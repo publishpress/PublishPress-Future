@@ -1,4 +1,4 @@
-(function($) {
+(function($, config) {
 
 	// we create a copy of the WP inline edit post function
 	var $wp_inline_edit = inlineEditPost.edit;
@@ -80,10 +80,11 @@
 				expirationdate_day: $expirationdate_day,
 				expirationdate_year: $expirationdate_year,
 				expirationdate_hour: $expirationdate_hour,
-				expirationdate_minute: $expirationdate_minute
+				expirationdate_minute: $expirationdate_minute,
+                nonce: config.ajax.nonce
 			}
 		});
 		
 	});
 
-})(jQuery);
+})(jQuery, config);

@@ -27,6 +27,7 @@ define('POSTEXPIRATOR_EMAILNOTIFICATION','0');
 define('POSTEXPIRATOR_EMAILNOTIFICATIONADMINS','0');
 define('POSTEXPIRATOR_DEBUGDEFAULT','0');
 define('POSTEXPIRATOR_EXPIREDEFAULT','null');
+define('POSTEXPIRATOR_SLUG','post-expirator');
 
 function postExpirator_plugin_action_links($links, $file) {
     $this_plugin = basename(plugin_dir_url(__FILE__)) . '/post-expirator.php';
@@ -1693,6 +1694,11 @@ add_action( 'admin_print_scripts-edit.php', 'expirationdate_quickedit_javascript
 function expirationdate_quickedit_javascript() {
 	// if using code as plugin
 	wp_enqueue_script( 'manage-wp-posts-using-bulk-quick-edit', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'admin-edit.js', array( 'jquery', 'inline-edit-post' ), '', true );
+	wp_localize_script( 'manage-wp-posts-using-bulk-quick-edit', 'config', array(
+		'ajax' => array(
+			'nonce' => wp_create_nonce( POSTEXPIRATOR_SLUG ),
+		),
+	));
 
 }
 
@@ -1701,6 +1707,8 @@ function expirationdate_quickedit_javascript() {
 */
 add_action( 'wp_ajax_manage_wp_posts_using_bulk_quick_save_bulk_edit', 'expiration_date_save_bulk_edit' );
 function expiration_date_save_bulk_edit() {
+	check_ajax_referer( POSTEXPIRATOR_SLUG, 'nonce' );
+
 	// we need the post IDs
 	$post_ids = ( isset( $_POST[ 'post_ids' ] ) && !empty( $_POST[ 'post_ids' ] ) ) ? $_POST[ 'post_ids' ] : NULL;
 
@@ -1717,12 +1725,15 @@ function expiration_date_save_bulk_edit() {
 		$minute  = intval($_POST['expirationdate_minute']);
 		$ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0",'U');
 
+		if ( ! $ts ) {
+			return;
+		}
+
 		foreach( $post_ids as $post_id ) {
 			// Only update posts that already have expiration date set.  Ignore Others
-	                $ed = get_post_meta($post_id,'_expiration-date',true);
+			$ed = get_post_meta($post_id,'_expiration-date',true);
 			if ($ed) {
-				$opts = get_post_meta($post_id, '_expiration-date-options', true);
-		                #_scheduleExpiratorEvent($post_id,$ts,$opts);
+				update_post_meta( $post_id, '_expiration-date', $ts );
 			}
 		}
 	}
