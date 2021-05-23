@@ -1,0 +1,11 @@
+.distignore
+.git
+.gitignore
+Gruntfile.js
+node_modules
+composer.lock
+package-lock.json
+package.json
+composer.json
+phpcs.xml
+logs
