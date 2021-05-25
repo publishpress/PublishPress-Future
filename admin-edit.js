@@ -55,7 +55,7 @@
 		var $bulk_row = $( '#bulk-edit' );
 		
 		// get the selected post ids that are being edited
-		var $post_ids = new Array();
+		var $post_ids = [];
 		$bulk_row.find( '#bulk-titles' ).children().each( function() {
 			$post_ids.push( $( this ).attr( 'id' ).replace( /^(ttle)/i, '' ) );
 		});
@@ -74,7 +74,7 @@
 			async: false,
 			cache: false,
 			data: {
-				action: 'manage_wp_posts_using_bulk_quick_save_bulk_edit', // this is the name of our WP AJAX function that we'll set up next
+				action: config.ajax.bulk_edit,
 				post_ids: $post_ids, // and these are the 2 parameters we're passing to our function
 				expirationdate_month: $expirationdate_month,
 				expirationdate_day: $expirationdate_day,
