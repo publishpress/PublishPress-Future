@@ -608,7 +608,9 @@ add_action( 'save_post', 'postexpirator_update_post_meta' );
  * Schedules the single event.
  */
 function postexpirator_schedule_event( $id, $ts, $opts ) {
-		$debug = postexpirator_debug(); // check for/load debug
+	$debug = postexpirator_debug(); // check for/load debug
+
+	$id = intval( $id );
 
 	do_action( 'postexpiratior_schedule', $id, $ts, $opts ); // allow custom actions
 
@@ -626,7 +628,9 @@ function postexpirator_schedule_event( $id, $ts, $opts ) {
 
 	// Update Post Meta
 	update_post_meta( $id, '_expiration-date', $ts );
-	update_post_meta( $id, '_expiration-date-options', $opts );
+	if ( ! is_null( $opts ) ) {
+		update_post_meta( $id, '_expiration-date-options', $opts );
+	}
 	update_post_meta( $id, '_expiration-date-status', 'saved' );
 }
 
@@ -2000,6 +2004,7 @@ function postexpirator_date_save_bulk_edit() {
 			$ed = get_post_meta( $post_id, '_expiration-date', true );
 			if ( $ed ) {
 				update_post_meta( $post_id, '_expiration-date', $ts );
+				postexpirator_schedule_event( $post_id, $ts, null );
 			}
 		}
 	}
