@@ -1,3 +1,5 @@
+/* global ajaxurl */
+
 (function($) {
 
 	// we create a copy of the WP inline edit post function
@@ -55,7 +57,7 @@
 		var $bulk_row = $( '#bulk-edit' );
 		
 		// get the selected post ids that are being edited
-		var $post_ids = new Array();
+		var $post_ids = [];
 		$bulk_row.find( '#bulk-titles' ).children().each( function() {
 			$post_ids.push( $( this ).attr( 'id' ).replace( /^(ttle)/i, '' ) );
 		});
