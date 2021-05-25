@@ -21,15 +21,7 @@ define( 'POSTEXPIRATOR_EMAILNOTIFICATION', '0' );
 define( 'POSTEXPIRATOR_EMAILNOTIFICATIONADMINS', '0' );
 define( 'POSTEXPIRATOR_DEBUGDEFAULT', '0' );
 define( 'POSTEXPIRATOR_EXPIREDEFAULT', 'null' );
-
-/**
- * Load translation, if it exists.
- */
-function postexpirator_init() {
-	$plugin_dir = basename( dirname( __FILE__ ) );
-	load_plugin_textdomain( 'post-expirator', null, $plugin_dir . '/languages/' );
-}
-add_action( 'plugins_loaded', 'postexpirator_init' );
+define( 'POSTEXPIRATOR_SLUG', 'post-expirator' );
 
 /**
  * Adds links to the plugin listing screen.
@@ -42,6 +34,15 @@ function postexpirator_plugin_action_links( $links, $file ) {
 	return $links;
 }
 add_filter( 'plugin_action_links', 'postexpirator_plugin_action_links', 10, 2 );
+
+/**
+ * Load translation, if it exists.
+ */
+function postexpirator_init() {
+	$plugin_dir = basename( dirname( __FILE__ ) );
+	load_plugin_textdomain( 'post-expirator', null, $plugin_dir . '/languages/' );
+}
+add_action( 'plugins_loaded', 'postexpirator_init' );
 
 /**
  * Adds an 'Expires' column to the post display table.
@@ -1959,13 +1960,23 @@ function _postexpirator_taxonomy( $opts ) {
 function postexpirator_quickedit_javascript() {
 	// if using code as plugin
 	wp_enqueue_script( 'manage-wp-posts-using-bulk-quick-edit', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'admin-edit.js', array( 'jquery', 'inline-edit-post' ), '', true );
+	wp_localize_script(
+		'manage-wp-posts-using-bulk-quick-edit', 'config', array(
+			'ajax' => array(
+				'nonce' => wp_create_nonce( POSTEXPIRATOR_SLUG ),
+				'bulk_edit' => 'manage_wp_posts_using_bulk_quick_save_bulk_edit',
+			),
+		)
+	);
 }
 add_action( 'admin_print_scripts-edit.php', 'postexpirator_quickedit_javascript' );
 
 /**
- * Receieve AJAX call from bulk edit to process save
+ Receieve AJAX call from bulk edit to process save
  */
 function postexpirator_date_save_bulk_edit() {
+	check_ajax_referer( POSTEXPIRATOR_SLUG, 'nonce' );
+
 	// we need the post IDs
 	$post_ids = ( isset( $_POST['post_ids'] ) && ! empty( $_POST['post_ids'] ) ) ? $_POST['post_ids'] : null;
 
@@ -1983,6 +1994,10 @@ function postexpirator_date_save_bulk_edit() {
 		$hour    = intval( $_POST['expirationdate_hour'] );
 		$minute  = intval( $_POST['expirationdate_minute'] );
 		$ts = get_gmt_from_date( "$year-$month-$day $hour:$minute:0", 'U' );
+
+		if ( ! $ts ) {
+			return;
+		}
 
 		foreach ( $post_ids as $post_id ) {
 			// Only update posts that already have expiration date set.  Ignore Others
