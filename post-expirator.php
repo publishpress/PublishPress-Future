@@ -682,10 +682,20 @@ function postexpirator_expire_post( $id ) {
 	$postlink = get_post_permalink( $id );
 
 	$postoptions = get_post_meta( $id, '_expiration-date-options', true );
+	$expireType = $category = $categoryTaxonomy = null;
 
-	// @TODO remove extract
-	// phpcs:ignore WordPress.PHP.DontExtract.extract_extract
-	extract( $postoptions );
+	if ( isset( $postoptions['expireType'] ) ) {
+		$expireType = $postoptions['expireType'];
+	}
+
+	if ( isset( $postoptions['category'] ) ) {
+		$category = $postoptions['category'];
+	}
+
+	if ( isset( $postoptions['categoryTaxonomy'] ) ) {
+		$categoryTaxonomy = $postoptions['categoryTaxonomy'];
+	}
+
 	$ed = get_post_meta( $id, '_expiration-date', true );
 
 	// Check for default expire only if not passed in
@@ -694,7 +704,7 @@ function postexpirator_expire_post( $id ) {
 		if ( $posttype === 'page' ) {
 			$expireType = strtolower( get_option( 'expirationdateExpiredPageStatus', POSTEXPIRATOR_PAGESTATUS ) );
 		} elseif ( $posttype === 'post' ) {
-			$expireType = strtolower( get_option( 'expirationdateExpiredPostStatus', 'Draft' ) );
+			$expireType = strtolower( get_option( 'expirationdateExpiredPostStatus', 'draft' ) );
 		} else {
 			$expireType = apply_filters( 'postexpirator_custom_posttype_expire', $expireType, $posttype ); // hook to set defaults for custom post types
 		}
