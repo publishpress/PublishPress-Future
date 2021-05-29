@@ -1542,7 +1542,7 @@ function postexpirator_shortcode( $atts ) {
 		$format = $timeformat;
 	}
 
-	return get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $expirationdatets ), $format );
+	return date_i18n( $format, $expirationdatets + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
 }
 add_shortcode( 'postexpirator', 'postexpirator_shortcode' );
 
