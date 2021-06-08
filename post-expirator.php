@@ -238,13 +238,13 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 					</select>
 					</label>
 					<label><span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
-				<input name="expirationdate_day" placeholder="Day" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>, 
+				<input name="expirationdate_day" placeholder="<?php _e( 'Day', 'post-expirator' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>, 
 				<label><span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
-				<input name="expirationdate_year" placeholder="Year" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @ 
+				<input name="expirationdate_year" placeholder="<?php _e( 'Year', 'post-expirator' ); ?>" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @ 
 				<label><span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
-				<input name="expirationdate_hour" placeholder="Hour" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>:
+				<input name="expirationdate_hour" placeholder="<?php _e( 'Hour', 'post-expirator' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>:
 				<label><span class="screen-reader-text"><?php _e( 'Minute', 'post-expirator' ); ?></span>
-				<input name="expirationdate_minute" placeholder="Min" value="" size="2" maxlength="2" autocomplete="off" type="text"></label></div>
+				<input name="expirationdate_minute" placeholder="<?php _e( 'Minute', 'post-expirator' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text"></label></div>
 				<input name="expirationdate_quickedit" value="true" type="hidden"/>
 			</fieldset>
 		</div>
