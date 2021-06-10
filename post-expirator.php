@@ -615,15 +615,15 @@ function postexpirator_schedule_event( $id, $ts, $opts ) {
 	do_action( 'postexpiratior_schedule', $id, $ts, $opts ); // allow custom actions
 
 	if ( wp_next_scheduled( 'postExpiratorExpire', array($id) ) !== false ) {
-		wp_clear_scheduled_hook( 'postExpiratorExpire', array($id) ); // Remove any existing hooks
+		$error = wp_clear_scheduled_hook( 'postExpiratorExpire', array($id), true ); // Remove any existing hooks
 		if ( POSTEXPIRATOR_DEBUG ) {
-			$debug->save( array('message' => $id . ' -> EXISTING FOUND - UNSCHEDULED') );
+			$debug->save( array('message' => $id . ' -> EXISTING FOUND - UNSCHEDULED - ' . ( is_wp_error( $error ) ? $error->get_error_message() : 'no error' )) );
 		}
 	}
 
-	wp_schedule_single_event( $ts, 'postExpiratorExpire', array($id) );
+	$error = wp_schedule_single_event( $ts, 'postExpiratorExpire', array($id), true );
 	if ( POSTEXPIRATOR_DEBUG ) {
-		$debug->save( array('message' => $id . ' -> SCHEDULED at ' . date_i18n( 'r', $ts ) . ' ' . '(' . $ts . ') with options ' . print_r( $opts, true )) );
+		$debug->save( array('message' => $id . ' -> SCHEDULED at ' . date_i18n( 'r', $ts ) . ' ' . '(' . $ts . ') with options ' . print_r( $opts, true ) . ' ' . ( is_wp_error( $error ) ? $error->get_error_message() : 'no error' ) ) );
 	}
 
 	// Update Post Meta
