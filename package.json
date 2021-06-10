@@ -1,0 +1,27 @@
+{
+  "name": "post-expirator",
+  "version": "2.4.1",
+  "description": "post-expirator",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/publishpress/PublishPress-Future.git"
+  },
+  "keywords": [
+    "wordpress-plugin"
+  ],
+  "license": "GPL-2.0+",
+  "devDependencies": {
+    "grunt": "^1.3.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-mkdir": "^1.0.0",
+    "grunt-phpcbf": "^0.1.1",
+    "grunt-phpcs": "^0.4.0",
+    "grunt-phplint": "^0.1.0",
+    "grunt-wp-i18n": "^1.0.3",
+    "load-grunt-tasks": "^5.1.0"
+  },
+  "pot": {
+    "languageteam": "PostExpirator Translate Team",
+    "lasttranslator": "PostExpirator Translate Team"
+  }
+}
