@@ -188,9 +188,9 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 					</select>
 					</label>
 					<label><span class="screen-reader-text">Day</span>
-				<input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>, 
+				<input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>,
 				<label><span class="screen-reader-text">Year</span>
-				<input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @ 
+				<input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @
 				<label><span class="screen-reader-text">Hour</span>
 				<input name="expirationdate_hour" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>:
 				<label><span class="screen-reader-text">Minute</span>
@@ -239,9 +239,9 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 					</select>
 					</label>
 					<label><span class="screen-reader-text">Day</span>
-				<input name="expirationdate_day" placeholder="Day" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>, 
+				<input name="expirationdate_day" placeholder="Day" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>,
 				<label><span class="screen-reader-text">Year</span>
-				<input name="expirationdate_year" placeholder="Year" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @ 
+				<input name="expirationdate_year" placeholder="Year" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @
 				<label><span class="screen-reader-text">Hour</span>
 				<input name="expirationdate_hour" placeholder="Hour" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>:
 				<label><span class="screen-reader-text">Minute</span>
