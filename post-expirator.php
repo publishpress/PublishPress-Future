@@ -22,9 +22,17 @@ define( 'POSTEXPIRATOR_EMAILNOTIFICATIONADMINS', '0' );
 define( 'POSTEXPIRATOR_DEBUGDEFAULT', '0' );
 define( 'POSTEXPIRATOR_EXPIREDEFAULT', 'null' );
 define( 'POSTEXPIRATOR_SLUG', 'post-expirator' );
+define( 'POSTEXPIRATOR_BASEDIR', dirname( __FILE__ ) );
+
+require_once POSTEXPIRATOR_BASEDIR . '/functions.php';
+
 
 /**
  * Adds links to the plugin listing screen.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_plugin_action_links( $links, $file ) {
 	$this_plugin = basename( plugin_dir_url( __FILE__ ) ) . '/post-expirator.php';
@@ -37,6 +45,10 @@ add_filter( 'plugin_action_links', 'postexpirator_plugin_action_links', 10, 2 );
 
 /**
  * Load translation, if it exists.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_init() {
 	$plugin_dir = basename( dirname( __FILE__ ) );
@@ -46,6 +58,10 @@ add_action( 'plugins_loaded', 'postexpirator_init' );
 
 /**
  * Adds an 'Expires' column to the post display table.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_add_column( $columns, $type ) {
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $type ) );
@@ -58,6 +74,10 @@ add_filter( 'manage_posts_columns', 'postexpirator_add_column', 10, 2 );
 
 /**
  * Adds sortable columns.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_manage_sortable_columns() {
 	$post_types = get_post_types( array('public' => true) );
@@ -69,6 +89,10 @@ add_action( 'init', 'postexpirator_manage_sortable_columns', 100 );
 
 /**
  * Adds an 'Expires' column to the post display table.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_sortable_column( $columns ) {
 	$columns['expirationdate'] = 'expirationdate';
@@ -77,6 +101,10 @@ function postexpirator_sortable_column( $columns ) {
 
 /**
  * Modify the sorting of posts.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_orderby( $query ) {
 	if ( ! is_admin() ) {
@@ -107,6 +135,10 @@ add_action( 'pre_get_posts', 'postexpirator_orderby' );
 
 /**
  * Adds an 'Expires' column to the page display table.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_add_column_page( $columns ) {
 	$defaults = get_option( 'expirationdateDefaultsPage' );
@@ -119,6 +151,10 @@ add_filter( 'manage_pages_columns', 'postexpirator_add_column_page' );
 
 /**
  * Fills the 'Expires' column of the post display table.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_show_value( $column_name ) {
 	global $post;
@@ -156,6 +192,10 @@ add_action( 'manage_pages_custom_column', 'postexpirator_show_value' );
 
 /**
  * Quick Edit functionality.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_quickedit( $column_name, $post_type ) {
 	if ( $column_name !== 'expirationdate' ) {
@@ -207,6 +247,10 @@ add_action( 'quick_edit_custom_box', 'postexpirator_quickedit', 10, 2 );
 
 /**
  * Bulk Edit functionality.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_bulkedit( $column_name, $post_type ) {
 	if ( $column_name !== 'expirationdate' ) {
@@ -258,6 +302,10 @@ add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
 
 /**
  * Adds hooks to get the meta box added to pages and custom post types
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_meta_custom() {
 	$custom_post_types = get_post_types();
@@ -273,6 +321,10 @@ add_action( 'add_meta_boxes', 'postexpirator_meta_custom' );
 
 /**
  * Actually adds the meta box
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_meta_box( $post ) {
 	// Get default month
@@ -458,6 +510,10 @@ function postexpirator_meta_box( $post ) {
 
 /**
  * Add's ajax javascript.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_js_admin_header() {
 	// Define custom JavaScript function
@@ -527,6 +583,10 @@ add_action( 'admin_head', 'postexpirator_js_admin_header' );
 
 /**
  * Get correct URL (HTTP or HTTPS)
+ *
+ * @internal
+ *
+ * @access private
  */
 function expirationdate_get_blog_url() {
 	if ( is_multisite() ) {
@@ -538,6 +598,10 @@ function expirationdate_get_blog_url() {
 
 /**
  * Called when post is saved - stores expiration-date meta value
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_update_post_meta( $id ) {
 	// don't run the echo if this is an auto save
@@ -606,6 +670,10 @@ add_action( 'save_post', 'postexpirator_update_post_meta' );
 
 /**
  * Schedules the single event.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_schedule_event( $id, $ts, $opts ) {
 	$debug = postexpirator_debug(); // check for/load debug
@@ -636,6 +704,10 @@ function postexpirator_schedule_event( $id, $ts, $opts ) {
 
 /**
  * Unschedules the single event.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_unschedule_event( $id ) {
 	$debug = postexpirator_debug(); // check for/load debug
@@ -659,6 +731,10 @@ function postexpirator_unschedule_event( $id ) {
  * The new expiration function, to work with single scheduled events.
  *
  * This was designed to hopefully be more flexible for future tweaks/modifications to the architecture.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_expire_post( $id ) {
 	$debug = postexpirator_debug(); // check for/load debug
@@ -962,6 +1038,10 @@ add_action( 'postExpiratorExpire', 'postexpirator_expire_post' );
 
 /**
  * Internal method to get category names corresponding to the category IDs.
+ *
+ * @internal
+ *
+ * @access private
  */
 function _postexpirator_get_cat_names( $cats ) {
 	$out = array();
@@ -973,6 +1053,10 @@ function _postexpirator_get_cat_names( $cats ) {
 
 /**
  * Build the menu for the options page
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_menu_tabs( $tab ) {
 		echo '<p>';
@@ -988,6 +1072,10 @@ function postexpirator_menu_tabs( $tab ) {
 
 /**
  * Show the menu.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_menu() {
 		$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : '';
@@ -1010,6 +1098,10 @@ function postexpirator_menu() {
 
 /**
  * Hook's to add plugin page menu
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_add_menu() {
 	add_submenu_page( 'options-general.php', __( 'Post Expirator Options', 'post-expirator' ), __( 'Post Expirator', 'post-expirator' ), 'manage_options', basename( __FILE__ ), 'postexpirator_menu' );
@@ -1018,6 +1110,10 @@ add_action( 'admin_menu', 'postexpirator_add_menu' );
 
 /**
  * Show the Expiration Date options page
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_menu_general() {
 	if ( isset( $_POST['expirationdateSave'] ) && $_POST['expirationdateSave'] ) {
@@ -1238,6 +1334,10 @@ function postexpirator_menu_general() {
 
 /**
  * The default menu.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_menu_defaults() {
 	$debug = postexpirator_debug();
@@ -1371,6 +1471,10 @@ function postexpirator_menu_defaults() {
 
 /**
  * Diagnostics menu.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_menu_diagnostics() {
 	if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
@@ -1492,6 +1596,10 @@ function postexpirator_menu_diagnostics() {
 
 /**
  * Debug menu.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_menu_debug() {
 	require_once( plugin_dir_path( __FILE__ ) . 'post-expirator-debug.php' );
@@ -1502,6 +1610,10 @@ function postexpirator_menu_debug() {
 
 /**
  * Register the shortcode.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_shortcode( $atts ) {
 	global $post;
@@ -1548,6 +1660,10 @@ add_shortcode( 'postexpirator', 'postexpirator_shortcode' );
 
 /**
  * Add the footer.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_add_footer( $text ) {
 	global $post;
@@ -1588,6 +1704,10 @@ add_action( 'the_content', 'postexpirator_add_footer', 0 );
 
 /**
  * Check for Debug
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_debug() {
 	$debug = get_option( 'expirationdateDebug' );
@@ -1609,6 +1729,10 @@ function postexpirator_debug() {
 
 /**
  * Add Stylesheet
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_css() {
 		$myStyleUrl = plugins_url( 'style.css', __FILE__ ); // Respects SSL, Style.css is relative to the current file
@@ -1623,6 +1747,10 @@ add_action( 'admin_init', 'postexpirator_css' );
 
 /**
  * Post Expirator Activation/Upgrade
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_upgrade() {
 
@@ -1705,6 +1833,10 @@ add_action( 'admin_init', 'postexpirator_upgrade' );
 
 /**
  * Called at plugin activation
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_activate() {
 	if ( get_option( 'expirationdateDefaultDateFormat' ) === false ) {
@@ -1732,6 +1864,10 @@ function postexpirator_activate() {
 
 /**
  * Called at plugin deactivation
+ *
+ * @internal
+ *
+ * @access private
  */
 function expirationdate_deactivate() {
 	global $current_blog;
@@ -1766,6 +1902,10 @@ register_deactivation_hook( __FILE__, 'expirationdate_deactivate' );
 
 /**
  * The walker class for category checklist.
+ *
+ * @internal
+ *
+ * @access private
  */
 class Walker_PostExpirator_Category_Checklist extends Walker {
 
@@ -1870,6 +2010,10 @@ class Walker_PostExpirator_Category_Checklist extends Walker {
 
 /**
  * Get the HTML for expire type.
+ *
+ * @internal
+ *
+ * @access private
  */
 function _postexpirator_expire_type( $opts ) {
 	if ( empty( $opts ) ) {
@@ -1916,6 +2060,10 @@ function _postexpirator_expire_type( $opts ) {
 
 /**
  * Get the HTML for taxonomy.
+ *
+ * @internal
+ *
+ * @access private
  */
 function _postexpirator_taxonomy( $opts ) {
 	if ( empty( $opts ) ) {
@@ -1966,6 +2114,10 @@ function _postexpirator_taxonomy( $opts ) {
 
 /**
  * Include the JS.
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_quickedit_javascript() {
 	// if using code as plugin
@@ -1983,6 +2135,10 @@ add_action( 'admin_print_scripts-edit.php', 'postexpirator_quickedit_javascript'
 
 /**
  Receieve AJAX call from bulk edit to process save
+ *
+ * @internal
+ *
+ * @access private
  */
 function postexpirator_date_save_bulk_edit() {
 	check_ajax_referer( POSTEXPIRATOR_SLUG, 'nonce' );
