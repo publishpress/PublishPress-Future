@@ -76,6 +76,7 @@ module.exports = function(grunt) {
                 options: {
                     mainFile: 'post-expirator.php',
                     type: 'wp-plugin',
+                    exclude: ['/vendor'],
                     updateTimestamp: false,
                     processPot: function( pot, options ) {
                         // https://github.com/cedaro/grunt-wp-i18n/blob/develop/docs/examples/remove-package-metadata.md

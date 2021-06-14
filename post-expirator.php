@@ -342,7 +342,7 @@ function postexpirator_meta_box( $post ) {
 		$disabled   = '';
 		$opts       = get_post_meta( $post->ID, '_expiration-date-options', true );
 		if ( isset( $opts['expireType'] ) ) {
-					$expireType = $opts['expireType'];
+			$expireType = $opts['expireType'];
 		}
 		$categories = isset( $opts['category'] ) ? $opts['category'] : false;
 	}
@@ -368,7 +368,8 @@ function postexpirator_meta_box( $post ) {
 		}
 
 		for ( $i = $currentyear; $i <= $currentyear + 10; $i++ ) {
-			if ( $i === $defaultyear ) {
+			// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+			if ( $i == $defaultyear ) {
 				$selected = ' selected="selected"';
 			} else {
 				$selected = '';
@@ -1135,7 +1136,7 @@ function postexpirator_menu_general() {
 					<div id="expired-custom-container" style="display: <?php echo $show; ?>;">
 					<br/><label for="expired-custom-expiration-date">Custom:</label> <input type="text" value="<?php echo $expirationdateDefaultDateCustom; ?>" name="expired-custom-expiration-date" id="expired-custom-expiration-date" />
 					<br/>
-					<?php _e( 'Set the custom value to use for the default expiration date.  For information on formatting, see <a href="http://php.net/manual/en/function.strtotime.php">PHP strtotime function</a>. For example, you could enter "+1 month" or "+1 week 2 days 4 hours 2 seconds" or "next Thursday."', 'post-expirator' ); ?>
+					<?php echo sprintf( __( 'Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.', 'post-expirator' ), '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">PHP strtotime function</a>', '<code>', '</code>', '<code>', '</code>', '<code>', '</code>' ); ?>
 					</div>
 				</td>
 			</tr>
