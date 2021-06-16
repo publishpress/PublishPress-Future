@@ -368,7 +368,7 @@ function postexpirator_meta_box( $post ) {
 		}
 
 		for ( $i = $currentyear; $i <= $currentyear + 10; $i++ ) {
-			if ( $i === $defaultyear ) {
+			if ( $i == $defaultyear ) {
 				$selected = ' selected="selected"';
 			} else {
 				$selected = '';
