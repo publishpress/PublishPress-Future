@@ -160,16 +160,21 @@ function postexpirator_show_value( $column_name ) {
 	global $post;
 	$id = $post->ID;
 	if ( $column_name === 'expirationdate' ) {
+		$display = __( 'Never', 'post-expirator' );
 		$ed = get_post_meta( $id, '_expiration-date', true );
-			echo ( $ed ? get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ed ), get_option( 'date_format' ) . ' ' . get_option( 'time_format' ) ) : __( 'Never', 'post-expirator' ) );
+		if ( $ed ) {
+			$display = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $ed + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+		}
+		echo $display;
 
 		// Values for Quick Edit
 		if ( $ed ) {
-			$year = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ed ), 'Y' );
-			$month = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ed ), 'm' );
-			$day = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ed ), 'd' );
-			$hour = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ed ), 'H' );
-			$minute = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ed ), 'i' );
+			$date = gmdate( 'Y-m-d H:i:s', $ed );
+			$year = get_date_from_gmt( $date, 'Y' );
+			$month = get_date_from_gmt( $date, 'm' );
+			$day = get_date_from_gmt( $date, 'd' );
+			$hour = get_date_from_gmt( $date, 'H' );
+			$minute = get_date_from_gmt( $date, 'i' );
 			echo '<span id="expirationdate_year-' . $id . '" style="display: none;">' . $year . '</span>';
 			echo '<span id="expirationdate_month-' . $id . '" style="display: none;">' . $month . '</span>';
 			echo '<span id="expirationdate_day-' . $id . '" style="display: none;">' . $day . '</span>';
@@ -206,34 +211,31 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 	<fieldset class="inline-edit-col-left post-expirator-quickedit">
 		<div class="inline-edit-col">
 		<div class="inline-edit-group">
-		<span class="title">Post Expirator</span>
-			<p><input name="enable-expirationdate" type="checkbox" /><span class="title">Enable Post Expiration</span></p>
+		<span class="title"><?php _e( 'Post Expirator', 'post-expirator' ); ?></span>
+			<p><input name="enable-expirationdate" type="checkbox" /><span class="title"><?php _e( 'Enable Post Expiration', 'post-expirator' ); ?></span></p>
 			<fieldset class="inline-edit-date">
-				<legend><span class="title">Expires</span></legend>
+				<legend><span class="title"><?php _e( 'Expires', 'post-expirator' ); ?></span></legend>
 				<div class="timestamp-wrap">
-					<label><span class="screen-reader-text">Month</span>
+					<label><span class="screen-reader-text"><?php _e( 'Month', 'post-expirator' ); ?></span>
 					<select name="expirationdate_month">
-					<option value="01" data-text="Jan">01-Jan</option>
-					<option value="02" data-text="Feb">02-Feb</option>
-					<option value="03" data-text="Mar">03-Mar</option>
-					<option value="04" data-text="Apr">04-Apr</option>
-					<option value="05" data-text="May">05-May</option>
-					<option value="06" data-text="Jun">06-Jun</option>
-					<option value="07" data-text="Jul">07-Jul</option>
-					<option value="08" data-text="Aug">08-Aug</option>
-					<option value="09" data-text="Sep">09-Sep</option>
-					<option value="10" data-text="Oct">10-Oct</option>
-					<option value="11" data-text="Nov">11-Nov</option>
-					<option value="12" data-text="Dec">12-Dec</option>
+					<?php
+					for ( $x = 1; $x <= 12; $x++ ) {
+						$now = mktime( 0, 0, 0, $x, 1, date_i18n( 'Y' ) );
+						$monthNumeric = date_i18n( 'm', $now );
+						$monthStr = date_i18n( 'M', $now );
+						?>
+						<option value="<?php echo $monthNumeric; ?>" data-text="<?php echo $monthStr; ?>"><?php echo $monthNumeric; ?>-<?php echo $monthStr; ?></option>
+					<?php } ?>
+
 					</select>
 					</label>
-					<label><span class="screen-reader-text">Day</span>
+					<label><span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
 				<input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>, 
-				<label><span class="screen-reader-text">Year</span>
+				<label><span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
 				<input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @ 
-				<label><span class="screen-reader-text">Hour</span>
+				<label><span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
 				<input name="expirationdate_hour" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>:
-				<label><span class="screen-reader-text">Minute</span>
+				<label><span class="screen-reader-text"><?php _e( 'Minute', 'post-expirator' ); ?></span>
 				<input name="expirationdate_minute" value="" size="2" maxlength="2" autocomplete="off" type="text"></label></div>
 				<input name="expirationdate_quickedit" value="true" type="hidden"/>
 			</fieldset>
@@ -263,33 +265,30 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 		<div class="inline-edit-group">
 		<span class="title"><?php echo __( 'Post Expirator: Will only update expiration date if already configured on post.', 'post-expirator' ); ?></span>
 			<fieldset class="inline-edit-date">
-				<legend><span class="title">Expires</span></legend>
+				<legend><span class="title"><?php _e( 'Expires', 'post-expirator' ); ?></span></legend>
 				<div class="timestamp-wrap">
-					<label><span class="screen-reader-text">Month</span>
+					<label><span class="screen-reader-text"><?php _e( 'Month', 'post-expirator' ); ?></span>
 					<select name="expirationdate_month">
-					<option value="false">- No Change -</option>
-					<option value="01" data-text="Jan">01-Jan</option>
-					<option value="02" data-text="Feb">02-Feb</option>
-					<option value="03" data-text="Mar">03-Mar</option>
-					<option value="04" data-text="Apr">04-Apr</option>
-					<option value="05" data-text="May">05-May</option>
-					<option value="06" data-text="Jun">06-Jun</option>
-					<option value="07" data-text="Jul">07-Jul</option>
-					<option value="08" data-text="Aug">08-Aug</option>
-					<option value="09" data-text="Sep">09-Sep</option>
-					<option value="10" data-text="Oct">10-Oct</option>
-					<option value="11" data-text="Nov">11-Nov</option>
-					<option value="12" data-text="Dec">12-Dec</option>
+					<option value="false">-<?php _e( 'No Change', 'post-expirator' ); ?>-</option>
+					<?php
+					for ( $x = 1; $x <= 12; $x++ ) {
+						$now = mktime( 0, 0, 0, $x, 1, date_i18n( 'Y' ) );
+						$monthNumeric = date_i18n( 'm', $now );
+						$monthStr = date_i18n( 'M', $now );
+						?>
+						<option value="<?php echo $monthNumeric; ?>" data-text="<?php echo $monthStr; ?>"><?php echo $monthNumeric; ?>-<?php echo $monthStr; ?></option>
+					<?php } ?>
+
 					</select>
 					</label>
-					<label><span class="screen-reader-text">Day</span>
-				<input name="expirationdate_day" placeholder="Day" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>, 
-				<label><span class="screen-reader-text">Year</span>
-				<input name="expirationdate_year" placeholder="Year" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @ 
-				<label><span class="screen-reader-text">Hour</span>
-				<input name="expirationdate_hour" placeholder="Hour" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>:
-				<label><span class="screen-reader-text">Minute</span>
-				<input name="expirationdate_minute" placeholder="Min" value="" size="2" maxlength="2" autocomplete="off" type="text"></label></div>
+					<label><span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
+				<input name="expirationdate_day" placeholder="<?php _e( 'Day', 'post-expirator' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>, 
+				<label><span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
+				<input name="expirationdate_year" placeholder="<?php _e( 'Year', 'post-expirator' ); ?>" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @ 
+				<label><span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
+				<input name="expirationdate_hour" placeholder="<?php _e( 'Hour', 'post-expirator' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>:
+				<label><span class="screen-reader-text"><?php _e( 'Minute', 'post-expirator' ); ?></span>
+				<input name="expirationdate_minute" placeholder="<?php _e( 'Minute', 'post-expirator' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text"></label></div>
 				<input name="expirationdate_quickedit" value="true" type="hidden"/>
 			</fieldset>
 		</div>
