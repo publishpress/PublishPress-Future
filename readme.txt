@@ -1,5 +1,5 @@
 === Post Expirator: Automatically Unpublish WordPress Posts ===
-Contributors: publishpress, kevinB, stevejburge, andergmartins, axelseaa
+Contributors: publishpress, kevinB, stevejburge, andergmartins, axelseaa, rozroz
 Author: PublishPress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
@@ -54,6 +54,12 @@ This section describes how to install the plugin and get it working.
 3. Settings screen
 
 == Changelog ==
+
+**Version 2.4.2**
+
+* Fixed: Bulk edit does not change scheduled event bug, #29;
+* Fixed: Date not being translated in shortcode, #16;
+* Fixed: Bulk Edit doesn't work, #4;
 
 **Version 2.4.1**
 
