@@ -305,6 +305,10 @@ function postexpirator_meta_box( $post ) {
 					// phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
 					date_default_timezone_set( $tz );
 				}
+
+				// strip the quotes in case the user provides them.
+				$custom = str_replace( '"', '', html_entity_decode( $custom, ENT_QUOTES ) );
+
 				$ts = time() + ( strtotime( $custom ) - time() );
 				if ( $tz ) {
 					// @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
