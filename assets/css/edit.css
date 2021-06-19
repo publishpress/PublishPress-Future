@@ -1,0 +1,11 @@
+div.timestamp-wrap label {
+	vertical-align: middle !important;
+}
+
+div.timestamp-wrap > span.post-expirator-date-fields {
+	display: none;
+}
+
+.post-expirator-quickedit input {
+	font-size: 12px;
+}
