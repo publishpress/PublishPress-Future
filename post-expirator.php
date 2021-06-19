@@ -217,8 +217,9 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 			<fieldset class="inline-edit-date">
 				<legend><span class="title"><?php _e( 'Expires', 'post-expirator' ); ?></span></legend>
 				<div class="timestamp-wrap">
-					<label><span class="screen-reader-text"><?php _e( 'Month', 'post-expirator' ); ?></span>
-					<select name="expirationdate_month">
+					<label>
+						<span class="screen-reader-text"><?php _e( 'Month', 'post-expirator' ); ?></span>
+						<select name="expirationdate_month">
 					<?php
 					for ( $x = 1; $x <= 12; $x++ ) {
 						$now = mktime( 0, 0, 0, $x, 1, date_i18n( 'Y' ) );
@@ -228,16 +229,25 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 						<option value="<?php echo $monthNumeric; ?>" data-text="<?php echo $monthStr; ?>"><?php echo $monthNumeric; ?>-<?php echo $monthStr; ?></option>
 					<?php } ?>
 
-					</select>
+						</select>
 					</label>
-					<label><span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
-				<input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>, 
-				<label><span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
-				<input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off" type="text"></label> @ 
-				<label><span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
-				<input name="expirationdate_hour" value="" size="2" maxlength="2" autocomplete="off" type="text"></label>:
-				<label><span class="screen-reader-text"><?php _e( 'Minute', 'post-expirator' ); ?></span>
-				<input name="expirationdate_minute" value="" size="2" maxlength="2" autocomplete="off" type="text"></label></div>
+					<label>
+						<span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
+						<input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="<?php echo date( 'd' ); ?>">
+					</label>, 
+					<label>
+						<span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
+						<input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off" type="text" placeholder="<?php echo date( 'Y' ); ?>">
+					</label> @ 
+					<label>
+						<span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
+						<input name="expirationdate_hour" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="00">
+					</label> :
+					<label>
+						<span class="screen-reader-text"><?php _e( 'Minute', 'post-expirator' ); ?></span>
+						<input name="expirationdate_minute" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="00">
+					</label>
+				</div>
 				<input name="expirationdate_quickedit" value="true" type="hidden"/>
 			</fieldset>
 		</div>
@@ -648,19 +658,26 @@ function postexpirator_update_post_meta( $id ) {
 	}
 
 	if ( isset( $_POST['enable-expirationdate'] ) ) {
-			$default = get_option( 'expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT );
+		$default = get_option( 'expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT );
 		if ( $default === 'publish' ) {
-				$month   = intval( $_POST['mm'] );
-				$day     = intval( $_POST['jj'] );
-				$year    = intval( $_POST['aa'] );
-				$hour    = intval( $_POST['hh'] );
-				$minute  = intval( $_POST['mn'] );
+			$month   = intval( $_POST['mm'] );
+			$day     = intval( $_POST['jj'] );
+			$year    = intval( $_POST['aa'] );
+			$hour    = intval( $_POST['hh'] );
+			$minute  = intval( $_POST['mn'] );
 		} else {
-				$month   = intval( $_POST['expirationdate_month'] );
-				$day     = intval( $_POST['expirationdate_day'] );
-				$year    = intval( $_POST['expirationdate_year'] );
-				$hour    = intval( $_POST['expirationdate_hour'] );
-				$minute  = intval( $_POST['expirationdate_minute'] );
+			$month   = intval( $_POST['expirationdate_month'] );
+			$day     = intval( $_POST['expirationdate_day'] );
+			$year    = intval( $_POST['expirationdate_year'] );
+			$hour    = intval( $_POST['expirationdate_hour'] );
+			$minute  = intval( $_POST['expirationdate_minute'] );
+
+			if ( empty( $day ) ) {
+				$day = date( 'd' );
+			}
+			if ( empty( $year ) ) {
+				$year = date( 'Y' );
+			}
 		}
 		$category = isset( $_POST['expirationdate_category'] ) ? $_POST['expirationdate_category'] : 0;
 
