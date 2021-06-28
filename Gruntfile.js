@@ -12,6 +12,7 @@ module.exports = function(grunt) {
             '!node_modules/**',
             '!logs/**',
             '!.git/**',
+            '!tests/**',
         ],
         files_js: [
             '*.js',
@@ -22,6 +23,9 @@ module.exports = function(grunt) {
             '!logs/**',
             '!Gruntfile.js',
             '!.git/**',
+            '!codeceptjs/**',
+            '!codecept**',
+            '!tests/**',
         ],
         mkdir: {
             logs: {

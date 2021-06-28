@@ -9,3 +9,6 @@ package.json
 composer.json
 phpcs.xml
 logs
+tests
+codecept.conf.js
+codeceptjs

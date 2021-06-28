@@ -4,3 +4,5 @@ vendor
 logs
 composer.lock
 package-lock.json
+codecept.conf.js
+codeceptjs/output
