@@ -9,3 +9,6 @@ package.json
 composer.json
 phpcs.xml
 logs
+.babelrc
+assets/jsx
+webpack.config.js
