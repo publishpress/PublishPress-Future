@@ -4,8 +4,8 @@ Author: PublishPress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
 Requires at least: 4.0
-Tested up to: 5.7.1
-Stable tag: 2.4.1
+Tested up to: 5.7
+Stable tag: 2.4.3
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -50,10 +50,16 @@ This section describes how to install the plugin and get it working.
 == Screenshots ==
 
 1. Adding expiration date to a post
-2. Viewing the exipiration dates on the post overview screen
+2. Viewing the expiration dates on the post overview screen
 3. Settings screen
 
 == Changelog ==
+
+**Version 2.4.3**
+
+* Added: Expose wrappers for legacy functions, #40;
+* Added: Support for quotes in Default expiry, #43;
+* Fixed: Default expiry duration is broken for future years, #39;
 
 **Version 2.4.2**
 
@@ -108,7 +114,7 @@ This section describes how to install the plugin and get it working.
 
 **Version 2.1.2**
 
-* Security: Added form nonce for protect agaisnt possible CSRF
+* Security: Added form nonce for protect against possible CSRF
 * Security: Fixed XSS issue on settings pages
 * New: Added check to show if WP_CRON is enabled on diagnostics page
 * Fix: Minor Code Cleanup
@@ -120,7 +126,7 @@ This section describes how to install the plugin and get it working.
 
 **Version 2.1.0**
 
-* New: Added support for heirarchical custom taxonomy
+* New: Added support for hierarchical custom taxonomy
 * New: Enhanced custom post type support
 * Fix: Updated debug function to be friendly for scripted calls 
 * Fix: Change to only show public custom post types on defaults screen
