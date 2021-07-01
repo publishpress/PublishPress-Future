@@ -60,6 +60,9 @@ This section describes how to install the plugin and get it working.
 * Added: Expose wrappers for legacy functions, #40;
 * Added: Support for quotes in Default expiry, #43;
 * Fixed: Default expiry duration is broken for future years, #39;
+* Fixed: Translation bug, #5;
+* Fixed: Post expiring one year early, #24;
+* Changed: Bulk and Quick Edit boxes default to current date/year, #46;
 
 **Version 2.4.2**
 
