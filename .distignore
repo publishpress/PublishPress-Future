@@ -1,6 +1,7 @@
 .distignore
 .git
 .gitignore
+.github
 Gruntfile.js
 node_modules
 composer.lock
@@ -12,3 +13,5 @@ logs
 tests
 codecept.conf.js
 codeceptjs
+build
+docker-compose.yml
