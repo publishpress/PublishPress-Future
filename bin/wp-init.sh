@@ -47,11 +47,11 @@ docker exec $args pe_wordpress wp --allow-root term create category banana
 docker exec $args pe_wordpress wp --allow-root term create category custard
 
 # add a post with ID: 1000 and add to apple
-docker exec $args pe_wordpress wp --allow-root post create --post_title="post1" --post_content="random content" --post_status=publish --post_category="apple" --import_id=1000
+docker exec $args pe_wordpress wp --allow-root post create --post_type=post --post_title="post1" --post_content="random" --post_status=publish --post_category="apple" --import_id=1000
 docker exec $args pe_wordpress wp --allow-root post term remove 1000 category 'uncategorized'
 
 # add a post with ID: 1001 and add to banana
-docker exec $args pe_wordpress wp --allow-root post create --post_title="post2" --post_content="random content" --post_status=publish --post_category="banana" --import_id=1001
+docker exec $args pe_wordpress wp --allow-root post create --post_type=post --post_title="post2" --post_content="random" --post_status=publish --post_category="banana" --import_id=1001
 docker exec $args pe_wordpress wp --allow-root post term remove 1000 category 'uncategorized'
 
 #docker exec $args pe_wordpress npm install
