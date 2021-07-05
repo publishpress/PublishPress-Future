@@ -54,6 +54,7 @@ docker exec $args pe_wordpress wp --allow-root post term remove 1000 category 'u
 docker exec $args pe_wordpress wp --allow-root post create --post_type=post --post_title="post2" --post_content="random" --post_status=publish --post_category="banana" --import_id=1001
 docker exec $args pe_wordpress wp --allow-root post term remove 1000 category 'uncategorized'
 
-docker exec $args pe_wordpress export show=false url=http://wp.lvh.me:80/
+docker exec $args pe_wordpress cd /var/www/html/wp-content/plugins/post-expirator
+#docker exec $args pe_wordpress export show=false url=http://wp.lvh.me:80/
 docker exec $args pe_wordpress npm install
 docker exec $args pe_wordpress npm run e2e:run
