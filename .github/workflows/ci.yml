@@ -35,7 +35,7 @@ jobs:
       - name: CodeceptJS run
         run: |
           npm install
-          npx codeceptjs run --show false --url http://wp.lvh.me:80/
+          npx codeceptjs --show false --url http://wp.lvh.me:80/ run
 
       - name: Cleanup
         if: always()
