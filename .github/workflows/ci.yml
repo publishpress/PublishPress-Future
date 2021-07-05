@@ -32,11 +32,6 @@ jobs:
           PE_WP_HOST: wp.lvh.me
           PE_WP_VERSION: ${{ matrix.wp_version }}
 
-      - name: CodeceptJS run
-        run: |
-          export show=false url=http://wp.lvh.me:80/
-          npm install
-          npm run e2e:run
 
       - name: Cleanup
         if: always()
