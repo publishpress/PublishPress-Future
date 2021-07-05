@@ -4,7 +4,7 @@ exports.config = {
   helpers: {
     Playwright: {
       url: process.env.url || 'http://localhost:91',
-      show: process.env.show || true,
+      show: process.env.show !== 'false',
       browser: 'chromium',
       waitForAction: 500
     }
