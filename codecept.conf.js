@@ -27,7 +27,8 @@ exports.config = {
       enabled: true
     },
     'stepByStepReport': {
-      'enabled': true
+      'enabled': true,
+      'output': 'output',
     },
     autoLogin: {
       enabled: true,
