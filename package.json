@@ -28,7 +28,6 @@
     "lasttranslator": "PostExpirator Translate Team"
   },
   "scripts": {
-    "e2e:run": "npx codeceptjs run",
-    "ci:run": "npx codeceptjs run --show false --url http://wp.lvh.me:80/"
+    "e2e:run": "npx codeceptjs run"
   }
 }

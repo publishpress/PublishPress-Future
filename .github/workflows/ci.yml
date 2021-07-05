@@ -34,7 +34,9 @@ jobs:
 
       - name: CodeceptJS run
         run: |
-          npm run ci:run
+          export show=false url=http://wp.lvh.me:80/
+          npm install
+          npm run e2e:run
 
       - name: Cleanup
         if: always()
