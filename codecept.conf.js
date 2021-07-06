@@ -26,10 +26,6 @@ exports.config = {
     screenshotOnFail: {
       enabled: true
     },
-    'stepByStepReport': {
-      'enabled': true,
-      'output': 'output',
-    },
     autoLogin: {
       enabled: true,
       saveToFile: true,
