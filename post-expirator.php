@@ -81,7 +81,7 @@ add_filter( 'manage_posts_columns', 'postexpirator_add_column', 10, 2 );
  * @access private
  */
 function postexpirator_manage_sortable_columns() {
-	$post_types = get_post_types( array('public' => true) );
+	$post_types = postexpirator_get_post_types();
 	foreach ( $post_types as $post_type ) {
 		add_filter( 'manage_edit-' . $post_type . '_sortable_columns', 'postexpirator_sortable_column' );
 	}
@@ -332,6 +332,26 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
 
 /**
+ * Returns the post types that are supported.
+ *
+ * @internal
+ *
+ * @access private
+ */
+function postexpirator_get_post_types() {
+	$post_types = get_post_types( array('public' => true) );
+
+	// in case some post types should not be supported.
+	$unset_post_types = apply_filters( 'postexpirator_unset_post_types', array( 'attachment' ) );
+	if ( $unset_post_types ) {
+		foreach ( $unset_post_types as $type ) {
+			unset( $post_types[ $type ] );
+		}
+	}
+	return $post_types;
+}
+
+/**
  * Adds hooks to get the meta box added to pages and custom post types
  *
  * @internal
@@ -339,9 +359,8 @@ add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
  * @access private
  */
 function postexpirator_meta_custom() {
-	$custom_post_types = get_post_types();
-	array_push( $custom_post_types, 'page' );
-	foreach ( $custom_post_types as $t ) {
+	$post_types = postexpirator_get_post_types();
+	foreach ( $post_types as $t ) {
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $t ) );
 		if ( ! isset( $defaults['activeMetaBox'] ) || $defaults['activeMetaBox'] === 'active' ) {
 			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core' );
@@ -1384,8 +1403,7 @@ function postexpirator_menu_general() {
  */
 function postexpirator_menu_defaults() {
 	$debug = postexpirator_debug();
-	$types = get_post_types( array('public' => true, '_builtin' => false) );
-	array_unshift( $types, 'post', 'page' );
+	$types = postexpirator_get_post_types();
 
 	if ( isset( $_POST['expirationdateSaveDefaults'] ) ) {
 		if ( ! isset( $_POST['_postExpiratorMenuDefaults_nonce'] ) || ! wp_verify_nonce( $_POST['_postExpiratorMenuDefaults_nonce'], 'postexpirator_menu_defaults' ) ) {
