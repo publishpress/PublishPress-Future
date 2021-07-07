@@ -5,3 +5,4 @@ logs
 composer.lock
 package-lock.json
 .idea
+.DS_Store

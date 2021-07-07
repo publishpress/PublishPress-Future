@@ -5,7 +5,7 @@ Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
 Requires at least: 4.0
 Tested up to: 5.7
-Stable tag: 2.4.2
+Stable tag: 2.4.3
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -27,16 +27,16 @@ There are a number of different ways that the posts can expire:
 
 For each expiration event, a custom cron job will be schedule which will help reduce server overhead for busy sites.
 
-The expiration date can be displayed within the actual post by using the [postexpirator] tag.  The format attribute will override the plugin
-default display format.  See the [PHP Date Function](http://us2.php.net/manual/en/function.date.php) for valid date/time format options.
+The expiration date can be displayed within the actual post by using the [postexpirator] tag.  The format attribute will override the plugin 
+default display format.  See the [PHP Date Function](http://us2.php.net/manual/en/function.date.php) for valid date/time format options. 
 
-NOTE: This plugin REQUIRES that WP-CRON is setup and functional on your web host.  Some hosts do not support this, so please check and confirm if you run into issues using the plugin.
+NOTE: This plugin REQUIRES that WP-CRON is setup and functional on your webhost.  Some hosts do not support this, so please check and confirm if you run into issues using the plugin.
 
 **[postexpirator] shortcode attributes**
 
 * type - defaults to full - valid options are full,date,time
 * dateformat - format set here will override the value set on the settings page
-* timeformat - format set here will override the value set on the settings page
+* timeformat - format set here will override the value set on the settings page 
 
 This plugin is fully compatible with WordPress Multisite Mode.
 
@@ -54,6 +54,15 @@ This section describes how to install the plugin and get it working.
 3. Settings screen
 
 == Changelog ==
+
+**Version 2.4.3**
+
+* Added: Expose wrappers for legacy functions, #40;
+* Added: Support for quotes in Default expiry, #43;
+* Fixed: Default expiry duration is broken for future years, #39;
+* Fixed: Translation bug, #5;
+* Fixed: Post expiring one year early, #24;
+* Changed: Bulk and Quick Edit boxes default to current date/year, #46;
 
 **Version 2.4.2**
 
@@ -122,7 +131,7 @@ This section describes how to install the plugin and get it working.
 
 * New: Added support for hierarchical custom taxonomy
 * New: Enhanced custom post type support
-* Fix: Updated debug function to be friendly for scripted calls
+* Fix: Updated debug function to be friendly for scripted calls 
 * Fix: Change to only show public custom post types on defaults screen
 * Fix: Removed category expiration options for 'pages', which is currently unsupported
 * Fix: Some date calls were getting "double" converted for the timezone pending how other plugins handled date - this issue should now be resolved
