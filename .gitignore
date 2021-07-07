@@ -4,3 +4,4 @@ vendor
 logs
 composer.lock
 package-lock.json
+.idea
