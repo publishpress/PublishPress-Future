@@ -1,0 +1,44 @@
+name: E2E
+on:
+  push:
+jobs:
+  set-wp-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      wp-versions: ${{ steps.set-versions.outputs.versions }}
+    steps:
+      - id: set-versions
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ];then
+            echo "::set-output name=versions::[\"5.7\",\"4.9\"]"
+          fi
+  plugin:
+    needs: set-wp-versions
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        wp_version: ${{fromJson(needs.set-wp-versions.outputs.wp-versions)}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run WP container
+        run: |
+          docker-compose -f docker-compose.yml down -v
+          docker-compose -f docker-compose.yml up -d --force-recreate
+          chmod +x ./bin/wp-init.sh && ./bin/wp-init.sh
+        env:
+          PE_WP_HOST: wp.lvh.me
+          PE_WP_VERSION: ${{ matrix.wp_version }}
+
+      - name: CodeceptJS run
+        run: |
+          export show=false url=http://wp.lvh.me:80/
+          npm install
+          npm run e2e:run
+
+      - name: Cleanup
+        if: always()
+        run: |
+          docker-compose -f docker-compose.yml down -v
