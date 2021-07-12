@@ -45,3 +45,17 @@ if ( ! function_exists( 'postExpiratorExpire' ) ) {
 }
 
 
+if ( ! function_exists( '_postExpiratorExpireType' ) ) {
+
+	/**
+	 * Get the HTML for expire type.
+	 *
+	 * @since 2.5.0
+	 * @deprecated 2.5.0
+	 */
+	function _postExpiratorExpireType( $opts ) {
+		_postexpirator_expire_type( $opts );
+	}
+}
+
+
