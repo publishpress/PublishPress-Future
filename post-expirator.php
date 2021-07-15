@@ -979,10 +979,11 @@ function postexpirator_expire_post( $id ) {
 				$cats = wp_get_post_categories( $id );
 				$merged = array();
 				foreach ( $cats as $cat ) {
-					if ( ! in_array( $cat, $category, true ) ) {
+					if ( ! in_array( $cat, $category, false ) ) {
 						$merged[] = $cat;
 					}
 				}
+
 				if ( wp_update_post( array('ID' => $id, 'post_category' => $merged) ) === 0 ) {
 					if ( POSTEXPIRATOR_DEBUG ) {
 						$debug->save( array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r( $postoptions, true )) );
@@ -999,7 +1000,7 @@ function postexpirator_expire_post( $id ) {
 				$terms = wp_get_object_terms( $id, $categoryTaxonomy, array('fields' => 'ids') );
 				$merged = array();
 				foreach ( $terms as $term ) {
-					if ( ! in_array( $term, $category, true ) ) {
+					if ( ! in_array( $term, $category, false ) ) {
 						$merged[] = $term;
 					}
 				}
