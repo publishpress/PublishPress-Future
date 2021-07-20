@@ -6,7 +6,7 @@
 # Calls docker-compose with common options.
 ##
 dc() {
-    docker-compose -f ../docker-compose.yml "$@"
+    docker-compose -f "$(dirname "$0")/../docker-compose.yml" "$@"
 }
 
 ##
