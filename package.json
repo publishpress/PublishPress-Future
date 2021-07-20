@@ -1,6 +1,6 @@
 {
   "name": "post-expirator",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "post-expirator",
   "repository": {
     "type": "git",
@@ -11,7 +11,6 @@
   ],
   "license": "GPL-2.0+",
   "devDependencies": {
-    "codeceptjs": "^3.0.7",
     "grunt": "^1.3.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-mkdir": "^1.0.0",
@@ -19,14 +18,15 @@
     "grunt-phpcs": "^0.4.0",
     "grunt-phplint": "^0.1.0",
     "grunt-wp-i18n": "^1.0.3",
-    "load-grunt-tasks": "^5.1.0",
+    "load-grunt-tasks": "^5.1.0",
+    "codeceptjs": "^3.0.7",
     "playwright": "^1.12.2",
     "webdriverio": "^5.23.0"
   },
   "pot": {
     "languageteam": "PostExpirator Translate Team",
     "lasttranslator": "PostExpirator Translate Team"
-  },
+  },
   "scripts": {
     "e2e:run": "npx codeceptjs run"
   }

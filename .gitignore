@@ -6,3 +6,5 @@ composer.lock
 package-lock.json
 codeceptjs/output
 #bin
+.idea
+.DS_Store
