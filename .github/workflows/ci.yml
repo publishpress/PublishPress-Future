@@ -29,12 +29,12 @@ jobs:
           docker-compose -f docker-compose.yml up -d --force-recreate
           chmod +x ./bin/wp-init.sh && ./bin/wp-init.sh
         env:
-          PE_WP_HOST: wp.lvh.me
+          PE_WP_HOST: localhost
           PE_WP_VERSION: ${{ matrix.wp_version }}
 
       - name: CodeceptJS run
         run: |
-          export show=false url=http://wp.lvh.me:9080/
+          export show=false url=http://localhost:9080/
           npm install
           npm run e2e:run
 
