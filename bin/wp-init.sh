@@ -41,7 +41,7 @@ else
 fi
 
 # Get the host port for the WordPress container.
-wp_port=$(dc port $CONTAINER 80 | awk -F : '{printf $2}')
+wp_port=$(dc port wordpress 80 | awk -F : '{printf $2}')
 
 npx wait-on --timeout 30000 "http://$wp_host:$wp_port"
 
