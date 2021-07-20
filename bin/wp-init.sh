@@ -24,7 +24,7 @@ wp() {
 # Executes the given command in the wordpress container.
 ##
 container() {
-    dc exec $args pe_wordpress "$@"
+    dc exec $args wordpress "$@"
 }
 
 wp_host='localhost'
