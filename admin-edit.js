@@ -1,5 +1,15 @@
 (function($, config) {
 
+    // show/hide the date fields when the user chooses the intent.
+    $('body').on('change', 'select[name="expirationdate_status"]', function(e){
+        var $show = $(this).find('option:selected').attr('data-show-fields');
+        if($show === 'true'){
+            $(this).parents('.timestamp-wrap').find('span.post-expirator-date-fields').show();
+        }else{
+            $(this).parents('.timestamp-wrap').find('span.post-expirator-date-fields').hide();
+        }
+    });
+
 	// we create a copy of the WP inline edit post function
 	var $wp_inline_edit = inlineEditPost.edit;
 
@@ -66,6 +76,7 @@
 		var $expirationdate_year = $bulk_row.find( 'input[name="expirationdate_year"]' ).val();
 		var $expirationdate_hour = $bulk_row.find( 'input[name="expirationdate_hour"]' ).val();
 		var $expirationdate_minute = $bulk_row.find( 'input[name="expirationdate_minute"]' ).val();
+		var $expirationdate_status = $bulk_row.find( 'select[name="expirationdate_status"]' ).val();
 		
 		// save the data
 		$.ajax({
@@ -81,6 +92,7 @@
 				expirationdate_year: $expirationdate_year,
 				expirationdate_hour: $expirationdate_hour,
 				expirationdate_minute: $expirationdate_minute,
+				expirationdate_status: $expirationdate_status,
                 nonce: config.ajax.nonce
 			}
 		});

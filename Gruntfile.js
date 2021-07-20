@@ -12,6 +12,7 @@ module.exports = function(grunt) {
             '!node_modules/**',
             '!logs/**',
             '!.git/**',
+            '!tests/**',
         ],
         files_js: [
             '*.js',
@@ -22,6 +23,9 @@ module.exports = function(grunt) {
             '!logs/**',
             '!Gruntfile.js',
             '!.git/**',
+            '!codeceptjs/**',
+            '!codecept**',
+            '!tests/**',
         ],
         mkdir: {
             logs: {
@@ -76,6 +80,7 @@ module.exports = function(grunt) {
                 options: {
                     mainFile: 'post-expirator.php',
                     type: 'wp-plugin',
+                    exclude: ['/vendor'],
                     updateTimestamp: false,
                     processPot: function( pot, options ) {
                         // https://github.com/cedaro/grunt-wp-i18n/blob/develop/docs/examples/remove-package-metadata.md
