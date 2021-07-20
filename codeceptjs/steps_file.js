@@ -1,8 +1,8 @@
 
 const loginDefaults = {
   url: '/wp-admin',
-  username: 'wordpress',
-  password: 'wordpress',
+  username: 'wordpress1',
+  password: 'wordpress1',
 };
 
 module.exports = function() {
