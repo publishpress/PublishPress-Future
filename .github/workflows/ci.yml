@@ -34,7 +34,7 @@ jobs:
 
       - name: CodeceptJS run
         run: |
-          export show=false url=http://wp.lvh.me:80/
+          export show=false url=http://wp.lvh.me:9080/
           npm install
           npm run e2e:run
 
