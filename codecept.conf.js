@@ -1,5 +1,6 @@
 exports.config = {
   tests: 'tests/*.js',
+  timeout: 5000,
   output: './codeceptjs/output',
   helpers: {
     Playwright: {
