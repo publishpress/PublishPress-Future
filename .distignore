@@ -1,5 +1,6 @@
 .distignore
 .git
+.github
 .gitignore
 Gruntfile.js
 node_modules
@@ -11,4 +12,7 @@ phpcs.xml
 logs
 .babelrc
 assets/jsx
+bin
+codeceptjs
+tests
 webpack.config.js

@@ -6,7 +6,7 @@
     const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner } = wp.components;
     const { Fragment, Component } = wp.element;
     const { decodeEntities } = wp.htmlEntities;
-    const { isEmpty, keys } = lodash;
+    const { isEmpty, keys, compact } = lodash;
 
     class PostExpiratorSidebar extends Component {
         constructor() {
@@ -27,10 +27,6 @@
             let enabled = config.defaults.autoEnable == 1;
             let date = new Date();
 
-            if(config.default_date){
-                date.setTime((parseInt(config.default_date) + date.getTimezoneOffset() * 60) * 1000);
-            }
-
             let expireAction = this.getExpireType(postMeta);
 
             let categories = [];
@@ -38,11 +34,20 @@
                 categories = this.getCategories(postMeta);
             }
 
+            if(postMeta['_expiration-date-status'] && postMeta['_expiration-date-status'] === 'saved'){
+                enabled = true;
+            }
+
             if(postMeta['_expiration-date']){
                 date.setTime((postMeta['_expiration-date'] + date.getTimezoneOffset() * 60) * 1000);
-                enabled = true;
             }else{
                 categories = config.default_categories;
+                if(config.default_date){
+                    date.setTime((parseInt(config.default_date) + date.getTimezoneOffset() * 60) * 1000);
+                    // update the post meta for date so that the user does not have to click the date to set it
+                    const setPostMeta = (newMeta) => wp.data.dispatch( 'core/editor' ).editPost( { meta: newMeta } );
+                    setPostMeta( {'_expiration-date': this.getDate(date) } );
+                }
             }
 
             let taxonomy = config.defaults.taxonomy || 'categories';
@@ -66,7 +71,7 @@
                         categoriesList[ cat.name ] = cat;
                         catIdVsName[ cat.id ] = cat.name;
                     });
-                    this.setState( { categoriesList: categoriesList, catIdVsName: catIdVsName } );
+                    this.setState( { categoriesList: categoriesList, catIdVsName: catIdVsName, taxonomy: __( 'Category' ) } );
                 } );
             }else if(postType !== 'page') {
                 wp.apiFetch( {
@@ -97,10 +102,7 @@
                     break;
                 case 'date':
                     if(typeof date === 'string'){
-                        let newDate = new Date();
-                        newDate.setTime(Date.parse(date));
-                        newDate.setTime(newDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
-                        setPostMeta( {'_expiration-date': ((newDate.getTime()) / 1000) } );
+                        setPostMeta( {'_expiration-date': this.getDate(date) } );
                     }
                     break;
                 case 'action':
@@ -175,7 +177,7 @@
                                     (
                                 <FormTokenField
                                     label={ __('Expiration Categories', 'post-expirator') + ` (${taxonomy})` }
-                                    value={ categories && categories.map((id) => catIdVsName[id] ) }
+                                    value={ categories && compact(categories.map((id) => catIdVsName[id] || false )) }
                                     suggestions={ Object.keys(categoriesList) }
                                     onChange={ ( value ) => { this.setState( { categories: this.selectCategories(value), attribute: 'category' } ) } }
                                     maxSuggestions={ 10 }
@@ -188,6 +190,7 @@
             );
         }
 
+        // what action to take on expiration
         getExpireType(postMeta) {
             let typeNew = postMeta['_expiration-date-type'];
             let typeOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['expireType'];
@@ -203,6 +206,7 @@
             return 'draft';
         }
 
+        // what categories to add/remove/replace
         getCategories(postMeta) {
             let categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
             let categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
@@ -219,6 +223,7 @@
 
         }
 
+        // fired for the autocomplete
         selectCategories(tokens) {
             const { categoriesList, catIdVsName } = this.state;
 
@@ -235,6 +240,13 @@
             })
 
             return categories.map( (cat) => cat.id );
+        }
+
+        getDate(date){
+            let newDate = new Date();
+            newDate.setTime(Date.parse(date));
+            newDate.setTime(newDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
+            return ((newDate.getTime()) / 1000);
         }
 
     }

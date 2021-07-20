@@ -52,15 +52,22 @@ class PostExpirator_Facade {
 				break;
 		}
 
-		remove_action( 'updated_postmeta', 'postexpirator_updatedmeta', 10, 4 );
+		remove_action( 'updated_postmeta', array( $this, 'updatedmeta' ), 10, 4 );
 		if ( $unschedule ) {
-			postexpirator_unschedule_event( $post_id );
+			// @TODO the below delete_post_meta do not seem to work
+			delete_post_meta( $post_id, '_expiration-date' );
+			delete_post_meta( $post_id, '_expiration-date-options' );
+			delete_post_meta( $post_id, '_expiration-date-type' );
+			delete_post_meta( $post_id, '_expiration-date-categories' );
+			delete_post_meta( $post_id, '_expiration-date-taxonomy' );
+
+			$this->unschedule_event( $post_id );
 		}
 
 		if ( $schedule ) {
 			$opts = self::get_expire_principles( $post_id );
 			$ts = $meta_value;
-			postexpirator_schedule_event( $post_id, $ts, $opts );
+			$this->schedule_event( $post_id, $ts, $opts );
 		}
 	}
 
@@ -87,6 +94,10 @@ class PostExpirator_Facade {
 					// phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
 					date_default_timezone_set( $tz );
 				}
+
+				// strip the quotes in case the user provides them.
+				$custom = str_replace( '"', '', html_entity_decode( $custom, ENT_QUOTES ) );
+
 				$ts = time() + ( strtotime( $custom ) - time() );
 				if ( $tz ) {
 					// @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
@@ -107,7 +118,7 @@ class PostExpirator_Facade {
 			'year' => $defaultyear,
 			'hour' => $defaulthour,
 			'minute' => $defaultminute,
-			'ts' => $ts
+			'ts' => $ts,
 		);
 	}
 
@@ -126,34 +137,34 @@ class PostExpirator_Facade {
 	 *
 	 * Keeps in mind the old (classic editor) and new (gutenberg) structure.
 	 */
-	public static function get_expire_principles( $id ){
+	public static function get_expire_principles( $id ) {
 		$expireType = $categories = $taxonomyName = '';
 
 		$expireTypeNew = get_post_meta( $id, '_expiration-date-type', true );
-		if( ! empty( $expireTypeNew ) ) {
+		if ( ! empty( $expireTypeNew ) ) {
 			$expireType = $expireTypeNew;
 		}
 
 		$categoriesNew = get_post_meta( $id, '_expiration-date-categories', true );
-		if( ! empty( $categoriesNew ) ) {
+		if ( ! empty( $categoriesNew ) ) {
 			$categories = $categoriesNew;
 		}
 
 		$taxonomyNameNew = get_post_meta( $id, '_expiration-date-taxonomy', true );
-		if( ! empty( $taxonomyNameNew ) ) {
+		if ( ! empty( $taxonomyNameNew ) ) {
 			$taxonomyName = $taxonomyNameNew;
 		}
 
 		// _expiration-date-options is deprecated when using block editor
 		$opts       = get_post_meta( $id, '_expiration-date-options', true );
-		if ( empty($expireType) && isset( $opts['expireType'] ) ) {
+		if ( empty( $expireType ) && isset( $opts['expireType'] ) ) {
 			$expireType = $opts['expireType'];
 		}
-		if ( empty($categories)){
+		if ( empty( $categories ) ) {
 			$categories = isset( $opts['category'] ) ? $opts['category'] : false;
 		}
 
-		if ( empty($taxonomyName)){
+		if ( empty( $taxonomyName ) ) {
 			$taxonomyName = isset( $opts['categoryTaxonomy'] ) ? $opts['categoryTaxonomy'] : '';
 		}
 
@@ -171,65 +182,75 @@ class PostExpirator_Facade {
 	function register_post_meta() {
 		$post_types = get_post_types( array('public' => true) );
 		foreach ( $post_types as $post_type ) {
-			
+
 			// this is important for CPTs to show the postMeta.
 			add_post_type_support( $post_type, array( 'custom-fields' ) );
 
-			register_post_meta( $post_type, '_expiration-date-status', array(
-				'single' => true,
-				'type' => 'string',
-				'auth_callback' => function() {
-					return current_user_can( 'edit_posts' );
-				},
-				'show_in_rest' => true,
-			));
-			register_post_meta( $post_type, '_expiration-date', array(
-				'single' => true,
-				'type' => 'number',
-				'auth_callback' => function() {
-					return current_user_can( 'edit_posts' );
-				},
-				'show_in_rest' => true,
-			));
-			register_post_meta( $post_type, '_expiration-date-type', array(
-				'single' => true,
-				'type' => 'string',
-				'auth_callback' => function() {
-					return current_user_can( 'edit_posts' );
-				},
-				'show_in_rest' => true,
-			));
-			register_post_meta( $post_type, '_expiration-date-categories', array(
-				'single' => true,
-				'type' => 'array',
-				'auth_callback' => function() {
-					return current_user_can( 'edit_posts' );
-				},
-				'show_in_rest' => array(
-					'schema' => array(
-						'type' => 'array',
-						'items' => array(
-							'type' => 'number',
-						)
-					)
-				),
-			));
-			
+			register_post_meta(
+				$post_type, '_expiration-date-status', array(
+					'single' => true,
+					'type' => 'string',
+					'auth_callback' => function() {
+						return current_user_can( 'edit_posts' );
+					},
+					'show_in_rest' => true,
+				)
+			);
+			register_post_meta(
+				$post_type, '_expiration-date', array(
+					'single' => true,
+					'type' => 'number',
+					'auth_callback' => function() {
+						return current_user_can( 'edit_posts' );
+					},
+					'show_in_rest' => true,
+				)
+			);
+			register_post_meta(
+				$post_type, '_expiration-date-type', array(
+					'single' => true,
+					'type' => 'string',
+					'auth_callback' => function() {
+						return current_user_can( 'edit_posts' );
+					},
+					'show_in_rest' => true,
+				)
+			);
+			register_post_meta(
+				$post_type, '_expiration-date-categories', array(
+					'single' => true,
+					'type' => 'array',
+					'auth_callback' => function() {
+						return current_user_can( 'edit_posts' );
+					},
+					'show_in_rest' => array(
+						'schema' => array(
+							'type' => 'array',
+							'items' => array(
+								'type' => 'number',
+							),
+						),
+					),
+				)
+			);
+
 			// this is the old complex field that we are now deprecating
 			// as it cannot be used easily in the block editor
-			register_post_meta( $post_type, '_expiration-date-options', array(
-				'single' => true,
-				'type' => 'object',
-				'auth_callback' => function() {
-					return current_user_can( 'edit_posts' );
-				},
-				'show_in_rest' => array(
-					'schema' => array(
-						'type'       => 'object',
-						'additionalProperties' => true,
+			register_post_meta(
+				$post_type, '_expiration-date-options', array(
+					'single' => true,
+					'type' => 'object',
+					'auth_callback' => function() {
+						return current_user_can( 'edit_posts' );
+					},
+					'show_in_rest' => array(
+						'schema' => array(
+							'type'       => 'object',
+							'additionalProperties' => true,
+						),
 					),
-				),
-			));
+				)
+			);
 
 		}
 	}
@@ -255,11 +276,13 @@ class PostExpirator_Facade {
 			);
 
 			$default_expiry = PostExpirator_Facade::get_default_expiry();
-			wp_localize_script( 'postexpirator-block', 'config', array(
-				'defaults' => $defaults,
-				'default_date' => $default_expiry['ts'],
-				'default_categories' => get_option( 'expirationdateCategoryDefaults' ),
-			) );
+			wp_localize_script(
+				'postexpirator-block', 'config', array(
+					'defaults' => $defaults,
+					'default_date' => $default_expiry['ts'],
+					'default_categories' => get_option( 'expirationdateCategoryDefaults' ),
+				)
+			);
 
 		}
 	}
@@ -267,9 +290,23 @@ class PostExpirator_Facade {
 	/**
 	 * Is the (default) Gutenberg-style box enabled in options?
 	 */
-	public static function show_gutenberg_metabox(){
+	public static function show_gutenberg_metabox() {
 		$gutenberg = get_option( 'expirationdateGutenbergSupport', 1 );
 		return intval( $gutenberg ) === 1;
+	}
+
+	/**
+	 * Wrapper for unscheduling event.
+	 */
+	private function unschedule_event( $post_id ) {
+		postexpirator_unschedule_event( $post_id );
+	}
+
+	/**
+	 * Wrapper for scheduling event.
+	 */
+	private function schedule_event( $post_id, $ts, $opts ) {
+		postexpirator_schedule_event( $post_id, $ts, $opts );
 	}
 
 }

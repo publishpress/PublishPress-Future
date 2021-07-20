@@ -123,7 +123,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     var decodeEntities = wp.htmlEntities.decodeEntities;
     var _lodash = lodash,
         isEmpty = _lodash.isEmpty,
-        keys = _lodash.keys;
+        keys = _lodash.keys,
+        compact = _lodash.compact;
 
     var PostExpiratorSidebar = function (_Component) {
         _inherits(PostExpiratorSidebar, _Component);
@@ -154,10 +155,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var enabled = config.defaults.autoEnable == 1;
                 var date = new Date();
 
-                if (config.default_date) {
-                    date.setTime((parseInt(config.default_date) + date.getTimezoneOffset() * 60) * 1000);
-                }
-
                 var expireAction = this.getExpireType(postMeta);
 
                 var categories = [];
@@ -165,11 +162,22 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     categories = this.getCategories(postMeta);
                 }
 
+                if (postMeta['_expiration-date-status'] && postMeta['_expiration-date-status'] === 'saved') {
+                    enabled = true;
+                }
+
                 if (postMeta['_expiration-date']) {
                     date.setTime((postMeta['_expiration-date'] + date.getTimezoneOffset() * 60) * 1000);
-                    enabled = true;
                 } else {
                     categories = config.default_categories;
+                    if (config.default_date) {
+                        date.setTime((parseInt(config.default_date) + date.getTimezoneOffset() * 60) * 1000);
+                        // update the post meta for date so that the user does not have to click the date to set it
+                        var setPostMeta = function setPostMeta(newMeta) {
+                            return wp.data.dispatch('core/editor').editPost({ meta: newMeta });
+                        };
+                        setPostMeta({ '_expiration-date': this.getDate(date) });
+                    }
                 }
 
                 var taxonomy = config.defaults.taxonomy || 'categories';
@@ -193,7 +201,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             categoriesList[cat.name] = cat;
                             catIdVsName[cat.id] = cat.name;
                         });
-                        _this2.setState({ categoriesList: categoriesList, catIdVsName: catIdVsName });
+                        _this2.setState({ categoriesList: categoriesList, catIdVsName: catIdVsName, taxonomy: __('Category') });
                     });
                 } else if (postType !== 'page') {
                     wp.apiFetch({
@@ -232,10 +240,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                         break;
                     case 'date':
                         if (typeof date === 'string') {
-                            var newDate = new Date();
-                            newDate.setTime(Date.parse(date));
-                            newDate.setTime(newDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
-                            setPostMeta({ '_expiration-date': newDate.getTime() / 1000 });
+                            setPostMeta({ '_expiration-date': this.getDate(date) });
                         }
                         break;
                     case 'action':
@@ -316,9 +321,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                             React.createElement(Spinner, null)
                         ) || React.createElement(FormTokenField, {
                             label: __('Expiration Categories', 'post-expirator') + (' (' + taxonomy + ')'),
-                            value: categories && categories.map(function (id) {
-                                return catIdVsName[id];
-                            }),
+                            value: categories && compact(categories.map(function (id) {
+                                return catIdVsName[id] || false;
+                            })),
                             suggestions: Object.keys(categoriesList),
                             onChange: function onChange(value) {
                                 _this3.setState({ categories: _this3.selectCategories(value), attribute: 'category' });
@@ -328,6 +333,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     )
                 );
             }
+
+            // what action to take on expiration
+
         }, {
             key: 'getExpireType',
             value: function getExpireType(postMeta) {
@@ -344,6 +352,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 return 'draft';
             }
+
+            // what categories to add/remove/replace
+
         }, {
             key: 'getCategories',
             value: function getCategories(postMeta) {
@@ -360,6 +371,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 return categoriesOld;
             }
+
+            // fired for the autocomplete
+
         }, {
             key: 'selectCategories',
             value: function selectCategories(tokens) {
@@ -383,6 +397,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 return categories.map(function (cat) {
                     return cat.id;
                 });
+            }
+        }, {
+            key: 'getDate',
+            value: function getDate(date) {
+                var newDate = new Date();
+                newDate.setTime(Date.parse(date));
+                newDate.setTime(newDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
+                return newDate.getTime() / 1000;
             }
         }]);
 

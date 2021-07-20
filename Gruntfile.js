@@ -26,6 +26,8 @@ module.exports = function(grunt) {
             '!codeceptjs/**',
             '!codecept**',
             '!tests/**',
+            '!webpack.config.js',
+            '!assets/js/block.js',
         ],
         mkdir: {
             logs: {
