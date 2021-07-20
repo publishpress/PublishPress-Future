@@ -22,7 +22,7 @@
     "codeceptjs": "^3.0.7",
     "playwright": "^1.12.2",
     "webdriverio": "^5.23.0"
-  },
+    },
   "pot": {
     "languageteam": "PostExpirator Translate Team",
     "lasttranslator": "PostExpirator Translate Team"
@@ -30,4 +30,5 @@
   "scripts": {
     "e2e:run": "npx codeceptjs run"
   }
+
 }
