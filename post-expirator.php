@@ -4,14 +4,14 @@ Plugin Name: Post Expirator
 Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
 Author: Aaron Axelsen
-Version: 2.4.3
+Version: 2.4.4
 Author URI: http://postexpirator.tuxdocs.net/
 Text Domain: post-expirator
 Domain Path: /languages
 */
 
 // Default Values
-define( 'POSTEXPIRATOR_VERSION', '2.4.3' );
+define( 'POSTEXPIRATOR_VERSION', '2.4.4' );
 define( 'POSTEXPIRATOR_DATEFORMAT', __( 'l F jS, Y', 'post-expirator' ) );
 define( 'POSTEXPIRATOR_TIMEFORMAT', __( 'g:ia', 'post-expirator' ) );
 define( 'POSTEXPIRATOR_FOOTERCONTENTS', __( 'Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator' ) );
@@ -234,11 +234,11 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
 						<input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="<?php echo date( 'd' ); ?>">
-					</label>, 
+					</label>,
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
 						<input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off" type="text" placeholder="<?php echo date( 'Y' ); ?>">
-					</label> @ 
+					</label> @
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
 						<input name="expirationdate_hour" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="00">
@@ -306,11 +306,11 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
 						<input name="expirationdate_day" placeholder="<?php echo date( 'd' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text">
-					</label>, 
+					</label>,
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
 						<input name="expirationdate_year" placeholder="<?php echo date( 'Y' ); ?>" value="" size="4" maxlength="4" autocomplete="off" type="text">
-					</label> @ 
+					</label> @
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
 						<input name="expirationdate_hour" placeholder="00" value="" size="2" maxlength="2" autocomplete="off" type="text">
@@ -979,10 +979,11 @@ function postexpirator_expire_post( $id ) {
 				$cats = wp_get_post_categories( $id );
 				$merged = array();
 				foreach ( $cats as $cat ) {
-					if ( ! in_array( $cat, $category, true ) ) {
+					if ( ! in_array( $cat, $category, false ) ) {
 						$merged[] = $cat;
 					}
 				}
+
 				if ( wp_update_post( array('ID' => $id, 'post_category' => $merged) ) === 0 ) {
 					if ( POSTEXPIRATOR_DEBUG ) {
 						$debug->save( array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r( $postoptions, true )) );
@@ -999,7 +1000,7 @@ function postexpirator_expire_post( $id ) {
 				$terms = wp_get_object_terms( $id, $categoryTaxonomy, array('fields' => 'ids') );
 				$merged = array();
 				foreach ( $terms as $term ) {
-					if ( ! in_array( $term, $category, true ) ) {
+					if ( ! in_array( $term, $category, false ) ) {
 						$merged[] = $term;
 					}
 				}
