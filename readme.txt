@@ -55,7 +55,12 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.4.3] - 2021-07-07 =
+= [2.4.4] - 22 Jul 2021 =
+
+* Fixed: Fix conflict with the plugin WCFM, #60;
+* Fixed: Fix the Category: Remove option, #61;
+
+= [2.4.3] - 07 Jul 2021 =
 
 * Added: Expose wrappers for legacy functions, #40;
 * Added: Support for quotes in Default expiry, #43;
