@@ -234,11 +234,11 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
 						<input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="<?php echo date( 'd' ); ?>">
-					</label>,
+					</label>, 
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
 						<input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off" type="text" placeholder="<?php echo date( 'Y' ); ?>">
-					</label> @
+					</label> @ 
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
 						<input name="expirationdate_hour" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="00">
@@ -306,11 +306,11 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
 						<input name="expirationdate_day" placeholder="<?php echo date( 'd' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text">
-					</label>,
+					</label>, 
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
 						<input name="expirationdate_year" placeholder="<?php echo date( 'Y' ); ?>" value="" size="4" maxlength="4" autocomplete="off" type="text">
-					</label> @
+					</label> @ 
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
 						<input name="expirationdate_hour" placeholder="00" value="" size="2" maxlength="2" autocomplete="off" type="text">
@@ -363,7 +363,8 @@ function postexpirator_meta_custom() {
 	foreach ( $post_types as $t ) {
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $t ) );
 		if ( ! isset( $defaults['activeMetaBox'] ) || $defaults['activeMetaBox'] === 'active' ) {
-			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core' );
+			$gutenberg = get_option( 'expirationdateGutenbergSupport', 1 );
+			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core', array( '__back_compat_meta_box' => intval( $gutenberg ) ) );
 		}
 	}
 }
@@ -388,42 +389,13 @@ function postexpirator_meta_box( $post ) {
 	$expireType = '';
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post->post_type ) );
 	if ( empty( $expirationdatets ) ) {
-		$default = get_option( 'expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT );
-		if ( $default === 'null' ) {
-			$defaultmonth   = date_i18n( 'm' );
-			$defaultday     = date_i18n( 'd' );
-			$defaulthour    = date_i18n( 'H' );
-			$defaultyear    = date_i18n( 'Y' );
-			$defaultminute  = date_i18n( 'i' );
+		$default_expiry = PostExpirator_Facade::get_default_expiry();
 
-		} elseif ( $default === 'custom' ) {
-			$custom = get_option( 'expirationdateDefaultDateCustom' );
-			if ( $custom === false ) {
-				$ts = time();
-			} else {
-				$tz = get_option( 'timezone_string' );
-				if ( $tz ) {
-					// @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
-					// phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
-					date_default_timezone_set( $tz );
-				}
-
-				// strip the quotes in case the user provides them.
-				$custom = str_replace( '"', '', html_entity_decode( $custom, ENT_QUOTES ) );
-
-				$ts = time() + ( strtotime( $custom ) - time() );
-				if ( $tz ) {
-					// @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
-					// phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
-					date_default_timezone_set( 'UTC' );
-				}
-			}
-			$defaultmonth   = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'm' );
-			$defaultday     = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'd' );
-			$defaultyear    = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'Y' );
-			$defaulthour    = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'H' );
-			$defaultminute  = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'i' );
-		}
+		$defaultmonth   = $default_expiry['month'];
+		$defaultday   = $default_expiry['day'];
+		$defaulthour   = $default_expiry['hour'];
+		$defaultyear   = $default_expiry['year'];
+		$defaultminute   = $default_expiry['minute'];
 
 		$enabled = '';
 		$disabled = ' disabled="disabled"';
@@ -446,11 +418,10 @@ function postexpirator_meta_box( $post ) {
 		$defaultminute  = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $expirationdatets ), 'i' );
 		$enabled    = ' checked="checked"';
 		$disabled   = '';
-		$opts       = get_post_meta( $post->ID, '_expiration-date-options', true );
-		if ( isset( $opts['expireType'] ) ) {
-			$expireType = $opts['expireType'];
-		}
-		$categories = isset( $opts['category'] ) ? $opts['category'] : false;
+
+		$attributes = PostExpirator_Facade::get_expire_principles( $post->ID );
+		$expireType = $attributes['expireType'];
+		$categories = $attributes['category'];
 	}
 
 	$rv = array();
@@ -665,8 +636,13 @@ function postexpirator_update_post_meta( $id ) {
 	}
 
 	// don't run the echo if the function is called for saving revision.
-		$posttype = get_post_type( $id );
+
+	$posttype = get_post_type( $id );
 	if ( $posttype === 'revision' ) {
+		return;
+	}
+
+	if ( PostExpirator_Util::is_gutenberg_active() && PostExpirator_Facade::show_gutenberg_metabox() ) {
 		return;
 	}
 
@@ -705,7 +681,7 @@ function postexpirator_update_post_meta( $id ) {
 		if ( isset( $_POST['expirationdate_quickedit'] ) ) {
 				$ed = get_post_meta( $id, '_expiration-date', true );
 			if ( $ed ) {
-				$opts = get_post_meta( $id, '_expiration-date-options', true );
+				$opts = PostExpirator_Facade::get_expire_principles( $id );
 			}
 		} else {
 			$opts = array();
@@ -759,7 +735,7 @@ function postexpirator_schedule_event( $id, $ts, $opts ) {
 	// Update Post Meta
 	update_post_meta( $id, '_expiration-date', $ts );
 	if ( ! is_null( $opts ) ) {
-		update_post_meta( $id, '_expiration-date-options', $opts );
+		PostExpirator_Facade::set_expire_principles( $id, $opts );
 	}
 	update_post_meta( $id, '_expiration-date-status', 'saved' );
 }
@@ -778,6 +754,9 @@ function postexpirator_unschedule_event( $id ) {
 
 	delete_post_meta( $id, '_expiration-date' );
 	delete_post_meta( $id, '_expiration-date-options' );
+	delete_post_meta( $id, '_expiration-date-type' );
+	delete_post_meta( $id, '_expiration-date-categories' );
+	delete_post_meta( $id, '_expiration-date-taxonomy' );
 
 	// Delete Scheduled Expiration
 	if ( wp_next_scheduled( 'postExpiratorExpire', array($id) ) !== false ) {
@@ -786,7 +765,7 @@ function postexpirator_unschedule_event( $id ) {
 			$debug->save( array('message' => $id . ' -> UNSCHEDULED') );
 		}
 	}
-	update_post_meta( $id, '_expiration-date-status', 'saved' );
+	delete_post_meta( $id, '_expiration-date-status' );
 }
 
 /**
@@ -819,7 +798,7 @@ function postexpirator_expire_post( $id ) {
 	$posttitle = get_the_title( $id );
 	$postlink = get_post_permalink( $id );
 
-	$postoptions = get_post_meta( $id, '_expiration-date-options', true );
+	$postoptions = PostExpirator_Facade::get_expire_principles( $id );
 	$expireType = $category = $categoryTaxonomy = null;
 
 	if ( isset( $postoptions['expireType'] ) ) {
@@ -1195,6 +1174,7 @@ function postexpirator_menu_general() {
 			update_option( 'expirationdateEmailNotificationList', trim( $_POST['expired-email-notification-list'] ) );
 			update_option( 'expirationdateFooterContents', $_POST['expired-footer-contents'] );
 			update_option( 'expirationdateFooterStyle', $_POST['expired-footer-style'] );
+			update_option( 'expirationdateGutenbergSupport', $_POST['gutenberg-support'] );
 			if ( isset( $_POST['expirationdate_category'] ) ) {
 				update_option( 'expirationdateCategoryDefaults', $_POST['expirationdate_category'] );
 			}
@@ -1387,6 +1367,25 @@ function postexpirator_menu_general() {
 				</td>
 			</tr>
 		</table>
+
+		<h3><?php _e( 'Advanced Options', 'post-expirator' ); ?></h3>
+		<p><?php _e( 'Please do not update anything here unless you know what it entails. For advanced users only.', 'post-expirator' ); ?></p>
+		<?php
+			$gutenberg = get_option( 'expirationdateGutenbergSupport', 1 );
+		?>
+		<table class="form-table">
+			<tr valign="top">
+				<th scope="row"><?php _e( 'Block Editor Support', 'post-expirator' ); ?></th>
+				<td>
+					<input type="radio" name="gutenberg-support" id="gutenberg-support-enabled" value="1" <?php echo intval( $gutenberg ) === 1 ? 'checked' : ''; ?>/> <label for="gutenberg-support-enabled"><?php _e( 'Show Gutenberg style box', 'post-expirator' ); ?></label>
+					<br/>
+					<input type="radio" name="gutenberg-support" id="gutenberg-support-disabled" value="0" <?php echo intval( $gutenberg ) === 0 ? 'checked' : ''; ?>/> <label for="gutenberg-support-disabled"><?php _e( 'Show Classic Editor style box', 'post-expirator' ); ?></label>
+					<br/>
+					<?php _e( 'Toggle between native support for the Block Editor or the backward compatible Classic Editor style metabox.', 'post-expirator' ); ?>
+				</td>
+			</tr>
+		</table>
+
 		<p class="submit">
 			<input type="submit" name="expirationdateSave" class="button-primary" value="<?php _e( 'Save Changes', 'post-expirator' ); ?>" />
 		</p>
@@ -1855,7 +1854,9 @@ function postexpirator_upgrade() {
 					$opts['category'] = $cat;
 					$opts['expireType'] = 'category';
 				}
-				update_post_meta( $result->post_id, '_expiration-date-options', $opts );
+
+				PostExpirator_Facade::set_expire_principles( $result->post_id, $opts );
+
 			}
 
 			// update meta key to new format
@@ -1925,6 +1926,9 @@ function postexpirator_activate() {
 	if ( get_option( 'expirationdateDefaultDate' ) === false ) {
 		update_option( 'expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT );
 	}
+	if ( get_option( 'expirationdateGutenbergSupport' ) === false ) {
+		update_option( 'expirationdateGutenbergSupport', 1 );
+	}
 }
 
 /**
@@ -1953,6 +1957,7 @@ function expirationdate_deactivate() {
 	delete_option( 'expirationdateAutoEnabled' );
 	delete_option( 'expirationdateDefaultsPage' );
 	delete_option( 'expirationdateDefaultsPost' );
+	delete_option( 'expirationdateGutenbergSupport' );
 	// what about custom post types? - how to cleanup?
 	if ( is_multisite() ) {
 		wp_clear_scheduled_hook( 'expirationdate_delete_' . $current_blog->blog_id );
@@ -2269,3 +2274,31 @@ function postexpirator_date_save_bulk_edit() {
 	}
 }
 add_action( 'wp_ajax_manage_wp_posts_using_bulk_quick_save_bulk_edit', 'postexpirator_date_save_bulk_edit' );
+
+/**
+ * Autoloads the classes.
+ */
+function postexpirator_autoload( $class ) {
+	$namespaces = array( 'PostExpirator' );
+	foreach ( $namespaces as $namespace ) {
+		if ( substr( $class, 0, strlen( $namespace ) ) === $namespace ) {
+			$class = str_replace( '_', '', strstr( $class, '_' ) );
+			$filename = plugin_dir_path( __FILE__ ) . 'classes/' . sprintf( '%s.class.php', $class );
+			if ( is_readable( $filename ) ) {
+				require_once $filename;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+spl_autoload_register( 'postexpirator_autoload' );
+
+/**
+ * Launch the plugin by initializing its helpers.
+ */
+function postexpirator_launch() {
+	new PostExpirator_Facade();
+}
+postexpirator_launch();
+
