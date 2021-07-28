@@ -4,14 +4,14 @@ Plugin Name: Post Expirator
 Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
 Author: Aaron Axelsen
-Version: 2.4.3
+Version: 2.4.4
 Author URI: http://postexpirator.tuxdocs.net/
 Text Domain: post-expirator
 Domain Path: /languages
 */
 
 // Default Values
-define( 'POSTEXPIRATOR_VERSION', '2.4.3' );
+define( 'POSTEXPIRATOR_VERSION', '2.4.4' );
 define( 'POSTEXPIRATOR_DATEFORMAT', __( 'l F jS, Y', 'post-expirator' ) );
 define( 'POSTEXPIRATOR_TIMEFORMAT', __( 'g:ia', 'post-expirator' ) );
 define( 'POSTEXPIRATOR_FOOTERCONTENTS', __( 'Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator' ) );
@@ -81,7 +81,7 @@ add_filter( 'manage_posts_columns', 'postexpirator_add_column', 10, 2 );
  * @access private
  */
 function postexpirator_manage_sortable_columns() {
-	$post_types = get_post_types( array('public' => true) );
+	$post_types = postexpirator_get_post_types();
 	foreach ( $post_types as $post_type ) {
 		add_filter( 'manage_edit-' . $post_type . '_sortable_columns', 'postexpirator_sortable_column' );
 	}
@@ -332,6 +332,26 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
 
 /**
+ * Returns the post types that are supported.
+ *
+ * @internal
+ *
+ * @access private
+ */
+function postexpirator_get_post_types() {
+	$post_types = get_post_types( array('public' => true) );
+
+	// in case some post types should not be supported.
+	$unset_post_types = apply_filters( 'postexpirator_unset_post_types', array( 'attachment' ) );
+	if ( $unset_post_types ) {
+		foreach ( $unset_post_types as $type ) {
+			unset( $post_types[ $type ] );
+		}
+	}
+	return $post_types;
+}
+
+/**
  * Adds hooks to get the meta box added to pages and custom post types
  *
  * @internal
@@ -339,9 +359,8 @@ add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
  * @access private
  */
 function postexpirator_meta_custom() {
-	$custom_post_types = get_post_types();
-	array_push( $custom_post_types, 'page' );
-	foreach ( $custom_post_types as $t ) {
+	$post_types = postexpirator_get_post_types();
+	foreach ( $post_types as $t ) {
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $t ) );
 		if ( ! isset( $defaults['activeMetaBox'] ) || $defaults['activeMetaBox'] === 'active' ) {
 			$gutenberg = get_option( 'expirationdateGutenbergSupport', 1 );
@@ -617,6 +636,7 @@ function postexpirator_update_post_meta( $id ) {
 	}
 
 	// don't run the echo if the function is called for saving revision.
+
 	$posttype = get_post_type( $id );
 	if ( $posttype === 'revision' ) {
 		return;
@@ -1383,8 +1403,7 @@ function postexpirator_menu_general() {
  */
 function postexpirator_menu_defaults() {
 	$debug = postexpirator_debug();
-	$types = get_post_types( array('public' => true, '_builtin' => false) );
-	array_unshift( $types, 'post', 'page' );
+	$types = postexpirator_get_post_types();
 
 	if ( isset( $_POST['expirationdateSaveDefaults'] ) ) {
 		if ( ! isset( $_POST['_postExpiratorMenuDefaults_nonce'] ) || ! wp_verify_nonce( $_POST['_postExpiratorMenuDefaults_nonce'], 'postexpirator_menu_defaults' ) ) {
@@ -1835,7 +1854,9 @@ function postexpirator_upgrade() {
 					$opts['category'] = $cat;
 					$opts['expireType'] = 'category';
 				}
+
 				PostExpirator_Facade::set_expire_principles( $result->post_id, $opts );
+
 			}
 
 			// update meta key to new format
@@ -2254,7 +2275,6 @@ function postexpirator_date_save_bulk_edit() {
 }
 add_action( 'wp_ajax_manage_wp_posts_using_bulk_quick_save_bulk_edit', 'postexpirator_date_save_bulk_edit' );
 
-
 /**
  * Autoloads the classes.
  */
@@ -2281,3 +2301,4 @@ function postexpirator_launch() {
 	new PostExpirator_Facade();
 }
 postexpirator_launch();
+

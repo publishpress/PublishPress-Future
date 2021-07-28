@@ -1,6 +1,6 @@
 {
   "name": "post-expirator",
-  "version": "2.4.3",
+  "version": "2.4.4",
   "description": "post-expirator",
   "repository": {
     "type": "git",
@@ -42,4 +42,3 @@
     "lasttranslator": "PostExpirator Translate Team"
   }
 }
-
