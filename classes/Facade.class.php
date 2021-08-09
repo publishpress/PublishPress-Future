@@ -8,10 +8,26 @@
 class PostExpirator_Facade {
 
 	/**
+	 * The singleton instance.
+	 */
+	private static $_instance = null;
+
+	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	private function __construct() {
+		PostExpirator_Display::getInstance();
 		$this->hooks();
+	}
+
+	/**
+	 * Returns instance of the singleton.
+	 */
+	public static function getInstance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
 	}
 
 	/**
@@ -22,6 +38,21 @@ class PostExpirator_Facade {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'block_editor_assets') );
 		add_action( 'updated_postmeta', array( $this, 'updatedmeta' ), 10, 4 );
 	}
+
+	/**
+	 * Loads the assets for the particular page.
+	 */
+	public static function load_assets( $for ) {
+		switch ( $for ) {
+			case 'settings':
+				wp_enqueue_script( 'pe-settings', POSTEXPIRATOR_BASEURL . '/assets/js/settings.js', array( 'jquery', 'jquery-ui-tabs' ), POSTEXPIRATOR_VERSION, false );
+				wp_localize_script( 'pe-settings', 'config', array() );
+				wp_enqueue_style( 'pe-settings', POSTEXPIRATOR_BASEURL . '/assets/css/settings.css', array(), POSTEXPIRATOR_VERSION, false );
+				wp_enqueue_style( 'pe-jquery-ui', POSTEXPIRATOR_BASEURL . '/assets/css/lib/jquery-ui/jquery-ui.min.css', array( 'pe-settings' ), POSTEXPIRATOR_VERSION );
+				break;
+		}
+	}
+
 
 	/**
 	 * Fires when the post meta is updated (in the gutenberg block).
