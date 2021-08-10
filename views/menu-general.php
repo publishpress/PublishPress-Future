@@ -73,18 +73,18 @@ if ( $expiredemailnotificationadmins == 0 ) {
 				<tr valign="top">
 					<th scope="row"><label for="expired-default-expiration-date"><?php _e( 'Default Date/Time Duration', 'post-expirator' ); ?></label></th>
 					<td>
-						<select name="expired-default-expiration-date" id="expired-default-expiration-date" onchange="expirationdate_toggle_defaultdate(this)">
+						<select name="expired-default-expiration-date" id="expired-default-expiration-date" class="pe-custom-date-toggle">
 							<option value="null" <?php echo ( $expirationdateDefaultDate == 'null' ) ? ' selected="selected"' : ''; ?>><?php _e( 'None', 'post-expirator' ); ?></option>
 							<option value="custom" <?php echo ( $expirationdateDefaultDate == 'custom' ) ? ' selected="selected"' : ''; ?>><?php _e( 'Custom', 'post-expirator' ); ?></option>
 							<option value="publish" <?php echo ( $expirationdateDefaultDate == 'publish' ) ? ' selected="selected"' : ''; ?>><?php _e( 'Post/Page Publish Time', 'post-expirator' ); ?></option>
 						</select>
 						<p class="description"><?php _e( 'Set the default expiration date to be used when creating new posts and pages.  Defaults to none.', 'post-expirator' ); ?></p>
 						<?php $show = ( $expirationdateDefaultDate == 'custom' ) ? 'block' : 'none'; ?>
-						<div id="expired-custom-container" style="display: <?php echo $show; ?>;">
-						<br/>
-						<label for="expired-custom-expiration-date">Custom:</label>
-						<input type="text" value="<?php echo $expirationdateDefaultDateCustom; ?>" name="expired-custom-expiration-date" id="expired-custom-expiration-date" />
-						<p class="description"><?php echo sprintf( __( 'Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.', 'post-expirator' ), '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">PHP strtotime function</a>', '<code>', '</code>', '<code>', '</code>', '<code>', '</code>' ); ?></p>
+						<div id="expired-custom-container" style="display: <?php echo $show; ?>;" class="pe-custom-date-container">
+							<br/>
+							<label for="expired-custom-expiration-date"><?php _e( 'Custom', 'post-expirator' ); ?>:</label>
+							<input type="text" value="<?php echo $expirationdateDefaultDateCustom; ?>" name="expired-custom-expiration-date" id="expired-custom-expiration-date" />
+							<p class="description"><?php echo sprintf( __( 'Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.', 'post-expirator' ), '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">PHP strtotime function</a>', '<code>', '</code>', '<code>', '</code>', '<code>', '</code>' ); ?></p>
 						</div>
 					</td>
 				</tr>
