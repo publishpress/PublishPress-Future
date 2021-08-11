@@ -390,7 +390,7 @@ function postexpirator_meta_box( $post ) {
 	$expireType = '';
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post->post_type ) );
 	if ( empty( $expirationdatets ) ) {
-		$default_expiry = PostExpirator_Facade::get_default_expiry();
+		$default_expiry = PostExpirator_Facade::get_default_expiry( $post->post_type );
 
 		$defaultmonth   = $default_expiry['month'];
 		$defaultday   = $default_expiry['day'];
@@ -593,14 +593,6 @@ function expirationdate_toggle_category(id) {
 	} else {
 		jQuery('#expired-category-selection').hide();
 	}
-}
-function expirationdate_toggle_defaultdate(id) {
-	if (id.options[id.selectedIndex].value == 'custom') {
-		jQuery('#expired-custom-container').show();
-	} else {
-		jQuery('#expired-custom-container').hide();
-	}
-
 }
 //]]>
 </script>

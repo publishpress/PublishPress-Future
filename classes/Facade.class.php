@@ -105,7 +105,7 @@ class PostExpirator_Facade {
 	/**
 	 * Calculates the default expiry date as set in the options.
 	 */
-	public static function get_default_expiry() {
+	public static function get_default_expiry( $post_type ) {
 		$defaultmonth   = date_i18n( 'm' );
 		$defaultday     = date_i18n( 'd' );
 		$defaulthour    = date_i18n( 'H' );
@@ -113,12 +113,40 @@ class PostExpirator_Facade {
 		$defaultminute  = date_i18n( 'i' );
 		$ts = time();
 
-		$default = get_option( 'expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT );
-		if ( $default === 'custom' ) {
+		$default_date_expiry = $custom_date = '';
+		$general_date_expiry = $general_custom_date = '';
+
+		// get the values from the general settings
+		$general_date_expiry = get_option( 'expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT );
+		if ( 'custom' === $general_date_expiry ) {
 			$custom = get_option( 'expirationdateDefaultDateCustom' );
-			if ( $custom === false ) {
-				$ts = time();
-			} else {
+			if ( $custom !== false ) {
+				$general_custom_date = $custom;
+			}
+		}
+
+		// get the values from the post_type
+		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
+
+		if ( isset( $defaults['default-expire-type'] ) ) {
+			$default_date_expiry = $defaults['default-expire-type'];
+			switch ( $default_date_expiry ) {
+				case 'custom':
+					$custom_date = $defaults['default-custom-date'];
+					break;
+				case 'inherit':
+					$custom_date = $general_custom_date;
+					$default_date_expiry = $general_date_expiry;
+					break;
+			}
+		} else {
+			$default_date_expiry = $general_date_expiry;
+			$custom_date = $general_custom_date;
+		}
+
+		if ( 'custom' === $default_date_expiry ) {
+			$custom = get_option( 'expirationdateDefaultDateCustom' );
+			if ( ! empty( $custom_date ) ) {
 				$tz = get_option( 'timezone_string' );
 				if ( $tz ) {
 					// @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
@@ -127,9 +155,9 @@ class PostExpirator_Facade {
 				}
 
 				// strip the quotes in case the user provides them.
-				$custom = str_replace( '"', '', html_entity_decode( $custom, ENT_QUOTES ) );
+				$custom_date = str_replace( '"', '', html_entity_decode( $custom_date, ENT_QUOTES ) );
 
-				$ts = time() + ( strtotime( $custom ) - time() );
+				$ts = time() + ( strtotime( $custom_date ) - time() );
 				if ( $tz ) {
 					// @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
 					// phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
@@ -306,7 +334,7 @@ class PostExpirator_Facade {
 				true
 			);
 
-			$default_expiry = PostExpirator_Facade::get_default_expiry();
+			$default_expiry = PostExpirator_Facade::get_default_expiry( $post->post_type );
 			wp_localize_script(
 				'postexpirator-block', 'config', array(
 					'defaults' => $defaults,

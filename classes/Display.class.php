@@ -183,6 +183,13 @@ class PostExpirator_Display {
 					}
 					$defaults[ $type ]['emailnotification'] = trim( $_POST[ 'expirationdate_emailnotification-' . $type ] );
 
+					if ( isset( $_POST[ 'expired-default-date-' . $type ] ) ) {
+						$defaults[ $type ]['default-expire-type'] = $_POST[ 'expired-default-date-' . $type ];
+					}
+					if ( isset( $_POST[ 'expired-custom-date-' . $type ] ) ) {
+						$defaults[ $type ]['default-custom-date'] = $_POST[ 'expired-custom-date-' . $type ];
+					}
+
 					// Save Settings
 					update_option( 'expirationdateDefaults' . ucfirst( $type ), $defaults[ $type ] );
 				}

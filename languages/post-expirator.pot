@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Post Expirator 2.4.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/PublishPress-Future\n"
-"POT-Creation-Date: 2021-08-09 04:51:36+00:00\n"
+"POT-Creation-Date: 2021-08-09 07:22:21+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,7 +34,7 @@ msgid ""
 "troubleshooting."
 msgstr ""
 
-#: classes/Display.class.php:190 classes/Display.class.php:227
+#: classes/Display.class.php:197 classes/Display.class.php:234
 msgid "Saved Options!"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr ""
 msgid "The published date/time will be used as the expiration value"
 msgstr ""
 
-#: post-expirator.php:497 views/menu-defaults.php:47
+#: post-expirator.php:497 views/menu-defaults.php:50
 msgid "How to expire"
 msgstr ""
 
@@ -155,88 +155,88 @@ msgstr ""
 msgid "Taxonomy Name"
 msgstr ""
 
-#: post-expirator.php:843 post-expirator.php:854 post-expirator.php:865
-#: post-expirator.php:876
+#: post-expirator.php:835 post-expirator.php:846 post-expirator.php:857
+#: post-expirator.php:868
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post status has been successfully changed "
 "to \"%4$s\"."
 msgstr ""
 
-#: post-expirator.php:887
+#: post-expirator.php:879
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "set."
 msgstr ""
 
-#: post-expirator.php:898
+#: post-expirator.php:890
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "removed."
 msgstr ""
 
-#: post-expirator.php:911 post-expirator.php:925
+#: post-expirator.php:903 post-expirator.php:917
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
 "\"%5$s\"."
 msgstr ""
 
-#: post-expirator.php:948 post-expirator.php:962
+#: post-expirator.php:940 post-expirator.php:954
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:991 post-expirator.php:1012
+#: post-expirator.php:983 post-expirator.php:1004
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:1031
+#: post-expirator.php:1023
 msgid "Post Expiration Complete \"%s\""
 msgstr ""
 
-#: post-expirator.php:1067
+#: post-expirator.php:1059
 msgid "[%1$s] %2$s"
 msgstr ""
 
-#: post-expirator.php:1612
+#: post-expirator.php:1604
 msgid "Draft"
 msgstr ""
 
-#: post-expirator.php:1613
+#: post-expirator.php:1605
 msgid "Delete"
 msgstr ""
 
-#: post-expirator.php:1614
+#: post-expirator.php:1606
 msgid "Trash"
 msgstr ""
 
-#: post-expirator.php:1615
+#: post-expirator.php:1607
 msgid "Private"
 msgstr ""
 
-#: post-expirator.php:1616
+#: post-expirator.php:1608
 msgid "Stick"
 msgstr ""
 
-#: post-expirator.php:1617
+#: post-expirator.php:1609
 msgid "Unstick"
 msgstr ""
 
-#: post-expirator.php:1619
+#: post-expirator.php:1611
 msgid "Category: Replace"
 msgstr ""
 
-#: post-expirator.php:1620
+#: post-expirator.php:1612
 msgid "Category: Add"
 msgstr ""
 
-#: post-expirator.php:1621
+#: post-expirator.php:1613
 msgid "Category: Remove"
 msgstr ""
 
-#: post-expirator.php:1674
+#: post-expirator.php:1666
 msgid ""
 "Select the hierarchical taxonomy to be used for \"category\" based "
 "expiration."
@@ -253,55 +253,90 @@ msgid ""
 "creating/editing the post/page."
 msgstr ""
 
-#: views/menu-defaults.php:38 views/menu-defaults.php:40
+#: views/menu-defaults.php:41 views/menu-defaults.php:43
 msgid "Active"
 msgstr ""
 
-#: views/menu-defaults.php:42
+#: views/menu-defaults.php:45
 msgid "Inactive"
 msgstr ""
 
-#: views/menu-defaults.php:43
+#: views/menu-defaults.php:46
 msgid "Select whether the post expirator meta box is active for this post type."
 msgstr ""
 
-#: views/menu-defaults.php:50
+#: views/menu-defaults.php:53
 msgid "Select the default expire action for the post type."
 msgstr ""
 
-#: views/menu-defaults.php:54
+#: views/menu-defaults.php:57
 msgid "Auto-Enable?"
 msgstr ""
 
-#: views/menu-defaults.php:56 views/menu-general.php:113
+#: views/menu-defaults.php:59 views/menu-general.php:113
 #: views/menu-general.php:122 views/menu-general.php:143
 msgid "Enabled"
 msgstr ""
 
-#: views/menu-defaults.php:58 views/menu-general.php:115
+#: views/menu-defaults.php:61 views/menu-general.php:115
 #: views/menu-general.php:124 views/menu-general.php:145
 msgid "Disabled"
 msgstr ""
 
-#: views/menu-defaults.php:59
+#: views/menu-defaults.php:62
 msgid "Select whether the post expirator is enabled for all new posts."
 msgstr ""
 
-#: views/menu-defaults.php:63
+#: views/menu-defaults.php:66
 msgid "Taxonomy (hierarchical)"
 msgstr ""
 
-#: views/menu-defaults.php:69 views/menu-general.php:129
+#: views/menu-defaults.php:72 views/menu-general.php:129
 msgid "Who to notify"
 msgstr ""
 
-#: views/menu-defaults.php:72
+#: views/menu-defaults.php:75
 msgid ""
 "Enter a comma separate list of emails that you would like to be notified "
 "when the post expires."
 msgstr ""
 
-#: views/menu-defaults.php:82 views/menu-general.php:189
+#: views/menu-defaults.php:80 views/menu-general.php:77
+msgid "None"
+msgstr ""
+
+#: views/menu-defaults.php:81
+msgid "Inherit from General Settings"
+msgstr ""
+
+#: views/menu-defaults.php:82 views/menu-defaults.php:106
+#: views/menu-general.php:78 views/menu-general.php:85
+msgid "Custom"
+msgstr ""
+
+#: views/menu-defaults.php:83
+msgid "Publish Time"
+msgstr ""
+
+#: views/menu-defaults.php:96 views/menu-general.php:74
+msgid "Default Date/Time Duration"
+msgstr ""
+
+#: views/menu-defaults.php:103
+msgid ""
+"Set the default expiration date to be used when creating a new post of this "
+"type."
+msgstr ""
+
+#: views/menu-defaults.php:108 views/menu-general.php:87
+msgid ""
+"Set the custom value to use for the default expiration date.  For "
+"information on formatting, see %1$s. For example, you could enter %2$s+1 "
+"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
+"Thursday%7$s."
+msgstr ""
+
+#: views/menu-defaults.php:119 views/menu-general.php:189
 msgid "Save Changes"
 msgstr ""
 
@@ -428,18 +463,6 @@ msgid ""
 "formatting options, see: %s."
 msgstr ""
 
-#: views/menu-general.php:74
-msgid "Default Date/Time Duration"
-msgstr ""
-
-#: views/menu-general.php:77
-msgid "None"
-msgstr ""
-
-#: views/menu-general.php:78
-msgid "Custom"
-msgstr ""
-
 #: views/menu-general.php:79
 msgid "Post/Page Publish Time"
 msgstr ""
@@ -448,14 +471,6 @@ msgstr ""
 msgid ""
 "Set the default expiration date to be used when creating new posts and "
 "pages.  Defaults to none."
-msgstr ""
-
-#: views/menu-general.php:87
-msgid ""
-"Set the custom value to use for the default expiration date.  For "
-"information on formatting, see %1$s. For example, you could enter %2$s+1 "
-"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
-"Thursday%7$s."
 msgstr ""
 
 #: views/menu-general.php:92
