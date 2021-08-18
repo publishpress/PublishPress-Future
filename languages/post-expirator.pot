@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Post Expirator 2.4.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/PublishPress-Future\n"
-"POT-Creation-Date: 2021-08-09 07:22:21+00:00\n"
+"POT-Creation-Date: 2021-08-16 08:46:25+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -66,180 +66,181 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: post-expirator.php:71 post-expirator.php:148 post-expirator.php:219
-#: post-expirator.php:280
+#: post-expirator.php:71 post-expirator.php:148 views/bulk-edit.php:7
+#: views/quick-edit.php:8
 msgid "Expires"
 msgstr ""
 
-#: post-expirator.php:165
-msgid "Never"
-msgstr ""
-
-#: post-expirator.php:217 post-expirator.php:283 post-expirator.php:430
+#: post-expirator.php:303 views/bulk-edit.php:10 views/quick-edit.php:6
 msgid "Enable Post Expiration"
 msgstr ""
 
-#: post-expirator.php:222 post-expirator.php:294 post-expirator.php:437
-msgid "Month"
-msgstr ""
-
-#: post-expirator.php:236 post-expirator.php:308 post-expirator.php:438
-msgid "Day"
-msgstr ""
-
-#: post-expirator.php:240 post-expirator.php:312 post-expirator.php:436
-msgid "Year"
-msgstr ""
-
-#: post-expirator.php:244 post-expirator.php:316 post-expirator.php:475
-msgid "Hour"
-msgstr ""
-
-#: post-expirator.php:248 post-expirator.php:320 post-expirator.php:476
-msgid "Minute"
-msgstr ""
-
-#: post-expirator.php:285
-msgid "No Change"
-msgstr ""
-
-#: post-expirator.php:286
-msgid "Change expiry date if enabled on posts"
-msgstr ""
-
-#: post-expirator.php:286
-msgid "Change on posts"
-msgstr ""
-
-#: post-expirator.php:287
-msgid "Add expiry date if not enabled on posts"
-msgstr ""
-
-#: post-expirator.php:287
-msgid "Add to posts"
-msgstr ""
-
-#: post-expirator.php:288
-msgid "Change & Add"
-msgstr ""
-
-#: post-expirator.php:289
-msgid "Remove from posts"
-msgstr ""
-
-#: post-expirator.php:433
+#: post-expirator.php:306
 msgid "The published date/time will be used as the expiration value"
 msgstr ""
 
-#: post-expirator.php:497 views/menu-defaults.php:50
+#: post-expirator.php:309 views/bulk-edit.php:39 views/quick-edit.php:29
+msgid "Year"
+msgstr ""
+
+#: post-expirator.php:310 views/bulk-edit.php:21 views/quick-edit.php:11
+msgid "Month"
+msgstr ""
+
+#: post-expirator.php:311 views/bulk-edit.php:35 views/quick-edit.php:25
+msgid "Day"
+msgstr ""
+
+#: post-expirator.php:348 views/bulk-edit.php:43 views/quick-edit.php:33
+msgid "Hour"
+msgstr ""
+
+#: post-expirator.php:349 views/bulk-edit.php:47 views/quick-edit.php:37
+msgid "Minute"
+msgstr ""
+
+#: post-expirator.php:370 views/bulk-edit.php:51 views/menu-defaults.php:50
+#: views/quick-edit.php:41
 msgid "How to expire"
 msgstr ""
 
-#: post-expirator.php:508
+#: post-expirator.php:381
 msgid "Expiration Categories"
 msgstr ""
 
-#: post-expirator.php:519
+#: post-expirator.php:392
 msgid ""
 "You must assign a heirarchical taxonomy to this post type to use this "
 "feature."
 msgstr ""
 
-#: post-expirator.php:521
+#: post-expirator.php:394
 msgid ""
 "More than 1 heirachical taxonomy detected.  You must assign a default "
 "taxonomy on the settings screen."
 msgstr ""
 
-#: post-expirator.php:531
+#: post-expirator.php:404
 msgid "Taxonomy Name"
 msgstr ""
 
-#: post-expirator.php:835 post-expirator.php:846 post-expirator.php:857
-#: post-expirator.php:868
+#: post-expirator.php:710 post-expirator.php:721 post-expirator.php:732
+#: post-expirator.php:743
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post status has been successfully changed "
 "to \"%4$s\"."
 msgstr ""
 
-#: post-expirator.php:879
+#: post-expirator.php:754
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "set."
 msgstr ""
 
-#: post-expirator.php:890
+#: post-expirator.php:765
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "removed."
 msgstr ""
 
-#: post-expirator.php:903 post-expirator.php:917
+#: post-expirator.php:778 post-expirator.php:792
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
 "\"%5$s\"."
 msgstr ""
 
-#: post-expirator.php:940 post-expirator.php:954
+#: post-expirator.php:815 post-expirator.php:829
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:983 post-expirator.php:1004
+#: post-expirator.php:858 post-expirator.php:879
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:1023
+#: post-expirator.php:898
 msgid "Post Expiration Complete \"%s\""
 msgstr ""
 
-#: post-expirator.php:1059
+#: post-expirator.php:934
 msgid "[%1$s] %2$s"
 msgstr ""
 
-#: post-expirator.php:1604
-msgid "Draft"
-msgstr ""
-
-#: post-expirator.php:1605
-msgid "Delete"
-msgstr ""
-
-#: post-expirator.php:1606
-msgid "Trash"
-msgstr ""
-
-#: post-expirator.php:1607
-msgid "Private"
-msgstr ""
-
-#: post-expirator.php:1608
-msgid "Stick"
-msgstr ""
-
-#: post-expirator.php:1609
-msgid "Unstick"
-msgstr ""
-
-#: post-expirator.php:1611
-msgid "Category: Replace"
-msgstr ""
-
-#: post-expirator.php:1612
-msgid "Category: Add"
-msgstr ""
-
-#: post-expirator.php:1613
-msgid "Category: Remove"
-msgstr ""
-
-#: post-expirator.php:1666
+#: post-expirator.php:1506
 msgid ""
 "Select the hierarchical taxonomy to be used for \"category\" based "
 "expiration."
+msgstr ""
+
+#: views/bulk-edit.php:12
+msgid "No Change"
+msgstr ""
+
+#: views/bulk-edit.php:13
+msgid "Change expiry date if enabled on posts"
+msgstr ""
+
+#: views/bulk-edit.php:13
+msgid "Change on posts"
+msgstr ""
+
+#: views/bulk-edit.php:14
+msgid "Add expiry date if not enabled on posts"
+msgstr ""
+
+#: views/bulk-edit.php:14
+msgid "Add to posts"
+msgstr ""
+
+#: views/bulk-edit.php:15
+msgid "Change & Add"
+msgstr ""
+
+#: views/bulk-edit.php:16
+msgid "Remove from posts"
+msgstr ""
+
+#: views/expire-column.php:3
+msgid "Never"
+msgstr ""
+
+#: views/how-to-expire.php:25
+msgid "Draft"
+msgstr ""
+
+#: views/how-to-expire.php:26
+msgid "Delete"
+msgstr ""
+
+#: views/how-to-expire.php:27
+msgid "Trash"
+msgstr ""
+
+#: views/how-to-expire.php:28
+msgid "Private"
+msgstr ""
+
+#: views/how-to-expire.php:29
+msgid "Stick"
+msgstr ""
+
+#: views/how-to-expire.php:30
+msgid "Unstick"
+msgstr ""
+
+#: views/how-to-expire.php:32
+msgid "Category: Replace"
+msgstr ""
+
+#: views/how-to-expire.php:33
+msgid "Category: Add"
+msgstr ""
+
+#: views/how-to-expire.php:34
+msgid "Category: Remove"
 msgstr ""
 
 #: views/menu-defaults.php:3

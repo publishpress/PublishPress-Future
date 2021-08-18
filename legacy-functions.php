@@ -54,7 +54,9 @@ if ( ! function_exists( '_postExpiratorExpireType' ) ) {
 	 * @deprecated 2.5.0
 	 */
 	function _postExpiratorExpireType( $opts ) {
+		ob_start();
 		_postexpirator_expire_type( $opts );
+		return ob_get_clean();
 	}
 }
 
