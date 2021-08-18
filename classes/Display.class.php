@@ -242,7 +242,7 @@ class PostExpirator_Display {
 	/**
 	 * Renders a named template, if it is found.
 	 */
-	private function render_template( $name, $params = null ) {
+	public function render_template( $name, $params = null ) {
 		$template = POSTEXPIRATOR_BASEDIR . "/views/{$name}.php";
 		if ( file_exists( $template ) ) {
 			// expand all parameters so that they can be directly accessed with their name.

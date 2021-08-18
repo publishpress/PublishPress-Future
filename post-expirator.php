@@ -159,39 +159,16 @@ add_filter( 'manage_pages_columns', 'postexpirator_add_column_page' );
  * @access private
  */
 function postexpirator_show_value( $column_name ) {
-	global $post;
-	$id = $post->ID;
-	if ( $column_name === 'expirationdate' ) {
-		$display = __( 'Never', 'post-expirator' );
-		$ed = get_post_meta( $id, '_expiration-date', true );
-		if ( $ed ) {
-			$display = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $ed + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
-		}
-		echo $display;
-
-		// Values for Quick Edit
-		if ( $ed ) {
-			$date = gmdate( 'Y-m-d H:i:s', $ed );
-			$year = get_date_from_gmt( $date, 'Y' );
-			$month = get_date_from_gmt( $date, 'm' );
-			$day = get_date_from_gmt( $date, 'd' );
-			$hour = get_date_from_gmt( $date, 'H' );
-			$minute = get_date_from_gmt( $date, 'i' );
-			echo '<span id="expirationdate_year-' . $id . '" style="display: none;">' . $year . '</span>';
-			echo '<span id="expirationdate_month-' . $id . '" style="display: none;">' . $month . '</span>';
-			echo '<span id="expirationdate_day-' . $id . '" style="display: none;">' . $day . '</span>';
-			echo '<span id="expirationdate_hour-' . $id . '" style="display: none;">' . $hour . '</span>';
-			echo '<span id="expirationdate_minute-' . $id . '" style="display: none;">' . $minute . '</span>';
-			echo '<span id="expirationdate_enabled-' . $id . '" style="display: none;">true</span>';
-		} else {
-			echo '<span id="expirationdate_year-' . $id . '" style="display: none;">' . date( 'Y' ) . '</span>';
-			echo '<span id="expirationdate_month-' . $id . '" style="display: none;">' . date( 'm' ) . '</span>';
-			echo '<span id="expirationdate_day-' . $id . '" style="display: none;">' . date( 'd' ) . '</span>';
-			echo '<span id="expirationdate_hour-' . $id . '" style="display: none;">' . date( 'H' ) . '</span>';
-			echo '<span id="expirationdate_minute-' . $id . '" style="display: none;">' . date( 'i' ) . '</span>';
-			echo '<span id="expirationdate_enabled-' . $id . '" style="display: none;">false</span>';
-		}
+	if ( $column_name !== 'expirationdate' ) {
+		return;
 	}
+
+	global $post;
+
+	// get the attributes that quick edit functionality requires
+	// and save it as a JSON encoded HTML attribute
+	$attributes = PostExpirator_Facade::get_expire_principles( $post->ID );
+	PostExpirator_Display::getInstance()->render_template( 'expire-column', array( 'id' => $post->ID, 'post_type' => $post->post_type, 'attributes' => $attributes ) );
 }
 add_action( 'manage_posts_custom_column', 'postexpirator_show_value' );
 add_action( 'manage_pages_custom_column', 'postexpirator_show_value' );
@@ -208,54 +185,8 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 	if ( $column_name !== 'expirationdate' ) {
 		return;
 	}
-	?>
-	<div style="clear:both"></div>
-	<fieldset class="inline-edit-col-left post-expirator-quickedit">
-		<div class="inline-edit-col">
-		<div class="inline-edit-group">
-		<span class="title"><?php _e( 'Post Expirator', 'post-expirator' ); ?></span>
-			<p><input name="enable-expirationdate" type="checkbox" /><span class="title"><?php _e( 'Enable Post Expiration', 'post-expirator' ); ?></span></p>
-			<fieldset class="inline-edit-date">
-				<legend><span class="title"><?php _e( 'Expires', 'post-expirator' ); ?></span></legend>
-				<div class="timestamp-wrap">
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Month', 'post-expirator' ); ?></span>
-						<select name="expirationdate_month">
-					<?php
-					for ( $x = 1; $x <= 12; $x++ ) {
-						$now = mktime( 0, 0, 0, $x, 1, date_i18n( 'Y' ) );
-						$monthNumeric = date_i18n( 'm', $now );
-						$monthStr = date_i18n( 'M', $now );
-						?>
-						<option value="<?php echo $monthNumeric; ?>" data-text="<?php echo $monthStr; ?>"><?php echo $monthNumeric; ?>-<?php echo $monthStr; ?></option>
-					<?php } ?>
 
-						</select>
-					</label>
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
-						<input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="<?php echo date( 'd' ); ?>">
-					</label>, 
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
-						<input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off" type="text" placeholder="<?php echo date( 'Y' ); ?>">
-					</label> @ 
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
-						<input name="expirationdate_hour" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="00">
-					</label> :
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Minute', 'post-expirator' ); ?></span>
-						<input name="expirationdate_minute" value="" size="2" maxlength="2" autocomplete="off" type="text" placeholder="00">
-					</label>
-				</div>
-				<input name="expirationdate_quickedit" value="true" type="hidden"/>
-			</fieldset>
-		</div>
-		</div>
-	</fieldset>
-	<?php
-
+	PostExpirator_Display::getInstance()->render_template( 'quick-edit', array( 'post_type' => $post_type ) );
 }
 add_action( 'quick_edit_custom_box', 'postexpirator_quickedit', 10, 2 );
 
@@ -270,65 +201,8 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 	if ( $column_name !== 'expirationdate' ) {
 		return;
 	}
-	?>
-	<div style="clear:both"></div>
-	<div class="inline-edit-col post-expirator-quickedit">
-		<div class="inline-edit-col">
-		<div class="inline-edit-group">
-		<legend class="inline-edit-legend"><?php _e( 'Post Expirator', 'post-expirator' ); ?></legend>
-			<fieldset class="inline-edit-date">
-				<legend><span class="title"><?php _e( 'Expires', 'post-expirator' ); ?></span></legend>
-				<div class="timestamp-wrap">
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Enable Post Expiration', 'post-expirator' ); ?></span>
-						<select name="expirationdate_status">
-							<option value="no-change" data-show-fields="false" selected>--<?php _e( 'No Change', 'post-expirator' ); ?>--</option>
-							<option value="change-only" data-show-fields="true" title="<?php _e( 'Change expiry date if enabled on posts', 'post-expirator' ); ?>"><?php _e( 'Change on posts', 'post-expirator' ); ?></option>
-							<option value="add-only" data-show-fields="true" title="<?php _e( 'Add expiry date if not enabled on posts', 'post-expirator' ); ?>"><?php _e( 'Add to posts', 'post-expirator' ); ?></option>
-							<option value="change-add" data-show-fields="true"><?php _e( 'Change & Add', 'post-expirator' ); ?></option>
-							<option value="remove-only" data-show-fields="false"><?php _e( 'Remove from posts', 'post-expirator' ); ?></option>
-						</select>
-					</label>
-					<span class="post-expirator-date-fields">
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Month', 'post-expirator' ); ?></span>
-						<select name="expirationdate_month">
-					<?php
-					for ( $x = 1; $x <= 12; $x++ ) {
-						$now = mktime( 0, 0, 0, $x, 1, date_i18n( 'Y' ) );
-						$monthNumeric = date_i18n( 'm', $now );
-						$monthStr = date_i18n( 'M', $now );
-						?>
-							<option value="<?php echo $monthNumeric; ?>" data-text="<?php echo $monthStr; ?>"><?php echo $monthNumeric; ?>-<?php echo $monthStr; ?></option>
-					<?php } ?>
 
-						</select>
-					</label>
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
-						<input name="expirationdate_day" placeholder="<?php echo date( 'd' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text">
-					</label>, 
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
-						<input name="expirationdate_year" placeholder="<?php echo date( 'Y' ); ?>" value="" size="4" maxlength="4" autocomplete="off" type="text">
-					</label> @ 
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
-						<input name="expirationdate_hour" placeholder="00" value="" size="2" maxlength="2" autocomplete="off" type="text">
-					</label> :
-					<label>
-						<span class="screen-reader-text"><?php _e( 'Minute', 'post-expirator' ); ?></span>
-						<input name="expirationdate_minute" placeholder="00" value="" size="2" maxlength="2" autocomplete="off" type="text">
-					</label>
-					</span>
-				</div>
-				<input name="expirationdate_quickedit" value="true" type="hidden"/>
-			</fieldset>
-		</div>
-		</div>
-	</div>
-	<?php
-
+	PostExpirator_Display::getInstance()->render_template( 'bulk-edit', array( 'post_type' => $post_type ) );
 }
 add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
 
@@ -364,8 +238,7 @@ function postexpirator_meta_custom() {
 	foreach ( $post_types as $t ) {
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $t ) );
 		if ( ! isset( $defaults['activeMetaBox'] ) || $defaults['activeMetaBox'] === 'active' ) {
-			$gutenberg = get_option( 'expirationdateGutenbergSupport', 1 );
-			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core', array( '__back_compat_meta_box' => intval( $gutenberg ) ) );
+			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core', array( '__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox() ) );
 		}
 	}
 }
@@ -495,7 +368,7 @@ function postexpirator_meta_box( $post ) {
 	echo implode( "\n", $rv );
 
 	echo '<br/>' . __( 'How to expire', 'post-expirator' ) . ': ';
-	echo _postexpirator_expire_type( array('type' => $post->post_type, 'name' => 'expirationdate_expiretype', 'selected' => $expireType, 'disabled' => $disabled, 'onchange' => 'expirationdate_toggle_category(this)') );
+	_postexpirator_expire_type( array('type' => $post->post_type, 'name' => 'expirationdate_expiretype', 'selected' => $expireType, 'disabled' => $disabled, 'onchange' => 'expirationdate_toggle_category(this)') );
 	echo '<br/>';
 
 	if ( $post->post_type !== 'page' ) {
@@ -629,20 +502,18 @@ function postexpirator_update_post_meta( $id ) {
 	}
 
 	// don't run the echo if the function is called for saving revision.
-
 	$posttype = get_post_type( $id );
 	if ( $posttype === 'revision' ) {
 		return;
 	}
 
-	if ( PostExpirator_Util::is_gutenberg_active() && PostExpirator_Facade::show_gutenberg_metabox() ) {
+	// we want to make sure we don't fire the save_post action when we are inside the block editor
+	// but this should not stop quick/bulk edit
+	if ( PostExpirator_Util::is_gutenberg_active() && PostExpirator_Facade::show_gutenberg_metabox()
+		&&
+		! isset( $_POST['expirationdate_quickedit'] ) && ! isset( $_POST['expirationdate_formcheck'] )
+	) {
 		return;
-	}
-
-	if ( ! isset( $_POST['expirationdate_quickedit'] ) ) {
-		if ( ! isset( $_POST['expirationdate_formcheck'] ) ) {
-			return;
-		}
 	}
 
 	if ( isset( $_POST['enable-expirationdate'] ) ) {
@@ -672,9 +543,13 @@ function postexpirator_update_post_meta( $id ) {
 		$ts = get_gmt_from_date( "$year-$month-$day $hour:$minute:0", 'U' );
 
 		if ( isset( $_POST['expirationdate_quickedit'] ) ) {
-				$ed = get_post_meta( $id, '_expiration-date', true );
+			$ed = get_post_meta( $id, '_expiration-date', true );
 			if ( $ed ) {
 				$opts = PostExpirator_Facade::get_expire_principles( $id );
+				if ( isset( $_POST['expirationdate_expiretype'] ) ) {
+					$opts['expireType'] = $_POST['expirationdate_expiretype'];
+					PostExpirator_Facade::set_expire_principles( $id, $opts );
+				}
 			}
 		} else {
 			$opts = array();
@@ -1578,42 +1453,7 @@ function _postexpirator_expire_type( $opts ) {
 		return false;
 	}
 
-	// @TODO remove extract
-	// phpcs:ignore WordPress.PHP.DontExtract.extract_extract
-	extract( $opts );
-
-	if ( ! isset( $name ) ) {
-		return false;
-	}
-	if ( ! isset( $id ) ) {
-		$id = $name;
-	}
-	if ( ! isset( $disabled ) ) {
-		$disabled = false;
-	}
-	if ( ! isset( $onchange ) ) {
-		$onchange = '';
-	}
-	if ( ! isset( $type ) ) {
-		$type = '';
-	}
-
-	$rv = array();
-	// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-	$rv[] = '<select name="' . $name . '" id="' . $id . '"' . ( $disabled == true ? ' disabled="disabled"' : '' ) . ' onchange="' . $onchange . '">';
-	$rv[] = '<option value="draft" ' . ( $selected === 'draft' ? 'selected="selected"' : '' ) . '>' . __( 'Draft', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="delete" ' . ( $selected === 'delete' ? 'selected="selected"' : '' ) . '>' . __( 'Delete', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="trash" ' . ( $selected === 'trash' ? 'selected="selected"' : '' ) . '>' . __( 'Trash', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="private" ' . ( $selected === 'private' ? 'selected="selected"' : '' ) . '>' . __( 'Private', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="stick" ' . ( $selected === 'stick' ? 'selected="selected"' : '' ) . '>' . __( 'Stick', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="unstick" ' . ( $selected === 'unstick' ? 'selected="selected"' : '' ) . '>' . __( 'Unstick', 'post-expirator' ) . '</option>';
-	if ( $type !== 'page' ) {
-		$rv[] = '<option value="category" ' . ( $selected === 'category' ? 'selected="selected"' : '' ) . '>' . __( 'Category: Replace', 'post-expirator' ) . '</option>';
-		$rv[] = '<option value="category-add" ' . ( $selected === 'category-add' ? 'selected="selected"' : '' ) . '>' . __( 'Category: Add', 'post-expirator' ) . '</option>';
-		$rv[] = '<option value="category-remove" ' . ( $selected === 'category-remove' ? 'selected="selected"' : '' ) . '>' . __( 'Category: Remove', 'post-expirator' ) . '</option>';
-	}
-	$rv[] = '</select>';
-	return implode( "<br/>\n", $rv );
+	PostExpirator_Display::getInstance()->render_template( 'how-to-expire', array( 'opts' => $opts ) );
 }
 
 /**
@@ -1755,6 +1595,9 @@ function postexpirator_date_save_bulk_edit() {
 			}
 
 			if ( $update_expiry ) {
+				$opts = PostExpirator_Facade::get_expire_principles( $post_id );
+				$opts['expireType'] = $_POST['expirationdate_expiretype'];
+				PostExpirator_Facade::set_expire_principles( $post_id, $opts );
 				update_post_meta( $post_id, '_expiration-date', $ts );
 				postexpirator_schedule_event( $post_id, $ts, null );
 			}

@@ -52,6 +52,11 @@
 			var $minute = $( '#expirationdate_minute-' + $post_id ).text();
 			$edit_row.find( 'input[name="expirationdate_minute"]' ).val( $minute );
 
+            // expire type
+			var $type = $( '#expirationdate_expireType-' + $post_id ).text();
+			$edit_row.find( 'select[name="expirationdate_expiretype"]' ).val( $type );
+
+            // enabled or not
 			var $enabled = $( '#expirationdate_enabled-' + $post_id ).text();
 			if ($enabled == "true") {
 				$edit_row.find( 'input[name="enable-expirationdate"]' ).prop( 'checked', true );
@@ -77,6 +82,7 @@
 		var $expirationdate_hour = $bulk_row.find( 'input[name="expirationdate_hour"]' ).val();
 		var $expirationdate_minute = $bulk_row.find( 'input[name="expirationdate_minute"]' ).val();
 		var $expirationdate_status = $bulk_row.find( 'select[name="expirationdate_status"]' ).val();
+		var $expirationdate_expireType = $bulk_row.find( 'select[name="expirationdate_expiretype"]' ).val();
 		
 		// save the data
 		$.ajax({
@@ -93,6 +99,7 @@
 				expirationdate_hour: $expirationdate_hour,
 				expirationdate_minute: $expirationdate_minute,
 				expirationdate_status: $expirationdate_status,
+				expirationdate_expiretype: $expirationdate_expireType,
                 nonce: config.ajax.nonce
 			}
 		});
