@@ -1,23 +1,20 @@
+<?php
+	$current_tab     = empty( $_GET['tab'] ) ? 'general' : sanitize_title( wp_unslash( $_GET['tab'] ) );
+?>
+
 <div class="wrap">
 	<h2><?php __( 'Post Expirator Options', 'post-expirator' ); ?></h2>
 	<div id="pe-settings-tabs">
-		<ul>
-			<li data-href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=general' ); ?>"><a href="#tab-general" class="pe-tab"><?php _e( 'General Settings', 'post-expirator' ); ?></a></li>
-			<li data-href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=defaults' ); ?>"><a href="#tab-defaults" class="pe-tab"><?php _e( 'Post Types', 'post-expirator' ); ?></a></li>
-			<li data-href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=diagnostics' ); ?>"><a href="#tab-diagnostics" class="pe-tab"><?php _e( 'Diagnostics', 'post-expirator' ); ?></a></li>
+		<nav class="nav-tab-wrapper postexpirator-nav-tab-wrapper">
+			<a href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=general' ); ?>" class="pe-tab nav-tab <?php echo ( $current_tab === 'general' ? 'nav-tab-active' : '' ); ?>"><?php _e( 'General Settings', 'post-expirator' ); ?></a>
+			<a href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=defaults' ); ?>" class="pe-tab nav-tab <?php echo ( $current_tab === 'defaults' ? 'nav-tab-active' : '' ); ?>"><?php _e( 'Post Types', 'post-expirator' ); ?></a>
+			<a href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=diagnostics' ); ?>" class="pe-tab nav-tab <?php echo ( $current_tab === 'diagnostics' ? 'nav-tab-active' : '' ); ?>"><?php _e( 'Diagnostics', 'post-expirator' ); ?></a>
 <?php if ( POSTEXPIRATOR_DEBUG ) { ?>
-			<li data-href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=viewdebug' ); ?>"><a href="#tab-viewdebug" class="pe-tab"><?php _e( 'View Debug Logs', 'post-expirator' ); ?></a></li>
+			<a href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=viewdebug' ); ?>" class="pe-tab nav-tab <?php echo ( $current_tab === 'viewdebug' ? 'nav-tab-active' : '' ); ?>"><?php _e( 'View Debug Logs', 'post-expirator' ); ?></a>
 <?php } ?>
-		</ul>
-
-<?php
-foreach ( $tabs as $t ) {
-	echo '<div id="tab-' . $t . '">' . ( $t === $tab ? $html : ( __( 'Loading', 'post-expirator' ) . '...' ) ) . '</div>';
-}
-?>
+		</nav>
+	
+	<?php echo $html; ?>
 
 	</div>
-	
-	<input type="hidden" id="pe-current-tab" value="<?php echo $tab_index; ?>">
-
 </div>

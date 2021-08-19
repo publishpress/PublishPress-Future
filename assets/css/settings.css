@@ -25,21 +25,3 @@ tr.pe-event {
 	padding: 0px 12px;
 	margin-bottom: 20px;
 }
-
-/* overwrite jquery-ui */
-.ui-widget {
-	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif !important;
-	font-size: initial !important;
-}
-
-.ui-widget-content {
-	background: none !important;
-}
-
-.ui-widget-content a {
-	color: #0073aa !important;
-}
-
-.ui-widget-header a {
-	color: #222 !important;
-}
