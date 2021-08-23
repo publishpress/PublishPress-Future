@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Post Expirator 2.4.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/PublishPress-Future\n"
-"POT-Creation-Date: 2021-08-23 04:25:07+00:00\n"
+"POT-Creation-Date: 2021-08-23 08:13:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -71,105 +71,105 @@ msgstr ""
 msgid "Expires"
 msgstr ""
 
-#: post-expirator.php:303 views/bulk-edit.php:19 views/quick-edit.php:6
+#: post-expirator.php:304 views/bulk-edit.php:19 views/quick-edit.php:6
 msgid "Enable Post Expiration"
 msgstr ""
 
-#: post-expirator.php:306
+#: post-expirator.php:307
 msgid "The published date/time will be used as the expiration value"
 msgstr ""
 
-#: post-expirator.php:309 views/bulk-edit.php:50 views/quick-edit.php:29
+#: post-expirator.php:310 views/bulk-edit.php:50 views/quick-edit.php:29
 msgid "Year"
 msgstr ""
 
-#: post-expirator.php:310 views/bulk-edit.php:30 views/quick-edit.php:11
+#: post-expirator.php:311 views/bulk-edit.php:30 views/quick-edit.php:11
 msgid "Month"
 msgstr ""
 
-#: post-expirator.php:311 views/bulk-edit.php:46 views/quick-edit.php:25
+#: post-expirator.php:312 views/bulk-edit.php:46 views/quick-edit.php:25
 msgid "Day"
 msgstr ""
 
-#: post-expirator.php:348 views/bulk-edit.php:54 views/quick-edit.php:33
+#: post-expirator.php:349 views/bulk-edit.php:54 views/quick-edit.php:33
 msgid "Hour"
 msgstr ""
 
-#: post-expirator.php:349 views/bulk-edit.php:58 views/quick-edit.php:37
+#: post-expirator.php:350 views/bulk-edit.php:58 views/quick-edit.php:37
 msgid "Minute"
 msgstr ""
 
-#: post-expirator.php:370 views/bulk-edit.php:62 views/menu-defaults.php:50
+#: post-expirator.php:371 views/bulk-edit.php:62 views/menu-defaults.php:50
 #: views/quick-edit.php:41
 msgid "How to expire"
 msgstr ""
 
-#: post-expirator.php:381
+#: post-expirator.php:382
 msgid "Expiration Categories"
 msgstr ""
 
-#: post-expirator.php:392
+#: post-expirator.php:393
 msgid ""
 "You must assign a heirarchical taxonomy to this post type to use this "
 "feature."
 msgstr ""
 
-#: post-expirator.php:394
+#: post-expirator.php:395
 msgid ""
 "More than 1 heirachical taxonomy detected.  You must assign a default "
 "taxonomy on the settings screen."
 msgstr ""
 
-#: post-expirator.php:404
+#: post-expirator.php:405
 msgid "Taxonomy Name"
 msgstr ""
 
-#: post-expirator.php:710 post-expirator.php:721 post-expirator.php:732
-#: post-expirator.php:743
+#: post-expirator.php:711 post-expirator.php:722 post-expirator.php:733
+#: post-expirator.php:744
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post status has been successfully changed "
 "to \"%4$s\"."
 msgstr ""
 
-#: post-expirator.php:754
+#: post-expirator.php:755
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "set."
 msgstr ""
 
-#: post-expirator.php:765
+#: post-expirator.php:766
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "removed."
 msgstr ""
 
-#: post-expirator.php:778 post-expirator.php:792
+#: post-expirator.php:779 post-expirator.php:793
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
 "\"%5$s\"."
 msgstr ""
 
-#: post-expirator.php:815 post-expirator.php:829
+#: post-expirator.php:816 post-expirator.php:830
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:858 post-expirator.php:879
+#: post-expirator.php:859 post-expirator.php:880
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:898
+#: post-expirator.php:899
 msgid "Post Expiration Complete \"%s\""
 msgstr ""
 
-#: post-expirator.php:934
+#: post-expirator.php:935
 msgid "[%1$s] %2$s"
 msgstr ""
 
-#: post-expirator.php:1506
+#: post-expirator.php:1507
 msgid ""
 "Select the hierarchical taxonomy to be used for \"category\" based "
 "expiration."

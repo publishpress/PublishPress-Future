@@ -215,6 +215,7 @@ add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
  */
 function postexpirator_get_post_types() {
 	$post_types = get_post_types( array('public' => true) );
+	$post_types = array_merge( $post_types, get_post_types( array('public' => false, '_builtin' => false ) ) );
 
 	// in case some post types should not be supported.
 	$unset_post_types = apply_filters( 'postexpirator_unset_post_types', array( 'attachment' ) );
