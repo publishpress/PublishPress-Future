@@ -12,12 +12,14 @@ if ( isset( $defaults['expireType'] ) ) {
 	$expireType = $defaults['expireType'];
 }
 
+	// these defaults will be used by quick edit
+	$defaults = PostExpirator_Facade::get_default_expiry( $post_type );
 
-	$year = date( 'Y' );
-	$month = date( 'm' );
-	$day = date( 'd' );
-	$hour = date( 'H' );
-	$minute = date( 'i' );
+	$year = $defaults['year'];
+	$month = $defaults['month'];
+	$day = $defaults['day'];
+	$hour = $defaults['hour'];
+	$minute = $defaults['minute'];
 	$enabled = 'false';
 
 	// Values for Quick Edit
@@ -33,6 +35,9 @@ if ( $ed ) {
 		$expireType = $attributes['expireType'];
 	}
 }
+
+	// the hidden fields will be used by quick edit
+
 ?>
 	<?php echo esc_html( $display ); ?>
 	<span id="expirationdate_year-<?php echo $id; ?>" style="display: none;"><?php echo $year; ?></span>
