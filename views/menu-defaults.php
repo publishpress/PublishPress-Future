@@ -49,7 +49,7 @@
 					<tr valign="top">
 						<th scope="row"><label for="expirationdate_expiretype-<?php echo $type; ?>"><?php _e( 'How to expire', 'post-expirator' ); ?></label></th>
 						<td>
-							<?php _postexpirator_expire_type( array('name' => 'expirationdate_expiretype-' . $type, 'selected' => $defaults['expireType']) ); ?>
+							<?php _postexpirator_expire_type( array('name' => 'expirationdate_expiretype-' . $type, 'selected' => ( isset( $defaults['expireType'] ) ? $defaults['expireType'] : '' ) ) ); ?>
 							<p class="description"><?php _e( 'Select the default expire action for the post type.', 'post-expirator' ); ?></p>
 						</td>
 					</tr>

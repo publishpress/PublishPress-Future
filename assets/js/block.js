@@ -180,7 +180,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     }
                 }
 
-                var taxonomy = config.defaults.taxonomy || 'categories';
+                var taxonomy = config.defaults.taxonomy || 'category';
 
                 this.setState({
                     enabled: enabled,

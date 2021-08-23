@@ -50,7 +50,7 @@
                 }
             }
 
-            let taxonomy = config.defaults.taxonomy || 'categories';
+            let taxonomy = config.defaults.taxonomy || 'category';
 
             this.setState( {
                 enabled: enabled,
