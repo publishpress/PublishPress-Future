@@ -1,3 +1,12 @@
+<?php
+	$defaults = PostExpirator_Facade::get_default_expiry( $post_type );
+
+	$year = $defaults['year'];
+	$month = $defaults['month'];
+	$day = $defaults['day'];
+	$hour = $defaults['hour'];
+	$minute = $defaults['minute'];
+?>
 	<div style="clear:both"></div>
 	<div class="inline-edit-col post-expirator-quickedit">
 		<div class="inline-edit-col">
@@ -25,27 +34,29 @@
 						$now = mktime( 0, 0, 0, $x, 1, date_i18n( 'Y' ) );
 						$monthNumeric = date_i18n( 'm', $now );
 						$monthStr = date_i18n( 'M', $now );
+						// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+						$selected = $monthNumeric == $defaults['month'] ? 'selected' : '';
 						?>
-							<option value="<?php echo $monthNumeric; ?>" data-text="<?php echo $monthStr; ?>"><?php echo $monthNumeric; ?>-<?php echo $monthStr; ?></option>
+							<option value="<?php echo $monthNumeric; ?>" data-text="<?php echo $monthStr; ?>" <?php echo $selected; ?>><?php echo $monthNumeric; ?>-<?php echo $monthStr; ?></option>
 					<?php } ?>
 
 						</select>
 					</label>
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Day', 'post-expirator' ); ?></span>
-						<input name="expirationdate_day" placeholder="<?php echo date( 'd' ); ?>" value="" size="2" maxlength="2" autocomplete="off" type="text">
+						<input name="expirationdate_day" placeholder="<?php echo $day; ?>" value="" size="2" maxlength="2" autocomplete="off" type="text">
 					</label>, 
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Year', 'post-expirator' ); ?></span>
-						<input name="expirationdate_year" placeholder="<?php echo date( 'Y' ); ?>" value="" size="4" maxlength="4" autocomplete="off" type="text">
+						<input name="expirationdate_year" placeholder="<?php echo $year; ?>" value="" size="4" maxlength="4" autocomplete="off" type="text">
 					</label> @ 
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Hour', 'post-expirator' ); ?></span>
-						<input name="expirationdate_hour" placeholder="00" value="" size="2" maxlength="2" autocomplete="off" type="text">
+						<input name="expirationdate_hour" placeholder="<?php echo $hour; ?>" value="" size="2" maxlength="2" autocomplete="off" type="text">
 					</label> :
 					<label>
 						<span class="screen-reader-text"><?php _e( 'Minute', 'post-expirator' ); ?></span>
-						<input name="expirationdate_minute" placeholder="00" value="" size="2" maxlength="2" autocomplete="off" type="text">
+						<input name="expirationdate_minute" placeholder="<?php echo $minute; ?>" value="" size="2" maxlength="2" autocomplete="off" type="text">
 					</label>
 					<label>
 						<span class="screen-reader-text"><?php _e( 'How to expire', 'post-expirator' ); ?></span>
