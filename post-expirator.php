@@ -186,7 +186,11 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 		return;
 	}
 
-	PostExpirator_Display::getInstance()->render_template( 'quick-edit', array( 'post_type' => $post_type ) );
+	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
+	$taxonomy = isset( $defaults['taxonomy'] ) ? $defaults['taxonomy'] : '';
+	$tax_object = get_taxonomy( $taxonomy );
+
+	PostExpirator_Display::getInstance()->render_template( 'quick-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $tax_object->label ) );
 }
 add_action( 'quick_edit_custom_box', 'postexpirator_quickedit', 10, 2 );
 
@@ -202,7 +206,11 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 		return;
 	}
 
-	PostExpirator_Display::getInstance()->render_template( 'bulk-edit', array( 'post_type' => $post_type ) );
+	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
+	$taxonomy = isset( $defaults['taxonomy'] ) ? $defaults['taxonomy'] : '';
+	$tax_object = get_taxonomy( $taxonomy );
+
+	PostExpirator_Display::getInstance()->render_template( 'bulk-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $tax_object->label ) );
 }
 add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
 
@@ -549,6 +557,9 @@ function postexpirator_update_post_meta( $id ) {
 				$opts = PostExpirator_Facade::get_expire_principles( $id );
 				if ( isset( $_POST['expirationdate_expiretype'] ) ) {
 					$opts['expireType'] = $_POST['expirationdate_expiretype'];
+					if ( in_array( $opts['expireType'], array( 'category', 'category-add', 'category-remove' ), true ) ) {
+						$opts['category'] = $_POST['expirationdate_category'];
+					}
 					PostExpirator_Facade::set_expire_principles( $id, $opts );
 				}
 			}
@@ -1598,6 +1609,11 @@ function postexpirator_date_save_bulk_edit() {
 			if ( $update_expiry ) {
 				$opts = PostExpirator_Facade::get_expire_principles( $post_id );
 				$opts['expireType'] = $_POST['expirationdate_expiretype'];
+
+				if ( in_array( $opts['expireType'], array( 'category', 'category-add', 'category-remove' ), true ) ) {
+					$opts['category'] = $_POST['expirationdate_category'];
+				}
+
 				PostExpirator_Facade::set_expire_principles( $post_id, $opts );
 				update_post_meta( $post_id, '_expiration-date', $ts );
 				postexpirator_schedule_event( $post_id, $ts, null );
