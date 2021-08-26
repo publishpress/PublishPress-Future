@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Post Expirator 2.4.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/PublishPress-Future\n"
-"POT-Creation-Date: 2021-08-23 08:13:11+00:00\n"
+"POT-Creation-Date: 2021-08-24 10:29:30+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -66,141 +66,148 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: post-expirator.php:71 post-expirator.php:148 views/bulk-edit.php:16
-#: views/quick-edit.php:8
+#: post-expirator.php:71 post-expirator.php:148
 msgid "Expires"
 msgstr ""
 
-#: post-expirator.php:304 views/bulk-edit.php:19 views/quick-edit.php:6
+#: post-expirator.php:312 views/bulk-edit.php:20 views/quick-edit.php:7
 msgid "Enable Post Expiration"
 msgstr ""
 
-#: post-expirator.php:307
+#: post-expirator.php:315
 msgid "The published date/time will be used as the expiration value"
 msgstr ""
 
-#: post-expirator.php:310 views/bulk-edit.php:50 views/quick-edit.php:29
+#: post-expirator.php:318 views/bulk-edit.php:51 views/quick-edit.php:32
 msgid "Year"
 msgstr ""
 
-#: post-expirator.php:311 views/bulk-edit.php:30 views/quick-edit.php:11
+#: post-expirator.php:319 views/bulk-edit.php:31 views/quick-edit.php:14
 msgid "Month"
 msgstr ""
 
-#: post-expirator.php:312 views/bulk-edit.php:46 views/quick-edit.php:25
+#: post-expirator.php:320 views/bulk-edit.php:47 views/quick-edit.php:28
 msgid "Day"
 msgstr ""
 
-#: post-expirator.php:349 views/bulk-edit.php:54 views/quick-edit.php:33
+#: post-expirator.php:357 views/bulk-edit.php:55 views/quick-edit.php:36
 msgid "Hour"
 msgstr ""
 
-#: post-expirator.php:350 views/bulk-edit.php:58 views/quick-edit.php:37
+#: post-expirator.php:358 views/bulk-edit.php:59 views/quick-edit.php:40
 msgid "Minute"
 msgstr ""
 
-#: post-expirator.php:371 views/bulk-edit.php:62 views/menu-defaults.php:50
-#: views/quick-edit.php:41
+#: post-expirator.php:379 views/bulk-edit.php:67 views/menu-defaults.php:50
+#: views/quick-edit.php:47
 msgid "How to expire"
 msgstr ""
 
-#: post-expirator.php:382
+#: post-expirator.php:390 views/bulk-edit.php:79 views/quick-edit.php:57
 msgid "Expiration Categories"
 msgstr ""
 
-#: post-expirator.php:393
+#: post-expirator.php:401
 msgid ""
 "You must assign a heirarchical taxonomy to this post type to use this "
 "feature."
 msgstr ""
 
-#: post-expirator.php:395
+#: post-expirator.php:403
 msgid ""
 "More than 1 heirachical taxonomy detected.  You must assign a default "
 "taxonomy on the settings screen."
 msgstr ""
 
-#: post-expirator.php:405
+#: post-expirator.php:413
 msgid "Taxonomy Name"
 msgstr ""
 
-#: post-expirator.php:711 post-expirator.php:722 post-expirator.php:733
-#: post-expirator.php:744
+#: post-expirator.php:722 post-expirator.php:733 post-expirator.php:744
+#: post-expirator.php:755
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post status has been successfully changed "
 "to \"%4$s\"."
 msgstr ""
 
-#: post-expirator.php:755
+#: post-expirator.php:766
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "set."
 msgstr ""
 
-#: post-expirator.php:766
+#: post-expirator.php:777
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "removed."
 msgstr ""
 
-#: post-expirator.php:779 post-expirator.php:793
+#: post-expirator.php:790 post-expirator.php:804
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
 "\"%5$s\"."
 msgstr ""
 
-#: post-expirator.php:816 post-expirator.php:830
+#: post-expirator.php:827 post-expirator.php:841
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:859 post-expirator.php:880
+#: post-expirator.php:870 post-expirator.php:891
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:899
+#: post-expirator.php:910
 msgid "Post Expiration Complete \"%s\""
 msgstr ""
 
-#: post-expirator.php:935
+#: post-expirator.php:946
 msgid "[%1$s] %2$s"
 msgstr ""
 
-#: post-expirator.php:1507
+#: post-expirator.php:1518
 msgid ""
 "Select the hierarchical taxonomy to be used for \"category\" based "
 "expiration."
 msgstr ""
 
-#: views/bulk-edit.php:21
+#: views/bulk-edit.php:18 views/menu-diagnostics.php:45 views/quick-edit.php:12
+msgid "Date"
+msgstr ""
+
+#: views/bulk-edit.php:22
 msgid "No Change"
 msgstr ""
 
-#: views/bulk-edit.php:22
+#: views/bulk-edit.php:23
 msgid "Change expiry date if enabled on posts"
 msgstr ""
 
-#: views/bulk-edit.php:22
+#: views/bulk-edit.php:23
 msgid "Change on posts"
 msgstr ""
 
-#: views/bulk-edit.php:23
+#: views/bulk-edit.php:24
 msgid "Add expiry date if not enabled on posts"
 msgstr ""
 
-#: views/bulk-edit.php:23
+#: views/bulk-edit.php:24
 msgid "Add to posts"
 msgstr ""
 
-#: views/bulk-edit.php:24
+#: views/bulk-edit.php:25
 msgid "Change & Add"
 msgstr ""
 
-#: views/bulk-edit.php:25
+#: views/bulk-edit.php:26
 msgid "Remove from posts"
+msgstr ""
+
+#: views/bulk-edit.php:66 views/quick-edit.php:46
+msgid "Type"
 msgstr ""
 
 #: views/expire-column.php:3
@@ -393,10 +400,6 @@ msgstr ""
 msgid ""
 "The below table will show all currently scheduled cron events with the next "
 "run time."
-msgstr ""
-
-#: views/menu-diagnostics.php:45
-msgid "Date"
 msgstr ""
 
 #: views/menu-diagnostics.php:46

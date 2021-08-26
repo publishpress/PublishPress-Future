@@ -2,8 +2,17 @@ div.timestamp-wrap label {
 	vertical-align: middle !important;
 }
 
-div.timestamp-wrap > span.post-expirator-date-fields {
+div.timestamp-wrap .post-expirator-date-fields,
+div.timestamp-wrap > .pe-category-list {
 	display: none;
+}
+
+div.timestamp-wrap > div {
+	margin: 5px 0px;
+}
+
+#bulk-edit div.timestamp-wrap > .pe-category-list {
+	max-width: 25%;
 }
 
 .post-expirator-quickedit input {

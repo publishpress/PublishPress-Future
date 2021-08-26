@@ -1,12 +1,31 @@
 (function($, config) {
 
-    // show/hide the date fields when the user chooses the intent.
+    // show/hide the date fields when the user chooses the intent in bulk edit
     $('body').on('change', 'select[name="expirationdate_status"]', function(e){
         var $show = $(this).find('option:selected').attr('data-show-fields');
         if($show === 'true'){
-            $(this).parents('.timestamp-wrap').find('span.post-expirator-date-fields').show();
+            $(this).parents('.timestamp-wrap').find('.post-expirator-date-fields').show();
         }else{
-            $(this).parents('.timestamp-wrap').find('span.post-expirator-date-fields').hide();
+            $(this).parents('.timestamp-wrap').find('.post-expirator-date-fields').hide();
+        }
+    });
+
+    // show/hide the date fields when the user chooses the intent in quick edit
+    $('body').on('click', 'input[name="enable-expirationdate"]', function(e){
+        if($(this).is(':checked')){
+            $(this).parents('.post-expirator-quickedit').find('.timestamp-wrap').show();
+        }else{
+            $(this).parents('.post-expirator-quickedit').find('.timestamp-wrap').hide();
+        }
+    });
+
+    // hide/show the categories selection checkbox list in bulk/quick edit
+    $('body').on('change', 'select[name="expirationdate_expiretype"]', function(e){
+        var $show = $(this).val().indexOf('category') !== -1;
+        if($show){
+            $(this).parents('.timestamp-wrap').find('.pe-category-list').show();
+        }else{
+            $(this).parents('.timestamp-wrap').find('.pe-category-list').hide();
         }
     });
 
@@ -60,7 +79,24 @@
 			var $enabled = $( '#expirationdate_enabled-' + $post_id ).text();
 			if ($enabled == "true") {
 				$edit_row.find( 'input[name="enable-expirationdate"]' ).prop( 'checked', true );
+				$edit_row.find('.timestamp-wrap').show();
 			}
+
+            // categories
+			var $categories = $( '#expirationdate_categories-' + $post_id ).text();
+			if ($categories !== ''){
+                $.each($categories.split(','), function(index, value){
+                    $edit_row.find( 'input[name="expirationdate_category[]"][value="' + value + '"]' ).prop( 'checked', true );
+                });
+			}
+
+            // show or hide categories
+            if($type.indexOf('category') !== -1){
+                $edit_row.find('.pe-category-list').show();
+            }else{
+                $edit_row.find('.pe-category-list').hide();
+            }
+
 		}
 	};
 
@@ -83,7 +119,11 @@
 		var $expirationdate_minute = $bulk_row.find( 'input[name="expirationdate_minute"]' ).val();
 		var $expirationdate_status = $bulk_row.find( 'select[name="expirationdate_status"]' ).val();
 		var $expirationdate_expireType = $bulk_row.find( 'select[name="expirationdate_expiretype"]' ).val();
-		
+		var expirationdate_category = [];
+        $bulk_row.find( 'input[name="expirationdate_category[]"]:checked' ).each(function(){
+            expirationdate_category.push($(this).val());
+        });
+
 		// save the data
 		$.ajax({
 			url: ajaxurl, // this is a variable that WordPress has already defined for us
@@ -100,6 +140,7 @@
 				expirationdate_minute: $expirationdate_minute,
 				expirationdate_status: $expirationdate_status,
 				expirationdate_expiretype: $expirationdate_expireType,
+				expirationdate_category: expirationdate_category,
                 nonce: config.ajax.nonce
 			}
 		});

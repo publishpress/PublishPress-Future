@@ -21,6 +21,7 @@ if ( isset( $defaults['expireType'] ) ) {
 	$hour = $defaults['hour'];
 	$minute = $defaults['minute'];
 	$enabled = 'false';
+	$categories = '';
 
 	// Values for Quick Edit
 if ( $ed ) {
@@ -33,6 +34,9 @@ if ( $ed ) {
 	$minute = get_date_from_gmt( $date, 'i' );
 	if ( isset( $attributes['expireType'] ) ) {
 		$expireType = $attributes['expireType'];
+	}
+	if ( isset( $attributes['category'] ) && ! empty( $attributes['category'] ) && in_array( $expireType, array( 'category', 'category-add', 'category-remove' ), true ) ) {
+		$categories = implode( ',', $attributes['category'] );
 	}
 }
 
@@ -47,4 +51,5 @@ if ( $ed ) {
 	<span id="expirationdate_minute-<?php echo $id; ?>" style="display: none;"><?php echo $minute; ?></span>
 	<span id="expirationdate_enabled-<?php echo $id; ?>" style="display: none;"><?php echo $enabled; ?></span>
 	<span id="expirationdate_expireType-<?php echo $id; ?>" style="display: none;"><?php echo $expireType; ?></span>
+	<span id="expirationdate_categories-<?php echo $id; ?>" style="display: none;"><?php echo $categories; ?></span>
 </div>
