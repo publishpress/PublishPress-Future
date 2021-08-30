@@ -13,7 +13,7 @@
 		<div class="inline-edit-group">
 		<legend class="inline-edit-legend"><?php _e( 'Post Expirator', 'post-expirator' ); ?></legend>
 			<fieldset class="inline-edit-date">
-				<div class="timestamp-wrap">
+				<div class="pe-qe-fields">
 					<div>
 						<legend><span class="title"><?php _e( 'Date', 'post-expirator' ); ?></span></legend>
 						<label>
@@ -69,7 +69,7 @@
 						<label>
 							<?php
 								$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
-								_postexpirator_expire_type( array('name' => 'expirationdate_expiretype', 'selected' => $defaults['expireType']) );
+								_postexpirator_expire_type( array('name' => 'expirationdate_expiretype', 'selected' => $defaults['expireType'], 'post_type' => $post_type ) );
 							?>
 						</label>
 					</div>

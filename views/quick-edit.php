@@ -7,7 +7,7 @@
 				<span class=""><?php _e( 'Enable Post Expiration', 'post-expirator' ); ?></span>
 			</label>
 			<fieldset class="inline-edit-date">
-				<div class="timestamp-wrap" style="display: none">
+				<div class="pe-qe-fields" style="display: none">
 					<div>
 						<legend><span class="title"><?php _e( 'Date', 'post-expirator' ); ?></span></legend>
 						<label>
@@ -48,7 +48,7 @@
 						</legend>
 						<?php
 							$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
-							_postexpirator_expire_type( array('name' => 'expirationdate_expiretype', 'selected' => $defaults['expireType']) );
+							_postexpirator_expire_type( array( 'name' => 'expirationdate_expiretype', 'selected' => $defaults['expireType'], 'post_type' => $post_type ) );
 						?>
 					</div>
 					<div class="pe-category-list">

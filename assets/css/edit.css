@@ -1,17 +1,21 @@
-div.timestamp-wrap label {
+div.pe-qe-fields {
+	padding: .2em .5em;
+}
+
+div.pe-qe-fields label {
 	vertical-align: middle !important;
 }
 
-div.timestamp-wrap .post-expirator-date-fields,
-div.timestamp-wrap > .pe-category-list {
+div.pe-qe-fields .post-expirator-date-fields,
+div.pe-qe-fields > .pe-category-list {
 	display: none;
 }
 
-div.timestamp-wrap > div {
+div.pe-qe-fields > div {
 	margin: 5px 0px;
 }
 
-#bulk-edit div.timestamp-wrap > .pe-category-list {
+#bulk-edit div.pe-qe-fields > .pe-category-list {
 	max-width: 25%;
 }
 

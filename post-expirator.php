@@ -189,9 +189,19 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
 	$taxonomy = isset( $defaults['taxonomy'] ) ? $defaults['taxonomy'] : '';
-	$tax_object = get_taxonomy( $taxonomy );
+	$label = '';
 
-	PostExpirator_Display::getInstance()->render_template( 'quick-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $tax_object->label ) );
+	// if settings have not been configured and this is the default post type
+	if ( empty( $taxonomy ) && 'post' === $post_type ) {
+		$taxonomy = 'category';
+	}
+
+	if ( ! empty( $taxonomy ) ) {
+		$tax_object = get_taxonomy( $taxonomy );
+		$label = $tax_object ? $tax_object->label : '';
+	}
+
+	PostExpirator_Display::getInstance()->render_template( 'quick-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $label ) );
 }
 add_action( 'quick_edit_custom_box', 'postexpirator_quickedit', 10, 2 );
 
@@ -209,9 +219,19 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
 	$taxonomy = isset( $defaults['taxonomy'] ) ? $defaults['taxonomy'] : '';
-	$tax_object = get_taxonomy( $taxonomy );
+	$label = '';
 
-	PostExpirator_Display::getInstance()->render_template( 'bulk-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $tax_object->label ) );
+	// if settings have not been configured and this is the default post type
+	if ( empty( $taxonomy ) && 'post' === $post_type ) {
+		$taxonomy = 'category';
+	}
+
+	if ( ! empty( $taxonomy ) ) {
+		$tax_object = get_taxonomy( $taxonomy );
+		$label = $tax_object ? $tax_object->label : '';
+	}
+
+	PostExpirator_Display::getInstance()->render_template( 'bulk-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $label ) );
 }
 add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
 
@@ -1513,13 +1533,13 @@ function _postexpirator_taxonomy( $opts ) {
 		// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		$rv[] = '<select name="' . $name . '" id="' . $id . '"' . ( $disabled == true ? ' disabled="disabled"' : '' ) . ' onchange="' . $onchange . '">';
 		foreach ( $taxonomies as $taxonomy ) {
-			$rv[] = '<option value="' . $taxonomy->name . '" ' . ( $selected === $taxonomy->name ? 'selected="selected"' : '' ) . '>' . $taxonomy->name . '</option>';
+			$rv[] = '<option value="' . $taxonomy->name . '" ' . ( $selected === $taxonomy->name ? 'selected="selected"' : '' ) . '>' . $taxonomy->label . '</option>';
 		}
 
 		$rv[] = '</select>';
 		$rv[] = '<p class="description">' . __( 'Select the hierarchical taxonomy to be used for "category" based expiration.', 'post-expirator' ) . '</p>';
 	} else {
-		$rv[] = 'No taxonomies found for post type.';
+		$rv[] = __( 'No taxonomies found', 'post-expirator' );
 	}
 	return implode( "<br/>\n", $rv );
 }
@@ -1533,7 +1553,7 @@ function _postexpirator_taxonomy( $opts ) {
  */
 function postexpirator_quickedit_javascript() {
 	// if using code as plugin
-	wp_enqueue_script( 'postexpirator-edit', POSTEXPIRATOR_BASEURL . '/admin-edit.js', array( 'jquery', 'inline-edit-post' ), POSTEXPIRATOR_VERSION, true );
+	wp_enqueue_script( 'postexpirator-edit', POSTEXPIRATOR_BASEURL . '/assets/js/admin-edit.js', array( 'jquery', 'inline-edit-post' ), POSTEXPIRATOR_VERSION, true );
 	wp_localize_script(
 		'postexpirator-edit', 'config', array(
 			'ajax' => array(
