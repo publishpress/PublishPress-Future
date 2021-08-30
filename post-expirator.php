@@ -67,7 +67,8 @@ add_action( 'plugins_loaded', 'postexpirator_init' );
  */
 function postexpirator_add_column( $columns, $type ) {
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $type ) );
-	if ( ! isset( $defaults['activeMetaBox'] ) || $defaults['activeMetaBox'] === 'active' ) {
+	// if settings are not configured, show the metabox by default only for posts and pages
+	if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $type, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
 		$columns['expirationdate'] = __( 'Expires', 'post-expirator' );
 	}
 	return $columns;
