@@ -325,7 +325,8 @@ class PostExpirator_Facade {
 		}
 
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post->post_type ) );
-		if ( ! isset( $defaults['activeMetaBox'] ) || $defaults['activeMetaBox'] === 'active' ) {
+		// if settings are not configured, show the metabox by default only for posts and pages
+		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $post->post_type, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
 			wp_enqueue_script(
 				'postexpirator-block',
 				POSTEXPIRATOR_BASEURL . 'assets/js/block.js',
