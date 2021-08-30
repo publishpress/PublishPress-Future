@@ -246,7 +246,8 @@ function postexpirator_meta_custom() {
 	$post_types = postexpirator_get_post_types();
 	foreach ( $post_types as $t ) {
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $t ) );
-		if ( ! isset( $defaults['activeMetaBox'] ) || $defaults['activeMetaBox'] === 'active' ) {
+		// if settings are not configured, show the metabox by default only for posts and pages
+		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $t, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
 			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core', array( '__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox() ) );
 		}
 	}

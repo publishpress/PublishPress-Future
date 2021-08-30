@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Post Expirator 2.4.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/PublishPress-Future\n"
-"POT-Creation-Date: 2021-08-24 10:29:30+00:00\n"
+"POT-Creation-Date: 2021-08-30 04:41:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,105 +70,105 @@ msgstr ""
 msgid "Expires"
 msgstr ""
 
-#: post-expirator.php:312 views/bulk-edit.php:20 views/quick-edit.php:7
+#: post-expirator.php:313 views/bulk-edit.php:20 views/quick-edit.php:7
 msgid "Enable Post Expiration"
 msgstr ""
 
-#: post-expirator.php:315
+#: post-expirator.php:316
 msgid "The published date/time will be used as the expiration value"
 msgstr ""
 
-#: post-expirator.php:318 views/bulk-edit.php:51 views/quick-edit.php:32
+#: post-expirator.php:319 views/bulk-edit.php:51 views/quick-edit.php:32
 msgid "Year"
 msgstr ""
 
-#: post-expirator.php:319 views/bulk-edit.php:31 views/quick-edit.php:14
+#: post-expirator.php:320 views/bulk-edit.php:31 views/quick-edit.php:14
 msgid "Month"
 msgstr ""
 
-#: post-expirator.php:320 views/bulk-edit.php:47 views/quick-edit.php:28
+#: post-expirator.php:321 views/bulk-edit.php:47 views/quick-edit.php:28
 msgid "Day"
 msgstr ""
 
-#: post-expirator.php:357 views/bulk-edit.php:55 views/quick-edit.php:36
+#: post-expirator.php:358 views/bulk-edit.php:55 views/quick-edit.php:36
 msgid "Hour"
 msgstr ""
 
-#: post-expirator.php:358 views/bulk-edit.php:59 views/quick-edit.php:40
+#: post-expirator.php:359 views/bulk-edit.php:59 views/quick-edit.php:40
 msgid "Minute"
 msgstr ""
 
-#: post-expirator.php:379 views/bulk-edit.php:67 views/menu-defaults.php:50
+#: post-expirator.php:380 views/bulk-edit.php:67 views/menu-defaults.php:50
 #: views/quick-edit.php:47
 msgid "How to expire"
 msgstr ""
 
-#: post-expirator.php:390 views/bulk-edit.php:79 views/quick-edit.php:57
+#: post-expirator.php:391 views/bulk-edit.php:79 views/quick-edit.php:57
 msgid "Expiration Categories"
 msgstr ""
 
-#: post-expirator.php:401
+#: post-expirator.php:402
 msgid ""
 "You must assign a heirarchical taxonomy to this post type to use this "
 "feature."
 msgstr ""
 
-#: post-expirator.php:403
+#: post-expirator.php:404
 msgid ""
 "More than 1 heirachical taxonomy detected.  You must assign a default "
 "taxonomy on the settings screen."
 msgstr ""
 
-#: post-expirator.php:413
+#: post-expirator.php:414
 msgid "Taxonomy Name"
 msgstr ""
 
-#: post-expirator.php:722 post-expirator.php:733 post-expirator.php:744
-#: post-expirator.php:755
+#: post-expirator.php:723 post-expirator.php:734 post-expirator.php:745
+#: post-expirator.php:756
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post status has been successfully changed "
 "to \"%4$s\"."
 msgstr ""
 
-#: post-expirator.php:766
+#: post-expirator.php:767
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "set."
 msgstr ""
 
-#: post-expirator.php:777
+#: post-expirator.php:778
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "removed."
 msgstr ""
 
-#: post-expirator.php:790 post-expirator.php:804
+#: post-expirator.php:791 post-expirator.php:805
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
 "\"%5$s\"."
 msgstr ""
 
-#: post-expirator.php:827 post-expirator.php:841
+#: post-expirator.php:828 post-expirator.php:842
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:870 post-expirator.php:891
+#: post-expirator.php:871 post-expirator.php:892
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
-#: post-expirator.php:910
+#: post-expirator.php:911
 msgid "Post Expiration Complete \"%s\""
 msgstr ""
 
-#: post-expirator.php:946
+#: post-expirator.php:947
 msgid "[%1$s] %2$s"
 msgstr ""
 
-#: post-expirator.php:1518
+#: post-expirator.php:1519
 msgid ""
 "Select the hierarchical taxonomy to be used for \"category\" based "
 "expiration."
