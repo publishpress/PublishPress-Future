@@ -19,12 +19,22 @@
 					$expiredautoenabled = '';
 					$expiredautodisabled = 'checked = "checked"';
 				}
-				if ( isset( $defaults['activeMetaBox'] ) && $defaults['activeMetaBox'] === 'inactive' ) {
-					$expiredactivemetaenabled = '';
-					$expiredactivemetadisabled = 'checked = "checked"';
-				} else {
+
+				$expiredactivemetaenabled = '';
+				$expiredactivemetadisabled = 'checked = "checked"';
+
+				// if settings are not configured, show the metabox by default only for posts and pages
+				if ( ! isset( $defaults['activeMetaBox'] ) && in_array( $type, array( 'post', 'page' ), true ) ) {
 					$expiredactivemetaenabled = 'checked = "checked"';
 					$expiredactivemetadisabled = '';
+				} elseif ( isset( $defaults['activeMetaBox'] ) ) {
+					if ( $defaults['activeMetaBox'] === 'inactive' ) {
+						$expiredactivemetaenabled = '';
+						$expiredactivemetadisabled = 'checked = "checked"';
+					} else {
+						$expiredactivemetadisabled = '';
+						$expiredactivemetaenabled = 'checked = "checked"';
+					}
 				}
 				if ( ! isset( $defaults['taxonomy'] ) ) {
 					$defaults['taxonomy'] = false;
