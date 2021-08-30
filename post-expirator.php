@@ -1533,13 +1533,13 @@ function _postexpirator_taxonomy( $opts ) {
 		// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		$rv[] = '<select name="' . $name . '" id="' . $id . '"' . ( $disabled == true ? ' disabled="disabled"' : '' ) . ' onchange="' . $onchange . '">';
 		foreach ( $taxonomies as $taxonomy ) {
-			$rv[] = '<option value="' . $taxonomy->name . '" ' . ( $selected === $taxonomy->name ? 'selected="selected"' : '' ) . '>' . $taxonomy->name . '</option>';
+			$rv[] = '<option value="' . $taxonomy->name . '" ' . ( $selected === $taxonomy->name ? 'selected="selected"' : '' ) . '>' . $taxonomy->label . '</option>';
 		}
 
 		$rv[] = '</select>';
 		$rv[] = '<p class="description">' . __( 'Select the hierarchical taxonomy to be used for "category" based expiration.', 'post-expirator' ) . '</p>';
 	} else {
-		$rv[] = 'No taxonomies found for post type.';
+		$rv[] = __( 'No taxonomies found', 'post-expirator' );
 	}
 	return implode( "<br/>\n", $rv );
 }
