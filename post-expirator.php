@@ -1553,7 +1553,7 @@ function _postexpirator_taxonomy( $opts ) {
  */
 function postexpirator_quickedit_javascript() {
 	// if using code as plugin
-	wp_enqueue_script( 'postexpirator-edit', POSTEXPIRATOR_BASEURL . '/admin-edit.js', array( 'jquery', 'inline-edit-post' ), POSTEXPIRATOR_VERSION, true );
+	wp_enqueue_script( 'postexpirator-edit', POSTEXPIRATOR_BASEURL . '/assets/js/admin-edit.js', array( 'jquery', 'inline-edit-post' ), POSTEXPIRATOR_VERSION, true );
 	wp_localize_script(
 		'postexpirator-edit', 'config', array(
 			'ajax' => array(

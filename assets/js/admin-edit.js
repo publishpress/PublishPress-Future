@@ -29,6 +29,23 @@
         }
     });
 
+	// we create a copy of the WP bulk edit post function
+	var $wp_bulk_edit = inlineEditPost.setBulk;
+
+	// and then we overwrite the function with our own code
+	inlineEditPost.setBulk = function( id ) {
+		// "call" the original WP edit function
+		// we don't want to leave WordPress hanging
+		$wp_bulk_edit.apply( this, arguments );
+
+		var $bulk_row = $( '#bulk-edit' );
+
+        // hide the fields for bulk edit till action is taken by the user
+        $bulk_row.find('.pe-qe-fields select[name="expirationdate_status"]').prop('selectedIndex', 0);
+        $bulk_row.find('.pe-qe-fields .post-expirator-date-fields').hide();
+        $bulk_row.find('.pe-qe-fields .pe-category-list').hide();
+    };
+
 	// we create a copy of the WP inline edit post function
 	var $wp_inline_edit = inlineEditPost.edit;
 
