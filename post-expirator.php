@@ -189,9 +189,19 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
 	$taxonomy = isset( $defaults['taxonomy'] ) ? $defaults['taxonomy'] : '';
-	$tax_object = get_taxonomy( $taxonomy );
+	$label = '';
 
-	PostExpirator_Display::getInstance()->render_template( 'quick-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $tax_object->label ) );
+	// if settings have not been configured and this is the default post type
+	if ( empty( $taxonomy ) && 'post' === $post_type ) {
+		$taxonomy = 'category';
+	}
+
+	if ( ! empty( $taxonomy ) ) {
+		$tax_object = get_taxonomy( $taxonomy );
+		$label = $tax_object ? $tax_object->label : '';
+	}
+
+	PostExpirator_Display::getInstance()->render_template( 'quick-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $label ) );
 }
 add_action( 'quick_edit_custom_box', 'postexpirator_quickedit', 10, 2 );
 
@@ -209,9 +219,19 @@ function postexpirator_bulkedit( $column_name, $post_type ) {
 
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
 	$taxonomy = isset( $defaults['taxonomy'] ) ? $defaults['taxonomy'] : '';
-	$tax_object = get_taxonomy( $taxonomy );
+	$label = '';
 
-	PostExpirator_Display::getInstance()->render_template( 'bulk-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $tax_object->label ) );
+	// if settings have not been configured and this is the default post type
+	if ( empty( $taxonomy ) && 'post' === $post_type ) {
+		$taxonomy = 'category';
+	}
+
+	if ( ! empty( $taxonomy ) ) {
+		$tax_object = get_taxonomy( $taxonomy );
+		$label = $tax_object ? $tax_object->label : '';
+	}
+
+	PostExpirator_Display::getInstance()->render_template( 'bulk-edit', array( 'post_type' => $post_type, 'taxonomy' => $taxonomy, 'tax_label' => $label ) );
 }
 add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
 

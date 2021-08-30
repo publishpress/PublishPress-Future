@@ -4,18 +4,18 @@
     $('body').on('change', 'select[name="expirationdate_status"]', function(e){
         var $show = $(this).find('option:selected').attr('data-show-fields');
         if($show === 'true'){
-            $(this).parents('.timestamp-wrap').find('.post-expirator-date-fields').show();
+            $(this).parents('.pe-qe-fields').find('.post-expirator-date-fields').show();
         }else{
-            $(this).parents('.timestamp-wrap').find('.post-expirator-date-fields').hide();
+            $(this).parents('.pe-qe-fields').find('.post-expirator-date-fields').hide();
         }
     });
 
     // show/hide the date fields when the user chooses the intent in quick edit
     $('body').on('click', 'input[name="enable-expirationdate"]', function(e){
         if($(this).is(':checked')){
-            $(this).parents('.post-expirator-quickedit').find('.timestamp-wrap').show();
+            $(this).parents('.post-expirator-quickedit').find('.pe-qe-fields').show();
         }else{
-            $(this).parents('.post-expirator-quickedit').find('.timestamp-wrap').hide();
+            $(this).parents('.post-expirator-quickedit').find('.pe-qe-fields').hide();
         }
     });
 
@@ -23,9 +23,9 @@
     $('body').on('change', 'select[name="expirationdate_expiretype"]', function(e){
         var $show = $(this).val().indexOf('category') !== -1;
         if($show){
-            $(this).parents('.timestamp-wrap').find('.pe-category-list').show();
+            $(this).parents('.pe-qe-fields').find('.pe-category-list').show();
         }else{
-            $(this).parents('.timestamp-wrap').find('.pe-category-list').hide();
+            $(this).parents('.pe-qe-fields').find('.pe-category-list').hide();
         }
     });
 
@@ -79,7 +79,7 @@
 			var $enabled = $( '#expirationdate_enabled-' + $post_id ).text();
 			if ($enabled == "true") {
 				$edit_row.find( 'input[name="enable-expirationdate"]' ).prop( 'checked', true );
-				$edit_row.find('.timestamp-wrap').show();
+				$edit_row.find('.pe-qe-fields').show();
 			}
 
             // categories

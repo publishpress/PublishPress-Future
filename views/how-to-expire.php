@@ -19,6 +19,11 @@ if ( ! isset( $type ) ) {
 	$type = '';
 }
 
+	// maybe settings have not been configured
+if ( empty( $type ) && isset( $opts['post_type'] ) ) {
+	$type = $opts['post_type'];
+}
+
 	$rv = array();
 	// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 	$rv[] = '<select name="' . $name . '" id="' . $id . '"' . ( $disabled == true ? ' disabled="disabled"' : '' ) . ' onchange="' . $onchange . '">';
