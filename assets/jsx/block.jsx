@@ -141,6 +141,11 @@
                 ]);
             }
 
+            let selectedCats = categories && compact(categories.map((id) => catIdVsName[id] || false ));
+            if(typeof selectedCats === 'string'){
+                selectedCats = [];
+            }
+    
             return (
                 <PluginDocumentSettingPanel title={ __( 'Post Expirator', 'post-expirator' ) } icon="calendar" initialOpen={ enabled }>
                     <PanelRow>
@@ -177,7 +182,7 @@
                                     (
                                 <FormTokenField
                                     label={ __('Expiration Categories', 'post-expirator') + ` (${taxonomy})` }
-                                    value={ categories && compact(categories.map((id) => catIdVsName[id] || false )) }
+                                    value={ selectedCats }
                                     suggestions={ Object.keys(categoriesList) }
                                     onChange={ ( value ) => { this.setState( { categories: this.selectCategories(value), attribute: 'category' } ) } }
                                     maxSuggestions={ 10 }
