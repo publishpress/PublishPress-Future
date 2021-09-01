@@ -320,7 +320,7 @@ class PostExpirator_Facade {
 	function block_editor_assets() {
 		global $post;
 
-		if ( ! self::show_gutenberg_metabox() ) {
+		if ( ! $post || ! self::show_gutenberg_metabox() ) {
 			return;
 		}
 
