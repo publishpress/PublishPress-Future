@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Post Expirator 2.4.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/PublishPress-Future\n"
-"POT-Creation-Date: 2021-08-30 07:18:09+00:00\n"
+"POT-Creation-Date: 2021-09-08 08:07:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,25 +16,25 @@ msgstr ""
 msgid "Post Expirator Options"
 msgstr ""
 
-#: classes/Display.class.php:123
+#: classes/Display.class.php:113
 msgid "Debugging Disabled"
 msgstr ""
 
-#: classes/Display.class.php:128
+#: classes/Display.class.php:118
 msgid "Debugging Enabled"
 msgstr ""
 
-#: classes/Display.class.php:135
+#: classes/Display.class.php:125
 msgid "Debugging Table Emptied"
 msgstr ""
 
-#: classes/Display.class.php:150
+#: classes/Display.class.php:140
 msgid ""
 "Below is a dump of the debugging table, this should be useful for "
 "troubleshooting."
 msgstr ""
 
-#: classes/Display.class.php:197 classes/Display.class.php:234
+#: classes/Display.class.php:187 classes/Display.class.php:221
 msgid "Saved Options!"
 msgstr ""
 
@@ -285,13 +285,13 @@ msgstr ""
 msgid "Auto-Enable?"
 msgstr ""
 
-#: views/menu-defaults.php:69 views/menu-general.php:113
-#: views/menu-general.php:122 views/menu-general.php:143
+#: views/menu-defaults.php:69 views/menu-display.php:41
+#: views/menu-general.php:95 views/menu-general.php:104
 msgid "Enabled"
 msgstr ""
 
-#: views/menu-defaults.php:71 views/menu-general.php:115
-#: views/menu-general.php:124 views/menu-general.php:145
+#: views/menu-defaults.php:71 views/menu-display.php:43
+#: views/menu-general.php:97 views/menu-general.php:106
 msgid "Disabled"
 msgstr ""
 
@@ -303,7 +303,7 @@ msgstr ""
 msgid "Taxonomy (hierarchical)"
 msgstr ""
 
-#: views/menu-defaults.php:82 views/menu-general.php:129
+#: views/menu-defaults.php:82 views/menu-general.php:111
 msgid "Who to notify"
 msgstr ""
 
@@ -313,7 +313,7 @@ msgid ""
 "when the post expires."
 msgstr ""
 
-#: views/menu-defaults.php:90 views/menu-general.php:77
+#: views/menu-defaults.php:90 views/menu-general.php:59
 msgid "None"
 msgstr ""
 
@@ -322,7 +322,7 @@ msgid "Inherit from General Settings"
 msgstr ""
 
 #: views/menu-defaults.php:92 views/menu-defaults.php:116
-#: views/menu-general.php:78 views/menu-general.php:85
+#: views/menu-general.php:60 views/menu-general.php:67
 msgid "Custom"
 msgstr ""
 
@@ -330,7 +330,7 @@ msgstr ""
 msgid "Publish Time"
 msgstr ""
 
-#: views/menu-defaults.php:106 views/menu-general.php:74
+#: views/menu-defaults.php:106 views/menu-general.php:56
 msgid "Default Date/Time Duration"
 msgstr ""
 
@@ -340,7 +340,7 @@ msgid ""
 "type."
 msgstr ""
 
-#: views/menu-defaults.php:118 views/menu-general.php:87
+#: views/menu-defaults.php:118 views/menu-general.php:69
 msgid ""
 "Set the custom value to use for the default expiration date.  For "
 "information on formatting, see %1$s. For example, you could enter %2$s+1 "
@@ -348,7 +348,8 @@ msgid ""
 "Thursday%7$s."
 msgstr ""
 
-#: views/menu-defaults.php:129 views/menu-general.php:189
+#: views/menu-defaults.php:129 views/menu-display.php:70
+#: views/menu-general.php:137
 msgid "Save Changes"
 msgstr ""
 
@@ -368,7 +369,7 @@ msgstr ""
 msgid "Disable Debugging"
 msgstr ""
 
-#: views/menu-diagnostics.php:12 views/tabs.php:13
+#: views/menu-diagnostics.php:12 views/tabs.php:14
 msgid "View Debug Logs"
 msgstr ""
 
@@ -422,176 +423,176 @@ msgstr ""
 msgid "Single Event"
 msgstr ""
 
-#: views/menu-general.php:44
-msgid ""
-"The post expirator plugin sets a custom meta value, and then optionally "
-"allows you to select if you want the post changed to a draft status or "
-"deleted when it expires."
-msgstr ""
-
-#: views/menu-general.php:46
+#: views/menu-display.php:25
 msgid "Shortcode"
 msgstr ""
 
-#: views/menu-general.php:47
+#: views/menu-display.php:26
 msgid "Valid %s attributes:"
 msgstr ""
 
-#: views/menu-general.php:49
+#: views/menu-display.php:28
 msgid "%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
 msgstr ""
 
-#: views/menu-general.php:50 views/menu-general.php:51
+#: views/menu-display.php:29 views/menu-display.php:30
 msgid "%s - format set here will override the value set on the settings page"
 msgstr ""
 
-#: views/menu-general.php:57
-msgid "Defaults"
-msgstr ""
-
-#: views/menu-general.php:60
-msgid "Date Format"
-msgstr ""
-
-#: views/menu-general.php:63
-msgid ""
-"The default format to use when displaying the expiration date within a post "
-"using the shortcode or within the footer.  For information on valid "
-"formatting options, see: %s."
-msgstr ""
-
-#: views/menu-general.php:67
-msgid "Time Format"
-msgstr ""
-
-#: views/menu-general.php:70
-msgid ""
-"The default format to use when displaying the expiration time within a post "
-"using the shortcode or within the footer.  For information on valid "
-"formatting options, see: %s."
-msgstr ""
-
-#: views/menu-general.php:79
-msgid "Post/Page Publish Time"
-msgstr ""
-
-#: views/menu-general.php:81
-msgid ""
-"Set the default expiration date to be used when creating new posts and "
-"pages.  Defaults to none."
-msgstr ""
-
-#: views/menu-general.php:92
-msgid "Default Expiration Category"
-msgstr ""
-
-#: views/menu-general.php:102
-msgid "Sets the default expiration category for the post."
-msgstr ""
-
-#: views/menu-general.php:107
-msgid "Expiration Email Notification"
-msgstr ""
-
-#: views/menu-general.php:108
-msgid ""
-"Whenever a post expires, an email can be sent to alert users of the "
-"expiration."
-msgstr ""
-
-#: views/menu-general.php:111
-msgid "Enable Email Notification?"
-msgstr ""
-
-#: views/menu-general.php:116
-msgid ""
-"This will enable or disable the send of email notification on post "
-"expiration."
-msgstr ""
-
-#: views/menu-general.php:120
-msgid "Include Blog Administrators?"
-msgstr ""
-
-#: views/menu-general.php:125
-msgid ""
-"This will include all users with the role of \"Administrator\" in the post "
-"expiration email."
-msgstr ""
-
-#: views/menu-general.php:132
-msgid ""
-"Enter a comma separate list of emails that you would like to be notified "
-"when the post expires.  This will be applied to ALL post types.  You can "
-"set post type specific emails on the Defaults tab."
-msgstr ""
-
-#: views/menu-general.php:137
+#: views/menu-display.php:35
 msgid "Post Footer Display"
 msgstr ""
 
-#: views/menu-general.php:138
+#: views/menu-display.php:36
 msgid ""
 "Enabling this below will display the expiration date automatically at the "
 "end of any post which is set to expire."
 msgstr ""
 
-#: views/menu-general.php:141
+#: views/menu-display.php:39
 msgid "Show in post footer?"
 msgstr ""
 
-#: views/menu-general.php:146
+#: views/menu-display.php:44
 msgid ""
 "This will enable or disable displaying the post expiration date in the post "
 "footer."
 msgstr ""
 
-#: views/menu-general.php:150
+#: views/menu-display.php:48
 msgid "Footer Contents"
 msgstr ""
 
-#: views/menu-general.php:153
+#: views/menu-display.php:51
 msgid ""
 "Enter the text you would like to appear at the bottom of every post that "
 "will expire.  The following placeholders will be replaced with the post "
 "expiration date in the following format:"
 msgstr ""
 
-#: views/menu-general.php:162
+#: views/menu-display.php:60
 msgid "Footer Style"
 msgstr ""
 
-#: views/menu-general.php:165
+#: views/menu-display.php:63
 msgid "This post will expire on"
 msgstr ""
 
-#: views/menu-general.php:166
+#: views/menu-display.php:64
 msgid "The inline css which will be used to style the footer text."
 msgstr ""
 
-#: views/menu-general.php:171
+#: views/menu-general.php:35
+msgid ""
+"The post expirator plugin sets a custom meta value, and then optionally "
+"allows you to select if you want the post changed to a draft status or "
+"deleted when it expires."
+msgstr ""
+
+#: views/menu-general.php:39
+msgid "Defaults"
+msgstr ""
+
+#: views/menu-general.php:42
+msgid "Date Format"
+msgstr ""
+
+#: views/menu-general.php:45
+msgid ""
+"The default format to use when displaying the expiration date within a post "
+"using the shortcode or within the footer.  For information on valid "
+"formatting options, see: %s."
+msgstr ""
+
+#: views/menu-general.php:49
+msgid "Time Format"
+msgstr ""
+
+#: views/menu-general.php:52
+msgid ""
+"The default format to use when displaying the expiration time within a post "
+"using the shortcode or within the footer.  For information on valid "
+"formatting options, see: %s."
+msgstr ""
+
+#: views/menu-general.php:61
+msgid "Post/Page Publish Time"
+msgstr ""
+
+#: views/menu-general.php:63
+msgid ""
+"Set the default expiration date to be used when creating new posts and "
+"pages.  Defaults to none."
+msgstr ""
+
+#: views/menu-general.php:74
+msgid "Default Expiration Category"
+msgstr ""
+
+#: views/menu-general.php:84
+msgid "Sets the default expiration category for the post."
+msgstr ""
+
+#: views/menu-general.php:89
+msgid "Expiration Email Notification"
+msgstr ""
+
+#: views/menu-general.php:90
+msgid ""
+"Whenever a post expires, an email can be sent to alert users of the "
+"expiration."
+msgstr ""
+
+#: views/menu-general.php:93
+msgid "Enable Email Notification?"
+msgstr ""
+
+#: views/menu-general.php:98
+msgid ""
+"This will enable or disable the send of email notification on post "
+"expiration."
+msgstr ""
+
+#: views/menu-general.php:102
+msgid "Include Blog Administrators?"
+msgstr ""
+
+#: views/menu-general.php:107
+msgid ""
+"This will include all users with the role of \"Administrator\" in the post "
+"expiration email."
+msgstr ""
+
+#: views/menu-general.php:114
+msgid ""
+"Enter a comma separate list of emails that you would like to be notified "
+"when the post expires.  This will be applied to ALL post types.  You can "
+"set post type specific emails on the Defaults tab."
+msgstr ""
+
+#: views/menu-general.php:119
 msgid "Advanced Options"
 msgstr ""
 
-#: views/menu-general.php:172
+#: views/menu-general.php:120
 msgid ""
 "Please do not update anything here unless you know what it entails. For "
 "advanced users only."
 msgstr ""
 
-#: views/menu-general.php:178
+#: views/menu-general.php:126
 msgid "Block Editor Support"
 msgstr ""
 
-#: views/menu-general.php:180
+#: views/menu-general.php:128
 msgid "Show Gutenberg style box"
 msgstr ""
 
-#: views/menu-general.php:182
+#: views/menu-general.php:130
 msgid "Show Classic Editor style box"
 msgstr ""
 
-#: views/menu-general.php:183
+#: views/menu-general.php:131
 msgid ""
 "Toggle between native support for the Block Editor or the backward "
 "compatible Classic Editor style metabox."
@@ -606,6 +607,10 @@ msgid "Post Types"
 msgstr ""
 
 #: views/tabs.php:11
+msgid "Display"
+msgstr ""
+
+#: views/tabs.php:12
 msgid "Diagnostics"
 msgstr ""
 

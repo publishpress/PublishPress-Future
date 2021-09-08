@@ -43,22 +43,12 @@ class PostExpirator_Display {
 
 	/**
 	 * Loads the specified tab.
+	 *
+	 * Make sure the name of the file is menu_{$tab}.php.
 	 */
 	public function load_tab( $tab ) {
-		switch ( $tab ) {
-			case 'general':
-				$this->menu_general();
-				break;
-			case 'defaults':
-				$this->menu_defaults();
-				break;
-			case 'diagnostics':
-				$this->menu_diagnostics();
-				break;
-			case 'viewdebug':
-				$this->menu_viewdebug();
-				break;
-		}
+		$function = 'menu_' . $tab;
+		$this->$function();
 	}
 
 	/**
@@ -67,45 +57,45 @@ class PostExpirator_Display {
 	public function settings_tabs() {
 		PostExpirator_Facade::load_assets( 'settings' );
 
+		$allowed_tabs = array( 'general', 'defaults', 'display', 'diagnostics', 'viewdebug' );
 		$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : '';
-		if ( empty( $tab ) ) {
+		if ( empty( $tab ) || ! in_array( $tab, $allowed_tabs, true ) ) {
 			$tab = 'general';
 		}
 
-		$tab_index = 0;
-
 		ob_start();
-
-		switch ( $tab ) {
-			case 'general':
-				$tab_index = 0;
-				$this->load_tab( 'general' );
-				break;
-			case 'defaults':
-				$this->load_tab( 'defaults' );
-				$tab_index = 1;
-				break;
-			case 'diagnostics':
-				$this->load_tab( 'diagnostics' );
-				$tab_index = 2;
-				break;
-			case 'viewdebug':
-				$this->load_tab( 'viewdebug' );
-				$tab_index = 3;
-				break;
-		}
-
+		$this->load_tab( $tab );
 		$html = ob_get_clean();
 
 		$debug = postexpirator_debug(); // check for/load debug
 
-		$tabs = array( 'general', 'defaults', 'diagnostics' );
-		if ( POSTEXPIRATOR_DEBUG ) {
-			$tabs[] = 'viewdebug';
+		if ( ! POSTEXPIRATOR_DEBUG ) {
+			unset( $allowed_tabs['viewdebug'] );
 		}
 
-		$this->render_template( 'tabs', array( 'tabs' => $tabs, 'tab_index' => $tab_index, 'html' => $html, 'tab' => $tab ) );
+		$this->render_template( 'tabs', array( 'tabs' => $allowed_tabs, 'html' => $html, 'tab' => $tab ) );
 
+	}
+
+	/**
+	 * Dsiplay menu.
+	 */
+	private function menu_display() {
+		if ( isset( $_POST['expirationdateSaveDisplay'] ) && $_POST['expirationdateSaveDisplay'] ) {
+			if ( ! isset( $_POST['_postExpiratorMenuDisplay_nonce'] ) || ! wp_verify_nonce( $_POST['_postExpiratorMenuDisplay_nonce'], 'postexpirator_menu_display' ) ) {
+				print 'Form Validation Failure: Sorry, your nonce did not verify.';
+				exit;
+			} else {
+				// Filter Content
+				$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+
+				update_option( 'expirationdateDisplayFooter', $_POST['expired-display-footer'] );
+				update_option( 'expirationdateFooterContents', $_POST['expired-footer-contents'] );
+				update_option( 'expirationdateFooterStyle', $_POST['expired-footer-style'] );
+			}
+		}
+
+		$this->render_template( 'menu-display' );
 	}
 
 	/**
@@ -216,12 +206,9 @@ class PostExpirator_Display {
 
 				update_option( 'expirationdateDefaultDateFormat', $_POST['expired-default-date-format'] );
 				update_option( 'expirationdateDefaultTimeFormat', $_POST['expired-default-time-format'] );
-				update_option( 'expirationdateDisplayFooter', $_POST['expired-display-footer'] );
 				update_option( 'expirationdateEmailNotification', $_POST['expired-email-notification'] );
 				update_option( 'expirationdateEmailNotificationAdmins', $_POST['expired-email-notification-admins'] );
 				update_option( 'expirationdateEmailNotificationList', trim( $_POST['expired-email-notification-list'] ) );
-				update_option( 'expirationdateFooterContents', $_POST['expired-footer-contents'] );
-				update_option( 'expirationdateFooterStyle', $_POST['expired-footer-style'] );
 				update_option( 'expirationdateGutenbergSupport', $_POST['gutenberg-support'] );
 				if ( isset( $_POST['expirationdate_category'] ) ) {
 					update_option( 'expirationdateCategoryDefaults', $_POST['expirationdate_category'] );
