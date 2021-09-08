@@ -57,7 +57,7 @@ class PostExpirator_Display {
 	public function settings_tabs() {
 		PostExpirator_Facade::load_assets( 'settings' );
 
-		$allowed_tabs = array( 'general', 'defaults', 'display', 'diagnostics', 'viewdebug' );
+		$allowed_tabs = array( 'general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug' );
 		$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : '';
 		if ( empty( $tab ) || ! in_array( $tab, $allowed_tabs, true ) ) {
 			$tab = 'general';
@@ -78,7 +78,26 @@ class PostExpirator_Display {
 	}
 
 	/**
-	 * Dsiplay menu.
+	 * Editor menu.
+	 */
+	private function menu_editor() {
+		if ( isset( $_POST['expirationdateSaveEditor'] ) && $_POST['expirationdateSaveEditor'] ) {
+			if ( ! isset( $_POST['_postExpiratorMenuEditor_nonce'] ) || ! wp_verify_nonce( $_POST['_postExpiratorMenuEditor_nonce'], 'postexpirator_menu_editor' ) ) {
+				print 'Form Validation Failure: Sorry, your nonce did not verify.';
+				exit;
+			} else {
+				// Filter Content
+				$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+				update_option( 'expirationdateGutenbergSupport', $_POST['gutenberg-support'] );
+			}
+		}
+
+		$this->render_template( 'menu-editor' );
+
+	}
+
+	/**
+	 * Display menu.
 	 */
 	private function menu_display() {
 		if ( isset( $_POST['expirationdateSaveDisplay'] ) && $_POST['expirationdateSaveDisplay'] ) {
@@ -209,7 +228,6 @@ class PostExpirator_Display {
 				update_option( 'expirationdateEmailNotification', $_POST['expired-email-notification'] );
 				update_option( 'expirationdateEmailNotificationAdmins', $_POST['expired-email-notification-admins'] );
 				update_option( 'expirationdateEmailNotificationList', trim( $_POST['expired-email-notification-list'] ) );
-				update_option( 'expirationdateGutenbergSupport', $_POST['gutenberg-support'] );
 				if ( isset( $_POST['expirationdate_category'] ) ) {
 					update_option( 'expirationdateCategoryDefaults', $_POST['expirationdate_category'] );
 				}

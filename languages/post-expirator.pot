@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Post Expirator 2.4.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/PublishPress-Future\n"
-"POT-Creation-Date: 2021-09-08 08:19:35+00:00\n"
+"POT-Creation-Date: 2021-09-08 08:34:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -16,25 +16,25 @@ msgstr ""
 msgid "Post Expirator Options"
 msgstr ""
 
-#: classes/Display.class.php:113
+#: classes/Display.class.php:132
 msgid "Debugging Disabled"
 msgstr ""
 
-#: classes/Display.class.php:118
+#: classes/Display.class.php:137
 msgid "Debugging Enabled"
 msgstr ""
 
-#: classes/Display.class.php:125
+#: classes/Display.class.php:144
 msgid "Debugging Table Emptied"
 msgstr ""
 
-#: classes/Display.class.php:140
+#: classes/Display.class.php:159
 msgid ""
 "Below is a dump of the debugging table, this should be useful for "
 "troubleshooting."
 msgstr ""
 
-#: classes/Display.class.php:187 classes/Display.class.php:221
+#: classes/Display.class.php:206 classes/Display.class.php:239
 msgid "Saved Options!"
 msgstr ""
 
@@ -349,7 +349,7 @@ msgid ""
 msgstr ""
 
 #: views/menu-defaults.php:129 views/menu-display.php:70
-#: views/menu-general.php:137
+#: views/menu-editor.php:21 views/menu-general.php:120
 msgid "Save Changes"
 msgstr ""
 
@@ -369,7 +369,7 @@ msgstr ""
 msgid "Disable Debugging"
 msgstr ""
 
-#: views/menu-diagnostics.php:12 views/tabs.php:14
+#: views/menu-diagnostics.php:12 views/tabs.php:15
 msgid "View Debug Logs"
 msgstr ""
 
@@ -482,6 +482,28 @@ msgstr ""
 msgid "The inline css which will be used to style the footer text."
 msgstr ""
 
+#: views/menu-editor.php:4 views/tabs.php:12
+msgid "Editor"
+msgstr ""
+
+#: views/menu-editor.php:10
+msgid "Block Editor Support"
+msgstr ""
+
+#: views/menu-editor.php:12
+msgid "Show Gutenberg style box"
+msgstr ""
+
+#: views/menu-editor.php:14
+msgid "Show Classic Editor style box"
+msgstr ""
+
+#: views/menu-editor.php:15
+msgid ""
+"Toggle between native support for the Block Editor or the backward "
+"compatible Classic Editor style metabox."
+msgstr ""
+
 #: views/menu-general.php:35
 msgid ""
 "The post expirator plugin sets a custom meta value, and then optionally "
@@ -570,34 +592,6 @@ msgid ""
 "set post type specific emails on the Defaults tab."
 msgstr ""
 
-#: views/menu-general.php:119
-msgid "Advanced Options"
-msgstr ""
-
-#: views/menu-general.php:120
-msgid ""
-"Please do not update anything here unless you know what it entails. For "
-"advanced users only."
-msgstr ""
-
-#: views/menu-general.php:126
-msgid "Block Editor Support"
-msgstr ""
-
-#: views/menu-general.php:128
-msgid "Show Gutenberg style box"
-msgstr ""
-
-#: views/menu-general.php:130
-msgid "Show Classic Editor style box"
-msgstr ""
-
-#: views/menu-general.php:131
-msgid ""
-"Toggle between native support for the Block Editor or the backward "
-"compatible Classic Editor style metabox."
-msgstr ""
-
 #: views/tabs.php:10
 msgid "Post Types"
 msgstr ""
@@ -606,7 +600,7 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: views/tabs.php:12
+#: views/tabs.php:13
 msgid "Diagnostics"
 msgstr ""
 
