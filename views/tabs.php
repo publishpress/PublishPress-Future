@@ -13,7 +13,7 @@
 			<a href="<?php echo admin_url( 'options-general.php?page=post-expirator.php&tab=viewdebug' ); ?>" class="pe-tab nav-tab <?php echo ( $current_tab === 'viewdebug' ? 'nav-tab-active' : '' ); ?>"><?php _e( 'View Debug Logs', 'post-expirator' ); ?></a>
 <?php } ?>
 		</nav>
-	
+
 	<?php echo $html; ?>
 
 	</div>

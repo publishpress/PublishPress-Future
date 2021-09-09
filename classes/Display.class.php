@@ -105,7 +105,7 @@ class PostExpirator_Display {
 		}
 
 		$this->render_template( 'tabs', array( 'tabs' => $tabs, 'tab_index' => $tab_index, 'html' => $html, 'tab' => $tab ) );
-
+		$this->publishpress_footer();
 	}
 
 	/**
@@ -253,6 +253,64 @@ class PostExpirator_Display {
 			}
 			include $template;
 		}
+	}
+
+	/**
+	 * PublishPress footer
+	 */
+	public function publishpress_footer() {
+		?>
+		<footer>
+			<div class="pp-rating">
+				<a href="https://wordpress.org/support/plugin/post-expirator/reviews/#new-post" target="_blank" rel="noopener noreferrer">
+				<?php printf(
+					__('If you like %s, please leave us a %s rating. Thank you!', 'post-expirator'),
+					'<strong>PublishPress Future</strong>',
+					'<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
+					);
+				?>
+				</a>
+			</div>
+
+			<hr>
+
+			<nav>
+				<ul>
+					<li>
+						<a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer" title="<?php _e('About PublishPress Future', 'post-expirator');?>">
+							<?php _e('About', 'post-expirator');?>
+						</a>
+					</li>
+					<li>
+						<a href="https://publishpress.com/knowledge-base/introduction-future/" target="_blank" rel="noopener noreferrer" title="<?php _e('Future Documentation', 'post-expirator');?>">
+							<?php _e('Documentation', 'post-expirator');?>
+						</a>
+					</li>
+					<li>
+						<a href="https://publishpress.com/contact" target="_blank" rel="noopener noreferrer" title="<?php _e('Contact the PublishPress team', 'post-expirator');?>">
+							<?php _e('Contact', 'post-expirator');?>
+						</a>
+					</li>
+					<li>
+						<a href="https://twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer">
+							<span class="dashicons dashicons-twitter"></span>
+						</a>
+					</li>
+					<li>
+						<a href="https://facebook.com/publishpress" target="_blank" rel="noopener noreferrer">
+							<span class="dashicons dashicons-facebook"></span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+
+			<div class="pp-pressshack-logo">
+				<a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
+					<img src="<?php echo esc_url(plugins_url('assets/images/publishpress-logo.png', dirname(__FILE__))) ?>" />
+				</a>
+			</div>
+		</footer>
+		<?php
 	}
 
 }
