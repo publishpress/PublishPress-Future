@@ -3,9 +3,9 @@
 Plugin Name: Post Expirator
 Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
-Author: Aaron Axelsen
+Author: PublishPress
 Version: 2.5.0
-Author URI: http://postexpirator.tuxdocs.net/
+Author URI: http://publishpress.com
 Text Domain: post-expirator
 Domain Path: /languages
 */
