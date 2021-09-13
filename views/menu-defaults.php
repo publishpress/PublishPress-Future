@@ -3,7 +3,7 @@
 				<h3><?php _e( 'Default Expiration Values', 'post-expirator' ); ?></h3>
 
 				<p><?php _e( 'Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page.', 'post-expirator' ); ?></p>
-			
+
 			<?php
 			foreach ( $types as $type ) {
 				$post_type_object = get_post_type_object( $type );
@@ -53,7 +53,7 @@
 							<input type="radio" name="expirationdate_activemeta-<?php echo $type; ?>" id="expirationdate_activemeta-true-<?php echo $type; ?>" value="active" <?php echo $expiredactivemetaenabled; ?>/> <label for="expirationdate_activemeta-true-<?php echo $type; ?>"><?php _e( 'Active', 'post-expirator' ); ?></label>
 							&nbsp;&nbsp;
 							<input type="radio" name="expirationdate_activemeta-<?php echo $type; ?>" id="expirationdate_activemeta-false-<?php echo $type; ?>" value="inactive" <?php echo $expiredactivemetadisabled; ?>/> <label for="expirationdate_activemeta-false-<?php echo $type; ?>"><?php _e( 'Inactive', 'post-expirator' ); ?></label>
-							<p class="description"><?php _e( 'Select whether the post expirator meta box is active for this post type.', 'post-expirator' ); ?></p>
+							<p class="description"><?php _e( 'Select whether the PublishPress Future meta box is active for this post type.', 'post-expirator' ); ?></p>
 						</td>
 					</tr>
 					<tr valign="top">
@@ -69,7 +69,7 @@
 							<input type="radio" name="expirationdate_autoenable-<?php echo $type; ?>" id="expirationdate_autoenable-true-<?php echo $type; ?>" value="1" <?php echo $expiredautoenabled; ?>/> <label for="expirationdate_autoenable-true-<?php echo $type; ?>"><?php _e( 'Enabled', 'post-expirator' ); ?></label>
 							&nbsp;&nbsp;
 							<input type="radio" name="expirationdate_autoenable-<?php echo $type; ?>" id="expirationdate_autoenable-false-<?php echo $type; ?>" value="0" <?php echo $expiredautodisabled; ?>/> <label for="expirationdate_autoenable-false-<?php echo $type; ?>"><?php _e( 'Disabled', 'post-expirator' ); ?></label>
-							<p class="description"><?php _e( 'Select whether the post expirator is enabled for all new posts.', 'post-expirator' ); ?></p>
+							<p class="description"><?php _e( 'Select whether the PublishPress Future is enabled for all new posts.', 'post-expirator' ); ?></p>
 						</td>
 					</tr>
 					<tr valign="top">

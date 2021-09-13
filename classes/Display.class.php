@@ -38,7 +38,7 @@ class PostExpirator_Display {
 	 * Add plugin page menu.
 	 */
 	function add_menu() {
-		add_submenu_page( 'options-general.php', __( 'Post Expirator Options', 'post-expirator' ), __( 'Post Expirator', 'post-expirator' ), 'manage_options', POSTEXPIRATOR_BASENAME, array( self::$_instance, 'settings_tabs' ) );
+		add_submenu_page( 'options-general.php', __( 'PublishPress Future Options', 'post-expirator' ), __( 'PublishPress Future', 'post-expirator' ), 'manage_options', POSTEXPIRATOR_BASENAME, array( self::$_instance, 'settings_tabs' ) );
 	}
 
 	/**

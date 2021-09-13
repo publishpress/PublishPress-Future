@@ -41,7 +41,7 @@ if ( $expiredemailnotificationadmins == 0 ) {
 }
 
 ?>
-		<p><?php _e( 'The post expirator plugin sets a custom meta value, and then optionally allows you to select if you want the post changed to a draft status or deleted when it expires.', 'post-expirator' ); ?></p>
+		<p><?php _e( 'The PublishPress Future plugin sets a custom meta value, and then optionally allows you to select if you want the post changed to a draft status or deleted when it expires.', 'post-expirator' ); ?></p>
 
 		<h3><?php _e( 'Shortcode', 'post-expirator' ); ?></h3>
 		<p><?php echo sprintf( __( 'Valid %s attributes:', 'post-expirator' ), '<code>[postexpirator]</code>' ); ?></p>

@@ -1,8 +1,8 @@
 # Copyright (C) 2021 Aaron Axelsen
-# This file is distributed under the same license as the Post Expirator package.
+# This file is distributed under the same license as the PublishPress Future package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Post Expirator 2.4.4\n"
+"Project-Id-Version: PublishPress Future 2.4.4\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/PublishPress-Future\n"
 "POT-Creation-Date: 2021-08-30 07:18:09+00:00\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: PostExpirator Translate Team\n"
 
 #: classes/Display.class.php:41 views/tabs.php:6
-msgid "Post Expirator Options"
+msgid "PublishPress Future Options"
 msgstr ""
 
 #: classes/Display.class.php:123
@@ -274,7 +274,7 @@ msgid "Inactive"
 msgstr ""
 
 #: views/menu-defaults.php:56
-msgid "Select whether the post expirator meta box is active for this post type."
+msgid "Select whether the PublishPress Future meta box is active for this post type."
 msgstr ""
 
 #: views/menu-defaults.php:63
@@ -296,7 +296,7 @@ msgid "Disabled"
 msgstr ""
 
 #: views/menu-defaults.php:72
-msgid "Select whether the post expirator is enabled for all new posts."
+msgid "Select whether the PublishPress Future is enabled for all new posts."
 msgstr ""
 
 #: views/menu-defaults.php:76
@@ -424,7 +424,7 @@ msgstr ""
 
 #: views/menu-general.php:44
 msgid ""
-"The post expirator plugin sets a custom meta value, and then optionally "
+"The PublishPress Future plugin sets a custom meta value, and then optionally "
 "allows you to select if you want the post changed to a draft status or "
 "deleted when it expires."
 msgstr ""
