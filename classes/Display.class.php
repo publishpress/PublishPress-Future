@@ -228,9 +228,7 @@ class PostExpirator_Display {
 				update_option( 'expirationdateEmailNotification', $_POST['expired-email-notification'] );
 				update_option( 'expirationdateEmailNotificationAdmins', $_POST['expired-email-notification-admins'] );
 				update_option( 'expirationdateEmailNotificationList', trim( $_POST['expired-email-notification-list'] ) );
-				if ( isset( $_POST['expirationdate_category'] ) ) {
-					update_option( 'expirationdateCategoryDefaults', $_POST['expirationdate_category'] );
-				}
+				update_option( 'expirationdateCategoryDefaults', isset( $_POST['expirationdate_category'] ) ? $_POST['expirationdate_category'] : array() );
 				update_option( 'expirationdateDefaultDate', $_POST['expired-default-expiration-date'] );
 				if ( $_POST['expired-custom-expiration-date'] ) {
 					update_option( 'expirationdateDefaultDateCustom', $_POST['expired-custom-expiration-date'] );
