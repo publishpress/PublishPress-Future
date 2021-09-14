@@ -147,7 +147,7 @@
             }
     
             return (
-                <PluginDocumentSettingPanel title={ __( 'Post Expirator', 'post-expirator' ) } icon="calendar" initialOpen={ enabled }>
+                <PluginDocumentSettingPanel title={ __( 'PublishPress Future', 'post-expirator' ) } icon="calendar" initialOpen={ enabled }>
                     <PanelRow>
                         <CheckboxControl
                             label={ __( 'Enable Post Expiration', 'post-expirator' ) }

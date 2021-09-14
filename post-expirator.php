@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Post Expirator
+Plugin Name: PublishPress Future
 Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
 Author: PublishPress
@@ -269,7 +269,7 @@ function postexpirator_meta_custom() {
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $t ) );
 		// if settings are not configured, show the metabox by default only for posts and pages
 		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $t, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
-			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core', array( '__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox() ) );
+			add_meta_box( 'expirationdatediv', __( 'PublishPress Future', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core', array( '__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox() ) );
 		}
 	}
 }
@@ -1082,7 +1082,7 @@ function postexpirator_css( $screen_id ) {
 add_action( 'admin_enqueue_scripts', 'postexpirator_css', 10, 1 );
 
 /**
- * Post Expirator Activation/Upgrade
+ * PublishPress Future Activation/Upgrade
  *
  * @internal
  *
@@ -1546,4 +1546,3 @@ function postexpirator_launch() {
 	PostExpirator_Facade::getInstance();
 }
 postexpirator_launch();
-

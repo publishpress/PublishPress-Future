@@ -6,7 +6,7 @@ Feature('Check if elements are enabled');
 
 Scenario('Settings Page', ({ I }) => {
     I.amOnPage('/wp-admin/options-general.php?page=post-expirator.php');
-    I.see('Post Expirator Options');
+    I.see('PublishPress Future Options');
 });
 
 
