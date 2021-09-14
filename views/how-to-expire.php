@@ -9,12 +9,6 @@ if ( ! isset( $name ) ) {
 if ( ! isset( $id ) ) {
 	$id = $name;
 }
-if ( ! isset( $disabled ) ) {
-	$disabled = false;
-}
-if ( ! isset( $onchange ) ) {
-	$onchange = '';
-}
 if ( ! isset( $type ) ) {
 	$type = '';
 }
@@ -24,19 +18,18 @@ if ( empty( $type ) && isset( $opts['post_type'] ) ) {
 	$type = $opts['post_type'];
 }
 
-	$rv = array();
 	// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-	$rv[] = '<select name="' . $name . '" id="' . $id . '"' . ( $disabled == true ? ' disabled="disabled"' : '' ) . ' onchange="' . $onchange . '">';
-	$rv[] = '<option value="draft" ' . ( $selected === 'draft' ? 'selected="selected"' : '' ) . '>' . __( 'Draft', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="delete" ' . ( $selected === 'delete' ? 'selected="selected"' : '' ) . '>' . __( 'Delete', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="trash" ' . ( $selected === 'trash' ? 'selected="selected"' : '' ) . '>' . __( 'Trash', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="private" ' . ( $selected === 'private' ? 'selected="selected"' : '' ) . '>' . __( 'Private', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="stick" ' . ( $selected === 'stick' ? 'selected="selected"' : '' ) . '>' . __( 'Stick', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="unstick" ' . ( $selected === 'unstick' ? 'selected="selected"' : '' ) . '>' . __( 'Unstick', 'post-expirator' ) . '</option>';
-if ( $type !== 'page' ) {
-	$rv[] = '<option value="category" ' . ( $selected === 'category' ? 'selected="selected"' : '' ) . '>' . __( 'Category: Replace', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="category-add" ' . ( $selected === 'category-add' ? 'selected="selected"' : '' ) . '>' . __( 'Category: Add', 'post-expirator' ) . '</option>';
-	$rv[] = '<option value="category-remove" ' . ( $selected === 'category-remove' ? 'selected="selected"' : '' ) . '>' . __( 'Category: Remove', 'post-expirator' ) . '</option>';
-}
-	$rv[] = '</select>';
-	echo implode( "<br/>\n", $rv );
+?>
+	<select name="<?php echo $name; ?>" id="<?php echo $id; ?>" class="pe-howtoexpire">
+		<option value="draft" <?php echo $selected === 'draft' ? 'selected="selected"' : ''; ?>><?php _e( 'Draft', 'post-expirator' ); ?></option>
+		<option value="delete" <?php echo $selected === 'delete' ? 'selected="selected"' : ''; ?>><?php _e( 'Delete', 'post-expirator' ); ?></option>
+		<option value="trash" <?php echo $selected === 'trash' ? 'selected="selected"' : ''; ?>><?php _e( 'Trash', 'post-expirator' ); ?></option>
+		<option value="private" <?php echo $selected === 'private' ? 'selected="selected"' : ''; ?>><?php _e( 'Private', 'post-expirator' ); ?></option>
+		<option value="stick" <?php echo $selected === 'stick' ? 'selected="selected"' : ''; ?>><?php _e( 'Stick', 'post-expirator' ); ?></option>
+		<option value="unstick" <?php echo $selected === 'unstick' ? 'selected="selected"' : ''; ?>><?php _e( 'Unstick', 'post-expirator' ); ?></option>
+<?php if ( $type !== 'page' ) { ?>
+		<option value="category" <?php echo $selected === 'category' ? 'selected="selected"' : ''; ?>><?php _e( 'Category: Replace', 'post-expirator' ); ?></option>
+		<option value="category-add" <?php echo $selected === 'category-add' ? 'selected="selected"' : ''; ?>><?php _e( 'Category: Add', 'post-expirator' ); ?></option>
+		<option value="category-remove" <?php echo $selected === 'category-remove' ? 'selected="selected"' : ''; ?>><?php _e( 'Category: Remove', 'post-expirator' ); ?></option>
+<?php } ?>
+	</select>

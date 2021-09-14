@@ -11,7 +11,7 @@
 	<div class="inline-edit-col post-expirator-quickedit">
 		<div class="inline-edit-col">
 		<div class="inline-edit-group">
-		<legend class="inline-edit-legend"><?php _e( 'Post Expirator', 'post-expirator' ); ?></legend>
+		<legend class="inline-edit-legend"><?php _e( 'PublishPress Future', 'post-expirator' ); ?></legend>
 			<fieldset class="inline-edit-date">
 				<div class="pe-qe-fields">
 					<div>
