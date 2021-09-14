@@ -1,41 +1,85 @@
-# Copyright (C) 2021 PublishPress
-# This file is distributed under the same license as the PublishPress Future package.
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 2.5.0\n"
-"Report-Msgid-Bugs-To: "
-"https://wordpress.org/support/plugin/PublishPress-Future\n"
-"POT-Creation-Date: 2021-09-14 04:02:10+00:00\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: PublishPress Future\n"
+"POT-Creation-Date: 2021-09-14 11:00-0500\n"
+"PO-Revision-Date: 2021-09-14 11:00-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: PostExpirator Translate Team\n"
-"Language-Team: PostExpirator Translate Team\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: post-expirator.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
 
 #: classes/Display.class.php:41 views/tabs.php:6
 msgid "PublishPress Future Options"
 msgstr ""
 
-#: classes/Display.class.php:132
+#. Plugin Name of the plugin/theme
+#: classes/Display.class.php:41 post-expirator.php:272 views/bulk-edit.php:14
+msgid "PublishPress Future"
+msgstr ""
+
+#: classes/Display.class.php:134
 msgid "Debugging Disabled"
 msgstr ""
 
-#: classes/Display.class.php:137
+#: classes/Display.class.php:139
 msgid "Debugging Enabled"
 msgstr ""
 
-#: classes/Display.class.php:144
+#: classes/Display.class.php:146
 msgid "Debugging Table Emptied"
 msgstr ""
 
-#: classes/Display.class.php:159
+#: classes/Display.class.php:161
 msgid ""
 "Below is a dump of the debugging table, this should be useful for "
 "troubleshooting."
 msgstr ""
 
-#: classes/Display.class.php:206 classes/Display.class.php:237
+#: classes/Display.class.php:208 classes/Display.class.php:239
 msgid "Saved Options!"
+msgstr ""
+
+#: classes/Display.class.php:272
+#, php-format
+msgid "If you like %s, please leave us a %s rating. Thank you!"
+msgstr ""
+
+#: classes/Display.class.php:285
+msgid "About PublishPress Future"
+msgstr ""
+
+#: classes/Display.class.php:286
+msgid "About"
+msgstr ""
+
+#: classes/Display.class.php:290
+msgid "Future Documentation"
+msgstr ""
+
+#: classes/Display.class.php:291
+msgid "Documentation"
+msgstr ""
+
+#: classes/Display.class.php:295
+msgid "Contact the PublishPress team"
+msgstr ""
+
+#: classes/Display.class.php:296
+msgid "Contact"
 msgstr ""
 
 #: post-expirator-debug.php:66
@@ -72,46 +116,53 @@ msgstr ""
 
 #: post-expirator.php:618 post-expirator.php:629 post-expirator.php:640
 #: post-expirator.php:651
+#, php-format
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post status has been successfully changed "
 "to \"%4$s\"."
 msgstr ""
 
 #: post-expirator.php:662
+#, php-format
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "set."
 msgstr ""
 
 #: post-expirator.php:673
+#, php-format
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "removed."
 msgstr ""
 
 #: post-expirator.php:686 post-expirator.php:700
+#, php-format
 msgid ""
-"%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
-"\"%5$s\"."
+"%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to \"%5$s\"."
 msgstr ""
 
 #: post-expirator.php:723 post-expirator.php:737
+#, php-format
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
 #: post-expirator.php:766 post-expirator.php:787
+#, php-format
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
 
 #: post-expirator.php:806
+#, php-format
 msgid "Post Expiration Complete \"%s\""
 msgstr ""
 
 #: post-expirator.php:842
+#, php-format
 msgid "[%1$s] %2$s"
 msgstr ""
 
@@ -274,7 +325,8 @@ msgid "Inactive"
 msgstr ""
 
 #: views/menu-defaults.php:56
-msgid "Select whether the PublishPress Future meta box is active for this post type."
+msgid ""
+"Select whether the PublishPress Future meta box is active for this post type."
 msgstr ""
 
 #: views/menu-defaults.php:63
@@ -286,12 +338,12 @@ msgid "Auto-Enable?"
 msgstr ""
 
 #: views/menu-defaults.php:69 views/menu-display.php:41
-#: views/menu-general.php:95 views/menu-general.php:104
+#: views/menu-general.php:99 views/menu-general.php:108
 msgid "Enabled"
 msgstr ""
 
 #: views/menu-defaults.php:71 views/menu-display.php:43
-#: views/menu-general.php:97 views/menu-general.php:106
+#: views/menu-general.php:101 views/menu-general.php:110
 msgid "Disabled"
 msgstr ""
 
@@ -303,7 +355,7 @@ msgstr ""
 msgid "Taxonomy (hierarchical)"
 msgstr ""
 
-#: views/menu-defaults.php:82 views/menu-general.php:111
+#: views/menu-defaults.php:82 views/menu-general.php:115
 msgid "Who to notify"
 msgstr ""
 
@@ -313,7 +365,7 @@ msgid ""
 "when the post expires."
 msgstr ""
 
-#: views/menu-defaults.php:90 views/menu-general.php:59
+#: views/menu-defaults.php:90 views/menu-general.php:63
 msgid "None"
 msgstr ""
 
@@ -322,7 +374,7 @@ msgid "Inherit from General Settings"
 msgstr ""
 
 #: views/menu-defaults.php:92 views/menu-defaults.php:116
-#: views/menu-general.php:60 views/menu-general.php:67
+#: views/menu-general.php:64 views/menu-general.php:71
 msgid "Custom"
 msgstr ""
 
@@ -330,7 +382,7 @@ msgstr ""
 msgid "Publish Time"
 msgstr ""
 
-#: views/menu-defaults.php:106 views/menu-general.php:56
+#: views/menu-defaults.php:106 views/menu-general.php:60
 msgid "Default Date/Time Duration"
 msgstr ""
 
@@ -340,16 +392,17 @@ msgid ""
 "type."
 msgstr ""
 
-#: views/menu-defaults.php:118 views/menu-general.php:69
+#: views/menu-defaults.php:118 views/menu-general.php:73
+#, php-format
 msgid ""
 "Set the custom value to use for the default expiration date.  For "
 "information on formatting, see %1$s. For example, you could enter %2$s+1 "
-"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
-"Thursday%7$s."
+"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday"
+"%7$s."
 msgstr ""
 
 #: views/menu-defaults.php:129 views/menu-display.php:70
-#: views/menu-editor.php:21 views/menu-general.php:120
+#: views/menu-editor.php:21 views/menu-general.php:124
 msgid "Save Changes"
 msgstr ""
 
@@ -428,14 +481,18 @@ msgid "Shortcode"
 msgstr ""
 
 #: views/menu-display.php:26
+#, php-format
 msgid "Valid %s attributes:"
 msgstr ""
 
 #: views/menu-display.php:28
-msgid "%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
+#, php-format
+msgid ""
+"%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
 msgstr ""
 
 #: views/menu-display.php:29 views/menu-display.php:30
+#, php-format
 msgid "%s - format set here will override the value set on the settings page"
 msgstr ""
 
@@ -504,92 +561,94 @@ msgid ""
 "compatible Classic Editor style metabox."
 msgstr ""
 
-#: views/menu-general.php:35
+#: views/menu-general.php:35 views/menu-general.php:39
 msgid ""
 "The PublishPress Future plugin sets a custom meta value, and then optionally "
 "allows you to select if you want the post changed to a draft status or "
 "deleted when it expires."
 msgstr ""
 
-#: views/menu-general.php:39 views/tabs.php:9
+#: views/menu-general.php:43 views/tabs.php:9
 msgid "Defaults"
 msgstr ""
 
-#: views/menu-general.php:42
+#: views/menu-general.php:46
 msgid "Date Format"
 msgstr ""
 
-#: views/menu-general.php:45
+#: views/menu-general.php:49
+#, php-format
 msgid ""
 "The default format to use when displaying the expiration date within a post "
 "using the shortcode or within the footer.  For information on valid "
 "formatting options, see: %s."
 msgstr ""
 
-#: views/menu-general.php:49
+#: views/menu-general.php:53
 msgid "Time Format"
 msgstr ""
 
-#: views/menu-general.php:52
+#: views/menu-general.php:56
+#, php-format
 msgid ""
 "The default format to use when displaying the expiration time within a post "
 "using the shortcode or within the footer.  For information on valid "
 "formatting options, see: %s."
 msgstr ""
 
-#: views/menu-general.php:61
+#: views/menu-general.php:65
 msgid "Post/Page Publish Time"
 msgstr ""
 
-#: views/menu-general.php:63
+#: views/menu-general.php:67
 msgid ""
 "Set the default expiration date to be used when creating new posts and "
 "pages.  Defaults to none."
 msgstr ""
 
-#: views/menu-general.php:74
+#: views/menu-general.php:78
 msgid "Default Expiration Category"
 msgstr ""
 
-#: views/menu-general.php:84
+#: views/menu-general.php:88
 msgid "Sets the default expiration category for the post."
 msgstr ""
 
-#: views/menu-general.php:89
+#: views/menu-general.php:93
 msgid "Expiration Email Notification"
 msgstr ""
 
-#: views/menu-general.php:90
+#: views/menu-general.php:94
 msgid ""
 "Whenever a post expires, an email can be sent to alert users of the "
 "expiration."
 msgstr ""
 
-#: views/menu-general.php:93
+#: views/menu-general.php:97
 msgid "Enable Email Notification?"
 msgstr ""
 
-#: views/menu-general.php:98
+#: views/menu-general.php:102
 msgid ""
 "This will enable or disable the send of email notification on post "
 "expiration."
 msgstr ""
 
-#: views/menu-general.php:102
+#: views/menu-general.php:106
 msgid "Include Blog Administrators?"
 msgstr ""
 
-#: views/menu-general.php:107
+#: views/menu-general.php:111
 msgid ""
 "This will include all users with the role of \"Administrator\" in the post "
 "expiration email."
 msgstr ""
 
-#: views/menu-general.php:114
+#: views/menu-general.php:118
 msgid ""
 "Enter a comma separate list of emails that you would like to be notified "
-"when the post expires.  This will be applied to ALL post types.  You can "
-"set post type specific emails on the Defaults tab."
+"when the post expires.  This will be applied to ALL post types.  You can set "
+"post type specific emails on the Defaults tab."
 msgstr ""
 
 #: views/tabs.php:10
@@ -604,9 +663,21 @@ msgstr ""
 msgid "Diagnostics"
 msgstr ""
 
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/post-expirator/"
+msgstr ""
+
 #. Description of the plugin/theme
 msgid ""
 "Allows you to add an expiration date (minute) to posts which you can "
 "configure to either delete the post, change it to a draft, or update the "
 "post categories at expiration time."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "PublishPress"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://publishpress.com"
 msgstr ""
