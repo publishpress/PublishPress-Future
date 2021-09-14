@@ -166,7 +166,7 @@ This section describes how to install the plugin and get it working.
 
 = [2.1.1] =
 
-* New: Added the option to disable post expirator for certain post types if desired
+* New: Added the option to disable PublishPress Future for certain post types if desired
 * Fix: Fixed php warning issue cause when post type defaults are not set
 
 = [2.1.0] =
@@ -204,7 +204,7 @@ This is a major update of the core functions of this plugin.  All current plugin
 
 = [1.6.2] =
 
-* Added the ability to configure the post expirator to be enabled by default for all new posts
+* Added the ability to configure the PublishPress Future to be enabled by default for all new posts
 * Changed some instances of mktime to time
 * Fixed missing global call for MS installs
 
@@ -255,7 +255,7 @@ This is a major update of the core functions of this plugin.  All current plugin
 
 = [1.4.2] =
 
-* Added post expirator POT to /languages folder
+* Added PublishPress Future POT to /languages folder
 * Fixed issue with plugin admin navigation
 * Fixed timezone issue on plugin options screen
 

@@ -3,9 +3,9 @@
 Plugin Name: PublishPress Future
 Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
-Author: Aaron Axelsen
+Author: PublishPress
 Version: 2.5.0
-Author URI: http://postexpirator.tuxdocs.net/
+Author URI: http://publishpress.com
 Text Domain: post-expirator
 Domain Path: /languages
 */
@@ -287,23 +287,18 @@ function postexpirator_meta_box( $post ) {
 	$expirationdatets = get_post_meta( $post->ID, '_expiration-date', true );
 	$firstsave = get_post_meta( $post->ID, '_expiration-date-status', true );
 
-	// nonce
-	wp_nonce_field( '__postexpirator', '_postexpiratornonce' );
-
-	$default = '';
-	$expireType = '';
+	$default = $expireType = $enabled = $defaultmonth = $defaultday = $defaulthour = $defaultyear = $defaultminute = $categories = '';
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post->post_type ) );
 	if ( empty( $expirationdatets ) ) {
 		$default_expiry = PostExpirator_Facade::get_default_expiry( $post->post_type );
 
 		$defaultmonth   = $default_expiry['month'];
-		$defaultday   = $default_expiry['day'];
-		$defaulthour   = $default_expiry['hour'];
-		$defaultyear   = $default_expiry['year'];
-		$defaultminute   = $default_expiry['minute'];
+		$defaultday     = $default_expiry['day'];
+		$defaulthour    = $default_expiry['hour'];
+		$defaultyear    = $default_expiry['year'];
+		$defaultminute  = $default_expiry['minute'];
 
 		$enabled = '';
-		$disabled = ' disabled="disabled"';
 		$categories = get_option( 'expirationdateCategoryDefaults' );
 
 		if ( isset( $defaults['expireType'] ) ) {
@@ -313,7 +308,6 @@ function postexpirator_meta_box( $post ) {
 		// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 		if ( isset( $defaults['autoEnable'] ) && ( $firstsave !== 'saved' ) && ( $defaults['autoEnable'] === true || $defaults['autoEnable'] == 1 ) ) {
 			$enabled = ' checked="checked"';
-			$disabled = '';
 		}
 	} else {
 		$defaultmonth   = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $expirationdatets ), 'm' );
@@ -322,121 +316,26 @@ function postexpirator_meta_box( $post ) {
 		$defaulthour    = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $expirationdatets ), 'H' );
 		$defaultminute  = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $expirationdatets ), 'i' );
 		$enabled    = ' checked="checked"';
-		$disabled   = '';
 
 		$attributes = PostExpirator_Facade::get_expire_principles( $post->ID );
 		$expireType = $attributes['expireType'];
 		$categories = $attributes['category'];
 	}
 
-	$rv = array();
-	$rv[] = '<p><input type="checkbox" name="enable-expirationdate" id="enable-expirationdate" value="checked"' . $enabled . ' onclick="expirationdate_ajax_add_meta(\'enable-expirationdate\')" />';
-	$rv[] = '<label for="enable-expirationdate">' . __( 'Enable Post Expiration', 'post-expirator' ) . '</label></p>';
-
-	if ( $default === 'publish' ) {
-		$rv[] = '<em>' . __( 'The published date/time will be used as the expiration value', 'post-expirator' ) . '</em><br/>';
-	} else {
-		$rv[] = '<table><tr>';
-		$rv[] = '<th style="text-align: left;">' . __( 'Year', 'post-expirator' ) . '</th>';
-		$rv[] = '<th style="text-align: left;">' . __( 'Month', 'post-expirator' ) . '</th>';
-		$rv[] = '<th style="text-align: left;">' . __( 'Day', 'post-expirator' ) . '</th>';
-		$rv[] = '</tr><tr>';
-		$rv[] = '<td>';
-		$rv[] = '<select name="expirationdate_year" id="expirationdate_year"' . $disabled . '>';
-		$currentyear = date( 'Y' );
-
-		if ( $defaultyear < $currentyear ) {
-			$currentyear = $defaultyear;
-		}
-
-		for ( $i = $currentyear; $i <= $currentyear + 10; $i++ ) {
-			// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-			if ( $i == $defaultyear ) {
-				$selected = ' selected="selected"';
-			} else {
-				$selected = '';
-			}
-			$rv[] = '<option' . $selected . '>' . ( $i ) . '</option>';
-		}
-		$rv[] = '</select>';
-		$rv[] = '</td><td>';
-		$rv[] = '<select name="expirationdate_month" id="expirationdate_month"' . $disabled . '>';
-
-		for ( $i = 1; $i <= 12; $i++ ) {
-			if ( $defaultmonth === date_i18n( 'm', mktime( 0, 0, 0, $i, 1, date_i18n( 'Y' ) ) ) ) {
-				$selected = ' selected="selected"';
-			} else {
-				$selected = '';
-			}
-			$rv[] = '<option value="' . date_i18n( 'm', mktime( 0, 0, 0, $i, 1, date_i18n( 'Y' ) ) ) . '"' . $selected . '>' . date_i18n( 'F', mktime( 0, 0, 0, $i, 1, date_i18n( 'Y' ) ) ) . '</option>';
-		}
-
-		$rv[] = '</select>';
-		$rv[] = '</td><td>';
-		$rv[] = '<input type="text" id="expirationdate_day" name="expirationdate_day" value="' . $defaultday . '" size="2"' . $disabled . ' />,';
-		$rv[] = '</td></tr><tr>';
-		$rv[] = '<th style="text-align: left;"></th>';
-		$rv[] = '<th style="text-align: left;">' . __( 'Hour', 'post-expirator' ) . '(' . date_i18n( 'T', mktime( 0, 0, 0, $i, 1, date_i18n( 'Y' ) ) ) . ')</th>';
-		$rv[] = '<th style="text-align: left;">' . __( 'Minute', 'post-expirator' ) . '</th>';
-		$rv[] = '</tr><tr>';
-		$rv[] = '<td>@</td><td>';
-		$rv[] = '<select name="expirationdate_hour" id="expirationdate_hour"' . $disabled . '>';
-
-		for ( $i = 1; $i <= 24; $i++ ) {
-			if ( $defaulthour === date_i18n( 'H', mktime( $i, 0, 0, date_i18n( 'n' ), date_i18n( 'j' ), date_i18n( 'Y' ) ) ) ) {
-				$selected = ' selected="selected"';
-			} else {
-				$selected = '';
-			}
-			$rv[] = '<option value="' . date_i18n( 'H', mktime( $i, 0, 0, date_i18n( 'n' ), date_i18n( 'j' ), date_i18n( 'Y' ) ) ) . '"' . $selected . '>' . date_i18n( 'H', mktime( $i, 0, 0, date_i18n( 'n' ), date_i18n( 'j' ), date_i18n( 'Y' ) ) ) . '</option>';
-		}
-
-		$rv[] = '</select></td><td>';
-		$rv[] = '<input type="text" id="expirationdate_minute" name="expirationdate_minute" value="' . $defaultminute . '" size="2"' . $disabled . ' />';
-		$rv[] = '</td></tr></table>';
-	}
-	$rv[] = '<input type="hidden" name="expirationdate_formcheck" value="true" />';
-	echo implode( "\n", $rv );
-
-	echo '<br/>' . __( 'How to expire', 'post-expirator' ) . ': ';
-	_postexpirator_expire_type( array('type' => $post->post_type, 'name' => 'expirationdate_expiretype', 'selected' => $expireType, 'disabled' => $disabled, 'onchange' => 'expirationdate_toggle_category(this)') );
-	echo '<br/>';
-
-	if ( $post->post_type !== 'page' ) {
-		if ( isset( $expireType ) && ( $expireType === 'category' || $expireType === 'category-add' || $expireType === 'category-remove' ) ) {
-			$catdisplay = 'block';
-		} else {
-			$catdisplay = 'none';
-		}
-		echo '<div id="expired-category-selection" style="display: ' . $catdisplay . '">';
-		echo '<br/>' . __( 'Expiration Categories', 'post-expirator' ) . ':<br/>';
-
-		echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
-		echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
-		$walker = new Walker_PostExpirator_Category_Checklist();
-		if ( ! empty( $disabled ) ) {
-			$walker->setDisabled();
-		}
-		$taxonomies = get_object_taxonomies( $post->post_type, 'object' );
-			$taxonomies = wp_filter_object_list( $taxonomies, array('hierarchical' => true) );
-		if ( sizeof( $taxonomies ) === 0 ) {
-			echo '<p>' . __( 'You must assign a heirarchical taxonomy to this post type to use this feature.', 'post-expirator' ) . '</p>';
-		} elseif ( sizeof( $taxonomies ) > 1 && ! isset( $defaults['taxonomy'] ) ) {
-			echo '<p>' . __( 'More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen.', 'post-expirator' ) . '</p>';
-		} else {
-			$keys = array_keys( $taxonomies );
-			$taxonomy = isset( $defaults['taxonomy'] ) ? $defaults['taxonomy'] : $keys[0];
-			wp_terms_checklist( 0, array( 'taxonomy' => $taxonomy, 'walker' => $walker, 'selected_cats' => $categories, 'checked_ontop' => false ) );
-			echo '<input type="hidden" name="taxonomy-heirarchical" value="' . $taxonomy . '" />';
-		}
-		echo '</ul>';
-		echo '</div>';
-		if ( isset( $taxonomy ) ) {
-			echo '<p class="post-expirator-taxonomy-name">' . __( 'Taxonomy Name', 'post-expirator' ) . ': ' . $taxonomy . '</p>';
-		}
-		echo '</div>';
-	}
-	echo '<div id="expirationdate_ajax_result"></div>';
+	PostExpirator_Display::getInstance()->render_template(
+		'classic-metabox', array(
+			'post' => $post,
+			'enabled' => $enabled,
+			'default' => $default,
+			'defaultmonth' => $defaultmonth,
+			'defaultday' => $defaultday,
+			'defaulthour' => $defaulthour,
+			'defaultyear' => $defaultyear,
+			'defaultminute' => $defaultminute,
+			'categories' => $categories,
+			'expireType' => $expireType,
+		)
+	);
 }
 
 /**
@@ -447,57 +346,32 @@ function postexpirator_meta_box( $post ) {
  * @access private
  */
 function postexpirator_js_admin_header() {
-	// Define custom JavaScript function
 	?>
 <script type="text/javascript">
 //<![CDATA[
-function expirationdate_ajax_add_meta(expireenable) {
-	var expire = document.getElementById(expireenable);
+(function($){
+	$(document).ready(function(){
+		init();
+	});
 
-	if (expire.checked == true) {
-		var enable = 'true';
-		if (document.getElementById('expirationdate_month')) {
-			document.getElementById('expirationdate_month').disabled = false;
-			document.getElementById('expirationdate_day').disabled = false;
-			document.getElementById('expirationdate_year').disabled = false;
-			document.getElementById('expirationdate_hour').disabled = false;
-			document.getElementById('expirationdate_minute').disabled = false;
-		}
-		document.getElementById('expirationdate_expiretype').disabled = false;
-		var cats = document.getElementsByName('expirationdate_category[]');
-		var max = cats.length;
-		for (var i=0; i<max; i++) {
-			cats[i].disabled = '';
-		}
-	} else {
-		if (document.getElementById('expirationdate_month')) {
-			document.getElementById('expirationdate_month').disabled = true;
-			document.getElementById('expirationdate_day').disabled = true;
-			document.getElementById('expirationdate_year').disabled = true;
-			document.getElementById('expirationdate_hour').disabled = true;
-			document.getElementById('expirationdate_minute').disabled = true;
-		}
-		document.getElementById('expirationdate_expiretype').disabled = true;
-		var cats = document.getElementsByName('expirationdate_category[]');
-		var max = cats.length;
-		for (var i=0; i<max; i++) {
-			cats[i].disabled = 'disable';
-		}
-		var enable = 'false';
+	function init(){
+		$('#enable-expirationdate').on('click', function(e){
+			if($(this).is(':checked')){
+				$('.pe-classic-fields').show();
+			}else{
+				$('.pe-classic-fields').hide();
+			}
+		});
+
+		$('.pe-howtoexpire').on('change', function(e){
+			if($(this).val().indexOf('category') !== -1){
+				$('#expired-category-selection').show();
+			}else{
+				$('#expired-category-selection').hide();
+			}
+		});
 	}
-	return true;
-}
-function expirationdate_toggle_category(id) {
-	if (id.options[id.selectedIndex].value == 'category') {
-		jQuery('#expired-category-selection').show();
-	} else if (id.options[id.selectedIndex].value == 'category-add') {
-		jQuery('#expired-category-selection').show(); //TEMP
-	} else if (id.options[id.selectedIndex].value == 'category-remove') {
-		jQuery('#expired-category-selection').show(); //TEMP
-	} else {
-		jQuery('#expired-category-selection').hide();
-	}
-}
+})(jQuery);
 //]]>
 </script>
 	<?php
@@ -1193,6 +1067,7 @@ function postexpirator_debug() {
  * @access private
  */
 function postexpirator_css( $screen_id ) {
+	error_log( "oye $screen_id" );
 	switch ( $screen_id ) {
 		case 'post.php':
 		case 'post-new.php':

@@ -32,3 +32,22 @@
 	font-style: italic;
 	font-size: x-small;
 }
+
+div.pe-classic-fields {
+	display: flex;
+	flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.pe-classic-fields > div {
+	display: flex;
+	flex-direction: column;
+	padding: 5px;
+}
+
+div.pe-classic-fields > div > label {
+	font-weight: bold;
+}
