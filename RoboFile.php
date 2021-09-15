@@ -7,24 +7,26 @@ use PublishPressBuilder\PackageBuilderTasks;
  *
  * @see http://robo.li/
  */
-class RoboFile extends PackageBuilderTasks
-{
-    public function __construct()
-    {
-        parent::__construct();
+class RoboFile extends PackageBuilderTasks {
 
-        $this->appendToFileToIgnore(
-            [
-                'docker-compose.yml',
-                'codecept.conf.js',
-                'codeceptjs',
-                'Gruntfile.js',
-                'jsconfig.json',
-                'logs',
-                'phpcs.xml',
-            ]
-        );
+	/**
+	 * The constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
 
-        $this->setVersionConstantName('POSTEXPIRATOR_VERSION');
-    }
+		$this->appendToFileToIgnore(
+			array(
+				'docker-compose.yml',
+				'codecept.conf.js',
+				'codeceptjs',
+				'Gruntfile.js',
+				'jsconfig.json',
+				'logs',
+				'phpcs.xml',
+			)
+		);
+
+		$this->setVersionConstantName( 'POSTEXPIRATOR_VERSION' );
+	}
 }
