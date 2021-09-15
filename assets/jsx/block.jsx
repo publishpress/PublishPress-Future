@@ -44,9 +44,6 @@
                 categories = config.default_categories;
                 if(config.default_date){
                     date.setTime((parseInt(config.default_date) + date.getTimezoneOffset() * 60) * 1000);
-                    // update the post meta for date so that the user does not have to click the date to set it
-                    const setPostMeta = (newMeta) => wp.data.dispatch( 'core/editor' ).editPost( { meta: newMeta } );
-                    setPostMeta( {'_expiration-date': this.getDate(date) } );
                 }
             }
 
@@ -95,10 +92,16 @@
         componentDidUpdate() {
             const { enabled, date, expireAction, categories, attribute } = this.state;
             const setPostMeta = (newMeta) => wp.data.dispatch( 'core/editor' ).editPost( { meta: newMeta } );
+            const postMeta = wp.data.select( 'core/editor' ).getEditedPostAttribute( 'meta' );
 
             switch(attribute){
                 case 'enabled':
                     setPostMeta( { '_expiration-date-status' : (enabled ? 'saved' : '' ) } );
+                    // if date is not set when the checkbox is enabled, set it to the default date
+                    // this is to prevent the user from having to click the date to set it
+                    if(!postMeta['_expiration-date']){
+                        setPostMeta( {'_expiration-date': this.getDate(date) } );
+                    }
                     break;
                 case 'date':
                     if(typeof date === 'string'){
