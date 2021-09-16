@@ -3,15 +3,15 @@
 Plugin Name: Post Expirator
 Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
-Author: Aaron Axelsen
-Version: 2.4.4
-Author URI: http://postexpirator.tuxdocs.net/
+Author: PublishPress
+Version: 2.5.0
+Author URI: http://publishpress.com
 Text Domain: post-expirator
 Domain Path: /languages
 */
 
 // Default Values
-define( 'POSTEXPIRATOR_VERSION', '2.4.4' );
+define( 'POSTEXPIRATOR_VERSION', '2.5.0' );
 define( 'POSTEXPIRATOR_DATEFORMAT', __( 'l F jS, Y', 'post-expirator' ) );
 define( 'POSTEXPIRATOR_TIMEFORMAT', __( 'g:ia', 'post-expirator' ) );
 define( 'POSTEXPIRATOR_FOOTERCONTENTS', __( 'Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator' ) );
@@ -243,8 +243,8 @@ add_action( 'bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2 );
  * @access private
  */
 function postexpirator_get_post_types() {
-	$post_types = get_post_types( array('public' => true) );
-	$post_types = array_merge( $post_types, get_post_types( array('public' => false, '_builtin' => false ) ) );
+	$post_types = get_post_types( array( 'public' => true ) );
+	$post_types = array_merge( $post_types, get_post_types( array( 'public' => false, 'show_ui' => true, '_builtin' => false ) ) );
 
 	// in case some post types should not be supported.
 	$unset_post_types = apply_filters( 'postexpirator_unset_post_types', array( 'attachment' ) );
@@ -268,7 +268,7 @@ function postexpirator_meta_custom() {
 	foreach ( $post_types as $t ) {
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $t ) );
 		// if settings are not configured, show the metabox by default only for posts and pages
-		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $t, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
+		if ( ( ( empty( $defaults ) || ! isset( $defaults['activeMetaBox'] ) ) && in_array( $t, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
 			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core', array( '__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox() ) );
 		}
 	}
