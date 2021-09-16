@@ -1,44 +1,70 @@
 === Post Expirator: Automatically Unpublish WordPress Posts ===
-Contributors: publishpress, kevinB, stevejburge, andergmartins, axelseaa, rozroz
-Author: PublishPress
+Contributors: publishpress, kevinB, stevejburge, andergmartins
+Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
-Requires at least: 4.0
+Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.4.4
+Stable tag: 2.5.0
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
 == Description ==
 
-The Post Expirator plugin allows you to add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
+The Post Expirator plugin allows you to add an expiration date to posts. pages and other content type. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
-There are a number of different ways that the posts can expire:
+Here's an overview of what you can do with Post Expirator:
 
-* Draft
-* Delete
-* Trash
-* Private
-* Stick
-* Unstick
-* Categories: Replace
-* Categories: Add
-* Categories: Remove
+* Choose expiry dates for content in any post type.
+* Select expiry dates in the right sidebar when editing posts.
+* Modify, remove or completely delete content when the expiry date arrives.
+* Modify expiry dates using "Quick Edit" and "Bulk Edit".
+* Receive email notifications when your content expires.
+* Show expiry dates in your content, automatically or with shortcodes.
 
-For each expiration event, a custom cron job will be schedule which will help reduce server overhead for busy sites.
+## Options for Expiring Posts
 
-The expiration date can be displayed within the actual post by using the [postexpirator] tag.  The format attribute will override the plugin
-default display format.  See the [PHP Date Function](http://us2.php.net/manual/en/function.date.php) for valid date/time format options.
+When your posts expire, you can perform these changes on your content:
 
-NOTE: This plugin REQUIRES that WP-CRON is setup and functional on your webhost.  Some hosts do not support this, so please check and confirm if you run into issues using the plugin.
+* Change the status to "Draft".
+* Delete the post.
+* Send the post to the Trash.
+* Change the status to "Private".
+* Enable the “Stick to the top of the blog” option.
+* Disable the “Stick to the top of the blog” option.
+* Remove all existing categories, and add new categories.
+* Keep all existing categories, and add new categories.
+* Keep all existing categories, except for those specified in this change.
 
-**[postexpirator] shortcode attributes**
+[Click here for more details on expiring posts](https://publishpress.com/knowledge-base/ways-to-expire-posts/).
 
-* type - defaults to full - valid options are full,date,time
-* dateformat - format set here will override the value set on the settings page
-* timeformat - format set here will override the value set on the settings page
+## Display the Expiry Date in Your Content
 
-This plugin is fully compatible with WordPress Multisite Mode.
+Post Expirator allows you to place automatically show the expiry date inside your articles. The expiry will be added at the bottom of your post.
+
+[Click here to see the Footer Display options](https://publishpress.com/knowledge-base/footer-display/).
+
+You can use shortcodes to show the expiration date inside your posts. You can customize the shortcode output with several formatting options.
+
+[Click here to see the shortcode options](https://publishpress.com/knowledge-base/shortcodes-to-show-expiration-date/).
+
+## Expiry Defaults for Post Types
+
+Post Expirator can support any post type in WordPress. Go to Settings > Post Expirator > Defaults and you can choose default expiry options for each post type.
+
+[Click here to see the default options](https://publishpress.com/knowledge-base/defaults-for-post-types/).
+
+## Post Expirator Email Notifications
+
+The Post Expirator plugin can send you email notifications when your content is unpublished. You can control the emails by going to Settings > Post Expirator > General Settings.
+
+[Click here to see the notification options](https://publishpress.com/knowledge-base/email-notifications/).
+
+## Details on How Post Expiry Works
+
+For each expiration event, a custom cron job is scheduled. This can help reduce server overhead for busy sites. This plugin REQUIRES that WP-CRON is setup and functional on your webhost.  Some hosts do not support this, so please check and confirm if you run into issues using the plugin.
+
+[Click here to see the technical details for this plugin](https://publishpress.com/knowledge-base/scheduling-cron-jobs/).
 
 == Installation ==
 
@@ -54,6 +80,17 @@ This section describes how to install the plugin and get it working.
 3. Settings screen
 
 == Changelog ==
+
+= [2.5.0] - 08 Aug 2021 =
+
+* Fixed: Appearance Widgets screen shows PHP Notice, #92;
+* Fixed: Stop the Post Expirator box from appearing in non-public post types, #78;
+* Added: Add "How to Expire" to Quick Edit, #62;
+* Changed: Settings UI enhancement, #14;
+* Fixed: Hide metabox from Media Library files, #56;
+* Added: Support for Gutenberg block editor, #10;
+* Added: Set a default time per post type, #12;
+
 
 = [2.4.4] - 22 Jul 2021 =
 

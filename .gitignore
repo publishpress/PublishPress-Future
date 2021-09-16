@@ -8,3 +8,4 @@ codeceptjs/output
 #bin
 .idea
 .DS_Store
+/builder.yml
