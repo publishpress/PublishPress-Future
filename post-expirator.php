@@ -68,7 +68,7 @@ add_action( 'plugins_loaded', 'postexpirator_init' );
 function postexpirator_add_column( $columns, $type ) {
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $type ) );
 	// if settings are not configured, show the metabox by default only for posts and pages
-	if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $type, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
+	if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $type, array( 'post', 'page' ), true ) ) || ( is_array( $defaults ) && $defaults['activeMetaBox'] === 'active' ) ) {
 		$columns['expirationdate'] = __( 'Expires', 'post-expirator' );
 	}
 	return $columns;
@@ -265,11 +265,11 @@ function postexpirator_get_post_types() {
  */
 function postexpirator_meta_custom() {
 	$post_types = postexpirator_get_post_types();
-	foreach ( $post_types as $t ) {
-		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $t ) );
+	foreach ( $post_types as $type ) {
+		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $type ) );
 		// if settings are not configured, show the metabox by default only for posts and pages
-		if ( ( ( empty( $defaults ) || ! isset( $defaults['activeMetaBox'] ) ) && in_array( $t, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
-			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $t, 'side', 'core', array( '__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox() ) );
+		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $type, array( 'post', 'page' ), true ) ) || ( is_array( $defaults ) && $defaults['activeMetaBox'] === 'active' ) ) {
+			add_meta_box( 'expirationdatediv', __( 'Post Expirator', 'post-expirator' ), 'postexpirator_meta_box', $type, 'side', 'core', array( '__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox() ) );
 		}
 	}
 }
@@ -1067,7 +1067,6 @@ function postexpirator_debug() {
  * @access private
  */
 function postexpirator_css( $screen_id ) {
-	error_log( "oye $screen_id" );
 	switch ( $screen_id ) {
 		case 'post.php':
 		case 'post-new.php':
