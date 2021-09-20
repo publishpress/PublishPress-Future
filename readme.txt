@@ -1,5 +1,5 @@
 === Post Expirator: Automatically Unpublish WordPress Posts ===
-Contributors: publishpress, kevinB, stevejburge, andergmartins
+Contributors: publishpress, kevinB, stevejburge, andergmartins, rozroz
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
