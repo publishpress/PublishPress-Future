@@ -69,7 +69,7 @@
 						<label>
 							<?php
 								$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
-								_postexpirator_expire_type( array('name' => 'expirationdate_expiretype', 'selected' => $defaults['expireType'], 'post_type' => $post_type ) );
+								_postexpirator_expire_type( array('name' => 'expirationdate_expiretype', 'selected' => empty( $defaults ) ? 'draft' : $defaults['expireType'], 'post_type' => $post_type ) );
 							?>
 						</label>
 					</div>

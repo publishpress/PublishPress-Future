@@ -1,11 +1,11 @@
 === Post Expirator: Automatically Unpublish WordPress Posts ===
-Contributors: publishpress, kevinB, stevejburge, andergmartins
+Contributors: publishpress, kevinB, stevejburge, andergmartins, rozroz
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
-Requires at least: 4.0
+Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -80,6 +80,14 @@ This section describes how to install the plugin and get it working.
 3. Settings screen
 
 == Changelog ==
+
+= [2.5.1] - 27 Sep 2021 =
+
+* Fixed: Default Expiration Categories cannot be unset, #94;
+* Fixed: Tidy up design for Classic Editor version, #83;
+* Fixed: All posts now carry the default expiration, #115;
+* Fixed: Error with 2.5.0 and WordPress 5.8.1, #110;
+* Fixed: Do not show private post types that don't have an admin UI, #116;
 
 = [2.5.0] - 08 Aug 2021 =
 

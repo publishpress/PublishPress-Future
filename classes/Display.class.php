@@ -223,9 +223,7 @@ class PostExpirator_Display {
 				update_option( 'expirationdateFooterContents', $_POST['expired-footer-contents'] );
 				update_option( 'expirationdateFooterStyle', $_POST['expired-footer-style'] );
 				update_option( 'expirationdateGutenbergSupport', $_POST['gutenberg-support'] );
-				if ( isset( $_POST['expirationdate_category'] ) ) {
-					update_option( 'expirationdateCategoryDefaults', $_POST['expirationdate_category'] );
-				}
+				update_option( 'expirationdateCategoryDefaults', isset( $_POST['expirationdate_category'] ) ? $_POST['expirationdate_category'] : array() );
 				update_option( 'expirationdateDefaultDate', $_POST['expired-default-expiration-date'] );
 				if ( $_POST['expired-custom-expiration-date'] ) {
 					update_option( 'expirationdateDefaultDateCustom', $_POST['expired-custom-expiration-date'] );
