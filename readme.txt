@@ -81,7 +81,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.5.1] - 23 Sep 2021 =
+= [2.5.1] - 27 Sep 2021 =
 
 * Fixed: Default Expiration Categories cannot be unset, #94;
 * Fixed: Tidy up design for Classic Editor version, #83;
