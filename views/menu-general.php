@@ -40,6 +40,8 @@ if ( $expiredemailnotificationadmins == 0 ) {
 	$expiredemailnotificationadminsenabled = 'checked="checked"';
 }
 
+$user_roles    = wp_roles()->get_names();
+$plugin_facade = PostExpirator_Facade::getInstance();
 ?>
 	<p><?php _e( 'The post expirator plugin sets a custom meta value, and then optionally allows you to select if you want the post changed to a draft status or deleted when it expires.', 'post-expirator' ); ?></p>
 
@@ -235,6 +237,24 @@ if ( $expiredemailnotificationadmins == 0 ) {
 					       value="0" <?php echo intval( $gutenberg ) === 0 ? 'checked' : ''; ?>/> <label
 							for="gutenberg-support-disabled"><?php _e( 'Show Classic Editor style box', 'post-expirator' ); ?></label>
 					<p class="description"><?php _e( 'Toggle between native support for the Block Editor or the backward compatible Classic Editor style metabox.', 'post-expirator' ); ?></p>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row">
+					<?php _e( 'Choose which user roles can use Post Expirator', 'post-expirator' ); ?>
+				</th>
+				<td class="pe-checklist">
+					<?php foreach ( $user_roles as $role_name => $role_label ) : ?>
+						<label for="allow-user-role-<?php echo esc_attr( $role_name ); ?>">
+							<input type="checkbox"
+							       id="allow-user-role-<?php echo esc_attr( $role_name ); ?>"
+							       name="allow-user-roles[]"
+							       value="<?php echo esc_attr( $role_name ); ?>"
+							       <?php if ( $plugin_facade->user_role_can_expire_posts( $role_name ) ) : ?>checked="checked"<?php endif; ?>
+							/>
+							<?php echo esc_html( $role_label ); ?>
+						</label>
+					<?php endforeach; ?>
 				</td>
 			</tr>
 		</table>

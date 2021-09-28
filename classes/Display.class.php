@@ -237,6 +237,27 @@ class PostExpirator_Display {
 				if ( $_POST['expired-custom-expiration-date'] ) {
 					update_option( 'expirationdateDefaultDateCustom', $_POST['expired-custom-expiration-date'] );
 				}
+
+				if ( ! isset( $_POST['allow-user-roles'] ) || ! is_array( $_POST['allow-user-roles'] ) ) {
+					$_POST['allow-user-roles'] = array();
+				}
+
+				$user_roles = wp_roles()->get_names();
+
+				foreach ( $user_roles as $role_name => $role_label ) {
+					$role = get_role( $role_name );
+
+					if ( ! is_a( $role, WP_Role::class ) ) {
+						continue;
+					}
+
+					if ( in_array( $role_name, $_POST['allow-user-roles'], true ) ) {
+						$role->add_cap( PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST );
+					} else {
+						$role->remove_cap( PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST );
+					}
+				}
+
 				echo "<div id='message' class='updated fade'><p>";
 				_e( 'Saved Options!', 'post-expirator' );
 				echo '</p></div>';

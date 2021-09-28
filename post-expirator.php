@@ -205,6 +205,12 @@ function postexpirator_quickedit( $column_name, $post_type ) {
 		return;
 	}
 
+	$facade = PostExpirator_Facade::getInstance();
+
+	if ( ! $facade->current_user_can_expire_posts() ) {
+		return;
+	}
+
 	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
 	$taxonomy = isset( $defaults['taxonomy'] ) ? $defaults['taxonomy'] : '';
 	$label    = '';
@@ -237,6 +243,12 @@ add_action( 'quick_edit_custom_box', 'postexpirator_quickedit', 10, 2 );
  */
 function postexpirator_bulkedit( $column_name, $post_type ) {
 	if ( $column_name !== 'expirationdate' ) {
+		return;
+	}
+
+	$facade = PostExpirator_Facade::getInstance();
+
+	if ( ! $facade->current_user_can_expire_posts() ) {
 		return;
 	}
 
@@ -297,6 +309,12 @@ function postexpirator_get_post_types() {
  * @access private
  */
 function postexpirator_meta_custom() {
+	$facade = PostExpirator_Facade::getInstance();
+
+	if ( ! $facade->current_user_can_expire_posts() ) {
+		return;
+	}
+
 	$post_types = postexpirator_get_post_types();
 	foreach ( $post_types as $type ) {
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $type ) );
@@ -383,6 +401,11 @@ function postexpirator_meta_box( $post ) {
  * @access private
  */
 function postexpirator_js_admin_header() {
+	$facade = PostExpirator_Facade::getInstance();
+
+	if ( ! $facade->current_user_can_expire_posts() ) {
+		return;
+	}
 	?>
 	<script type="text/javascript">
         //<![CDATA[
@@ -447,6 +470,12 @@ function postexpirator_update_post_meta( $id ) {
 	// don't run the echo if the function is called for saving revision.
 	$posttype = get_post_type( $id );
 	if ( $posttype === 'revision' ) {
+		return;
+	}
+
+	$facade = PostExpirator_Facade::getInstance();
+
+	if ( ! $facade->current_user_can_expire_posts() ) {
 		return;
 	}
 
@@ -1254,6 +1283,9 @@ function postexpirator_activate() {
 	if ( get_option( 'expirationdateGutenbergSupport' ) === false ) {
 		update_option( 'expirationdateGutenbergSupport', 1 );
 	}
+
+	$plugin_facade = PostExpirator_Facade::getInstance();
+	$plugin_facade->set_default_capabilities();
 }
 
 /**
@@ -1508,6 +1540,12 @@ add_action( 'admin_print_scripts-edit.php', 'postexpirator_quickedit_javascript'
  */
 function postexpirator_date_save_bulk_edit() {
 	check_ajax_referer( POSTEXPIRATOR_SLUG, 'nonce' );
+
+	$facade = PostExpirator_Facade::getInstance();
+
+	if ( ! $facade->current_user_can_expire_posts() ) {
+		wp_die( __( 'You\'re not allowed to set posts to expire', 'post-expirator' ), __( 'Forbidden', 'post-expirator' ), 403 );
+	}
 
 	// we need the post IDs
 	$post_ids = ( isset( $_POST['post_ids'] ) && ! empty( $_POST['post_ids'] ) ) ? $_POST['post_ids'] : null;
