@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     require('load-grunt-tasks')(grunt);
 
@@ -89,21 +89,21 @@ module.exports = function(grunt) {
                     type: 'wp-plugin',
                     exclude: ['/vendor'],
                     updateTimestamp: false,
-                    processPot: function( pot, options ) {
+                    processPot: function (pot, options) {
                         // https://github.com/cedaro/grunt-wp-i18n/blob/develop/docs/examples/remove-package-metadata.md
                         var translation,
-                        excluded_meta = [
-                            'Plugin Name of the plugin/theme',
-                            'Plugin URI of the plugin/theme',
-                            'Author of the plugin/theme',
-                            'Author URI of the plugin/theme'
-                        ];
+                            excluded_meta = [
+                                'Plugin Name of the plugin/theme',
+                                'Plugin URI of the plugin/theme',
+                                'Author of the plugin/theme',
+                                'Author URI of the plugin/theme'
+                            ];
 
-                        for ( translation in pot.translations[''] ) {
-                            if ( 'undefined' !== typeof pot.translations[''][ translation ].comments.extracted ) {
-                                if ( excluded_meta.indexOf( pot.translations[''][ translation ].comments.extracted ) >= 0 ) {
-                                    console.log( 'Excluded meta: ' + pot.translations[''][ translation ].comments.extracted );
-                                    delete pot.translations[''][ translation ];
+                        for (translation in pot.translations['']) {
+                            if ('undefined' !== typeof pot.translations[''][translation].comments.extracted) {
+                                if (excluded_meta.indexOf(pot.translations[''][translation].comments.extracted) >= 0) {
+                                    console.log('Excluded meta: ' + pot.translations[''][translation].comments.extracted);
+                                    delete pot.translations[''][translation];
                                 }
                             }
                         }

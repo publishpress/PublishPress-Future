@@ -22,10 +22,10 @@ services:
     ports:
       - 80:80
     volumes:
-       - ./wp-content:/var/www/html/wp-content/
-       - .:/var/www/html/wp-content/plugins/post-expirator/
-       - ./bin/:/var/www/html/pe-bin/
-       - ./test/:/var/www/html/pe-test/
+      - ./wp-content:/var/www/html/wp-content/
+      - .:/var/www/html/wp-content/plugins/post-expirator/
+      - ./bin/:/var/www/html/pe-bin/
+      - ./test/:/var/www/html/pe-test/
     restart: always
     environment:
       WORDPRESS_DB_NAME: wordpress

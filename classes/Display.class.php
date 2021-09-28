@@ -24,6 +24,7 @@ class PostExpirator_Display {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
+
 		return self::$_instance;
 	}
 
@@ -38,7 +39,10 @@ class PostExpirator_Display {
 	 * Add plugin page menu.
 	 */
 	function add_menu() {
-		add_submenu_page( 'options-general.php', __( 'Post Expirator Options', 'post-expirator' ), __( 'Post Expirator', 'post-expirator' ), 'manage_options', POSTEXPIRATOR_BASENAME, array( self::$_instance, 'settings_tabs' ) );
+		add_submenu_page( 'options-general.php', __( 'Post Expirator Options', 'post-expirator' ), __( 'Post Expirator', 'post-expirator' ), 'manage_options', POSTEXPIRATOR_BASENAME, array(
+			self::$_instance,
+			'settings_tabs'
+		) );
 	}
 
 	/**
@@ -104,7 +108,12 @@ class PostExpirator_Display {
 			$tabs[] = 'viewdebug';
 		}
 
-		$this->render_template( 'tabs', array( 'tabs' => $tabs, 'tab_index' => $tab_index, 'html' => $html, 'tab' => $tab ) );
+		$this->render_template( 'tabs', array(
+			'tabs'      => $tabs,
+			'tab_index' => $tab_index,
+			'html'      => $html,
+			'tab'       => $tab
+		) );
 
 	}
 
@@ -119,19 +128,19 @@ class PostExpirator_Display {
 			}
 			if ( isset( $_POST['debugging-disable'] ) ) {
 				update_option( 'expirationdateDebug', 0 );
-						echo "<div id='message' class='updated fade'><p>";
+				echo "<div id='message' class='updated fade'><p>";
 				_e( 'Debugging Disabled', 'post-expirator' );
 				echo '</p></div>';
 			} elseif ( isset( $_POST['debugging-enable'] ) ) {
 				update_option( 'expirationdateDebug', 1 );
-						echo "<div id='message' class='updated fade'><p>";
+				echo "<div id='message' class='updated fade'><p>";
 				_e( 'Debugging Enabled', 'post-expirator' );
 				echo '</p></div>';
 			} elseif ( isset( $_POST['purge-debug'] ) ) {
 				require_once( plugin_dir_path( __FILE__ ) . 'post-expirator-debug.php' );
 				$debug = new PostExpiratorDebug();
 				$debug->purge();
-						echo "<div id='message' class='updated fade'><p>";
+				echo "<div id='message' class='updated fade'><p>";
 				_e( 'Debugging Table Emptied', 'post-expirator' );
 				echo '</p></div>';
 			}
@@ -156,8 +165,8 @@ class PostExpirator_Display {
 	 * The default menu.
 	 */
 	private function menu_defaults() {
-		$debug = postexpirator_debug();
-		$types = postexpirator_get_post_types();
+		$debug    = postexpirator_debug();
+		$types    = postexpirator_get_post_types();
 		$defaults = array();
 
 		if ( isset( $_POST['expirationdateSaveDefaults'] ) ) {
@@ -228,9 +237,9 @@ class PostExpirator_Display {
 				if ( $_POST['expired-custom-expiration-date'] ) {
 					update_option( 'expirationdateDefaultDateCustom', $_POST['expired-custom-expiration-date'] );
 				}
-						echo "<div id='message' class='updated fade'><p>";
-						_e( 'Saved Options!', 'post-expirator' );
-						echo '</p></div>';
+				echo "<div id='message' class='updated fade'><p>";
+				_e( 'Saved Options!', 'post-expirator' );
+				echo '</p></div>';
 			}
 		}
 

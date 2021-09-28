@@ -27,6 +27,7 @@ class PostExpirator_Facade {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
+
 		return self::$_instance;
 	}
 
@@ -35,7 +36,7 @@ class PostExpirator_Facade {
 	 */
 	private function hooks() {
 		add_action( 'init', array( $this, 'register_post_meta' ), 11 );
-		add_action( 'enqueue_block_editor_assets', array( $this, 'block_editor_assets') );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'block_editor_assets' ) );
 		add_action( 'updated_postmeta', array( $this, 'updatedmeta' ), 10, 4 );
 	}
 
@@ -45,7 +46,10 @@ class PostExpirator_Facade {
 	public static function load_assets( $for ) {
 		switch ( $for ) {
 			case 'settings':
-				wp_enqueue_script( 'pe-settings', POSTEXPIRATOR_BASEURL . '/assets/js/settings.js', array( 'jquery', 'jquery-ui-tabs' ), POSTEXPIRATOR_VERSION, false );
+				wp_enqueue_script( 'pe-settings', POSTEXPIRATOR_BASEURL . '/assets/js/settings.js', array(
+					'jquery',
+					'jquery-ui-tabs'
+				), POSTEXPIRATOR_VERSION, false );
 				wp_localize_script( 'pe-settings', 'config', array() );
 				wp_enqueue_style( 'pe-settings', POSTEXPIRATOR_BASEURL . '/assets/css/settings.css', array(), POSTEXPIRATOR_VERSION, false );
 				wp_enqueue_style( 'pe-jquery-ui', POSTEXPIRATOR_BASEURL . '/assets/css/lib/jquery-ui/jquery-ui.min.css', array( 'pe-settings' ), POSTEXPIRATOR_VERSION );
@@ -97,7 +101,7 @@ class PostExpirator_Facade {
 
 		if ( $schedule ) {
 			$opts = self::get_expire_principles( $post_id );
-			$ts = $meta_value;
+			$ts   = $meta_value;
 			$this->schedule_event( $post_id, $ts, $opts );
 		}
 	}
@@ -106,12 +110,12 @@ class PostExpirator_Facade {
 	 * Calculates the default expiry date as set in the options.
 	 */
 	public static function get_default_expiry( $post_type ) {
-		$defaultmonth   = date_i18n( 'm' );
-		$defaultday     = date_i18n( 'd' );
-		$defaulthour    = date_i18n( 'H' );
-		$defaultyear    = date_i18n( 'Y' );
-		$defaultminute  = date_i18n( 'i' );
-		$ts = time();
+		$defaultmonth  = date_i18n( 'm' );
+		$defaultday    = date_i18n( 'd' );
+		$defaulthour   = date_i18n( 'H' );
+		$defaultyear   = date_i18n( 'Y' );
+		$defaultminute = date_i18n( 'i' );
+		$ts            = time();
 
 		$default_date_expiry = $custom_date = '';
 		$general_date_expiry = $general_custom_date = '';
@@ -135,13 +139,13 @@ class PostExpirator_Facade {
 					$custom_date = $defaults['default-custom-date'];
 					break;
 				case 'inherit':
-					$custom_date = $general_custom_date;
+					$custom_date         = $general_custom_date;
 					$default_date_expiry = $general_date_expiry;
 					break;
 			}
 		} else {
 			$default_date_expiry = $general_date_expiry;
-			$custom_date = $general_custom_date;
+			$custom_date         = $general_custom_date;
 		}
 
 		if ( 'custom' === $default_date_expiry ) {
@@ -164,20 +168,20 @@ class PostExpirator_Facade {
 					date_default_timezone_set( 'UTC' );
 				}
 			}
-			$defaultmonth   = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'm' );
-			$defaultday     = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'd' );
-			$defaultyear    = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'Y' );
-			$defaulthour    = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'H' );
-			$defaultminute  = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'i' );
+			$defaultmonth  = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'm' );
+			$defaultday    = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'd' );
+			$defaultyear   = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'Y' );
+			$defaulthour   = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'H' );
+			$defaultminute = get_date_from_gmt( gmdate( 'Y-m-d H:i:s', $ts ), 'i' );
 		}
 
 		return array(
-			'month' => $defaultmonth,
-			'day' => $defaultday,
-			'year' => $defaultyear,
-			'hour' => $defaulthour,
+			'month'  => $defaultmonth,
+			'day'    => $defaultday,
+			'year'   => $defaultyear,
+			'hour'   => $defaulthour,
 			'minute' => $defaultminute,
-			'ts' => $ts,
+			'ts'     => $ts,
 		);
 	}
 
@@ -215,7 +219,7 @@ class PostExpirator_Facade {
 		}
 
 		// _expiration-date-options is deprecated when using block editor
-		$opts       = get_post_meta( $id, '_expiration-date-options', true );
+		$opts = get_post_meta( $id, '_expiration-date-options', true );
 		if ( empty( $expireType ) && isset( $opts['expireType'] ) ) {
 			$expireType = $opts['expireType'];
 		}
@@ -228,8 +232,8 @@ class PostExpirator_Facade {
 		}
 
 		return array(
-			'expireType' => $expireType,
-			'category' => $categories,
+			'expireType'       => $expireType,
+			'category'         => $categories,
 			'categoryTaxonomy' => $taxonomyName,
 		);
 	}
@@ -239,7 +243,7 @@ class PostExpirator_Facade {
 	 * Register the post meta to use in the block.
 	 */
 	function register_post_meta() {
-		$post_types = get_post_types( array('public' => true) );
+		$post_types = get_post_types( array( 'public' => true ) );
 		foreach ( $post_types as $post_type ) {
 
 			// this is important for CPTs to show the postMeta.
@@ -247,44 +251,44 @@ class PostExpirator_Facade {
 
 			register_post_meta(
 				$post_type, '_expiration-date-status', array(
-					'single' => true,
-					'type' => 'string',
-					'auth_callback' => function() {
+					'single'        => true,
+					'type'          => 'string',
+					'auth_callback' => function () {
 						return current_user_can( 'edit_posts' );
 					},
-					'show_in_rest' => true,
+					'show_in_rest'  => true,
 				)
 			);
 			register_post_meta(
 				$post_type, '_expiration-date', array(
-					'single' => true,
-					'type' => 'number',
-					'auth_callback' => function() {
+					'single'        => true,
+					'type'          => 'number',
+					'auth_callback' => function () {
 						return current_user_can( 'edit_posts' );
 					},
-					'show_in_rest' => true,
+					'show_in_rest'  => true,
 				)
 			);
 			register_post_meta(
 				$post_type, '_expiration-date-type', array(
-					'single' => true,
-					'type' => 'string',
-					'auth_callback' => function() {
+					'single'        => true,
+					'type'          => 'string',
+					'auth_callback' => function () {
 						return current_user_can( 'edit_posts' );
 					},
-					'show_in_rest' => true,
+					'show_in_rest'  => true,
 				)
 			);
 			register_post_meta(
 				$post_type, '_expiration-date-categories', array(
-					'single' => true,
-					'type' => 'array',
-					'auth_callback' => function() {
+					'single'        => true,
+					'type'          => 'array',
+					'auth_callback' => function () {
 						return current_user_can( 'edit_posts' );
 					},
-					'show_in_rest' => array(
+					'show_in_rest'  => array(
 						'schema' => array(
-							'type' => 'array',
+							'type'  => 'array',
 							'items' => array(
 								'type' => 'number',
 							),
@@ -297,14 +301,14 @@ class PostExpirator_Facade {
 			// as it cannot be used easily in the block editor
 			register_post_meta(
 				$post_type, '_expiration-date-options', array(
-					'single' => true,
-					'type' => 'object',
-					'auth_callback' => function() {
+					'single'        => true,
+					'type'          => 'object',
+					'auth_callback' => function () {
 						return current_user_can( 'edit_posts' );
 					},
-					'show_in_rest' => array(
+					'show_in_rest'  => array(
 						'schema' => array(
-							'type'       => 'object',
+							'type'                 => 'object',
 							'additionalProperties' => true,
 						),
 					),
@@ -326,7 +330,10 @@ class PostExpirator_Facade {
 
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post->post_type ) );
 		// if settings are not configured, show the metabox by default only for posts and pages
-		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $post->post_type, array( 'post', 'page' ), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
+		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $post->post_type, array(
+					'post',
+					'page'
+				), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
 			wp_enqueue_script(
 				'postexpirator-block',
 				POSTEXPIRATOR_BASEURL . 'assets/js/block.js',
@@ -338,8 +345,8 @@ class PostExpirator_Facade {
 			$default_expiry = PostExpirator_Facade::get_default_expiry( $post->post_type );
 			wp_localize_script(
 				'postexpirator-block', 'config', array(
-					'defaults' => $defaults,
-					'default_date' => $default_expiry['ts'],
+					'defaults'           => $defaults,
+					'default_date'       => $default_expiry['ts'],
 					'default_categories' => get_option( 'expirationdateCategoryDefaults' ),
 				)
 			);
@@ -352,6 +359,7 @@ class PostExpirator_Facade {
 	 */
 	public static function show_gutenberg_metabox() {
 		$gutenberg = get_option( 'expirationdateGutenbergSupport', 1 );
+
 		return intval( $gutenberg ) === 1;
 	}
 
