@@ -29,6 +29,10 @@ class PostExpirator_Facade {
 	private function __construct() {
 		PostExpirator_Display::getInstance();
 		$this->hooks();
+
+		if ( ! $this->user_role_can_expire_posts( 'administrator' ) ) {
+			$this->set_default_capabilities();
+		}
 	}
 
 	/**

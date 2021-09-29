@@ -249,6 +249,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
 							<input type="checkbox"
 							       id="allow-user-role-<?php echo esc_attr( $role_name ); ?>"
 							       name="allow-user-roles[]"
+							       <?php if ( 'administrator' === $role_name ) : echo 'disabled="disabled"'; endif; ?>
 							       value="<?php echo esc_attr( $role_name ); ?>"
 							       <?php if ( $plugin_facade->user_role_can_expire_posts( $role_name ) ) : ?>checked="checked"<?php endif; ?>
 							/>

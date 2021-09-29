@@ -251,7 +251,7 @@ class PostExpirator_Display {
 						continue;
 					}
 
-					if ( in_array( $role_name, $_POST['allow-user-roles'], true ) ) {
+					if ( $role_name === 'administrator' || in_array( $role_name, $_POST['allow-user-roles'], true ) ) {
 						$role->add_cap( PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST );
 					} else {
 						$role->remove_cap( PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST );

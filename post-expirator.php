@@ -1283,9 +1283,6 @@ function postexpirator_activate() {
 	if ( get_option( 'expirationdateGutenbergSupport' ) === false ) {
 		update_option( 'expirationdateGutenbergSupport', 1 );
 	}
-
-	$plugin_facade = PostExpirator_Facade::getInstance();
-	$plugin_facade->set_default_capabilities();
 }
 
 /**
