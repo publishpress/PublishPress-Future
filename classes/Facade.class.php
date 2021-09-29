@@ -380,7 +380,9 @@ class PostExpirator_Facade {
 	public static function show_gutenberg_metabox() {
 		$gutenberg = get_option( 'expirationdateGutenbergSupport', 1 );
 
-		return intval( $gutenberg ) === 1;
+		$facade = PostExpirator_Facade::getInstance();
+
+		return intval( $gutenberg ) === 1 && $facade->current_user_can_expire_posts();
 	}
 
 	/**
