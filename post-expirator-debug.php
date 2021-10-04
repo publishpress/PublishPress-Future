@@ -64,6 +64,7 @@ class PostExpiratorDebug {
 		$results = $wpdb->get_results( "SELECT * FROM {$this->debug_table} ORDER BY `id` DESC" );
 		if ( empty( $results ) ) {
 			print '<p>' . __( 'Debugging table is currently empty.', 'post-expirator' ) . '</p>';
+
 			return;
 		}
 		print '<table class="post-expirator-debug">';

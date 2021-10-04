@@ -3,7 +3,6 @@ node_modules
 vendor
 logs
 composer.lock
-package-lock.json
 codeceptjs/output
 #bin
 .idea

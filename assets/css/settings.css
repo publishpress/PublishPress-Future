@@ -1,27 +1,33 @@
 ul.pe-list {
-	list-style: disc !important;
+    list-style: disc !important;
 }
 
 ul.pe-list > li {
-	margin-left: 3%;
+    margin-left: 3%;
 }
 
 .pe-scroll {
-	height: 300px;
-	overflow-y: scroll;
+    height: 300px;
+    overflow-y: scroll;
 }
 
 .pe-scroll > table td {
-	padding: 5px;
+    padding: 5px;
 }
 
 tr.pe-event {
-	background-color: #ddd !important;
+    background-color: #ddd !important;
 }
 
 #pe-settings-tabs fieldset {
-	border: 1px solid black;
-	border-radius: 6px;
-	padding: 0px 12px;
-	margin-bottom: 20px;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 0px 12px;
+    margin-bottom: 20px;
+}
+
+.pe-checklist label {
+    display: block;
+    width: 300px;
+    margin-bottom: 2px;
 }

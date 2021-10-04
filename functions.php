@@ -4,4 +4,3 @@
  */
 
 require_once POSTEXPIRATOR_BASEDIR . '/legacy-functions.php';
-

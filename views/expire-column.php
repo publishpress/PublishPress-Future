@@ -1,48 +1,53 @@
-<div class="post-expire-col" data-id="<?php echo esc_attr( $id ); ?>" data-expire-attributes="<?php echo esc_attr( json_encode( $attributes ) ); ?>">
-<?php
+<div class="post-expire-col" data-id="<?php echo esc_attr( $id ); ?>"
+     data-expire-attributes="<?php echo esc_attr( json_encode( $attributes ) ); ?>">
+	<?php
 	$display = __( 'Never', 'post-expirator' );
-	$ed = get_post_meta( $id, '_expiration-date', true );
-if ( $ed ) {
-	$display = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $ed + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
-}
+	$ed      = get_post_meta( $id, '_expiration-date', true );
+	if ( $ed ) {
+		$display = date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $ed + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+	}
 
-	$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
+	$defaults   = get_option( 'expirationdateDefaults' . ucfirst( $post_type ) );
 	$expireType = 'draft';
-if ( isset( $defaults['expireType'] ) ) {
-	$expireType = $defaults['expireType'];
-}
+	if ( isset( $defaults['expireType'] ) ) {
+		$expireType = $defaults['expireType'];
+	}
 
 	// these defaults will be used by quick edit
 	$defaults = PostExpirator_Facade::get_default_expiry( $post_type );
 
-	$year = $defaults['year'];
-	$month = $defaults['month'];
-	$day = $defaults['day'];
-	$hour = $defaults['hour'];
-	$minute = $defaults['minute'];
-	$enabled = 'false';
+	$year       = $defaults['year'];
+	$month      = $defaults['month'];
+	$day        = $defaults['day'];
+	$hour       = $defaults['hour'];
+	$minute     = $defaults['minute'];
+	$enabled    = 'false';
 	$categories = '';
 
 	// Values for Quick Edit
-if ( $ed ) {
-	$enabled = 'true';
-	$date = gmdate( 'Y-m-d H:i:s', $ed );
-	$year = get_date_from_gmt( $date, 'Y' );
-	$month = get_date_from_gmt( $date, 'm' );
-	$day = get_date_from_gmt( $date, 'd' );
-	$hour = get_date_from_gmt( $date, 'H' );
-	$minute = get_date_from_gmt( $date, 'i' );
-	if ( isset( $attributes['expireType'] ) ) {
-		$expireType = $attributes['expireType'];
+	if ( $ed ) {
+		$enabled = 'true';
+		$date    = gmdate( 'Y-m-d H:i:s', $ed );
+		$year    = get_date_from_gmt( $date, 'Y' );
+		$month   = get_date_from_gmt( $date, 'm' );
+		$day     = get_date_from_gmt( $date, 'd' );
+		$hour    = get_date_from_gmt( $date, 'H' );
+		$minute  = get_date_from_gmt( $date, 'i' );
+		if ( isset( $attributes['expireType'] ) ) {
+			$expireType = $attributes['expireType'];
+		}
+		if ( isset( $attributes['category'] ) && ! empty( $attributes['category'] ) && in_array( $expireType, array(
+				'category',
+				'category-add',
+				'category-remove'
+			), true ) ) {
+			$categories = implode( ',', $attributes['category'] );
+		}
 	}
-	if ( isset( $attributes['category'] ) && ! empty( $attributes['category'] ) && in_array( $expireType, array( 'category', 'category-add', 'category-remove' ), true ) ) {
-		$categories = implode( ',', $attributes['category'] );
-	}
-}
 
 	// the hidden fields will be used by quick edit
 
-?>
+	?>
 	<?php echo esc_html( $display ); ?>
 	<span id="expirationdate_year-<?php echo $id; ?>" style="display: none;"><?php echo $year; ?></span>
 	<span id="expirationdate_month-<?php echo $id; ?>" style="display: none;"><?php echo $month; ?></span>
