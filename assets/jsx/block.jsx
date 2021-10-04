@@ -217,12 +217,18 @@
             let typeNew = postMeta['_expiration-date-type'];
             let typeOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['expireType'];
 
+
+
             if (typeNew) {
                 return typeNew;
             }
 
             if (typeOld) {
                 return typeOld;
+            }
+
+            if (config && config.defaults && config.defaults.expireType) {
+                return config.defaults.expireType;
             }
 
             return 'draft';
