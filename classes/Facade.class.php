@@ -12,12 +12,27 @@ class PostExpirator_Facade {
 	 */
 	private static $_instance = null;
 
+	const DEFAULT_CAPABILITY_EXPIRE_POST = 'publishpress_future_expire_post';
+
+	/**
+	 * List of capabilities used by the plugin.
+	 *
+	 * @var string[]
+	 */
+	private $capabilities = array(
+		'expire_post' => self::DEFAULT_CAPABILITY_EXPIRE_POST,
+	);
+
 	/**
 	 * Constructor.
 	 */
 	private function __construct() {
 		PostExpirator_Display::getInstance();
 		$this->hooks();
+
+		if ( ! $this->user_role_can_expire_posts( 'administrator' ) ) {
+			$this->set_default_capabilities();
+		}
 	}
 
 	/**
@@ -38,6 +53,7 @@ class PostExpirator_Facade {
 		add_action( 'init', array( $this, 'register_post_meta' ), 11 );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'block_editor_assets' ) );
 		add_action( 'updated_postmeta', array( $this, 'updatedmeta' ), 10, 4 );
+		add_filter( 'cme_plugin_capabilities', [ $this, 'filter_cme_capabilities' ], 20 );
 	}
 
 	/**
@@ -46,10 +62,12 @@ class PostExpirator_Facade {
 	public static function load_assets( $for ) {
 		switch ( $for ) {
 			case 'settings':
-				wp_enqueue_script( 'pe-settings', POSTEXPIRATOR_BASEURL . '/assets/js/settings.js', array(
+				wp_enqueue_script(
+					'pe-settings', POSTEXPIRATOR_BASEURL . '/assets/js/settings.js', array(
 					'jquery',
-					'jquery-ui-tabs'
-				), POSTEXPIRATOR_VERSION, false );
+					'jquery-ui-tabs',
+				), POSTEXPIRATOR_VERSION, false
+				);
 				wp_localize_script( 'pe-settings', 'config', array() );
 				wp_enqueue_style( 'pe-settings', POSTEXPIRATOR_BASEURL . '/assets/css/settings.css', array(), POSTEXPIRATOR_VERSION, false );
 				wp_enqueue_style( 'pe-jquery-ui', POSTEXPIRATOR_BASEURL . '/assets/css/lib/jquery-ui/jquery-ui.min.css', array( 'pe-settings' ), POSTEXPIRATOR_VERSION );
@@ -330,10 +348,12 @@ class PostExpirator_Facade {
 
 		$defaults = get_option( 'expirationdateDefaults' . ucfirst( $post->post_type ) );
 		// if settings are not configured, show the metabox by default only for posts and pages
-		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array( $post->post_type, array(
+		if ( ( ! isset( $defaults['activeMetaBox'] ) && in_array(
+					$post->post_type, array(
 					'post',
-					'page'
-				), true ) ) || $defaults['activeMetaBox'] === 'active' ) {
+					'page',
+				), true
+				) ) || $defaults['activeMetaBox'] === 'active' ) {
 			wp_enqueue_script(
 				'postexpirator-block',
 				POSTEXPIRATOR_BASEURL . 'assets/js/block.js',
@@ -360,7 +380,9 @@ class PostExpirator_Facade {
 	public static function show_gutenberg_metabox() {
 		$gutenberg = get_option( 'expirationdateGutenbergSupport', 1 );
 
-		return intval( $gutenberg ) === 1;
+		$facade = PostExpirator_Facade::getInstance();
+
+		return intval( $gutenberg ) === 1 && $facade->current_user_can_expire_posts();
 	}
 
 	/**
@@ -377,4 +399,55 @@ class PostExpirator_Facade {
 		postexpirator_schedule_event( $post_id, $ts, $opts );
 	}
 
+	/**
+	 * Return true if the specific user role can expire posts.
+	 *
+	 * @return bool
+	 */
+	public function user_role_can_expire_posts( $user_role ) {
+		$user_role_instance = get_role( $user_role );
+
+		if ( ! is_a( $user_role_instance, WP_Role::class ) ) {
+			return false;
+		}
+
+		return $user_role_instance->has_cap( $this->capabilities['expire_post'] )
+		       && $user_role_instance->capabilities[ $this->capabilities['expire_post'] ] === true;
+	}
+
+	/**
+	 * Returns true if the current user can expire posts.
+	 *
+	 * @return bool
+	 */
+	public function current_user_can_expire_posts() {
+		$current_user = wp_get_current_user();
+
+		return is_a( $current_user, WP_User::class )
+		       && $current_user->has_cap( $this->capabilities['expire_post'] );
+	}
+
+	/**
+	 * Set the default capabilities.
+	 */
+	public function set_default_capabilities() {
+		$admin_role = get_role( 'administrator' );
+		$admin_role->add_cap( self::DEFAULT_CAPABILITY_EXPIRE_POST );
+	}
+
+	/**
+	 * Add the plugin capabilities to the PublishPress Capabilities plugin.
+	 *
+	 * @param array $capabilities Array of capabilities.
+	 *
+	 * @return array
+	 */
+	public function filter_cme_capabilities( $capabilities ) {
+		return array_merge(
+			$capabilities,
+			array(
+				'Post Expirator' => array( self::DEFAULT_CAPABILITY_EXPIRE_POST ),
+			)
+		);
+	}
 }

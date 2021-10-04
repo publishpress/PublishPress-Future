@@ -26,7 +26,7 @@
         }
     ],
     "dist": {
-        "url": "https://github.com/publishpress/PublishPress-Future/releases/download/v2.5.1/post-expirator-2.5.1.zip",
+        "url": "https://github.com/publishpress/PublishPress-Future/releases/download/v2.5.2-beta.1/post-expirator-2.5.2-beta.1.zip",
         "type": "zip"
     },
     "require-dev": {

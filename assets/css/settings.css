@@ -25,3 +25,9 @@ tr.pe-event {
     padding: 0px 12px;
     margin-bottom: 20px;
 }
+
+.pe-checklist label {
+    display: block;
+    width: 300px;
+    margin-bottom: 2px;
+}
