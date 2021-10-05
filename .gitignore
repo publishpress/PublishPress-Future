@@ -9,3 +9,4 @@ codeceptjs/output
 .DS_Store
 /builder.yml
 dist
+.env.testing
