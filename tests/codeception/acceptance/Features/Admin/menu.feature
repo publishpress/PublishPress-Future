@@ -7,5 +7,5 @@ Feature: Admin menu
     Given the user "petm_admin_user" exists with role "administrator"
     And I am logged in as "petm_admin_user"
 
-  Scenario:
+  Scenario: See the Settings submenu
     Then I see the Settings submenu "Post Expirator"
