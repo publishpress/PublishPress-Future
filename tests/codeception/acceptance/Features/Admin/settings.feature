@@ -1,4 +1,4 @@
-Feature: Admin menu
+Feature: Settings
   In order to configure the plugin
   As an admin
   I need to be able to see the submenu in the Settings menu

@@ -155,7 +155,7 @@
 
             return (
                 <PluginDocumentSettingPanel title={__('Post Expirator', 'post-expirator')} icon="calendar"
-                                            initialOpen={enabled}>
+                                            initialOpen={enabled} className={'post-expirator-panel'}>
                     <PanelRow>
                         <CheckboxControl
                             label={__('Enable Post Expiration', 'post-expirator')}
