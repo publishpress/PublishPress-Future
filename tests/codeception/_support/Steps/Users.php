@@ -31,12 +31,4 @@ trait Users
         global $current_user;
         $current_user = $user;
     }
-
-    /**
-     * @Then is working
-     */
-    public function isWorking()
-    {
-        return true;
-    }
 }
