@@ -867,7 +867,7 @@ function postexpirator_expire_post($id)
         }
     } elseif ($expireType === 'category') {
         if (! empty($category)) {
-            if (! isset($categoryTaxonomy) || $categoryTaxonomy === 'category') {
+            if (empty($categoryTaxonomy) || $categoryTaxonomy === 'category') {
                 if (wp_update_post(array('ID' => $id, 'post_category' => $category)) === 0) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
