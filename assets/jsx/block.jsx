@@ -62,7 +62,7 @@
 
             if ((!taxonomy && postType === 'post') || taxonomy === 'category') {
                 wp.apiFetch({
-                    path: wp.url.addQueryArgs('wp/v2/categories', {per_page: -1, hide_empty: false}),
+                    path: wp.url.addQueryArgs('wp/v2/categories', {per_page: -1}),
                 }).then((list) => {
                     list.forEach(cat => {
                         categoriesList[cat.name] = cat;
