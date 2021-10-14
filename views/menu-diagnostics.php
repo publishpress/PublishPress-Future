@@ -42,73 +42,83 @@
                 _e('WP-Cron Status', 'post-expirator'); ?></th>
             <td>
                 <?php
-                if (defined('DISABLE_WP_CRON') && DISABLE_WP_CRON === true) {
-                    _e('DISABLED', 'post-expirator');
-                } else {
-                    _e('ENABLED - OK', 'post-expirator');
-                }
+                echo PostExpirator_CronFacade::is_cron_enabled() ?
+                    _e('ENABLED - OK', 'post-expirator')
+                    : _e('DISABLED', 'post-expirator');
                 ?>
             </td>
         </tr/>
         <tr valign="top">
             <th scope="row"><label for="cron-schedule"><?php
-                    _e('Current Cron Schedule', 'post-expirator'); ?></label>
+                _e('Current Cron Schedule', 'post-expirator'); ?></label>
             </th>
             <td>
-                <p><?php
-                    _e(
-                        'The below table will show all currently scheduled cron events with the next run time.',
-                        'post-expirator'
-                    ); ?></p>
+                <?php
+                $cron = PostExpirator_CronFacade::get_plugin_cron_events();
 
-                <div class="pe-scroll">
-                    <table cellspacing="0" class="striped">
-                        <tr>
-                            <th style="width: 30%"><?php
-                                _e('Date', 'post-expirator'); ?></th>
-                            <th style="width: 30%;"><?php
-                                _e('Event', 'post-expirator'); ?></th>
-                            <th style="width: 30%;"><?php
-                                _e('Arguments / Schedule', 'post-expirator'); ?></th>
-                        </tr>
-                        <?php
-                        $cron = _get_cron_array();
-                        foreach ($cron as $key => $value) {
-                            foreach ($value as $eventkey => $eventvalue) {
-                                $class = $eventkey === 'postExpiratorExpire' ? 'pe-event' : '';
-                                print '<tr class="' . $class . '">';
-                                print '<td>' . date_i18n('r', $key) . '</td>';
-                                print '<td>' . $eventkey . '</td>';
-                                $arrkey = array_keys($eventvalue);
-                                print '<td>';
-                                foreach ($arrkey as $eventguid) {
-                                    print '<table><tr>';
-                                    if (empty($eventvalue[$eventguid]['args'])) {
-                                        print '<td>' . __('No Arguments', 'post-expirator') . '</td>';
-                                    } else {
-                                        print '<td>';
-                                        $args = array();
-                                        foreach ($eventvalue[$eventguid]['args'] as $key => $value) {
-                                            $args[] = "$key => $value";
+                if (empty($cron)) {''
+                    ?>
+                    <p><?php
+                        _e('No cron events found for the plugin.', 'post-expirator'); ?></p>
+                    <?php
+                } else {
+                    ?>
+                    <p><?php
+                        _e(
+                            'The below table will show all currently scheduled cron events for the plugin with the next run time.',
+                            'post-expirator'
+                        ); ?></p>
+
+                    <div class="pe-scroll">
+                        <table cellspacing="0" class="striped">
+                            <tr>
+                                <th style="width: 30%"><?php
+                                    _e('Date', 'post-expirator'); ?></th>
+                                <th style="width: 30%;"><?php
+                                    _e('Event', 'post-expirator'); ?></th>
+                                <th style="width: 30%;"><?php
+                                    _e('Arguments / Schedule', 'post-expirator'); ?></th>
+                            </tr>
+                            <?php
+                            foreach ($cron as $time => $value) {
+                                foreach ($value as $eventkey => $eventvalue) {
+                                    echo '<tr class="pe-event">';
+                                    echo '<td>' . date_i18n('r', $time) . '</td>';
+                                    echo '<td>' . $eventkey . '</td>';
+                                    $arrkey = array_keys($eventvalue);
+                                    echo '<td>';
+                                    foreach ($arrkey as $eventguid) {
+                                        echo '<table><tr>';
+                                        if (empty($eventvalue[$eventguid]['args'])) {
+                                            echo '<td>' . __('No Arguments', 'post-expirator') . '</td>';
+                                        } else {
+                                            echo '<td>';
+                                            $args = array();
+                                            foreach ($eventvalue[$eventguid]['args'] as $key => $value) {
+                                                $args[] = "$key => $value";
+                                            }
+                                            echo implode("<br/>\n", $args);
+                                            echo '</td>';
                                         }
-                                        print implode("<br/>\n", $args);
-                                        print '</td>';
+                                        if (empty($eventvalue[$eventguid]['schedule'])) {
+                                            echo '<td>' . __('Single Event', 'post-expirator') . '</td>';
+                                        } else {
+                                            echo '<td>' . $eventvalue[$eventguid]['schedule'] . ' (' . $eventvalue[$eventguid]['interval'] . ')</td>';
+                                        }
+                                        echo '</tr></table>';
                                     }
-                                    if (empty($eventvalue[$eventguid]['schedule'])) {
-                                        print '<td>' . __('Single Event', 'post-expirator') . '</td>';
-                                    } else {
-                                        print '<td>' . $eventvalue[$eventguid]['schedule'] . ' (' . $eventvalue[$eventguid]['interval'] . ')</td>';
-                                    }
-                                    print '</tr></table>';
+                                    echo '</td>';
+                                    echo '</tr>';
                                 }
-                                print '</td>';
-                                print '</tr>';
                             }
-                        }
-                        ?>
-                    </table>
-                </div>
+                            ?>
+                        </table>
+                    </div>
+                    <?php
+                }
+                ?>
             </td>
         </tr>
     </table>
 </form>
+<?php
