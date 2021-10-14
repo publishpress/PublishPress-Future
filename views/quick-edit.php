@@ -101,6 +101,7 @@
 
                 </div>
                 <input name="expirationdate_quickedit" value="true" type="hidden"/>
+                <input name="postexpirator_view" value="quick-edit" type="hidden"/>
             </fieldset>
         </div>
     </div>

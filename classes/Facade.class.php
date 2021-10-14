@@ -142,33 +142,21 @@ class PostExpirator_Facade
             return;
         }
 
-        $unschedule = $schedule = false;
         switch ($meta_key) {
             case '_expiration-date-status':
-                $unschedule = empty($meta_value);
+                if (empty($meta_value)) {
+                    $this->unschedule_event($post_id);
+                }
+                
+
                 break;
             case '_expiration-date':
-                $schedule = true;
+                $opts = self::get_expire_principles($post_id);
+                $this->schedule_event($post_id, $meta_value, $opts);
+
                 break;
         }
-
-        remove_action('updated_postmeta', array($this, 'updatedmeta'), 10, 4);
-        if ($unschedule) {
-            // @TODO the below delete_post_meta do not seem to work
-            delete_post_meta($post_id, '_expiration-date');
-            delete_post_meta($post_id, '_expiration-date-options');
-            delete_post_meta($post_id, '_expiration-date-type');
-            delete_post_meta($post_id, '_expiration-date-categories');
-            delete_post_meta($post_id, '_expiration-date-taxonomy');
-
-            $this->unschedule_event($post_id);
-        }
-
-        if ($schedule) {
-            $opts = self::get_expire_principles($post_id);
-            $ts   = $meta_value;
-            $this->schedule_event($post_id, $ts, $opts);
-        }
+        //remove_action('updated_postmeta', array($this, 'updatedmeta'), 10, 4);
     }
 
     /**
@@ -176,6 +164,12 @@ class PostExpirator_Facade
      */
     private function unschedule_event($post_id)
     {
+        delete_post_meta($post_id, '_expiration-date');
+        delete_post_meta($post_id, '_expiration-date-options');
+        delete_post_meta($post_id, '_expiration-date-type');
+        delete_post_meta($post_id, '_expiration-date-categories');
+        delete_post_meta($post_id, '_expiration-date-taxonomy');
+
         postexpirator_unschedule_event($post_id);
     }
 

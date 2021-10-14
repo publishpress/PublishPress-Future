@@ -504,22 +504,25 @@ function postexpirator_update_post_meta($id)
         return;
     }
 
+    // Do not process Bulk edit here
+    if (isset($_GET['postexpirator_view']) && $_GET['postexpirator_view'] === 'bulk-edit') {
+        return;
+    }
+
     $facade = PostExpirator_Facade::getInstance();
 
     if (! $facade->current_user_can_expire_posts()) {
         return;
     }
 
-    // we want to make sure we don't fire the save_post action when we are inside the block editor
-    // but this should not stop quick/bulk edit
-    if (PostExpirator_Util::is_gutenberg_active() && PostExpirator_Facade::show_gutenberg_metabox()
-        &&
-        ! isset($_POST['expirationdate_quickedit']) && ! isset($_POST['expirationdate_formcheck'])
-    ) {
-        return;
-    }
+    $shouldSchedule = false;
+    $ts             = null;
+    $opts           = [];
+    
+    if (isset($_POST['postexpirator_view'])) {
+        // Classic editor, quick edit
+        $shouldSchedule = isset($_POST['enable-expirationdate']);
 
-    if (isset($_POST['enable-expirationdate'])) {
         $default = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
         if ($default === 'publish') {
             $month  = intval($_POST['mm']);
@@ -558,12 +561,9 @@ function postexpirator_update_post_meta($id)
                     ),           true)) {
                         $opts['category'] = $_POST['expirationdate_category'];
                     }
-                    PostExpirator_Facade::set_expire_principles($id, $opts);
                 }
             }
         } else {
-            $opts = array();
-
             // Schedule/Update Expiration
             $opts['expireType'] = $_POST['expirationdate_expiretype'];
             $opts['id']         = $id;
@@ -577,6 +577,64 @@ function postexpirator_update_post_meta($id)
                 }
             }
         }
+    } else {
+        // Gutenberg or script
+        $payload = @file_get_contents('php://input');
+
+        if (empty($payload)) {
+            $debug = postexpirator_debug();
+
+            if (POSTEXPIRATOR_DEBUG) {
+                $debug->save(
+                    array(
+                        'message' => $id . ' -> NO PAYLOAD ON SAVE_POST'
+                    )
+                );
+            }
+
+            return;
+        }
+
+        $payload = @json_decode($payload, true);
+
+        if (isset($payload['meta'])) {
+            if (isset($payload['meta']['_expiration-date-status'])) {
+                $shouldSchedule = $payload['meta']['_expiration-date-status'] === 'saved';
+            } else {
+                $shouldSchedule = get_post_meta($id, '_expiration-date-status', true) === 'saved';
+            }
+
+            if (isset($payload['meta']['_expiration-date'])) {
+                $ts = $payload['meta']['_expiration-date'];
+            } else {
+                $ts = get_post_meta($id, '_expiration-date', true);
+            }
+
+            if (isset($payload['meta']['_expiration-date-type'])) {
+                $opts[expireType] = $payload['meta']['_expiration-date-type'];
+            } else {
+                $opts[expireType] = get_post_meta($id, '_expiration-date-type', true);
+            }
+
+            if (isset($payload['meta']['_expiration-date-categories'])) {
+                $opts['category'] = (array)$payload['meta']['_expiration-date-categories'];
+            } else {
+                $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
+            }
+        } else {
+            $shouldSchedule = get_post_meta($id, '_expiration-date-status', true) === 'saved';
+            
+            if ($shouldSchedule) {
+                $ts = get_post_meta($id, '_expiration-date', true);
+
+                $opts['expireType'] = get_post_meta($id, '_expiration-date-type', true);
+                $opts['category']   = (array)get_post_meta($id, '_expiration-date-categories', true);
+            }
+        }
+    }
+
+    if ($shouldSchedule) {
+        $opts['id'] = $id;
         postexpirator_schedule_event($id, $ts, $opts);
     } else {
         postexpirator_unschedule_event($id);
@@ -1920,31 +1978,26 @@ function postexpirator_date_save_bulk_edit()
         );
     }
 
+    $status = $_POST['expirationdate_status'];
+    // if no change, do nothing
+    if ($status === 'no-change') {
+        return;
+    }
+
     // we need the post IDs
     $post_ids = (isset($_POST['post_ids']) && ! empty($_POST['post_ids'])) ? $_POST['post_ids'] : null;
 
     // if we have post IDs
     if (! empty($post_ids) && is_array($post_ids)) {
-        $status = $_POST['expirationdate_status'];
+        $post_type = get_post_type($post_ids[0]);
 
-        // if no change, do nothing
-        if ($status === 'no-change') {
-            return;
-        }
+        $defaults = PostExpirator_Facade::get_default_expiry($post_type);
 
-        $month  = intval($_POST['expirationdate_month']);
-        $day    = intval($_POST['expirationdate_day']);
-        $year   = intval($_POST['expirationdate_year']);
-        $hour   = intval($_POST['expirationdate_hour']);
-        $minute = intval($_POST['expirationdate_minute']);
-
-        // default to current date and/or year if not provided by user.
-        if (empty($day)) {
-            $day = date('d');
-        }
-        if (empty($year)) {
-            $year = date('Y');
-        }
+        $year   = intval('' === $_POST['expirationdate_year'] ? $defaults['year'] : $_POST['expirationdate_year']);
+        $month  = intval('' === $_POST['expirationdate_month'] ? $defaults['month'] : $_POST['expirationdate_month']);
+        $day    = intval('' === $_POST['expirationdate_day'] ? $defaults['day'] : $_POST['expirationdate_day']);
+        $hour   = intval('' === $_POST['expirationdate_hour'] ? $defaults['hour'] : $_POST['expirationdate_hour']);
+        $minute = intval('' === $_POST['expirationdate_minute'] ? $defaults['minute'] : $_POST['expirationdate_minute']);
 
         $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
 
@@ -1982,7 +2035,7 @@ function postexpirator_date_save_bulk_edit()
 
                 PostExpirator_Facade::set_expire_principles($post_id, $opts);
                 update_post_meta($post_id, '_expiration-date', $ts);
-                postexpirator_schedule_event($post_id, $ts, null);
+                postexpirator_schedule_event($post_id, $ts, $opts);
             }
         }
     }
