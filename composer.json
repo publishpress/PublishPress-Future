@@ -47,5 +47,8 @@
     "squizlabs/php_codesniffer": "^3.5",
     "sebastian/phpcpd": "^5.0",
     "overtrue/phplint": "^2.1"
+  },
+  "require": {
+    "publishpress/wordpress-reviews":  "^1.1"
   }
 }

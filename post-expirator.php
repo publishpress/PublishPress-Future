@@ -27,6 +27,7 @@ define('POSTEXPIRATOR_BASENAME', basename(__FILE__));
 define('POSTEXPIRATOR_BASEURL', plugins_url('/', __FILE__));
 
 require_once POSTEXPIRATOR_BASEDIR . '/functions.php';
+require_once POSTEXPIRATOR_BASEDIR . '/vendor/autoload.php';
 
 
 /**
@@ -59,6 +60,8 @@ function postexpirator_init()
 {
     $plugin_dir = basename(dirname(__FILE__));
     load_plugin_textdomain('post-expirator', null, $plugin_dir . '/languages/');
+
+    PostExpirator_Reviews::init();
 }
 
 add_action('plugins_loaded', 'postexpirator_init');
@@ -518,7 +521,7 @@ function postexpirator_update_post_meta($id)
     $shouldSchedule = false;
     $ts             = null;
     $opts           = [];
-    
+
     if (isset($_POST['postexpirator_view'])) {
         // Classic editor, quick edit
         $shouldSchedule = isset($_POST['enable-expirationdate']);
@@ -623,7 +626,7 @@ function postexpirator_update_post_meta($id)
             }
         } else {
             $shouldSchedule = get_post_meta($id, '_expiration-date-status', true) === 'saved';
-            
+
             if ($shouldSchedule) {
                 $ts = get_post_meta($id, '_expiration-date', true);
 

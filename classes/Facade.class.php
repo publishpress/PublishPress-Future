@@ -9,6 +9,7 @@ class PostExpirator_Facade
 {
 
     const DEFAULT_CAPABILITY_EXPIRE_POST = 'publishpress_future_expire_post';
+
     /**
      * The singleton instance.
      */
