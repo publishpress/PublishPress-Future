@@ -19,27 +19,27 @@
 
         // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
         if (isset($defaults['autoEnable']) && $defaults['autoEnable'] == 1) {
-            $expiredautoenabled  = 'checked = "checked"';
+            $expiredautoenabled = 'checked = "checked"';
             $expiredautodisabled = '';
         } else {
-            $expiredautoenabled  = '';
+            $expiredautoenabled = '';
             $expiredautodisabled = 'checked = "checked"';
         }
 
-        $expiredactivemetaenabled  = '';
+        $expiredactivemetaenabled = '';
         $expiredactivemetadisabled = 'checked = "checked"';
 
         // if settings are not configured, show the metabox by default only for posts and pages
         if (! isset($defaults['activeMetaBox']) && in_array($type, array('post', 'page'), true)) {
-            $expiredactivemetaenabled  = 'checked = "checked"';
+            $expiredactivemetaenabled = 'checked = "checked"';
             $expiredactivemetadisabled = '';
         } elseif (isset($defaults['activeMetaBox'])) {
             if ($defaults['activeMetaBox'] === 'inactive') {
-                $expiredactivemetaenabled  = '';
+                $expiredactivemetaenabled = '';
                 $expiredactivemetadisabled = 'checked = "checked"';
             } else {
                 $expiredactivemetadisabled = '';
-                $expiredactivemetaenabled  = 'checked = "checked"';
+                $expiredactivemetaenabled = 'checked = "checked"';
             }
         }
         if (! isset($defaults['taxonomy'])) {
@@ -95,9 +95,9 @@
                 <td>
                     <?php
                     _postexpirator_expire_type(array(
-                                                   'name'     => 'expirationdate_expiretype-' . $type,
-                                                   'selected' => (isset($defaults['expireType']) ? $defaults['expireType'] : '')
-                                               )); ?>
+                        'name' => 'expirationdate_expiretype-' . $type,
+                        'selected' => (isset($defaults['expireType']) ? $defaults['expireType'] : '')
+                    )); ?>
                     <p class="description"><?php
                         _e('Select the default expire action for the post type.', 'post-expirator'); ?></p>
                 </td>
@@ -141,10 +141,10 @@
                 <td>
                     <?php
                     echo _postexpirator_taxonomy(array(
-                                                     'type'     => $type,
-                                                     'name'     => 'expirationdate_taxonomy-' . $type,
-                                                     'selected' => $defaults['taxonomy']
-                                                 )); ?>
+                        'type' => $type,
+                        'name' => 'expirationdate_taxonomy-' . $type,
+                        'selected' => $defaults['taxonomy']
+                    )); ?>
                 </td>
             </tr>
             <tr valign="top">
@@ -169,16 +169,16 @@
             </tr>
             <?php
             $values = array(
-                ''        => __('None', 'post-expirator'),
+                '' => __('None', 'post-expirator'),
                 'inherit' => __('Inherit from General Settings', 'post-expirator'),
-                'custom'  => __('Custom', 'post-expirator'),
+                'custom' => __('Custom', 'post-expirator'),
                 'publish' => __('Publish Time', 'post-expirator'),
             );
 
-            $show       = 'none';
+            $show = 'none';
             $customDate = '';
             if ($defaults['default-expire-type'] === 'custom') {
-                $show       = 'block';
+                $show = 'block';
                 $customDate = $defaults['default-custom-date'];
             }
 
@@ -201,7 +201,7 @@
                             echo $value; ?>" <?php
                             selected($value, $defaults['default-expire-type']); ?>><?php
                                 echo $label; ?></option>
-                        <?php
+                            <?php
                         } ?>
                     </select>
                     <p class="description"><?php

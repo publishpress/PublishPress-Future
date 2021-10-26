@@ -109,10 +109,10 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
             _e('How to expire', 'post-expirator'); ?></label>
         <?php
         _postexpirator_expire_type(array(
-                                       'type'     => $post->post_type,
-                                       'name'     => 'expirationdate_expiretype',
-                                       'selected' => $expireType
-                                   )); ?>
+            'type' => $post->post_type,
+            'name' => 'expirationdate_expiretype',
+            'selected' => $expireType
+        )); ?>
     </div>
 
     <?php
@@ -128,25 +128,25 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
 
         echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
         echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
-        $walker     = new Walker_PostExpirator_Category_Checklist();
+        $walker = new Walker_PostExpirator_Category_Checklist();
         $taxonomies = get_object_taxonomies($post->post_type, 'object');
         $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
         if (sizeof($taxonomies) === 0) {
             echo '<p>' . __(
-                'You must assign a heirarchical taxonomy to this post type to use this feature.',
-                'post-expirator'
-            ) . '</p>';
+                    'You must assign a heirarchical taxonomy to this post type to use this feature.',
+                    'post-expirator'
+                ) . '</p>';
         } elseif (sizeof($taxonomies) > 1 && ! isset($defaults['taxonomy'])) {
             echo '<p>' . __(
-                'More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
-                'post-expirator'
-            ) . '</p>';
+                    'More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
+                    'post-expirator'
+                ) . '</p>';
         } else {
-            $keys     = array_keys($taxonomies);
+            $keys = array_keys($taxonomies);
             $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : $keys[0];
             wp_terms_checklist(0, array(
-                'taxonomy'      => $taxonomy,
-                'walker'        => $walker,
+                'taxonomy' => $taxonomy,
+                'walker' => $walker,
                 'selected_cats' => $categories,
                 'checked_ontop' => false
             ));
@@ -156,9 +156,9 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
         echo '</div>';
         if (isset($taxonomy)) {
             echo '<p class="post-expirator-taxonomy-name">' . __(
-                'Taxonomy Name',
-                'post-expirator'
-            ) . ': ' . $taxonomy . '</p>';
+                    'Taxonomy Name',
+                    'post-expirator'
+                ) . ': ' . $taxonomy . '</p>';
         }
         echo '</div>';
     }

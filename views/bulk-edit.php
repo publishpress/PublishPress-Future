@@ -2,10 +2,10 @@
 
 $defaults = PostExpirator_Facade::get_default_expiry($post_type);
 
-$year   = $defaults['year'];
-$month  = $defaults['month'];
-$day    = $defaults['day'];
-$hour   = $defaults['hour'];
+$year = $defaults['year'];
+$month = $defaults['month'];
+$day = $defaults['day'];
+$hour = $defaults['hour'];
 $minute = $defaults['minute'];
 ?>
 <div style="clear:both"></div>
@@ -37,10 +37,10 @@ $minute = $defaults['minute'];
                                     _e('Add to posts', 'post-expirator'); ?></option>
                                 <option value="change-add"
                                         data-show-fields="true"><?php
-                                        _e('Change & Add', 'post-expirator'); ?></option>
+                                    _e('Change & Add', 'post-expirator'); ?></option>
                                 <option value="remove-only"
                                         data-show-fields="false"><?php
-                                        _e('Remove from posts', 'post-expirator'); ?></option>
+                                    _e('Remove from posts', 'post-expirator'); ?></option>
                             </select>
                         </label>
                         <span class="post-expirator-date-fields">
@@ -50,9 +50,9 @@ $minute = $defaults['minute'];
                                 <select name="expirationdate_month">
                             <?php
                             for ($x = 1; $x <= 12; $x++) {
-                                $now          = mktime(0, 0, 0, $x, 1, date_i18n('Y'));
+                                $now = mktime(0, 0, 0, $x, 1, date_i18n('Y'));
                                 $monthNumeric = date_i18n('m', $now);
-                                $monthStr     = date_i18n('M', $now);
+                                $monthStr = date_i18n('M', $now);
                                 // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
                                 $selected = $monthNumeric == $defaults['month'] ? 'selected' : '';
                                 ?>
@@ -109,10 +109,10 @@ $minute = $defaults['minute'];
                             <?php
                             $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
                             _postexpirator_expire_type(array(
-                                                           'name'      => 'expirationdate_expiretype',
-                                                           'selected'  => empty($defaults) ? 'draft' : $defaults['expireType'],
-                                                           'post_type' => $post_type
-                                                       ));
+                                'name' => 'expirationdate_expiretype',
+                                'selected' => empty($defaults) ? 'draft' : $defaults['expireType'],
+                                'post_type' => $post_type
+                            ));
                             ?>
                         </label>
                     </div>
@@ -129,8 +129,8 @@ $minute = $defaults['minute'];
                             if (! empty($taxonomy)) {
                                 $walker = new Walker_PostExpirator_Category_Checklist();
                                 wp_terms_checklist(0, array(
-                                    'taxonomy'      => $taxonomy,
-                                    'walker'        => $walker,
+                                    'taxonomy' => $taxonomy,
+                                    'walker' => $walker,
                                     'checked_ontop' => false
                                 ));
                             }

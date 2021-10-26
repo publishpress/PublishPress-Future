@@ -18,9 +18,9 @@
                             <select name="expirationdate_month">
                                 <?php
                                 for ($x = 1; $x <= 12; $x++) {
-                                    $now          = mktime(0, 0, 0, $x, 1, date_i18n('Y'));
+                                    $now = mktime(0, 0, 0, $x, 1, date_i18n('Y'));
                                     $monthNumeric = date_i18n('m', $now);
-                                    $monthStr     = date_i18n('M', $now);
+                                    $monthStr = date_i18n('M', $now);
                                     ?>
                                     <option value="<?php
                                     echo $monthNumeric; ?>"
@@ -29,7 +29,7 @@
                                         echo $monthNumeric; ?>
                                         -<?php
                                         echo $monthStr; ?></option>
-                                <?php
+                                    <?php
                                 } ?>
 
                             </select>
@@ -71,10 +71,10 @@
                         <?php
                         $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
                         _postexpirator_expire_type(array(
-                                                       'name'      => 'expirationdate_expiretype',
-                                                       'selected'  => empty($defaults) ? 'draft' : $defaults['expireType'],
-                                                       'post_type' => $post_type
-                                                   ));
+                            'name' => 'expirationdate_expiretype',
+                            'selected' => empty($defaults) ? 'draft' : $defaults['expireType'],
+                            'post_type' => $post_type
+                        ));
                         ?>
                     </div>
                     <div class="pe-category-list">
@@ -90,8 +90,8 @@
                             if (! empty($taxonomy)) {
                                 $walker = new Walker_PostExpirator_Category_Checklist();
                                 wp_terms_checklist(0, array(
-                                    'taxonomy'      => $taxonomy,
-                                    'walker'        => $walker,
+                                    'taxonomy' => $taxonomy,
+                                    'walker' => $walker,
                                     'checked_ontop' => false
                                 ));
                             }

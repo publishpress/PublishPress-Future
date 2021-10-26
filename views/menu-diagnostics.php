@@ -17,8 +17,8 @@
                             'post-expirator'
                         ) . ') ' . __('Disable Debugging', 'post-expirator') . '" />
 								<br/><a href="' . admin_url(
-                             'options-general.php?page=post-expirator.php&tab=viewdebug'
-                         ) . '">' . __('View Debug Logs', 'post-expirator') . '</a>';
+                            'options-general.php?page=post-expirator.php&tab=viewdebug'
+                        ) . '">' . __('View Debug Logs', 'post-expirator') . '</a>';
                 } else {
                     echo '<input type="submit" class="button" name="debugging-enable" id="debugging-enable" value="(' . __(
                             'Status: Disabled',
@@ -50,13 +50,14 @@
         </tr/>
         <tr valign="top">
             <th scope="row"><label for="cron-schedule"><?php
-                _e('Current Cron Schedule', 'post-expirator'); ?></label>
+                    _e('Current Cron Schedule', 'post-expirator'); ?></label>
             </th>
             <td>
                 <?php
                 $cron = PostExpirator_CronFacade::get_plugin_cron_events();
 
-                if (empty($cron)) {''
+                if (empty($cron)) {
+                    ''
                     ?>
                     <p><?php
                         _e('No cron events found for the plugin.', 'post-expirator'); ?></p>

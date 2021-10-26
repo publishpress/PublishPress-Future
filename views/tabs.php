@@ -30,7 +30,7 @@ $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET
                    class="pe-tab nav-tab <?php
                    echo($current_tab === 'viewdebug' ? 'nav-tab-active' : ''); ?>"><?php
                     _e('View Debug Logs', 'post-expirator'); ?></a>
-            <?php
+                <?php
             } ?>
         </nav>
 
