@@ -73,12 +73,10 @@
                     <div class="pe-scroll">
                         <table cellspacing="0" class="striped">
                             <tr>
-                                <th style="width: 30%"><?php
-                                    _e('Date', 'post-expirator'); ?></th>
-                                <th style="width: 30%;"><?php
-                                    _e('Event', 'post-expirator'); ?></th>
-                                <th style="width: 30%;"><?php
-                                    _e('Arguments / Schedule', 'post-expirator'); ?></th>
+                                <th><?php _e('Date', 'post-expirator'); ?></th>
+                                <th><?php _e('Event', 'post-expirator'); ?></th>
+                                <th><?php _e('Arguments / Schedule', 'post-expirator'); ?></th>
+                                <th><?php _e('Post', 'post-expirator'); ?></th>
                             </tr>
                             <?php
                             foreach ($cron as $time => $value) {
@@ -87,26 +85,46 @@
                                     echo '<td>' . date_i18n('r', $time) . '</td>';
                                     echo '<td>' . $eventkey . '</td>';
                                     $arrkey = array_keys($eventvalue);
+                                    $firstArgsUid = null;
                                     echo '<td>';
                                     foreach ($arrkey as $eventguid) {
-                                        echo '<table><tr>';
+                                        if (is_null($firstArgsUid)) {
+                                            $firstArgsUid = $eventguid;
+                                        }
+
                                         if (empty($eventvalue[$eventguid]['args'])) {
-                                            echo '<td>' . __('No Arguments', 'post-expirator') . '</td>';
+                                            echo '<div>' . __('No Arguments', 'post-expirator') . '</div>';
                                         } else {
-                                            echo '<td>';
+                                            echo '<div>';
                                             $args = array();
                                             foreach ($eventvalue[$eventguid]['args'] as $key => $value) {
                                                 $args[] = "$key => $value";
                                             }
                                             echo implode("<br/>\n", $args);
-                                            echo '</td>';
+                                            echo '</div>';
                                         }
-                                        if (empty($eventvalue[$eventguid]['schedule'])) {
-                                            echo '<td>' . __('Single Event', 'post-expirator') . '</td>';
-                                        } else {
-                                            echo '<td>' . $eventvalue[$eventguid]['schedule'] . ' (' . $eventvalue[$eventguid]['interval'] . ')</td>';
+                                    }
+
+                                    echo '&nbsp;/&nbsp;';
+                                    if (empty($eventvalue[$eventguid]['schedule'])) {
+                                        echo __('Single Event', 'post-expirator');
+                                    } else {
+                                        echo $eventvalue[$eventguid]['schedule'] . ' (' . $eventvalue[$eventguid]['interval'] . ')';
+                                    }
+                                    echo '</td>';
+
+                                    echo '<td>';
+                                    if (
+                                        isset($eventvalue[$firstArgsUid])
+                                        && isset($eventvalue[$firstArgsUid]['args'])
+                                        && isset($eventvalue[$firstArgsUid]['args'][0])
+                                        && ! empty($eventvalue[$firstArgsUid]['args'][0])
+                                    ) {
+                                        $post = get_post((int)$eventvalue[$firstArgsUid]['args'][0]);
+
+                                        if (! empty($post) && ! is_wp_error($post) && is_object($post)) {
+                                            echo "{$post->ID}: {$post->post_title} ({$post->post_status})";
                                         }
-                                        echo '</tr></table>';
                                     }
                                     echo '</td>';
                                     echo '</tr>';
