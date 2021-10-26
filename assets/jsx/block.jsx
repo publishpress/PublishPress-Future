@@ -23,6 +23,7 @@
 
             const postMeta = wp.data.select('core/editor').getEditedPostAttribute('meta');
             const postType = wp.data.select('core/editor').getCurrentPostType();
+            const setPostMeta = (newMeta) => wp.data.dispatch('core/editor').editPost({meta: newMeta});
 
             let enabled = config.defaults.autoEnable == 1;
             let date = new Date();
@@ -56,6 +57,12 @@
                 categories: categories,
                 taxonomy: taxonomy,
             });
+
+            // Force all the metadata to be saved. Required for making sure the default settings are stored correctly.
+            setPostMeta({'_expiration-date-status': (enabled ? 'saved' : '')});
+            setPostMeta({'_expiration-date': (date.getTime()) / 1000});
+            setPostMeta({'_expiration-date-type': expireAction});
+            setPostMeta({'_expiration-date-categories': categories});
 
             let categoriesList = [];
             let catIdVsName = [];
