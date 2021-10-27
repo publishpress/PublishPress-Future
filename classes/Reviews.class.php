@@ -15,7 +15,7 @@ abstract class PostExpirator_Reviews
     public static function init()
     {
         if (is_null(static::$reviewController)) {
-            add_filter('publishpress_wp_reviews_display_banner_post-expirator', [self::class, 'shouldDisplayBanner']);
+            add_filter('post-expirator_wp_reviews_allow_display_notice', [self::class, 'shouldDisplayBanner']);
 
             self::$reviewController = new ReviewsController(
                 'post-expirator',
