@@ -22,7 +22,7 @@ tr.pe-event {
 #pe-settings-tabs fieldset {
     border: 1px solid black;
     border-radius: 6px;
-    padding: 0px 12px;
+    padding: 0 12px;
     margin-bottom: 20px;
 }
 
@@ -30,4 +30,27 @@ tr.pe-event {
     display: block;
     width: 300px;
     margin-bottom: 2px;
+}
+
+.pe-status {
+    display: inline-block;
+    font-size: 25px;
+}
+
+.pe-status-enabled {
+    color: #2c9b1a;
+}
+
+.pe-status-disabled {
+    color: #e58484;
+}
+
+.pe-status + span {
+    line-height: 25px;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.pe-status + span + input[type="submit"] {
+    margin-right: 10px;
 }

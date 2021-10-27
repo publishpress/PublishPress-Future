@@ -1,66 +1,54 @@
 <form method="post" id="postExpiratorMenuUpgrade">
     <?php
     wp_nonce_field('postexpirator_menu_diagnostics', '_postExpiratorMenuDiagnostics_nonce'); ?>
-    <h3><?php
-        _e('Advanced Diagnostics', 'post-expirator'); ?></h3>
+    <h3><?php _e('Advanced Diagnostics', 'post-expirator'); ?></h3>
     <table class="form-table">
-        <tr valign="top">
-            <th scope="row"><label for="postexpirator-log"><?php
-                    _e('Debug Logging', 'post-expirator'); ?></label>
+        <tr>
+            <th scope="row">
+                <label for="postexpirator-log"><?php _e('Debug Logging', 'post-expirator'); ?></label>
             </th>
             <td>
-                <?php
-                if (POSTEXPIRATOR_DEBUG) {
-                    echo '
-								<input type="submit" class="button" name="debugging-disable" id="debugging-disable" value="(' . __(
-                            'Status: Enabled',
-                            'post-expirator'
-                        ) . ') ' . __('Disable Debugging', 'post-expirator') . '" />
-								<br/><a href="' . admin_url(
-                            'options-general.php?page=post-expirator.php&tab=viewdebug'
-                        ) . '">' . __('View Debug Logs', 'post-expirator') . '</a>';
-                } else {
-                    echo '<input type="submit" class="button" name="debugging-enable" id="debugging-enable" value="(' . __(
-                            'Status: Disabled',
-                            'post-expirator'
-                        ) . ') ' . __('Enable Debugging', 'post-expirator') . '" />';
-                }
-                ?>
+                <?php if (defined('POSTEXPIRATOR_DEBUG') && POSTEXPIRATOR_DEBUG) : ?>
+                    <i class="dashicons dashicons-yes-alt pe-status pe-status-enabled"></i> <span><?php _e('Enabled', 'post-expirator'); ?></span>
+                    <?php echo '<input type="submit" class="button" name="debugging-disable" id="debugging-disable" value="' . __('Disable Debugging', 'post-expirator') . '" />'; ?>
+                    <?php echo '<a href="' . admin_url('options-general.php?page=post-expirator.php&tab=viewdebug') . '">' . __('View Debug Logs', 'post-expirator') . '</a>'; ?>
+                <?php else: ?>
+                    <i class="dashicons dashicons-no-alt pe-status pe-status-disabled"></i> <span><?php _e('Disabled', 'post-expirator'); ?></span>
+                    <?php echo '<input type="submit" class="button" name="debugging-enable" id="debugging-enable" value="' . __('Enable Debugging', 'post-expirator') . '" />'; ?>
+                <?php endif; ?>
             </td>
         </tr>
-        <tr valign="top">
-            <th scope="row"><?php
-                _e('Purge Debug Log', 'post-expirator'); ?></th>
+        <tr>
+            <th scope="row"><?php _e('Purge Debug Log', 'post-expirator'); ?></th>
             <td>
-                <input type="submit" class="button" name="purge-debug" id="purge-debug"
-                       value="<?php
-                       _e('Purge Debug Log', 'post-expirator'); ?>"/>
+                <input type="submit"
+                       class="button"
+                       name="purge-debug"
+                       id="purge-debug"
+                       value="<?php _e('Purge Debug Log', 'post-expirator'); ?>"/>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><?php _e('WP-Cron Status', 'post-expirator'); ?></th>
+            <td>
+                <?php if (PostExpirator_CronFacade::is_cron_enabled()) : ?>
+                    <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php _e('Enabled', 'post-expirator'); ?></span>
+                <?php else: ?>
+                    <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php _e('Disabled', 'post-expirator'); ?></span>
+                <?php endif; ?>
             </td>
         </tr/>
-        <tr valign="top">
-            <th scope="row"><?php
-                _e('WP-Cron Status', 'post-expirator'); ?></th>
-            <td>
-                <?php
-                echo PostExpirator_CronFacade::is_cron_enabled() ?
-                    _e('ENABLED - OK', 'post-expirator')
-                    : _e('DISABLED', 'post-expirator');
-                ?>
-            </td>
-        </tr/>
-        <tr valign="top">
-            <th scope="row"><label for="cron-schedule"><?php
-                    _e('Current Cron Schedule', 'post-expirator'); ?></label>
+        <tr>
+            <th scope="row">
+                <label for="cron-schedule"><?php _e('Current Cron Schedule', 'post-expirator'); ?></label>
             </th>
             <td>
                 <?php
                 $cron = PostExpirator_CronFacade::get_plugin_cron_events();
 
                 if (empty($cron)) {
-                    ''
                     ?>
-                    <p><?php
-                        _e('No cron events found for the plugin.', 'post-expirator'); ?></p>
+                    <p><?php _e('No cron events found for the plugin.', 'post-expirator'); ?></p>
                     <?php
                 } else {
                     ?>
@@ -71,7 +59,7 @@
                         ); ?></p>
 
                     <div class="pe-scroll">
-                        <table cellspacing="0" class="striped">
+                        <table class="striped">
                             <tr>
                                 <th><?php _e('Date', 'post-expirator'); ?></th>
                                 <th><?php _e('Event', 'post-expirator'); ?></th>
