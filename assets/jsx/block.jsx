@@ -23,6 +23,7 @@
 
             const postMeta = wp.data.select('core/editor').getEditedPostAttribute('meta');
             const postType = wp.data.select('core/editor').getCurrentPostType();
+            const setPostMeta = (newMeta) => wp.data.dispatch('core/editor').editPost({meta: newMeta});
 
             let enabled = config.defaults.autoEnable == 1;
             let date = new Date();
@@ -57,12 +58,18 @@
                 taxonomy: taxonomy,
             });
 
+            // Force all the metadata to be saved. Required for making sure the default settings are stored correctly.
+            setPostMeta({'_expiration-date-status': (enabled ? 'saved' : '')});
+            setPostMeta({'_expiration-date': (date.getTime()) / 1000});
+            setPostMeta({'_expiration-date-type': expireAction});
+            setPostMeta({'_expiration-date-categories': categories});
+
             let categoriesList = [];
             let catIdVsName = [];
 
             if ((!taxonomy && postType === 'post') || taxonomy === 'category') {
                 wp.apiFetch({
-                    path: wp.url.addQueryArgs('wp/v2/categories', {per_page: -1, hide_empty: false}),
+                    path: wp.url.addQueryArgs('wp/v2/categories', {per_page: -1}),
                 }).then((list) => {
                     list.forEach(cat => {
                         categoriesList[cat.name] = cat;
@@ -155,7 +162,7 @@
 
             return (
                 <PluginDocumentSettingPanel title={__('Post Expirator', 'post-expirator')} icon="calendar"
-                                            initialOpen={enabled}>
+                                            initialOpen={enabled} className={'post-expirator-panel'}>
                     <PanelRow>
                         <CheckboxControl
                             label={__('Enable Post Expiration', 'post-expirator')}
@@ -217,12 +224,18 @@
             let typeNew = postMeta['_expiration-date-type'];
             let typeOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['expireType'];
 
+
+
             if (typeNew) {
                 return typeNew;
             }
 
             if (typeOld) {
                 return typeOld;
+            }
+
+            if (config && config.defaults && config.defaults.expireType) {
+                return config.defaults.expireType;
             }
 
             return 'draft';
