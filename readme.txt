@@ -83,15 +83,15 @@ This section describes how to install the plugin and get it working.
 
 = [2.6.1] - 27 Oct 2021 =
 
-* Added: Add post information to the scheduled list for easier debugging, #164;
 * Fixed: Fix category replace not saving, #159;
 * Fixed: Fix auto enabled settings, #158;
-* Added: Add a review request after a specific period of usage, #103;
 * Fixed: Fix expiration data and cron on Gutenberg style box, #156, #136;
-* Added: Improve the list of cron tasks, filtering only the tasks related to the plugin, #153;
 * Fixed: Fix the request that loads categories in the Gutenberg style panel, #133;
 * Fixed: Fix the category replace not working with the new Gutenberg style panel, #127;
 * Fixed: Fix the default options for the Gutenberg style panel, #145;
+* Added: Add post information to the scheduled list for easier debugging, #164;
+* Added: Add a review request after a specific period of usage, #103;
+* Added: Improve the list of cron tasks, filtering only the tasks related to the plugin, #153;
 
 = [2.6.0] - 04 Oct 2021 =
 
