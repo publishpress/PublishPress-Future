@@ -413,6 +413,7 @@ function postexpirator_meta_box($post)
             'post' => $post,
             'enabled' => $enabled,
             'default' => $default,
+            'defaults' => $defaults,
             'defaultmonth' => $defaultmonth,
             'defaultday' => $defaultday,
             'defaulthour' => $defaulthour,
