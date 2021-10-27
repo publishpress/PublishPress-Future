@@ -70,6 +70,11 @@ class PostExpirator_Facade
     public function set_default_capabilities()
     {
         $admin_role = get_role('administrator');
+
+        if (! is_a($admin_role, WP_Role::class)) {
+            return;
+        }
+
         $admin_role->add_cap(self::DEFAULT_CAPABILITY_EXPIRE_POST);
     }
 
