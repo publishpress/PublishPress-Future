@@ -25,7 +25,7 @@ class PostExpirator_Util
         }
 
         if (self::is_classic_editor_plugin_active()) {
-            $editor_option       = get_option('classic-editor-replace');
+            $editor_option = get_option('classic-editor-replace');
             $block_editor_active = array('no-replace', 'block');
 
             return in_array($editor_option, $block_editor_active, true);

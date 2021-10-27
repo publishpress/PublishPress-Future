@@ -9,7 +9,7 @@ class PostExpiratorDebug
     /**
      * Constructor.
      */
-    function __construct()
+    public function __construct()
     {
         global $wpdb;
         $this->debug_table = $wpdb->prefix . 'postexpirator_debug';

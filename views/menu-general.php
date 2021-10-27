@@ -3,21 +3,21 @@
 // Get Option
 $expirationdateDefaultDateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
 $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
-$expireddisplayfooter            = get_option('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
-$expiredemailnotification        = get_option('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
-$expiredemailnotificationadmins  = get_option(
+$expireddisplayfooter = get_option('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
+$expiredemailnotification = get_option('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
+$expiredemailnotificationadmins = get_option(
     'expirationdateEmailNotificationAdmins',
     POSTEXPIRATOR_EMAILNOTIFICATIONADMINS
 );
-$expiredemailnotificationlist    = get_option('expirationdateEmailNotificationList', '');
-$expirationdateFooterContents    = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
-$expirationdateFooterStyle       = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
-$expirationdateDefaultDate       = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
+$expiredemailnotificationlist = get_option('expirationdateEmailNotificationList', '');
+$expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
+$expirationdateFooterStyle = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
+$expirationdateDefaultDate = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
 $expirationdateDefaultDateCustom = get_option('expirationdateDefaultDateCustom');
 
 $categories = get_option('expirationdateCategoryDefaults');
 
-$expireddisplayfooterenabled  = '';
+$expireddisplayfooterenabled = '';
 $expireddisplayfooterdisabled = '';
 if ($expireddisplayfooter == 0) {
     $expireddisplayfooterdisabled = 'checked="checked"';
@@ -25,7 +25,7 @@ if ($expireddisplayfooter == 0) {
     $expireddisplayfooterenabled = 'checked="checked"';
 }
 
-$expiredemailnotificationenabled  = '';
+$expiredemailnotificationenabled = '';
 $expiredemailnotificationdisabled = '';
 if ($expiredemailnotification == 0) {
     $expiredemailnotificationdisabled = 'checked="checked"';
@@ -33,7 +33,7 @@ if ($expiredemailnotification == 0) {
     $expiredemailnotificationenabled = 'checked="checked"';
 }
 
-$expiredemailnotificationadminsenabled  = '';
+$expiredemailnotificationadminsenabled = '';
 $expiredemailnotificationadminsdisabled = '';
 if ($expiredemailnotificationadmins == 0) {
     $expiredemailnotificationadminsdisabled = 'checked="checked"';
@@ -41,7 +41,7 @@ if ($expiredemailnotificationadmins == 0) {
     $expiredemailnotificationadminsenabled = 'checked="checked"';
 }
 
-$user_roles    = wp_roles()->get_names();
+$user_roles = wp_roles()->get_names();
 $plugin_facade = PostExpirator_Facade::getInstance();
 ?>
     <p><?php
@@ -193,8 +193,8 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
                     $walker = new Walker_PostExpirator_Category_Checklist();
                     wp_terms_checklist(0, array(
-                        'taxonomy'      => 'category',
-                        'walker'        => $walker,
+                        'taxonomy' => 'category',
+                        'walker' => $walker,
                         'selected_cats' => $categories,
                         'checked_ontop' => false
                     ));

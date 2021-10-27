@@ -9,6 +9,7 @@ class PostExpirator_Facade
 {
 
     const DEFAULT_CAPABILITY_EXPIRE_POST = 'publishpress_future_expire_post';
+
     /**
      * The singleton instance.
      */
@@ -60,7 +61,7 @@ class PostExpirator_Facade
         }
 
         return $user_role_instance->has_cap($this->capabilities['expire_post'])
-               && $user_role_instance->capabilities[$this->capabilities['expire_post']] === true;
+            && $user_role_instance->capabilities[$this->capabilities['expire_post']] === true;
     }
 
     /**
@@ -147,7 +148,7 @@ class PostExpirator_Facade
                 if (empty($meta_value)) {
                     $this->unschedule_event($post_id);
                 }
-                
+
 
                 break;
             case '_expiration-date':
@@ -211,8 +212,8 @@ class PostExpirator_Facade
         }
 
         return array(
-            'expireType'       => $expireType,
-            'category'         => $categories,
+            'expireType' => $expireType,
+            'category' => $categories,
             'categoryTaxonomy' => $taxonomyName,
         );
     }
@@ -239,50 +240,50 @@ class PostExpirator_Facade
                 $post_type,
                 '_expiration-date-status',
                 array(
-                    'single'        => true,
-                    'type'          => 'string',
+                    'single' => true,
+                    'type' => 'string',
                     'auth_callback' => function () {
                         return current_user_can('edit_posts');
                     },
-                    'show_in_rest'  => true,
+                    'show_in_rest' => true,
                 )
             );
             register_post_meta(
                 $post_type,
                 '_expiration-date',
                 array(
-                    'single'        => true,
-                    'type'          => 'number',
+                    'single' => true,
+                    'type' => 'number',
                     'auth_callback' => function () {
                         return current_user_can('edit_posts');
                     },
-                    'show_in_rest'  => true,
+                    'show_in_rest' => true,
                 )
             );
             register_post_meta(
                 $post_type,
                 '_expiration-date-type',
                 array(
-                    'single'        => true,
-                    'type'          => 'string',
+                    'single' => true,
+                    'type' => 'string',
                     'auth_callback' => function () {
                         return current_user_can('edit_posts');
                     },
-                    'show_in_rest'  => true,
+                    'show_in_rest' => true,
                 )
             );
             register_post_meta(
                 $post_type,
                 '_expiration-date-categories',
                 array(
-                    'single'        => true,
-                    'type'          => 'array',
+                    'single' => true,
+                    'type' => 'array',
                     'auth_callback' => function () {
                         return current_user_can('edit_posts');
                     },
-                    'show_in_rest'  => array(
+                    'show_in_rest' => array(
                         'schema' => array(
-                            'type'  => 'array',
+                            'type' => 'array',
                             'items' => array(
                                 'type' => 'number',
                             ),
@@ -297,14 +298,14 @@ class PostExpirator_Facade
                 $post_type,
                 '_expiration-date-options',
                 array(
-                    'single'        => true,
-                    'type'          => 'object',
+                    'single' => true,
+                    'type' => 'object',
                     'auth_callback' => function () {
                         return current_user_can('edit_posts');
                     },
-                    'show_in_rest'  => array(
+                    'show_in_rest' => array(
                         'schema' => array(
-                            'type'                 => 'object',
+                            'type' => 'object',
                             'additionalProperties' => true,
                         ),
                     ),
@@ -349,8 +350,8 @@ class PostExpirator_Facade
                 'postexpirator-block',
                 'config',
                 array(
-                    'defaults'           => $defaults,
-                    'default_date'       => $default_expiry['ts'],
+                    'defaults' => $defaults,
+                    'default_date' => $default_expiry['ts'],
                     'default_categories' => get_option('expirationdateCategoryDefaults'),
                 )
             );
@@ -391,7 +392,7 @@ class PostExpirator_Facade
         $current_user = wp_get_current_user();
 
         return is_a($current_user, WP_User::class)
-               && $current_user->has_cap($this->capabilities['expire_post']);
+            && $current_user->has_cap($this->capabilities['expire_post']);
     }
 
     /**
@@ -399,12 +400,12 @@ class PostExpirator_Facade
      */
     public static function get_default_expiry($post_type)
     {
-        $defaultmonth  = date_i18n('m');
-        $defaultday    = date_i18n('d');
-        $defaulthour   = date_i18n('H');
-        $defaultyear   = date_i18n('Y');
+        $defaultmonth = date_i18n('m');
+        $defaultday = date_i18n('d');
+        $defaulthour = date_i18n('H');
+        $defaultyear = date_i18n('Y');
         $defaultminute = date_i18n('i');
-        $ts            = time();
+        $ts = time();
 
         $default_date_expiry = $custom_date = '';
         $general_date_expiry = $general_custom_date = '';
@@ -428,13 +429,13 @@ class PostExpirator_Facade
                     $custom_date = $defaults['default-custom-date'];
                     break;
                 case 'inherit':
-                    $custom_date         = $general_custom_date;
+                    $custom_date = $general_custom_date;
                     $default_date_expiry = $general_date_expiry;
                     break;
             }
         } else {
             $default_date_expiry = $general_date_expiry;
-            $custom_date         = $general_custom_date;
+            $custom_date = $general_custom_date;
         }
 
         if ('custom' === $default_date_expiry) {
@@ -457,20 +458,20 @@ class PostExpirator_Facade
                     date_default_timezone_set('UTC');
                 }
             }
-            $defaultmonth  = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'm');
-            $defaultday    = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'd');
-            $defaultyear   = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'Y');
-            $defaulthour   = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'H');
+            $defaultmonth = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'm');
+            $defaultday = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'd');
+            $defaultyear = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'Y');
+            $defaulthour = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'H');
             $defaultminute = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'i');
         }
 
         return array(
-            'month'  => $defaultmonth,
-            'day'    => $defaultday,
-            'year'   => $defaultyear,
-            'hour'   => $defaulthour,
+            'month' => $defaultmonth,
+            'day' => $defaultday,
+            'year' => $defaultyear,
+            'hour' => $defaulthour,
             'minute' => $defaultminute,
-            'ts'     => $ts,
+            'ts' => $ts,
         );
     }
 

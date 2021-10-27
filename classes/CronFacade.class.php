@@ -10,7 +10,7 @@ class PostExpirator_CronFacade
      */
     public static function get_plugin_cron_events()
     {
-        $cron   = _get_cron_array();
+        $cron = _get_cron_array();
         $events = [];
 
         $plugin_valid_events = self::get_valid_events();
@@ -35,7 +35,7 @@ class PostExpirator_CronFacade
      */
     public static function is_cron_enabled()
     {
-        return !defined('DISABLE_WP_CRON') || DISABLE_WP_CRON == false;
+        return ! defined('DISABLE_WP_CRON') || DISABLE_WP_CRON == false;
     }
 
     private static function get_valid_events()

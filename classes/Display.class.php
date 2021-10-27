@@ -102,10 +102,10 @@ class PostExpirator_Display
         }
 
         $this->render_template('tabs', array(
-            'tabs'      => $tabs,
+            'tabs' => $tabs,
             'tab_index' => $tab_index,
-            'html'      => $html,
-            'tab'       => $tab
+            'html' => $html,
+            'tab' => $tab
         ));
     }
 
@@ -217,8 +217,8 @@ class PostExpirator_Display
      */
     private function menu_defaults()
     {
-        $debug    = postexpirator_debug();
-        $types    = postexpirator_get_post_types();
+        $debug = postexpirator_debug();
+        $types = postexpirator_get_post_types();
         $defaults = array();
 
         if (isset($_POST['expirationdateSaveDefaults'])) {

@@ -5,7 +5,7 @@ Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.5.1
+Stable tag: 2.6.1
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -80,6 +80,22 @@ This section describes how to install the plugin and get it working.
 3. Settings screen
 
 == Changelog ==
+
+= [2.6.1] - 27 Oct 2021 =
+
+* Fixed: Fix category replace not saving, #159;
+* Fixed: Fix auto enabled settings, #158;
+* Fixed: Fix expiration data and cron on Gutenberg style box, #156, #136;
+* Fixed: Fix the request that loads categories in the Gutenberg style panel, #133;
+* Fixed: Fix the category replace not working with the new Gutenberg style panel, #127;
+* Fixed: Fix the default options for the Gutenberg style panel, #145;
+* Added: Add post information to the scheduled list for easier debugging, #164;
+* Added: Add a review request after a specific period of usage, #103;
+* Added: Improve the list of cron tasks, filtering only the tasks related to the plugin, #153;
+
+= [2.6.0] - 04 Oct 2021 =
+
+* Added: Add specific capabilities for expiring posts, #141;
 
 = [2.5.1] - 27 Sep 2021 =
 
