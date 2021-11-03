@@ -1090,7 +1090,7 @@ function postexpirator_expire_post($id)
                         '##EXPIRATIONDATE##',
                         'CATEGORIES',
                         implode(',', _postexpirator_get_cat_names($category)),
-                        implode(',', _postexpirator_get_cat_names($merged))
+                        implode(',', _postexpirator_get_cat_names($terms))
                     );
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
