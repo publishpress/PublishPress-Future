@@ -335,30 +335,47 @@ class PostExpirator_Facade
         if (
             (! isset($defaults['activeMetaBox']) && in_array(
                     $post->post_type,
-                    array(
+                    [
                         'post',
                         'page',
-                    ),
+                    ],
                     true
                 )) || $defaults['activeMetaBox'] === 'active'
         ) {
             wp_enqueue_script(
-                'postexpirator-block',
-                POSTEXPIRATOR_BASEURL . 'assets/js/block.js',
-                array('wp-edit-post'),
+                'postexpirator-gutenberg-panel',
+                POSTEXPIRATOR_BASEURL . 'assets/js/gutenberg-panel.js',
+                ['wp-edit-post'],
                 POSTEXPIRATOR_VERSION,
                 true
             );
 
             $default_expiry = PostExpirator_Facade::get_default_expiry($post->post_type);
             wp_localize_script(
-                'postexpirator-block',
-                'config',
-                array(
+                'postexpirator-gutenberg-panel',
+                'postExpiratorPanelConfig',
+                [
                     'defaults' => $defaults,
                     'default_date' => $default_expiry['ts'],
                     'default_categories' => get_option('expirationdateCategoryDefaults'),
-                )
+                    'strings' => [
+                        'category' => __('Category'),
+                        'draft' => __('Draft', 'post-expirator'),
+                        'delete' => __('Delete', 'post-expirator'),
+                        'trash' => __('Trash', 'post-expirator'),
+                        'private' => __('Private', 'post-expirator'),
+                        'stick' => __('Stick', 'post-expirator'),
+                        'unstick' => __('Unstick', 'post-expirator'),
+                        'categoryReplace' => __('Category: Replace', 'post-expirator'),
+                        'categoryAdd' => __('Category: Add', 'post-expirator'),
+                        'categoryRemove' => __('Category: Remove', 'post-expirator'),
+                        'postExpirator' => __('Post Expirator', 'post-expirator'),
+                        'enablePostExpiration' => __('Enable Post Expiration', 'post-expirator'),
+                        'howToExpire' => __('How to expire', 'post-expirator'),
+                        'loading' => __('Loading', 'post-expirator'),
+                        'expirationCategories' => __('Expiration Categories', 'post-expirator'),
+                    ]
+                ]
             );
         }
     }

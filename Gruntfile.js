@@ -32,7 +32,7 @@ module.exports = function (grunt) {
             '!codecept**',
             '!tests/**',
             '!webpack.config.js',
-            '!assets/js/block.js',
+            '!assets/js/gutenberg-panel.js',
         ],
         mkdir: {
             logs: {
