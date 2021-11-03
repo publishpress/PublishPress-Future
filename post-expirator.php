@@ -1027,7 +1027,7 @@ function postexpirator_expire_post($id)
         }
     } elseif ($expireType === 'category-add') {
         if (! empty($category)) {
-            if (! isset($categoryTaxonomy) || $categoryTaxonomy === 'category') {
+            if (empty($categoryTaxonomy) || $categoryTaxonomy === 'category') {
                 $cats = wp_get_post_categories($id);
                 $merged = array_merge($cats, $category);
                 if (wp_update_post(array('ID' => $id, 'post_category' => $merged)) === 0) {
@@ -1129,7 +1129,7 @@ function postexpirator_expire_post($id)
         }
     } elseif ($expireType === 'category-remove') {
         if (! empty($category)) {
-            if (! isset($categoryTaxonomy) || $categoryTaxonomy === 'category') {
+            if (empty($categoryTaxonomy) || $categoryTaxonomy === 'category') {
                 $cats = wp_get_post_categories($id);
                 $merged = array();
                 foreach ($cats as $cat) {
