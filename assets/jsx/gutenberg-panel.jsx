@@ -177,7 +177,7 @@
                                 <DateTimePicker
                                     currentDate={date}
                                     onChange={(value) => this.setState({date: value, attribute: 'date'})}
-                                    is12Hour={true}
+                                    is12Hour={config.is12Hour}
                                 />
                             </PanelRow>
                             <SelectControl
