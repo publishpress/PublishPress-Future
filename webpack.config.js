@@ -9,7 +9,7 @@ module.exports = [
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "assets", "js"),
-            filename: "block.js"
+            filename: "gutenberg-panel.js"
         },
         module: {
             rules: [

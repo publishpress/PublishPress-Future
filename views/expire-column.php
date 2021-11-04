@@ -3,13 +3,15 @@ echo esc_attr($id); ?>"
      data-expire-attributes="<?php
      echo esc_attr(json_encode($attributes)); ?>">
     <?php
-    $display = __('Never', 'post-expirator');
-    $ed = get_post_meta($id, '_expiration-date', true);
-    if ($ed) {
+    $expirationEnabled = get_post_meta($id, '_expiration-date-status', true) === 'saved';
+    $expirationDate = get_post_meta($id, '_expiration-date', true);
+    if ($expirationDate && $expirationEnabled) {
         $display = date_i18n(
             get_option('date_format') . ' ' . get_option('time_format'),
-            $ed + (get_option('gmt_offset') * HOUR_IN_SECONDS)
+            $expirationDate + (get_option('gmt_offset') * HOUR_IN_SECONDS)
         );
+    } else {
+        $display = __('Never', 'post-expirator');
     }
 
     $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
@@ -26,13 +28,12 @@ echo esc_attr($id); ?>"
     $day = $defaults['day'];
     $hour = $defaults['hour'];
     $minute = $defaults['minute'];
-    $enabled = 'false';
+    $enabled = $expirationDate && $expirationEnabled ? 'true' : 'false';
     $categories = '';
 
     // Values for Quick Edit
-    if ($ed) {
-        $enabled = 'true';
-        $date = gmdate('Y-m-d H:i:s', $ed);
+    if ($expirationDate) {
+        $date = gmdate('Y-m-d H:i:s', $expirationDate);
         $year = get_date_from_gmt($date, 'Y');
         $month = get_date_from_gmt($date, 'm');
         $day = get_date_from_gmt($date, 'd');

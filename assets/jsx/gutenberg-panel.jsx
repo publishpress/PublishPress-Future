@@ -1,7 +1,6 @@
 (function (wp, config) {
 
     const {registerPlugin} = wp.plugins;
-    const {__} = wp.i18n;
     const {PluginDocumentSettingPanel} = wp.editPost;
     const {PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner} = wp.components;
     const {Fragment, Component} = wp.element;
@@ -75,7 +74,7 @@
                         categoriesList[cat.name] = cat;
                         catIdVsName[cat.id] = cat.name;
                     });
-                    this.setState({categoriesList: categoriesList, catIdVsName: catIdVsName, taxonomy: __('Category')});
+                    this.setState({categoriesList: categoriesList, catIdVsName: catIdVsName, taxonomy: config.strings.category});
                 });
             } else if (postType !== 'page') {
                 wp.apiFetch({
@@ -139,19 +138,19 @@
             const postType = wp.data.select('core/editor').getCurrentPostType();
 
             let actionsList = [
-                {label: __('Draft', 'post-expirator'), value: 'draft'},
-                {label: __('Delete', 'post-expirator'), value: 'delete'},
-                {label: __('Trash', 'post-expirator'), value: 'trash'},
-                {label: __('Private', 'post-expirator'), value: 'private'},
-                {label: __('Stick', 'post-expirator'), value: 'stick'},
-                {label: __('Unstick', 'post-expirator'), value: 'unstick'},
+                {label: config.strings.draft, value: 'draft'},
+                {label: config.strings.delete, value: 'delete'},
+                {label: config.strings.trash, value: 'trash'},
+                {label: config.strings.private, value: 'private'},
+                {label: config.strings.stick, value: 'stick'},
+                {label: config.strings.unstick, value: 'unstick'},
             ];
 
             if (postType !== 'page') {
                 actionsList = _.union(actionsList, [
-                    {label: __('Category: Replace', 'post-expirator'), value: 'category'},
-                    {label: __('Category: Add', 'post-expirator'), value: 'category-add'},
-                    {label: __('Category: Remove', 'post-expirator'), value: 'category-remove'},
+                    {label: config.strings.categoryReplace, value: 'category'},
+                    {label: config.strings.categoryAdd, value: 'category-add'},
+                    {label: config.strings.categoryRemove, value: 'category-remove'},
                 ]);
             }
 
@@ -161,11 +160,11 @@
             }
 
             return (
-                <PluginDocumentSettingPanel title={__('Post Expirator', 'post-expirator')} icon="calendar"
+                <PluginDocumentSettingPanel title={config.strings.postExpirator} icon="calendar"
                                             initialOpen={enabled} className={'post-expirator-panel'}>
                     <PanelRow>
                         <CheckboxControl
-                            label={__('Enable Post Expiration', 'post-expirator')}
+                            label={config.strings.enablePostExpiration}
                             checked={enabled}
                             onChange={(value) => {
                                 this.setState({enabled: !enabled, attribute: 'enabled'})
@@ -178,11 +177,11 @@
                                 <DateTimePicker
                                     currentDate={date}
                                     onChange={(value) => this.setState({date: value, attribute: 'date'})}
-                                    is12Hour={true}
+                                    is12Hour={config.is12Hour}
                                 />
                             </PanelRow>
                             <SelectControl
-                                label={__('How to expire', 'post-expirator')}
+                                label={config.strings.howToExpire}
                                 value={expireAction}
                                 options={actionsList}
                                 onChange={(value) => {
@@ -193,14 +192,14 @@
                             (
                                 (isEmpty(keys(categoriesList)) && (
                                     <Fragment>
-                                        {__('Loading', 'post-expirator') + ` (${taxonomy})`}
+                                        {config.strings.loading + ` (${taxonomy})`}
                                         <Spinner/>
                                     </Fragment>
                                 ))
                                 ||
                                 (
                                     <FormTokenField
-                                        label={__('Expiration Categories', 'post-expirator') + ` (${taxonomy})`}
+                                        label={config.strings.expirationCategories + ` (${taxonomy})`}
                                         value={selectedCats}
                                         suggestions={Object.keys(categoriesList)}
                                         onChange={(value) => {
@@ -291,4 +290,4 @@
     });
 
 
-})(window.wp, config);
+})(window.wp, window.postExpiratorPanelConfig);
