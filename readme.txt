@@ -81,6 +81,17 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.6.2] - 04 Nov 2021 =
+
+* Fixed: Fix fatal error: Call to a member function add_cap() on null, #167;
+* Fixed: Fix hierarchical taxonomy selection error for multiple taxonomies, #144;
+* Fixed: Fix PHP warning: use of undefined constant - assumed 'expireType', #617;
+* Fixed: Fix translation of strings in the block editor panel, #163;
+* Fixed: Fix category not being added or removed when the post expires, #170;
+* Fixed: Fix PHP notice: Undefined variable: merged, #174;
+* Fixed: Fix category-based expiration for custom post types in classic editor, #179;
+* Fixed: Fix expiration date being added to old posts when edited, #168;
+
 = [2.6.1] - 27 Oct 2021 =
 
 * Fixed: Fix category replace not saving, #159;
