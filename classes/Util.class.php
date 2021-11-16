@@ -69,4 +69,13 @@ class PostExpirator_Util
 
         return $timezone->getOffset(new DateTime());
     }
+
+    public static function get_wp_date($format, $timestamp)
+    {
+        $gmtTime = gmdate('Y-m-d H:i:s', $timestamp);
+        $timezone = wp_timezone();
+        $datetime = date_create($gmtTime, new DateTimeZone('+0:00'));
+
+        return wp_date($format, $datetime->getTimestamp(), $timezone);
+    }
 }

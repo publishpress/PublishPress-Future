@@ -6,10 +6,8 @@ echo esc_attr($id); ?>"
     $expirationEnabled = get_post_meta($id, '_expiration-date-status', true) === 'saved';
     $expirationDate = get_post_meta($id, '_expiration-date', true);
     if ($expirationDate && $expirationEnabled) {
-        $display = date_i18n(
-            get_option('date_format') . ' ' . get_option('time_format'),
-            $expirationDate + (get_option('gmt_offset') * HOUR_IN_SECONDS)
-        );
+        $format = get_option('date_format') . ' ' . get_option('time_format');
+        $display = PostExpirator_Util::get_wp_date($format, $expirationDate);
     } else {
         $display = __('Never', 'post-expirator');
     }

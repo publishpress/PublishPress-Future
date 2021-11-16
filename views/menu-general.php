@@ -103,7 +103,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                            value="<?php
                            echo $expirationdateDefaultDateFormat; ?>" size="25"/> <span
                             class="description">(<?php
-                        echo date_i18n("$expirationdateDefaultDateFormat"); ?>)</span>
+                        echo PostExpirator_Util::get_wp_date($expirationdateDefaultDateFormat, time()); ?>)</span>
                     <p class="description"><?php
                         echo sprintf(
                             __(
@@ -124,7 +124,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                            value="<?php
                            echo $expirationdateDefaultTimeFormat; ?>" size="25"/> <span
                             class="description">(<?php
-                        echo date_i18n("$expirationdateDefaultTimeFormat"); ?>)</span>
+                        echo PostExpirator_Util::get_wp_date($expirationdateDefaultTimeFormat, time()); ?>)</span>
                     <p class="description"><?php
                         echo sprintf(
                             __(
@@ -326,18 +326,24 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             'post-expirator'
                         ); ?></p>
                     <ul class="pe-list">
-                        <li><p class="description">EXPIRATIONFULL
+                        <li>
+                            <p class="description">EXPIRATIONFULL
                                 -> <?php
-                                echo date_i18n(
-                                    "$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat"
-                                ); ?></p>
+                                echo PostExpirator_Util::get_wp_date("$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat", time()); ?>
+                            </p>
                         </li>
-                        <li><p class="description">EXPIRATIONDATE
+                        <li>
+                            <p class="description">EXPIRATIONDATE
                                 -> <?php
-                                echo date_i18n("$expirationdateDefaultDateFormat"); ?></p></li>
-                        <li><p class="description">EXPIRATIONTIME
+                                echo PostExpirator_Util::get_wp_date($expirationdateDefaultDateFormat, time()); ?>
+                            </p>
+                        </li>
+                        <li>
+                            <p class="description">EXPIRATIONTIME
                                 -> <?php
-                                echo date_i18n("$expirationdateDefaultTimeFormat"); ?></p></li>
+                                echo PostExpirator_Util::get_wp_date($expirationdateDefaultTimeFormat, time()); ?>
+                            </p>
+                        </li>
                     </ul>
                 </td>
             </tr>
@@ -352,7 +358,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     (<span style="<?php
                     echo $expirationdateFooterStyle; ?>"><?php
                         _e('This post will expire on', 'post-expirator'); ?><?php
-                        echo date_i18n("$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat"); ?></span>)
+                        echo PostExpirator_Util::get_wp_date("$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat", time()); ?></span>)
                     <p class="description"><?php
                         _e('The inline css which will be used to style the footer text.', 'post-expirator'); ?></p>
                 </td>

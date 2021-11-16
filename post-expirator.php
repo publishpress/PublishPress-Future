@@ -677,12 +677,12 @@ function postexpirator_schedule_event($id, $ts, $opts)
 
     $error = wp_schedule_single_event($ts, 'postExpiratorExpire', array($id), true);
     if (POSTEXPIRATOR_DEBUG) {
+
         $debug->save(
             array(
-                'message' => $id . ' -> SCHEDULED at ' . date_i18n(
-                        'r',
-                        $ts
-                    ) . ' ' . '(' . $ts . ') with options ' . print_r($opts, true) . ' ' . (is_wp_error(
+                'message' => $id . ' -> SCHEDULED at ' .
+                    PostExpirator_Util::get_wp_date('r', $ts)
+                    . ' ' . '(' . $ts . ') with options ' . print_r($opts, true) . ' ' . (is_wp_error(
                         $error
                     ) ? $error->get_error_message() : 'no error')
             )
@@ -1448,7 +1448,7 @@ function postexpirator_shortcode($atts)
         $format = $timeformat;
     }
 
-    return date_i18n($format, $expirationdatets + (get_option('gmt_offset') * HOUR_IN_SECONDS));
+    return PostExpirator_Util::get_wp_date($format, $expirationdatets);
 }
 
 add_shortcode('postexpirator', 'postexpirator_shortcode');
@@ -1487,10 +1487,11 @@ function postexpirator_add_footer($text)
         'EXPIRATIONDATE',
         'EXPIRATIONTIME',
     );
+
     $replace = array(
-        get_date_from_gmt(gmdate('Y-m-d H:i:s', $expirationdatets), "$dateformat $timeformat"),
-        get_date_from_gmt(gmdate('Y-m-d H:i:s', $expirationdatets), $dateformat),
-        get_date_from_gmt(gmdate('Y-m-d H:i:s', $expirationdatets), $timeformat),
+        PostExpirator_Util::get_wp_date("$dateformat $timeformat", $expirationdatets),
+        PostExpirator_Util::get_wp_date($dateformat, $expirationdatets),
+        PostExpirator_Util::get_wp_date($timeformat, $expirationdatets)
     );
 
     $add_to_footer = '<p style="' . $expirationdateFooterStyle . '">' . str_replace(

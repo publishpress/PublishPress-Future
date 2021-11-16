@@ -70,7 +70,7 @@
                             foreach ($cron as $time => $value) {
                                 foreach ($value as $eventkey => $eventvalue) {
                                     echo '<tr class="pe-event">';
-                                    echo '<td>' . date_i18n('r', $time) . '</td>';
+                                    echo '<td>' . PostExpirator_Util::get_wp_date('r', $time) . '</td>';
                                     echo '<td>' . $eventkey . '</td>';
                                     $arrkey = array_keys($eventvalue);
                                     $firstArgsUid = null;
