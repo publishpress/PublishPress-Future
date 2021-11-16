@@ -51,4 +51,22 @@ class PostExpirator_Util
 
         return false;
     }
+
+    public static function wp_timezone_string()
+    {
+        $tzString = wp_timezone_string();
+
+        if (substr_count($tzString, ':')) {
+            $tzString = 'UTC ' . $tzString;
+        }
+
+        return $tzString;
+    }
+
+    public static function get_timezone_offset()
+    {
+        $timezone = wp_timezone();
+
+        return $timezone->getOffset(new DateTime());
+    }
 }
