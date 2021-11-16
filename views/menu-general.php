@@ -17,6 +17,8 @@ $expirationdateDefaultDateCustom = get_option('expirationdateDefaultDateCustom')
 
 $categories = get_option('expirationdateCategoryDefaults');
 
+$preserveData = (bool)get_option('expirationdatePreserveData', true);
+
 $expireddisplayfooterenabled = '';
 $expireddisplayfooterdisabled = '';
 if ($expireddisplayfooter == 0) {
@@ -419,6 +421,31 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         </label>
                     <?php
                     endforeach; ?>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row">
+                    <?php
+                    _e('Preserve data after deactivating the plugin', 'post-expirator'); ?>
+                </th>
+                <td>
+                    <input type="radio" name="expired-preserve-data-deactivating" id="expired-preserve-data-deactivating-true"
+                           value="1" <?php echo $preserveData ? ' checked="checked"' : ''; ?>/>
+                    <label for="expired-preserve-data-deactivating-true">
+                        <?php _e('Preserve data', 'post-expirator'); ?>
+                    </label>
+                    &nbsp;&nbsp;
+                    <input type="radio" name="expired-preserve-data-deactivating" id="expired-preserve-data-deactivating-false"
+                           value="0" <?php echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
+                    <label for="expired-preserve-data-deactivating-false">
+                        <?php _e('Delete data', 'post-expirator'); ?>
+                    </label>
+                    <p class="description">
+                        <?php _e(
+                            'Toggle between preserving or deleting data after the plugin is deactivated.',
+                            'post-expirator'
+                        ); ?>
+                    </p>
                 </td>
             </tr>
         </table>

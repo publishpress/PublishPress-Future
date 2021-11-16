@@ -157,6 +157,7 @@ class PostExpirator_Display
                 update_option('expirationdateFooterContents', $_POST['expired-footer-contents']);
                 update_option('expirationdateFooterStyle', $_POST['expired-footer-style']);
                 update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
+                update_option('expirationdatePreserveData', (bool)$_POST['expired-preserve-data-deactivating']);
                 update_option(
                     'expirationdateCategoryDefaults',
                     isset($_POST['expirationdate_category']) ? $_POST['expirationdate_category'] : array()
