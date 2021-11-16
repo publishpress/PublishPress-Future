@@ -1519,7 +1519,7 @@ function postexpirator_debug()
         if (! defined('POSTEXPIRATOR_DEBUG')) {
             define('POSTEXPIRATOR_DEBUG', 1);
         }
-        require_once(plugin_dir_path(__FILE__) . 'post-expirator-debug.php'); // Load Class
+        require_once(POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php'); // Load Class
 
         return new PostExpiratorDebug();
     } else {
@@ -1740,7 +1740,7 @@ function expirationdate_deactivate()
     } else {
         wp_clear_scheduled_hook('expirationdate_delete');
     }
-    require_once(plugin_dir_path(__FILE__) . 'post-expirator-debug.php');
+    require_once(POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php');
     $debug = new PostExpiratorDebug();
     $debug->removeDbTable();
 }
@@ -2065,7 +2065,7 @@ function postexpirator_autoload($class)
     foreach ($namespaces as $namespace) {
         if (substr($class, 0, strlen($namespace)) === $namespace) {
             $class = str_replace('_', '', strstr($class, '_'));
-            $filename = plugin_dir_path(__FILE__) . 'classes/' . sprintf('%s.class.php', $class);
+            $filename = POSTEXPIRATOR_BASEDIR . '/classes/' . sprintf('%s.class.php', $class);
             if (is_readable($filename)) {
                 require_once $filename;
 
