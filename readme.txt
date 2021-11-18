@@ -81,7 +81,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.6.3] - UNRELEASED =
+= [2.6.3] - 18 Nov 2021 =
 
 * Fixed: Fix the timezone applied to time fields, #134;
 * Fixed: Add the timezone string to the time fields, #134;
