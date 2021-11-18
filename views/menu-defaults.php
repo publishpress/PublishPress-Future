@@ -205,7 +205,7 @@
                         } ?>
                     </select>
                     <p class="description"><?php
-                        _e('Set the default expiration date to be used when creating a new post of this type.'); ?></p>
+                        _e('Set the default expiration date to be used when creating a new post of this type.', 'post-expirator'); ?></p>
                     <div id="expired-custom-container-<?php
                     echo $type; ?>" class="pe-custom-date-container"
                          style="display: <?php

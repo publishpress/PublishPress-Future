@@ -24,7 +24,7 @@ To release the Free plugin please make sure to check all the checkboxes below.
 
 - [ ] Create a Pull Request and merge the release branch it into the `master` branch.
 - [ ] Merge the `master` branch into the `development` branch.
-- [ ] Create the Github release (make sure it is based on the `master` branch and correct tag).
+- [ ] Create the GitHub release (make sure it is based on the `master` branch and correct tag).
 
 #### SVN Repo
 - [ ] Cleanup the `trunk` directory.

@@ -60,6 +60,8 @@
                             <input name="expirationdate_minute" value="" size="2" maxlength="2" autocomplete="off"
                                    type="text" placeholder="00">
                         </label>
+
+                        <?php echo PostExpirator_Util::wp_timezone_string(); ?>
                     </div>
                     <div>
                         <legend>

@@ -1,0 +1,667 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Post Expirator 2.4.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
+"future\n"
+"POT-Creation-Date: 2021-11-02T20:47:14-03:00\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: PostExpirator Translate Team\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Plugin Name of the plugin
+#: classes/Display.class.php:50 post-expirator.php:350 views/bulk-edit.php:16
+#: assets/jsx/block.jsx:164
+msgid "Post Expirator"
+msgstr "Post Expirator"
+
+#. Plugin URI of the plugin
+msgid "http://wordpress.org/extend/plugins/post-expirator/"
+msgstr "http://wordpress.org/extend/plugins/post-expirator/"
+
+#. Description of the plugin
+msgid ""
+"Allows you to add an expiration date (minute) to posts which you can "
+"configure to either delete the post, change it to a draft, or update the "
+"post categories at expiration time."
+msgstr ""
+
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin
+msgid "http://publishpress.com"
+msgstr "http://publishpress.com"
+
+#: classes/Display.class.php:49 views/tabs.php:8
+msgid "Post Expirator Options"
+msgstr "Opções do Post Expirator"
+
+#: classes/Display.class.php:190 classes/Display.class.php:263
+msgid "Saved Options!"
+msgstr "Configurações salvas!"
+
+#: classes/Display.class.php:289
+msgid "Debugging Disabled"
+msgstr "Depuração Desativada"
+
+#: classes/Display.class.php:294
+msgid "Debugging Enabled"
+msgstr "Depuração Ativada"
+
+#: classes/Display.class.php:301
+msgid "Debugging Table Emptied"
+msgstr "Tabela de Depuração Esvaziada"
+
+#: classes/Display.class.php:317
+msgid ""
+"Below is a dump of the debugging table, this should be useful for "
+"troubleshooting."
+msgstr ""
+"Abaixo está um despejo da tabela de depuração, isso deve ser útil para a "
+"solução de problemas."
+
+#: post-expirator-debug.php:77
+msgid "Debugging table is currently empty."
+msgstr "A tabela de depuração está atualmente vazia."
+
+#: post-expirator-debug.php:82
+msgid "Timestamp"
+msgstr "Data/Hora"
+
+#: post-expirator-debug.php:83
+msgid "Message"
+msgstr "Mensagem"
+
+#: post-expirator.php:15
+msgid "l F jS, Y"
+msgstr "l F jS, Y"
+
+#: post-expirator.php:16
+msgid "g:ia"
+msgstr "g:ia"
+
+#: post-expirator.php:17
+msgid "Post expires at EXPIRATIONTIME on EXPIRATIONDATE"
+msgstr "O post expira às EXPIRATIONTIME do dia EXPIRATIONDATE"
+
+#: post-expirator.php:44
+msgid "Settings"
+msgstr "Configurações"
+
+#: post-expirator.php:86 post-expirator.php:172
+msgid "Expires"
+msgstr "Expira"
+
+#: post-expirator.php:808 post-expirator.php:830 post-expirator.php:852
+#: post-expirator.php:874
+msgid ""
+"%1$s (%2$s) has expired at %3$s. Post status has been successfully changed "
+"to \"%4$s\"."
+msgstr ""
+"%1$s (%2$s) expirou em %3$s. O status do post foi atualizado com sucesso "
+"para \"%4$s\"."
+
+#: post-expirator.php:896
+msgid ""
+"%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
+"set."
+msgstr ""
+"%1$s (%2$s) expirou em %3$s. O status de \"%4$s\" foi definido com sucesso."
+
+#: post-expirator.php:915
+msgid ""
+"%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
+"removed."
+msgstr ""
+"%1$s (%2$s) expirou em %3$s. O status de \"%4$s\" foi removido com sucesso."
+
+#: post-expirator.php:941 post-expirator.php:983
+msgid ""
+"%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to \"%5$s\"."
+msgstr ""
+"%1$s (%2$s) expirou em %3$s. O post \"%4$s\" já foi definido para \"%5$s\"."
+
+#: post-expirator.php:1041 post-expirator.php:1084
+msgid ""
+"%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
+"added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
+msgstr ""
+"%1$s (%2$s) expirou em %3$s. O seguinte post \"%4$s\" já foi adicionado: "
+"\"%5$s\". A lista completa das categorias do  post é: \"%6$s\"."
+
+#: post-expirator.php:1149 post-expirator.php:1199
+msgid ""
+"%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
+"removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
+msgstr ""
+"%1$s (%2$s) expirou em %3$s. O seguinte post \"%4$s\" já foi removido: \"%5$s"
+"\". A lista completa das categorias no post é: \"%6$s\"."
+
+#: post-expirator.php:1251
+msgid "Post Expiration Complete \"%s\""
+msgstr "Expiração do post completo \"%s\""
+
+#: post-expirator.php:1927
+msgid ""
+"Select the hierarchical taxonomy to be used for \"category\" based "
+"expiration."
+msgstr ""
+"Selecione a taxonomia hierárquica a ser usada para expiração baseada em "
+"\"categoria\"."
+
+#: post-expirator.php:1932
+msgid "No taxonomies found"
+msgstr "Não foram encontradas taxonomias"
+
+#: post-expirator.php:1979
+msgid "You're not allowed to set posts to expire"
+msgstr "Você não tem permissão para colocar este post para expirar"
+
+#: post-expirator.php:1980
+msgid "Forbidden"
+msgstr "Acesso negado"
+
+#: views/bulk-edit.php:21 views/menu-diagnostics.php:64 views/quick-edit.php:14
+msgid "Date"
+msgstr "Data"
+
+#: views/bulk-edit.php:24 views/classic-metabox.php:6 views/quick-edit.php:8
+#: assets/jsx/block.jsx:168
+msgid "Enable Post Expiration"
+msgstr "Habilitar Expiração do Post"
+
+#: views/bulk-edit.php:28
+msgid "No Change"
+msgstr "Nenhuma alteração"
+
+#: views/bulk-edit.php:32
+msgid "Change expiry date if enabled on posts"
+msgstr "Alterar a data de validade se habilitada em postagens"
+
+#: views/bulk-edit.php:33
+msgid "Change on posts"
+msgstr "Alteração nos posts"
+
+#: views/bulk-edit.php:36
+msgid "Add expiry date if not enabled on posts"
+msgstr "Adicionar data de validade se não estiver habilitado em postagens"
+
+#: views/bulk-edit.php:37
+msgid "Add to posts"
+msgstr "Adicionar às postagens"
+
+#: views/bulk-edit.php:40
+msgid "Change & Add"
+msgstr "Alterar e Adicionar"
+
+#: views/bulk-edit.php:43
+msgid "Remove from posts"
+msgstr "Remover de postagens"
+
+#: views/bulk-edit.php:49 views/classic-metabox.php:50 views/quick-edit.php:17
+msgid "Month"
+msgstr "Mês"
+
+#: views/bulk-edit.php:73 views/classic-metabox.php:71 views/quick-edit.php:39
+msgid "Day"
+msgstr "Dia"
+
+#: views/bulk-edit.php:80 views/classic-metabox.php:22 views/quick-edit.php:46
+msgid "Year"
+msgstr "Ano"
+
+#: views/bulk-edit.php:87 views/classic-metabox.php:78 views/quick-edit.php:53
+msgid "Hour"
+msgstr "Hora"
+
+#: views/bulk-edit.php:94 views/classic-metabox.php:102 views/quick-edit.php:59
+msgid "Minute"
+msgstr "Minuto"
+
+#: views/bulk-edit.php:104 views/quick-edit.php:67
+msgid "Type"
+msgstr "Tipo"
+
+#: views/bulk-edit.php:106 views/classic-metabox.php:109
+#: views/menu-defaults.php:93 views/quick-edit.php:69 assets/jsx/block.jsx:185
+msgid "How to expire"
+msgstr "Como expirar"
+
+#: views/bulk-edit.php:124 views/classic-metabox.php:127
+#: views/quick-edit.php:85 assets/jsx/block.jsx:203
+msgid "Expiration Categories"
+msgstr "Categorias para expiração"
+
+#: views/classic-metabox.php:13
+msgid "The published date/time will be used as the expiration value"
+msgstr "A data/hora publicada será usada como valor de expiração"
+
+#: views/classic-metabox.php:135
+msgid ""
+"You must assign a heirarchical taxonomy to this post type to use this "
+"feature."
+msgstr ""
+"Você deve atribuir uma taxonomia herdeira a este tipo de post para usar este "
+"recurso."
+
+#: views/classic-metabox.php:140
+msgid ""
+"More than 1 heirachical taxonomy detected.  You must assign a default "
+"taxonomy on the settings screen."
+msgstr ""
+"Mais de 1 taxonomia herdônica detectada.  Você deve atribuir uma taxonomia "
+"padrão na tela de configurações."
+
+#: views/classic-metabox.php:158
+msgid "Taxonomy Name"
+msgstr "Nome da Taxonomia"
+
+#: views/expire-column.php:6
+msgid "Never"
+msgstr "Nunca"
+
+#: views/how-to-expire.php:27 assets/jsx/block.jsx:142
+msgid "Draft"
+msgstr "Rascunho"
+
+#: views/how-to-expire.php:30 assets/jsx/block.jsx:143
+msgid "Delete"
+msgstr "Excluir"
+
+#: views/how-to-expire.php:33 assets/jsx/block.jsx:144
+msgid "Trash"
+msgstr "Lixeira"
+
+#: views/how-to-expire.php:36 assets/jsx/block.jsx:145
+msgid "Private"
+msgstr "Privado"
+
+#: views/how-to-expire.php:39 assets/jsx/block.jsx:146
+msgid "Stick"
+msgstr "Fixar"
+
+#: views/how-to-expire.php:42 assets/jsx/block.jsx:147
+msgid "Unstick"
+msgstr "Desafixar"
+
+#: views/how-to-expire.php:47 assets/jsx/block.jsx:152
+msgid "Category: Replace"
+msgstr "Categoria: Substituir"
+
+#: views/how-to-expire.php:50 assets/jsx/block.jsx:153
+msgid "Category: Add"
+msgstr "Categoria: Adicionar"
+
+#: views/how-to-expire.php:53 assets/jsx/block.jsx:154
+msgid "Category: Remove"
+msgstr "Categoria: Remover"
+
+#: views/menu-defaults.php:5
+msgid "Default Expiration Values"
+msgstr "Valores de expiração padrão"
+
+#: views/menu-defaults.php:8
+msgid ""
+"Use the values below to set the default actions/values to be used for each "
+"for the corresponding post types.  These values can all be overwritten when "
+"creating/editing the post/page."
+msgstr ""
+"Use os valores abaixo para definir as ações/valores padrão a serem usados "
+"para cada um para os tipos de postagem correspondentes.  Todos esses valores "
+"podem ser substituídos ao criar/editar o post/página."
+
+#: views/menu-defaults.php:60 views/menu-defaults.php:71
+msgid "Active"
+msgstr "Ativar"
+
+#: views/menu-defaults.php:81
+msgid "Inactive"
+msgstr "Desativar"
+
+#: views/menu-defaults.php:83
+msgid ""
+"Select whether the post expirator meta box is active for this post type."
+msgstr ""
+"Selecione se a espiração de post está habilitada para este tipo de post."
+
+#: views/menu-defaults.php:102
+msgid "Select the default expire action for the post type."
+msgstr "Selecione a ação padrão para espirar para o tipo de post."
+
+#: views/menu-defaults.php:109
+msgid "Auto-Enable?"
+msgstr "Habilitar automaticamente?"
+
+#: views/menu-defaults.php:120 views/menu-diagnostics.php:12
+#: views/menu-diagnostics.php:35 views/menu-general.php:226
+#: views/menu-general.php:249 views/menu-general.php:298
+msgid "Enabled"
+msgstr "Habilitar"
+
+#: views/menu-defaults.php:130 views/menu-diagnostics.php:16
+#: views/menu-diagnostics.php:37 views/menu-general.php:232
+#: views/menu-general.php:256 views/menu-general.php:304
+msgid "Disabled"
+msgstr "Desabilitar"
+
+#: views/menu-defaults.php:132
+msgid "Select whether the post expirator is enabled for all new posts."
+msgstr ""
+"Selecione se o a expiração de posts está ativa para todos os novos posts."
+
+#: views/menu-defaults.php:139
+msgid "Taxonomy (hierarchical)"
+msgstr "Taxonomia (hierárquica)"
+
+#: views/menu-defaults.php:154 views/menu-general.php:267
+msgid "Who to notify"
+msgstr "A quem notificar"
+
+#: views/menu-defaults.php:164
+msgid ""
+"Enter a comma separate list of emails that you would like to be notified "
+"when the post expires."
+msgstr ""
+"Entre com uma lista de emails separada por vírgula que você gostaria que "
+"fossem notificados quanto o post expira."
+
+#: views/menu-defaults.php:172 views/menu-general.php:146
+msgid "None"
+msgstr "Nenhum"
+
+#: views/menu-defaults.php:173
+msgid "Inherit from General Settings"
+msgstr "Herdado de Configuraçes Gerais"
+
+#: views/menu-defaults.php:174 views/menu-defaults.php:216
+#: views/menu-general.php:149 views/menu-general.php:166
+msgid "Custom"
+msgstr "Customizado"
+
+#: views/menu-defaults.php:175
+msgid "Publish Time"
+msgstr "Hora de Publicação"
+
+#: views/menu-defaults.php:191 views/menu-general.php:139
+msgid "Default Date/Time Duration"
+msgstr ""
+
+#: views/menu-defaults.php:226 views/menu-general.php:172
+msgid ""
+"Set the custom value to use for the default expiration date.  For "
+"information on formatting, see %1$s. For example, you could enter %2$s+1 "
+"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday"
+"%7$s."
+msgstr ""
+
+#: views/menu-defaults.php:250 views/menu-general.php:429
+msgid "Save Changes"
+msgstr ""
+
+#: views/menu-diagnostics.php:4
+msgid "Advanced Diagnostics"
+msgstr ""
+
+#: views/menu-diagnostics.php:8
+msgid "Debug Logging"
+msgstr ""
+
+#: views/menu-diagnostics.php:13
+msgid "Disable Debugging"
+msgstr ""
+
+#: views/menu-diagnostics.php:14 views/tabs.php:32
+msgid "View Debug Logs"
+msgstr ""
+
+#: views/menu-diagnostics.php:17
+msgid "Enable Debugging"
+msgstr ""
+
+#: views/menu-diagnostics.php:22 views/menu-diagnostics.php:28
+msgid "Purge Debug Log"
+msgstr ""
+
+#: views/menu-diagnostics.php:32
+msgid "WP-Cron Status"
+msgstr ""
+
+#: views/menu-diagnostics.php:43
+msgid "Current Cron Schedule"
+msgstr ""
+
+#: views/menu-diagnostics.php:51
+msgid "No cron events found for the plugin."
+msgstr ""
+
+#: views/menu-diagnostics.php:56
+msgid ""
+"The below table will show all currently scheduled cron events for the plugin "
+"with the next run time."
+msgstr ""
+
+#: views/menu-diagnostics.php:65
+msgid "Event"
+msgstr ""
+
+#: views/menu-diagnostics.php:66
+msgid "Arguments / Schedule"
+msgstr ""
+
+#: views/menu-diagnostics.php:67
+msgid "Post"
+msgstr ""
+
+#: views/menu-diagnostics.php:84
+msgid "No Arguments"
+msgstr ""
+
+#: views/menu-diagnostics.php:98
+msgid "Single Event"
+msgstr ""
+
+#: views/menu-general.php:48
+msgid ""
+"The post expirator plugin sets a custom meta value, and then optionally "
+"allows you to select if you want the post changed to a draft status or "
+"deleted when it expires."
+msgstr ""
+
+#: views/menu-general.php:54
+msgid "Shortcode"
+msgstr ""
+
+#: views/menu-general.php:56
+msgid "Valid %s attributes:"
+msgstr ""
+
+#: views/menu-general.php:61
+msgid ""
+"%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
+msgstr ""
+
+#: views/menu-general.php:74 views/menu-general.php:81
+msgid "%s - format set here will override the value set on the settings page"
+msgstr ""
+
+#: views/menu-general.php:92
+msgid "Defaults"
+msgstr ""
+
+#: views/menu-general.php:97
+msgid "Date Format"
+msgstr ""
+
+#: views/menu-general.php:107
+msgid ""
+"The default format to use when displaying the expiration date within a post "
+"using the shortcode or within the footer.  For information on valid "
+"formatting options, see: %s."
+msgstr ""
+
+#: views/menu-general.php:118
+msgid "Time Format"
+msgstr ""
+
+#: views/menu-general.php:128
+msgid ""
+"The default format to use when displaying the expiration time within a post "
+"using the shortcode or within the footer.  For information on valid "
+"formatting options, see: %s."
+msgstr ""
+
+#: views/menu-general.php:152
+msgid "Post/Page Publish Time"
+msgstr ""
+
+#: views/menu-general.php:155
+msgid ""
+"Set the default expiration date to be used when creating new posts and "
+"pages.  Defaults to none."
+msgstr ""
+
+#: views/menu-general.php:189
+msgid "Default Expiration Category"
+msgstr ""
+
+#: views/menu-general.php:205
+msgid "Sets the default expiration category for the post."
+msgstr ""
+
+#: views/menu-general.php:211
+msgid "Expiration Email Notification"
+msgstr ""
+
+#: views/menu-general.php:213
+msgid ""
+"Whenever a post expires, an email can be sent to alert users of the "
+"expiration."
+msgstr ""
+
+#: views/menu-general.php:220
+msgid "Enable Email Notification?"
+msgstr ""
+
+#: views/menu-general.php:234
+msgid ""
+"This will enable or disable the send of email notification on post "
+"expiration."
+msgstr ""
+
+#: views/menu-general.php:242
+msgid "Include Blog Administrators?"
+msgstr ""
+
+#: views/menu-general.php:258
+msgid ""
+"This will include all users with the role of \"Administrator\" in the post "
+"expiration email."
+msgstr ""
+
+#: views/menu-general.php:274
+msgid ""
+"Enter a comma separate list of emails that you would like to be notified "
+"when the post expires.  This will be applied to ALL post types.  You can set "
+"post type specific emails on the Defaults tab."
+msgstr ""
+
+#: views/menu-general.php:283
+msgid "Post Footer Display"
+msgstr ""
+
+#: views/menu-general.php:285
+msgid ""
+"Enabling this below will display the expiration date automatically at the "
+"end of any post which is set to expire."
+msgstr ""
+
+#: views/menu-general.php:292
+msgid "Show in post footer?"
+msgstr ""
+
+#: views/menu-general.php:306
+msgid ""
+"This will enable or disable displaying the post expiration date in the post "
+"footer."
+msgstr ""
+
+#: views/menu-general.php:315
+msgid "Footer Contents"
+msgstr ""
+
+#: views/menu-general.php:322
+msgid ""
+"Enter the text you would like to appear at the bottom of every post that "
+"will expire.  The following placeholders will be replaced with the post "
+"expiration date in the following format:"
+msgstr ""
+
+#: views/menu-general.php:345
+msgid "Footer Style"
+msgstr ""
+
+#: views/menu-general.php:352
+msgid "This post will expire on"
+msgstr ""
+
+#: views/menu-general.php:355
+msgid "The inline css which will be used to style the footer text."
+msgstr ""
+
+#: views/menu-general.php:361
+msgid "Advanced Options"
+msgstr ""
+
+#: views/menu-general.php:363
+msgid ""
+"Please do not update anything here unless you know what it entails. For "
+"advanced users only."
+msgstr ""
+
+#: views/menu-general.php:373
+msgid "Block Editor Support"
+msgstr ""
+
+#: views/menu-general.php:379
+msgid "Show Gutenberg style box"
+msgstr ""
+
+#: views/menu-general.php:385
+msgid "Show Classic Editor style box"
+msgstr ""
+
+#: views/menu-general.php:387
+msgid ""
+"Toggle between native support for the Block Editor or the backward "
+"compatible Classic Editor style metabox."
+msgstr ""
+
+#: views/menu-general.php:396
+msgid "Choose which user roles can use Post Expirator"
+msgstr ""
+
+#: views/tabs.php:15
+msgid "General Settings"
+msgstr ""
+
+#: views/tabs.php:20
+msgid "Post Types"
+msgstr ""
+
+#: views/tabs.php:25
+msgid "Diagnostics"
+msgstr ""
+
+#: assets/jsx/block.jsx:196
+msgid "Loading"
+msgstr ""
+
+#~ msgid "[%1$s] %2$s"
+#~ msgstr "[%1$s] %2$s"

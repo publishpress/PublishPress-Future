@@ -25,10 +25,6 @@
       "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
     }
   ],
-  "dist": {
-    "url": "https://github.com/publishpress/PublishPress-Future/releases/download/v2.5.2-beta.1/post-expirator-2.5.2-beta.1.zip",
-    "type": "zip"
-  },
   "require-dev": {
     "lucatume/wp-browser": "^3",
     "codeception/module-asserts": "^1.0",
@@ -46,7 +42,8 @@
     "phpmd/phpmd": "^2.8",
     "squizlabs/php_codesniffer": "^3.5",
     "sebastian/phpcpd": "^5.0",
-    "overtrue/phplint": "^2.1"
+    "overtrue/phplint": "^2.1",
+    "wp-cli/i18n-command": "^2.2"
   },
   "require": {
     "publishpress/wordpress-reviews":  "^1.1"

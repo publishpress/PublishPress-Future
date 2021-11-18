@@ -38,12 +38,15 @@
                 enabled = true;
             }
 
+            let browserTimezoneOffset = date.getTimezoneOffset() * 60;
+            let wpTimezoneOffset = config.timezone_offset * 60;
+
             if (postMeta['_expiration-date']) {
-                date.setTime((postMeta['_expiration-date'] + date.getTimezoneOffset() * 60) * 1000);
+                date.setTime((postMeta['_expiration-date'] + browserTimezoneOffset + wpTimezoneOffset) * 1000);
             } else {
                 categories = config.default_categories;
                 if (config.default_date) {
-                    date.setTime((parseInt(config.default_date) + date.getTimezoneOffset() * 60) * 1000);
+                    date.setTime((parseInt(config.default_date) + browserTimezoneOffset + wpTimezoneOffset) * 1000);
                 }
             }
 
@@ -177,7 +180,7 @@
                                 <DateTimePicker
                                     currentDate={date}
                                     onChange={(value) => this.setState({date: value, attribute: 'date'})}
-                                    is12Hour={config.is12Hour}
+                                    is_12_hours={config.is_12_hours}
                                 />
                             </PanelRow>
                             <SelectControl
@@ -278,8 +281,10 @@
 
         getDate(date) {
             let newDate = new Date();
+            let browserTimezoneOffset = new Date().getTimezoneOffset() * 60;
+            let wpTimezoneOffset = config.timezone_offset * 60;
             newDate.setTime(Date.parse(date));
-            newDate.setTime(newDate.getTime() - new Date().getTimezoneOffset() * 60 * 1000);
+            newDate.setTime(newDate.getTime() - (browserTimezoneOffset + wpTimezoneOffset) * 1000);
             return ((newDate.getTime()) / 1000);
         }
 

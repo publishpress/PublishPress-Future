@@ -358,7 +358,8 @@ class PostExpirator_Facade
                     'defaults' => $defaults,
                     'default_date' => $default_expiry['ts'],
                     'default_categories' => get_option('expirationdateCategoryDefaults'),
-                    'is12Hour' => get_option('time_format') !== 'H:i',
+                    'is_12_hours' => get_option('time_format') !== 'H:i',
+                    'timezone_offset' => PostExpirator_Util::get_timezone_offset() / 60,
                     'strings' => [
                         'category' => __('Category'),
                         'draft' => __('Draft', 'post-expirator'),

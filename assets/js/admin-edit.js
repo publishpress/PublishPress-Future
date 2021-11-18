@@ -100,6 +100,7 @@
             }
 
             // categories
+            $edit_row.find('input[name="expirationdate_category[]"]').prop('checked', false);
             var $categories = $('#expirationdate_categories-' + $post_id).text();
             if ($categories !== '') {
                 $.each($categories.split(','), function (index, value) {

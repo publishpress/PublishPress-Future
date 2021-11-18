@@ -51,4 +51,31 @@ class PostExpirator_Util
 
         return false;
     }
+
+    public static function wp_timezone_string()
+    {
+        $tzString = wp_timezone_string();
+
+        if (substr_count($tzString, ':')) {
+            $tzString = 'UTC ' . $tzString;
+        }
+
+        return $tzString;
+    }
+
+    public static function get_timezone_offset()
+    {
+        $timezone = wp_timezone();
+
+        return $timezone->getOffset(new DateTime());
+    }
+
+    public static function get_wp_date($format, $timestamp)
+    {
+        $gmtTime = gmdate('Y-m-d H:i:s', $timestamp);
+        $timezone = wp_timezone();
+        $datetime = date_create($gmtTime, new DateTimeZone('+0:00'));
+
+        return wp_date($format, $datetime->getTimestamp(), $timezone);
+    }
 }

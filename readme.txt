@@ -81,6 +81,15 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.6.3] - UNRELEASED =
+
+* Fixed: Fix the timezone applied to time fields, #134;
+* Fixed: Add the timezone string to the time fields, #134;
+* Fixed: Fix the selected expiring categories on the quick edit panel, #160;
+* Added: Add setting field for choosing between preserve or delete data when the plugin is deactivated, #137;
+* Fixed: Fix E_COMPILER_ERROR when cleaning up the debug table, #183;
+* Fixed: Fix translation and localization of date and time, #150;
+
 = [2.6.2] - 04 Nov 2021 =
 
 * Fixed: Fix fatal error: Call to a member function add_cap() on null, #167;
