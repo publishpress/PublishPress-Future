@@ -25,10 +25,6 @@
       "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
     }
   ],
-  "dist": {
-    "url": "https://github.com/publishpress/PublishPress-Future/releases/download/v2.5.2-beta.1/post-expirator-2.5.2-beta.1.zip",
-    "type": "zip"
-  },
   "require-dev": {
     "lucatume/wp-browser": "^3",
     "codeception/module-asserts": "^1.0",
