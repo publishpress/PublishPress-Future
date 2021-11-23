@@ -45,7 +45,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
 ?>
     <p><?php
         _e(
-            'The post expirator plugin sets a custom meta value, and then optionally allows you to select if you want the post changed to a draft status or deleted when it expires.',
+            'The PublishPress Future plugin sets a custom meta value, and then optionally allows you to select if you want the post changed to a draft status or deleted when it expires.',
             'post-expirator'
         ); ?></p>
 
@@ -360,7 +360,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             <tr valign="top">
                 <th scope="row">
                     <?php
-                    _e('Choose which user roles can use Post Expirator', 'post-expirator'); ?>
+                    _e('Choose which user roles can use PublishPress Future', 'post-expirator'); ?>
                 </th>
                 <td class="pe-checklist">
                     <?php

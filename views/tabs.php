@@ -5,7 +5,7 @@ $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET
 
 <div class="wrap">
     <h2><?php
-        __('Post Expirator Options', 'post-expirator'); ?></h2>
+        __('PublishPress Future Options', 'post-expirator'); ?></h2>
     <div id="pe-settings-tabs">
         <nav class="nav-tab-wrapper postexpirator-nav-tab-wrapper">
             <a href="<?php

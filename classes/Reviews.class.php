@@ -19,7 +19,7 @@ abstract class PostExpirator_Reviews
 
             self::$reviewController = new ReviewsController(
                 'post-expirator',
-                'Post Expirator',
+                'PublishPress Future',
                 POSTEXPIRATOR_BASEURL . 'assets/img/post-expirator-wp-logo.png'
             );
 

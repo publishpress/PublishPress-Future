@@ -17,8 +17,8 @@ msgstr ""
 #. Plugin Name of the plugin
 #: classes/Display.class.php:50 post-expirator.php:350 views/bulk-edit.php:16
 #: assets/jsx/block.jsx:164
-msgid "Post Expirator"
-msgstr "Post Expirator"
+msgid "PublishPress Future"
+msgstr "PublishPress Future"
 
 #. Plugin URI of the plugin
 msgid "http://wordpress.org/extend/plugins/post-expirator/"
@@ -40,8 +40,8 @@ msgid "http://publishpress.com"
 msgstr "http://publishpress.com"
 
 #: classes/Display.class.php:49 views/tabs.php:8
-msgid "Post Expirator Options"
-msgstr "Opções do Post Expirator"
+msgid "PublishPress Future Options"
+msgstr "Opções do PublishPress Future"
 
 #: classes/Display.class.php:190 classes/Display.class.php:263
 msgid "Saved Options!"
@@ -327,7 +327,7 @@ msgstr "Desativar"
 
 #: views/menu-defaults.php:83
 msgid ""
-"Select whether the post expirator meta box is active for this post type."
+"Select whether the meta box is active for this post type."
 msgstr ""
 "Selecione se a espiração de post está habilitada para este tipo de post."
 
@@ -352,7 +352,7 @@ msgid "Disabled"
 msgstr "Desabilitar"
 
 #: views/menu-defaults.php:132
-msgid "Select whether the post expirator is enabled for all new posts."
+msgid "Select whether the expiration is enabled for all new posts."
 msgstr ""
 "Selecione se o a expiração de posts está ativa para todos os novos posts."
 
@@ -469,7 +469,7 @@ msgstr ""
 
 #: views/menu-general.php:48
 msgid ""
-"The post expirator plugin sets a custom meta value, and then optionally "
+"The PublishPress Future plugin sets a custom meta value, and then optionally "
 "allows you to select if you want the post changed to a draft status or "
 "deleted when it expires."
 msgstr ""
@@ -644,7 +644,7 @@ msgid ""
 msgstr ""
 
 #: views/menu-general.php:396
-msgid "Choose which user roles can use Post Expirator"
+msgid "Choose which user roles can use PublishPress Future"
 msgstr ""
 
 #: views/tabs.php:15

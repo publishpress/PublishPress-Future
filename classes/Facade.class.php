@@ -371,7 +371,7 @@ class PostExpirator_Facade
                         'categoryReplace' => __('Category: Replace', 'post-expirator'),
                         'categoryAdd' => __('Category: Add', 'post-expirator'),
                         'categoryRemove' => __('Category: Remove', 'post-expirator'),
-                        'postExpirator' => __('Post Expirator', 'post-expirator'),
+                        'postExpirator' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Post Expiration', 'post-expirator'),
                         'howToExpire' => __('How to expire', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
@@ -511,7 +511,7 @@ class PostExpirator_Facade
         return array_merge(
             $capabilities,
             array(
-                'Post Expirator' => array(self::DEFAULT_CAPABILITY_EXPIRE_POST),
+                'PublishPress Future' => array(self::DEFAULT_CAPABILITY_EXPIRE_POST),
             )
         );
     }
