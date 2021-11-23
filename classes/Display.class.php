@@ -205,7 +205,7 @@ class PostExpirator_Display
             if (! isset($_POST['_postExpiratorMenuDefaults_nonce']) || ! wp_verify_nonce(
                     $_POST['_postExpiratorMenuDefaults_nonce'],
                     'postexpirator_menu_defaults'
-               ) ) {
+                )) {
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {

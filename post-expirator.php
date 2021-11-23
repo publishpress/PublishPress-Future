@@ -677,7 +677,6 @@ function postexpirator_schedule_event($id, $ts, $opts)
 
     $error = wp_schedule_single_event($ts, 'postExpiratorExpire', array($id), true);
     if (POSTEXPIRATOR_DEBUG) {
-
         $debug->save(
             array(
                 'message' => $id . ' -> SCHEDULED at ' .

@@ -41,8 +41,8 @@ echo esc_attr($id); ?>"
             $expireType = $attributes['expireType'];
         }
         if (
-                isset($attributes['category'])
-                && ! empty($attributes['category']) && in_array($expireType, array(
+            isset($attributes['category'])
+            && ! empty($attributes['category']) && in_array($expireType, array(
                 'category',
                 'category-add',
                 'category-remove'
@@ -56,12 +56,28 @@ echo esc_attr($id); ?>"
     ?>
     <?php
     echo esc_html($display); ?>
-    <span id="expirationdate_year-<?php echo $id; ?>" style="display: none;"><?php echo $year; ?></span>
-    <span id="expirationdate_month-<?php echo $id; ?>" style="display: none;"><?php echo $month; ?></span>
-    <span id="expirationdate_day-<?php echo $id; ?>" style="display: none;"><?php echo $day; ?></span>
-    <span id="expirationdate_hour-<?php echo $id; ?>" style="display: none;"><?php echo $hour; ?></span>
-    <span id="expirationdate_minute-<?php echo $id; ?>" style="display: none;"><?php echo $minute; ?></span>
-    <span id="expirationdate_enabled-<?php echo $id; ?>" style="display: none;"><?php echo $enabled; ?></span>
-    <span id="expirationdate_expireType-<?php echo $id; ?>" style="display: none;"><?php echo $expireType; ?></span>
-    <span id="expirationdate_categories-<?php echo $id; ?>" style="display: none;"><?php echo $categories; ?></span>
+    <span id="expirationdate_year-<?php
+    echo $id; ?>" style="display: none;"><?php
+        echo $year; ?></span>
+    <span id="expirationdate_month-<?php
+    echo $id; ?>" style="display: none;"><?php
+        echo $month; ?></span>
+    <span id="expirationdate_day-<?php
+    echo $id; ?>" style="display: none;"><?php
+        echo $day; ?></span>
+    <span id="expirationdate_hour-<?php
+    echo $id; ?>" style="display: none;"><?php
+        echo $hour; ?></span>
+    <span id="expirationdate_minute-<?php
+    echo $id; ?>" style="display: none;"><?php
+        echo $minute; ?></span>
+    <span id="expirationdate_enabled-<?php
+    echo $id; ?>" style="display: none;"><?php
+        echo $enabled; ?></span>
+    <span id="expirationdate_expireType-<?php
+    echo $id; ?>" style="display: none;"><?php
+        echo $expireType; ?></span>
+    <span id="expirationdate_categories-<?php
+    echo $id; ?>" style="display: none;"><?php
+        echo $categories; ?></span>
 </div>

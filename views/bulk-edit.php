@@ -97,7 +97,8 @@ $minute = $defaults['minute'];
                                        size="2" maxlength="2" autocomplete="off" type="text">
                             </label>
 
-                            <?php echo PostExpirator_Util::wp_timezone_string(); ?>
+                            <?php
+                            echo PostExpirator_Util::wp_timezone_string(); ?>
                         </span>
                     </div>
                     <div class="post-expirator-date-fields">

@@ -88,7 +88,8 @@
                         array(
                             'name' => 'expirationdate_expiretype-' . $type,
                             'selected' => (isset($defaults['expireType']) ? $defaults['expireType'] : '')
-                        )); ?>
+                        )
+                    ); ?>
                     <p class="description"><?php
                         _e('Select the default expire action for the post type.', 'post-expirator'); ?></p>
                 </td>
@@ -129,7 +130,8 @@
                             'type' => $type,
                             'name' => 'expirationdate_taxonomy-' . $type,
                             'selected' => $defaults['taxonomy']
-                        )); ?>
+                        )
+                    ); ?>
                 </td>
             </tr>
             <tr valign="top">
@@ -179,11 +181,14 @@
                             echo $value; ?>" <?php
                             selected($value, $defaults['default-expire-type']); ?>><?php
                                 echo $label; ?></option>
-                        <?php
+                            <?php
                         } ?>
                     </select>
                     <p class="description"><?php
-                        _e('Set the default expiration date to be used when creating a new post of this type.', 'post-expirator'); ?></p>
+                        _e(
+                            'Set the default expiration date to be used when creating a new post of this type.',
+                            'post-expirator'
+                        ); ?></p>
                     <div id="expired-custom-container-<?php
                     echo $type; ?>" class="pe-custom-date-container" style="display: <?php
                     echo $show; ?>;">

@@ -89,14 +89,14 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     echo $expirationdateDefaultTimeFormat; ?>" size="25"/> <span class="description">(<?php
                         echo PostExpirator_Util::get_wp_date($expirationdateDefaultTimeFormat, time()); ?>)</span>
                     <p class="description"><?php
-                        echo sprintf(
-                            __(
-                                'The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
-                                'post-expirator'
-                            ),
-                            '<a href="http://us2.php.net/manual/en/function.date.php" target="_blank">PHP Date Function</a>'
+                    echo sprintf(
+                        __(
+                            'The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
+                            'post-expirator'
+                        ),
+                        '<a href="http://us2.php.net/manual/en/function.date.php" target="_blank">PHP Date Function</a>'
 
-                ); ?></td>
+                    ); ?></td>
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expired-default-expiration-date"><?php
@@ -161,7 +161,8 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             'walker' => $walker,
                             'selected_cats' => $categories,
                             'checked_ontop' => false
-                        ));
+                        )
+                    );
                     echo '</ul>';
                     echo '</div>';
                     ?>
@@ -291,7 +292,10 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         <li>
                             <p class="description">EXPIRATIONFULL
                                 -> <?php
-                                echo PostExpirator_Util::get_wp_date("$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat", time()); ?>
+                                echo PostExpirator_Util::get_wp_date(
+                                    "$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat",
+                                    time()
+                                ); ?>
                             </p>
                         </li>
                         <li>
@@ -320,7 +324,10 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     (<span style="<?php
                     echo $expirationdateFooterStyle; ?>"><?php
                         _e('This post will expire on', 'post-expirator'); ?><?php
-                        echo PostExpirator_Util::get_wp_date("$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat", time()); ?></span>)
+                        echo PostExpirator_Util::get_wp_date(
+                            "$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat",
+                            time()
+                        ); ?></span>)
                     <p class="description"><?php
                         _e('The inline css which will be used to style the footer text.', 'post-expirator'); ?></p>
                 </td>
@@ -397,19 +404,26 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     _e('Preserve data after deactivating the plugin', 'post-expirator'); ?>
                 </th>
                 <td>
-                    <input type="radio" name="expired-preserve-data-deactivating" id="expired-preserve-data-deactivating-true"
-                           value="1" <?php echo $preserveData ? ' checked="checked"' : ''; ?>/>
+                    <input type="radio" name="expired-preserve-data-deactivating"
+                           id="expired-preserve-data-deactivating-true"
+                           value="1" <?php
+                    echo $preserveData ? ' checked="checked"' : ''; ?>/>
                     <label for="expired-preserve-data-deactivating-true">
-                        <?php _e('Preserve data', 'post-expirator'); ?>
+                        <?php
+                        _e('Preserve data', 'post-expirator'); ?>
                     </label>
                     &nbsp;&nbsp;
-                    <input type="radio" name="expired-preserve-data-deactivating" id="expired-preserve-data-deactivating-false"
-                           value="0" <?php echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
+                    <input type="radio" name="expired-preserve-data-deactivating"
+                           id="expired-preserve-data-deactivating-false"
+                           value="0" <?php
+                    echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
                     <label for="expired-preserve-data-deactivating-false">
-                        <?php _e('Delete data', 'post-expirator'); ?>
+                        <?php
+                        _e('Delete data', 'post-expirator'); ?>
                     </label>
                     <p class="description">
-                        <?php _e(
+                        <?php
+                        _e(
                             'Toggle between preserving or deleting data after the plugin is deactivated.',
                             'post-expirator'
                         ); ?>
