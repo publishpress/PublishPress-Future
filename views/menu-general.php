@@ -16,6 +16,7 @@ $categories = get_option('expirationdateCategoryDefaults');
 
 $preserveData = (bool)get_option('expirationdatePreserveData', true);
 
+$expireddisplayfooter = get_option('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
 $expireddisplayfooterenabled = '';
 $expireddisplayfooterdisabled = '';
 if ($expireddisplayfooter == 0) {
@@ -23,6 +24,8 @@ if ($expireddisplayfooter == 0) {
 } elseif ($expireddisplayfooter == 1) {
     $expireddisplayfooterenabled = 'checked="checked"';
 }
+$expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
+$expirationdateFooterStyle = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
 
 $expiredemailnotificationenabled = '';
 $expiredemailnotificationdisabled = '';

@@ -50,7 +50,7 @@ class PostExpirator_Display
             __('PublishPress Future', 'post-expirator'),
             'manage_options',
             POSTEXPIRATOR_BASENAME,
-            array(self::$_instance, 'settings_tabs')
+            array(self::$instance, 'settings_tabs')
         );
     }
 
@@ -173,7 +173,9 @@ class PostExpirator_Display
             }
         }
 
-        $this->render_template('menu-general');
+        $debug = postexpirator_debug();
+
+        $this->render_template('menu-diagnostics');
     }
 
     /**
@@ -308,11 +310,6 @@ class PostExpirator_Display
         }
 
         $this->render_template('menu-general');
-    }
-
-        $debug = postexpirator_debug();
-
-        $this->render_template('menu-diagnostics');
     }
 
     /**
