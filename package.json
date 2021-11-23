@@ -1,6 +1,6 @@
 {
   "name": "post-expirator",
-  "version": "2.5.0",
+  "version": "2.6.3",
   "description": "post-expirator",
   "repository": {
     "type": "git",
@@ -34,7 +34,8 @@
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "build:dev": "wp-scripts build --mode development --watch",
+    "build:dev": "wp-scripts build --mode development",
+    "build:watch": "wp-scripts build --mode development --watch",
     "build": "wp-scripts build --mode production"
   },
   "pot": {

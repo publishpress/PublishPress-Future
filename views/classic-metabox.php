@@ -1,5 +1,6 @@
 <p>
-    <input type="checkbox" name="enable-expirationdate" id="enable-expirationdate" value="checked"' . <?php
+    <input type="checkbox" name="enable-expirationdate" id="enable-expirationdate" value="checked"'
+    . <?php
     echo $enabled; ?>/>
     <label for="enable-expirationdate"><?php
         _e('Enable Post Expiration', 'post-expirator'); ?></label>
@@ -69,11 +70,13 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
         <label><?php
             _e('Day', 'post-expirator'); ?></label>
         <input type="text" id="expirationdate_day" name="expirationdate_day" value="<?php
-        echo $defaultday; ?>" size="2"/>
+        echo $defaultday; ?>"
+               size="2"/>
     </div>
     <div>
         <label><?php
-            _e('Hour', 'post-expirator'); ?> (<?php
+            _e('Hour', 'post-expirator'); ?>
+            (<?php
             echo date_i18n('T', mktime(0, 0, 0, $i, 1, date_i18n('Y'))); ?>)</label>
         <select name="expirationdate_hour" id="expirationdate_hour">
             <?php
@@ -98,14 +101,18 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
         <label><?php
             _e('Minute', 'post-expirator'); ?></label>
         <input type="text" id="expirationdate_minute" name="expirationdate_minute" value="<?php
-        echo $defaultminute; ?>" size="2"/>
+        echo $defaultminute; ?>"
+               size="2"/>
     </div>
     <div>
         <label><?php
             _e('How to expire', 'post-expirator'); ?></label>
         <?php
-        _postexpirator_expire_type(
-            array('type' => $post->post_type, 'name' => 'expirationdate_expiretype', 'selected' => $expireType)); ?>
+        _postexpirator_expire_type(array(
+            'type' => $post->post_type,
+            'name' => 'expirationdate_expiretype',
+            'selected' => $expireType
+        )); ?>
     </div>
 
     <?php
@@ -137,14 +144,12 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
         } else {
             $keys = array_keys($taxonomies);
             $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : $keys[0];
-            wp_terms_checklist(
-                0,
-                array(
-                    'taxonomy' => $taxonomy,
-                    'walker' => $walker,
-                    'selected_cats' => $categories,
-                    'checked_ontop' => false
-                ));
+            wp_terms_checklist(0, array(
+                'taxonomy' => $taxonomy,
+                'walker' => $walker,
+                'selected_cats' => $categories,
+                'checked_ontop' => false
+            ));
             echo '<input type="hidden" name="taxonomy-heirarchical" value="' . $taxonomy . '" />';
         }
         echo '</ul>';
@@ -160,6 +165,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     ?>
 </div>
 
-<input type="hidden" name="expirationdate_formcheck" value="true"/>
+<input name="expirationdate_formcheck" value="true" type="hidden"/>
+<input name="postexpirator_view" value="classic-metabox" type="hidden"/>
 <?php
 wp_nonce_field('__postexpirator', '_postexpiratornonce'); ?>

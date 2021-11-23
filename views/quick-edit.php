@@ -23,11 +23,13 @@
                                     $monthStr = date_i18n('M', $now);
                                     ?>
                                     <option value="<?php
-                                    echo $monthNumeric; ?>" data-text="<?php
-                                    echo $monthStr; ?>"><?php
-                                        echo $monthNumeric; ?>-<?php
+                                    echo $monthNumeric; ?>"
+                                            data-text="<?php
+                                            echo $monthStr; ?>"><?php
+                                        echo $monthNumeric; ?>
+                                        -<?php
                                         echo $monthStr; ?></option>
-                                <?php
+                                    <?php
                                 } ?>
 
                             </select>
@@ -58,6 +60,8 @@
                             <input name="expirationdate_minute" value="" size="2" maxlength="2" autocomplete="off"
                                    type="text" placeholder="00">
                         </label>
+
+                        <?php echo PostExpirator_Util::wp_timezone_string(); ?>
                     </div>
                     <div>
                         <legend>
@@ -68,12 +72,11 @@
                         </legend>
                         <?php
                         $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
-                        _postexpirator_expire_type(
-                            array(
-                                'name' => 'expirationdate_expiretype',
-                                'selected' => $defaults['expireType'],
-                                'post_type' => $post_type
-                            ));
+                        _postexpirator_expire_type(array(
+                            'name' => 'expirationdate_expiretype',
+                            'selected' => empty($defaults) ? 'draft' : $defaults['expireType'],
+                            'post_type' => $post_type
+                        ));
                         ?>
                     </div>
                     <div class="pe-category-list">
@@ -88,9 +91,11 @@
                             <?php
                             if (! empty($taxonomy)) {
                                 $walker = new Walker_PostExpirator_Category_Checklist();
-                                wp_terms_checklist(
-                                    0,
-                                    array('taxonomy' => $taxonomy, 'walker' => $walker, 'checked_ontop' => false));
+                                wp_terms_checklist(0, array(
+                                    'taxonomy' => $taxonomy,
+                                    'walker' => $walker,
+                                    'checked_ontop' => false
+                                ));
                             }
                             ?>
                         </ul>
@@ -98,6 +103,7 @@
 
                 </div>
                 <input name="expirationdate_quickedit" value="true" type="hidden"/>
+                <input name="postexpirator_view" value="quick-edit" type="hidden"/>
             </fieldset>
         </div>
     </div>

@@ -9,7 +9,7 @@ class PostExpirator_Display
     /**
      * The singleton instance.
      */
-    private static $_instance = null;
+    private static $instance = null;
 
     /**
      * Constructor.
@@ -20,22 +20,23 @@ class PostExpirator_Display
     }
 
     /**
-     * Returns instance of the singleton.
-     */
-    public static function getInstance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
-
-    /**
      * Initialize the hooks.
      */
     private function hooks()
     {
         add_action('admin_menu', array($this, 'add_menu'));
+    }
+
+    /**
+     * Returns instance of the singleton.
+     */
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
     /**
@@ -172,9 +173,7 @@ class PostExpirator_Display
             }
         }
 
-        $debug = postexpirator_debug();
-
-        $this->render_template('menu-diagnostics');
+        $this->render_template('menu-general');
     }
 
     /**
@@ -204,7 +203,7 @@ class PostExpirator_Display
             if (! isset($_POST['_postExpiratorMenuDefaults_nonce']) || ! wp_verify_nonce(
                     $_POST['_postExpiratorMenuDefaults_nonce'],
                     'postexpirator_menu_defaults'
-                )) {
+               ) ) {
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
@@ -251,10 +250,12 @@ class PostExpirator_Display
     private function menu_general()
     {
         if (isset($_POST['expirationdateSave']) && $_POST['expirationdateSave']) {
-            if (! isset($_POST['_postExpiratorMenuGeneral_nonce']) || ! wp_verify_nonce(
+            if (
+                ! isset($_POST['_postExpiratorMenuGeneral_nonce']) || ! wp_verify_nonce(
                     $_POST['_postExpiratorMenuGeneral_nonce'],
                     'postexpirator_menu_general'
-                )) {
+                )
+            ) {
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
@@ -263,9 +264,14 @@ class PostExpirator_Display
 
                 update_option('expirationdateDefaultDateFormat', $_POST['expired-default-date-format']);
                 update_option('expirationdateDefaultTimeFormat', $_POST['expired-default-time-format']);
+                update_option('expirationdateDisplayFooter', $_POST['expired-display-footer']);
                 update_option('expirationdateEmailNotification', $_POST['expired-email-notification']);
                 update_option('expirationdateEmailNotificationAdmins', $_POST['expired-email-notification-admins']);
                 update_option('expirationdateEmailNotificationList', trim($_POST['expired-email-notification-list']));
+                update_option('expirationdateFooterContents', $_POST['expired-footer-contents']);
+                update_option('expirationdateFooterStyle', $_POST['expired-footer-style']);
+                update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
+                update_option('expirationdatePreserveData', (bool)$_POST['expired-preserve-data-deactivating']);
                 update_option(
                     'expirationdateCategoryDefaults',
                     isset($_POST['expirationdate_category']) ? $_POST['expirationdate_category'] : array()
@@ -274,6 +280,27 @@ class PostExpirator_Display
                 if ($_POST['expired-custom-expiration-date']) {
                     update_option('expirationdateDefaultDateCustom', $_POST['expired-custom-expiration-date']);
                 }
+
+                if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
+                    $_POST['allow-user-roles'] = array();
+                }
+
+                $user_roles = wp_roles()->get_names();
+
+                foreach ($user_roles as $role_name => $role_label) {
+                    $role = get_role($role_name);
+
+                    if (! is_a($role, WP_Role::class)) {
+                        continue;
+                    }
+
+                    if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
+                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                    } else {
+                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                    }
+                }
+
                 echo "<div id='message' class='updated fade'><p>";
                 _e('Saved Options!', 'post-expirator');
                 echo '</p></div>';
@@ -281,6 +308,11 @@ class PostExpirator_Display
         }
 
         $this->render_template('menu-general');
+    }
+
+        $debug = postexpirator_debug();
+
+        $this->render_template('menu-diagnostics');
     }
 
     /**

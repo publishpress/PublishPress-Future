@@ -1,7 +1,5 @@
 <?php
 
-// phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-
 /**
  * The class that adds debug entries to the database.
  */
@@ -27,11 +25,11 @@ class PostExpiratorDebug
 
         if ($wpdb->get_var("SHOW TABLES LIKE '" . $this->debug_table . "'") !== $this->debug_table) {
             $sql = 'CREATE TABLE `' . $this->debug_table . '` (
-				`id` INT(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-				`timestamp` TIMESTAMP NOT NULL,
-				`blog` INT(9) NOT NULL,
-				`message` text NOT NULL
-			);';
+                `id` INT(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                `timestamp` TIMESTAMP NOT NULL,
+                `blog` INT(9) NOT NULL,
+                `message` text NOT NULL
+            );';
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             dbDelta($sql);
         }
@@ -77,6 +75,7 @@ class PostExpiratorDebug
         $results = $wpdb->get_results("SELECT * FROM {$this->debug_table} ORDER BY `id` DESC");
         if (empty($results)) {
             print '<p>' . __('Debugging table is currently empty.', 'post-expirator') . '</p>';
+
             return;
         }
         print '<table class="post-expirator-debug">';
@@ -98,5 +97,3 @@ class PostExpiratorDebug
         $wpdb->query("TRUNCATE TABLE {$this->debug_table}");
     }
 }
-
-// phpcs:enable

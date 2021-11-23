@@ -9,12 +9,16 @@ use PublishPressBuilder\PackageBuilderTasks;
  */
 class RoboFile extends PackageBuilderTasks
 {
+
+    /**
+     * The constructor.
+     */
     public function __construct()
     {
         parent::__construct();
 
         $this->appendToFileToIgnore(
-            [
+            array(
                 'docker-compose.yml',
                 'codecept.conf.js',
                 'codeceptjs',
@@ -22,7 +26,7 @@ class RoboFile extends PackageBuilderTasks
                 'jsconfig.json',
                 'logs',
                 'phpcs.xml',
-            ]
+            )
         );
 
         $this->setVersionConstantName('POSTEXPIRATOR_VERSION');

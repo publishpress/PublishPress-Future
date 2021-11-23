@@ -1,6 +1,6 @@
 <?php
+
 // @TODO remove extract
-// phpcs:ignore WordPress.PHP.DontExtract.extract_extract
 extract($opts);
 
 if (! isset($name)) {
@@ -18,7 +18,6 @@ if (empty($type) && isset($opts['post_type'])) {
     $type = $opts['post_type'];
 }
 
-// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 ?>
 <select name="<?php
 echo $name; ?>" id="<?php
@@ -52,6 +51,6 @@ echo $id; ?>" class="pe-howtoexpire">
         <option value="category-remove" <?php
         echo $selected === 'category-remove' ? 'selected="selected"' : ''; ?>><?php
             _e('Category: Remove', 'post-expirator'); ?></option>
-    <?php
+        <?php
     } ?>
 </select>

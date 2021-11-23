@@ -1,19 +1,19 @@
-=== PublishPress Future: Automatically Unpublish WordPress Posts ===
-Contributors: publishpress, kevinB, stevejburge, andergmartins
+=== Post Expirator: Automatically Unpublish WordPress Posts ===
+Contributors: publishpress, kevinB, stevejburge, andergmartins, rozroz
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
-Requires at least: 4.0
+Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.5.0
+Stable tag: 2.6.3
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
 == Description ==
 
-The PublishPress Future plugin allows you to add an expiration date to posts. pages and other content type. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
+The Post Expirator plugin allows you to add an expiration date to posts. pages and other content type. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
-Here's an overview of what you can do with PublishPress Future:
+Here's an overview of what you can do with Post Expirator:
 
 * Choose expiry dates for content in any post type.
 * Select expiry dates in the right sidebar when editing posts.
@@ -40,7 +40,7 @@ When your posts expire, you can perform these changes on your content:
 
 ## Display the Expiry Date in Your Content
 
-PublishPress Future allows you to place automatically show the expiry date inside your articles. The expiry will be added at the bottom of your post.
+Post Expirator allows you to place automatically show the expiry date inside your articles. The expiry will be added at the bottom of your post.
 
 [Click here to see the Footer Display options](https://publishpress.com/knowledge-base/footer-display/).
 
@@ -50,13 +50,13 @@ You can use shortcodes to show the expiration date inside your posts. You can cu
 
 ## Expiry Defaults for Post Types
 
-PublishPress Future can support any post type in WordPress. Go to Settings > PublishPress Future > Defaults and you can choose default expiry options for each post type.
+Post Expirator can support any post type in WordPress. Go to Settings > Post Expirator > Defaults and you can choose default expiry options for each post type.
 
 [Click here to see the default options](https://publishpress.com/knowledge-base/defaults-for-post-types/).
 
-## PublishPress Future Email Notifications
+## Post Expirator Email Notifications
 
-The PublishPress Future plugin can send you email notifications when your content is unpublished. You can control the emails by going to Settings > PublishPress Future > General Settings.
+The Post Expirator plugin can send you email notifications when your content is unpublished. You can control the emails by going to Settings > Post Expirator > General Settings.
 
 [Click here to see the notification options](https://publishpress.com/knowledge-base/email-notifications/).
 
@@ -81,10 +81,54 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.6.3] - 18 Nov 2021 =
+
+* Fixed: Fix the timezone applied to time fields, #134;
+* Fixed: Add the timezone string to the time fields, #134;
+* Fixed: Fix the selected expiring categories on the quick edit panel, #160;
+* Added: Add setting field for choosing between preserve or delete data when the plugin is deactivated, #137;
+* Fixed: Fix E_COMPILER_ERROR when cleaning up the debug table, #183;
+* Fixed: Fix translation and localization of date and time, #150;
+
+= [2.6.2] - 04 Nov 2021 =
+
+* Fixed: Fix fatal error: Call to a member function add_cap() on null, #167;
+* Fixed: Fix hierarchical taxonomy selection error for multiple taxonomies, #144;
+* Fixed: Fix PHP warning: use of undefined constant - assumed 'expireType', #617;
+* Fixed: Fix translation of strings in the block editor panel, #163;
+* Fixed: Fix category not being added or removed when the post expires, #170;
+* Fixed: Fix PHP notice: Undefined variable: merged, #174;
+* Fixed: Fix category-based expiration for custom post types in classic editor, #179;
+* Fixed: Fix expiration date being added to old posts when edited, #168;
+
+= [2.6.1] - 27 Oct 2021 =
+
+* Fixed: Fix category replace not saving, #159;
+* Fixed: Fix auto enabled settings, #158;
+* Fixed: Fix expiration data and cron on Gutenberg style box, #156, #136;
+* Fixed: Fix the request that loads categories in the Gutenberg style panel, #133;
+* Fixed: Fix the category replace not working with the new Gutenberg style panel, #127;
+* Fixed: Fix the default options for the Gutenberg style panel, #145;
+* Added: Add post information to the scheduled list for easier debugging, #164;
+* Added: Add a review request after a specific period of usage, #103;
+* Added: Improve the list of cron tasks, filtering only the tasks related to the plugin, #153;
+
+= [2.6.0] - 04 Oct 2021 =
+
+* Added: Add specific capabilities for expiring posts, #141;
+
+= [2.5.1] - 27 Sep 2021 =
+
+* Fixed: Default Expiration Categories cannot be unset, #94;
+* Fixed: Tidy up design for Classic Editor version, #83;
+* Fixed: All posts now carry the default expiration, #115;
+* Fixed: Error with 2.5.0 and WordPress 5.8.1, #110;
+* Fixed: Do not show private post types that don't have an admin UI, #116;
+
 = [2.5.0] - 08 Aug 2021 =
 
 * Fixed: Appearance Widgets screen shows PHP Notice, #92;
-* Fixed: Stop the PublishPress Future box from appearing in non-public post types, #78;
+* Fixed: Stop the Post Expirator box from appearing in non-public post types, #78;
 * Added: Add "How to Expire" to Quick Edit, #62;
 * Changed: Settings UI enhancement, #14;
 * Fixed: Hide metabox from Media Library files, #56;
@@ -166,7 +210,7 @@ This section describes how to install the plugin and get it working.
 
 = [2.1.1] =
 
-* New: Added the option to disable PublishPress Future for certain post types if desired
+* New: Added the option to disable post expirator for certain post types if desired
 * Fix: Fixed php warning issue cause when post type defaults are not set
 
 = [2.1.0] =
@@ -204,7 +248,7 @@ This is a major update of the core functions of this plugin.  All current plugin
 
 = [1.6.2] =
 
-* Added the ability to configure the PublishPress Future to be enabled by default for all new posts
+* Added the ability to configure the post expirator to be enabled by default for all new posts
 * Changed some instances of mktime to time
 * Fixed missing global call for MS installs
 
@@ -255,7 +299,7 @@ This is a major update of the core functions of this plugin.  All current plugin
 
 = [1.4.2] =
 
-* Added PublishPress Future POT to /languages folder
+* Added post expirator POT to /languages folder
 * Fixed issue with plugin admin navigation
 * Fixed timezone issue on plugin options screen
 
@@ -290,7 +334,7 @@ NOTE: After upgrading, you may need to reset the cron schedules.  Following onsc
 
 = [1.2] =
 
-* Changed wording from "Expiration Date" to "PublishPress Future" and moved the configuration options to the "Settings" tab.
+* Changed wording from "Expiration Date" to "Post Expirator" and moved the configuration options to the "Settings" tab.
 * Added shortcode tag [postexpirator] to display the post expiration date within the post
 ** Added new setting for the default format
 * Fixed bug where expiration date was removed when a post was auto saved

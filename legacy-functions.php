@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file provides access to all legacy functions that are now deprecated.
  */
@@ -56,8 +57,7 @@ if (! function_exists('_postExpiratorExpireType')) {
     {
         ob_start();
         _postexpirator_expire_type($opts);
+
         return ob_get_clean();
     }
 }
-
-

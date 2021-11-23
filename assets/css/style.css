@@ -1,41 +1,44 @@
 /* settings */
 .post-expirator-adminnotice {
-	background-color: red;
+    background-color: red;
 }
 
 .post-expirator-addcolumn {
-	font-size: 0.8em; 
-	font-weight: normal;
+    font-size: 0.8em;
+    font-weight: normal;
 }
 
 .post-expirator-debug th {
-	font-weight: bold;
-	border-bottom: 1px solid black;
+    font-weight: bold;
+    border-bottom: 1px solid black;
 }
 
 .post-expirator-timestamp {
-	width: 150px;
+    width: 150px;
 }
 
 /* metabox */
 #post-expirator-cat-list {
-	max-width: 250px;
+    max-width: 250px;
 }
+
 #post-expirator-cat-list ul {
-	margin: 0;
+    margin: 0;
 }
+
 #post-expirator-cat-list ul ul {
-	margin-left: 18px;
+    margin-left: 18px;
 }
+
 .post-expirator-taxonomy-name {
-	margin: 0px;
-	font-style: italic;
-	font-size: x-small;
+    margin: 0px;
+    font-style: italic;
+    font-size: x-small;
 }
 
 div.pe-classic-fields {
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     align-content: center;
     justify-content: space-between;
@@ -43,11 +46,11 @@ div.pe-classic-fields {
 }
 
 div.pe-classic-fields > div {
-	display: flex;
-	flex-direction: column;
-	padding: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
 }
 
 div.pe-classic-fields > div > label {
-	font-weight: bold;
+    font-weight: bold;
 }

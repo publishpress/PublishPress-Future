@@ -2,9 +2,10 @@ node_modules
 *.log
 vendor
 logs
-composer.lock
 codeceptjs/output
 #bin
 .idea
 .DS_Store
 /builder.yml
+dist
+.env.testing
