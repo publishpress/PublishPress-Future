@@ -553,18 +553,15 @@ function postexpirator_update_post_meta($id)
         $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
 
         if (isset($_POST['expirationdate_quickedit'])) {
-            $ed = get_post_meta($id, '_expiration-date', true);
-            if ($ed) {
-                $opts = PostExpirator_Facade::get_expire_principles($id);
-                if (isset($_POST['expirationdate_expiretype'])) {
-                    $opts['expireType'] = $_POST['expirationdate_expiretype'];
-                    if (in_array($opts['expireType'], array(
-                        'category',
-                        'category-add',
-                        'category-remove'
-                    ), true)) {
-                        $opts['category'] = $_POST['expirationdate_category'];
-                    }
+            $opts = PostExpirator_Facade::get_expire_principles($id);
+            if (isset($_POST['expirationdate_expiretype'])) {
+                $opts['expireType'] = $_POST['expirationdate_expiretype'];
+                if (in_array($opts['expireType'], array(
+                    'category',
+                    'category-add',
+                    'category-remove'
+                ), true)) {
+                    $opts['category'] = $_POST['expirationdate_category'];
                 }
             }
         } else {
