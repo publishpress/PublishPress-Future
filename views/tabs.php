@@ -12,7 +12,7 @@ $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET
             echo admin_url('options-general.php?page=post-expirator.php&tab=general'); ?>"
                class="pe-tab nav-tab <?php
                echo($current_tab === 'general' ? 'nav-tab-active' : ''); ?>"><?php
-                _e('General Settings', 'post-expirator'); ?></a>
+                _e('Defaults', 'post-expirator'); ?></a>
             <a href="<?php
             echo admin_url('options-general.php?page=post-expirator.php&tab=defaults'); ?>"
                class="pe-tab nav-tab <?php
