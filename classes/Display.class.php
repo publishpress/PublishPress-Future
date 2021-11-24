@@ -72,7 +72,7 @@ class PostExpirator_Display
     {
         PostExpirator_Facade::load_assets('settings');
 
-        $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug');
+        $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
         $tab = isset($_GET['tab']) ? $_GET['tab'] : '';
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
             $tab = 'general';
@@ -266,14 +266,9 @@ class PostExpirator_Display
 
                 update_option('expirationdateDefaultDateFormat', $_POST['expired-default-date-format']);
                 update_option('expirationdateDefaultTimeFormat', $_POST['expired-default-time-format']);
-                update_option('expirationdateDisplayFooter', $_POST['expired-display-footer']);
-                update_option('expirationdateEmailNotification', $_POST['expired-email-notification']);
+                                update_option('expirationdateEmailNotification', $_POST['expired-email-notification']);
                 update_option('expirationdateEmailNotificationAdmins', $_POST['expired-email-notification-admins']);
                 update_option('expirationdateEmailNotificationList', trim($_POST['expired-email-notification-list']));
-                update_option('expirationdateFooterContents', $_POST['expired-footer-contents']);
-                update_option('expirationdateFooterStyle', $_POST['expired-footer-style']);
-                update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
-                update_option('expirationdatePreserveData', (bool)$_POST['expired-preserve-data-deactivating']);
                 update_option(
                     'expirationdateCategoryDefaults',
                     isset($_POST['expirationdate_category']) ? $_POST['expirationdate_category'] : array()
@@ -310,6 +305,56 @@ class PostExpirator_Display
         }
 
         $this->render_template('menu-general');
+    }
+
+    /**
+     * Show the Expiration Date options page
+     */
+    private function menu_advanced()
+    {
+        if (isset($_POST['expirationdateSave']) && $_POST['expirationdateSave']) {
+            if (
+                ! isset($_POST['_postExpiratorMenuAdvanced_nonce']) || ! wp_verify_nonce(
+                    $_POST['_postExpiratorMenuAdvanced_nonce'],
+                    'postexpirator_menu_advanced'
+                )
+            ) {
+                print 'Form Validation Failure: Sorry, your nonce did not verify.';
+                exit;
+            } else {
+                // Filter Content
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
+                update_option('expirationdatePreserveData', (bool)$_POST['expired-preserve-data-deactivating']);
+
+                if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
+                    $_POST['allow-user-roles'] = array();
+                }
+
+                $user_roles = wp_roles()->get_names();
+
+                foreach ($user_roles as $role_name => $role_label) {
+                    $role = get_role($role_name);
+
+                    if (! is_a($role, WP_Role::class)) {
+                        continue;
+                    }
+
+                    if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
+                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                    } else {
+                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                    }
+                }
+
+                echo "<div id='message' class='updated fade'><p>";
+                _e('Saved Options!', 'post-expirator');
+                echo '</p></div>';
+            }
+        }
+
+        $this->render_template('menu-advanced');
     }
 
     /**

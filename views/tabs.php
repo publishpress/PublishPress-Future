@@ -14,6 +14,11 @@ $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET
                echo($current_tab === 'general' ? 'nav-tab-active' : ''); ?>"><?php
                 _e('Defaults', 'post-expirator'); ?></a>
             <a href="<?php
+            echo admin_url('options-general.php?page=post-expirator.php&tab=display'); ?>"
+               class="pe-tab nav-tab <?php
+               echo($current_tab === 'display' ? 'nav-tab-active' : ''); ?>"><?php
+                _e('Display', 'post-expirator'); ?></a>
+            <a href="<?php
             echo admin_url('options-general.php?page=post-expirator.php&tab=defaults'); ?>"
                class="pe-tab nav-tab <?php
                echo($current_tab === 'defaults' ? 'nav-tab-active' : ''); ?>"><?php
@@ -23,6 +28,11 @@ $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET
                class="pe-tab nav-tab <?php
                echo($current_tab === 'diagnostics' ? 'nav-tab-active' : ''); ?>"><?php
                 _e('Diagnostics', 'post-expirator'); ?></a>
+            <a href="<?php
+            echo admin_url('options-general.php?page=post-expirator.php&tab=advanced'); ?>"
+               class="pe-tab nav-tab <?php
+               echo($current_tab === 'advanced' ? 'nav-tab-active' : ''); ?>"><?php
+                _e('Advanced', 'post-expirator'); ?></a>
             <?php
             if (POSTEXPIRATOR_DEBUG) { ?>
                 <a href="<?php
@@ -34,8 +44,7 @@ $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET
             } ?>
         </nav>
 
-        <?php
-        echo $html; ?>
+        <?php echo $html; ?>
 
     </div>
 </div>
