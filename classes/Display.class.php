@@ -44,13 +44,14 @@ class PostExpirator_Display
      */
     public function add_menu()
     {
-        add_submenu_page(
-            'options-general.php',
-            __('PublishPress Future Options', 'post-expirator'),
-            __('PublishPress Future', 'post-expirator'),
+        add_menu_page(
+            __('Future Options', 'post-expirator'),
+            __('Future', 'post-expirator'),
             'manage_options',
-            POSTEXPIRATOR_BASENAME,
-            array(self::$instance, 'settings_tabs')
+            'publishpress-future',
+            array(self::$instance, 'settings_tabs'),
+            'dashicons-clock',
+            40
         );
     }
 
