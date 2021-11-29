@@ -45,7 +45,7 @@ class PostExpirator_Display
     public function add_menu()
     {
         add_menu_page(
-            __('Future Options', 'post-expirator'),
+            __('PublishPress Future Options', 'post-expirator'),
             __('Future', 'post-expirator'),
             'manage_options',
             'publishpress-future',
