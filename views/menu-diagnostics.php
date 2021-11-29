@@ -83,7 +83,7 @@
                             'post-expirator'
                         ); ?></p>
 
-                    <div class="pe-scroll">
+                    <div>
                         <table class="striped">
                             <tr>
                                 <th><?php
