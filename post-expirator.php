@@ -1407,8 +1407,9 @@ function postexpirator_shortcode($atts)
 {
     global $post;
 
+    $enabled = PostExpirator_Facade::is_expiration_enabled_for_post($post->ID);
     $expirationdatets = get_post_meta($post->ID, '_expiration-date', true);
-    if (empty($expirationdatets)) {
+    if (! $enabled || empty($expirationdatets)) {
         return false;
     }
 
@@ -1465,6 +1466,12 @@ function postexpirator_add_footer($text)
 
     // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
     if ($displayFooter === false || $displayFooter == 0) {
+        return $text;
+    }
+
+    $enabled = PostExpirator_Facade::is_expiration_enabled_for_post($post->ID);
+
+    if (empty($enabled)) {
         return $text;
     }
 

@@ -515,4 +515,9 @@ class PostExpirator_Facade
             )
         );
     }
+
+    public static function is_expiration_enabled_for_post($post_id)
+    {
+        return get_post_meta($post_id, '_expiration-date-status', true) === 'saved';
+    }
 }

@@ -3,7 +3,7 @@ echo esc_attr($id); ?>"
      data-expire-attributes="<?php
      echo esc_attr(json_encode($attributes)); ?>">
     <?php
-    $expirationEnabled = get_post_meta($id, '_expiration-date-status', true) === 'saved';
+    $expirationEnabled = PostExpirator_Facade::is_expiration_enabled_for_post($id);
     $expirationDate = get_post_meta($id, '_expiration-date', true);
     if ($expirationDate && $expirationEnabled) {
         $format = get_option('date_format') . ' ' . get_option('time_format');
