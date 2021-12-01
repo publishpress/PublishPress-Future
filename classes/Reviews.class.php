@@ -35,8 +35,8 @@ abstract class PostExpirator_Reviews
             return false;
         }
 
-        if ($pagenow === 'options-general.php' && isset($_GET['page'])) {
-            if ($_GET['page'] === 'post-expirator.php') {
+        if ($pagenow === 'admin.php' && isset($_GET['page'])) {
+            if ($_GET['page'] === 'publishpress-future') {
                 return true;
             }
         }
