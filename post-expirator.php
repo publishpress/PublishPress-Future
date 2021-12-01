@@ -40,7 +40,7 @@ function postexpirator_plugin_action_links($links, $file)
 {
     $this_plugin = basename(plugin_dir_url(__FILE__)) . '/post-expirator.php';
     if ($file === $this_plugin) {
-        $links[] = '<a href="options-general.php?page=post-expirator">' . __('Settings', 'post-expirator') . '</a>';
+        $links[] = '<a href="admin.php?page=publishpress-future">' . __('Settings', 'post-expirator') . '</a>';
     }
 
     return $links;
