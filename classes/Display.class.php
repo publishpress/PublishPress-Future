@@ -11,12 +11,16 @@ class PostExpirator_Display
      */
     private static $instance = null;
 
+    private $renamingWarningInstance = null;
+
     /**
      * Constructor.
      */
     private function __construct()
     {
         $this->hooks();
+
+        $this->renamingWarningInstance = new PostExpirator_RenamingWarning();
     }
 
     /**
@@ -24,7 +28,8 @@ class PostExpirator_Display
      */
     private function hooks()
     {
-        add_action('admin_menu', array($this, 'add_menu'));
+        add_action('admin_menu', [$this, 'add_menu']);
+        add_action('init', [$this, 'init']);
     }
 
     /**
@@ -37,6 +42,11 @@ class PostExpirator_Display
         }
 
         return self::$instance;
+    }
+
+    public function init()
+    {
+        $this->renamingWarningInstance->init();
     }
 
     /**
