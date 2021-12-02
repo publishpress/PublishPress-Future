@@ -175,7 +175,7 @@ class PostExpirator_Display
                 _e('Debugging Enabled', 'post-expirator');
                 echo '</p></div>';
             } elseif (isset($_POST['purge-debug'])) {
-                require_once(plugin_dir_path(__FILE__) . 'post-expirator-debug.php');
+                require_once(POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php');
                 $debug = new PostExpiratorDebug();
                 $debug->purge();
                 echo "<div id='message' class='updated fade'><p>";
