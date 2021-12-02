@@ -69,31 +69,31 @@
             var $edit_row = $('#edit-' + $post_id);
 
             // get / set year
-            var $year = $('#expirationdate_year-' + $post_id).text();
+            var $year = $('#expirationdate_year-' + $post_id).val();
             $edit_row.find('input[name="expirationdate_year"]').val($year);
 
             // get / set month
-            var $month = $('#expirationdate_month-' + $post_id).text();
+            var $month = $('#expirationdate_month-' + $post_id).val();
             $edit_row.find('select[name="expirationdate_month"]').val($month);
 
             // get / set day
-            var $day = $('#expirationdate_day-' + $post_id).text();
+            var $day = $('#expirationdate_day-' + $post_id).val();
             $edit_row.find('input[name="expirationdate_day"]').val($day);
 
             // get / set hour
-            var $hour = $('#expirationdate_hour-' + $post_id).text();
+            var $hour = $('#expirationdate_hour-' + $post_id).val();
             $edit_row.find('input[name="expirationdate_hour"]').val($hour);
 
             // get / set minute
-            var $minute = $('#expirationdate_minute-' + $post_id).text();
+            var $minute = $('#expirationdate_minute-' + $post_id).val();
             $edit_row.find('input[name="expirationdate_minute"]').val($minute);
 
             // expire type
-            var $type = $('#expirationdate_expireType-' + $post_id).text();
+            var $type = $('#expirationdate_expireType-' + $post_id).val();
             $edit_row.find('select[name="expirationdate_expiretype"]').val($type);
 
             // enabled or not
-            var $enabled = $('#expirationdate_enabled-' + $post_id).text();
+            var $enabled = $('#expirationdate_enabled-' + $post_id).val();
             if ($enabled == "true") {
                 $edit_row.find('input[name="enable-expirationdate"]').prop('checked', true);
                 $edit_row.find('.pe-qe-fields').show();
@@ -101,7 +101,7 @@
 
             // categories
             $edit_row.find('input[name="expirationdate_category[]"]').prop('checked', false);
-            var $categories = $('#expirationdate_categories-' + $post_id).text();
+            var $categories = $('#expirationdate_categories-' + $post_id).val();
             if ($categories !== '') {
                 $.each($categories.split(','), function (index, value) {
                     $edit_row.find('input[name="expirationdate_category[]"][value="' + value + '"]').prop('checked', true);
