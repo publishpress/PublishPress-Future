@@ -1,15 +1,22 @@
-<div class="post-expire-col" data-id="<?php
-echo esc_attr($id); ?>"
-     data-expire-attributes="<?php
-     echo esc_attr(json_encode($attributes)); ?>">
+<div class="post-expire-col" data-id="<?php echo esc_attr($id); ?>"
+     data-expire-attributes="<?php echo esc_attr(json_encode($attributes)); ?>">
     <?php
+    $iconClass = '';
+
     $expirationEnabled = PostExpirator_Facade::is_expiration_enabled_for_post($id);
     $expirationDate = get_post_meta($id, '_expiration-date', true);
+
     if ($expirationDate && $expirationEnabled) {
         $format = get_option('date_format') . ' ' . get_option('time_format');
         $display = PostExpirator_Util::get_wp_date($format, $expirationDate);
+        if (PostExpirator_CronFacade::post_has_scheduled_task($id)) {
+            $iconClass = 'clock icon-scheduled';
+        } else {
+            $iconClass = 'warning icon-missed';
+        }
     } else {
         $display = __('Never', 'post-expirator');
+        $iconClass = 'marker icon-never';
     }
 
     $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
@@ -52,8 +59,9 @@ echo esc_attr($id); ?>"
     }
 
     // the hidden fields will be used by quick edit
-
     ?>
+    <span class="dashicons dashicons-<?php echo $iconClass; ?>"></span>
+
     <?php echo esc_html($display); ?>
     <input type="hidden" id="expirationdate_year-<?php echo $id; ?>" value="<?php echo $year; ?>" />
     <input type="hidden" id="expirationdate_month-<?php echo $id; ?>" value="<?php echo $month; ?>" />
