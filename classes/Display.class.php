@@ -61,7 +61,7 @@ class PostExpirator_Display
             'publishpress-future',
             array(self::$instance, 'settings_tabs'),
             'dashicons-clock',
-            40
+            74
         );
     }
 
