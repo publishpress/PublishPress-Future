@@ -131,7 +131,7 @@ class PostExpirator_Facade
     /**
      * Fires when the post meta is updated (in the gutenberg block).
      */
-    function updatedmeta($meta_id, $post_id, $meta_key, $meta_value)
+    public function updatedmeta($meta_id, $post_id, $meta_key, $meta_value)
     {
         // allow only through gutenberg
         if (! PostExpirator_Util::is_gutenberg_active()) {
@@ -234,7 +234,7 @@ class PostExpirator_Facade
     /**
      * Register the post meta to use in the block.
      */
-    function register_post_meta()
+    public function register_post_meta()
     {
         $post_types = get_post_types(array('public' => true));
         foreach ($post_types as $post_type) {
@@ -322,7 +322,7 @@ class PostExpirator_Facade
     /**
      * Load the block's backend assets only if the meta box is active for this post type.
      */
-    function block_editor_assets()
+    public function block_editor_assets()
     {
         global $post;
 
@@ -371,7 +371,7 @@ class PostExpirator_Facade
                         'categoryReplace' => __('Category: Replace', 'post-expirator'),
                         'categoryAdd' => __('Category: Add', 'post-expirator'),
                         'categoryRemove' => __('Category: Remove', 'post-expirator'),
-                        'postExpirator' => __('Post Expirator', 'post-expirator'),
+                        'postExpirator' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Post Expiration', 'post-expirator'),
                         'howToExpire' => __('How to expire', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
@@ -511,8 +511,13 @@ class PostExpirator_Facade
         return array_merge(
             $capabilities,
             array(
-                'Post Expirator' => array(self::DEFAULT_CAPABILITY_EXPIRE_POST),
+                'PublishPress Future' => array(self::DEFAULT_CAPABILITY_EXPIRE_POST),
             )
         );
+    }
+
+    public static function is_expiration_enabled_for_post($post_id)
+    {
+        return get_post_meta($post_id, '_expiration-date-status', true) === 'saved';
     }
 }

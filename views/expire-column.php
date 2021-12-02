@@ -3,7 +3,7 @@ echo esc_attr($id); ?>"
      data-expire-attributes="<?php
      echo esc_attr(json_encode($attributes)); ?>">
     <?php
-    $expirationEnabled = get_post_meta($id, '_expiration-date-status', true) === 'saved';
+    $expirationEnabled = PostExpirator_Facade::is_expiration_enabled_for_post($id);
     $expirationDate = get_post_meta($id, '_expiration-date', true);
     if ($expirationDate && $expirationEnabled) {
         $format = get_option('date_format') . ' ' . get_option('time_format');
@@ -41,8 +41,8 @@ echo esc_attr($id); ?>"
             $expireType = $attributes['expireType'];
         }
         if (
-                isset($attributes['category'])
-                && ! empty($attributes['category']) && in_array($expireType, array(
+            isset($attributes['category'])
+            && ! empty($attributes['category']) && in_array($expireType, array(
                 'category',
                 'category-add',
                 'category-remove'
@@ -54,14 +54,13 @@ echo esc_attr($id); ?>"
     // the hidden fields will be used by quick edit
 
     ?>
-    <?php
-    echo esc_html($display); ?>
-    <span id="expirationdate_year-<?php echo $id; ?>" style="display: none;"><?php echo $year; ?></span>
-    <span id="expirationdate_month-<?php echo $id; ?>" style="display: none;"><?php echo $month; ?></span>
-    <span id="expirationdate_day-<?php echo $id; ?>" style="display: none;"><?php echo $day; ?></span>
-    <span id="expirationdate_hour-<?php echo $id; ?>" style="display: none;"><?php echo $hour; ?></span>
-    <span id="expirationdate_minute-<?php echo $id; ?>" style="display: none;"><?php echo $minute; ?></span>
-    <span id="expirationdate_enabled-<?php echo $id; ?>" style="display: none;"><?php echo $enabled; ?></span>
-    <span id="expirationdate_expireType-<?php echo $id; ?>" style="display: none;"><?php echo $expireType; ?></span>
-    <span id="expirationdate_categories-<?php echo $id; ?>" style="display: none;"><?php echo $categories; ?></span>
+    <?php echo esc_html($display); ?>
+    <input type="hidden" id="expirationdate_year-<?php echo $id; ?>" value="<?php echo $year; ?>" />
+    <input type="hidden" id="expirationdate_month-<?php echo $id; ?>" value="<?php echo $month; ?>" />
+    <input type="hidden" id="expirationdate_day-<?php echo $id; ?>" value="<?php echo $day; ?>" />
+    <input type="hidden" id="expirationdate_hour-<?php echo $id; ?>" value="<?php echo $hour; ?>" />
+    <input type="hidden" id="expirationdate_minute-<?php echo $id; ?>" value="<?php echo $minute; ?>" />
+    <input type="hidden" id="expirationdate_enabled-<?php echo $id; ?>" value="<?php echo $enabled; ?>" />
+    <input type="hidden" id="expirationdate_expireType-<?php echo $id; ?>" value="<?php echo $expireType; ?>" />
+    <input type="hidden" id="expirationdate_categories-<?php echo $id; ?>" value="<?php echo $categories; ?>" />
 </div>

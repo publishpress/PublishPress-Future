@@ -19,8 +19,8 @@ abstract class PostExpirator_Reviews
 
             self::$reviewController = new ReviewsController(
                 'post-expirator',
-                'Post Expirator',
-                POSTEXPIRATOR_BASEURL . 'assets/img/post-expirator-wp-logo.png'
+                'PublishPress Future',
+                POSTEXPIRATOR_BASEURL . 'assets/images/publishpress-future-256.png'
             );
 
             self::$reviewController->init();
@@ -35,8 +35,8 @@ abstract class PostExpirator_Reviews
             return false;
         }
 
-        if ($pagenow === 'options-general.php' && isset($_GET['page'])) {
-            if ($_GET['page'] === 'post-expirator.php') {
+        if ($pagenow === 'admin.php' && isset($_GET['page'])) {
+            if ($_GET['page'] === 'publishpress-future') {
                 return true;
             }
         }

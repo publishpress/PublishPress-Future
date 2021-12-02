@@ -61,7 +61,8 @@
                                    type="text" placeholder="00">
                         </label>
 
-                        <?php echo PostExpirator_Util::wp_timezone_string(); ?>
+                        <?php
+                        echo PostExpirator_Util::wp_timezone_string(); ?>
                     </div>
                     <div>
                         <legend>

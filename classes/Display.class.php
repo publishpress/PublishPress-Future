@@ -11,12 +11,16 @@ class PostExpirator_Display
      */
     private static $instance = null;
 
+    private $renamingWarningInstance = null;
+
     /**
      * Constructor.
      */
     private function __construct()
     {
         $this->hooks();
+
+        $this->renamingWarningInstance = new PostExpirator_RenamingWarning();
     }
 
     /**
@@ -24,7 +28,8 @@ class PostExpirator_Display
      */
     private function hooks()
     {
-        add_action('admin_menu', array($this, 'add_menu'));
+        add_action('admin_menu', [$this, 'add_menu']);
+        add_action('init', [$this, 'init']);
     }
 
     /**
@@ -39,22 +44,36 @@ class PostExpirator_Display
         return self::$instance;
     }
 
+    public function init()
+    {
+        $this->renamingWarningInstance->init();
+    }
+
     /**
      * Add plugin page menu.
      */
     public function add_menu()
     {
-        add_submenu_page(
-            'options-general.php',
-            __('Post Expirator Options', 'post-expirator'),
-            __('Post Expirator', 'post-expirator'),
+        add_menu_page(
+            __('PublishPress Future Options', 'post-expirator'),
+            __('Future', 'post-expirator'),
             'manage_options',
-            POSTEXPIRATOR_BASENAME,
-            array(
-                self::$instance,
-                'settings_tabs'
-            )
+            'publishpress-future',
+            array(self::$instance, 'settings_tabs'),
+            'dashicons-clock',
+            74
         );
+    }
+
+    /**
+     * Loads the specified tab.
+     *
+     * Make sure the name of the file is menu_{$tab}.php.
+     */
+    public function load_tab($tab)
+    {
+        $function = 'menu_' . $tab;
+        $this->$function();
     }
 
     /**
@@ -64,153 +83,124 @@ class PostExpirator_Display
     {
         PostExpirator_Facade::load_assets('settings');
 
+        $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
         $tab = isset($_GET['tab']) ? $_GET['tab'] : '';
-        if (empty($tab)) {
+        if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
             $tab = 'general';
         }
 
-        $tab_index = 0;
-
         ob_start();
-
-        switch ($tab) {
-            case 'general':
-                $tab_index = 0;
-                $this->load_tab('general');
-                break;
-            case 'defaults':
-                $this->load_tab('defaults');
-                $tab_index = 1;
-                break;
-            case 'diagnostics':
-                $this->load_tab('diagnostics');
-                $tab_index = 2;
-                break;
-            case 'viewdebug':
-                $this->load_tab('viewdebug');
-                $tab_index = 3;
-                break;
-        }
-
+        $this->load_tab($tab);
         $html = ob_get_clean();
 
         $debug = postexpirator_debug(); // check for/load debug
 
-        $tabs = array('general', 'defaults', 'diagnostics');
-        if (POSTEXPIRATOR_DEBUG) {
-            $tabs[] = 'viewdebug';
+        if (! POSTEXPIRATOR_DEBUG) {
+            unset($allowed_tabs['viewdebug']);
         }
 
-        $this->render_template('tabs', array(
-            'tabs' => $tabs,
-            'tab_index' => $tab_index,
-            'html' => $html,
-            'tab' => $tab
-        ));
+        $this->render_template('tabs', array('tabs' => $allowed_tabs, 'html' => $html, 'tab' => $tab));
+
+        $this->publishpress_footer();
     }
 
     /**
-     * Loads the specified tab.
+     * Editor menu.
      */
-    public function load_tab($tab)
+    private function menu_editor()
     {
-        switch ($tab) {
-            case 'general':
-                $this->menu_general();
-                break;
-            case 'defaults':
-                $this->menu_defaults();
-                break;
-            case 'diagnostics':
-                $this->menu_diagnostics();
-                break;
-            case 'viewdebug':
-                $this->menu_viewdebug();
-                break;
+        if (isset($_POST['expirationdateSaveEditor']) && $_POST['expirationdateSaveEditor']) {
+            if (! isset($_POST['_postExpiratorMenuEditor_nonce']) || ! wp_verify_nonce(
+                    $_POST['_postExpiratorMenuEditor_nonce'],
+                    'postexpirator_menu_editor'
+                )) {
+                print 'Form Validation Failure: Sorry, your nonce did not verify.';
+                exit;
+            } else {
+                // Filter Content
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
+            }
         }
+
+        $this->render_template('menu-editor');
     }
 
     /**
-     * Show the Expiration Date options page
+     * Display menu.
      */
-    private function menu_general()
+    private function menu_display()
     {
-        if (isset($_POST['expirationdateSave']) && $_POST['expirationdateSave']) {
-            if (
-                ! isset($_POST['_postExpiratorMenuGeneral_nonce']) || ! wp_verify_nonce(
-                    $_POST['_postExpiratorMenuGeneral_nonce'],
-                    'postexpirator_menu_general'
-                )
-            ) {
+        if (isset($_POST['expirationdateSaveDisplay']) && $_POST['expirationdateSaveDisplay']) {
+            if (! isset($_POST['_postExpiratorMenuDisplay_nonce']) || ! wp_verify_nonce(
+                    $_POST['_postExpiratorMenuDisplay_nonce'],
+                    'postexpirator_menu_display'
+                )) {
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
                 // Filter Content
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                update_option('expirationdateDefaultDateFormat', $_POST['expired-default-date-format']);
-                update_option('expirationdateDefaultTimeFormat', $_POST['expired-default-time-format']);
                 update_option('expirationdateDisplayFooter', $_POST['expired-display-footer']);
-                update_option('expirationdateEmailNotification', $_POST['expired-email-notification']);
-                update_option('expirationdateEmailNotificationAdmins', $_POST['expired-email-notification-admins']);
-                update_option('expirationdateEmailNotificationList', trim($_POST['expired-email-notification-list']));
                 update_option('expirationdateFooterContents', $_POST['expired-footer-contents']);
                 update_option('expirationdateFooterStyle', $_POST['expired-footer-style']);
-                update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
-                update_option('expirationdatePreserveData', (bool)$_POST['expired-preserve-data-deactivating']);
-                update_option(
-                    'expirationdateCategoryDefaults',
-                    isset($_POST['expirationdate_category']) ? $_POST['expirationdate_category'] : array()
-                );
-                update_option('expirationdateDefaultDate', $_POST['expired-default-expiration-date']);
-                if ($_POST['expired-custom-expiration-date']) {
-                    update_option('expirationdateDefaultDateCustom', $_POST['expired-custom-expiration-date']);
-                }
+            }
+        }
 
-                if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
-                    $_POST['allow-user-roles'] = array();
-                }
+        $this->render_template('menu-display');
+    }
 
-                $user_roles = wp_roles()->get_names();
-
-                foreach ($user_roles as $role_name => $role_label) {
-                    $role = get_role($role_name);
-
-                    if (! is_a($role, WP_Role::class)) {
-                        continue;
-                    }
-
-                    if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
-                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
-                    } else {
-                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
-                    }
-                }
-
+    /**
+     * Diagnostics menu.
+     */
+    private function menu_diagnostics()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (! isset($_POST['_postExpiratorMenuDiagnostics_nonce']) || ! wp_verify_nonce(
+                    $_POST['_postExpiratorMenuDiagnostics_nonce'],
+                    'postexpirator_menu_diagnostics'
+                )) {
+                print 'Form Validation Failure: Sorry, your nonce did not verify.';
+                exit;
+            }
+            if (isset($_POST['debugging-disable'])) {
+                update_option('expirationdateDebug', 0);
                 echo "<div id='message' class='updated fade'><p>";
-                _e('Saved Options!', 'post-expirator');
+                _e('Debugging Disabled', 'post-expirator');
+                echo '</p></div>';
+            } elseif (isset($_POST['debugging-enable'])) {
+                update_option('expirationdateDebug', 1);
+                echo "<div id='message' class='updated fade'><p>";
+                _e('Debugging Enabled', 'post-expirator');
+                echo '</p></div>';
+            } elseif (isset($_POST['purge-debug'])) {
+                require_once(plugin_dir_path(__FILE__) . 'post-expirator-debug.php');
+                $debug = new PostExpiratorDebug();
+                $debug->purge();
+                echo "<div id='message' class='updated fade'><p>";
+                _e('Debugging Table Emptied', 'post-expirator');
                 echo '</p></div>';
             }
         }
 
-        $this->render_template('menu-general');
+        $debug = postexpirator_debug();
+
+        $this->render_template('menu-diagnostics');
     }
 
     /**
-     * Renders a named template, if it is found.
+     * Debug menu.
      */
-    public function render_template($name, $params = null)
+    private function menu_viewdebug()
     {
-        $template = POSTEXPIRATOR_BASEDIR . "/views/{$name}.php";
-        if (file_exists($template)) {
-            // expand all parameters so that they can be directly accessed with their name.
-            if ($params) {
-                foreach ($params as $param => $value) {
-                    $$param = $value;
-                }
-            }
-            include $template;
-        }
+        require_once POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php';
+        print '<p>' . __(
+                'Below is a dump of the debugging table, this should be useful for troubleshooting.',
+                'post-expirator'
+            ) . '</p>';
+        $debug = new PostExpiratorDebug();
+        $debug->getTable();
     }
 
     /**
@@ -223,12 +213,10 @@ class PostExpirator_Display
         $defaults = array();
 
         if (isset($_POST['expirationdateSaveDefaults'])) {
-            if (
-                ! isset($_POST['_postExpiratorMenuDefaults_nonce']) || ! wp_verify_nonce(
+            if (! isset($_POST['_postExpiratorMenuDefaults_nonce']) || ! wp_verify_nonce(
                     $_POST['_postExpiratorMenuDefaults_nonce'],
                     'postexpirator_menu_defaults'
-                )
-            ) {
+                )) {
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
@@ -270,56 +258,201 @@ class PostExpirator_Display
     }
 
     /**
-     * Diagnostics menu.
+     * Show the Expiration Date options page
      */
-    private function menu_diagnostics()
+    private function menu_general()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['expirationdateSave']) && $_POST['expirationdateSave']) {
             if (
-                ! isset($_POST['_postExpiratorMenuDiagnostics_nonce']) || ! wp_verify_nonce(
-                    $_POST['_postExpiratorMenuDiagnostics_nonce'],
-                    'postexpirator_menu_diagnostics'
+                ! isset($_POST['_postExpiratorMenuGeneral_nonce']) || ! wp_verify_nonce(
+                    $_POST['_postExpiratorMenuGeneral_nonce'],
+                    'postexpirator_menu_general'
                 )
             ) {
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
-            }
-            if (isset($_POST['debugging-disable'])) {
-                update_option('expirationdateDebug', 0);
+            } else {
+                // Filter Content
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                update_option('expirationdateDefaultDateFormat', $_POST['expired-default-date-format']);
+                update_option('expirationdateDefaultTimeFormat', $_POST['expired-default-time-format']);
+                                update_option('expirationdateEmailNotification', $_POST['expired-email-notification']);
+                update_option('expirationdateEmailNotificationAdmins', $_POST['expired-email-notification-admins']);
+                update_option('expirationdateEmailNotificationList', trim($_POST['expired-email-notification-list']));
+                update_option(
+                    'expirationdateCategoryDefaults',
+                    isset($_POST['expirationdate_category']) ? $_POST['expirationdate_category'] : array()
+                );
+                update_option('expirationdateDefaultDate', $_POST['expired-default-expiration-date']);
+                if ($_POST['expired-custom-expiration-date']) {
+                    update_option('expirationdateDefaultDateCustom', $_POST['expired-custom-expiration-date']);
+                }
+
+                if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
+                    $_POST['allow-user-roles'] = array();
+                }
+
+                $user_roles = wp_roles()->get_names();
+
+                foreach ($user_roles as $role_name => $role_label) {
+                    $role = get_role($role_name);
+
+                    if (! is_a($role, WP_Role::class)) {
+                        continue;
+                    }
+
+                    if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
+                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                    } else {
+                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                    }
+                }
+
                 echo "<div id='message' class='updated fade'><p>";
-                _e('Debugging Disabled', 'post-expirator');
-                echo '</p></div>';
-            } elseif (isset($_POST['debugging-enable'])) {
-                update_option('expirationdateDebug', 1);
-                echo "<div id='message' class='updated fade'><p>";
-                _e('Debugging Enabled', 'post-expirator');
-                echo '</p></div>';
-            } elseif (isset($_POST['purge-debug'])) {
-                require_once(POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php');
-                $debug = new PostExpiratorDebug();
-                $debug->purge();
-                echo "<div id='message' class='updated fade'><p>";
-                _e('Debugging Table Emptied', 'post-expirator');
+                _e('Saved Options!', 'post-expirator');
                 echo '</p></div>';
             }
         }
 
-        $debug = postexpirator_debug();
-
-        $this->render_template('menu-diagnostics');
+        $this->render_template('menu-general');
     }
 
     /**
-     * Debug menu.
+     * Show the Expiration Date options page
      */
-    private function menu_viewdebug()
+    private function menu_advanced()
     {
-        require_once POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php';
-        print '<p>' . __(
-                'Below is a dump of the debugging table, this should be useful for troubleshooting.',
-                'post-expirator'
-            ) . '</p>';
-        $debug = new PostExpiratorDebug();
-        $debug->getTable();
+        if (isset($_POST['expirationdateSave']) && $_POST['expirationdateSave']) {
+            if (
+                ! isset($_POST['_postExpiratorMenuAdvanced_nonce']) || ! wp_verify_nonce(
+                    $_POST['_postExpiratorMenuAdvanced_nonce'],
+                    'postexpirator_menu_advanced'
+                )
+            ) {
+                print 'Form Validation Failure: Sorry, your nonce did not verify.';
+                exit;
+            } else {
+                // Filter Content
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
+                update_option('expirationdatePreserveData', (bool)$_POST['expired-preserve-data-deactivating']);
+
+                if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
+                    $_POST['allow-user-roles'] = array();
+                }
+
+                $user_roles = wp_roles()->get_names();
+
+                foreach ($user_roles as $role_name => $role_label) {
+                    $role = get_role($role_name);
+
+                    if (! is_a($role, WP_Role::class)) {
+                        continue;
+                    }
+
+                    if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
+                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                    } else {
+                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                    }
+                }
+
+                echo "<div id='message' class='updated fade'><p>";
+                _e('Saved Options!', 'post-expirator');
+                echo '</p></div>';
+            }
+        }
+
+        $this->render_template('menu-advanced');
+    }
+
+    /**
+     * Renders a named template, if it is found.
+     */
+    public function render_template($name, $params = null)
+    {
+        $template = POSTEXPIRATOR_BASEDIR . "/views/{$name}.php";
+        if (file_exists($template)) {
+            // expand all parameters so that they can be directly accessed with their name.
+            if ($params) {
+                foreach ($params as $param => $value) {
+                    $$param = $value;
+                }
+            }
+            include $template;
+        }
+    }
+
+    /**
+     * PublishPress footer
+     */
+    public function publishpress_footer()
+    {
+        ?>
+        <footer>
+            <div class="pp-rating">
+                <a href="https://wordpress.org/support/plugin/post-expirator/reviews/#new-post" target="_blank"
+                   rel="noopener noreferrer">
+                    <?php
+                    printf(
+                        __('If you like %s, please leave us a %s rating. Thank you!', 'post-expirator'),
+                        '<strong>PublishPress Future</strong>',
+                        '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
+                    );
+                    ?>
+                </a>
+            </div>
+
+            <hr>
+
+            <nav>
+                <ul>
+                    <li>
+                        <a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer"
+                           title="<?php
+                           _e('About PublishPress Future', 'post-expirator'); ?>">
+                            <?php
+                            _e('About', 'post-expirator'); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://publishpress.com/knowledge-base/introduction-future/" target="_blank"
+                           rel="noopener noreferrer" title="<?php
+                        _e('Future Documentation', 'post-expirator'); ?>">
+                            <?php
+                            _e('Documentation', 'post-expirator'); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://publishpress.com/contact" target="_blank" rel="noopener noreferrer"
+                           title="<?php
+                           _e('Contact the PublishPress team', 'post-expirator'); ?>">
+                            <?php
+                            _e('Contact', 'post-expirator'); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer">
+                            <span class="dashicons dashicons-twitter"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://facebook.com/publishpress" target="_blank" rel="noopener noreferrer">
+                            <span class="dashicons dashicons-facebook"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="pp-pressshack-logo">
+                <a href="https://publishpress.com" target="_blank" rel="noopener noreferrer">
+                    <img src="<?php
+                    echo esc_url(plugins_url('assets/images/publishpress-logo.png', dirname(__FILE__))) ?>"/>
+                </a>
+            </div>
+        </footer>
+        <?php
     }
 }

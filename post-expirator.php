@@ -1,17 +1,17 @@
 <?php
 /*
-Plugin Name: Post Expirator
+Plugin Name: PublishPress Future
 Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
 Author: PublishPress
-Version: 2.6.3
+Version: 2.7.0-rc.2
 Author URI: http://publishpress.com
 Text Domain: post-expirator
 Domain Path: /languages
 */
 
 // Default Values
-define('POSTEXPIRATOR_VERSION', '2.6.3');
+define('POSTEXPIRATOR_VERSION', '2.7.0-rc.2');
 define('POSTEXPIRATOR_DATEFORMAT', __('l F jS, Y', 'post-expirator'));
 define('POSTEXPIRATOR_TIMEFORMAT', __('g:ia', 'post-expirator'));
 define('POSTEXPIRATOR_FOOTERCONTENTS', __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'));
@@ -29,7 +29,6 @@ define('POSTEXPIRATOR_BASEURL', plugins_url('/', __FILE__));
 require_once POSTEXPIRATOR_BASEDIR . '/functions.php';
 require_once POSTEXPIRATOR_BASEDIR . '/vendor/autoload.php';
 
-
 /**
  * Adds links to the plugin listing screen.
  *
@@ -41,7 +40,7 @@ function postexpirator_plugin_action_links($links, $file)
 {
     $this_plugin = basename(plugin_dir_url(__FILE__)) . '/post-expirator.php';
     if ($file === $this_plugin) {
-        $links[] = '<a href="options-general.php?page=post-expirator">' . __('Settings', 'post-expirator') . '</a>';
+        $links[] = '<a href="admin.php?page=publishpress-future">' . __('Settings', 'post-expirator') . '</a>';
     }
 
     return $links;
@@ -347,7 +346,7 @@ function postexpirator_meta_custom()
                 ) && $defaults['activeMetaBox'] === 'active')) {
             add_meta_box(
                 'expirationdatediv',
-                __('Post Expirator', 'post-expirator'),
+                __('PublishPress Future', 'post-expirator'),
                 'postexpirator_meta_box',
                 $type,
                 'side',
@@ -553,18 +552,15 @@ function postexpirator_update_post_meta($id)
         $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
 
         if (isset($_POST['expirationdate_quickedit'])) {
-            $ed = get_post_meta($id, '_expiration-date', true);
-            if ($ed) {
-                $opts = PostExpirator_Facade::get_expire_principles($id);
-                if (isset($_POST['expirationdate_expiretype'])) {
-                    $opts['expireType'] = $_POST['expirationdate_expiretype'];
-                    if (in_array($opts['expireType'], array(
-                        'category',
-                        'category-add',
-                        'category-remove'
-                    ), true)) {
-                        $opts['category'] = $_POST['expirationdate_category'];
-                    }
+            $opts = PostExpirator_Facade::get_expire_principles($id);
+            if (isset($_POST['expirationdate_expiretype'])) {
+                $opts['expireType'] = $_POST['expirationdate_expiretype'];
+                if (in_array($opts['expireType'], array(
+                    'category',
+                    'category-add',
+                    'category-remove'
+                ), true)) {
+                    $opts['category'] = $_POST['expirationdate_category'];
                 }
             }
         } else {
@@ -677,7 +673,6 @@ function postexpirator_schedule_event($id, $ts, $opts)
 
     $error = wp_schedule_single_event($ts, 'postExpiratorExpire', array($id), true);
     if (POSTEXPIRATOR_DEBUG) {
-
         $debug->save(
             array(
                 'message' => $id . ' -> SCHEDULED at ' .
@@ -1411,8 +1406,9 @@ function postexpirator_shortcode($atts)
 {
     global $post;
 
+    $enabled = PostExpirator_Facade::is_expiration_enabled_for_post($post->ID);
     $expirationdatets = get_post_meta($post->ID, '_expiration-date', true);
-    if (empty($expirationdatets)) {
+    if (! $enabled || empty($expirationdatets)) {
         return false;
     }
 
@@ -1469,6 +1465,12 @@ function postexpirator_add_footer($text)
 
     // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
     if ($displayFooter === false || $displayFooter == 0) {
+        return $text;
+    }
+
+    $enabled = PostExpirator_Facade::is_expiration_enabled_for_post($post->ID);
+
+    if (empty($enabled)) {
         return $text;
     }
 
@@ -1567,7 +1569,7 @@ function postexpirator_css($screen_id)
 add_action('admin_enqueue_scripts', 'postexpirator_css', 10, 1);
 
 /**
- * Post Expirator Activation/Upgrade
+ * PublishPress Future Activation/Upgrade
  *
  * @internal
  *
