@@ -2,6 +2,7 @@
      data-expire-attributes="<?php echo esc_attr(json_encode($attributes)); ?>">
     <?php
     $iconClass = '';
+    $iconTitle = '';
 
     $expirationEnabled = PostExpirator_Facade::is_expiration_enabled_for_post($id);
     $expirationDate = get_post_meta($id, '_expiration-date', true);
@@ -11,8 +12,10 @@
         $display = PostExpirator_Util::get_wp_date($format, $expirationDate);
         if (PostExpirator_CronFacade::post_has_scheduled_task($id)) {
             $iconClass = 'clock icon-scheduled';
+            $iconTitle = __('Cron event scheduled.', 'post-expirator');
         } else {
             $iconClass = 'warning icon-missed';
+            $iconTitle = __('Cron event not found!', 'post-expirator');
         }
     } else {
         $display = __('Never', 'post-expirator');
@@ -60,7 +63,7 @@
 
     // the hidden fields will be used by quick edit
     ?>
-    <span class="dashicons dashicons-<?php echo $iconClass; ?>"></span>
+    <span class="dashicons dashicons-<?php echo $iconClass; ?>" title="<?php echo $iconTitle; ?>"></span>
 
     <?php echo esc_html($display); ?>
     <input type="hidden" id="expirationdate_year-<?php echo $id; ?>" value="<?php echo $year; ?>" />

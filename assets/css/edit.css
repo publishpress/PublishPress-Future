@@ -34,3 +34,7 @@ div.pe-qe-fields > div {
 .post-expire-col .icon-missed {
     color: #e08f63;
 }
+
+.post-expire-col .dashicons {
+    cursor: help;
+}
