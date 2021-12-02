@@ -19,7 +19,7 @@ class PostExpirator_RenamingWarning
 
     public function init()
     {
-        $this->iconUrl = POSTEXPIRATOR_BASEURL . 'assets/img/post-expirator-wp-logo.png';
+        $this->iconUrl = POSTEXPIRATOR_BASEURL . 'assets/images/publishpress-future-256.png';
 
         $this->addHooks();
     }
@@ -172,7 +172,7 @@ class PostExpirator_RenamingWarning
             'publishpress-future-naming-notice',
             "
             .{$this->pluginSlug}-naming-notice {
-                min-height: 130px;
+                min-height: 90px;
             }
             
             .{$this->pluginSlug}-naming-notice .button,
@@ -192,7 +192,7 @@ class PostExpirator_RenamingWarning
             
             .{$this->pluginSlug}-naming-notice .notice-icon {
                 float: right;
-                height: 110px;
+                height: 70px;
                 margin-top: 10px;
                 margin-left: 10px;
             }
