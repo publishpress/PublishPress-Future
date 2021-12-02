@@ -5,7 +5,7 @@ Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
 Requires at least: 5.0
 Tested up to: 5.8
-Stable tag: 2.6.3
+Stable tag: 2.7.0
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -80,6 +80,17 @@ This section describes how to install the plugin and get it working.
 3. Settings screen
 
 == Changelog ==
+
+= [2.7.0] - 02 Dec 2021 =
+
+* Changed: Rename the plugin from Post Expirator to PublishpPress Future, #14;
+* Changed: Add the PublishPress footer and branding, #68;
+* Changed: Separate the settings into different tabs, #97, #98;
+* Changed: Rename the "General Settings" tab to "Default", #99;
+* Added: Add new admin menu item: Future, #8;
+* Fixed: Fix the 1hr diff between expiration time when editing and shown in post list, #138;
+* Fixed: Post Expirator is adding wrong expiry dates to old posts, #160;
+* Fixed: Post Expirator is setting unwanted expire time for posts, #187;
 
 = [2.6.3] - 18 Nov 2021 =
 
