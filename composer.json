@@ -40,7 +40,7 @@
     "symfony/polyfill-ctype": "1.19.0",
     "cmb2/cmb2": "^2.6",
     "psr/container": "1.0.0",
-    "publishpress/publishpress-future": "dev-development",
+    "publishpress/post-expirator": "dev-development",
     "alledia/wordpress-edd-license-integration": "^2.3"
   },
   "require-dev": {
