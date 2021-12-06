@@ -36,3 +36,4 @@ node_modules
 /dist/
 builder.yml
 .env.testing
+.phplint-cache
