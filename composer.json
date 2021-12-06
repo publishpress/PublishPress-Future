@@ -1,0 +1,49 @@
+{
+  "name": "publishpress/publishpress-future-pro",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "description": "",
+  "authors": [
+    {
+      "name": "PublishPress",
+      "email": "help@publishpress.com",
+      "homepage": "https://publishpress.com",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "stable",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/OSTraining/WordPress-EDD-License-Integration"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/OSTraining/EDD-License-handler"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/publishpress/PublishPress-Future.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.20",
+    "pimple/pimple": "3.2.3",
+    "twig/twig": "1.42.5",
+    "symfony/polyfill-ctype": "1.19.0",
+    "cmb2/cmb2": "^2.6",
+    "psr/container": "1.0.0",
+    "publishpress/publishpress-future": "dev-development",
+    "alledia/wordpress-edd-license-integration": "^2.3"
+  },
+  "require-dev": {
+    "overtrue/phplint": "^2.1"
+  }
+}
