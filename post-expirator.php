@@ -27,7 +27,11 @@ define('POSTEXPIRATOR_BASENAME', basename(__FILE__));
 define('POSTEXPIRATOR_BASEURL', plugins_url('/', __FILE__));
 
 require_once POSTEXPIRATOR_BASEDIR . '/functions.php';
-require_once POSTEXPIRATOR_BASEDIR . '/vendor/autoload.php';
+
+$autoloadPath = POSTEXPIRATOR_BASEDIR . '/vendor/autoload.php';
+if (file_exists($autoloadPath)) {
+    require_once $autoloadPath;
+}
 
 /**
  * Adds links to the plugin listing screen.
