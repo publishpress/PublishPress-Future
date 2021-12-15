@@ -222,13 +222,6 @@ class PostExpirator_RenamingWarning
      */
     public function ajaxHandler()
     {
-        $args = wp_parse_args(
-            $_REQUEST,
-            [
-                'reason' => 'acknowledge',
-            ]
-        );
-
         if (! wp_verify_nonce($_REQUEST['nonce'], $this->nonceAction)) {
             wp_send_json_error();
         }
