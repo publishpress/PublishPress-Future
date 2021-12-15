@@ -1,4 +1,8 @@
 <?php
+defined('ABSPATH') or die('Direct access not allowed.');
+?>
+
+<?php
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase
 // phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
 

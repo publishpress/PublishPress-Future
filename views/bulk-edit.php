@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 $defaults = PostExpirator_Facade::get_default_expiry($post_type);
 
 $year = $defaults['year'];

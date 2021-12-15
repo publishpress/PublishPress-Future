@@ -1,3 +1,7 @@
+<?php
+defined('ABSPATH') or die('Direct access not allowed.');
+?>
+
 <p>
     <input type="checkbox" name="enable-expirationdate" id="enable-expirationdate" value="checked"'
     . <?php

@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') or die('Direct access not allowed.');
 
 // Get Option
 $expirationdateDefaultDateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);

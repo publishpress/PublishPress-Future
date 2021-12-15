@@ -1,3 +1,7 @@
+<?php
+defined('ABSPATH') or die('Direct access not allowed.');
+?>
+
 <form method="post">
     <?php
     wp_nonce_field('postexpirator_menu_defaults', '_postExpiratorMenuDefaults_nonce'); ?>

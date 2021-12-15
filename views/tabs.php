@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET['tab']));
 ?>
 

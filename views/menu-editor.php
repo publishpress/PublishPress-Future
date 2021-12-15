@@ -1,3 +1,7 @@
+<?php
+defined('ABSPATH') or die('Direct access not allowed.');
+?>
+
 <form method="post" id="expirationdate_save_options">
     <?php
     wp_nonce_field('postexpirator_menu_editor', '_postExpiratorMenuEditor_nonce'); ?>
