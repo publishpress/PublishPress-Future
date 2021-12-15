@@ -81,7 +81,7 @@ class PostExpirator_Display
      */
     public function settings_tabs()
     {
-        if (!current_user_can('manage_options')) {
+        if (!is_admin() || !current_user_can('manage_options')) {
             wp_die(__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
         }
 
