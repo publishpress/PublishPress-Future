@@ -109,7 +109,7 @@ function postexpirator_manage_sortable_columns()
     }
 }
 
-add_action('init', 'postexpirator_manage_sortable_columns', 100);
+add_action('admin_init', 'postexpirator_manage_sortable_columns', 100);
 
 /**
  * Adds an 'Expires' column to the post display table.
