@@ -476,22 +476,6 @@ function postexpirator_js_admin_header()
 add_action('admin_head', 'postexpirator_js_admin_header');
 
 /**
- * Get correct URL (HTTP or HTTPS)
- *
- * @internal
- *
- * @access private
- */
-function expirationdate_get_blog_url()
-{
-    if (is_multisite()) {
-        echo network_home_url('/');
-    } else {
-        echo home_url('/');
-    }
-}
-
-/**
  * Called when post is saved - stores expiration-date meta value
  *
  * @internal
