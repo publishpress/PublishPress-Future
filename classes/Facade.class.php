@@ -162,7 +162,6 @@ class PostExpirator_Facade
 
                 break;
         }
-        //remove_action('updated_postmeta', array($this, 'updatedmeta'), 10, 4);
     }
 
     /**
