@@ -81,6 +81,22 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.7.1] - UNRELEASED =
+
+* Added: Add visual indicator to the cron event status in the settings page, #155;
+* Added: Add small help text to the Expires column icon to say if the event is scheduled or not;
+* Added: Add additional permission check before loading the settings page;
+* Changed: Remove the plugin description from the settings page, #194;
+* Changed: Deprecated a not used function called "expirationdate_get_blog_url";
+* Fixed: Fix PHP error while purging the debug log, #135;
+* Fixed: Fix composer's autoloader path;
+* Fixed: Code cleanup. Removed comments and dead code;
+* Fixed: Fixed the block for direct access to view files;
+* Fixed: Added check for is_admin before checking if the user has permission to see the settings page;
+* Fixed: Avoid running sortable column code if not in the admin;
+* Fixed: Fix non escaped output on some pages and metaboxes;
+* Fixed: Fix the URL for the View Debug Log admin page, #196;
+
 = [2.7.0] - 02 Dec 2021 =
 
 * Changed: Rename the plugin from Post Expirator to PublishpPress Future, #14;
