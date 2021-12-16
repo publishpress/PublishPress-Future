@@ -306,6 +306,7 @@ class PostExpirator_Display
                         continue;
                     }
 
+                    // TODO: only allow roles that can edit posts. Filter in the form as well, adding a description.
                     if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
                         $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
                     } else {
