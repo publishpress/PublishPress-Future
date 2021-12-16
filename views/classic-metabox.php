@@ -3,18 +3,19 @@ defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 
 <p>
-    <input type="checkbox" name="enable-expirationdate" id="enable-expirationdate" value="checked"'
-    . <?php
+    <input type="checkbox" name="enable-expirationdate" id="enable-expirationdate" value="checked"
+    <?php
+    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $enabled; ?>/>
     <label for="enable-expirationdate"><?php
-        _e('Enable Post Expiration', 'post-expirator'); ?></label>
+        esc_html_e('Enable Post Expiration', 'post-expirator'); ?></label>
 </p>
 
 <?php
 if ($default === 'publish') {
     ?>
     <em><?php
-        _e('The published date/time will be used as the expiration value', 'post-expirator'); ?></em>
+        esc_html_e('The published date/time will be used as the expiration value', 'post-expirator'); ?></em>
     <?php
     return;
 }
@@ -23,7 +24,7 @@ if ($default === 'publish') {
 echo empty($enabled) ? 'none' : 'flex'; ?>">
     <div>
         <label><?php
-            _e('Year', 'post-expirator'); ?></label>
+            esc_html_e('Year', 'post-expirator'); ?></label>
         <select name="expirationdate_year" id="expirationdate_year">
             <?php
             $currentyear = date('Y');
@@ -41,9 +42,10 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
                 }
                 ?>
                 <option <?php
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $selected; ?> value="<?php
-                echo $i; ?>"><?php
-                    echo $i; ?></option>
+                echo esc_attr($i); ?>"><?php
+                    echo esc_html($i); ?></option>
                 <?php
             }
             ?>
@@ -51,7 +53,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     </div>
     <div>
         <label><?php
-            _e('Month', 'post-expirator'); ?></label>
+            esc_html_e('Month', 'post-expirator'); ?></label>
         <select name="expirationdate_month" id="expirationdate_month">
             <?php
             for ($i = 1; $i <= 12; $i++) {
@@ -62,9 +64,10 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
                 }
                 ?>
                 <option value="<?php
-                echo date_i18n('m', mktime(0, 0, 0, $i, 1, date_i18n('Y'))); ?>" <?php
+                echo esc_attr(date_i18n('m', mktime(0, 0, 0, $i, 1, date_i18n('Y')))); ?>" <?php
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $selected; ?>><?php
-                    echo date_i18n('F', mktime(0, 0, 0, $i, 1, date_i18n('Y'))); ?></option>
+                    echo esc_html(date_i18n('F', mktime(0, 0, 0, $i, 1, date_i18n('Y')))); ?></option>
                 <?php
             }
             ?>
@@ -72,16 +75,16 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     </div>
     <div>
         <label><?php
-            _e('Day', 'post-expirator'); ?></label>
+            esc_html_e('Day', 'post-expirator'); ?></label>
         <input type="text" id="expirationdate_day" name="expirationdate_day" value="<?php
-        echo $defaultday; ?>"
+        echo esc_attr($defaultday); ?>"
                size="2"/>
     </div>
     <div>
         <label><?php
-            _e('Hour', 'post-expirator'); ?>
+            esc_html_e('Hour', 'post-expirator'); ?>
             (<?php
-            echo date_i18n('T', mktime(0, 0, 0, $i, 1, date_i18n('Y'))); ?>)</label>
+            echo esc_html(date_i18n('T', mktime(0, 0, 0, $i, 1, date_i18n('Y')))); ?>)</label>
         <select name="expirationdate_hour" id="expirationdate_hour">
             <?php
             for ($i = 1; $i <= 24; $i++) {
@@ -93,9 +96,10 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
                 }
                 ?>
                 <option value="<?php
-                echo $hour; ?>" <?php
+                echo esc_attr($hour); ?>" <?php
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 echo $selected; ?>><?php
-                    echo $hour; ?></option>
+                    echo esc_html($hour); ?></option>
                 <?php
             }
             ?>
@@ -103,14 +107,14 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     </div>
     <div>
         <label><?php
-            _e('Minute', 'post-expirator'); ?></label>
+            esc_html_e('Minute', 'post-expirator'); ?></label>
         <input type="text" id="expirationdate_minute" name="expirationdate_minute" value="<?php
-        echo $defaultminute; ?>"
+        echo esc_attr($defaultminute); ?>"
                size="2"/>
     </div>
     <div>
         <label><?php
-            _e('How to expire', 'post-expirator'); ?></label>
+            esc_html_e('How to expire', 'post-expirator'); ?></label>
         <?php
         _postexpirator_expire_type(array(
             'type' => $post->post_type,
@@ -127,8 +131,8 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
             $catdisplay = 'none';
         }
 
-        echo '<div id="expired-category-selection" style="display: ' . $catdisplay . '">';
-        echo '<br/>' . __('Expiration Categories', 'post-expirator') . ':<br/>';
+        echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
+        echo '<br/>' . esc_html__('Expiration Categories', 'post-expirator') . ':<br/>';
 
         echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
         echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
@@ -136,12 +140,12 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
         $taxonomies = get_object_taxonomies($post->post_type, 'object');
         $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
         if (sizeof($taxonomies) === 0) {
-            echo '<p>' . __(
+            echo '<p>' . esc_html__(
                     'You must assign a heirarchical taxonomy to this post type to use this feature.',
                     'post-expirator'
                 ) . '</p>';
         } elseif (sizeof($taxonomies) > 1 && ! isset($defaults['taxonomy'])) {
-            echo '<p>' . __(
+            echo '<p>' . esc_html__(
                     'More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
                     'post-expirator'
                 ) . '</p>';
@@ -154,15 +158,15 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
                 'selected_cats' => $categories,
                 'checked_ontop' => false
             ));
-            echo '<input type="hidden" name="taxonomy-heirarchical" value="' . $taxonomy . '" />';
+            echo '<input type="hidden" name="taxonomy-heirarchical" value="' . esc_attr($taxonomy) . '" />';
         }
         echo '</ul>';
         echo '</div>';
         if (isset($taxonomy)) {
-            echo '<p class="post-expirator-taxonomy-name">' . __(
+            echo '<p class="post-expirator-taxonomy-name">' . esc_html__(
                     'Taxonomy Name',
                     'post-expirator'
-                ) . ': ' . $taxonomy . '</p>';
+                ) . ': ' . esc_html($taxonomy) . '</p>';
         }
         echo '</div>';
     }

@@ -1916,18 +1916,18 @@ function _postexpirator_taxonomy($opts)
     $rv = array();
     if ($taxonomies) {
         // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-        $rv[] = '<select name="' . $name . '" id="' . $id . '"' . ($disabled == true ? ' disabled="disabled"' : '') . ' onchange="' . $onchange . '">';
+        $rv[] = '<select name="' . esc_attr($name) . '" id="' . esc_attr($id) . '"' . ($disabled == true ? ' disabled="disabled"' : '') . ' onchange="' . esc_attr($onchange) . '">';
         foreach ($taxonomies as $taxonomy) {
-            $rv[] = '<option value="' . $taxonomy->name . '" ' . ($selected === $taxonomy->name ? 'selected="selected"' : '') . '>' . $taxonomy->label . '</option>';
+            $rv[] = '<option value="' . esc_attr($taxonomy->name) . '" ' . ($selected === esc_attr($taxonomy->name) ? 'selected="selected"' : '') . '>' . esc_html($taxonomy->label) . '</option>';
         }
 
         $rv[] = '</select>';
-        $rv[] = '<p class="description">' . __(
+        $rv[] = '<p class="description">' . esc_html(
                 'Select the hierarchical taxonomy to be used for "category" based expiration.',
                 'post-expirator'
             ) . '</p>';
     } else {
-        $rv[] = __('No taxonomies found', 'post-expirator');
+        $rv[] = esc_html('No taxonomies found', 'post-expirator');
     }
 
     return implode("<br/>\n", $rv);
@@ -1974,8 +1974,8 @@ function postexpirator_date_save_bulk_edit()
 
     if (! $facade->current_user_can_expire_posts()) {
         wp_die(
-            __('You\'re not allowed to set posts to expire', 'post-expirator'),
-            __('Forbidden', 'post-expirator'),
+            esc_html__('You\'re not allowed to set posts to expire', 'post-expirator'),
+            esc_html__('Forbidden', 'post-expirator'),
             403
         );
     }

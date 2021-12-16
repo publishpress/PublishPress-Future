@@ -66,15 +66,15 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
     // the hidden fields will be used by quick edit
     ?>
-    <span class="dashicons dashicons-<?php echo $iconClass; ?>" title="<?php echo $iconTitle; ?>"></span>
+    <span class="dashicons dashicons-<?php echo esc_attr($iconClass); ?>" title="<?php echo esc_attr($iconTitle); ?>"></span>
 
     <?php echo esc_html($display); ?>
-    <input type="hidden" id="expirationdate_year-<?php echo $id; ?>" value="<?php echo $year; ?>" />
-    <input type="hidden" id="expirationdate_month-<?php echo $id; ?>" value="<?php echo $month; ?>" />
-    <input type="hidden" id="expirationdate_day-<?php echo $id; ?>" value="<?php echo $day; ?>" />
-    <input type="hidden" id="expirationdate_hour-<?php echo $id; ?>" value="<?php echo $hour; ?>" />
-    <input type="hidden" id="expirationdate_minute-<?php echo $id; ?>" value="<?php echo $minute; ?>" />
-    <input type="hidden" id="expirationdate_enabled-<?php echo $id; ?>" value="<?php echo $enabled; ?>" />
-    <input type="hidden" id="expirationdate_expireType-<?php echo $id; ?>" value="<?php echo $expireType; ?>" />
-    <input type="hidden" id="expirationdate_categories-<?php echo $id; ?>" value="<?php echo $categories; ?>" />
+    <input type="hidden" id="expirationdate_year-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($year); ?>" />
+    <input type="hidden" id="expirationdate_month-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($month); ?>" />
+    <input type="hidden" id="expirationdate_day-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($day); ?>" />
+    <input type="hidden" id="expirationdate_hour-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($hour); ?>" />
+    <input type="hidden" id="expirationdate_minute-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($minute); ?>" />
+    <input type="hidden" id="expirationdate_enabled-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($enabled); ?>" />
+    <input type="hidden" id="expirationdate_expireType-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($expireType); ?>" />
+    <input type="hidden" id="expirationdate_categories-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($categories); ?>" />
 </div>

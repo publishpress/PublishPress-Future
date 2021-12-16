@@ -96,17 +96,17 @@ class PostExpirator_RenamingWarning
                         url: ajaxurl,
                         data: {
                             action: 'publishpress-future-naming-notice-dismiss',
-                            nonce: '<?php echo wp_create_nonce($this->nonceAction); ?>',
+                            nonce: '<?php echo esc_attr(wp_create_nonce($this->nonceAction)); ?>',
                             reason: reason
                         }
                     });
                 }
 
                 $(document)
-                    .on('click', '.<?php echo $this->pluginSlug; ?>-naming-notice .<?php echo "$this->pluginSlug-dismiss"; ?>', function (event) {
+                    .on('click', '.<?php echo esc_attr($this->pluginSlug); ?>-naming-notice .<?php echo esc_attr("$this->pluginSlug-dismiss"); ?>', function (event) {
                         var $this = $(this),
                             reason = $this.data('reason'),
-                            notice = $this.parents('.<?php echo $this->pluginSlug; ?>-naming-notice');
+                            notice = $this.parents('.<?php echo esc_attr($this->pluginSlug); ?>-naming-notice');
 
                         notice.fadeTo(100, 0, function () {
                             notice.slideUp(100, function () {
@@ -118,7 +118,7 @@ class PostExpirator_RenamingWarning
                     })
                     .ready(function () {
                         setTimeout(function () {
-                            $('.<?php echo $this->pluginSlug; ?>-naming-notice button.notice-dismiss').click(function (event) {
+                            $('.<?php echo esc_attr($this->pluginSlug); ?>-naming-notice button.notice-dismiss').click(function (event) {
                                 dismiss('acknowledge');
                             });
                         }, 1000);
@@ -127,23 +127,23 @@ class PostExpirator_RenamingWarning
         </script>
 
         <div class="notice notice-success is-dismissible <?php
-        echo "$this->pluginSlug-naming-notice"; ?>">
+        echo esc_attr("$this->pluginSlug-naming-notice"); ?>">
             <?php
             if (! empty($this->iconUrl)) : ?>
                 <img src="<?php
-                echo $this->iconUrl; ?>" class="notice-icon" alt="<?php
-                echo $this->pluginName; ?> logo"/>
+                echo esc_url($this->iconUrl); ?>" class="notice-icon" alt="<?php
+                echo esc_attr($this->pluginName); ?> logo"/>
             <?php
             endif; ?>
 
             <p><?php echo sprintf(
-                    __('Thanks for using Post Expirator. This plugin has a new name: "PublishPress Future". Nothing else has changed with the plugin. If you have any questions, please %sclick this link and talk with us%s.', 'post-expirator'),
+                    esc_html__('Thanks for using Post Expirator. This plugin has a new name: "PublishPress Future". Nothing else has changed with the plugin. If you have any questions, please %sclick this link and talk with us%s.', 'post-expirator'),
                     '<a href="mailto:help@publishpress.com">',
                     '</a>'
                 ); ?></p>
 
-            <a href="#" class="button <?php echo "$this->pluginSlug-dismiss"; ?>" data-reason="maybe_later">
-                <?php _e('Dismiss', $this->pluginSlug); ?>
+            <a href="#" class="button <?php echo esc_attr("$this->pluginSlug-dismiss"); ?>" data-reason="maybe_later">
+                <?php esc_html_e('Dismiss', $this->pluginSlug); ?>
             </a>
         </div>
         <?php

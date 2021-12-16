@@ -1,4 +1,5 @@
 <?php
+
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 
@@ -6,10 +7,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
     <?php
     wp_nonce_field('postexpirator_menu_defaults', '_postExpiratorMenuDefaults_nonce'); ?>
     <h3><?php
-        _e('Default Expiration Values', 'post-expirator'); ?></h3>
+        esc_html_e('Default Expiration Values', 'post-expirator'); ?></h3>
 
     <p><?php
-        _e(
+        esc_html_e(
             'Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page.',
             'post-expirator'
         ); ?></p>
@@ -17,8 +18,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
     <?php
     foreach ($types as $type) {
         $post_type_object = get_post_type_object($type);
+        $singularName = $post_type_object->labels->singular_name;
         echo '<fieldset>';
-        echo "<legend>&nbsp;{$post_type_object->labels->singular_name}&nbsp;</legend>";
+        echo '<legend>&nbsp;' . esc_html($singularName) . '&nbsp;</legend>';
         $defaults = get_option('expirationdateDefaults' . ucfirst($type));
 
         // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
@@ -59,24 +61,26 @@ defined('ABSPATH') or die('Direct access not allowed.');
         <table class="form-table">
             <tr valign="top">
                 <th scope="row"><label for="expirationdate_activemeta-<?php
-                    echo $type; ?>"><?php
-                        _e('Active', 'post-expirator'); ?></label></th>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Active', 'post-expirator'); ?></label></th>
                 <td>
                     <input type="radio" name="expirationdate_activemeta-<?php
-                    echo $type; ?>" id="expirationdate_activemeta-true-<?php
-                    echo $type; ?>" value="active" <?php
+                    echo esc_attr($type); ?>" id="expirationdate_activemeta-true-<?php
+                    echo esc_attr($type); ?>" value="active" <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $expiredactivemetaenabled; ?>/> <label for="expirationdate_activemeta-true-<?php
-                    echo $type; ?>"><?php
-                        _e('Active', 'post-expirator'); ?></label>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Active', 'post-expirator'); ?></label>
                     &nbsp;&nbsp;
                     <input type="radio" name="expirationdate_activemeta-<?php
-                    echo $type; ?>" id="expirationdate_activemeta-false-<?php
-                    echo $type; ?>" value="inactive" <?php
+                    echo esc_attr($type); ?>" id="expirationdate_activemeta-false-<?php
+                    echo esc_attr($type); ?>" value="inactive" <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $expiredactivemetadisabled; ?>/> <label for="expirationdate_activemeta-false-<?php
-                    echo $type; ?>"><?php
-                        _e('Inactive', 'post-expirator'); ?></label>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Inactive', 'post-expirator'); ?></label>
                     <p class="description"><?php
-                        _e(
+                        esc_html_e(
                             'Select whether the PublishPress Future meta box is active for this post type.',
                             'post-expirator'
                         ); ?></p>
@@ -84,40 +88,42 @@ defined('ABSPATH') or die('Direct access not allowed.');
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expirationdate_expiretype-<?php
-                    echo $type; ?>"><?php
-                        _e('How to expire', 'post-expirator'); ?></label></th>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('How to expire', 'post-expirator'); ?></label></th>
                 <td>
                     <?php
                     _postexpirator_expire_type(
                         array(
-                            'name' => 'expirationdate_expiretype-' . $type,
+                            'name' => 'expirationdate_expiretype-' . esc_attr($type),
                             'selected' => (isset($defaults['expireType']) ? $defaults['expireType'] : '')
                         )
                     ); ?>
                     <p class="description"><?php
-                        _e('Select the default expire action for the post type.', 'post-expirator'); ?></p>
+                        esc_html_e('Select the default expire action for the post type.', 'post-expirator'); ?></p>
                 </td>
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expirationdate_autoenable-<?php
-                    echo $type; ?>"><?php
-                        _e('Auto-Enable?', 'post-expirator'); ?></label></th>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Auto-Enable?', 'post-expirator'); ?></label></th>
                 <td>
                     <input type="radio" name="expirationdate_autoenable-<?php
-                    echo $type; ?>" id="expirationdate_autoenable-true-<?php
-                    echo $type; ?>" value="1" <?php
+                    echo esc_attr($type); ?>" id="expirationdate_autoenable-true-<?php
+                    echo esc_attr($type); ?>" value="1" <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $expiredautoenabled; ?>/> <label for="expirationdate_autoenable-true-<?php
-                    echo $type; ?>"><?php
-                        _e('Enabled', 'post-expirator'); ?></label>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Enabled', 'post-expirator'); ?></label>
                     &nbsp;&nbsp;
                     <input type="radio" name="expirationdate_autoenable-<?php
-                    echo $type; ?>" id="expirationdate_autoenable-false-<?php
-                    echo $type; ?>" value="0" <?php
+                    echo esc_attr($type); ?>" id="expirationdate_autoenable-false-<?php
+                    echo esc_attr($type); ?>" value="0" <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $expiredautodisabled; ?>/> <label for="expirationdate_autoenable-false-<?php
-                    echo $type; ?>"><?php
-                        _e('Disabled', 'post-expirator'); ?></label>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Disabled', 'post-expirator'); ?></label>
                     <p class="description"><?php
-                        _e(
+                        esc_html_e(
                             'Select whether the PublishPress Future is enabled for all new posts.',
                             'post-expirator'
                         ); ?></p>
@@ -125,30 +131,39 @@ defined('ABSPATH') or die('Direct access not allowed.');
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expirationdate_taxonomy-<?php
-                    echo $type; ?>"><?php
-                        _e('Taxonomy (hierarchical)', 'post-expirator'); ?></label></th>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Taxonomy (hierarchical)', 'post-expirator'); ?></label></th>
                 <td>
                     <?php
-                    echo _postexpirator_taxonomy(
-                        array(
-                            'type' => $type,
-                            'name' => 'expirationdate_taxonomy-' . $type,
-                            'selected' => $defaults['taxonomy']
-                        )
-                    ); ?>
+                    echo wp_kses(
+                        _postexpirator_taxonomy(
+                            [
+                                'type' => $type,
+                                'name' => 'expirationdate_taxonomy-' . $type,
+                                'selected' => $defaults['taxonomy']
+                            ]
+                        ),
+                        [
+                            'select' => [],
+                            'option' => [],
+                            'p' => [],
+
+                        ]
+                    );
+                    ?>
                 </td>
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expirationdate_emailnotification-<?php
-                    echo $type; ?>"><?php
-                        _e('Who to notify', 'post-expirator'); ?></label></th>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Who to notify', 'post-expirator'); ?></label></th>
                 <td>
                     <input class="large-text" type="text" name="expirationdate_emailnotification-<?php
-                    echo $type; ?>" id="expirationdate_emailnotification-<?php
-                    echo $type; ?>" value="<?php
-                    echo $defaults['emailnotification']; ?>"/>
+                    echo esc_attr($type); ?>" id="expirationdate_emailnotification-<?php
+                    echo esc_attr($type); ?>" value="<?php
+                    echo esc_attr($defaults['emailnotification']); ?>"/>
                     <p class="description"><?php
-                        _e(
+                        esc_html_e(
                             'Enter a comma separate list of emails that you would like to be notified when the post expires.',
                             'post-expirator'
                         ); ?></p>
@@ -156,10 +171,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
             </tr>
             <?php
             $values = array(
-                '' => __('None', 'post-expirator'),
-                'inherit' => __('Inherit from General Settings', 'post-expirator'),
-                'custom' => __('Custom', 'post-expirator'),
-                'publish' => __('Publish Time', 'post-expirator'),
+                '' => esc_html__('None', 'post-expirator'),
+                'inherit' => esc_html__('Inherit from General Settings', 'post-expirator'),
+                'custom' => esc_html__('Custom', 'post-expirator'),
+                'publish' => esc_html__('Publish Time', 'post-expirator'),
             );
 
             $show = 'none';
@@ -173,40 +188,40 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
             <tr valign="top">
                 <th scope="row"><label for="expired-default-date-<?php
-                    echo $type; ?>"><?php
-                        _e('Default Date/Time Duration', 'post-expirator'); ?></label></th>
+                    echo esc_attr($type); ?>"><?php
+                        esc_html_e('Default Date/Time Duration', 'post-expirator'); ?></label></th>
                 <td>
                     <select name="expired-default-date-<?php
-                    echo $type; ?>" id="expired-default-date-<?php
-                    echo $type; ?>" class="pe-custom-date-toggle">
+                    echo esc_attr($type); ?>" id="expired-default-date-<?php
+                    echo esc_attr($type); ?>" class="pe-custom-date-toggle">
                         <?php
                         foreach ($values as $value => $label) { ?>
                             <option value="<?php
-                            echo $value; ?>" <?php
+                            echo esc_attr($value); ?>" <?php
                             selected($value, $defaults['default-expire-type']); ?>><?php
-                                echo $label; ?></option>
+                                echo esc_html($label); ?></option>
                             <?php
                         } ?>
                     </select>
                     <p class="description"><?php
-                        _e(
+                        esc_html_e(
                             'Set the default expiration date to be used when creating a new post of this type.',
                             'post-expirator'
                         ); ?></p>
                     <div id="expired-custom-container-<?php
-                    echo $type; ?>" class="pe-custom-date-container" style="display: <?php
-                    echo $show; ?>;">
+                    echo esc_attr($type); ?>" class="pe-custom-date-container" style="display: <?php
+                    echo esc_attr($show); ?>;">
                         <br/>
                         <label for="expired-custom-date-<?php
-                        echo $type; ?>"><?php
-                            _e('Custom', 'post-expirator'); ?>:</label>
+                        echo esc_attr($type); ?>"><?php
+                            esc_html_e('Custom', 'post-expirator'); ?>:</label>
                         <input type="text" value="<?php
-                        echo $customDate; ?>" name="expired-custom-date-<?php
-                        echo $type; ?>" id="expired-custom-date-<?php
-                        echo $type; ?>"/>
+                        echo esc_attr($customDate); ?>" name="expired-custom-date-<?php
+                        echo esc_attr($type); ?>" id="expired-custom-date-<?php
+                        echo esc_attr($type); ?>"/>
                         <p class="description"><?php
                             echo sprintf(
-                                __(
+                                esc_html__(
                                     'Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                     'post-expirator'
                                 ),
@@ -229,6 +244,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
     ?>
     <p class="submit">
         <input type="submit" name="expirationdateSaveDefaults" class="button-primary" value="<?php
-        _e('Save Changes', 'post-expirator'); ?>"/>
+        esc_html_e('Save Changes', 'post-expirator'); ?>"/>
     </p>
 </form>

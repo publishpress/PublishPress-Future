@@ -82,7 +82,7 @@ class PostExpirator_Display
     public function settings_tabs()
     {
         if (!is_admin() || !current_user_can('manage_options')) {
-            wp_die(__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
+            wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
         }
 
         PostExpirator_Facade::load_assets('settings');
@@ -199,7 +199,7 @@ class PostExpirator_Display
     private function menu_viewdebug()
     {
         require_once POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php';
-        print '<p>' . __(
+        print '<p>' . esc_html__(
                 'Below is a dump of the debugging table, this should be useful for troubleshooting.',
                 'post-expirator'
             ) . '</p>';
@@ -402,7 +402,7 @@ class PostExpirator_Display
                    rel="noopener noreferrer">
                     <?php
                     printf(
-                        __('If you like %s, please leave us a %s rating. Thank you!', 'post-expirator'),
+                        esc_html__('If you like %s, please leave us a %s rating. Thank you!', 'post-expirator'),
                         '<strong>PublishPress Future</strong>',
                         '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
                     );

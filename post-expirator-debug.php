@@ -74,16 +74,16 @@ class PostExpiratorDebug
         global $wpdb;
         $results = $wpdb->get_results("SELECT * FROM {$this->debug_table} ORDER BY `id` DESC");
         if (empty($results)) {
-            print '<p>' . __('Debugging table is currently empty.', 'post-expirator') . '</p>';
+            print '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
 
             return;
         }
         print '<table class="post-expirator-debug">';
-        print '<tr><th class="post-expirator-timestamp">' . __('Timestamp', 'post-expirator') . '</th>';
-        print '<th>' . __('Message', 'post-expirator') . '</th></tr>';
+        print '<tr><th class="post-expirator-timestamp">' . esc_html__('Timestamp', 'post-expirator') . '</th>';
+        print '<th>' . esc_html__('Message', 'post-expirator') . '</th></tr>';
         foreach ($results as $result) {
-            print '<tr><td>' . $result->timestamp . '</td>';
-            print '<td>' . $result->message . '</td></tr>';
+            print '<tr><td>' . esc_html($result->timestamp) . '</td>';
+            print '<td>' . esc_html($result->message) . '</td></tr>';
         }
         print '</table>';
     }

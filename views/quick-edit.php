@@ -9,16 +9,16 @@ defined('ABSPATH') or die('Direct access not allowed.');
             <label>
                 <input name="enable-expirationdate" type="checkbox"/>
                 <span class=""><?php
-                    _e('Enable Post Expiration', 'post-expirator'); ?></span>
+                    esc_html_e('Enable Post Expiration', 'post-expirator'); ?></span>
             </label>
             <fieldset class="inline-edit-date">
                 <div class="pe-qe-fields" style="display: none">
                     <div>
                         <legend><span class="title"><?php
-                                _e('Date', 'post-expirator'); ?></span></legend>
+                                esc_html_e('Date', 'post-expirator'); ?></span></legend>
                         <label>
                             <span class="screen-reader-text"><?php
-                                _e('Month', 'post-expirator'); ?></span>
+                                esc_html_e('Month', 'post-expirator'); ?></span>
                             <select name="expirationdate_month">
                                 <?php
                                 for ($x = 1; $x <= 12; $x++) {
@@ -27,12 +27,12 @@ defined('ABSPATH') or die('Direct access not allowed.');
                                     $monthStr = date_i18n('M', $now);
                                     ?>
                                     <option value="<?php
-                                    echo $monthNumeric; ?>"
+                                    echo esc_attr($monthNumeric); ?>"
                                             data-text="<?php
-                                            echo $monthStr; ?>"><?php
-                                        echo $monthNumeric; ?>
+                                            echo esc_attr($monthStr); ?>"><?php
+                                        echo esc_html($monthNumeric); ?>
                                         -<?php
-                                        echo $monthStr; ?></option>
+                                        echo esc_html($monthStr); ?></option>
                                     <?php
                                 } ?>
 
@@ -40,40 +40,40 @@ defined('ABSPATH') or die('Direct access not allowed.');
                         </label>
                         <label>
                             <span class="screen-reader-text"><?php
-                                _e('Day', 'post-expirator'); ?></span>
+                                esc_html_e('Day', 'post-expirator'); ?></span>
                             <input name="expirationdate_day" value="" size="2" maxlength="2" autocomplete="off"
                                    type="text" placeholder="<?php
-                            echo date('d'); ?>">
+                            echo esc_attr(date('d')); ?>">
                         </label>,
                         <label>
                             <span class="screen-reader-text"><?php
-                                _e('Year', 'post-expirator'); ?></span>
+                                esc_html_e('Year', 'post-expirator'); ?></span>
                             <input name="expirationdate_year" value="" size="4" maxlength="4" autocomplete="off"
                                    type="text" placeholder="<?php
-                            echo date('Y'); ?>">
+                            echo esc_attr(date('Y')); ?>">
                         </label> @
                         <label>
                             <span class="screen-reader-text"><?php
-                                _e('Hour', 'post-expirator'); ?></span>
+                                esc_html_e('Hour', 'post-expirator'); ?></span>
                             <input name="expirationdate_hour" value="" size="2" maxlength="2" autocomplete="off"
                                    type="text" placeholder="00">
                         </label> :
                         <label>
                             <span class="screen-reader-text"><?php
-                                _e('Minute', 'post-expirator'); ?></span>
+                                esc_html_e('Minute', 'post-expirator'); ?></span>
                             <input name="expirationdate_minute" value="" size="2" maxlength="2" autocomplete="off"
                                    type="text" placeholder="00">
                         </label>
 
                         <?php
-                        echo PostExpirator_Util::wp_timezone_string(); ?>
+                        echo esc_html(PostExpirator_Util::wp_timezone_string()); ?>
                     </div>
                     <div>
                         <legend>
                             <span class="title"><?php
-                                _e('Type', 'post-expirator'); ?></span>
+                                esc_html_e('Type', 'post-expirator'); ?></span>
                             <span class="screen-reader-text"><?php
-                                _e('How to expire', 'post-expirator'); ?></span>
+                                esc_html_e('How to expire', 'post-expirator'); ?></span>
                         </legend>
                         <?php
                         $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
@@ -87,9 +87,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
                     <div class="pe-category-list">
                         <legend>
                             <span class="title"><?php
-                                echo $tax_label; ?></span>
+                                echo esc_html($tax_label); ?></span>
                             <span class="screen-reader-text"><?php
-                                _e('Expiration Categories', 'post-expirator'); ?></span>
+                                esc_html_e('Expiration Categories', 'post-expirator'); ?></span>
                         </legend>
                         <ul id="categorychecklist"
                             class="list:category categorychecklist cat-checklist category-checklist">
