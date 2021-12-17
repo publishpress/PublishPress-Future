@@ -1927,7 +1927,7 @@ function _postexpirator_taxonomy($opts)
                 'post-expirator'
             ) . '</p>';
     } else {
-        $rv[] = esc_html('No taxonomies found', 'post-expirator');
+        $rv[] = esc_html__('No taxonomies found', 'post-expirator');
     }
 
     return implode("<br/>\n", $rv);
