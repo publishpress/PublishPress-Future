@@ -490,12 +490,12 @@ function postexpirator_update_post_meta($id)
     }
 
     // don't run the echo if the function is called for saving revision.
-    $posttype = get_post_type($id);
+    $posttype = get_post_type((int) $id);
     if ($posttype === 'revision') {
         return;
     }
 
-    // Do not process Bulk edit here
+    // Do not process Bulk edit here. It is processed on the function "postexpirator_date_save_bulk_edit"
     if (isset($_GET['postexpirator_view']) && $_GET['postexpirator_view'] === 'bulk-edit') {
         return;
     }
@@ -511,6 +511,12 @@ function postexpirator_update_post_meta($id)
     $opts = [];
 
     if (isset($_POST['postexpirator_view'])) {
+        if (defined('DOING_AJAX') && DOING_AJAX) {
+            check_ajax_referer('__postexpirator', '_postexpiratornonce');
+        } else {
+            check_admin_referer('__postexpirator', '_postexpiratornonce');
+        }
+
         // Classic editor, quick edit
         $shouldSchedule = isset($_POST['enable-expirationdate']);
 
@@ -566,7 +572,7 @@ function postexpirator_update_post_meta($id)
             }
         }
     } else {
-        // Gutenberg or script
+        // Gutenberg or script request
         $payload = @file_get_contents('php://input');
 
         if (empty($payload)) {

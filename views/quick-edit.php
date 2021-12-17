@@ -109,6 +109,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 </div>
                 <input name="expirationdate_quickedit" value="true" type="hidden"/>
                 <input name="postexpirator_view" value="quick-edit" type="hidden"/>
+                <?php wp_nonce_field('__postexpirator', '_postexpiratornonce'); ?>
             </fieldset>
         </div>
     </div>
