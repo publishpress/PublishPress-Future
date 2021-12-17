@@ -176,4 +176,4 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
 <input name="expirationdate_formcheck" value="true" type="hidden"/>
 <input name="postexpirator_view" value="classic-metabox" type="hidden"/>
 <?php
-wp_nonce_field('__postexpirator', '_postexpiratornonce'); ?>
+wp_nonce_field('__postexpirator', '_postexpiratornonce');
