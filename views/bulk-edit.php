@@ -142,7 +142,6 @@ $minute = $defaults['minute'];
                             ?>
                         </ul>
                     </div>
-                    </span>
                 </div>
                 <input name="expirationdate_quickedit" value="true" type="hidden"/>
                 <input name="postexpirator_view" value="bulk-edit" type="hidden"/>
