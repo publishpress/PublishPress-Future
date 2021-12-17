@@ -94,8 +94,10 @@ This section describes how to install the plugin and get it working.
 * Fixed: Fixed the block for direct access to view files;
 * Fixed: Added check for is_admin before checking if the user has permission to see the settings page;
 * Fixed: Avoid running sortable column code if not in the admin;
-* Fixed: Fix non escaped output on some pages and metaboxes;
+* Fixed : Cross-site scripting (XSS) was possible if a third party allowed html or javascript into a database setting or language file;
 * Fixed: Fix the URL for the View Debug Log admin page, #196;
+* Fixed: Removed unopened span tag from a form;
+* Fixed: Added a secondary admin and ajax referer check when saving expiration post data;
 
 = [2.7.0] - 02 Dec 2021 =
 
