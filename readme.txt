@@ -3,7 +3,7 @@ Contributors: publishpress, kevinB, stevejburge, andergmartins, rozroz
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
-Requires at least: 5.0
+Requires at least: 5.3
 Tested up to: 5.8
 Stable tag: 2.7.0
 
