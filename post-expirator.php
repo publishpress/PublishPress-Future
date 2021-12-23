@@ -744,11 +744,20 @@ function postexpirator_expire_post($id)
         return false;
     }
 
+    $postoptions = PostExpirator_Facade::get_expire_principles($id);
+
+    if ($postoptions['enabled'] === false) {
+        if (POSTEXPIRATOR_DEBUG) {
+            $debug->save(array('message' => $id . ' -> Post expire data exist but is not activated'));
+        }
+
+        return false;
+    }
+
     $posttype = get_post_type($id);
     $posttitle = get_the_title($id);
     $postlink = get_post_permalink($id);
 
-    $postoptions = PostExpirator_Facade::get_expire_principles($id);
     $expireType = $category = $categoryTaxonomy = null;
 
     if (isset($postoptions['expireType'])) {
