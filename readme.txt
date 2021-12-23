@@ -88,6 +88,7 @@ This section describes how to install the plugin and get it working.
 * Added: Add additional permission check before loading the settings page;
 * Changed: Remove the plugin description from the settings page, #194;
 * Changed: Deprecated a not used function called "expirationdate_get_blog_url";
+* Changed: Updated the min required WP to 5.3 due to the requirement of using the function 'wp_date';
 * Fixed: Fix PHP error while purging the debug log, #135;
 * Fixed: Fix composer's autoloader path;
 * Fixed: Code cleanup. Removed comments and dead code;
@@ -98,6 +99,7 @@ This section describes how to install the plugin and get it working.
 * Fixed: Fix the URL for the View Debug Log admin page, #196;
 * Fixed: Removed unopened span tag from a form;
 * Fixed: Added a secondary admin and ajax referer check when saving expiration post data;
+* Fixed: Fix the option "Preserve data after deactivating the plugin" that was not saving the setting, #198;
 
 = [2.7.0] - 02 Dec 2021 =
 
