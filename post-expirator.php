@@ -1711,7 +1711,6 @@ function expirationdate_deactivate()
         return;
     }
 
-    global $current_blog;
     delete_option('expirationdateExpiredPostStatus');
     delete_option('expirationdateExpiredPageStatus');
     delete_option('expirationdateDefaultDateFormat');
@@ -1733,6 +1732,8 @@ function expirationdate_deactivate()
     delete_option('expirationdatePreserveData');
     // what about custom post types? - how to cleanup?
     if (is_multisite()) {
+        global $current_blog;
+
         wp_clear_scheduled_hook('expirationdate_delete_' . $current_blog->blog_id);
     } else {
         wp_clear_scheduled_hook('expirationdate_delete');
