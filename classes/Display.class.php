@@ -342,7 +342,7 @@ class PostExpirator_Display
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                 update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
-                update_option('expirationdatePreserveData', (bool)$_POST['expired-preserve-data-deactivating']);
+                update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
                     $_POST['allow-user-roles'] = array();
