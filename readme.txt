@@ -100,6 +100,7 @@ This section describes how to install the plugin and get it working.
 * Fixed: Removed unopened span tag from a form;
 * Fixed: Added a secondary admin and ajax referer check when saving expiration post data;
 * Fixed: Fix the option "Preserve data after deactivating the plugin" that was not saving the setting, #198;
+* Fixed: Fix the post expiration function to make sure a post is not expired if the checkbox is not checked on it, #199;
 
 = [2.7.0] - 02 Dec 2021 =
 
