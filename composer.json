@@ -25,6 +25,11 @@
       "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
     }
   ],
+  "autoload": {
+    "files": [
+      "classes/DummyForAutoloadDetection.php"
+    ]
+  },
   "require-dev": {
     "lucatume/wp-browser": "^3",
     "codeception/module-asserts": "^1.0",

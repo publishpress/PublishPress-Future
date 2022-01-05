@@ -29,8 +29,10 @@ define('POSTEXPIRATOR_BASEURL', plugins_url('/', __FILE__));
 require_once POSTEXPIRATOR_BASEDIR . '/functions.php';
 
 $autoloadPath = POSTEXPIRATOR_BASEDIR . '/vendor/autoload.php';
-if (file_exists($autoloadPath)) {
-    require_once $autoloadPath;
+if (false === class_exists('PublishPressFuture\\DummyForAutoloadDetection')
+    && true === file_exists($autoloadPath)
+) {
+    include_once $autoloadPath;
 }
 
 /**
