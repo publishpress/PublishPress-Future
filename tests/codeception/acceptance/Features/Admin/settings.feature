@@ -4,8 +4,8 @@ Feature: Settings
   I need to be able to see the submenu in the Settings menu
 
   Background:
-    Given the user "petm_admin_user" exists with role "administrator"
-    And I am logged in as "petm_admin_user"
+    Given the user "admin_user" exists with role "administrator"
+    And I am logged in as "admin_user"
 
   Scenario: See the Settings submenu
     Then I see the Settings submenu "PublishPress Future"

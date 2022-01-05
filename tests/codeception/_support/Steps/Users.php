@@ -2,6 +2,8 @@
 
 namespace Steps;
 
+use function sq;
+
 trait Users
 {
     /**
@@ -9,6 +11,8 @@ trait Users
      */
     public function theUserExistsWithRole($userLogin, $userRole)
     {
+        $userLogin = sq($userLogin);
+
         $this->factory()->user->create(
             [
                 'user_login' => $userLogin,
@@ -24,6 +28,8 @@ trait Users
      */
     public function iAmLoggedInAsUser($userLogin)
     {
+        $userLogin = sq($userLogin);
+
         $this->loginAs($userLogin, $userLogin);
 
         $user = get_user_by('login', $userLogin);

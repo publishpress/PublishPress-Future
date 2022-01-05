@@ -2,6 +2,8 @@
 
 namespace Steps;
 
+use function sq;
+
 trait Post
 {
     /**
@@ -11,7 +13,7 @@ trait Post
     {
         $this->factory('Creating new post')->post->create(
             [
-                'post_name' => $postSlug,
+                'post_name' => sq($postSlug),
             ]
         );
     }
@@ -21,6 +23,8 @@ trait Post
      */
     public function iAmEditingPost($postSlug)
     {
+        $postSlug = sq($postSlug);
+
         $args = [
             'name'        => $postSlug,
             'post_type'   => 'post',
