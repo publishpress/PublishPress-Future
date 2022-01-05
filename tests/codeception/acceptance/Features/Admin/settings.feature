@@ -8,4 +8,4 @@ Feature: Settings
     And I am logged in as "admin_user"
 
   Scenario: See the Settings submenu
-    Then I see the Settings submenu "PublishPress Future"
+    Then I see the Settings submenu "Future"
