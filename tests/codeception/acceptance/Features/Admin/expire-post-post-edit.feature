@@ -11,4 +11,3 @@ Feature: Expire post in the Post edit page
     Given post "post_1" exists
     And I am editing post "post_1"
     Then I see the component panel "PublishPress Future"
-    And I see "Enable Post Expiration" in code

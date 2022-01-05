@@ -46,7 +46,7 @@ trait Post
     /**
      * @Then I see the component panel :text
      */
-    public function iSeeComponentPanel($text)
+    public function iSeeComponentPanelText($text)
     {
         $this->see($text, '.components-panel .post-expirator-panel');
     }
@@ -54,16 +54,8 @@ trait Post
     /**
      * @Then I see :text
      */
-    public function iSee($text)
+    public function iSeeText($text)
     {
         $this->see($text);
-    }
-
-    /**
-     * @Then I see :text in code
-     */
-    public function iSeeInCode($text)
-    {
-        $this->iSeeInCode($text);
     }
 }
