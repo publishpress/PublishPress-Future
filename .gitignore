@@ -11,3 +11,4 @@ dist
 .env.testing
 report.csv
 .phplint-cache
+.php-cs-fixer.cache
