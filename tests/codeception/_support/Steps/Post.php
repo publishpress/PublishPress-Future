@@ -26,14 +26,14 @@ trait Post
         $postSlug = sq($postSlug);
 
         $args = [
-            'name'        => $postSlug,
-            'post_type'   => 'post',
+            'name' => $postSlug,
+            'post_type' => 'post',
             'post_status' => 'publish',
             'numberposts' => 1
         ];
 
         $postId = null;
-        $posts  = get_posts($args);
+        $posts = get_posts($args);
         if (! empty($posts)) {
             $postId = $posts[0]->ID;
         }
@@ -41,14 +41,6 @@ trait Post
         if (! empty($postId)) {
             $this->amOnAdminPage("post.php?post=$postId&action=edit");
         }
-    }
-
-    /**
-     * @Then I see the component panel :text
-     */
-    public function iSeeComponentPanelText($text)
-    {
-        $this->see($text, '.components-panel .post-expirator-panel');
     }
 
     /**

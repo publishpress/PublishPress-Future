@@ -15,11 +15,13 @@
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
- */
-class AcceptanceTester extends \Codeception\Actor
+*/
+class AcceptanceGutenbergTester extends \Codeception\Actor
 {
-    use _generated\AcceptanceTesterActions;
+    use _generated\AcceptanceGutenbergTesterActions;
     use \Steps\Users;
     use \Steps\Menu;
+    use \Steps\Plugins;
     use \Steps\Post;
+    use \Steps\PostGutenberg;
 }
