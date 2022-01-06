@@ -1,4 +1,4 @@
-Feature: Expire post in the Gutenberg editor
+Feature: Expiring post in the Gutenberg editor
   In order to expire a post
   As an admin
   I need to be able to configure a post to expire

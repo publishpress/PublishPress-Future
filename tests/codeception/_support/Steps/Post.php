@@ -20,6 +20,7 @@ trait Post
 
     /**
      * @Given I am editing post :postSlug
+     * @When I am editing post :postSlug
      */
     public function iAmEditingPost($postSlug)
     {
