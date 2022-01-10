@@ -27,6 +27,15 @@ trait Post
     }
 
     /**
+     * @When I am adding a new post with title :title
+     */
+    public function iAmAddingANewPostWithTitle($title)
+    {
+        $this->iAmAddingANewPost();
+        $this->fillField('#title', sq($title));
+    }
+
+    /**
      * @Given I am editing post :postSlug
      * @When I am editing post :postSlug
      */
