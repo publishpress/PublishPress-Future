@@ -68,7 +68,7 @@ function postexpirator_init()
 
     PostExpirator_Reviews::init();
 
-    add_action('wp_insert_post', 'postexpirator_set_default_meta', 10, 3);
+    add_action('wp_insert_post', 'postexpirator_set_default_meta_for_post', 10, 3);
 }
 
 add_action('plugins_loaded', 'postexpirator_init');
@@ -428,7 +428,7 @@ function postexpirator_meta_box($post)
     );
 }
 
-function postexpirator_set_default_meta($postId, $post, $update)
+function postexpirator_set_default_meta_for_post($postId, $post, $update)
 {
     if ($update) {
         return;
