@@ -11,11 +11,19 @@ trait Post
      */
     public function postExists($postSlug)
     {
-        $this->factory('Creating new post')->post->create(
+        $this->havePostInDatabase(
             [
                 'post_name' => sq($postSlug),
             ]
         );
+    }
+
+    /**
+     * @When I am adding a new post
+     */
+    public function iAmAddingANewPost()
+    {
+        $this->amOnAdminPage('post-new.php');
     }
 
     /**
@@ -29,7 +37,6 @@ trait Post
         $args = [
             'name' => $postSlug,
             'post_type' => 'post',
-            'post_status' => 'publish',
             'numberposts' => 1
         ];
 

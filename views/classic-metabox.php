@@ -144,14 +144,14 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
                     'You must assign a heirarchical taxonomy to this post type to use this feature.',
                     'post-expirator'
                 ) . '</p>';
-        } elseif (sizeof($taxonomies) > 1 && ! isset($defaults['taxonomy'])) {
+        } elseif (sizeof($taxonomies) > 1 && ! isset($defaultsOption['taxonomy'])) {
             echo '<p>' . esc_html__(
                     'More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
                     'post-expirator'
                 ) . '</p>';
         } else {
             $keys = array_keys($taxonomies);
-            $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : $keys[0];
+            $taxonomy = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
             wp_terms_checklist(0, array(
                 'taxonomy' => $taxonomy,
                 'walker' => $walker,

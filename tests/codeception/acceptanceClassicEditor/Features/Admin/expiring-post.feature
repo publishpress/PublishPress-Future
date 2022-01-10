@@ -10,28 +10,26 @@ Feature: Expiring post in the Classic editor
 
   Scenario: When default expiration is not activated for post, the Enable Post Expiration checkbox should be unchecked by default
     Given default expiration is not activated for "post"
-    And post "post_1" exists
-    When I am editing post "post_1"
+    When I am adding a new post
     Then the checkbox Enable Post Expiration is deactivated on the metabox
 
   Scenario: When default expiration is activated for post, the Enable Post Expiration checkbox should be checked by default
     Given default expiration is activated for "post"
-    And post "post_2" exists
-    When I am editing post "post_2"
+    When I am adding a new post
     Then the checkbox Enable Post Expiration is activated on the metabox
 
-  Scenario: When default expiration is not activated for post, I can enable it for the post
+  Scenario: When default expiration is not activated for post, I can enable it for a post
     Given default expiration is not activated for "post"
-    And post "post_3" exists
-    And I am editing post "post_3"
+    And post "post_1" exists
+    And I am editing post "post_1"
     When I check the Enable Post Expiration checkbox
     And I save the post
     Then the checkbox Enable Post Expiration is activated on the metabox
 
-  Scenario: When default expiration is activated for post, I can disable it for the post
+  Scenario: When default expiration is activated for post, I can disable it for a post
     Given default expiration is activated for "post"
-    And post "post_4" exists
-    And I am editing post "post_4"
+    And post "post_2" exists
+    And I am editing post "post_2"
     When I uncheck the Enable Post Expiration checkbox
     And I save the post
     Then the checkbox Enable Post Expiration is deactivated on the metabox

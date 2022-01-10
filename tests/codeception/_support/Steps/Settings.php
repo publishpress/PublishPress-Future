@@ -9,19 +9,9 @@ trait Settings
      */
     public function defaultExpirationNotActivatedForPostType($postType)
     {
-        $this->haveOptionInDatabase(
-            'expirationdateDefaults' . ucfirst($postType),
-            maybe_serialize(
-                [
-                    'expireType' => 'draft',
-                    'autoEnable' => 0,
-                    'activeMetaBox' => 'active',
-                    'emailnotification' => '',
-                    'default-expire-type' => '',
-                    'default-custom-date' => '',
-                ]
-            )
-        );
+        $this->amOnAdminPage('admin.php?page=publishpress-future&tab=defaults');
+        $this->checkOption('#expirationdate_autoenable-false-' . $postType);
+        $this->click('Save Changes');
     }
 
     /**
@@ -29,18 +19,8 @@ trait Settings
      */
     public function defaultExpirationActivatedForPostType($postType)
     {
-        $this->haveOptionInDatabase(
-            'expirationdateDefaults' . ucfirst($postType),
-            maybe_serialize(
-                [
-                    'expireType' => 'draft',
-                    'autoEnable' => 1,
-                    'activeMetaBox' => 'active',
-                    'emailnotification' => '',
-                    'default-expire-type' => '',
-                    'default-custom-date' => '',
-                ]
-            )
-        );
+        $this->amOnAdminPage('admin.php?page=publishpress-future&tab=defaults');
+        $this->checkOption('#expirationdate_autoenable-true-' . $postType);
+        $this->click('Save Changes');
     }
 }

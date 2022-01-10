@@ -67,6 +67,8 @@ function postexpirator_init()
     load_plugin_textdomain('post-expirator', null, $plugin_dir . '/languages/');
 
     PostExpirator_Reviews::init();
+
+    add_action('wp_insert_post', 'postexpirator_set_default_meta', 10, 3);
 }
 
 add_action('plugins_loaded', 'postexpirator_init');
@@ -374,59 +376,92 @@ add_action('add_meta_boxes', 'postexpirator_meta_custom');
  */
 function postexpirator_meta_box($post)
 {
-    // Get default month
-    $expirationdatets = get_post_meta($post->ID, '_expiration-date', true);
-    $firstsave = get_post_meta($post->ID, '_expiration-date-status', true);
+    $postMetaDate = get_post_meta($post->ID, '_expiration-date', true);
+    $postMetaStatus = get_post_meta($post->ID, '_expiration-date-status', true);
 
-    $default = $expireType = $enabled = $defaultmonth = $defaultday = $defaulthour = $defaultyear = $defaultminute = $categories = '';
-    $defaults = get_option('expirationdateDefaults' . ucfirst($post->post_type));
-    if (empty($expirationdatets)) {
-        $default_expiry = PostExpirator_Facade::get_default_expiry($post->post_type);
+    $expireType = $default = $enabled = '';
+    $defaultsOption = get_option('expirationdateDefaults' . ucfirst($post->post_type));
+    if (empty($postMetaDate)) {
+        $defaultExpire = PostExpirator_Facade::get_default_expiry($post->post_type);
 
-        $defaultmonth = $default_expiry['month'];
-        $defaultday = $default_expiry['day'];
-        $defaulthour = $default_expiry['hour'];
-        $defaultyear = $default_expiry['year'];
-        $defaultminute = $default_expiry['minute'];
+        $defaultMonth = $defaultExpire['month'];
+        $defaultDay = $defaultExpire['day'];
+        $defaultHour = $defaultExpire['hour'];
+        $defaultYear = $defaultExpire['year'];
+        $defaultMinute = $defaultExpire['minute'];
 
-        $enabled = '';
         $categories = get_option('expirationdateCategoryDefaults');
 
-        if (isset($defaults['expireType'])) {
-            $expireType = $defaults['expireType'];
-        }
-
-        // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-        if (isset($defaults['autoEnable']) && ($firstsave !== 'saved') && ($defaults['autoEnable'] === true || $defaults['autoEnable'] == 1)) {
-            $enabled = ' checked="checked"';
+        if (isset($defaultsOption['expireType'])) {
+            $expireType = $defaultsOption['expireType'];
         }
     } else {
-        $defaultmonth = get_date_from_gmt(gmdate('Y-m-d H:i:s', $expirationdatets), 'm');
-        $defaultday = get_date_from_gmt(gmdate('Y-m-d H:i:s', $expirationdatets), 'd');
-        $defaultyear = get_date_from_gmt(gmdate('Y-m-d H:i:s', $expirationdatets), 'Y');
-        $defaulthour = get_date_from_gmt(gmdate('Y-m-d H:i:s', $expirationdatets), 'H');
-        $defaultminute = get_date_from_gmt(gmdate('Y-m-d H:i:s', $expirationdatets), 'i');
-        $enabled = ' checked="checked"';
+        $defaultMonth = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'm');
+        $defaultDay = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'd');
+        $defaultYear = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'Y');
+        $defaultHour = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'H');
+        $defaultMinute = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'i');
 
         $attributes = PostExpirator_Facade::get_expire_principles($post->ID);
         $expireType = $attributes['expireType'];
         $categories = $attributes['category'];
     }
 
+    if ($postMetaStatus === 'saved') {
+        $enabled = ' checked="checked"';
+    }
+
     PostExpirator_Display::getInstance()->render_template(
-        'classic-metabox', array(
+        'classic-metabox', [
             'post' => $post,
             'enabled' => $enabled,
             'default' => $default,
-            'defaults' => $defaults,
-            'defaultmonth' => $defaultmonth,
-            'defaultday' => $defaultday,
-            'defaulthour' => $defaulthour,
-            'defaultyear' => $defaultyear,
-            'defaultminute' => $defaultminute,
+            'defaultsOption' => $defaultsOption,
+            'defaultmonth' => $defaultMonth,
+            'defaultday' => $defaultDay,
+            'defaulthour' => $defaultHour,
+            'defaultyear' => $defaultYear,
+            'defaultminute' => $defaultMinute,
             'categories' => $categories,
             'expireType' => $expireType,
-        )
+        ]
+    );
+}
+
+function postexpirator_set_default_meta($postId, $post, $update)
+{
+    if ($update) {
+        return;
+    }
+
+    $postTypeDefaults = get_option('expirationdateDefaults' . ucfirst($post->post_type));
+
+    if (empty($postTypeDefaults) || (int)$postTypeDefaults['autoEnable'] !== 1) {
+        return;
+    }
+
+    $defaultExpire = PostExpirator_Facade::get_default_expiry($post->post_type);
+
+    $categories = get_option('expirationdateCategoryDefaults');
+
+    $status = ! empty($defaultExpire['ts']) ? 'saved' : '';
+
+    $opts = [
+        'expireType' => $postTypeDefaults['expireType'],
+        'category' => $categories,
+        'categoryTaxonomy' => '',
+        'enabled' => $status === 'saved',
+    ];
+
+    update_post_meta($post->ID, '_expiration-date', $defaultExpire['ts']);
+    update_post_meta($post->ID, '_expiration-date-status', $status);
+    update_post_meta($post->ID, '_expiration-date-options', $opts);
+    update_post_meta($post->ID, '_expiration-date-type', $postTypeDefaults['expireType']);
+    update_post_meta($post->ID, '_expiration-date-categories', (array)$categories);
+    update_post_meta(
+        $post->ID,
+        '_expiration-date-taxonomy',
+        $opts['categoryTaxonomy']
     );
 }
 
