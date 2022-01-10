@@ -25,4 +25,5 @@ class AcceptanceClassicEditorTester extends \Codeception\Actor
     use \Steps\Post;
     use \Steps\PostClassicEditor;
     use \Steps\Settings;
+    use \Steps\Debug;
 }
