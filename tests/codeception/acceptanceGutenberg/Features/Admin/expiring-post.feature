@@ -23,6 +23,8 @@ Feature: Expiring post in the Gutenberg editor
     When I am adding a new post with title "Post A" on Gutenberg
     And I check the Enable Post Expiration checkbox on Gutenberg
     And I save the post on Gutenberg
+    And I wait 2 seconds
+    And I refresh the page
     Then the checkbox Enable Post Expiration is activated on the component panel
 
   Scenario: When default expiration is not activated for post, I can enable it for an existent post
@@ -31,6 +33,8 @@ Feature: Expiring post in the Gutenberg editor
     And I am editing post "post_2"
     And I check the Enable Post Expiration checkbox on Gutenberg
     And I save the post on Gutenberg
+    And I wait 2 seconds
+    And I refresh the page
     Then the checkbox Enable Post Expiration is activated on the component panel
 
   # When default expiration is activated for post
@@ -45,6 +49,8 @@ Feature: Expiring post in the Gutenberg editor
     When I am adding a new post with title "Post B" on Gutenberg
     When I uncheck the Enable Post Expiration checkbox on Gutenberg
     And I save the post on Gutenberg
+    And I wait 2 seconds
+    And I refresh the page
     Then the checkbox Enable Post Expiration is deactivated on the component panel
 
   Scenario: When default expiration is activated for post, I can disable it for an existent post
@@ -53,4 +59,6 @@ Feature: Expiring post in the Gutenberg editor
     And I am editing post "post_4"
     When I uncheck the Enable Post Expiration checkbox on Gutenberg
     And I save the post on Gutenberg
+    And I wait 2 seconds
+    And I refresh the page
     Then the checkbox Enable Post Expiration is deactivated on the component panel

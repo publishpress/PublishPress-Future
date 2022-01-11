@@ -24,7 +24,7 @@
             const postType = wp.data.select('core/editor').getCurrentPostType();
             const setPostMeta = (newMeta) => wp.data.dispatch('core/editor').editPost({meta: newMeta});
 
-            let enabled = config.defaults.autoEnable == 1;
+            let enabled = false;
             let date = new Date();
 
             let expireAction = this.getExpireType(postMeta);

@@ -92,4 +92,12 @@ trait Post
     {
         $this->click('#publish');
     }
+
+    /**
+     * @When I refresh the page
+     */
+    public function iRefreshThePage()
+    {
+        $this->executeJs('location.reload()');
+    }
 }
