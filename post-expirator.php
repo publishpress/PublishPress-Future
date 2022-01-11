@@ -67,7 +67,10 @@ function postexpirator_init()
     load_plugin_textdomain('post-expirator', null, $plugin_dir . '/languages/');
 
     PostExpirator_Reviews::init();
-    PostExpirator_Cli::getInstance();
+
+    if (class_exists('WP_CLI')) {
+        PostExpirator_Cli::getInstance();
+    }
 
     add_action('wp_insert_post', 'postexpirator_set_default_meta_for_post', 10, 3);
 }
