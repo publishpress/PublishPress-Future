@@ -46,7 +46,7 @@ modules:
             capabilities:
                 browserName: chrome
                 chromeOptions:
-                    args: [ --disable-gpu", "disable-infobars" ]
+                    args: [ "--headless", "--disable-gpu", "--disable-infobars" ]
                     prefs:
                         download.default_directory: "..."
         Sequence:
