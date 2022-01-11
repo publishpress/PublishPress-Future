@@ -65,5 +65,7 @@ trait PostGutenberg
     public function iSaveThePostOnGutenberg()
     {
         $this->executeJS('wp.data.dispatch(\'core/editor\').savePost()');
+        // We need to wait until the post is saved
+        $this->wait(2);
     }
 }
