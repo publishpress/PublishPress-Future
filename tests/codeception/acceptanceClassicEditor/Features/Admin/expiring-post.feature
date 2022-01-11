@@ -8,6 +8,9 @@ Feature: Expiring post in the Classic editor
     And I am logged in as "admin_user"
     And the plugin "classic-editor" is active
 
+
+  # When default expiration is not activated for post
+
   Scenario: When default expiration is not activated for post, the Enable Post Expiration checkbox should be unchecked by default for a new post
     Given default expiration is not activated for "post"
     When I am adding a new post
@@ -27,6 +30,8 @@ Feature: Expiring post in the Classic editor
     When I check the Enable Post Expiration checkbox
     And I save the post
     Then the checkbox Enable Post Expiration is activated on the metabox
+
+  # When default expiration is activated for post
 
   Scenario: When default expiration is activated for post, the Enable Post Expiration checkbox should be checked by default for a new post
     Given default expiration is activated for "post"

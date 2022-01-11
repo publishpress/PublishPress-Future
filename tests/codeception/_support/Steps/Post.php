@@ -67,4 +67,29 @@ trait Post
     {
         $this->see($text);
     }
+
+
+    /**
+     * @When I check the Enable Post Expiration checkbox
+     */
+    public function iCheckTheEnablePostExpirationCheckbox()
+    {
+        $this->checkOption('Enable Post Expiration');
+    }
+
+    /**
+     * @When I uncheck the Enable Post Expiration checkbox
+     */
+    public function iUncheckTheEnablePostExpirationCheckbox()
+    {
+        $this->uncheckOption('Enable Post Expiration');
+    }
+
+    /**
+     * @When I save the post
+     */
+    public function iSaveThePost()
+    {
+        $this->click('#publish');
+    }
 }

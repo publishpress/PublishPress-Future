@@ -24,5 +24,6 @@ class AcceptanceGutenbergTester extends \Codeception\Actor
     use \Steps\Plugins;
     use \Steps\Post;
     use \Steps\PostGutenberg;
+    use \Steps\Settings;
     use \Steps\Debug;
 }
