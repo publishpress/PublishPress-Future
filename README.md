@@ -16,6 +16,12 @@ You can download a built package from [releases page](/releases/) and install it
 
 Please, check the instructions on our [documentation pages](https://publishpress.github.io/docs/deployment/building).
 
+## How to run CLI command from inside Docker
+
+```bash
+docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/plugindev  publishpress-future expire-post <post_id>
+```
+
 ## License
 
 License: [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html)
