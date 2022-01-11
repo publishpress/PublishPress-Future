@@ -19,8 +19,8 @@ class PostExpirator_Cli
                 self::CLI_COMMAND . ' expire-post',
                 [$this, 'expirePostCommand'],
                 [
-                    'shortdesc' => 'Expire a post passing the post id',
-                    'longdesc' => 'Expire a post passing the post id',
+                    'shortdesc' => 'Expire a post passing the post id, ignoring the expiration date',
+                    'longdesc' => 'Expire a post passing the post id, ignoring the expiration date',
                 ]
             );
         } catch (Exception $e) {
@@ -38,7 +38,7 @@ class PostExpirator_Cli
     }
 
     /**
-     * Expires a post using the post metadata in PublishPress Future.
+     * Expires a post using the post metadata in PublishPress Future, but ignoring the expiration date.
      *
      * <post-id>
      * : One or more post ids separated by space

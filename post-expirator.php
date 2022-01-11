@@ -766,6 +766,8 @@ function postexpirator_expire_post($id)
 {
     $debug = postexpirator_debug(); // check for/load debug
 
+    $id = (int)$id;
+
     if (empty($id)) {
         if (POSTEXPIRATOR_DEBUG) {
             $debug->save(array('message' => 'No Post ID found - exiting'));
@@ -833,6 +835,8 @@ function postexpirator_expire_post($id)
     // we are only changing the post status/meta information and not touching the content.
     kses_remove_filters();
 
+    $postWasExpired = false;
+
     // Do Work
     if ($expireType === 'draft') {
         if (wp_update_post(array('ID' => $id, 'post_status' => 'draft')) === 0) {
@@ -855,6 +859,8 @@ function postexpirator_expire_post($id)
                     array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postoptions, true))
                 );
             }
+
+            $postWasExpired = true;
         }
     } elseif ($expireType === 'private') {
         if (wp_update_post(array('ID' => $id, 'post_status' => 'private')) === 0) {
@@ -877,6 +883,8 @@ function postexpirator_expire_post($id)
                     array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postoptions, true))
                 );
             }
+
+            $postWasExpired = true;
         }
     } elseif ($expireType === 'delete') {
         if (wp_delete_post($id) === false) {
@@ -899,6 +907,8 @@ function postexpirator_expire_post($id)
                     array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postoptions, true))
                 );
             }
+
+            $postWasExpired = true;
         }
     } elseif ($expireType === 'trash') {
         if (wp_trash_post($id) === false) {
@@ -921,6 +931,8 @@ function postexpirator_expire_post($id)
                     array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postoptions, true))
                 );
             }
+
+            $postWasExpired = true;
         }
     } elseif ($expireType === 'stick') {
         if (stick_post($id) === false) {
@@ -940,6 +952,8 @@ function postexpirator_expire_post($id)
                     array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postoptions, true))
                 );
             }
+
+            $postWasExpired = true;
         }
     } elseif ($expireType === 'unstick') {
         if (unstick_post($id) === false) {
@@ -962,6 +976,8 @@ function postexpirator_expire_post($id)
                     array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postoptions, true))
                 );
             }
+
+            $postWasExpired = true;
         }
     } elseif ($expireType === 'category') {
         if (! empty($category)) {
@@ -1005,6 +1021,8 @@ function postexpirator_expire_post($id)
                             )
                         );
                     }
+
+                    $postWasExpired = true;
                 }
             } else {
                 $terms = array_map('intval', $category);
@@ -1047,6 +1065,8 @@ function postexpirator_expire_post($id)
                             )
                         );
                     }
+
+                    $postWasExpired = true;
                 }
             }
         } else {
@@ -1106,6 +1126,8 @@ function postexpirator_expire_post($id)
                             )
                         );
                     }
+
+                    $postWasExpired = true;
                 }
             } else {
                 $terms = array_map('intval', $category);
@@ -1149,6 +1171,8 @@ function postexpirator_expire_post($id)
                             )
                         );
                     }
+
+                    $postWasExpired = true;
                 }
             }
         } else {
@@ -1214,6 +1238,8 @@ function postexpirator_expire_post($id)
                             )
                         );
                     }
+
+                    $postWasExpired = true;
                 }
             } else {
                 $terms = wp_get_object_terms($id, $categoryTaxonomy, array('fields' => 'ids'));
@@ -1264,6 +1290,8 @@ function postexpirator_expire_post($id)
                             )
                         );
                     }
+
+                    $postWasExpired = true;
                 }
             }
         } else {
@@ -1282,6 +1310,7 @@ function postexpirator_expire_post($id)
 
     // Process Email
     $emailenabled = get_option('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
+
     // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
     if ($emailenabled == 1 && isset($emailBody)) {
         $subj = sprintf(__('Post Expiration Complete "%s"', 'post-expirator'), $posttitle);
@@ -1337,6 +1366,10 @@ function postexpirator_expire_post($id)
                 }
             }
         }
+    }
+
+    if (true === $postWasExpired) {
+        postexpirator_unschedule_event($id);
     }
 }
 
