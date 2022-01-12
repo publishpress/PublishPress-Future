@@ -19,7 +19,7 @@
                         ) . '" />'; ?>
                     <?php
                     echo '<a href="' . admin_url(
-                            'options-general.php?page=post-expirator.php&tab=viewdebug'
+                            'admin.php?page=publishpress-future&tab=viewdebug'
                         ) . '">' . __('View Debug Logs', 'post-expirator') . '</a>'; ?>
                 <?php
                 else: ?>
