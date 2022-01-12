@@ -26,6 +26,11 @@ class RoboFile extends PackageBuilderTasks
                 'jsconfig.json',
                 'logs',
                 'phpcs.xml',
+                '.distignore',
+                '.phplint-cache',
+                '.php-cs-fixer.cache',
+                'psalm.xml',
+                'report.csv',
             )
         );
 
