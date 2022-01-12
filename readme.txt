@@ -86,6 +86,7 @@ This section describes how to install the plugin and get it working.
 * Added: Add visual indicator to the cron event status in the settings page, #155;
 * Added: Add small help text to the Expires column icon to say if the event is scheduled or not;
 * Added: Add additional permission check before loading the settings page;
+* Added: Add CLI command to expire a post, #206;
 * Changed: Remove the plugin description from the settings page, #194;
 * Changed: Deprecated a not used function called "expirationdate_get_blog_url";
 * Changed: Updated the min required WP to 5.3 due to the requirement of using the function 'wp_date';
@@ -95,12 +96,14 @@ This section describes how to install the plugin and get it working.
 * Fixed: Fixed the block for direct access to view files;
 * Fixed: Added check for is_admin before checking if the user has permission to see the settings page;
 * Fixed: Avoid running sortable column code if not in the admin;
-* Fixed : Cross-site scripting (XSS) was possible if a third party allowed html or javascript into a database setting or language file;
+* Fixed: Cross-site scripting (XSS) was possible if a third party allowed html or javascript into a database setting or language file;
 * Fixed: Fix the URL for the View Debug Log admin page, #196;
 * Fixed: Removed unopened span tag from a form;
 * Fixed: Added a secondary admin and ajax referer check when saving expiration post data;
 * Fixed: Fix the option "Preserve data after deactivating the plugin" that was not saving the setting, #198;
 * Fixed: Fix the post expiration function to make sure a post is not expired if the checkbox is not checked on it, #199;
+* Fixed: Fix the post expiration meta not being cleanup after a post expires, #207;
+* Fixed: Fix the post expiration checkbox status when post type is set configured to check it by default;
 
 = [2.7.0] - 02 Dec 2021 =
 
