@@ -81,6 +81,10 @@ class PostExpirator_Display
      */
     public function settings_tabs()
     {
+        if (!is_admin() || !current_user_can('manage_options')) {
+            wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
+        }
+
         PostExpirator_Facade::load_assets('settings');
 
         $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
@@ -175,7 +179,7 @@ class PostExpirator_Display
                 _e('Debugging Enabled', 'post-expirator');
                 echo '</p></div>';
             } elseif (isset($_POST['purge-debug'])) {
-                require_once(plugin_dir_path(__FILE__) . 'post-expirator-debug.php');
+                require_once(POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php');
                 $debug = new PostExpiratorDebug();
                 $debug->purge();
                 echo "<div id='message' class='updated fade'><p>";
@@ -195,7 +199,7 @@ class PostExpirator_Display
     private function menu_viewdebug()
     {
         require_once POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php';
-        print '<p>' . __(
+        print '<p>' . esc_html__(
                 'Below is a dump of the debugging table, this should be useful for troubleshooting.',
                 'post-expirator'
             ) . '</p>';
@@ -302,6 +306,7 @@ class PostExpirator_Display
                         continue;
                     }
 
+                    // TODO: only allow roles that can edit posts. Filter in the form as well, adding a description.
                     if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
                         $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
                     } else {
@@ -337,7 +342,7 @@ class PostExpirator_Display
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                 update_option('expirationdateGutenbergSupport', $_POST['gutenberg-support']);
-                update_option('expirationdatePreserveData', (bool)$_POST['expired-preserve-data-deactivating']);
+                update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
                     $_POST['allow-user-roles'] = array();
@@ -397,7 +402,7 @@ class PostExpirator_Display
                    rel="noopener noreferrer">
                     <?php
                     printf(
-                        __('If you like %s, please leave us a %s rating. Thank you!', 'post-expirator'),
+                        esc_html__('If you like %s, please leave us a %s rating. Thank you!', 'post-expirator'),
                         '<strong>PublishPress Future</strong>',
                         '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
                     );

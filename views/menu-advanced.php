@@ -1,4 +1,7 @@
 <?php
+
+defined('ABSPATH') or die('Direct access not allowed.');
+
 // Get Option
 $preserveData = (bool)get_option('expirationdatePreserveData', true);
 

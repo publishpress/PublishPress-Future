@@ -22,3 +22,19 @@ div.pe-qe-fields > div {
 .post-expirator-quickedit input {
     font-size: 12px;
 }
+
+.post-expire-col .icon-never {
+    color: #dfdfdf;
+}
+
+.post-expire-col .icon-scheduled {
+    color: #7171d7;
+}
+
+.post-expire-col .icon-missed {
+    color: #e08f63;
+}
+
+.post-expire-col .dashicons {
+    cursor: help;
+}

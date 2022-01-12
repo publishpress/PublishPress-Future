@@ -15,11 +15,15 @@
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
- */
-class AcceptanceTester extends \Codeception\Actor
+*/
+class AcceptanceClassicEditorTester extends \Codeception\Actor
 {
-    use _generated\AcceptanceTesterActions;
+    use _generated\AcceptanceClassicEditorTesterActions;
     use \Steps\Users;
     use \Steps\Menu;
+    use \Steps\Plugins;
     use \Steps\Post;
+    use \Steps\PostClassicEditor;
+    use \Steps\Settings;
+    use \Steps\Debug;
 }

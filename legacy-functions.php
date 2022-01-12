@@ -61,3 +61,24 @@ if (! function_exists('_postExpiratorExpireType')) {
         return ob_get_clean();
     }
 }
+
+/**
+ * Get correct URL (HTTP or HTTPS)
+ *
+ * @internal
+ * @access private
+ *
+ * @deprecated 2.7.1
+ */
+function expirationdate_get_blog_url()
+{
+    _deprecated_function(__FUNCTION__, '2.7.1');
+
+    if (is_multisite()) {
+        $url = network_home_url('/');
+    } else {
+        $url = home_url('/');
+    }
+
+    echo esc_url($url);
+}

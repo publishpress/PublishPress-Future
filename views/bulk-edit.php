@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 $defaults = PostExpirator_Facade::get_default_expiry($post_type);
 
 $year = $defaults['year'];
@@ -13,40 +15,40 @@ $minute = $defaults['minute'];
     <div class="inline-edit-col">
         <div class="inline-edit-group">
             <legend class="inline-edit-legend"><?php
-                _e('PublishPress Future', 'post-expirator'); ?></legend>
+                esc_html_e('PublishPress Future', 'post-expirator'); ?></legend>
             <fieldset class="inline-edit-date">
                 <div class="pe-qe-fields">
                     <div>
                         <legend><span class="title"><?php
-                                _e('Date', 'post-expirator'); ?></span></legend>
+                                esc_html_e('Date', 'post-expirator'); ?></span></legend>
                         <label>
                             <span class="screen-reader-text"><?php
-                                _e('Enable Post Expiration', 'post-expirator'); ?></span>
+                                esc_html_e('Enable Post Expiration', 'post-expirator'); ?></span>
                             <select name="expirationdate_status">
                                 <option value="no-change" data-show-fields="false" selected>
                                     --<?php
-                                    _e('No Change', 'post-expirator'); ?>--
+                                    esc_html_e('No Change', 'post-expirator'); ?>--
                                 </option>
                                 <option value="change-only" data-show-fields="true"
                                         title="<?php
-                                        _e('Change expiry date if enabled on posts', 'post-expirator'); ?>"><?php
-                                    _e('Change on posts', 'post-expirator'); ?></option>
+                                        esc_html_e('Change expiry date if enabled on posts', 'post-expirator'); ?>"><?php
+                                    esc_html_e('Change on posts', 'post-expirator'); ?></option>
                                 <option value="add-only" data-show-fields="true"
                                         title="<?php
-                                        _e('Add expiry date if not enabled on posts', 'post-expirator'); ?>"><?php
-                                    _e('Add to posts', 'post-expirator'); ?></option>
+                                        esc_html_e('Add expiry date if not enabled on posts', 'post-expirator'); ?>"><?php
+                                    esc_html_e('Add to posts', 'post-expirator'); ?></option>
                                 <option value="change-add"
                                         data-show-fields="true"><?php
-                                    _e('Change & Add', 'post-expirator'); ?></option>
+                                    esc_html_e('Change & Add', 'post-expirator'); ?></option>
                                 <option value="remove-only"
                                         data-show-fields="false"><?php
-                                    _e('Remove from posts', 'post-expirator'); ?></option>
+                                    esc_html_e('Remove from posts', 'post-expirator'); ?></option>
                             </select>
                         </label>
                         <span class="post-expirator-date-fields">
                             <label>
                                 <span class="screen-reader-text"><?php
-                                    _e('Month', 'post-expirator'); ?></span>
+                                    esc_html_e('Month', 'post-expirator'); ?></span>
                                 <select name="expirationdate_month">
                             <?php
                             for ($x = 1; $x <= 12; $x++) {
@@ -57,12 +59,12 @@ $minute = $defaults['minute'];
                                 $selected = $monthNumeric == $defaults['month'] ? 'selected' : '';
                                 ?>
                                 <option value="<?php
-                                echo $monthNumeric; ?>"
+                                echo esc_attr($monthNumeric); ?>"
                                         data-text="<?php
-                                        echo $monthStr; ?>" <?php
-                                echo $selected; ?>><?php
-                                    echo $monthNumeric; ?>-<?php
-                                    echo $monthStr; ?></option>
+                                        echo esc_attr($monthStr); ?>" <?php
+                                echo esc_attr($selected); ?>><?php
+                                    echo esc_html($monthNumeric); ?>-<?php
+                                    echo esc_html($monthStr); ?></option>
                                 <?php
                             } ?>
 
@@ -70,43 +72,43 @@ $minute = $defaults['minute'];
                             </label>
                             <label>
                                 <span class="screen-reader-text"><?php
-                                    _e('Day', 'post-expirator'); ?></span>
+                                    esc_html_e('Day', 'post-expirator'); ?></span>
                                 <input name="expirationdate_day" placeholder="<?php
-                                echo $day; ?>" value="" size="2"
+                                echo esc_attr($day); ?>" value="" size="2"
                                        maxlength="2" autocomplete="off" type="text">
                             </label>,
                             <label>
                                 <span class="screen-reader-text"><?php
-                                    _e('Year', 'post-expirator'); ?></span>
+                                    esc_html_e('Year', 'post-expirator'); ?></span>
                                 <input name="expirationdate_year" placeholder="<?php
-                                echo $year; ?>" value="" size="4"
+                                echo esc_attr($year); ?>" value="" size="4"
                                        maxlength="4" autocomplete="off" type="text">
                             </label> @
                             <label>
                                 <span class="screen-reader-text"><?php
-                                    _e('Hour', 'post-expirator'); ?></span>
+                                    esc_html_e('Hour', 'post-expirator'); ?></span>
                                 <input name="expirationdate_hour" placeholder="<?php
-                                echo $hour; ?>" value="" size="2"
+                                echo esc_attr($hour); ?>" value="" size="2"
                                        maxlength="2" autocomplete="off" type="text">
                             </label> :
                             <label>
                                 <span class="screen-reader-text"><?php
-                                    _e('Minute', 'post-expirator'); ?></span>
+                                    esc_html_e('Minute', 'post-expirator'); ?></span>
                                 <input name="expirationdate_minute" placeholder="<?php
-                                echo $minute; ?>" value=""
+                                echo esc_attr($minute); ?>" value=""
                                        size="2" maxlength="2" autocomplete="off" type="text">
                             </label>
 
                             <?php
-                            echo PostExpirator_Util::wp_timezone_string(); ?>
+                            echo esc_html(PostExpirator_Util::wp_timezone_string()); ?>
                         </span>
                     </div>
                     <div class="post-expirator-date-fields">
                         <legend>
                             <span class="title"><?php
-                                _e('Type', 'post-expirator'); ?></span>
+                                esc_html_e('Type', 'post-expirator'); ?></span>
                             <span class="screen-reader-text"><?php
-                                _e('How to expire', 'post-expirator'); ?></span>
+                                esc_html_e('How to expire', 'post-expirator'); ?></span>
                         </legend>
                         <label>
                             <?php
@@ -122,9 +124,9 @@ $minute = $defaults['minute'];
                     <div class="pe-category-list">
                         <legend>
                             <span class="title"><?php
-                                echo $tax_label; ?></span>
+                                echo esc_html($tax_label); ?></span>
                             <span class="screen-reader-text"><?php
-                                _e('Expiration Categories', 'post-expirator'); ?></span>
+                                esc_html_e('Expiration Categories', 'post-expirator'); ?></span>
                         </legend>
                         <ul id="categorychecklist"
                             class="list:category categorychecklist cat-checklist category-checklist">
@@ -140,7 +142,6 @@ $minute = $defaults['minute'];
                             ?>
                         </ul>
                     </div>
-                    </span>
                 </div>
                 <input name="expirationdate_quickedit" value="true" type="hidden"/>
                 <input name="postexpirator_view" value="bulk-edit" type="hidden"/>

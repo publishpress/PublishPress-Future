@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') or die('Direct access not allowed.');
 
 // Get Option
 $expirationdateDefaultDateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
@@ -46,28 +47,22 @@ if ($expiredemailnotificationadmins == 0) {
 $user_roles = wp_roles()->get_names();
 $plugin_facade = PostExpirator_Facade::getInstance();
 ?>
-    <p><?php
-        _e(
-            'The PublishPress Future plugin sets a custom meta value, and then optionally allows you to select if you want the post changed to a draft status or deleted when it expires.',
-            'post-expirator'
-        ); ?></p>
-
     <form method="post" id="expirationdate_save_options">
         <?php
         wp_nonce_field('postexpirator_menu_general', '_postExpiratorMenuGeneral_nonce'); ?>
         <h3><?php
-            _e('Defaults', 'post-expirator'); ?></h3>
+            esc_html_e('Defaults', 'post-expirator'); ?></h3>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row"><label for="expired-default-date-format"><?php
-                        _e('Date Format', 'post-expirator'); ?></label></th>
+                        esc_html_e('Date Format', 'post-expirator'); ?></label></th>
                 <td>
                     <input type="text" name="expired-default-date-format" id="expired-default-date-format" value="<?php
-                    echo $expirationdateDefaultDateFormat; ?>" size="25"/> <span class="description">(<?php
-                        echo PostExpirator_Util::get_wp_date($expirationdateDefaultDateFormat, time()); ?>)</span>
+                    echo esc_attr($expirationdateDefaultDateFormat); ?>" size="25"/> <span class="description">(<?php
+                        echo esc_html(PostExpirator_Util::get_wp_date($expirationdateDefaultDateFormat, time())); ?>)</span>
                     <p class="description"><?php
                         echo sprintf(
-                            __(
+                            esc_html__(
                                 'The default format to use when displaying the expiration date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
                                 'post-expirator'
                             ),
@@ -77,14 +72,14 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expired-default-time-format"><?php
-                        _e('Time Format', 'post-expirator'); ?></label></th>
+                        esc_html_e('Time Format', 'post-expirator'); ?></label></th>
                 <td>
                     <input type="text" name="expired-default-time-format" id="expired-default-time-format" value="<?php
-                    echo $expirationdateDefaultTimeFormat; ?>" size="25"/> <span class="description">(<?php
-                        echo PostExpirator_Util::get_wp_date($expirationdateDefaultTimeFormat, time()); ?>)</span>
+                    echo esc_attr($expirationdateDefaultTimeFormat); ?>" size="25"/> <span class="description">(<?php
+                        echo esc_html(PostExpirator_Util::get_wp_date($expirationdateDefaultTimeFormat, time())); ?>)</span>
                     <p class="description"><?php
                     echo sprintf(
-                        __(
+                        esc_html__(
                             'The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
                             'post-expirator'
                         ),
@@ -94,38 +89,38 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expired-default-expiration-date"><?php
-                        _e('Default Date/Time Duration', 'post-expirator'); ?></label></th>
+                        esc_html_e('Default Date/Time Duration', 'post-expirator'); ?></label></th>
                 <td>
                     <select name="expired-default-expiration-date" id="expired-default-expiration-date"
                             class="pe-custom-date-toggle">
                         <option value="null" <?php
                         echo ($expirationdateDefaultDate == 'null') ? ' selected="selected"' : ''; ?>><?php
-                            _e('None', 'post-expirator'); ?></option>
+                            esc_html_e('None', 'post-expirator'); ?></option>
                         <option value="custom" <?php
                         echo ($expirationdateDefaultDate == 'custom') ? ' selected="selected"' : ''; ?>><?php
-                            _e('Custom', 'post-expirator'); ?></option>
+                            esc_html_e('Custom', 'post-expirator'); ?></option>
                         <option value="publish" <?php
                         echo ($expirationdateDefaultDate == 'publish') ? ' selected="selected"' : ''; ?>><?php
-                            _e('Post/Page Publish Time', 'post-expirator'); ?></option>
+                            esc_html_e('Post/Page Publish Time', 'post-expirator'); ?></option>
                     </select>
                     <p class="description"><?php
-                        _e(
+                        esc_html_e(
                             'Set the default expiration date to be used when creating new posts and pages.  Defaults to none.',
                             'post-expirator'
                         ); ?></p>
                     <?php
                     $show = ($expirationdateDefaultDate == 'custom') ? 'block' : 'none'; ?>
                     <div id="expired-custom-container" style="display: <?php
-                    echo $show; ?>;" class="pe-custom-date-container">
+                    echo esc_attr($show); ?>;" class="pe-custom-date-container">
                         <br/>
                         <label for="expired-custom-expiration-date"><?php
-                            _e('Custom', 'post-expirator'); ?>:</label>
+                            esc_html_e('Custom', 'post-expirator'); ?>:</label>
                         <input type="text" value="<?php
-                        echo $expirationdateDefaultDateCustom; ?>" name="expired-custom-expiration-date"
+                        echo esc_attr($expirationdateDefaultDateCustom); ?>" name="expired-custom-expiration-date"
                                id="expired-custom-expiration-date"/>
                         <p class="description"><?php
                             echo sprintf(
-                                __(
+                                esc_html__(
                                     'Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                     'post-expirator'
                                 ),
@@ -142,7 +137,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </tr>
             <tr valign="top">
                 <th scope="row"><?php
-                    _e('Default Expiration Category', 'post-expirator'); ?></th>
+                    esc_html_e('Default Expiration Category', 'post-expirator'); ?></th>
                 <td>
                     <?php
                     echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
@@ -161,36 +156,38 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     echo '</div>';
                     ?>
                     <p class="description"><?php
-                        _e('Sets the default expiration category for the post.', 'post-expirator'); ?></p>
+                        esc_html_e('Sets the default expiration category for the post.', 'post-expirator'); ?></p>
                 </td>
             </tr>
         </table>
 
         <h3><?php
-            _e('Expiration Email Notification', 'post-expirator'); ?></h3>
+            esc_html_e('Expiration Email Notification', 'post-expirator'); ?></h3>
         <p class="description"><?php
-            _e(
+            esc_html_e(
                 'Whenever a post expires, an email can be sent to alert users of the expiration.',
                 'post-expirator'
             ); ?></p>
         <table class="form-table">
             <tr valign="top">
                 <th scope="row"><?php
-                    _e('Enable Email Notification?', 'post-expirator'); ?></th>
+                    esc_html_e('Enable Email Notification?', 'post-expirator'); ?></th>
                 <td>
                     <input type="radio" name="expired-email-notification" id="expired-email-notification-true"
                            value="1" <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $expiredemailnotificationenabled; ?>/> <label
                             for="expired-email-notification-true"><?php
-                        _e('Enabled', 'post-expirator'); ?></label>
+                        esc_html_e('Enabled', 'post-expirator'); ?></label>
                     &nbsp;&nbsp;
                     <input type="radio" name="expired-email-notification" id="expired-email-notification-false"
                            value="0" <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $expiredemailnotificationdisabled; ?>/> <label
                             for="expired-email-notification-false"><?php
-                        _e('Disabled', 'post-expirator'); ?></label>
+                        esc_html_e('Disabled', 'post-expirator'); ?></label>
                     <p class="description"><?php
-                        _e(
+                        esc_html_e(
                             'This will enable or disable the send of email notification on post expiration.',
                             'post-expirator'
                         ); ?></p>
@@ -198,23 +195,25 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </tr>
             <tr valign="top">
                 <th scope="row"><?php
-                    _e('Include Blog Administrators?', 'post-expirator'); ?></th>
+                    esc_html_e('Include Blog Administrators?', 'post-expirator'); ?></th>
                 <td>
                     <input type="radio" name="expired-email-notification-admins"
                            id="expired-email-notification-admins-true"
                            value="1" <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $expiredemailnotificationadminsenabled; ?>/> <label
                             for="expired-email-notification-admins-true"><?php
-                        _e('Enabled', 'post-expirator'); ?></label>
+                        esc_html_e('Enabled', 'post-expirator'); ?></label>
                     &nbsp;&nbsp;
                     <input type="radio" name="expired-email-notification-admins"
                            id="expired-email-notification-admins-false"
                            value="0" <?php
+                    // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     echo $expiredemailnotificationadminsdisabled; ?>/> <label
                             for="expired-email-notification-admins-false"><?php
-                        _e('Disabled', 'post-expirator'); ?></label>
+                        esc_html_e('Disabled', 'post-expirator'); ?></label>
                     <p class="description"><?php
-                        _e(
+                        esc_html_e(
                             'This will include all users with the role of "Administrator" in the post expiration email.',
                             'post-expirator'
                         ); ?></p>
@@ -223,14 +222,14 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             <tr valign="top">
                 <th scope="row"><label
                             for="expired-email-notification-list"><?php
-                        _e('Who to notify', 'post-expirator'); ?></label>
+                        esc_html_e('Who to notify', 'post-expirator'); ?></label>
                 </th>
                 <td>
                     <input class="large-text" type="text" name="expired-email-notification-list"
                            id="expired-email-notification-list" value="<?php
-                    echo $expiredemailnotificationlist; ?>"/>
+                    echo esc_attr($expiredemailnotificationlist); ?>"/>
                     <p class="description"><?php
-                        _e(
+                        esc_html_e(
                             'Enter a comma separate list of emails that you would like to be notified when the post expires.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab.',
                             'post-expirator'
                         ); ?></p>
@@ -241,7 +240,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
         <p class="submit">
             <input type="submit" name="expirationdateSave" class="button-primary"
                    value="<?php
-                   _e('Save Changes', 'post-expirator'); ?>"/>
+                   esc_html_e('Save Changes', 'post-expirator'); ?>"/>
         </p>
     </form>
 

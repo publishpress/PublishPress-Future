@@ -31,6 +31,7 @@ extensions:
         post-expirator-debug.php: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/post-expirator-debug.php"
         readme.txt: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/readme.txt"
         tests/codeception/_data/plugins/custom-post-type-for-post-expirator: "%WP_ROOT_FOLDER%/wp-content/plugins/custom-post-type-for-post-expirator"
+        tests/codeception/_data/plugins/classic-editor-v1.6.2: "%WP_ROOT_FOLDER%/wp-content/plugins/classic-editor"
 params:
   - .env.testing
 settings:

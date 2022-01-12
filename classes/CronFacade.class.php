@@ -44,4 +44,39 @@ class PostExpirator_CronFacade
             'postExpiratorExpire',
         ];
     }
+
+    public static function post_has_scheduled_task($post_id)
+    {
+        $events = self::get_plugin_cron_events();
+
+        foreach ($events as $time => $value) {
+            foreach ($value as $eventkey => $eventvalue) {
+                $arrkey = array_keys($eventvalue);
+                $firstArgsUid = null;
+
+                foreach ($arrkey as $eventguid) {
+                    if (is_null($firstArgsUid)) {
+                        $firstArgsUid = $eventguid;
+                    }
+                }
+
+                if (
+                    isset($eventvalue[$firstArgsUid])
+                    && isset($eventvalue[$firstArgsUid]['args'])
+                    && isset($eventvalue[$firstArgsUid]['args'][0])
+                    && ! empty($eventvalue[$firstArgsUid]['args'][0])
+                ) {
+                    $post = get_post((int)$eventvalue[$firstArgsUid]['args'][0]);
+
+                    if (! empty($post) && ! is_wp_error($post) && is_object($post)) {
+                        if ($post->ID === $post_id) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 }

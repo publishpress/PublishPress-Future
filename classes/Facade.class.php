@@ -162,7 +162,6 @@ class PostExpirator_Facade
 
                 break;
         }
-        //remove_action('updated_postmeta', array($this, 'updatedmeta'), 10, 4);
     }
 
     /**
@@ -186,7 +185,7 @@ class PostExpirator_Facade
      */
     public static function get_expire_principles($id)
     {
-        $expireType = $categories = $taxonomyName = '';
+        $expireType = $categories = $taxonomyName = $expireStatus = '';
 
         $expireTypeNew = get_post_meta($id, '_expiration-date-type', true);
         if (! empty($expireTypeNew)) {
@@ -201,6 +200,11 @@ class PostExpirator_Facade
         $taxonomyNameNew = get_post_meta($id, '_expiration-date-taxonomy', true);
         if (! empty($taxonomyNameNew)) {
             $taxonomyName = $taxonomyNameNew;
+        }
+
+        $expireStatusNew = get_post_meta($id, '_expiration-date-status', true);
+        if (! empty($expireStatusNew)) {
+            $expireStatus = $expireStatusNew;
         }
 
         // _expiration-date-options is deprecated when using block editor
@@ -220,6 +224,7 @@ class PostExpirator_Facade
             'expireType' => $expireType,
             'category' => $categories,
             'categoryTaxonomy' => $taxonomyName,
+            'enabled' => $expireStatus === 'saved',
         );
     }
 
