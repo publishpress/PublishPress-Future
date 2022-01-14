@@ -81,7 +81,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.7.1] - UNRELEASED =
+= [2.7.1] - 12 Jan 2022 =
 
 * Added: Add visual indicator to the cron event status in the settings page, #155;
 * Added: Add small help text to the Expires column icon to say if the event is scheduled or not;
