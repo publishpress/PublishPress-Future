@@ -698,7 +698,7 @@ function postexpirator_schedule_event($id, $ts, $opts)
         if (POSTEXPIRATOR_DEBUG) {
             $debug->save(
                 array(
-                    'message' => $id . ' -> EXISTING FOUND - UNSCHEDULED - ' . (is_wp_error(
+                    'message' => $id . ' -> EXISTING CRON EVENT FOUND - UNSCHEDULED - ' . (is_wp_error(
                             $error
                         ) ? $error->get_error_message() : 'no error')
                 )
@@ -706,17 +706,27 @@ function postexpirator_schedule_event($id, $ts, $opts)
         }
     }
 
-    $error = wp_schedule_single_event($ts, 'postExpiratorExpire', array($id), true);
+    $scheduled = wp_schedule_single_event($ts, 'postExpiratorExpire', array($id), true);
     if (POSTEXPIRATOR_DEBUG) {
-        $debug->save(
-            array(
-                'message' => $id . ' -> SCHEDULED at ' .
-                    PostExpirator_Util::get_wp_date('r', $ts)
-                    . ' ' . '(' . $ts . ') with options ' . print_r($opts, true) . ' ' . (is_wp_error(
-                        $error
-                    ) ? $error->get_error_message() : 'no error')
-            )
-        );
+        if ($scheduled) {
+            $debug->save(
+                array(
+                    'message' => $id . ' -> CRON EVENT SCHEDULED at ' .
+                        PostExpirator_Util::get_wp_date('r', $ts)
+                        . ' ' . '(' . $ts . ') with options ' . print_r($opts, true) . ' no error'
+                )
+            );
+        } else {
+            $debug->save(
+                array(
+                    'message' => $id . ' -> TRIED TO SCHEDULE CRON EVENT at ' .
+                        PostExpirator_Util::get_wp_date('r', $ts)
+                        . ' ' . '(' . $ts . ') with options ' . print_r($opts, true) . ' ' . (is_wp_error(
+                            $scheduled
+                        ) ? $scheduled->get_error_message() : 'no error')
+                )
+            );
+        }
     }
 
     // Update Post Meta
