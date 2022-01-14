@@ -58,19 +58,12 @@ class PostExpirator_CronFacade
                     if (is_null($firstArgsUid)) {
                         $firstArgsUid = $eventguid;
                     }
-                }
 
-                if (
-                    isset($eventvalue[$firstArgsUid])
-                    && isset($eventvalue[$firstArgsUid]['args'])
-                    && isset($eventvalue[$firstArgsUid]['args'][0])
-                    && ! empty($eventvalue[$firstArgsUid]['args'][0])
-                ) {
-                    $post = get_post((int)$eventvalue[$firstArgsUid]['args'][0]);
-
-                    if (! empty($post) && ! is_wp_error($post) && is_object($post)) {
-                        if ($post->ID === $post_id) {
-                            return true;
+                    if (! empty($eventvalue[$eventguid]['args'])) {
+                        foreach ($eventvalue[$eventguid]['args'] as $key => $value) {
+                            if ((int)$value === (int)$post_id) {
+                                return true;
+                            }
                         }
                     }
                 }
