@@ -83,7 +83,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                     ?>
                     <p><?php
                         esc_html_e(
-                            'The below table will show all currently scheduled cron events for the pluginwith the next run time.',
+                            'The below table will show all currently scheduled cron events for the plugin with the next run time.',
                             'post-expirator'
                         ); ?></p>
 
