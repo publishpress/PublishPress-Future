@@ -81,6 +81,12 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [UNRELEASED] =
+
+* Changed: Added more clear debug message if the cron event was not scheduled due to an error;
+* Fixed: Fix the Expires column in the posts page correctly identifying the post ID on cron event with multiple IDs, #210;
+*
+
 = [2.7.1] - 12 Jan 2022 =
 
 * Added: Add visual indicator to the cron event status in the settings page, #155;
@@ -107,7 +113,7 @@ This section describes how to install the plugin and get it working.
 
 = [2.7.0] - 02 Dec 2021 =
 
-* Changed: Rename the plugin from Post Expirator to PublishpPress Future, #14;
+* Changed: Rename the plugin from Post Expirator to PublishPress Future, #14;
 * Changed: Add the PublishPress footer and branding, #68;
 * Changed: Separate the settings into different tabs, #97, #98;
 * Changed: Rename the "General Settings" tab to "Default", #99;
