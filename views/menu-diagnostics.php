@@ -123,8 +123,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
                                             echo '<td>';
                                             foreach ($eventValueKeys as $eventGUID) {
                                                 if (false === empty($eventValue[$eventGUID]['args'])) {
-                                                    echo '<div>';
-                                                    foreach ($eventValue[$eventGUID]['args'] as $key => $value) {
+                                                    echo '<div class="pe-event-post" title="' . esc_attr($eventGUID) . '">';
+                                                    foreach ($eventValue[$eventGUID]['args'] as $value) {
                                                         $eventPost = get_post((int)$value);
 
                                                         if (

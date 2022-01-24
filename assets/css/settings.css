@@ -149,3 +149,7 @@ footer .pp-pressshack-logo img {
 span.post-expiration-attributes {
 	color: #adadad;
 }
+
+.pe-event-post {
+	cursor: help;
+}

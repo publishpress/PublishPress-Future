@@ -87,6 +87,7 @@ This section describes how to install the plugin and get it working.
 * Changed: Refactored the list of cron schedules in the Diagnostics tab adding more post information, #215;
 * Fixed: Fix the Expires column in the posts page correctly identifying the post ID on cron event with multiple IDs, #210;
 * Fixed: Fix wrong function used to escape a html attribute on a setting page;
+* Added: Added the event GUID as tooltip to each post in the Current Cron Schedule list on the Diagnostics page, #214;
 
 = [2.7.1] - 12 Jan 2022 =
 
