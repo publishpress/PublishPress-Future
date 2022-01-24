@@ -12,31 +12,31 @@ defined('ABSPATH') or die('Direct access not allowed.');
             <th scope="row"><label for="postexpirator-log"><?php
                     esc_html_e('Debug Logging', 'post-expirator'); ?></label></th>
             <td>
-                <?php
-                if (defined('POSTEXPIRATOR_DEBUG') && POSTEXPIRATOR_DEBUG) : ?>
+                <?php if (defined('POSTEXPIRATOR_DEBUG') && POSTEXPIRATOR_DEBUG) : ?>
                     <i class="dashicons dashicons-yes-alt pe-status pe-status-enabled"></i> <span><?php
                         esc_html_e('Enabled', 'post-expirator'); ?></span>
                     <?php
-                    echo '<input type="submit" class="button" name="debugging-disable" id="debugging-disable" value=" ' . esc_html__(
+                    echo '<input type="submit" class="button" name="debugging-disable" id="debugging-disable" value=" '
+                        . esc_html__(
                             'Disable Debugging',
                             'post-expirator'
                         ) . '" />'; ?>
                     <?php
-                    echo '<a href="' . esc_url(admin_url(
+                    echo '<a href="' . esc_url(
+                        admin_url(
                             'admin.php?page=publishpress-future&tab=viewdebug'
-                        )) . '">' . esc_html__('View Debug Logs', 'post-expirator') . '</a>'; ?>
-                <?php
-                else: ?>
+                        )
+                    ) . '">' . esc_html__('View Debug Logs', 'post-expirator') . '</a>'; ?>
+                <?php else : ?>
                     <i class="dashicons dashicons-no-alt pe-status pe-status-disabled"></i> <span><?php
                         esc_html_e('Disabled', 'post-expirator'); ?></span>
                     <?php
-                    echo '<input type="submit" class="button" name="debugging-enable" id="debugging-enable" value=" ' . esc_html__(
+                    echo '<input type="submit" class="button" name="debugging-enable" id="debugging-enable" value=" '
+                        . esc_html__(
                             'Enable Debugging',
                             'post-expirator'
                         ) . '" />'; ?>
-                <?php
-                endif;
-                ?>
+                <?php endif; ?>
             </td>
         </tr>
         <tr>
@@ -51,17 +51,13 @@ defined('ABSPATH') or die('Direct access not allowed.');
             <th scope="row"><?php
                 esc_html_e('WP-Cron Status', 'post-expirator'); ?></th>
             <td>
-                <?php
-                if (PostExpirator_CronFacade::is_cron_enabled()) : ?>
+                <?php if (PostExpirator_CronFacade::is_cron_enabled()) : ?>
                     <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
                         esc_html_e('Enabled', 'post-expirator'); ?></span>
-                <?php
-                else: ?>
+                <?php else : ?>
                     <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php
                         esc_html_e('Disabled', 'post-expirator'); ?></span>
-                <?php
-                endif;
-                ?>
+                <?php endif; ?>
             </td>
         </tr>
         <tr>
@@ -82,52 +78,71 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 } else {
                     ?>
                     <p><?php
+                        // phpcs:disable Generic.Files.LineLength.TooLong
                         esc_html_e(
                             'The below table will show all currently scheduled cron events for the plugin with the next run time.',
                             'post-expirator'
-                        ); ?></p>
+                        );
+                        // phpcs:enable
+                        ?></p>
 
                     <div>
                         <table class="striped wp-list-table widefat fixed table-view-list">
                             <thead>
                                 <tr>
-                                    <th class="pe-date-column"><?php esc_html_e('Date', 'post-expirator'); ?></th>
-                                    <th class="pe-event-column"><?php esc_html_e('Event', 'post-expirator'); ?></th>
-                                    <th><?php esc_html_e('Posts and expiration settings', 'post-expirator'); ?></th>
+                                    <th class="pe-date-column">
+                                        <?php esc_html_e('Date', 'post-expirator'); ?>
+                                    </th>
+                                    <th class="pe-event-column">
+                                        <?php esc_html_e('Event', 'post-expirator'); ?>
+                                    </th>
+                                    <th>
+                                        <?php esc_html_e('Posts and expiration settings', 'post-expirator'); ?>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
+                                    $printPostEvent = function ($post) {
+                                        echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
+                                        $attributes = PostExpirator_Facade::get_expire_principles($post->ID);
+                                        echo ': <span class="post-expiration-attributes">';
+                                        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+                                        print_r($attributes);
+                                        echo '</span>';
+                                    };
 
-                                foreach ($cron as $time => $value) {
-                                    foreach ($value as $eventKey => $eventValue) {
-                                        echo '<tr class="pe-event">';
-                                        echo '<td>' . esc_html(PostExpirator_Util::get_wp_date('r', $time)) . '</td>';
-                                        echo '<td>' . esc_html($eventKey) . '</td>';
-                                        $eventValueKeys = array_keys($eventValue);
-                                        echo '<td>';
-                                        foreach ($eventValueKeys as $eventGUID) {
-                                            if (false === empty($eventValue[$eventGUID]['args'])) {
-                                                echo '<div>';
-                                                foreach ($eventValue[$eventGUID]['args'] as $key => $value) {
-                                                    $post = get_post((int)$value);
+                                    // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+                                    foreach ($cron as $time => $value) {
+                                        foreach ($value as $eventKey => $eventValue) {
+                                            echo '<tr class="pe-event">';
+                                            echo '<td>' . esc_html(PostExpirator_Util::get_wp_date('r', $time))
+                                                . '</td>';
+                                            echo '<td>' . esc_html($eventKey) . '</td>';
+                                            $eventValueKeys = array_keys($eventValue);
+                                            echo '<td>';
+                                            foreach ($eventValueKeys as $eventGUID) {
+                                                if (false === empty($eventValue[$eventGUID]['args'])) {
+                                                    echo '<div>';
+                                                    foreach ($eventValue[$eventGUID]['args'] as $key => $value) {
+                                                        $eventPost = get_post((int)$value);
 
-                                                    if (false === empty($post) && false === is_wp_error($post) && is_object($post)) {
-                                                        echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
-                                                        $attributes = PostExpirator_Facade::get_expire_principles($post->ID);
-                                                        echo ': <span class="post-expiration-attributes">';
-                                                        print_r($attributes);
-                                                        echo '</span>';
+                                                        if (
+                                                            false === empty($eventPost)
+                                                            && false === is_wp_error($eventPost)
+                                                            && is_object($eventPost)
+                                                        ) {
+                                                            $printPostEvent($eventPost);
+                                                        }
                                                     }
+                                                    echo '</div>';
                                                 }
-                                                echo '</div>';
                                             }
+                                            echo '</td>';
+                                            echo '</tr>';
                                         }
-                                        echo '</td>';
-                                        echo '</tr>';
                                     }
-                                }
-                                ?>
+                                // phpcs:enable ?>
                             </tbody>
                         </table>
                     </div>
