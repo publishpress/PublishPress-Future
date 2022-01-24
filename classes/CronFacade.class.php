@@ -49,21 +49,14 @@ class PostExpirator_CronFacade
     {
         $events = self::get_plugin_cron_events();
 
-        foreach ($events as $time => $value) {
-            foreach ($value as $eventkey => $eventvalue) {
-                $arrkey = array_keys($eventvalue);
-                $firstArgsUid = null;
+        foreach ($events as $event) {
+            foreach ($event as $eventValue) {
+                $eventValueKeys = array_keys($eventValue);
 
-                foreach ($arrkey as $eventguid) {
-                    if (is_null($firstArgsUid)) {
-                        $firstArgsUid = $eventguid;
-                    }
-
-                    if (! empty($eventvalue[$eventguid]['args'])) {
-                        foreach ($eventvalue[$eventguid]['args'] as $key => $value) {
-                            if ((int)$value === (int)$post_id) {
-                                return true;
-                            }
+                foreach ($eventValueKeys as $eventGUID) {
+                    if (! empty($eventValue[$eventGUID]['args'])) {
+                        if ((int)$eventValue[$eventGUID]['args'][0] === (int)$post_id) {
+                            return true;
                         }
                     }
                 }
