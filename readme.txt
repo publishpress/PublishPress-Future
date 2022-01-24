@@ -84,8 +84,8 @@ This section describes how to install the plugin and get it working.
 = [UNRELEASED] =
 
 * Changed: Added more clear debug message if the cron event was not scheduled due to an error;
+* Changed: Refactored the list of cron schedules in the Diagnostics tab adding more post information, #215;
 * Fixed: Fix the Expires column in the posts page correctly identifying the post ID on cron event with multiple IDs, #210;
-*
 
 = [2.7.1] - 12 Jan 2022 =
 

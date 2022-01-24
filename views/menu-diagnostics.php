@@ -63,7 +63,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 endif;
                 ?>
             </td>
-        </tr/>
+        </tr>
         <tr>
             <th scope="row"><label for="cron-schedule"><?php
                     esc_html_e('Current Cron Schedule', 'post-expirator'); ?></label></th>
@@ -113,7 +113,11 @@ defined('ABSPATH') or die('Direct access not allowed.');
                                                     $post = get_post((int)$value);
 
                                                     if (false === empty($post) && false === is_wp_error($post) && is_object($post)) {
-                                                        echo esc_html("{$post->ID}: {$post->post_title} ({$post->post_status})");
+                                                        echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
+                                                        $attributes = PostExpirator_Facade::get_expire_principles($post->ID);
+                                                        echo ': <span class="post-expiration-attributes">';
+                                                        print_r($attributes);
+                                                        echo '</span>';
                                                     }
                                                 }
                                                 echo '</div>';
