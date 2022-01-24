@@ -639,22 +639,24 @@ function postexpirator_update_post_meta($id)
                 $shouldSchedule = get_post_meta($id, '_expiration-date-status', true) === 'saved';
             }
 
-            if (isset($payload['meta']['_expiration-date'])) {
-                $ts = $payload['meta']['_expiration-date'];
-            } else {
-                $ts = get_post_meta($id, '_expiration-date', true);
-            }
+            if ($shouldSchedule) {
+                if (isset($payload['meta']['_expiration-date'])) {
+                    $ts = $payload['meta']['_expiration-date'];
+                } else {
+                    $ts = get_post_meta($id, '_expiration-date', true);
+                }
 
-            if (isset($payload['meta']['_expiration-date-type'])) {
-                $opts['expireType'] = $payload['meta']['_expiration-date-type'];
-            } else {
-                $opts['expireType'] = get_post_meta($id, '_expiration-date-type', true);
-            }
+                if (isset($payload['meta']['_expiration-date-type'])) {
+                    $opts['expireType'] = $payload['meta']['_expiration-date-type'];
+                } else {
+                    $opts['expireType'] = get_post_meta($id, '_expiration-date-type', true);
+                }
 
-            if (isset($payload['meta']['_expiration-date-categories'])) {
-                $opts['category'] = (array)$payload['meta']['_expiration-date-categories'];
-            } else {
-                $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
+                if (isset($payload['meta']['_expiration-date-categories'])) {
+                    $opts['category'] = (array)$payload['meta']['_expiration-date-categories'];
+                } else {
+                    $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
+                }
             }
         } else {
             $shouldSchedule = get_post_meta($id, '_expiration-date-status', true) === 'saved';
