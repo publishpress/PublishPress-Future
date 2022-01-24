@@ -145,3 +145,7 @@ footer .pp-pressshack-logo img {
 .form-table .widefat .pe-event-column {
 	width: 20%;
 }
+
+span.post-expiration-attributes {
+	color: #adadad;
+}
