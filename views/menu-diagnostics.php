@@ -97,51 +97,48 @@ defined('ABSPATH') or die('Direct access not allowed.');
                                 <th><?php
                                     esc_html_e('Arguments / Schedule', 'post-expirator'); ?></th>
                                 <th><?php
-                                    esc_html_e('Post', 'post-expirator'); ?></th>
+                                    esc_html_e('Posts', 'post-expirator'); ?></th>
                             </tr>
                             <?php
 
                             foreach ($cron as $time => $value) {
-                                foreach ($value as $eventkey => $eventvalue) {
+                                foreach ($value as $eventKey => $eventValue) {
                                     echo '<tr class="pe-event">';
                                     echo '<td>' . esc_html(PostExpirator_Util::get_wp_date('r', $time)) . '</td>';
-                                    echo '<td>' . esc_html($eventkey) . '</td>';
-                                    $arrkey = array_keys($eventvalue);
-                                    $firstArgsUid = null;
+                                    echo '<td>' . esc_html($eventKey) . '</td>';
+                                    $eventValueKeys = array_keys($eventValue);
                                     echo '<td>';
-                                    foreach ($arrkey as $eventguid) {
-                                        if (is_null($firstArgsUid)) {
-                                            $firstArgsUid = $eventguid;
-                                        }
-                                        if (empty($eventvalue[$eventguid]['args'])) {
+                                    foreach ($eventValueKeys as $eventGUID) {
+                                        if (empty($eventValue[$eventGUID]['args'])) {
                                             echo '<div>' . esc_html__('No Arguments', 'post-expirator') . '</div>';
                                         } else {
                                             echo '<div>';
-                                            foreach ($eventvalue[$eventguid]['args'] as $key => $value) {
+                                            foreach ($eventValue[$eventGUID]['args'] as $key => $value) {
                                                 echo esc_html("$key => $value") . '<br>';
                                             }
                                             echo '</div>';
                                         }
                                     }
                                     echo '&nbsp;/&nbsp;';
-                                    if (empty($eventvalue[$eventguid]['schedule'])) {
+                                    if (empty($eventValue[$eventGUID]['schedule'])) {
                                         echo esc_html__('Single Event', 'post-expirator');
                                     } else {
-                                        echo esc_html($eventvalue[$eventguid]['schedule']) . ' (' . esc_html($eventvalue[$eventguid]['interval']) . ')';
+                                        echo esc_html($eventValue[$eventGUID]['schedule']) . ' (' . esc_html($eventValue[$eventGUID]['interval']) . ')';
                                     }
                                     echo '</td>';
 
                                     echo '<td>';
-                                    if (
-                                        isset($eventvalue[$firstArgsUid])
-                                        && isset($eventvalue[$firstArgsUid]['args'])
-                                        && isset($eventvalue[$firstArgsUid]['args'][0])
-                                        && ! empty($eventvalue[$firstArgsUid]['args'][0])
-                                    ) {
-                                        $post = get_post((int)$eventvalue[$firstArgsUid]['args'][0]);
+                                    foreach ($eventValueKeys as $eventGUID) {
+                                        if (false === empty($eventValue[$eventGUID]['args'])) {
+                                            echo '<div>';
+                                            foreach ($eventValue[$eventGUID]['args'] as $key => $value) {
+                                                $post = get_post((int)$value);
 
-                                        if (! empty($post) && ! is_wp_error($post) && is_object($post)) {
-                                            echo esc_html("{$post->ID}: {$post->post_title} ({$post->post_status})");
+                                                if (false === empty($post) && false === is_wp_error($post) && is_object($post)) {
+                                                    echo esc_html("{$post->ID}: {$post->post_title} ({$post->post_status})");
+                                                }
+                                            }
+                                            echo '</div>';
                                         }
                                     }
                                     echo '</td>';
