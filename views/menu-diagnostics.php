@@ -44,7 +44,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 esc_html_e('Purge Debug Log', 'post-expirator'); ?></th>
             <td>
                 <input type="submit" class="button" name="purge-debug" id="purge-debug" value="<?php
-                esc_html_e('Purge Debug Log', 'post-expirator'); ?>"/>
+                esc_attr_e('Purge Debug Log', 'post-expirator'); ?>"/>
             </td>
         </tr>
         <tr>
