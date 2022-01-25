@@ -81,13 +81,18 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [UNRELEASED] =
+= [2.7.2] - 25 Jan 2022 =
 
 * Changed: Added more clear debug message if the cron event was not scheduled due to an error;
 * Changed: Refactored the list of cron schedules in the Diagnostics tab adding more post information, #215;
-* Fixed: Fix the Expires column in the posts page correctly identifying the post ID on cron event with multiple IDs, #210;
-* Fixed: Fix wrong function used to escape a html attribute on a setting page;
+* Changed: Removed the admin notice about the plugin renaming;
 * Added: Added the event GUID as tooltip to each post in the Current Cron Schedule list on the Diagnostics page, #214;
+* Fixed: Fix the Expires column in the posts page correctly identifying the post ID on cron event with multiple IDs, #210;
+* Fixed: Fix wrong function used to escape a html attributes on a setting page;
+* Fixed: Fix missed sanitization for some data on admin pages;
+* Fixed: Fix some false positives given by PHPCS;
+* Fixed: Fix expiration data processing avoid to process for deactivated posts;
+* Fixed: Fix a typo in the diagnostics settings tab;
 
 = [2.7.1] - 12 Jan 2022 =
 
