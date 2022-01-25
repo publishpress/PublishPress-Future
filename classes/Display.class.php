@@ -277,7 +277,7 @@ class PostExpirator_Display
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
                 update_option('expirationdateDefaultDateFormat', sanitize_text_field($_POST['expired-default-date-format']));
-                update_option('expirationdateDefaultTimeFormat', sanitize_text_field($_POST['expired-default-time-format']);
+                update_option('expirationdateDefaultTimeFormat', sanitize_text_field($_POST['expired-default-time-format']));
                 update_option('expirationdateEmailNotification', sanitize_text_field($_POST['expired-email-notification']));
                 update_option('expirationdateEmailNotificationAdmins', sanitize_text_field($_POST['expired-email-notification-admins']));
                 update_option('expirationdateEmailNotificationList', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
