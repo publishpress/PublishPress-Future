@@ -582,32 +582,32 @@ function postexpirator_update_post_meta($id)
                 $year = date('Y');
             }
         }
-        $category = isset($_POST['expirationdate_category']) ? $_POST['expirationdate_category'] : 0;
+        $category = isset($_POST['expirationdate_category']) ? sanitize_text_field($_POST['expirationdate_category']) : 0;
 
         $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
 
         if (isset($_POST['expirationdate_quickedit'])) {
             $opts = PostExpirator_Facade::get_expire_principles($id);
             if (isset($_POST['expirationdate_expiretype'])) {
-                $opts['expireType'] = $_POST['expirationdate_expiretype'];
+                $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
                 if (in_array($opts['expireType'], array(
                     'category',
                     'category-add',
                     'category-remove'
                 ), true)) {
-                    $opts['category'] = $_POST['expirationdate_category'];
+                    $opts['category'] = sanitize_text_field($_POST['expirationdate_category']);
                 }
             }
         } else {
             // Schedule/Update Expiration
-            $opts['expireType'] = $_POST['expirationdate_expiretype'];
+            $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
             $opts['id'] = $id;
 
             if ($opts['expireType'] === 'category' || $opts['expireType'] === 'category-add' || $opts['expireType'] === 'category-remove') {
                 if (isset($category) && ! empty($category)) {
                     if (! empty($category)) {
                         $opts['category'] = $category;
-                        $opts['categoryTaxonomy'] = $_POST['taxonomy-heirarchical'];
+                        $opts['categoryTaxonomy'] = sanitize_text_field($_POST['taxonomy-heirarchical']);
                     }
                 }
             }
@@ -2083,14 +2083,14 @@ function postexpirator_date_save_bulk_edit()
         );
     }
 
-    $status = $_POST['expirationdate_status'];
+    $status = sanitize_key($_POST['expirationdate_status']);
     // if no change, do nothing
     if ($status === 'no-change') {
         return;
     }
 
     // we need the post IDs
-    $post_ids = (isset($_POST['post_ids']) && ! empty($_POST['post_ids'])) ? $_POST['post_ids'] : null;
+    $post_ids = (isset($_POST['post_ids']) && ! empty($_POST['post_ids'])) ? array_map('intval', $_POST['post_ids']) : null;
 
     // if we have post IDs
     if (! empty($post_ids) && is_array($post_ids)) {
@@ -2134,10 +2134,10 @@ function postexpirator_date_save_bulk_edit()
 
             if ($update_expiry) {
                 $opts = PostExpirator_Facade::get_expire_principles($post_id);
-                $opts['expireType'] = $_POST['expirationdate_expiretype'];
+                $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
 
                 if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
-                    $opts['category'] = $_POST['expirationdate_category'];
+                    $opts['category'] = sanitize_text_field($_POST['expirationdate_category']);
                 }
 
                 PostExpirator_Facade::set_expire_principles($post_id, $opts);
