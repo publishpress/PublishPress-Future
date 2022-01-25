@@ -129,7 +129,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
 
         <p class="submit">
             <input type="submit" name="expirationdateSaveDisplay" class="button-primary" value="<?php
-            esc_html_e('Save Changes', 'post-expirator'); ?>"/>
+            esc_attr_e('Save Changes', 'post-expirator'); ?>"/>
         </p>
     </form>
 
