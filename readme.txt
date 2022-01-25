@@ -93,6 +93,7 @@ This section describes how to install the plugin and get it working.
 * Fixed: Fix some false positives given by PHPCS;
 * Fixed: Fix expiration data processing avoid to process for deactivated posts;
 * Fixed: Fix a typo in the diagnostics settings tab;
+* Fixed: Fix the checkbox state for posts that are not set to expire, #217;
 
 = [2.7.1] - 12 Jan 2022 =
 
