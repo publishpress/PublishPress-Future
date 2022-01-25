@@ -48,6 +48,9 @@
                 if (config.default_date) {
                     date.setTime((parseInt(config.default_date) + browserTimezoneOffset + wpTimezoneOffset) * 1000);
                 }
+
+                // If the date is not set
+                enabled = false;
             }
 
             let taxonomy = config.defaults.taxonomy || 'category';

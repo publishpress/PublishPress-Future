@@ -411,7 +411,7 @@ function postexpirator_meta_box($post)
         $categories = $attributes['category'];
     }
 
-    if ($postMetaStatus === 'saved') {
+    if (PostExpirator_Facade::is_expiration_enabled_for_post($post->ID)) {
         $enabled = ' checked="checked"';
     }
 
@@ -634,9 +634,11 @@ function postexpirator_update_post_meta($id)
 
         if (isset($payload['meta'])) {
             if (isset($payload['meta']['_expiration-date-status'])) {
-                $shouldSchedule = $payload['meta']['_expiration-date-status'] === 'saved';
+                $shouldSchedule = $payload['meta']['_expiration-date-status'] === 'saved'
+                    && isset($payload['meta']['_expiration-date'])
+                    && false === empty($payload['meta']['_expiration-date']);
             } else {
-                $shouldSchedule = get_post_meta($id, '_expiration-date-status', true) === 'saved';
+                $shouldSchedule = PostExpirator_Facade::is_expiration_enabled_for_post($id);
             }
 
             if ($shouldSchedule) {
@@ -659,7 +661,7 @@ function postexpirator_update_post_meta($id)
                 }
             }
         } else {
-            $shouldSchedule = get_post_meta($id, '_expiration-date-status', true) === 'saved';
+            $shouldSchedule = PostExpirator_Facade::is_expiration_enabled_for_post($id);
 
             if ($shouldSchedule) {
                 $ts = get_post_meta($id, '_expiration-date', true);
@@ -827,7 +829,15 @@ function postexpirator_expire_post($id)
         $expireCategoryTaxonomy = $postExpireOptions['categoryTaxonomy'];
     }
 
-    $expirationDate = get_post_meta($id, '_expiration-date', true);
+    $expirationDate = (int)get_post_meta($id, '_expiration-date', true);
+
+    if (empty($expirationDate)) {
+        if (POSTEXPIRATOR_DEBUG) {
+            $debug->save(array('message' => $id . ' -> Tried to expire the post but the expire date is empty'));
+        }
+
+        return false;
+    }
 
     // Check for default expire only if not passed in
     if (empty($expireType)) {
