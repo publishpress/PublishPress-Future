@@ -23,6 +23,7 @@ class PostExpiratorDebug
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         if ($wpdb->get_var("SHOW TABLES LIKE '" . $this->debug_table . "'") !== $this->debug_table) {
             $sql = 'CREATE TABLE `' . $this->debug_table . '` (
                 `id` INT(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -41,6 +42,7 @@ class PostExpiratorDebug
     public function removeDBTable()
     {
         global $wpdb;
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
         $wpdb->query('DROP TABLE IF EXISTS ' . $this->debug_table);
     }
 
@@ -57,12 +59,14 @@ class PostExpiratorDebug
             $blog = 0;
         }
         $wpdb->query(
+            // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
             $wpdb->prepare(
                 'INSERT INTO ' . $this->debug_table . ' (`timestamp`,`message`,`blog`) VALUES (FROM_UNIXTIME(%d),%s,%s)',
                 time(),
                 $data['message'],
                 $blog
             )
+            // phpcs:enable
         );
     }
 
