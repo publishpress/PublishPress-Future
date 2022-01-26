@@ -4,8 +4,8 @@ Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
 Requires at least: 5.3
-Tested up to: 5.8
-Stable tag: 2.7.1
+Tested up to: 5.9
+Stable tag: 2.7.2
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -81,7 +81,21 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.7.1] - UNRELEASED =
+= [2.7.2] - 25 Jan 2022 =
+
+* Changed: Added more clear debug message if the cron event was not scheduled due to an error;
+* Changed: Refactored the list of cron schedules in the Diagnostics tab adding more post information, #215;
+* Changed: Removed the admin notice about the plugin renaming;
+* Added: Added the event GUID as tooltip to each post in the Current Cron Schedule list on the Diagnostics page, #214;
+* Fixed: Fix the Expires column in the posts page correctly identifying the post ID on cron event with multiple IDs, #210;
+* Fixed: Fix wrong function used to escape a html attributes on a setting page;
+* Fixed: Fix missed sanitization for some data on admin pages;
+* Fixed: Fix some false positives given by PHPCS;
+* Fixed: Fix expiration data processing avoid to process for deactivated posts;
+* Fixed: Fix a typo in the diagnostics settings tab;
+* Fixed: Fix the checkbox state for posts that are not set to expire, #217;
+
+= [2.7.1] - 12 Jan 2022 =
 
 * Added: Add visual indicator to the cron event status in the settings page, #155;
 * Added: Add small help text to the Expires column icon to say if the event is scheduled or not;
@@ -107,7 +121,7 @@ This section describes how to install the plugin and get it working.
 
 = [2.7.0] - 02 Dec 2021 =
 
-* Changed: Rename the plugin from Post Expirator to PublishpPress Future, #14;
+* Changed: Rename the plugin from Post Expirator to PublishPress Future, #14;
 * Changed: Add the PublishPress footer and branding, #68;
 * Changed: Separate the settings into different tabs, #97, #98;
 * Changed: Rename the "General Settings" tab to "Default", #99;

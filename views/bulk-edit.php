@@ -31,11 +31,11 @@ $minute = $defaults['minute'];
                                 </option>
                                 <option value="change-only" data-show-fields="true"
                                         title="<?php
-                                        esc_html_e('Change expiry date if enabled on posts', 'post-expirator'); ?>"><?php
+                                        esc_attr_e('Change expiry date if enabled on posts', 'post-expirator'); ?>"><?php
                                     esc_html_e('Change on posts', 'post-expirator'); ?></option>
                                 <option value="add-only" data-show-fields="true"
                                         title="<?php
-                                        esc_html_e('Add expiry date if not enabled on posts', 'post-expirator'); ?>"><?php
+                                        esc_attr_e('Add expiry date if not enabled on posts', 'post-expirator'); ?>"><?php
                                     esc_html_e('Add to posts', 'post-expirator'); ?></option>
                                 <option value="change-add"
                                         data-show-fields="true"><?php

@@ -35,11 +35,7 @@ trait Post
         $this->fillField('#title', sq($title));
     }
 
-    /**
-     * @Given I am editing post :postSlug
-     * @When I am editing post :postSlug
-     */
-    public function iAmEditingPost($postSlug)
+    private function getPostIdFromSlug($postSlug)
     {
         $postSlug = sq($postSlug);
 
@@ -54,6 +50,17 @@ trait Post
         if (! empty($posts)) {
             $postId = $posts[0]->ID;
         }
+
+        return $postId;
+    }
+
+    /**
+     * @Given I am editing post :postSlug
+     * @When I am editing post :postSlug
+     */
+    public function iAmEditingPost($postSlug)
+    {
+        $postId = $this->getPostIdFromSlug($postSlug);
 
         if (! empty($postId)) {
             $this->amOnAdminPage("post.php?post=$postId&action=edit");
@@ -99,5 +106,15 @@ trait Post
     public function iRefreshThePage()
     {
         $this->executeJs('location.reload()');
+    }
+
+    /**
+     * @Given post :postSlug has metadata :metadataKey as :metadataValue
+     */
+    public function postHasMetadata($postSlug, $metadataKey, $metadataValue)
+    {
+        $postId = $this->getPostIdFromSlug($postSlug);
+
+        $this->havePostmetaInDatabase($postId, $metadataKey, $metadataValue);
     }
 }

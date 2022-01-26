@@ -179,14 +179,13 @@ class PostExpirator_Facade
     }
 
     /**
-     * Get the expire type, categories etc.
+     * Get the expiry type, categories etc.
      *
      * Keeps in mind the old (classic editor) and new (gutenberg) structure.
      */
     public static function get_expire_principles($id)
     {
         $expireType = $categories = $taxonomyName = $expireStatus = '';
-
         $expireTypeNew = get_post_meta($id, '_expiration-date-type', true);
         if (! empty($expireTypeNew)) {
             $expireType = $expireTypeNew;
@@ -224,7 +223,7 @@ class PostExpirator_Facade
             'expireType' => $expireType,
             'category' => $categories,
             'categoryTaxonomy' => $taxonomyName,
-            'enabled' => $expireStatus === 'saved',
+            'enabled' => self::is_expiration_enabled_for_post($id),
         );
     }
 
@@ -523,6 +522,9 @@ class PostExpirator_Facade
 
     public static function is_expiration_enabled_for_post($post_id)
     {
-        return get_post_meta($post_id, '_expiration-date-status', true) === 'saved';
+        $statusEnabled = get_post_meta($post_id, '_expiration-date-status', true) === 'saved';
+        $date = (int)get_post_meta($post_id, '_expiration-date', true);
+
+        return $statusEnabled && false === empty($date);
     }
 }

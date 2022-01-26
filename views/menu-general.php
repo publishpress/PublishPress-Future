@@ -240,7 +240,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
         <p class="submit">
             <input type="submit" name="expirationdateSave" class="button-primary"
                    value="<?php
-                   esc_html_e('Save Changes', 'post-expirator'); ?>"/>
+                   esc_attr_e('Save Changes', 'post-expirator'); ?>"/>
         </p>
     </form>
 

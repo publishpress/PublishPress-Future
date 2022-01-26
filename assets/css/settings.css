@@ -15,10 +15,6 @@ ul.pe-list > li {
 	padding: 5px;
 }
 
-tr.pe-event {
-	background-color: #ddd !important;
-}
-
 #pe-settings-tabs fieldset {
 	border: 1px solid black;
 	border-radius: 6px;
@@ -138,4 +134,22 @@ footer .dashicons.dashicons-star-filled {
 
 footer .pp-pressshack-logo img {
 	 width: 170px;
+}
+
+.form-table .widefat th {
+	padding-left: 20px;
+	font-weight: 400;
+}
+
+.form-table .widefat .pe-date-column,
+.form-table .widefat .pe-event-column {
+	width: 20%;
+}
+
+span.post-expiration-attributes {
+	color: #adadad;
+}
+
+.pe-event-post {
+	cursor: help;
 }
