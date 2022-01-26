@@ -25,7 +25,7 @@ class RoboFile extends PackageBuilderTasks
                 'Gruntfile.js',
                 'jsconfig.json',
                 'logs',
-                'phpcs.xml',
+                '.phpcs.xml',
                 '.distignore',
                 '.phplint-cache',
                 '.php-cs-fixer.cache',
@@ -34,6 +34,7 @@ class RoboFile extends PackageBuilderTasks
             )
         );
 
+        $this->setPluginFilename('post-expirator.php');
         $this->setVersionConstantName('POSTEXPIRATOR_VERSION');
     }
 }
