@@ -283,7 +283,7 @@ class PostExpirator_Display
                 update_option('expirationdateEmailNotificationList', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
                 update_option(
                     'expirationdateCategoryDefaults',
-                    isset($_POST['expirationdate_category']) ? sanitize_text_field($_POST['expirationdate_category']) : array()
+                    isset($_POST['expirationdate_category']) ? PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']) : []
                 );
                 update_option('expirationdateDefaultDate', sanitize_text_field($_POST['expired-default-expiration-date']));
                 if (!empty($_POST['expired-custom-expiration-date'])) {

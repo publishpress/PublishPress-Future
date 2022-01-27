@@ -4,14 +4,14 @@
 * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
 * Author: PublishPress
- * Version: 2.7.2
+ * Version: 2.7.3
 * Author URI: http://publishpress.com
 * Text Domain: post-expirator
 * Domain Path: /languages
 */
 
 // Default Values
-define('POSTEXPIRATOR_VERSION', '2.7.2');
+define('POSTEXPIRATOR_VERSION', '2.7.3');
 define('POSTEXPIRATOR_DATEFORMAT', __('l F jS, Y', 'post-expirator'));
 define('POSTEXPIRATOR_TIMEFORMAT', __('g:ia', 'post-expirator'));
 define('POSTEXPIRATOR_FOOTERCONTENTS', __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'));
@@ -582,7 +582,8 @@ function postexpirator_update_post_meta($id)
                 $year = date('Y');
             }
         }
-        $category = isset($_POST['expirationdate_category']) ? sanitize_text_field($_POST['expirationdate_category']) : 0;
+        $category = isset($_POST['expirationdate_category'])
+            ? PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']) : [];
 
         $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
 
@@ -595,7 +596,7 @@ function postexpirator_update_post_meta($id)
                     'category-add',
                     'category-remove'
                 ), true)) {
-                    $opts['category'] = sanitize_text_field($_POST['expirationdate_category']);
+                    $opts['category'] = $category;
                 }
             }
         } else {
@@ -605,10 +606,8 @@ function postexpirator_update_post_meta($id)
 
             if ($opts['expireType'] === 'category' || $opts['expireType'] === 'category-add' || $opts['expireType'] === 'category-remove') {
                 if (isset($category) && ! empty($category)) {
-                    if (! empty($category)) {
-                        $opts['category'] = $category;
-                        $opts['categoryTaxonomy'] = sanitize_text_field($_POST['taxonomy-heirarchical']);
-                    }
+                    $opts['category'] = $category;
+                    $opts['categoryTaxonomy'] = sanitize_text_field($_POST['taxonomy-heirarchical']);
                 }
             }
         }
@@ -655,7 +654,7 @@ function postexpirator_update_post_meta($id)
                 }
 
                 if (isset($payload['meta']['_expiration-date-categories'])) {
-                    $opts['category'] = array_map('intval', (array)$payload['meta']['_expiration-date-categories']);
+                    $opts['category'] = PostExpirator_Util::sanitize_array_of_integers($payload['meta']['_expiration-date-categories']);
                 } else {
                     $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
                 }
@@ -1050,7 +1049,7 @@ function postexpirator_expire_post($id)
                     $postWasExpired = true;
                 }
             } else {
-                $terms = array_map('intval', $expireCategory);
+                $terms = PostExpirator_Util::sanitize_array_of_integers($expireCategory);
                 if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, false))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
@@ -1155,7 +1154,7 @@ function postexpirator_expire_post($id)
                     $postWasExpired = true;
                 }
             } else {
-                $terms = array_map('intval', $expireCategory);
+                $terms = PostExpirator_Util::sanitize_array_of_integers($expireCategory);
                 if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, true))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
@@ -1274,7 +1273,7 @@ function postexpirator_expire_post($id)
                         $mergedCategories[] = $term;
                     }
                 }
-                $terms = array_map('intval', $mergedCategories);
+                $terms = PostExpirator_Util::sanitize_array_of_integers($mergedCategories);
                 if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, false))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
@@ -2100,7 +2099,8 @@ function postexpirator_date_save_bulk_edit()
     }
 
     // we need the post IDs
-    $post_ids = (isset($_POST['post_ids']) && ! empty($_POST['post_ids'])) ? array_map('intval', $_POST['post_ids']) : null;
+    $post_ids = (isset($_POST['post_ids']) && ! empty($_POST['post_ids']))
+        ? PostExpirator_Util::sanitize_array_of_integers($_POST['post_ids']) : null;
 
     // if we have post IDs
     if (! empty($post_ids) && is_array($post_ids)) {
@@ -2147,7 +2147,7 @@ function postexpirator_date_save_bulk_edit()
                 $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
 
                 if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
-                    $opts['category'] = sanitize_text_field($_POST['expirationdate_category']);
+                    $opts['category'] = PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']);
                 }
 
                 PostExpirator_Facade::set_expire_principles($post_id, $opts);
