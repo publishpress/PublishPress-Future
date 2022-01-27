@@ -582,7 +582,8 @@ function postexpirator_update_post_meta($id)
                 $year = date('Y');
             }
         }
-        $category = isset($_POST['expirationdate_category']) ? sanitize_text_field($_POST['expirationdate_category']) : 0;
+        $category = isset($_POST['expirationdate_category'])
+            ? PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']) : [];
 
         $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
 
@@ -595,7 +596,7 @@ function postexpirator_update_post_meta($id)
                     'category-add',
                     'category-remove'
                 ), true)) {
-                    $opts['category'] = sanitize_text_field($_POST['expirationdate_category']);
+                    $opts['category'] = $category;
                 }
             }
         } else {
@@ -605,10 +606,8 @@ function postexpirator_update_post_meta($id)
 
             if ($opts['expireType'] === 'category' || $opts['expireType'] === 'category-add' || $opts['expireType'] === 'category-remove') {
                 if (isset($category) && ! empty($category)) {
-                    if (! empty($category)) {
-                        $opts['category'] = $category;
-                        $opts['categoryTaxonomy'] = sanitize_text_field($_POST['taxonomy-heirarchical']);
-                    }
+                    $opts['category'] = $category;
+                    $opts['categoryTaxonomy'] = sanitize_text_field($_POST['taxonomy-heirarchical']);
                 }
             }
         }
@@ -2147,7 +2146,7 @@ function postexpirator_date_save_bulk_edit()
                 $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
 
                 if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
-                    $opts['category'] = sanitize_text_field($_POST['expirationdate_category']);
+                    $opts['category'] = PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']);
                 }
 
                 PostExpirator_Facade::set_expire_principles($post_id, $opts);

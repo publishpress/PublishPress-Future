@@ -78,4 +78,9 @@ class PostExpirator_Util
 
         return wp_date($format, $datetime->getTimestamp(), $timezone);
     }
+
+    public static function sanitize_array_of_integers($array)
+    {
+        return array_map('intval', (array)$array);
+    }
 }
