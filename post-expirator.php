@@ -654,7 +654,7 @@ function postexpirator_update_post_meta($id)
                 }
 
                 if (isset($payload['meta']['_expiration-date-categories'])) {
-                    $opts['category'] = array_map('intval', (array)$payload['meta']['_expiration-date-categories']);
+                    $opts['category'] = PostExpirator_Util::sanitize_array_of_integers($payload['meta']['_expiration-date-categories']);
                 } else {
                     $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
                 }
@@ -1049,7 +1049,7 @@ function postexpirator_expire_post($id)
                     $postWasExpired = true;
                 }
             } else {
-                $terms = array_map('intval', $expireCategory);
+                $terms = PostExpirator_Util::sanitize_array_of_integers($expireCategory);
                 if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, false))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
@@ -1154,7 +1154,7 @@ function postexpirator_expire_post($id)
                     $postWasExpired = true;
                 }
             } else {
-                $terms = array_map('intval', $expireCategory);
+                $terms = PostExpirator_Util::sanitize_array_of_integers($expireCategory);
                 if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, true))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
@@ -1273,7 +1273,7 @@ function postexpirator_expire_post($id)
                         $mergedCategories[] = $term;
                     }
                 }
-                $terms = array_map('intval', $mergedCategories);
+                $terms = PostExpirator_Util::sanitize_array_of_integers($mergedCategories);
                 if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, false))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
@@ -2099,7 +2099,8 @@ function postexpirator_date_save_bulk_edit()
     }
 
     // we need the post IDs
-    $post_ids = (isset($_POST['post_ids']) && ! empty($_POST['post_ids'])) ? array_map('intval', $_POST['post_ids']) : null;
+    $post_ids = (isset($_POST['post_ids']) && ! empty($_POST['post_ids']))
+        ? PostExpirator_Util::sanitize_array_of_integers($_POST['post_ids']) : null;
 
     // if we have post IDs
     if (! empty($post_ids) && is_array($post_ids)) {
