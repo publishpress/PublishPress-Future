@@ -81,6 +81,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.7.3] - 27 Jan 2022 =
+
+* Fixed: Fix the selection of categories when setting a post to expire, #220;
+
 = [2.7.2] - 25 Jan 2022 =
 
 * Changed: Added more clear debug message if the cron event was not scheduled due to an error;
