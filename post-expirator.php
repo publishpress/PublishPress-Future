@@ -2034,7 +2034,7 @@ function _postexpirator_taxonomy($opts)
         }
 
         $rv[] = '</select>';
-        $rv[] = '<p class="description">' . esc_html(
+        $rv[] = '<p class="description">' . esc_html__(
                 'Select the hierarchical taxonomy to be used for "category" based expiration.',
                 'post-expirator'
             ) . '</p>';
