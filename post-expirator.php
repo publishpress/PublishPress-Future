@@ -694,7 +694,7 @@ function postexpirator_schedule_event($id, $ts, $opts)
 
     $id = intval($id);
 
-    do_action('postexpiratior_schedule', $id, $ts, $opts); // allow custom actions
+    do_action('postexpirator_schedule', $id, $ts, $opts); // allow custom actions
 
     if (wp_next_scheduled('postExpiratorExpire', array($id)) !== false) {
         $error = wp_clear_scheduled_hook('postExpiratorExpire', array($id), true); // Remove any existing hooks
@@ -751,7 +751,7 @@ function postexpirator_unschedule_event($id)
 {
     $debug = postexpirator_debug(); // check for/load debug
 
-    do_action('postexpiratior_unschedule', $id); // allow custom actions
+    do_action('postexpirator_unschedule', $id); // allow custom actions
 
     delete_post_meta($id, '_expiration-date');
     delete_post_meta($id, '_expiration-date-options');
