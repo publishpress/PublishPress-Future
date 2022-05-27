@@ -11,7 +11,4 @@ permissions:
 
 jobs:
   php5_check:
-    uses: publishpress/github-workfows/.github/workflows/php-version-check.yml@main
-    with:
-      expected_php: "5.6"
-      php_version_check: "70000"
+    uses: publishpress/github-workfows/.github/workflows/php5-support.yml@main
