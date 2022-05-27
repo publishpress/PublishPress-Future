@@ -1,0 +1,14 @@
+name: PHP v5 Support
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+permissions:
+  contents: read
+
+jobs:
+  php5_check:
+    uses: publishpress/github-workfows/.github/workflows/php5-support.yml@main
