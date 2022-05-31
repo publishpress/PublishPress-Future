@@ -81,6 +81,14 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.7.4] - UNRELEASED =
+
+* CHANGED: Add library to protect breaking site when multiple instances of the plugin are activated;
+* CHANGED: Invert order of the debug log, showing now on ASC order;
+* FIXED: Fix unlocalized string on the taxonomy field (Thanks to Alex Lion), #255;
+* FIXED: Fix default taxonomy selection for Post Types in the settings, #144;
+* FIXED: Fix typo in the hook name 'postexpirator_schedule' (Thanks to Nico Mollet), #244;
+
 = [2.7.3] - 27 Jan 2022 =
 
 * Fixed: Fix the selection of categories when setting a post to expire, #220;
