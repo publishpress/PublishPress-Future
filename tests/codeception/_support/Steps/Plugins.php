@@ -8,10 +8,26 @@ namespace Steps;
 trait Plugins
 {
     /**
-     * @Given the plugin :pluginName is active
+     * @Given the plugin :plugin is active
      */
-    public function pluginIsActive($pluginName)
+    public function pluginIsActive($plugin)
     {
-        activate_plugin($pluginName . '/' . $pluginName . '.php');
+        $this->pluginsAreActive([$plugin]);
+    }
+
+    /**
+     * @Given the plugins :plugins are active
+     */
+    public function pluginsAreActive($plugins)
+    {
+        $plugins = explode(',', $plugins);
+
+        $current   = get_option('active_plugins', []);
+        foreach ($plugins as $plugin) {
+            $current[] = $plugin . '/' . $plugin . '.php';
+            sort($current);
+        }
+
+        update_option('active_plugins', $current);
     }
 }

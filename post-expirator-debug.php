@@ -76,7 +76,7 @@ class PostExpiratorDebug
     public function getTable()
     {
         global $wpdb;
-        $results = $wpdb->get_results("SELECT * FROM {$this->debug_table} ORDER BY `id` DESC");
+        $results = $wpdb->get_results("SELECT * FROM {$this->debug_table} ORDER BY `id` ASC");
         if (empty($results)) {
             print '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
 
