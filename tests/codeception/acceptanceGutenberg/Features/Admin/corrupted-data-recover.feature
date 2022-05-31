@@ -6,6 +6,7 @@ Feature: Do not expire posts if data is corrupted, in the Gutenberg editor
   Background:
     Given the user "admin_user" exists with role "administrator"
     And I am logged in as "admin_user"
+    And the plugins "post-expirator, pre-tests" are active
 
   Scenario: _expiration-date-status=saved, but there is no expiring date
     Given post "post_1" exists
