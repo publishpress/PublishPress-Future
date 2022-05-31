@@ -31,8 +31,8 @@ modules:
             domain: "%TEST_SITE_WP_DOMAIN%"
             adminEmail: "%TEST_SITE_ADMIN_EMAIL%"
             title: "Test"
-            plugins: [ "post-expirator/post-expirator.php", "custom-post-type-for-post-expirator/custom-post-type-for-post-expirator.php" ]
-            activatePlugins: [ "post-expirator/post-expirator.php", "custom-post-type-for-post-expirator/custom-post-type-for-post-expirator.php" ]
+            plugins: [ "post-expirator/post-expirator.php", "pre-tests/pre-tests.php" ]
+            activatePlugins: [ "post-expirator/post-expirator.php", "pre-tests/pre-tests.php" ]
             isolatedInstall: true
         WPWebDriver:
             url: "%TEST_SITE_WP_URL%"

@@ -6,7 +6,7 @@
  * Author:      PublishPress
  * Author URI:  https://publishpress.com
  * Version: 0.1.0
- * Text Domain: custom-post-type-post-expirator
+ * Text Domain: pre-tests
  */
 
 
