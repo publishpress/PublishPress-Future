@@ -1,11 +1,12 @@
-Feature: Expiring post in the Gutenberg editor
+Feature: Expiring posts using the Gutenberg editor
   In order to control the post expiration of a post in the Gutenberg editor
   As an admin
-  I need to be able to configure a post to expire or not using the component panel
+  I need to be able to configure a post to expire or not, using the component panel
 
   Background:
     Given the user "admin_user" exists with role "administrator"
     And I am logged in as "admin_user"
+    And the plugins "post-expirator, pre-tests" are active
 
   Scenario: See the Gutenberg metabox
     When I am adding a new post

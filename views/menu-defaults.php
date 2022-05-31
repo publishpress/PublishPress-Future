@@ -135,21 +135,13 @@ defined('ABSPATH') or die('Direct access not allowed.');
                         esc_html_e('Taxonomy (hierarchical)', 'post-expirator'); ?></label></th>
                 <td>
                     <?php
-                    echo wp_kses(
-                        _postexpirator_taxonomy(
+                        echo _postexpirator_taxonomy(
                             [
                                 'type' => $type,
                                 'name' => 'expirationdate_taxonomy-' . $type,
                                 'selected' => $defaults['taxonomy']
                             ]
-                        ),
-                        [
-                            'select' => [],
-                            'option' => [],
-                            'p' => [],
-
-                        ]
-                    );
+                            );
                     ?>
                 </td>
             </tr>
