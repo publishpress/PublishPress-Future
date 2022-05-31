@@ -5,10 +5,18 @@ namespace Steps;
 trait Menu
 {
     /**
-     * @Then I see the Settings submenu :submenu
+     * @Then I see the Future admin menu on the sidebar
      */
-    public function iSeeSettingsSubmenuInCode($submenu)
+    public function iSeeFutureAdminMenu()
     {
-        $this->seeInSource($submenu, '#menu-settings .wp-submenu li a');
+        $this->seeInSource('Future', '#toplevel_page_publishpress-future');
+    }
+
+    /**
+     * @When I am on the admin home page
+     */
+    public function iAmOnAdminHomePage()
+    {
+        $this->amOnAdminPage('/');
     }
 }
