@@ -2016,50 +2016,58 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
             return false;
         }
 
-        // @TODO remove extract
-        // phpcs:ignore WordPress.PHP.DontExtract.extract_extract
-        extract($opts);
-        if (! isset($name)) {
+        if (! isset($opts['name'])) {
             return false;
         }
+
+        $name = sanitize_text_field($opts['name']);
+
         if (! isset($id)) {
             $id = $name;
         }
-        if (! isset($disabled)) {
-            $disabled = false;
+
+        $disabled = false;
+        if (isset($opts['disabled'])) {
+            $disabled = (bool)$opts['disabled'];
         }
-        if (! isset($onchange)) {
-            $onchange = '';
+
+        $onchange = '';
+        if (isset($opts['onchange'])) {
+            $onchange = sanitize_text_field($opts['onchange']);
         }
-        if (! isset($type)) {
-            $type = '';
+
+        $type = '';
+        if (isset($opts['type'])) {
+            $type = sanitize_text_field($opts['type']);
+        }
+
+        $selected = false;
+        if (isset($opts['selected'])) {
+            $selected = $opts['selected'];
         }
 
         $taxonomies = get_object_taxonomies($type, 'object');
         $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
 
         if (empty($taxonomies)) {
-            $disabled = true;
+            return esc_html__('No taxonomies found', 'post-expirator');
         }
 
-        $rv = array();
-        if ($taxonomies) {
-            // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-            $rv[] = '<select name="' . esc_attr($name) . '" id="' . esc_attr($id) . '"' . ($disabled == true ? ' disabled="disabled"' : '') . ' onchange="' . esc_attr($onchange) . '">';
-            foreach ($taxonomies as $taxonomy) {
-                $rv[] = '<option value="' . esc_attr($taxonomy->name) . '" ' . ($selected === esc_attr($taxonomy->name) ? 'selected="selected"' : '') . '>' . esc_html($taxonomy->label) . '</option>';
-            }
+        $output = [];
 
-            $rv[] = '</select>';
-            $rv[] = '<p class="description">' . esc_html__(
-                    'Select the hierarchical taxonomy to be used for "category" based expiration.',
-                    'post-expirator'
-                ) . '</p>';
-        } else {
-            $rv[] = esc_html__('No taxonomies found', 'post-expirator');
+        $output[] = '<select name="' . esc_attr($name) . '" id="' . esc_attr($id) . '"' . ($disabled === true ? ' disabled="disabled"' : '') . ' onchange="' . esc_attr($onchange) . '">';
+
+        foreach ($taxonomies as $taxonomy) {
+            $output[] = '<option value="' . esc_attr($taxonomy->name) . '" ' . ($selected === esc_attr($taxonomy->name) ? 'selected="selected"' : '') . '>' . esc_html($taxonomy->label) . '</option>';
         }
 
-        return implode("<br/>\n", $rv);
+        $output[] = '</select>';
+        $output[] = '<p class="description">' . esc_html__(
+                'Select the hierarchical taxonomy to be used for "category" based expiration.',
+                'post-expirator'
+            ) . '</p>';
+
+        return implode("<br/>\n", $output);
     }
 
     /**
