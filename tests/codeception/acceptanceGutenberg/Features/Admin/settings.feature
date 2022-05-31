@@ -6,6 +6,7 @@ Feature: Settings
   Background:
     Given the user "admin_user" exists with role "administrator"
     And I am logged in as "admin_user"
+    And the plugins "post-expirator, pre-tests" are active
 
   Scenario: See the Settings submenu
     Then I see the Settings submenu "Future"

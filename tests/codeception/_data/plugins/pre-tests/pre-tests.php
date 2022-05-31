@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: PublishPress Custom Post Type for PublishPress Future
+ * Plugin Name: pre-tests
  * Plugin URI:  https://wordpress.org/plugins/post-expirator/
- * Description: PublishPress Test Plugin for creating a custom post type for PublishPress Future
+ * Description: Auxiliar plugin for the tests
  * Author:      PublishPress
  * Author URI:  https://publishpress.com
  * Version: 0.1.0
