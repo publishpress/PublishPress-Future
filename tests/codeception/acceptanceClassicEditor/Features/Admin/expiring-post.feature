@@ -1,12 +1,12 @@
-Feature: Expiring post in the Classic editor
+Feature: Expiring posts using the Classic editor
   In order to control the post expiration of a post in the Classic Editor
   As an admin
-  I need to be able to configure a post to expire or not using the metabox
+  I need to be able to configure a post to expire or not, using the metabox
 
   Background:
     Given the user "admin_user" exists with role "administrator"
     And I am logged in as "admin_user"
-    And the plugin "classic-editor" is active
+    And the plugins "post-expirator, pre-tests, classic-editor" are active
 
 
   # When default expiration is not activated for post

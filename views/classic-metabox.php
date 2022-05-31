@@ -139,6 +139,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
         $walker = new Walker_PostExpirator_Category_Checklist();
         $taxonomies = get_object_taxonomies($post->post_type, 'object');
         $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
+
         if (sizeof($taxonomies) === 0) {
             echo '<p>' . esc_html__(
                     'You must assign a heirarchical taxonomy to this post type to use this feature.',
