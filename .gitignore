@@ -12,3 +12,5 @@ dist
 report.csv
 .phplint-cache
 .php-cs-fixer.cache
+.vscode/
+*.code-workspace
