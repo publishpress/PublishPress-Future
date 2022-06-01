@@ -37,8 +37,6 @@ trait Post
 
     private function getPostIdFromSlug($postSlug)
     {
-        $postSlug = sq($postSlug);
-
         $args = [
             'name' => $postSlug,
             'post_type' => 'post',
@@ -60,7 +58,7 @@ trait Post
      */
     public function iAmEditingPost($postSlug)
     {
-        $postId = $this->getPostIdFromSlug($postSlug);
+        $postId = $this->getPostIdFromSlug(sq($postSlug));
 
         if (! empty($postId)) {
             $this->amOnAdminPage("post.php?post=$postId&action=edit");
@@ -113,7 +111,7 @@ trait Post
      */
     public function postHasMetadata($postSlug, $metadataKey, $metadataValue)
     {
-        $postId = $this->getPostIdFromSlug($postSlug);
+        $postId = $this->getPostIdFromSlug(sq($postSlug));
 
         $this->havePostmetaInDatabase($postId, $metadataKey, $metadataValue);
     }
