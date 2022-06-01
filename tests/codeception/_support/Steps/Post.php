@@ -11,11 +11,24 @@ trait Post
      */
     public function postExists($postSlug)
     {
-        $this->havePostInDatabase(
+        return $this->havePostInDatabase(
             [
                 'post_name' => sq($postSlug),
             ]
         );
+    }
+
+    /**
+     * @Given posts :postSlugs exist
+     */
+    public function postsExist($postSlugs)
+    {
+        $postSlugs = explode(',', $postSlugs);
+        $postSlugs = array_map('trim', $postSlugs);
+
+        foreach ($postSlugs as $postSlug) {
+            $this->postExists($postSlug);
+        }
     }
 
     /**
@@ -24,6 +37,14 @@ trait Post
     public function iAmAddingANewPost()
     {
         $this->amOnAdminPage('post-new.php');
+    }
+
+    /**
+     * @When I am on the list of posts
+     */
+    public function iAmOnListOfPosts()
+    {
+        $this->amOnAdminPage('edit.php');
     }
 
     /**
@@ -114,5 +135,25 @@ trait Post
         $postId = $this->getPostIdFromSlug(sq($postSlug));
 
         $this->havePostmetaInDatabase($postId, $metadataKey, $metadataValue);
+    }
+
+    /**
+     * @When I click on the quick edit action for :postSlug
+     */
+    public function iClickOnTheQuickEditActionFor($postSlug)
+    {
+        $postId = $this->getPostIdFromSlug(sq($postSlug));
+
+        $this->moveMouseOver('#post-' . $postId, 60, 30);
+        $this->click('#post-' . $postId . ' button.editinline');
+    }
+
+   /**
+    * @Then I see the checkbox to enable post expiration
+    */
+    public function iSeeTheCheckboxToEnablePostExpiration()
+    {
+        $this->seeElement('fieldset.post-expirator-quickedit');
+        $this->see('Enable Post Expiration', 'fieldset.post-expirator-quickedit label span');
     }
 }
