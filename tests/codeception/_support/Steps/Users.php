@@ -13,12 +13,12 @@ trait Users
     {
         $userLogin = sq($userLogin);
 
-        $this->factory()->user->create(
+        $this->haveUserInDatabase(
+            $userLogin,
+            $userRole,
             [
-                'user_login' => $userLogin,
-                'user_pass'  => $userLogin,
                 'user_email' => sprintf('%s@example.com', $userLogin),
-                'role'       => $userRole
+                'user_pass' => $userLogin,
             ]
         );
     }
