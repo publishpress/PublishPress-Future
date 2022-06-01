@@ -16,13 +16,15 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class AcceptanceClassicEditorTester extends \Codeception\Actor
+class AcceptanceTester extends \Codeception\Actor
 {
-    use _generated\AcceptanceClassicEditorTesterActions;
+    use _generated\AcceptanceTesterActions;
+
     use \Steps\Users;
     use \Steps\Menu;
     use \Steps\Plugins;
     use \Steps\Post;
+    use \Steps\PostGutenberg;
     use \Steps\PostClassicEditor;
     use \Steps\Settings;
     use \Steps\Debug;
