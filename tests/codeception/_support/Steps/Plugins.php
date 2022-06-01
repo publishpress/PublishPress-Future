@@ -22,19 +22,12 @@ trait Plugins
 
         sort($current);
 
-        update_option('active_plugins', $current);
-    }
-
-    /**
-     * @Given the plugin :plugin is active
-     */
-    public function pluginIsActive($plugin)
-    {
-        $this->pluginsAreActive($plugin);
+        $this->haveOptionInDatabase('active_plugins', $current);
     }
 
     /**
      * @Given the plugins :plugins are active
+     * @Given the plugin :plugins is active
      */
     public function pluginsAreActive($plugins)
     {
@@ -48,19 +41,12 @@ trait Plugins
 
         sort($current);
 
-        update_option('active_plugins', $current);
-    }
-
-    /**
-     * @Given the plugin :plugin is not active
-     */
-    public function pluginIsNotActive($plugin)
-    {
-        $this->pluginsAreNotActive($plugin);
+        $this->haveOptionInDatabase('active_plugins', $current);
     }
 
     /**
      * @Given the plugins :plugins are not active
+     * @Given the plugin :plugin is not active
      */
     public function pluginsAreNotActive($plugins)
     {
@@ -72,12 +58,13 @@ trait Plugins
             $pluginFile = $plugin . '/' . $plugin . '.php';
 
             $key = array_search($pluginFile, $current);
+
             if (false !== $key) {
                 unset($current[$key]);
             }
         }
         sort($current);
 
-        update_option('active_plugins', $current);
+        $this->haveOptionInDatabase('active_plugins', $current);
     }
 }
