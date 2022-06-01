@@ -40,7 +40,7 @@ trait PostGutenberg
     public function iAmAddingANewPostWithTitleOnGutenberg($title)
     {
         $this->iAmAddingANewPost();
-        $this->executeJS('wp.data.dispatch(\'core/editor\').editPost({title: \'' . $title . '\'})');
+        $this->executeJS('wp.data.dispatch(\'core/editor\').editPost({title: \'' . sq($title) . '\'})');
     }
 
     /**
