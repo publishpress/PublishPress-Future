@@ -6,7 +6,7 @@ Feature: Expiring posts using the Gutenberg editor
   Background:
     Given the user "admin_user" exists with role "administrator"
     And I am logged in as "admin_user"
-    And the plugins "post-expirator, pre-tests" are active
+    And only the plugins "post-expirator, pre-tests" are active
 
   Scenario: See the Gutenberg metabox
     When I am adding a new post

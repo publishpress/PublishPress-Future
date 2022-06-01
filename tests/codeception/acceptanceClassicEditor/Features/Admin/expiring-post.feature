@@ -6,8 +6,7 @@ Feature: Expiring posts using the Classic editor
   Background:
     Given the user "admin_user" exists with role "administrator"
     And I am logged in as "admin_user"
-    And the plugins "post-expirator, pre-tests, classic-editor" are active
-
+    And only the plugins "post-expirator, pre-tests, classic-editor" are active
 
   # When default expiration is not activated for post
 
