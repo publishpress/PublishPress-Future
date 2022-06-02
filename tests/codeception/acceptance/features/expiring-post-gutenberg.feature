@@ -9,7 +9,8 @@ Feature: Expiring posts using the Gutenberg editor
     And only the plugins "post-expirator, pre-tests" are active
 
   @admin @gutenberg
-  Scenario: See the Gutenberg metabox
+  Scenario: See the Gutenberg metabox if enabled for post type
+    Given expiration metabox is enabled for "post"
     When I am adding a new post
     Then I see the component panel "PublishPress Future"
 
