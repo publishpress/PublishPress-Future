@@ -88,6 +88,8 @@ This section describes how to install the plugin and get it working.
 * FIXED: Fix unlocalized string on the taxonomy field (Thanks to Alex Lion), #255;
 * FIXED: Fix default taxonomy selection for Post Types in the settings, #144;
 * FIXED: Fix typo in the hook name 'postexpirator_schedule' (Thanks to Nico Mollet), #244;
+* FIXED: Fix bulk editing for WordPress v6.0, #251;
+* FIXED: Fix the Gutenberg panel for custom post types created on PODS in WordPress v6.0, #250;
 
 = [2.7.3] - 27 Jan 2022 =
 
