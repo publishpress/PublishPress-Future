@@ -41,7 +41,7 @@ class PostExpirator_Facade
      */
     private function hooks()
     {
-        add_action('init', array($this, 'register_post_meta'), 11);
+        add_action('init', array($this, 'register_post_meta'), 100);
         add_action('enqueue_block_editor_assets', array($this, 'block_editor_assets'));
         add_action('updated_postmeta', array($this, 'updatedmeta'), 10, 4);
         add_filter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
