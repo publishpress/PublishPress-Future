@@ -73,3 +73,9 @@ Feature: Expiring posts using the Gutenberg editor
     And I save the post on Gutenberg
     And I refresh the page
     Then the checkbox Enable Post Expiration is deactivated on the component panel
+
+  @admin @gutenberg
+  Scenario: When default expiration is activated for custom post type, the Enable Post Expiration checkbox should be checked by default for a new post
+    Given default expiration is activated for "music"
+    When I am adding a new "music" post
+    Then the checkbox Enable Post Expiration is activated on the component panel
