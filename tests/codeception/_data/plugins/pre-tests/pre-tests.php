@@ -19,10 +19,15 @@ function registerPostTypes()
     register_post_type(
         'music',
         [
-            'label'    => 'Musics',
-            'supports' => ['title'],
-            'public'   => true,
-            'show_ui'  => true,
+            'labels' => [
+                'name' => 'Music',
+                'singular_name' => 'Music'
+            ],
+            'has_archive' => true,
+            'public' => true,
+            'rewrite' => ['slug' => 'music'],
+            'show_in_rest' => true,
+            'supports' => ['editor', 'title']
         ]
     );
 }
