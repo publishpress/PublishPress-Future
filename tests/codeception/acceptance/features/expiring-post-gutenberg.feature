@@ -14,6 +14,12 @@ Feature: Expiring posts using the Gutenberg editor
     When I am adding a new post
     Then I see the component panel "PublishPress Future"
 
+  @admin @gutenberg
+  Scenario: Don't the Gutenberg metabox if disabled for post type
+    Given expiration metabox is disabled for "post"
+    When I am adding a new post
+    Then I don't see the component panel "PublishPress Future"
+
   # When default expiration is not activated for post
 
   @admin @gutenberg
