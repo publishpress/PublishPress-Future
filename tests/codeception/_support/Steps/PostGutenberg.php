@@ -15,6 +15,14 @@ trait PostGutenberg
     }
 
     /**
+     * @Then I don't see the component panel :text
+     */
+    public function iDontSeeComponentPanelText($text)
+    {
+        $this->dontSee($text, '.components-panel .post-expirator-panel');
+    }
+
+    /**
      * @Then the checkbox Enable Post Expiration is deactivated on the component panel
      */
     public function checkboxEnablePostExpirationIsDeactivatedOnComponentPanel()
@@ -30,7 +38,6 @@ trait PostGutenberg
     public function checkboxEnablePostExpirationIsActivatedOnComponentPanel()
     {
         $status = $this->executeJS('return wp.data.select(\'core/editor\').getEditedPostAttribute(\'meta\')[\'_expiration-date-status\']');
-
         $this->assertEquals("saved", $status, 'The value of the post meta _expiration-date-status should be "saved"');
     }
 

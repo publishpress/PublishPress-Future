@@ -43,6 +43,14 @@ trait Post
     }
 
     /**
+     * @When I am adding a new :postType post
+     */
+    public function iAmAddingANewCustomPost($postType)
+    {
+        $this->amOnAdminPage('post-new.php?post_type=' . $postType);
+    }
+
+    /**
      * @When I am on the list of posts
      */
     public function iAmOnListOfPosts()

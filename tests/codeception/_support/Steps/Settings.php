@@ -21,13 +21,41 @@ trait Settings
             ]
         );
      }
+
+     /**
+     * @Given expiration metabox is disabled for :postType
+     */
+    public function expirationMetaboxIsDisabledForPostType($postType)
+    {
+       $this->haveOptionInDatabase(
+           'expirationdateDefaults' . strtoupper($postType),
+           [
+               'expireType' => 'draft',
+               'autoEnable' => '0',
+               'activeMetaBox' => 'inactive',
+               'emailnotification' => '',
+               'default-expire-type' => '',
+               'default-custom-date' => '',
+           ]
+       );
+    }
+
+    /**
      * @Given default expiration is not activated for :postType
      */
     public function defaultExpirationNotActivatedForPostType($postType)
     {
-        $this->amOnAdminPage('admin.php?page=publishpress-future&tab=defaults');
-        $this->checkOption('#expirationdate_autoenable-false-' . $postType);
-        $this->click('Save Changes');
+        $this->haveOptionInDatabase(
+            'expirationdateDefaults' . strtoupper($postType),
+            [
+                'expireType' => 'draft',
+                'autoEnable' => '0',
+                'activeMetaBox' => 'active',
+                'emailnotification' => '',
+                'default-expire-type' => '',
+                'default-custom-date' => '',
+            ]
+        );
     }
 
     /**
@@ -35,9 +63,17 @@ trait Settings
      */
     public function defaultExpirationActivatedForPostType($postType)
     {
-        $this->amOnAdminPage('admin.php?page=publishpress-future&tab=defaults');
-        $this->checkOption('#expirationdate_autoenable-true-' . $postType);
-        $this->click('Save Changes');
+        $this->haveOptionInDatabase(
+            'expirationdateDefaults' . strtoupper($postType),
+            [
+                'expireType' => 'draft',
+                'autoEnable' => '1',
+                'activeMetaBox' => 'active',
+                'emailnotification' => '',
+                'default-expire-type' => '',
+                'default-custom-date' => '',
+            ]
+        );
     }
 
     /**
@@ -71,5 +107,4 @@ trait Settings
     {
         $this->seeOptionIsSelected('#expirationdate_taxonomy-' . strtolower($arg2), $arg1);
     }
-
 }
