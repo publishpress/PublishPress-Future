@@ -5,6 +5,22 @@ namespace Steps;
 trait Settings
 {
     /**
+     * @Given expiration metabox is enabled for :postType
+     */
+     public function expirationMetaboxIsEnabledForPostType($postType)
+     {
+        $this->haveOptionInDatabase(
+            'expirationdateDefaults' . strtoupper($postType),
+            [
+                'expireType' => 'draft',
+                'autoEnable' => '0',
+                'activeMetaBox' => 'active',
+                'emailnotification' => '',
+                'default-expire-type' => '',
+                'default-custom-date' => '',
+            ]
+        );
+     }
      * @Given default expiration is not activated for :postType
      */
     public function defaultExpirationNotActivatedForPostType($postType)
