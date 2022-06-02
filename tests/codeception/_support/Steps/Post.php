@@ -195,11 +195,27 @@ trait Post
     }
 
     /**
-    * @When I set the expiration option to Add on posts
+    * @When I set the expiration option to Add to posts
     */
-    public function iSetTheExpirationOptionToAddOnPosts()
+    public function iSetTheExpirationOptionToAddToPosts()
     {
         $this->selectOption('select[name="expirationdate_status"]', 'add-only');
+    }
+
+    /**
+    * @When I set the expiration option to Change and Add to posts
+    */
+    public function iSetTheExpirationOptionToChangeAndAddToPosts()
+    {
+        $this->selectOption('select[name="expirationdate_status"]', 'change-add');
+    }
+
+    /**
+    * @When I set the expiration option to Remove from posts
+    */
+    public function iSetTheExpirationOptionToRemoveFromPosts()
+    {
+        $this->selectOption('select[name="expirationdate_status"]', 'remove-only');
     }
 
    /**
