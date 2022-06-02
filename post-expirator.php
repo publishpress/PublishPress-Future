@@ -2084,8 +2084,12 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
             'jquery',
             'inline-edit-post'
         ), POSTEXPIRATOR_VERSION, true);
+
+        global $wp_version;
+
         wp_localize_script(
-            'postexpirator-edit', 'config', array(
+            'postexpirator-edit', 'postexpiratorConfig', array(
+                'wpAfter6' => version_compare($wp_version, '6', '>='),
                 'ajax' => array(
                     'nonce' => wp_create_nonce(POSTEXPIRATOR_SLUG),
                     'bulk_edit' => 'manage_wp_posts_using_bulk_quick_save_bulk_edit',
@@ -2096,94 +2100,96 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
     add_action('admin_print_scripts-edit.php', 'postexpirator_quickedit_javascript');
 
-    /**
-     * Receives AJAX call from bulk edit to process save.
-     *
-     * @internal
-     *
-     * @access private
-     */
-    function postexpirator_date_save_bulk_edit()
-    {
-        check_ajax_referer(POSTEXPIRATOR_SLUG, 'nonce');
-
+    add_filter('admin_init', function() {
+        // Save Bulk edit data
+        $wpListTable = _get_list_table('WP_Posts_List_Table');
+        $doaction = $wpListTable->current_action();
         $facade = PostExpirator_Facade::getInstance();
 
-        if (! $facade->current_user_can_expire_posts()) {
-            wp_die(
-                esc_html__('You\'re not allowed to set posts to expire', 'post-expirator'),
-                esc_html__('Forbidden', 'post-expirator'),
-                403
-            );
-        }
-
-        $status = sanitize_key($_POST['expirationdate_status']);
-        // if no change, do nothing
-        if ($status === 'no-change') {
+        if (
+            'edit' !== $doaction
+            || ! isset($_REQUEST['postexpirator_view'])
+            || $_REQUEST['postexpirator_view'] !== 'bulk-edit'
+            || ! isset($_REQUEST['expirationdate_status'])
+            || sanitize_key($_REQUEST['expirationdate_status']) === 'no-change'
+            || ! $facade->current_user_can_expire_posts()
+        ) {
             return;
         }
 
-        // we need the post IDs
-        $post_ids = (isset($_POST['post_ids']) && ! empty($_POST['post_ids']))
-            ? PostExpirator_Util::sanitize_array_of_integers($_POST['post_ids']) : null;
+        check_admin_referer('bulk-posts');
 
-        // if we have post IDs
-        if (! empty($post_ids) && is_array($post_ids)) {
-            $post_type = get_post_type($post_ids[0]);
+        $status = sanitize_key($_REQUEST['expirationdate_status']);
 
-            $defaults = PostExpirator_Facade::get_default_expiry($post_type);
+        $postIds = array_map('intval', (array)$_REQUEST['post']);
 
-            $year = intval('' === $_POST['expirationdate_year'] ? $defaults['year'] : $_POST['expirationdate_year']);
-            $month = intval('' === $_POST['expirationdate_month'] ? $defaults['month'] : $_POST['expirationdate_month']);
-            $day = intval('' === $_POST['expirationdate_day'] ? $defaults['day'] : $_POST['expirationdate_day']);
-            $hour = intval('' === $_POST['expirationdate_hour'] ? $defaults['hour'] : $_POST['expirationdate_hour']);
-            $minute = intval(
-                '' === $_POST['expirationdate_minute'] ? $defaults['minute'] : $_POST['expirationdate_minute']
-            );
+        if (empty($postIds)) {
+            return;
+        }
 
-            $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
+        $postType = get_post_type($postIds[0]);
 
-            if (! $ts) {
-                return;
+        $defaults = PostExpirator_Facade::get_default_expiry($postType);
+
+        $year = $defaults['year'];
+        if (isset($_REQUEST['expirationdate_year'])) {
+            $year = (int)$_REQUEST['expirationdate_year'];
+        }
+
+        $month = $defaults['month'];
+        if (isset($_REQUEST['expirationdate_month'])) {
+            $month = (int)$_REQUEST['expirationdate_month'];
+        }
+
+        $day = $defaults['day'];
+        if (isset($_REQUEST['expirationdate_day'])) {
+            $day = (int)$_REQUEST['expirationdate_day'];
+        }
+
+        $hour = $defaults['hour'];
+        if (isset($_REQUEST['expirationdate_hour'])) {
+            $hour = (int)$_REQUEST['expirationdate_hour'];
+        }
+
+        $minute = $defaults['minute'];
+        if (isset($_REQUEST['expirationdate_minute'])) {
+            $minute = (int)$_REQUEST['expirationdate_minute'];
+        }
+
+        $newExpirationDate = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
+
+        if (! $newExpirationDate) {
+            return;
+        }
+
+        foreach ($postIds as $postId) {
+            $postExpirationDate = get_post_meta($postId, '_expiration-date', true);
+
+            if ($status === 'remove-only') {
+                delete_post_meta($postId, '_expiration-date');
+                postexpirator_unschedule_event($postId);
+                continue;
             }
 
-            foreach ($post_ids as $post_id) {
-                $ed = get_post_meta($post_id, '_expiration-date', true);
-                $update_expiry = false;
+            $updateExpiry = ($status === 'change-only' && ! empty($postExpirationDate))
+                || ($status === 'add-only' && empty($postExpirationDate))
+                || $status === 'change-add';
 
-                switch ($status) {
-                    case 'change-only':
-                        $update_expiry = ! empty($ed);
-                        break;
-                    case 'add-only':
-                        $update_expiry = empty($ed);
-                        break;
-                    case 'change-add':
-                        $update_expiry = true;
-                        break;
-                    case 'remove-only':
-                        delete_post_meta($post_id, '_expiration-date');
-                        postexpirator_unschedule_event($post_id);
-                        break;
+
+            if ($updateExpiry) {
+                $opts = PostExpirator_Facade::get_expire_principles($postId);
+                $opts['expireType'] = sanitize_key($_REQUEST['expirationdate_expiretype']);
+
+                if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
+                    $opts['category'] = PostExpirator_Util::sanitize_array_of_integers($_REQUEST['expirationdate_category']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 }
 
-                if ($update_expiry) {
-                    $opts = PostExpirator_Facade::get_expire_principles($post_id);
-                    $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
-
-                    if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
-                        $opts['category'] = PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                    }
-
-                    PostExpirator_Facade::set_expire_principles($post_id, $opts);
-                    update_post_meta($post_id, '_expiration-date', $ts);
-                    postexpirator_schedule_event($post_id, $ts, $opts);
-                }
+                PostExpirator_Facade::set_expire_principles($postId, $opts);
+                update_post_meta($postId, '_expiration-date', $newExpirationDate);
+                postexpirator_schedule_event($postId, $newExpirationDate, $opts);
             }
         }
-    }
-
-    add_action('wp_ajax_manage_wp_posts_using_bulk_quick_save_bulk_edit', 'postexpirator_date_save_bulk_edit');
+    });
 
     /**
      * Autoloads the classes.

@@ -2,8 +2,10 @@
 
 namespace Steps;
 
-use function sq;
+use PostExpirator_Util;
+use DateTime;
 
+use function sq;
 trait Post
 {
     /**
@@ -14,6 +16,7 @@ trait Post
         return $this->havePostInDatabase(
             [
                 'post_name' => sq($postSlug),
+                'post_title' => sq($postSlug),
             ]
         );
     }
@@ -155,5 +158,191 @@ trait Post
     {
         $this->seeElement('fieldset.post-expirator-quickedit');
         $this->see('Enable Post Expiration', 'fieldset.post-expirator-quickedit label span');
+    }
+
+    /**
+     * @When I bulk edit the posts :postSlugs
+     */
+    public function iBulkEditThePosts($postSlugs)
+    {
+        $postSlugs = explode(',', $postSlugs);
+        $postSlugs = array_map('trim', $postSlugs);
+
+        foreach ($postSlugs as $postSlug) {
+            $postId = $this->getPostIdFromSlug(sq($postSlug));
+
+            $this->checkOption('#cb-select-' . $postId);
+        }
+
+        $this->selectOption('#bulk-action-selector-top', 'edit');
+        $this->click('#doaction');
+    }
+
+    /**
+     * @Then I see the fields to change post expiration on bulk edit panel
+     */
+    public function iSeeTheFieldsToChangePostExpirationOnBulkEditPanel()
+    {
+        $this->seeElement('.post-expirator-quickedit [name="expirationdate_status"]');
+    }
+
+   /**
+    * @When I set the expiration option to Change on posts
+    */
+    public function iSetTheExpirationOptionToChangeOnPosts()
+    {
+        $this->selectOption('select[name="expirationdate_status"]', 'change-only');
+    }
+
+    /**
+    * @When I set the expiration option to Add to posts
+    */
+    public function iSetTheExpirationOptionToAddToPosts()
+    {
+        $this->selectOption('select[name="expirationdate_status"]', 'add-only');
+    }
+
+    /**
+    * @When I set the expiration option to Change and Add to posts
+    */
+    public function iSetTheExpirationOptionToChangeAndAddToPosts()
+    {
+        $this->selectOption('select[name="expirationdate_status"]', 'change-add');
+    }
+
+    /**
+    * @When I set the expiration option to Remove from posts
+    */
+    public function iSetTheExpirationOptionToRemoveFromPosts()
+    {
+        $this->selectOption('select[name="expirationdate_status"]', 'remove-only');
+    }
+
+   /**
+    * @When I set the day of expiration to tomorrow at noon
+    */
+    public function iSetTheDayOfExpirationToTomorrow()
+    {
+        $tomorrowDate = $this->getTomorrowDateAtNoon();
+
+        $this->selectOption('select[name="expirationdate_month"]', $tomorrowDate->format('m'));
+        $this->fillField('input[name="expirationdate_day"]', $tomorrowDate->format('d'));
+        $this->fillField('input[name="expirationdate_year"]', $tomorrowDate->format('Y'));
+        $this->fillField('input[name="expirationdate_hour"]', $tomorrowDate->format('h'));
+        $this->fillField('input[name="expirationdate_minute"]', $tomorrowDate->format('i'));
+    }
+
+   /**
+    * @When I click on Update
+    */
+    public function iClickOnUpdate()
+    {
+        $this->click('#bulk_edit');
+    }
+
+   /**
+    * @Then I see the posts :postSlugs shows Never on the Expires column
+    * @Then I see the post :postSlugs shows Never on the Expires column
+    */
+    public function iSeeThePostsShowsNeverOnTheExpiresColumn($postSlugs)
+    {
+        $postSlugs = explode(',', $postSlugs);
+        $postSlugs = array_map('trim', $postSlugs);
+
+        foreach ($postSlugs as $postSlug) {
+            $postId = $this->getPostIdFromSlug(sq($postSlug));
+
+            $this->see('Never', 'tr#post-' . $postId . ' .post-expire-col');
+        }
+    }
+
+    /**
+     * @Given posts :postSlugs are set to expire in seven days at noon as Draft
+     * @Given post :postSlugs is set to expire in seven days at noon as Draft
+     */
+    public function postsSetToExpireNextMonthAsDraft($postSlugs)
+    {
+        $postSlugs = explode(',', $postSlugs);
+        $postSlugs = array_map('trim', $postSlugs);
+
+        $nextWeekDate = $this->getNextWeekDateAtNoon();
+
+        foreach ($postSlugs as $postSlug) {
+            $postId = $this->getPostIdFromSlug(sq($postSlug));
+
+            $unixTime = $nextWeekDate->format('U');
+            $this->havePostmetaInDatabase($postId, '_expiration-date-status', 'saved');
+            $this->havePostmetaInDatabase($postId, '_expiration-date', $unixTime);
+            $this->havePostmetaInDatabase($postId, '_expiration-date-type', 'draft');
+            $opts = [
+                'expireType' => 'draft',
+                'category' => null,
+                'categoryTaxonomy' => '',
+                'enabled' => true,
+            ];
+            $this->havePostmetaInDatabase($postId, '_expiration-date-options', serialize($opts));
+
+            postexpirator_schedule_event($postId, $unixTime, $opts);
+        }
+    }
+
+    private function getTomorrowDateAtNoon()
+    {
+        $tomorrowDate = new DateTime();
+        $tomorrowDate->modify('+1 day');
+        $tomorrowDate->setTime(12, 0, 0);
+
+        return $tomorrowDate;
+    }
+
+    private function getNextWeekDateAtNoon()
+    {
+        $nextWeekDate = new DateTime();
+        $nextWeekDate->modify('+7 day');
+        $nextWeekDate->setTime(12, 0, 0);
+
+        return $nextWeekDate;
+    }
+
+    /**
+     * @Then I see the posts :postSlugs will expire tomorrow at noon
+     * @Then I see the post :postSlugs will expire tomorrow at noon
+     */
+    public function iSeeThePostsWillExpireTomorrowAtNoon($postSlugs)
+    {
+        $tomorrowDate = $this->getTomorrowDateAtNoon();
+
+        $format = get_option('date_format') . ' ' . get_option('time_format');
+        $dateString = PostExpirator_Util::get_wp_date($format, $tomorrowDate->format('U'));
+
+        $postSlugs = explode(',', $postSlugs);
+        $postSlugs = array_map('trim', $postSlugs);
+
+        foreach ($postSlugs as $postSlug) {
+            $postId = $this->getPostIdFromSlug(sq($postSlug));
+
+            $this->see($dateString, 'tr#post-' . $postId . ' .post-expire-col');
+        }
+    }
+
+    /**
+     * @Then I see the posts :postSlugs will expire in seven days at noon
+     * @Then I see the post :postSlugs will expire in seven days at noon
+     */
+    public function iSeeThePostsWillExpireInSevenDaysAtNoon($postSlugs)
+    {
+        $nextWeekDate = $this->getNextWeekDateAtNoon();
+
+        $format = get_option('date_format') . ' ' . get_option('time_format');
+        $dateString = PostExpirator_Util::get_wp_date($format, $nextWeekDate->format('U'));
+
+        $postSlugs = explode(',', $postSlugs);
+        $postSlugs = array_map('trim', $postSlugs);
+
+        foreach ($postSlugs as $postSlug) {
+            $postId = $this->getPostIdFromSlug(sq($postSlug));
+
+            $this->see($dateString, 'tr#post-' . $postId . ' .post-expire-col');
+        }
     }
 }
