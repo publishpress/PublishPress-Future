@@ -2085,7 +2085,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
             'inline-edit-post'
         ), POSTEXPIRATOR_VERSION, true);
         wp_localize_script(
-            'postexpirator-edit', 'config', array(
+            'postexpirator-edit', 'postexpiratorConfig', array(
                 'ajax' => array(
                     'nonce' => wp_create_nonce(POSTEXPIRATOR_SLUG),
                     'bulk_edit' => 'manage_wp_posts_using_bulk_quick_save_bulk_edit',

@@ -149,7 +149,7 @@
             async: false,
             cache: false,
             data: {
-                action: config.ajax.bulk_edit,
+                action: postexpiratorConfig.ajax.bulk_edit,
                 post_ids: $post_ids, // and these are the 2 parameters we're passing to our function
                 expirationdate_month: $expirationdate_month,
                 expirationdate_day: $expirationdate_day,
@@ -159,10 +159,10 @@
                 expirationdate_status: $expirationdate_status,
                 expirationdate_expiretype: $expirationdate_expireType,
                 expirationdate_category: expirationdate_category,
-                nonce: config.ajax.nonce
+                nonce: postexpiratorConfig.ajax.nonce
             }
         });
 
     });
 
-})(jQuery, config);
+})(jQuery, postexpiratorConfig);
