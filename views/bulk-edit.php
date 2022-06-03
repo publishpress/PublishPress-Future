@@ -73,30 +73,29 @@ $minute = $defaults['minute'];
                             <label>
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Day', 'post-expirator'); ?></span>
-                                <input name="expirationdate_day" placeholder="<?php
-                                echo esc_attr($day); ?>" value="" size="2"
+                                <input name="expirationdate_day" required value="<?php
+                                echo esc_attr($day); ?>" size="2"
                                        maxlength="2" autocomplete="off" type="text">
                             </label>,
                             <label>
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Year', 'post-expirator'); ?></span>
-                                <input name="expirationdate_year" placeholder="<?php
-                                echo esc_attr($year); ?>" value="" size="4"
+                                <input name="expirationdate_year" required value="<?php
+                                echo esc_attr($year); ?>" size="4"
                                        maxlength="4" autocomplete="off" type="text">
                             </label> @
                             <label>
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Hour', 'post-expirator'); ?></span>
-                                <input name="expirationdate_hour" placeholder="<?php
-                                echo esc_attr($hour); ?>" value="" size="2"
+                                <input name="expirationdate_hour" required value="<?php
+                                echo esc_attr($hour); ?>" size="2"
                                        maxlength="2" autocomplete="off" type="text">
                             </label> :
                             <label>
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Minute', 'post-expirator'); ?></span>
-                                <input name="expirationdate_minute" placeholder="<?php
-                                echo esc_attr($minute); ?>" value=""
-                                       size="2" maxlength="2" autocomplete="off" type="text">
+                                <input name="expirationdate_minute" required value="<?php
+                                echo esc_attr($minute); ?>"                                        size="2" maxlength="2" autocomplete="off" type="text">
                             </label>
 
                             <?php
