@@ -44,6 +44,7 @@
         $bulk_row.find('.pe-qe-fields select[name="expirationdate_status"]').prop('selectedIndex', 0);
         $bulk_row.find('.pe-qe-fields .post-expirator-date-fields').hide();
         $bulk_row.find('.pe-qe-fields .pe-category-list').hide();
+        $bulk_row.find('.pe-qe-fields input').removeClass('invalid');
     };
 
     // we create a copy of the WP inline edit post function
@@ -117,4 +118,41 @@
 
         }
     };
+
+    $('#bulk_edit').click(function(e) {
+        const $statusField = $('#bulk-edit').find('.pe-qe-fields select[name="expirationdate_status"]');
+
+        if ($statusField.val() === 'no-change' || $statusField.val() === 'remove-only') {
+            return;
+        }
+
+        const fields = [
+            'expirationdate_day',
+            'expirationdate_year',
+            'expirationdate_hour',
+            'expirationdate_minute'
+        ];
+
+        let hasInvalidFields = false;
+
+        let $field;
+        let value;
+        for (let i = 0; i < fields.length; i++) {
+            $field = $('#bulk-edit').find('.pe-qe-fields input[name="' + fields[i] + '"]');
+
+            $field.removeClass('invalid');
+
+            value = parseInt($field.val());
+            if (isNaN(value) || value <= 0) {
+                $field.addClass('invalid');
+                hasInvalidFields = true;
+            }
+        }
+
+        if (hasInvalidFields) {
+            e.preventDefault();
+
+            return false;
+        }
+    });
 })(jQuery, postexpiratorConfig);
