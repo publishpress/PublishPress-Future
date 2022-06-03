@@ -2100,7 +2100,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
     add_action('admin_print_scripts-edit.php', 'postexpirator_quickedit_javascript');
 
-    add_filter('admin_init', function() {
+    function postexpirator_date_save_bulk_edit()
+    {
         // Save Bulk edit data
         $wpListTable = _get_list_table('WP_Posts_List_Table');
         $doaction = $wpListTable->current_action();
@@ -2189,7 +2190,9 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                 postexpirator_schedule_event($postId, $newExpirationDate, $opts);
             }
         }
-    });
+    }
+
+    add_filter('admin_init', 'postexpirator_date_save_bulk_edit');
 
     /**
      * Autoloads the classes.
