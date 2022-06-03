@@ -22,16 +22,6 @@
     }
   },
   "minimum-stability": "stable",
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/publishpress-instance-protection"
-      }
-  ],
   "autoload": {
     "files": [
       "classes/DummyForAutoloadDetection.php"
