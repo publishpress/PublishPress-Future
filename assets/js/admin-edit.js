@@ -119,11 +119,12 @@
         }
     };
 
-    $('#bulk_edit').click(function(e) {
+    function validateBulkFields()
+    {
         const $statusField = $('#bulk-edit').find('.pe-qe-fields select[name="expirationdate_status"]');
 
         if ($statusField.val() === 'no-change' || $statusField.val() === 'remove-only') {
-            return;
+            return true;
         }
 
         const fields = [
@@ -133,7 +134,7 @@
             'expirationdate_minute'
         ];
 
-        let hasInvalidFields = false;
+        let isValid = true;
 
         let $field;
         let value;
@@ -145,11 +146,22 @@
             value = parseInt($field.val());
             if (isNaN(value) || value <= 0) {
                 $field.addClass('invalid');
-                hasInvalidFields = true;
+                isValid = false;
             }
         }
 
-        if (hasInvalidFields) {
+        return isValid;
+    }
+
+    $('.pe-qe-fields input[name="expirationdate_day"]').on('blur', validateBulkFields);
+    $('.pe-qe-fields input[name="expirationdate_year"]').on('blur', validateBulkFields);
+    $('.pe-qe-fields input[name="expirationdate_hour"]').on('blur', validateBulkFields);
+    $('.pe-qe-fields input[name="expirationdate_minute"]').on('blur', validateBulkFields);
+
+    $('#bulk_edit').on('click', function(e) {
+        const isValid = validateBulkFields();
+        console.log(isValid);
+        if (! isValid) {
             e.preventDefault();
 
             return false;

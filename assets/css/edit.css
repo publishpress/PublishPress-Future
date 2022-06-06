@@ -40,6 +40,6 @@ div.pe-qe-fields > div {
 }
 
 .pe-qe-fields input.invalid {
-    border: 2px solid rgb(221, 17, 17);
-    background-color: rgb(235, 168, 168);
+    border: 2px solid #b15b5b;
+    background-color: #ffdede;
 }
