@@ -85,6 +85,7 @@ This section describes how to install the plugin and get it working.
 
 * CHANGED: Add library to protect breaking site when multiple instances of the plugin are activated;
 * CHANGED: Invert order of the debug log, showing now on ASC order;
+* CHANGED: Make bulk edit date fields required, #256;
 * FIXED: Fix unlocalized string on the taxonomy field (Thanks to Alex Lion), #255;
 * FIXED: Fix default taxonomy selection for Post Types in the settings, #144;
 * FIXED: Fix typo in the hook name 'postexpirator_schedule' (Thanks to Nico Mollet), #244;
