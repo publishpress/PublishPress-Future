@@ -15,7 +15,8 @@ class RoboFile extends PackageBuilderTasks
      */
     public function __construct()
     {
-        parent::__construct();
+        $this->setPluginFilename('post-expirator.php');
+        $this->setVersionConstantName('POSTEXPIRATOR_VERSION');
 
         $this->appendToFileToIgnore(
             array(
@@ -34,7 +35,6 @@ class RoboFile extends PackageBuilderTasks
             )
         );
 
-        $this->setPluginFilename('post-expirator.php');
-        $this->setVersionConstantName('POSTEXPIRATOR_VERSION');
+        parent::__construct();
     }
 }
