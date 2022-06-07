@@ -81,7 +81,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.7.4] - UNRELEASED =
+= [2.7.4] - 07 Jun, 2022 =
 
 * CHANGED: Add library to protect breaking site when multiple instances of the plugin are activated;
 * CHANGED: Invert order of the debug log, showing now on ASC order;
