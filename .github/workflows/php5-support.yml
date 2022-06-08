@@ -1,10 +1,14 @@
 name: PHP v5 Support
 
 on:
-  push:
-    branches: [ main, develop ]
   pull_request:
-    branches: [ main, develop ]
+    branches:
+      - main
+      - develop
+
+concurrency:
+  group: php5-support-${{ github.ref }}-1
+  cancel-in-progress: true
 
 permissions:
   contents: read
