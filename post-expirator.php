@@ -2103,12 +2103,11 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     function postexpirator_date_save_bulk_edit()
     {
         // Save Bulk edit data
-        $wpListTable = _get_list_table('WP_Posts_List_Table');
-        $doaction = $wpListTable->current_action();
+        $doAction = isset($_GET['action']) ? sanitize_key($_GET['action']) : '';
         $facade = PostExpirator_Facade::getInstance();
 
         if (
-            'edit' !== $doaction
+            'edit' !== $doAction
             || ! isset($_REQUEST['postexpirator_view'])
             || $_REQUEST['postexpirator_view'] !== 'bulk-edit'
             || ! isset($_REQUEST['expirationdate_status'])
