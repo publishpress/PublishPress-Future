@@ -1,6 +1,14 @@
 name: PHPLint
 
-on: [ push ]
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+concurrency:
+  group: phplint-${{ github.ref }}-1
+  cancel-in-progress: true
 
 jobs:
   phplint:
@@ -9,12 +17,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        operating-system: [ ubuntu-latest ]
+        operating-system: [ ubuntu-20.04 ]
         php-versions: [ '7.4' ]
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -23,11 +31,20 @@ jobs:
           extensions: intl, fileinfo, zip, mbstring
           ini-values: "post_max_size=256M"
 
-      - name: Check PHP Version
+      - name: Show PHP Version
         run: php -v
-
-      - name: Update the composer.lock file
-        run: composer update --lock
+        
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
       - name: Validate composer.json and composer.lock
         run: composer validate
