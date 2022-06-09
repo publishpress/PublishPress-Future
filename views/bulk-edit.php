@@ -4,11 +4,11 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 $defaults = PostExpirator_Facade::get_default_expiry($post_type);
 
-$year = $defaults['year'];
-$month = $defaults['month'];
-$day = $defaults['day'];
-$hour = $defaults['hour'];
-$minute = $defaults['minute'];
+$defaultYear = $defaults['year'];
+$defaultMonth = $defaults['month'];
+$defaultDay = $defaults['day'];
+$defaultHour = $defaults['hour'];
+$defaultMinute = $defaults['minute'];
 ?>
 <div style="clear:both"></div>
 <div class="inline-edit-col post-expirator-quickedit">
@@ -56,7 +56,7 @@ $minute = $defaults['minute'];
                                 $monthNumeric = PostExpirator_Util::get_wp_date('m', $now);
                                 $monthStr = PostExpirator_Util::get_wp_date('M', $now);
                                 // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-                                $selected = $monthNumeric == $defaults['month'] ? 'selected' : '';
+                                $selected = $monthNumeric == $defaultMonth['month'] ? 'selected' : '';
                                 ?>
                                 <option value="<?php
                                 echo esc_attr($monthNumeric); ?>"
@@ -74,28 +74,28 @@ $minute = $defaults['minute'];
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Day', 'post-expirator'); ?></span>
                                 <input name="expirationdate_day" required value="<?php
-                                echo esc_attr($day); ?>" size="2"
+                                echo esc_attr($defaultDay); ?>" size="2"
                                        maxlength="2" autocomplete="off" type="text">
                             </label>,
                             <label>
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Year', 'post-expirator'); ?></span>
                                 <input name="expirationdate_year" required value="<?php
-                                echo esc_attr($year); ?>" size="4"
+                                echo esc_attr($defaultYear); ?>" size="4"
                                        maxlength="4" autocomplete="off" type="text">
                             </label> @
                             <label>
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Hour', 'post-expirator'); ?></span>
                                 <input name="expirationdate_hour" required value="<?php
-                                echo esc_attr($hour); ?>" size="2"
-                                       maxlength="2" autocomplete="off" type="text">
+                                echo esc_attr($defaultHour); ?>" size="2"
+                                       mdefaultMxlength="2" autocomplete="off" type="text">
                             </label> :
                             <label>
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Minute', 'post-expirator'); ?></span>
                                 <input name="expirationdate_minute" required value="<?php
-                                echo esc_attr($minute); ?>"                                        size="2" maxlength="2" autocomplete="off" type="text">
+                                echo esc_attr($defaultMinute); ?>"                                        size="2" maxlength="2" autocomplete="off" type="text">
                             </label>
 
                             <?php
