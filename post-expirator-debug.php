@@ -23,8 +23,7 @@ class PostExpiratorDebug
     {
         global $wpdb;
 
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        if ($wpdb->get_var("SHOW TABLES LIKE '" . $this->debug_table . "'") !== $this->debug_table) {
+        if ($wpdb->get_var("SHOW TABLES LIKE '" . $this->debug_table . "'") !== $this->debug_table) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
             $sql = 'CREATE TABLE `' . $this->debug_table . '` (
                 `id` INT(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 `timestamp` TIMESTAMP NOT NULL,
@@ -42,8 +41,8 @@ class PostExpiratorDebug
     public function removeDBTable()
     {
         global $wpdb;
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-        $wpdb->query('DROP TABLE IF EXISTS ' . $this->debug_table);
+
+        $wpdb->query('DROP TABLE IF EXISTS ' . $this->debug_table); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching
     }
 
     /**
@@ -58,15 +57,13 @@ class PostExpiratorDebug
         } else {
             $blog = 0;
         }
-        $wpdb->query(
-            // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
+        $wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
             $wpdb->prepare(
-                'INSERT INTO ' . $this->debug_table . ' (`timestamp`,`message`,`blog`) VALUES (FROM_UNIXTIME(%d),%s,%s)',
+                'INSERT INTO ' . $this->debug_table . ' (`timestamp`,`message`,`blog`) VALUES (FROM_UNIXTIME(%d),%s,%s)', // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 time(),
                 $data['message'],
                 $blog
             )
-            // phpcs:enable
         );
     }
 
@@ -76,7 +73,7 @@ class PostExpiratorDebug
     public function getTable()
     {
         global $wpdb;
-        $results = $wpdb->get_results("SELECT * FROM {$this->debug_table} ORDER BY `id` ASC");
+        $results = $wpdb->get_results("SELECT * FROM {$this->debug_table} ORDER BY `id` ASC"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         if (empty($results)) {
             print '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
 
@@ -98,6 +95,6 @@ class PostExpiratorDebug
     public function purge()
     {
         global $wpdb;
-        $wpdb->query("TRUNCATE TABLE {$this->debug_table}");
+        $wpdb->query("TRUNCATE TABLE {$this->debug_table}"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
     }
 }
