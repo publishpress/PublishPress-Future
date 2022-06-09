@@ -801,6 +801,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
         $id = (int)$id;
 
+        $debug->save(array('message' => 'Called postexpirator_expire_post with id=' . $id));
+
         if (empty($id)) {
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(array('message' => 'No Post ID found - exiting'));
@@ -1367,6 +1369,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
             );
 
             $emailsToSend = array();
+
             // Get Blog Admins
             $blogAdmins = get_option('expirationdateEmailNotificationAdmins', POSTEXPIRATOR_EMAILNOTIFICATIONADMINS);
             // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
@@ -1395,15 +1398,21 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                 }
             }
 
-            // Send Emails
-            foreach ($emailsToSend as $email) {
-                if (wp_mail($email, sprintf(__('[%1$s] %2$s'), get_option('blogname'), $emailSubject), $emailBody)) {
-                    if (POSTEXPIRATOR_DEBUG) {
-                        $debug->save(array('message' => $id . ' -> EXPIRATION EMAIL SENT (' . $email . ')'));
-                    }
-                } else {
-                    if (POSTEXPIRATOR_DEBUG) {
-                        $debug->save(array('message' => $id . ' -> EXPIRATION EMAIL FAILED (' . $email . ')'));
+            $emailsToSend = array_unique($emailsToSend);
+
+            if (! empty($emailsToSend)) {
+                $debug->save(array('message' => $id . ' -> SENDING EMAIL TO (' . implode(', ', $emailsToSend) . ')'));
+
+                // Send Emails
+                foreach ($emailsToSend as $email) {
+                    if (wp_mail($email, sprintf(__('[%1$s] %2$s'), get_option('blogname'), $emailSubject), $emailBody)) {
+                        if (POSTEXPIRATOR_DEBUG) {
+                            $debug->save(array('message' => $id . ' -> EXPIRATION EMAIL SENT (' . $email . ')'));
+                        }
+                    } else {
+                        if (POSTEXPIRATOR_DEBUG) {
+                            $debug->save(array('message' => $id . ' -> EXPIRATION EMAIL FAILED (' . $email . ')'));
+                        }
                     }
                 }
             }
