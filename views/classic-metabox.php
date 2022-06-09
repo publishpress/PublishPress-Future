@@ -152,22 +152,22 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
                 ) . '</p>';
         } else {
             $keys = array_keys($taxonomies);
-            $taxonomy = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
+            $taxonomyId = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
             wp_terms_checklist(0, array(
-                'taxonomy' => $taxonomy,
+                'taxonomy' => $taxonomyId,
                 'walker' => $walker,
                 'selected_cats' => $categories,
                 'checked_ontop' => false
             ));
-            echo '<input type="hidden" name="taxonomy-heirarchical" value="' . esc_attr($taxonomy) . '" />';
+            echo '<input type="hidden" name="taxonomy-heirarchical" value="' . esc_attr($taxonomyId) . '" />';
         }
         echo '</ul>';
         echo '</div>';
-        if (isset($taxonomy)) {
+        if (isset($taxonomyId)) {
             echo '<p class="post-expirator-taxonomy-name">' . esc_html__(
                     'Taxonomy Name',
                     'post-expirator'
-                ) . ': ' . esc_html($taxonomy) . '</p>';
+                ) . ': ' . esc_html($taxonomyId) . '</p>';
         }
         echo '</div>';
     }
