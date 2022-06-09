@@ -2,7 +2,7 @@
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 <div class="post-expire-col" data-id="<?php echo esc_attr($id); ?>"
-     data-expire-attributes="<?php echo esc_attr(json_encode($attributes)); ?>">
+     data-expire-attributes="<?php echo esc_attr(wp_json_encode($attributes)); ?>">
     <?php
     $iconClass = '';
     $iconTitle = '';
