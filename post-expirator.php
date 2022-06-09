@@ -2052,7 +2052,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
         $selected = false;
         if (isset($opts['selected'])) {
-            $selected = $opts['selected'];
+            $selected = sanitize_text_field($opts['selected']);
         }
 
         $taxonomies = get_object_taxonomies($type, 'object');

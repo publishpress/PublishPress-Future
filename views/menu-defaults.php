@@ -135,6 +135,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                         esc_html_e('Taxonomy (hierarchical)', 'post-expirator'); ?></label></th>
                 <td>
                     <?php
+                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                         echo _postexpirator_taxonomy(
                             [
                                 'type' => $postType,
