@@ -35,8 +35,8 @@ abstract class PostExpirator_Reviews
             return false;
         }
 
-        if ($pagenow === 'admin.php' && isset($_GET['page'])) {
-            if ($_GET['page'] === 'publishpress-future') {
+        if ($pagenow === 'admin.php' && isset($_GET['page'])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            if ($_GET['page'] === 'publishpress-future') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
                 return true;
             }
         }
