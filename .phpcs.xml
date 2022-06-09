@@ -27,6 +27,7 @@
 
     <rule ref="WordPressVIPMinimum">
         <exclude name="WordPress.DateTime.RestrictedFunctions.date_date" />
+        <exclude name="WordPress.WP.GlobalVariablesOverride.Prohibited" />
     </rule>
     <rule ref="WordPress-VIP-Go"/>
     <rule ref="VariableAnalysis"/>
