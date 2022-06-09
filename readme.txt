@@ -81,6 +81,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.7.5] - 09 Jun, 2022 =
+
+* FIXED: Fix undefined array key "hook_suffix" warning, #259;
+
 = [2.7.4] - 07 Jun, 2022 =
 
 * CHANGED: Add library to protect breaking site when multiple instances of the plugin are activated;
