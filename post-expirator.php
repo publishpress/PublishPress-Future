@@ -811,7 +811,9 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
             return false;
         }
 
-        if (is_null(get_post($id))) {
+        $post = get_post($id);
+
+        if (is_null($post)) {
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(array('message' => $id . ' -> Post does not exist - exiting'));
             }
@@ -882,6 +884,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
         // Do Work
         if ($expireType === 'draft') {
+            // TODO: fix this, because wp_update_post returns int or WP_ERROR, not 0. Check other places doing the same.
             if (wp_update_post(array('ID' => $id, 'post_status' => 'draft')) === 0) {
                 if (POSTEXPIRATOR_DEBUG) {
                     $debug->save(array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true)));
@@ -902,6 +905,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                         array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
                     );
                 }
+
+                wp_transition_post_status('draft', $post->post_status, $post);
 
                 $postWasExpired = true;
             }
@@ -926,6 +931,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                         array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
                     );
                 }
+
+                wp_transition_post_status('private', $post->post_status, $post);
 
                 $postWasExpired = true;
             }
