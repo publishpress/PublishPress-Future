@@ -4,7 +4,7 @@
 * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
 * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
 * Author: PublishPress
- * Version: 2.7.5
+ * Version: 2.8.0-alpha.1
 * Author URI: http://publishpress.com
 * Text Domain: post-expirator
 * Domain Path: /languages
@@ -27,7 +27,7 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 
 if (! defined('POSTEXPIRATOR_LOADED')) {
     // Default Values
-    define('POSTEXPIRATOR_VERSION', '2.7.5');
+    define('POSTEXPIRATOR_VERSION', '2.8.0-alpha.1');
     define('POSTEXPIRATOR_DATEFORMAT', __('l F jS, Y', 'post-expirator'));
     define('POSTEXPIRATOR_TIMEFORMAT', __('g:ia', 'post-expirator'));
     define('POSTEXPIRATOR_FOOTERCONTENTS', __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'));
@@ -858,7 +858,9 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
             return false;
         }
 
-        if (is_null(get_post($id))) {
+        $post = get_post($id);
+
+        if (is_null($post)) {
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(array('message' => $id . ' -> Post does not exist - exiting'));
             }
@@ -929,6 +931,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
         // Do Work
         if ($expireType === 'draft') {
+            // TODO: fix this, because wp_update_post returns int or WP_ERROR, not 0. Check other places doing the same.
             if (wp_update_post(array('ID' => $id, 'post_status' => 'draft')) === 0) {
                 if (POSTEXPIRATOR_DEBUG) {
                     $debug->save(array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true)));
@@ -949,6 +952,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                         array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
                     );
                 }
+
+                wp_transition_post_status('draft', $post->post_status, $post);
 
                 $postWasExpired = true;
             }
@@ -973,6 +978,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                         array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
                     );
                 }
+
+                wp_transition_post_status('private', $post->post_status, $post);
 
                 $postWasExpired = true;
             }
