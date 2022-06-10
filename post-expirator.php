@@ -159,7 +159,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
      */
     function postexpirator_orderby($query)
     {
-        if (! is_admin()) {
+        if (! is_admin() || ! $query->is_main_query()) {
             return;
         }
 
