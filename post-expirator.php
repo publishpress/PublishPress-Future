@@ -580,17 +580,17 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
             $default = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
             if ($default === 'publish') {
-                $month = intval($_POST['mm']);
-                $day = intval($_POST['jj']);
-                $year = intval($_POST['aa']);
-                $hour = intval($_POST['hh']);
-                $minute = intval($_POST['mn']);
+                $month = isset($_POST['mm']) ? intval($_POST['mm']) : 0;
+                $day = isset($_POST['jj']) ? intval($_POST['jj']) : 0;
+                $year = isset($_POST['aa']) ? intval($_POST['aa']) : 0;
+                $hour = isset($_POST['hh']) ? intval($_POST['hh']) : 0;
+                $minute = isset($_POST['mn']) ? intval($_POST['mn']) : 0;
             } else {
-                $month = intval($_POST['expirationdate_month']);
-                $day = intval($_POST['expirationdate_day']);
-                $year = intval($_POST['expirationdate_year']);
-                $hour = intval($_POST['expirationdate_hour']);
-                $minute = intval($_POST['expirationdate_minute']);
+                $month = isset($_POST['expirationdate_month']) ? intval($_POST['expirationdate_month']) : 0;
+                $day = isset($_POST['expirationdate_day']) ? intval($_POST['expirationdate_day']) : 0;
+                $year = isset($_POST['expirationdate_year']) ? intval($_POST['expirationdate_year']) : 0;
+                $hour = isset($_POST['expirationdate_hour']) ? intval($_POST['expirationdate_hour']) : 0;
+                $minute = isset($_POST['expirationdate_minute']) ? intval($_POST['expirationdate_minute']) : 0;
 
                 if (empty($day)) {
                     $day = date('d');
