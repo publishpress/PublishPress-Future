@@ -548,8 +548,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
         }
 
         // don't run the echo if the function is called for saving revision.
-        $posttype = get_post_type((int) $id);
-        if ($posttype === 'revision') {
+        $postType = get_post_type((int) $id);
+        if ($postType === 'revision') {
             return;
         }
 
@@ -559,10 +559,11 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
         }
 
         $facade = PostExpirator_Facade::getInstance();
-
         if (! $facade->current_user_can_expire_posts()) {
             return;
         }
+
+        $default = get_option('expirationdateDefaults' . ucfirst($postType));
 
         $shouldSchedule = false;
         $ts = null;
@@ -575,23 +576,69 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                 check_admin_referer('__postexpirator', '_postexpiratornonce');
             }
 
+            $defaultExpireOptions = PostExpirator_Facade::get_default_expiry($postType);
+
             // Classic editor, quick edit
             $shouldSchedule = isset($_POST['enable-expirationdate']);
 
             $default = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
             if ($default === 'publish') {
-                $month = isset($_POST['mm']) ? intval($_POST['mm']) : 0;
-                $day = isset($_POST['jj']) ? intval($_POST['jj']) : 0;
-                $year = isset($_POST['aa']) ? intval($_POST['aa']) : 0;
-                $hour = isset($_POST['hh']) ? intval($_POST['hh']) : 0;
-                $minute = isset($_POST['mn']) ? intval($_POST['mn']) : 0;
-            } else {
-                $month = isset($_POST['expirationdate_month']) ? intval($_POST['expirationdate_month']) : 0;
-                $day = isset($_POST['expirationdate_day']) ? intval($_POST['expirationdate_day']) : 0;
-                $year = isset($_POST['expirationdate_year']) ? intval($_POST['expirationdate_year']) : 0;
-                $hour = isset($_POST['expirationdate_hour']) ? intval($_POST['expirationdate_hour']) : 0;
-                $minute = isset($_POST['expirationdate_minute']) ? intval($_POST['expirationdate_minute']) : 0;
+                $useDefaultTime = false;
 
+                $expectedKeys = ['mm', 'jj', 'aa', 'hh', 'mm'];
+                foreach ($expectedKeys as $key)
+                {
+                    if (! isset($_POST[$key])) {
+                        $useDefaultTime = true;
+                        break;
+                    }
+                }
+
+                if ($useDefaultTime) {
+                    $month = intval($defaultExpireOptions['month']);
+                    $day = intval($defaultExpireOptions['day']);
+                    $year = intval($defaultExpireOptions['year']);
+                    $hour = intval($defaultExpireOptions['hour']);
+                    $minute = intval($defaultExpireOptions['minute']);
+                } else {
+                    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+                    $month = intval($_POST['mm']);
+                    $day = intval($_POST['jj']);
+                    $year = intval($_POST['aa']);
+                    $hour = intval($_POST['hh']);
+                    $minute = intval($_POST['mn']);
+                    // phpcs:enable
+                }
+
+           } else {
+                $useDefaultTime = false;
+
+                $expectedKeys = ['expirationdate_month', 'expirationdate_day', 'expirationdate_year', 'expirationdate_hour', 'expirationdate_minute'];
+                foreach ($expectedKeys as $key)
+                {
+                    if (! isset($_POST[$key])) {
+                        $useDefaultTime = true;
+                        break;
+                    }
+                }
+
+                if ($useDefaultTime) {
+                    $month = intval($defaultExpireOptions['month']);
+                    $day = intval($defaultExpireOptions['day']);
+                    $year = intval($defaultExpireOptions['year']);
+                    $hour = intval($defaultExpireOptions['hour']);
+                    $minute = intval($defaultExpireOptions['minute']);
+                } else {
+                    // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+                    $month = intval($_POST['expirationdate_month']);
+                    $day = intval($_POST['expirationdate_day']);
+                    $year = intval($_POST['expirationdate_year']);
+                    $hour = intval($_POST['expirationdate_hour']);
+                    $minute = intval($_POST['expirationdate_minute']);
+                    // phpcs:enable
+                }
+
+                // TODO: Do we still need this?
                 if (empty($day)) {
                     $day = date('d');
                 }
