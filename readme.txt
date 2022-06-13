@@ -81,6 +81,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.7.6] - 13 Jun, 2022 =
+
+* FIXED: Fix fatal error on cron if debug is not activated, #265;
+
 = [2.7.5] - 09 Jun, 2022 =
 
 * FIXED: Fix undefined array key "hook_suffix" warning, #259;
