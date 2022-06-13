@@ -16,3 +16,5 @@ bin
 codeceptjs
 tests
 webpack.config.js
+docker
+*.code-workspace
