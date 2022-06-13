@@ -801,7 +801,9 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
         $id = (int)$id;
 
-        $debug->save(array('message' => 'Called postexpirator_expire_post with id=' . $id));
+        if (POSTEXPIRATOR_DEBUG) {
+            $debug->save(array('message' => 'Called postexpirator_expire_post with id=' . $id));
+        }
 
         if (empty($id)) {
             if (POSTEXPIRATOR_DEBUG) {
