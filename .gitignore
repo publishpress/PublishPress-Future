@@ -8,9 +8,10 @@ codeceptjs/output
 .DS_Store
 /builder.yml
 dist
-.env.testing
 report.csv
 .phplint-cache
 .php-cs-fixer.cache
 .vscode/
 *.code-workspace
+.codeception-php*.env
+.codeception.env

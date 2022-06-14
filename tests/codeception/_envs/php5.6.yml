@@ -1,0 +1,63 @@
+modules:
+  config:
+    WPDb:
+        dsn: 'mysql:host=%TEST_SITE_DB_HOST%;port=%TEST_SITE_DB_PORT%;dbname=%TEST_SITE_DB_NAME%;charset=UTF8'
+        user: '%TEST_SITE_DB_USER%'
+        password: '%TEST_SITE_DB_PASSWORD%'
+        cleanup: false
+        waitlock: 10
+        url: '%TEST_SITE_WP_URL%'
+        urlReplacement: true #replace the hardcoded dump URL with the one above
+        tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
+    WPLoader:
+        wpRootFolder: "%WP_ROOT_FOLDER%"
+        dbName: "%TEST_SITE_DB_NAME%"
+        dbHost: "%TEST_SITE_DB_HOST%:%TEST_SITE_DB_PORT%"
+        dbUser: "%TEST_SITE_DB_USER%"
+        dbPassword: "%TEST_SITE_DB_PASSWORD%"
+        tablePrefix: "%TEST_SITE_TABLE_PREFIX%"
+        domain: "%TEST_SITE_WP_DOMAIN%"
+        adminEmail: "%TEST_SITE_ADMIN_EMAIL%"
+        title: "%TEST_SITE_NAME%"
+        plugins:
+            - post-expirator/post-expirator.php
+            - pre-tests/pre-tests.php
+        activatePlugins:
+            - post-expirator/post-expirator.php
+            - pre-tests/pre-tests.php
+    WPWebDriver:
+        url: "%TEST_SITE_WP_URL%"
+        adminUsername: "%TEST_SITE_ADMIN_USERNAME%"
+        adminPassword: "%TEST_SITE_ADMIN_PASSWORD%"
+        adminPath: "/wp-admin"
+        browser: chrome
+        restart: true
+        window_size: "1280x1200"
+        port: 9515
+        capabilities:
+            browserName: chrome
+            chromeOptions:
+                args:
+                    - --headless
+                    - --disable-gpu
+                    - --disable-infobars
+                prefs:
+                    download.default_directory: "..."
+    Sequence:
+        prefix: "uid_"
+extensions:
+    config:
+        tad\WPBrowser\Extension\Copier:
+            files:
+                assets: "%ssss%/wp-content/plugins/post-expirator/assets"
+                classes: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/classes"
+                languages: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/languages"
+                vendor: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/vendor"
+                views: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/views"
+                functions.php: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/functions.php"
+                legacy-functions.php: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/legacy-functions.php"
+                post-expirator.php: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/post-expirator.php"
+                post-expirator-debug.php: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/post-expirator-debug.php"
+                readme.txt: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator/readme.txt"
+                tests/codeception/_data/plugins/pre-tests: "%WP_ROOT_FOLDER%/wp-content/plugins/pre-tests"
+                tests/codeception/_data/plugins/classic-editor-v1.6.2: "%WP_ROOT_FOLDER%/wp-content/plugins/classic-editor"

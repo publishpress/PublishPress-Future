@@ -58,5 +58,14 @@
   "require": {
     "publishpress/wordpress-reviews": "^1.1",
     "publishpress/publishpress-instance-protection": "^1.0"
+
+  },
+  "scripts": {
+    "tests": "tests/bin/tests.sh publishpress-future $1 $2",
+    "tests-php": "tests/bin/get-php-versions.sh"
+  },
+  "scripts-descriptions": {
+    "tests": "Manage tests on Docker a container. You need to pass the PHP version as the first argument. Check versions available running 'composer test-php'.",
+    "tests-php": "Show the available PHP versions for running tests."
   }
 }

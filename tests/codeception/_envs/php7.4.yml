@@ -1,0 +1,2 @@
+params:
+  - .codeception-php7.4.env
