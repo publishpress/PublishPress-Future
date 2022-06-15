@@ -51,7 +51,7 @@ fix_volume_permissions() {
 create_env_file() {
     ENV_FILE_NAME="$PHP_VERSION.yml"
     ENV_FILE="$ENVS_PATH/$ENV_FILE_NAME"
-    TEMPLATE_FILE="$PROJECT_ROOT_PATH/codeception.env.dist.yml"
+    TEMPLATE_FILE="$PROJECT_ROOT_PATH/.acceptance.env.template.yml"
 
     WORDPRESS_IP=$(get_wordpress_service_ip)
     DB_IP=$(get_db_service_ip)

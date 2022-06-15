@@ -13,5 +13,3 @@ report.csv
 .php-cs-fixer.cache
 .vscode/
 *.code-workspace
-.codeception-php*.env
-.codeception.env
