@@ -1,23 +1,26 @@
 paths:
-  tests: tests/codeception
-  output: tests/codeception/_output
-  data: tests/codeception/_data
-  support: tests/codeception/_support
-  envs: tests/codeception/_envs
+    tests: tests/codeception
+    output: tests/codeception/_output
+    data: tests/codeception/_data
+    support: tests/codeception/_support
+    envs: tests/codeception/_envs
 actor_suffix: Tester
 extensions:
-  enabled:
-    - Codeception\Extension\RunFailed
-    - tad\WPBrowser\Extension\Copier
-  commands:
-    - Codeception\Command\GenerateWPUnit
-    - Codeception\Command\GenerateWPRestApi
-    - Codeception\Command\GenerateWPRestController
-    - Codeception\Command\GenerateWPRestPostTypeController
-    - Codeception\Command\GenerateWPAjax
-    - Codeception\Command\GenerateWPCanonical
-    - Codeception\Command\GenerateWPXMLRPC
+    enabled:
+        - Codeception\Extension\RunFailed
+        - Codeception\Extension\Recorder:
+            module: WPWebDriver
+            delete_successful: false
+            ignore_steps: [have, grab*]
+    commands:
+        - Codeception\Command\GenerateWPUnit
+        - Codeception\Command\GenerateWPRestApi
+        - Codeception\Command\GenerateWPRestController
+        - Codeception\Command\GenerateWPRestPostTypeController
+        - Codeception\Command\GenerateWPAjax
+        - Codeception\Command\GenerateWPCanonical
+        - Codeception\Command\GenerateWPXMLRPC
 settings:
-  lint: true
-  report_useless_tests: true
-  colors: true
+    lint: true
+    report_useless_tests: true
+    colors: true

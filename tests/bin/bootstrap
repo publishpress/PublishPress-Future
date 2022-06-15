@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+$basePath = getcwd();
+$wpRootPath = $argv[1];
+
+$bootstrapFile = $basePath . '/tests/bootstrap.config.yml';
+
+if (!file_exists($bootstrapFile)) {
+    exit(0);
+}
+
+echo "Parsing bootstrap.yml file\n";
+$config = yaml_parse_file($bootstrapFile);
+
+if (isset($config['copy']) && ! empty($config['copy'])) {
+    echo "Copying files to the test volume\n";
+
+    foreach ($config['copy'] as $source => $destination) {
+        $destination = str_replace('%WP_ROOT_FOLDER%', $wpRootPath, $destination);
+        $sourcePath = "$basePath/$source";
+
+        // Using rsync because it is faster
+        if (is_dir($sourcePath)) {
+            shell_exec("mkdir -p $destination");
+            shell_exec("rsync -r $sourcePath/* $destination");
+        } else {
+            shell_exec("rsync -r $sourcePath $destination");
+        }
+    }
+
+    echo "Finished copying files\n";
+}

@@ -11,6 +11,8 @@
 
 namespace PreTests;
 
+add_filter('admin_email_check_interval', '__return_false');
+
 add_action('init', 'PreTests\registerPostTypes', 1);
 add_action('init', 'PreTests\registerTaxonomies', 1);
 

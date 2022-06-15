@@ -12,7 +12,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
     volumes:
-      - wordpress:/var/www/html
+      - ./volumes/php5.6-wordpress:/var/www/html
     depends_on:
       - db
 
@@ -24,6 +24,3 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
       MYSQL_ROOT_PASSWORD: wordpress
-
-volumes:
-  wordpress:

@@ -7,8 +7,42 @@ modules:
         - Asserts
         - WPLoader
         - Sequence
+    config:
+        WPDb:
+            dump: "tests/codeception/_data/sql/dump.sql"
+            populate: true
+            cleanup: false
+            urlReplacement: true
+            letAdminEmailVerification: false
+            letCron: false
+        WPLoader:
+            isolatedInstall: true
+            plugins:
+                - post-expirator/post-expirator.php
+                - pre-tests/pre-tests.php
+            activatePlugins:
+                - post-expirator/post-expirator.php
+                - pre-tests/pre-tests.php
+        WPWebDriver:
+            adminPath: "/wp-admin"
+            browser: chrome
+            restart: true
+            window_size: "1280x1200"
+            port: 9515
+            capabilities:
+                browserName: chrome
+                chromeOptions:
+                args:
+                    - --headless
+                    - --disable-gpu
+                    - --disable-infobars
+                prefs:
+                    download.default_directory: "..."
+        Sequence:
+            prefix: "uid_"
 extensions:
     enabled:
         - Codeception\Extension\RunProcess:
-              0: chromedriver --url-base=/wd/hub
+              0: pwd
+              1: chromedriver --url-base=/wd/hub
               sleep: 3
