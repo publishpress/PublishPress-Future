@@ -15,5 +15,3 @@ report.csv
 *.code-workspace
 .codeception-php*.env
 .codeception.env
-tests/codeception/_envs/*
-!tests/codeception/_envs/.gitkeep
