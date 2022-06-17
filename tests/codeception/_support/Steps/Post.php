@@ -4,8 +4,10 @@ namespace Steps;
 
 use PostExpirator_Util;
 use DateTime;
+use Exception;
 
 use function sq;
+
 trait Post
 {
     /**
@@ -79,6 +81,10 @@ trait Post
         $posts = get_posts($args);
         if (! empty($posts)) {
             $postId = $posts[0]->ID;
+        }
+
+        if (empty($posts)) {
+            throw new Exception("Post not found with slug $postSlug");
         }
 
         return $postId;
