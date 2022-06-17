@@ -3,11 +3,11 @@
 ## Builder
 
 ```bash
-docker build -t ppbuilder bin/docker
+docker build -t ppbuilder builder/docker
 docker run -it --rm -v $PWD:/app ppbuilder
 
-bin/docker/scripts/build.sh build
-bin/docker/scripts/build.sh build-dir
+builder/docker/scripts/build build
+builder/docker/scripts/build build-dir
 
 
 
@@ -18,9 +18,9 @@ bin/docker/scripts/build.sh build-dir
 Available versions: php5.6, php7.4, php8.0, php8.1
 
 ```bash
-composer tests stop php5.6
-composer tests start php5.6
-composer tests bootstrap php5.6 && vendor/bin/codecept run acceptance --env php5.6
+tests/bin/tests php5.6 start
+tests/bin/tests php5.6 stop
+tests/bin/tests php5.6 run tests/codeception/acceptance/features/settings.feature
 ```
 
 ## TODO

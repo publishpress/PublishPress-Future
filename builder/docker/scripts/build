@@ -5,7 +5,7 @@ script_version="1.0.0"
 
 command=${1}
 source_path=$(pwd)
-php_scripts_path="${source_path}/bin/docker/scripts"
+scripts_path="${source_path}/builder/docker/scripts"
 dist_path="${source_path}/dist"
 cols=$(tput cols)
 
@@ -13,14 +13,15 @@ cols=$(tput cols)
 #######################################
 # Get the plugin name from composer.json file.
 # Globals:
-#   php_scripts_path
+#   scripts_path
 #   source_path
 # Returns:
 #   The plugin name.
 #######################################
 get_plugin_name() {
-    php "${php_scripts_path}/parse-json.php" "${source_path}/composer.json" name | awk -F/ '{print $NF}'
+    php "${scripts_path}/parse-json.php" "${source_path}/composer.json" name | awk -F/ '{print $NF}'
 }
+plugin_name=$(get_plugin_name)
 
 #######################################
 # Get the plugin version from the main plugin file.
@@ -31,9 +32,8 @@ get_plugin_version() {
     # TODO: Remove the hardcoded plugin slug
     cat post-expirator.php | grep "* Version:" | sed 's/ //g' | awk -F: '{print $NF}'
 }
-
-plugin_name=$(get_plugin_name)
 plugin_version=$(get_plugin_version)
+
 tmp_build_dir="${dist_path}/${plugin_name}"
 
 #######################################
@@ -115,10 +115,13 @@ pack_built_dir() {
 #   The runtime in seconds.
 #######################################
 show_time() {
-    end_time=$(date +%s)
-    runtime=$((end_time-start_time))
-    echo ""
-    echo "Runtime $runtime sec"
+    if [ "${HIDE_HEADER}" != "1" ]
+    then
+        end_time=$(date +%s)
+        runtime=$((end_time-start_time))
+        echo ""
+        echo "Runtime $runtime sec"
+    fi
 }
 
 #######################################
@@ -161,7 +164,11 @@ echo_header() {
 }
 
 #######################################
-echo_header
+if [ "${HIDE_HEADER}" != "1" ]
+then
+    echo_header
+fi
+
 case "${command}" in
     "build-dir")
         echo "Building to dist dir:"

@@ -24,4 +24,5 @@ RoboFile.php export-ignore
 screenshot-*.png export-ignore
 webpack.config.js export-ignore
 node_modules export-ignore
-
+bin export-ignore
+builder export-ignore

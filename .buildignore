@@ -26,5 +26,6 @@ screenshot-*.png
 webpack.config.js
 node_modules
 bin
+builder
 vendor
 README-build.md
