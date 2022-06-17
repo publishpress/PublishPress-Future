@@ -6,6 +6,11 @@
 docker build -t ppbuilder bin/docker
 docker run -it --rm -v $PWD:/app ppbuilder
 
+bin/docker/scripts/build.sh build
+bin/docker/scripts/build.sh build-dir
+
+
+
 ```
 
 ## Tests
@@ -15,7 +20,7 @@ Available versions: php5.6, php7.4, php8.0, php8.1
 ```bash
 composer tests stop php5.6
 composer tests start php5.6
-vendor/bin/codecept run acceptance --env php5.6
+composer tests bootstrap php5.6 && vendor/bin/codecept run acceptance --env php5.6
 ```
 
 ## TODO
