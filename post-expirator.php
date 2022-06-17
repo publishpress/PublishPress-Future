@@ -1,14 +1,14 @@
 <?php
 /**
-* Plugin Name: PublishPress Future
-* Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
-* Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
-* Author: PublishPress
+ * Plugin Name: PublishPress Future
+ * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
+ * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
+ * Author: PublishPress
  * Version: 2.7.6-enhencement.266
-* Author URI: http://publishpress.com
-* Text Domain: post-expirator
-* Domain Path: /languages
-*/
+ * Author URI: http://publishpress.com
+ * Text Domain: post-expirator
+ * Domain Path: /languages
+ */
 
 $includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
 if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
