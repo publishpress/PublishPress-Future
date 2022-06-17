@@ -125,6 +125,10 @@ case $COMMAND in
         echo "Creating the codeception env file"
         create_env_file
         ;;
+    "bootstrap")
+        echo "Running bootstrap"
+        run_bootstrap
+        ;;
     "start-all")
 
         ;;
