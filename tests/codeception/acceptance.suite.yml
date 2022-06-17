@@ -37,6 +37,10 @@ modules:
                         - --headless
                         - --disable-gpu
                         - --disable-infobars
+                        - --no-sandbox
+                        - --user-agent=wp-browser
+                        - --allow-insecure-localhost
+                        - --ignore-certificate-errors
                     prefs:
                         download.default_directory: "..."
         Sequence:
