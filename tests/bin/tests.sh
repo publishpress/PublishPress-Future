@@ -202,6 +202,12 @@ run_bootstrap() {
     tests/bin/bootstrap "${mount_path}"
 }
 
+#######################################
+# Show a list of available envs for different
+# PHP versions for testing.
+# Outputs:
+#   A list of codeception envs
+#######################################
 get_php_versions() {
     find tests/docker/ -type f -name 'docker-compose-tests-php*\.yml' | sed 's/tests\/docker\/docker-compose-tests-//g' | sed 's/\.yml//g'
 }
