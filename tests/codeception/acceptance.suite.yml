@@ -17,6 +17,7 @@ modules:
             letCron: false
         WPLoader:
             isolatedInstall: true
+            tablePrefix: "wp_"
             plugins:
                 - post-expirator/post-expirator.php
                 - pre-tests/pre-tests.php
