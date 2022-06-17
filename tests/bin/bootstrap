@@ -21,6 +21,7 @@ if (isset($config['copy']) && ! empty($config['copy'])) {
 
         // Using rsync because it is faster
         if (is_dir($sourcePath)) {
+            shell_exec("rm -rf $destination");
             shell_exec("mkdir -p $destination");
             shell_exec("rsync -r $sourcePath/* $destination");
         } else {
