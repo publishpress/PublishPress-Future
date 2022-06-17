@@ -1,5 +1,8 @@
 #!/usr/bin/env php
 <?php
+/**
+ * Bootstrap the plugin files into the test container volume.
+ */
 $basePath = getcwd();
 $wpRootPath = $argv[1];
 
@@ -9,11 +12,11 @@ if (!file_exists($bootstrapFile)) {
     exit(0);
 }
 
-echo "Parsing bootstrap.yml file\n";
+echo "▶ Parsing bootstrap.yml file\n";
 $config = yaml_parse_file($bootstrapFile);
 
 if (isset($config['copy']) && ! empty($config['copy'])) {
-    echo "Copying files to the test volume\n";
+    echo "▶ Copying files to the test volume\n";
 
     foreach ($config['copy'] as $source => $destination) {
         $destination = str_replace('%WP_ROOT_FOLDER%', $wpRootPath, $destination);
@@ -28,6 +31,4 @@ if (isset($config['copy']) && ! empty($config['copy'])) {
             shell_exec("rsync -r $sourcePath $destination");
         }
     }
-
-    echo "Finished copying files\n";
 }

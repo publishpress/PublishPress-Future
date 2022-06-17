@@ -2,6 +2,14 @@
 $path = $argv[1];
 $property = $argv[2];
 
+/**
+ * Parse a json file and returns the content as a string.
+ * If the value is an array, returns it separaated by comma.
+ *
+ * @param string $jsonFilePath
+ * @param string $property
+ * @return string
+ */
 function parseJson(string $jsonFilePath, string $property)
 {
     $jsonContent = trim(file_get_contents($jsonFilePath));
