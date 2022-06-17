@@ -1,7 +1,6 @@
 {
   "name": "publishpress/publishpress-future",
   "type": "wordpress-plugin",
-  "plugin-slug": "post-expirator",
   "license": "GPL-2.0-or-later",
   "description": "",
   "authors": [
