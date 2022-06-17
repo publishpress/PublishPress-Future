@@ -108,7 +108,8 @@ RUN set -eux; \
 		mkdir "wp-content/$dir"; \
 	done; \
 	chown -R www-data:www-data wp-content; \
-	chmod -R 777 wp-content
+	find ./ -type d -exec chmod 777 {} \; \
+	find ./ -type f -exec chmod 666 {} \;
 
 VOLUME /var/www/html
 
