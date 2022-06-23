@@ -30,3 +30,5 @@ builder
 vendor
 README-build.md
 cs
+ray.php
+ray-dist.php

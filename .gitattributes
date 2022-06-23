@@ -27,3 +27,5 @@ node_modules export-ignore
 bin export-ignore
 builder export-ignore
 cs export-ignore
+ray.php export-ignore
+ray-dist.php export-ignore
