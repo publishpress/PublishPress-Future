@@ -10,7 +10,7 @@ extensions:
         - Codeception\Extension\RunFailed
         - Codeception\Extension\Recorder:
             module: WPWebDriver
-            delete_successful: false
+            delete_successful: true
             ignore_steps: [have, grab*]
     commands:
         - Codeception\Command\GenerateWPUnit
