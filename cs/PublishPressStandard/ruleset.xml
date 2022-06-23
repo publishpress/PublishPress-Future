@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset name="PublishPressStandard">
+    <description>A custom coding standard.</description>
+
+    <rule>PublishPressStandard.Debug.DisallowRayFunctions.FoundRayFunction</rule>
+</ruleset>
