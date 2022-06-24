@@ -1410,7 +1410,9 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
             $emailsToSend = array_unique($emailsToSend);
 
             if (! empty($emailsToSend)) {
-                $debug->save(array('message' => $id . ' -> SENDING EMAIL TO (' . implode(', ', $emailsToSend) . ')'));
+                if (POSTEXPIRATOR_DEBUG) {
+                    $debug->save(array('message' => $id . ' -> SENDING EMAIL TO (' . implode(', ', $emailsToSend) . ')'));
+                }
 
                 // Send Emails
                 foreach ($emailsToSend as $email) {
