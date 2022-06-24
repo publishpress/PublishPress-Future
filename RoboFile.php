@@ -32,6 +32,7 @@ class RoboFile extends PackageBuilderTasks
                 '.php-cs-fixer.cache',
                 'psalm.xml',
                 'report.csv',
+                'ray.php'
             )
         );
 
