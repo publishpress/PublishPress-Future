@@ -33,6 +33,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/andergmartins/wordpress-ray"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/publishpress/publishpress-phpcs-standards"
     }
   ],
   "require": {
@@ -67,20 +71,15 @@
     "behat/behat": "^3.10",
     "automattic/vipwpcs": "^2.3",
     "spatie/ray": "*",
-		"spatie/wordpress-ray": "dev-patch-1"
+		"spatie/wordpress-ray": "dev-patch-1",
+    "publishpress/publishpress-phpcs-standards": "dev-main"
   },
   "scripts": {
     "tests": "tests/bin/tests $1 $2",
     "tests-php": "tests/bin/get-php-versions",
     "build-dir": "builder/docker/scripts/build build-dir",
     "build": "builder/docker/scripts/build build",
-    "build-clean": "builder/docker/scripts/build clean",
-    "post-install-cmd": [
-      "vendor/bin/phpcs --config-set installed_paths cs/PublishPressStandard"
-    ],
-    "post-update-cmd": [
-        "vendor/bin/phpcs --config-set installed_paths cs/PublishPressStandard"
-    ]
+    "build-clean": "builder/docker/scripts/build clean"
   },
   "scripts-descriptions": {
     "tests": "Manage tests on Docker a container. You need to pass the PHP version as the first argument. Check versions available running 'composer test-php'.",

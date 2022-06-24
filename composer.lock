@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7f98195bfcc99243c29bd4788f1fc49",
+    "content-hash": "e07e3d7ce9382967663ddb7732f89e5b",
     "packages": [
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -6226,6 +6226,62 @@
             "time": "2017-10-23T01:57:42+00:00"
         },
         {
+            "name": "publishpress/publishpress-phpcs-standards",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/publishpress-phpcs-standards.git",
+                "reference": "9024774e73f54f7fa0ebb59441619483608ba965"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/publishpress-phpcs-standards/zipball/9024774e73f54f7fa0ebb59441619483608ba965",
+                "reference": "9024774e73f54f7fa0ebb59441619483608ba965",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.20"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "*",
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "overtrue/phplint": "^2.1",
+                "phpcompatibility/php-compatibility": "*",
+                "phpmd/phpmd": "^2.8",
+                "sebastian/phpcpd": "^5.0",
+                "spatie/ray": "*",
+                "spatie/wordpress-ray": "dev-patch-1",
+                "squizlabs/php_codesniffer": "^3.5",
+                "vimeo/psalm": "^4.17"
+            },
+            "default-branch": true,
+            "type": "library",
+            "scripts": {
+                "post-install-cmd": [
+                    "vendor/bin/phpcs --config-set installed_paths standards/PublishPressStandards"
+                ],
+                "post-update-cmd": [
+                    "vendor/bin/phpcs --config-set installed_paths standards/PublishPressStandards"
+                ]
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com",
+                    "homepage": "https://publishpress.com",
+                    "role": "Developer"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/publishpress/publishpress-phpcs-standards/tree/main",
+                "issues": "https://github.com/publishpress/publishpress-phpcs-standards/issues"
+            },
+            "time": "2022-06-23T18:35:04+00:00"
+        },
+        {
             "name": "publishpress/publishpress-plugin-builder",
             "version": "v1.4.0",
             "source": {
@@ -10795,7 +10851,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "spatie/wordpress-ray": 20
+        "spatie/wordpress-ray": 20,
+        "publishpress/publishpress-phpcs-standards": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
