@@ -225,9 +225,6 @@ add_user_group() {
 # and tested.
 #######################################
 run_bootstrap() {
-    run_builder
-    echo ""
-
     mount_path=$(get_mount_path)
     tests/bin/bootstrap "${mount_path}"
 }
