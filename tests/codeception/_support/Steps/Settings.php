@@ -85,11 +85,11 @@ trait Settings
     }
 
    /**
-    * @When I change the default taxonomy to :arg1 for :arg2
+    * @When /I change the default taxonomy to ([a-z_0-9]+) for ([a-z_0-9]+)/
     */
-    public function iChangeTheDefaultTaxonomyToFor($arg1, $arg2)
+    public function iChangeTheDefaultTaxonomyToFor($taxonomy, $postType)
     {
-        $this->selectOption('#expirationdate_taxonomy-' . strtolower($arg2), $arg1);
+        $this->selectOption('#expirationdate_taxonomy-' . $postType, $taxonomy);
     }
 
    /**
@@ -101,44 +101,26 @@ trait Settings
     }
 
    /**
-    * @Then I see the taxonomy :arg1 as the default one for :arg2
+    * @Then /I see the taxonomy ([a-z_0-9]+) as the default one for ([a-z_0-9]+)/
     */
-    public function iSeeTheTaxonomyAsTheDefaultOneFor($arg1, $arg2)
+    public function iSeeTheTaxonomyAsTheDefaultOneFor($taxonomy, $postType)
     {
-        $this->seeOptionIsSelected('#expirationdate_taxonomy-' . strtolower($arg2), $arg1);
+        $this->seeOptionIsSelected('#expirationdate_taxonomy-' . $postType, $taxonomy);
     }
 
     /**
-     * @When I set Active field as inactive for :arg1
+     * @When /I set Active field as (inactive|active) for ([a-z_0-9]+)/
      */
-    public function iSetActiveFieldAsInactiveFor($arg1)
+    public function iSetActiveFieldFor($value, $postType)
     {
-        $this->selectOption('input[name="expirationdate_activemeta-'  . strtolower($arg1) . '"]', 'inactive');
+        $this->selectOption('input[name="expirationdate_activemeta-'  . $postType . '"]', $value);
     }
 
    /**
-    * @Then I see the field Active has value inactive for :arg1
-    * @When I see the field Active has value inactive for :arg1
+    * @When /I see the field Active has value (inactive|active) for ([a-z_0-9]+)/
     */
-    public function iSeeTheFieldActiveHasValueInactiveFor($arg1)
+    public function iSeeTheFieldActiveHasValueFor($value, $postType)
     {
-        $this->seeOptionIsSelected('input[name="expirationdate_activemeta-'  . strtolower($arg1) . '"]', 'Inactive');
-    }
-
-   /**
-    * @When set Active field as active for :arg1
-    */
-    public function setActiveFieldAsActiveFor($arg1)
-    {
-        $this->selectOption('input[name="expirationdate_activemeta-'  . strtolower($arg1) . '"]', 'active');
-    }
-
-   /**
-    * @Then I see the field Active has value active for :arg1
-    * @When I see the field Active has value active for :arg1
-    */
-    public function iSeeTheFieldActiveHasValueActiveFor($arg1)
-    {
-        $this->seeOptionIsSelected('input[name="expirationdate_activemeta-'  . strtolower($arg1) . '"]', 'Active');
+        $this->seeOptionIsSelected('input[name="expirationdate_activemeta-'  . $postType . '"]', ucfirst($value));
     }
 }

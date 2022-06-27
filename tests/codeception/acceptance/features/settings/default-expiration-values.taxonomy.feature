@@ -10,20 +10,13 @@ Feature: Settings - Tab Post Types
     And I am on the settings page in the Post Types tab
 
   @admin @settings
-  Scenario: Change default expiration taxonomy for Posts
-    When I change the default taxonomy to "tax1" for "Post"
+  Scenario Outline: Change default expiration taxonomy for post type
+    When I change the default taxonomy to <taxonomy> for <post_type>
     And I save the changes
-    Then I see the taxonomy "tax1" as the default one for "Post"
+    Then I see the taxonomy <taxonomy> as the default one for <post_type>
 
-  @admin @settings
-  Scenario: Change default expiration taxonomy for Pages
-    When I change the default taxonomy to "tax2" for "Page"
-    And I save the changes
-    Then I see the taxonomy "tax2" as the default one for "Page"
-
-  @admin @settings
-  Scenario: Change default expiration taxonomy for custom type Music
-    When I change the default taxonomy to "tax3" for "Music"
-    And I save the changes
-    Then I see the taxonomy "tax3" as the default one for "Music"
-
+    Examples:
+    | post_type | taxonomy |
+    | post      | tax1     |
+    | page      | tax2     |
+    | music     | tax3     |
