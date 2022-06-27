@@ -38,7 +38,7 @@ function registerTaxonomies()
 {
     register_taxonomy(
         'tax1',
-        'post',
+        ['post', 'page', 'music'],
         [
             'hierarchical' => true,
             'labels' => [
@@ -51,13 +51,52 @@ function registerTaxonomies()
 
     register_taxonomy(
         'tax2',
-        'post',
+        ['post', 'page', 'music'],
         [
             'hierarchical' => true,
             'labels' => [
                 'name' => 'Tax2',
                 'singular_name' => 'tax2',
                 'plural_name' => 'tax2s'
+            ]
+        ]
+    );
+
+    register_taxonomy(
+        'tax3',
+        ['post', 'page', 'music'],
+        [
+            'hierarchical' => true,
+            'labels' => [
+                'name' => 'Tax3',
+                'singular_name' => 'tax3',
+                'plural_name' => 'tax3s'
+            ]
+        ]
+    );
+
+    register_taxonomy(
+        'tax4',
+        ['post', 'page', 'music'],
+        [
+            'hierarchical' => true,
+            'labels' => [
+                'name' => 'Tax4',
+                'singular_name' => 'tax4',
+                'plural_name' => 'tax4s'
+            ]
+        ]
+    );
+
+    register_taxonomy(
+        'tax5',
+        ['post', 'page', 'music'],
+        [
+            'hierarchical' => true,
+            'labels' => [
+                'name' => 'Tax5',
+                'singular_name' => 'tax5',
+                'plural_name' => 'tax5s'
             ]
         ]
     );

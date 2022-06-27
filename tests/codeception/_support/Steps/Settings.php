@@ -107,4 +107,38 @@ trait Settings
     {
         $this->seeOptionIsSelected('#expirationdate_taxonomy-' . strtolower($arg2), $arg1);
     }
+
+    /**
+     * @When I set Active field as inactive for :arg1
+     */
+    public function iSetActiveFieldAsInactiveFor($arg1)
+    {
+        $this->selectOption('input[name="expirationdate_activemeta-'  . strtolower($arg1) . '"]', 'inactive');
+    }
+
+   /**
+    * @Then I see the field Active has value inactive for :arg1
+    * @When I see the field Active has value inactive for :arg1
+    */
+    public function iSeeTheFieldActiveHasValueInactiveFor($arg1)
+    {
+        $this->seeOptionIsSelected('input[name="expirationdate_activemeta-'  . strtolower($arg1) . '"]', 'Inactive');
+    }
+
+   /**
+    * @When set Active field as active for :arg1
+    */
+    public function setActiveFieldAsActiveFor($arg1)
+    {
+        $this->selectOption('input[name="expirationdate_activemeta-'  . strtolower($arg1) . '"]', 'active');
+    }
+
+   /**
+    * @Then I see the field Active has value active for :arg1
+    * @When I see the field Active has value active for :arg1
+    */
+    public function iSeeTheFieldActiveHasValueActiveFor($arg1)
+    {
+        $this->seeOptionIsSelected('input[name="expirationdate_activemeta-'  . strtolower($arg1) . '"]', 'Active');
+    }
 }
