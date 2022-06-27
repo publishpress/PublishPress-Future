@@ -23,12 +23,16 @@ if (isset($config['copy']) && ! empty($config['copy'])) {
         $sourcePath = "$basePath/$source";
 
         // Using rsync because it is faster
-        if (is_dir($sourcePath)) {
-            shell_exec("rm -rf $destination");
-            shell_exec("mkdir -p $destination");
-            shell_exec("rsync -r $sourcePath/* $destination");
+        if (file_exists($sourcePath)) {
+            if (is_dir($sourcePath)) {
+                shell_exec("rm -rf $destination");
+                shell_exec("mkdir -p $destination");
+                shell_exec("rsync -r $sourcePath/* $destination");
+            } else {
+                shell_exec("rsync -r $sourcePath $destination");
+            }
         } else {
-            shell_exec("rsync -r $sourcePath $destination");
+            throw new Exception('Source path not found: ' . $source);
         }
     }
 }

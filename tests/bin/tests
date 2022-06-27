@@ -225,8 +225,21 @@ add_user_group() {
 # and tested.
 #######################################
 run_bootstrap() {
+    run_builder
+    echo ""
+
     mount_path=$(get_mount_path)
     tests/bin/bootstrap "${mount_path}"
+}
+
+
+#######################################
+# Run the builder command without showing
+# the header.
+# Outputs: The output of the builder command.
+#######################################
+run_builder() {
+    HIDE_HEADER=1 $scripts_path/build build-dir
 }
 
 #######################################
@@ -368,7 +381,7 @@ case "${command}" in
         # Arguments passed to this command, after ther third one, will all be passed to
         # codeception run command
 
-        HIDE_HEADER=1 $scripts_path/build build-dir
+        run_builder
         echo ""
 
         echo_step "Fixing volume permissions"
