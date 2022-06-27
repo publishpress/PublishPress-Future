@@ -79,7 +79,13 @@
     "tests-php": "tests/bin/get-php-versions",
     "build-dir": "builder/docker/scripts/build build-dir",
     "build": "builder/docker/scripts/build build",
-    "build-clean": "builder/docker/scripts/build clean"
+    "build-clean": "builder/docker/scripts/build clean",
+    "post-install-cmd": [
+      "vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
+    ],
+    "post-update-cmd": [
+        "vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
+    ]
   },
   "scripts-descriptions": {
     "tests": "Manage tests on Docker a container. You need to pass the PHP version as the first argument. Check versions available running 'composer test-php'.",
