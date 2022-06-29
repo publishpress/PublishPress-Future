@@ -250,17 +250,46 @@ get_php_versions() {
 }
 
 #######################################
+# Start ChromeDriver
+#######################################
+
+start_chromedriver() {
+    chromedriver --url-base=/wd/hub &
+}
+
+#######################################
+# Stop ChromeDriver
+#######################################
+stop_chromedriver() {
+    ps aux | grep chromedriver | awk ' { print $2 } ' | xargs kill -9
+}
+
+#######################################
 # Show the elapsed time since the script started.
 # Globals:
 #   start_time
 # Outputs:
 #   The runtime in seconds.
 #######################################
-show_time() {
+show_runtime() {
     end_time=$(date +%s)
     runtime=$((end_time-start_time))
     echo ""
-    echo "Runtime $runtime sec"
+    echo "Runtime: $runtime sec"
+}
+
+#######################################
+# Show the elapsed time since the script started.
+# Globals:
+#   start_time
+# Outputs:
+#   The runtime in seconds.
+#######################################
+show_elapsed_time() {
+    end_time=$(date +%s)
+    runtime=$((end_time-start_time))
+    echo ""
+    echo "Elapsed time: $runtime sec"
 }
 
 #######################################
@@ -271,7 +300,7 @@ show_time() {
 # Outputs:
 #   The repeated string.
 #######################################
-repeat(){
+repeat() {
 	for (( c=1; c<="${2}"; c++ ))
     do
         echo -n "${1}"
@@ -323,12 +352,15 @@ case "${command}" in
         run_bootstrap
 
         echo_step  "Creating the codeception env file"
-        echo ""
         create_env_file
+
+        echo_step  "Starting ChromeDriver in the background"
+        echo ""
+        start_chromedriver
 
         echo ""
         echo "Start process finished!"
-        show_time
+        show_runtime
         ;;
     "bootstrap")
         echo "Bootstrapping the plugin for testing:"
@@ -337,7 +369,7 @@ case "${command}" in
 
         echo ""
         echo "Plugin bootstrapped succesfully!"
-        show_time
+        show_runtime
         ;;
     "stop")
         echo "Stop services:"
@@ -346,10 +378,16 @@ case "${command}" in
         echo_step "Stopping docker services"
         echo ""
         stop_services
+        echo ""
+
+        echo_step "Stopping ChromeDriver"
+        echo ""
+        stop_chromedriver
+        echo ""
 
         echo ""
         echo "Stop process finished!"
-        show_time
+        show_runtime
         ;;
     "ip")
         get_ip_addresses
@@ -387,6 +425,10 @@ case "${command}" in
         echo_step "Bootstrapping the plugin"
         run_bootstrap
 
+        echo ""
+        show_elapsed_time
+        echo ""
+
         echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
 
         echo ""
@@ -394,7 +436,7 @@ case "${command}" in
 
         echo ""
         echo "Finish running tests!"
-        show_time
+        show_runtime
         ;;
     *) echo "invalid option ${command}";;
 esac
