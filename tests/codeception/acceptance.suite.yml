@@ -27,7 +27,6 @@ modules:
         WPWebDriver:
             adminPath: "/wp-admin"
             browser: chrome
-            restart: true
             window_size: "1280x2000"
             port: 9515
             capabilities:
