@@ -412,7 +412,7 @@ case "${command}" in
         echo "Files cleaned succesfully!"
         clean_envs
         ;;
-    "run")
+    "brun")
         # Arguments passed to this command, after ther third one, will all be passed to
         # codeception run command
 
@@ -429,6 +429,18 @@ case "${command}" in
         show_elapsed_time
         echo ""
 
+        echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
+
+        echo ""
+        $source_path/vendor/bin/codecept run "${@:3}" --env "${php_version}"
+
+        echo ""
+        echo "Finish running tests!"
+        show_runtime
+        ;;
+    "run")
+        # Arguments passed to this command, after ther third one, will all be passed to
+        # codeception run command
         echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
 
         echo ""
