@@ -87,17 +87,4 @@ function registerTaxonomies()
             ]
         ]
     );
-
-    register_taxonomy(
-        'tax5',
-        ['post', 'page', 'music'],
-        [
-            'hierarchical' => true,
-            'labels' => [
-                'name' => 'Tax5',
-                'singular_name' => 'tax5',
-                'plural_name' => 'tax5s'
-            ]
-        ]
-    );
 }
