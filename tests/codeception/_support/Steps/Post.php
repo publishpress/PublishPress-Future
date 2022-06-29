@@ -133,6 +133,7 @@ trait Post
      */
     public function iSaveThePost()
     {
+        $this->executeJs('document.getElementById(\'publish\').scrollIntoView()');
         $this->click('#publish');
     }
 
