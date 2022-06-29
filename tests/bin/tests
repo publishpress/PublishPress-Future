@@ -429,6 +429,9 @@ case "${command}" in
         show_elapsed_time
         echo ""
 
+        echo_step "Cleanning up codeception output"
+        $source_path/vendor/bin/codecept clean
+
         echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
 
         echo ""
@@ -439,6 +442,9 @@ case "${command}" in
         show_runtime
         ;;
     "run")
+        echo_step "Cleanning up codeception output"
+        $source_path/vendor/bin/codecept clean
+
         # Arguments passed to this command, after ther third one, will all be passed to
         # codeception run command
         echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
