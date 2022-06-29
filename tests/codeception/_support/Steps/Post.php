@@ -246,6 +246,22 @@ trait Post
         $this->fillField('input[name="expirationdate_minute"]', $tomorrowDate->format('i'));
     }
 
+    /**
+     * @When I set the day of expiration to tomorrow at noon on classic editor
+     *
+     * @return void
+     */
+    public function iSetTheDayOfExpirationToTomorrowOnClassicEditor()
+    {
+        $tomorrowDate = $this->getTomorrowDateAtNoon();
+
+        $this->selectOption('select[name="expirationdate_month"]', $tomorrowDate->format('m'));
+        $this->fillField('input[name="expirationdate_day"]', $tomorrowDate->format('d'));
+        $this->selectOption('select[name="expirationdate_year"]', $tomorrowDate->format('Y'));
+        $this->selectOption('select[name="expirationdate_hour"]', $tomorrowDate->format('h'));
+        $this->fillField('input[name="expirationdate_minute"]', $tomorrowDate->format('i'));
+    }
+
    /**
     * @When I click on Update
     */
