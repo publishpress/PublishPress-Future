@@ -1,11 +1,11 @@
-Feature: Settings - Tab Post Types
+Feature: Settings - Tab Post Types - Taxonomy
   In order to configure the default expiration values for post types
   As an admin
   I want to see and use the Post Types tab
 
   Background:
-    Given the user "peter" exists with role "administrator"
-    And I am logged in as "peter"
+    Given the user "philip" exists with role "administrator"
+    And I am logged in as "philip"
     And only the plugins "post-expirator, pre-tests" are active
     And I am on the settings page in the Post Types tab
 

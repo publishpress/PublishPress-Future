@@ -123,4 +123,37 @@ trait Settings
     {
         $this->seeOptionIsSelected('input[name="expirationdate_activemeta-'  . $postType . '"]', ucfirst($value));
     }
+
+    /**
+     * @When I enable auto-enable for :post
+     */
+    public function iEnableAutoenableForPost($postType)
+    {
+        $this->click("#expirationdate_autoenable-true-{$postType}");
+    }
+
+    /**
+     * @When I disable auto-enable for :post
+     */
+    public function iDisableAutoenableForPost($postType)
+    {
+        $this->click("#expirationdate_autoenable-false-{$postType}");
+        // $this->wait(30);
+    }
+
+   /**
+    * @Then I see auto-enable is selected for :postType
+    */
+    public function iSeeAutoenableIsSelectedForPost($postType)
+    {
+        $this->seeOptionIsSelected("input[name=expirationdate_autoenable-{$postType}]", 'Enabled');
+    }
+
+    /**
+    * @Then I see auto-enable is not selected for :postType
+    */
+    public function iSeeAutoenableIsNotSelectedForPost($postType)
+    {
+        $this->seeOptionIsSelected("input[name=expirationdate_autoenable-{$postType}]", 'Disabled');
+    }
 }

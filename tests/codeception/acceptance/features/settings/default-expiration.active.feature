@@ -1,7 +1,7 @@
-Feature: Settings - Tab Post Types
-  In order to configure the default expiration values for post types
+Feature: Settings - Tab Post Types - Active
+  In order to activate and deactivate expiration metabox for post types
   As an admin
-  I want to see and use the Post Types tab
+  I want to be sure the Active field is working
 
   Background:
     Given the user "peter" exists with role "administrator"
