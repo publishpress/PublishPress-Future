@@ -156,4 +156,56 @@ trait Settings
     {
         $this->seeOptionIsSelected("input[name=expirationdate_autoenable-{$postType}]", 'Disabled');
     }
+
+    /**
+     * @When I set How To Expire as :value for :postType
+     */
+    public function iSetHowToExpireAsDeleteForPost($value, $postType)
+    {
+        $this->selectOption('#expirationdate_expiretype-' . $postType, $value);
+    }
+
+    /**
+     * @Then I see the field How to Expire has value :value for :postType
+     */
+    public function iSeeTheFieldHowToExpireHasValueFor($value, $postType)
+    {
+        $this->seeOptionIsSelected('#expirationdate_expiretype-' . $postType, $value);
+    }
+
+    /**
+     * @When I set Auto-Enable as :value for :postType
+     */
+    public function iSetAutoEnableAsFor($value, $postType)
+    {
+        if ($value === 'Enable') {
+            $this->click("#expirationdate_autoenable-true-{$postType}");
+        } else {
+            $this->click("#expirationdate_autoenable-false-{$postType}");
+        }
+    }
+
+   /**
+    * @Then I see the field Auto-Enable has value :value for :postType
+    */
+    public function iSeeTheFieldAutoEnableHasValueFor($value, $postType)
+    {
+        $this->seeOptionIsSelected("input[name=expirationdate_autoenable-{$postType}]", $value);
+    }
+
+    /**
+     * @When I set Taxonomy as :value for :postType
+     */
+    public function iSetTaxonomyAsFor($value, $postType)
+    {
+        $this->selectOption('#expirationdate_taxonomy-' . $postType, $value);
+    }
+
+   /**
+    * @Then I see the field Taxonomy has value :value for :postType
+    */
+    public function iSeeTheFieldTaxonomyHasValueFor($value, $postType)
+    {
+        $this->seeOptionIsSelected("#expirationdate_taxonomy-" . $postType, $value);
+    }
 }

@@ -1,5 +1,7 @@
 FROM php:5.6-apache
 
+# TODO: Compile this for M1? https://medium.com/nerd-for-tech/developing-on-apple-m1-silicon-with-virtual-environments-4f5f0765fd2f
+
 # install the PHP extensions we need
 RUN set -ex; \
 	\
