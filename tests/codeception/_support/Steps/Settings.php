@@ -208,4 +208,48 @@ trait Settings
     {
         $this->seeOptionIsSelected("#expirationdate_taxonomy-" . $postType, $value);
     }
+
+    /**
+     * @When I set Who to Notify as :value for :postType
+     */
+    public function iSetWhoToNotifyAsFor($value, $postType)
+    {
+        $this->fillField('#expirationdate_emailnotification-' . $postType, $value);
+    }
+
+   /**
+    * @Then I see the field Who to Notify has value :value for :postType
+    */
+    public function iSeeTheFieldWhoToNotifyHasValueFor($value, $postType)
+    {
+        $this->seeInField('#expirationdate_emailnotification-' . $postType, $value);
+    }
+
+    /**
+     * @When I set Default Date as :value for :postType
+     */
+    public function iSetDefaultDateAsFor($value, $postType)
+    {
+        $value = explode(':', $value);
+
+        $this->selectOption('#expired-default-date-' . $postType, $value[0]);
+
+        if ($value[0] === 'Custom') {
+            $this->fillField('#expired-custom-date-' . $postType, $value[1]);
+        }
+    }
+
+   /**
+    * @Then I see the field Default Date has value :value for :postType
+    */
+    public function iSeeTheFieldDefaultDateHasValueFor($value, $postType)
+    {
+        $value = explode(':', $value);
+
+        $this->seeOptionIsSelected("#expired-default-date-" . $postType, $value[0]);
+
+        if ($value[0] === 'Custom') {
+            $this->seeInField('#expired-custom-date-' . $postType, $value[1]);
+        }
+    }
 }
