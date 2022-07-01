@@ -346,4 +346,28 @@ trait Settings
 
         $this->see($time, '.entry-content p');
     }
+
+    /**
+     * @When I fill the Footer Style with :customStyle
+     */
+    public function iFillTheFooterStyleWith($customStyle)
+    {
+        $this->fillField('#expired-footer-style', $customStyle);
+    }
+
+   /**
+    * @Then I see the custom footer content :content with style :style
+    */
+    public function iSeeTheCustomFooterConstentWithStyle($content, $style)
+    {
+        $this->seeInSource('<p style="' . $style . '">' . $content . '</p>');
+    }
+
+    /**
+    * @Then I see the preview with style :style
+    */
+    public function iSeeThePreviewWithStyle($style)
+    {
+        $this->seeElementInDOM('#expired-footer-style + span', ['style' => $style]);
+    }
 }

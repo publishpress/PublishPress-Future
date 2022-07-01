@@ -57,7 +57,6 @@ Feature: Settings - Tab Display
     Then I see the custom footer content "This post will expire at"
     And I see the expiration date in the footer content
 
-  @dev
   Scenario: Placeholder EXPIRATIONTIME is replaced on the post footer
     Given post "crazypost" exists
     And post "crazypost" is set to expire in seven days at noon as Draft
@@ -67,3 +66,23 @@ Feature: Settings - Tab Display
     And I view the post "crazypost"
     Then I see the custom footer content "This post will expire at"
     And I see the expiration time in the footer content
+
+  @dev
+  Scenario: Customize the footer style and see it on preview
+    Given post "crazypost" exists
+    And post "crazypost" is set to expire in seven days at noon as Draft
+    When I enable Show in post footer
+    And I fill Footer Contents with "This post will expire!"
+    And I fill the Footer Style with "font-style: italic; color: green;"
+    And I save the changes
+    Then I see the preview with style "font-style: italic; color: green;"
+
+  Scenario: Customize the footer style and see it on the frontend
+    Given post "crazypost" exists
+    And post "crazypost" is set to expire in seven days at noon as Draft
+    When I enable Show in post footer
+    And I fill Footer Contents with "This post will expire!"
+    And I fill the Footer Style with "font-style: italic; color: orange;"
+    And I save the changes
+    And I view the post "crazypost"
+    Then I see the custom footer content "This post will expire!" with style "font-style: italic; color: orange;"
