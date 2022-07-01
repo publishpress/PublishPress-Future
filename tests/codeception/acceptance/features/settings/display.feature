@@ -67,7 +67,6 @@ Feature: Settings - Tab Display
     Then I see the custom footer content "This post will expire at"
     And I see the expiration time in the footer content
 
-  @dev
   Scenario: Customize the footer style and see it on preview
     Given post "crazypost" exists
     And post "crazypost" is set to expire in seven days at noon as Draft
