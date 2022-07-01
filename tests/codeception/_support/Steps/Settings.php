@@ -278,4 +278,72 @@ trait Settings
     {
         $this->fillField('#expired-footer-contents', $value);
     }
+
+
+    /**
+     * @Then I see the expiration date in the post footer
+     */
+    public function iSeeTheExpirationDateInThePostFooter()
+    {
+        $this->see('Post expires at ', '.entry-content p');
+    }
+
+    /**
+     * @Then I don't see the expiration date in the post footer
+     */
+    public function iDontSeeTheExpirationDateInThePostFooter()
+    {
+        $this->dontSee('Post expires at ', '.entry-content p');
+    }
+
+    /**
+     * @Then I see the custom footer content :customContent
+     */
+    public function iSeeTheCustomFooterContent($customContent)
+    {
+        $this->see($customContent, '.entry-content p');
+    }
+
+    /**
+     * @Then I see the expiration full date in the footer content
+     */
+    public function iSeeTheFullDateInTheFooterContent()
+    {
+        global $currentExpirationDate;
+
+        $dateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
+        $timeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
+
+        $fullDate = \PostExpirator_Util::get_wp_date("$dateFormat $timeFormat", $currentExpirationDate->getTimestamp());
+
+        $this->see($fullDate, '.entry-content p');
+    }
+
+    /**
+     * @Then I see the expiration date in the footer content
+     */
+    public function iSeeTheDateInTheFooterContent()
+    {
+        global $currentExpirationDate;
+
+        $dateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
+
+        $date = \PostExpirator_Util::get_wp_date($dateFormat, $currentExpirationDate->getTimestamp());
+
+        $this->see($date, '.entry-content p');
+    }
+
+     /**
+     * @Then I see the expiration time in the footer content
+     */
+    public function iSeeTheTimeInTheFooterContent()
+    {
+        global $currentExpirationDate;
+
+        $timeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
+
+        $time = \PostExpirator_Util::get_wp_date($timeFormat, $currentExpirationDate->getTimestamp());
+
+        $this->see($time, '.entry-content p');
+    }
 }

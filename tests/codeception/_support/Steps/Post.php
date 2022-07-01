@@ -299,6 +299,9 @@ trait Post
 
         $nextWeekDate = $this->getNextWeekDateAtNoon();
 
+        global $currentExpirationDate;
+        $currentExpirationDate = $nextWeekDate;
+
         foreach ($postSlugs as $postSlug) {
             $postId = $this->getPostIdFromSlug(sq($postSlug));
 
@@ -384,21 +387,5 @@ trait Post
     public function iViewThePost($postSlug)
     {
         $this->amOnPage(sq($postSlug));
-    }
-
-    /**
-     * @Then I see the expiration date in the post footer
-     */
-    public function iSeeTheExpirationDateInThePostFooter()
-    {
-        $this->see('Post expires at ', '.entry-content p');
-    }
-
-    /**
-     * @Then I don't see the expiration date in the post footer
-     */
-    public function iDontSeeTheExpirationDateInThePostFooter()
-    {
-        $this->dontSee('Post expires at ', '.entry-content p');
     }
 }
