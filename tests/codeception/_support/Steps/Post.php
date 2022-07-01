@@ -113,6 +113,7 @@ trait Post
 
 
     /**
+     * @Given I check the Enable Post Expiration checkbox
      * @When I check the Enable Post Expiration checkbox
      */
     public function iCheckTheEnablePostExpirationCheckbox()
@@ -375,5 +376,29 @@ trait Post
 
             $this->see($dateString, 'tr#post-' . $postId . ' .post-expire-col');
         }
+    }
+
+     /**
+     * @When I view the post :postSlug
+     */
+    public function iViewThePost($postSlug)
+    {
+        $this->amOnPage(sq($postSlug));
+    }
+
+    /**
+     * @Then I see the expiration date in the post footer
+     */
+    public function iSeeTheExpirationDateInThePostFooter()
+    {
+        $this->see('Post expires at ', '.entry-content p');
+    }
+
+    /**
+     * @Then I don't see the expiration date in the post footer
+     */
+    public function iDontSeeTheExpirationDateInThePostFooter()
+    {
+        $this->dontSee('Post expires at ', '.entry-content p');
     }
 }

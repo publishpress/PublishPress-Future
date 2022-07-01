@@ -84,6 +84,14 @@ trait Settings
         $this->amOnAdminPage('admin.php?page=publishpress-future&tab=defaults');
     }
 
+    /**
+     * @Given I am on the settings page in the Display tab
+     */
+    public function iAmOnTheSettingsPageInTheDisplayTab()
+    {
+        $this->amOnAdminPage('admin.php?page=publishpress-future&tab=display');
+    }
+
    /**
     * @When /I change the default taxonomy to ([a-z_0-9]+) for ([a-z_0-9]+)/
     */
@@ -251,5 +259,23 @@ trait Settings
         if ($value[0] === 'Custom') {
             $this->seeInField('#expired-custom-date-' . $postType, $value[1]);
         }
+    }
+
+    /**
+     * @When /I (enable|disable) Show in post footer/
+     */
+    public function iEnableDisableShowInPostFooter($value)
+    {
+        $value = $value === 'enable' ? 'true' : 'false';
+
+        $this->click('#expired-display-footer-' . $value);
+    }
+
+    /**
+     * @When I fill Footer Contents with :value
+     */
+    public function iFillFooterContentsWith($value)
+    {
+        $this->fillField('#expired-footer-contents', $value);
     }
 }
