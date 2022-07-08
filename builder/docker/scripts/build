@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 start_time=$(date +%s)
 
-script_version="1.0.0"
+script_version="1.1.0"
 
 command=${1}
 source_path=$(pwd)
@@ -24,17 +24,30 @@ get_plugin_name() {
 plugin_name=$(get_plugin_name)
 
 #######################################
+# Get the plugin slug from composer.json file.
+# Globals:
+#   scripts_path
+#   source_path
+# Returns:
+#   The plugin slug.
+#######################################
+get_plugin_slug() {
+    php "${scripts_path}/parse-json.php" "${source_path}/composer.json" "extra.plugin-slug"
+}
+plugin_slug=$(get_plugin_slug)
+
+#######################################
 # Get the plugin version from the main plugin file.
 # Returns:
 #   The plugin version.
 #######################################
 get_plugin_version() {
     # TODO: Remove the hardcoded plugin slug
-    cat post-expirator.php | grep "* Version:" | sed 's/ //g' | awk -F: '{print $NF}'
+    cat $plugin_slug.php | grep "* Version:" | sed 's/ //g' | awk -F: '{print $NF}'
 }
 plugin_version=$(get_plugin_version)
 
-tmp_build_dir="${dist_path}/${plugin_name}"
+tmp_build_dir="${dist_path}/${plugin_slug}"
 
 #######################################
 # Echo the string as an step in the output.
@@ -56,7 +69,7 @@ echo_step() {
 #   The current step message.
 #######################################
 clean_dist() {
-    echo_step "Removing the folder dist/${plugin_name} if exists"
+    echo_step "Removing the folder ${tmp_build_dir} if exists"
     rm -rf "${tmp_build_dir}"
 }
 
@@ -103,7 +116,7 @@ pack_built_dir() {
     rm -f "${zip_path}"
     pushd "${dist_path}" > /dev/null 2>&1
     echo_step "Creating the zip file on dist/${plugin_name}-${plugin_version}.zip"
-    zip -qr "${zip_path}" ./${plugin_name}
+    zip -qr "${zip_path}" ./${plugin_slug}
     popd > /dev/null 2>&1
 }
 
@@ -146,6 +159,7 @@ repeat(){
 #   script_version
 #   plugin_name
 #   plugin_version
+#   plugin_slug
 # Outputs:
 #   The formatted header.
 #######################################
@@ -156,7 +170,7 @@ echo_header() {
     echo "   -=(o '.      PUBLISHPRESS PLUGIN BUILDER - v${script_version}"
     echo "     '.-.\      ${line}"
     echo "     /|  \\      Name: ${plugin_name}"
-    echo "     '|  ||     Slug: "
+    echo "     '|  ||     Slug: ${plugin_slug}"
     echo "      _\_):,_   Version: ${plugin_version}"
     echo ""
     repeat "=" $cols
