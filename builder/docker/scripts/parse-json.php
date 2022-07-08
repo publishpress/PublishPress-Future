@@ -4,26 +4,45 @@ $property = $argv[2];
 
 /**
  * Parse a json file and returns the content as a string.
- * If the value is an array, returns it separaated by comma.
- *
- * @param string $jsonFilePath
- * @param string $property
- * @return string
  */
-function parseJson(string $jsonFilePath, string $property)
+function parseJson(string $jsonFilePath): array
 {
     $jsonContent = trim(file_get_contents($jsonFilePath));
     $jsonContent = (array)json_decode($jsonContent);
 
-    return isset($jsonContent[$property]) ? $jsonContent[$property] : '';
+    return $jsonContent;
 }
 
-$value = parseJson($path, $property);
+/**
+ * Return a property from an array
+ */
+function getProperty(array $data, string $property): string
+{
+    $propertyList = explode('.', $property);
+    $property = array_shift($propertyList);
+    $nextProperties = implode('.', $propertyList);
+    $value = 'null';
 
-if (is_string($value)) {
-    echo $value . "\n";
-    exit(0);
-} elseif (is_array($value)) {
-    echo implode(',', $value) . "\n";
-    exit(0);
+    if (isset($data[$property])) {
+        $value = $data[$property];
+
+        if (is_object($value)) {
+            $value = (array)$value;
+        }
+
+        if (is_array($value)) {
+            if (! empty($nextProperties)) {
+                $value = getProperty($value, $nextProperties);
+            } else {
+                $value = implode(', ', $value);
+            }
+        }
+
+        $value = (string)$value;
+    }
+
+    return $value;
 }
+
+$jsonContent = parseJson($path, $property);
+echo getProperty($jsonContent, $property);
