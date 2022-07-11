@@ -8,10 +8,6 @@ actor_suffix: Tester
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
-        - Codeception\Extension\Recorder:
-            module: WPWebDriver
-            delete_successful: true
-            ignore_steps: [have, grab*]
     commands:
         - Codeception\Command\GenerateWPUnit
         - Codeception\Command\GenerateWPRestApi
