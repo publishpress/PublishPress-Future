@@ -176,20 +176,20 @@ create_env_file() {
 
     # Copy the template file and replace the variables
     cp "${template_file_path}" "${env_file_path}"
-    sed -i "s/%TEST_SITE_DB_HOST%/${test_site_db_host}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_DB_PORT%/${test_site_db_port}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_DB_NAME%/${test_site_db_name}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_DB_USER%/${test_site_db_user}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_DB_PASSWORD%/${test_site_db_password}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_WP_URL%/${test_site_wp_url}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_WP_DOMAIN%/${test_site_wp_domain}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_NAME%/${test_site_name}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_ADMIN_USERNAME%/${test_site_admin_username}/g" "${env_file_path}"
-    sed -i "s/%TEST_SITE_ADMIN_PASSWORD%/${test_site_admin_password}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_DB_HOST%/${test_site_db_host}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_DB_PORT%/${test_site_db_port}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_DB_NAME%/${test_site_db_name}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_DB_USER%/${test_site_db_user}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_DB_PASSWORD%/${test_site_db_password}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_WP_URL%/${test_site_wp_url}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_WP_DOMAIN%/${test_site_wp_domain}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_NAME%/${test_site_name}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_ADMIN_USERNAME%/${test_site_admin_username}/g" "${env_file_path}"
+    sed -i'' -e "s/%TEST_SITE_ADMIN_PASSWORD%/${test_site_admin_password}/g" "${env_file_path}"
 
     wp_root_folder=$(echo "${mount_path}" | sed "s/\//:::/g")
-    sed -i "s/%WP_ROOT_FOLDER%/${wp_root_folder}/g" "${env_file_path}"
-    sed -i "s/:::/\//g" "${env_file_path}"
+    sed -i'' -e "s/%WP_ROOT_FOLDER%/${wp_root_folder}/g" "${env_file_path}"
+    sed -i'' -e "s/:::/\//g" "${env_file_path}"
 }
 
 #######################################
