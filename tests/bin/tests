@@ -20,17 +20,6 @@ get_plugin_name() {
 }
 plugin_name=$(get_plugin_name)
 
-#######################################
-# Get the plugin version from the main plugin file.
-# Returns:
-#   The plugin version.
-#######################################
-get_plugin_version() {
-    # TODO: Remove the hardcoded plugin slug
-    cat post-expirator.php | grep "* Version:" | sed 's/ //g' | awk -F: '{print $NF}'
-}
-plugin_version=$(get_plugin_version)
-
 php_version="${1}"
 command="${2}"
 flat_php_version=$(echo "${php_version}" | sed 's/\.//g')
