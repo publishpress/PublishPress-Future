@@ -406,6 +406,11 @@ case "${command}" in
         echo_step  "Creating the codeception env file"
         create_env_file
 
+        echo_step "IP and Ports"
+        echo ""
+        get_ip_addresses
+        echo ""
+
         echo_step  "Starting ChromeDriver in the background"
         echo ""
         start_chromedriver
@@ -468,6 +473,11 @@ case "${command}" in
         # Arguments passed to this command, after ther third one, will all be passed to
         # codeception run command
 
+        echo_step "IP and Ports"
+        echo ""
+        get_ip_addresses
+        echo ""
+
         run_builder
         echo ""
 
@@ -494,6 +504,11 @@ case "${command}" in
         show_runtime
         ;;
     "run")
+        echo_step "IP and Ports"
+        echo ""
+        get_ip_addresses
+        echo ""
+
         echo_step "Cleanning up codeception output"
         $source_path/vendor/bin/codecept clean
 
