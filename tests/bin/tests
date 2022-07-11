@@ -71,25 +71,31 @@ stop_services() {
 }
 
 #######################################
-# Get the DB service IP address.
+# Get the service IP address.
 # Globals:
-#   db_container_name
+#   container_name
 # Outputs:
 #   The IP address
 #######################################
-get_db_service_ip() {
-    docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "${db_container_name}"
+get_service_ip() {
+    container_name="${1}"
+
+    docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "${container_name}"
 }
 
 #######################################
-# Get the WordPress service IP address.
-# Globals:
-#   wordpress_container_name
+# Get the service port.
+# Arguments:
+#   container_name
+#   port
 # Outputs:
-#   The IP address
+#   The port number
 #######################################
-get_wordpress_service_ip() {
-    docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "${wordpress_container_name}"
+get_service_port() {
+    container_name="${1}"
+    port="${2}"
+
+    docker inspect -f "{{(index (index .NetworkSettings.Ports \"${port}/tcp\") 0).HostPort}}" "${container_name}"
 }
 
 #######################################
@@ -98,13 +104,17 @@ get_wordpress_service_ip() {
 #   The IP address
 #######################################
 get_ip_addresses() {
-    wordpress_container_ip=$(get_wordpress_service_ip)
-    db_container_ip=$(get_db_service_ip)
+    wordpress_container_ip=$(get_service_ip "${wordpress_container_name}")
+    db_container_ip=$(get_service_ip "${db_container_name}")
+
+    port_80=$(get_service_port "${wordpress_container_name}" 80)
+    port_443=$(get_service_port "${wordpress_container_name}" 443)
+    port_3306=$(get_service_port "${db_container_name}" 3306)
 
     echo "IP Addresses:"
     echo ""
-    echo "wordrpess: ${wordpress_container_ip} port: 80"
-    echo "       db: ${db_container_ip} port: 3306"
+    echo "wordrpess: ${wordpress_container_ip} ports: 80=${port_80} 443=${port_443}"
+    echo "       db: ${db_container_ip} ports: 3306=${port_3306}"
 }
 
 #######################################
@@ -145,17 +155,17 @@ create_env_file() {
     env_file_path="${codeception_envs_path}/${env_file_name}"
     template_file_path="${project_root_path}/tests/env.acceptance.template.yml"
 
-    wordpress_container_ip=$(get_wordpress_service_ip)
-    db_container_ip=$(get_db_service_ip)
+    db_container_port=$(get_service_port "${db_container_name}" 3306)
+    wordpress_container_port=$(get_service_port "${wordpress_container_name}" 80)
     mount_path=$(get_mount_path)
 
-    test_site_db_host="${db_container_ip}"
-    test_site_db_port="3306"
+    test_site_db_host="127.0.0.1"
+    test_site_db_port="${db_container_port}"
     test_site_db_name="wordpress"
     test_site_db_user="wordpress"
     test_site_db_password="wordpress"
-    test_site_wp_url="http:\/\/${wordpress_container_ip}"
-    test_site_wp_domain="${wordpress_container_ip}"
+    test_site_wp_url="http:\/\/127.0.0.1:${wordpress_container_port}"
+    test_site_wp_domain="127.0.0.1:${wordpress_container_port}"
     test_site_name="Tests on ${php_version}"
     test_site_admin_username="admin"
     test_site_admin_password="admin"
@@ -165,20 +175,22 @@ create_env_file() {
 
     # Copy the template file and replace the variables
     cp "${template_file_path}" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_DB_HOST%/${test_site_db_host}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_DB_PORT%/${test_site_db_port}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_DB_NAME%/${test_site_db_name}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_DB_USER%/${test_site_db_user}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_DB_PASSWORD%/${test_site_db_password}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_WP_URL%/${test_site_wp_url}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_WP_DOMAIN%/${test_site_wp_domain}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_NAME%/${test_site_name}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_ADMIN_USERNAME%/${test_site_admin_username}/g" "${env_file_path}"
-    sed -i'' -e "s/%TEST_SITE_ADMIN_PASSWORD%/${test_site_admin_password}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_DB_HOST%/${test_site_db_host}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_DB_PORT%/${test_site_db_port}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_DB_NAME%/${test_site_db_name}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_DB_USER%/${test_site_db_user}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_DB_PASSWORD%/${test_site_db_password}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_WP_URL%/${test_site_wp_url}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_WP_DOMAIN%/${test_site_wp_domain}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_NAME%/${test_site_name}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_ADMIN_USERNAME%/${test_site_admin_username}/g" "${env_file_path}"
+    sed -i.bak "s/%TEST_SITE_ADMIN_PASSWORD%/${test_site_admin_password}/g" "${env_file_path}"
 
     wp_root_folder=$(echo "${mount_path}" | sed "s/\//:::/g")
-    sed -i'' -e "s/%WP_ROOT_FOLDER%/${wp_root_folder}/g" "${env_file_path}"
-    sed -i'' -e "s/:::/\//g" "${env_file_path}"
+    sed -i.bak "s/%WP_ROOT_FOLDER%/${wp_root_folder}/g" "${env_file_path}"
+    sed -i.bak "s/:::/\//g" "${env_file_path}"
+
+    rm -f ${env_file_path}.bak
 }
 
 #######################################
@@ -186,7 +198,7 @@ create_env_file() {
 #######################################
 
 create_ray_config() {
-    wordpress_container_ip=$(get_wordpress_service_ip)
+    wordpress_container_ip=$(get_service_ip "${wordpress_container_name}")
     mount_path=$(get_mount_path)
 
     config_content=$(cat <<EOF
