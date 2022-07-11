@@ -350,7 +350,7 @@ repeat() {
 # Globals:
 #   script_version
 #   plugin_name
-#   plugin_version
+#   php_version
 # Outputs:
 #   The formatted header.
 #######################################
