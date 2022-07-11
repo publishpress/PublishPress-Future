@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc19721407d2f9a200c2b54a0ecfed8b",
+    "content-hash": "4ecc92676343948390e1467d6233ad61",
     "packages": [
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -383,16 +383,16 @@
         },
         {
             "name": "behat/behat",
-            "version": "v3.10.0",
+            "version": "v3.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Behat.git",
-                "reference": "a55661154079cf881ef643b303bfaf67bae3a09f"
+                "reference": "a19c72c78eb0cdf7b7c4dabfeec9eb3a282728fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Behat/zipball/a55661154079cf881ef643b303bfaf67bae3a09f",
-                "reference": "a55661154079cf881ef643b303bfaf67bae3a09f",
+                "url": "https://api.github.com/repos/Behat/Behat/zipball/a19c72c78eb0cdf7b7c4dabfeec9eb3a282728fc",
+                "reference": "a19c72c78eb0cdf7b7c4dabfeec9eb3a282728fc",
                 "shasum": ""
             },
             "require": {
@@ -400,7 +400,7 @@
                 "behat/transliterator": "^1.2",
                 "ext-mbstring": "*",
                 "php": "^7.2 || ^8.0",
-                "psr/container": "^1.0",
+                "psr/container": "^1.0 || ^2.0",
                 "symfony/config": "^4.4 || ^5.0 || ^6.0",
                 "symfony/console": "^4.4 || ^5.0 || ^6.0",
                 "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0",
@@ -409,7 +409,6 @@
                 "symfony/yaml": "^4.4 || ^5.0 || ^6.0"
             },
             "require-dev": {
-                "container-interop/container-interop": "^1.2",
                 "herrera-io/box": "~1.6.1",
                 "phpunit/phpunit": "^8.5 || ^9.0",
                 "symfony/process": "^4.4 || ^5.0 || ^6.0",
@@ -464,9 +463,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Behat/Behat/issues",
-                "source": "https://github.com/Behat/Behat/tree/v3.10.0"
+                "source": "https://github.com/Behat/Behat/tree/v3.11.0"
             },
-            "time": "2021-11-02T20:09:40+00:00"
+            "time": "2022-07-07T09:49:27+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -4687,6 +4686,57 @@
                 }
             ],
             "time": "2022-02-23T07:53:09+00:00"
+        },
+        {
+            "name": "permafrost-dev/ray-cli",
+            "version": "1.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/permafrost-dev/ray-cli.git",
+                "reference": "5ee74a6bebbb9e9596c71991b631bac7b5b6d97c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/permafrost-dev/ray-cli/zipball/5ee74a6bebbb9e9596c71991b631bac7b5b6d97c",
+                "reference": "5ee74a6bebbb9e9596c71991b631bac7b5b6d97c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^7.4|^8.0",
+                "spatie/ray": "^1.7",
+                "symfony/console": "^5.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "permafrost-dev/phpcsfixer-preset": "^1.5",
+                "phpunit/phpunit": "^9.5"
+            },
+            "bin": [
+                "bin/ray"
+            ],
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Permafrost\\RayCli\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "sends data to Ray via a cli command",
+            "keywords": [
+                "cli",
+                "permafrost",
+                "ray"
+            ],
+            "support": {
+                "issues": "https://github.com/permafrost-dev/ray-cli/issues",
+                "source": "https://github.com/permafrost-dev/ray-cli/tree/1.12.0"
+            },
+            "time": "2021-02-02T07:25:22+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -10866,5 +10916,5 @@
         "php": ">=5.6.20"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
