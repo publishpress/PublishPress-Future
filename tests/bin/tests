@@ -24,8 +24,8 @@ php_version="${1}"
 command="${2}"
 flat_php_version=$(echo "${php_version}" | sed 's/\.//g')
 container_name="${plugin_name}-tests-${flat_php_version}"
-wordpress_container_name="${container_name}_wordpress_1"
-db_container_name="${container_name}_db_1"
+wordpress_container_name="${container_name}-wordpress-1"
+db_container_name="${container_name}-db-1"
 project_root_path=$(pwd)
 codeception_envs_path="${project_root_path}/tests/codeception/_envs"
 remote_path_in_container="/var/www/html"
@@ -50,10 +50,10 @@ echo_step() {
 #   php_version
 #   container_name
 # Outputs:
-#   Docker-compose output
+#   Docker compose output
 #######################################
 start_services() {
-    docker-compose -f "./tests/docker/docker-compose-tests-${php_version}.yml" -p "${container_name}" up -d
+    docker compose -f "./tests/docker/docker-compose-tests-${php_version}.yml" -p "${container_name}" up -d
 }
 
 #######################################
@@ -64,10 +64,10 @@ start_services() {
 #   php_version
 #   container_name
 # Outputs:
-#   Docker-compose output
+#   Docker compose output
 #######################################
 stop_services() {
-    docker-compose -f "./tests/docker/docker-compose-tests-${php_version}.yml" -p "${container_name}" down
+    docker compose -f "./tests/docker/docker-compose-tests-${php_version}.yml" -p "${container_name}" down
 }
 
 #######################################
