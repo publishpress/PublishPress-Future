@@ -24,7 +24,6 @@ Feature: Settings - Tab Defaults
   | l F jS, Y   |
   | Y-m-d       |
 
-  @dev
   Scenario Outline: Custom Time format
     Given post "apost" exists
     And post "apost" is set to expire in seven days at noon as Draft
