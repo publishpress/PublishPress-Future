@@ -88,3 +88,22 @@ function registerTaxonomies()
         ]
     );
 }
+
+
+add_action('init', 'PreTests\runExpirationAction');
+
+function runExpirationAction()
+{
+    if (! is_admin()) {
+        return;
+    }
+
+    if (isset($_GET['tests-future-expire-id'])) {
+        $id = (int) $_GET['tests-future-expire-id'];
+
+        do_action('postExpiratorExpire', $id);
+
+        echo 'Did action postExpiratorExpire for ' . $id;
+        die;
+    }
+}

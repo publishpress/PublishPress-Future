@@ -81,6 +81,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= UNRELEASED =
+
+* ADDED: Add post meta "expiration_log" with expiration log data when post expires;
+
 = [2.7.6] - 13 Jun, 2022 =
 
 * FIXED: Fix fatal error on cron if debug is not activated, #265;

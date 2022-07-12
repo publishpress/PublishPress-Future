@@ -24,6 +24,20 @@ trait Post
     }
 
     /**
+     * @Given post :postSlug exists and is published
+     */
+    public function postExistsAndIsPublished($postSlug)
+    {
+        return $this->havePostInDatabase(
+            [
+                'post_name' => sq($postSlug),
+                'post_title' => sq($postSlug),
+                'post_status' => 'publish',
+            ]
+        );
+    }
+
+    /**
      * @Given posts :postSlugs exist
      */
     public function postsExist($postSlugs)
@@ -292,7 +306,7 @@ trait Post
      * @Given posts :postSlugs are set to expire in seven days at noon as Draft
      * @Given post :postSlugs is set to expire in seven days at noon as Draft
      */
-    public function postsSetToExpireNextMonthAsDraft($postSlugs)
+    public function postsSetToExpireNextWeekAsDraft($postSlugs)
     {
         $postSlugs = explode(',', $postSlugs);
         $postSlugs = array_map('trim', $postSlugs);
@@ -321,6 +335,39 @@ trait Post
         }
     }
 
+    /**
+     * @Given posts :postSlugs are set to expire yesterday as Draft
+     * @Given post :postSlugs is set to expire yesterday as Draft
+     */
+    public function postsSetToExpireYesterdayAsDraft($postSlugs)
+    {
+        $postSlugs = explode(',', $postSlugs);
+        $postSlugs = array_map('trim', $postSlugs);
+
+        $yesterdayDate = $this->geYesterdayDate();
+
+        global $currentExpirationDate;
+        $currentExpirationDate = $yesterdayDate;
+
+        foreach ($postSlugs as $postSlug) {
+            $postId = $this->getPostIdFromSlug(sq($postSlug));
+
+            $unixTime = $yesterdayDate->format('U');
+            $this->havePostmetaInDatabase($postId, '_expiration-date-status', 'saved');
+            $this->havePostmetaInDatabase($postId, '_expiration-date', $unixTime);
+            $this->havePostmetaInDatabase($postId, '_expiration-date-type', 'draft');
+            $opts = [
+                'expireType' => 'draft',
+                'category' => null,
+                'categoryTaxonomy' => '',
+                'enabled' => true,
+            ];
+            $this->havePostmetaInDatabase($postId, '_expiration-date-options', serialize($opts));
+
+            postexpirator_schedule_event($postId, $unixTime, $opts);
+        }
+    }
+
     private function getTomorrowDateAtNoon()
     {
         $tomorrowDate = new DateTime();
@@ -334,6 +381,15 @@ trait Post
     {
         $nextWeekDate = new DateTime();
         $nextWeekDate->modify('+7 day');
+        $nextWeekDate->setTime(12, 0, 0);
+
+        return $nextWeekDate;
+    }
+
+    private function geYesterdayDate()
+    {
+        $nextWeekDate = new DateTime();
+        $nextWeekDate->modify('-1 day');
         $nextWeekDate->setTime(12, 0, 0);
 
         return $nextWeekDate;
@@ -387,5 +443,17 @@ trait Post
     public function iViewThePost($postSlug)
     {
         $this->amOnPage(sq($postSlug));
+    }
+
+     /**
+     * @Then the post :slug expired as draft
+     */
+    public function thePostExpiredAsDraft($slug)
+    {
+        $postId = $this->getPostIdFromSlug(sq($slug));
+
+        $expirationLog = $this->grabPostMetaFromDatabase($postId, 'expiration_log');
+
+        $this->assertNotEmpty($expirationLog);
     }
 }

@@ -29,4 +29,5 @@ class AcceptanceTester extends \Codeception\Actor
     use \Steps\Settings;
     use \Steps\Options;
     use \Steps\Debug;
+    use \Steps\Cli;
 }
