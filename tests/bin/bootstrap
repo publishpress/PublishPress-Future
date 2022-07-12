@@ -17,6 +17,7 @@ $config = yaml_parse_file($bootstrapFile);
 
 if (isset($config['copy']) && ! empty($config['copy'])) {
     echo "▶ Copying files to the test volume\n";
+    echo "\n";
 
     foreach ($config['copy'] as $source => $destination) {
         $destination = str_replace('%WP_ROOT_FOLDER%', $wpRootPath, $destination);
@@ -25,14 +26,21 @@ if (isset($config['copy']) && ! empty($config['copy'])) {
         // Using rsync because it is faster
         if (file_exists($sourcePath)) {
             if (is_dir($sourcePath)) {
+                echo 'Copying dir ' . $source . "\n";
+
                 shell_exec("rm -rf $destination");
                 shell_exec("mkdir -p $destination");
                 shell_exec("rsync -r $sourcePath/* $destination");
             } else {
+                echo 'Copying file ' . $source . "\n";
+
+                shell_exec("rm -f $destination");
                 shell_exec("rsync -r $sourcePath $destination");
             }
         } else {
             throw new Exception('Source path not found: ' . $source);
         }
     }
+
+    echo "\n";
 }
