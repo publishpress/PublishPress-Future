@@ -388,6 +388,22 @@ class PostExpirator_Display
     }
 
     /**
+     * Returns the rendered template
+     *
+     * @param string $name
+     * @param array $param
+     * @return string
+     */
+    public function get_rendered_template($name, $params = null)
+    {
+        ob_start();
+
+        $this->render_template($name, $params);
+
+        return ob_get_clean();
+    }
+
+    /**
      * PublishPress footer
      */
     public function publishpress_footer()

@@ -2145,21 +2145,16 @@ function _postexpirator_taxonomy($opts)
         return esc_html__('No taxonomies found', 'post-expirator');
     }
 
-    $output = [];
+    $params = [
+        'name' => $name,
+        'id' => $id,
+        'disabled' => $disabled,
+        'taxonomies' => $taxonomies,
+        'selected' => $selected,
+        'onchange' => $onchange
+    ];
 
-    $output[] = '<select name="' . esc_attr($name) . '" id="' . esc_attr($id) . '"' . ($disabled === true ? ' disabled="disabled"' : '') . ' onchange="' . esc_attr($onchange) . '">';
-
-    foreach ($taxonomies as $taxonomy) {
-        $output[] = '<option value="' . esc_attr($taxonomy->name) . '" ' . ($selected === esc_attr($taxonomy->name) ? 'selected="selected"' : '') . '>' . esc_html($taxonomy->label) . '</option>';
-    }
-
-    $output[] = '</select>';
-    $output[] = '<p class="description">' . esc_html__(
-            'Select the hierarchical taxonomy to be used for "category" based expiration.',
-            'post-expirator'
-        ) . '</p>';
-
-    return implode("<br/>\n", $output);
+    return PostExpirator_Display::getInstance()->get_rendered_template('taxonomy-field', $params);
 }
 
 /**
