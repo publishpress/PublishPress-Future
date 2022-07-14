@@ -29,7 +29,6 @@ ray.php
 README-build.md
 README.md
 RoboFile.php
-screenshot-*.png
 tests
 vendor
 webpack.config.js

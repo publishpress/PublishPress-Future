@@ -94,8 +94,6 @@ build_to_dir() {
     composer install --no-dev --working-dir="${tmp_build_dir}"
 
     echo ""
-    echo_step "Removing composer files"
-    rm -rf "${tmp_build_dir}/composer.json" "${tmp_build_dir}/composer.lock"
 }
 
 #######################################

@@ -32,13 +32,6 @@ class RoboFile extends PackageBuilderTasks
                 '.php-cs-fixer.cache',
                 'psalm.xml',
                 'report.csv',
-                '.github',
-                '.vscode',
-                '.acceptance.env.template.yml',
-                'publishpress-future.code-workspace',
-                'screenshot-1.png',
-                'screenshot-2.png',
-                'screenshot-3.png'
                 'ray.php'
             )
         );

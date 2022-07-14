@@ -1,5 +1,4 @@
 (function ($, config) {
-
     // show/hide the date fields when the user chooses the intent in bulk edit
     $('body').on('change', 'select[name="expirationdate_status"]', function (e) {
         var $show = $(this).find('option:selected').attr('data-show-fields');
