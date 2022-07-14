@@ -144,7 +144,12 @@
             $field.removeClass('invalid');
 
             value = parseInt($field.val());
-            if (isNaN(value) || value <= 0) {
+            if (['expirationdate_hour', 'expirationdate_minute'].includes($field.prop('name'))) {
+                if (isNaN(value) || value < 0) {
+                    $field.addClass('invalid');
+                    isValid = false;
+                }
+            } else if (isNaN(value) || value <= 0) {
                 $field.addClass('invalid');
                 isValid = false;
             }

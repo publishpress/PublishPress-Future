@@ -42,6 +42,7 @@ trait PostGutenberg
     }
 
     /**
+     * @Given I am adding a new post with title :title on Gutenberg
      * @When I am adding a new post with title :title on Gutenberg
      */
     public function iAmAddingANewPostWithTitleOnGutenberg($title)
@@ -51,7 +52,7 @@ trait PostGutenberg
     }
 
     /**
-     * @When  I check the Enable Post Expiration checkbox on Gutenberg
+     * @When I check the Enable Post Expiration checkbox on Gutenberg
      */
     public function iCheckTheEnablePostExpirationCheckboxOnGutenberg()
     {
@@ -71,6 +72,26 @@ trait PostGutenberg
      */
     public function iSaveThePostOnGutenberg()
     {
+        $this->executeJS('wp.data.dispatch(\'core/editor\').savePost()');
+        // We need to wait until the post is saved
+        $this->wait(2);
+    }
+
+    /**
+     * @Then I set the expiration date to yesterday as draft on Gutenberg
+     */
+    public function iSetTheExpirationDateToYesterdayAsDraftOnGutenberg()
+    {
+        $yesterday = date('U',strtotime("-1 days"));
+        $this->executeJS('wp.data.dispatch(\'core/editor\').editPost({meta: {\'_expiration-date\': \'' . $yesterday . '\'}});');
+    }
+
+   /**
+    * @Then I publish the post on Gutenberg
+    */
+    public function iPublishThePostOnGutenberg()
+    {
+        $this->executeJS('wp.data.dispatch(\'core/editor\').editPost({status: \'publish\'});');
         $this->executeJS('wp.data.dispatch(\'core/editor\').savePost()');
         // We need to wait until the post is saved
         $this->wait(2);

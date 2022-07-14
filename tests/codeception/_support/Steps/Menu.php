@@ -5,11 +5,19 @@ namespace Steps;
 trait Menu
 {
     /**
-     * @Then I see the Future admin menu on the sidebar
+     * @Then I see the admin menu Future on the sidebar
      */
     public function iSeeFutureAdminMenu()
     {
-        $this->seeInSource('Future', '#toplevel_page_publishpress-future');
+        $this->see('Future', '#toplevel_page_publishpress-future');
+    }
+
+    /**
+     * @Then I don't see the admin menu Future on the sidebar
+     */
+    public function iDontSeeFutureAdminMenu()
+    {
+        $this->dontSee('Future', '#toplevel_page_publishpress-future');
     }
 
     /**

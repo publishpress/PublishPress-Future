@@ -21,6 +21,7 @@ Feature: Expiring posts using the Classic editor
     Given default expiration is not activated for "post"
     When I am adding a new post with title "Post A"
     And I check the Enable Post Expiration checkbox
+    And I set the day of expiration to tomorrow at noon on classic editor
     And I save the post
     Then the checkbox Enable Post Expiration is activated on the metabox
 
@@ -30,6 +31,7 @@ Feature: Expiring posts using the Classic editor
     And post "post_2" exists
     And I am editing post "post_2"
     When I check the Enable Post Expiration checkbox
+    And I set the day of expiration to tomorrow at noon on classic editor
     And I save the post
     Then the checkbox Enable Post Expiration is activated on the metabox
 

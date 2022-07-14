@@ -7,8 +7,7 @@ codeceptjs/output
 .idea
 .DS_Store
 /builder.yml
-dist
-.env.testing
+/dist
 report.csv
 .phplint-cache
 .php-cs-fixer.cache

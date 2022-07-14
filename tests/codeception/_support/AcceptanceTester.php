@@ -27,5 +27,7 @@ class AcceptanceTester extends \Codeception\Actor
     use \Steps\PostGutenberg;
     use \Steps\PostClassicEditor;
     use \Steps\Settings;
+    use \Steps\Options;
     use \Steps\Debug;
+    use \Steps\Cli;
 }
