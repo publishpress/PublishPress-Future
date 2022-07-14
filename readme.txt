@@ -81,9 +81,11 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= UNRELEASED =
+= [2.7.7] - 14 Jul, 2022 =
 
 * ADDED: Add post meta "expiration_log" with expiration log data when post expires;
+* FIXED: Can't bulk edit posts if hour or minutes are set to 00, #273;
+* FIXED: When the post expires to draft we don't trigger the status transition actions, #264;
 
 = [2.7.6] - 13 Jun, 2022 =
 
