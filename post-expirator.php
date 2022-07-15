@@ -4,11 +4,13 @@
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
  * Author: PublishPress
- * Version: 2.7.7
+ * Version: 2.8.0-alpha.1
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
  */
+
+use PublishPressFuture\Core\Container;
 
 $includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
 if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
@@ -26,8 +28,19 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 }
 
 if (! defined('POSTEXPIRATOR_LOADED')) {
-    // Default Values
-    define('POSTEXPIRATOR_VERSION', '2.7.7');
+    define('POSTEXPIRATOR_LOADED', true);
+
+    $autoloadPath = __DIR__ . '/vendor/autoload.php';
+    if (! class_exists('PublishPressFuture\\Core\\Plugin') && is_readable($autoloadPath)) {
+        include_once $autoloadPath;
+    }
+
+    $services = require __DIR__ . '/services.php';
+    $container = new Container($services);
+
+    //@deprecated 2.8.0
+    define('POSTEXPIRATOR_VERSION', $container->get('plugin.version'));
+
     define('POSTEXPIRATOR_DATEFORMAT', __('l F jS, Y', 'post-expirator'));
     define('POSTEXPIRATOR_TIMEFORMAT', __('g:ia', 'post-expirator'));
     define('POSTEXPIRATOR_FOOTERCONTENTS', __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'));
@@ -41,16 +54,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     define('POSTEXPIRATOR_BASEDIR', dirname(__FILE__));
     define('POSTEXPIRATOR_BASENAME', basename(__FILE__));
     define('POSTEXPIRATOR_BASEURL', plugins_url('/', __FILE__));
-    define('POSTEXPIRATOR_LOADED', true);
 
     require_once POSTEXPIRATOR_BASEDIR . '/functions.php';
-
-    $autoloadPath = POSTEXPIRATOR_BASEDIR . '/vendor/autoload.php';
-    if (false === class_exists('PublishPressFuture\\DummyForAutoloadDetection')
-        && true === file_exists($autoloadPath)
-    ) {
-        include_once $autoloadPath;
-    }
 
     require_once POSTEXPIRATOR_BASEDIR . '/autoload.php';
 
