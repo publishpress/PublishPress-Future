@@ -11,61 +11,102 @@
  */
 
 use PublishPressFuture\Core\Container;
-
-$includeFilebRelativePath = '/publishpress/publishpress-instance-protection/include.php';
-if (file_exists(__DIR__ . '/vendor' . $includeFilebRelativePath)) {
-    require_once __DIR__ . '/vendor' . $includeFilebRelativePath;
-} else if (defined('POSTEXPIRATOR_VENDOR_PATH') && file_exists(POSTEXPIRATOR_VENDOR_PATH . $includeFilebRelativePath)) {
-    require_once POSTEXPIRATOR_VENDOR_PATH . $includeFilebRelativePath;
-}
-
-if (class_exists('PublishPressInstanceProtection\\Config')) {
-    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
-    $pluginCheckerConfig->pluginSlug = 'post-expirator';
-    $pluginCheckerConfig->pluginName = 'PublishPress Future';
-
-    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
-}
+use PublishPressFuture\Core\HooksAbstract;
+use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressInstanceProtection\InstanceChecker;
+use PublishPressInstanceProtection\Config as InstanceProtectionConfig;
 
 if (! defined('POSTEXPIRATOR_LOADED')) {
     define('POSTEXPIRATOR_LOADED', true);
 
     $autoloadPath = __DIR__ . '/vendor/autoload.php';
     if (! class_exists('PublishPressFuture\\Core\\Plugin') && is_readable($autoloadPath)) {
-        include_once $autoloadPath;
+        require_once $autoloadPath;
     }
 
     $services = require __DIR__ . '/services.php';
     $container = new Container($services);
 
-    //@deprecated 2.8.0
-    define('POSTEXPIRATOR_VERSION', $container->get('plugin.version'));
-
-    define('POSTEXPIRATOR_DATEFORMAT', __('l F jS, Y', 'post-expirator'));
-    define('POSTEXPIRATOR_TIMEFORMAT', __('g:ia', 'post-expirator'));
-    define('POSTEXPIRATOR_FOOTERCONTENTS', __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'));
-    define('POSTEXPIRATOR_FOOTERSTYLE', 'font-style: italic;');
-    define('POSTEXPIRATOR_FOOTERDISPLAY', '0');
-    define('POSTEXPIRATOR_EMAILNOTIFICATION', '0');
-    define('POSTEXPIRATOR_EMAILNOTIFICATIONADMINS', '0');
-    define('POSTEXPIRATOR_DEBUGDEFAULT', '0');
-    define('POSTEXPIRATOR_EXPIREDEFAULT', 'null');
-    define('POSTEXPIRATOR_SLUG', 'post-expirator');
-    define('POSTEXPIRATOR_BASEDIR', dirname(__FILE__));
-    define('POSTEXPIRATOR_BASENAME', basename(__FILE__));
-    define('POSTEXPIRATOR_BASEURL', plugins_url('/', __FILE__));
-
-    require_once POSTEXPIRATOR_BASEDIR . '/functions.php';
-
-    require_once POSTEXPIRATOR_BASEDIR . '/autoload.php';
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_VERSION', $container->get(ServicesAbstract::SERVICE_PLUGIN_VERSION));
 
     /**
-     * Launch the plugin by initializing its helpers.
+     * @deprecated 2.8.0
      */
-    function postexpirator_launch()
-    {
-        PostExpirator_Facade::getInstance();
-    }
+    define('POSTEXPIRATOR_DATEFORMAT', $container->get(ServicesAbstract::SERVICE_DEFAULT_DATE_FORMAT));
 
-    postexpirator_launch();
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_TIMEFORMAT', $container->get(ServicesAbstract::SERVICE_DEFAULT_TIME_FORMAT));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_FOOTERCONTENTS', $container->get(ServicesAbstract::SERVICE_DEFAULT_FOOTER_CONTENT));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_FOOTERSTYLE', $container->get(ServicesAbstract::SERVICE_DEFAULT_FOOTER_STYLE));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_FOOTERDISPLAY', $container->get(ServicesAbstract::SERVICE_DEFAULT_FOOTER_DISPLAY));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_EMAILNOTIFICATION', $container->get(ServicesAbstract::SERVICE_DEFAULT_EMAIL_NOTIFICATION));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_EMAILNOTIFICATIONADMINS', $container->get(ServicesAbstract::SERVICE_DEFAULT_EMAIL_NOTIFICATION_ADMINS));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_DEBUGDEFAULT', $container->get(ServicesAbstract::SERVICE_DEFAULT_DEBUG));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_EXPIREDEFAULT', $container->get(ServicesAbstract::SERVICE_DEFAULT_EXPIRATION_DATE));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_SLUG', $container->get(ServicesAbstract::SERVICE_PLUGIN_SLUG));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_BASEDIR', $container->get(ServicesAbstract::SERVICE_BASE_PATH));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_BASENAME', basename(__FILE__));
+
+    /**
+     * @deprecated 2.8.0
+     */
+    define('POSTEXPIRATOR_BASEURL', $container->get(ServicesAbstract::SERVICE_BASE_URL));
+
+    require_once __DIR__ . '/legacy-functions.php';
+
+    require_once __DIR__ . '/autoload.php';
+
+    $actionsFacade = $container->get(ServicesAbstract::SERVICE_ACTIONS_FACADE);
+
+
+    // Launch the plugin
+    $actionsFacade->execute(HooksAbstract::ACTION_PLUGIN_INIT);
+    $plugin = $container->get(ServicesAbstract::SERVICE_PLUGIN);
+
+    // PostExpirator_Facade::getInstance();
 }
