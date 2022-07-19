@@ -375,7 +375,7 @@ class PostExpirator_Display
      */
     public function render_template($name, $params = null)
     {
-        $template = POSTEXPIRATOR_BASEDIR . "/views/{$name}.php";
+        $template = POSTEXPIRATOR_BASEDIR . "/legacy/views/{$name}.php";
         if (file_exists($template)) {
             // expand all parameters so that they can be directly accessed with their name.
             if ($params) {
