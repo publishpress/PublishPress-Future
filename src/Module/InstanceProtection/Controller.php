@@ -3,6 +3,9 @@
 namespace PublishPressFuture\Module\InstanceProtection;
 
 use PublishPressFuture\Core\HookFacadeInterface;
+use PublishPressFuture\Core\Paths;
+use PublishPressInstanceProtection\InstanceChecker;
+use PublishPressInstanceProtection\Config as InstanceProtectionConfig;
 
 class Controller
 {
@@ -12,29 +15,39 @@ class Controller
     private $actionsFacade;
 
     /**
-     * @param HookFacadeInterface $actionsFacade
+     * @var Paths
      */
-    public function __construct(HookFacadeInterface $actionsFacade)
+    private $paths;
+
+    /**
+     * @var InstanceChecker
+     */
+    private $pluginChecker;
+
+    /**
+     * @param HookFacadeInterface $actionsFacade
+     * @param Paths
+     */
+    public function __construct(HookFacadeInterface $actionsFacade, Paths $paths)
     {
         $this->actionsFacade = $actionsFacade;
+        $this->paths = $paths;
     }
 
     public function init()
     {
-        // $includeFileRelativePath = '/publishpress/publishpress-instance-protection/include.php';
+        $vendorDirPath = $this->paths->getVendorDirPath() . '/publishpress/publishpress-instance-protection/include.php';
 
-        // if (is_readable(__DIR__ . '/vendor' . $includeFileRelativePath)) {
-        //     require_once __DIR__ . '/vendor' . $includeFileRelativePath;
-        // } else if (defined('POSTEXPIRATOR_VENDOR_PATH') && is_readable(POSTEXPIRATOR_VENDOR_PATH . $includeFileRelativePath)) {
-        //     require_once POSTEXPIRATOR_VENDOR_PATH . $includeFileRelativePath;
-        // }
+        if (is_readable($vendorDirPath)) {
+            require_once $vendorDirPath;
+        }
 
-        // if (class_exists('PublishPressInstanceProtection\\Config')) {
-        //     $pluginCheckerConfig = new InstanceProtectionConfig();
-        //     $pluginCheckerConfig->pluginSlug = 'post-expirator';
-        //     $pluginCheckerConfig->pluginName = 'PublishPress Future';
+        if (class_exists('PublishPressInstanceProtection\\Config')) {
+            $pluginCheckerConfig = new InstanceProtectionConfig();
+            $pluginCheckerConfig->pluginSlug = 'post-expirator';
+            $pluginCheckerConfig->pluginName = 'PublishPress Future';
 
-        //     $pluginChecker = new InstanceChecker($pluginCheckerConfig);
-        // }
+            $this->pluginChecker = new InstanceChecker($pluginCheckerConfig);
+        }
     }
 }

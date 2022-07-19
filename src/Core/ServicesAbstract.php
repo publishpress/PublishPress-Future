@@ -39,4 +39,6 @@ class ServicesAbstract
     const SERVICE_MODULE_INSTANCE_PROTECTION = 'module.instanceprotection';
 
     const SERVICE_PLUGIN = 'plugin';
+
+    const SERVICE_PATHS = 'paths';
 }

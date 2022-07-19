@@ -13,8 +13,6 @@
 use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressInstanceProtection\InstanceChecker;
-use PublishPressInstanceProtection\Config as InstanceProtectionConfig;
 
 if (! defined('POSTEXPIRATOR_LOADED')) {
     define('POSTEXPIRATOR_LOADED', true);

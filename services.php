@@ -3,6 +3,7 @@
 use Psr\Container\ContainerInterface;
 use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\HookFacadeInterface;
+use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\Plugin;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Core\WordPress\ActionsFacade;
@@ -98,7 +99,18 @@ return [
     ServicesAbstract::SERVICE_MODULE_INSTANCE_PROTECTION => static function (ContainerInterface $container)
     {
         $actionsFacade = $container->get(ServicesAbstract::SERVICE_ACTIONS_FACADE);
+        $paths = $container->get(ServicesAbstract::SERVICE_PATHS);
 
-        return new InstanceProtectionController($actionsFacade);
+        return new InstanceProtectionController($actionsFacade, $paths);
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return InstanceProtectionController
+     */
+    ServicesAbstract::SERVICE_PATHS => static function (ContainerInterface $container)
+    {
+        return new Paths(__DIR__);
     },
 ];
