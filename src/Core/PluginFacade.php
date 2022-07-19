@@ -4,7 +4,7 @@ namespace PublishPressFuture\Core;
 
 use PostExpirator_Facade;
 
-class Plugin
+class PluginFacade
 {
     /**
      * @var HookFacadeInterface

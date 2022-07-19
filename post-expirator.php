@@ -101,10 +101,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
     $actionsFacade = $container->get(ServicesAbstract::SERVICE_ACTIONS_FACADE);
 
-
     // Launch the plugin
     $actionsFacade->execute(HooksAbstract::ACTION_PLUGIN_INIT);
-    $plugin = $container->get(ServicesAbstract::SERVICE_PLUGIN);
 
-    // PostExpirator_Facade::getInstance();
+    $pluginFacade = $container->get(ServicesAbstract::SERVICE_PLUGIN_FACADE);
 }

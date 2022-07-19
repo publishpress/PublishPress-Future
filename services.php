@@ -4,7 +4,7 @@ use Psr\Container\ContainerInterface;
 use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\HookFacadeInterface;
 use PublishPressFuture\Core\Paths;
-use PublishPressFuture\Core\Plugin;
+use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Core\WordPress\ActionsFacade;
 use PublishPressFuture\Core\WordPress\FiltersFacade;
@@ -42,13 +42,13 @@ return [
      *
      * @return Plugin
      */
-    ServicesAbstract::SERVICE_PLUGIN => static function(ContainerInterface $container)
+    ServicesAbstract::SERVICE_PLUGIN_FACADE => static function(ContainerInterface $container)
     {
         $filtersFacade = $container->get(ServicesAbstract::SERVICE_FILTERS_FACADE);
         $modulesInstanceList = $container->get(ServicesAbstract::SERVICE_MODULES_LIST);
         $legacyPlugin = $container->get(ServicesAbstract::SERVICE_LEGACY_PLUGIN);
 
-        return new Plugin($filtersFacade, $modulesInstanceList, $legacyPlugin);
+        return new PluginFacade($filtersFacade, $modulesInstanceList, $legacyPlugin);
     },
 
     /**
