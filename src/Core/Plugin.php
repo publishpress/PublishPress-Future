@@ -17,26 +17,22 @@ class Plugin
     private $modulesInstanceList;
 
     /**
+     * @var object
+     */
+    private $legacyPlugin;
+
+    /**
      * @param HookFacadeInterface $filtersFacade
      * @param array $modulesInstanceList
+     * @param object $legacyPluginFactory
      */
-    public function __construct(HookFacadeInterface $filtersFacade, $modulesInstanceList)
+    public function __construct(HookFacadeInterface $filtersFacade, $modulesInstanceList, $legacyPlugin)
     {
         $this->filtersFacade = $filtersFacade;
         $this->modulesInstanceList = $modulesInstanceList;
+        $this->legacyPlugin = $legacyPlugin;
 
         $this->initModules();
-        $this->initLegacyPlugin();
-    }
-
-    /**
-     * Initialize the legacy plugin until we finish refactoring it.
-     *
-     * @return void
-     */
-    private function initLegacyPlugin()
-    {
-        PostExpirator_Facade::getInstance();
     }
 
     /**

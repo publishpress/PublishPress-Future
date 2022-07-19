@@ -46,8 +46,19 @@ return [
     {
         $filtersFacade = $container->get(ServicesAbstract::SERVICE_FILTERS_FACADE);
         $modulesInstanceList = $container->get(ServicesAbstract::SERVICE_MODULES_LIST);
+        $legacyPlugin = $container->get(ServicesAbstract::SERVICE_LEGACY_PLUGIN);
 
-        return new Plugin($filtersFacade, $modulesInstanceList);
+        return new Plugin($filtersFacade, $modulesInstanceList, $legacyPlugin);
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return Plugin
+     */
+    ServicesAbstract::SERVICE_LEGACY_PLUGIN => static function(ContainerInterface $container)
+    {
+        return PostExpirator_Facade::getInstance();
     },
 
     /**

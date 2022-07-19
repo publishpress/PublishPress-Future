@@ -40,5 +40,7 @@ class ServicesAbstract
 
     const SERVICE_PLUGIN = 'plugin';
 
+    const SERVICE_LEGACY_PLUGIN = 'legacy.plugin';
+
     const SERVICE_PATHS = 'paths';
 }
