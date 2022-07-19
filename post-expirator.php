@@ -23,9 +23,9 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     }
 
     $services = require __DIR__ . '/services.php';
-    $container = new Container($services);
-    $pluginFile = __FILE__;
+    $container = Container::getInstance($services);
 
+    $pluginFile = __FILE__;
     require_once __DIR__ . '/legacy/defines.php';
     require_once __DIR__ . '/legacy/functions.php';
     require_once __DIR__ . '/legacy/autoload.php';

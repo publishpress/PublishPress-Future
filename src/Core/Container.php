@@ -2,10 +2,12 @@
 
 namespace PublishPressFuture\Core;
 
+use Exception;
 use PublishPressFuture\Core\Exception\ServiceNotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use PublishPressFuture\Core\Exception\DefinitionsNotFoundException;
 
 /**
  * PHP Dependency Injection Container PSR-11.
@@ -19,19 +21,49 @@ class Container implements ContainerInterface
     /**
      * @var array
      */
-    private $definitions = [];
+    private $resolvedEntries = [];
 
     /**
      * @var array
      */
-    private $resolvedEntries = [];
+    private $definitions = [];
 
-    public function __construct(array $definitions)
+    /**
+     * @var Container
+     */
+    static private $instance;
+
+    public function __construct($definitions)
+    {
+        $this->setDefinitions($definitions);
+    }
+
+    private function setDefinitions($definitions)
     {
         $this->definitions = array_merge(
             $definitions,
             [ContainerInterface::class => $this]
         );
+    }
+
+    /**
+     * @param array $definitions
+     *
+     * @return Container
+     *
+     * @throws DefinitionsNotFoundException
+     */
+    static public function getInstance($definitions = null)
+    {
+        if (! isset(self::$instance)) {
+            if (empty($definitions) || ! is_array($definitions)) {
+                throw new DefinitionsNotFoundException();
+            }
+
+            self::$instance = new self($definitions);
+        }
+
+        return self::$instance;
     }
 
     /**

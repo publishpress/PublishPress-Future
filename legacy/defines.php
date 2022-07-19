@@ -1,6 +1,9 @@
 <?php
 
+use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\ServicesAbstract;
+
+$container = Container::getInstance();
 
 /**
  * @deprecated 2.8.0
