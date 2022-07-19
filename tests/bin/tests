@@ -111,10 +111,15 @@ get_ip_addresses() {
     port_443=$(get_service_port "${wordpress_container_name}" 443)
     port_3306=$(get_service_port "${db_container_name}" 3306)
 
-    echo "IP Addresses:"
-    echo ""
-    echo "wordrpess: ${wordpress_container_ip} ports: 80=${port_80} 443=${port_443}"
-    echo "       db: ${db_container_ip} ports: 3306=${port_3306}"
+    output=$(cat <<END
+SERVICE|PORT|CONTAINER IP|FORWARDED PORT
+wordrpess|80|${wordpress_container_ip}|${port_80}
+wordrpess|443|${wordpress_container_ip}|${port_443}
+db|3306|${db_container_ip}|${port_3306}
+END
+) ;
+
+    echo "$output" | column -t -s '|'
 }
 
 #######################################
