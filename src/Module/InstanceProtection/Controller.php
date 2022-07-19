@@ -36,6 +36,11 @@ class Controller
 
     public function init()
     {
+        $this->pluginChecker = $this->factoryInstanceProtectionChecker();
+    }
+
+    private function factoryInstanceProtectionChecker()
+    {
         $vendorDirPath = $this->paths->getVendorDirPath() . '/publishpress/publishpress-instance-protection/include.php';
 
         if (is_readable($vendorDirPath)) {
@@ -47,7 +52,9 @@ class Controller
             $pluginCheckerConfig->pluginSlug = 'post-expirator';
             $pluginCheckerConfig->pluginName = 'PublishPress Future';
 
-            $this->pluginChecker = new InstanceChecker($pluginCheckerConfig);
+            return new InstanceChecker($pluginCheckerConfig);
         }
+
+        return null;
     }
 }

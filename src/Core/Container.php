@@ -60,6 +60,7 @@ class Container implements ContainerInterface
         }
 
         $this->resolvedEntries[$id] = $value;
+
         return $value;
     }
 

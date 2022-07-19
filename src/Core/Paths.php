@@ -11,8 +11,13 @@ class Paths
         $this->baseDir = $baseDir;
     }
 
+    public function getBaseDirPath()
+    {
+        return $this->baseDir;
+    }
+
     public function getVendorDirPath()
     {
-        return $this->baseDir . '/vendor';
+        return $this->getBaseDirPath() . '/vendor';
     }
 }
