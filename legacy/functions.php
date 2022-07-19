@@ -4,6 +4,9 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
+use PublishPressFuture\Core\Container;
+use PublishPressFuture\Core\ServicesAbstract;
+
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
      * Schedules the single event.
@@ -1729,7 +1732,11 @@ function postexpirator_debug()
         if (! defined('POSTEXPIRATOR_DEBUG')) {
             define('POSTEXPIRATOR_DEBUG', 1);
         }
-        require_once(POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php'); // Load Class
+
+        $container = Container::getInstance();
+        $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+
+        require_once($legacyPath . '/post-expirator-debug.php'); // Load Class
 
         return new PostExpiratorDebug();
     } else {
@@ -1952,7 +1959,11 @@ function expirationdate_deactivate()
     } else {
         wp_clear_scheduled_hook('expirationdate_delete');
     }
-    require_once(POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php');
+
+    $container = Container::getInstance();
+    $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+
+    require_once $legacyPath . '/post-expirator-debug.php';
     $debug = new PostExpiratorDebug();
     $debug->removeDbTable();
 }

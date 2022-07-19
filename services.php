@@ -35,6 +35,8 @@ return [
 
     ServicesAbstract::SERVICE_BASE_PATH => __DIR__,
 
+    ServicesAbstract::SERVICE_LEGACY_PATH => __DIR__ . '/legacy',
+
     ServicesAbstract::SERVICE_BASE_URL => plugins_url('/', __FILE__),
 
     /**

@@ -26,9 +26,11 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     $container = Container::getInstance($services);
 
     $pluginFile = __FILE__;
-    require_once __DIR__ . '/legacy/defines.php';
-    require_once __DIR__ . '/legacy/functions.php';
-    require_once __DIR__ . '/legacy/autoload.php';
+
+    $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+    require_once $legacyPath . '/defines.php';
+    require_once $legacyPath . '/functions.php';
+    require_once $legacyPath . '/autoload.php';
 
     $actionsFacade = $container->get(ServicesAbstract::SERVICE_ACTIONS_FACADE);
 

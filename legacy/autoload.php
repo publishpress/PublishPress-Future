@@ -1,5 +1,7 @@
 <?php
 
+use PublishPressFuture\Core\Container;
+use PublishPressFuture\Core\ServicesAbstract;
 
 /**
  * Autoloads the classes.
@@ -10,7 +12,11 @@ function postexpirator_autoload($class)
     foreach ($namespaces as $namespace) {
         if (substr($class, 0, strlen($namespace)) === $namespace) {
             $class = str_replace('_', '', strstr($class, '_'));
-            $filename = POSTEXPIRATOR_BASEDIR . '/legacy/classes/' . sprintf('%s.class.php', $class);
+
+            $container = Container::getInstance();
+            $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+
+            $filename = $legacyPath . '/classes/' . sprintf('%s.class.php', $class);
             if (is_readable($filename)) {
                 require_once $filename;
 

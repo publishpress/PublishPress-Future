@@ -1,5 +1,8 @@
 <?php
 
+use PublishPressFuture\Core\Container;
+use PublishPressFuture\Core\ServicesAbstract;
+
 /**
  * The class that is responsible for all the displays.
  */
@@ -174,7 +177,10 @@ class PostExpirator_Display
                 _e('Debugging Enabled', 'post-expirator');
                 echo '</p></div>';
             } elseif (isset($_POST['purge-debug'])) {
-                require_once(POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php');
+                $container = Container::getInstance();
+                $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+
+                require_once $legacyPath . '/post-expirator-debug.php';
                 $debug = new PostExpiratorDebug();
                 $debug->purge();
                 echo "<div id='message' class='updated fade'><p>";
@@ -193,7 +199,10 @@ class PostExpirator_Display
      */
     private function menu_viewdebug()
     {
-        require_once POSTEXPIRATOR_BASEDIR . '/post-expirator-debug.php';
+        $container = Container::getInstance();
+        $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+
+        require_once $legacyPath . '/post-expirator-debug.php';
         print '<p>' . esc_html__(
                 'Below is a dump of the debugging table, this should be useful for troubleshooting.',
                 'post-expirator'
@@ -375,7 +384,10 @@ class PostExpirator_Display
      */
     public function render_template($name, $params = null)
     {
-        $template = POSTEXPIRATOR_BASEDIR . "/legacy/views/{$name}.php";
+        $container = Container::getInstance();
+        $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+
+        $template = $legacyPath . "/views/{$name}.php";
         if (file_exists($template)) {
             // expand all parameters so that they can be directly accessed with their name.
             if ($params) {
