@@ -16,7 +16,7 @@ if (! function_exists('_scheduleExpiratorEvent')) {
      */
     function _scheduleExpiratorEvent($id, $ts, $opts)
     {
-        esi($id, $ts, $opts);
+        postexpirator_schedule_event($id, $ts, $opts);
     }
 }
 
