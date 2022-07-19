@@ -10,7 +10,7 @@ function postexpirator_autoload($class)
     foreach ($namespaces as $namespace) {
         if (substr($class, 0, strlen($namespace)) === $namespace) {
             $class = str_replace('_', '', strstr($class, '_'));
-            $filename = POSTEXPIRATOR_BASEDIR . '/classes/' . sprintf('%s.class.php', $class);
+            $filename = POSTEXPIRATOR_BASEDIR . '/legacy/classes/' . sprintf('%s.class.php', $class);
             if (is_readable($filename)) {
                 require_once $filename;
 
