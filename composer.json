@@ -59,7 +59,6 @@
     "dealerdirect/phpcodesniffer-composer-installer": "*",
     "phpcompatibility/php-compatibility": "*",
     "wp-coding-standards/wpcs": "*",
-    "publishpress/publishpress-plugin-builder": "^1.4",
     "phpmd/phpmd": "^2.8",
     "squizlabs/php_codesniffer": "^3.5",
     "sebastian/phpcpd": "^5.0",
