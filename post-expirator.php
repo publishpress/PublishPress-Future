@@ -23,7 +23,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     }
 
     $services = require __DIR__ . '/services.php';
-    $container = Container::getInstance($services);
+    $container = new Container($services);
 
     $pluginFile = __FILE__;
 

@@ -177,10 +177,8 @@ class PostExpirator_Display
                 _e('Debugging Enabled', 'post-expirator');
                 echo '</p></div>';
             } elseif (isset($_POST['purge-debug'])) {
-                $container = Container::getInstance();
-                $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
+                require_once POSTEXPIRATOR_LEGACYDIR . '/debug.php';
 
-                require_once $legacyPath . '/post-expirator-debug.php';
                 $debug = new PostExpiratorDebug();
                 $debug->purge();
                 echo "<div id='message' class='updated fade'><p>";
@@ -199,10 +197,7 @@ class PostExpirator_Display
      */
     private function menu_viewdebug()
     {
-        $container = Container::getInstance();
-        $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
-
-        require_once $legacyPath . '/post-expirator-debug.php';
+        require_once POSTEXPIRATOR_LEGACYDIR . '/debug.php';
         print '<p>' . esc_html__(
                 'Below is a dump of the debugging table, this should be useful for troubleshooting.',
                 'post-expirator'
@@ -384,10 +379,7 @@ class PostExpirator_Display
      */
     public function render_template($name, $params = null)
     {
-        $container = Container::getInstance();
-        $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
-
-        $template = $legacyPath . "/views/{$name}.php";
+        $template = POSTEXPIRATOR_LEGACYDIR . "/views/{$name}.php";
         if (file_exists($template)) {
             // expand all parameters so that they can be directly accessed with their name.
             if ($params) {

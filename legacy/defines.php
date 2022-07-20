@@ -1,9 +1,6 @@
 <?php
 
-use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\ServicesAbstract;
-
-$container = Container::getInstance();
 
 /**
  * @deprecated 2.8.0
@@ -74,3 +71,8 @@ define('POSTEXPIRATOR_BASENAME', basename($pluginFile));
  * @deprecated 2.8.0
  */
 define('POSTEXPIRATOR_BASEURL', $container->get(ServicesAbstract::BASE_URL));
+
+/**
+ * @deprecated 2.8.0
+ */
+define('POSTEXPIRATOR_LEGACYDIR', POSTEXPIRATOR_BASEDIR . '/legacy');

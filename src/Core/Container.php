@@ -28,11 +28,6 @@ class Container implements ContainerInterface
      */
     private $definitions = [];
 
-    /**
-     * @var Container
-     */
-    static private $instance;
-
     public function __construct($definitions)
     {
         $this->setDefinitions($definitions);
@@ -44,26 +39,6 @@ class Container implements ContainerInterface
             $definitions,
             [ContainerInterface::class => $this]
         );
-    }
-
-    /**
-     * @param array $definitions
-     *
-     * @return Container
-     *
-     * @throws DefinitionsNotFoundException
-     */
-    static public function getInstance($definitions = null)
-    {
-        if (! isset(self::$instance)) {
-            if (empty($definitions) || ! is_array($definitions)) {
-                throw new DefinitionsNotFoundException();
-            }
-
-            self::$instance = new self($definitions);
-        }
-
-        return self::$instance;
     }
 
     /**

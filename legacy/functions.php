@@ -1733,10 +1733,7 @@ function postexpirator_debug()
             define('POSTEXPIRATOR_DEBUG', 1);
         }
 
-        $container = Container::getInstance();
-        $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
-
-        require_once($legacyPath . '/post-expirator-debug.php'); // Load Class
+        require_once POSTEXPIRATOR_LEGACYDIR . '/debug.php';
 
         return new PostExpiratorDebug();
     } else {
@@ -1960,10 +1957,7 @@ function expirationdate_deactivate()
         wp_clear_scheduled_hook('expirationdate_delete');
     }
 
-    $container = Container::getInstance();
-    $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
-
-    require_once $legacyPath . '/post-expirator-debug.php';
+    require_once POSTEXPIRATOR_LEGACYDIR . '/debug.php';
     $debug = new PostExpiratorDebug();
     $debug->removeDbTable();
 }

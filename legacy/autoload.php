@@ -13,10 +13,7 @@ function postexpirator_autoload($class)
         if (substr($class, 0, strlen($namespace)) === $namespace) {
             $class = str_replace('_', '', strstr($class, '_'));
 
-            $container = Container::getInstance();
-            $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
-
-            $filename = $legacyPath . '/classes/' . sprintf('%s.class.php', $class);
+            $filename = POSTEXPIRATOR_LEGACYDIR . '/classes/' . sprintf('%s.class.php', $class);
             if (is_readable($filename)) {
                 require_once $filename;
 
