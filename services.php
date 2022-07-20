@@ -2,7 +2,7 @@
 
 use Psr\Container\ContainerInterface;
 use PublishPressFuture\Core\HooksAbstract;
-use PublishPressFuture\Core\HookFacadeInterface;
+use PublishPressFuture\Core\ExecutableInterface;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\ServicesAbstract;
@@ -66,7 +66,7 @@ return [
     /**
      * @param ContainerInterface $container
      *
-     * @return HookFacadeInterface
+     * @return ExecutableInterface
      */
     ServicesAbstract::SERVICE_FILTERS_FACADE => static function (ContainerInterface $container)
     {
@@ -76,7 +76,7 @@ return [
     /**
      * @param ContainerInterface $container
      *
-     * @return HookFacadeInterface
+     * @return ExecutableInterface
      */
     ServicesAbstract::SERVICE_ACTIONS_FACADE => static function (ContainerInterface $container)
     {

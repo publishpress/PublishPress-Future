@@ -2,7 +2,7 @@
 
 namespace PublishPressFuture\Module\InstanceProtection;
 
-use PublishPressFuture\Core\HookFacadeInterface;
+use PublishPressFuture\Core\ExecutableInterface;
 use PublishPressFuture\Core\Paths;
 use PublishPressInstanceProtection\InstanceChecker;
 use PublishPressInstanceProtection\Config as InstanceProtectionConfig;
@@ -10,7 +10,7 @@ use PublishPressInstanceProtection\Config as InstanceProtectionConfig;
 class Controller
 {
     /**
-     * @var HookFacadeInterface
+     * @var ExecutableInterface
      */
     private $actionsFacade;
 
@@ -25,10 +25,10 @@ class Controller
     private $pluginChecker;
 
     /**
-     * @param HookFacadeInterface $actionsFacade
+     * @param ExecutableInterface $actionsFacade
      * @param Paths
      */
-    public function __construct(HookFacadeInterface $actionsFacade, Paths $paths)
+    public function __construct(ExecutableInterface $actionsFacade, Paths $paths)
     {
         $this->actionsFacade = $actionsFacade;
         $this->paths = $paths;

@@ -2,9 +2,9 @@
 
 namespace PublishPressFuture\Core\WordPress;
 
-use PublishPressFuture\Core\HookFacadeInterface;
+use PublishPressFuture\Core\ExecutableInterface;
 
-class ActionsFacade implements HookFacadeInterface
+class ActionsFacade implements ExecutableInterface
 {
     /**
      * Add a hook

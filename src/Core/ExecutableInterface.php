@@ -2,7 +2,7 @@
 
 namespace PublishPressFuture\Core;
 
-interface HookFacadeInterface
+interface ExecutableInterface
 {
     /**
      * Add a hook

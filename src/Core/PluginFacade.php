@@ -7,7 +7,7 @@ use PostExpirator_Facade;
 class PluginFacade
 {
     /**
-     * @var HookFacadeInterface
+     * @var ExecutableInterface
      */
     private $filtersFacade;
 
@@ -22,11 +22,11 @@ class PluginFacade
     private $legacyPlugin;
 
     /**
-     * @param HookFacadeInterface $filtersFacade
+     * @param ExecutableInterface $filtersFacade
      * @param array $modulesInstanceList
      * @param object $legacyPluginFactory
      */
-    public function __construct(HookFacadeInterface $filtersFacade, $modulesInstanceList, $legacyPlugin)
+    public function __construct(ExecutableInterface $filtersFacade, $modulesInstanceList, $legacyPlugin)
     {
         $this->filtersFacade = $filtersFacade;
         $this->modulesInstanceList = $modulesInstanceList;
