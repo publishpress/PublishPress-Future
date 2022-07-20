@@ -486,9 +486,6 @@ case "${command}" in
         run_builder
         echo ""
 
-        echo_step "Fixing volume permissions"
-        fix_volume_permissions
-
         echo_step "Bootstrapping the plugin"
         run_bootstrap
 
