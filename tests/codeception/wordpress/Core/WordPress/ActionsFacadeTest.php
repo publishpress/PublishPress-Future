@@ -43,4 +43,20 @@ class ActionsFacadeTest extends \Codeception\Test\Unit
 
         $this->assertEquals('yes', $output);
     }
+
+    public function testExecuteAnActionWithArguments()
+    {
+        $callback = static function($end) {
+            echo 'yes' . $end;
+        };
+
+        add_action(sq('future.init'), $callback);
+
+        ob_start();
+        $actionsFacade = new ActionsFacade();
+        $actionsFacade->do(sq('future.init'), ['!']);
+        $output = ob_get_clean();
+
+        $this->assertEquals('yes!', $output);
+    }
 }
