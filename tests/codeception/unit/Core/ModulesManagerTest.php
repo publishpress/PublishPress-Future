@@ -20,8 +20,7 @@ class ModulesManagerTest extends \Codeception\Test\Unit
             'PublishPressFuture\\Module\\InstanceProtection\\Controller',
             [
                 'initialize' => Expected::once()
-            ],
-            $this
+            ]
         );
 
         $instance = $this->make(
@@ -37,16 +36,14 @@ class ModulesManagerTest extends \Codeception\Test\Unit
             'PublishPressFuture\\Module\\InstanceProtection\\Controller',
             [
                 'initialize' => Expected::once()
-            ],
-            $this
+            ]
         );
 
         $module2 = $this->make(
             'PublishPressFuture\\Module\\InstanceProtection\\Controller',
             [
                 'initialize' => Expected::once()
-            ],
-            $this
+            ]
         );
 
         $instance = $this->make(
