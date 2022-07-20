@@ -30,7 +30,7 @@ class PathsCest
      * @example ["/tmp", "/tmp/vendor"]
      * @example ["/tmp/", "/tmp/vendor"]
      */
-    public function testGetVendorDirPathReturnsTheVendorDirWithNoTraillingSlash(UnitTester $I, Example $example)
+    public function testGetVendorDirPathReturnsNoTraillingSlash(UnitTester $I, Example $example)
     {
         $I->amGoingTo('test if method getVendorDirPath returns no trailing slash');
 
