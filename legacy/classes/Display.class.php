@@ -178,7 +178,7 @@ class PostExpirator_Display
                 echo '</p></div>';
             } elseif (isset($_POST['purge-debug'])) {
                 $container = Container::getInstance();
-                $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+                $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
 
                 require_once $legacyPath . '/post-expirator-debug.php';
                 $debug = new PostExpiratorDebug();
@@ -200,7 +200,7 @@ class PostExpirator_Display
     private function menu_viewdebug()
     {
         $container = Container::getInstance();
-        $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+        $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
 
         require_once $legacyPath . '/post-expirator-debug.php';
         print '<p>' . esc_html__(
@@ -385,7 +385,7 @@ class PostExpirator_Display
     public function render_template($name, $params = null)
     {
         $container = Container::getInstance();
-        $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+        $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
 
         $template = $legacyPath . "/views/{$name}.php";
         if (file_exists($template)) {

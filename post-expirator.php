@@ -27,16 +27,16 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
     $pluginFile = __FILE__;
 
-    $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+    $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
     require_once $legacyPath . '/defines.php';
     require_once $legacyPath . '/functions.php';
     require_once $legacyPath . '/autoload.php';
 
-    $actionsFacade = $container->get(ServicesAbstract::SERVICE_ACTIONS_FACADE);
+    $actionsFacade = $container->get(ServicesAbstract::ACTIONS_FACADE);
 
     // Launch the plugin
     $actionsFacade->execute(HooksAbstract::ACTION_PLUGIN_INIT);
 
-    $modulesManager = $container->get(ServicesAbstract::SERVICE_MODULES_MANAGER);
+    $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
     $modulesManager->initializeAllModules();
 }

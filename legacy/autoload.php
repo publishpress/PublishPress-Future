@@ -14,7 +14,7 @@ function postexpirator_autoload($class)
             $class = str_replace('_', '', strstr($class, '_'));
 
             $container = Container::getInstance();
-            $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+            $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
 
             $filename = $legacyPath . '/classes/' . sprintf('%s.class.php', $class);
             if (is_readable($filename)) {

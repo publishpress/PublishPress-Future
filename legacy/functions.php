@@ -1734,7 +1734,7 @@ function postexpirator_debug()
         }
 
         $container = Container::getInstance();
-        $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+        $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
 
         require_once($legacyPath . '/post-expirator-debug.php'); // Load Class
 
@@ -1961,7 +1961,7 @@ function expirationdate_deactivate()
     }
 
     $container = Container::getInstance();
-    $legacyPath = $container->get(ServicesAbstract::SERVICE_LEGACY_PATH);
+    $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
 
     require_once $legacyPath . '/post-expirator-debug.php';
     $debug = new PostExpiratorDebug();

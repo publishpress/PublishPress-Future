@@ -11,44 +11,44 @@ use PublishPressFuture\Core\WordPress\FiltersFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 
 return [
-    ServicesAbstract::SERVICE_PLUGIN_VERSION => '2.8.0-alpha.1',
+    ServicesAbstract::PLUGIN_VERSION => '2.8.0-alpha.1',
 
-    ServicesAbstract::SERVICE_PLUGIN_SLUG => 'post-expirator',
+    ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
-    ServicesAbstract::SERVICE_DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
+    ServicesAbstract::DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
 
-    ServicesAbstract::SERVICE_DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
+    ServicesAbstract::DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
 
-    ServicesAbstract::SERVICE_DEFAULT_FOOTER_CONTENT => __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'),
+    ServicesAbstract::DEFAULT_FOOTER_CONTENT => __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'),
 
-    ServicesAbstract::SERVICE_DEFAULT_FOOTER_STYLE => 'font-style: italic;',
+    ServicesAbstract::DEFAULT_FOOTER_STYLE => 'font-style: italic;',
 
-    ServicesAbstract::SERVICE_DEFAULT_FOOTER_DISPLAY => '0',
+    ServicesAbstract::DEFAULT_FOOTER_DISPLAY => '0',
 
-    ServicesAbstract::SERVICE_DEFAULT_EMAIL_NOTIFICATION => '0',
+    ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION => '0',
 
-    ServicesAbstract::SERVICE_DEFAULT_EMAIL_NOTIFICATION_ADMINS => '0',
+    ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION_ADMINS => '0',
 
-    ServicesAbstract::SERVICE_DEFAULT_DEBUG => '0',
+    ServicesAbstract::DEFAULT_DEBUG => '0',
 
-    ServicesAbstract::SERVICE_DEFAULT_EXPIRATION_DATE => 'null',
+    ServicesAbstract::DEFAULT_EXPIRATION_DATE => 'null',
 
-    ServicesAbstract::SERVICE_BASE_PATH => __DIR__,
+    ServicesAbstract::BASE_PATH => __DIR__,
 
-    ServicesAbstract::SERVICE_LEGACY_PATH => __DIR__ . '/legacy',
+    ServicesAbstract::LEGACY_PATH => __DIR__ . '/legacy',
 
-    ServicesAbstract::SERVICE_BASE_URL => plugins_url('/', __FILE__),
+    ServicesAbstract::BASE_URL => plugins_url('/', __FILE__),
 
     /**
      * @param ContainerInterface $container
      *
      * @return Plugin
      */
-    ServicesAbstract::SERVICE_MODULES_MANAGER => static function(ContainerInterface $container)
+    ServicesAbstract::MODULES_MANAGER => static function(ContainerInterface $container)
     {
-        $filtersFacade = $container->get(ServicesAbstract::SERVICE_FILTERS_FACADE);
-        $modulesInstanceList = $container->get(ServicesAbstract::SERVICE_MODULES_LIST);
-        $legacyPlugin = $container->get(ServicesAbstract::SERVICE_LEGACY_PLUGIN);
+        $filtersFacade = $container->get(ServicesAbstract::FILTERS_FACADE);
+        $modulesInstanceList = $container->get(ServicesAbstract::MODULES_LIST);
+        $legacyPlugin = $container->get(ServicesAbstract::LEGACY_PLUGIN);
 
         return new ModulesManager($filtersFacade, $modulesInstanceList, $legacyPlugin);
     },
@@ -58,7 +58,7 @@ return [
      *
      * @return Plugin
      */
-    ServicesAbstract::SERVICE_LEGACY_PLUGIN => static function(ContainerInterface $container)
+    ServicesAbstract::LEGACY_PLUGIN => static function(ContainerInterface $container)
     {
         return PostExpirator_Facade::getInstance();
     },
@@ -68,7 +68,7 @@ return [
      *
      * @return ExecutableInterface
      */
-    ServicesAbstract::SERVICE_FILTERS_FACADE => static function (ContainerInterface $container)
+    ServicesAbstract::FILTERS_FACADE => static function (ContainerInterface $container)
     {
         return new FiltersFacade();
     },
@@ -78,7 +78,7 @@ return [
      *
      * @return ExecutableInterface
      */
-    ServicesAbstract::SERVICE_ACTIONS_FACADE => static function (ContainerInterface $container)
+    ServicesAbstract::ACTIONS_FACADE => static function (ContainerInterface $container)
     {
         return new ActionsFacade();
     },
@@ -88,12 +88,12 @@ return [
      *
      * @return array
      */
-    ServicesAbstract::SERVICE_MODULES_LIST => static function (ContainerInterface $container)
+    ServicesAbstract::MODULES_LIST => static function (ContainerInterface $container)
     {
-        $filtersFacade = $container->get(ServicesAbstract::SERVICE_FILTERS_FACADE);
+        $filtersFacade = $container->get(ServicesAbstract::FILTERS_FACADE);
 
         $modulesList = [
-            $container->get(ServicesAbstract::SERVICE_MODULE_INSTANCE_PROTECTION),
+            $container->get(ServicesAbstract::MODULE_INSTANCE_PROTECTION),
         ];
 
         $modulesList = $filtersFacade->execute(
@@ -109,10 +109,10 @@ return [
      *
      * @return InstanceProtectionController
      */
-    ServicesAbstract::SERVICE_MODULE_INSTANCE_PROTECTION => static function (ContainerInterface $container)
+    ServicesAbstract::MODULE_INSTANCE_PROTECTION => static function (ContainerInterface $container)
     {
-        $actionsFacade = $container->get(ServicesAbstract::SERVICE_ACTIONS_FACADE);
-        $paths = $container->get(ServicesAbstract::SERVICE_PATHS);
+        $actionsFacade = $container->get(ServicesAbstract::ACTIONS_FACADE);
+        $paths = $container->get(ServicesAbstract::PATHS);
 
         return new InstanceProtectionController($actionsFacade, $paths);
     },
@@ -122,7 +122,7 @@ return [
      *
      * @return InstanceProtectionController
      */
-    ServicesAbstract::SERVICE_PATHS => static function (ContainerInterface $container)
+    ServicesAbstract::PATHS => static function (ContainerInterface $container)
     {
         return new Paths(__DIR__);
     },

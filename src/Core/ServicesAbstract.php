@@ -4,45 +4,45 @@ namespace PublishPressFuture\Core;
 
 class ServicesAbstract
 {
-    const SERVICE_PLUGIN_VERSION = 'plugin.version';
+    const PLUGIN_VERSION = 'plugin.version';
 
-    const SERVICE_PLUGIN_SLUG = 'plugin.slug';
+    const PLUGIN_SLUG = 'plugin.slug';
 
-    const SERVICE_DEFAULT_DATE_FORMAT = 'default.date.format';
+    const DEFAULT_DATE_FORMAT = 'default.date.format';
 
-    const SERVICE_DEFAULT_TIME_FORMAT = 'default.time.format';
+    const DEFAULT_TIME_FORMAT = 'default.time.format';
 
-    const SERVICE_DEFAULT_FOOTER_CONTENT = 'default.footer.content';
+    const DEFAULT_FOOTER_CONTENT = 'default.footer.content';
 
-    const SERVICE_DEFAULT_FOOTER_STYLE = 'default.footer.style';
+    const DEFAULT_FOOTER_STYLE = 'default.footer.style';
 
-    const SERVICE_DEFAULT_FOOTER_DISPLAY = 'default.footer.display';
+    const DEFAULT_FOOTER_DISPLAY = 'default.footer.display';
 
-    const SERVICE_DEFAULT_EMAIL_NOTIFICATION = 'default.email.notification';
+    const DEFAULT_EMAIL_NOTIFICATION = 'default.email.notification';
 
-    const SERVICE_DEFAULT_EMAIL_NOTIFICATION_ADMINS = 'default.email.notification.admins';
+    const DEFAULT_EMAIL_NOTIFICATION_ADMINS = 'default.email.notification.admins';
 
-    const SERVICE_DEFAULT_DEBUG = 'default.debug';
+    const DEFAULT_DEBUG = 'default.debug';
 
-    const SERVICE_DEFAULT_EXPIRATION_DATE = 'default.expiration.date';
+    const DEFAULT_EXPIRATION_DATE = 'default.expiration.date';
 
-    const SERVICE_BASE_PATH = 'base.path';
+    const BASE_PATH = 'base.path';
 
-    const SERVICE_BASE_URL = 'base.url';
+    const BASE_URL = 'base.url';
 
-    const SERVICE_FILTERS_FACADE = 'filters.facade';
+    const FILTERS_FACADE = 'filters.facade';
 
-    const SERVICE_ACTIONS_FACADE = 'actions.facade';
+    const ACTIONS_FACADE = 'actions.facade';
 
-    const SERVICE_MODULES_LIST = 'modules.list';
+    const MODULES_LIST = 'modules.list';
 
-    const SERVICE_MODULE_INSTANCE_PROTECTION = 'module.instanceprotection';
+    const MODULE_INSTANCE_PROTECTION = 'module.instanceprotection';
 
-    const SERVICE_MODULES_MANAGER = 'modules.manager';
+    const MODULES_MANAGER = 'modules.manager';
 
-    const SERVICE_LEGACY_PLUGIN = 'legacy.plugin';
+    const LEGACY_PLUGIN = 'legacy.plugin';
 
-    const SERVICE_LEGACY_PATH = 'legacy.path';
+    const LEGACY_PATH = 'legacy.path';
 
-    const SERVICE_PATHS = 'paths';
+    const PATHS = 'paths';
 }
