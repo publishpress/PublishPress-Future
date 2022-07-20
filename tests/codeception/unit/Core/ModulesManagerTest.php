@@ -3,6 +3,8 @@ namespace Core;
 
 use Codeception\Stub\Expected;
 use Codeception\Test\Feature\Stub as Stub;
+use PublishPressFuture\Core\ModulesManager;
+use PublishPressFuture\Module\InstanceProtection\Controller;
 use UnitTester;
 
 class ModulesManagerTest extends \Codeception\Test\Unit
@@ -17,14 +19,14 @@ class ModulesManagerTest extends \Codeception\Test\Unit
     public function testInitializingAModule()
     {
         $module = $this->make(
-            'PublishPressFuture\\Module\\InstanceProtection\\Controller',
+            Controller::class,
             [
                 'initialize' => Expected::once()
             ]
         );
 
         $instance = $this->make(
-            'PublishPressFuture\\Core\\ModulesManager'
+            ModulesManager::class
         );
 
         $instance->initializeAModule($module);
@@ -33,21 +35,21 @@ class ModulesManagerTest extends \Codeception\Test\Unit
     public function testInitializingAllModules()
     {
         $module1 = $this->make(
-            'PublishPressFuture\\Module\\InstanceProtection\\Controller',
+            Controller::class,
             [
                 'initialize' => Expected::once()
             ]
         );
 
         $module2 = $this->make(
-            'PublishPressFuture\\Module\\InstanceProtection\\Controller',
+            Controller::class,
             [
                 'initialize' => Expected::once()
             ]
         );
 
         $instance = $this->make(
-            'PublishPressFuture\\Core\\ModulesManager',
+            ModulesManager::class,
             [
                 'modulesInstanceList' => [
                     $module1,
