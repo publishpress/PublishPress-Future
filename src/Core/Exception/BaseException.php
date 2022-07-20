@@ -2,7 +2,9 @@
 
 namespace PublishPressFuture\Core\Exception;
 
-class DefinitionsNotFoundException extends BaseException
+use Exception;
+
+class BaseException extends Exception
 {
 
 }
