@@ -1,15 +1,13 @@
 <?php
 namespace Core;
 
-use Codeception\Stub;
 use Codeception\Stub\Expected;
-use Codeception\Test\Feature\Stub as FeatureStub;
-use PublishPressFuture\Core\ModulesManager;
+use Codeception\Test\Feature\Stub as Stub;
 use UnitTester;
 
 class ModulesManagerTest extends \Codeception\Test\Unit
 {
-    use FeatureStub;
+    use Stub;
 
     /**
      * @var \UnitTester
