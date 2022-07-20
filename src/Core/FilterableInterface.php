@@ -2,7 +2,7 @@
 
 namespace PublishPressFuture\Core;
 
-interface ExecutableInterface
+interface FilterableInterface
 {
     /**
      * Add a hook
@@ -17,12 +17,13 @@ interface ExecutableInterface
     public function add($hookName, $callback, $priority = 10, $acceptedArgs = 1);
 
     /**
-     * Execute the hook
+     * Apply the hook
      *
      * @param string $hookName
+     * @param mixed $value
      * @param array $args
      *
      * @return mixed
      */
-    public function do($hookName, $args = []);
+    public function apply($hookName, $value = null, $args = []);
 }

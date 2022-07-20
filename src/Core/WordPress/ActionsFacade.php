@@ -25,16 +25,14 @@ class ActionsFacade implements ExecutableInterface
      * Execute the hook
      *
      * @param string $hookName
-     * @param mixed $value
      * @param array $args
      *
      * @return mixed
      */
-    public function execute($hookName, $value = null, $args = [])
+    public function do($hookName, $args = [])
     {
         $params = array_merge([
             $hookName,
-            $value
         ], $args);
 
         return call_user_func_array('do_action', $params);

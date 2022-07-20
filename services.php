@@ -96,7 +96,7 @@ return [
             $container->get(ServicesAbstract::MODULE_INSTANCE_PROTECTION),
         ];
 
-        $modulesList = $filtersFacade->execute(
+        $modulesList = $filtersFacade->apply(
             HooksAbstract::FILTER_MODULES_LIST,
             $modulesList
         );

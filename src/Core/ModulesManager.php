@@ -2,13 +2,12 @@
 
 namespace PublishPressFuture\Core;
 
-use PublishPressFuture\Core\InitializableInterface;
 
 class ModulesManager implements ModularInterface
 {
 
     /**
-     * @var ExecutableInterface
+     * @var FilterableInterface
      */
     private $filtersFacade;
 
@@ -23,11 +22,11 @@ class ModulesManager implements ModularInterface
     private $legacyPlugin;
 
     /**
-     * @param ExecutableInterface $filtersFacade
+     * @param FilterableInterface $filtersFacade
      * @param array $modulesInstanceList
      * @param object $legacyPluginFactory
      */
-    public function __construct(ExecutableInterface $filtersFacade, $modulesInstanceList, $legacyPlugin)
+    public function __construct(FilterableInterface $filtersFacade, $modulesInstanceList, $legacyPlugin)
     {
         $this->filtersFacade = $filtersFacade;
         $this->modulesInstanceList = $modulesInstanceList;

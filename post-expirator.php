@@ -35,7 +35,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     $actionsFacade = $container->get(ServicesAbstract::ACTIONS_FACADE);
 
     // Launch the plugin
-    $actionsFacade->execute(HooksAbstract::ACTION_PLUGIN_INIT);
+    $actionsFacade->do(HooksAbstract::ACTION_PLUGIN_INIT);
 
     $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
     $modulesManager->initializeAllModules();

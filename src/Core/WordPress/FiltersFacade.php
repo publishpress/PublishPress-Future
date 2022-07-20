@@ -2,9 +2,9 @@
 
 namespace PublishPressFuture\Core\WordPress;
 
-use PublishPressFuture\Core\ExecutableInterface;
+use PublishPressFuture\Core\FilterableInterface;
 
-class FiltersFacade implements ExecutableInterface
+class FiltersFacade implements FilterableInterface
 {
     /**
      * Add a hook
@@ -30,7 +30,7 @@ class FiltersFacade implements ExecutableInterface
      *
      * @return mixed
      */
-    public function execute($hookName, $value = null, $args = [])
+    public function apply($hookName, $value = null, $args = [])
     {
         $params = array_merge([
             $hookName,
