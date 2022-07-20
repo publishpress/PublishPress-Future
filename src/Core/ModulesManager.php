@@ -2,10 +2,11 @@
 
 namespace PublishPressFuture\Core;
 
-use PostExpirator_Facade;
+use PublishPressFuture\Core\InitializableInterface;
 
-class ModulesManager
+class ModulesManager implements ModularInterface
 {
+
     /**
      * @var ExecutableInterface
      */
@@ -31,8 +32,6 @@ class ModulesManager
         $this->filtersFacade = $filtersFacade;
         $this->modulesInstanceList = $modulesInstanceList;
         $this->legacyPlugin = $legacyPlugin;
-
-        $this->initModules();
     }
 
     /**
@@ -40,12 +39,22 @@ class ModulesManager
      *
      * @return void
      */
-    private function initModules()
+    public function initializeAllModules()
     {
-        foreach ($this->modulesInstanceList as $instance) {
-            if (is_object($instance) && method_exists($instance, 'init')) {
-                $instance->init();
-            }
+        array_map([$this, 'initializeAModule'], $this->modulesInstanceList);
+    }
+
+    /**
+     * @param InitializableInterface $module
+     *
+     * @return InitializableInterface
+     */
+    public function initializeAModule($module)
+    {
+        if (is_object($module) && method_exists($module, 'initialize')) {
+            $module->initialize();
         }
+
+        return $module;
     }
 }

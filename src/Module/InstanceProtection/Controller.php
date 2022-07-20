@@ -3,11 +3,12 @@
 namespace PublishPressFuture\Module\InstanceProtection;
 
 use PublishPressFuture\Core\ExecutableInterface;
+use PublishPressFuture\Core\InitializableInterface;
 use PublishPressFuture\Core\Paths;
 use PublishPressInstanceProtection\InstanceChecker;
 use PublishPressInstanceProtection\Config as InstanceProtectionConfig;
 
-class Controller
+class Controller implements InitializableInterface
 {
     /**
      * @var ExecutableInterface
@@ -34,7 +35,7 @@ class Controller
         $this->paths = $paths;
     }
 
-    public function init()
+    public function initialize()
     {
         $this->pluginChecker = $this->factoryInstanceProtectionChecker();
     }

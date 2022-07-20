@@ -38,4 +38,5 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     $actionsFacade->execute(HooksAbstract::ACTION_PLUGIN_INIT);
 
     $modulesManager = $container->get(ServicesAbstract::SERVICE_MODULES_MANAGER);
+    $modulesManager->initializeAllModules();
 }
