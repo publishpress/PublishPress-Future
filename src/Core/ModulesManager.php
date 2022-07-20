@@ -4,7 +4,7 @@ namespace PublishPressFuture\Core;
 
 use PostExpirator_Facade;
 
-class PluginFacade
+class ModulesManager
 {
     /**
      * @var ExecutableInterface

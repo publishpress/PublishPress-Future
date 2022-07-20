@@ -38,7 +38,7 @@ class ServicesAbstract
 
     const SERVICE_MODULE_INSTANCE_PROTECTION = 'module.instanceprotection';
 
-    const SERVICE_PLUGIN_FACADE = 'plugin.facade';
+    const SERVICE_MODULES_MANAGER = 'modules.manager';
 
     const SERVICE_LEGACY_PLUGIN = 'legacy.plugin';
 
