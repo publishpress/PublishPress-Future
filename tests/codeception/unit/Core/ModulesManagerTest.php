@@ -10,7 +10,7 @@ class ModulesManagerTest extends \Codeception\Test\Unit
     use Stub;
 
     /**
-     * @var \UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
