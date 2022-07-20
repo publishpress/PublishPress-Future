@@ -3,7 +3,6 @@ namespace Core;
 
 use Codeception\Test\Feature\Stub;
 use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\Exception\DefinitionsNotFoundException;
 
 class ContainerTest extends \Codeception\Test\Unit
 {
