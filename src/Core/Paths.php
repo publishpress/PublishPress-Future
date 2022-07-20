@@ -4,16 +4,19 @@ namespace PublishPressFuture\Core;
 
 class Paths
 {
+    /**
+     * @var string
+     */
     private $baseDir;
 
     public function __construct($baseDir)
     {
-        $this->baseDir = $baseDir;
+        $this->baseDir = (string) $baseDir;
     }
 
     public function getBaseDirPath()
     {
-        return $this->baseDir;
+        return rtrim($this->baseDir, '/');
     }
 
     public function getVendorDirPath()
