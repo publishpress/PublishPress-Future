@@ -3,6 +3,8 @@ namespace Core;
 
 use Codeception\Test\Feature\Stub;
 use PublishPressFuture\Core\Container;
+use PublishPressFuture\Core\Exception\ServiceNotFoundException;
+use stdClass;
 
 class ContainerTest extends \Codeception\Test\Unit
 {
@@ -13,45 +15,95 @@ class ContainerTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    protected function __before()
+    public function testHasReturningTrueForExistentService()
     {
+        $services = [
+            'version' => '0.1.0',
+            'module' => new stdClass,
+        ];
 
+        $container = $this->construct(
+            Container::class,
+            [$services]
+        );
+
+        $this->assertTrue($container->has('version'));
+        $this->assertTrue($container->has('module'));
     }
 
-    // public function testGetInstanceWhenNeverConstructedWithDefinitions()
-    // {
-    //     // $this->tester->expectThrowable(
-    //     //     DefinitionsNotFoundException::class,
-    //     //     function() {
-    //     //         // $instance = Container::getInstance();
+    public function testHasReturningFalseForNonExistentService()
+    {
+        $services = [
+            'module' => new stdClass,
+        ];
 
-    //     //         $container = $this->makeEmpty(
-    //     //             Container::class,
-    //     //             [
-    //     //                 'definitions' => [],
-    //     //                 'instance' => null,
-    //     //             ]
-    //     //         );
+        $container = $this->construct(
+            Container::class,
+            [$services]
+        );
 
-    //     //         $container::getInstance();
-    //     //     }
-    //     // );
-    // }
+        $this->assertFalse($container->has('module1'));
+        $this->assertFalse($container->has('module2'));
+    }
 
-    // public function testGetInstanceConstructingWithDefinitions()
-    // {
-    //     // $definitions = [
-    //     //     'version' => 1702,
-    //     // ];
+    public function testGetThrowsExceptionForNotFoundService()
+    {
+        $this->tester->expectThrowable(
+            ServiceNotFoundException::class,
+            function() {
+                $services = [
+                    'module' => new stdClass,
+                ];
 
-    //     // $instance = Container::getInstance($definitions);
+                $container = new Container($services);
+                $container->get('module1');
+            }
+        );
+    }
 
-    //     // $this->assertIsObject($instance);
-    //     // $this->assertInstanceOf(Container::class, $instance);
-    // }
+    public function testGetReturnsResolvedService()
+    {
+        $services = [
+            'version' => '0.1.0',
+            'module' => static function () {
+                return new stdClass();
+            }
+        ];
 
-    // public function testGet()
-    // {
+        $container = $this->construct(
+            Container::class,
+            [$services]
+        );
 
-    // }
+        $serviceVersion = $container->get('version');
+
+        $this->assertIsString($serviceVersion);
+        $this->assertEquals($services['version'], $serviceVersion);
+
+        $serviceModule = $container->get('module');
+
+        $this->assertIsObject($serviceModule);
+        $this->assertEquals(new stdClass(), $serviceModule);
+    }
+
+    public function testGetReturnsCachedService()
+    {
+        $services = [
+            'module' => static function () {
+                return new stdClass();
+            }
+        ];
+
+        $container = $this->construct(
+            Container::class,
+            [$services]
+        );
+
+        $serviceModule1 = $container->get('module');
+        $serviceModule2 = $container->get('module');
+
+        $this->assertIsObject($serviceModule1);
+        $this->assertIsObject($serviceModule2);
+        $this->assertSame($serviceModule1, $serviceModule2);
+    }
 }
