@@ -75,4 +75,9 @@ define('POSTEXPIRATOR_BASEURL', $container->get(ServicesAbstract::BASE_URL));
 /**
  * @deprecated 2.8.0
  */
+define('POSTEXPIRATOR_LOADED', true);
+
+/**
+ * @deprecated 2.8.0
+ */
 define('POSTEXPIRATOR_LEGACYDIR', POSTEXPIRATOR_BASEDIR . '/legacy');

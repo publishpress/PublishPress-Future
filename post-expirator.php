@@ -14,8 +14,8 @@ use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
 
-if (! defined('POSTEXPIRATOR_LOADED')) {
-    define('POSTEXPIRATOR_LOADED', true);
+if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
+    define('PUBLISHPRESS_FUTURE_LOADED', true);
 
     $autoloadPath = __DIR__ . '/vendor/autoload.php';
     if (! class_exists('PublishPressFuture\\Core\\Plugin') && is_readable($autoloadPath)) {
@@ -32,11 +32,13 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     require_once $legacyPath . '/functions.php';
     require_once $legacyPath . '/autoload.php';
 
+    // Launch the plugin
     $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
 
-    // Launch the plugin
-    $hooks->doAction(HooksAbstract::ACTION_PLUGIN_INIT);
+    $hooks->addAction(HooksAbstract::ACTION_PLUGIN_INIT, function() use ($container) {
+        $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
+        $modulesManager->initializeAllModules();
+    });
 
-    $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
-    $modulesManager->initializeAllModules();
+    $hooks->doAction(HooksAbstract::ACTION_PLUGIN_INIT);
 }
