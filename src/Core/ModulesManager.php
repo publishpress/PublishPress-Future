@@ -7,9 +7,9 @@ class ModulesManager implements ModularInterface
 {
 
     /**
-     * @var FilterableInterface
+     * @var HookableInterface
      */
-    private $filtersFacade;
+    private $hooks;
 
     /**
      * @var array
@@ -22,13 +22,13 @@ class ModulesManager implements ModularInterface
     private $legacyPlugin;
 
     /**
-     * @param FilterableInterface $filtersFacade
+     * @param HookableInterface $hooks
      * @param array $modulesInstanceList
      * @param object $legacyPluginFactory
      */
-    public function __construct(FilterableInterface $filtersFacade, $modulesInstanceList, $legacyPlugin)
+    public function __construct(HookableInterface $hooks, $modulesInstanceList, $legacyPlugin)
     {
-        $this->filtersFacade = $filtersFacade;
+        $this->hooks = $hooks;
         $this->modulesInstanceList = $modulesInstanceList;
         $this->legacyPlugin = $legacyPlugin;
     }

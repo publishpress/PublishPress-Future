@@ -8,6 +8,7 @@ use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Core\WordPress\ActionsFacade;
 use PublishPressFuture\Core\WordPress\FiltersFacade;
+use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 
 return [
@@ -46,11 +47,11 @@ return [
      */
     ServicesAbstract::MODULES_MANAGER => static function(ContainerInterface $container)
     {
-        $filtersFacade = $container->get(ServicesAbstract::FILTERS_FACADE);
+        $hooksFacade = $container->get(ServicesAbstract::HOOKS_FACADE);
         $modulesInstanceList = $container->get(ServicesAbstract::MODULES_LIST);
         $legacyPlugin = $container->get(ServicesAbstract::LEGACY_PLUGIN);
 
-        return new ModulesManager($filtersFacade, $modulesInstanceList, $legacyPlugin);
+        return new ModulesManager($hooksFacade, $modulesInstanceList, $legacyPlugin);
     },
 
     /**
@@ -68,19 +69,9 @@ return [
      *
      * @return ExecutableInterface
      */
-    ServicesAbstract::FILTERS_FACADE => static function (ContainerInterface $container)
+    ServicesAbstract::HOOKS_FACADE => static function (ContainerInterface $container)
     {
-        return new FiltersFacade();
-    },
-
-    /**
-     * @param ContainerInterface $container
-     *
-     * @return ExecutableInterface
-     */
-    ServicesAbstract::ACTIONS_FACADE => static function (ContainerInterface $container)
-    {
-        return new ActionsFacade();
+        return new HooksFacade();
     },
 
     /**
@@ -90,13 +81,13 @@ return [
      */
     ServicesAbstract::MODULES_LIST => static function (ContainerInterface $container)
     {
-        $filtersFacade = $container->get(ServicesAbstract::FILTERS_FACADE);
+        $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
 
         $modulesList = [
             $container->get(ServicesAbstract::MODULE_INSTANCE_PROTECTION),
         ];
 
-        $modulesList = $filtersFacade->apply(
+        $modulesList = $hooks->applyFilters(
             HooksAbstract::FILTER_MODULES_LIST,
             $modulesList
         );
@@ -111,10 +102,10 @@ return [
      */
     ServicesAbstract::MODULE_INSTANCE_PROTECTION => static function (ContainerInterface $container)
     {
-        $actionsFacade = $container->get(ServicesAbstract::ACTIONS_FACADE);
+        $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
         $paths = $container->get(ServicesAbstract::PATHS);
 
-        return new InstanceProtectionController($actionsFacade, $paths);
+        return new InstanceProtectionController($hooks, $paths);
     },
 
     /**

@@ -32,10 +32,10 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
     require_once $legacyPath . '/functions.php';
     require_once $legacyPath . '/autoload.php';
 
-    $actionsFacade = $container->get(ServicesAbstract::ACTIONS_FACADE);
+    $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
 
     // Launch the plugin
-    $actionsFacade->do(HooksAbstract::ACTION_PLUGIN_INIT);
+    $hooks->doAction(HooksAbstract::ACTION_PLUGIN_INIT);
 
     $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
     $modulesManager->initializeAllModules();

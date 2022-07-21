@@ -30,9 +30,7 @@ class ServicesAbstract
 
     const BASE_URL = 'base.url';
 
-    const FILTERS_FACADE = 'filters.facade';
-
-    const ACTIONS_FACADE = 'actions.facade';
+    const HOOKS_FACADE = 'hooks.facade';
 
     const MODULES_LIST = 'modules.list';
 
