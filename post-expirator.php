@@ -34,10 +34,10 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
     // Launch the plugin
     $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
+    $plugin = $container->get(ServicesAbstract::PLUGIN_FACADE);
 
-    $hooks->addAction(HooksAbstract::ACTION_PLUGIN_INIT, function() use ($container) {
-        $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
-        $modulesManager->initializeAllModules();
+    $hooks->addAction(HooksAbstract::ACTION_PLUGIN_INIT, function() use ($plugin) {
+        $plugin->initialize();
     });
 
     $hooks->doAction(HooksAbstract::ACTION_PLUGIN_INIT);

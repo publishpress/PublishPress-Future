@@ -4,6 +4,8 @@ namespace PublishPressFuture\Core;
 
 class ServicesAbstract
 {
+    const PLUGIN_FACADE = 'plugin.facade';
+
     const PLUGIN_VERSION = 'plugin.version';
 
     const PLUGIN_SLUG = 'plugin.slug';

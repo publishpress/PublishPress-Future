@@ -2,12 +2,10 @@
 
 use Psr\Container\ContainerInterface;
 use PublishPressFuture\Core\HooksAbstract;
-use PublishPressFuture\Core\ExecutableInterface;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressFuture\Core\WordPress\ActionsFacade;
-use PublishPressFuture\Core\WordPress\FiltersFacade;
+use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
@@ -46,13 +44,25 @@ return [
      *
      * @return Plugin
      */
+    ServicesAbstract::PLUGIN_FACADE => static function(ContainerInterface $container)
+    {
+        $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
+        $legacyPlugin = $container->get(ServicesAbstract::LEGACY_PLUGIN);
+
+        return new PluginFacade($modulesManager, $legacyPlugin);
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return Plugin
+     */
     ServicesAbstract::MODULES_MANAGER => static function(ContainerInterface $container)
     {
         $hooksFacade = $container->get(ServicesAbstract::HOOKS_FACADE);
         $modulesInstanceList = $container->get(ServicesAbstract::MODULES_LIST);
-        $legacyPlugin = $container->get(ServicesAbstract::LEGACY_PLUGIN);
 
-        return new ModulesManager($hooksFacade, $modulesInstanceList, $legacyPlugin);
+        return new ModulesManager($hooksFacade, $modulesInstanceList);
     },
 
     /**

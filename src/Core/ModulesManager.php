@@ -17,20 +17,13 @@ class ModulesManager implements ModularInterface
     private $modulesInstanceList;
 
     /**
-     * @var object
-     */
-    private $legacyPlugin;
-
-    /**
      * @param HookableInterface $hooks
      * @param array $modulesInstanceList
-     * @param object $legacyPluginFactory
      */
-    public function __construct(HookableInterface $hooks, $modulesInstanceList, $legacyPlugin)
+    public function __construct(HookableInterface $hooks, $modulesInstanceList)
     {
         $this->hooks = $hooks;
         $this->modulesInstanceList = $modulesInstanceList;
-        $this->legacyPlugin = $legacyPlugin;
     }
 
     /**
