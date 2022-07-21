@@ -10,6 +10,7 @@ use PublishPressFuture\Core\WordPress\ActionsFacade;
 use PublishPressFuture\Core\WordPress\FiltersFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
+use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => '2.8.0-alpha.1',
@@ -85,6 +86,7 @@ return [
 
         $modulesList = [
             $container->get(ServicesAbstract::MODULE_INSTANCE_PROTECTION),
+            $container->get(ServicesAbstract::MODULE_EXPIRATION),
         ];
 
         $modulesList = $hooks->applyFilters(
@@ -106,6 +108,18 @@ return [
         $paths = $container->get(ServicesAbstract::PATHS);
 
         return new InstanceProtectionController($hooks, $paths);
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return ExpirationController
+     */
+    ServicesAbstract::MODULE_EXPIRATION => static function (ContainerInterface $container)
+    {
+        $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
+
+        return new ExpirationController($hooks);
     },
 
     /**

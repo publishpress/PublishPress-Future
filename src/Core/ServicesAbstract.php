@@ -36,6 +36,8 @@ class ServicesAbstract
 
     const MODULE_INSTANCE_PROTECTION = 'module.instanceprotection';
 
+    const MODULE_EXPIRATION = 'module.expiration';
+
     const MODULES_MANAGER = 'modules.manager';
 
     const LEGACY_PLUGIN = 'legacy.plugin';

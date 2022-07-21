@@ -1,8 +1,6 @@
 <?php
 namespace Core;
 
-use Codeception\Example;
-use Codeception\Test\Feature\Stub as Stub;
 use PublishPressFuture\Core\Paths;
 use UnitTester;
 
