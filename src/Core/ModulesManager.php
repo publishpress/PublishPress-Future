@@ -31,9 +31,9 @@ class ModulesManager implements ModularInterface
      *
      * @return void
      */
-    public function initializeAllModules()
+    public function initializeModules()
     {
-        array_map([$this, 'initializeAModule'], $this->modulesInstanceList);
+        array_map([$this, 'initializeSingleModule'], $this->modulesInstanceList);
     }
 
     /**
@@ -41,7 +41,7 @@ class ModulesManager implements ModularInterface
      *
      * @return InitializableInterface
      */
-    public function initializeAModule($module)
+    public function initializeSingleModule($module)
     {
         if (is_object($module) && method_exists($module, 'initialize')) {
             $module->initialize();

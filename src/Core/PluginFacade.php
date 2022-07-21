@@ -26,6 +26,6 @@ class PluginFacade implements InitializableInterface
 
     public function initialize()
     {
-        $this->modulesManager->initializeAllModules();
+        $this->modulesManager->initializeModules();
     }
 }

@@ -4,18 +4,20 @@ namespace Core;
 use Codeception\Stub\Expected;
 use Codeception\Test\Feature\Stub as Stub;
 use PublishPressFuture\Core\ModulesManager;
+use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
 use UnitTester;
+use stdClass;
 
-class ModulesTest extends \Codeception\Test\Unit
+class PluginFacadeTest extends \Codeception\Test\Unit
 {
     /**
      * @var UnitTester
      */
     protected $tester;
 
-    public function testInitializeDefaultModules()
+    public function testModulesAreInitialized()
     {
         $modulesClasses = [
             InstanceProtectionController::class,
@@ -38,13 +40,26 @@ class ModulesTest extends \Codeception\Test\Unit
             return $className;
         }, $modulesClasses);
 
-        $instance = $this->make(
+        $modulesManager = $this->make(
             ModulesManager::class,
             [
                 'modulesInstanceList' => $modulesMocks,
             ]
         );
 
-        $instance->initializeAllModules();
+        $legacyPlugin = $this->make(
+            stdClass::class
+        );
+
+        $plugin = $this->construct(
+            PluginFacade::class,
+            [
+                $modulesManager,
+                $legacyPlugin
+            ]
+            );
+
+
+        $plugin->initialize();
     }
 }

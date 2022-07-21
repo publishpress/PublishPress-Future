@@ -16,7 +16,7 @@ class ModulesManagerTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    public function testInitializingAModule()
+    public function testInitializingSingleModule()
     {
         $module = $this->make(
             Controller::class,
@@ -29,7 +29,7 @@ class ModulesManagerTest extends \Codeception\Test\Unit
             ModulesManager::class
         );
 
-        $instance->initializeAModule($module);
+        $instance->initializeSingleModule($module);
     }
 
     public function testInitializingAllModules()
@@ -58,6 +58,6 @@ class ModulesManagerTest extends \Codeception\Test\Unit
             ]
         );
 
-        $instance->initializeAllModules();
+        $instance->initializeModules();
     }
 }
