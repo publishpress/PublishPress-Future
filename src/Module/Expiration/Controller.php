@@ -4,6 +4,8 @@ namespace PublishPressFuture\Module\Expiration;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
+use PublishPressFuture\Core\WordPress\CronFacade;
+use PublishPressFuture\Core\WordPress\SiteFacade;
 use PublishPressFuture\Module\Settings\HooksAbstract as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface
@@ -19,13 +21,20 @@ class Controller implements InitializableInterface
     private $site;
 
     /**
+     * @var CronFacade
+     */
+    private $cron;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
+     * @param CronFacade $cronFacade
      */
-    public function __construct(HookableInterface $hooksFacade, $siteFacade)
+    public function __construct(HookableInterface $hooksFacade, $siteFacade, $cronFacade)
     {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
+        $this->cron = $cronFacade;
     }
 
     public function initialize()
@@ -38,10 +47,10 @@ class Controller implements InitializableInterface
         // TODO: What about custom post types? How to clean up?
 
         if ($this->site->isMultisite()) {
-            wp_clear_scheduled_hook('expirationdate_delete_' . $this->site->getBlogId());
+            $this->cron->clearScheduledHook('expirationdate_delete_' . $this->site->getBlogId());
             return;
         }
 
-        wp_clear_scheduled_hook('expirationdate_delete');
+        $this->cron->clearScheduledHook('expirationdate_delete');
     }
 }

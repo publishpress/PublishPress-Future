@@ -141,8 +141,9 @@ return [
     {
         $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
         $site = $container->get(ServicesAbstract::SITE_FACADE);
+        $cron = $container->get(ServicesAbstract::CRON_FACADE);
 
-        return new ExpirationController($hooks, $site);
+        return new ExpirationController($hooks, $site, $cron);
     },
 
     /**
