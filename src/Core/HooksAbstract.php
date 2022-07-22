@@ -13,4 +13,6 @@ class HooksAbstract
     const ACTION_PLUGIN_AFTER_INIT_MODULE = 'publishpressfuture.core/init/module/after';
 
     const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture.core/deactivate';
+
+    const ACTION_ACTIVATE_PLUGIN = 'publishpressfuture.core/activate';
 }

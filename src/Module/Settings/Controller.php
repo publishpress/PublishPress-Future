@@ -31,9 +31,15 @@ class Controller implements InitializableInterface
 
     public function initialize()
     {
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_ACTIVATE_PLUGIN, [$this, 'onActivatePlugin']);
         $this->hooks->addAction(CoreHooksAbstract::ACTION_DEACTIVATE_PLUGIN, [$this, 'onDeactivatePlugin']);
 
         $this->hooks->addFilter(HooksAbstract::FILTER_GET_SETTING, [$this, 'getSetting']);
+    }
+
+    public function onActivatePlugin()
+    {
+        $this->setDefaultSettings();
     }
 
     public function onDeactivatePlugin()
@@ -49,27 +55,59 @@ class Controller implements InitializableInterface
         $this->deleteAllSettings();
     }
 
+    private function setDefaultSettings()
+    {
+        $defaultValues = [
+            'expirationdateDefaultDateFormat' => POSTEXPIRATOR_DATEFORMAT,
+            'expirationdateDefaultTimeFormat' => POSTEXPIRATOR_TIMEFORMAT,
+            'expirationdateFooterContents' => POSTEXPIRATOR_FOOTERCONTENTS,
+            'expirationdateFooterStyle' => POSTEXPIRATOR_FOOTERSTYLE,
+            'expirationdateDisplayFooter' => POSTEXPIRATOR_FOOTERDISPLAY,
+            'expirationdateDebug' => POSTEXPIRATOR_DEBUGDEFAULT,
+            'expirationdateDefaultDate' => POSTEXPIRATOR_EXPIREDEFAULT,
+            'expirationdateGutenbergSupport' => 1,
+        ];
+
+        $callback = function($defaultValue, $optionName) {
+            if ($this->options->getOption($optionName) === false) {
+                $this->options->updateOption($optionName, $defaultValue);
+            }
+        };
+
+        array_walk($defaultValues,$callback);
+    }
+
     private function deleteAllSettings()
     {
-        $this->options->deleteOption('expirationdateExpiredPostStatus');
-        $this->options->deleteOption('expirationdateExpiredPageStatus');
-        $this->options->deleteOption('expirationdateDefaultDateFormat');
-        $this->options->deleteOption('expirationdateDefaultTimeFormat');
-        $this->options->deleteOption('expirationdateDisplayFooter');
-        $this->options->deleteOption('expirationdateFooterContents');
-        $this->options->deleteOption('expirationdateFooterStyle');
-        $this->options->deleteOption('expirationdateCategory');
-        $this->options->deleteOption('expirationdateCategoryDefaults');
-        $this->options->deleteOption('expirationdateDebug');
-        $this->options->deleteOption('postexpiratorVersion');
-        $this->options->deleteOption('expirationdateCronSchedule');
-        $this->options->deleteOption('expirationdateDefaultDate');
-        $this->options->deleteOption('expirationdateDefaultDateCustom');
-        $this->options->deleteOption('expirationdateAutoEnabled');
-        $this->options->deleteOption('expirationdateDefaultsPage');
-        $this->options->deleteOption('expirationdateDefaultsPost');
-        $this->options->deleteOption('expirationdateGutenbergSupport');
-        $this->options->deleteOption('expirationdatePreserveData');
+        $allOptions = [
+            'expirationdateExpiredPostStatus',
+            'expirationdateExpiredPageStatus',
+            'expirationdateDefaultDateFormat',
+            'expirationdateDefaultTimeFormat',
+            'expirationdateDisplayFooter',
+            'expirationdateFooterContents',
+            'expirationdateFooterStyle',
+            'expirationdateCategory',
+            'expirationdateCategoryDefaults',
+            'expirationdateDebug',
+            'postexpiratorVersion',
+            'expirationdateCronSchedule',
+            'expirationdateDefaultDate',
+            'expirationdateDefaultDateCustom',
+            'expirationdateAutoEnabled',
+            'expirationdateDefaultsPost',
+            'expirationdateDefaultsPage',
+            'expirationdateGutenbergSupport',
+            'expirationdatePreserveData',
+        ];
+
+        // TODO: Remove the custom post type default settings like expirationdateDefaults<post_type>, etc.
+
+        $callback = function($optionName) {
+            $this->options->deleteOption($optionName);
+        };
+
+        array_walk($allOptions, $callback);
     }
 
     /**

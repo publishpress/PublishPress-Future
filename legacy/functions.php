@@ -5,6 +5,7 @@
  */
 
 use PublishPressFuture\Core\Container;
+use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Module\Settings\HooksAbstract as SettingsHooksAbstract;
 
@@ -1792,7 +1793,9 @@ function postexpirator_upgrade()
     // Check for current version, if not exists, run activation
     $version = get_option('postexpiratorVersion');
     if ($version === false) { // not installed, run default activation
-        postexpirator_activate();
+        $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
+        $hooks->doAction(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
+
         update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
     } else {
         if (version_compare($version, '1.6.1') === -1) {
@@ -1885,33 +1888,11 @@ add_action('admin_init', 'postexpirator_upgrade');
  * @internal
  *
  * @access private
+ * @deprecated 2.8.0
  */
 function postexpirator_activate()
 {
-    if (get_option('expirationdateDefaultDateFormat') === false) {
-        update_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
-    }
-    if (get_option('expirationdateDefaultTimeFormat') === false) {
-        update_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
-    }
-    if (get_option('expirationdateFooterContents') === false) {
-        update_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
-    }
-    if (get_option('expirationdateFooterStyle') === false) {
-        update_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
-    }
-    if (get_option('expirationdateDisplayFooter') === false) {
-        update_option('expirationdateDisplayFooter', POSTEXPIRATOR_FOOTERDISPLAY);
-    }
-    if (get_option('expirationdateDebug') === false) {
-        update_option('expirationdateDebug', POSTEXPIRATOR_DEBUGDEFAULT);
-    }
-    if (get_option('expirationdateDefaultDate') === false) {
-        update_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
-    }
-    if (get_option('expirationdateGutenbergSupport') === false) {
-        update_option('expirationdateGutenbergSupport', 1);
-    }
+    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the module Settings');
 }
 
 /**

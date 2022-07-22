@@ -220,7 +220,7 @@ return [
      *
      * @return CronFacade
      */
-    ServicesAbstract::OPTIONS_FACADE => static function (ContainerInterface $container)
+    ServicesAbstract::CRON_FACADE => static function (ContainerInterface $container)
     {
         return new CronFacade();
     },
