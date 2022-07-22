@@ -11,9 +11,7 @@
  */
 
 use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressFuture\Core\WordPress\DatabaseFacade;
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     define('PUBLISHPRESS_FUTURE_LOADED', true);
