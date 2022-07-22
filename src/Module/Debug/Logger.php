@@ -4,8 +4,7 @@ namespace PublishPressFuture\Module\Debug;
 
 use Psr\Log\LogLevel;
 use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Core\WordPress\DatabaseFacade;
-use PublishPressFuture\Core\WordPress\SiteFacade;
+use PublishPressFuture\Core\LoggerInterface;
 
 class Logger implements LoggerInterface
 {

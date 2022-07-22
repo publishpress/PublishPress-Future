@@ -70,4 +70,13 @@ class HooksFacade implements HookableInterface
 
         return call_user_func_array('do_action', $params);
     }
+
+    /**
+     * @param string $pluginFile
+     * @param callable $callback
+     */
+    public function registerDeactivationHook($pluginFile, $callback)
+    {
+        register_deactivation_hook($pluginFile, $callback);
+    }
 }

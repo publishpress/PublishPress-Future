@@ -47,4 +47,10 @@ interface HookableInterface
      * @return mixed
      */
     public function doAction($actionName, ...$args);
+
+    /**
+     * @param string $pluginFile
+     * @param callable $callback
+     */
+    public function registerDeactivationHook($pluginFile, $callback);
 }

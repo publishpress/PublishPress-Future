@@ -55,4 +55,10 @@ class ServicesAbstract
     const DATABASE_FACADE = 'database.facade';
 
     const SITE_FACADE = 'site.facade';
+
+    const OPTIONS_FACADE = 'options.facade';
+
+    const CRON_FACADE = 'cron.facade';
+
+    const MODULE_SETTINGS = 'module.settings';
 }

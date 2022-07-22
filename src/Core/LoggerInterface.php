@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Module\Debug;
+namespace PublishPressFuture\Core;
 
 use Psr\Log\LoggerInterface as LogLoggerInterface;
 use PublishPressFuture\Core\InitializableInterface;

@@ -6,13 +6,16 @@ use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Core\PluginFacade;
+use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
+use PublishPressFuture\Core\WordPress\OptionsFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
 use PublishPressFuture\Module\Debug\Controller as DebugController;
 use PublishPressFuture\Module\Debug\Logger;
+use PublishPressFuture\Module\Settings\Controller as SettingsController;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => '2.8.0-alpha.1',
@@ -53,8 +56,10 @@ return [
         $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
         $legacyPlugin = $container->get(ServicesAbstract::LEGACY_PLUGIN);
         $hooksFacade = $container->get(ServicesAbstract::HOOKS_FACADE);
+        $basePath = $container->get(ServicesAbstract::BASE_PATH);
+        $pluginSlug = $container->get(ServicesAbstract::PLUGIN_SLUG);
 
-        return new PluginFacade($modulesManager, $legacyPlugin, $hooksFacade);
+        return new PluginFacade($modulesManager, $legacyPlugin, $hooksFacade, $pluginSlug, $basePath);
     },
 
     /**
@@ -103,6 +108,7 @@ return [
             $container->get(ServicesAbstract::MODULE_INSTANCE_PROTECTION),
             $container->get(ServicesAbstract::MODULE_EXPIRATION),
             $container->get(ServicesAbstract::MODULE_DEBUG),
+            $container->get(ServicesAbstract::MODULE_SETTINGS),
         ];
 
         $modulesList = $hooks->applyFilters(
@@ -134,8 +140,9 @@ return [
     ServicesAbstract::MODULE_EXPIRATION => static function (ContainerInterface $container)
     {
         $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
+        $site = $container->get(ServicesAbstract::SITE_FACADE);
 
-        return new ExpirationController($hooks);
+        return new ExpirationController($hooks, $site);
     },
 
     /**
@@ -196,5 +203,38 @@ return [
     ServicesAbstract::SITE_FACADE => static function (ContainerInterface $container)
     {
         return new SiteFacade();
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return OptionsFacade
+     */
+    ServicesAbstract::OPTIONS_FACADE => static function (ContainerInterface $container)
+    {
+        return new OptionsFacade();
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return CronFacade
+     */
+    ServicesAbstract::OPTIONS_FACADE => static function (ContainerInterface $container)
+    {
+        return new CronFacade();
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return SettingsController
+     */
+    ServicesAbstract::MODULE_SETTINGS => static function (ContainerInterface $container)
+    {
+        $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
+        $options = $container->get(ServicesAbstract::OPTIONS_FACADE);
+
+        return new SettingsController($hooks, $options);
     },
 ];

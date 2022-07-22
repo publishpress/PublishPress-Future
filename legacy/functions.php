@@ -6,6 +6,7 @@
 
 use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Module\Settings\HooksAbstract as SettingsHooksAbstract;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
@@ -1919,50 +1920,13 @@ function postexpirator_activate()
  * @internal
  *
  * @access private
+ *
+ * @deprecated 2.8.0
  */
 function expirationdate_deactivate()
 {
-    $preserveData = (bool)get_option('expirationdatePreserveData', true);
-
-    if ($preserveData) {
-        return;
-    }
-
-    delete_option('expirationdateExpiredPostStatus');
-    delete_option('expirationdateExpiredPageStatus');
-    delete_option('expirationdateDefaultDateFormat');
-    delete_option('expirationdateDefaultTimeFormat');
-    delete_option('expirationdateDisplayFooter');
-    delete_option('expirationdateFooterContents');
-    delete_option('expirationdateFooterStyle');
-    delete_option('expirationdateCategory');
-    delete_option('expirationdateCategoryDefaults');
-    delete_option('expirationdateDebug');
-    delete_option('postexpiratorVersion');
-    delete_option('expirationdateCronSchedule');
-    delete_option('expirationdateDefaultDate');
-    delete_option('expirationdateDefaultDateCustom');
-    delete_option('expirationdateAutoEnabled');
-    delete_option('expirationdateDefaultsPage');
-    delete_option('expirationdateDefaultsPost');
-    delete_option('expirationdateGutenbergSupport');
-    delete_option('expirationdatePreserveData');
-
-    // what about custom post types? - how to clean up?
-    if (is_multisite()) {
-        global $current_blog;
-
-        wp_clear_scheduled_hook('expirationdate_delete_' . $current_blog->blog_id);
-    } else {
-        wp_clear_scheduled_hook('expirationdate_delete');
-    }
-
-    require_once POSTEXPIRATOR_LEGACYDIR . '/debug.php';
-    $debug = new PostExpiratorDebug();
-    $debug->removeDbTable();
+    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPressFuture\Core\PluginFacade class.');
 }
-
-register_deactivation_hook(__FILE__, 'expirationdate_deactivate');
 
 /**
  * The walker class for category checklist.
