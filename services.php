@@ -52,8 +52,9 @@ return [
     {
         $modulesManager = $container->get(ServicesAbstract::MODULES_MANAGER);
         $legacyPlugin = $container->get(ServicesAbstract::LEGACY_PLUGIN);
+        $hooksFacade = $container->get(ServicesAbstract::HOOKS_FACADE);
 
-        return new PluginFacade($modulesManager, $legacyPlugin);
+        return new PluginFacade($modulesManager, $legacyPlugin, $hooksFacade);
     },
 
     /**

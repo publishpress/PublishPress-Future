@@ -14,8 +14,6 @@ interface ModularInterface
 
     /**
      * @param InitializableInterface $module
-     *
-     * @return InitializableInterface
      */
     public function initializeSingleModule($module);
 }
