@@ -5,6 +5,7 @@ use Codeception\Stub\Expected;
 use Codeception\Test\Feature\Stub as Stub;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\PluginFacade;
+use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
 use UnitTester;
@@ -19,6 +20,10 @@ class PluginFacadeTest extends \Codeception\Test\Unit
 
     public function testModulesAreInitialized()
     {
+        $hooksFacade = $this->makeEmpty(
+            HooksFacade::class
+        );
+
         $modulesClasses = [
             InstanceProtectionController::class,
             ExpirationController::class
@@ -43,6 +48,7 @@ class PluginFacadeTest extends \Codeception\Test\Unit
             ModulesManager::class,
             [
                 'modulesInstanceList' => $modulesMocks,
+                'hooks' => $hooksFacade,
             ]
         );
 
@@ -50,13 +56,19 @@ class PluginFacadeTest extends \Codeception\Test\Unit
             stdClass::class
         );
 
+        $basePath = '/tmp';
+        $pluginSlug = 'post-expirator';
+
         $plugin = $this->construct(
             PluginFacade::class,
             [
                 $modulesManager,
-                $legacyPlugin
+                $legacyPlugin,
+                $hooksFacade,
+                $basePath,
+                $pluginSlug
             ]
-            );
+        );
 
 
         $plugin->initialize();

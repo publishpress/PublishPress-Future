@@ -4,6 +4,7 @@ namespace Core;
 use Codeception\Stub\Expected;
 use Codeception\Test\Feature\Stub as Stub;
 use PublishPressFuture\Core\ModulesManager;
+use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller;
 use UnitTester;
 
@@ -25,8 +26,15 @@ class ModulesManagerTest extends \Codeception\Test\Unit
             ]
         );
 
+        $hooksFacade = $this->makeEmpty(
+            HooksFacade::class
+        );
+
         $instance = $this->make(
-            ModulesManager::class
+            ModulesManager::class,
+            [
+                'hooks' => $hooksFacade,
+            ]
         );
 
         $instance->initializeSingleModule($module);
@@ -48,13 +56,18 @@ class ModulesManagerTest extends \Codeception\Test\Unit
             ]
         );
 
+        $hooksFacade = $this->makeEmpty(
+            HooksFacade::class
+        );
+
         $instance = $this->make(
             ModulesManager::class,
             [
                 'modulesInstanceList' => [
                     $module1,
                     $module2
-                ]
+                ],
+                'hooks' => $hooksFacade,
             ]
         );
 
