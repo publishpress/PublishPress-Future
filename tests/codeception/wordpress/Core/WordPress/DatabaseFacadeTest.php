@@ -6,7 +6,7 @@ use PDO;
 
 use function sq;
 
-class HooksFacadeTest extends \Codeception\TestCase\WPTestCase
+class DatabaseFacadeTest extends \Codeception\TestCase\WPTestCase
 {
     /**
      * @var \WordpressTester
