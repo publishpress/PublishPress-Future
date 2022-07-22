@@ -22,23 +22,17 @@ return [
 
     ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
-    ServicesAbstract::DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
-
-    ServicesAbstract::DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
-
-    ServicesAbstract::DEFAULT_FOOTER_CONTENT => __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'),
-
-    ServicesAbstract::DEFAULT_FOOTER_STYLE => 'font-style: italic;',
-
-    ServicesAbstract::DEFAULT_FOOTER_DISPLAY => '0',
-
-    ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION => '0',
-
-    ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION_ADMINS => '0',
-
-    ServicesAbstract::DEFAULT_DEBUG => '0',
-
-    ServicesAbstract::DEFAULT_EXPIRATION_DATE => 'null',
+    ServicesAbstract::DEFAULT_DATA => [
+        ServicesAbstract::DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
+        ServicesAbstract::DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
+        ServicesAbstract::DEFAULT_FOOTER_CONTENT => __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'),
+        ServicesAbstract::DEFAULT_FOOTER_STYLE => 'font-style: italic;',
+        ServicesAbstract::DEFAULT_FOOTER_DISPLAY => '0',
+        ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION => '0',
+        ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION_ADMINS => '0',
+        ServicesAbstract::DEFAULT_DEBUG => '0',
+        ServicesAbstract::DEFAULT_EXPIRATION_DATE => 'null',
+    ],
 
     ServicesAbstract::BASE_PATH => __DIR__,
 
@@ -235,7 +229,8 @@ return [
     {
         $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
         $options = $container->get(ServicesAbstract::OPTIONS_FACADE);
+        $defaultData = $container->get(ServicesAbstract::DEFAULT_DATA);
 
-        return new SettingsController($hooks, $options);
+        return new SettingsController($hooks, $options, $defaultData);
     },
 ];

@@ -10,6 +10,8 @@ class ServicesAbstract
 
     const PLUGIN_SLUG = 'plugin.slug';
 
+    const DEFAULT_DATA = 'default.data';
+
     const DEFAULT_DATE_FORMAT = 'default.date.format';
 
     const DEFAULT_TIME_FORMAT = 'default.time.format';

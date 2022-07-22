@@ -6,6 +6,7 @@ use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
 use PublishPressFuture\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPressFuture\Core\ServicesAbstract;
 
 class Controller implements InitializableInterface
 {
@@ -20,13 +21,20 @@ class Controller implements InitializableInterface
     private $options;
 
     /**
+     * @var array $defaultData
+     */
+    private $defaultData;
+
+    /**
      * @param HookableInterface $hooks
      * @param OptionsFacade $options
+     * @param array $defaultData
      */
-    public function __construct(HookableInterface $hooks, $options)
+    public function __construct(HookableInterface $hooks, $options, $defaultData)
     {
         $this->hooks = $hooks;
         $this->options = $options;
+        $this->defaultData = $defaultData;
     }
 
     public function initialize()
@@ -58,13 +66,13 @@ class Controller implements InitializableInterface
     private function setDefaultSettings()
     {
         $defaultValues = [
-            'expirationdateDefaultDateFormat' => POSTEXPIRATOR_DATEFORMAT,
-            'expirationdateDefaultTimeFormat' => POSTEXPIRATOR_TIMEFORMAT,
-            'expirationdateFooterContents' => POSTEXPIRATOR_FOOTERCONTENTS,
-            'expirationdateFooterStyle' => POSTEXPIRATOR_FOOTERSTYLE,
-            'expirationdateDisplayFooter' => POSTEXPIRATOR_FOOTERDISPLAY,
-            'expirationdateDebug' => POSTEXPIRATOR_DEBUGDEFAULT,
-            'expirationdateDefaultDate' => POSTEXPIRATOR_EXPIREDEFAULT,
+            'expirationdateDefaultDateFormat' => $this->defaultData[ServicesAbstract::DEFAULT_DATE_FORMAT],
+            'expirationdateDefaultTimeFormat' => $this->defaultData[ServicesAbstract::DEFAULT_TIME_FORMAT],
+            'expirationdateFooterContents' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_CONTENT],
+            'expirationdateFooterStyle' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_STYLE],
+            'expirationdateDisplayFooter' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_DISPLAY],
+            'expirationdateDebug' => $this->defaultData[ServicesAbstract::DEFAULT_DEBUG],
+            'expirationdateDefaultDate' => $this->defaultData[ServicesAbstract::DEFAULT_EXPIRATION_DATE],
             'expirationdateGutenbergSupport' => 1,
         ];
 
