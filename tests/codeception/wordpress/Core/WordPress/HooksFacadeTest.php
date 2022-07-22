@@ -6,7 +6,7 @@ use PublishPressFuture\Core\WordPress\HooksFacade;
 use function sq;
 
 
-class HooksFacadeTest extends \Codeception\Test\Unit
+class HooksFacadeTest extends \Codeception\TestCase\WPTestCase
 {
     /**
      * @var \WordpressTester

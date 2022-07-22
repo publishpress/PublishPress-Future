@@ -6,9 +6,13 @@ use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Core\PluginFacade;
+use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
+use PublishPressFuture\Core\WordPress\SiteFacade;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
+use PublishPressFuture\Module\Debug\Controller as DebugController;
+use PublishPressFuture\Module\Debug\Logger;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => '2.8.0-alpha.1',
@@ -97,6 +101,7 @@ return [
         $modulesList = [
             $container->get(ServicesAbstract::MODULE_INSTANCE_PROTECTION),
             $container->get(ServicesAbstract::MODULE_EXPIRATION),
+            $container->get(ServicesAbstract::MODULE_DEBUG),
         ];
 
         $modulesList = $hooks->applyFilters(
@@ -135,10 +140,59 @@ return [
     /**
      * @param ContainerInterface $container
      *
+     * @return ExpirationController
+     */
+    ServicesAbstract::MODULE_DEBUG => static function (ContainerInterface $container)
+    {
+        $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
+
+        return new DebugController($hooks);
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
      * @return InstanceProtectionController
      */
     ServicesAbstract::PATHS => static function (ContainerInterface $container)
     {
         return new Paths(__DIR__);
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return InstanceProtectionController
+     */
+    ServicesAbstract::LOGGER => static function (ContainerInterface $container)
+    {
+        $hooksFacade = $container->get(ServicesAbstract::HOOKS_FACADE);
+        $databaseFacade = $container->get(ServicesAbstract::DATABASE_FACADE);
+        $siteFacade = $container->get(ServicesAbstract::SITE_FACADE);
+
+        $logger = new Logger($hooksFacade, $databaseFacade, $siteFacade);
+        $logger->initialize();
+
+        return $logger;
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return InstanceProtectionController
+     */
+    ServicesAbstract::DATABASE_FACADE => static function (ContainerInterface $container)
+    {
+        return new DatabaseFacade();
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return SiteFacade
+     */
+    ServicesAbstract::SITE_FACADE => static function (ContainerInterface $container)
+    {
+        return new SiteFacade();
     },
 ];

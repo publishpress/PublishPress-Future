@@ -167,7 +167,7 @@ create_env_file() {
     test_site_db_host="127.0.0.1"
     test_site_db_port="${db_container_port}"
     test_site_db_name="wordpress"
-    test_site_db_user="wordpress"
+    test_site_db_user="root"
     test_site_db_password="wordpress"
     test_site_wp_url="http:\/\/127.0.0.1:${wordpress_container_port}"
     test_site_wp_domain="127.0.0.1:${wordpress_container_port}"

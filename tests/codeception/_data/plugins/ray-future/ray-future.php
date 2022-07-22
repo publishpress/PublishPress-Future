@@ -12,5 +12,3 @@
 namespace RayFuture;
 
 require_once __DIR__ . '/vendor/autoload.php';
-
-\ray()->phpinfo();

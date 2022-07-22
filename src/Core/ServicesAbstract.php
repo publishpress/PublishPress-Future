@@ -47,4 +47,12 @@ class ServicesAbstract
     const LEGACY_PATH = 'legacy.path';
 
     const PATHS = 'paths';
+
+    const LOGGER = 'logger';
+
+    const MODULE_DEBUG = 'module.debug';
+
+    const DATABASE_FACADE = 'database.facade';
+
+    const SITE_FACADE = 'site.facade';
 }

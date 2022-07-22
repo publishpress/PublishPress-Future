@@ -4,6 +4,7 @@ modules:
         - \Helper\Wordpress
         - WPLoader
         - Sequence
+        - WPDb
     config:
         WPDb:
             dump: "tests/codeception/_data/sql/dump.sql"
@@ -18,6 +19,8 @@ modules:
             plugins:
                 - post-expirator/post-expirator.php
                 - pre-tests/pre-tests.php
+                - ray-future/ray-future.php
             activatePlugins:
                 - post-expirator/post-expirator.php
                 - pre-tests/pre-tests.php
+                - ray-future/ray-future.php

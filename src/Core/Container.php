@@ -7,6 +7,7 @@ use PublishPressFuture\Core\Exception\ServiceNotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use PublishPressFuture\Core\Exception\ContainerNotInitializedException;
 use PublishPressFuture\Core\Exception\DefinitionsNotFoundException;
 
 /**
@@ -28,9 +29,21 @@ class Container implements ContainerInterface
      */
     private $definitions = [];
 
+    /**
+     * Singleton instance. This should be kept until we are
+     * able to finish the code refactoring removing deprecated
+     * legacy code. Otherwise the legacy code can't reuse the
+     * new code structure.
+     *
+     * @var ContainerInterface
+     */
+    static private $instance;
+
     public function __construct($definitions)
     {
         $this->setDefinitions($definitions);
+
+        self::$instance = $this;
     }
 
     private function setDefinitions($definitions)
@@ -39,6 +52,20 @@ class Container implements ContainerInterface
             $definitions,
             [ContainerInterface::class => $this]
         );
+    }
+
+    /**
+     * @return ContainerInterface
+     *
+     * @throws ContainerNotInitializedException
+     */
+    static public function getInstance()
+    {
+        if (empty(self::$instance)) {
+            throw new ContainerNotInitializedException();
+        }
+
+        return self::$instance;
     }
 
     /**

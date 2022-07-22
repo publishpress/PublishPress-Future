@@ -25,10 +25,9 @@ class PluginFacadeTest extends \Codeception\Test\Unit
         ];
 
         $modulesMocks = [];
-        $self = $this;
 
-        array_map(function($className) use (&$modulesMocks, $self) {
-            $module = $self->make(
+        array_map(function($className) use (&$modulesMocks) {
+            $module = $this->make(
                 $className,
                 [
                     'initialize' => Expected::once()

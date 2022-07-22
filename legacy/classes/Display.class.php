@@ -203,7 +203,21 @@ class PostExpirator_Display
                 'post-expirator'
             ) . '</p>';
         $debug = new PostExpiratorDebug();
-        $debug->getTable();
+        $results = $debug->getTable();
+
+        if (empty($results)) {
+            print '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
+
+            return;
+        }
+        print '<table class="post-expirator-debug">';
+        print '<tr><th class="post-expirator-timestamp">' . esc_html__('Timestamp', 'post-expirator') . '</th>';
+        print '<th>' . esc_html__('Message', 'post-expirator') . '</th></tr>';
+        foreach ($results as $result) {
+            print '<tr><td>' . esc_html($result->timestamp) . '</td>';
+            print '<td>' . esc_html($result->message) . '</td></tr>';
+        }
+        print '</table>';
     }
 
     /**
