@@ -10,10 +10,15 @@ interface LoggerInterface extends InitializableInterface, LogLoggerInterface
     /**
      * @return array
      */
-    public function fetchEntries();
+    public function fetchAll();
 
     /**
      * @return void
      */
     public function deleteLogs();
+
+    /**
+     * @return void
+     */
+    public function dropDatabaseTable();
 }

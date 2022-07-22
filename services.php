@@ -145,8 +145,9 @@ return [
     ServicesAbstract::MODULE_DEBUG => static function (ContainerInterface $container)
     {
         $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
+        $looger = $container->get(ServicesAbstract::LOGGER);
 
-        return new DebugController($hooks);
+        return new DebugController($hooks, $looger);
     },
 
     /**

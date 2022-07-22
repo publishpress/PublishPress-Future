@@ -222,7 +222,7 @@ class Logger implements LoggerInterface
     /**
      * @return array
      */
-    public function fetchEntries()
+    public function fetchAll()
     {
         $databaseTableName = $this->getDatabaseTableName();
 
