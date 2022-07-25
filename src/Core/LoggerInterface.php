@@ -3,7 +3,6 @@
 namespace PublishPressFuture\Core;
 
 use Psr\Log\LoggerInterface as LogLoggerInterface;
-use PublishPressFuture\Core\InitializableInterface;
 
 interface LoggerInterface extends InitializableInterface, LogLoggerInterface
 {
