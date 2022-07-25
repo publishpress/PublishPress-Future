@@ -5,7 +5,7 @@ namespace PublishPressFuture\Core\WordPress;
 class SiteFacade
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function isMultisite()
     {

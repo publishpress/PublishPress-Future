@@ -3,6 +3,7 @@ namespace Core;
 
 use Codeception\Stub\Expected;
 use Codeception\Test\Feature\Stub as Stub;
+use Codeception\Test\Unit;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
@@ -11,7 +12,7 @@ use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
 use UnitTester;
 use stdClass;
 
-class PluginFacadeTest extends \Codeception\Test\Unit
+class PluginFacadeTest extends Unit
 {
     /**
      * @var UnitTester

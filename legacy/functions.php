@@ -8,6 +8,7 @@ use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Module\Settings\HooksAbstract as SettingsHooksAbstract;
+use PublishPressFuture\Module\Expiration\HooksAbstract as ExpirationHooksAbstract;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
@@ -742,57 +743,12 @@ add_action('save_post', 'postexpirator_update_post_meta');
  * @internal
  *
  * @access private
+ * @deprecated 2.8.0
  */
-function postexpirator_schedule_event($id, $ts, $opts)
+function postexpirator_schedule_event($postId, $timestamp, $opts)
 {
-    $debug = postexpirator_debug(); // check for/load debug
-
-    $id = intval($id);
-
-    do_action('postexpirator_schedule', $id, $ts, $opts); // allow custom actions
-
-    if (wp_next_scheduled('postExpiratorExpire', array($id)) !== false) {
-        $error = wp_clear_scheduled_hook('postExpiratorExpire', array($id), true); // Remove any existing hooks
-        if (POSTEXPIRATOR_DEBUG) {
-            $debug->save(
-                array(
-                    'message' => $id . ' -> EXISTING CRON EVENT FOUND - UNSCHEDULED - ' . (is_wp_error(
-                            $error
-                        ) ? $error->get_error_message() : 'no error')
-                )
-            );
-        }
-    }
-
-    $scheduled = wp_schedule_single_event($ts, 'postExpiratorExpire', array($id), true);
-    if (POSTEXPIRATOR_DEBUG) {
-        if ($scheduled) {
-            $debug->save(
-                array(
-                    'message' => $id . ' -> CRON EVENT SCHEDULED at ' .
-                        PostExpirator_Util::get_wp_date('r', $ts)
-                        . ' ' . '(' . $ts . ') with options ' . print_r($opts, true) . ' no error'
-                )
-            );
-        } else {
-            $debug->save(
-                array(
-                    'message' => $id . ' -> TRIED TO SCHEDULE CRON EVENT at ' .
-                        PostExpirator_Util::get_wp_date('r', $ts)
-                        . ' ' . '(' . $ts . ') with options ' . print_r($opts, true) . ' ' . (is_wp_error(
-                            $scheduled
-                        ) ? $scheduled->get_error_message() : 'no error')
-                )
-            );
-        }
-    }
-
-    // Update Post Meta
-    update_post_meta($id, '_expiration-date', $ts);
-    if (! is_null($opts)) {
-        PostExpirator_Facade::set_expire_principles($id, $opts);
-    }
-    update_post_meta($id, '_expiration-date-status', 'saved');
+    $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
+    $hooks->doAction(ExpirationHooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
 }
 
 /**
@@ -801,27 +757,12 @@ function postexpirator_schedule_event($id, $ts, $opts)
  * @internal
  *
  * @access private
+ * @deprecated 2.8.0
  */
-function postexpirator_unschedule_event($id)
+function postexpirator_unschedule_event($postId)
 {
-    $debug = postexpirator_debug(); // check for/load debug
-
-    do_action('postexpirator_unschedule', $id); // allow custom actions
-
-    delete_post_meta($id, '_expiration-date');
-    delete_post_meta($id, '_expiration-date-options');
-    delete_post_meta($id, '_expiration-date-type');
-    delete_post_meta($id, '_expiration-date-categories');
-    delete_post_meta($id, '_expiration-date-taxonomy');
-
-    // Delete Scheduled Expiration
-    if (wp_next_scheduled('postExpiratorExpire', array($id)) !== false) {
-        wp_clear_scheduled_hook('postExpiratorExpire', array($id)); // Remove any existing hooks
-        if (POSTEXPIRATOR_DEBUG) {
-            $debug->save(array('message' => $id . ' -> UNSCHEDULED'));
-        }
-    }
-    delete_post_meta($id, '_expiration-date-status');
+    $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
+    $hooks->doAction(ExpirationHooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 }
 
 /**
@@ -1725,6 +1666,7 @@ add_action('the_content', 'postexpirator_add_footer', 0);
  * @internal
  *
  * @access private
+ * @deprecated 2.8.0
  */
 function postexpirator_debug()
 {

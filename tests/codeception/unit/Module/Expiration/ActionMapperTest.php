@@ -1,6 +1,7 @@
 <?php
 namespace Core\WordPress;
 
+use Codeception\Test\Unit;
 use PublishPressFuture\Module\Expiration;
 use PublishPressFuture\Module\Expiration\Action\PostStatusToDraft;
 use PublishPressFuture\Module\Expiration\Action\PostStatusToPrivate;
@@ -8,13 +9,15 @@ use PublishPressFuture\Module\Expiration\ActionMapper;
 use PublishPressFuture\Module\Expiration\ActionsAbstract;
 use PublishPressFuture\Module\Expiration\Exception\UndefinedActionException;
 
+use WordpressTester;
+
 use function sq;
 
 
-class ActionMapperTest extends \Codeception\Test\Unit
+class ActionMapperTest extends Unit
 {
     /**
-     * @var \WordpressTester
+     * @var WordpressTester
      */
     protected $tester;
 

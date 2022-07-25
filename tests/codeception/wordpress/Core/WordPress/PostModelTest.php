@@ -1,15 +1,18 @@
 <?php
 namespace Core\WordPress;
 
+use Codeception\TestCase\WPTestCase;
 use PublishPressFuture\Core\WordPress\PostModel;
+
+use WordpressTester;
 
 use function sq;
 
 
-class PostModelTest extends \Codeception\TestCase\WPTestCase
+class PostModelTest extends WPTestCase
 {
     /**
-     * @var \WordpressTester
+     * @var WordpressTester
      */
     protected $tester;
 

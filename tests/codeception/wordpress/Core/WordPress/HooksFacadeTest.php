@@ -1,15 +1,18 @@
 <?php
 namespace Core\WordPress;
 
+use Codeception\TestCase\WPTestCase;
 use PublishPressFuture\Core\WordPress\HooksFacade;
+
+use WordpressTester;
 
 use function sq;
 
 
-class HooksFacadeTest extends \Codeception\TestCase\WPTestCase
+class HooksFacadeTest extends WPTestCase
 {
     /**
-     * @var \WordpressTester
+     * @var WordpressTester
      */
     protected $tester;
 

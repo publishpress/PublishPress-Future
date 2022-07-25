@@ -1,10 +1,11 @@
 <?php
 namespace Core;
 
+use Codeception\Test\Unit;
 use PublishPressFuture\Core\Paths;
 use UnitTester;
 
-class PathsTest extends \Codeception\Test\Unit
+class PathsTest extends Unit
 {
     /**
      * @var UnitTester

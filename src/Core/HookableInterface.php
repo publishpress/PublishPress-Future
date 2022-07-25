@@ -9,8 +9,8 @@ interface HookableInterface
      *
      * @param string $filterName
      * @param callable $callback
-     * @param integer $priority
-     * @param integer $acceptedArgs
+     * @param int $priority
+     * @param int $acceptedArgs
      *
      * @return bool
      */
@@ -31,8 +31,8 @@ interface HookableInterface
      *
      * @param string $actionName
      * @param callable $callback
-     * @param integer $priority
-     * @param integer $acceptedArgs
+     * @param int $priority
+     * @param int $acceptedArgs
      *
      * @return bool
      */

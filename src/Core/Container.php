@@ -36,7 +36,7 @@ class Container implements ContainerInterface
      *
      * @var ContainerInterface
      */
-    static private $instance;
+    private static $instance;
 
     public function __construct($definitions)
     {
@@ -58,7 +58,7 @@ class Container implements ContainerInterface
      *
      * @throws ContainerNotInitializedException
      */
-    static public function getInstance()
+    public static function getInstance()
     {
         if (empty(self::$instance)) {
             throw new ContainerNotInitializedException();

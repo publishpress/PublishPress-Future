@@ -115,6 +115,8 @@ class PostExpirator_Facade
 
     /**
      * Set the expire type, categories etc. corresponding to the new (gutenberg) structure.
+     *
+     * @deprecated 2.8.0
      */
     public static function set_expire_principles($id, $opts)
     {

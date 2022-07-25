@@ -4,6 +4,7 @@ use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Module\Debug\HooksAbstract as DebugHooksAbstract;
 use PublishPressFuture\Module\Debug\Logger;
+use PublishPressFuture\Module\Debug\LoggerInterface;
 
 /**
  * The class that adds debug entries to the database.
@@ -13,7 +14,7 @@ use PublishPressFuture\Module\Debug\Logger;
 class PostExpiratorDebug
 {
     /**
-     * @var \PublishPressFuture\Module\Debug\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 

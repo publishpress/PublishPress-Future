@@ -34,7 +34,7 @@ class ServicesAbstract
 
     const BASE_URL = 'base.url';
 
-    const HOOKS_FACADE = 'hooks.facade';
+    const HOOKS_FACADE = 'wp.hooks.facade';
 
     const MODULES_LIST = 'modules.list';
 
@@ -54,13 +54,23 @@ class ServicesAbstract
 
     const MODULE_DEBUG = 'module.Debug';
 
-    const DATABASE_FACADE = 'database.facade';
+    const DATABASE_FACADE = 'wp.database.facade';
 
-    const SITE_FACADE = 'site.facade';
+    const SITE_FACADE = 'wp.site.facade';
 
-    const OPTIONS_FACADE = 'options.facade';
+    const OPTIONS_FACADE = 'wp.options.facade';
 
-    const CRON_FACADE = 'cron.facade';
+    const CRON_FACADE = 'wp.cron.facade';
+
+    const SCHEDULER_FACADE = 'scheduler.facade';
+
+    const ERROR_FACADE = 'wp.error.facade';
 
     const MODULE_SETTINGS = 'module.Settings';
+
+    const SETTINGS_FACADE = 'settings.facade';
+
+    const DATETIME_FACADE = 'wp.datetime.facade';
+
+    const DATETIME_HELPER = 'datetime.helper';
 }

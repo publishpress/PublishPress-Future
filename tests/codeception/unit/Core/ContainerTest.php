@@ -2,16 +2,18 @@
 namespace Core;
 
 use Codeception\Test\Feature\Stub;
+use Codeception\Test\Unit;
 use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\Exception\ServiceNotFoundException;
 use stdClass;
+use UnitTester;
 
-class ContainerTest extends \Codeception\Test\Unit
+class ContainerTest extends Unit
 {
     use Stub;
 
     /**
-     * @var \UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -19,7 +21,7 @@ class ContainerTest extends \Codeception\Test\Unit
     {
         $services = [
             'version' => '0.1.0',
-            'module' => new stdClass,
+            'module' => new stdClass(),
         ];
 
         $container = $this->construct(
@@ -34,7 +36,7 @@ class ContainerTest extends \Codeception\Test\Unit
     public function testHasReturningFalseForNonExistentService()
     {
         $services = [
-            'module' => new stdClass,
+            'module' => new stdClass(),
         ];
 
         $container = $this->construct(
@@ -52,7 +54,7 @@ class ContainerTest extends \Codeception\Test\Unit
             ServiceNotFoundException::class,
             function() {
                 $services = [
-                    'module' => new stdClass,
+                    'module' => new stdClass(),
                 ];
 
                 $container = new Container($services);

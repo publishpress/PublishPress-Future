@@ -1,6 +1,7 @@
 <?php
 
 use Psr\Container\ContainerInterface;
+use PublishPressFuture\Core\Helper\DateTimeHelper;
 use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\ModulesManager;
@@ -8,6 +9,7 @@ use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
+use PublishPressFuture\Core\WordPress\DateTimeFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
@@ -17,13 +19,17 @@ use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
 use PublishPressFuture\Module\Debug\Controller as DebugController;
 use PublishPressFuture\Module\Debug\Logger;
 use PublishPressFuture\Module\Settings\Controller as SettingsController;
+use PublishPressFuture\Module\Expiration\SchedulerInterface;
+use PublishPressFuture\Module\Expiration\Scheduler;
+use PublishPressFuture\Core\WordPress\ErrorFacade;
+use PublishPressFuture\Module\Settings\SettingsFacade;
 
-return [
+return array(
     ServicesAbstract::PLUGIN_VERSION => '2.8.0-alpha.1',
 
     ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
-    ServicesAbstract::DEFAULT_DATA => [
+    ServicesAbstract::DEFAULT_DATA => array(
         ServicesAbstract::DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
         ServicesAbstract::DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
         ServicesAbstract::DEFAULT_FOOTER_CONTENT => __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'),
@@ -33,7 +39,7 @@ return [
         ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION_ADMINS => '0',
         ServicesAbstract::DEFAULT_DEBUG => '0',
         ServicesAbstract::DEFAULT_EXPIRATION_DATE => 'null',
-    ],
+    ),
 
     ServicesAbstract::BASE_PATH => __DIR__,
 
@@ -99,12 +105,12 @@ return [
     {
         $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
 
-        $modulesList = [
+        $modulesList = array(
             $container->get(ServicesAbstract::MODULE_INSTANCE_PROTECTION),
             $container->get(ServicesAbstract::MODULE_EXPIRATION),
             $container->get(ServicesAbstract::MODULE_DEBUG),
             $container->get(ServicesAbstract::MODULE_SETTINGS),
-        ];
+        );
 
         $modulesList = $hooks->applyFilters(
             HooksAbstract::FILTER_MODULES_LIST,
@@ -121,10 +127,9 @@ return [
      */
     ServicesAbstract::MODULE_INSTANCE_PROTECTION => static function (ContainerInterface $container)
     {
-        $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
         $paths = $container->get(ServicesAbstract::PATHS);
 
-        return new InstanceProtectionController($hooks, $paths);
+        return new InstanceProtectionController($paths);
     },
 
     /**
@@ -137,8 +142,9 @@ return [
         $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
         $site = $container->get(ServicesAbstract::SITE_FACADE);
         $cron = $container->get(ServicesAbstract::CRON_FACADE);
+        $scheduler = $container->get(ServicesAbstract::SCHEDULER_FACADE);
 
-        return new ExpirationController($hooks, $site, $cron);
+        return new ExpirationController($hooks, $site, $cron, $scheduler);
     },
 
     /**
@@ -149,15 +155,15 @@ return [
     ServicesAbstract::MODULE_DEBUG => static function (ContainerInterface $container)
     {
         $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
-        $looger = $container->get(ServicesAbstract::LOGGER);
+        $logger = $container->get(ServicesAbstract::LOGGER);
 
-        return new DebugController($hooks, $looger);
+        return new DebugController($hooks, $logger);
     },
 
     /**
      * @param ContainerInterface $container
      *
-     * @return InstanceProtectionController
+     * @return Paths
      */
     ServicesAbstract::PATHS => static function (ContainerInterface $container)
     {
@@ -173,8 +179,9 @@ return [
     {
         $databaseFacade = $container->get(ServicesAbstract::DATABASE_FACADE);
         $siteFacade = $container->get(ServicesAbstract::SITE_FACADE);
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS_FACADE);
 
-        return new Logger($databaseFacade, $siteFacade);
+        return new Logger($databaseFacade, $siteFacade, $settingsFacade);
     },
 
     /**
@@ -225,9 +232,70 @@ return [
     ServicesAbstract::MODULE_SETTINGS => static function (ContainerInterface $container)
     {
         $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
+        $settings = $container->get(ServicesAbstract::SETTINGS_FACADE);
+
+        return new SettingsController($hooks, $settings);
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return SettingsFacade
+     */
+    ServicesAbstract::SETTINGS_FACADE => static function (ContainerInterface $container)
+    {
+        $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
         $options = $container->get(ServicesAbstract::OPTIONS_FACADE);
         $defaultData = $container->get(ServicesAbstract::DEFAULT_DATA);
 
-        return new SettingsController($hooks, $options, $defaultData);
+        return new SettingsFacade($hooks, $options, $defaultData);
     },
-];
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return ErrorFacade
+     */
+    ServicesAbstract::ERROR_FACADE => static function (ContainerInterface $container)
+    {
+        return new ErrorFacade();
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return SchedulerInterface
+     */
+    ServicesAbstract::SCHEDULER_FACADE => static function (ContainerInterface $container)
+    {
+        $hooks = $container->get(ServicesAbstract::HOOKS_FACADE);
+        $cron = $container->get(ServicesAbstract::CRON_FACADE);
+        $error = $container->get(ServicesAbstract::ERROR_FACADE);
+        $logger = $container->get(ServicesAbstract::LOGGER);
+        $dateTimeHelper = $container->get(ServicesAbstract::DATETIME_HELPER);
+
+        return new Scheduler($hooks, $cron, $error, $logger, $dateTimeHelper);
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return DateTimeFacade
+     */
+    ServicesAbstract::DATETIME_FACADE => static function (ContainerInterface $container)
+    {
+        return new DateTimeFacade();
+    },
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return DateTimeHelper
+     */
+    ServicesAbstract::DATETIME_HELPER => static function (ContainerInterface $container)
+    {
+        $dateTime = $container->get(ServicesAbstract::DATETIME_FACADE);
+
+        return new DateTimeHelper($dateTime);
+    },
+);

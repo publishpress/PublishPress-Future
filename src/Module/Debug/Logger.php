@@ -2,9 +2,10 @@
 
 namespace PublishPressFuture\Module\Debug;
 
-use Psr\Log\LogLevel;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
+use PublishPressFuture\Module\Settings\SettingsFacade;
+use PublishPressFuture\Module\Debug\LogLevelAbstract as LogLevel;
 
 class Logger implements LoggerInterface
 {
@@ -23,10 +24,16 @@ class Logger implements LoggerInterface
      */
     private $site;
 
-    public function __construct($databaseFacade, $siteFacade)
+    /**
+     * @var SettingsFacade
+     */
+    private $settings;
+
+    public function __construct($databaseFacade, $siteFacade, $settingsFacade)
     {
         $this->db = $databaseFacade;
         $this->site = $siteFacade;
+        $this->settings = $settingsFacade;
 
         $this->dbTableName = $this->db->getTablePrefix() . 'postexpirator_debug';
 
@@ -191,6 +198,10 @@ class Logger implements LoggerInterface
      */
     public function log($level, $message, $context = [])
     {
+        if (! $this->debugIsEnabled()) {
+            return;
+        }
+
         $levelDescription = strtoupper($level);
 
         $databaseTableName = $this->getDatabaseTableName();
@@ -234,5 +245,13 @@ class Logger implements LoggerInterface
         $databaseTableName = $this->getDatabaseTableName();
 
         $this->db->dropTable($databaseTableName);
+    }
+
+    /**
+     * @return bool
+     */
+    private function debugIsEnabled()
+    {
+        return $this->settings->getDebug();
     }
 }

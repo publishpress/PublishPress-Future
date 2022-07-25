@@ -4,6 +4,8 @@ namespace PublishPressFuture\Module\Expiration\Action;
 
 use PublishPressFuture\Module\Expiration\ExecutableInterface;
 
+use function ray;
+
 class PostCategoryAdd implements ExecutableInterface
 {
     /**
@@ -21,6 +23,6 @@ class PostCategoryAdd implements ExecutableInterface
 
     public function execute()
     {
-        \ray(__METHOD__);
+        ray(__METHOD__);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Steps;
 
+use PostExpirator_Util;
+
 trait Settings
 {
     /**
@@ -322,7 +324,7 @@ trait Settings
         $dateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
         $timeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
 
-        $fullDate = \PostExpirator_Util::get_wp_date("$dateFormat $timeFormat", $currentExpirationDate->getTimestamp());
+        $fullDate = PostExpirator_Util::get_wp_date("$dateFormat $timeFormat", $currentExpirationDate->getTimestamp());
 
         $this->see($fullDate, '.entry-content p');
     }
@@ -336,7 +338,7 @@ trait Settings
 
         $dateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
 
-        $date = \PostExpirator_Util::get_wp_date($dateFormat, $currentExpirationDate->getTimestamp());
+        $date = PostExpirator_Util::get_wp_date($dateFormat, $currentExpirationDate->getTimestamp());
 
         $this->see($date, '.entry-content p');
     }
@@ -350,7 +352,7 @@ trait Settings
 
         $timeFormat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
 
-        $time = \PostExpirator_Util::get_wp_date($timeFormat, $currentExpirationDate->getTimestamp());
+        $time = PostExpirator_Util::get_wp_date($timeFormat, $currentExpirationDate->getTimestamp());
 
         $this->see($time, '.entry-content p');
     }
@@ -394,7 +396,7 @@ trait Settings
     {
         global $currentExpirationDate;
 
-        $date = \PostExpirator_Util::get_wp_date($dateFormat, $currentExpirationDate->getTimestamp());
+        $date = PostExpirator_Util::get_wp_date($dateFormat, $currentExpirationDate->getTimestamp());
 
         $this->see($date, '.entry-content p');
     }
@@ -423,7 +425,7 @@ trait Settings
     {
         global $currentExpirationDate;
 
-        $time = \PostExpirator_Util::get_wp_date($timeFormat, $currentExpirationDate->getTimestamp());
+        $time = PostExpirator_Util::get_wp_date($timeFormat, $currentExpirationDate->getTimestamp());
 
         $this->see($time, '.entry-content p');
     }

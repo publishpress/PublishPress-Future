@@ -18,8 +18,8 @@ class DatabaseFacade
 
     /**
      * @param string $query
-     * @param integer $x
-     * @param integer $y
+     * @param int $x
+     * @param int $y
      *
      * @return string|null
      */

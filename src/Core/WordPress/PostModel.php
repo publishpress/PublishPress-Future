@@ -61,4 +61,46 @@ class PostModel
             ]
         );
     }
+
+    /**
+     * @param string|array $metaKey
+     * @param mixed $metaValue
+     * @return void
+     */
+    public function updateMeta($metaKey, $metaValue = null)
+    {
+        if (! is_array($metaKey)) {
+            $metaKey = [$metaKey => $metaValue];
+        }
+
+        $callback = function ($value, $key) {
+            update_post_meta(
+                $this->postId,
+                sanitize_key($key),
+                $value
+            );
+        };
+
+        array_walk($metaKey, $callback);
+    }
+
+    /**
+     * @param string|array $metaKey
+     * @return void
+     */
+    public function deleteMeta($metaKey)
+    {
+        if (! is_array($metaKey)) {
+            $metaKey = [$metaKey];
+        }
+
+        $callback = function ($key) {
+            delete_post_meta(
+                $this->postId,
+                sanitize_key($key)
+            );
+        };
+
+        array_walk($metaKey, $callback);
+    }
 }

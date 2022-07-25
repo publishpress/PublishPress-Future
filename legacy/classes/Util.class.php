@@ -70,6 +70,9 @@ class PostExpirator_Util
         return $timezone->getOffset(new DateTime());
     }
 
+    /**
+     * @deprecated 2.8.0 Use PublishPressFuture/Core/Helper/Date::getWpDate instead
+     */
     public static function get_wp_date($format, $timestamp)
     {
         $gmtTime = gmdate('Y-m-d H:i:s', $timestamp);
