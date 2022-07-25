@@ -2,13 +2,12 @@
 
 namespace PublishPressFuture\Core;
 
-use Exception;
+use Closure;
 use PublishPressFuture\Core\Exception\ServiceNotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use PublishPressFuture\Core\Exception\ContainerNotInitializedException;
-use PublishPressFuture\Core\Exception\DefinitionsNotFoundException;
 
 /**
  * PHP Dependency Injection Container PSR-11.
@@ -32,7 +31,7 @@ class Container implements ContainerInterface
     /**
      * Singleton instance. This should be kept until we are
      * able to finish the code refactoring removing deprecated
-     * legacy code. Otherwise the legacy code can't reuse the
+     * legacy code. Otherwise, the legacy code can't reuse the
      * new code structure.
      *
      * @var ContainerInterface
@@ -81,7 +80,7 @@ class Container implements ContainerInterface
     public function get($id)
     {
         if (!$this->has($id)) {
-            throw new ServiceNotFoundException("No entry or class found for '{$id}'");
+            throw new ServiceNotFoundException("No entry or class found for '$id'");
         }
 
         if (array_key_exists($id, $this->resolvedEntries)) {
@@ -89,7 +88,7 @@ class Container implements ContainerInterface
         }
 
         $value = $this->definitions[$id];
-        if ($value instanceof \Closure) {
+        if ($value instanceof Closure) {
             $value = $value($this);
         }
 
