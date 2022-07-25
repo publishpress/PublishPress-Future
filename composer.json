@@ -72,7 +72,8 @@
     "publishpress/publishpress-phpcs-standards": "dev-main",
     "spatie/ray": "*",
     "spatie/wordpress-ray": "dev-patch-1",
-    "permafrost-dev/ray-cli": "^1.12"
+    "permafrost-dev/ray-cli": "^1.12",
+    "ext-pdo": "*"
   },
   "scripts": {
     "tests-unit": "vendor/bin/codecept run unit",
