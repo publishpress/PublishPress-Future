@@ -38,9 +38,9 @@ class ServicesAbstract
 
     const MODULES_LIST = 'modules.list';
 
-    const MODULE_INSTANCE_PROTECTION = 'module.instanceprotection';
+    const MODULE_INSTANCE_PROTECTION = 'module.InstanceProtection';
 
-    const MODULE_EXPIRATION = 'module.expiration';
+    const MODULE_EXPIRATION = 'module.Expiration';
 
     const MODULES_MANAGER = 'modules.manager';
 
@@ -52,7 +52,7 @@ class ServicesAbstract
 
     const LOGGER = 'logger';
 
-    const MODULE_DEBUG = 'module.debug';
+    const MODULE_DEBUG = 'module.Debug';
 
     const DATABASE_FACADE = 'database.facade';
 
@@ -62,5 +62,5 @@ class ServicesAbstract
 
     const CRON_FACADE = 'cron.facade';
 
-    const MODULE_SETTINGS = 'module.settings';
+    const MODULE_SETTINGS = 'module.Settings';
 }
