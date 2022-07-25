@@ -11,6 +11,7 @@ use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
+use PublishPressFuture\Module\Expiration\ExecutableInterface;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Module\Expiration\Controller as ExpirationController;
 use PublishPressFuture\Module\Debug\Controller as DebugController;
@@ -43,7 +44,7 @@ return [
     /**
      * @param ContainerInterface $container
      *
-     * @return Plugin
+     * @return PluginFacade
      */
     ServicesAbstract::PLUGIN_FACADE => static function(ContainerInterface $container)
     {
@@ -59,7 +60,7 @@ return [
     /**
      * @param ContainerInterface $container
      *
-     * @return Plugin
+     * @return ModulesManager
      */
     ServicesAbstract::MODULES_MANAGER => static function(ContainerInterface $container)
     {
@@ -72,7 +73,7 @@ return [
     /**
      * @param ContainerInterface $container
      *
-     * @return Plugin
+     * @return PostExpirator_Facade
      */
     ServicesAbstract::LEGACY_PLUGIN => static function(ContainerInterface $container)
     {
@@ -170,14 +171,10 @@ return [
      */
     ServicesAbstract::LOGGER => static function (ContainerInterface $container)
     {
-        $hooksFacade = $container->get(ServicesAbstract::HOOKS_FACADE);
         $databaseFacade = $container->get(ServicesAbstract::DATABASE_FACADE);
         $siteFacade = $container->get(ServicesAbstract::SITE_FACADE);
 
-        $logger = new Logger($hooksFacade, $databaseFacade, $siteFacade);
-        $logger->initialize();
-
-        return $logger;
+        return new Logger($databaseFacade, $siteFacade);
     },
 
     /**

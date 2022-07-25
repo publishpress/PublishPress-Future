@@ -3,8 +3,8 @@
 namespace PublishPressFuture\Module\Debug;
 
 use Psr\Log\LogLevel;
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Core\LoggerInterface;
+use PublishPressFuture\Core\WordPress\DatabaseFacade;
+use PublishPressFuture\Core\WordPress\SiteFacade;
 
 class Logger implements LoggerInterface
 {
@@ -19,25 +19,21 @@ class Logger implements LoggerInterface
     private $db;
 
     /**
-     * @var HookableInterface
-     */
-    private $hooks;
-
-    /**
      * @var SiteFacade
      */
     private $site;
 
-    public function __construct(HookableInterface $hooksFacade, $databaseFacade, $siteFacade)
+    public function __construct($databaseFacade, $siteFacade)
     {
         $this->db = $databaseFacade;
-        $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
 
         $this->dbTableName = $this->db->getTablePrefix() . 'postexpirator_debug';
+
+        $this->initialize();
     }
 
-    public function initialize()
+    private function initialize()
     {
         if ($this->databaseTableDoNotExists()) {
             $this->createDatabaseTable();
@@ -53,14 +49,14 @@ class Logger implements LoggerInterface
     {
         $databaseTableName = $this->getDatabaseTableName();
 
-        return $this->db->getVar("SHOW TABLES LIKE '{$databaseTableName}'") !== $this->dbTableName;
+        return $this->db->getVar("SHOW TABLES LIKE '$databaseTableName'") !== $this->dbTableName;
     }
 
     private function createDatabaseTable()
     {
         $databaseTableName = $this->getDatabaseTableName();
 
-        $tableStructure = "CREATE TABLE `{$databaseTableName}` (
+        $tableStructure = "CREATE TABLE `$databaseTableName` (
             `id` INT(9) NOT NULL AUTO_INCREMENT PRIMARY KEY,
             `timestamp` TIMESTAMP NOT NULL,
             `blog` INT(9) NOT NULL,
@@ -74,7 +70,7 @@ class Logger implements LoggerInterface
     {
         $databaseTableName = $this->getDatabaseTableName();
 
-        $this->db->query("TRUNCATE TABLE {$databaseTableName}");
+        $this->db->query("TRUNCATE TABLE $databaseTableName");
     }
 
     /**
@@ -191,6 +187,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array $context
      * @return void
+     * @noinspection SqlResolve
      */
     public function log($level, $message, $context = [])
     {
@@ -210,7 +207,7 @@ class Logger implements LoggerInterface
 
         $this->db->query(
             $this->db->prepare(
-                "INSERT INTO {$databaseTableName} (`timestamp`,`message`,`blog`) VALUES (FROM_UNIXTIME(%d),%s,%s)",
+                "INSERT INTO $databaseTableName (`timestamp`,`message`,`blog`) VALUES (FROM_UNIXTIME(%d),%s,%s)",
                 time(),
                 $fullMessage,
                 $this->site->getBlogId()
@@ -220,12 +217,13 @@ class Logger implements LoggerInterface
 
     /**
      * @return array
+     * @noinspection SqlResolve
      */
     public function fetchAll()
     {
         $databaseTableName = $this->getDatabaseTableName();
 
-        return (array)$this->db->getResults("SELECT * FROM {$databaseTableName} ORDER BY `id` ASC");
+        return (array)$this->db->getResults("SELECT * FROM $databaseTableName ORDER BY `id`");
     }
 
     /**

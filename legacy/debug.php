@@ -13,7 +13,7 @@ use PublishPressFuture\Module\Debug\Logger;
 class PostExpiratorDebug
 {
     /**
-     * @var Logger
+     * @var \PublishPressFuture\Module\Debug\LoggerInterface
      */
     private $logger;
 
