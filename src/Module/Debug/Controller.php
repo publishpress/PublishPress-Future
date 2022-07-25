@@ -21,6 +21,7 @@ class Controller implements InitializableInterface
 
     /**
      * @param HookableInterface $hooks
+     * @param LoggerInterface $logger
      */
     public function __construct(HookableInterface $hooks, LoggerInterface $logger)
     {
@@ -39,12 +40,12 @@ class Controller implements InitializableInterface
         $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_NOTICE, [$this, 'loggerNotice'], 10, 2);
         $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_INFO, [$this, 'loggerInfo'], 10, 2);
         $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_DEBUG, [$this, 'loggerDebug'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_DELETE_LOGS, [$this, 'loggerDeleteLogs'], 10);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_DROP_DATABASE_TABLE, [$this, 'loggerDropDatabaseTable'], 10);
+        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_DELETE_LOGS, [$this, 'loggerDeleteLogs']);
+        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_DROP_DATABASE_TABLE, [$this, 'loggerDropDatabaseTable']);
 
         $this->hooks->addAction(SettingsHooksAbstract::ACTION_DELETE_ALL_SETTINGS, [$this, 'onDeleteAllSettings']);
 
-        $this->hooks->addFilter(HooksAbstract::FILTER_LOGGER_FETCH_ALL, [$this, 'loggerFetchAll'], 10);
+        $this->hooks->addFilter(HooksAbstract::FILTER_LOGGER_FETCH_ALL, [$this, 'loggerFetchAll']);
     }
 
     public function loggerLog($level, $message, $context = [])
@@ -102,11 +103,15 @@ class Controller implements InitializableInterface
         $this->logger->dropDatabaseTable();
     }
 
-    public function loggerFetchAll($results = [])
+    public function loggerFetchAll($results = [], $replace = true)
     {
-        $results = $this->logger->fetchAll();
+        $fetchedEntries = $this->logger->fetchAll();
 
-        return $results;
+        if ($replace) {
+            return $fetchedEntries;
+        }
+
+        return array_merge($results, $fetchedEntries);
     }
 
     public function onDeleteAllSettings()
