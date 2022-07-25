@@ -2,6 +2,8 @@
 
 namespace PublishPressFuture\Core\WordPress;
 
+use WP_Post;
+
 class PostModel
 {
     /**
@@ -15,12 +17,12 @@ class PostModel
     }
 
     /**
-     * @var \WP_Post
+     * @var WP_Post
      */
     private $postInstance;
 
     /**
-     * @return \WP_Post
+     * @return WP_Post
      */
     private function getPostInstance()
     {
@@ -53,14 +55,10 @@ class PostModel
      */
     public function setPostStatus($newPostStatus)
     {
-        $post = $this->getPostInstance();
-
-        $result = $this->update(
+        return $this->update(
             [
                 'post_status' => $newPostStatus,
             ]
         );
-
-        return $result;
     }
 }

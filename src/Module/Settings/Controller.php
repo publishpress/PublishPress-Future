@@ -125,6 +125,6 @@ class Controller implements InitializableInterface
      */
     public function getSetting($settingName)
     {
-
+        return null;
     }
 }

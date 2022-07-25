@@ -2,6 +2,8 @@
 
 namespace PublishPressFuture\Core\WordPress;
 
+use WP_Error;
+
 class CronFacade
 {
     /**
@@ -10,7 +12,7 @@ class CronFacade
      * @param string $hook
      * @param array $args
      * @param boolean $wpError
-     * @return int|\WP_Error|false
+     * @return int|WP_Error|false
      */
     public function clearScheduledHook($hook, $args = [], $wpError = false)
     {
