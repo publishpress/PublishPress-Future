@@ -18,7 +18,7 @@ class ActionMapper implements ActionMapperInterface
     /**
      * @param array
      */
-    private $actionClassesMap = [];
+    private $actionClassesMap;
 
     public function __construct()
     {
