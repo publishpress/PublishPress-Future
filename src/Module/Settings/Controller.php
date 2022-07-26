@@ -5,7 +5,7 @@ namespace PublishPressFuture\Module\Settings;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
-use PublishPressFuture\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPressFuture\Core\ActionHooksAbstract as CoreHooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
 
 class Controller implements InitializableInterface
@@ -37,8 +37,8 @@ class Controller implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_ACTIVATE_PLUGIN, [$this, 'onActivatePlugin']);
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_DEACTIVATE_PLUGIN, [$this, 'onDeactivatePlugin']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTIVATE_PLUGIN, [$this, 'onActivatePlugin']);
+        $this->hooks->addAction(CoreHooksAbstract::DEACTIVATE_PLUGIN, [$this, 'onDeactivatePlugin']);
     }
 
     public function onActivatePlugin()
@@ -52,7 +52,7 @@ class Controller implements InitializableInterface
             return;
         }
 
-        $this->hooks->doAction(HooksAbstract::ACTION_DELETE_ALL_SETTINGS);
+        $this->hooks->doAction(ActionHooksAbstract::DELETE_ALL_SETTINGS);
 
         $this->settings->deleteAllSettings();
     }

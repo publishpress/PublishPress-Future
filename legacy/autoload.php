@@ -5,6 +5,8 @@ use PublishPressFuture\Core\ServicesAbstract;
 
 /**
  * Autoloads the classes.
+ *
+ * @deprecated 2.8.0
  */
 function postexpirator_autoload($class)
 {

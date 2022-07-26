@@ -6,7 +6,7 @@ use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
 use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
-use PublishPressFuture\Module\Settings\HooksAbstract as SettingsHooksAbstract;
+use PublishPressFuture\Module\Settings\ActionHooksAbstract as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface
 {
@@ -46,9 +46,9 @@ class Controller implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(SettingsHooksAbstract::ACTION_DELETE_ALL_SETTINGS, [$this, 'onDeleteAllSettings']);
-        $this->hooks->addAction(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, [$this, 'schedulePostExpiration'], 10, 3);
-        $this->hooks->addAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, [$this, 'unschedulePostExpiration']);
+        $this->hooks->addAction(SettingsHooksAbstract::DELETE_ALL_SETTINGS, [$this, 'onDeleteAllSettings']);
+        $this->hooks->addAction(ActionHooksAbstract::SCHEDULE_POST_EXPIRATION, [$this, 'schedulePostExpiration'], 10, 3);
+        $this->hooks->addAction(ActionHooksAbstract::UNSCHEDULE_POST_EXPIRATION, [$this, 'unschedulePostExpiration']);
     }
 
     public function onDeleteAllSettings()

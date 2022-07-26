@@ -2,7 +2,7 @@
 
 use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressFuture\Module\Debug\HooksAbstract as DebugHooksAbstract;
+use PublishPressFuture\Module\Debug\ActionHooksAbstract as DebugHooksAbstract;
 use PublishPressFuture\Module\Debug\Logger;
 use PublishPressFuture\Module\Debug\LoggerInterface;
 
@@ -37,7 +37,7 @@ class PostExpiratorDebug
      */
     public function removeDBTable()
     {
-        $this->hooks->doAction(DebugHooksAbstract::ACTION_LOGGER_DROP_DATABASE_TABLE);
+        $this->hooks->doAction(DebugHooksAbstract::DROP_DATABASE_TABLE);
     }
 
     /**
@@ -45,7 +45,7 @@ class PostExpiratorDebug
      */
     public function save($data)
     {
-        $this->hooks->doAction(DebugHooksAbstract::ACTION_LOGGER_DEBUG, $data['message']);
+        $this->hooks->doAction(DebugHooksAbstract::LOG_DEBUG, $data['message']);
     }
 
     /**
@@ -53,7 +53,7 @@ class PostExpiratorDebug
      */
     public function getTable()
     {
-        return $this->hooks->applyFilters(DebugHooksAbstract::FILTER_LOGGER_FETCH_ALL, []);
+        return $this->hooks->applyFilters(DebugHooksAbstract::FETCH_ALL_LOGS, []);
 
     }
 
@@ -62,6 +62,6 @@ class PostExpiratorDebug
      */
     public function purge()
     {
-        $this->hooks->doAction(DebugHooksAbstract::ACTION_LOGGER_DELETE_LOGS);
+        $this->hooks->doAction(DebugHooksAbstract::DELETE_LOGS);
     }
 }

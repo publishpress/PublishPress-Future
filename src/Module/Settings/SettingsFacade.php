@@ -7,7 +7,7 @@ namespace PublishPressFuture\Module\Settings;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
-use PublishPressFuture\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPressFuture\Core\ActionHooksAbstract as CoreHooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
 
 class SettingsFacade
@@ -47,7 +47,7 @@ class SettingsFacade
             return;
         }
 
-        $this->hooks->doAction(HooksAbstract::ACTION_DELETE_ALL_SETTINGS);
+        $this->hooks->doAction(ActionHooksAbstract::DELETE_ALL_SETTINGS);
 
         $this->deleteAllSettings();
     }

@@ -2,7 +2,7 @@
 
 use Psr\Container\ContainerInterface;
 use PublishPressFuture\Core\Helper\DateTimeHelper;
-use PublishPressFuture\Core\HooksAbstract;
+use PublishPressFuture\Core\ActionHooksAbstract;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\ServicesAbstract;
@@ -113,7 +113,7 @@ return array(
         );
 
         $modulesList = $hooks->applyFilters(
-            HooksAbstract::FILTER_MODULES_LIST,
+            ActionHooksAbstract::FILTER_MODULES_LIST,
             $modulesList
         );
 

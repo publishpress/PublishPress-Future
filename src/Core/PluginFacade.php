@@ -47,7 +47,7 @@ class PluginFacade implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_PLUGIN_INIT);
+        $this->hooks->doAction(ActionHooksAbstract::INIT_PLUGIN);
 
         $pluginFile = $this->basePath . '/' . $this->pluginSlug . '.php';
         $this->hooks->registerDeactivationHook($pluginFile, [$this, 'deactivatePlugin']);
@@ -57,6 +57,6 @@ class PluginFacade implements InitializableInterface
 
     public function deactivatePlugin()
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
+        $this->hooks->doAction(ActionHooksAbstract::DEACTIVATE_PLUGIN);
     }
 }

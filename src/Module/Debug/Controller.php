@@ -4,7 +4,7 @@ namespace PublishPressFuture\Module\Debug;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
-use PublishPressFuture\Module\Settings\HooksAbstract as SettingsHooksAbstract;
+use PublishPressFuture\Module\Settings\ActionHooksAbstract as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface
 {
@@ -30,21 +30,21 @@ class Controller implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_LOG, [$this, 'loggerLog'], 10, 3);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_EMERGENCY, [$this, 'loggerEmergency'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_ALERT, [$this, 'loggerAlert'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_CRITICAL, [$this, 'loggerCritical'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_ERROR, [$this, 'loggerError'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_WARNING, [$this, 'loggerWarning'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_NOTICE, [$this, 'loggerNotice'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_INFO, [$this, 'loggerInfo'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_DEBUG, [$this, 'loggerDebug'], 10, 2);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_DELETE_LOGS, [$this, 'loggerDeleteLogs']);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOGGER_DROP_DATABASE_TABLE, [$this, 'loggerDropDatabaseTable']);
+        $this->hooks->addAction(ActionHooksAbstract::LOG, [$this, 'loggerLog'], 10, 3);
+        $this->hooks->addAction(ActionHooksAbstract::LOG_EMERGENCY, [$this, 'loggerEmergency'], 10, 2);
+        $this->hooks->addAction(ActionHooksAbstract::LOG_ALERT, [$this, 'loggerAlert'], 10, 2);
+        $this->hooks->addAction(ActionHooksAbstract::LOG_CRITICAL, [$this, 'loggerCritical'], 10, 2);
+        $this->hooks->addAction(ActionHooksAbstract::LOG_ERROR, [$this, 'loggerError'], 10, 2);
+        $this->hooks->addAction(ActionHooksAbstract::LOG_WARNING, [$this, 'loggerWarning'], 10, 2);
+        $this->hooks->addAction(ActionHooksAbstract::LOG_NOTICE, [$this, 'loggerNotice'], 10, 2);
+        $this->hooks->addAction(ActionHooksAbstract::LOG_INFO, [$this, 'loggerInfo'], 10, 2);
+        $this->hooks->addAction(ActionHooksAbstract::LOG_DEBUG, [$this, 'loggerDebug'], 10, 2);
+        $this->hooks->addAction(ActionHooksAbstract::DELETE_LOGS, [$this, 'loggerDeleteLogs']);
+        $this->hooks->addAction(ActionHooksAbstract::DROP_DATABASE_TABLE, [$this, 'loggerDropDatabaseTable']);
 
-        $this->hooks->addAction(SettingsHooksAbstract::ACTION_DELETE_ALL_SETTINGS, [$this, 'onDeleteAllSettings']);
+        $this->hooks->addAction(SettingsHooksAbstract::DELETE_ALL_SETTINGS, [$this, 'onDeleteAllSettings']);
 
-        $this->hooks->addFilter(HooksAbstract::FILTER_LOGGER_FETCH_ALL, [$this, 'loggerFetchAll']);
+        $this->hooks->addFilter(ActionHooksAbstract::FETCH_ALL_LOGS, [$this, 'loggerFetchAll']);
     }
 
     public function loggerLog($level, $message, $context = [])

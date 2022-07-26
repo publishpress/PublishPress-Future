@@ -33,7 +33,7 @@ class ModulesManager implements ModularInterface
      */
     public function initializeModules()
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_PLUGIN_INIT_MODULES);
+        $this->hooks->doAction(ActionHooksAbstract::INIT_MODULES);
 
         array_walk($this->modulesInstanceList, [$this, 'initializeSingleModule']);
     }
@@ -46,7 +46,7 @@ class ModulesManager implements ModularInterface
         if (is_object($module) && method_exists($module, 'initialize')) {
             $module->initialize();
 
-            $this->hooks->doAction(HooksAbstract::ACTION_PLUGIN_AFTER_INIT_MODULE, $module);
+            $this->hooks->doAction(ActionHooksAbstract::AFTER_INIT_MODULE, $module);
         }
     }
 }

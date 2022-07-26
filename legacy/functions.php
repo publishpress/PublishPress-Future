@@ -5,10 +5,10 @@
  */
 
 use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\HooksAbstract;
+use PublishPressFuture\Core\ActionHooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressFuture\Module\Settings\HooksAbstract as SettingsHooksAbstract;
-use PublishPressFuture\Module\Expiration\HooksAbstract as ExpirationHooksAbstract;
+use PublishPressFuture\Module\Settings\ActionHooksAbstract as SettingsHooksAbstract;
+use PublishPressFuture\Module\Expiration\ActionHooksAbstract as ExpirationHooksAbstract;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
@@ -748,7 +748,7 @@ add_action('save_post', 'postexpirator_update_post_meta');
 function postexpirator_schedule_event($postId, $timestamp, $opts)
 {
     $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
-    $hooks->doAction(ExpirationHooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
+    $hooks->doAction(ExpirationHooksAbstract::SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
 }
 
 /**
@@ -762,7 +762,7 @@ function postexpirator_schedule_event($postId, $timestamp, $opts)
 function postexpirator_unschedule_event($postId)
 {
     $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
-    $hooks->doAction(ExpirationHooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+    $hooks->doAction(ExpirationHooksAbstract::UNSCHEDULE_POST_EXPIRATION, $postId);
 }
 
 /**
@@ -1736,7 +1736,7 @@ function postexpirator_upgrade()
     $version = get_option('postexpiratorVersion');
     if ($version === false) { // not installed, run default activation
         $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
-        $hooks->doAction(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
+        $hooks->doAction(ActionHooksAbstract::ACTIVATE_PLUGIN);
 
         update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
     } else {
