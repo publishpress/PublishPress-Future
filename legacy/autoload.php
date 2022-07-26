@@ -1,8 +1,5 @@
 <?php
 
-use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\ServicesAbstract;
-
 /**
  * Autoloads the classes.
  *

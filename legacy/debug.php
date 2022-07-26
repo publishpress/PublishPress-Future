@@ -1,8 +1,8 @@
 <?php
 
-use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\Logger\LoggerInterface;
-use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Core\Dependencies\Container;
+use PublishPressFuture\Core\Dependencies\ServicesAbstract;
 use PublishPressFuture\Modules\Debug\Hooks\ActionsAbstract as DebugHooksAbstract;
 
 /**

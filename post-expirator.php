@@ -10,8 +10,8 @@
  * Domain Path: /languages
  */
 
-use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Core\Dependencies\Container;
+use PublishPressFuture\Core\Dependencies\ServicesAbstract;
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     define('PUBLISHPRESS_FUTURE_LOADED', true);

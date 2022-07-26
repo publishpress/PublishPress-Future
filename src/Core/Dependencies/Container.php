@@ -1,13 +1,16 @@
 <?php
+/**
+ * Copyright (c) 2022. PublishPress, All rights reserved.
+ */
 
-namespace PublishPressFuture\Core;
+namespace PublishPressFuture\Core\Dependencies;
 
 use Closure;
-use PublishPressFuture\Core\Exceptions\ServiceNotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use PublishPressFuture\Core\Exceptions\ContainerNotInitializedException;
+use PublishPressFuture\Core\Exceptions\ServiceNotFoundException;
 
 /**
  * PHP Dependency Injection Container PSR-11.

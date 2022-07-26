@@ -3,8 +3,8 @@ namespace Core;
 
 use Codeception\Test\Feature\Stub;
 use Codeception\Test\Unit;
-use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\Exceptions\ServiceNotFoundException;
+use PublishPressFuture\Core\Dependencies\Container;
 use stdClass;
 use UnitTester;
 

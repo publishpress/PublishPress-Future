@@ -4,9 +4,9 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
-use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\Hooks\ActionsAbstract;
-use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Core\Dependencies\Container;
+use PublishPressFuture\Core\Dependencies\ServicesAbstract;
 use PublishPressFuture\Modules\Expirator\Hooks\ActionsAbstract as ExpirationHooksAbstract;
 
 if (! function_exists('_scheduleExpiratorEvent')) {

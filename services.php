@@ -8,7 +8,7 @@ use PublishPressFuture\Core\Logger\Logger;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\PluginFacade;
-use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Core\Dependencies\ServicesAbstract;
 use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\DateTimeFacade;

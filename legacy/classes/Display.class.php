@@ -1,8 +1,5 @@
 <?php
 
-use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\ServicesAbstract;
-
 /**
  * The class that is responsible for all the displays.
  */
