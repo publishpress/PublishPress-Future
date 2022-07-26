@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\Debug\Interfaces;
+namespace PublishPressFuture\Domain\Debug\Interfaces;
 
 interface LoggerInterface
 {

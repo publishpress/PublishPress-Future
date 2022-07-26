@@ -1,8 +1,6 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use PublishPressFuture\Core\Debug\Controller as DebugController;
-use PublishPressFuture\Core\Debug\Logger;
 use PublishPressFuture\Core\Helpers\DateTimeHelper;
 use PublishPressFuture\Core\Hooks\FiltersAbstract;
 use PublishPressFuture\Core\InstanceProtection\Controller as InstanceProtectionController;
@@ -19,6 +17,8 @@ use PublishPressFuture\Core\WordPress\ErrorFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
+use PublishPressFuture\Domain\Debug\Controller as DebugController;
+use PublishPressFuture\Domain\Debug\Logger;
 use PublishPressFuture\Domain\PostExpiration\Controller as ExpirationController;
 use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
 use PublishPressFuture\Domain\PostExpiration\Interfaces\SchedulerInterface;

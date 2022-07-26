@@ -1,8 +1,11 @@
 <?php
+/**
+ * Copyright (c) 2022. PublishPress, All rights reserved.
+ */
 
-namespace PublishPressFuture\Core\Debug;
+namespace PublishPressFuture\Domain\Debug\Hooks;
 
-abstract class HookActionsAbstract
+abstract class ActionsAbstract
 {
     const LOG = 'publishpressfuture.debug/log';
 

@@ -1,12 +1,15 @@
 <?php
+/**
+ * Copyright (c) 2022. PublishPress, All rights reserved.
+ */
 
-namespace PublishPressFuture\Core\Debug;
+namespace PublishPressFuture\Domain\Debug;
 
-use PublishPressFuture\Core\Debug\Interfaces\LoggerInterface;
-use PublishPressFuture\Core\Debug\LogLevelAbstract as LogLevel;
 use PublishPressFuture\Core\Settings\SettingsFacade;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
+use PublishPressFuture\Domain\Debug\Interfaces\LoggerInterface;
+use PublishPressFuture\Domain\Debug\LogLevelAbstract as LogLevel;
 
 class Logger implements LoggerInterface
 {
