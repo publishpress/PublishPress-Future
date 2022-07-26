@@ -2,7 +2,7 @@
 
 namespace PublishPressFuture\Module\Expiration;
 
-class ActionsAbstract
+abstract class ActionsAbstract
 {
     const POST_STATUS_TO_DRAFT = 'draft';
 

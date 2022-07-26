@@ -2,10 +2,8 @@
 
 namespace PublishPressFuture\Core;
 
-class ActionHooksAbstract
+abstract class HookActionsAbstract
 {
-    const FILTER_MODULES_LIST = 'publishpressfuture.core/modules/list';
-
     const INIT_PLUGIN = 'publishpressfuture.core/init';
 
     const INIT_MODULES = 'publishpressfuture.core/init/modules';

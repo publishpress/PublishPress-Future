@@ -5,7 +5,7 @@ namespace PublishPressFuture\Module\Settings;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
-use PublishPressFuture\Core\ActionHooksAbstract as CoreHooksAbstract;
+use PublishPressFuture\Core\HookActionsAbstract as CoreHooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
 
 class Controller implements InitializableInterface

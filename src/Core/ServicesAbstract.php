@@ -2,7 +2,7 @@
 
 namespace PublishPressFuture\Core;
 
-class ServicesAbstract
+abstract class ServicesAbstract
 {
     const PLUGIN_FACADE = 'plugin.facade';
 

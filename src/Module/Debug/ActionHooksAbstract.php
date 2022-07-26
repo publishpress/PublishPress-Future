@@ -2,7 +2,7 @@
 
 namespace PublishPressFuture\Module\Debug;
 
-class ActionHooksAbstract
+abstract class ActionHooksAbstract
 {
     const LOG = 'publishpressfuture.debug/log';
 

@@ -5,7 +5,7 @@
  */
 
 use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\ActionHooksAbstract;
+use PublishPressFuture\Core\HookActionsAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Module\Settings\ActionHooksAbstract as SettingsHooksAbstract;
 use PublishPressFuture\Module\Expiration\ActionHooksAbstract as ExpirationHooksAbstract;
@@ -1736,7 +1736,7 @@ function postexpirator_upgrade()
     $version = get_option('postexpiratorVersion');
     if ($version === false) { // not installed, run default activation
         $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
-        $hooks->doAction(ActionHooksAbstract::ACTIVATE_PLUGIN);
+        $hooks->doAction(HookActionsAbstract::ACTIVATE_PLUGIN);
 
         update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
     } else {
