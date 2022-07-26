@@ -1,12 +1,12 @@
 <?php
 
-namespace PublishPressFuture\Domain\Expiration\Action;
+namespace PublishPressFuture\Domain\PostExpiration\Strategies;
 
-use PublishPressFuture\Domain\Expiration\ExecutableInterface;
+use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
 
 use function ray;
 
-class PostCategorySet implements ExecutableInterface
+class ExpireChangingPostStatusToPrivate implements ExecutableInterface
 {
     /**
      * @var int

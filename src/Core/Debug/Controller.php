@@ -1,10 +1,10 @@
 <?php
 
-namespace PublishPressFuture\Domain\Debug;
+namespace PublishPressFuture\Core\Debug;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
-use PublishPressFuture\Domain\Debug\ActionHooksAbstract;
+use PublishPressFuture\Core\Debug\ActionHooksAbstract;
 use PublishPressFuture\Module\Settings\ActionHooksAbstract as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface

@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Domain\Expiration;
+namespace PublishPressFuture\Domain\PostExpiration\Interfaces;
 
 interface SchedulerInterface
 {

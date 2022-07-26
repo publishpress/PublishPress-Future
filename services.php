@@ -1,28 +1,27 @@
 <?php
 
 use Psr\Container\ContainerInterface;
+use PublishPressFuture\Core\Debug\Controller as DebugController;
+use PublishPressFuture\Core\Debug\Logger;
 use PublishPressFuture\Core\Helper\DateTimeHelper;
-use PublishPressFuture\Core\HookActionsAbstract;
 use PublishPressFuture\Core\HookFiltersAbstract;
-use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\ModulesManager;
-use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\PluginFacade;
+use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\DateTimeFacade;
+use PublishPressFuture\Core\WordPress\ErrorFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
-use PublishPressFuture\Domain\Expiration\ExecutableInterface;
+use PublishPressFuture\Domain\PostExpiration\Controller as ExpirationController;
+use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
+use PublishPressFuture\Domain\PostExpiration\Interfaces\SchedulerInterface;
+use PublishPressFuture\Domain\PostExpiration\Scheduler;
 use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
-use PublishPressFuture\Domain\Expiration\Controller as ExpirationController;
-use PublishPressFuture\Domain\Debug\Controller as DebugController;
-use PublishPressFuture\Domain\Debug\Logger;
 use PublishPressFuture\Module\Settings\Controller as SettingsController;
-use PublishPressFuture\Domain\Expiration\SchedulerInterface;
-use PublishPressFuture\Domain\Expiration\Scheduler;
-use PublishPressFuture\Core\WordPress\ErrorFacade;
 use PublishPressFuture\Module\Settings\SettingsFacade;
 
 return array(

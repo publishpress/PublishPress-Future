@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Domain\Expiration;
+namespace PublishPressFuture\Domain\PostExpiration\Interfaces;
 
 
 interface ActionableInterface

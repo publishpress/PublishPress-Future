@@ -3,15 +3,15 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Domain\Expiration;
+namespace PublishPressFuture\Domain\PostExpiration;
 
+use PublishPressFuture\Core\Debug\LoggerInterface;
 use PublishPressFuture\Core\Helper\DateTimeHelper;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\ErrorFacade;
 use PublishPressFuture\Core\WordPress\PostModel;
-use PublishPressFuture\Domain\Debug\ActionHooksAbstract as DebugHooksAbstract;
-use PublishPressFuture\Domain\Debug\LoggerInterface;
+use PublishPressFuture\Domain\PostExpiration\Interfaces\SchedulerInterface;
 use WP_Error;
 
 class Scheduler implements SchedulerInterface

@@ -1,7 +1,10 @@
 <?php
 
-namespace PublishPressFuture\Domain\Expiration;
+namespace PublishPressFuture\Domain\PostExpiration;
 
+
+use PublishPressFuture\Domain\PostExpiration\Interfaces\ActionableInterface;
+use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
 
 class ExpirationEvent implements ActionableInterface, ExecutableInterface
 {

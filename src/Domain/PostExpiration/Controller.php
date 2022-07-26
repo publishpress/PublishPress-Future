@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Domain\Expiration;
+namespace PublishPressFuture\Domain\PostExpiration;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;

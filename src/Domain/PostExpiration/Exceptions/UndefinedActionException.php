@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Domain\Expiration\Exception;
+namespace PublishPressFuture\Domain\PostExpiration\Exceptions;
 
 use PublishPressFuture\Core\Exception\BaseException;
 
