@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\PostExpirator\Interfaces;
+namespace PublishPressFuture\Modules\Expirator;
 
 
 interface ActionMapperInterface

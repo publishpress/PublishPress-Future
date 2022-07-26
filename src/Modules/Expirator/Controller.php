@@ -1,12 +1,12 @@
 <?php
 
-namespace PublishPressFuture\Modules\PostExpirator;
+namespace PublishPressFuture\Modules\Expirator;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
 use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
-use PublishPressFuture\Modules\PostExpirator\Hooks\ActionsAbstract;
+use PublishPressFuture\Modules\Expirator\Hooks\ActionsAbstract;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface

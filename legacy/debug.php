@@ -1,9 +1,9 @@
 <?php
 
 use PublishPressFuture\Core\Container;
+use PublishPressFuture\Core\Logger\LoggerInterface;
 use PublishPressFuture\Core\ServicesAbstract;
 use PublishPressFuture\Modules\Debug\Hooks\ActionsAbstract as DebugHooksAbstract;
-use PublishPressFuture\Modules\Debug\Interfaces\LoggerInterface;
 
 /**
  * The class that adds debug entries to the database.

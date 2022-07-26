@@ -7,7 +7,7 @@ use PublishPressFuture\Core\InstanceProtection\Controller as InstanceProtectionC
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
-use PublishPressFuture\Modules\PostExpirator\Controller as ExpirationController;
+use PublishPressFuture\Modules\Expirator\Controller as ExpirationController;
 use stdClass;
 use UnitTester;
 

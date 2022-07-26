@@ -1,12 +1,12 @@
 <?php
 
-namespace PublishPressFuture\Modules\PostExpirator\Strategies;
+namespace PublishPressFuture\Modules\Expirator\Strategies;
 
-use PublishPressFuture\Modules\PostExpirator\Interfaces\ExecutableInterface;
+use PublishPressFuture\Modules\Expirator\ExecutableInterface;
 
 use function ray;
 
-class UnstickPost implements ExecutableInterface
+class PostCategoryAdd implements ExecutableInterface
 {
     /**
      * @var int

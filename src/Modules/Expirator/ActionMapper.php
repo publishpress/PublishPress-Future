@@ -1,18 +1,17 @@
 <?php
 
-namespace PublishPressFuture\Modules\PostExpirator;
+namespace PublishPressFuture\Modules\Expirator;
 
-use PublishPressFuture\Modules\PostExpirator\Exceptions\UndefinedActionException;
-use PublishPressFuture\Modules\PostExpirator\Interfaces\ActionMapperInterface;
-use PublishPressFuture\Modules\PostExpirator\Strategies\PostCategoryAdd;
-use PublishPressFuture\Modules\PostExpirator\Strategies\PostStatusToDraft;
-use PublishPressFuture\Modules\PostExpirator\Strategies\PostStatusToPrivate;
-use PublishPressFuture\Modules\PostExpirator\Strategies\PostStatusToTrash;
-use PublishPressFuture\Modules\PostExpirator\Strategies\DeletePost;
-use PublishPressFuture\Modules\PostExpirator\Strategies\PostCategoryRemove;
-use PublishPressFuture\Modules\PostExpirator\Strategies\PostCategorySet;
-use PublishPressFuture\Modules\PostExpirator\Strategies\StickPost;
-use PublishPressFuture\Modules\PostExpirator\Strategies\UnstickPost;
+use PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException;
+use PublishPressFuture\Modules\Expirator\Strategies\DeletePost;
+use PublishPressFuture\Modules\Expirator\Strategies\PostCategoryAdd;
+use PublishPressFuture\Modules\Expirator\Strategies\PostCategoryRemove;
+use PublishPressFuture\Modules\Expirator\Strategies\PostCategorySet;
+use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToDraft;
+use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToPrivate;
+use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToTrash;
+use PublishPressFuture\Modules\Expirator\Strategies\StickPost;
+use PublishPressFuture\Modules\Expirator\Strategies\UnstickPost;
 
 class ActionMapper implements ActionMapperInterface
 {

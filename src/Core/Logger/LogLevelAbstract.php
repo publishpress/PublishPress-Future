@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Debug;
+namespace PublishPressFuture\Core\Logger;
 
 /**
  * Describes log levels.

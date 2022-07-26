@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Modules\PostExpirator\Hooks;
+namespace PublishPressFuture\Modules\Expirator\Hooks;
 
 abstract class ActionsAbstract
 {

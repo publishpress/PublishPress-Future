@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Modules\PostExpirator\Exceptions;
+namespace PublishPressFuture\Modules\Expirator\Exceptions;
 
 use PublishPressFuture\Core\Exceptions\BaseException;
 

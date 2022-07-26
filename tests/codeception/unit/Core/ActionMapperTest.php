@@ -6,12 +6,12 @@
 namespace Core\WordPress;
 
 use Codeception\Test\Unit;
-use PublishPressFuture\Modules\PostExpirator;
-use PublishPressFuture\Modules\PostExpirator\Strategies\PostStatusToDraft;
-use PublishPressFuture\Modules\PostExpirator\Strategies\PostStatusToPrivate;
-use PublishPressFuture\Modules\PostExpirator\ActionMapper;
-use PublishPressFuture\Modules\PostExpirator\ActionsAbstract;
-use PublishPressFuture\Modules\PostExpirator\Exceptions\UndefinedActionException;
+use PublishPressFuture\Modules\Expirator;
+use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToDraft;
+use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToPrivate;
+use PublishPressFuture\Modules\Expirator\ActionMapper;
+use PublishPressFuture\Modules\Expirator\ActionsAbstract;
+use PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException;
 
 use WordpressTester;
 

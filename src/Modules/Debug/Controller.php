@@ -7,8 +7,8 @@ namespace PublishPressFuture\Modules\Debug;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\InitializableInterface;
+use PublishPressFuture\Core\Logger\LoggerInterface;
 use PublishPressFuture\Modules\Debug\Hooks\ActionsAbstract;
-use PublishPressFuture\Modules\Debug\Interfaces\LoggerInterface;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface

@@ -1,10 +1,7 @@
 <?php
 
-namespace PublishPressFuture\Modules\PostExpirator;
+namespace PublishPressFuture\Modules\Expirator;
 
-
-use PublishPressFuture\Modules\PostExpirator\Interfaces\ActionableInterface;
-use PublishPressFuture\Modules\PostExpirator\Interfaces\ExecutableInterface;
 
 class ExpirationEvent implements ActionableInterface, ExecutableInterface
 {
