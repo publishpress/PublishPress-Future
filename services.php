@@ -5,6 +5,7 @@ use PublishPressFuture\Core\Debug\Controller as DebugController;
 use PublishPressFuture\Core\Debug\Logger;
 use PublishPressFuture\Core\Helper\DateTimeHelper;
 use PublishPressFuture\Core\HookFiltersAbstract;
+use PublishPressFuture\Core\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\PluginFacade;
@@ -20,7 +21,6 @@ use PublishPressFuture\Domain\PostExpiration\Controller as ExpirationController;
 use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
 use PublishPressFuture\Domain\PostExpiration\Interfaces\SchedulerInterface;
 use PublishPressFuture\Domain\PostExpiration\Scheduler;
-use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Module\Settings\Controller as SettingsController;
 use PublishPressFuture\Module\Settings\SettingsFacade;
 

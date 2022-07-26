@@ -1,11 +1,14 @@
 <?php
+/**
+ * Copyright (c) 2022. PublishPress, All rights reserved.
+ */
 
-namespace PublishPressFuture\Module\InstanceProtection;
+namespace PublishPressFuture\Core\InstanceProtection;
 
 use PublishPressFuture\Core\InitializableInterface;
 use PublishPressFuture\Core\Paths;
-use PublishPressInstanceProtection\InstanceChecker;
 use PublishPressInstanceProtection\Config as InstanceProtectionConfig;
+use PublishPressInstanceProtection\InstanceChecker;
 
 class Controller implements InitializableInterface
 {

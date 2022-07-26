@@ -2,15 +2,14 @@
 namespace Core;
 
 use Codeception\Stub\Expected;
-use Codeception\Test\Feature\Stub as Stub;
 use Codeception\Test\Unit;
+use PublishPressFuture\Core\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
-use PublishPressFuture\Module\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Domain\PostExpiration\Controller as ExpirationController;
-use UnitTester;
 use stdClass;
+use UnitTester;
 
 class PluginFacadeTest extends Unit
 {
