@@ -2,7 +2,7 @@
 
 namespace PublishPressFuture\Domain\PostExpiration;
 
-abstract class ActionHooksAbstract
+abstract class HookActionsAbstract
 {
     const LEGACY_SCHEDULE = 'postexpirator_schedule';
 

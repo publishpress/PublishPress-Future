@@ -47,7 +47,7 @@ class SettingsFacade
             return;
         }
 
-        $this->hooks->doAction(ActionHooksAbstract::DELETE_ALL_SETTINGS);
+        $this->hooks->doAction(HookActionsAbstract::DELETE_ALL_SETTINGS);
 
         $this->deleteAllSettings();
     }

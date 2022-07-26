@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Domain\PostExpiration;
 
-use PublishPressFuture\Core\Debug\LoggerInterface;
+use PublishPressFuture\Core\Debug\Interfaces\LoggerInterface;
 use PublishPressFuture\Core\Helper\DateTimeHelper;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\WordPress\CronFacade;
@@ -63,12 +63,12 @@ class Scheduler implements SchedulerInterface
      */
     private function removeExistentExpirationsForPost($postId)
     {
-        return $this->cron->clearScheduledHook(ActionHooksAbstract::LEGACY_EXPIRE_POST, [$postId], true);
+        return $this->cron->clearScheduledHook(HookActionsAbstract::LEGACY_EXPIRE_POST, [$postId], true);
     }
 
     private function expirationIsScheduledForPost($postId)
     {
-        return $this->cron->getNextScheduleForEvent($postId, ActionHooksAbstract::LEGACY_EXPIRE_POST);
+        return $this->cron->getNextScheduleForEvent($postId, HookActionsAbstract::LEGACY_EXPIRE_POST);
     }
 
     private function unscheduleExpirationForPostIfScheduled($postId, $timestamp)
@@ -129,11 +129,11 @@ class Scheduler implements SchedulerInterface
     {
         $postId = (int)$postId;
 
-        $this->hooks->doAction(ActionHooksAbstract::LEGACY_SCHEDULE, $postId, $timestamp, $opts);
+        $this->hooks->doAction(HookActionsAbstract::LEGACY_SCHEDULE, $postId, $timestamp, $opts);
 
         $this->unscheduleExpirationForPostIfScheduled($postId, $timestamp);
 
-        $scheduled = $this->cron->scheduleSingleEvent($timestamp, ActionHooksAbstract::LEGACY_EXPIRE_POST, [$postId], true);
+        $scheduled = $this->cron->scheduleSingleEvent($timestamp, HookActionsAbstract::LEGACY_EXPIRE_POST, [$postId], true);
 
         if (! $scheduled) {
             $this->logger->debug(
@@ -165,10 +165,10 @@ class Scheduler implements SchedulerInterface
 
     public function unscheduleExpirationForPost($postId)
     {
-        $this->hooks->doAction(ActionHooksAbstract::LEGACY_UNSCHEDULE, $postId);
+        $this->hooks->doAction(HookActionsAbstract::LEGACY_UNSCHEDULE, $postId);
 
         if ($this->expirationIsScheduledForPost($postId)) {
-            $this->cron->clearScheduledHook(ActionHooksAbstract::LEGACY_EXPIRE_POST, [$postId]);
+            $this->cron->clearScheduledHook(HookActionsAbstract::LEGACY_EXPIRE_POST, [$postId]);
 
             $this->logger->debug(sprintf('%d -> UNSCHEDULED, no errors found', $postId));
         }

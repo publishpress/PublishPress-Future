@@ -2,10 +2,11 @@
 
 namespace PublishPressFuture\Core\Debug;
 
+use PublishPressFuture\Core\Debug\Interfaces\LoggerInterface;
+use PublishPressFuture\Core\Debug\LogLevelAbstract as LogLevel;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
 use PublishPressFuture\Module\Settings\SettingsFacade;
-use PublishPressFuture\Core\Debug\LogLevelAbstract as LogLevel;
 
 class Logger implements LoggerInterface
 {

@@ -7,8 +7,8 @@
 use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\HookActionsAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressFuture\Module\Settings\ActionHooksAbstract as SettingsHooksAbstract;
-use PublishPressFuture\Domain\PostExpiration\ActionHooksAbstract as ExpirationHooksAbstract;
+use PublishPressFuture\Module\Settings\HookActionsAbstract as SettingsHooksAbstract;
+use PublishPressFuture\Domain\PostExpiration\HookActionsAbstract as ExpirationHooksAbstract;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
