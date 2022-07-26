@@ -32,11 +32,11 @@ class PluginFacade implements InitializableInterface
     private $pluginSlug;
 
     /**
-     * @param ModularInterface
-     * @param object
-     * @param HookableInterface
+     * @param ModularInterface $modulesManager
+     * @param object $legacyPlugin
+     * @param HookableInterface $hooksFacade
      * @param string $pluginSlug
-     * @param string @basePath
+     * @param string $basePath
      */
     public function __construct(ModularInterface $modulesManager, $legacyPlugin, HookableInterface $hooksFacade, $pluginSlug, $basePath)
     {
