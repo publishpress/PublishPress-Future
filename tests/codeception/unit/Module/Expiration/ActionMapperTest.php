@@ -2,12 +2,12 @@
 namespace Core\WordPress;
 
 use Codeception\Test\Unit;
-use PublishPressFuture\Module\Expiration;
-use PublishPressFuture\Module\Expiration\Action\PostStatusToDraft;
-use PublishPressFuture\Module\Expiration\Action\PostStatusToPrivate;
-use PublishPressFuture\Module\Expiration\ActionMapper;
-use PublishPressFuture\Module\Expiration\ActionsAbstract;
-use PublishPressFuture\Module\Expiration\Exception\UndefinedActionException;
+use PublishPressFuture\Domain\Expiration;
+use PublishPressFuture\Domain\Expiration\Action\PostStatusToDraft;
+use PublishPressFuture\Domain\Expiration\Action\PostStatusToPrivate;
+use PublishPressFuture\Domain\Expiration\ActionMapper;
+use PublishPressFuture\Domain\Expiration\ActionsAbstract;
+use PublishPressFuture\Domain\Expiration\Exception\UndefinedActionException;
 
 use WordpressTester;
 

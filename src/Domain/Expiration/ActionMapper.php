@@ -1,17 +1,17 @@
 <?php
 
-namespace PublishPressFuture\Module\Expiration;
+namespace PublishPressFuture\Domain\Expiration;
 
-use PublishPressFuture\Module\Expiration\Action\DeletePost;
-use PublishPressFuture\Module\Expiration\Action\PostCategoryAdd;
-use PublishPressFuture\Module\Expiration\Action\PostCategoryRemove;
-use PublishPressFuture\Module\Expiration\Action\PostCategorySet;
-use PublishPressFuture\Module\Expiration\Action\PostStatusToDraft;
-use PublishPressFuture\Module\Expiration\Action\PostStatusToPrivate;
-use PublishPressFuture\Module\Expiration\Action\PostStatusToTrash;
-use PublishPressFuture\Module\Expiration\Action\StickPost;
-use PublishPressFuture\Module\Expiration\Action\UnstickPost;
-use PublishPressFuture\Module\Expiration\Exception\UndefinedActionException;
+use PublishPressFuture\Domain\Expiration\Action\DeletePost;
+use PublishPressFuture\Domain\Expiration\Action\PostCategoryAdd;
+use PublishPressFuture\Domain\Expiration\Action\PostCategoryRemove;
+use PublishPressFuture\Domain\Expiration\Action\PostCategorySet;
+use PublishPressFuture\Domain\Expiration\Action\PostStatusToDraft;
+use PublishPressFuture\Domain\Expiration\Action\PostStatusToPrivate;
+use PublishPressFuture\Domain\Expiration\Action\PostStatusToTrash;
+use PublishPressFuture\Domain\Expiration\Action\StickPost;
+use PublishPressFuture\Domain\Expiration\Action\UnstickPost;
+use PublishPressFuture\Domain\Expiration\Exception\UndefinedActionException;
 
 class ActionMapper implements ActionMapperInterface
 {

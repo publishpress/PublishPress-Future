@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Module\Expiration;
+namespace PublishPressFuture\Domain\Expiration;
 
 
 interface ExecutableInterface

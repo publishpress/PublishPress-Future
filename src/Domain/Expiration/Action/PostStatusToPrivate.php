@@ -1,8 +1,8 @@
 <?php
 
-namespace PublishPressFuture\Module\Expiration\Action;
+namespace PublishPressFuture\Domain\Expiration\Action;
 
-use PublishPressFuture\Module\Expiration\ExecutableInterface;
+use PublishPressFuture\Domain\Expiration\ExecutableInterface;
 
 use function ray;
 

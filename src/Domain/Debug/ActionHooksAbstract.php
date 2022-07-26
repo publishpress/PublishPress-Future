@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Module\Debug;
+namespace PublishPressFuture\Domain\Debug;
 
 abstract class ActionHooksAbstract
 {
