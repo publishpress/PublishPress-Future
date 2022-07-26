@@ -2,8 +2,8 @@
 
 use PublishPressFuture\Core\Container;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressFuture\Domain\Debug\Hooks\ActionsAbstract as DebugHooksAbstract;
-use PublishPressFuture\Domain\Debug\Interfaces\LoggerInterface;
+use PublishPressFuture\Modules\Debug\Hooks\ActionsAbstract as DebugHooksAbstract;
+use PublishPressFuture\Modules\Debug\Interfaces\LoggerInterface;
 
 /**
  * The class that adds debug entries to the database.

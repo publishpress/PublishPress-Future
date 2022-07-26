@@ -8,8 +8,6 @@ use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressFuture\Core\Settings\Controller as SettingsController;
-use PublishPressFuture\Core\Settings\SettingsFacade;
 use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\DateTimeFacade;
@@ -17,12 +15,14 @@ use PublishPressFuture\Core\WordPress\ErrorFacade;
 use PublishPressFuture\Core\WordPress\HooksFacade;
 use PublishPressFuture\Core\WordPress\OptionsFacade;
 use PublishPressFuture\Core\WordPress\SiteFacade;
-use PublishPressFuture\Domain\Debug\Controller as DebugController;
-use PublishPressFuture\Domain\Debug\Logger;
-use PublishPressFuture\Domain\PostExpiration\Controller as ExpirationController;
-use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
-use PublishPressFuture\Domain\PostExpiration\Interfaces\SchedulerInterface;
-use PublishPressFuture\Domain\PostExpiration\Scheduler;
+use PublishPressFuture\Modules\Debug\Controller as DebugController;
+use PublishPressFuture\Modules\Debug\Logger;
+use PublishPressFuture\Modules\PostExpirator\Controller as ExpirationController;
+use PublishPressFuture\Modules\PostExpirator\Interfaces\ExecutableInterface;
+use PublishPressFuture\Modules\PostExpirator\Interfaces\SchedulerInterface;
+use PublishPressFuture\Modules\PostExpirator\Scheduler;
+use PublishPressFuture\Modules\Settings\Controller as SettingsController;
+use PublishPressFuture\Modules\Settings\SettingsFacade;
 
 return array(
     ServicesAbstract::PLUGIN_VERSION => '2.8.0-alpha.1',

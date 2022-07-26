@@ -1,13 +1,17 @@
 <?php
+/**
+ * Copyright (c) 2022. PublishPress, All rights reserved.
+ */
+
 namespace Core\WordPress;
 
 use Codeception\Test\Unit;
-use PublishPressFuture\Domain\PostExpiration;
-use PublishPressFuture\Domain\PostExpiration\Strategies\PostStatusToDraft;
-use PublishPressFuture\Domain\PostExpiration\Strategies\PostStatusToPrivate;
-use PublishPressFuture\Domain\PostExpiration\ActionMapper;
-use PublishPressFuture\Domain\PostExpiration\ActionsAbstract;
-use PublishPressFuture\Domain\PostExpiration\Exceptions\UndefinedActionException;
+use PublishPressFuture\Modules\PostExpirator;
+use PublishPressFuture\Modules\PostExpirator\Strategies\PostStatusToDraft;
+use PublishPressFuture\Modules\PostExpirator\Strategies\PostStatusToPrivate;
+use PublishPressFuture\Modules\PostExpirator\ActionMapper;
+use PublishPressFuture\Modules\PostExpirator\ActionsAbstract;
+use PublishPressFuture\Modules\PostExpirator\Exceptions\UndefinedActionException;
 
 use WordpressTester;
 
