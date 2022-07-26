@@ -6,7 +6,7 @@ use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
 
 use function ray;
 
-class ExpireSettingPostCategory implements ExecutableInterface
+class StickPost implements ExecutableInterface
 {
     /**
      * @var int

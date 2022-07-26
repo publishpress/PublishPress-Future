@@ -6,7 +6,7 @@ use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
 
 use function ray;
 
-class ExpireChangingPostStatusToPrivate implements ExecutableInterface
+class PostStatusToTrash implements ExecutableInterface
 {
     /**
      * @var int

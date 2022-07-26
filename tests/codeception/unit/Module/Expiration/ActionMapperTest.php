@@ -3,8 +3,8 @@ namespace Core\WordPress;
 
 use Codeception\Test\Unit;
 use PublishPressFuture\Domain\PostExpiration;
-use PublishPressFuture\Domain\PostExpiration\Strategies\ExpireChangingPostStatusToDraft;
-use PublishPressFuture\Domain\PostExpiration\Strategies\ExpireChangingPostStatusToPrivate;
+use PublishPressFuture\Domain\PostExpiration\Strategies\PostStatusToDraft;
+use PublishPressFuture\Domain\PostExpiration\Strategies\PostStatusToPrivate;
 use PublishPressFuture\Domain\PostExpiration\ActionMapper;
 use PublishPressFuture\Domain\PostExpiration\ActionsAbstract;
 use PublishPressFuture\Domain\PostExpiration\Exceptions\UndefinedActionException;
@@ -30,12 +30,12 @@ class ActionMapperTest extends Unit
         $actionName = $mapper->map(ActionsAbstract::POST_STATUS_TO_DRAFT);
 
         $this->assertIsString($actionName);
-        $this->assertEquals(ExpireChangingPostStatusToDraft::class, $actionName);
+        $this->assertEquals(PostStatusToDraft::class, $actionName);
 
         $actionName = $mapper->map(ActionsAbstract::POST_STATUS_TO_PRIVATE);
 
         $this->assertIsString($actionName);
-        $this->assertEquals(ExpireChangingPostStatusToPrivate::class, $actionName);
+        $this->assertEquals(PostStatusToPrivate::class, $actionName);
     }
 
     public function testMapToNonExistentActionThrowsException()

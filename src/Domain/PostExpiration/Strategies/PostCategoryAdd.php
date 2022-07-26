@@ -6,7 +6,7 @@ use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
 
 use function ray;
 
-class ExpireChangingPostStatusToDraft implements ExecutableInterface
+class PostCategoryAdd implements ExecutableInterface
 {
     /**
      * @var int
