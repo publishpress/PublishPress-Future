@@ -1,12 +1,14 @@
 <?php
+/**
+ * Copyright (c) 2022. PublishPress, All rights reserved.
+ */
 
-namespace PublishPressFuture\Module\Settings;
+namespace PublishPressFuture\Core\Settings;
 
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Core\Hooks\ActionsAbstract as CoreHooksAbstract;
 use PublishPressFuture\Core\InitializableInterface;
-use PublishPressFuture\Core\WordPress\OptionsFacade;
-use PublishPressFuture\Core\HookActionsAbstract as CoreHooksAbstract;
-use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Core\Settings\Hooks\ActionsAbstract;
 
 class Controller implements InitializableInterface
 {
@@ -52,7 +54,7 @@ class Controller implements InitializableInterface
             return;
         }
 
-        $this->hooks->doAction(HookActionsAbstract::DELETE_ALL_SETTINGS);
+        $this->hooks->doAction(ActionsAbstract::DELETE_ALL_SETTINGS);
 
         $this->settings->deleteAllSettings();
     }

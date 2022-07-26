@@ -1,8 +1,8 @@
 <?php
 
-namespace PublishPressFuture\Core;
+namespace PublishPressFuture\Core\Hooks;
 
-abstract class HookFiltersAbstract
+abstract class FiltersAbstract
 {
     const MODULES_LIST = 'publishpressfuture.core/modules/list';
 }

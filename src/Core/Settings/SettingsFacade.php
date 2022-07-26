@@ -3,12 +3,12 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Module\Settings;
+namespace PublishPressFuture\Core\Settings;
 
 use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Core\WordPress\OptionsFacade;
-use PublishPressFuture\Core\HookActionsAbstract as CoreHooksAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Core\Settings\Hooks\ActionsAbstract;
+use PublishPressFuture\Core\WordPress\OptionsFacade;
 
 class SettingsFacade
 {
@@ -47,7 +47,7 @@ class SettingsFacade
             return;
         }
 
-        $this->hooks->doAction(HookActionsAbstract::DELETE_ALL_SETTINGS);
+        $this->hooks->doAction(ActionsAbstract::DELETE_ALL_SETTINGS);
 
         $this->deleteAllSettings();
     }

@@ -3,6 +3,8 @@
 namespace PublishPressFuture\Core;
 
 
+use PublishPressFuture\Core\Hooks\ActionsAbstract;
+
 class ModulesManager implements ModularInterface
 {
 
@@ -33,7 +35,7 @@ class ModulesManager implements ModularInterface
      */
     public function initializeModules()
     {
-        $this->hooks->doAction(HookActionsAbstract::INIT_MODULES);
+        $this->hooks->doAction(ActionsAbstract::INIT_MODULES);
 
         array_walk($this->modulesInstanceList, [$this, 'initializeSingleModule']);
     }
@@ -46,7 +48,7 @@ class ModulesManager implements ModularInterface
         if (is_object($module) && method_exists($module, 'initialize')) {
             $module->initialize();
 
-            $this->hooks->doAction(HookActionsAbstract::AFTER_INIT_MODULE, $module);
+            $this->hooks->doAction(ActionsAbstract::AFTER_INIT_MODULE, $module);
         }
     }
 }

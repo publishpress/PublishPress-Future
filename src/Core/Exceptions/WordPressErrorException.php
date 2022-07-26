@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Core\Exception;
+namespace PublishPressFuture\Core\Exceptions;
 
 
 class WordPressErrorException extends BaseException

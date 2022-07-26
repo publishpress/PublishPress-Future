@@ -4,7 +4,7 @@ namespace Core;
 use Codeception\Test\Feature\Stub;
 use Codeception\Test\Unit;
 use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\Exception\ServiceNotFoundException;
+use PublishPressFuture\Core\Exceptions\ServiceNotFoundException;
 use stdClass;
 use UnitTester;
 

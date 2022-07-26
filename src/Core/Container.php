@@ -3,11 +3,11 @@
 namespace PublishPressFuture\Core;
 
 use Closure;
-use PublishPressFuture\Core\Exception\ServiceNotFoundException;
+use PublishPressFuture\Core\Exceptions\ServiceNotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use PublishPressFuture\Core\Exception\ContainerNotInitializedException;
+use PublishPressFuture\Core\Exceptions\ContainerNotInitializedException;
 
 /**
  * PHP Dependency Injection Container PSR-11.

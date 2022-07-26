@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\Helper;
+namespace PublishPressFuture\Core\Helpers;
 
 use DateTimeZone;
 use PublishPressFuture\Core\WordPress\DateTimeFacade;

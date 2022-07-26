@@ -5,10 +5,9 @@
  */
 
 use PublishPressFuture\Core\Container;
-use PublishPressFuture\Core\HookActionsAbstract;
+use PublishPressFuture\Core\Hooks\ActionsAbstract;
 use PublishPressFuture\Core\ServicesAbstract;
-use PublishPressFuture\Module\Settings\HookActionsAbstract as SettingsHooksAbstract;
-use PublishPressFuture\Domain\PostExpiration\HookActionsAbstract as ExpirationHooksAbstract;
+use PublishPressFuture\Domain\PostExpiration\Hooks\ActionsAbstract as ExpirationHooksAbstract;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
@@ -1736,7 +1735,7 @@ function postexpirator_upgrade()
     $version = get_option('postexpiratorVersion');
     if ($version === false) { // not installed, run default activation
         $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
-        $hooks->doAction(HookActionsAbstract::ACTIVATE_PLUGIN);
+        $hooks->doAction(ActionsAbstract::ACTIVATE_PLUGIN);
 
         update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
     } else {

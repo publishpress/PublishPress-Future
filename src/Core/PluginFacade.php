@@ -2,6 +2,8 @@
 
 namespace PublishPressFuture\Core;
 
+use PublishPressFuture\Core\Hooks\ActionsAbstract;
+
 class PluginFacade implements InitializableInterface
 {
     /**
@@ -47,7 +49,7 @@ class PluginFacade implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->doAction(HookActionsAbstract::INIT_PLUGIN);
+        $this->hooks->doAction(ActionsAbstract::INIT_PLUGIN);
 
         $pluginFile = $this->basePath . '/' . $this->pluginSlug . '.php';
         $this->hooks->registerDeactivationHook($pluginFile, [$this, 'deactivatePlugin']);
@@ -57,6 +59,6 @@ class PluginFacade implements InitializableInterface
 
     public function deactivatePlugin()
     {
-        $this->hooks->doAction(HookActionsAbstract::DEACTIVATE_PLUGIN);
+        $this->hooks->doAction(ActionsAbstract::DEACTIVATE_PLUGIN);
     }
 }

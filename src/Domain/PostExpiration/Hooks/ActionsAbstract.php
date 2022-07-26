@@ -1,8 +1,8 @@
 <?php
 
-namespace PublishPressFuture\Domain\PostExpiration;
+namespace PublishPressFuture\Domain\PostExpiration\Hooks;
 
-abstract class HookActionsAbstract
+abstract class ActionsAbstract
 {
     const LEGACY_SCHEDULE = 'postexpirator_schedule';
 

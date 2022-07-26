@@ -3,13 +3,15 @@
 use Psr\Container\ContainerInterface;
 use PublishPressFuture\Core\Debug\Controller as DebugController;
 use PublishPressFuture\Core\Debug\Logger;
-use PublishPressFuture\Core\Helper\DateTimeHelper;
-use PublishPressFuture\Core\HookFiltersAbstract;
+use PublishPressFuture\Core\Helpers\DateTimeHelper;
+use PublishPressFuture\Core\Hooks\FiltersAbstract;
 use PublishPressFuture\Core\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Core\ModulesManager;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\PluginFacade;
 use PublishPressFuture\Core\ServicesAbstract;
+use PublishPressFuture\Core\Settings\Controller as SettingsController;
+use PublishPressFuture\Core\Settings\SettingsFacade;
 use PublishPressFuture\Core\WordPress\CronFacade;
 use PublishPressFuture\Core\WordPress\DatabaseFacade;
 use PublishPressFuture\Core\WordPress\DateTimeFacade;
@@ -21,8 +23,6 @@ use PublishPressFuture\Domain\PostExpiration\Controller as ExpirationController;
 use PublishPressFuture\Domain\PostExpiration\Interfaces\ExecutableInterface;
 use PublishPressFuture\Domain\PostExpiration\Interfaces\SchedulerInterface;
 use PublishPressFuture\Domain\PostExpiration\Scheduler;
-use PublishPressFuture\Module\Settings\Controller as SettingsController;
-use PublishPressFuture\Module\Settings\SettingsFacade;
 
 return array(
     ServicesAbstract::PLUGIN_VERSION => '2.8.0-alpha.1',
@@ -113,7 +113,7 @@ return array(
         );
 
         $modulesList = $hooks->applyFilters(
-            HookFiltersAbstract::MODULES_LIST,
+            FiltersAbstract::MODULES_LIST,
             $modulesList
         );
 

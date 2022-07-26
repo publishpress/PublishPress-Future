@@ -1,8 +1,8 @@
 <?php
 
-namespace PublishPressFuture\Core;
+namespace PublishPressFuture\Core\Hooks;
 
-abstract class HookActionsAbstract
+abstract class ActionsAbstract
 {
     const INIT_PLUGIN = 'publishpressfuture.core/init';
 
