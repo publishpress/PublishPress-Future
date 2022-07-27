@@ -73,7 +73,8 @@
     "spatie/ray": "*",
     "spatie/wordpress-ray": "dev-patch-1",
     "permafrost-dev/ray-cli": "^1.12",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-yaml": "*"
   },
   "scripts": {
     "tests-unit": "vendor/bin/codecept run unit",
@@ -95,8 +96,8 @@
   "scripts-descriptions": {
     "tests-php": "Show the available PHP versions for running tests."
   },
-	"extra": {
-		"plugin-slug": "post-expirator",
+  "extra": {
+    "plugin-slug": "post-expirator",
     "plugin-name": "publishpress-future"
-	}
+  }
 }

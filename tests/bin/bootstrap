@@ -13,6 +13,7 @@ if (!file_exists($bootstrapFile)) {
 }
 
 echo "▶ Parsing bootstrap.yml file\n";
+/** @noinspection PhpComposerExtensionStubsInspection */
 $config = yaml_parse_file($bootstrapFile);
 
 if (isset($config['copy']) && ! empty($config['copy'])) {
