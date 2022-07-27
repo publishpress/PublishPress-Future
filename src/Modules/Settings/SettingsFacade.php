@@ -5,9 +5,9 @@
 
 namespace PublishPressFuture\Modules\Settings;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Core\Dependencies\ServicesAbstract;
-use PublishPressFuture\Core\WordPress\OptionsFacade;
+use PublishPressFuture\Framework\Dependencies\ServicesAbstract;
+use PublishPressFuture\Framework\HookableInterface;
+use PublishPressFuture\Framework\WordPress\OptionsFacade;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract;
 
 class SettingsFacade
@@ -52,28 +52,6 @@ class SettingsFacade
         $this->deleteAllSettings();
     }
 
-    public function setDefaultSettings()
-    {
-        $defaultValues = [
-            'expirationdateDefaultDateFormat' => $this->defaultData[ServicesAbstract::DEFAULT_DATE_FORMAT],
-            'expirationdateDefaultTimeFormat' => $this->defaultData[ServicesAbstract::DEFAULT_TIME_FORMAT],
-            'expirationdateFooterContents' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_CONTENT],
-            'expirationdateFooterStyle' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_STYLE],
-            'expirationdateDisplayFooter' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_DISPLAY],
-            'expirationdateDebug' => $this->defaultData[ServicesAbstract::DEFAULT_DEBUG],
-            'expirationdateDefaultDate' => $this->defaultData[ServicesAbstract::DEFAULT_EXPIRATION_DATE],
-            'expirationdateGutenbergSupport' => 1,
-        ];
-
-        $callback = function($defaultValue, $optionName) {
-            if ($this->options->getOption($optionName) === false) {
-                $this->options->updateOption($optionName, $defaultValue);
-            }
-        };
-
-        array_walk($defaultValues,$callback);
-    }
-
     public function deleteAllSettings()
     {
         $allOptions = [
@@ -100,11 +78,33 @@ class SettingsFacade
 
         // TODO: Remove the custom post type default settings like expirationdateDefaults<post_type>, etc.
 
-        $callback = function($optionName) {
+        $callback = function ($optionName) {
             $this->options->deleteOption($optionName);
         };
 
         array_walk($allOptions, $callback);
+    }
+
+    public function setDefaultSettings()
+    {
+        $defaultValues = [
+            'expirationdateDefaultDateFormat' => $this->defaultData[ServicesAbstract::DEFAULT_DATE_FORMAT],
+            'expirationdateDefaultTimeFormat' => $this->defaultData[ServicesAbstract::DEFAULT_TIME_FORMAT],
+            'expirationdateFooterContents' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_CONTENT],
+            'expirationdateFooterStyle' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_STYLE],
+            'expirationdateDisplayFooter' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_DISPLAY],
+            'expirationdateDebug' => $this->defaultData[ServicesAbstract::DEFAULT_DEBUG],
+            'expirationdateDefaultDate' => $this->defaultData[ServicesAbstract::DEFAULT_EXPIRATION_DATE],
+            'expirationdateGutenbergSupport' => 1,
+        ];
+
+        $callback = function ($defaultValue, $optionName) {
+            if ($this->options->getOption($optionName) === false) {
+                $this->options->updateOption($optionName, $defaultValue);
+            }
+        };
+
+        array_walk($defaultValues, $callback);
     }
 
     /**
@@ -114,7 +114,7 @@ class SettingsFacade
      */
     public function getSettingPreserveData($default = true)
     {
-        return (bool) $this->options->getOption('expirationdatePreserveData', $default);
+        return (bool)$this->options->getOption('expirationdatePreserveData', $default);
     }
 
     /**

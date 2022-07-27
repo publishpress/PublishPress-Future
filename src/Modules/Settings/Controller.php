@@ -5,9 +5,9 @@
 
 namespace PublishPressFuture\Modules\Settings;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Core\Hooks\ActionsAbstract as CoreHooksAbstract;
-use PublishPressFuture\Core\InitializableInterface;
+use PublishPressFuture\Framework\HookableInterface;
+use PublishPressFuture\Framework\Hooks\ActionsAbstract as CoreHooksAbstract;
+use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract;
 
 class Controller implements InitializableInterface

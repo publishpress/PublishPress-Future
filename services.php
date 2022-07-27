@@ -1,26 +1,26 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use PublishPressFuture\Core\Helpers\DateTimeHelper;
-use PublishPressFuture\Core\Hooks\FiltersAbstract;
-use PublishPressFuture\Core\InstanceProtection\Controller as InstanceProtectionController;
-use PublishPressFuture\Core\Logger\Logger;
-use PublishPressFuture\Core\ModulesManager;
-use PublishPressFuture\Core\Paths;
-use PublishPressFuture\Core\PluginFacade;
-use PublishPressFuture\Core\Dependencies\ServicesAbstract;
-use PublishPressFuture\Core\WordPress\CronFacade;
-use PublishPressFuture\Core\WordPress\DatabaseFacade;
-use PublishPressFuture\Core\WordPress\DateTimeFacade;
-use PublishPressFuture\Core\WordPress\ErrorFacade;
-use PublishPressFuture\Core\WordPress\HooksFacade;
-use PublishPressFuture\Core\WordPress\OptionsFacade;
-use PublishPressFuture\Core\WordPress\SiteFacade;
+use PublishPressFuture\Framework\Dependencies\ServicesAbstract;
+use PublishPressFuture\Framework\Helpers\DateTimeHelper;
+use PublishPressFuture\Framework\Hooks\FiltersAbstract;
+use PublishPressFuture\Framework\Logger\Logger;
+use PublishPressFuture\Framework\ModulesManager;
+use PublishPressFuture\Framework\Paths;
+use PublishPressFuture\Framework\PluginFacade;
+use PublishPressFuture\Framework\WordPress\CronFacade;
+use PublishPressFuture\Framework\WordPress\DatabaseFacade;
+use PublishPressFuture\Framework\WordPress\DateTimeFacade;
+use PublishPressFuture\Framework\WordPress\ErrorFacade;
+use PublishPressFuture\Framework\WordPress\HooksFacade;
+use PublishPressFuture\Framework\WordPress\OptionsFacade;
+use PublishPressFuture\Framework\WordPress\SiteFacade;
 use PublishPressFuture\Modules\Debug\Controller as DebugController;
 use PublishPressFuture\Modules\Expirator\Controller as ExpirationController;
 use PublishPressFuture\Modules\Expirator\ExecutableInterface;
 use PublishPressFuture\Modules\Expirator\Scheduler;
 use PublishPressFuture\Modules\Expirator\SchedulerInterface;
+use PublishPressFuture\Modules\InstanceProtection\Controller as InstanceProtectionController;
 use PublishPressFuture\Modules\Settings\Controller as SettingsController;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 

@@ -5,9 +5,9 @@
 
 namespace PublishPressFuture\Modules\Debug;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Core\InitializableInterface;
-use PublishPressFuture\Core\Logger\LoggerInterface;
+use PublishPressFuture\Framework\HookableInterface;
+use PublishPressFuture\Framework\InitializableInterface;
+use PublishPressFuture\Framework\Logger\LoggerInterface;
 use PublishPressFuture\Modules\Debug\Hooks\ActionsAbstract;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract as SettingsHooksAbstract;
 
@@ -102,11 +102,6 @@ class Controller implements InitializableInterface
         $this->logger->deleteLogs();
     }
 
-    public function loggerDropDatabaseTable()
-    {
-        $this->logger->dropDatabaseTable();
-    }
-
     public function loggerFetchAll($results = [], $replace = true)
     {
         $fetchedEntries = $this->logger->fetchAll();
@@ -121,5 +116,10 @@ class Controller implements InitializableInterface
     public function onDeleteAllSettings()
     {
         $this->loggerDropDatabaseTable();
+    }
+
+    public function loggerDropDatabaseTable()
+    {
+        $this->logger->dropDatabaseTable();
     }
 }

@@ -4,9 +4,9 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
-use PublishPressFuture\Core\Hooks\ActionsAbstract;
-use PublishPressFuture\Core\Dependencies\Container;
-use PublishPressFuture\Core\Dependencies\ServicesAbstract;
+use PublishPressFuture\Framework\Hooks\ActionsAbstract;
+use PublishPressFuture\Framework\Dependencies\Container;
+use PublishPressFuture\Framework\Dependencies\ServicesAbstract;
 use PublishPressFuture\Modules\Expirator\Hooks\ActionsAbstract as ExpirationHooksAbstract;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
@@ -1847,7 +1847,7 @@ function postexpirator_activate()
  */
 function expirationdate_deactivate()
 {
-    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPressFuture\Core\PluginFacade class.');
+    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPressFuture\Framework\PluginFacade class.');
 }
 
 /**

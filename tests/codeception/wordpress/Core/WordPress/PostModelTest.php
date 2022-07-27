@@ -2,7 +2,7 @@
 namespace Core\WordPress;
 
 use Codeception\TestCase\WPTestCase;
-use PublishPressFuture\Core\WordPress\PostModel;
+use PublishPressFuture\Framework\WordPress\PostModel;
 
 use WordpressTester;
 

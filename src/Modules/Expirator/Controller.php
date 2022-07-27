@@ -2,10 +2,10 @@
 
 namespace PublishPressFuture\Modules\Expirator;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Core\InitializableInterface;
-use PublishPressFuture\Core\WordPress\CronFacade;
-use PublishPressFuture\Core\WordPress\SiteFacade;
+use PublishPressFuture\Framework\HookableInterface;
+use PublishPressFuture\Framework\InitializableInterface;
+use PublishPressFuture\Framework\WordPress\CronFacade;
+use PublishPressFuture\Framework\WordPress\SiteFacade;
 use PublishPressFuture\Modules\Expirator\Hooks\ActionsAbstract;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract as SettingsHooksAbstract;
 

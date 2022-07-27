@@ -10,14 +10,14 @@
  * Domain Path: /languages
  */
 
-use PublishPressFuture\Core\Dependencies\Container;
-use PublishPressFuture\Core\Dependencies\ServicesAbstract;
+use PublishPressFuture\Framework\Dependencies\Container;
+use PublishPressFuture\Framework\Dependencies\ServicesAbstract;
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     define('PUBLISHPRESS_FUTURE_LOADED', true);
 
     $autoloadPath = __DIR__ . '/vendor/autoload.php';
-    if (! class_exists('PublishPressFuture\\Core\\Plugin') && is_readable($autoloadPath)) {
+    if (! class_exists('PublishPressFuture\\Core\\PluginFacade') && is_readable($autoloadPath)) {
         require_once $autoloadPath;
     }
 

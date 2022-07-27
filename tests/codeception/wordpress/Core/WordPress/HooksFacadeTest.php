@@ -2,7 +2,7 @@
 namespace Core\WordPress;
 
 use Codeception\TestCase\WPTestCase;
-use PublishPressFuture\Core\WordPress\HooksFacade;
+use PublishPressFuture\Framework\WordPress\HooksFacade;
 
 use WordpressTester;
 

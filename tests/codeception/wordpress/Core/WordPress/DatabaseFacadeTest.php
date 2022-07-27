@@ -2,7 +2,7 @@
 namespace Core\WordPress;
 
 use Codeception\TestCase\WPTestCase;
-use PublishPressFuture\Core\WordPress\DatabaseFacade;
+use PublishPressFuture\Framework\WordPress\DatabaseFacade;
 use PDO;
 
 use WordpressTester;
