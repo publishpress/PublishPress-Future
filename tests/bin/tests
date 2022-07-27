@@ -22,7 +22,7 @@ plugin_name=$(get_plugin_name)
 
 php_version="${1}"
 command="${2}"
-flat_php_version=$(echo "${php_version}" | sed 's/\.//g')
+flat_php_version=$(${php_version//./})
 container_name="${plugin_name}-tests-${flat_php_version}"
 wordpress_container_name="${container_name}-wordpress-1"
 db_container_name="${container_name}-db-1"
@@ -195,7 +195,7 @@ create_env_file() {
     sed -i.bak "s/%WP_ROOT_FOLDER%/${wp_root_folder}/g" "${env_file_path}"
     sed -i.bak "s/:::/\//g" "${env_file_path}"
 
-    rm -f ${env_file_path}.bak
+    rm -f "${env_file_path}".bak
 }
 
 #######################################
@@ -243,7 +243,7 @@ return [
 EOF
 )
 
-    echo "${config_content}" > $mount_path/ray.php
+    echo "${config_content}" > "$mount_path"/ray.php
 }
 
 #######################################
@@ -270,7 +270,7 @@ clean_envs() {
 # so it can read and write docker volume files.
 #######################################
 add_user_group() {
-    sudo usermod -a -G www-data $(whoami)
+    sudo usermod -a -G www-data "$(whoami)"
 }
 
 #######################################
@@ -290,7 +290,7 @@ run_bootstrap() {
 # Outputs: The output of the builder command.
 #######################################
 run_builder() {
-    HIDE_HEADER=1 $scripts_path/build build-dir
+    HIDE_HEADER=1 "$scripts_path"/build build-dir
 }
 
 #######################################
@@ -315,7 +315,7 @@ start_chromedriver() {
 # Stop ChromeDriver
 #######################################
 stop_chromedriver() {
-    ps aux | grep chromedriver | awk ' { print $2 } ' | xargs kill -9
+    ps aux | pgrep chromedriver | awk ' { print $2 } ' | xargs kill -9
 }
 
 #######################################
@@ -372,16 +372,16 @@ repeat() {
 #   The formatted header.
 #######################################
 echo_header() {
-    repeat "=" $cols
-    line=$(repeat "-" $(($cols-16)))
+    repeat "=" "$cols"
+    line=$(repeat "-" "$cols"-16)
     echo "      __"
-    echo "   -=(o '.      PUBLISHPRESS TESTS ASSISTENT - v${script_version}"
+    echo "   -=(o '.      PUBLISHPRESS TESTS ASSISTANT - v${script_version}"
     echo "     '.-.\      ${line}"
     echo "     /|  \\      Name: ${plugin_name}"
     echo "     '|  ||     "
     echo "      _\_):,_   PHP Version: ${php_version}"
     echo ""
-    repeat "=" $cols
+    repeat "=" "$cols"
     echo ""
 }
 
@@ -430,7 +430,7 @@ case "${command}" in
         run_bootstrap
 
         echo ""
-        echo "Plugin bootstrapped succesfully!"
+        echo "Plugin bootstrapped successfully!"
         show_runtime
         ;;
     "stop")
@@ -471,11 +471,11 @@ case "${command}" in
         echo_step "Cleaning the codeception env files"
 
         echo ""
-        echo "Files cleaned succesfully!"
+        echo "Files cleaned successfully!"
         clean_envs
         ;;
     "brun")
-        # Arguments passed to this command, after ther third one, will all be passed to
+        # Arguments passed to this command, after the third one, will all be passed to
         # codeception run command
 
         echo_step "IP and Ports"
@@ -493,13 +493,13 @@ case "${command}" in
         show_elapsed_time
         echo ""
 
-        echo_step "Cleanning up codeception output"
-        $source_path/vendor/bin/codecept clean
+        echo_step "Cleaning up codeception output"
+        "$source_path"/vendor/bin/codecept clean
 
-        echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
+        echo_step "Running codeception tests: ${*:3}, env: ${php_version}"
 
         echo ""
-        $source_path/vendor/bin/codecept run "${@:3}" --env "${php_version}"
+        "$source_path"/vendor/bin/codecept run "${*:3}" --env "${php_version}"
 
         echo ""
         echo "Finish running tests!"
@@ -511,15 +511,15 @@ case "${command}" in
         get_ip_addresses
         echo ""
 
-        echo_step "Cleanning up codeception output"
-        $source_path/vendor/bin/codecept clean
+        echo_step "Cleaning up codeception output"
+        "$source_path"/vendor/bin/codecept clean
 
-        # Arguments passed to this command, after ther third one, will all be passed to
+        # Arguments passed to this command, after the third one, will all be passed to
         # codeception run command
-        echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
+        echo_step "Running codeception tests: ${*:3}, env: ${php_version}"
 
         echo ""
-        $source_path/vendor/bin/codecept run "${@:3}" --env "${php_version}"
+        "$source_path"/vendor/bin/codecept run "${*:3}" --env "${php_version}"
 
         echo ""
         echo "Finish running tests!"
