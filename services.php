@@ -43,8 +43,6 @@ return array(
 
     ServicesAbstract::BASE_PATH => __DIR__,
 
-    ServicesAbstract::LEGACY_PATH => __DIR__ . '/legacy',
-
     ServicesAbstract::BASE_URL => plugins_url('/', __FILE__),
 
     /**

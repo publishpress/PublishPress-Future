@@ -74,14 +74,12 @@ class Container implements ContainerInterface
      * @param string $id Identifier of the entry to look for.
      *
      * @return mixed Entry.
-     * @throws ContainerExceptionInterface Error while retrieving the entry.
-     *
-     * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
+     * @throws ServiceNotFoundException  No entry was found for **this** identifier.
      */
     public function get($id)
     {
         if (! $this->has($id)) {
-            throw new ServiceNotFoundException("No entry or class found for '$id'");
+            throw new ServiceNotFoundException($id);
         }
 
         if (array_key_exists($id, $this->resolvedEntries)) {

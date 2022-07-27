@@ -26,11 +26,14 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
     $pluginFile = __FILE__;
 
-    $legacyPath = $container->get(ServicesAbstract::LEGACY_PATH);
-    require_once $legacyPath . '/defines.php';
-    require_once $legacyPath . '/functions.php';
-    require_once $legacyPath . '/autoload.php';
+    try {
+        require_once __DIR__ . '/legacy/defines.php';
+        require_once __DIR__ . '/legacy/functions.php';
+        require_once __DIR__ . '/legacy/autoload.php';
 
-    // Launch the plugin
-    $container->get(ServicesAbstract::PLUGIN_FACADE)->initialize();
+        // Launch the plugin
+        $container->get(ServicesAbstract::PLUGIN_FACADE)->initialize();
+    } catch (Exception $e) {
+        error_log('[PUBLISHPRESSFUTURE] ' . $e->getMessage());
+    }
 }

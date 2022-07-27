@@ -49,8 +49,6 @@ abstract class ServicesAbstract
 
     const LEGACY_PLUGIN = 'legacy.plugin';
 
-    const LEGACY_PATH = 'legacy.path';
-
     const PATHS = 'paths';
 
     const LOGGER = 'logger';
