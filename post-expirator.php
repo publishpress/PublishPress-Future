@@ -30,6 +30,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
         require_once __DIR__ . '/legacy/defines.php';
         require_once __DIR__ . '/legacy/functions.php';
+        require_once __DIR__ . '/legacy/deprecated-functions.php';
         require_once __DIR__ . '/legacy/autoload.php';
 
         $container->get(AbstractServices::PLUGIN)->initialize();
