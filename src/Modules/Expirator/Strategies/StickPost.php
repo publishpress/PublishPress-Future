@@ -2,11 +2,11 @@
 
 namespace PublishPressFuture\Modules\Expirator\Strategies;
 
-use PublishPressFuture\Modules\Expirator\ExecutableInterface;
+use PublishPressFuture\Modules\Expirator\ExpirableActionInterface;
 
 use function ray;
 
-class StickPost implements ExecutableInterface
+class StickPost implements ExpirableActionInterface
 {
     /**
      * @var int

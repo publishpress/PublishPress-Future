@@ -1,6 +1,6 @@
 <?php
 
-use PublishPressFuture\Modules\Expirator\Hooks\ActionsAbstract as ExpirationAbstractHooks;
+use PublishPressFuture\Modules\Expirator\AbstractHooks;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
@@ -96,7 +96,7 @@ function postexpirator_schedule_event($postId, $timestamp, $opts)
 {
     _deprecated_function(__FUNCTION__, '2.8.0');
 
-    do_action(ExpirationAbstractHooks::SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
+    do_action(AbstractHooks::SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
 }
 
 /**
@@ -111,7 +111,7 @@ function postexpirator_unschedule_event($postId)
 {
     _deprecated_function(__FUNCTION__, '2.8.0');
 
-    do_action(ExpirationAbstractHooks::UNSCHEDULE_POST_EXPIRATION, $postId);
+    do_action(AbstractHooks::UNSCHEDULE_POST_EXPIRATION, $postId);
 }
 
 

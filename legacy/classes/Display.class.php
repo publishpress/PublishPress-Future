@@ -1,5 +1,7 @@
 <?php
 
+use PublishPressFuture\Modules\Settings\AbstractHooks;
+
 /**
  * The class that is responsible for all the displays.
  */
@@ -92,9 +94,8 @@ class PostExpirator_Display
         $this->load_tab($tab);
         $html = ob_get_clean();
 
-        $debug = postexpirator_debug(); // check for/load debug
-
-        if (! POSTEXPIRATOR_DEBUG) {
+        $debugIsEnabled = (bool)apply_filters(AbstractHooks::FILTER_DEBUG_ENABLED, false);
+        if (! $debugIsEnabled) {
             unset($allowed_tabs['viewdebug']);
         }
 
@@ -183,8 +184,6 @@ class PostExpirator_Display
                 echo '</p></div>';
             }
         }
-
-        $debug = postexpirator_debug();
 
         $this->render_template('menu-diagnostics');
     }

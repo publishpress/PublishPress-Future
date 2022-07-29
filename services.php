@@ -1,6 +1,7 @@
 <?php
 
 use Psr\Container\ContainerInterface;
+use PublishPressFuture\Core\AbstractHooks;
 use PublishPressFuture\Core\DI\AbstractServices;
 use PublishPressFuture\Core\Framework\Logger\Logger;
 use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
@@ -11,12 +12,14 @@ use PublishPressFuture\Core\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Core\Hooks\FiltersAbstract;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\Plugin;
-use PublishPressFuture\Modules\Debug\Debug;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
+use PublishPressFuture\Modules\Expirator\ExpirationRunner;
+use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
 use PublishPressFuture\Modules\Expirator\Module as ModuleExpiration;
+use PublishPressFuture\Modules\Expirator\RunnerInterface;
+use PublishPressFuture\Modules\Expirator\SchedulerInterface;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
 use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
@@ -69,7 +72,7 @@ return [
         }
 
         return $container->get(AbstractServices::HOOKS)->applyFilters(
-            FiltersAbstract::MODULES_LIST,
+            AbstractHooks::FILTER_MODULES_LIST,
             $modules
         );
     },
@@ -162,10 +165,10 @@ return [
     },
 
     /**
-     * @return Debug
+     * @return PublishPressFuture\Modules\Debug\Debug|null
      */
     AbstractServices::DEBUG => function (ContainerInterface $container) {
-        return new Debug(
+        return new PublishPressFuture\Modules\Debug\Debug(
             $container->get(AbstractServices::LOGGER)
         );
     },
@@ -186,10 +189,53 @@ return [
     },
 
     /**
+     * @return SchedulerInterface
+     */
+    AbstractServices::EXPIRATION_SCHEDULER => function (ContainerInterface $container) {
+        $hooks = $container->get(AbstractServices::HOOKS);
+        $cron = $container->get(AbstractServices::CRON);
+        $error = $container->get(AbstractServices::ERROR);
+        $logger = $container->get(AbstractServices::LOGGER);
+        $datetime = $container->get(AbstractServices::DATETIME);
+        $postModelFactory = $container->get(AbstractServices::POST_MODEL_FACTORY);
+
+        return new ExpirationScheduler(
+            $hooks,
+            $cron,
+            $error,
+            $logger,
+            $datetime,
+            $postModelFactory
+        );
+    },
+
+    /**
+     * @return RunnerInterface
+     */
+    AbstractServices::EXPIRATION_RUNNER => function (ContainerInterface $container) {
+        $hooks = $container->get(AbstractServices::HOOKS);
+        $scheduler = $container->get(AbstractServices::EXPIRATION_SCHEDULER);
+        $debug = $container->get(AbstractServices::DEBUG);
+        $options = $container->get(AbstractServices::OPTIONS);
+        $postModelFactory = $container->get(AbstractServices::POST_MODEL_FACTORY);
+
+        return new ExpirationRunner(
+            $hooks,
+            $scheduler,
+            $debug,
+            $options,
+            $postModelFactory
+        );
+    },
+
+    /**
      * @return ModuleDebug
      */
     AbstractServices::MODULE_DEBUG => function (ContainerInterface $container) {
-        return new ModuleDebug();
+        return new ModuleDebug(
+            $container->get(AbstractServices::HOOKS),
+            $container->get(AbstractServices::LOGGER)
+        );
     },
 
     /**
@@ -218,9 +264,15 @@ return [
     },
 
     /**
-     * @return ModuleDebug
+     * @return ModuleSettings
      */
     AbstractServices::MODULE_SETTINGS => function (ContainerInterface $container) {
         return new ModuleSettings();
+    },
+
+    AbstractServices::POST_MODEL_FACTORY => function (ContainerInterface $container) {
+        return new \PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory(
+            $container->get(AbstractServices::DEBUG)
+        );
     },
 ];

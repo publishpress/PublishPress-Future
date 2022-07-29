@@ -7,8 +7,7 @@ namespace PublishPressFuture\Modules\Settings;
 
 use PublishPressFuture\Core\DI\AbstractServices;
 use PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade;
-use PublishPressFuture\Core\Hooks\HookableInterface;
-use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract;
+use PublishPressFuture\Core\HookableInterface;
 
 class SettingsFacade
 {
@@ -47,7 +46,7 @@ class SettingsFacade
             return;
         }
 
-        $this->hooks->doAction(ActionsAbstract::DELETE_ALL_SETTINGS);
+        $this->hooks->doAction(AbstractHooks::ACTION_DELETE_ALL_SETTINGS);
 
         $this->deleteAllSettings();
     }
@@ -121,7 +120,7 @@ class SettingsFacade
      * @param bool $default
      * @return bool
      */
-    public function getDebug($default = false)
+    public function getDebugIsEnabled($default = false)
     {
         return (bool)$this->options->getOption('expirationdateDebug', $default);
     }

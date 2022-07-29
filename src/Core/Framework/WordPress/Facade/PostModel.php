@@ -18,9 +18,15 @@ class PostModel
      */
     private $postInstance;
 
-    public function __construct($postId)
+    /**
+     * @var \PublishPressFuture\Modules\Debug\Debug
+     */
+    private $debug;
+
+    public function __construct($postId, $debug)
     {
         $this->postId = (int)$postId;
+        $this->debug = $debug;
     }
 
     /**
@@ -30,11 +36,17 @@ class PostModel
      */
     public function setPostStatus($newPostStatus)
     {
-        return $this->update(
+        $post = $this->getPostInstance();
+
+        $updated = $this->update(
             [
                 'post_status' => $newPostStatus,
             ]
         );
+
+        wp_transition_post_status($newPostStatus, $post->post_status, $post);
+
+        return $updated;
     }
 
     /**
@@ -50,6 +62,16 @@ class PostModel
         );
 
         return \wp_update_post($data) > 0;
+    }
+
+    /**
+     * @param string $metaKey
+     * @param mixed $metaValue
+     * @return false|int
+     */
+    public function addMeta($metaKey, $metaValue = null)
+    {
+        return add_post_meta($this->postId, $metaKey, $metaValue);
     }
 
     /**
@@ -96,6 +118,21 @@ class PostModel
         array_walk($metaKey, $callback);
     }
 
+    public function getMeta($metaKey, $single = false)
+    {
+        return get_post_meta($this->postId, $metaKey, $single);
+    }
+
+    /**
+     * @return bool
+     */
+    public function postExists()
+    {
+        $instance = $this->getPostInstance();
+
+        return is_object($instance);
+    }
+
     /**
      * @return WP_Post
      */
@@ -106,5 +143,20 @@ class PostModel
         }
 
         return $this->postInstance;
+    }
+
+    public function getType()
+    {
+        return get_post_type($this->postId);
+    }
+
+    public function getTitle()
+    {
+        return get_the_title($this->postId);
+    }
+
+    public function getPermalink()
+    {
+        return get_post_permalink($this->postId);
     }
 }

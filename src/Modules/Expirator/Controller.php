@@ -5,9 +5,8 @@ namespace PublishPressFuture\Modules\Expirator;
 use PublishPressFuture\Core\Framework\InitializableInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Core\Hooks\HookableInterface;
-use PublishPressFuture\Modules\Expirator\Hooks\ActionsAbstract;
-use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract as SettingsHooksAbstract;
+use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Modules\Settings\AbstractHooks as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface
 {
@@ -27,7 +26,7 @@ class Controller implements InitializableInterface
     private $cron;
 
     /**
-     * @var Scheduler
+     * @var ExpirationScheduler
      */
     private $scheduler;
 
@@ -35,7 +34,7 @@ class Controller implements InitializableInterface
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
      * @param CronFacade $cronFacade
-     * @param Scheduler $scheduler
+     * @param ExpirationScheduler $scheduler
      */
     public function __construct(HookableInterface $hooksFacade, $siteFacade, $cronFacade, $scheduler)
     {
@@ -47,12 +46,18 @@ class Controller implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(SettingsHooksAbstract::DELETE_ALL_SETTINGS, [$this, 'onDeleteAllSettings']);
-        $this->hooks->addAction(ActionsAbstract::SCHEDULE_POST_EXPIRATION, [$this, 'schedulePostExpiration'], 10, 3);
-        $this->hooks->addAction(ActionsAbstract::UNSCHEDULE_POST_EXPIRATION, [$this, 'unschedulePostExpiration']);
+        $this->hooks->addAction(SettingsHooksAbstract::ACTION_DELETE_ALL_SETTINGS, [$this, 'onActionDeleteAllSettings']
+        );
+        $this->hooks->addAction(
+            AbstractHooks::SCHEDULE_POST_EXPIRATION,
+            [$this, 'onActionSchedulePostExpiration'],
+            10,
+            3
+        );
+        $this->hooks->addAction(AbstractHooks::UNSCHEDULE_POST_EXPIRATION, [$this, 'onActionUnschedulePostExpiration']);
     }
 
-    public function onDeleteAllSettings()
+    public function onActionDeleteAllSettings()
     {
         // TODO: What about custom post types? How to clean up?
 
@@ -64,13 +69,13 @@ class Controller implements InitializableInterface
         $this->cron->clearScheduledHook('expirationdate_delete');
     }
 
-    public function schedulePostExpiration($postId, $timestamp, $opts)
+    public function onActionSchedulePostExpiration($postId, $timestamp, $opts)
     {
         $this->scheduler->scheduleExpirationForPost($postId, $timestamp, $opts);
     }
 
-    public function unschedulePostExpiration($postId)
+    public function onActionUnschedulePostExpiration($postId)
     {
-        $this->scheduler->unscheduleExpirationForPost($postId);
+        $this->scheduler->unschedule($postId);
     }
 }

@@ -5,12 +5,11 @@
 
 namespace PublishPressFuture\Modules\Debug;
 
-
+use PublishPressFuture\Core\Framework\InitializableInterface;
 use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Core\Framework\ModuleInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
 
-class Module implements ModuleInterface
+class Controller implements InitializableInterface
 {
     /**
      * @var HooksFacade
@@ -22,33 +21,19 @@ class Module implements ModuleInterface
      */
     private $logger;
 
-    /**
-     * @var Controller
-     */
-    private $controller;
-
-    /**
-     * @param HooksFacade $hooks
-     * @param LoggerInterface $logger
-     */
     public function __construct(HooksFacade $hooks, LoggerInterface $logger)
     {
         $this->hooks = $hooks;
         $this->logger = $logger;
-
-        $this->controller = $this->getController();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function initialize()
     {
-        $this->controller->initialize();
+        $this->hooks->addAction(AbstractHooks::ACTION_DEBUG_LOG, [$this, 'onActionDebugLog']);
     }
 
-    private function getController()
+    public function onActionDebugLog($message)
     {
-        return new Controller($this->hooks, $this->logger);
+        $this->logger->debug($message);
     }
 }

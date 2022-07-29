@@ -13,5 +13,17 @@ interface SchedulerInterface
      * @param array $opts
      * @return void
      */
-    public function scheduleExpirationForPost($postId, $timestamp, $opts);
+    public function schedule($postId, $timestamp, $opts);
+
+    /**
+     * @param int $postId
+     * @return void
+     */
+    public function unschedule($postId);
+
+    /**
+     * @param int $postId
+     * @return bool
+     */
+    public function isScheduled($postId);
 }

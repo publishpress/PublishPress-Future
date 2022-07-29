@@ -71,27 +71,27 @@ class Module implements ModuleInterface
         $this->controller->initialize();
     }
 
-    /**
-     * @return \PublishPressFuture\Modules\Expirator\Scheduler
-     */
-    private function getScheduler()
-    {
-        return new Scheduler(
-            $this->hooks,
-            $this->cron,
-            $this->error,
-            $this->logger,
-            $this->datetime
-        );
-    }
+//    /**
+//     * @return \PublishPressFuture\Modules\Expirator\Scheduler
+//     */
+//    private function getScheduler()
+//    {
+//        return new Scheduler(
+//            $this->hooks,
+//            $this->cron,
+//            $this->error,
+//            $this->logger,
+//            $this->datetime
+//        );
+//    }
 
-    private function getController()
-    {
-        return new Controller(
-            $this->hooks,
-            $this->site,
-            $this->cron,
-            $this->getScheduler()
-        );
-    }
+//    private function getController()
+//    {
+//        return new Controller(
+//            $this->hooks,
+//            $this->site,
+//            $this->cron,
+//            $this->getScheduler()
+//        );
+//    }
 }

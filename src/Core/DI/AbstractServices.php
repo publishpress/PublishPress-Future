@@ -65,6 +65,10 @@ abstract class AbstractServices
 
     const MODULES = 'modules';
 
+    const EXPIRATION_SCHEDULER = 'expiration.scheduler';
+
+    const EXPIRATION_RUNNER = 'expiration.runner';
+
     const MODULE_DEBUG = 'module.debug';
 
     const MODULE_INSTANCE_PROTECTION = 'module.instance_protection';
@@ -72,4 +76,6 @@ abstract class AbstractServices
     const MODULE_EXPIRATOR = 'module.expirator';
 
     const MODULE_SETTINGS = 'module.settings';
+
+    const POST_MODEL_FACTORY = 'post.model.factory';
 }

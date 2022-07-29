@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Core\Framework\WordPress\Facade;
 
-use PublishPressFuture\Core\Hooks\HookableInterface;
+use PublishPressFuture\Core\HookableInterface;
 
 use function PublishPressFuture\Framework\WordPress\add_action;
 use function PublishPressFuture\Framework\WordPress\add_filter;

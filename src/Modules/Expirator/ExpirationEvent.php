@@ -3,7 +3,7 @@
 namespace PublishPressFuture\Modules\Expirator;
 
 
-class ExpirationEvent implements ActionableInterface, ExecutableInterface
+class ExpirationEvent implements ActionableInterface, ExpirableActionInterface
 {
     /**
      * @var int
@@ -13,7 +13,7 @@ class ExpirationEvent implements ActionableInterface, ExecutableInterface
     /**
      * Undocumented variable
      *
-     * @var ExecutableInterface
+     * @var ExpirableActionInterface
      */
     private $action;
 

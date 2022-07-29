@@ -4,7 +4,10 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
-use PublishPressFuture\Core\Hooks\AbstractActionHooks;
+use PublishPressFuture\Core\DI\AbstractServices as CoreAbstractServices;
+use PublishPressFuture\Modules\Debug\AbstractHooks as DebugAbstractHooks;
+use PublishPressFuture\Modules\Settings\AbstractHooks as SettingsAbstractHooks;
+use PublishPressFuture\Core\DI\Container;
 
 /**
  * Adds links to the plugin listing screen.
@@ -589,17 +592,10 @@ function postexpirator_update_post_meta($id)
         $payload = @file_get_contents('php://input');
 
         if (empty($payload)) {
-            $debug = postexpirator_debug();
-
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array(
-                        'message' => $id . ' -> NO PAYLOAD ON SAVE_POST'
-                    )
-                );
-            }
-
-            return;
+            do_action(
+                DebugAbstractHooks::ACTION_DEBUG_LOG,
+                $id . ' -> NO PAYLOAD ON SAVE_POST'
+            );
         }
 
         $payload = @json_decode($payload, true);
@@ -662,51 +658,64 @@ add_action('save_post', 'postexpirator_update_post_meta');
  *
  * This was designed to hopefully be more flexible for future tweaks/modifications to the architecture.
  *
+ * @throws \PublishPressFuture\Core\DI\ContainerNotInitializedException
+ * @throws \Psr\Container\NotFoundExceptionInterface
+ * @throws \Psr\Container\ContainerExceptionInterface
  * @internal
  *
  * @access private
  */
-function postexpirator_expire_post($id)
+function postexpirator_expire_post($postId)
 {
-    $debug = postexpirator_debug(); // check for/load debug
+    $postId = (int)$postId;
 
-    $id = (int)$id;
+    $container = Container::getInstance();
+    $settings = $container->get(CoreAbstractServices::SETTINGS);
+    $debug = $container->get(CoreAbstractServices::DEBUG);
 
-    if (POSTEXPIRATOR_DEBUG) {
-        $debug->save(array('message' => 'Called postexpirator_expire_post with id=' . $id));
+    $debugIsEnabled = $settings->getDebugIsEnabled();
+
+    if ($debugIsEnabled) {
+        $debug->log('Called postexpirator_expire_post with id=' . $postId);
     }
 
-    if (empty($id)) {
-        if (POSTEXPIRATOR_DEBUG) {
-            $debug->save(array('message' => 'No Post ID found - exiting'));
+    if (empty($postId)) {
+        if ($debugIsEnabled) {
+            $debug->log('No Post ID found - exiting');
         }
 
         return false;
     }
 
-    $post = get_post($id);
+    $post = get_post($postId);
 
     if (is_null($post)) {
-        if (POSTEXPIRATOR_DEBUG) {
-            $debug->save(array('message' => $id . ' -> Post does not exist - exiting'));
+        if ($debugIsEnabled) {
+            do_action(
+                DebugAbstractHooks::ACTION_DEBUG_LOG,
+                $postId . ' -> Post does not exist - exiting'
+            );
         }
 
         return false;
     }
 
-    $postExpireOptions = PostExpirator_Facade::get_expire_principles($id);
+    $postExpireOptions = PostExpirator_Facade::get_expire_principles($postId);
 
     if ($postExpireOptions['enabled'] === false) {
-        if (POSTEXPIRATOR_DEBUG) {
-            $debug->save(array('message' => $id . ' -> Post expire data exist but is not activated'));
+        if ($debugIsEnabled) {
+            do_action(
+                DebugAbstractHooks::ACTION_DEBUG_LOG,
+                $postId . ' -> Post expire data exist but is not activated'
+            );
         }
 
         return false;
     }
 
-    $postType = get_post_type($id);
-    $postTitle = get_the_title($id);
-    $postLink = get_post_permalink($id);
+    $postType = get_post_type($postId);
+    $postTitle = get_the_title($postId);
+    $postLink = get_post_permalink($postId);
 
     $expireType = $expireCategory = $expireCategoryTaxonomy = null;
 
@@ -722,11 +731,14 @@ function postexpirator_expire_post($id)
         $expireCategoryTaxonomy = $postExpireOptions['categoryTaxonomy'];
     }
 
-    $expirationDate = (int)get_post_meta($id, '_expiration-date', true);
+    $expirationDate = (int)get_post_meta($postId, '_expiration-date', true);
 
     if (empty($expirationDate)) {
-        if (POSTEXPIRATOR_DEBUG) {
-            $debug->save(array('message' => $id . ' -> Tried to expire the post but the expire date is empty'));
+        if ($debugIsEnabled) {
+            do_action(
+                DebugAbstractHooks::ACTION_DEBUG_LOG,
+                $postId . ' -> Tried to expire the post but the expire date is empty'
+            );
         }
 
         return false;
@@ -734,7 +746,7 @@ function postexpirator_expire_post($id)
 
     // Check for default expire only if not passed in
     if (empty($expireType)) {
-        $postType = get_post_type($id);
+        $postType = get_post_type($postId);
         if ($postType === 'page') {
             $expireType = strtolower(get_option('expirationdateExpiredPageStatus', 'draft'));
         } elseif ($postType === 'post') {
@@ -762,38 +774,42 @@ function postexpirator_expire_post($id)
     // Do Work
     if ($expireType === 'draft') {
         // TODO: fix this, because wp_update_post returns int or WP_ERROR, not 0. Check other places doing the same.
-        if (wp_update_post(array('ID' => $id, 'post_status' => 'draft')) === 0) {
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true))
-                );
-            }
-        } else {
-            $emailBody = sprintf(
-                __(
-                    '%1$s (%2$s) has expired at %3$s. Post status has been successfully changed to "%4$s".',
-                    'post-expirator'
-                ),
-                '##POSTTITLE##',
-                '##POSTLINK##',
-                '##EXPIRATIONDATE##',
-                strtoupper($expireType)
-            );
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
-                );
-            }
-
-            wp_transition_post_status('draft', $post->post_status, $post);
-
-            $postWasExpired = true;
-        }
+//        if (wp_update_post(array('ID' => $postId, 'post_status' => 'draft')) === 0) {
+//            if ($debugIsEnabled) {
+//                do_action(
+//                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+//                    $postId . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true)
+//                );
+//            }
+//        } else {
+//            $emailBody = sprintf(
+//                __(
+//                    '%1$s (%2$s) has expired at %3$s. Post status has been successfully changed to "%4$s".',
+//                    'post-expirator'
+//                ),
+//                '##POSTTITLE##',
+//                '##POSTLINK##',
+//                '##EXPIRATIONDATE##',
+//                strtoupper($expireType)
+//            );
+//
+//            if ($debugIsEnabled) {
+//                do_action(
+//                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+//                    $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true)
+//                );
+//            }
+//
+//            wp_transition_post_status('draft', $post->post_status, $post);
+//
+//            $postWasExpired = true;
+//        }
     } elseif ($expireType === 'private') {
-        if (wp_update_post(array('ID' => $id, 'post_status' => 'private')) === 0) {
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+        if (wp_update_post(array('ID' => $postId, 'post_status' => 'private')) === 0) {
+            if ($debugIsEnabled) {
+                do_action(
+                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+                    $postId . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true)
                 );
             }
         } else {
@@ -807,9 +823,10 @@ function postexpirator_expire_post($id)
                 '##EXPIRATIONDATE##',
                 strtoupper($expireType)
             );
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+            if ($debugIsEnabled) {
+                do_action(
+                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+                    $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true)
                 );
             }
 
@@ -818,10 +835,11 @@ function postexpirator_expire_post($id)
             $postWasExpired = true;
         }
     } elseif ($expireType === 'delete') {
-        if (wp_delete_post($id) === false) {
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+        if (wp_delete_post($postId) === false) {
+            if ($debugIsEnabled) {
+                do_action(
+                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+                    $postId . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true)
                 );
             }
         } else {
@@ -835,19 +853,21 @@ function postexpirator_expire_post($id)
                 '##EXPIRATIONDATE##',
                 strtoupper($expireType)
             );
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+            if ($debugIsEnabled) {
+                do_action(
+                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+                    $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true)
                 );
             }
 
             $postWasExpired = true;
         }
     } elseif ($expireType === 'trash') {
-        if (wp_trash_post($id) === false) {
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+        if (wp_trash_post($postId) === false) {
+            if ($debugIsEnabled) {
+                do_action(
+                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+                    $postId . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true)
                 );
             }
         } else {
@@ -861,19 +881,24 @@ function postexpirator_expire_post($id)
                 '##EXPIRATIONDATE##',
                 strtoupper($expireType)
             );
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(
-                    array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+            if ($debugIsEnabled) {
+                do_action(
+                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+                    $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true)
                 );
             }
 
             $postWasExpired = true;
         }
     } elseif ($expireType === 'stick') {
-        if (stick_post($id) === false) {
-            if (POSTEXPIRATOR_DEBUG) {
+        if (stick_post($postId) === false) {
+            if ($debugIsEnabled) {
+                do_action(
+                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+                    $postId . ' -> Tried to expire the post but the expire date is empty'
+                );
                 $debug->save(
-                    array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+                    array('message' => $postId . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true))
                 );
             }
         } else {
@@ -886,17 +911,17 @@ function postexpirator_expire_post($id)
             );
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(
-                    array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+                    array('message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
                 );
             }
 
             $postWasExpired = true;
         }
     } elseif ($expireType === 'unstick') {
-        if (unstick_post($id) === false) {
+        if (unstick_post($postId) === false) {
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(
-                    array('message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+                    array('message' => $postId . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true))
                 );
             }
         } else {
@@ -912,7 +937,7 @@ function postexpirator_expire_post($id)
             );
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(
-                    array('message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+                    array('message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
                 );
             }
 
@@ -923,11 +948,11 @@ function postexpirator_expire_post($id)
             if (empty($expireCategoryTaxonomy) || $expireCategoryTaxonomy === 'category') {
                 $expirationLog['taxonomy'] = 'category';
 
-                if (wp_update_post(array('ID' => $id, 'post_category' => $expireCategory)) === 0) {
+                if (wp_update_post(array('ID' => $postId, 'post_category' => $expireCategory)) === 0) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> FAILED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -949,7 +974,7 @@ function postexpirator_expire_post($id)
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -957,7 +982,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES REPLACED ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES REPLACED ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -965,7 +990,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES COMPLETE ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES COMPLETE ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -981,11 +1006,11 @@ function postexpirator_expire_post($id)
                 $expirationLog['taxonomy'] = $expireCategoryTaxonomy;
                 $expirationLog['terms'] = $terms;
 
-                if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, false))) {
+                if (is_wp_error(wp_set_object_terms($postId, $terms, $expireCategoryTaxonomy, false))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> FAILED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1008,7 +1033,7 @@ function postexpirator_expire_post($id)
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1016,7 +1041,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES REPLACED ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES REPLACED ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -1024,7 +1049,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES COMPLETE ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES COMPLETE ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -1039,7 +1064,7 @@ function postexpirator_expire_post($id)
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(
                     array(
-                        'message' => $id . ' -> CATEGORIES MISSING ' . $expireType . ' ' . print_r(
+                        'message' => $postId . ' -> CATEGORIES MISSING ' . $expireType . ' ' . print_r(
                                 $postExpireOptions,
                                 true
                             )
@@ -1053,13 +1078,13 @@ function postexpirator_expire_post($id)
                 $expirationLog['taxonomy'] = 'category';
                 $expirationLog['terms'] = $expireCategory;
 
-                $postCategories = wp_get_post_categories($id);
+                $postCategories = wp_get_post_categories($postId);
                 $mergedCategories = array_merge($postCategories, $expireCategory);
-                if (wp_update_post(array('ID' => $id, 'post_category' => $mergedCategories)) === 0) {
+                if (wp_update_post(array('ID' => $postId, 'post_category' => $mergedCategories)) === 0) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> FAILED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1082,7 +1107,7 @@ function postexpirator_expire_post($id)
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1090,7 +1115,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES ADDED ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES ADDED ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -1098,7 +1123,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES COMPLETE ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES COMPLETE ' . print_r(
                                         _postexpirator_get_cat_names($mergedCategories),
                                         true
                                     )
@@ -1114,11 +1139,11 @@ function postexpirator_expire_post($id)
                 $expirationLog['taxonomy'] = $expireCategoryTaxonomy;
                 $expirationLog['terms'] = $terms;
 
-                if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, true))) {
+                if (is_wp_error(wp_set_object_terms($postId, $terms, $expireCategoryTaxonomy, true))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> FAILED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1141,7 +1166,7 @@ function postexpirator_expire_post($id)
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1149,7 +1174,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES ADDED ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES ADDED ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -1157,7 +1182,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES COMPLETE ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES COMPLETE ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -1172,7 +1197,7 @@ function postexpirator_expire_post($id)
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(
                     array(
-                        'message' => $id . ' -> CATEGORIES MISSING ' . $expireType . ' ' . print_r(
+                        'message' => $postId . ' -> CATEGORIES MISSING ' . $expireType . ' ' . print_r(
                                 $postExpireOptions,
                                 true
                             )
@@ -1186,7 +1211,7 @@ function postexpirator_expire_post($id)
                 $expirationLog['taxonomy'] = 'category';
                 $expirationLog['terms'] = $expireCategory;
 
-                $postCategories = wp_get_post_categories($id);
+                $postCategories = wp_get_post_categories($postId);
                 $mergedCategories = array();
                 foreach ($postCategories as $category) {
                     if (! in_array($category, $expireCategory, false)) {
@@ -1194,11 +1219,11 @@ function postexpirator_expire_post($id)
                     }
                 }
 
-                if (wp_update_post(array('ID' => $id, 'post_category' => $mergedCategories)) === 0) {
+                if (wp_update_post(array('ID' => $postId, 'post_category' => $mergedCategories)) === 0) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> FAILED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1221,7 +1246,7 @@ function postexpirator_expire_post($id)
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1229,7 +1254,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES REMOVED ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES REMOVED ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -1237,7 +1262,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES COMPLETE ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES COMPLETE ' . print_r(
                                         _postexpirator_get_cat_names($mergedCategories),
                                         true
                                     )
@@ -1248,7 +1273,7 @@ function postexpirator_expire_post($id)
                     $postWasExpired = true;
                 }
             } else {
-                $terms = wp_get_object_terms($id, $expireCategoryTaxonomy, array('fields' => 'ids'));
+                $terms = wp_get_object_terms($postId, $expireCategoryTaxonomy, array('fields' => 'ids'));
 
                 $expirationLog['taxonomy'] = $expireCategoryTaxonomy;
                 $expirationLog['terms'] = $terms;
@@ -1260,11 +1285,11 @@ function postexpirator_expire_post($id)
                     }
                 }
                 $terms = PostExpirator_Util::sanitize_array_of_integers($mergedCategories);
-                if (is_wp_error(wp_set_object_terms($id, $terms, $expireCategoryTaxonomy, false))) {
+                if (is_wp_error(wp_set_object_terms($postId, $terms, $expireCategoryTaxonomy, false))) {
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> FAILED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> FAILED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1287,7 +1312,7 @@ function postexpirator_expire_post($id)
                     if (POSTEXPIRATOR_DEBUG) {
                         $debug->save(
                             array(
-                                'message' => $id . ' -> PROCESSED ' . $expireType . ' ' . print_r(
+                                'message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r(
                                         $postExpireOptions,
                                         true
                                     )
@@ -1295,7 +1320,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES REMOVED ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES REMOVED ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -1303,7 +1328,7 @@ function postexpirator_expire_post($id)
                         );
                         $debug->save(
                             array(
-                                'message' => $id . ' -> CATEGORIES COMPLETE ' . print_r(
+                                'message' => $postId . ' -> CATEGORIES COMPLETE ' . print_r(
                                         _postexpirator_get_cat_names($expireCategory),
                                         true
                                     )
@@ -1318,7 +1343,7 @@ function postexpirator_expire_post($id)
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(
                     array(
-                        'message' => $id . ' -> CATEGORIES MISSING ' . $expireType . ' ' . print_r(
+                        'message' => $postId . ' -> CATEGORIES MISSING ' . $expireType . ' ' . print_r(
                                 $postExpireOptions,
                                 true
                             )
@@ -1327,86 +1352,86 @@ function postexpirator_expire_post($id)
             }
         }
     }
-
-    // Process Email
-    $emailEnabled = get_option('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
-
-    $expirationLog['email_enabled'] = (bool)$emailEnabled;
-
-    // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-    if ($emailEnabled == 1 && isset($emailBody)) {
-        $emailSubject = sprintf(__('Post Expiration Complete "%s"', 'post-expirator'), $postTitle);
-        $emailBody = str_replace('##POSTTITLE##', $postTitle, $emailBody);
-        $emailBody = str_replace('##POSTLINK##', $postLink, $emailBody);
-        $emailBody = str_replace(
-            '##EXPIRATIONDATE##',
-            get_date_from_gmt(
-                gmdate('Y-m-d H:i:s', $expirationDate),
-                get_option('date_format') . ' ' . get_option('time_format')
-            ),
-            $emailBody
-        );
-
-        $emailsToSend = array();
-
-        // Get Blog Admins
-        $blogAdmins = get_option('expirationdateEmailNotificationAdmins', POSTEXPIRATOR_EMAILNOTIFICATIONADMINS);
-        // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-        if ($blogAdmins == 1) {
-            $blogUsers = get_users('role=Administrator');
-            foreach ($blogUsers as $user) {
-                $emailsToSend[] = $user->user_email;
-            }
-        }
-
-        // Get Global Notification Emails
-        $emailsList = get_option('expirationdateEmailNotificationList');
-        if (! empty($emailsList)) {
-            $values = explode(',', $emailsList);
-            foreach ($values as $value) {
-                $emailsToSend[] = trim($value);
-            }
-        }
-
-        // Get Post Type Notification Emails
-        $defaults = get_option('expirationdateDefaults' . ucfirst($postType));
-        if (isset($defaults['emailnotification']) && ! empty($defaults['emailnotification'])) {
-            $values = explode(',', $defaults['emailnotification']);
-            foreach ($values as $value) {
-                $emailsToSend[] = trim($value);
-            }
-        }
-
-        $emailsToSend = array_unique($emailsToSend);
-
-        if (! empty($emailsToSend)) {
-            if (POSTEXPIRATOR_DEBUG) {
-                $debug->save(array('message' => $id . ' -> SENDING EMAIL TO (' . implode(', ', $emailsToSend) . ')'));
-            }
-
-            // Send Emails
-            foreach ($emailsToSend as $email) {
-                if (wp_mail($email, sprintf(__('[%1$s] %2$s'), get_option('blogname'), $emailSubject), $emailBody)) {
-                    if (POSTEXPIRATOR_DEBUG) {
-                        $debug->save(array('message' => $id . ' -> EXPIRATION EMAIL SENT (' . $email . ')'));
-                    }
-
-                    $expirationLog['email_sent'] = true;
-                } else {
-                    if (POSTEXPIRATOR_DEBUG) {
-                        $debug->save(array('message' => $id . ' -> EXPIRATION EMAIL FAILED (' . $email . ')'));
-                    }
-
-                    $expirationLog['email_sent'] = false;
-                }
-            }
-        }
-    }
-
-    if (true === $postWasExpired) {
-        postexpirator_register_expiration_meta($id, $expirationLog);
-        postexpirator_unschedule_event($id);
-    }
+//
+//    // Process Email
+//    $emailEnabled = get_option('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
+//
+//    $expirationLog['email_enabled'] = (bool)$emailEnabled;
+//
+//    // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+//    if ($emailEnabled == 1 && isset($emailBody)) {
+//        $emailSubject = sprintf(__('Post Expiration Complete "%s"', 'post-expirator'), $postTitle);
+//        $emailBody = str_replace('##POSTTITLE##', $postTitle, $emailBody);
+//        $emailBody = str_replace('##POSTLINK##', $postLink, $emailBody);
+//        $emailBody = str_replace(
+//            '##EXPIRATIONDATE##',
+//            get_date_from_gmt(
+//                gmdate('Y-m-d H:i:s', $expirationDate),
+//                get_option('date_format') . ' ' . get_option('time_format')
+//            ),
+//            $emailBody
+//        );
+//
+//        $emailsToSend = array();
+//
+//        // Get Blog Admins
+//        $blogAdmins = get_option('expirationdateEmailNotificationAdmins', POSTEXPIRATOR_EMAILNOTIFICATIONADMINS);
+//        // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+//        if ($blogAdmins == 1) {
+//            $blogUsers = get_users('role=Administrator');
+//            foreach ($blogUsers as $user) {
+//                $emailsToSend[] = $user->user_email;
+//            }
+//        }
+//
+//        // Get Global Notification Emails
+//        $emailsList = get_option('expirationdateEmailNotificationList');
+//        if (! empty($emailsList)) {
+//            $values = explode(',', $emailsList);
+//            foreach ($values as $value) {
+//                $emailsToSend[] = trim($value);
+//            }
+//        }
+//
+//        // Get Post Type Notification Emails
+//        $defaults = get_option('expirationdateDefaults' . ucfirst($postType));
+//        if (isset($defaults['emailnotification']) && ! empty($defaults['emailnotification'])) {
+//            $values = explode(',', $defaults['emailnotification']);
+//            foreach ($values as $value) {
+//                $emailsToSend[] = trim($value);
+//            }
+//        }
+//
+//        $emailsToSend = array_unique($emailsToSend);
+//
+//        if (! empty($emailsToSend)) {
+//            if (POSTEXPIRATOR_DEBUG) {
+//                $debug->save(array('message' => $postId . ' -> SENDING EMAIL TO (' . implode(', ', $emailsToSend) . ')'));
+//            }
+//
+//            // Send Emails
+//            foreach ($emailsToSend as $email) {
+//                if (wp_mail($email, sprintf(__('[%1$s] %2$s'), get_option('blogname'), $emailSubject), $emailBody)) {
+//                    if (POSTEXPIRATOR_DEBUG) {
+//                        $debug->save(array('message' => $postId . ' -> EXPIRATION EMAIL SENT (' . $email . ')'));
+//                    }
+//
+//                    $expirationLog['email_sent'] = true;
+//                } else {
+//                    if (POSTEXPIRATOR_DEBUG) {
+//                        $debug->save(array('message' => $postId . ' -> EXPIRATION EMAIL FAILED (' . $email . ')'));
+//                    }
+//
+//                    $expirationLog['email_sent'] = false;
+//                }
+//            }
+//        }
+//    }
+//
+//    if (true === $postWasExpired) {
+//        postexpirator_register_expiration_meta($postId, $expirationLog);
+//        postexpirator_unschedule_event($postId);
+//    }
 }
 
 add_action('postExpiratorExpire', 'postexpirator_expire_post');
@@ -1593,7 +1618,7 @@ function postexpirator_upgrade()
     // Check for current version, if not exists, run activation
     $version = get_option('postexpiratorVersion');
     if ($version === false) { // not installed, run default activation
-        do_action(AbstractActionHooks::ACTIVATE_PLUGIN);
+        do_action(AbstractHooks::ACTION_ACTIVATE_PLUGIN);
 
         update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
     } else {

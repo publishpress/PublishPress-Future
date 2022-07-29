@@ -1,8 +1,11 @@
 <?php
+/**
+ * Copyright (c) 2022. PublishPress, All rights reserved.
+ */
 
-namespace PublishPressFuture\Modules\Expirator\Hooks;
+namespace PublishPressFuture\Modules\Expirator;
 
-abstract class ActionsAbstract
+abstract class AbstractHooks
 {
     const LEGACY_SCHEDULE = 'postexpirator_schedule';
 
@@ -13,6 +16,4 @@ abstract class ActionsAbstract
     const SCHEDULE_POST_EXPIRATION = 'publishpressfuture.expiration/schedule';
 
     const UNSCHEDULE_POST_EXPIRATION = 'publishpressfuture.expiration/unschedule';
-
-    const EXPIRE_POST = 'publishpressfuture.expiration/expire';
 }

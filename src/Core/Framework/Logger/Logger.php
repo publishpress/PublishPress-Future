@@ -139,7 +139,7 @@ class Logger implements LoggerInterface
      */
     private function debugIsEnabled()
     {
-        return $this->settings->getDebug();
+        return $this->settings->getDebugIsEnabled();
     }
 
     /**

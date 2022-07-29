@@ -1,8 +1,12 @@
 <?php
 
+use \PublishPressFuture\Modules\Settings\AbstractHooks;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET['tab']));
+
+$debugIsEnabled = apply_filters(AbstractHooks::FILTER_DEBUG_ENABLED, false);
 ?>
 
 <div class="wrap">
@@ -36,7 +40,7 @@ $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET
                echo ($current_tab === 'advanced' ? 'nav-tab-active' : ''); ?>"><?php
                 esc_html_e('Advanced', 'post-expirator'); ?></a>
             <?php
-            if (POSTEXPIRATOR_DEBUG) { ?>
+            if ($debugIsEnabled) { ?>
                 <a href="<?php
                 echo esc_url(admin_url('admin.php?page=publishpress-future&tab=viewdebug')); ?>"
                    class="pe-tab nav-tab <?php
