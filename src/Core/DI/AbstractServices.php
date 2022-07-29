@@ -55,10 +55,6 @@ abstract class AbstractServices
 
     const CRON = 'cron';
 
-    const EXPIRATOR = 'expirator';
-
-    const SCHEDULER = 'scheduler';
-
     const ERROR = 'error';
 
     const DATETIME = 'datetime';

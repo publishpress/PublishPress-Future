@@ -16,9 +16,7 @@ use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\Plugin;
 use PublishPressFuture\Modules\Debug\Debug;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
-use PublishPressFuture\Modules\Expirator\Expirator;
 use PublishPressFuture\Modules\Expirator\Module as ModuleExpiration;
-use PublishPressFuture\Modules\Expirator\Scheduler;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
 use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
@@ -173,36 +171,6 @@ return [
     },
 
     /**
-     * @return Expirator
-     */
-    AbstractServices::EXPIRATOR => function (ContainerInterface $container) {
-        $hooks = $container->get(AbstractServices::HOOKS);
-        $site = $container->get(AbstractServices::SITE);
-        $cron = $container->get(AbstractServices::CRON);
-        $scheduler = $container->get(AbstractServices::SCHEDULER);
-
-        return new Expirator(
-            $hooks,
-            $site,
-            $cron,
-            $scheduler
-        );
-    },
-
-    /**
-     * @returns Scheduler
-     */
-    AbstractServices::SCHEDULER => function (ContainerInterface $container) {
-        return new Scheduler(
-            $container->get(AbstractServices::HOOKS),
-            $container->get(AbstractServices::CRON),
-            $container->get(AbstractServices::ERROR),
-            $container->get(AbstractServices::LOGGER),
-            $container->get(AbstractServices::DATETIME)
-        );
-    },
-
-    /**
      * @return SettingsFacade
      */
     AbstractServices::SETTINGS => function (ContainerInterface $container) {
@@ -239,7 +207,14 @@ return [
      * @return ModuleExpiration
      */
     AbstractServices::MODULE_EXPIRATOR => function (ContainerInterface $container) {
-        return new ModuleExpiration();
+        return new ModuleExpiration(
+            $container->get(AbstractServices::HOOKS),
+            $container->get(AbstractServices::SITE),
+            $container->get(AbstractServices::CRON),
+            $container->get(AbstractServices::ERROR),
+            $container->get(AbstractServices::LOGGER),
+            $container->get(AbstractServices::DATETIME)
+        );
     },
 
     /**

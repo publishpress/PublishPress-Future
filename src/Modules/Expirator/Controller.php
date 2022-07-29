@@ -9,7 +9,7 @@ use PublishPressFuture\Core\Hooks\HookableInterface;
 use PublishPressFuture\Modules\Expirator\Hooks\ActionsAbstract;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract as SettingsHooksAbstract;
 
-class Expirator implements InitializableInterface
+class Controller implements InitializableInterface
 {
     /**
      * @var HookableInterface
@@ -35,14 +35,14 @@ class Expirator implements InitializableInterface
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
      * @param CronFacade $cronFacade
-     * @param CronFacade $schedulerFacade
+     * @param Scheduler $scheduler
      */
-    public function __construct(HookableInterface $hooksFacade, $siteFacade, $cronFacade, $schedulerFacade)
+    public function __construct(HookableInterface $hooksFacade, $siteFacade, $cronFacade, $scheduler)
     {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
         $this->cron = $cronFacade;
-        $this->scheduler = $schedulerFacade;
+        $this->scheduler = $scheduler;
     }
 
     public function initialize()
