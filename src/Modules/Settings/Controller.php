@@ -5,10 +5,10 @@
 
 namespace PublishPressFuture\Modules\Settings;
 
-use PublishPressFuture\Framework\HookableInterface;
-use PublishPressFuture\Framework\Hooks\ActionsAbstract as CoreHooksAbstract;
-use PublishPressFuture\Framework\InitializableInterface;
+use PublishPressFuture\Core\Framework\InitializableInterface;
+use PublishPressFuture\Core\Hooks\HookableInterface;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract;
+use PublishPressFuture\Framework\Hooks\HooksActionsAbstract as CoreHooksAbstract;
 
 class Controller implements InitializableInterface
 {

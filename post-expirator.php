@@ -10,30 +10,48 @@
  * Domain Path: /languages
  */
 
-use PublishPressFuture\Framework\Dependencies\Container;
-use PublishPressFuture\Framework\Dependencies\ServicesAbstract;
+use PublishPressFuture\Core\AbstractServices;
+use PublishPressFuture\Core\DI\Container;
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     define('PUBLISHPRESS_FUTURE_LOADED', true);
 
     try {
         $autoloadPath = __DIR__ . '/vendor/autoload.php';
-        if (! class_exists('PublishPressFuture\\Core\\PluginFacade') && is_readable($autoloadPath)) {
+        if (! class_exists('PublishPressFuture\\Core\\Plugin') && is_readable($autoloadPath)) {
             require_once $autoloadPath;
         }
 
-        $services = require __DIR__ . '/services.php';
-        $container = new Container($services);
-
         $pluginFile = __FILE__;
+
+        $services = require __DIR__ . '/services.php';
+
+        $container = new Container($services);
 
         require_once __DIR__ . '/legacy/defines.php';
         require_once __DIR__ . '/legacy/functions.php';
         require_once __DIR__ . '/legacy/autoload.php';
 
-        // Launch the plugin
-        $container->get(ServicesAbstract::PLUGIN_FACADE)->initialize();
+        $container->get(AbstractServices::PLUGIN)->initialize();
     } catch (Exception $e) {
-        error_log('[PUBLISHPRESSFUTURE] ' . $e->getMessage());
+        $trace = $e->getTrace();
+
+        $traceText = '';
+
+        foreach ($trace as $item) {
+            $traceText .= $item['file'] . ':' . $item['line'] . ' ' . $item['function'] . '(), ';
+        }
+
+        $message = sprintf(
+            "PUBLISHPRESS FUTURE Exception: %s: %s. Backtrace: %s",
+            get_class($e),
+            $e->getMessage(),
+            $traceText
+        );
+
+        // Make the log message binary safe removing any non-printable chars.
+        $message = addcslashes($message, "\000..\037\177..\377\\");
+
+        error_log($message);
     }
 }

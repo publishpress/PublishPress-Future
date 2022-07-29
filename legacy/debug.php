@@ -1,9 +1,11 @@
 <?php
 
-use PublishPressFuture\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Framework\Dependencies\Container;
-use PublishPressFuture\Framework\Dependencies\ServicesAbstract;
-use PublishPressFuture\Modules\Debug\Hooks\ActionsAbstract as DebugHooksAbstract;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ContainerNotInitializedException;
+use PublishPressFuture\Modules\Debug\DebugInterface;
+use PublishPressFuture\Modules\Debug\ServiceProvider;
 
 /**
  * The class that adds debug entries to the database.
@@ -13,9 +15,9 @@ use PublishPressFuture\Modules\Debug\Hooks\ActionsAbstract as DebugHooksAbstract
 class PostExpiratorDebug
 {
     /**
-     * @var LoggerInterface
+     * @var DebugInterface
      */
-    private $logger;
+    private $debug;
 
     /**
      * @var string
@@ -25,10 +27,13 @@ class PostExpiratorDebug
 
     /**
      * Constructor.
+     * @throws ContainerNotInitializedException
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     public function __construct()
     {
-        $this->hooks = Container::getInstance()->get(ServicesAbstract::HOOKS_FACADE);
+        $this->debug = Container::getInstance()->get(ServiceProvider::SERVICE_DEBUG);
     }
 
     /**
@@ -36,7 +41,7 @@ class PostExpiratorDebug
      */
     public function removeDBTable()
     {
-        $this->hooks->doAction(DebugHooksAbstract::DROP_DATABASE_TABLE);
+        $this->debug->dropDatabaseTable();
     }
 
     /**
@@ -44,7 +49,7 @@ class PostExpiratorDebug
      */
     public function save($data)
     {
-        $this->hooks->doAction(DebugHooksAbstract::LOG_DEBUG, $data['message']);
+        $this->debug->log($data['message']);
     }
 
     /**
@@ -52,8 +57,7 @@ class PostExpiratorDebug
      */
     public function getTable()
     {
-        return $this->hooks->applyFilters(DebugHooksAbstract::FETCH_ALL_LOGS, []);
-
+        return $this->debug->fetchAll();
     }
 
     /**
@@ -61,6 +65,6 @@ class PostExpiratorDebug
      */
     public function purge()
     {
-        $this->hooks->doAction(DebugHooksAbstract::DELETE_LOGS);
+        $this->debug->deleteLogs();
     }
 }

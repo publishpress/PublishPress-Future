@@ -5,12 +5,12 @@
 
 namespace PublishPressFuture\Modules\Expirator;
 
-use PublishPressFuture\Framework\Helpers\DateTimeHelper;
-use PublishPressFuture\Framework\HookableInterface;
-use PublishPressFuture\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Framework\WordPress\CronFacade;
-use PublishPressFuture\Framework\WordPress\ErrorFacade;
-use PublishPressFuture\Framework\WordPress\PostModel;
+use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
+use PublishPressFuture\Core\Framework\WordPress\Facade\CronFacade;
+use PublishPressFuture\Core\Framework\WordPress\Facade\DateTimeFacade;
+use PublishPressFuture\Core\Framework\WordPress\Facade\ErrorFacade;
+use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
+use PublishPressFuture\Core\Hooks\HookableInterface;
 use PublishPressFuture\Modules\Expirator\Hooks\ActionsAbstract;
 use WP_Error;
 
@@ -37,24 +37,24 @@ class Scheduler implements SchedulerInterface
     private $logger;
 
     /**
-     * @var DateTimeHelper
+     * @var DateTimeFacade
      */
-    private $dateTimeHelper;
+    private $datetime;
 
     /**
      * @param HookableInterface $hooksFacade
      * @param CronFacade $cronFacade
      * @param ErrorFacade $errorFacade
      * @param LoggerInterface $logger
-     * @param DateTimeHelper $dateTimeHelper
+     * @param DateTimeFacade $datetime
      */
-    public function __construct($hooksFacade, $cronFacade, $errorFacade, $logger, $dateTimeHelper)
+    public function __construct($hooksFacade, $cronFacade, $errorFacade, $logger, $datetime)
     {
         $this->hooks = $hooksFacade;
         $this->cron = $cronFacade;
         $this->error = $errorFacade;
         $this->logger = $logger;
-        $this->dateTimeHelper = $dateTimeHelper;
+        $this->datetime = $datetime;
     }
 
     /**
@@ -78,7 +78,7 @@ class Scheduler implements SchedulerInterface
                 sprintf(
                     '%d  -> TRIED TO SCHEDULE CRON EVENT at %s (%s) with options %s %s',
                     $postId,
-                    $this->dateTimeHelper->getWpDate('r', $timestamp),
+                    $this->datetime->getWpDate('r', $timestamp),
                     $timestamp,
                     print_r($opts, true),
                     $this->error->isWpError($scheduled) ? $this->error->getWpErrorMessage(
@@ -96,7 +96,7 @@ class Scheduler implements SchedulerInterface
             sprintf(
                 '%d  -> CRON EVENT SCHEDULED at %s (%s) with options %s, no errors found',
                 $postId,
-                $this->dateTimeHelper->getWpDate('r', $timestamp),
+                $this->datetime->getWpDate('r', $timestamp),
                 $timestamp,
                 print_r($opts, true)
             )
