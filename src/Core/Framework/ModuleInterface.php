@@ -5,8 +5,6 @@
 
 namespace PublishPressFuture\Core\Framework;
 
-use Psr\Container\ContainerExceptionInterface;
-
 interface ModuleInterface
 {
 }

@@ -67,8 +67,6 @@ abstract class AbstractServices
 
     const DEBUG = 'debug';
 
-    const INSTANCE_PROTECTION = 'instance.protection';
-
     const MODULES = 'modules';
 
     const MODULE_DEBUG = 'module.debug';

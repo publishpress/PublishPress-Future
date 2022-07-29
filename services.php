@@ -205,30 +205,6 @@ return [
     },
 
     /**
-     * @returns InstanceChecker
-     */
-    AbstractServices::INSTANCE_PROTECTION => function (ContainerInterface $container) {
-        $paths = $container->get(AbstractServices::PATHS);
-
-        $includeFile = $paths->getVendorDirPath()
-            . '/publishpress/publishpress-instance-protection/include.php';
-
-        if (is_readable($includeFile)) {
-            require_once $includeFile;
-        }
-
-        if (! class_exists('PublishPressInstanceProtection\\Config')) {
-            return null;
-        }
-
-        $pluginCheckerConfig = new InstanceProtectionConfig();
-        $pluginCheckerConfig->pluginSlug = $container->get(AbstractServices::PLUGIN_SLUG);
-        $pluginCheckerConfig->pluginName = $container->get(AbstractServices::PLUGIN_NAME);
-
-        return new InstanceChecker($pluginCheckerConfig);
-    },
-
-    /**
      * @return SettingsFacade
      */
     AbstractServices::SETTINGS => function (ContainerInterface $container) {
@@ -254,7 +230,11 @@ return [
      * @return ModuleInstanceProtection
      */
     AbstractServices::MODULE_INSTANCE_PROTECTION => function (ContainerInterface $container) {
-        return new ModuleInstanceProtection();
+        return new ModuleInstanceProtection(
+            $container->get(AbstractServices::PATHS),
+            $container->get(AbstractServices::PLUGIN_SLUG),
+            $container->get(AbstractServices::PLUGIN_NAME)
+        );
     },
 
     /**
