@@ -805,35 +805,35 @@ function postexpirator_expire_post($postId)
 //            $postWasExpired = true;
 //        }
     } elseif ($expireType === 'private') {
-        if (wp_update_post(array('ID' => $postId, 'post_status' => 'private')) === 0) {
-            if ($debugIsEnabled) {
-                do_action(
-                    DebugAbstractHooks::ACTION_DEBUG_LOG,
-                    $postId . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true)
-                );
-            }
-        } else {
-            $emailBody = sprintf(
-                __(
-                    '%1$s (%2$s) has expired at %3$s. Post status has been successfully changed to "%4$s".',
-                    'post-expirator'
-                ),
-                '##POSTTITLE##',
-                '##POSTLINK##',
-                '##EXPIRATIONDATE##',
-                strtoupper($expireType)
-            );
-            if ($debugIsEnabled) {
-                do_action(
-                    DebugAbstractHooks::ACTION_DEBUG_LOG,
-                    $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true)
-                );
-            }
-
-            wp_transition_post_status('private', $post->post_status, $post);
-
-            $postWasExpired = true;
-        }
+//        if (wp_update_post(array('ID' => $postId, 'post_status' => 'private')) === 0) {
+//            if ($debugIsEnabled) {
+//                do_action(
+//                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+//                    $postId . ' -> FAILED ' . $expireType . ' ' . print_r($postExpireOptions, true)
+//                );
+//            }
+//        } else {
+//            $emailBody = sprintf(
+//                __(
+//                    '%1$s (%2$s) has expired at %3$s. Post status has been successfully changed to "%4$s".',
+//                    'post-expirator'
+//                ),
+//                '##POSTTITLE##',
+//                '##POSTLINK##',
+//                '##EXPIRATIONDATE##',
+//                strtoupper($expireType)
+//            );
+//            if ($debugIsEnabled) {
+//                do_action(
+//                    DebugAbstractHooks::ACTION_DEBUG_LOG,
+//                    $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true)
+//                );
+//            }
+//
+//            wp_transition_post_status('private', $post->post_status, $post);
+//
+//            $postWasExpired = true;
+//        }
     } elseif ($expireType === 'delete') {
         if (wp_delete_post($postId) === false) {
             if ($debugIsEnabled) {

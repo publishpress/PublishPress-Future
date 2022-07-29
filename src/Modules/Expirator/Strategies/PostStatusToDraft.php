@@ -5,8 +5,6 @@ namespace PublishPressFuture\Modules\Expirator\Strategies;
 use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
 use PublishPressFuture\Modules\Expirator\ExpirableActionInterface;
 
-use function ray;
-
 class PostStatusToDraft implements ExpirableActionInterface
 {
     const EXPIRATION_TYPE = 'draft';
@@ -87,26 +85,6 @@ class PostStatusToDraft implements ExpirableActionInterface
      */
     public function execute()
     {
-        ray(__METHOD__);
-
-        // TODO: fix this, because wp_update_post returns int or WP_ERROR, not 0. Check other places doing the same.
-
-        $updated = $this->model->setPostStatus('draft');
-
-        if (! $updated) {
-            if ($this->debug) {
-                $this->debug->log($this->postId . ' -> FAILED ' . __CLASS__ . ' ' . print_r($this->expirationData, true));
-            }
-
-            return false;
-        }
-
-        if ($this->debug) {
-            $this->debug->log($this->postId . ' -> PROCESSED ' . __CLASS__ . ' ' . print_r($this->expirationData, true));
-        }
-
-        return true;
+        return $this->model->setPostStatus('draft');
     }
-
-
 }
