@@ -46,6 +46,11 @@ class Module implements ModuleInterface
      */
     private $datetime;
 
+    /**
+     * @var Controller
+     */
+    private $controller;
+
     public function __construct($hooks, $site, $cron, $error, $logger, $datetime)
     {
         $this->hooks = $hooks;
@@ -55,8 +60,15 @@ class Module implements ModuleInterface
         $this->logger = $logger;
         $this->datetime = $datetime;
 
-        $controller = $this->getController();
-        $controller->initialize();
+        $this->controller = $this->getController();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function initialize()
+    {
+        $this->controller->initialize();
     }
 
     /**

@@ -7,4 +7,8 @@ namespace PublishPressFuture\Core\Framework;
 
 interface ModuleInterface
 {
+    /**
+     * @return void
+     */
+    public function initialize();
 }

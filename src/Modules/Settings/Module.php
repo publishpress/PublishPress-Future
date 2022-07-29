@@ -10,4 +10,10 @@ use PublishPressFuture\Core\Framework\ModuleInterface;
 
 class Module implements ModuleInterface
 {
+    /**
+     * @inheritDoc
+     */
+    public function initialize()
+    {
+    }
 }

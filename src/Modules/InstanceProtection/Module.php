@@ -32,4 +32,11 @@ class Module implements ModuleInterface
 
         new InstanceChecker($pluginCheckerConfig);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function initialize()
+    {
+    }
 }
