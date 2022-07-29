@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Core;
+namespace PublishPressFuture\Core\Hooks;
 
 abstract class AbstractActionHooks
 {

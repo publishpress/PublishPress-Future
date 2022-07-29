@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Modules\Settings;
 
-use PublishPressFuture\Core\AbstractServices;
+use PublishPressFuture\Core\DI\AbstractServices;
 use PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade;
 use PublishPressFuture\Core\Hooks\HookableInterface;
 use PublishPressFuture\Modules\Settings\Hooks\ActionsAbstract;

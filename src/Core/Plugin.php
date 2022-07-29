@@ -7,6 +7,7 @@ namespace PublishPressFuture\Core;
 
 use PublishPressFuture\Core\Framework\InitializableInterface;
 use PublishPressFuture\Core\Framework\ModuleInterface as ModuleInterface;
+use PublishPressFuture\Core\Hooks\AbstractActionHooks;
 use PublishPressFuture\Core\Hooks\HookableInterface;
 
 class Plugin implements InitializableInterface

@@ -1,7 +1,7 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use PublishPressFuture\Core\AbstractServices;
+use PublishPressFuture\Core\DI\AbstractServices;
 use PublishPressFuture\Core\Framework\Logger\Logger;
 use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\CronFacade;
@@ -22,8 +22,6 @@ use PublishPressFuture\Modules\Expirator\Scheduler;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
 use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
-use PublishPressInstanceProtection\Config as InstanceProtectionConfig;
-use PublishPressInstanceProtection\InstanceChecker;
 
 return [
     AbstractServices::PLUGIN_VERSION => '2.8.0-alpha.1',
