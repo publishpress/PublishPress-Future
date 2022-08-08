@@ -9,8 +9,8 @@ use Codeception\Test\Unit;
 use PublishPressFuture\Modules\Expirator\ExpirationActionMapper;
 use PublishPressFuture\Modules\Expirator\ActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException;
-use PublishPressFuture\Modules\Expirator\Actions\PostStatusToDraft;
-use PublishPressFuture\Modules\Expirator\Actions\PostStatusToPrivate;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToDraft;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
 use WordpressTester;
 
 

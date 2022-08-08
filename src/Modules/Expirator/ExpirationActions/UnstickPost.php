@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\Actions;
+namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
 

@@ -1,12 +1,14 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\Actions;
+namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
 use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
 
-class PostStatusToPrivate implements ExpirableActionInterface
+class PostStatusToDraft implements ExpirableActionInterface
 {
+    const EXPIRATION_TYPE = 'draft';
+
     /**
      * @var int
      */
@@ -66,7 +68,7 @@ class PostStatusToPrivate implements ExpirableActionInterface
             '##POSTTITLE##',
             '##POSTLINK##',
             '##EXPIRATIONDATE##',
-            'private'
+            'draft'
         );
     }
 
@@ -83,6 +85,6 @@ class PostStatusToPrivate implements ExpirableActionInterface
      */
     public function execute()
     {
-        return $this->model->setPostStatus('private');
+        return $this->model->setPostStatus('draft');
     }
 }
