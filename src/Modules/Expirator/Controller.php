@@ -26,6 +26,11 @@ class Controller implements InitializableInterface
     private $cron;
 
     /**
+     * @var ExpirationRunner
+     */
+    private $runner;
+
+    /**
      * @var ExpirationScheduler
      */
     private $scheduler;
@@ -34,19 +39,23 @@ class Controller implements InitializableInterface
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
      * @param CronFacade $cronFacade
-     * @param ExpirationScheduler $scheduler
+     * @param RunnerInterface $runner
+     * @param SchedulerInterface $scheduler
      */
-    public function __construct(HookableInterface $hooksFacade, $siteFacade, $cronFacade, $scheduler)
+    public function __construct(HookableInterface $hooksFacade, $siteFacade, $cronFacade, $runner, $scheduler)
     {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
         $this->cron = $cronFacade;
+        $this->runner = $runner;
         $this->scheduler = $scheduler;
     }
 
     public function initialize()
     {
-        $this->hooks->addAction(SettingsHooksAbstract::ACTION_DELETE_ALL_SETTINGS, [$this, 'onActionDeleteAllSettings']
+        $this->hooks->addAction(
+            SettingsHooksAbstract::ACTION_DELETE_ALL_SETTINGS,
+            [$this, 'onActionDeleteAllSettings']
         );
         $this->hooks->addAction(
             AbstractHooks::SCHEDULE_POST_EXPIRATION,
@@ -71,7 +80,7 @@ class Controller implements InitializableInterface
 
     public function onActionSchedulePostExpiration($postId, $timestamp, $opts)
     {
-        $this->scheduler->scheduleExpirationForPost($postId, $timestamp, $opts);
+        $this->scheduler->schedule($postId, $timestamp, $opts);
     }
 
     public function onActionUnschedulePostExpiration($postId)

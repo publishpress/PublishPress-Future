@@ -259,7 +259,9 @@ return [
             $container->get(AbstractServices::CRON),
             $container->get(AbstractServices::ERROR),
             $container->get(AbstractServices::LOGGER),
-            $container->get(AbstractServices::DATETIME)
+            $container->get(AbstractServices::DATETIME),
+            $container->get(AbstractServices::EXPIRATION_RUNNER),
+            $container->get(AbstractServices::EXPIRATION_SCHEDULER)
         );
     },
 
