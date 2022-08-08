@@ -84,13 +84,11 @@ class SettingsFacade
             'expirationdateGutenbergSupport' => 1,
         ];
 
-        $callback = function ($defaultValue, $optionName) {
+        foreach ($defaultValues as $optionName => $defaultValue) {
             if ($this->options->getOption($optionName) === false) {
                 $this->options->updateOption($optionName, $defaultValue);
             }
-        };
-
-        array_walk($defaultValues, $callback);
+        }
     }
 
     /**
