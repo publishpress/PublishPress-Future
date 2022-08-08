@@ -51,7 +51,17 @@ class Module implements ModuleInterface
      */
     private $controller;
 
-    public function __construct($hooks, $site, $cron, $error, $logger, $datetime)
+    /**
+     * @var RunnerInterface
+     */
+    private $runner;
+
+    /**
+     * @var SchedulerInterface
+     */
+    private $scheduler;
+
+    public function __construct($hooks, $site, $cron, $error, $logger, $datetime, $runner, $scheduler)
     {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -59,6 +69,8 @@ class Module implements ModuleInterface
         $this->error = $error;
         $this->logger = $logger;
         $this->datetime = $datetime;
+        $this->runner = $runner;
+        $this->scheduler = $scheduler;
 
         $this->controller = $this->getController();
     }
@@ -71,27 +83,14 @@ class Module implements ModuleInterface
         $this->controller->initialize();
     }
 
-//    /**
-//     * @return \PublishPressFuture\Modules\Expirator\Scheduler
-//     */
-//    private function getScheduler()
-//    {
-//        return new Scheduler(
-//            $this->hooks,
-//            $this->cron,
-//            $this->error,
-//            $this->logger,
-//            $this->datetime
-//        );
-//    }
-
-//    private function getController()
-//    {
-//        return new Controller(
-//            $this->hooks,
-//            $this->site,
-//            $this->cron,
-//            $this->getScheduler()
-//        );
-//    }
+    private function getController()
+    {
+        return new Controller(
+            $this->hooks,
+            $this->site,
+            $this->cron,
+            $this->runner,
+            $this->scheduler
+        );
+    }
 }
