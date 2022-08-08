@@ -38,19 +38,6 @@ class SettingsFacade
         $this->defaultData = $defaultData;
     }
 
-    public function onDeactivatePlugin()
-    {
-        $preserveData = (bool)$this->options->getOption('expirationdatePreserveData', true);
-
-        if ($preserveData) {
-            return;
-        }
-
-        $this->hooks->doAction(AbstractHooks::ACTION_DELETE_ALL_SETTINGS);
-
-        $this->deleteAllSettings();
-    }
-
     public function deleteAllSettings()
     {
         $allOptions = [
