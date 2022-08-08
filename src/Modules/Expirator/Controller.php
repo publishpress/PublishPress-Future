@@ -65,7 +65,10 @@ class Controller implements InitializableInterface
             10,
             3
         );
-        $this->hooks->addAction(AbstractHooks::UNSCHEDULE_POST_EXPIRATION, [$this, 'onActionUnschedulePostExpiration']);
+        $this->hooks->addAction(
+            AbstractHooks::UNSCHEDULE_POST_EXPIRATION,
+            [$this, 'onActionUnschedulePostExpiration']
+        );
     }
 
     public function onActionDeleteAllSettings()
