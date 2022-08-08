@@ -17,7 +17,7 @@ use PublishPressFuture\Core\Plugin;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
 use PublishPressFuture\Modules\Expirator\ExpirationRunner;
 use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
-use PublishPressFuture\Modules\Expirator\Module as ModuleExpiration;
+use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
 use PublishPressFuture\Modules\Expirator\RunnerInterface;
 use PublishPressFuture\Modules\Expirator\SchedulerInterface;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
@@ -250,10 +250,10 @@ return [
     },
 
     /**
-     * @return ModuleExpiration
+     * @return ModuleExpirator
      */
     AbstractServices::MODULE_EXPIRATOR => function (ContainerInterface $container) {
-        return new ModuleExpiration(
+        return new ModuleExpirator(
             $container->get(AbstractServices::HOOKS),
             $container->get(AbstractServices::SITE),
             $container->get(AbstractServices::CRON),
