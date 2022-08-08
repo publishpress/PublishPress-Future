@@ -269,7 +269,10 @@ return [
      * @return ModuleSettings
      */
     AbstractServices::MODULE_SETTINGS => function (ContainerInterface $container) {
-        return new ModuleSettings();
+        return new ModuleSettings(
+            $container->get(AbstractServices::HOOKS),
+            $container->get(AbstractServices::SETTINGS)
+        );
     },
 
     AbstractServices::POST_MODEL_FACTORY => function (ContainerInterface $container) {
