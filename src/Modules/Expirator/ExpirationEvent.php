@@ -4,9 +4,9 @@ namespace PublishPressFuture\Modules\Expirator;
 
 
 use PublishPressFuture\Modules\Expirator\Interfaces\ActionableInterface;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 
-class ExpirationEvent implements ActionableInterface, ExpirableActionInterface
+class ExpirationEvent implements ActionableInterface, ExpirationActionInterface
 {
     /**
      * @var int
@@ -16,7 +16,7 @@ class ExpirationEvent implements ActionableInterface, ExpirableActionInterface
     /**
      * Undocumented variable
      *
-     * @var ExpirableActionInterface
+     * @var ExpirationActionInterface
      */
     private $action;
 

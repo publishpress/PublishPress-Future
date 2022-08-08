@@ -6,7 +6,7 @@
 namespace PublishPressFuture\Modules\Expirator;
 
 use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 
@@ -187,11 +187,11 @@ class ExpirationRunner implements RunnerInterface
 
     /**
      * @param int $postId
-     * @param \PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface $action
+     * @param \PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface $action
      * @param array $expirationData
      * @return bool
      */
-    protected function sendEmail($postId, ExpirableActionInterface $action, $expirationData)
+    protected function sendEmail($postId, ExpirationActionInterface $action, $expirationData)
     {
         // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
         $emailBody = $action->getNotificationText();
@@ -289,7 +289,7 @@ class ExpirationRunner implements RunnerInterface
      * @param string $class
      * @param int $postId
      * @param array $expirationData
-     * @return \PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface
+     * @return \PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface
      */
     protected function getActionByClass($class, $postId, $expirationData)
     {

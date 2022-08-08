@@ -6,7 +6,7 @@
 namespace PublishPressFuture\Modules\Expirator\Interfaces;
 
 
-interface ExpirableActionInterface
+interface ExpirationActionInterface
 {
     /**
      * @return bool

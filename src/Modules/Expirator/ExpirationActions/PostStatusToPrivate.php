@@ -3,9 +3,9 @@
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
 use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 
-class PostStatusToPrivate implements ExpirableActionInterface
+class PostStatusToPrivate implements ExpirationActionInterface
 {
     /**
      * @var int

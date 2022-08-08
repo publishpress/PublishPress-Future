@@ -2,11 +2,11 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 
 use function ray;
 
-class PostStatusToTrash implements ExpirableActionInterface
+class PostStatusToTrash implements ExpirationActionInterface
 {
     /**
      * @var int
