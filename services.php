@@ -5,6 +5,7 @@ use PublishPressFuture\Core\AbstractHooks;
 use PublishPressFuture\Core\DI\AbstractServices;
 use PublishPressFuture\Core\Framework\Logger\Logger;
 use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
+use PublishPressFuture\Core\Framework\ModuleInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\DateTimeFacade;
@@ -56,7 +57,7 @@ return [
     },
 
     /**
-     * @return array
+     * @return ModuleInterface[]
      */
     AbstractServices::MODULES => static function (ContainerInterface $container) {
         $modulesServiceList = [
@@ -229,7 +230,7 @@ return [
     },
 
     /**
-     * @return ModuleDebug
+     * @return ModuleInterface
      */
     AbstractServices::MODULE_DEBUG => function (ContainerInterface $container) {
         return new ModuleDebug(
@@ -239,7 +240,7 @@ return [
     },
 
     /**
-     * @return ModuleInstanceProtection
+     * @return ModuleInterface
      */
     AbstractServices::MODULE_INSTANCE_PROTECTION => function (ContainerInterface $container) {
         return new ModuleInstanceProtection(
@@ -250,7 +251,7 @@ return [
     },
 
     /**
-     * @return ModuleExpirator
+     * @return ModuleInterface
      */
     AbstractServices::MODULE_EXPIRATOR => function (ContainerInterface $container) {
         return new ModuleExpirator(
@@ -266,7 +267,7 @@ return [
     },
 
     /**
-     * @return ModuleSettings
+     * @return ModuleInterface
      */
     AbstractServices::MODULE_SETTINGS => function (ContainerInterface $container) {
         return new ModuleSettings(
