@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Core;
 
-abstract class AbstractHooks
+abstract class HooksAbstract
 {
     const ACTION_INIT_PLUGIN = 'publishpressfuture.core/init';
 

@@ -8,7 +8,7 @@ namespace unit\Core;
 use Codeception\Stub\Expected;
 use Codeception\Test\Unit;
 use Exception;
-use PublishPressFuture\Core\AbstractHooks;
+use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Core\Plugin;
 use stdClass;
@@ -60,7 +60,7 @@ class PluginTest extends Unit
 
         $plugin->initialize();
 
-        $this->assertTrue(in_array(AbstractHooks::ACTION_INIT_PLUGIN, $testInitializeTriggersActionInitPluginActions));
+        $this->assertTrue(in_array(HooksAbstract::ACTION_INIT_PLUGIN, $testInitializeTriggersActionInitPluginActions));
     }
 
     /**
@@ -126,7 +126,7 @@ class PluginTest extends Unit
         $plugin->deactivatePlugin();
 
         $this->assertTrue(
-            in_array(AbstractHooks::ACTION_DEACTIVATE_PLUGIN, $testDeactivatePluginDoActionDeactivatePluginActions)
+            in_array(HooksAbstract::ACTION_DEACTIVATE_PLUGIN, $testDeactivatePluginDoActionDeactivatePluginActions)
         );
     }
 }

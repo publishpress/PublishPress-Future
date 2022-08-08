@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Modules\Settings;
 
-abstract class AbstractHooks
+abstract class HooksAbstract
 {
     const ACTION_DELETE_ALL_SETTINGS = 'publishpressfuture.settings/delete/settings';
 

@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Modules\Settings;
 
-use PublishPressFuture\Core\AbstractHooks as CoreAbstractHooks;
+use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPressFuture\Core\Framework\InitializableInterface;
 use PublishPressFuture\Core\HookableInterface;
 
@@ -47,7 +47,7 @@ class Controller implements InitializableInterface
             [$this, 'onActionDeactivatePlugin']
         );
         $this->hooks->addFilter(
-            AbstractHooks::FILTER_DEBUG_ENABLED,
+            HooksAbstract::FILTER_DEBUG_ENABLED,
             [$this, 'onFilterDebugEnabled']
         );
     }
@@ -63,7 +63,7 @@ class Controller implements InitializableInterface
             return;
         }
 
-        $this->hooks->doAction(AbstractHooks::ACTION_DELETE_ALL_SETTINGS);
+        $this->hooks->doAction(HooksAbstract::ACTION_DELETE_ALL_SETTINGS);
 
         $this->settings->deleteAllSettings();
     }

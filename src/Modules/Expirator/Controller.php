@@ -8,7 +8,7 @@ use PublishPressFuture\Core\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPressFuture\Modules\Settings\AbstractHooks as SettingsHooksAbstract;
+use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface
 {
@@ -60,13 +60,13 @@ class Controller implements InitializableInterface
             [$this, 'onActionDeleteAllSettings']
         );
         $this->hooks->addAction(
-            AbstractHooks::SCHEDULE_POST_EXPIRATION,
+            HooksAbstract::SCHEDULE_POST_EXPIRATION,
             [$this, 'onActionSchedulePostExpiration'],
             10,
             3
         );
         $this->hooks->addAction(
-            AbstractHooks::UNSCHEDULE_POST_EXPIRATION,
+            HooksAbstract::UNSCHEDULE_POST_EXPIRATION,
             [$this, 'onActionUnschedulePostExpiration']
         );
     }

@@ -1,12 +1,12 @@
 <?php
 
-use \PublishPressFuture\Modules\Settings\AbstractHooks;
+use \PublishPressFuture\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET['tab']));
 
-$debugIsEnabled = apply_filters(AbstractHooks::FILTER_DEBUG_ENABLED, false);
+$debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
 ?>
 
 <div class="wrap">

@@ -4,9 +4,9 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
-use PublishPressFuture\Core\DI\AbstractServices as CoreAbstractServices;
-use PublishPressFuture\Modules\Debug\AbstractHooks as DebugAbstractHooks;
-use PublishPressFuture\Modules\Settings\AbstractHooks as SettingsAbstractHooks;
+use PublishPressFuture\Core\DI\ServicesAbstract as CoreAbstractServices;
+use PublishPressFuture\Modules\Debug\HooksAbstract as DebugAbstractHooks;
+use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsAbstractHooks;
 use PublishPressFuture\Core\DI\Container;
 
 /**

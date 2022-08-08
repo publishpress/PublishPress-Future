@@ -73,11 +73,11 @@ class ExpirationScheduler implements SchedulerInterface
     {
         $postId = (int)$postId;
 
-        $this->hooks->doAction(AbstractHooks::LEGACY_SCHEDULE, $postId, $timestamp, $opts);
+        $this->hooks->doAction(HooksAbstract::LEGACY_SCHEDULE, $postId, $timestamp, $opts);
 
         $this->unscheduleIfScheduled($postId, $timestamp);
 
-        $scheduled = $this->cron->scheduleSingleEvent($timestamp, AbstractHooks::LEGACY_EXPIRE_POST, [$postId], true);
+        $scheduled = $this->cron->scheduleSingleEvent($timestamp, HooksAbstract::LEGACY_EXPIRE_POST, [$postId], true);
 
         if (! $scheduled) {
             $this->logger->debug(
@@ -125,7 +125,7 @@ class ExpirationScheduler implements SchedulerInterface
 
     public function isScheduled($postId)
     {
-        return $this->cron->getNextScheduleForEvent($postId, AbstractHooks::LEGACY_EXPIRE_POST);
+        return $this->cron->getNextScheduleForEvent($postId, HooksAbstract::LEGACY_EXPIRE_POST);
     }
 
     /**
@@ -134,7 +134,7 @@ class ExpirationScheduler implements SchedulerInterface
      */
     private function removeSchedule($postId)
     {
-        return $this->cron->clearScheduledHook(AbstractHooks::LEGACY_EXPIRE_POST, [$postId], true);
+        return $this->cron->clearScheduledHook(HooksAbstract::LEGACY_EXPIRE_POST, [$postId], true);
     }
 
     /**
@@ -163,10 +163,10 @@ class ExpirationScheduler implements SchedulerInterface
      */
     public function unschedule($postId)
     {
-        $this->hooks->doAction(AbstractHooks::LEGACY_UNSCHEDULE, $postId);
+        $this->hooks->doAction(HooksAbstract::LEGACY_UNSCHEDULE, $postId);
 
         if ($this->isScheduled($postId)) {
-            $this->cron->clearScheduledHook(AbstractHooks::LEGACY_EXPIRE_POST, [$postId]);
+            $this->cron->clearScheduledHook(HooksAbstract::LEGACY_EXPIRE_POST, [$postId]);
 
             $this->logger->debug(sprintf('%d -> UNSCHEDULED, no errors found', $postId));
         }

@@ -1,8 +1,8 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use PublishPressFuture\Core\AbstractHooks;
-use PublishPressFuture\Core\DI\AbstractServices;
+use PublishPressFuture\Core\HooksAbstract;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Core\Framework\Logger\Logger;
 use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
 use PublishPressFuture\Core\Framework\ModuleInterface;
@@ -26,45 +26,45 @@ use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 
 return [
-    AbstractServices::PLUGIN_VERSION => '2.8.0-alpha.1',
+    ServicesAbstract::PLUGIN_VERSION => '2.8.0-alpha.1',
 
-    AbstractServices::PLUGIN_SLUG => 'post-expirator',
+    ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
-    AbstractServices::PLUGIN_NAME => 'PublishPress Future',
+    ServicesAbstract::PLUGIN_NAME => 'PublishPress Future',
 
-    AbstractServices::DEFAULT_DATA => [
-        AbstractServices::DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
-        AbstractServices::DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
-        AbstractServices::DEFAULT_FOOTER_CONTENT => __(
+    ServicesAbstract::DEFAULT_DATA => [
+        ServicesAbstract::DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
+        ServicesAbstract::DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
+        ServicesAbstract::DEFAULT_FOOTER_CONTENT => __(
             'Post expires at EXPIRATIONTIME on EXPIRATIONDATE',
             'post-expirator'
         ),
-        AbstractServices::DEFAULT_FOOTER_STYLE => 'font-style: italic;',
-        AbstractServices::DEFAULT_FOOTER_DISPLAY => '0',
-        AbstractServices::DEFAULT_EMAIL_NOTIFICATION => '0',
-        AbstractServices::DEFAULT_EMAIL_NOTIFICATION_ADMINS => '0',
-        AbstractServices::DEFAULT_DEBUG => '0',
-        AbstractServices::DEFAULT_EXPIRATION_DATE => 'null',
+        ServicesAbstract::DEFAULT_FOOTER_STYLE => 'font-style: italic;',
+        ServicesAbstract::DEFAULT_FOOTER_DISPLAY => '0',
+        ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION => '0',
+        ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION_ADMINS => '0',
+        ServicesAbstract::DEFAULT_DEBUG => '0',
+        ServicesAbstract::DEFAULT_EXPIRATION_DATE => 'null',
     ],
 
-    AbstractServices::BASE_PATH => __DIR__,
+    ServicesAbstract::BASE_PATH => __DIR__,
 
     /**
      * @return string
      */
-    AbstractServices::BASE_URL => static function (ContainerInterface $container) {
+    ServicesAbstract::BASE_URL => static function (ContainerInterface $container) {
         return plugins_url('/', __FILE__);
     },
 
     /**
      * @return ModuleInterface[]
      */
-    AbstractServices::MODULES => static function (ContainerInterface $container) {
+    ServicesAbstract::MODULES => static function (ContainerInterface $container) {
         $modulesServiceList = [
-            AbstractServices::MODULE_DEBUG,
-            AbstractServices::MODULE_INSTANCE_PROTECTION,
-            AbstractServices::MODULE_EXPIRATOR,
-            AbstractServices::MODULE_SETTINGS,
+            ServicesAbstract::MODULE_DEBUG,
+            ServicesAbstract::MODULE_INSTANCE_PROTECTION,
+            ServicesAbstract::MODULE_EXPIRATOR,
+            ServicesAbstract::MODULE_SETTINGS,
         ];
 
         $modules = [];
@@ -72,8 +72,8 @@ return [
             $modules[] = $container->get($service);
         }
 
-        return $container->get(AbstractServices::HOOKS)->applyFilters(
-            AbstractHooks::FILTER_MODULES_LIST,
+        return $container->get(ServicesAbstract::HOOKS)->applyFilters(
+            HooksAbstract::FILTER_MODULES_LIST,
             $modules
         );
     },
@@ -81,106 +81,106 @@ return [
     /**
      * @return Plugin
      */
-    AbstractServices::PLUGIN => static function (ContainerInterface $container) {
+    ServicesAbstract::PLUGIN => static function (ContainerInterface $container) {
         return new Plugin(
-            $container->get(AbstractServices::MODULES),
-            $container->get(AbstractServices::LEGACY_PLUGIN),
-            $container->get(AbstractServices::HOOKS),
-            $container->get(AbstractServices::PLUGIN_SLUG),
-            $container->get(AbstractServices::BASE_PATH)
+            $container->get(ServicesAbstract::MODULES),
+            $container->get(ServicesAbstract::LEGACY_PLUGIN),
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::PLUGIN_SLUG),
+            $container->get(ServicesAbstract::BASE_PATH)
         );
     },
 
     /**
      * @return PostExpirator_Facade
      */
-    AbstractServices::LEGACY_PLUGIN => static function (ContainerInterface $container) {
+    ServicesAbstract::LEGACY_PLUGIN => static function (ContainerInterface $container) {
         return PostExpirator_Facade::getInstance();
     },
 
     /**
      * @return Paths
      */
-    AbstractServices::PATHS => static function (ContainerInterface $container) {
+    ServicesAbstract::PATHS => static function (ContainerInterface $container) {
         return new Paths(__DIR__);
     },
 
     /**
      * @return LoggerInterface
      */
-    AbstractServices::LOGGER => function (ContainerInterface $container) {
+    ServicesAbstract::LOGGER => function (ContainerInterface $container) {
         return new Logger(
-            $container->get(AbstractServices::DB),
-            $container->get(AbstractServices::SITE),
-            $container->get(AbstractServices::SETTINGS)
+            $container->get(ServicesAbstract::DB),
+            $container->get(ServicesAbstract::SITE),
+            $container->get(ServicesAbstract::SETTINGS)
         );
     },
 
     /**
      * @return CronFacade
      */
-    AbstractServices::CRON => function (ContainerInterface $container) {
+    ServicesAbstract::CRON => function (ContainerInterface $container) {
         return new CronFacade();
     },
 
     /**
      * @return HooksFacade
      */
-    AbstractServices::HOOKS => function (ContainerInterface $container) {
+    ServicesAbstract::HOOKS => function (ContainerInterface $container) {
         return new HooksFacade();
     },
 
     /**
      * @return DatabaseFacade
      */
-    AbstractServices::DB => function (ContainerInterface $container) {
+    ServicesAbstract::DB => function (ContainerInterface $container) {
         return new DatabaseFacade();
     },
 
     /**
      * @return DateTimeFacade
      */
-    AbstractServices::DATETIME => function (ContainerInterface $container) {
+    ServicesAbstract::DATETIME => function (ContainerInterface $container) {
         return new DateTimeFacade();
     },
 
     /**
      * @return ErrorFacade
      */
-    AbstractServices::ERROR => function (ContainerInterface $container) {
+    ServicesAbstract::ERROR => function (ContainerInterface $container) {
         return new ErrorFacade();
     },
 
     /**
      * @return OptionsFacade
      */
-    AbstractServices::OPTIONS => function (ContainerInterface $container) {
+    ServicesAbstract::OPTIONS => function (ContainerInterface $container) {
         return new OptionsFacade();
     },
 
     /**
      * @return SiteFacade
      */
-    AbstractServices::SITE => function (ContainerInterface $container) {
+    ServicesAbstract::SITE => function (ContainerInterface $container) {
         return new SiteFacade();
     },
 
     /**
      * @return PublishPressFuture\Modules\Debug\Debug|null
      */
-    AbstractServices::DEBUG => function (ContainerInterface $container) {
+    ServicesAbstract::DEBUG => function (ContainerInterface $container) {
         return new PublishPressFuture\Modules\Debug\Debug(
-            $container->get(AbstractServices::LOGGER)
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 
     /**
      * @return SettingsFacade
      */
-    AbstractServices::SETTINGS => function (ContainerInterface $container) {
-        $hooks = $container->get(AbstractServices::HOOKS);
-        $options = $container->get(AbstractServices::OPTIONS);
-        $defaultData = $container->get(AbstractServices::DEFAULT_DATA);
+    ServicesAbstract::SETTINGS => function (ContainerInterface $container) {
+        $hooks = $container->get(ServicesAbstract::HOOKS);
+        $options = $container->get(ServicesAbstract::OPTIONS);
+        $defaultData = $container->get(ServicesAbstract::DEFAULT_DATA);
 
         return new SettingsFacade(
             $hooks,
@@ -192,13 +192,13 @@ return [
     /**
      * @return SchedulerInterface
      */
-    AbstractServices::EXPIRATION_SCHEDULER => function (ContainerInterface $container) {
-        $hooks = $container->get(AbstractServices::HOOKS);
-        $cron = $container->get(AbstractServices::CRON);
-        $error = $container->get(AbstractServices::ERROR);
-        $logger = $container->get(AbstractServices::LOGGER);
-        $datetime = $container->get(AbstractServices::DATETIME);
-        $postModelFactory = $container->get(AbstractServices::POST_MODEL_FACTORY);
+    ServicesAbstract::EXPIRATION_SCHEDULER => function (ContainerInterface $container) {
+        $hooks = $container->get(ServicesAbstract::HOOKS);
+        $cron = $container->get(ServicesAbstract::CRON);
+        $error = $container->get(ServicesAbstract::ERROR);
+        $logger = $container->get(ServicesAbstract::LOGGER);
+        $datetime = $container->get(ServicesAbstract::DATETIME);
+        $postModelFactory = $container->get(ServicesAbstract::POST_MODEL_FACTORY);
 
         return new ExpirationScheduler(
             $hooks,
@@ -213,12 +213,12 @@ return [
     /**
      * @return RunnerInterface
      */
-    AbstractServices::EXPIRATION_RUNNER => function (ContainerInterface $container) {
-        $hooks = $container->get(AbstractServices::HOOKS);
-        $scheduler = $container->get(AbstractServices::EXPIRATION_SCHEDULER);
-        $debug = $container->get(AbstractServices::DEBUG);
-        $options = $container->get(AbstractServices::OPTIONS);
-        $postModelFactory = $container->get(AbstractServices::POST_MODEL_FACTORY);
+    ServicesAbstract::EXPIRATION_RUNNER => function (ContainerInterface $container) {
+        $hooks = $container->get(ServicesAbstract::HOOKS);
+        $scheduler = $container->get(ServicesAbstract::EXPIRATION_SCHEDULER);
+        $debug = $container->get(ServicesAbstract::DEBUG);
+        $options = $container->get(ServicesAbstract::OPTIONS);
+        $postModelFactory = $container->get(ServicesAbstract::POST_MODEL_FACTORY);
 
         return new ExpirationRunner(
             $hooks,
@@ -232,53 +232,53 @@ return [
     /**
      * @return ModuleInterface
      */
-    AbstractServices::MODULE_DEBUG => function (ContainerInterface $container) {
+    ServicesAbstract::MODULE_DEBUG => function (ContainerInterface $container) {
         return new ModuleDebug(
-            $container->get(AbstractServices::HOOKS),
-            $container->get(AbstractServices::LOGGER)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::LOGGER)
         );
     },
 
     /**
      * @return ModuleInterface
      */
-    AbstractServices::MODULE_INSTANCE_PROTECTION => function (ContainerInterface $container) {
+    ServicesAbstract::MODULE_INSTANCE_PROTECTION => function (ContainerInterface $container) {
         return new ModuleInstanceProtection(
-            $container->get(AbstractServices::PATHS),
-            $container->get(AbstractServices::PLUGIN_SLUG),
-            $container->get(AbstractServices::PLUGIN_NAME)
+            $container->get(ServicesAbstract::PATHS),
+            $container->get(ServicesAbstract::PLUGIN_SLUG),
+            $container->get(ServicesAbstract::PLUGIN_NAME)
         );
     },
 
     /**
      * @return ModuleInterface
      */
-    AbstractServices::MODULE_EXPIRATOR => function (ContainerInterface $container) {
+    ServicesAbstract::MODULE_EXPIRATOR => function (ContainerInterface $container) {
         return new ModuleExpirator(
-            $container->get(AbstractServices::HOOKS),
-            $container->get(AbstractServices::SITE),
-            $container->get(AbstractServices::CRON),
-            $container->get(AbstractServices::ERROR),
-            $container->get(AbstractServices::LOGGER),
-            $container->get(AbstractServices::DATETIME),
-            $container->get(AbstractServices::EXPIRATION_RUNNER),
-            $container->get(AbstractServices::EXPIRATION_SCHEDULER)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::SITE),
+            $container->get(ServicesAbstract::CRON),
+            $container->get(ServicesAbstract::ERROR),
+            $container->get(ServicesAbstract::LOGGER),
+            $container->get(ServicesAbstract::DATETIME),
+            $container->get(ServicesAbstract::EXPIRATION_RUNNER),
+            $container->get(ServicesAbstract::EXPIRATION_SCHEDULER)
         );
     },
 
     /**
      * @return ModuleInterface
      */
-    AbstractServices::MODULE_SETTINGS => function (ContainerInterface $container) {
+    ServicesAbstract::MODULE_SETTINGS => function (ContainerInterface $container) {
         return new ModuleSettings(
-            $container->get(AbstractServices::HOOKS),
-            $container->get(AbstractServices::SETTINGS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::SETTINGS)
         );
     },
 
-    AbstractServices::POST_MODEL_FACTORY => function (ContainerInterface $container) {
+    ServicesAbstract::POST_MODEL_FACTORY => function (ContainerInterface $container) {
         return new \PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory(
-            $container->get(AbstractServices::DEBUG)
+            $container->get(ServicesAbstract::DEBUG)
         );
     },
 ];

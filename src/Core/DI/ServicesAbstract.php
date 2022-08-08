@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Core\DI;
 
-abstract class AbstractServices
+abstract class ServicesAbstract
 {
     const PLUGIN = 'plugin';
 

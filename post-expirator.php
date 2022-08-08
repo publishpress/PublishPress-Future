@@ -10,7 +10,7 @@
  * Domain Path: /languages
  */
 
-use PublishPressFuture\Core\DI\AbstractServices;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Core\DI\Container;
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
@@ -33,7 +33,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         require_once __DIR__ . '/legacy/deprecated-functions.php';
         require_once __DIR__ . '/legacy/autoload.php';
 
-        $container->get(AbstractServices::PLUGIN)->initialize();
+        $container->get(ServicesAbstract::PLUGIN)->initialize();
     } catch (Exception $e) {
         $trace = $e->getTrace();
 

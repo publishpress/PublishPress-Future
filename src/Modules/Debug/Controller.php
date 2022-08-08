@@ -29,7 +29,7 @@ class Controller implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(AbstractHooks::ACTION_DEBUG_LOG, [$this, 'onActionDebugLog']);
+        $this->hooks->addAction(HooksAbstract::ACTION_DEBUG_LOG, [$this, 'onActionDebugLog']);
     }
 
     public function onActionDebugLog($message)

@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Modules\Settings;
 
-use PublishPressFuture\Core\DI\AbstractServices;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade;
 use PublishPressFuture\Core\HookableInterface;
 
@@ -72,13 +72,13 @@ class SettingsFacade
     public function setDefaultSettings()
     {
         $defaultValues = [
-            'expirationdateDefaultDateFormat' => $this->defaultData[AbstractServices::DEFAULT_DATE_FORMAT],
-            'expirationdateDefaultTimeFormat' => $this->defaultData[AbstractServices::DEFAULT_TIME_FORMAT],
-            'expirationdateFooterContents' => $this->defaultData[AbstractServices::DEFAULT_FOOTER_CONTENT],
-            'expirationdateFooterStyle' => $this->defaultData[AbstractServices::DEFAULT_FOOTER_STYLE],
-            'expirationdateDisplayFooter' => $this->defaultData[AbstractServices::DEFAULT_FOOTER_DISPLAY],
-            'expirationdateDebug' => $this->defaultData[AbstractServices::DEFAULT_DEBUG],
-            'expirationdateDefaultDate' => $this->defaultData[AbstractServices::DEFAULT_EXPIRATION_DATE],
+            'expirationdateDefaultDateFormat' => $this->defaultData[ServicesAbstract::DEFAULT_DATE_FORMAT],
+            'expirationdateDefaultTimeFormat' => $this->defaultData[ServicesAbstract::DEFAULT_TIME_FORMAT],
+            'expirationdateFooterContents' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_CONTENT],
+            'expirationdateFooterStyle' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_STYLE],
+            'expirationdateDisplayFooter' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_DISPLAY],
+            'expirationdateDebug' => $this->defaultData[ServicesAbstract::DEFAULT_DEBUG],
+            'expirationdateDefaultDate' => $this->defaultData[ServicesAbstract::DEFAULT_EXPIRATION_DATE],
             'expirationdateGutenbergSupport' => 1,
         ];
 

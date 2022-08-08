@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Modules\Expirator;
 
-abstract class AbstractHooks
+abstract class HooksAbstract
 {
     const LEGACY_SCHEDULE = 'postexpirator_schedule';
 

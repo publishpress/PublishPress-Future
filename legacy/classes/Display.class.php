@@ -1,6 +1,6 @@
 <?php
 
-use PublishPressFuture\Modules\Settings\AbstractHooks;
+use PublishPressFuture\Modules\Settings\HooksAbstract;
 
 /**
  * The class that is responsible for all the displays.
@@ -94,7 +94,7 @@ class PostExpirator_Display
         $this->load_tab($tab);
         $html = ob_get_clean();
 
-        $debugIsEnabled = (bool)apply_filters(AbstractHooks::FILTER_DEBUG_ENABLED, false);
+        $debugIsEnabled = (bool)apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
         if (! $debugIsEnabled) {
             unset($allowed_tabs['viewdebug']);
         }
