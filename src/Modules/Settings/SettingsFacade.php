@@ -64,11 +64,9 @@ class SettingsFacade
 
         // TODO: Remove the custom post type default settings like expirationdateDefaults<post_type>, etc.
 
-        $callback = function ($optionName) {
+        foreach ($allOptions as $optionName) {
             $this->options->deleteOption($optionName);
-        };
-
-        array_walk($allOptions, $callback);
+        }
     }
 
     public function setDefaultSettings()
