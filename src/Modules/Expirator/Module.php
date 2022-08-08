@@ -13,6 +13,8 @@ use PublishPressFuture\Core\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\SiteFacade;
+use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 
 class Module implements ModuleInterface
 {

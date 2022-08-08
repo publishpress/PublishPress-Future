@@ -3,6 +3,9 @@
 namespace PublishPressFuture\Modules\Expirator;
 
 
+use PublishPressFuture\Modules\Expirator\Interfaces\ActionableInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
+
 class ExpirationEvent implements ActionableInterface, ExpirableActionInterface
 {
     /**

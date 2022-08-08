@@ -6,6 +6,8 @@ use PublishPressFuture\Core\Framework\InitializableInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Settings\AbstractHooks as SettingsHooksAbstract;
 
 class Controller implements InitializableInterface

@@ -1,12 +1,12 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\Strategies;
+namespace PublishPressFuture\Modules\Expirator\Actions;
 
-use PublishPressFuture\Modules\Expirator\ExpirableActionInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
 
 use function ray;
 
-class PostCategorySet implements ExpirableActionInterface
+class StickPost implements ExpirableActionInterface
 {
     /**
      * @var int

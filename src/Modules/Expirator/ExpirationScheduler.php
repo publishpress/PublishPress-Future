@@ -9,8 +9,8 @@ use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\ErrorFacade;
-use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use WP_Error;
 
 class ExpirationScheduler implements SchedulerInterface

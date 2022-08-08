@@ -6,6 +6,9 @@
 namespace PublishPressFuture\Modules\Expirator;
 
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 
 class ExpirationRunner implements RunnerInterface
 {
@@ -36,7 +39,7 @@ class ExpirationRunner implements RunnerInterface
 
     /**
      * @param HookableInterface $hooksFacade
-     * @param \PublishPressFuture\Modules\Expirator\SchedulerInterface $scheduler
+     * @param \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface $scheduler
      * @param \PublishPressFuture\Modules\Debug\Debug $debug
      * @param \PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade $options
      * @param \PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory $postModelFactory
@@ -184,7 +187,7 @@ class ExpirationRunner implements RunnerInterface
 
     /**
      * @param int $postId
-     * @param \PublishPressFuture\Modules\Expirator\ExpirableActionInterface $action
+     * @param \PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface $action
      * @param array $expirationData
      * @return bool
      */
@@ -279,14 +282,14 @@ class ExpirationRunner implements RunnerInterface
 
     protected function getActionMapper()
     {
-        return new ActionMapper();
+        return new ExpirationActionMapper();
     }
 
     /**
      * @param string $class
      * @param int $postId
      * @param array $expirationData
-     * @return \PublishPressFuture\Modules\Expirator\ExpirableActionInterface
+     * @return \PublishPressFuture\Modules\Expirator\Interfaces\ExpirableActionInterface
      */
     protected function getActionByClass($class, $postId, $expirationData)
     {

@@ -3,17 +3,18 @@
 namespace PublishPressFuture\Modules\Expirator;
 
 use PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException;
-use PublishPressFuture\Modules\Expirator\Strategies\DeletePost;
-use PublishPressFuture\Modules\Expirator\Strategies\PostCategoryAdd;
-use PublishPressFuture\Modules\Expirator\Strategies\PostCategoryRemove;
-use PublishPressFuture\Modules\Expirator\Strategies\PostCategorySet;
-use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToDraft;
-use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToPrivate;
-use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToTrash;
-use PublishPressFuture\Modules\Expirator\Strategies\StickPost;
-use PublishPressFuture\Modules\Expirator\Strategies\UnstickPost;
+use PublishPressFuture\Modules\Expirator\Interfaces\ActionMapperInterface;
+use PublishPressFuture\Modules\Expirator\Actions\DeletePost;
+use PublishPressFuture\Modules\Expirator\Actions\PostCategoryAdd;
+use PublishPressFuture\Modules\Expirator\Actions\PostCategoryRemove;
+use PublishPressFuture\Modules\Expirator\Actions\PostCategorySet;
+use PublishPressFuture\Modules\Expirator\Actions\PostStatusToDraft;
+use PublishPressFuture\Modules\Expirator\Actions\PostStatusToPrivate;
+use PublishPressFuture\Modules\Expirator\Actions\PostStatusToTrash;
+use PublishPressFuture\Modules\Expirator\Actions\StickPost;
+use PublishPressFuture\Modules\Expirator\Actions\UnstickPost;
 
-class ActionMapper implements ActionMapperInterface
+class ExpirationActionMapper implements ActionMapperInterface
 {
     /**
      * @param array

@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator;
+namespace PublishPressFuture\Modules\Expirator\Interfaces;
 
 
 interface ActionableInterface

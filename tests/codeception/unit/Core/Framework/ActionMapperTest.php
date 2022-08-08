@@ -6,11 +6,11 @@
 namespace unit\Core\Framework;
 
 use Codeception\Test\Unit;
-use PublishPressFuture\Modules\Expirator\ActionMapper;
+use PublishPressFuture\Modules\Expirator\ExpirationActionMapper;
 use PublishPressFuture\Modules\Expirator\ActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException;
-use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToDraft;
-use PublishPressFuture\Modules\Expirator\Strategies\PostStatusToPrivate;
+use PublishPressFuture\Modules\Expirator\Actions\PostStatusToDraft;
+use PublishPressFuture\Modules\Expirator\Actions\PostStatusToPrivate;
 use WordpressTester;
 
 
@@ -24,7 +24,7 @@ class ActionMapperTest extends Unit
     public function testMapToExistentActionReturnActionClassName()
     {
         $mapper = $this->construct(
-            ActionMapper::class
+            ExpirationActionMapper::class
         );
 
         $actionName = $mapper->map(ActionsAbstract::POST_STATUS_TO_DRAFT);
@@ -44,7 +44,7 @@ class ActionMapperTest extends Unit
             UndefinedActionException::class,
             function() {
                 $mapper = $this->construct(
-                    ActionMapper::class
+                    ExpirationActionMapper::class
                 );
 
                 $mapper->map('undefined-action');
