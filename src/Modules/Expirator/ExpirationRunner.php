@@ -64,7 +64,7 @@ class ExpirationRunner implements RunnerInterface
         $this->scheduler = $scheduler;
         $this->debug = $debug;
         $this->options = $options;
-        $this->postModelFactory = $expirablePostModelFactory;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     /**
@@ -84,7 +84,7 @@ class ExpirationRunner implements RunnerInterface
             return false;
         }
 
-        $expirablePostModelFactory = $this->postModelFactory;
+        $expirablePostModelFactory = $this->expirablePostModelFactory;
         $this->postModel = $expirablePostModelFactory($postId);
 
         if (! $this->postModel->postExists()) {
