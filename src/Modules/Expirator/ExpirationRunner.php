@@ -13,6 +13,7 @@ use PublishPressFuture\Modules\Debug\DebugInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 
 class ExpirationRunner implements RunnerInterface
 {

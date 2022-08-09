@@ -3,9 +3,10 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator;
+namespace PublishPressFuture\Modules\Expirator\Models;
 
 use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
+use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 
 class ExpirablePostModel
 {
