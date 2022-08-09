@@ -203,11 +203,6 @@ class PostExpirator_Facade
             $taxonomyName = $taxonomyNameNew;
         }
 
-        $expireStatusNew = get_post_meta($id, '_expiration-date-status', true);
-        if (! empty($expireStatusNew)) {
-            $expireStatus = $expireStatusNew;
-        }
-
         // _expiration-date-options is deprecated when using block editor
         $opts = get_post_meta($id, '_expiration-date-options', true);
         if (empty($expireType) && isset($opts['expireType'])) {

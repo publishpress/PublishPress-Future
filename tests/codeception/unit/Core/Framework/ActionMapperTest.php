@@ -7,7 +7,7 @@ namespace unit\Core\Framework;
 
 use Codeception\Test\Unit;
 use PublishPressFuture\Modules\Expirator\ExpirationActionMapper;
-use PublishPressFuture\Modules\Expirator\ActionsAbstract;
+use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToDraft;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
@@ -27,12 +27,12 @@ class ActionMapperTest extends Unit
             ExpirationActionMapper::class
         );
 
-        $actionName = $mapper->map(ActionsAbstract::POST_STATUS_TO_DRAFT);
+        $actionName = $mapper->map(ExpirationActionsAbstract::POST_STATUS_TO_DRAFT);
 
         $this->assertIsString($actionName);
         $this->assertEquals(PostStatusToDraft::class, $actionName);
 
-        $actionName = $mapper->map(ActionsAbstract::POST_STATUS_TO_PRIVATE);
+        $actionName = $mapper->map(ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE);
 
         $this->assertIsString($actionName);
         $this->assertEquals(PostStatusToPrivate::class, $actionName);

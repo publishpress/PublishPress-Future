@@ -4,10 +4,10 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
+use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract as CoreAbstractServices;
 use PublishPressFuture\Modules\Debug\HooksAbstract as DebugAbstractHooks;
-use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsAbstractHooks;
-use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 
 /**
  * Adds links to the plugin listing screen.
@@ -667,109 +667,116 @@ add_action('save_post', 'postexpirator_update_post_meta');
  */
 function postexpirator_expire_post($postId)
 {
-    $postId = (int)$postId;
+    do_action(
+        ExpiratorHooksAbstract::ACTION_RUN_POST_EXPIRATION,
+        $postId
+    );
 
-    $container = Container::getInstance();
-    $settings = $container->get(CoreAbstractServices::SETTINGS);
-    $debug = $container->get(CoreAbstractServices::DEBUG);
+    return;
 
-    $debugIsEnabled = $settings->getDebugIsEnabled();
+//    $postId = (int)$postId;
 
-    if ($debugIsEnabled) {
-        $debug->log('Called postexpirator_expire_post with id=' . $postId);
-    }
+//    $container = Container::getInstance();
+//    $settings = $container->get(CoreAbstractServices::SETTINGS);
+//    $debug = $container->get(CoreAbstractServices::DEBUG);
+//
+//    $debugIsEnabled = $settings->getDebugIsEnabled();
+//
+//    if ($debugIsEnabled) {
+//        $debug->log('Called postexpirator_expire_post with id=' . $postId);
+//    }
 
-    if (empty($postId)) {
-        if ($debugIsEnabled) {
-            $debug->log('No Post ID found - exiting');
-        }
+//    if (empty($postId)) {
+//        if ($debugIsEnabled) {
+//            $debug->log('No Post ID found - exiting');
+//        }
+//
+//        return false;
+//    }
+//
+//    $post = get_post($postId);
+//
+//    if (is_null($post)) {
+//        if ($debugIsEnabled) {
+//            do_action(
+//                DebugAbstractHooks::ACTION_DEBUG_LOG,
+//                $postId . ' -> Post does not exist - exiting'
+//            );
+//        }
+//
+//        return false;
+//    }
 
-        return false;
-    }
+//    $postExpireOptions = PostExpirator_Facade::get_expire_principles($postId);
 
-    $post = get_post($postId);
-
-    if (is_null($post)) {
-        if ($debugIsEnabled) {
-            do_action(
-                DebugAbstractHooks::ACTION_DEBUG_LOG,
-                $postId . ' -> Post does not exist - exiting'
-            );
-        }
-
-        return false;
-    }
-
-    $postExpireOptions = PostExpirator_Facade::get_expire_principles($postId);
-
-    if ($postExpireOptions['enabled'] === false) {
-        if ($debugIsEnabled) {
-            do_action(
-                DebugAbstractHooks::ACTION_DEBUG_LOG,
-                $postId . ' -> Post expire data exist but is not activated'
-            );
-        }
-
-        return false;
-    }
-
-    $postType = get_post_type($postId);
-    $postTitle = get_the_title($postId);
-    $postLink = get_post_permalink($postId);
-
-    $expireType = $expireCategory = $expireCategoryTaxonomy = null;
-
-    if (isset($postExpireOptions['expireType'])) {
-        $expireType = $postExpireOptions['expireType'];
-    }
-
-    if (isset($postExpireOptions['category'])) {
-        $expireCategory = $postExpireOptions['category'];
-    }
-
-    if (isset($postExpireOptions['categoryTaxonomy'])) {
-        $expireCategoryTaxonomy = $postExpireOptions['categoryTaxonomy'];
-    }
-
-    $expirationDate = (int)get_post_meta($postId, '_expiration-date', true);
-
-    if (empty($expirationDate)) {
-        if ($debugIsEnabled) {
-            do_action(
-                DebugAbstractHooks::ACTION_DEBUG_LOG,
-                $postId . ' -> Tried to expire the post but the expire date is empty'
-            );
-        }
-
-        return false;
-    }
-
-    // Check for default expire only if not passed in
-    if (empty($expireType)) {
-        $postType = get_post_type($postId);
-        if ($postType === 'page') {
-            $expireType = strtolower(get_option('expirationdateExpiredPageStatus', 'draft'));
-        } elseif ($postType === 'post') {
-            $expireType = strtolower(get_option('expirationdateExpiredPostStatus', 'draft'));
-        } else {
-            $expireType = apply_filters(
-                'postexpirator_custom_posttype_expire',
-                $expireType,
-                $postType
-            ); // hook to set defaults for custom post types
-        }
-    }
-
-    // Remove KSES - wp_cron runs as an unauthenticated user, which will by default trigger kses filtering,
-    // even if the post was published by a admin user.  It is fairly safe here to remove the filter call since
-    // we are only changing the post status/meta information and not touching the content.
-    kses_remove_filters();
-
-    $postWasExpired = false;
-    $expirationLog = [
-        'type' => sanitize_text_field($expireType),
-        'scheduled_for' => date('Y-m-d H:i:s', $expirationDate)
-    ];
+//    if ($postExpireOptions['enabled'] === false) {
+//        if ($debugIsEnabled) {
+//            do_action(
+//                DebugAbstractHooks::ACTION_DEBUG_LOG,
+//                $postId . ' -> Post expire data exist but is not activated'
+//            );
+//        }
+//
+//        return false;
+//    }
+//
+//    $postType = get_post_type($postId);
+//    $postTitle = get_the_title($postId);
+//    $postLink = get_post_permalink($postId);
+//
+//    $expireType = $expireCategory = $expireCategoryTaxonomy = null;
+//
+//    if (isset($postExpireOptions['expireType'])) {
+//        $expireType = $postExpireOptions['expireType'];
+//    }
+//
+//    if (isset($postExpireOptions['category'])) {
+//        $expireCategory = $postExpireOptions['category'];
+//    }
+//
+//    if (isset($postExpireOptions['categoryTaxonomy'])) {
+//        $expireCategoryTaxonomy = $postExpireOptions['categoryTaxonomy'];
+//    }
+//
+//    $expirationDate = (int)get_post_meta($postId, '_expiration-date', true);
+//
+//    if (empty($expirationDate)) {
+//        if ($debugIsEnabled) {
+//            do_action(
+//                DebugAbstractHooks::ACTION_DEBUG_LOG,
+//                $postId . ' -> Tried to expire the post but the expire date is empty'
+//            );
+//        }
+//
+//        return false;
+//    }
+//
+//    // Check for default expire only if not passed in
+//    if (empty($expireType)) {
+//        $postType = get_post_type($postId);
+//        if ($postType === 'page') {
+//            $expireType = strtolower(get_option('expirationdateExpiredPageStatus', 'draft'));
+//        } elseif ($postType === 'post') {
+//            $expireType = strtolower(get_option('expirationdateExpiredPostStatus', 'draft'));
+//        } else {
+//            $expireType = apply_filters(
+//                'postexpirator_custom_posttype_expire',
+//                $expireType,
+//                $postType
+//            ); // hook to set defaults for custom post types
+//        }
+//    }
+//
+//    // Remove KSES - wp_cron runs as an unauthenticated user, which will by default trigger kses filtering,
+//    // even if the post was published by a admin user.  It is fairly safe here to remove the filter call since
+//    // we are only changing the post status/meta information and not touching the content.
+//    kses_remove_filters();
+//
+//    $postWasExpired = false;
+//    $expirationLog = [
+//        'type' => sanitize_text_field($expireType),
+//        'scheduled_for' => date('Y-m-d H:i:s', $expirationDate)
+//    ];
 
     // Do Work
     if ($expireType === 'draft') {
@@ -911,7 +918,12 @@ function postexpirator_expire_post($postId)
             );
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(
-                    array('message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+                    array(
+                        'message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r(
+                                $postExpireOptions,
+                                true
+                            )
+                    )
                 );
             }
 
@@ -937,7 +949,12 @@ function postexpirator_expire_post($postId)
             );
             if (POSTEXPIRATOR_DEBUG) {
                 $debug->save(
-                    array('message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r($postExpireOptions, true))
+                    array(
+                        'message' => $postId . ' -> PROCESSED ' . $expireType . ' ' . print_r(
+                                $postExpireOptions,
+                                true
+                            )
+                    )
                 );
             }
 

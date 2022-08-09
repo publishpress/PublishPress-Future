@@ -3,6 +3,7 @@
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
 use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
+use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 
 class PostStatusToDraft implements ExpirationActionInterface
@@ -86,5 +87,10 @@ class PostStatusToDraft implements ExpirationActionInterface
     public function execute()
     {
         return $this->model->setPostStatus('draft');
+    }
+
+    public function __toString()
+    {
+        return ExpirationActionsAbstract::POST_STATUS_TO_DRAFT;
     }
 }

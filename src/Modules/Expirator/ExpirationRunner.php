@@ -5,7 +5,11 @@
 
 namespace PublishPressFuture\Modules\Expirator;
 
+use PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade;
+use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
+use PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory;
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Modules\Debug\DebugInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
@@ -23,107 +27,118 @@ class ExpirationRunner implements RunnerInterface
     private $scheduler;
 
     /**
-     * @var \PublishPressFuture\Modules\Debug\Debug
+     * @var DebugInterface
      */
     private $debug;
 
     /**
-     * @var \PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade;
+     * @var OptionsFacade;
      */
     private $options;
 
     /**
-     * @var \PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory
+     * @var callable
      */
-    private $postModelFactory;
+    private $expirablePostModelFactory;
+
+    /**
+     * @var PostModel
+     */
+    private $postModel;
+
+    /**
+     * @var array
+     */
+    private $postExpirationData;
 
     /**
      * @param HookableInterface $hooksFacade
-     * @param \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface $scheduler
-     * @param \PublishPressFuture\Modules\Debug\Debug $debug
-     * @param \PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade $options
-     * @param \PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory $postModelFactory
+     * @param Interfaces\SchedulerInterface $scheduler
+     * @param DebugInterface $debug
+     * @param OptionsFacade $options
+     * @param callable $expirablePostModelFactory
      */
-    public function __construct($hooksFacade, $scheduler, $debug, $options, $postModelFactory)
+    public function __construct($hooksFacade, $scheduler, $debug, $options, $expirablePostModelFactory)
     {
         $this->hooks = $hooksFacade;
         $this->scheduler = $scheduler;
         $this->debug = $debug;
         $this->options = $options;
-        $this->postModelFactory = $postModelFactory;
+        $this->postModelFactory = $expirablePostModelFactory;
     }
 
     /**
      * @param int $postId
      * @return bool
-     * @throws \PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException
+     * @throws Exceptions\UndefinedActionException
      */
     public function run($postId)
     {
         $postId = (int)$postId;
 
-        if ($this->debug) {
-            $this->debug->log('Called ' . __METHOD__ . ' with postId=' . $postId);
-        }
+        $this->debug->log('Called ' . __METHOD__ . ' with postId=' . $postId);
 
         if (empty($postId)) {
-            if ($this->debug) {
-                $this->debug->log('Empty Post ID - exiting');
-            }
+            $this->debug->log('Empty Post ID - exiting');
 
             return false;
         }
 
-        $model = $this->postModelFactory->getPostModel($postId);
+        $expirablePostModelFactory = $this->postModelFactory;
+        $this->postModel = $expirablePostModelFactory($postId);
 
-        if (! $model->postExists()) {
-            if ($this->debug) {
-                $this->debug->log($postId . ' -> Post does not exist - exiting');
-            }
+        if (! $this->postModel->postExists()) {
+            $this->debug->log($postId . ' -> Post does not exist - exiting');
 
             return false;
         }
 
-        $expirationData = $this->getPostExpirationData($postId);
+        $expirationData = new ExpirablePostModel($this->postModel);
 
         if ($expirationData['enabled'] === false) {
-            if ($this->debug) {
-                $this->debug->log($postId . ' -> Post expire data exist but is not activated');
-            }
+            $this->debug->log($postId . ' -> Post expire data exist but is not activated');
 
             return false;
         }
 
-        $postType = $model->getType();
+        $postType = $this->postModel->getType();
 
-        $expireType = $expireCategory = $expireCategoryTaxonomy = null;
-
+        $expireType = null;
         if (isset($postExpireOptions['expireType'])) {
             $expireType = $postExpireOptions['expireType'];
         }
 
-        if (isset($postExpireOptions['category'])) {
-            $expireCategory = $postExpireOptions['category'];
-        }
-
-        if (isset($postExpireOptions['categoryTaxonomy'])) {
-            $expireCategoryTaxonomy = $postExpireOptions['categoryTaxonomy'];
-        }
-
-        // Check for default expire only if not passed in
+        // Check for default expire type only if not provided.
         if (empty($expireType)) {
             if ($postType === 'page') {
-                $expireType = strtolower($this->options->getOption('expirationdateExpiredPageStatus', 'draft'));
+                $expireType = $this->options->getOption(
+                    'expirationdateExpiredPageStatus',
+                    ExpirationActionsAbstract::POST_STATUS_TO_DRAFT
+                );
             } elseif ($postType === 'post') {
-                $expireType = strtolower($this->options->getOption('expirationdateExpiredPostStatus', 'draft'));
-            } else {
-                $expireType = $this->hooks->applyFilters(
-                    'postexpirator_custom_posttype_expire',
-                    $expireType,
-                    $postType
+                $expireType = $this->options->getOption(
+                    'expirationdateExpiredPostStatus',
+                    ExpirationActionsAbstract::POST_STATUS_TO_DRAFT
                 );
             }
+
+            /**
+             * @deprecated
+             */
+            $expireType = $this->hooks->applyFilters(
+                HooksAbstract::FILTER_LEGACY_CUSTOM_EXPIRATION_TYPE,
+                $expireType,
+                $postType
+            );
+
+            $expireType = $this->hooks->applyFilters(
+                HooksAbstract::FILTER_CUSTOM_EXPIRATION_TYPE,
+                $expireType,
+                $postType
+            );
         }
+
+        $expireType = sanitize_key($expireType);
 
         // Remove KSES - wp_cron runs as an unauthenticated user, which will by default trigger kses filtering,
         // even if the post was published by a admin user.  It is fairly safe here to remove the filter call since
@@ -140,9 +155,7 @@ class ExpirationRunner implements RunnerInterface
         $actionClass = $actionMapper->map($expireType);
 
         if (! class_exists($actionClass)) {
-            if ($this->debug) {
-                $this->debug->log('Action ' . $actionClass . ' is undefined');
-            }
+            $this->debug->log('Action ' . $actionClass . ' is undefined');
 
             return false;
         }
@@ -150,12 +163,10 @@ class ExpirationRunner implements RunnerInterface
         $action = $this->getActionByClass($actionClass, $postId, $expirationData);
         $postHasExpired = $action->execute();
 
-        if ($this->debug) {
-            $message = $postHasExpired ?
-                $this->postId . ' -> FAILED ' . $actionClass . ' ' . print_r($expirationData, true)
-                : $this->postId . ' -> PROCESSED ' . $actionClass . ' ' . print_r($expirationData, true);
-            $this->debug->log($message);
-        }
+        $debugMessage = $postHasExpired ?
+            $this->postId . ' -> FAILED ' . $actionClass . ' ' . print_r($expirationData, true)
+            : $this->postId . ' -> PROCESSED ' . $actionClass . ' ' . print_r($expirationData, true);
+        $this->debug->log($debugMessage);
 
         $expirationLog = array_merge(
             $expirationLog,
@@ -176,18 +187,21 @@ class ExpirationRunner implements RunnerInterface
         }
     }
 
+    private function getExpirationType()
+    {
+
+    }
+
     private function registerExpirationMeta($postId, $log)
     {
-        $model = $this->postModelFactory->getPostModel($postId);
-
         $log['expired_on'] = date('Y-m-d H:i:s');
 
-        $model->addMeta('expiration_log', wp_json_encode($log));
+        $this->postModel->addMeta('expiration_log', wp_json_encode($log));
     }
 
     /**
      * @param int $postId
-     * @param \PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface $action
+     * @param ExpirationActionInterface $action
      * @param array $expirationData
      * @return bool
      */
@@ -200,11 +214,9 @@ class ExpirationRunner implements RunnerInterface
             return false;
         }
 
-        $model = $this->postModelFactory->getPostModel($postId);
-
-        $postType = $model->getType();
-        $postTitle = $model->getTitle();
-        $postPermalink = $model->getPermalink();
+        $postType = $this->postModel->getType();
+        $postTitle = $this->postModel->getTitle();
+        $postPermalink = $this->postModel->getPermalink();
 
         $emailSubject = sprintf(__('Post Expiration Complete "%s"', 'post-expirator'), $postTitle);
         $emailBody = str_replace('##POSTTITLE##', $postTitle, $emailBody);
@@ -255,9 +267,7 @@ class ExpirationRunner implements RunnerInterface
         $emailSent = false;
 
         if (! empty($emailsToSend)) {
-            if ($this->debug) {
-                $this->debug->log($postId . ' -> SENDING EMAIL TO (' . implode(', ', $emailsToSend) . ')');
-            }
+            $this->debug->log($postId . ' -> SENDING EMAIL TO (' . implode(', ', $emailsToSend) . ')');
 
             // Send Emails
             foreach ($emailsToSend as $email) {
@@ -266,12 +276,10 @@ class ExpirationRunner implements RunnerInterface
                     sprintf(__('[%1$s] %2$s'), $this->options->getOption('blogname'), $emailSubject),
                     $emailBody
                 )) {
-                    if ($this->debug) {
-                        $this->debug->log($postId . ' -> EXPIRATION EMAIL SENT (' . $email . ')');
-                    }
+                    $this->debug->log($postId . ' -> EXPIRATION EMAIL SENT (' . $email . ')');
 
                     $emailSent = true;
-                } elseif ($this->debug) {
+                } else {
                     $this->debug->log($postId . ' -> EXPIRATION EMAIL FAILED (' . $email . ')');
                 }
             }
@@ -289,7 +297,7 @@ class ExpirationRunner implements RunnerInterface
      * @param string $class
      * @param int $postId
      * @param array $expirationData
-     * @return \PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface
+     * @return ExpirationActionInterface
      */
     protected function getActionByClass($class, $postId, $expirationData)
     {
@@ -301,51 +309,53 @@ class ExpirationRunner implements RunnerInterface
      */
     private function getPostExpirationData($postId)
     {
-        $expireType = $categories = $taxonomyName = $expireStatus = '';
+        if (empty($this->postExpirationData)) {
+            $expireType = $categories = $taxonomyName = $expireStatus = '';
 
-        $model = $this->postModelFactory->getPostModel($postId);
+            $expireTypeNew = $this->postModel->getMeta('_expiration-date-type', true);
+            if (! empty($expireTypeNew)) {
+                $expireType = $expireTypeNew;
+            }
 
-        $expireTypeNew = $model->getMeta('_expiration-date-type', true);
-        if (! empty($expireTypeNew)) {
-            $expireType = $expireTypeNew;
+            $categoriesNew = $this->postModel->getMeta('_expiration-date-categories', true);
+            if (! empty($categoriesNew)) {
+                $categories = $categoriesNew;
+            }
+
+            $taxonomyNameNew = $this->postModel->getMeta('_expiration-date-taxonomy', true);
+            if (! empty($taxonomyNameNew)) {
+                $taxonomyName = $taxonomyNameNew;
+            }
+
+            $expireStatusNew = $this->postModel->getMeta('_expiration-date-status', true);
+            if (! empty($expireStatusNew)) {
+                $expireStatus = $expireStatusNew;
+            }
+
+            // _expiration-date-options is deprecated when using block editor
+            $opts = $this->postModel->getMeta('_expiration-date-options', true);
+            if (empty($expireType) && isset($opts['expireType'])) {
+                $expireType = $opts['expireType'];
+            }
+
+            if (empty($categories)) {
+                $categories = isset($opts['category']) ? $opts['category'] : false;
+            }
+
+            if (empty($taxonomyName)) {
+                $taxonomyName = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
+            }
+
+            $this->postExpirationData = [
+                'expireType' => $expireType,
+                'category' => $categories,
+                'categoryTaxonomy' => $taxonomyName,
+                'enabled' => $this->postHasExpirationData($postId),
+                'date' => (int)$this->postModel->getMeta('_expiration-date', true),
+            ];
         }
 
-        $categoriesNew = $model->getMeta('_expiration-date-categories', true);
-        if (! empty($categoriesNew)) {
-            $categories = $categoriesNew;
-        }
-
-        $taxonomyNameNew = $model->getMeta('_expiration-date-taxonomy', true);
-        if (! empty($taxonomyNameNew)) {
-            $taxonomyName = $taxonomyNameNew;
-        }
-
-        $expireStatusNew = $model->getMeta('_expiration-date-status', true);
-        if (! empty($expireStatusNew)) {
-            $expireStatus = $expireStatusNew;
-        }
-
-        // _expiration-date-options is deprecated when using block editor
-        $opts = $model->getMeta('_expiration-date-options', true);
-        if (empty($expireType) && isset($opts['expireType'])) {
-            $expireType = $opts['expireType'];
-        }
-
-        if (empty($categories)) {
-            $categories = isset($opts['category']) ? $opts['category'] : false;
-        }
-
-        if (empty($taxonomyName)) {
-            $taxonomyName = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
-        }
-
-        return [
-            'expireType' => $expireType,
-            'category' => $categories,
-            'categoryTaxonomy' => $taxonomyName,
-            'enabled' => $this->postHasExpirationData($postId),
-            'date' => (int)$model->getMeta('_expiration-date', true),
-        ];
+        return $this->postExpirationData;
     }
 
     /**
@@ -353,10 +363,8 @@ class ExpirationRunner implements RunnerInterface
      */
     private function postHasExpirationData($postId)
     {
-        $model = $this->postModelFactory->getPostModel($postId);
-
-        $statusEnabled = $model->getMeta('_expiration-date-status', true) === 'saved';
-        $date = (int)$model->getMeta('_expiration-date', true);
+        $statusEnabled = $this->postModel->getMeta('_expiration-date-status', true) === 'saved';
+        $date = (int)$this->postModel->getMeta('_expiration-date', true);
 
         return $statusEnabled && false === empty($date);
     }

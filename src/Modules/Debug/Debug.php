@@ -25,7 +25,9 @@ class Debug implements DebugInterface
      */
     public function log($message)
     {
-        $this->logger->debug($message);
+        if ($this->isEnabled()) {
+            $this->logger->debug($message);
+        }
     }
 
     /**
@@ -50,5 +52,13 @@ class Debug implements DebugInterface
     public function deleteLogs()
     {
         $this->logger->deleteLogs();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isEnabled()
+    {
+        return true;
     }
 }

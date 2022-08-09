@@ -1,7 +1,6 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Core\Framework\Logger\Logger;
 use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
@@ -12,10 +11,13 @@ use PublishPressFuture\Core\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade;
+use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
 use PublishPressFuture\Core\Framework\WordPress\Facade\SiteFacade;
+use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Core\Paths;
 use PublishPressFuture\Core\Plugin;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
+use PublishPressFuture\Modules\Expirator\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\ExpirationRunner;
 use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
 use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
@@ -108,7 +110,7 @@ return [
     /**
      * @return LoggerInterface
      */
-    ServicesAbstract::LOGGER => function (ContainerInterface $container) {
+    ServicesAbstract::LOGGER => static function (ContainerInterface $container) {
         return new Logger(
             $container->get(ServicesAbstract::DB),
             $container->get(ServicesAbstract::SITE),
@@ -119,56 +121,56 @@ return [
     /**
      * @return CronFacade
      */
-    ServicesAbstract::CRON => function (ContainerInterface $container) {
+    ServicesAbstract::CRON => static function (ContainerInterface $container) {
         return new CronFacade();
     },
 
     /**
      * @return HooksFacade
      */
-    ServicesAbstract::HOOKS => function (ContainerInterface $container) {
+    ServicesAbstract::HOOKS => static function (ContainerInterface $container) {
         return new HooksFacade();
     },
 
     /**
      * @return DatabaseFacade
      */
-    ServicesAbstract::DB => function (ContainerInterface $container) {
+    ServicesAbstract::DB => static function (ContainerInterface $container) {
         return new DatabaseFacade();
     },
 
     /**
      * @return DateTimeFacade
      */
-    ServicesAbstract::DATETIME => function (ContainerInterface $container) {
+    ServicesAbstract::DATETIME => static function (ContainerInterface $container) {
         return new DateTimeFacade();
     },
 
     /**
      * @return ErrorFacade
      */
-    ServicesAbstract::ERROR => function (ContainerInterface $container) {
+    ServicesAbstract::ERROR => static function (ContainerInterface $container) {
         return new ErrorFacade();
     },
 
     /**
      * @return OptionsFacade
      */
-    ServicesAbstract::OPTIONS => function (ContainerInterface $container) {
+    ServicesAbstract::OPTIONS => static function (ContainerInterface $container) {
         return new OptionsFacade();
     },
 
     /**
      * @return SiteFacade
      */
-    ServicesAbstract::SITE => function (ContainerInterface $container) {
+    ServicesAbstract::SITE => static function (ContainerInterface $container) {
         return new SiteFacade();
     },
 
     /**
      * @return PublishPressFuture\Modules\Debug\Debug|null
      */
-    ServicesAbstract::DEBUG => function (ContainerInterface $container) {
+    ServicesAbstract::DEBUG => static function (ContainerInterface $container) {
         return new PublishPressFuture\Modules\Debug\Debug(
             $container->get(ServicesAbstract::LOGGER)
         );
@@ -177,7 +179,7 @@ return [
     /**
      * @return SettingsFacade
      */
-    ServicesAbstract::SETTINGS => function (ContainerInterface $container) {
+    ServicesAbstract::SETTINGS => static function (ContainerInterface $container) {
         $hooks = $container->get(ServicesAbstract::HOOKS);
         $options = $container->get(ServicesAbstract::OPTIONS);
         $defaultData = $container->get(ServicesAbstract::DEFAULT_DATA);
@@ -192,7 +194,7 @@ return [
     /**
      * @return SchedulerInterface
      */
-    ServicesAbstract::EXPIRATION_SCHEDULER => function (ContainerInterface $container) {
+    ServicesAbstract::EXPIRATION_SCHEDULER => static function (ContainerInterface $container) {
         $hooks = $container->get(ServicesAbstract::HOOKS);
         $cron = $container->get(ServicesAbstract::CRON);
         $error = $container->get(ServicesAbstract::ERROR);
@@ -213,26 +215,26 @@ return [
     /**
      * @return RunnerInterface
      */
-    ServicesAbstract::EXPIRATION_RUNNER => function (ContainerInterface $container) {
+    ServicesAbstract::EXPIRATION_RUNNER => static function (ContainerInterface $container) {
         $hooks = $container->get(ServicesAbstract::HOOKS);
         $scheduler = $container->get(ServicesAbstract::EXPIRATION_SCHEDULER);
         $debug = $container->get(ServicesAbstract::DEBUG);
         $options = $container->get(ServicesAbstract::OPTIONS);
-        $postModelFactory = $container->get(ServicesAbstract::POST_MODEL_FACTORY);
+        $expirablePostModelFactory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
 
         return new ExpirationRunner(
             $hooks,
             $scheduler,
             $debug,
             $options,
-            $postModelFactory
+            $expirablePostModelFactory
         );
     },
 
     /**
      * @return ModuleInterface
      */
-    ServicesAbstract::MODULE_DEBUG => function (ContainerInterface $container) {
+    ServicesAbstract::MODULE_DEBUG => static function (ContainerInterface $container) {
         return new ModuleDebug(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::LOGGER)
@@ -242,7 +244,7 @@ return [
     /**
      * @return ModuleInterface
      */
-    ServicesAbstract::MODULE_INSTANCE_PROTECTION => function (ContainerInterface $container) {
+    ServicesAbstract::MODULE_INSTANCE_PROTECTION => static function (ContainerInterface $container) {
         return new ModuleInstanceProtection(
             $container->get(ServicesAbstract::PATHS),
             $container->get(ServicesAbstract::PLUGIN_SLUG),
@@ -253,7 +255,7 @@ return [
     /**
      * @return ModuleInterface
      */
-    ServicesAbstract::MODULE_EXPIRATOR => function (ContainerInterface $container) {
+    ServicesAbstract::MODULE_EXPIRATOR => static function (ContainerInterface $container) {
         return new ModuleExpirator(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::SITE),
@@ -269,16 +271,29 @@ return [
     /**
      * @return ModuleInterface
      */
-    ServicesAbstract::MODULE_SETTINGS => function (ContainerInterface $container) {
+    ServicesAbstract::MODULE_SETTINGS => static function (ContainerInterface $container) {
         return new ModuleSettings(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::SETTINGS)
         );
     },
 
-    ServicesAbstract::POST_MODEL_FACTORY => function (ContainerInterface $container) {
-        return new \PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory(
-            $container->get(ServicesAbstract::DEBUG)
-        );
+    ServicesAbstract::POST_MODEL_FACTORY => static function (ContainerInterface $container) {
+        return static function ($postId) use ($container) {
+            return new PostModel(
+                $postId,
+                $container->get(ServicesAbstract::DEBUG)
+            );
+        };
+    },
+
+    ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY => static function (ContainerInterface $container) {
+        return static function ($postId) use ($container) {
+            $postModelFactory = $container->get(ServicesAbstract::POST_MODEL_FACTORY);
+
+            $postModel = $postModelFactory($postId);
+
+            return new ExpirablePostModel($postModel);
+        };
     },
 ];

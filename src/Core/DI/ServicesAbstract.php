@@ -78,4 +78,6 @@ abstract class ServicesAbstract
     const MODULE_SETTINGS = 'module.settings';
 
     const POST_MODEL_FACTORY = 'post.model.factory';
+
+    const EXPIRABLE_POST_MODEL_FACTORY = 'expirable.post.model.factory';
 }

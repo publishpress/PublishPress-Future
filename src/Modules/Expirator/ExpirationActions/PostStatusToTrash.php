@@ -2,6 +2,7 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
+use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 
 use function ray;
@@ -24,5 +25,10 @@ class PostStatusToTrash implements ExpirationActionInterface
     public function execute()
     {
         ray(__METHOD__);
+    }
+
+    public function __toString()
+    {
+        return ExpirationActionsAbstract::POST_STATUS_TO_TRASH;
     }
 }

@@ -60,13 +60,13 @@ class Controller implements InitializableInterface
             [$this, 'onActionDeleteAllSettings']
         );
         $this->hooks->addAction(
-            HooksAbstract::SCHEDULE_POST_EXPIRATION,
+            HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
             [$this, 'onActionSchedulePostExpiration'],
             10,
             3
         );
         $this->hooks->addAction(
-            HooksAbstract::UNSCHEDULE_POST_EXPIRATION,
+            HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION,
             [$this, 'onActionUnschedulePostExpiration']
         );
     }

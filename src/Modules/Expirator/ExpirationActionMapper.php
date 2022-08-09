@@ -24,15 +24,15 @@ class ExpirationActionMapper implements ActionMapperInterface
     public function __construct()
     {
         $this->actionClassesMap = [
-            ActionsAbstract::POST_STATUS_TO_DRAFT => PostStatusToDraft::class,
-            ActionsAbstract::POST_STATUS_TO_PRIVATE => PostStatusToPrivate::class,
-            ActionsAbstract::POST_STATUS_TO_TRASH => PostStatusToTrash::class,
-            ActionsAbstract::DELETE_POST => DeletePost::class,
-            ActionsAbstract::STICK_POST => StickPost::class,
-            ActionsAbstract::UNSTICK_POST => UnstickPost::class,
-            ActionsAbstract::POST_CATEGORY_SET => PostCategorySet::class,
-            ActionsAbstract::POST_CATEGORY_ADD => PostCategoryAdd::class,
-            ActionsAbstract::POST_CATEGORY_REMOVE => PostCategoryRemove::class,
+            ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => PostStatusToDraft::class,
+            ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => PostStatusToPrivate::class,
+            ExpirationActionsAbstract::POST_STATUS_TO_TRASH => PostStatusToTrash::class,
+            ExpirationActionsAbstract::DELETE_POST => DeletePost::class,
+            ExpirationActionsAbstract::STICK_POST => StickPost::class,
+            ExpirationActionsAbstract::UNSTICK_POST => UnstickPost::class,
+            ExpirationActionsAbstract::POST_CATEGORY_SET => PostCategorySet::class,
+            ExpirationActionsAbstract::POST_CATEGORY_ADD => PostCategoryAdd::class,
+            ExpirationActionsAbstract::POST_CATEGORY_REMOVE => PostCategoryRemove::class,
         ];
     }
 

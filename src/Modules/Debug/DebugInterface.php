@@ -28,4 +28,9 @@ interface DebugInterface
      * @return void
      */
     public function deleteLogs();
+
+    /**
+     * @return bool
+     */
+    public function isEnabled();
 }

@@ -41,7 +41,7 @@ class ExpirationScheduler implements SchedulerInterface
     private $datetime;
 
     /**
-     * @var \PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory
+     * @var callable
      */
     private $postModelFactory;
 
@@ -51,7 +51,7 @@ class ExpirationScheduler implements SchedulerInterface
      * @param ErrorFacade $errorFacade
      * @param LoggerInterface $logger
      * @param DateTimeFacade $datetime
-     * @param \PublishPressFuture\Core\Framework\WordPress\Facade\PostModelFactory $postModelFactory
+     * @param callable $postModelFactory
      */
     public function __construct($hooksFacade, $cronFacade, $errorFacade, $logger, $datetime, $postModelFactory)
     {
@@ -73,11 +73,11 @@ class ExpirationScheduler implements SchedulerInterface
     {
         $postId = (int)$postId;
 
-        $this->hooks->doAction(HooksAbstract::LEGACY_SCHEDULE, $postId, $timestamp, $opts);
+        $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_SCHEDULE, $postId, $timestamp, $opts);
 
         $this->unscheduleIfScheduled($postId, $timestamp);
 
-        $scheduled = $this->cron->scheduleSingleEvent($timestamp, HooksAbstract::LEGACY_EXPIRE_POST, [$postId], true);
+        $scheduled = $this->cron->scheduleSingleEvent($timestamp, HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId], true);
 
         if (! $scheduled) {
             $this->logger->debug(
@@ -125,7 +125,7 @@ class ExpirationScheduler implements SchedulerInterface
 
     public function isScheduled($postId)
     {
-        return $this->cron->getNextScheduleForEvent($postId, HooksAbstract::LEGACY_EXPIRE_POST);
+        return $this->cron->getNextScheduleForEvent($postId, HooksAbstract::ACTION_LEGACY_EXPIRE_POST);
     }
 
     /**
@@ -134,7 +134,7 @@ class ExpirationScheduler implements SchedulerInterface
      */
     private function removeSchedule($postId)
     {
-        return $this->cron->clearScheduledHook(HooksAbstract::LEGACY_EXPIRE_POST, [$postId], true);
+        return $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId], true);
     }
 
     /**
@@ -145,7 +145,9 @@ class ExpirationScheduler implements SchedulerInterface
      */
     private function storeExpirationDataInPostMeta($postId, $timestamp, $opts)
     {
-        $postModel = $this->postModelFactory->getPostModel($postId);
+        $postModelFactory = $this->postModelFactory;
+        $postModel = $postModelFactory($postId);
+
         $postModel->updateMeta(
             [
                 '_expiration-date' => $timestamp,
@@ -163,10 +165,10 @@ class ExpirationScheduler implements SchedulerInterface
      */
     public function unschedule($postId)
     {
-        $this->hooks->doAction(HooksAbstract::LEGACY_UNSCHEDULE, $postId);
+        $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_UNSCHEDULE, $postId);
 
         if ($this->isScheduled($postId)) {
-            $this->cron->clearScheduledHook(HooksAbstract::LEGACY_EXPIRE_POST, [$postId]);
+            $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId]);
 
             $this->logger->debug(sprintf('%d -> UNSCHEDULED, no errors found', $postId));
         }
@@ -176,7 +178,9 @@ class ExpirationScheduler implements SchedulerInterface
 
     private function removeExpirationDataFromPostMeta($postId)
     {
-        $postModel = $this->postModelFactory->getPostModel($postId);
+        $postModelFactory = $this->postModelFactory;
+        $postModel = $postModelFactory($postId);
+
         $postModel->deleteMeta(
             [
                 '_expiration-date',
