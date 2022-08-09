@@ -9,6 +9,7 @@ namespace PublishPressFuture\Modules\Debug;
 use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
 use PublishPressFuture\Core\Framework\ModuleInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
+use PublishPressFuture\Modules\Debug\Controllers\Controller;
 
 class Module implements ModuleInterface
 {

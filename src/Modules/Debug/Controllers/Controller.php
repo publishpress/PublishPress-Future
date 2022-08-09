@@ -3,11 +3,12 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Debug;
+namespace PublishPressFuture\Modules\Debug\Controllers;
 
 use PublishPressFuture\Core\Framework\InitializableInterface;
 use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
+use PublishPressFuture\Modules\Debug\HooksAbstract;
 
 class Controller implements InitializableInterface
 {

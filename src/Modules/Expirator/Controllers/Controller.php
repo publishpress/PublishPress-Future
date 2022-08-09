@@ -1,11 +1,17 @@
 <?php
+/**
+ * Copyright (c) 2022. PublishPress, All rights reserved.
+ */
 
-namespace PublishPressFuture\Modules\Expirator;
+namespace PublishPressFuture\Modules\Expirator\Controllers;
 
 use PublishPressFuture\Core\Framework\InitializableInterface;
 use PublishPressFuture\Core\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Core\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Modules\Expirator\ExpirationRunner;
+use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
+use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\RunnerInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;

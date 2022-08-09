@@ -3,11 +3,13 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Settings;
+namespace PublishPressFuture\Modules\Settings\Controllers;
 
-use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPressFuture\Core\Framework\InitializableInterface;
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
+use PublishPressFuture\Modules\Settings\HooksAbstract;
+use PublishPressFuture\Modules\Settings\SettingsFacade;
 
 class Controller implements InitializableInterface
 {
