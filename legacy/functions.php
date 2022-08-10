@@ -4,7 +4,9 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
-use PublishPressFuture\Modules\Debug\HooksAbstract as DebugAbstractHooks;
+use PublishPressFuture\Core\HooksAbstract as CoreHooks;
+use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooks;
+use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
 /**
  * Adds links to the plugin listing screen.
@@ -590,7 +592,7 @@ function postexpirator_update_post_meta($id)
 
         if (empty($payload)) {
             do_action(
-                DebugAbstractHooks::ACTION_DEBUG_LOG,
+                DebugHooks::ACTION_DEBUG_LOG,
                 $id . ' -> NO PAYLOAD ON SAVE_POST'
             );
 
@@ -810,7 +812,7 @@ function postexpirator_upgrade()
     // Check for current version, if not exists, run activation
     $version = get_option('postexpiratorVersion');
     if ($version === false) { // not installed, run default activation
-        do_action(AbstractHooks::ACTION_ACTIVATE_PLUGIN);
+        do_action(CoreHooks::ACTION_ACTIVATE_PLUGIN);
 
         update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
     } else {
@@ -835,7 +837,7 @@ function postexpirator_upgrade()
                 )
             );
             foreach ($results as $result) {
-                wp_schedule_single_event($result->meta_value, HooksAbstract::ACTION_EXPIRE_POST, array($result->post_id)
+                wp_schedule_single_event($result->meta_value, ExpiratorHooks::ACTION_EXPIRE_POST, array($result->post_id)
                 );
                 $opts = array();
                 $opts['id'] = $result->post_id;
