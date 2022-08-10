@@ -1,6 +1,6 @@
 <?php
 
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
@@ -96,7 +96,7 @@ function postexpirator_schedule_event($postId, $timestamp, $opts)
 {
     _deprecated_function(__FUNCTION__, '2.8.0');
 
-    do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
+    do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
 }
 
 /**
@@ -111,7 +111,7 @@ function postexpirator_unschedule_event($postId)
 {
     _deprecated_function(__FUNCTION__, '2.8.0');
 
-    do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+    do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 }
 
 
@@ -227,4 +227,59 @@ function postexpirator_debug()
 
         return false;
     }
+}
+
+/**
+ * Internal method to get category names corresponding to the category IDs.
+ *
+ * @internal
+ *
+ * @access private
+ * @deprecated 2.8.0
+ */
+function _postexpirator_get_cat_names($cats)
+{
+    _deprecated_function(__FUNCTION__, '2.8.0');
+
+    $out = array();
+    foreach ($cats as $cat) {
+        $out[$cat] = get_the_category_by_id($cat);
+    }
+
+    return $out;
+}
+
+/**
+ * @param $id
+ * @param $log
+ * @return void
+ * @deprecated 2.8.0
+ */
+function postexpirator_register_expiration_meta($id, $log)
+{
+    _deprecated_function(__FUNCTION__, '2.8.0');
+
+    $log['expired_on'] = date('Y-m-d H:i:s');
+
+    add_post_meta($id, 'expiration_log', wp_json_encode($log));
+}
+
+/**
+ * The new expiration function, to work with single scheduled events.
+ *
+ * This was designed to hopefully be more flexible for future tweaks/modifications to the architecture.
+ *
+ * @internal
+ *
+ * @access private
+ * @deprecated 2.8.0
+ */
+function postexpirator_expire_post($postId)
+{
+    _deprecated_function(__FUNCTION__, '2.8.0');
+
+    do_action(
+        ExpiratorHooks::ACTION_EXPIRE_POST,
+        $postId
+    );
 }

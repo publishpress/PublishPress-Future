@@ -4,10 +4,7 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract as CoreAbstractServices;
 use PublishPressFuture\Modules\Debug\HooksAbstract as DebugAbstractHooks;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 
 /**
  * Adds links to the plugin listing screen.
@@ -656,52 +653,6 @@ add_action('save_post', 'postexpirator_update_post_meta');
 
 
 /**
- * The new expiration function, to work with single scheduled events.
- *
- * This was designed to hopefully be more flexible for future tweaks/modifications to the architecture.
- *
- * @throws \PublishPressFuture\Core\DI\ContainerNotInitializedException
- * @throws \Psr\Container\NotFoundExceptionInterface
- * @throws \Psr\Container\ContainerExceptionInterface
- * @internal
- *
- * @access private
- */
-function postexpirator_expire_post($postId)
-{
-    do_action(
-        ExpiratorHooksAbstract::ACTION_RUN_POST_EXPIRATION,
-        $postId
-    );
-}
-
-add_action('postExpiratorExpire', 'postexpirator_expire_post');
-
-function postexpirator_register_expiration_meta($id, $log)
-{
-    $log['expired_on'] = date('Y-m-d H:i:s');
-
-    add_post_meta($id, 'expiration_log', wp_json_encode($log));
-}
-
-/**
- * Internal method to get category names corresponding to the category IDs.
- *
- * @internal
- *
- * @access private
- */
-function _postexpirator_get_cat_names($cats)
-{
-    $out = array();
-    foreach ($cats as $cat) {
-        $out[$cat] = get_the_category_by_id($cat);
-    }
-
-    return $out;
-}
-
-/**
  * Register the shortcode.
  *
  * @internal
@@ -884,7 +835,8 @@ function postexpirator_upgrade()
                 )
             );
             foreach ($results as $result) {
-                wp_schedule_single_event($result->meta_value, 'postExpiratorExpire', array($result->post_id));
+                wp_schedule_single_event($result->meta_value, HooksAbstract::ACTION_EXPIRE_POST, array($result->post_id)
+                );
                 $opts = array();
                 $opts['id'] = $result->post_id;
                 $posttype = get_post_type($result->post_id);

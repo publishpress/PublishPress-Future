@@ -1,5 +1,7 @@
 <?php
 
+use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+
 /**
  * Utility functions.
  */
@@ -41,7 +43,7 @@ class PostExpirator_CronFacade
     private static function get_valid_events()
     {
         return [
-            'postExpiratorExpire',
+            ExpiratorHooks::ACTION_LEGACY_EXPIRE_POST,
         ];
     }
 

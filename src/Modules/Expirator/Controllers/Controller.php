@@ -79,7 +79,11 @@ class Controller implements InitializableInterface
             [$this, 'onActionUnschedulePostExpiration']
         );
         $this->hooks->addAction(
-            HooksAbstract::ACTION_RUN_POST_EXPIRATION,
+            HooksAbstract::ACTION_EXPIRE_POST,
+            [$this, 'onActionRunPostExpiration']
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_LEGACY_EXPIRE_POST,
             [$this, 'onActionRunPostExpiration']
         );
     }
