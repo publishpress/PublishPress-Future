@@ -258,9 +258,6 @@ return [
             $container->get(Services::HOOKS),
             $container->get(Services::SITE),
             $container->get(Services::CRON),
-            $container->get(Services::ERROR),
-            $container->get(Services::LOGGER),
-            $container->get(Services::DATETIME),
             $container->get(Services::EXPIRATION_SCHEDULER),
             $container->get(Services::EXPIRABLE_POST_MODEL_FACTORY)
         );

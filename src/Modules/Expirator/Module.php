@@ -34,21 +34,6 @@ class Module implements ModuleInterface
     private $cron;
 
     /**
-     * @var ErrorFacade;
-     */
-    private $error;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var DateTimeFacade
-     */
-    private $datetime;
-
-    /**
      * @var Controller
      */
     private $controller;
@@ -63,14 +48,11 @@ class Module implements ModuleInterface
      */
     private $expirablePostModelFactory;
 
-    public function __construct($hooks, $site, $cron, $error, $logger, $datetime, $scheduler, $expirablePostModelFactory)
+    public function __construct($hooks, $site, $cron, $scheduler, $expirablePostModelFactory)
     {
         $this->hooks = $hooks;
         $this->site = $site;
         $this->cron = $cron;
-        $this->error = $error;
-        $this->logger = $logger;
-        $this->datetime = $datetime;
         $this->scheduler = $scheduler;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
 
