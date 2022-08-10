@@ -47,6 +47,7 @@ class PostStatusToDraft implements ExpirationActionInterface
 
     /**
      * @inheritDoc
+     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function execute()
     {

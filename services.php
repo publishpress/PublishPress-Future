@@ -188,7 +188,8 @@ return [
      */
     Services::DEBUG => static function (ContainerInterface $container) {
         return new PublishPressFuture\Modules\Debug\Debug(
-            $container->get(Services::LOGGER)
+            $container->get(Services::LOGGER),
+            $container->get(Services::SETTINGS)
         );
     },
 

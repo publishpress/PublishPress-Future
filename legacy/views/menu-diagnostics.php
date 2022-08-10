@@ -1,5 +1,8 @@
 <?php
 defined('ABSPATH') or die('Direct access not allowed.');
+
+$container = PublishPressFuture\Core\DI\Container::getInstance();
+$debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
 ?>
 
 <form method="post" id="postExpiratorMenuUpgrade">
@@ -12,7 +15,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
             <th scope="row"><label for="postexpirator-log"><?php
                     esc_html_e('Debug Logging', 'post-expirator'); ?></label></th>
             <td>
-                <?php if (defined('POSTEXPIRATOR_DEBUG') && POSTEXPIRATOR_DEBUG) : ?>
+                <?php if ($debug->isEnabled()) : ?>
                     <i class="dashicons dashicons-yes-alt pe-status pe-status-enabled"></i> <span><?php
                         esc_html_e('Enabled', 'post-expirator'); ?></span>
                     <?php

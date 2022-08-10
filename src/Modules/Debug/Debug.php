@@ -15,9 +15,15 @@ class Debug implements DebugInterface
      */
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
+    /**
+     * @var \PublishPressFuture\Modules\Settings\SettingsFacade
+     */
+    private $settings;
+
+    public function __construct(LoggerInterface $logger, $settings)
     {
         $this->logger = $logger;
+        $this->settings = $settings;
     }
 
     /**
@@ -59,6 +65,6 @@ class Debug implements DebugInterface
      */
     public function isEnabled()
     {
-        return true;
+        return $this->settings->getDebugIsEnabled();
     }
 }

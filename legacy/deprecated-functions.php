@@ -222,6 +222,9 @@ function postexpirator_debug()
         return new PostExpiratorDebug();
     } else {
         if (! defined('POSTEXPIRATOR_DEBUG')) {
+            /**
+             * @deprecated
+             */
             define('POSTEXPIRATOR_DEBUG', 0);
         }
 
