@@ -13,6 +13,11 @@ use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 class ExpirablePostModel extends PostModel
 {
     /**
+     * @var \PublishPressFuture\Modules\Debug\Debug
+     */
+    private $debug;
+
+    /**
      * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
@@ -85,7 +90,7 @@ class ExpirablePostModel extends PostModel
     /**
      * @var callable
      */
-    private $termModelFactory;
+    protected $termModelFactory;
 
     /**
      * @param int $postId
@@ -111,8 +116,9 @@ class ExpirablePostModel extends PostModel
         $email,
         $termModelFactory
     ) {
-        parent::__construct($postId, $debug);
+        parent::__construct($postId, $termModelFactory);
 
+        $this->debug = $debug;
         $this->options = $options;
         $this->hooks = $hooks;
         $this->expirationActionMapper = $expirationActionMapper;
@@ -296,8 +302,6 @@ class ExpirablePostModel extends PostModel
      */
     public function expire($force = false)
     {
-        $this->debug->log('Called ' . __METHOD__ . ' for postId ' . $this->getPostId());
-
         if (! $this->isExpirationEnabled() && ! $force) {
             $this->debug->log($this->getPostId() . ' -> Post expiration is not activated for the post');
 
@@ -365,7 +369,7 @@ class ExpirablePostModel extends PostModel
      */
     private function getExpirationActionClassName()
     {
-        return $this->expirationActionMapper->map($this->expirationType);
+        return $this->expirationActionMapper->map($this->getExpirationType());
     }
 
     /**
@@ -375,6 +379,7 @@ class ExpirablePostModel extends PostModel
     {
         if (empty($this->expirationActionInstance)) {
             $actionClassName = $this->getExpirationActionClassName();
+
 
             if (! class_exists($actionClassName)) {
                 $this->debug->log('Expiration action class ' . $actionClassName . ' is undefined');
