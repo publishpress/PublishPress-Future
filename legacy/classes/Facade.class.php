@@ -1,5 +1,8 @@
 <?php
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract as Services;
+
 /**
  * The class that acts as a facade for the plugin's core functions.
  *
@@ -229,7 +232,10 @@ class PostExpirator_Facade
      */
     private function schedule_event($post_id, $ts, $opts)
     {
-        postexpirator_schedule_event($post_id, $ts, $opts);
+        $container = Container::getInstance();
+        $scheduler = $container->get(Services::EXPIRATION_SCHEDULER);
+
+        $scheduler->schedule($post_id, $ts, $opts);
     }
 
     /**

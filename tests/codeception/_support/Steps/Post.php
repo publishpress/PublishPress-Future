@@ -2,9 +2,11 @@
 
 namespace Steps;
 
-use PostExpirator_Util;
 use DateTime;
 use Exception;
+use PostExpirator_Util;
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract as Services;
 
 use function sq;
 
@@ -181,9 +183,9 @@ trait Post
         $this->click('#post-' . $postId . ' button.editinline');
     }
 
-   /**
-    * @Then I see the checkbox to enable post expiration
-    */
+    /**
+     * @Then I see the checkbox to enable post expiration
+     */
     public function iSeeTheCheckboxToEnablePostExpiration()
     {
         $this->seeElement('fieldset.post-expirator-quickedit');
@@ -216,41 +218,41 @@ trait Post
         $this->seeElement('.post-expirator-quickedit [name="expirationdate_status"]');
     }
 
-   /**
-    * @When I set the expiration option to Change on posts
-    */
+    /**
+     * @When I set the expiration option to Change on posts
+     */
     public function iSetTheExpirationOptionToChangeOnPosts()
     {
         $this->selectOption('select[name="expirationdate_status"]', 'change-only');
     }
 
     /**
-    * @When I set the expiration option to Add to posts
-    */
+     * @When I set the expiration option to Add to posts
+     */
     public function iSetTheExpirationOptionToAddToPosts()
     {
         $this->selectOption('select[name="expirationdate_status"]', 'add-only');
     }
 
     /**
-    * @When I set the expiration option to Change and Add to posts
-    */
+     * @When I set the expiration option to Change and Add to posts
+     */
     public function iSetTheExpirationOptionToChangeAndAddToPosts()
     {
         $this->selectOption('select[name="expirationdate_status"]', 'change-add');
     }
 
     /**
-    * @When I set the expiration option to Remove from posts
-    */
+     * @When I set the expiration option to Remove from posts
+     */
     public function iSetTheExpirationOptionToRemoveFromPosts()
     {
         $this->selectOption('select[name="expirationdate_status"]', 'remove-only');
     }
 
-   /**
-    * @When I set the day of expiration to tomorrow at noon
-    */
+    /**
+     * @When I set the day of expiration to tomorrow at noon
+     */
     public function iSetTheDayOfExpirationToTomorrow()
     {
         $tomorrowDate = $this->getTomorrowDateAtNoon();
@@ -278,18 +280,18 @@ trait Post
         $this->fillField('input[name="expirationdate_minute"]', $tomorrowDate->format('i'));
     }
 
-   /**
-    * @When I click on Update
-    */
+    /**
+     * @When I click on Update
+     */
     public function iClickOnUpdate()
     {
         $this->click('#bulk_edit');
     }
 
-   /**
-    * @Then I see the posts :postSlugs shows Never on the Expires column
-    * @Then I see the post :postSlugs shows Never on the Expires column
-    */
+    /**
+     * @Then I see the posts :postSlugs shows Never on the Expires column
+     * @Then I see the post :postSlugs shows Never on the Expires column
+     */
     public function iSeeThePostsShowsNeverOnTheExpiresColumn($postSlugs)
     {
         $postSlugs = explode(',', $postSlugs);
@@ -331,7 +333,10 @@ trait Post
             ];
             $this->havePostmetaInDatabase($postId, '_expiration-date-options', serialize($opts));
 
-            postexpirator_schedule_event($postId, $unixTime, $opts);
+            $container = Container::getInstance();
+            $scheduler = $container->get(Services::EXPIRATION_SCHEDULER);
+
+            $scheduler->schedule($postId, $unixTime, $opts);
         }
     }
 
@@ -364,7 +369,10 @@ trait Post
             ];
             $this->havePostmetaInDatabase($postId, '_expiration-date-options', serialize($opts));
 
-            postexpirator_schedule_event($postId, $unixTime, $opts);
+            $container = Container::getInstance();
+            $scheduler = $container->get(Services::EXPIRATION_SCHEDULER);
+
+            $scheduler->schedule($postId, $unixTime, $opts);
         }
     }
 
@@ -437,7 +445,7 @@ trait Post
         }
     }
 
-     /**
+    /**
      * @When I view the post :postSlug
      */
     public function iViewThePost($postSlug)
@@ -445,7 +453,7 @@ trait Post
         $this->amOnPage(sq($postSlug));
     }
 
-     /**
+    /**
      * @Then the post :slug expired as draft
      */
     public function thePostExpiredAsDraft($slug)

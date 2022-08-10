@@ -62,6 +62,17 @@ class Plugin implements InitializableInterface
 
         $pluginFile = $this->basePath . '/' . $this->pluginSlug . '.php';
         $this->hooks->registerDeactivationHook($pluginFile, [$this, 'deactivatePlugin']);
+
+        $this->initializeModules();
+    }
+
+    private function initializeModules()
+    {
+        foreach ($this->modules as $module) {
+            if (method_exists($module, 'initialize')) {
+                $module->initialize();
+            }
+        }
     }
 
     public function deactivatePlugin()

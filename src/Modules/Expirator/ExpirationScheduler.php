@@ -77,7 +77,7 @@ class ExpirationScheduler implements SchedulerInterface
 
         $this->unscheduleIfScheduled($postId, $timestamp);
 
-        $scheduled = $this->cron->scheduleSingleEvent($timestamp, HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId], true);
+        $scheduled = $this->cron->scheduleSingleEvent($timestamp, HooksAbstract::ACTION_EXPIRE_POST, [$postId], true);
 
         if (! $scheduled) {
             $this->logger->debug(
@@ -125,6 +125,12 @@ class ExpirationScheduler implements SchedulerInterface
 
     public function isScheduled($postId)
     {
+        $scheduledWithNewHook = $this->cron->getNextScheduleForEvent($postId, HooksAbstract::ACTION_EXPIRE_POST);
+
+        if ($scheduledWithNewHook) {
+            return true;
+        }
+
         return $this->cron->getNextScheduleForEvent($postId, HooksAbstract::ACTION_LEGACY_EXPIRE_POST);
     }
 

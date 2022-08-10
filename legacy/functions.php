@@ -645,9 +645,10 @@ function postexpirator_update_post_meta($id)
 
     if ($shouldSchedule) {
         $opts['id'] = $id;
-        postexpirator_schedule_event($id, $ts, $opts);
+
+        do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $id, $ts, $opts);
     } else {
-        postexpirator_unschedule_event($id);
+        do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $id);
     }
 }
 
@@ -837,7 +838,10 @@ function postexpirator_upgrade()
                 )
             );
             foreach ($results as $result) {
-                wp_schedule_single_event($result->meta_value, ExpiratorHooks::ACTION_EXPIRE_POST, array($result->post_id)
+                wp_schedule_single_event(
+                    $result->meta_value,
+                    ExpiratorHooks::ACTION_EXPIRE_POST,
+                    array($result->post_id)
                 );
                 $opts = array();
                 $opts['id'] = $result->post_id;
@@ -1173,9 +1177,15 @@ function postexpirator_date_save_bulk_edit()
         return;
     }
 
+
     check_admin_referer('bulk-posts');
 
     $status = sanitize_key($_REQUEST['expirationdate_status']);
+    $validStatuses = ['change-only', 'add-only', 'change-add', 'remove-only'];
+
+    if (! in_array($status, $validStatuses)) {
+        return;
+    }
 
     $postIds = array_map('intval', (array)$_REQUEST['post']);
 
@@ -1222,30 +1232,29 @@ function postexpirator_date_save_bulk_edit()
         $postExpirationDate = get_post_meta($postId, '_expiration-date', true);
 
         if ($status === 'remove-only') {
-            delete_post_meta($postId, '_expiration-date');
-            postexpirator_unschedule_event($postId);
+            do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+
             continue;
         }
 
-        $updateExpiry = ($status === 'change-only' && ! empty($postExpirationDate))
-            || ($status === 'add-only' && empty($postExpirationDate))
-            || $status === 'change-add';
-
-
-        if ($updateExpiry) {
-            $opts = PostExpirator_Facade::get_expire_principles($postId);
-            $opts['expireType'] = sanitize_key($_REQUEST['expirationdate_expiretype']);
-
-            if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
-                $opts['category'] = PostExpirator_Util::sanitize_array_of_integers(
-                    $_REQUEST['expirationdate_category']
-                ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            }
-
-            PostExpirator_Facade::set_expire_principles($postId, $opts);
-            update_post_meta($postId, '_expiration-date', $newExpirationDate);
-            postexpirator_schedule_event($postId, $newExpirationDate, $opts);
+        if ($status === 'change-only' && empty($postExpirationDate)) {
+            continue;
         }
+
+        if ($status === 'add-only' && ! empty($postExpirationDate)) {
+            continue;
+        }
+
+        $opts = PostExpirator_Facade::get_expire_principles($postId);
+        $opts['expireType'] = sanitize_key($_REQUEST['expirationdate_expiretype']);
+
+        if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
+            $opts['category'] = PostExpirator_Util::sanitize_array_of_integers(
+                $_REQUEST['expirationdate_category']
+            ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        }
+
+        do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $newExpirationDate, $opts);
     }
 }
 
