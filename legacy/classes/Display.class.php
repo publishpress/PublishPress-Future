@@ -221,7 +221,6 @@ class PostExpirator_Display
      */
     private function menu_defaults()
     {
-        $debug = postexpirator_debug();
         $types = postexpirator_get_post_types();
         $defaults = array();
 
