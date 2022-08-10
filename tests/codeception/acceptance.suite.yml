@@ -32,6 +32,7 @@ modules:
             port: 9515
             capabilities:
                 browserName: chrome
+                unexpectedAlertBehaviour: 'accept'
                 chromeOptions:
                     args:
                         - --headless
