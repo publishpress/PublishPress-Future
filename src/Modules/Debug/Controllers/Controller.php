@@ -5,9 +5,9 @@
 
 namespace PublishPressFuture\Modules\Debug\Controllers;
 
-use PublishPressFuture\Core\Framework\InitializableInterface;
-use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
+use PublishPressFuture\Framework\InitializableInterface;
+use PublishPressFuture\Framework\Logger\LoggerInterface;
+use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Modules\Debug\HooksAbstract;
 
 class Controller implements InitializableInterface

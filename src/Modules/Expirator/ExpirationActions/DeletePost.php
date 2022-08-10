@@ -2,33 +2,51 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
+use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-
-use function ray;
 
 class DeletePost implements ExpirationActionInterface
 {
     /**
-     * @var int
+     * @var ExpirablePostModel
      */
-    private $postId;
+    private $postModel;
 
     /**
-     * @param int $postId
+     * @param ExpirablePostModel $postModel
      */
-    public function __construct($postId)
+    public function __construct($postModel)
     {
-        $this->postId = $postId;
-    }
-
-    public function execute()
-    {
-        ray(__METHOD__);
+        $this->postModel = $postModel;
     }
 
     public function __toString()
     {
         return ExpirationActionsAbstract::DELETE_POST;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getNotificationText()
+    {
+        return __('Post has been successfully deleted.', 'post-expirator');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getExpirationLog()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function execute()
+    {
+        return $this->postModel->delete();
     }
 }

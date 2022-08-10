@@ -34,14 +34,17 @@ abstract class ServicesAbstract
     const ERROR = 'error';
     const DATETIME = 'datetime';
     const OPTIONS = 'options';
+    const USERS = 'users.facade';
+    const EMAIL = 'email.facade';
     const DEBUG = 'debug';
     const MODULES = 'modules';
     const EXPIRATION_SCHEDULER = 'expiration.scheduler';
-    const EXPIRATION_RUNNER = 'expiration.runner';
     const MODULE_DEBUG = 'module.debug';
     const MODULE_INSTANCE_PROTECTION = 'module.instance_protection';
     const MODULE_EXPIRATOR = 'module.expirator';
     const MODULE_SETTINGS = 'module.settings';
     const POST_MODEL_FACTORY = 'post.model.factory';
+    const TERM_MODEL_FACTORY = 'term.model.factory';
     const EXPIRABLE_POST_MODEL_FACTORY = 'expirable.post.model.factory';
+    const EXPIRATION_ACTION_MAPPER = 'expiration.action.mapper';
 }

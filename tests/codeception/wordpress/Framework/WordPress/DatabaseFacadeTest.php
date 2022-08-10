@@ -3,7 +3,7 @@ namespace wordpress\Framework\WordPress;
 
 use Codeception\TestCase\WPTestCase;
 use PDO;
-use PublishPressFuture\Core\Framework\WordPress\Facade\DatabaseFacade;
+use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
 use WordpressTester;
 
 class DatabaseFacadeTest extends WPTestCase

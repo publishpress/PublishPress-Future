@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\Framework\WordPress\Facade;
+namespace PublishPressFuture\Framework\WordPress\Facade;
 
 class SiteFacade
 {

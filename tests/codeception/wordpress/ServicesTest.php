@@ -10,7 +10,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Core\Framework\WordPress\Facade\PostModel;
+use PublishPressFuture\Framework\WordPress\Models\PostModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use UnitTester;
 

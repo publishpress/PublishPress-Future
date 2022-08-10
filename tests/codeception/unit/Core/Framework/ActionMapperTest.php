@@ -6,11 +6,11 @@
 namespace unit\Core\Framework;
 
 use Codeception\Test\Unit;
+use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPressFuture\Modules\Expirator\ExpirationActionMapper;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToDraft;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
+use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use WordpressTester;
 
 
@@ -41,7 +41,7 @@ class ActionMapperTest extends Unit
     public function testMapToNonExistentActionThrowsException()
     {
         $this->tester->expectThrowable(
-            UndefinedActionException::class,
+            NonexistentPostException::class,
             function() {
                 $mapper = $this->construct(
                     ExpirationActionMapper::class

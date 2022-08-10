@@ -2,7 +2,7 @@
 namespace wordpress\Framework\WordPress;
 
 use Codeception\TestCase\WPTestCase;
-use PublishPressFuture\Core\Framework\WordPress\Facade\HooksFacade;
+use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use WordpressTester;
 
 use function add_action;

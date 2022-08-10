@@ -2,8 +2,7 @@
 
 namespace PublishPressFuture\Modules\Expirator;
 
-use PublishPressFuture\Modules\Expirator\Exceptions\UndefinedActionException;
-use PublishPressFuture\Modules\Expirator\Interfaces\ActionMapperInterface;
+use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
@@ -13,6 +12,7 @@ use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToTrash;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\StickPost;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\UnstickPost;
+use PublishPressFuture\Modules\Expirator\Interfaces\ActionMapperInterface;
 
 class ExpirationActionMapper implements ActionMapperInterface
 {
@@ -41,12 +41,12 @@ class ExpirationActionMapper implements ActionMapperInterface
      *
      * @return string
      *
-     * @throws UndefinedActionException
+     * @throws NonexistentPostException
      */
     public function map($actionName)
     {
         if (! isset($this->actionClassesMap[$actionName])) {
-            throw new UndefinedActionException();
+            throw new NonexistentPostException();
         }
 
         return $this->actionClassesMap[$actionName];

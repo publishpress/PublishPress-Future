@@ -6,8 +6,8 @@
 namespace PublishPressFuture\Modules\Settings;
 
 
-use PublishPressFuture\Core\Framework\ModuleInterface;
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuture\Modules\Settings\Controllers\Controller;
 
 class Module implements ModuleInterface

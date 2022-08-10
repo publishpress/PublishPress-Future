@@ -6,8 +6,8 @@
 namespace PublishPressFuture\Modules\InstanceProtection;
 
 
-use PublishPressFuture\Core\Framework\ModuleInterface;
 use PublishPressFuture\Core\Paths;
+use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressInstanceProtection\Config;
 use PublishPressInstanceProtection\InstanceChecker;
 

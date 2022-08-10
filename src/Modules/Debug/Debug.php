@@ -6,7 +6,7 @@
 namespace PublishPressFuture\Modules\Debug;
 
 
-use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
+use PublishPressFuture\Framework\Logger\LoggerInterface;
 
 class Debug implements DebugInterface
 {

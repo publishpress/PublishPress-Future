@@ -3,12 +3,11 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\DI;
-
+namespace PublishPressFuture\Framework\WordPress\Exceptions;
 
 use PublishPressFuture\Framework\BaseException;
 
-class ContainerNotInitializedException extends BaseException
+class NonexistentPostException extends BaseException
 {
 
 }

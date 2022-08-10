@@ -3,8 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\Framework\WordPress\Facade;
+namespace PublishPressFuture\Framework\WordPress\Models;
 
+use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
 use WP_Post;
 
 class PostModel
@@ -19,20 +20,33 @@ class PostModel
     private $postInstance;
 
     /**
-     * @var \PublishPressFuture\Modules\Debug\Debug
+     * @var callable
      */
-    private $debug;
+    protected $termModelFactory;
 
-    public function __construct($postId, $debug)
+    /**
+     * @param int|\WP_Post $post
+     * @param callable $termModelFactory
+     */
+    public function __construct($post, $termModelFactory)
     {
-        $this->postId = (int)$postId;
-        $this->debug = $debug;
+        if (is_object($post)) {
+            $this->postInstance = $post;
+            $this->postId = $post->ID;
+        }
+
+        if (is_numeric($post)) {
+            $this->postId = (int)$post;
+        }
+
+        $this->termModelFactory = $termModelFactory;
     }
 
     /**
      * @param string $newPostStatus
      *
      * @return bool
+     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function setPostStatus($newPostStatus)
     {
@@ -125,6 +139,7 @@ class PostModel
 
     /**
      * @return bool
+     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function postExists()
     {
@@ -135,28 +150,101 @@ class PostModel
 
     /**
      * @return WP_Post
+     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
      */
     private function getPostInstance()
     {
         if (empty($this->postInstance)) {
             $this->postInstance = \get_post($this->postId);
+
+            if (! is_object($this->postInstance) || is_wp_error($this->postInstance)) {
+                throw new NonexistentPostException();
+            }
         }
 
         return $this->postInstance;
     }
 
-    public function getType()
+    public function getPostType()
     {
-        return get_post_type($this->postId);
+        return get_post_type($this->getPostId());
     }
 
     public function getTitle()
     {
-        return get_the_title($this->postId);
+        return get_the_title($this->getPostId());
     }
 
     public function getPermalink()
     {
-        return get_post_permalink($this->postId);
+        return get_post_permalink($this->getPostId());
+    }
+
+    public function getPostId()
+    {
+        return $this->postId;
+    }
+
+    public function getTerms($taxonomy = 'post_tag', $args = [])
+    {
+        $terms = wp_get_post_terms($this->getPostId(), $taxonomy, $args);
+        $termModelFactory = $this->termModelFactory;
+
+        foreach ($terms as &$term) {
+            $term = $termModelFactory($term);
+        }
+
+        return $terms;
+    }
+
+    public function getTermNames($taxonomy = 'post_tag', $args = [])
+    {
+        $terms = $this->getTerms($taxonomy, $args);
+
+        foreach ($terms as &$term) {
+            $term = $term->getName();
+        }
+
+        return $terms;
+    }
+
+    public function getTermIDs($taxonomy = 'post_tag', $args = [])
+    {
+        $terms = $this->getTerms($taxonomy, $args);
+
+        foreach ($terms as &$term) {
+            $term = $term->getTermID();
+        }
+
+        return $terms;
+    }
+
+    public function appendTerms($termIDs, $taxonomy)
+    {
+        return wp_set_object_terms($this->getPostId(), $termIDs, $taxonomy, true);
+    }
+
+    public function setTerms($termIDs, $taxonomy)
+    {
+        return wp_set_object_terms($this->getPostId(), $termIDs, $taxonomy, false);
+    }
+
+    public function delete()
+    {
+        return wp_delete_post($this->getPostId()) !== false;
+    }
+
+    public function stick()
+    {
+        stick_post($this->getPostId());
+
+        return true;
+    }
+
+    public function unstick()
+    {
+        unstick_post($this->getPostId());
+
+        return true;
     }
 }

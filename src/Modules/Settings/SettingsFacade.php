@@ -6,8 +6,8 @@
 namespace PublishPressFuture\Modules\Settings;
 
 use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Core\Framework\WordPress\Facade\OptionsFacade;
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
 
 class SettingsFacade
 {
@@ -60,6 +60,8 @@ class SettingsFacade
             'expirationdateDefaultsPage',
             'expirationdateGutenbergSupport',
             'expirationdatePreserveData',
+            'expirationdateEmailNotificationAdmins',
+            'expirationdateEmailNotificationList',
         ];
 
         // TODO: Remove the custom post type default settings like expirationdateDefaults<post_type>, etc.
@@ -106,5 +108,48 @@ class SettingsFacade
     public function getDebugIsEnabled($default = false)
     {
         return (bool)$this->options->getOption('expirationdateDebug', $default);
+    }
+
+    public function getSendEmailNotificationToAdmins()
+    {
+        return (bool)$this->options->getOption(
+            'expirationdateEmailNotificationAdmins',
+            POSTEXPIRATOR_EMAILNOTIFICATIONADMINS
+        );
+    }
+
+    public function getEmailNotificationAddressesList()
+    {
+        $emailsList = $this->options->getOption(
+            'expirationdateEmailNotificationList',
+            ''
+        );
+
+        $emailsList = explode(',', $emailsList);
+
+        foreach ($emailsList as &$emailAddress)
+        {
+            $emailAddress = filter_var(trim($emailAddress), FILTER_SANITIZE_EMAIL);
+        }
+
+        return (array)$emailsList;
+    }
+
+    public function getPostTypeDefaults($postType)
+    {
+        $defaults = [
+            'expireType' => null,
+            'autoEnable' => null,
+            'taxonomy' => null,
+            'activeMetaBox' => null,
+            'emailnotification' => null,
+            'default-expire-type' => null,
+            'default-custom-date' => null,
+        ];
+
+        return array_merge(
+            $defaults,
+            (array)$this->options->getOption('expirationdateDefaults' . ucfirst($postType))
+        );
     }
 }

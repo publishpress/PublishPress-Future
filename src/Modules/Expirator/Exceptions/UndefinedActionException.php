@@ -2,7 +2,7 @@
 
 namespace PublishPressFuture\Modules\Expirator\Exceptions;
 
-use PublishPressFuture\Core\Framework\BaseException;
+use PublishPressFuture\Framework\BaseException;
 
 class UndefinedActionException extends BaseException
 {

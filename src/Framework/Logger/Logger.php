@@ -3,11 +3,11 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\Framework\Logger;
+namespace PublishPressFuture\Framework\Logger;
 
-use PublishPressFuture\Core\Framework\Logger\LogLevelAbstract as LogLevel;
-use PublishPressFuture\Core\Framework\WordPress\Facade\DatabaseFacade;
-use PublishPressFuture\Core\Framework\WordPress\Facade\SiteFacade;
+use PublishPressFuture\Framework\Logger\LogLevelAbstract as LogLevel;
+use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
+use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 
 class Logger implements LoggerInterface

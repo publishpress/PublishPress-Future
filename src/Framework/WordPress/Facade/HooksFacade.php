@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\Framework\WordPress\Facade;
+namespace PublishPressFuture\Framework\WordPress\Facade;
 
 use PublishPressFuture\Core\HookableInterface;
 
@@ -84,5 +84,10 @@ class HooksFacade implements HookableInterface
     public function registerDeactivationHook($pluginFile, $callback)
     {
         \register_deactivation_hook($pluginFile, $callback);
+    }
+
+    public function ksesRemoveFilters()
+    {
+        kses_remove_filters();
     }
 }

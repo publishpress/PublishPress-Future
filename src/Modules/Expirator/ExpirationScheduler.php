@@ -5,11 +5,11 @@
 
 namespace PublishPressFuture\Modules\Expirator;
 
-use PublishPressFuture\Core\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Core\Framework\WordPress\Facade\CronFacade;
-use PublishPressFuture\Core\Framework\WordPress\Facade\DateTimeFacade;
-use PublishPressFuture\Core\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Framework\Logger\LoggerInterface;
+use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
+use PublishPressFuture\Framework\WordPress\Facade\DateTimeFacade;
+use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use WP_Error;
 

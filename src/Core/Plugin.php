@@ -5,8 +5,8 @@
 
 namespace PublishPressFuture\Core;
 
-use PublishPressFuture\Core\Framework\InitializableInterface;
-use PublishPressFuture\Core\Framework\ModuleInterface as ModuleInterface;
+use PublishPressFuture\Framework\InitializableInterface;
+use PublishPressFuture\Framework\ModuleInterface as ModuleInterface;
 
 class Plugin implements InitializableInterface
 {
