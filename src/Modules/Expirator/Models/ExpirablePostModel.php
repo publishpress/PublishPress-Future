@@ -401,7 +401,7 @@ class ExpirablePostModel extends PostModel
      */
     private function sendEmail($expirationAction)
     {
-        $actioNotificationText = $expirationAction->getNotificationText();
+        $actionNotificationText = $expirationAction->getNotificationText();
 
         $emailBody = sprintf(
             __(
@@ -411,7 +411,7 @@ class ExpirablePostModel extends PostModel
             '##POSTTITLE##',
             '##POSTLINK##',
             '##EXPIRATIONDATE##',
-            $actioNotificationText
+            $actionNotificationText
         );
 
         if (empty($emailBody)) {
