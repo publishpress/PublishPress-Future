@@ -132,7 +132,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
         }
 
         echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
-        echo '<br/>' . esc_html__('Expiration Categories', 'post-expirator') . ':<br/>';
+        echo '<br/>' . esc_html__('Expiration Taxonomies', 'post-expirator') . ':<br/>';
 
         echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
         echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
