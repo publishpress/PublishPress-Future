@@ -15,14 +15,19 @@ use PublishPressFuture\Framework\WordPress\Facade\EmailFacade;
 use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
+use PublishPressFuture\Framework\WordPress\Facade\RequestFacade;
+use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Framework\WordPress\Facade\UsersFacade;
 use PublishPressFuture\Framework\WordPress\Models\PostModel;
 use PublishPressFuture\Framework\WordPress\Models\TermModel;
+use PublishPressFuture\Framework\WordPress\Models\UserModel;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
 use PublishPressFuture\Modules\Expirator\ExpirationActionMapper;
 use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPressFuture\Modules\Expirator\Models\CurrentUserModel;
+use PublishPressFuture\Modules\Expirator\Models\DefaultDataModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
@@ -184,6 +189,20 @@ return [
     },
 
     /**
+     * @return \PublishPressFuture\Framework\WordPress\Facade\RequestFacade
+     */
+    Services::REQUEST => static function (ContainerInterface $container) {
+        return new RequestFacade();
+    },
+
+    /**
+     * @return \PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade
+     */
+    Services::SANITIZATION => static function (ContainerInterface $container) {
+        return new SanitizationFacade();
+    },
+
+    /**
      * @return PublishPressFuture\Modules\Debug\Debug|null
      */
     Services::DEBUG => static function (ContainerInterface $container) {
@@ -218,6 +237,7 @@ return [
         $logger = $container->get(Services::LOGGER);
         $datetime = $container->get(Services::DATETIME);
         $postModelFactory = $container->get(Services::POST_MODEL_FACTORY);
+        $sanitization = $container->get(Services::SANITIZATION);
 
         return new ExpirationScheduler(
             $hooks,
@@ -225,7 +245,8 @@ return [
             $error,
             $logger,
             $datetime,
-            $postModelFactory
+            $postModelFactory,
+            $sanitization
         );
     },
 
@@ -259,7 +280,10 @@ return [
             $container->get(Services::SITE),
             $container->get(Services::CRON),
             $container->get(Services::EXPIRATION_SCHEDULER),
-            $container->get(Services::EXPIRABLE_POST_MODEL_FACTORY)
+            $container->get(Services::EXPIRABLE_POST_MODEL_FACTORY),
+            $container->get(Services::SANITIZATION),
+            $container->get(Services::CURRENT_USER_MODEL_FACTORY),
+            $container->get(Services::REQUEST)
         );
     },
 
@@ -286,6 +310,25 @@ return [
         return static function ($termId) use ($container) {
             return new TermModel($termId);
         };
+    },
+
+    Services::USER_MODEL_FACTORY => static function (ContainerInterface $container) {
+        return static function ($user) use ($container) {
+            return new UserModel($user);
+        };
+    },
+
+    Services::CURRENT_USER_MODEL_FACTORY => static function (ContainerInterface $container) {
+        return static function () use ($container) {
+            return new CurrentUserModel();
+        };
+    },
+
+    Services::DEFAULT_DATA_MODEL => static function (ContainerInterface $container) {
+        return new DefaultDataModel(
+            $container->get(Services::SETTINGS),
+            $container->get(Services::OPTIONS)
+        );
     },
 
     Services::EXPIRABLE_POST_MODEL_FACTORY => static function (ContainerInterface $container) {

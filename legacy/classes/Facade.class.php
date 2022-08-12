@@ -417,93 +417,29 @@ class PostExpirator_Facade
      * Returns true if the current user can expire posts.
      *
      * @return bool
+     * @deprecated 2.8.0
      */
     public function current_user_can_expire_posts()
     {
-        $current_user = wp_get_current_user();
+        $container = Container::getInstance();
+        $currentUserModelFactory = $container->get(Services::CURRENT_USER_MODEL_FACTORY);
 
-        return is_a($current_user, WP_User::class)
-            && $current_user->has_cap($this->capabilities['expire_post']);
+        $currentUserModel = $currentUserModelFactory();
+
+        return $currentUserModel->userCanExpirePosts();
     }
 
     /**
      * Calculates the default expiry date as set in the options.
+     *
+     * @deprecated 2.8.0
      */
     public static function get_default_expiry($post_type)
     {
-        $defaultmonth = date_i18n('m');
-        $defaultday = date_i18n('d');
-        $defaulthour = date_i18n('H');
-        $defaultyear = date_i18n('Y');
-        $defaultminute = date_i18n('i');
-        $ts = time();
+        $container = Container::getInstance();
+        $defaultDataModel = $container->get(Services::DEFAULT_DATA_MODEL);
 
-        $default_date_expiry = $custom_date = '';
-        $general_date_expiry = $general_custom_date = '';
-
-        // get the values from the general settings
-        $general_date_expiry = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
-        if ('custom' === $general_date_expiry) {
-            $custom = get_option('expirationdateDefaultDateCustom');
-            if ($custom !== false) {
-                $general_custom_date = $custom;
-            }
-        }
-
-        // get the values from the post_type
-        $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
-
-        if (isset($defaults['default-expire-type'])) {
-            $default_date_expiry = $defaults['default-expire-type'];
-            switch ($default_date_expiry) {
-                case 'custom':
-                    $custom_date = $defaults['default-custom-date'];
-                    break;
-                case 'inherit':
-                    $custom_date = $general_custom_date;
-                    $default_date_expiry = $general_date_expiry;
-                    break;
-            }
-        } else {
-            $default_date_expiry = $general_date_expiry;
-            $custom_date = $general_custom_date;
-        }
-
-        if ('custom' === $default_date_expiry) {
-            $custom = get_option('expirationdateDefaultDateCustom');
-            if (! empty($custom_date)) {
-                $tz = get_option('timezone_string');
-                if ($tz) {
-                    // @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
-                    // phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
-                    date_default_timezone_set($tz);
-                }
-
-                // strip the quotes in case the user provides them.
-                $custom_date = str_replace('"', '', html_entity_decode($custom_date, ENT_QUOTES));
-
-                $ts = time() + (strtotime($custom_date) - time());
-                if ($tz) {
-                    // @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
-                    // phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
-                    date_default_timezone_set('UTC');
-                }
-            }
-            $defaultmonth = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'm');
-            $defaultday = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'd');
-            $defaultyear = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'Y');
-            $defaulthour = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'H');
-            $defaultminute = get_date_from_gmt(gmdate('Y-m-d H:i:s', $ts), 'i');
-        }
-
-        return array(
-            'month' => $defaultmonth,
-            'day' => $defaultday,
-            'year' => $defaultyear,
-            'hour' => $defaulthour,
-            'minute' => $defaultminute,
-            'ts' => $ts,
-        );
+        return $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
     }
 
     /**

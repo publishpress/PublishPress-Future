@@ -14,7 +14,7 @@ use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
-class Controller implements InitializableInterface
+class ExpirationController implements InitializableInterface
 {
     /**
      * @var HookableInterface

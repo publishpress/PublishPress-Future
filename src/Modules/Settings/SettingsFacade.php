@@ -5,7 +5,7 @@
 
 namespace PublishPressFuture\Modules\Settings;
 
-use PublishPressFuture\Core\DI\ServicesAbstract;
+use PublishPressFuture\Core\DI\ServicesAbstract as Services;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
 
@@ -74,13 +74,13 @@ class SettingsFacade
     public function setDefaultSettings()
     {
         $defaultValues = [
-            'expirationdateDefaultDateFormat' => $this->defaultData[ServicesAbstract::DEFAULT_DATE_FORMAT],
-            'expirationdateDefaultTimeFormat' => $this->defaultData[ServicesAbstract::DEFAULT_TIME_FORMAT],
-            'expirationdateFooterContents' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_CONTENT],
-            'expirationdateFooterStyle' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_STYLE],
-            'expirationdateDisplayFooter' => $this->defaultData[ServicesAbstract::DEFAULT_FOOTER_DISPLAY],
-            'expirationdateDebug' => $this->defaultData[ServicesAbstract::DEFAULT_DEBUG],
-            'expirationdateDefaultDate' => $this->defaultData[ServicesAbstract::DEFAULT_EXPIRATION_DATE],
+            'expirationdateDefaultDateFormat' => $this->defaultData[Services::DEFAULT_DATE_FORMAT],
+            'expirationdateDefaultTimeFormat' => $this->defaultData[Services::DEFAULT_TIME_FORMAT],
+            'expirationdateFooterContents' => $this->defaultData[Services::DEFAULT_FOOTER_CONTENT],
+            'expirationdateFooterStyle' => $this->defaultData[Services::DEFAULT_FOOTER_STYLE],
+            'expirationdateDisplayFooter' => $this->defaultData[Services::DEFAULT_FOOTER_DISPLAY],
+            'expirationdateDebug' => $this->defaultData[Services::DEFAULT_DEBUG],
+            'expirationdateDefaultDate' => $this->defaultData[Services::DEFAULT_EXPIRATION_DATE],
             'expirationdateGutenbergSupport' => 1,
         ];
 
@@ -127,8 +127,7 @@ class SettingsFacade
 
         $emailsList = explode(',', $emailsList);
 
-        foreach ($emailsList as &$emailAddress)
-        {
+        foreach ($emailsList as &$emailAddress) {
             $emailAddress = filter_var(trim($emailAddress), FILTER_SANITIZE_EMAIL);
         }
 
@@ -151,5 +150,24 @@ class SettingsFacade
             $defaults,
             (array)$this->options->getOption('expirationdateDefaults' . ucfirst($postType))
         );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultDate()
+    {
+        return $this->options->getOption(
+            'expirationdateDefaultDate',
+            $this->defaultData[Services::DEFAULT_EXPIRATION_DATE]
+        );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultDateCustom()
+    {
+        return $this->options->getOption('expirationdateDefaultDateCustom');
     }
 }

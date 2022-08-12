@@ -36,7 +36,9 @@ abstract class ServicesAbstract
     const OPTIONS = 'options';
     const USERS = 'users.facade';
     const EMAIL = 'email.facade';
+    const REQUEST = 'request.facade';
     const DEBUG = 'debug';
+    const SANITIZATION = 'sanitization';
     const MODULES = 'modules';
     const EXPIRATION_SCHEDULER = 'expiration.scheduler';
     const MODULE_DEBUG = 'module.debug';
@@ -45,6 +47,9 @@ abstract class ServicesAbstract
     const MODULE_SETTINGS = 'module.settings';
     const POST_MODEL_FACTORY = 'post.model.factory';
     const TERM_MODEL_FACTORY = 'term.model.factory';
+    const USER_MODEL_FACTORY = 'user.model.factory';
+    const CURRENT_USER_MODEL_FACTORY = 'current.user.model.factory';
     const EXPIRABLE_POST_MODEL_FACTORY = 'expirable.post.model.factory';
+    const DEFAULT_DATA_MODEL = 'default.data.model.factory';
     const EXPIRATION_ACTION_MAPPER = 'expiration.action.mapper';
 }

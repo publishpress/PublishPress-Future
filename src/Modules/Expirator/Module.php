@@ -6,15 +6,15 @@
 namespace PublishPressFuture\Modules\Expirator;
 
 
-use PublishPressFuture\Framework\Logger\LoggerInterface;
+use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
-use PublishPressFuture\Framework\WordPress\Facade\DateTimeFacade;
-use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Modules\Expirator\Controllers\Controller;
+use PublishPressFuture\Modules\Expirator\Controllers\BulkEditController;
+use PublishPressFuture\Modules\Expirator\Controllers\ExpirationController;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
 
 class Module implements ModuleInterface
 {
@@ -34,9 +34,9 @@ class Module implements ModuleInterface
     private $cron;
 
     /**
-     * @var Controller
+     * @var InitializableInterface[]
      */
-    private $controller;
+    private $controllers = [];
 
     /**
      * @var SchedulerInterface
@@ -48,15 +48,34 @@ class Module implements ModuleInterface
      */
     private $expirablePostModelFactory;
 
-    public function __construct($hooks, $site, $cron, $scheduler, $expirablePostModelFactory)
+    /**
+     * @var SanitizationFacade
+     */
+    private $sanitization;
+
+    /**
+     * @var callable
+     */
+    private $currentUserModelFactory;
+
+    /**
+     * @var \PublishPressFuture\Framework\WordPress\Facade\RequestFacade
+     */
+    private $request;
+
+    public function __construct($hooks, $site, $cron, $scheduler, $expirablePostModelFactory, $sanitization, $currentUserModelFactory, $request)
     {
         $this->hooks = $hooks;
         $this->site = $site;
         $this->cron = $cron;
         $this->scheduler = $scheduler;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->sanitization = $sanitization;
+        $this->currentUserModelFactory = $currentUserModelFactory;
+        $this->request = $request;
 
-        $this->controller = $this->getController();
+        $this->controllers['expiration'] = $this->factoryExpirationController();
+        $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
     }
 
     /**
@@ -64,17 +83,30 @@ class Module implements ModuleInterface
      */
     public function initialize()
     {
-        $this->controller->initialize();
+        foreach ($this->controllers as $controller) {
+            $controller->initialize();
+        }
     }
 
-    private function getController()
+    private function factoryExpirationController()
     {
-        return new Controller(
+        return new ExpirationController(
             $this->hooks,
             $this->site,
             $this->cron,
             $this->scheduler,
             $this->expirablePostModelFactory
+        );
+    }
+
+    private function factoryBulkEditController()
+    {
+        return new BulkEditController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
         );
     }
 }

@@ -7,6 +7,7 @@ namespace PublishPressFuture\Modules\Expirator;
 
 abstract class HooksAbstract
 {
+    const ACTION_ADMIN_INIT = 'admin_init';
     const ACTION_LEGACY_SCHEDULE = 'postexpirator_schedule';
     const ACTION_LEGACY_UNSCHEDULE = 'postexpirator_unschedule';
     const ACTION_LEGACY_EXPIRE_POST = 'postExpiratorExpire';
