@@ -432,8 +432,6 @@ class PostExpirator_Facade
 
         $currentUserModel = $currentUserModelFactory();
 
-        ray($currentUserModel->userCanExpirePosts())->red();
-
         return $currentUserModel->userCanExpirePosts();
     }
 
