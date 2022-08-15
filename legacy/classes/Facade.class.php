@@ -2,6 +2,7 @@
 
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract as Services;
+use PublishPressFuture\Modules\Expirator\CapabilitiesAbstract as Capabilities;
 
 /**
  * The class that acts as a facade for the plugin's core functions.
@@ -11,19 +12,24 @@ use PublishPressFuture\Core\DI\ServicesAbstract as Services;
 class PostExpirator_Facade
 {
 
-    const DEFAULT_CAPABILITY_EXPIRE_POST = 'publishpress_future_expire_post';
+    /**
+     * @deprecated 2.8.0 Use CapabilitiesAbstract::EXPIRE_POST;
+     */
+    const DEFAULT_CAPABILITY_EXPIRE_POST = Capabilities::EXPIRE_POST;
 
     /**
      * The singleton instance.
      */
     private static $instance = null;
+
     /**
      * List of capabilities used by the plugin.
      *
      * @var string[]
+     * @deprecated 2.8.0
      */
     private $capabilities = array(
-        'expire_post' => self::DEFAULT_CAPABILITY_EXPIRE_POST,
+        'expire_post' => Capabilities::EXPIRE_POST,
     );
 
     /**
@@ -63,8 +69,8 @@ class PostExpirator_Facade
             return false;
         }
 
-        return $user_role_instance->has_cap($this->capabilities['expire_post'])
-            && $user_role_instance->capabilities[$this->capabilities['expire_post']] === true;
+        return $user_role_instance->has_cap(Capabilities::EXPIRE_POST)
+            && $user_role_instance->capabilities[Capabilities::EXPIRE_POST] === true;
     }
 
     /**
@@ -78,7 +84,7 @@ class PostExpirator_Facade
             return;
         }
 
-        $admin_role->add_cap(self::DEFAULT_CAPABILITY_EXPIRE_POST);
+        $admin_role->add_cap(Capabilities::EXPIRE_POST);
     }
 
     /**
@@ -426,6 +432,8 @@ class PostExpirator_Facade
 
         $currentUserModel = $currentUserModelFactory();
 
+        ray($currentUserModel->userCanExpirePosts())->red();
+
         return $currentUserModel->userCanExpirePosts();
     }
 
@@ -454,7 +462,7 @@ class PostExpirator_Facade
         return array_merge(
             $capabilities,
             array(
-                'PublishPress Future' => array(self::DEFAULT_CAPABILITY_EXPIRE_POST),
+                'PublishPress Future' => [Capabilities::EXPIRE_POST],
             )
         );
     }
