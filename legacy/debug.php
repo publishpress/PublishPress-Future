@@ -20,12 +20,6 @@ class PostExpiratorDebug
     private $debug;
 
     /**
-     * @var string
-     * @deprecated 2.8.0
-     */
-    private $debug_table;
-
-    /**
      * Constructor.
      * @throws ContainerNotInitializedException
      * @throws NotFoundExceptionInterface
