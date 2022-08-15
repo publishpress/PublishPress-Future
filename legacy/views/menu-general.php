@@ -137,7 +137,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </tr>
             <tr valign="top">
                 <th scope="row"><?php
-                    esc_html_e('Default Expiration Category', 'post-expirator'); ?></th>
+                    esc_html_e('Default Expiration Taxonomy', 'post-expirator'); ?></th>
                 <td>
                     <?php
                     echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
@@ -156,7 +156,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     echo '</div>';
                     ?>
                     <p class="description"><?php
-                        esc_html_e('Sets the default expiration category for the post.', 'post-expirator'); ?></p>
+                        esc_html_e('Sets the default expiration taxonomy for the post.', 'post-expirator'); ?></p>
                 </td>
             </tr>
         </table>

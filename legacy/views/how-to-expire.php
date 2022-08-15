@@ -45,13 +45,13 @@ echo esc_attr($id); ?>" class="pe-howtoexpire">
     if ($type !== 'page') { ?>
         <option value="category" <?php
         echo $selected === 'category' ? 'selected="selected"' : ''; ?>><?php
-            esc_html_e('Category: Replace', 'post-expirator'); ?></option>
+            esc_html_e('Taxonomy: Replace', 'post-expirator'); ?></option>
         <option value="category-add" <?php
         echo $selected === 'category-add' ? 'selected="selected"' : ''; ?>><?php
-            esc_html_e('Category: Add', 'post-expirator'); ?></option>
+            esc_html_e('Taxonomy: Add', 'post-expirator'); ?></option>
         <option value="category-remove" <?php
         echo $selected === 'category-remove' ? 'selected="selected"' : ''; ?>><?php
-            esc_html_e('Category: Remove', 'post-expirator'); ?></option>
+            esc_html_e('Taxonomy: Remove', 'post-expirator'); ?></option>
         <?php
     } ?>
 </select>

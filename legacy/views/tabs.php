@@ -30,15 +30,15 @@ $debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
                echo ($current_tab === 'defaults' ? 'nav-tab-active' : ''); ?>"><?php
                 esc_html_e('Post Types', 'post-expirator'); ?></a>
             <a href="<?php
-            echo esc_url(admin_url('admin.php?page=publishpress-future&tab=diagnostics')); ?>"
-               class="pe-tab nav-tab <?php
-               echo ($current_tab === 'diagnostics' ? 'nav-tab-active' : ''); ?>"><?php
-                esc_html_e('Diagnostics', 'post-expirator'); ?></a>
-            <a href="<?php
             echo esc_url(admin_url('admin.php?page=publishpress-future&tab=advanced')); ?>"
                class="pe-tab nav-tab <?php
                echo ($current_tab === 'advanced' ? 'nav-tab-active' : ''); ?>"><?php
                 esc_html_e('Advanced', 'post-expirator'); ?></a>
+            <a href="<?php
+            echo esc_url(admin_url('admin.php?page=publishpress-future&tab=diagnostics')); ?>"
+               class="pe-tab nav-tab <?php
+               echo ($current_tab === 'diagnostics' ? 'nav-tab-active' : ''); ?>"><?php
+                esc_html_e('Diagnostics', 'post-expirator'); ?></a>
             <?php
             if ($debugIsEnabled) { ?>
                 <a href="<?php

@@ -8,15 +8,6 @@
     font-weight: normal;
 }
 
-.post-expirator-debug th {
-    font-weight: bold;
-    border-bottom: 1px solid black;
-}
-
-.post-expirator-timestamp {
-    width: 150px;
-}
-
 /* metabox */
 #post-expirator-cat-list {
     max-width: 250px;

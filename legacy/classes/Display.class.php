@@ -206,14 +206,20 @@ class PostExpirator_Display
 
             return;
         }
-        print '<table class="post-expirator-debug">';
+        print '<table class="form-table"><tbody><tr><td>';
+        print '<table class="post-expirator-debug striped wp-list-table widefat fixed table-view-list">';
+        print '<thead>';
         print '<tr><th class="post-expirator-timestamp">' . esc_html__('Timestamp', 'post-expirator') . '</th>';
         print '<th>' . esc_html__('Message', 'post-expirator') . '</th></tr>';
+        print '</thead>';
+        print '<tbody>';
         foreach ($results as $result) {
             print '<tr><td>' . esc_html($result->timestamp) . '</td>';
             print '<td>' . esc_html($result->message) . '</td></tr>';
         }
+        print '</tbody>';
         print '</table>';
+        print '</td></tr></tbody></table>';
     }
 
     /**

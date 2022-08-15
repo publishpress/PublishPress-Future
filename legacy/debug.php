@@ -4,8 +4,8 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ContainerNotInitializedException;
+use PublishPressFuture\Core\DI\ServicesAbstract as Services;
 use PublishPressFuture\Modules\Debug\DebugInterface;
-use PublishPressFuture\Modules\Debug\ServiceProvider;
 
 /**
  * The class that adds debug entries to the database.
@@ -20,12 +20,6 @@ class PostExpiratorDebug
     private $debug;
 
     /**
-     * @var string
-     * @deprecated 2.8.0
-     */
-    private $debug_table;
-
-    /**
      * Constructor.
      * @throws ContainerNotInitializedException
      * @throws NotFoundExceptionInterface
@@ -33,7 +27,7 @@ class PostExpiratorDebug
      */
     public function __construct()
     {
-        $this->debug = Container::getInstance()->get(ServiceProvider::SERVICE_DEBUG);
+        $this->debug = Container::getInstance()->get(Services::DEBUG);
     }
 
     /**
