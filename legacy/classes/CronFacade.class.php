@@ -43,6 +43,7 @@ class PostExpirator_CronFacade
     private static function get_valid_events()
     {
         return [
+            ExpiratorHooks::ACTION_EXPIRE_POST,
             ExpiratorHooks::ACTION_LEGACY_EXPIRE_POST,
         ];
     }

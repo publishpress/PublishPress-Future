@@ -111,7 +111,7 @@ class ExpirationScheduler implements SchedulerInterface
 
     private function unscheduleIfScheduled($postId, $timestamp)
     {
-        if ($this->isScheduled($timestamp)) {
+        if ($this->isScheduled($postId)) {
             $result = $this->removeSchedule($postId);
 
             $errorDetails = $this->error->isWpError($result) ? $this->error->getWpErrorMessage(
@@ -125,13 +125,13 @@ class ExpirationScheduler implements SchedulerInterface
 
     public function isScheduled($postId)
     {
-        $scheduledWithNewHook = $this->cron->getNextScheduleForEvent($postId, HooksAbstract::ACTION_EXPIRE_POST);
+        $scheduledWithNewHook = $this->cron->getNextScheduleForEvent(HooksAbstract::ACTION_EXPIRE_POST, [$postId]);
 
         if ($scheduledWithNewHook) {
             return true;
         }
 
-        return $this->cron->getNextScheduleForEvent($postId, HooksAbstract::ACTION_LEGACY_EXPIRE_POST);
+        return $this->cron->getNextScheduleForEvent(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId]);
     }
 
     /**
@@ -140,7 +140,18 @@ class ExpirationScheduler implements SchedulerInterface
      */
     private function removeSchedule($postId)
     {
-        return $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId], true);
+        $legacyResult = $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId], true);
+        $result = $this->cron->clearScheduledHook(HooksAbstract::ACTION_EXPIRE_POST, [$postId], true);
+
+        if ($this->error->isWpError($legacyResult)) {
+            return $legacyResult;
+        }
+
+        if ($this->error->isWpError($result)) {
+            return $result;
+        }
+
+        return $legacyResult || $result;
     }
 
     /**
@@ -175,6 +186,7 @@ class ExpirationScheduler implements SchedulerInterface
 
         if ($this->isScheduled($postId)) {
             $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId]);
+            $this->cron->clearScheduledHook(HooksAbstract::ACTION_EXPIRE_POST, [$postId]);
 
             $this->logger->debug(sprintf('%d -> UNSCHEDULED, no errors found', $postId));
         }
