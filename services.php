@@ -35,7 +35,7 @@ use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 
 return [
-    Services::PLUGIN_VERSION => '2.8.0-alpha.1',
+    Services::PLUGIN_VERSION => '2.8.0-alpha.2',
 
     Services::PLUGIN_SLUG => 'post-expirator',
 
