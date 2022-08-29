@@ -81,6 +81,11 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.7.8] - 30 Aug, 2022 =
+
+* CHANGED: Rename "Category" in the expiration options to use a more generic term: "Taxonomy";
+* FIXED: Fix bulk edit when expiration is not enabled for the post type, #281;
+
 = [2.7.7] - 14 Jul, 2022 =
 
 * ADDED: Add post meta "expiration_log" with expiration log data when post expires;
