@@ -42,17 +42,15 @@ if (empty($opts['type']) && isset($opts['post_type'])) {
         <?php esc_html_e('Unstick', 'post-expirator'); ?>
     </option>
 
-    <?php if ($opts['type'] !== 'page') : ?>
-        <option value="category" <?php selected($opts['selected'], 'category', true); ?>>
-            <?php esc_html_e('Taxonomy: Replace', 'post-expirator'); ?>
-        </option>
+    <option value="category" <?php selected($opts['selected'], 'category', true); ?>>
+        <?php esc_html_e('Taxonomy: Replace', 'post-expirator'); ?>
+    </option>
 
-        <option value="category-add" <?php selected($opts['selected'], 'category-add', true); ?>>
-            <?php esc_html_e('Taxonomy: Add', 'post-expirator'); ?>
-        </option>
+    <option value="category-add" <?php selected($opts['selected'], 'category-add', true); ?>>
+        <?php esc_html_e('Taxonomy: Add', 'post-expirator'); ?>
+    </option>
 
-        <option value="category-remove" <?php selected($opts['selected'], 'category-remove', true); ?>>
-            <?php esc_html_e('Taxonomy: Remove', 'post-expirator'); ?>
-        </option>
-    <?php endif; ?>
+    <option value="category-remove" <?php selected($opts['selected'], 'category-remove', true); ?>>
+        <?php esc_html_e('Taxonomy: Remove', 'post-expirator'); ?>
+    </option>
 </select>
