@@ -426,7 +426,7 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
     $opts = [
         'expireType' => $postTypeDefaults['expireType'],
         'category' => $categories,
-        'categoryTaxonomy' => '',
+        'categoryTaxonomy' => (string)$postTypeDefaults['taxonomy'],
         'enabled' => $status === 'saved',
     ];
 
@@ -435,11 +435,7 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
     update_post_meta($post->ID, '_expiration-date-options', $opts);
     update_post_meta($post->ID, '_expiration-date-type', $postTypeDefaults['expireType']);
     update_post_meta($post->ID, '_expiration-date-categories', (array)$categories);
-    update_post_meta(
-        $post->ID,
-        '_expiration-date-taxonomy',
-        $opts['categoryTaxonomy']
-    );
+    update_post_meta($post->ID, '_expiration-date-taxonomy', $opts['categoryTaxonomy']);
 }
 
 /**
@@ -520,6 +516,8 @@ function postexpirator_update_post_meta($id)
         return;
     }
 
+    $postTypeDefaults = get_option('expirationdateDefaults' . ucfirst($posttype));
+
     $shouldSchedule = false;
     $ts = null;
     $opts = [];
@@ -572,6 +570,7 @@ function postexpirator_update_post_meta($id)
                     'category-remove'
                 ), true)) {
                     $opts['category'] = $category;
+                    $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
                 }
             }
         } else {
@@ -582,7 +581,7 @@ function postexpirator_update_post_meta($id)
             if ($opts['expireType'] === 'category' || $opts['expireType'] === 'category-add' || $opts['expireType'] === 'category-remove') {
                 if (isset($category) && ! empty($category)) {
                     $opts['category'] = $category;
-                    $opts['categoryTaxonomy'] = sanitize_text_field($_POST['taxonomy-heirarchical']);
+                    $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
                 }
             }
         }
@@ -630,6 +629,8 @@ function postexpirator_update_post_meta($id)
                 } else {
                     $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
                 }
+
+                $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
             }
         } else {
             $shouldSchedule = PostExpirator_Facade::is_expiration_enabled_for_post($id);
@@ -639,6 +640,7 @@ function postexpirator_update_post_meta($id)
 
                 $opts['expireType'] = get_post_meta($id, '_expiration-date-type', true);
                 $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
+                $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
             }
         }
     }
