@@ -82,7 +82,7 @@
                     });
                     this.setState({categoriesList: categoriesList, catIdVsName: catIdVsName, taxonomy: config.strings.category});
                 });
-            } else if (postType !== 'page') {
+            } else {
                 wp.apiFetch({
                     path: wp.url.addQueryArgs(`wp/v2/taxonomies/${taxonomy}`, {context: 'edit'}),
                 }).then((taxAttributes) => {
@@ -150,15 +150,10 @@
                 {label: config.strings.private, value: 'private'},
                 {label: config.strings.stick, value: 'stick'},
                 {label: config.strings.unstick, value: 'unstick'},
+                {label: config.strings.categoryReplace, value: 'category'},
+                {label: config.strings.categoryAdd, value: 'category-add'},
+                {label: config.strings.categoryRemove, value: 'category-remove'},
             ];
-
-            if (postType !== 'page') {
-                actionsList = _.union(actionsList, [
-                    {label: config.strings.categoryReplace, value: 'category'},
-                    {label: config.strings.categoryAdd, value: 'category-add'},
-                    {label: config.strings.categoryRemove, value: 'category-remove'},
-                ]);
-            }
 
             let selectedCats = categories && compact(categories.map((id) => catIdVsName[id] || false));
             if (typeof selectedCats === 'string') {
@@ -183,7 +178,7 @@
                                 <DateTimePicker
                                     currentDate={date}
                                     onChange={(value) => this.setState({date: value, attribute: 'date'})}
-                                    is_12_hours={config.is_12_hours}
+                                    is12Hour={config.is_12_hours}
                                 />
                             </PanelRow>
                             <SelectControl

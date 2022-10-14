@@ -245,7 +245,7 @@ msgstr "A data/hora publicada será usada como valor de expiração"
 
 #: views/classic-metabox.php:135
 msgid ""
-"You must assign a heirarchical taxonomy to this post type to use this "
+"You must assign a hierarchical taxonomy to this post type to use this "
 "feature."
 msgstr ""
 "Você deve atribuir uma taxonomia herdeira a este tipo de post para usar este "

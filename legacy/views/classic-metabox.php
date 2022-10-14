@@ -142,7 +142,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
 
         if (sizeof($taxonomies) === 0) {
             echo '<p>' . esc_html__(
-                    'You must assign a heirarchical taxonomy to this post type to use this feature.',
+                    'You must assign a hierarchical taxonomy to this post type to use this feature.',
                     'post-expirator'
                 ) . '</p>';
         } elseif (sizeof($taxonomies) > 1 && ! isset($defaultsOption['taxonomy'])) {
@@ -159,7 +159,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
                 'selected_cats' => $categories,
                 'checked_ontop' => false
             ));
-            echo '<input type="hidden" name="taxonomy-heirarchical" value="' . esc_attr($taxonomy) . '" />';
+            echo '<input type="hidden" name="taxonomy-hierarchical" value="' . esc_attr($taxonomy) . '" />';
         }
         echo '</ul>';
         echo '</div>';

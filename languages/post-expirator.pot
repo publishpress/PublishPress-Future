@@ -320,7 +320,7 @@ msgid "The published date/time will be used as the expiration value"
 msgstr ""
 
 #: views/classic-metabox.php:135
-msgid "You must assign a heirarchical taxonomy to this post type to use this feature."
+msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
 msgstr ""
 
 #: views/classic-metabox.php:140
