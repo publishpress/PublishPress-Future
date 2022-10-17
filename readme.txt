@@ -81,7 +81,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.7.8] - 30 Aug, 2022 =
+= [2.7.8] - 17 Oct, 2022 =
 
 * CHANGED: Rename "Category" in the expiration options to use a more generic term: "Taxonomy";
 * CHANGED: Fixed typo in the classical metabox (classical editor);
