@@ -332,6 +332,10 @@ return [
     },
 
     Services::EXPIRABLE_POST_MODEL_FACTORY => static function (ContainerInterface $container) {
+        /**
+         * @return ExpirablePostModel
+         * @throws
+         */
         return static function ($postId) use ($container) {
             return new ExpirablePostModel(
                 $postId,
@@ -344,12 +348,30 @@ return [
                 $container->get(Services::SETTINGS),
                 $container->get(Services::EMAIL),
                 $container->get(Services::TERM_MODEL_FACTORY),
-                $container->get(Services::ERROR)
+                $container->get(Services::EXPIRATION_ACTION_FACTORY)
             );
         };
     },
 
     Services::EXPIRATION_ACTION_MAPPER => static function (ContainerInterface $container) {
         return new ExpirationActionMapper();
+    },
+
+    Services::EXPIRATION_ACTION_FACTORY => static function (ContainerInterface $container) {
+        /**
+         * @return \PublishPressFuture\Modules\Expirator\Interfaces\ActionableInterface|false
+         * @throws
+         */
+        return static function ($actionClassName, $postModel) use ($container) {
+            if (! class_exists($actionClassName)) {
+                $debug = $container->get(Services::DEBUG);
+
+                $debug->log('Expiration action class ' . $actionClassName . ' is undefined');
+
+                return false;
+            }
+
+            return new $actionClassName($postModel, $container->get(Services::ERROR));
+        };
     }
 ];

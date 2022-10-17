@@ -88,14 +88,14 @@ class ExpirablePostModel extends PostModel
     private $expirationActionInstance;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
+     * @var callable
      */
-    private $errorFacade;
+    protected $termModelFactory;
 
     /**
      * @var callable
      */
-    protected $termModelFactory;
+    protected $expirationActionFactory;
 
     /**
      * @param int $postId
@@ -108,7 +108,7 @@ class ExpirablePostModel extends PostModel
      * @param \PublishPressFuture\Modules\Settings\SettingsFacade $settings
      * @param \PublishPressFuture\Framework\WordPress\Facade\EmailFacade $email
      * @param callable $termModelFactory
-     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     * @param callable $expirationActionFactory
      */
     public function __construct(
         $postId,
@@ -121,7 +121,7 @@ class ExpirablePostModel extends PostModel
         $settings,
         $email,
         $termModelFactory,
-        $errorFacade
+        $expirationActionFactory
     ) {
         parent::__construct($postId, $termModelFactory);
 
@@ -134,7 +134,7 @@ class ExpirablePostModel extends PostModel
         $this->settings = $settings;
         $this->email = $email;
         $this->termModelFactory = $termModelFactory;
-        $this->errorFacade = $errorFacade;
+        $this->expirationActionFactory = $expirationActionFactory;
     }
 
     public function getExpirationDataAsArray()
@@ -396,14 +396,9 @@ class ExpirablePostModel extends PostModel
         if (empty($this->expirationActionInstance)) {
             $actionClassName = $this->getExpirationActionClassName();
 
+            $factory = $this->expirationActionFactory;
 
-            if (! class_exists($actionClassName)) {
-                $this->debug->log('Expiration action class ' . $actionClassName . ' is undefined');
-
-                return false;
-            }
-
-            $this->expirationActionInstance = new $actionClassName($this, $this->errorFacade);
+            $this->expirationActionInstance = $factory($actionClassName, $this);
         }
 
 

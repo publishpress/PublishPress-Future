@@ -50,6 +50,7 @@ abstract class ServicesAbstract
     const USER_MODEL_FACTORY = 'user.model.factory';
     const CURRENT_USER_MODEL_FACTORY = 'current.user.model.factory';
     const EXPIRABLE_POST_MODEL_FACTORY = 'expirable.post.model.factory';
+    const EXPIRATION_ACTION_FACTORY = 'expiration.action.factory';
     const DEFAULT_DATA_MODEL = 'default.data.model.factory';
     const EXPIRATION_ACTION_MAPPER = 'expiration.action.mapper';
 }
