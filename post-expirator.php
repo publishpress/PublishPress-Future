@@ -4,7 +4,7 @@
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
  * Author: PublishPress
- * Version: 2.7.7
+ * Version: 2.7.8
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
@@ -26,7 +26,7 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 
 if (! defined('POSTEXPIRATOR_LOADED')) {
     // Default Values
-    define('POSTEXPIRATOR_VERSION', '2.7.7');
+    define('POSTEXPIRATOR_VERSION', '2.7.8');
     define('POSTEXPIRATOR_DATEFORMAT', __('l F jS, Y', 'post-expirator'));
     define('POSTEXPIRATOR_TIMEFORMAT', __('g:ia', 'post-expirator'));
     define('POSTEXPIRATOR_FOOTERCONTENTS', __('Post expires at EXPIRATIONTIME on EXPIRATIONDATE', 'post-expirator'));
@@ -469,7 +469,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
         $opts = [
             'expireType' => $postTypeDefaults['expireType'],
             'category' => $categories,
-            'categoryTaxonomy' => '',
+            'categoryTaxonomy' => (string)$postTypeDefaults['taxonomy'],
             'enabled' => $status === 'saved',
         ];
 
@@ -478,11 +478,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
         update_post_meta($post->ID, '_expiration-date-options', $opts);
         update_post_meta($post->ID, '_expiration-date-type', $postTypeDefaults['expireType']);
         update_post_meta($post->ID, '_expiration-date-categories', (array)$categories);
-        update_post_meta(
-            $post->ID,
-            '_expiration-date-taxonomy',
-            $opts['categoryTaxonomy']
-        );
+        update_post_meta($post->ID, '_expiration-date-taxonomy', $opts['categoryTaxonomy']);
     }
 
     /**
@@ -563,6 +559,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
             return;
         }
 
+        $postTypeDefaults = get_option('expirationdateDefaults' . ucfirst($posttype));
+
         $shouldSchedule = false;
         $ts = null;
         $opts = [];
@@ -613,6 +611,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                         'category-remove'
                     ), true)) {
                         $opts['category'] = $category;
+                        $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
                     }
                 }
             } else {
@@ -623,7 +622,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                 if ($opts['expireType'] === 'category' || $opts['expireType'] === 'category-add' || $opts['expireType'] === 'category-remove') {
                     if (isset($category) && ! empty($category)) {
                         $opts['category'] = $category;
-                        $opts['categoryTaxonomy'] = sanitize_text_field($_POST['taxonomy-heirarchical']);
+                        $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
                     }
                 }
             }
@@ -674,6 +673,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                     } else {
                         $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
                     }
+
+                    $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
                 }
             } else {
                 $shouldSchedule = PostExpirator_Facade::is_expiration_enabled_for_post($id);
@@ -683,6 +684,7 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
 
                     $opts['expireType'] = get_post_meta($id, '_expiration-date-type', true);
                     $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
+                    $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
                 }
             }
         }
@@ -1196,6 +1198,8 @@ if (! defined('POSTEXPIRATOR_LOADED')) {
                     }
                 } else {
                     $terms = PostExpirator_Util::sanitize_array_of_integers($expireCategory);
+
+                    ray($terms, $expireCategory, $expireCategoryTaxonomy);
 
                     $expirationLog['taxonomy'] = $expireCategoryTaxonomy;
                     $expirationLog['terms'] = $terms;

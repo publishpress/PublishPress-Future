@@ -236,7 +236,7 @@ msgstr "Como expirar"
 
 #: views/bulk-edit.php:124 views/classic-metabox.php:127
 #: views/quick-edit.php:85 assets/jsx/block.jsx:203
-msgid "Expiration Categories"
+msgid "Expiration Taxonomies"
 msgstr "Categorias para expiração"
 
 #: views/classic-metabox.php:13
@@ -245,7 +245,7 @@ msgstr "A data/hora publicada será usada como valor de expiração"
 
 #: views/classic-metabox.php:135
 msgid ""
-"You must assign a heirarchical taxonomy to this post type to use this "
+"You must assign a hierarchical taxonomy to this post type to use this "
 "feature."
 msgstr ""
 "Você deve atribuir uma taxonomia herdeira a este tipo de post para usar este "
@@ -292,15 +292,15 @@ msgid "Unstick"
 msgstr "Desafixar"
 
 #: views/how-to-expire.php:47 assets/jsx/block.jsx:152
-msgid "Category: Replace"
+msgid "Taxonomy: Replace"
 msgstr "Categoria: Substituir"
 
 #: views/how-to-expire.php:50 assets/jsx/block.jsx:153
-msgid "Category: Add"
+msgid "Taxonomy: Add"
 msgstr "Categoria: Adicionar"
 
 #: views/how-to-expire.php:53 assets/jsx/block.jsx:154
-msgid "Category: Remove"
+msgid "Taxonomy: Remove"
 msgstr "Categoria: Remover"
 
 #: views/menu-defaults.php:5
@@ -528,7 +528,7 @@ msgid ""
 msgstr ""
 
 #: views/menu-general.php:189
-msgid "Default Expiration Category"
+msgid "Default Expiration Taxonomy"
 msgstr ""
 
 #: views/menu-general.php:205

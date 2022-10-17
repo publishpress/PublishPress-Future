@@ -365,21 +365,21 @@ class PostExpirator_Facade
                     'is_12_hours' => get_option('time_format') !== 'H:i',
                     'timezone_offset' => PostExpirator_Util::get_timezone_offset() / 60,
                     'strings' => [
-                        'category' => __('Category'),
+                        'category' => __('Taxonomy'),
                         'draft' => __('Draft', 'post-expirator'),
                         'delete' => __('Delete', 'post-expirator'),
                         'trash' => __('Trash', 'post-expirator'),
                         'private' => __('Private', 'post-expirator'),
                         'stick' => __('Stick', 'post-expirator'),
                         'unstick' => __('Unstick', 'post-expirator'),
-                        'categoryReplace' => __('Category: Replace', 'post-expirator'),
-                        'categoryAdd' => __('Category: Add', 'post-expirator'),
-                        'categoryRemove' => __('Category: Remove', 'post-expirator'),
+                        'categoryReplace' => __('Taxonomy: Replace', 'post-expirator'),
+                        'categoryAdd' => __('Taxonomy: Add', 'post-expirator'),
+                        'categoryRemove' => __('Taxonomy: Remove', 'post-expirator'),
                         'postExpirator' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Post Expiration', 'post-expirator'),
                         'howToExpire' => __('How to expire', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
-                        'expirationCategories' => __('Expiration Categories', 'post-expirator'),
+                        'expirationCategories' => __('Expiration Taxonomies', 'post-expirator'),
                     ]
                 ]
             );
