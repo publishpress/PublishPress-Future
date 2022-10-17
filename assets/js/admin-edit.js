@@ -114,7 +114,6 @@
             } else {
                 $edit_row.find('.pe-category-list').hide();
             }
-
         }
     };
 
@@ -162,13 +161,15 @@
     $('.pe-qe-fields input[name="expirationdate_hour"]').on('blur', validateBulkFields);
     $('.pe-qe-fields input[name="expirationdate_minute"]').on('blur', validateBulkFields);
 
-    $('#bulk_edit').on('click', function(e) {
-        const isValid = validateBulkFields();
-        console.log(isValid);
-        if (! isValid) {
-            e.preventDefault();
+    if ($('.post-expirator-quickedit').length > 0) {
+        $('#bulk_edit').on('click', function(e) {
+            const isValid = validateBulkFields();
+            console.log(isValid);
+            if (! isValid) {
+                e.preventDefault();
 
-            return false;
-        }
-    });
+                return false;
+            }
+        });
+    }
 })(jQuery, postexpiratorConfig);

@@ -124,17 +124,17 @@ msgstr ""
 
 #: classes/Facade.class.php:371
 #: views/how-to-expire.php:47
-msgid "Category: Replace"
+msgid "Taxonomy: Replace"
 msgstr ""
 
 #: classes/Facade.class.php:372
 #: views/how-to-expire.php:50
-msgid "Category: Add"
+msgid "Taxonomy: Add"
 msgstr ""
 
 #: classes/Facade.class.php:373
 #: views/how-to-expire.php:53
-msgid "Category: Remove"
+msgid "Taxonomy: Remove"
 msgstr ""
 
 #: classes/Facade.class.php:375
@@ -160,7 +160,7 @@ msgstr ""
 #: views/bulk-edit.php:127
 #: views/classic-metabox.php:127
 #: views/quick-edit.php:88
-msgid "Expiration Categories"
+msgid "Expiration Taxonomies"
 msgstr ""
 
 #: post-expirator-debug.php:77
@@ -320,7 +320,7 @@ msgid "The published date/time will be used as the expiration value"
 msgstr ""
 
 #: views/classic-metabox.php:135
-msgid "You must assign a heirarchical taxonomy to this post type to use this feature."
+msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
 msgstr ""
 
 #: views/classic-metabox.php:140
@@ -625,7 +625,7 @@ msgid "Set the default expiration date to be used when creating new posts and pa
 msgstr ""
 
 #: views/menu-general.php:151
-msgid "Default Expiration Category"
+msgid "Default Expiration Taxonomy"
 msgstr ""
 
 #: views/menu-general.php:170
