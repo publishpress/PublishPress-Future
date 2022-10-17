@@ -343,7 +343,8 @@ return [
                 $container->get(Services::EXPIRATION_SCHEDULER),
                 $container->get(Services::SETTINGS),
                 $container->get(Services::EMAIL),
-                $container->get(Services::TERM_MODEL_FACTORY)
+                $container->get(Services::TERM_MODEL_FACTORY),
+                $container->get(Services::ERROR)
             );
         };
     },

@@ -14,11 +14,18 @@ class PostCategoryRemove implements ExpirationActionInterface
     private $postModel;
 
     /**
-     * @param ExpirablePostModel $postModel
+     * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
      */
-    public function __construct($postModel)
+    private $errorFacade;
+
+    /**
+     * @param ExpirablePostModel $postModel
+     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     */
+    public function __construct($postModel, $errorFacade)
     {
         $this->postModel = $postModel;
+        $this->errorFacade = $errorFacade;
     }
 
     public function __toString()
@@ -68,6 +75,8 @@ class PostCategoryRemove implements ExpirationActionInterface
 
         $newPostTerms = array_diff($postTerms, $termsToRemove);
 
-        $this->postModel->setTerms($newPostTerms, $expirationTaxonomy);
+        $result = $this->postModel->setTerms($newPostTerms, $expirationTaxonomy);
+
+        return ! $this->errorFacade->isWpError($result);
     }
 }

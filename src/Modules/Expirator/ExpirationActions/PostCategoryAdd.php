@@ -2,6 +2,7 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
+use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
@@ -14,11 +15,18 @@ class PostCategoryAdd implements ExpirationActionInterface
     private $postModel;
 
     /**
-     * @param ExpirablePostModel $postModel
+     * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
      */
-    public function __construct($postModel)
+    private $errorFacade;
+
+    /**
+     * @param ExpirablePostModel $postModel
+     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     */
+    public function __construct($postModel, $errorFacade)
     {
         $this->postModel = $postModel;
+        $this->errorFacade = $errorFacade;
     }
 
     public function __toString()
@@ -66,6 +74,8 @@ class PostCategoryAdd implements ExpirationActionInterface
 
         $mergedTerms = array_merge($postTerms, $newTerms);
 
-        $this->postModel->setTerms($mergedTerms, $expirationTaxonomy);
+        $result = $this->postModel->setTerms($mergedTerms, $expirationTaxonomy);
+
+        return ! $this->errorFacade->isWpError($result);
     }
 }

@@ -88,6 +88,11 @@ class ExpirablePostModel extends PostModel
     private $expirationActionInstance;
 
     /**
+     * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
+     */
+    private $errorFacade;
+
+    /**
      * @var callable
      */
     protected $termModelFactory;
@@ -103,6 +108,7 @@ class ExpirablePostModel extends PostModel
      * @param \PublishPressFuture\Modules\Settings\SettingsFacade $settings
      * @param \PublishPressFuture\Framework\WordPress\Facade\EmailFacade $email
      * @param callable $termModelFactory
+     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
      */
     public function __construct(
         $postId,
@@ -114,7 +120,8 @@ class ExpirablePostModel extends PostModel
         $scheduler,
         $settings,
         $email,
-        $termModelFactory
+        $termModelFactory,
+        $errorFacade
     ) {
         parent::__construct($postId, $termModelFactory);
 
@@ -127,6 +134,7 @@ class ExpirablePostModel extends PostModel
         $this->settings = $settings;
         $this->email = $email;
         $this->termModelFactory = $termModelFactory;
+        $this->errorFacade = $errorFacade;
     }
 
     public function getExpirationDataAsArray()
@@ -331,7 +339,15 @@ class ExpirablePostModel extends PostModel
             return false;
         }
 
-        if (! $expirationAction->execute()) {
+        $result = $expirationAction->execute();
+
+        if (! is_bool($result)) {
+            $this->debug->log($this->getPostId() . ' -> ACTION  ' . $expirationAction . ' returned a non boolean value');
+
+            return false;
+        }
+
+        if (! $result) {
             $this->debug->log(
                 $this->getPostId() . ' -> FAILED ' . print_r($this->getExpirationDataAsArray(), true)
             );
@@ -387,7 +403,7 @@ class ExpirablePostModel extends PostModel
                 return false;
             }
 
-            $this->expirationActionInstance = new $actionClassName($this);
+            $this->expirationActionInstance = new $actionClassName($this, $this->errorFacade);
         }
 
 

@@ -15,8 +15,9 @@ class PostStatusToTrash implements ExpirationActionInterface
 
     /**
      * @param ExpirablePostModel $postModel
+     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
      */
-    public function __construct($postModel)
+    public function __construct($postModel, $errorFacade)
     {
         $this->postModel = $postModel;
     }

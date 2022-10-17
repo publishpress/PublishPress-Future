@@ -14,11 +14,18 @@ class PostCategorySet implements ExpirationActionInterface
     private $postModel;
 
     /**
-     * @param ExpirablePostModel $postModel
+     * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
      */
-    public function __construct($postModel)
+    private $errorFacade;
+
+    /**
+     * @param ExpirablePostModel $postModel
+     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     */
+    public function __construct($postModel, $errorFacade)
     {
         $this->postModel = $postModel;
+        $this->errorFacade = $errorFacade;
     }
 
     public function __toString()
@@ -63,6 +70,8 @@ class PostCategorySet implements ExpirationActionInterface
         $newTerms = $this->postModel->getExpirationCategoryIDs();
 
 
-        $this->postModel->setTerms($newTerms, $expirationTaxonomy);
+        $result = $this->postModel->setTerms($newTerms, $expirationTaxonomy);
+
+        return ! $this->errorFacade->isWpError($result);
     }
 }
