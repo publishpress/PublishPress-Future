@@ -216,14 +216,10 @@ return [
      * @return SettingsFacade
      */
     Services::SETTINGS => static function (ContainerInterface $container) {
-        $hooks = $container->get(Services::HOOKS);
-        $options = $container->get(Services::OPTIONS);
-        $defaultData = $container->get(Services::DEFAULT_DATA);
-
         return new SettingsFacade(
-            $hooks,
-            $options,
-            $defaultData
+            $container->get(Services::HOOKS),
+            $container->get(Services::OPTIONS),
+            $container->get(Services::DEFAULT_DATA)
         );
     },
 
@@ -231,22 +227,13 @@ return [
      * @return SchedulerInterface
      */
     Services::EXPIRATION_SCHEDULER => static function (ContainerInterface $container) {
-        $hooks = $container->get(Services::HOOKS);
-        $cron = $container->get(Services::CRON);
-        $error = $container->get(Services::ERROR);
-        $logger = $container->get(Services::LOGGER);
-        $datetime = $container->get(Services::DATETIME);
-        $postModelFactory = $container->get(Services::POST_MODEL_FACTORY);
-        $sanitization = $container->get(Services::SANITIZATION);
-
         return new ExpirationScheduler(
-            $hooks,
-            $cron,
-            $error,
-            $logger,
-            $datetime,
-            $postModelFactory,
-            $sanitization
+            $container->get(Services::HOOKS),
+            $container->get(Services::CRON),
+            $container->get(Services::ERROR),
+            $container->get(Services::LOGGER),
+            $container->get(Services::DATETIME),
+            $container->get(Services::POST_MODEL_FACTORY)
         );
     },
 
