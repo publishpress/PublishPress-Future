@@ -150,11 +150,13 @@ class PostExpirator_Facade
         }
 
         // not through bulk edit.
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if (isset($_POST['post_ids'])) {
             return;
         }
 
         // not through quick edit.
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if (isset($_POST['expirationdate_quickedit'])) {
             return;
         }

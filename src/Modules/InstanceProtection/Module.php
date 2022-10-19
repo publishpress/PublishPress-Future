@@ -19,6 +19,7 @@ class Module implements ModuleInterface
             . '/publishpress/publishpress-instance-protection/include.php';
 
         if (is_readable($includeFile)) {
+            // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
             require_once $includeFile;
         }
 
