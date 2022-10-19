@@ -85,6 +85,7 @@ class PostExpirator_Display
         PostExpirator_Facade::load_assets('settings');
 
         $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
             $tab = 'general';
@@ -109,6 +110,7 @@ class PostExpirator_Display
      */
     private function menu_editor()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if (isset($_POST['expirationdateSaveEditor']) && sanitize_key($_POST['expirationdateSaveEditor'])) {
             if (! isset($_POST['_postExpiratorMenuEditor_nonce']) || ! wp_verify_nonce(
                     sanitize_key($_POST['_postExpiratorMenuEditor_nonce']),
@@ -117,6 +119,7 @@ class PostExpirator_Display
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateGutenbergSupport', sanitize_text_field($_POST['gutenberg-support']));
             }
         }
@@ -129,6 +132,7 @@ class PostExpirator_Display
      */
     private function menu_display()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if (isset($_POST['expirationdateSaveDisplay']) && sanitize_key($_POST['expirationdateSaveDisplay'])) {
             if (! isset($_POST['_postExpiratorMenuDisplay_nonce']) || ! wp_verify_nonce(
                     sanitize_key($_POST['_postExpiratorMenuDisplay_nonce']),
@@ -140,7 +144,7 @@ class PostExpirator_Display
                 // Filter Content
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateDisplayFooter', $_POST['expired-display-footer']);
                 update_option('expirationdateFooterContents', $_POST['expired-footer-contents']);
                 update_option('expirationdateFooterStyle', $_POST['expired-footer-style']);
@@ -156,6 +160,7 @@ class PostExpirator_Display
      */
     private function menu_diagnostics()
     {
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (! isset($_POST['_postExpiratorMenuDiagnostics_nonce']) || ! wp_verify_nonce(
                     sanitize_key($_POST['_postExpiratorMenuDiagnostics_nonce']),
@@ -255,6 +260,7 @@ class PostExpirator_Display
                     if (isset($_POST['expirationdate_activemeta-' . $type])) {
                         $defaults[$type]['activeMetaBox'] = sanitize_text_field($_POST['expirationdate_activemeta-' . $type]);
                     }
+                    // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                     $defaults[$type]['emailnotification'] = trim(sanitize_text_field($_POST['expirationdate_emailnotification-' . $type]));
 
                     if (isset($_POST['expired-default-date-' . $type])) {
@@ -295,6 +301,7 @@ class PostExpirator_Display
                 // Filter Content
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+                // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateDefaultDateFormat', sanitize_text_field($_POST['expired-default-date-format']));
                 update_option('expirationdateDefaultTimeFormat', sanitize_text_field($_POST['expired-default-time-format']));
                 update_option('expirationdateEmailNotification', sanitize_text_field($_POST['expired-email-notification']));
@@ -302,10 +309,12 @@ class PostExpirator_Display
                 update_option('expirationdateEmailNotificationList', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
                 update_option(
                     'expirationdateCategoryDefaults',
+                    // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                     isset($_POST['expirationdate_category']) ? PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']) : []
                 );
                 update_option('expirationdateDefaultDate', sanitize_text_field($_POST['expired-default-expiration-date']));
                 update_option('expirationdateDefaultDateCustom', sanitize_text_field($_POST['expired-custom-expiration-date']));
+                // phpcs:enable
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
                     $_POST['allow-user-roles'] = array();
@@ -355,7 +364,9 @@ class PostExpirator_Display
                 // Filter Content
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateGutenbergSupport', sanitize_text_field($_POST['gutenberg-support']));
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
