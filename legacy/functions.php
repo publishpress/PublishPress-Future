@@ -119,9 +119,9 @@ function postexpirator_orderby($query)
         return;
     }
 
-    $orderby = $query->get('orderby');
+    $orderBy = $query->get('orderby');
 
-    if ('expirationdate' === $orderby) {
+    if ('expirationdate' === $orderBy && $query->is_main_query()) {
         $query->set(
             'meta_query', array(
                 'relation' => 'OR',
