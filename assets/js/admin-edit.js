@@ -1,5 +1,4 @@
 (function ($, config) {
-
     // show/hide the date fields when the user chooses the intent in bulk edit
     $('body').on('change', 'select[name="expirationdate_status"]', function (e) {
         var $show = $(this).find('option:selected').attr('data-show-fields');
@@ -115,7 +114,6 @@
             } else {
                 $edit_row.find('.pe-category-list').hide();
             }
-
         }
     };
 
@@ -144,7 +142,12 @@
             $field.removeClass('invalid');
 
             value = parseInt($field.val());
-            if (isNaN(value) || value <= 0) {
+            if (['expirationdate_hour', 'expirationdate_minute'].includes($field.prop('name'))) {
+                if (isNaN(value) || value < 0) {
+                    $field.addClass('invalid');
+                    isValid = false;
+                }
+            } else if (isNaN(value) || value <= 0) {
                 $field.addClass('invalid');
                 isValid = false;
             }
@@ -158,13 +161,14 @@
     $('.pe-qe-fields input[name="expirationdate_hour"]').on('blur', validateBulkFields);
     $('.pe-qe-fields input[name="expirationdate_minute"]').on('blur', validateBulkFields);
 
-    $('#bulk_edit').on('click', function(e) {
-        const isValid = validateBulkFields();
-        console.log(isValid);
-        if (! isValid) {
-            e.preventDefault();
+    if ($('.post-expirator-quickedit').length > 0) {
+        $('#bulk_edit').on('click', function(e) {
+            const isValid = validateBulkFields();
+            if (! isValid) {
+                e.preventDefault();
 
-            return false;
-        }
-    });
+                return false;
+            }
+        });
+    }
 })(jQuery, postexpiratorConfig);

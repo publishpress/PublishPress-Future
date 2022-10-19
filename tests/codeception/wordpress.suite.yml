@@ -1,0 +1,26 @@
+actor: WordpressTester
+modules:
+    enabled:
+        - \Helper\Wordpress
+        - WPLoader
+        - Sequence
+        - WPDb
+    config:
+        WPDb:
+            dump: "tests/codeception/_data/sql/dump.sql"
+            populate: true
+            cleanup: false
+            urlReplacement: true
+            letAdminEmailVerification: false
+            letCron: false
+        WPLoader:
+            isolatedInstall: true
+            tablePrefix: "wp_"
+            plugins:
+                - post-expirator/post-expirator.php
+                - pre-tests/pre-tests.php
+                - ray-future/ray-future.php
+            activatePlugins:
+                - post-expirator/post-expirator.php
+                - pre-tests/pre-tests.php
+                - ray-future/ray-future.php

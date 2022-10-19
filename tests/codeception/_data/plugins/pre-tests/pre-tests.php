@@ -11,6 +11,10 @@
 
 namespace PreTests;
 
+use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+
+add_filter('admin_email_check_interval', '__return_false');
+
 add_action('init', 'PreTests\registerPostTypes', 1);
 add_action('init', 'PreTests\registerTaxonomies', 1);
 
@@ -36,7 +40,7 @@ function registerTaxonomies()
 {
     register_taxonomy(
         'tax1',
-        'post',
+        ['post', 'page', 'music'],
         [
             'hierarchical' => true,
             'labels' => [
@@ -49,7 +53,7 @@ function registerTaxonomies()
 
     register_taxonomy(
         'tax2',
-        'post',
+        ['post', 'page', 'music'],
         [
             'hierarchical' => true,
             'labels' => [
@@ -59,4 +63,49 @@ function registerTaxonomies()
             ]
         ]
     );
+
+    register_taxonomy(
+        'tax3',
+        ['post', 'page', 'music'],
+        [
+            'hierarchical' => true,
+            'labels' => [
+                'name' => 'Tax3',
+                'singular_name' => 'tax3',
+                'plural_name' => 'tax3s'
+            ]
+        ]
+    );
+
+    register_taxonomy(
+        'tax4',
+        ['post', 'page', 'music'],
+        [
+            'hierarchical' => true,
+            'labels' => [
+                'name' => 'Tax4',
+                'singular_name' => 'tax4',
+                'plural_name' => 'tax4s'
+            ]
+        ]
+    );
+}
+
+
+add_action('init', 'PreTests\runExpirationAction');
+
+function runExpirationAction()
+{
+    if (! is_admin()) {
+        return;
+    }
+
+    if (isset($_GET['tests-future-expire-id'])) {
+        $id = (int) $_GET['tests-future-expire-id'];
+
+        do_action(ExpiratorHooks::ACTION_EXPIRE_POST, $id);
+
+        echo 'Did action postExpiratorExpire for ' . $id;
+        die;
+    }
 }

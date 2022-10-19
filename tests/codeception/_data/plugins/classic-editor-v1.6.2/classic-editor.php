@@ -206,7 +206,7 @@ class Classic_Editor {
 		 *   'editor' => 'classic', // Accepted values: 'classic', 'block'.
 		 *   'allow-users' => false,
 		 *
-		 * @param boolean To override the settings return an array with the above keys.
+		 * @param bool To override the settings return an array with the above keys.
 		 */
 		$settings = apply_filters( 'classic_editor_plugin_settings', false );
 
@@ -577,9 +577,9 @@ class Classic_Editor {
 	 *
 	 * @uses `use_block_editor_for_post` filter.
 	 *
-	 * @param boolean $use_block_editor True for block editor, false for classic editor.
+	 * @param bool $use_block_editor True for block editor, false for classic editor.
 	 * @param WP_Post $post             The post being edited.
-	 * @return boolean True for block editor, false for classic editor.
+	 * @return bool True for block editor, false for classic editor.
 	 */
 	public static function choose_editor( $use_block_editor, $post ) {
 		$settings = self::get_settings();

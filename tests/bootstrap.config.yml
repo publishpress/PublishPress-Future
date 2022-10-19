@@ -1,0 +1,6 @@
+copy:
+  dist/post-expirator: "%WP_ROOT_FOLDER%/wp-content/plugins/post-expirator"
+  tests/codeception/_data/plugins/pre-tests: "%WP_ROOT_FOLDER%/wp-content/plugins/pre-tests"
+  tests/codeception/_data/plugins/classic-editor-v1.6.2: "%WP_ROOT_FOLDER%/wp-content/plugins/classic-editor"
+  tests/codeception/_data/plugins/ray-future: "%WP_ROOT_FOLDER%/wp-content/plugins/ray-future"
+  tests/codeception/_data/plugins/disable-welcome-messages-and-tips: "%WP_ROOT_FOLDER%/wp-content/plugins/disable-welcome-messages-and-tips"

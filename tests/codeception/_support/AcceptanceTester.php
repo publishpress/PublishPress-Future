@@ -1,5 +1,17 @@
 <?php
 
+use Codeception\Actor;
+use Steps\Cli;
+use Steps\Debug;
+use Steps\Menu;
+use Steps\Options;
+use Steps\Plugins;
+use Steps\Post;
+use Steps\PostClassicEditor;
+use Steps\PostGutenberg;
+use Steps\Settings;
+use Steps\Users;
+
 
 /**
  * Inherited Methods
@@ -16,16 +28,18 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class AcceptanceTester extends \Codeception\Actor
+class AcceptanceTester extends Actor
 {
     use _generated\AcceptanceTesterActions;
 
-    use \Steps\Users;
-    use \Steps\Menu;
-    use \Steps\Plugins;
-    use \Steps\Post;
-    use \Steps\PostGutenberg;
-    use \Steps\PostClassicEditor;
-    use \Steps\Settings;
-    use \Steps\Debug;
+    use Users;
+    use Menu;
+    use Plugins;
+    use Post;
+    use PostGutenberg;
+    use PostClassicEditor;
+    use Settings;
+    use Options;
+    use Debug;
+    use Cli;
 }

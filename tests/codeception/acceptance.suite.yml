@@ -7,59 +7,42 @@ modules:
         - Asserts
         - WPLoader
         - Sequence
+        - Filesystem
     config:
         WPDb:
-            dsn: '%TEST_SITE_DB_DSN%'
-            user: '%TEST_SITE_DB_USER%'
-            password: '%TEST_SITE_DB_PASSWORD%'
-            dump: 'tests/codeception/_data/dump.sql'
-            #import the dump before the tests; this means the test site database will be repopulated before the tests.
+            dump: "tests/codeception/_data/sql/dump.sql"
             populate: true
-            # re-import the dump between tests; this means the test site database will be repopulated between the tests.
             cleanup: false
-            waitlock: 10
-            url: '%TEST_SITE_WP_URL%'
-            urlReplacement: true #replace the hardcoded dump URL with the one above
-            tablePrefix: '%TEST_SITE_TABLE_PREFIX%'
+            urlReplacement: true
+            letAdminEmailVerification: false
+            letCron: false
         WPLoader:
-            wpRootFolder: "%WP_ROOT_FOLDER%"
-            dbName: "%TEST_DB_NAME%"
-            dbHost: "%TEST_DB_HOST%"
-            dbUser: "%TEST_DB_USER%"
-            dbPassword: "%TEST_DB_PASSWORD%"
-            tablePrefix: "%TEST_TABLE_PREFIX%"
-            domain: "%TEST_SITE_WP_DOMAIN%"
-            adminEmail: "%TEST_SITE_ADMIN_EMAIL%"
-            title: "Test"
+            isolatedInstall: true
+            tablePrefix: "wp_"
             plugins:
                 - post-expirator/post-expirator.php
                 - pre-tests/pre-tests.php
             activatePlugins:
                 - post-expirator/post-expirator.php
                 - pre-tests/pre-tests.php
-            isolatedInstall: true
         WPWebDriver:
-            url: "%TEST_SITE_WP_URL%"
-            adminUsername: "%TEST_SITE_ADMIN_USERNAME%"
-            adminPassword: "%TEST_SITE_ADMIN_PASSWORD%"
-            adminPath: "%TEST_SITE_WP_ADMIN_PATH%"
+            adminPath: "/wp-admin"
             browser: chrome
-            restart: true
-            window_size: "1280x1200"
+            window_size: "1280x2000"
             port: 9515
             capabilities:
                 browserName: chrome
+                unexpectedAlertBehaviour: 'accept'
                 chromeOptions:
                     args:
                         - --headless
                         - --disable-gpu
                         - --disable-infobars
+                        - --no-sandbox
+                        - --user-agent=wp-browser
+                        - --allow-insecure-localhost
+                        - --ignore-certificate-errors
                     prefs:
                         download.default_directory: "..."
         Sequence:
             prefix: "uid_"
-extensions:
-    enabled:
-        - Codeception\Extension\RunProcess:
-              0: chromedriver --url-base=/wd/hub
-              sleep: 3

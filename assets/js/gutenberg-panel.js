@@ -1,2 +1,464 @@
-!function(e){var t={};function a(n){if(t[n])return t[n].exports;var r=t[n]={i:n,l:!1,exports:{}};return e[n].call(r.exports,r,r.exports,a),r.l=!0,r.exports}a.m=e,a.c=t,a.d=function(e,t,n){a.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},a.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},a.t=function(e,t){if(1&t&&(e=a(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(a.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)a.d(n,r,function(t){return e[t]}.bind(null,r));return n},a.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return a.d(t,"a",t),t},a.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},a.p="",a(a.s=0)}([function(e,t,a){e.exports=a(1)},function(e,t,a){"use strict";var n,r,o,i,s,c,u,l,p,d,f,g,y,m,b,v,x,h,E,w="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},P=function(){function e(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,a,n){return a&&e(t.prototype,a),n&&e(t,n),t}}();function T(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function S(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}n=window.wp,r=window.postExpiratorPanelConfig,o=n.plugins.registerPlugin,i=n.editPost.PluginDocumentSettingPanel,s=n.components,c=s.PanelRow,u=s.DateTimePicker,l=s.CheckboxControl,p=s.SelectControl,d=s.FormTokenField,f=s.Spinner,g=n.element,y=g.Fragment,m=g.Component,b=n.htmlEntities.decodeEntities,v=lodash,x=v.isEmpty,h=v.keys,E=v.compact,o("postexpirator-sidebar",{render:function(e){function t(){T(this,t);var e=S(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments));return e.state={categoriesList:[],catIdVsName:[]},e}return function(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}(t,e),P(t,[{key:"componentWillMount",value:function(){var e=this,t=(this.state.attributes,n.data.select("core/editor").getEditedPostAttribute("meta")),a=n.data.select("core/editor").getCurrentPostType(),o=function(e){return n.data.dispatch("core/editor").editPost({meta:e})},i=!1,s=new Date,c=this.getExpireType(t),u=[];c.includes("category")&&(u=this.getCategories(t)),t["_expiration-date-status"]&&"saved"===t["_expiration-date-status"]&&(i=!0);var l=60*s.getTimezoneOffset(),p=60*r.timezone_offset;t["_expiration-date"]?s.setTime(1e3*(t["_expiration-date"]+l+p)):(u=r.default_categories,r.default_date&&s.setTime(1e3*(parseInt(r.default_date)+l+p)),i=!1);var d=r.defaults.taxonomy||"category";this.setState({enabled:i,date:s,expireAction:c,categories:u,taxonomy:d}),o({"_expiration-date-status":i?"saved":""}),o({"_expiration-date":s.getTime()/1e3}),o({"_expiration-date-type":c}),o({"_expiration-date-categories":u});var f=[],g=[];!d&&"post"===a||"category"===d?n.apiFetch({path:n.url.addQueryArgs("wp/v2/categories",{per_page:-1})}).then((function(t){t.forEach((function(e){f[e.name]=e,g[e.id]=e.name})),e.setState({categoriesList:f,catIdVsName:g,taxonomy:r.strings.category})})):"page"!==a&&n.apiFetch({path:n.url.addQueryArgs("wp/v2/taxonomies/"+d,{context:"edit"})}).then((function(t){n.apiFetch({path:n.url.addQueryArgs("wp/v2/"+t.rest_base,{context:"edit"})}).then((function(a){a.forEach((function(e){f[b(e.name)]=e,g[e.id]=b(e.name)})),e.setState({categoriesList:f,catIdVsName:g,taxonomy:b(t.name)})}))}))}},{key:"componentDidUpdate",value:function(){var e=this.state,t=e.enabled,a=e.date,r=e.expireAction,o=e.categories,i=e.attribute,s=function(e){return n.data.dispatch("core/editor").editPost({meta:e})},c=n.data.select("core/editor").getEditedPostAttribute("meta");switch(i){case"enabled":s({"_expiration-date-status":t?"saved":""}),c["_expiration-date"]||s({"_expiration-date":this.getDate(a)});break;case"date":"string"==typeof a&&s({"_expiration-date":this.getDate(a)});break;case"action":s({"_expiration-date-type":r}),r.includes("category")||s({"_expiration-date-categories":[]});break;case"category":s({"_expiration-date-categories":o})}}},{key:"render",value:function(){var e=this,t=this.state,a=t.categoriesList,o=t.catIdVsName,s=this.state,g=s.enabled,m=s.date,b=s.expireAction,v=s.categories,w=s.taxonomy,P=n.data.select("core/editor").getCurrentPostType(),T=[{label:r.strings.draft,value:"draft"},{label:r.strings.delete,value:"delete"},{label:r.strings.trash,value:"trash"},{label:r.strings.private,value:"private"},{label:r.strings.stick,value:"stick"},{label:r.strings.unstick,value:"unstick"}];"page"!==P&&(T=_.union(T,[{label:r.strings.categoryReplace,value:"category"},{label:r.strings.categoryAdd,value:"category-add"},{label:r.strings.categoryRemove,value:"category-remove"}]));var S=v&&E(v.map((function(e){return o[e]||!1})));return"string"==typeof S&&(S=[]),React.createElement(i,{title:r.strings.postExpirator,icon:"calendar",initialOpen:g,className:"post-expirator-panel"},React.createElement(c,null,React.createElement(l,{label:r.strings.enablePostExpiration,checked:g,onChange:function(t){e.setState({enabled:!g,attribute:"enabled"})}})),g&&React.createElement(y,null,React.createElement(c,null,React.createElement(u,{currentDate:m,onChange:function(t){return e.setState({date:t,attribute:"date"})},is_12_hours:r.is_12_hours})),React.createElement(p,{label:r.strings.howToExpire,value:b,options:T,onChange:function(t){e.setState({expireAction:t,attribute:"action"})}}),b.includes("category")&&(x(h(a))&&React.createElement(y,null,r.strings.loading+" ("+w+")",React.createElement(f,null))||React.createElement(d,{label:r.strings.expirationCategories+" ("+w+")",value:S,suggestions:Object.keys(a),onChange:function(t){e.setState({categories:e.selectCategories(t),attribute:"category"})},maxSuggestions:10}))))}},{key:"getExpireType",value:function(e){var t=e["_expiration-date-type"],a=e["_expiration-date-options"]&&e["_expiration-date-options"].expireType;return t||a||(r&&r.defaults&&r.defaults.expireType?r.defaults.expireType:"draft")}},{key:"getCategories",value:function(e){var t=e["_expiration-date-categories"]&&e["_expiration-date-categories"],a=e["_expiration-date-options"]&&e["_expiration-date-options"].category;return"object"===(void 0===t?"undefined":w(t))&&t.length>0?t:(a&&void 0!==a&&"object"!==(void 0===a?"undefined":w(a))&&(categories=[a]),a)}},{key:"selectCategories",value:function(e){var t=this.state,a=t.categoriesList;if(t.catIdVsName,!e.some((function(e){return"string"==typeof e&&!a[e]})))return e.map((function(e){return"string"==typeof e?a[e]:e})).map((function(e){return e.id}))}},{key:"getDate",value:function(e){var t=new Date,a=60*(new Date).getTimezoneOffset(),n=60*r.timezone_offset;return t.setTime(Date.parse(e)),t.setTime(t.getTime()-1e3*(a+n)),t.getTime()/1e3}}]),t}(m)})}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./assets/jsx/gutenberg-panel.jsx":
+/*!****************************************!*\
+  !*** ./assets/jsx/gutenberg-panel.jsx ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+(function (wp, config) {
+    var registerPlugin = wp.plugins.registerPlugin;
+    var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
+    var _wp$components = wp.components,
+        PanelRow = _wp$components.PanelRow,
+        DateTimePicker = _wp$components.DateTimePicker,
+        CheckboxControl = _wp$components.CheckboxControl,
+        SelectControl = _wp$components.SelectControl,
+        FormTokenField = _wp$components.FormTokenField,
+        Spinner = _wp$components.Spinner;
+    var _wp$element = wp.element,
+        Fragment = _wp$element.Fragment,
+        Component = _wp$element.Component;
+    var decodeEntities = wp.htmlEntities.decodeEntities;
+    var _lodash = lodash,
+        isEmpty = _lodash.isEmpty,
+        keys = _lodash.keys,
+        compact = _lodash.compact;
+
+    var PostExpiratorSidebar = function (_Component) {
+        _inherits(PostExpiratorSidebar, _Component);
+
+        function PostExpiratorSidebar() {
+            _classCallCheck(this, PostExpiratorSidebar);
+
+            var _this = _possibleConstructorReturn(this, (PostExpiratorSidebar.__proto__ || Object.getPrototypeOf(PostExpiratorSidebar)).apply(this, arguments));
+
+            _this.state = {
+                categoriesList: [],
+                catIdVsName: []
+            };
+            return _this;
+        }
+
+        _createClass(PostExpiratorSidebar, [{
+            key: 'componentWillMount',
+            value: function componentWillMount() {
+                var _this2 = this;
+
+                var attributes = this.state.attributes;
+
+
+                var postMeta = wp.data.select('core/editor').getEditedPostAttribute('meta');
+                var postType = wp.data.select('core/editor').getCurrentPostType();
+                var setPostMeta = function setPostMeta(newMeta) {
+                    return wp.data.dispatch('core/editor').editPost({ meta: newMeta });
+                };
+
+                var enabled = false;
+                var date = new Date();
+
+                var expireAction = this.getExpireType(postMeta);
+
+                var categories = [];
+                if (expireAction.includes('category')) {
+                    categories = this.getCategories(postMeta);
+                }
+
+                if (postMeta['_expiration-date-status'] && postMeta['_expiration-date-status'] === 'saved') {
+                    enabled = true;
+                }
+
+                var browserTimezoneOffset = date.getTimezoneOffset() * 60;
+                var wpTimezoneOffset = config.timezone_offset * 60;
+
+                if (postMeta['_expiration-date']) {
+                    date.setTime((postMeta['_expiration-date'] + browserTimezoneOffset + wpTimezoneOffset) * 1000);
+                } else {
+                    categories = config.default_categories;
+                    if (config.default_date) {
+                        date.setTime((parseInt(config.default_date) + browserTimezoneOffset + wpTimezoneOffset) * 1000);
+                    }
+
+                    // If the date is not set
+                    enabled = false;
+                }
+
+                var taxonomy = config.defaults.taxonomy || 'category';
+
+                this.setState({
+                    enabled: enabled,
+                    date: date,
+                    expireAction: expireAction,
+                    categories: categories,
+                    taxonomy: taxonomy
+                });
+
+                // Force all the metadata to be saved. Required for making sure the default settings are stored correctly.
+                setPostMeta({ '_expiration-date-status': enabled ? 'saved' : '' });
+                setPostMeta({ '_expiration-date': date.getTime() / 1000 });
+                setPostMeta({ '_expiration-date-type': expireAction });
+                setPostMeta({ '_expiration-date-categories': categories });
+
+                var categoriesList = [];
+                var catIdVsName = [];
+
+                if (!taxonomy && postType === 'post' || taxonomy === 'category') {
+                    wp.apiFetch({
+                        path: wp.url.addQueryArgs('wp/v2/categories', { per_page: -1 })
+                    }).then(function (list) {
+                        list.forEach(function (cat) {
+                            categoriesList[cat.name] = cat;
+                            catIdVsName[cat.id] = cat.name;
+                        });
+                        _this2.setState({ categoriesList: categoriesList, catIdVsName: catIdVsName, taxonomy: config.strings.category });
+                    });
+                } else {
+                    wp.apiFetch({
+                        path: wp.url.addQueryArgs('wp/v2/taxonomies/' + taxonomy, { context: 'edit' })
+                    }).then(function (taxAttributes) {
+                        // fetch all terms
+                        wp.apiFetch({
+                            path: wp.url.addQueryArgs('wp/v2/' + taxAttributes.rest_base, { context: 'edit' })
+                        }).then(function (terms) {
+                            terms.forEach(function (term) {
+                                categoriesList[decodeEntities(term.name)] = term;
+                                catIdVsName[term.id] = decodeEntities(term.name);
+                            });
+                            _this2.setState({
+                                categoriesList: categoriesList,
+                                catIdVsName: catIdVsName,
+                                taxonomy: decodeEntities(taxAttributes.name)
+                            });
+                        });
+                    });
+                }
+            }
+        }, {
+            key: 'componentDidUpdate',
+            value: function componentDidUpdate() {
+                var _state = this.state,
+                    enabled = _state.enabled,
+                    date = _state.date,
+                    expireAction = _state.expireAction,
+                    categories = _state.categories,
+                    attribute = _state.attribute;
+
+                var setPostMeta = function setPostMeta(newMeta) {
+                    return wp.data.dispatch('core/editor').editPost({ meta: newMeta });
+                };
+                var postMeta = wp.data.select('core/editor').getEditedPostAttribute('meta');
+
+                switch (attribute) {
+                    case 'enabled':
+                        setPostMeta({ '_expiration-date-status': enabled ? 'saved' : '' });
+                        // if date is not set when the checkbox is enabled, set it to the default date
+                        // this is to prevent the user from having to click the date to set it
+                        if (!postMeta['_expiration-date']) {
+                            setPostMeta({ '_expiration-date': this.getDate(date) });
+                        }
+                        break;
+                    case 'date':
+                        if (typeof date === 'string') {
+                            setPostMeta({ '_expiration-date': this.getDate(date) });
+                        }
+                        break;
+                    case 'action':
+                        setPostMeta({ '_expiration-date-type': expireAction });
+                        if (!expireAction.includes('category')) {
+                            setPostMeta({ '_expiration-date-categories': [] });
+                        }
+                        break;
+                    case 'category':
+                        setPostMeta({ '_expiration-date-categories': categories });
+                        break;
+                }
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                var _this3 = this;
+
+                var _state2 = this.state,
+                    categoriesList = _state2.categoriesList,
+                    catIdVsName = _state2.catIdVsName;
+                var _state3 = this.state,
+                    enabled = _state3.enabled,
+                    date = _state3.date,
+                    expireAction = _state3.expireAction,
+                    categories = _state3.categories,
+                    taxonomy = _state3.taxonomy;
+
+
+                var postType = wp.data.select('core/editor').getCurrentPostType();
+
+                var actionsList = [{ label: config.strings.draft, value: 'draft' }, { label: config.strings.delete, value: 'delete' }, { label: config.strings.trash, value: 'trash' }, { label: config.strings.private, value: 'private' }, { label: config.strings.stick, value: 'stick' }, { label: config.strings.unstick, value: 'unstick' }, { label: config.strings.categoryReplace, value: 'category' }, { label: config.strings.categoryAdd, value: 'category-add' }, { label: config.strings.categoryRemove, value: 'category-remove' }];
+
+                var selectedCats = categories && compact(categories.map(function (id) {
+                    return catIdVsName[id] || false;
+                }));
+                if (typeof selectedCats === 'string') {
+                    selectedCats = [];
+                }
+
+                return React.createElement(
+                    PluginDocumentSettingPanel,
+                    { title: config.strings.postExpirator, icon: 'calendar',
+                        initialOpen: enabled, className: 'post-expirator-panel' },
+                    React.createElement(
+                        PanelRow,
+                        null,
+                        React.createElement(CheckboxControl, {
+                            label: config.strings.enablePostExpiration,
+                            checked: enabled,
+                            onChange: function onChange(value) {
+                                _this3.setState({ enabled: !enabled, attribute: 'enabled' });
+                            }
+                        })
+                    ),
+                    enabled && React.createElement(
+                        Fragment,
+                        null,
+                        React.createElement(
+                            PanelRow,
+                            null,
+                            React.createElement(DateTimePicker, {
+                                currentDate: date,
+                                onChange: function onChange(value) {
+                                    return _this3.setState({ date: value, attribute: 'date' });
+                                },
+                                is12Hour: config.is_12_hours
+                            })
+                        ),
+                        React.createElement(SelectControl, {
+                            label: config.strings.howToExpire,
+                            value: expireAction,
+                            options: actionsList,
+                            onChange: function onChange(value) {
+                                _this3.setState({ expireAction: value, attribute: 'action' });
+                            }
+                        }),
+                        expireAction.includes('category') && (isEmpty(keys(categoriesList)) && React.createElement(
+                            Fragment,
+                            null,
+                            config.strings.loading + (' (' + taxonomy + ')'),
+                            React.createElement(Spinner, null)
+                        ) || React.createElement(FormTokenField, {
+                            label: config.strings.expirationCategories + (' (' + taxonomy + ')'),
+                            value: selectedCats,
+                            suggestions: Object.keys(categoriesList),
+                            onChange: function onChange(value) {
+                                _this3.setState({
+                                    categories: _this3.selectCategories(value),
+                                    attribute: 'category'
+                                });
+                            },
+                            maxSuggestions: 10
+                        }))
+                    )
+                );
+            }
+
+            // what action to take on expiration
+
+        }, {
+            key: 'getExpireType',
+            value: function getExpireType(postMeta) {
+                var typeNew = postMeta['_expiration-date-type'];
+                var typeOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['expireType'];
+
+                if (typeNew) {
+                    return typeNew;
+                }
+
+                if (typeOld) {
+                    return typeOld;
+                }
+
+                if (config && config.defaults && config.defaults.expireType) {
+                    return config.defaults.expireType;
+                }
+
+                return 'draft';
+            }
+
+            // what categories to add/remove/replace
+
+        }, {
+            key: 'getCategories',
+            value: function getCategories(postMeta) {
+                var categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
+                var categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
+
+                if ((typeof categoriesNew === 'undefined' ? 'undefined' : _typeof(categoriesNew)) === 'object' && categoriesNew.length > 0) {
+                    return categoriesNew;
+                }
+
+                if (categoriesOld && typeof categoriesOld !== 'undefined' && (typeof categoriesOld === 'undefined' ? 'undefined' : _typeof(categoriesOld)) !== 'object') {
+                    categories = [categoriesOld];
+                }
+
+                return categoriesOld;
+            }
+
+            // fired for the autocomplete
+
+        }, {
+            key: 'selectCategories',
+            value: function selectCategories(tokens) {
+                var _state4 = this.state,
+                    categoriesList = _state4.categoriesList,
+                    catIdVsName = _state4.catIdVsName;
+
+
+                var hasNoSuggestion = tokens.some(function (token) {
+                    return typeof token === 'string' && !categoriesList[token];
+                });
+
+                if (hasNoSuggestion) {
+                    return;
+                }
+
+                var categories = tokens.map(function (token) {
+                    return typeof token === 'string' ? categoriesList[token] : token;
+                });
+
+                return categories.map(function (cat) {
+                    return cat.id;
+                });
+            }
+        }, {
+            key: 'getDate',
+            value: function getDate(date) {
+                var newDate = new Date();
+                var browserTimezoneOffset = new Date().getTimezoneOffset() * 60;
+                var wpTimezoneOffset = config.timezone_offset * 60;
+                newDate.setTime(Date.parse(date));
+                newDate.setTime(newDate.getTime() - (browserTimezoneOffset + wpTimezoneOffset) * 1000);
+                return newDate.getTime() / 1000;
+            }
+        }]);
+
+        return PostExpiratorSidebar;
+    }(Component);
+
+    registerPlugin('postexpirator-sidebar', {
+        render: PostExpiratorSidebar
+    });
+})(window.wp, window.postExpiratorPanelConfig);
+
+/***/ }),
+
+/***/ 0:
+/*!**********************************************!*\
+  !*** multi ./assets/jsx/gutenberg-panel.jsx ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./assets/jsx/gutenberg-panel.jsx */"./assets/jsx/gutenberg-panel.jsx");
+
+
+/***/ })
+
+/******/ });
 //# sourceMappingURL=gutenberg-panel.js.map
