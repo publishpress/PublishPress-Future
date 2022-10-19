@@ -349,6 +349,7 @@ class ExpirablePostModel extends PostModel
 
         if (! $result) {
             $this->debug->log(
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 $this->getPostId() . ' -> FAILED ' . print_r($this->getExpirationDataAsArray(), true)
             );
 
@@ -356,6 +357,7 @@ class ExpirablePostModel extends PostModel
         }
 
         $this->debug->log(
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
             $this->getPostId() . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
         );
 

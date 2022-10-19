@@ -67,11 +67,14 @@ class BulkEditController implements InitializableInterface
 
     public function onAdminInit()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $doAction = isset($_GET['action']) ? $this->sanitization->sanitizeKey($_GET['action']) : '';
         if ('edit' !== $doAction) {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if (! isset($_REQUEST['postexpirator_view'])) {
             return;
         }
@@ -84,6 +87,7 @@ class BulkEditController implements InitializableInterface
             return;
         }
 
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         if ($this->sanitization->sanitizeKey($_REQUEST['expirationdate_status']) === 'no-change') {
             return;
         }
@@ -98,10 +102,12 @@ class BulkEditController implements InitializableInterface
         $this->request->checkAdminReferer('bulk-posts');
 
         $this->saveBulkEditData();
+        // phpcs:enable
     }
 
     private function saveBulkEditData()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
         $status = $this->sanitization->sanitizeKey($_REQUEST['expirationdate_status']);
         $validStatuses = ['change-only', 'add-only', 'change-add', 'remove-only'];
 
@@ -109,6 +115,7 @@ class BulkEditController implements InitializableInterface
             return;
         }
 
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.NonceVerification.Recommended
         $postIds = array_map('intval', (array)$_REQUEST['post']);
 
         if (empty($postIds)) {
@@ -118,7 +125,5 @@ class BulkEditController implements InitializableInterface
         // Post model for the first post
         $postModelFactory = $this->expirablePostModelFactory;
         $postModel = $postModelFactory($postIds[0]);
-
-
     }
 }
