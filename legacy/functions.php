@@ -1202,12 +1202,14 @@ function postexpirator_date_save_bulk_edit()
         || ! isset($_REQUEST['postexpirator_view'])
         || $_REQUEST['postexpirator_view'] !== 'bulk-edit'
         || ! isset($_REQUEST['expirationdate_status'])
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         || sanitize_key($_REQUEST['expirationdate_status']) === 'no-change'
         || ! $facade->current_user_can_expire_posts()
+        || ! isset($_REQUEST['post'])
+        || ! isset($_REQUEST['expirationdate_expiretype'])
     ) {
         return;
     }
-
 
     check_admin_referer('bulk-posts');
 
@@ -1259,6 +1261,13 @@ function postexpirator_date_save_bulk_edit()
         return;
     }
 
+    $expireType = sanitize_key($_REQUEST['expirationdate_expiretype']);
+    $expireTaxonomy = null;
+    if (in_array($expireType, ['category', 'category-add', 'category-remove'], true)) {
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+        $expireTaxonomy = PostExpirator_Util::sanitize_array_of_integers($_REQUEST['expirationdate_category']);
+    }
+
     foreach ($postIds as $postId) {
         $postExpirationDate = get_post_meta($postId, '_expiration-date', true);
 
@@ -1277,12 +1286,10 @@ function postexpirator_date_save_bulk_edit()
         }
 
         $opts = PostExpirator_Facade::get_expire_principles($postId);
-        $opts['expireType'] = sanitize_key($_REQUEST['expirationdate_expiretype']);
+        $opts['expireType'] = $expireType;
 
         if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
-            $opts['category'] = PostExpirator_Util::sanitize_array_of_integers(
-                $_REQUEST['expirationdate_category']
-            );
+            $opts['category'] = $expireTaxonomy;
         }
 
         do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $newExpirationDate, $opts);
