@@ -28,6 +28,7 @@ class DatabaseFacade
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         return $wpdb->get_var($query, $x, $y);
     }
 
@@ -74,6 +75,7 @@ class DatabaseFacade
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         return $wpdb->get_results($query, $output);
     }
 
@@ -86,6 +88,7 @@ class DatabaseFacade
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->query('DROP TABLE IF EXISTS `' . esc_sql($tableName) . '`');
     }
 
@@ -98,6 +101,7 @@ class DatabaseFacade
     {
         global $wpdb;
 
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         return $wpdb->query($query);
     }
 }

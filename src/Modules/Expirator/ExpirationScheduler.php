@@ -86,6 +86,7 @@ class ExpirationScheduler implements SchedulerInterface
                     $postId,
                     $this->datetime->getWpDate('r', $timestamp),
                     $timestamp,
+                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                     print_r($opts, true),
                     $this->error->isWpError($scheduled) ? $this->error->getWpErrorMessage(
                         $scheduled
@@ -104,6 +105,7 @@ class ExpirationScheduler implements SchedulerInterface
                 $postId,
                 $this->datetime->getWpDate('r', $timestamp),
                 $timestamp,
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 print_r($opts, true)
             )
         );

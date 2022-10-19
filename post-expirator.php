@@ -53,6 +53,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         // Make the log message binary safe removing any non-printable chars.
         $message = addcslashes($message, "\000..\037\177..\377\\");
 
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
         error_log($message);
     }
 }
