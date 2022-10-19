@@ -1296,4 +1296,4 @@ function postexpirator_date_save_bulk_edit()
     }
 }
 
-add_filter('admin_init', 'postexpirator_date_save_bulk_edit');
+add_action('admin_init', 'postexpirator_date_save_bulk_edit');
