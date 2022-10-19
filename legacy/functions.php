@@ -1224,13 +1224,6 @@ function postexpirator_date_save_bulk_edit()
         return;
     }
 
-
-    !!!!!
-
-
-
-
-
     $postType = get_post_type($postIds[0]);
 
     $defaults = PostExpirator_Facade::get_default_expiry($postType);
