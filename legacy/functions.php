@@ -534,12 +534,32 @@ function postexpirator_update_post_meta($id)
 
         $default = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
         if ($default === 'publish') {
+            if (! isset($_POST['mm'])
+                || ! isset($_POST['jj'])
+                || ! isset($_POST['aa'])
+                || ! isset($_POST['hh'])
+                || ! isset($_POST['mn'])
+            ) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
+            }
+
             $month = intval($_POST['mm']);
             $day = intval($_POST['jj']);
             $year = intval($_POST['aa']);
             $hour = intval($_POST['hh']);
             $minute = intval($_POST['mn']);
         } else {
+            if (! isset($_POST['expirationdate_month'])
+                || ! isset($_POST['expirationdate_day'])
+                || ! isset($_POST['expirationdate_year'])
+                || ! isset($_POST['expirationdate_hour'])
+                || ! isset($_POST['expirationdate_minute'])
+            ) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
+            }
+
             $month = intval($_POST['expirationdate_month']);
             $day = intval($_POST['expirationdate_day']);
             $year = intval($_POST['expirationdate_year']);
@@ -555,8 +575,9 @@ function postexpirator_update_post_meta($id)
         }
         $category = isset($_POST['expirationdate_category'])
             ? PostExpirator_Util::sanitize_array_of_integers(
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                 $_POST['expirationdate_category']
-            ) : []; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            ) : [];
 
         $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
 
@@ -587,7 +608,12 @@ function postexpirator_update_post_meta($id)
         }
     } else {
         // Gutenberg or script request
-        $payload = @file_get_contents('php://input');
+        if (function_exists('`wpcom_vip_file_get_contents')) {
+            $payload = wpcom_vip_file_get_contents('php://input');
+        } else {
+            // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsRemoteFile
+            $payload = @file_get_contents('php://input');
+        }
 
         if (empty($payload)) {
             do_action(
@@ -832,6 +858,7 @@ function postexpirator_upgrade()
             global $wpdb;
 
             // Schedule Events/Migrate Config
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
             $results = $wpdb->get_results(
                 $wpdb->prepare(
                     'select post_id, meta_value from ' . $wpdb->postmeta . ' as postmeta, ' . $wpdb->posts . ' as posts where postmeta.post_id = posts.ID AND postmeta.meta_key = %s AND postmeta.meta_value >= %d',
@@ -839,6 +866,7 @@ function postexpirator_upgrade()
                     time()
                 )
             );
+
             foreach ($results as $result) {
                 wp_schedule_single_event(
                     $result->meta_value,
@@ -864,6 +892,7 @@ function postexpirator_upgrade()
             }
 
             // update meta key to new format
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
             $wpdb->query(
                 $wpdb->prepare(
                     "UPDATE $wpdb->postmeta SET meta_key = %s WHERE meta_key = %s",
@@ -1260,7 +1289,7 @@ function postexpirator_date_save_bulk_edit()
         if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
             $opts['category'] = PostExpirator_Util::sanitize_array_of_integers(
                 $_REQUEST['expirationdate_category']
-            ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            );
         }
 
         do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $newExpirationDate, $opts);
