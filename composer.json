@@ -99,6 +99,7 @@
   },
   "extra": {
     "plugin-slug": "post-expirator",
-    "plugin-name": "publishpress-future"
+    "plugin-name": "publishpress-future",
+    "plugin-folder": "publishpress-future"
   }
 }
