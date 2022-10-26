@@ -39,7 +39,7 @@ class PathsTest extends Unit
     /**
      * @dataProvider baseDirVendorProvider
      */
-    public function testGetVendorDirPathReturnsNoTraillingSlash($baseDir, $expected)
+    public function testGetVendorDirPathReturnsNoTrailingSlash($baseDir, $expected)
     {
         $instance = new Paths($baseDir);
         $result = $instance->getVendorDirPath();
