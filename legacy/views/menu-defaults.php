@@ -1,6 +1,9 @@
 <?php
 
 defined('ABSPATH') or die('Direct access not allowed.');
+
+$container = \PublishPressFuture\Core\DI\Container::getInstance();
+$settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
 ?>
 
 <form method="post">
@@ -21,7 +24,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
         $singularName = $postTypeObject->labels->singular_name;
         echo '<fieldset>';
         echo '<legend>&nbsp;' . esc_html($singularName) . '&nbsp;</legend>';
-        $defaults = get_option('expirationdateDefaults' . ucfirst($postType));
+
+        $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
         // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
         if (isset($defaults['autoEnable']) && $defaults['autoEnable'] == 1) {
@@ -164,7 +168,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
             </tr>
             <?php
             $values = array(
-                '' => esc_html__('None', 'post-expirator'),
                 'inherit' => esc_html__('Inherit from General Settings', 'post-expirator'),
                 'custom' => esc_html__('Custom', 'post-expirator'),
                 'publish' => esc_html__('Publish Time', 'post-expirator'),

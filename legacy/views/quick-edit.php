@@ -76,7 +76,11 @@ defined('ABSPATH') or die('Direct access not allowed.');
                                 esc_html_e('How to expire', 'post-expirator'); ?></span>
                         </legend>
                         <?php
-                        $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
+                        $container = \PublishPressFuture\Core\DI\Container::getInstance();
+                        $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+
+                        $defaults = $settingsFacade->getPostTypeDefaults($post_type);
+
                         _postexpirator_expire_type(array(
                             'name' => 'expirationdate_expiretype',
                             'selected' => empty($defaults) ? 'draft' : $defaults['expireType'],

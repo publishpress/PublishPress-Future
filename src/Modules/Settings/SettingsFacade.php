@@ -26,6 +26,8 @@ class SettingsFacade
      */
     private $defaultData;
 
+    const DEFAULT_CUSTOM_DATE = '+1 week';
+
     /**
      * @param HookableInterface $hooks
      * @param OptionsFacade $options
@@ -146,10 +148,16 @@ class SettingsFacade
             'default-custom-date' => null,
         ];
 
-        return array_merge(
+        $defaults = array_merge(
             $defaults,
             (array)$this->options->getOption('expirationdateDefaults' . ucfirst($postType))
         );
+
+        if ($defaults['default-expire-type'] === 'null' || empty($defaults['default-expire-type'])) {
+            $defaults['default-expire-type'] = 'inherit';
+        }
+
+        return $defaults;
     }
 
     /**
@@ -157,10 +165,16 @@ class SettingsFacade
      */
     public function getDefaultDate()
     {
-        return $this->options->getOption(
+        $defaultDateOption = $this->options->getOption(
             'expirationdateDefaultDate',
             $this->defaultData[Services::DEFAULT_EXPIRATION_DATE]
         );
+
+        if ('null' === $defaultDateOption || empty($defaultDateOption)) {
+            $defaultDateOption = 'custom';
+        }
+
+        return $defaultDateOption;
     }
 
     /**
@@ -168,6 +182,12 @@ class SettingsFacade
      */
     public function getDefaultDateCustom()
     {
-        return $this->options->getOption('expirationdateDefaultDateCustom');
+        $defaultDateOption = $this->options->getOption('expirationdateDefaultDateCustom');
+
+        if (empty($defaultDateOption)) {
+            $defaultDateOption = self::DEFAULT_CUSTOM_DATE;
+        }
+
+        return $defaultDateOption;
     }
 }

@@ -111,7 +111,11 @@ $defaultMinute = $defaults['minute'];
                         </legend>
                         <label>
                             <?php
-                            $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
+                            $container = \PublishPressFuture\Core\DI\Container::getInstance();
+                            $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+
+                            $defaults = $settingsFacade->getPostTypeDefaults($post_type);
+
                             _postexpirator_expire_type(array(
                                 'name' => 'expirationdate_expiretype',
                                 'selected' => empty($defaults) ? 'draft' : $defaults['expireType'],

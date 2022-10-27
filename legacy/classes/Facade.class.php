@@ -345,7 +345,11 @@ class PostExpirator_Facade
             return;
         }
 
-        $defaults = get_option('expirationdateDefaults' . ucfirst($post->post_type));
+        $container = \PublishPressFuture\Core\DI\Container::getInstance();
+        $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+
+        $defaults = $settingsFacade->getPostTypeDefaults($post->post_type);
+
         // if settings are not configured, show the metabox by default only for posts and pages
         if (
             (! isset($defaults['activeMetaBox']) && in_array(

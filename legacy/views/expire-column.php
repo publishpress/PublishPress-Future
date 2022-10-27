@@ -25,7 +25,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
         $iconClass = 'marker icon-never';
     }
 
-    $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
+    $container = \PublishPressFuture\Core\DI\Container::getInstance();
+    $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+
+    $defaults = $settingsFacade->getPostTypeDefaults($post_type);
     $expireType = 'draft';
     if (isset($defaults['expireType'])) {
         $expireType = $defaults['expireType'];

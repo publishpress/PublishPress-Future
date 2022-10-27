@@ -4,6 +4,8 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Core\HooksAbstract as CoreHooks;
 use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooks;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
@@ -59,7 +61,11 @@ add_action('plugins_loaded', 'postexpirator_init');
  */
 function postexpirator_add_column($columns, $type)
 {
-    $defaults = get_option('expirationdateDefaults' . ucfirst($type));
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+    $defaults = $settingsFacade->getPostTypeDefaults($type);
+
     // if settings are not configured, show the metabox by default only for posts and pages
     if ((! isset($defaults['activeMetaBox']) && in_array($type, array(
                 'post',
@@ -151,7 +157,11 @@ add_action('pre_get_posts', 'postexpirator_orderby');
  */
 function postexpirator_add_column_page($columns)
 {
-    $defaults = get_option('expirationdateDefaultsPage');
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+    $defaults = $settingsFacade->getPostTypeDefaults('page');
+
     if (! isset($defaults['activeMetaBox']) || $defaults['activeMetaBox'] === 'active') {
         $columns['expirationdate'] = __('Expires', 'post-expirator');
     }
@@ -209,7 +219,10 @@ function postexpirator_quickedit($column_name, $post_type)
         return;
     }
 
-    $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+    $defaults = $settingsFacade->getPostTypeDefaults($post_type);
     $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
     $label = '';
 
@@ -251,7 +264,11 @@ function postexpirator_bulkedit($column_name, $post_type)
         return;
     }
 
-    $defaults = get_option('expirationdateDefaults' . ucfirst($post_type));
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+    $defaults = $settingsFacade->getPostTypeDefaults($post_type);
+
     $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
     $label = '';
 
@@ -319,9 +336,13 @@ function postexpirator_meta_custom()
         return;
     }
 
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
     $post_types = postexpirator_get_post_types();
     foreach ($post_types as $type) {
-        $defaults = get_option('expirationdateDefaults' . ucfirst($type));
+        $defaults = $settingsFacade->getPostTypeDefaults($type);
+
         // if settings are not configured, show the metabox by default only for posts and pages
         if ((! isset($defaults['activeMetaBox']) && in_array($type, array(
                     'post',
@@ -357,7 +378,12 @@ function postexpirator_meta_box($post)
     $postMetaStatus = get_post_meta($post->ID, '_expiration-date-status', true);
 
     $expireType = $default = $enabled = '';
-    $defaultsOption = get_option('expirationdateDefaults' . ucfirst($post->post_type));
+
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+    $defaultsOption = $settingsFacade->getPostTypeDefaults($post->post_type);
+
     if (empty($postMetaDate)) {
         $defaultExpire = PostExpirator_Facade::get_default_expiry($post->post_type);
 
@@ -411,7 +437,10 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
         return;
     }
 
-    $postTypeDefaults = get_option('expirationdateDefaults' . ucfirst($post->post_type));
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+    $postTypeDefaults = $settingsFacade->getPostTypeDefaults($post->post_type);
 
     if (empty($postTypeDefaults) || (int)$postTypeDefaults['autoEnable'] !== 1) {
         return;
@@ -516,7 +545,10 @@ function postexpirator_update_post_meta($id)
         return;
     }
 
-    $postTypeDefaults = get_option('expirationdateDefaults' . ucfirst($posttype));
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+    $postTypeDefaults = $settingsFacade->getPostTypeDefaults($posttype);
 
     $shouldSchedule = false;
     $ts = null;

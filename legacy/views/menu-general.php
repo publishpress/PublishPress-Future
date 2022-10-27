@@ -10,8 +10,12 @@ $expiredemailnotificationadmins = get_option(
     POSTEXPIRATOR_EMAILNOTIFICATIONADMINS
 );
 $expiredemailnotificationlist = get_option('expirationdateEmailNotificationList', '');
-$expirationdateDefaultDate = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
-$expirationdateDefaultDateCustom = get_option('expirationdateDefaultDateCustom');
+
+$container = \PublishPressFuture\Core\DI\Container::getInstance();
+$settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+
+$expirationdateDefaultDate = $settingsFacade->getDefaultDate();
+$expirationdateDefaultDateCustom = $settingsFacade->getDefaultDateCustom();
 
 $categories = get_option('expirationdateCategoryDefaults');
 
@@ -93,14 +97,11 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                 <td>
                     <select name="expired-default-expiration-date" id="expired-default-expiration-date"
                             class="pe-custom-date-toggle">
-                        <option value="null" <?php
-                        echo ($expirationdateDefaultDate == 'null') ? ' selected="selected"' : ''; ?>><?php
-                            esc_html_e('None', 'post-expirator'); ?></option>
                         <option value="custom" <?php
-                        echo ($expirationdateDefaultDate == 'custom') ? ' selected="selected"' : ''; ?>><?php
+                            echo ($expirationdateDefaultDate == 'custom') ? ' selected="selected"' : ''; ?>><?php
                             esc_html_e('Custom', 'post-expirator'); ?></option>
                         <option value="publish" <?php
-                        echo ($expirationdateDefaultDate == 'publish') ? ' selected="selected"' : ''; ?>><?php
+                            echo ($expirationdateDefaultDate == 'publish') ? ' selected="selected"' : ''; ?>><?php
                             esc_html_e('Post/Page Publish Time', 'post-expirator'); ?></option>
                     </select>
                     <p class="description"><?php
