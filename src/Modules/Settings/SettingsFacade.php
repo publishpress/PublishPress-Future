@@ -26,6 +26,11 @@ class SettingsFacade
      */
     private $defaultData;
 
+    /**
+     * @var array
+     */
+    private $cache = [];
+
     const DEFAULT_CUSTOM_DATE = '+1 week';
 
     /**
@@ -109,7 +114,11 @@ class SettingsFacade
      */
     public function getDebugIsEnabled($default = false)
     {
-        return (bool)$this->options->getOption('expirationdateDebug', $default);
+        if (! isset($this->cache['debugIsEnabled'])) {
+            $this->cache['debugIsEnabled'] = (bool)$this->options->getOption('expirationdateDebug', $default);
+        }
+
+        return (bool) $this->cache['debugIsEnabled'];
     }
 
     public function getSendEmailNotificationToAdmins()
