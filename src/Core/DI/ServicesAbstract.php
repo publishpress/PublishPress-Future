@@ -42,6 +42,7 @@ abstract class ServicesAbstract
     const MODULES = 'modules';
     const EXPIRATION_SCHEDULER = 'expiration.scheduler';
     const MODULE_DEBUG = 'module.debug';
+    const MODULE_WOOCOMMERCE = 'module.woocommerce';
     const MODULE_INSTANCE_PROTECTION = 'module.instance_protection';
     const MODULE_EXPIRATOR = 'module.expirator';
     const MODULE_SETTINGS = 'module.settings';

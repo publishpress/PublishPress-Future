@@ -33,6 +33,7 @@ use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
 use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
+use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
 
 return [
     Services::PLUGIN_VERSION => '2.8.0-alpha.2',
@@ -74,6 +75,7 @@ return [
             Services::MODULE_INSTANCE_PROTECTION,
             Services::MODULE_EXPIRATOR,
             Services::MODULE_SETTINGS,
+            Services::MODULE_WOOCOMMERCE,
         ];
 
         $modules = [];
@@ -244,6 +246,16 @@ return [
         return new ModuleDebug(
             $container->get(Services::HOOKS),
             $container->get(Services::LOGGER)
+        );
+    },
+
+    /**
+     * @return ModuleInterface
+     */
+    Services::MODULE_WOOCOMMERCE => static function (ContainerInterface $container) {
+        return new ModuleWooCommerce(
+            $container->get(Services::BASE_URL),
+            $container->get(Services::PLUGIN_VERSION)
         );
     },
 
