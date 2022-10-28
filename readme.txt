@@ -81,6 +81,19 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.8.0] - UNRELEASED =
+
+* ADDED: Add translations for ES, FR, IT languages, #297;
+* FIXED: Fix the expire date column in WooCommerce products list, #276;
+* CHANGED: Removed the "None" option from default expiration dates. If a site is using it, the default value is now "Custom" and set for "+1 week", #274;
+* FIXED: Improve output escaping on a few views, #235;
+* FIXED: Improve input sanitization, #235;
+* FIXED: Add argument swapping on strings with multiple arguments, #305;
+* FIXED: Expiration settings not working on Classic Editor, #274;
+* FIXED: Fixed remaining message "Cron event not found!" for expirations that run successfully, #288;
+* CHANGED: The code was partially refactored improving the code quality, applying DRY and other good practices;
+* CHANGED: Deprecated some internal functions: postexpirator_activate, ;
+
 = [2.7.8] - 17 Oct, 2022 =
 
 * CHANGED: Rename "Category" in the expiration options to use a more generic term: "Taxonomy";
