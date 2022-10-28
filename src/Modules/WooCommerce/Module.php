@@ -60,4 +60,3 @@ class Module implements ModuleInterface
         );
     }
 }
-A
