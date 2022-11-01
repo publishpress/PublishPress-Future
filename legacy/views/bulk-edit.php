@@ -38,6 +38,7 @@ $defaultMinute = $defaults['minute'];
                                         esc_attr_e('Add expiry date if not enabled on posts', 'post-expirator'); ?>"><?php
                                     esc_html_e('Add to posts', 'post-expirator'); ?></option>
                                 <option value="change-add"
+
                                         data-show-fields="true"><?php
                                     esc_html_e('Change & Add', 'post-expirator'); ?></option>
                                 <option value="remove-only"
@@ -56,7 +57,7 @@ $defaultMinute = $defaults['minute'];
                                 $monthNumeric = PostExpirator_Util::get_wp_date('m', $now);
                                 $monthStr = PostExpirator_Util::get_wp_date('M', $now);
                                 // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-                                $selected = $monthNumeric == $defaultMonth['month'] ? 'selected' : '';
+                                $selected = $monthNumeric == $defaultMonth ? 'selected' : '';
                                 ?>
                                 <option value="<?php
                                 echo esc_attr($monthNumeric); ?>"
