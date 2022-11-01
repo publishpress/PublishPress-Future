@@ -31,7 +31,7 @@ $defaultMinute = $defaults['minute'];
                                 </option>
                                 <option value="change-only" data-show-fields="true"
                                         title="<?php
-                                        esc_attr_e('Change expiry date if enabled on posts', 'post-expirator'); ?>"><?php
+                                        esc_attr_e('Change expiry date if enabled on p  osts', 'post-expirator'); ?>"><?php
                                     esc_html_e('Change on posts', 'post-expirator'); ?></option>
                                 <option value="add-only" data-show-fields="true"
                                         title="<?php
@@ -96,7 +96,7 @@ $defaultMinute = $defaults['minute'];
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Minute', 'post-expirator'); ?></span>
                                 <input name="expirationdate_minute" required value="<?php
-                                echo esc_attr($defaultMinute); ?>"                                        size="2" maxlength="2" autocomplete="off" type="text">
+                                echo esc_attr($defaultMinute); ?>" size="2" maxlength="2" autocomplete="off" type="text">
                             </label>
 
                             <?php
