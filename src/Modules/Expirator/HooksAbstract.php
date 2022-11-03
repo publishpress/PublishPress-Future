@@ -14,10 +14,10 @@ abstract class HooksAbstract
     const ACTION_LEGACY_DELETE = 'expirationdate_delete';
     const ACTION_LEGACY_MULTISITE_DELETE_PREFIX = 'expirationdate_delete_';
     const FILTER_LEGACY_CUSTOM_EXPIRATION_TYPE = 'postexpirator_custom_posttype_expire';
-    const ACTION_SCHEDULE_POST_EXPIRATION = 'publishpressfuture.expiration/schedule';
-    const ACTION_UNSCHEDULE_POST_EXPIRATION = 'publishpressfuture.expiration/unschedule';
-    const ACTION_EXPIRE_POST = 'publishpressfuture.expiration/expire';
-    const FILTER_CUSTOM_EXPIRATION_TYPE = 'publishpressfuture.expiration/custom_expiration/type';
+    const ACTION_SCHEDULE_POST_EXPIRATION = 'publishpressfuture_schedule_expiration';
+    const ACTION_UNSCHEDULE_POST_EXPIRATION = 'publishpressfuture_unschedule_expiration';
+    const ACTION_EXPIRE_POST = 'publishpressfuture_expire';
+    const FILTER_CUSTOM_EXPIRATION_TYPE = 'publishpressfuture_custom_expiration_type';
 
     public static function getActionLegacyMultisiteDelete($blogId)
     {

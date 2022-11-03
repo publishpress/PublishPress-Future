@@ -7,8 +7,8 @@ namespace PublishPressFuture\Core;
 
 abstract class HooksAbstract
 {
-    const ACTION_INIT_PLUGIN = 'publishpressfuture.core/init';
-    const ACTION_ACTIVATE_PLUGIN = 'publishpressfuture.core/activate';
-    const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture.core/deactivate';
-    const FILTER_MODULES_LIST = 'publishpressfuture.core/modules/list';
+    const ACTION_INIT_PLUGIN = 'publishpressfuture_init_plugin';
+    const ACTION_ACTIVATE_PLUGIN = 'publishpressfuture_activate_plugin';
+    const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture_deactivate_plugin';
+    const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';
 }

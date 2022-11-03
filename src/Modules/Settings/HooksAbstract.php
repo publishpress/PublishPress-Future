@@ -7,6 +7,6 @@ namespace PublishPressFuture\Modules\Settings;
 
 abstract class HooksAbstract
 {
-    const ACTION_DELETE_ALL_SETTINGS = 'publishpressfuture.settings/delete/settings';
-    const FILTER_DEBUG_ENABLED = 'publishpressfuture.debug/debug/enabled';
+    const ACTION_DELETE_ALL_SETTINGS = 'publishpressfuture_delete_settings';
+    const FILTER_DEBUG_ENABLED = 'publishpressfuture_debug_enabled';
 }
