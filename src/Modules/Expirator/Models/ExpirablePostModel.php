@@ -310,15 +310,17 @@ class ExpirablePostModel extends PostModel
      */
     public function expire($force = false)
     {
+        $postId = $this->getPostId();
+
         if (! $this->isExpirationEnabled() && ! $force) {
-            $this->debug->log($this->getPostId() . ' -> Post expiration is not activated for the post');
+            $this->debug->log($postId . ' -> Post expiration is not activated for the post');
 
             return false;
         }
 
         if (! $this->isExpirationEnabled() && $force) {
             $this->debug->log(
-                $this->getPostId() . ' -> Post expiration is not activated for the post, but $force = true'
+                $postId . ' -> Post expiration is not activated for the post, but $force = true'
             );
         }
 
@@ -333,7 +335,7 @@ class ExpirablePostModel extends PostModel
 
         if (! $expirationAction) {
             $this->debug->log(
-                $this->getPostId() . ' -> Post expiration cancelled, action is not found'
+                $postId . ' -> Post expiration cancelled, action is not found'
             );
 
             return false;
@@ -342,7 +344,7 @@ class ExpirablePostModel extends PostModel
         $result = $expirationAction->execute();
 
         if (! is_bool($result)) {
-            $this->debug->log($this->getPostId() . ' -> ACTION  ' . $expirationAction . ' returned a non boolean value');
+            $this->debug->log($postId . ' -> ACTION  ' . $expirationAction . ' returned a non boolean value');
 
             return false;
         }
@@ -350,7 +352,7 @@ class ExpirablePostModel extends PostModel
         if (! $result) {
             $this->debug->log(
                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-                $this->getPostId() . ' -> FAILED ' . print_r($this->getExpirationDataAsArray(), true)
+                $postId . ' -> FAILED ' . print_r($this->getExpirationDataAsArray(), true)
             );
 
             return false;
@@ -358,7 +360,7 @@ class ExpirablePostModel extends PostModel
 
         $this->debug->log(
         // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-            $this->getPostId() . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
+            $postId . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
         );
 
         $expirationPostLogData = $expirationAction->getExpirationLog();
@@ -372,7 +374,8 @@ class ExpirablePostModel extends PostModel
         }
 
         $this->addMeta('expiration_log', wp_json_encode($expirationPostLogData));
-        $this->scheduler->unschedule($this->getPostId());
+
+        do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
         return true;
     }

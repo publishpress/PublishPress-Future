@@ -3,6 +3,7 @@
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract as Services;
 use PublishPressFuture\Modules\Expirator\CapabilitiesAbstract as Capabilities;
+use PublishPressFuture\Modules\Expirator\HooksAbstract;
 
 /**
  * The class that acts as a facade for the plugin's core functions.
@@ -240,10 +241,7 @@ class PostExpirator_Facade
      */
     private function schedule_event($post_id, $ts, $opts)
     {
-        $container = Container::getInstance();
-        $scheduler = $container->get(Services::EXPIRATION_SCHEDULER);
-
-        $scheduler->schedule($post_id, $ts, $opts);
+        do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post_id, $ts, $opts);
     }
 
     /**
