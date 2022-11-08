@@ -11,6 +11,8 @@
 
 namespace PreTests;
 
+use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+
 add_filter('admin_email_check_interval', '__return_false');
 
 add_action('init', 'PreTests\registerPostTypes', 1);
@@ -101,7 +103,7 @@ function runExpirationAction()
     if (isset($_GET['tests-future-expire-id'])) {
         $id = (int) $_GET['tests-future-expire-id'];
 
-        do_action('postExpiratorExpire', $id);
+        do_action(ExpiratorHooks::ACTION_EXPIRE_POST, $id);
 
         echo 'Did action postExpiratorExpire for ' . $id;
         die;

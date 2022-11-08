@@ -7,6 +7,7 @@ modules:
         - Asserts
         - WPLoader
         - Sequence
+        - Filesystem
     config:
         WPDb:
             dump: "tests/codeception/_data/sql/dump.sql"
@@ -31,6 +32,7 @@ modules:
             port: 9515
             capabilities:
                 browserName: chrome
+                unexpectedAlertBehaviour: 'accept'
                 chromeOptions:
                     args:
                         - --headless
