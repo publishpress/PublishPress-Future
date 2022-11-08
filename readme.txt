@@ -92,7 +92,14 @@ This section describes how to install the plugin and get it working.
 * FIXED: Expiration settings not working on Classic Editor, #274;
 * FIXED: Fixed remaining message "Cron event not found!" for expirations that run successfully, #288;
 * CHANGED: The code was partially refactored improving the code quality, applying DRY and other good practices;
-* CHANGED: Deprecated some internal functions: postexpirator_activate, ;
+* CHANGED: Deprecated some internal functions: postexpirator_activate, postexpirator_autoload, postexpirator_schedule_event, postexpirator_unschedule_event, postexpirator_debug, _postexpirator_get_cat_names, postexpirator_register_expiration_meta, postexpirator_expire_post;
+* CHANGED: Deprecated the constant: PostExpirator_Facade::PostExpirator_Facade => PublishPressFuture\Modules\Expirator\CapabilitiesAbstract::EXPIRE_POST;
+* CHANGED: Deprecated the constant POSTEXPIRATOR_DEBUG;
+* CHANGED: Deprecated the method PostExpirator_Facade::set_expire_principles;
+* CHANGED: Deprecated the method PostExpirator_Facade::current_user_can_expire_posts;
+* CHANGED: Deprecated the method PostExpirator_Facade::get_default_expiry;
+* CHANGED: Deprecated the method PostExpirator_Util::get_wp_date;
+* CHANGED: Deprecated the class PostExpiratorDebug;
 
 = [2.7.8] - 17 Oct, 2022 =
 
