@@ -13,6 +13,7 @@ if (!file_exists($bootstrapFile)) {
 }
 
 echo "▶ Parsing bootstrap.yml file\n";
+/** @noinspection PhpComposerExtensionStubsInspection */
 $config = yaml_parse_file($bootstrapFile);
 
 if (isset($config['copy']) && ! empty($config['copy'])) {
@@ -28,14 +29,16 @@ if (isset($config['copy']) && ! empty($config['copy'])) {
             if (is_dir($sourcePath)) {
                 echo 'Copying dir ' . $source . "\n";
 
-                shell_exec("rm -rf $destination");
+                shell_exec("[ -e $destination ] && chmod -R 777 $destination && rm -rf $destination");
                 shell_exec("mkdir -p $destination");
                 shell_exec("rsync -r $sourcePath/* $destination");
+                shell_exec("[ -e $destination ] && chmod -R 777 $destination");
             } else {
                 echo 'Copying file ' . $source . "\n";
 
-                shell_exec("rm -f $destination");
+                shell_exec("[ -e $destination ] && chmod -R 666 $destination && rm -rf $destination");
                 shell_exec("rsync -r $sourcePath $destination");
+                shell_exec("[ -e $destination ] && chmod -R 666 $destination");
             }
         } else {
             throw new Exception('Source path not found: ' . $source);

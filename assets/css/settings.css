@@ -153,3 +153,7 @@ span.post-expiration-attributes {
 .pe-event-post {
 	cursor: help;
 }
+
+.post-expirator-timestamp {
+	width: 20% !important;
+}

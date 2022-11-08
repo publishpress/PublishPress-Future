@@ -6,7 +6,6 @@ script_version="1.0.0"
 source_path=$(pwd)
 scripts_path="${source_path}/builder/docker/scripts"
 
-
 #######################################
 # Get the plugin name from composer.json file.
 # Globals:
@@ -22,7 +21,7 @@ plugin_name=$(get_plugin_name)
 
 php_version="${1}"
 command="${2}"
-flat_php_version=$(echo "${php_version}" | sed 's/\.//g')
+flat_php_version="${php_version//./}"
 container_name="${plugin_name}-tests-${flat_php_version}"
 wordpress_container_name="${container_name}-wordpress-1"
 db_container_name="${container_name}-db-1"
@@ -111,10 +110,16 @@ get_ip_addresses() {
     port_443=$(get_service_port "${wordpress_container_name}" 443)
     port_3306=$(get_service_port "${db_container_name}" 3306)
 
-    echo "IP Addresses:"
-    echo ""
-    echo "wordrpess: ${wordpress_container_ip} ports: 80=${port_80} 443=${port_443}"
-    echo "       db: ${db_container_ip} ports: 3306=${port_3306}"
+    output=$(
+        cat <<END
+SERVICE|PORT|CONTAINER IP|FORWARDED PORT
+wordrpess|80|${wordpress_container_ip}|${port_80}
+wordrpess|443|${wordpress_container_ip}|${port_443}
+db|3306|${db_container_ip}|${port_3306}
+END
+    )
+
+    echo "$output" | column -t -s '|'
 }
 
 #######################################
@@ -162,7 +167,7 @@ create_env_file() {
     test_site_db_host="127.0.0.1"
     test_site_db_port="${db_container_port}"
     test_site_db_name="wordpress"
-    test_site_db_user="wordpress"
+    test_site_db_user="root"
     test_site_db_password="wordpress"
     test_site_wp_url="http:\/\/127.0.0.1:${wordpress_container_port}"
     test_site_wp_domain="127.0.0.1:${wordpress_container_port}"
@@ -190,7 +195,7 @@ create_env_file() {
     sed -i.bak "s/%WP_ROOT_FOLDER%/${wp_root_folder}/g" "${env_file_path}"
     sed -i.bak "s/:::/\//g" "${env_file_path}"
 
-    rm -f ${env_file_path}.bak
+    rm -f "${env_file_path}".bak
 }
 
 #######################################
@@ -201,7 +206,8 @@ create_ray_config() {
     wordpress_container_ip=$(get_service_ip "${wordpress_container_name}")
     mount_path=$(get_mount_path)
 
-    config_content=$(cat <<EOF
+    config_content=$(
+        cat <<EOF
 <?php
 return [
     /*
@@ -236,9 +242,9 @@ return [
 ];
 
 EOF
-)
+    )
 
-    echo "${config_content}" > $mount_path/ray.php
+    echo "${config_content}" >"$mount_path"/ray.php
 }
 
 #######################################
@@ -265,7 +271,7 @@ clean_envs() {
 # so it can read and write docker volume files.
 #######################################
 add_user_group() {
-    sudo usermod -a -G www-data $(whoami)
+    sudo usermod -a -G www-data "$(whoami)"
 }
 
 #######################################
@@ -278,14 +284,13 @@ run_bootstrap() {
     tests/bin/bootstrap "${mount_path}"
 }
 
-
 #######################################
 # Run the builder command without showing
 # the header.
 # Outputs: The output of the builder command.
 #######################################
 run_builder() {
-    HIDE_HEADER=1 $scripts_path/build build-dir
+    HIDE_HEADER=1 "$scripts_path"/build build-dir
 }
 
 #######################################
@@ -310,7 +315,7 @@ start_chromedriver() {
 # Stop ChromeDriver
 #######################################
 stop_chromedriver() {
-    ps aux | grep chromedriver | awk ' { print $2 } ' | xargs kill -9
+    ps aux | pgrep chromedriver | awk ' { print $2 } ' | xargs kill -9
 }
 
 #######################################
@@ -322,7 +327,7 @@ stop_chromedriver() {
 #######################################
 show_runtime() {
     end_time=$(date +%s)
-    runtime=$((end_time-start_time))
+    runtime=$((end_time - start_time))
     echo ""
     echo "Runtime: $runtime sec"
 }
@@ -336,7 +341,7 @@ show_runtime() {
 #######################################
 show_elapsed_time() {
     end_time=$(date +%s)
-    runtime=$((end_time-start_time))
+    runtime=$((end_time - start_time))
     echo ""
     echo "Elapsed time: $runtime sec"
 }
@@ -350,8 +355,7 @@ show_elapsed_time() {
 #   The repeated string.
 #######################################
 repeat() {
-	for (( c=1; c<="${2}"; c++ ))
-    do
+    for ((c = 1; c <= "${2}"; c++)); do
         echo -n "${1}"
     done
 }
@@ -367,161 +371,158 @@ repeat() {
 #   The formatted header.
 #######################################
 echo_header() {
-    repeat "=" $cols
-    line=$(repeat "-" $(($cols-16)))
+    repeat "=" "$cols"
+    line=$(repeat "-" "$cols"-16)
     echo "      __"
-    echo "   -=(o '.      PUBLISHPRESS TESTS ASSISTENT - v${script_version}"
+    echo "   -=(o '.      PUBLISHPRESS TESTS ASSISTANT - v${script_version}"
     echo "     '.-.\      ${line}"
     echo "     /|  \\      Name: ${plugin_name}"
     echo "     '|  ||     "
     echo "      _\_):,_   PHP Version: ${php_version}"
     echo ""
-    repeat "=" $cols
+    repeat "=" "$cols"
     echo ""
 }
 
 #######################################
 echo_header
 case "${command}" in
-    "setup")
-        add_user_group
-        ;;
-    "start")
-        echo "Start services:"
-        echo ""
-        echo_step "Starting the docker services"
-        echo ""
-        start_services
-        echo ""
+"setup")
+    add_user_group
+    ;;
+"start")
+    echo "Start services:"
+    echo ""
+    echo_step "Starting the docker services"
+    echo ""
+    start_services
+    echo ""
 
-        echo_step "Creating Ray config file"
-        create_ray_config
+    echo_step "Creating Ray config file"
+    create_ray_config
 
-        echo_step "Fixing volume permissions"
-        fix_volume_permissions
+    echo_step "Fixing volume permissions"
+    fix_volume_permissions
 
-        echo_step "Bootstrapping"
-        run_bootstrap
+    echo_step "Bootstrapping"
+    run_bootstrap
 
-        echo_step  "Creating the codeception env file"
-        create_env_file
+    echo_step "Creating the codeception env file"
+    create_env_file
 
-        echo_step "IP and Ports"
-        echo ""
-        get_ip_addresses
-        echo ""
+    echo_step "IP and Ports"
+    echo ""
+    get_ip_addresses
+    echo ""
 
-        echo_step  "Starting ChromeDriver in the background"
-        echo ""
-        start_chromedriver
+    echo_step "Starting ChromeDriver in the background"
+    echo ""
+    start_chromedriver
 
-        echo ""
-        echo "Start process finished!"
-        show_runtime
-        ;;
-    "bootstrap")
-        echo "Bootstrapping the plugin for testing:"
-        echo ""
-        run_bootstrap
+    echo ""
+    echo "Start process finished!"
+    show_runtime
+    ;;
+"bootstrap")
+    echo "Bootstrapping the plugin for testing:"
+    echo ""
+    run_bootstrap
 
-        echo ""
-        echo "Plugin bootstrapped succesfully!"
-        show_runtime
-        ;;
-    "stop")
-        echo "Stop services:"
-        echo ""
+    echo ""
+    echo "Plugin bootstrapped successfully!"
+    show_runtime
+    ;;
+"stop")
+    echo "Stop services:"
+    echo ""
 
-        echo_step "Stopping docker services"
-        echo ""
-        stop_services
-        echo ""
+    echo_step "Stopping docker services"
+    echo ""
+    stop_services
+    echo ""
 
-        echo_step "Stopping ChromeDriver"
-        echo ""
-        stop_chromedriver
-        echo ""
+    echo_step "Stopping ChromeDriver"
+    echo ""
+    stop_chromedriver
+    echo ""
 
-        echo ""
-        echo "Stop process finished!"
-        show_runtime
-        ;;
-    "ip")
-        get_ip_addresses
-        ;;
-    "php-versions")
-        get_php_versions
-        ;;
-    "path")
-        mount_path=$(get_mount_path)
-        echo "WordPress path: ${mount_path}"
-        ;;
-    "clean")
-        echo "Cleaning:"
-        echo ""
+    echo ""
+    echo "Stop process finished!"
+    show_runtime
+    ;;
+"ip")
+    get_ip_addresses
+    ;;
+"php-versions")
+    get_php_versions
+    ;;
+"path")
+    mount_path=$(get_mount_path)
+    echo "WordPress path: ${mount_path}"
+    ;;
+"clean")
+    echo "Cleaning:"
+    echo ""
 
-        echo_step "Cleaning the volumes"
-        clean_volumes
+    echo_step "Cleaning the volumes"
+    clean_volumes
 
-        echo_step "Cleaning the codeception env files"
+    echo_step "Cleaning the codeception env files"
 
-        echo ""
-        echo "Files cleaned succesfully!"
-        clean_envs
-        ;;
-    "brun")
-        # Arguments passed to this command, after ther third one, will all be passed to
-        # codeception run command
+    echo ""
+    echo "Files cleaned successfully!"
+    clean_envs
+    ;;
+"brun")
+    # Arguments passed to this command, after the third one, will all be passed to
+    # codeception run command
 
-        echo_step "IP and Ports"
-        echo ""
-        get_ip_addresses
-        echo ""
+    echo_step "IP and Ports"
+    echo ""
+    get_ip_addresses
+    echo ""
 
-        run_builder
-        echo ""
+    run_builder
+    echo ""
 
-        echo_step "Fixing volume permissions"
-        fix_volume_permissions
+    echo_step "Bootstrapping the plugin"
+    run_bootstrap
 
-        echo_step "Bootstrapping the plugin"
-        run_bootstrap
+    echo ""
+    show_elapsed_time
+    echo ""
 
-        echo ""
-        show_elapsed_time
-        echo ""
+    echo_step "Cleaning up codeception output"
+    "$source_path"/vendor/bin/codecept clean
 
-        echo_step "Cleanning up codeception output"
-        $source_path/vendor/bin/codecept clean
+    echo_step "Running codeception tests: ${*:3}, env: ${php_version}"
 
-        echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
+    echo ""
+    "$source_path"/vendor/bin/codecept run "${*:3}" --env "${php_version}"
 
-        echo ""
-        $source_path/vendor/bin/codecept run "${@:3}" --env "${php_version}"
+    echo ""
+    echo "Finish running tests!"
+    show_runtime
+    ;;
+"run")
+    echo_step "IP and Ports"
+    echo ""
+    get_ip_addresses
+    echo ""
 
-        echo ""
-        echo "Finish running tests!"
-        show_runtime
-        ;;
-    "run")
-        echo_step "IP and Ports"
-        echo ""
-        get_ip_addresses
-        echo ""
+    echo_step "Cleaning up codeception output"
+    "$source_path"/vendor/bin/codecept clean
 
-        echo_step "Cleanning up codeception output"
-        $source_path/vendor/bin/codecept clean
+    # Arguments passed to this command, after the third one, will all be passed to
+    # codeception run command
+    echo_step "Running codeception tests: ${*:3}, env: ${php_version}"
 
-        # Arguments passed to this command, after ther third one, will all be passed to
-        # codeception run command
-        echo_step "Running codeception tests: ${@:3}, env: ${php_version}"
+    echo ""
+    "$source_path"/vendor/bin/codecept run "${*:3}" --env "${php_version}"
 
-        echo ""
-        $source_path/vendor/bin/codecept run "${@:3}" --env "${php_version}"
-
-        echo ""
-        echo "Finish running tests!"
-        show_runtime
-        ;;
-    *) echo "invalid option ${command}";;
+    echo ""
+    echo "Finish running tests!"
+    show_runtime
+    ;;
+*) echo "invalid option ${command}" ;;
 esac

@@ -164,7 +164,6 @@
     if ($('.post-expirator-quickedit').length > 0) {
         $('#bulk_edit').on('click', function(e) {
             const isValid = validateBulkFields();
-            console.log(isValid);
             if (! isValid) {
                 e.preventDefault();
 

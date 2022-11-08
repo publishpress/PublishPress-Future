@@ -30,7 +30,6 @@
 - README.md
 - RoboFile.php
 - tests
-- vendor
 - webpack.config.js
 - vendor/bin
 - assets/jsx

@@ -10,7 +10,7 @@ return [
     /*
      *  The host used to communicate with the Ray app.
      */
-    'host' => '127.0.0.1',
+    'host' => 'host.docker.internal',
 
     /*
      *  The port number used to communicate with the Ray app.

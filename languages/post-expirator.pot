@@ -629,7 +629,7 @@ msgid "Default Expiration Taxonomy"
 msgstr ""
 
 #: views/menu-general.php:170
-msgid "Sets the default expiration category for the post."
+msgid "Sets the default expiration taxonomy for the post."
 msgstr ""
 
 #: views/menu-general.php:176
