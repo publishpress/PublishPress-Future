@@ -36,7 +36,7 @@ use PublishPressFuture\Modules\Settings\SettingsFacade;
 use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
 
 return [
-    Services::PLUGIN_VERSION => '2.8.1-beta.2',
+    Services::PLUGIN_VERSION => '2.8.1',
 
     Services::PLUGIN_SLUG => 'post-expirator',
 
