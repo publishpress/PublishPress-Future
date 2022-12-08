@@ -781,10 +781,10 @@ function postexpirator_add_footer($text)
     global $post;
 
     // Check to see if its enabled
-    $displayFooter = get_option('expirationdateDisplayFooter');
+    $displayFooter = (bool) get_option('expirationdateDisplayFooter');
 
     // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-    if ($displayFooter === false || $displayFooter == 0) {
+    if (! $displayFooter || empty($post)) {
         return $text;
     }
 
