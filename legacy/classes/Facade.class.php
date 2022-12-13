@@ -325,6 +325,7 @@ class PostExpirator_Facade
                         'schema' => array(
                             'type' => 'object',
                             'additionalProperties' => true,
+                            'properties' => []
                         ),
                     ),
                 )

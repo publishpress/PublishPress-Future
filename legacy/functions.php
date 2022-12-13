@@ -38,7 +38,8 @@ add_filter('plugin_action_links', 'postexpirator_plugin_action_links', 10, 2);
  */
 function postexpirator_init()
 {
-    $plugin_dir = plugin_basename(__DIR__);
+    $container = Container::getInstance();
+    $plugin_dir = basename($container->get(ServicesAbstract::BASE_PATH));
     load_plugin_textdomain('post-expirator', null, $plugin_dir . '/languages/');
 
     PostExpirator_Reviews::init();
@@ -781,10 +782,10 @@ function postexpirator_add_footer($text)
     global $post;
 
     // Check to see if its enabled
-    $displayFooter = get_option('expirationdateDisplayFooter');
+    $displayFooter = (bool) get_option('expirationdateDisplayFooter');
 
     // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-    if ($displayFooter === false || $displayFooter == 0) {
+    if (! $displayFooter || empty($post)) {
         return $text;
     }
 

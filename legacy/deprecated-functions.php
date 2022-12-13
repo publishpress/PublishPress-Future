@@ -94,8 +94,6 @@ if (! function_exists('expirationdate_get_blog_url')) {
  */
 function postexpirator_schedule_event($postId, $timestamp, $opts)
 {
-    _deprecated_function(__FUNCTION__, '2.8.0');
-
     do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $timestamp, $opts);
 }
 
@@ -109,8 +107,6 @@ function postexpirator_schedule_event($postId, $timestamp, $opts)
  */
 function postexpirator_unschedule_event($postId)
 {
-    _deprecated_function(__FUNCTION__, '2.8.0');
-
     do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 }
 
@@ -242,8 +238,6 @@ function postexpirator_debug()
  */
 function _postexpirator_get_cat_names($cats)
 {
-    _deprecated_function(__FUNCTION__, '2.8.0');
-
     $out = array();
     foreach ($cats as $cat) {
         $out[$cat] = get_the_category_by_id($cat);
@@ -260,8 +254,6 @@ function _postexpirator_get_cat_names($cats)
  */
 function postexpirator_register_expiration_meta($id, $log)
 {
-    _deprecated_function(__FUNCTION__, '2.8.0');
-
     $log['expired_on'] = date('Y-m-d H:i:s');
 
     add_post_meta($id, 'expiration_log', wp_json_encode($log));
@@ -279,8 +271,6 @@ function postexpirator_register_expiration_meta($id, $log)
  */
 function postexpirator_expire_post($postId)
 {
-    _deprecated_function(__FUNCTION__, '2.8.0');
-
     do_action(
         ExpiratorHooks::ACTION_EXPIRE_POST,
         $postId
