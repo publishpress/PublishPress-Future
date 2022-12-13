@@ -212,7 +212,7 @@ class ExpirablePostModel extends PostModel
             $options = $this->getExpirationOptions();
 
             if (empty($this->expirationCategories)) {
-                $this->expirationCategories = isset($options['category']) ? $options['category'] : false;
+                $this->expirationCategories = isset($options['category']) ? $options['category'] : [];
             }
 
             foreach ($this->expirationCategories as &$categoryID) {
