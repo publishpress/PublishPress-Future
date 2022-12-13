@@ -72,7 +72,7 @@
     "automattic/vipwpcs": "^2.3",
     "publishpress/publishpress-phpcs-standards": "dev-main",
     "spatie/ray": "*",
-    "spatie/wordpress-ray": "dev-patch-1",
+    "realcodelab/wordpress-ray": "dev-patch-1",
     "permafrost-dev/ray-cli": "^1.12",
     "ext-pdo": "*",
     "ext-yaml": "*"
