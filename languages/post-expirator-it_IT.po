@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - PublishPress Future: Automatically Unpublish WordPress Posts - Stable (latest release)\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-10-18 20:36+0200\n"
+"PO-Revision-Date: 2022-11-10 13:34+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -14,198 +14,235 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: classes/Facade.class.php:382 views/bulk-edit.php:128
-#: views/classic-metabox.php:135 views/quick-edit.php:92
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:423
+msgid "%1$s (%2$s) has expired at %3$s. %4$s"
+msgstr "%1$s (%2$s) è scaduto il %3$s. %4$s"
+
+#: src/Modules/Expirator/ExpirationActions/UnstickPost.php:35
+msgid "Post has been removed from stickies list."
+msgstr "L'articolo è stato rimosso dalla lista in evidenza."
+
+#: src/Modules/Expirator/ExpirationActions/StickPost.php:35
+msgid "Post has been added to stickies list."
+msgstr "L'articolo è stato aggiunto alla lista in evidenza."
+
+#: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:36
+#: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:36
+#: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:36
+msgid "Post status has been successfully changed to \"%s\"."
+msgstr "Lo stato dell'articolo è stato modificato correttamente in \"%s\"."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:46
+msgid "The following terms (%s) were set to the post: \"%s\". The old list of terms on the post was: %s."
+msgstr "I seguenti termini (%s) sono stati impostati nell'articolo: \"%s\". Il vecchio elenco di termini dell'articolo era: %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:49
+msgid "The following terms (%s) were removed from the post: \"%s\". The new list of terms on the post is: %s."
+msgstr "I seguenti termini (%s) sono stati eliminati dall'articolo: \"%s\". Il nuovo elenco di termini dell'articolo è: %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:51
+msgid "The following terms (%s) were added to the post: \"%s\". The full list of terms on the post is: %s."
+msgstr "I seguenti termini (%s) sono stati aggiunti all'articolo: \"%s\". L'elenco completo dei termini nell'articolo è: %s."
+
+#: src/Modules/Expirator/ExpirationActions/DeletePost.php:35
+msgid "Post has been successfully deleted."
+msgstr "L'articolo è stato eliminato correttamente."
+
+#: legacy/classes/Facade.class.php:395 legacy/views/bulk-edit.php:133
+#: legacy/views/classic-metabox.php:135 legacy/views/quick-edit.php:96
 msgid "Expiration Taxonomies"
 msgstr "Tassonomie della scadenza"
 
-#: classes/Facade.class.php:377 views/how-to-expire.php:54
+#: legacy/classes/Facade.class.php:390 legacy/views/how-to-expire.php:54
+#: views/how-to-expire.php:54
 msgid "Taxonomy: Remove"
 msgstr "Tassonomia: Rimuovere"
 
-#: classes/Facade.class.php:376 views/how-to-expire.php:50
+#: legacy/classes/Facade.class.php:389 legacy/views/how-to-expire.php:50
+#: views/how-to-expire.php:50
 msgid "Taxonomy: Add"
 msgstr "Tassonomia: Aggiungere"
 
-#: classes/Facade.class.php:375 views/how-to-expire.php:46
+#: legacy/classes/Facade.class.php:388 legacy/views/how-to-expire.php:46
+#: views/how-to-expire.php:46
 msgid "Taxonomy: Replace"
 msgstr "Tassonomia: Sostituire"
 
-#: classes/Facade.class.php:368
+#: legacy/classes/Facade.class.php:381
 msgid "Taxonomy"
 msgstr "Tassonomia"
 
-#: views/menu-diagnostics.php:100
+#: legacy/views/menu-diagnostics.php:103
 msgid "Posts and expiration settings"
 msgstr "Impostazioni degli articoli e della scadenza"
 
-#: views/expire-column.php:21
+#: legacy/views/expire-column.php:21
 msgid "Cron event not found!"
 msgstr "Il cron dell'evento non è stato trovato!"
 
-#: views/expire-column.php:18
+#: legacy/views/expire-column.php:18
 msgid "Cron event scheduled."
 msgstr "Il cron dell'evento è stato programmato."
 
-#: classes/Display.class.php:80
+#: legacy/classes/Display.class.php:82
 msgid "You do not have permission to configure PublishPress Future."
 msgstr "Non hai i permessi per configurare PublishPress Future."
 
-#: views/tabs.php:37
+#: legacy/views/tabs.php:36
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: views/tabs.php:22
+#: legacy/views/tabs.php:26
 msgid "Display"
 msgstr "Visualizza"
 
-#: views/menu-editor.php:10
+#: legacy/views/menu-editor.php:10
 msgid "Editor"
 msgstr "Editor"
 
-#: views/menu-defaults.php:126
+#: legacy/views/menu-defaults.php:130
 msgid "Select whether the PublishPress Future is enabled for all new posts."
 msgstr "Selezionare se PublishPress Future è abilitato per tutti i nuovi articoli."
 
-#: views/menu-advanced.php:51
+#: legacy/views/menu-advanced.php:51
 msgid "Choose which user roles can use PublishPress Future"
 msgstr "Scegli quali ruoli utente possono utilizzare PublishPress Future"
 
-#: classes/Display.class.php:435
+#: legacy/classes/Display.class.php:479
 msgid "Contact"
 msgstr "Contatto"
 
-#: classes/Display.class.php:433
+#: legacy/classes/Display.class.php:477
 msgid "Contact the PublishPress team"
 msgstr "Contatta il team di PublishPress"
 
-#: classes/Display.class.php:427
+#: legacy/classes/Display.class.php:471
 msgid "Documentation"
 msgstr "Documentazione"
 
-#: classes/Display.class.php:425
+#: legacy/classes/Display.class.php:469
 msgid "Future Documentation"
 msgstr "Documentazione di Future"
 
-#: classes/Display.class.php:419
+#: legacy/classes/Display.class.php:463
 msgid "About"
 msgstr "Chi siamo"
 
-#: classes/Display.class.php:417
+#: legacy/classes/Display.class.php:461
 msgid "About PublishPress Future"
 msgstr "Informazioni su PublishPress Future"
 
-#: classes/Display.class.php:402
+#: legacy/classes/Display.class.php:446
 msgid "If you like %s, please leave us a %s rating. Thank you!"
 msgstr "Se %s ti piace, lasciaci una valutazione di %s!"
 
-#: classes/Display.class.php:54
+#: legacy/classes/Display.class.php:56
 msgid "Future"
 msgstr "Future"
 
-#: classes/Display.class.php:53
+#: legacy/classes/Display.class.php:55
 msgid "PublishPress Future Options"
 msgstr "Opzioni di PublishPress Future"
 
 #. Plugin Name of the plugin
-#: classes/Facade.class.php:378 post-expirator.php:377 views/bulk-edit.php:18
-#: views/tabs.php:10
+#: legacy/classes/Facade.class.php:391 legacy/functions.php:355
+#: legacy/views/bulk-edit.php:18 legacy/views/tabs.php:14
 msgid "PublishPress Future"
 msgstr "PublishPress Future"
 
-#: views/menu-advanced.php:104
+#: legacy/views/menu-advanced.php:104
 msgid "Toggle between preserving or deleting data after the plugin is deactivated."
 msgstr "Attiva/disattiva la conservazione o l'eliminazione dei dati dopo la disattivazione del plugin."
 
-#: views/menu-advanced.php:100
+#: legacy/views/menu-advanced.php:100
 msgid "Delete data"
 msgstr "Elimina i dati"
 
-#: views/menu-advanced.php:91
+#: legacy/views/menu-advanced.php:91
 msgid "Preserve data"
 msgstr "Conserva i dati"
 
-#: views/menu-advanced.php:82
+#: legacy/views/menu-advanced.php:82
 msgid "Preserve data after deactivating the plugin"
 msgstr "Conserva i dati dopo la disattivazione del plugin"
 
-#: views/menu-diagnostics.php:73
+#: legacy/views/menu-diagnostics.php:76
 msgid "No cron events found for the plugin."
 msgstr "Nessun cron trovato per il plugin."
 
-#: classes/Facade.class.php:381
+#: legacy/classes/Facade.class.php:394
 msgid "Loading"
 msgstr "Caricamento in corso"
 
-#: views/tabs.php:27
+#: legacy/views/tabs.php:31
 msgid "Post Types"
 msgstr "Tipi di contenuto"
 
-#: views/menu-advanced.php:42 views/menu-editor.php:27
+#: legacy/views/menu-advanced.php:42 legacy/views/menu-editor.php:27
 msgid "Toggle between native support for the Block Editor or the backward compatible Classic Editor style metabox."
 msgstr "Commuta tra il supporto nativo per l'editor a blocchi e il metabox in stile editor classico, compatibile con le versioni precedenti."
 
-#: views/menu-advanced.php:40 views/menu-editor.php:25
+#: legacy/views/menu-advanced.php:40 legacy/views/menu-editor.php:25
 msgid "Show Classic Editor style box"
 msgstr "Mostra la casella in stile editor classico"
 
-#: views/menu-advanced.php:34 views/menu-editor.php:21
+#: legacy/views/menu-advanced.php:34 legacy/views/menu-editor.php:21
 msgid "Show Gutenberg style box"
 msgstr "Mostra la casella in stile Gutenberg"
 
-#: views/menu-advanced.php:28 views/menu-editor.php:17
+#: legacy/views/menu-advanced.php:28 legacy/views/menu-editor.php:17
 msgid "Block Editor Support"
 msgstr "Supporto editor a blocchi"
 
-#: views/menu-advanced.php:18
+#: legacy/views/menu-advanced.php:18
 msgid "Please do not update anything here unless you know what it entails. For advanced users only."
 msgstr "Si raccomanda di non aggiornare nulla qui se non se ne conoscono le conseguenze. Solo per utenti avanzati."
 
-#: views/menu-advanced.php:16
+#: legacy/views/menu-advanced.php:16
 msgid "Advanced Options"
 msgstr "Opzioni avanzate"
 
-#: views/menu-general.php:82
+#: legacy/views/menu-general.php:86
 msgid "The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr "Il formato predefinito da utilizzare quando si visualizza l'ora di scadenza all'interno di un articolo utilizzando lo shortcode o nel footer.  Per informazioni sulle opzioni di formattazione valide, vedere: %s."
 
-#: views/menu-general.php:65
+#: legacy/views/menu-general.php:69
 msgid "The default format to use when displaying the expiration date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr "Il formato predefinito da utilizzare quando si visualizza la data di scadenza all'interno di un articolo utilizzando lo shortcode o nel footer.  Per informazioni sulle opzioni di formattazione valide, vedere: %s."
 
-#: views/menu-display.php:37
+#: legacy/views/menu-display.php:37
 msgid "%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
 msgstr "%1$s - le opzioni valide sono %2$sfull%3$s (predefinito), %4$sdata%5$s, %6$sora%7$s"
 
-#: views/menu-display.php:33
+#: legacy/views/menu-display.php:33
 msgid "Valid %s attributes:"
 msgstr "Attributi %s validi:"
 
-#: views/menu-display.php:31
+#: legacy/views/menu-display.php:31
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: views/menu-diagnostics.php:13
+#: legacy/views/menu-diagnostics.php:16
 msgid "Debug Logging"
 msgstr "Registrazione di debug"
 
-#: views/menu-defaults.php:199
+#: legacy/views/menu-defaults.php:203
 msgid "Set the default expiration date to be used when creating a new post of this type."
 msgstr "Impostare la data di scadenza predefinita da utilizzare quando si crea un nuovo articolo di questo tipo."
 
-#: views/menu-defaults.php:169
+#: legacy/views/menu-defaults.php:173
 msgid "Publish Time"
 msgstr "Data di pubblicazione"
 
-#: views/menu-defaults.php:167
+#: legacy/views/menu-defaults.php:171
 msgid "Inherit from General Settings"
 msgstr "Eredita dalle impostazioni generali"
 
-#: views/bulk-edit.php:108 views/quick-edit.php:74
+#: legacy/views/bulk-edit.php:109 legacy/views/quick-edit.php:74
 msgid "Type"
 msgstr "Tipo"
 
-#: post-expirator.php:2115
+#: legacy/functions.php:1181
 msgid "No taxonomies found"
 msgstr "Nessuna tassonomia trovata"
 
@@ -217,118 +254,96 @@ msgstr "http://publishpress.com"
 msgid "PublishPress"
 msgstr "PublishPress"
 
-#: views/menu-defaults.php:216 views/menu-general.php:123
+#: legacy/views/menu-defaults.php:220 legacy/views/menu-general.php:124
 msgid "Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
 msgstr "Impostare il valore personalizzato da utilizzare per la data di scadenza predefinita.  Per informazioni sulla formattazione, vedere %1$s. Ad esempio, si può inserire %2$s+1 mese%3$s o %4$s+1 settimana 2 giorni 4 ore 2 secondi%5$s o %6$sil prossimo giovedì%7$s."
 
-#: views/bulk-edit.php:45
+#: legacy/views/bulk-edit.php:46
 msgid "Remove from posts"
 msgstr "Rimuovi dagli articoli"
 
-#: views/bulk-edit.php:42
+#: legacy/views/bulk-edit.php:43
 msgid "Change & Add"
 msgstr "Cambia e aggiungi"
 
-#: views/bulk-edit.php:39
+#: legacy/views/bulk-edit.php:39
 msgid "Add to posts"
 msgstr "Aggiungi agli articoli"
 
-#: views/bulk-edit.php:38
+#: legacy/views/bulk-edit.php:38
 msgid "Add expiry date if not enabled on posts"
 msgstr "Aggiungi la data di scadenza se non è abilitata negli articoli"
 
-#: views/bulk-edit.php:35
+#: legacy/views/bulk-edit.php:35
 msgid "Change on posts"
 msgstr "Cambia negli articoli"
 
-#: views/bulk-edit.php:34
-msgid "Change expiry date if enabled on posts"
+#: legacy/views/bulk-edit.php:34
+msgid "Change expiry date if enabled on p  osts"
 msgstr "Cambia la data di scadenza se è abilitata negli articoli"
 
-#: views/bulk-edit.php:30
+#: legacy/views/bulk-edit.php:30
 msgid "No Change"
 msgstr "Non cambiare"
 
-#: post-expirator.php:1449
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:496
 msgid "[%1$s] %2$s"
 msgstr "[%1$s] %2$s"
 
-#: classes/Facade.class.php:374 views/how-to-expire.php:42
+#: legacy/classes/Facade.class.php:387 legacy/views/how-to-expire.php:42
+#: views/how-to-expire.php:42
 msgid "Unstick"
 msgstr "Rimuovi in evidenza"
 
-#: classes/Facade.class.php:373 views/how-to-expire.php:38
+#: legacy/classes/Facade.class.php:386 legacy/views/how-to-expire.php:38
+#: views/how-to-expire.php:38
 msgid "Stick"
 msgstr "Metti in evidenza"
 
-#: classes/Facade.class.php:371 views/how-to-expire.php:30
+#: legacy/classes/Facade.class.php:384 legacy/views/how-to-expire.php:30
+#: views/how-to-expire.php:30
 msgid "Trash"
 msgstr "Cestino"
 
-#: views/menu-defaults.php:158
+#: legacy/views/menu-defaults.php:163
 msgid "Enter a comma separate list of emails that you would like to be notified when the post expires."
 msgstr "Inserisci un elenco di email separate da virgola a cui vuoi inviare una notifica quando scade l'articolo."
 
-#: views/menu-general.php:232
+#: legacy/views/menu-general.php:233
 msgid "Enter a comma separate list of emails that you would like to be notified when the post expires.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
 msgstr "Inserisci un elenco di email separate da virgole a cui ti piacerebbe inviare una notifica quando scade l'articolo. Questo sarà applicato a tutti i tipi di contenuto. È possibile impostare email specifiche per un tipo di contenuto nella scheda \"Valori predefiniti\"."
 
-#: views/menu-defaults.php:151 views/menu-general.php:225
+#: legacy/views/menu-defaults.php:156 legacy/views/menu-general.php:226
 msgid "Who to notify"
 msgstr "Chi avvisare"
 
-#: views/menu-general.php:216
+#: legacy/views/menu-general.php:217
 msgid "This will include all users with the role of \"Administrator\" in the post expiration email."
 msgstr "Ciò includerà tutti gli utenti con il ruolo di \"Amministratore\" nell'email di scadenza dell'articolo."
 
-#: views/menu-general.php:198
+#: legacy/views/menu-general.php:199
 msgid "Include Blog Administrators?"
 msgstr "Includere gli amministratori del blog?"
 
-#: views/menu-general.php:190
+#: legacy/views/menu-general.php:191
 msgid "This will enable or disable the send of email notification on post expiration."
 msgstr "Questo abiliterà o disabiliterà l'invio della notifica via email alla scadenza dell'articolo."
 
-#: views/menu-general.php:174
+#: legacy/views/menu-general.php:175
 msgid "Enable Email Notification?"
 msgstr "Abilita notifica email?"
 
-#: views/menu-general.php:167
+#: legacy/views/menu-general.php:168
 msgid "Whenever a post expires, an email can be sent to alert users of the expiration."
 msgstr "Ogni volta che un articolo scade, un'email può essere spedita per avvisare gli utenti della scadenza."
 
-#: views/menu-general.php:165
+#: legacy/views/menu-general.php:166
 msgid "Expiration Email Notification"
 msgstr "Email di notifica scadenza"
 
-#: post-expirator.php:1398
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:440
 msgid "Post Expiration Complete \"%s\""
 msgstr "Scadenza articolo completata \"%s\""
-
-#: post-expirator.php:1285 post-expirator.php:1341
-msgid "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
-msgstr "%1$s (%2$s) è scaduto il %3$s. Il seguente articolo \"%4$s\" è stato rimosso: \"%5$s\". L'elenco completo delle categorie dell'articolo è: \"%6$s\"."
-
-#: post-expirator.php:1164 post-expirator.php:1215
-msgid "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
-msgstr "%1$s (%2$s) è scaduto il %3$s. Il seguente articolo \"%4$s\" è stato aggiunto: \"%5$s\". L'elenco completo delle categorie dell'articolo è: \"%6$s\"."
-
-#: post-expirator.php:1052 post-expirator.php:1101
-msgid "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to \"%5$s\"."
-msgstr "%1$s (%2$s) è scaduto il %3$s. L'articolo \"%4$s\" è stato impostato su \"%5$s\"."
-
-#: post-expirator.php:1022
-msgid "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully removed."
-msgstr "%1$s (%2$s) è scaduto il %3$s. Lo stato \"%4$s\" dell'articolo è stato rimosso con successo."
-
-#: post-expirator.php:1001
-msgid "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully set."
-msgstr "%1$s (%2$s) è scaduto il %3$s. Lo stato \"%4$s\" dell'articolo è stato impostato con successo."
-
-#: post-expirator.php:901 post-expirator.php:927 post-expirator.php:953
-#: post-expirator.php:977
-msgid "%1$s (%2$s) has expired at %3$s. Post status has been successfully changed to \"%4$s\"."
-msgstr "%1$s (%2$s) è scaduto il %3$s. Lo stato dell'articolo è stato cambiato con successo in \"%4$s\"."
 
 #. Description of the plugin
 msgid "Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time."
@@ -338,297 +353,302 @@ msgstr "Consente di aggiungere una data e un orario di scadenza agli articoli co
 msgid "http://wordpress.org/extend/plugins/post-expirator/"
 msgstr "http://wordpress.org/extend/plugins/post-expirator/"
 
-#: classes/Facade.class.php:372 views/how-to-expire.php:34
+#: legacy/classes/Facade.class.php:385 legacy/views/how-to-expire.php:34
+#: views/how-to-expire.php:34
 msgid "Private"
 msgstr "Privato"
 
-#: classes/Facade.class.php:370 views/how-to-expire.php:26
+#: legacy/classes/Facade.class.php:383 legacy/views/how-to-expire.php:26
+#: views/how-to-expire.php:26
 msgid "Delete"
 msgstr "Elimina"
 
-#: classes/Facade.class.php:369 views/how-to-expire.php:22
+#: legacy/classes/Facade.class.php:382 legacy/views/how-to-expire.php:22
+#: views/how-to-expire.php:22
 msgid "Draft"
 msgstr "Bozza"
 
-#: classes/Display.class.php:197
+#: legacy/classes/Display.class.php:202
 msgid "Below is a dump of the debugging table, this should be useful for troubleshooting."
 msgstr "Di seguito è riportato un dump della tabella di debug, questo dovrebbe essere utile per la risoluzione dei problemi."
 
-#: views/menu-diagnostics.php:97
+#: legacy/views/menu-diagnostics.php:100
 msgid "Event"
 msgstr "Evento"
 
-#: views/bulk-edit.php:23 views/menu-diagnostics.php:94 views/quick-edit.php:18
+#: legacy/views/bulk-edit.php:23 legacy/views/menu-diagnostics.php:97
+#: legacy/views/quick-edit.php:18
 msgid "Date"
 msgstr "Data"
 
-#: views/menu-diagnostics.php:82
+#: legacy/views/menu-diagnostics.php:85
 msgid "The below table will show all currently scheduled cron events for the plugin with the next run time."
 msgstr "La tabella seguente mostra tutti gli eventi cron attualmente programmati per il plugin con il prossimo orario di esecuzione."
 
-#: views/menu-diagnostics.php:65
+#: legacy/views/menu-diagnostics.php:68
 msgid "Current Cron Schedule"
 msgstr "Programma cron attuale"
 
-#: views/menu-diagnostics.php:52
+#: legacy/views/menu-diagnostics.php:55
 msgid "WP-Cron Status"
 msgstr "Stato di WP-Cron"
 
-#: views/menu-diagnostics.php:44 views/menu-diagnostics.php:47
+#: legacy/views/menu-diagnostics.php:47 legacy/views/menu-diagnostics.php:50
 msgid "Purge Debug Log"
 msgstr "Svuota il registro di debug"
 
-#: views/menu-diagnostics.php:35
+#: legacy/views/menu-diagnostics.php:38
 msgid "Enable Debugging"
 msgstr "Attiva il debugging"
 
-#: views/menu-diagnostics.php:20
+#: legacy/views/menu-diagnostics.php:23
 msgid "Disable Debugging"
 msgstr "Disattiva il debugging"
 
-#: views/menu-diagnostics.php:9
+#: legacy/views/menu-diagnostics.php:12
 msgid "Advanced Diagnostics"
 msgstr "Diagnostica avanzata"
 
-#: classes/Display.class.php:181
+#: legacy/classes/Display.class.php:188
 msgid "Debugging Table Emptied"
 msgstr "Tabella di debug svuotata"
 
-#: classes/Display.class.php:174
+#: legacy/classes/Display.class.php:180
 msgid "Debugging Enabled"
 msgstr "Debug abilitato"
 
-#: classes/Display.class.php:169
+#: legacy/classes/Display.class.php:175
 msgid "Debugging Disabled"
 msgstr "Debug disabilitato"
 
-#: post-expirator.php:2127
+#: legacy/views/taxonomy-field.php:10
 msgid "Select the hierarchical taxonomy to be used for \"category\" based expiration."
 msgstr "Seleziona la tassonomia gerarchica da utilizzare per la scadenza basata sulla \"categoria\"."
 
-#: views/menu-defaults.php:135
+#: legacy/views/menu-defaults.php:139
 msgid "Taxonomy (hierarchical)"
 msgstr "Tassonomia (gerarchica)"
 
-#: views/menu-defaults.php:108
+#: legacy/views/menu-defaults.php:112
 msgid "Auto-Enable?"
 msgstr "Abilitazione automatica?"
 
-#: views/menu-defaults.php:102
+#: legacy/views/menu-defaults.php:106
 msgid "Select the default expire action for the post type."
 msgstr "Seleziona l'azione di scadenza predefinita per il tipo di contenuto."
 
-#: views/menu-defaults.php:83
+#: legacy/views/menu-defaults.php:87
 msgid "Select whether the PublishPress Future meta box is active for this post type."
 msgstr "Selezionare se la casella di meta PublishPress Future è attiva per questo tipo di articolo."
 
-#: views/menu-defaults.php:81
+#: legacy/views/menu-defaults.php:85
 msgid "Inactive"
 msgstr "Inattivo"
 
-#: views/menu-defaults.php:65 views/menu-defaults.php:73
+#: legacy/views/menu-defaults.php:69 legacy/views/menu-defaults.php:77
 msgid "Active"
 msgstr "Attivo"
 
-#: views/menu-defaults.php:13
+#: legacy/views/menu-defaults.php:16
 msgid "Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page."
 msgstr "Utilizza i seguenti valori per impostare azioni/valori predefiniti da utilizzare per ciascuno dei tipi di contenuto corrispondenti. Questi valori possono essere tutti sovrascritti in fase di creazione/modifica di ciascun articolo/pagina."
 
-#: views/menu-defaults.php:10
+#: legacy/views/menu-defaults.php:13
 msgid "Default Expiration Values"
 msgstr "Valori di scadenza predefiniti"
 
-#: views/menu-advanced.php:116 views/menu-defaults.php:239
-#: views/menu-display.php:132 views/menu-editor.php:37
-#: views/menu-general.php:243
+#: legacy/views/menu-advanced.php:116 legacy/views/menu-defaults.php:243
+#: legacy/views/menu-display.php:132 legacy/views/menu-editor.php:37
+#: legacy/views/menu-general.php:244
 msgid "Save Changes"
 msgstr "Salva modifiche"
 
-#: views/menu-display.php:125
+#: legacy/views/menu-display.php:125
 msgid "The inline css which will be used to style the footer text."
 msgstr "Il css inline che verrà utilizzato per definire lo stile del testo del footer."
 
-#: views/menu-display.php:122
+#: legacy/views/menu-display.php:122
 msgid "This post will expire on"
 msgstr "Questo articolo scadrà il"
 
-#: views/menu-display.php:116
+#: legacy/views/menu-display.php:116
 msgid "Footer Style"
 msgstr "Stile del footer"
 
-#: views/menu-display.php:98
+#: legacy/views/menu-display.php:98
 msgid "Enter the text you would like to appear at the bottom of every post that will expire.  The following placeholders will be replaced with the post expiration date in the following format:"
 msgstr "Inserisci il testo che vorresti far apparire in fondo a ogni articolo impostato con una scadenza. I seguenti segnaposto verranno sostituiti con la data di scadenza nel modo indicato:"
 
-#: views/menu-display.php:93
+#: legacy/views/menu-display.php:93
 msgid "Footer Contents"
 msgstr "Contenuto del footer"
 
-#: views/menu-display.php:85
+#: legacy/views/menu-display.php:85
 msgid "This will enable or disable displaying the post expiration date in the post footer."
 msgstr "Questo abiliterà o disabiliterà la visualizzazione della data di scadenza dell'articolo nel footer dello stesso."
 
-#: views/menu-defaults.php:124 views/menu-diagnostics.php:32
-#: views/menu-diagnostics.php:59 views/menu-display.php:83
-#: views/menu-general.php:188 views/menu-general.php:214
+#: legacy/views/menu-defaults.php:128 legacy/views/menu-diagnostics.php:35
+#: legacy/views/menu-diagnostics.php:62 legacy/views/menu-display.php:83
+#: legacy/views/menu-general.php:189 legacy/views/menu-general.php:215
 msgid "Disabled"
 msgstr "Disabilitato"
 
-#: views/menu-defaults.php:116 views/menu-diagnostics.php:17
-#: views/menu-diagnostics.php:56 views/menu-display.php:78
-#: views/menu-general.php:181 views/menu-general.php:206
+#: legacy/views/menu-defaults.php:120 legacy/views/menu-diagnostics.php:20
+#: legacy/views/menu-diagnostics.php:59 legacy/views/menu-display.php:78
+#: legacy/views/menu-general.php:182 legacy/views/menu-general.php:207
 msgid "Enabled"
 msgstr "Abilitato"
 
-#: views/menu-display.php:73
+#: legacy/views/menu-display.php:73
 msgid "Show in post footer?"
 msgstr "Mostrare nel footer dell'articolo?"
 
-#: views/menu-display.php:66
+#: legacy/views/menu-display.php:66
 msgid "Enabling this below will display the expiration date automatically at the end of any post which is set to expire."
 msgstr "Abilitando l'opzione seguente verrà mostrata automaticamente la data di scadenza alla fine di ogni articolo che è impostato per scadere."
 
-#: views/menu-display.php:64
+#: legacy/views/menu-display.php:64
 msgid "Post Footer Display"
 msgstr "Visualizzazione nel footer"
 
-#: views/menu-general.php:159
-msgid "Sets the default expiration category for the post."
-msgstr "Imposta la categoria di scadenza predefinita per l'articolo."
+#: legacy/views/menu-general.php:160
+msgid "Sets the default expiration taxonomy for the post."
+msgstr "Imposta la tassonomia di scadenza predefinita per l'articolo."
 
-#: views/menu-general.php:140
+#: legacy/views/menu-general.php:141
 msgid "Default Expiration Taxonomy"
 msgstr "Tassonomia di scadenza predefinita"
 
-#: views/menu-general.php:107
+#: legacy/views/menu-general.php:108
 msgid "Set the default expiration date to be used when creating new posts and pages.  Defaults to none."
 msgstr "Imposta la data di scadenza predefinita da utilizzare quando si creano nuovi articoli e pagine. Il valore predefinito è nessuno."
 
-#: views/menu-general.php:104
+#: legacy/views/menu-general.php:105
 msgid "Post/Page Publish Time"
 msgstr "Data/ora di pubblicazione dell'articolo o della pagina"
 
-#: views/menu-defaults.php:168 views/menu-defaults.php:209
-#: views/menu-general.php:101 views/menu-general.php:117
+#: legacy/views/menu-defaults.php:172 legacy/views/menu-defaults.php:213
+#: legacy/views/menu-general.php:102 legacy/views/menu-general.php:118
 msgid "Custom"
 msgstr "Personalizzato"
 
-#: views/menu-defaults.php:166 views/menu-general.php:98
-msgid "None"
-msgstr "Nessuna"
-
-#: views/menu-defaults.php:184 views/menu-general.php:92
+#: legacy/views/menu-defaults.php:188 legacy/views/menu-general.php:96
 msgid "Default Date/Time Duration"
 msgstr "Durata Data/Ora predefinita"
 
-#: views/menu-general.php:75
+#: legacy/views/menu-general.php:79
 msgid "Time Format"
 msgstr "Formato ora"
 
-#: views/menu-general.php:58
+#: legacy/views/menu-general.php:62
 msgid "Date Format"
 msgstr "Formato data"
 
-#: views/menu-display.php:51 views/menu-display.php:56
+#: legacy/views/menu-display.php:51 legacy/views/menu-display.php:56
 msgid "%s - format set here will override the value set on the settings page"
 msgstr "%s - il formato impostato qui sovrascrive il valore configurato nella pagina delle impostazioni"
 
-#: classes/Display.class.php:253 classes/Display.class.php:315
-#: classes/Display.class.php:365
+#: legacy/classes/Display.class.php:278 legacy/classes/Display.class.php:341
+#: legacy/classes/Display.class.php:393
 msgid "Saved Options!"
 msgstr "Opzioni salvate!"
 
-#: views/menu-diagnostics.php:29 views/tabs.php:44
+#: legacy/views/menu-diagnostics.php:32 legacy/views/tabs.php:48
 msgid "View Debug Logs"
 msgstr "Visualizza i log di debug"
 
-#: views/tabs.php:32
+#: legacy/views/tabs.php:41
 msgid "Diagnostics"
 msgstr "Diagnostica"
 
-#: views/menu-general.php:54 views/tabs.php:17
+#: legacy/views/menu-general.php:58 legacy/views/tabs.php:21
 msgid "Defaults"
 msgstr "Valori predefiniti"
 
-#: views/classic-metabox.php:167
+#: legacy/views/classic-metabox.php:167
 msgid "Taxonomy Name"
 msgstr "Nome tassonomia"
 
-#: views/classic-metabox.php:149
+#: legacy/views/classic-metabox.php:149
 msgid "More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen."
 msgstr "È stata rilevata più di 1 tassonomia gerarchica. È necessario assegnare una tassonomia predefinita nella schermata delle impostazioni."
 
-#: views/classic-metabox.php:144
+#: legacy/views/classic-metabox.php:144
 msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
 msgstr "Per usare questa caratteristica devi assegnare una tassonomia gerarchica a questo tipo di contenuto."
 
-#: classes/Facade.class.php:380 views/bulk-edit.php:110
-#: views/classic-metabox.php:117 views/menu-defaults.php:92
-#: views/quick-edit.php:76
+#: legacy/classes/Facade.class.php:393 legacy/views/bulk-edit.php:111
+#: legacy/views/classic-metabox.php:117 legacy/views/menu-defaults.php:96
+#: legacy/views/quick-edit.php:76
 msgid "How to expire"
 msgstr "Come applicare la scadenza"
 
-#: views/bulk-edit.php:96 views/classic-metabox.php:110 views/quick-edit.php:63
+#: legacy/views/bulk-edit.php:97 legacy/views/classic-metabox.php:110
+#: legacy/views/quick-edit.php:63
 msgid "Minute"
 msgstr "Minuto"
 
-#: views/bulk-edit.php:89 views/classic-metabox.php:85 views/quick-edit.php:57
+#: legacy/views/bulk-edit.php:90 legacy/views/classic-metabox.php:85
+#: legacy/views/quick-edit.php:57
 msgid "Hour"
 msgstr "Ora"
 
-#: views/bulk-edit.php:75 views/classic-metabox.php:78 views/quick-edit.php:43
+#: legacy/views/bulk-edit.php:76 legacy/views/classic-metabox.php:78
+#: legacy/views/quick-edit.php:43
 msgid "Day"
 msgstr "Giorno"
 
-#: views/bulk-edit.php:51 views/classic-metabox.php:56 views/quick-edit.php:21
+#: legacy/views/bulk-edit.php:52 legacy/views/classic-metabox.php:56
+#: legacy/views/quick-edit.php:21
 msgid "Month"
 msgstr "Mese"
 
-#: views/bulk-edit.php:82 views/classic-metabox.php:27 views/quick-edit.php:50
+#: legacy/views/bulk-edit.php:83 legacy/views/classic-metabox.php:27
+#: legacy/views/quick-edit.php:50
 msgid "Year"
 msgstr "Anno"
 
-#: views/classic-metabox.php:18
+#: legacy/views/classic-metabox.php:18
 msgid "The published date/time will be used as the expiration value"
 msgstr "La data e l'ora pubblicate verranno utilizzate come valore di scadenza"
 
-#: classes/Facade.class.php:379 views/bulk-edit.php:26
-#: views/classic-metabox.php:11 views/quick-edit.php:12
+#: legacy/classes/Facade.class.php:392 legacy/views/bulk-edit.php:26
+#: legacy/views/classic-metabox.php:11 legacy/views/quick-edit.php:12
 msgid "Enable Post Expiration"
 msgstr "Abilita scadenza articolo"
 
-#: views/expire-column.php:24
+#: legacy/views/expire-column.php:24
 msgid "Never"
 msgstr "Mai"
 
-#: post-expirator.php:113 post-expirator.php:199
+#: legacy/functions.php:76 legacy/functions.php:166
 msgid "Expires"
 msgstr "Scadenza"
 
-#: post-expirator.php:65
+#: legacy/functions.php:24
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: post-expirator.php:32
+#: services.php:48
 msgid "Post expires at EXPIRATIONTIME on EXPIRATIONDATE"
 msgstr "L'articolo scade alle EXPIRATIONTIME del EXPIRATIONDATE"
 
-#: post-expirator.php:31
+#: services.php:47
 msgid "g:ia"
 msgstr "G:i"
 
-#: post-expirator.php:30
+#: services.php:46
 msgid "l F jS, Y"
 msgstr "l j F Y"
 
-#: post-expirator-debug.php:87
+#: legacy/classes/Display.class.php:218
 msgid "Message"
 msgstr "Messaggio"
 
-#: post-expirator-debug.php:86
+#: legacy/classes/Display.class.php:217
 msgid "Timestamp"
 msgstr "Data e ora"
 
-#: post-expirator-debug.php:81
+#: legacy/classes/Display.class.php:210
 msgid "Debugging table is currently empty."
 msgstr "La tabella di debug è attualmente vuota."
