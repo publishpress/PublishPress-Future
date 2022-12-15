@@ -166,6 +166,16 @@ class SettingsFacade
             $defaults['default-expire-type'] = 'inherit';
         }
 
+        if (empty($defaults['taxonomy'])) {
+            // Get the first hierarchical taxonomy of the post as the default value.
+            $taxonomies = get_object_taxonomies($postType, 'object');
+            $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
+
+            if (! empty($taxonomies)) {
+                $defaults['taxonomy'] = array_keys($taxonomies)[0];
+            }
+        }
+
         return $defaults;
     }
 

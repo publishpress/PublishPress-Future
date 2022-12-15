@@ -253,10 +253,17 @@ class ExpirablePostModel extends PostModel
         if (empty($this->expirationTaxonomy)) {
             $this->expirationTaxonomy = $this->getMeta('_expiration-date-taxonomy', true);
 
-            $options = $this->getExpirationOptions();
-
+            // Legacy value.
             if (empty($this->expirationTaxonomy)) {
+                $options = $this->getExpirationOptions();
+
                 $this->expirationTaxonomy = isset($options['categoryTaxonomy']) ? $options['categoryTaxonomy'] : '';
+            }
+
+            // Default value.
+            if (empty($this->expirationTaxonomy)) {
+                $defaults = $this->settings->getPostTypeDefaults($this->getPostType());
+                ray($defaults)->green();
             }
         }
 

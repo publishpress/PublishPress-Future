@@ -71,7 +71,7 @@ class PostModel
     public function update($data)
     {
         $data = array_merge(
-            ['ID' => $this->postId],
+            ['ID' => $this->getPostId()],
             $data
         );
 
@@ -85,7 +85,7 @@ class PostModel
      */
     public function addMeta($metaKey, $metaValue = null)
     {
-        return add_post_meta($this->postId, $metaKey, $metaValue);
+        return add_post_meta($this->getPostId(), $metaKey, $metaValue);
     }
 
     /**
@@ -101,7 +101,7 @@ class PostModel
 
         $callback = function ($value, $key) {
             \update_post_meta(
-                $this->postId,
+                $this->getPostId(),
                 \sanitize_key($key),
                 $value
             );
@@ -123,7 +123,7 @@ class PostModel
 
         $callback = function ($key) {
             \delete_post_meta(
-                $this->postId,
+                $this->getPostId(),
                 \sanitize_key($key)
             );
         };
@@ -134,7 +134,7 @@ class PostModel
 
     public function getMeta($metaKey, $single = false)
     {
-        return get_post_meta($this->postId, $metaKey, $single);
+        return get_post_meta($this->getPostId(), $metaKey, $single);
     }
 
     /**
@@ -155,7 +155,7 @@ class PostModel
     private function getPostInstance()
     {
         if (empty($this->postInstance)) {
-            $this->postInstance = \get_post($this->postId);
+            $this->postInstance = \get_post($this->getPostId());
 
             if (! is_object($this->postInstance) || is_wp_error($this->postInstance)) {
                 throw new NonexistentPostException();
