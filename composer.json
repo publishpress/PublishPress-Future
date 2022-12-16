@@ -87,6 +87,7 @@
     "build-dir": "builder/docker/scripts/build build-dir",
     "build": "builder/docker/scripts/build build",
     "build-clean": "builder/docker/scripts/build clean",
+    "cli": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
     "post-install-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
     ],
