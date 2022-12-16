@@ -78,16 +78,6 @@
     "ext-yaml": "*"
   },
   "scripts": {
-    "tests-unit": "vendor/bin/codecept run unit",
-    "tests-wordpress": "tests/bin/tests php7.4 brun wordpress",
-    "tests-acceptance-php7.4": "tests/bin/tests php7.4 brun acceptance",
-    "tests-acceptance-php5.6": "tests/bin/tests php5.6 brun acceptance",
-    "tests-acceptance-php8.1": "tests/bin/tests php8.1 brun acceptance",
-    "tests-php": "tests/bin/get-php-versions",
-    "build-dir": "builder/docker/scripts/build build-dir",
-    "build": "builder/docker/scripts/build build",
-    "build-clean": "builder/docker/scripts/build clean",
-    "cli": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
     "post-install-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
     ],
