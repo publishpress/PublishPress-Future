@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   wordpress:
-    image: publishpress-wordpress:6.0-php5.6-apache
+    build: wordpress-php56-apache
     restart: always
     environment:
       WORDPRESS_DB_HOST: db
