@@ -81,7 +81,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.8.2] - UNRELEASED =
+= [2.8.2] - 20 Dec, 2022 =
 
 * FIXED: Fix taxonomy expiration, #309;
 * FIXED: Fix TypeError in ExpirablePostModel.php: array_unique(): Argument #1 ($array) must be of type array, #318;
