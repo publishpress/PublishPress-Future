@@ -13,11 +13,10 @@ To release the Free plugin please make sure to check all the checkboxes below.
 
 - [ ] Create the release branch as `release-<version>` based on the development branch.
 - [ ] Make sure to directly merge or use Pull Requests to merge hotfixes or features branches into the release branch.
-- [ ] Build JS files to production running `$ npm run build`.
-- [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct.
-- [ ] Update the version number to the next stable version.
-- [ ] Commit the changes to the release branch.
-- [ ] Build the zip package.
+- [ ] Build JS files to production running `$ npm run jsbuild` and commit.
+- [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct, commit.
+- [ ] Update the version number to the next stable version and commit.
+- [ ] Build the zip package, running `$ npm run build`.
 - [ ] Send to the team for testing.
 
 ### Release Checklist

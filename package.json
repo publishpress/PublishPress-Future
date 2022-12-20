@@ -2,6 +2,7 @@
   "name": "post-expirator",
   "version": "2.7.0",
   "description": "post-expirator",
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/publishpress/PublishPress-Future.git"
@@ -31,12 +32,22 @@
     "grunt-wp-i18n": "^1.0.3",
     "load-grunt-tasks": "^5.1.0",
     "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "inquirer-interrupted-prompt": "^2.0.1",
+    "inquirer-autocomplete-prompt": "^3.0.0"
   },
   "scripts": {
-    "build:dev": "wp-scripts build --mode development",
-    "build:watch": "wp-scripts build --mode development --watch",
-    "build": "wp-scripts build --mode production"
+    "jsbuild:dev": "wp-scripts build --mode development",
+    "jsbuild:watch": "wp-scripts build --mode development --watch",
+    "jsbuild": "wp-scripts build --mode production",
+    "tests:start": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} start",
+    "tests:stop": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} stop",
+    "tests:build:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} brun",
+    "tests:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} run",
+    "build": "builder/docker/scripts/build build",
+    "build:dir": "builder/docker/scripts/build build-dir",
+    "build:clean": "builder/docker/scripts/build clean",
+    "cli": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/"
   },
   "pot": {
     "languageteam": "PostExpirator Translate Team",

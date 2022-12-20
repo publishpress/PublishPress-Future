@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   wordpress:
-    build: wordpress-php56-apache
+    image: wordpress:6.1.1-php8.2-apache
     restart: always
     environment:
       WORDPRESS_DB_HOST: db
@@ -12,7 +12,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
     volumes:
-      - ./volumes/php5.6-wordpress:/var/www/html
+      - ./volumes/php8.2-wordpress:/var/www/html
     depends_on:
       - db
     ports:

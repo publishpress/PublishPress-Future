@@ -300,7 +300,7 @@ run_builder() {
 #   A list of codeception envs
 #######################################
 get_php_versions() {
-    find tests/docker/ -type f -name 'docker-compose-tests-php*\.yml' | sed 's/tests\/docker\/docker-compose-tests-//g' | sed 's/\.yml//g'
+    find tests/docker/ -type f -name 'docker-compose-tests-php*\.yml' | sed 's/tests\/docker\/docker-compose-tests-//g' | sed 's/\.yml//g' | sed 's/\/\//\//g'
 }
 
 #######################################
@@ -398,11 +398,11 @@ case "${command}" in
     start_services
     echo ""
 
-    echo_step "Creating Ray config file"
-    create_ray_config
-
     echo_step "Fixing volume permissions"
     fix_volume_permissions
+
+    echo_step "Creating Ray config file"
+    create_ray_config
 
     echo_step "Bootstrapping"
     run_bootstrap
