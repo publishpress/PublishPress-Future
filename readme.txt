@@ -88,7 +88,7 @@ This section describes how to install the plugin and get it working.
 
 = [2.8.1] - 08 Dec, 2022 =
 
-* FIXED: Fix PHP warning: attempt to read propertyu "ID" on null in the "the_content" filter, #313;
+* FIXED: Fix PHP warning: attempt to read property "ID" on null in the "the_content" filter, #313;
 * FIXED: Fix PHP warning: undefined array key "properties" in class-wp-rest-meta-fields.php, #311;
 * FIXED: Update language files to ES, FR and IT (thanks to @wocmultimedia), #308;
 
