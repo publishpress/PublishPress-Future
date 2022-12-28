@@ -450,13 +450,13 @@ class ExpirablePostModel extends PostModel
         $emailSubject = sprintf(__('[%1$s] %2$s'), $this->options->getOption('blogname'), $emailSubject);
 
         /**
-		 * Allows changing the email subject.
-		 * @param string $emailSubject
-		 * @param ExpirablePostModel $this
-		 * @param ExpirationActionInterface $expirationAction
-		 * @return string
-		 */
-		$emailSubject = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_SUBJECT, $emailSubject, $this, $expirationAction);
+         * Allows changing the email subject.
+         * @param string $emailSubject
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return string
+         */
+        $emailSubject = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_SUBJECT, $emailSubject, $this, $expirationAction);
 
         $dateTimeFormat = $this->options->getOption('date_format') . ' ' . $this->options->getOption('time_format');
 
@@ -472,13 +472,13 @@ class ExpirablePostModel extends PostModel
         );
 
         /**
-		 * Allows changing the email body.
-		 * @param string $emailBody
-		 * @param ExpirablePostModel $this
-		 * @param ExpirationActionInterface $expirationAction
-		 * @return string
-		 */
-		$emailBody = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_BODY, $emailBody, $this, $expirationAction);
+         * Allows changing the email body.
+         * @param string $emailBody
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return string
+         */
+        $emailBody = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_BODY, $emailBody, $this, $expirationAction);
 
         $emailAddresses = array();
 
@@ -510,13 +510,13 @@ class ExpirablePostModel extends PostModel
         }
 
         /**
-		 * Allows changing the email addresses.
-		 * @param array<string> $emailAddresses
-		 * @param ExpirablePostModel $this
-		 * @param ExpirationActionInterface $expirationAction
-		 * @return array<string>
-		 */
-		$emailAddresses = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_ADDRESSES, $emailAddresses, $this, $expirationAction);
+         * Allows changing the email addresses.
+         * @param array<string> $emailAddresses
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return array<string>
+         */
+        $emailAddresses = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_ADDRESSES, $emailAddresses, $this, $expirationAction);
         $emailAddresses = array_unique($emailAddresses);
         $emailSent = false;
 

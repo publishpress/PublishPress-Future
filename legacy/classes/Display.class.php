@@ -404,31 +404,31 @@ class PostExpirator_Display
      */
     public function render_template($name, $params = null)
     {
-		/**
-		 * Allows changing template parameters.
-		 * @param null|array<string,mixed> $params
-		 * @param string $name
-		 * @return null|array<string,mixed>
-		 */
-		$params = apply_filters(
+        /**
+         * Allows changing template parameters.
+         * @param null|array<string,mixed> $params
+         * @param string $name
+         * @return null|array<string,mixed>
+         */
+        $params = apply_filters(
             ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_PARAMS,
             $params,
             $name
         );
 
-		/**
-		 * Allows changing the template file name.
-		 * @param string $template
-		 * @param string $name
-		 * @param null|array<string,mixed> $params
-		 * @return null|array<string,mixed>
-		 */
-		$template = apply_filters(
-			ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_FILE,
-			POSTEXPIRATOR_LEGACYDIR . "/views/{$name}.php",
-			$name,
-			$params
-		);
+        /**
+         * Allows changing the template file name.
+         * @param string $template
+         * @param string $name
+         * @param null|array<string,mixed> $params
+         * @return null|array<string,mixed>
+         */
+        $template = apply_filters(
+            ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_FILE,
+            POSTEXPIRATOR_LEGACYDIR . "/views/{$name}.php",
+            $name,
+            $params
+        );
 
         if (file_exists($template)) {
             // expand all parameters so that they can be directly accessed with their name.
