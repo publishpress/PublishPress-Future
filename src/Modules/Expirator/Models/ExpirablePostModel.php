@@ -518,6 +518,27 @@ class ExpirablePostModel extends PostModel
          */
         $emailAddresses = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_ADDRESSES, $emailAddresses, $this, $expirationAction);
         $emailAddresses = array_unique($emailAddresses);
+
+        $emailHeaders = '';
+        /**
+         * Allows changing the email headers.
+         * @param string $emailHeaders
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return string|array<string>
+         */
+        $emailHeaders = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_HEADERS, $emailHeaders, $this, $expirationAction);
+
+        $emailAttachments = [];
+        /**
+         * Allows changing the email attachments.
+         * @param array<string> $emailAttachments
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return string|array<string>
+         */
+        $emailAttachments = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_ATTACHMENTS, $emailAttachments, $this, $expirationAction);
+
         $emailSent = false;
 
         if (! empty($emailAddresses)) {
@@ -528,7 +549,9 @@ class ExpirablePostModel extends PostModel
                 $emailSent = $this->email->send(
                     $email,
                     $emailSubject,
-                    $emailBody
+                    $emailBody,
+                    $emailHeaders,
+                    $emailAttachments
                 );
 
                 $this->debug->log(

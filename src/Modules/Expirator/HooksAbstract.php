@@ -23,6 +23,8 @@ abstract class HooksAbstract
     const FILTER_EXPIRED_EMAIL_SUBJECT = 'publishpressfuture_expired_email_subject';
     const FILTER_EXPIRED_EMAIL_BODY = 'publishpressfuture_expired_email_body';
     const FILTER_EXPIRED_EMAIL_ADDRESSES = 'publishpressfuture_expired_email_addresses';
+    const FILTER_EXPIRED_EMAIL_HEADERS = 'publishpressfuture_expired_email_headers';
+    const FILTER_EXPIRED_EMAIL_ATTACHMENTS = 'publishpressfuture_expired_email_attachments';
 
 
     public static function getActionLegacyMultisiteDelete($blogId)
