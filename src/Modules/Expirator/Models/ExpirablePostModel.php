@@ -263,7 +263,6 @@ class ExpirablePostModel extends PostModel
             // Default value.
             if (empty($this->expirationTaxonomy)) {
                 $defaults = $this->settings->getPostTypeDefaults($this->getPostType());
-                ray($defaults)->green();
             }
         }
 
