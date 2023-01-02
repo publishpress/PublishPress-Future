@@ -524,7 +524,7 @@ msgstr ""
 #: views/menu-general.php:155
 msgid ""
 "Set the default expiration date to be used when creating new posts and "
-"pages.  Defaults to none."
+"pages. Defaults to custom."
 msgstr ""
 
 #: views/menu-general.php:189

@@ -520,8 +520,8 @@ msgid "Default Expiration Taxonomy"
 msgstr "Categoría por defecto para vencimiento"
 
 #: legacy/views/menu-general.php:108
-msgid "Set the default expiration date to be used when creating new posts and pages.  Defaults to none."
-msgstr "Ajusta la fecha de caducidad por defecto que se utilizará al crear nuevas entradas y páginas. El valor por defecto es ninguno."
+msgid "Set the default expiration date to be used when creating new posts and pages. Defaults to custom."
+msgstr "Ajusta la fecha de caducidad por defecto que se utilizará al crear nuevas entradas y páginas. El valor por defecto es personalizada."
 
 #: legacy/views/menu-general.php:105
 msgid "Post/Page Publish Time"

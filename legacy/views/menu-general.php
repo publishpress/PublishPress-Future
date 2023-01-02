@@ -106,7 +106,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     </select>
                     <p class="description"><?php
                         esc_html_e(
-                            'Set the default expiration date to be used when creating new posts and pages.  Defaults to none.',
+                            'Set the default expiration date to be used when creating new posts and pages. Defaults to custom.',
                             'post-expirator'
                         ); ?></p>
                     <?php

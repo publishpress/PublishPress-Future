@@ -520,8 +520,8 @@ msgid "Default Expiration Taxonomy"
 msgstr "Expiration de taxonomie par défaut"
 
 #: legacy/views/menu-general.php:108
-msgid "Set the default expiration date to be used when creating new posts and pages.  Defaults to none."
-msgstr "Définissez la date d’expiration par défaut à utiliser lors de la création de nouveaux articles et de pages. La valeur par défaut est « aucune »."
+msgid "Set the default expiration date to be used when creating new posts and pages. Defaults to custom."
+msgstr "Définissez la date d’expiration par défaut à utiliser lors de la création de nouveaux articles et de pages. La valeur par défaut est Personnalisé."
 
 #: legacy/views/menu-general.php:105
 msgid "Post/Page Publish Time"
@@ -530,7 +530,7 @@ msgstr "Date de publication"
 #: legacy/views/menu-defaults.php:172 legacy/views/menu-defaults.php:213
 #: legacy/views/menu-general.php:102 legacy/views/menu-general.php:118
 msgid "Custom"
-msgstr "Personnalisé "
+msgstr "Personnalisé"
 
 #: legacy/views/menu-defaults.php:188 legacy/views/menu-general.php:96
 msgid "Default Date/Time Duration"
