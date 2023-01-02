@@ -1,6 +1,7 @@
 <?php
 
 use PublishPressFuture\Modules\Settings\HooksAbstract;
+use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 
 /**
  * The class that is responsible for all the displays.
@@ -403,7 +404,32 @@ class PostExpirator_Display
      */
     public function render_template($name, $params = null)
     {
-        $template = POSTEXPIRATOR_LEGACYDIR . "/views/{$name}.php";
+        /**
+         * Allows changing template parameters.
+         * @param null|array<string,mixed> $params
+         * @param string $name
+         * @return null|array<string,mixed>
+         */
+        $params = apply_filters(
+            ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_PARAMS,
+            $params,
+            $name
+        );
+
+        /**
+         * Allows changing the template file name.
+         * @param string $template
+         * @param string $name
+         * @param null|array<string,mixed> $params
+         * @return null|array<string,mixed>
+         */
+        $template = apply_filters(
+            ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_FILE,
+            POSTEXPIRATOR_LEGACYDIR . "/views/{$name}.php",
+            $name,
+            $params
+        );
+
         if (file_exists($template)) {
             // expand all parameters so that they can be directly accessed with their name.
             if ($params) {
