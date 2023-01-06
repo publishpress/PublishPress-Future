@@ -81,6 +81,13 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= UNRELEASED =
+
+* ADDED: Add new filters for allowing customizing the expiration metabox and the email sent when post is expired, #327 (thanks to Menno);
+* FIXED: Remove debug statement, #326;
+* FIXED: Fix text for default date/time expiration setting description;
+* FIXED: Fix PHP 8 error and remove extract functions, #328;
+
 = [2.8.2] - 20 Dec, 2022 =
 
 * FIXED: Fix taxonomy expiration, #309;
