@@ -89,6 +89,7 @@ This section describes how to install the plugin and get it working.
 * FIXED: Fix PHP 8 error and remove extract functions, #328;
 * FIXED: Simplify setting to set default expiration date/time interval, removing invalid "none" option, #325;
 * FIXED: Simplify unscheduling removing duplicated code, #329;
+* FIXED: Fix PHP warning and fatal error when post's expiration categories list is not an array, #330;
 
 = [2.8.2] - 20 Dec, 2022 =
 

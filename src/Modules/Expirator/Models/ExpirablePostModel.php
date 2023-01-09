@@ -212,7 +212,7 @@ class ExpirablePostModel extends PostModel
             $options = $this->getExpirationOptions();
 
             if (empty($this->expirationCategories)) {
-                $this->expirationCategories = isset($options['category']) ? $options['category'] : [];
+                $this->expirationCategories = isset($options['category']) ? (array)$options['category'] : [];
             }
 
             foreach ($this->expirationCategories as &$categoryID) {
@@ -235,8 +235,11 @@ class ExpirablePostModel extends PostModel
         $categoryNames = [];
 
         foreach ($categories as $categoryId) {
-            $termModelFactory = $this->termModelFactory;
+            if (empty($categoryId)) {
+                continue;
+            }
 
+            $termModelFactory = $this->termModelFactory;
             $termModel = $termModelFactory($categoryId);
 
             $categoryNames[] = $termModel->getName();
