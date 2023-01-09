@@ -87,6 +87,8 @@ This section describes how to install the plugin and get it working.
 * FIXED: Remove debug statement, #326;
 * FIXED: Fix text for default date/time expiration setting description;
 * FIXED: Fix PHP 8 error and remove extract functions, #328;
+* FIXED: Simplify setting to set default expiration date/time interval, removing invalid "none" option, #325;
+* FIXED: Simplify unscheduling removing duplicated code, #329;
 
 = [2.8.2] - 20 Dec, 2022 =
 
