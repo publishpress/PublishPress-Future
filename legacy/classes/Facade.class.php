@@ -95,17 +95,6 @@ class PostExpirator_Facade
     {
         switch ($for) {
             case 'settings':
-                wp_enqueue_script(
-                    'pe-settings',
-                    POSTEXPIRATOR_BASEURL . '/assets/js/settings.js',
-                    array(
-                        'jquery',
-                        'jquery-ui-tabs',
-                    ),
-                    POSTEXPIRATOR_VERSION,
-                    false
-                );
-                wp_localize_script('pe-settings', 'config', array());
                 wp_enqueue_style(
                     'pe-settings',
                     POSTEXPIRATOR_BASEURL . '/assets/css/settings.css',

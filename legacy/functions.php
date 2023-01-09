@@ -554,8 +554,9 @@ function postexpirator_update_post_meta($id)
     $shouldSchedule = false;
     $ts = null;
     $opts = [];
+    $isClassicalInterface = isset($_POST['postexpirator_view']);
 
-    if (isset($_POST['postexpirator_view'])) {
+    if ($isClassicalInterface) {
         if (defined('DOING_AJAX') && DOING_AJAX) {
             check_ajax_referer('__postexpirator', '_postexpiratornonce');
         } else {
@@ -565,47 +566,29 @@ function postexpirator_update_post_meta($id)
         // Classic editor, quick edit
         $shouldSchedule = isset($_POST['enable-expirationdate']);
 
-        $default = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
-        if ($default === 'publish') {
-            if (! isset($_POST['mm'])
-                || ! isset($_POST['jj'])
-                || ! isset($_POST['aa'])
-                || ! isset($_POST['hh'])
-                || ! isset($_POST['mn'])
-            ) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
-            }
-
-            $month = intval($_POST['mm']);
-            $day = intval($_POST['jj']);
-            $year = intval($_POST['aa']);
-            $hour = intval($_POST['hh']);
-            $minute = intval($_POST['mn']);
-        } else {
-            if (! isset($_POST['expirationdate_month'])
-                || ! isset($_POST['expirationdate_day'])
-                || ! isset($_POST['expirationdate_year'])
-                || ! isset($_POST['expirationdate_hour'])
-                || ! isset($_POST['expirationdate_minute'])
-            ) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
-            }
-
-            $month = intval($_POST['expirationdate_month']);
-            $day = intval($_POST['expirationdate_day']);
-            $year = intval($_POST['expirationdate_year']);
-            $hour = intval($_POST['expirationdate_hour']);
-            $minute = intval($_POST['expirationdate_minute']);
-
-            if (empty($day)) {
-                $day = date('d');
-            }
-            if (empty($year)) {
-                $year = date('Y');
-            }
+        if (! isset($_POST['expirationdate_month'])
+            || ! isset($_POST['expirationdate_day'])
+            || ! isset($_POST['expirationdate_year'])
+            || ! isset($_POST['expirationdate_hour'])
+            || ! isset($_POST['expirationdate_minute'])
+        ) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+            error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
         }
+
+        $month = intval($_POST['expirationdate_month']);
+        $day = intval($_POST['expirationdate_day']);
+        $year = intval($_POST['expirationdate_year']);
+        $hour = intval($_POST['expirationdate_hour']);
+        $minute = intval($_POST['expirationdate_minute']);
+
+        if (empty($day)) {
+            $day = date('d');
+        }
+        if (empty($year)) {
+            $year = date('Y');
+        }
+
         $category = isset($_POST['expirationdate_category'])
             ? PostExpirator_Util::sanitize_array_of_integers(
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

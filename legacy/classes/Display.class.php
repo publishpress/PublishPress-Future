@@ -264,11 +264,10 @@ class PostExpirator_Display
                     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                     $defaults[$type]['emailnotification'] = trim(sanitize_text_field($_POST['expirationdate_emailnotification-' . $type]));
 
-                    if (isset($_POST['expired-default-date-' . $type])) {
-                        $defaults[$type]['default-expire-type'] = sanitize_text_field($_POST['expired-default-date-' . $type]);
-                    }
+                    $defaults[$type]['default-expire-type'] = 'custom';
+
                     if (isset($_POST['expired-custom-date-' . $type])) {
-                        $defaults[$type]['default-custom-date'] = sanitize_text_field($_POST['expired-custom-date-' . $type]);
+                        $defaults[$type]['default-custom-date'] = trim(sanitize_text_field($_POST['expired-custom-date-' . $type]));
                     }
 
                     // Save Settings
@@ -313,7 +312,7 @@ class PostExpirator_Display
                     // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
                     isset($_POST['expirationdate_category']) ? PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']) : []
                 );
-                update_option('expirationdateDefaultDate', sanitize_text_field($_POST['expired-default-expiration-date']));
+                update_option('expirationdateDefaultDate', 'custom');
                 update_option('expirationdateDefaultDateCustom', sanitize_text_field($_POST['expired-custom-expiration-date']));
                 // phpcs:enable
 
