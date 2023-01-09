@@ -660,6 +660,7 @@ function postexpirator_update_post_meta($id)
         $payload = @json_decode($payload, true);
 
         if (isset($payload['meta'])) {
+            // Meta has changed, let's update the expiration data.
             if (isset($payload['meta']['_expiration-date-status'])) {
                 $shouldSchedule = $payload['meta']['_expiration-date-status'] === 'saved'
                     && isset($payload['meta']['_expiration-date'])
@@ -692,6 +693,7 @@ function postexpirator_update_post_meta($id)
                 $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
             }
         } else {
+            // Meta has not changed. Let's pass the current expiration data to be rescheduled.
             $shouldSchedule = PostExpirator_Facade::is_expiration_enabled_for_post($id);
 
             if ($shouldSchedule) {

@@ -319,7 +319,7 @@ class ExpirablePostModel extends PostModel
         $postId = $this->getPostId();
 
         if (! $this->isExpirationEnabled() && ! $force) {
-            $this->debug->log($postId . ' -> Post expiration is not activated for the post');
+            $this->debug->log($postId . ' -> Tried to expire but post expiration is NOT ACTIVATED for the post');
 
             return false;
         }
@@ -340,9 +340,7 @@ class ExpirablePostModel extends PostModel
         $expirationAction = $this->getExpirationAction();
 
         if (! $expirationAction) {
-            $this->debug->log(
-                $postId . ' -> Post expiration cancelled, action is not found'
-            );
+            $this->debug->log($postId . ' -> Post expiration cancelled, expiration action is not found');
 
             return false;
         }
@@ -350,7 +348,7 @@ class ExpirablePostModel extends PostModel
         $result = $expirationAction->execute();
 
         if (! is_bool($result)) {
-            $this->debug->log($postId . ' -> ACTION  ' . $expirationAction . ' returned a non boolean value');
+            $this->debug->log($postId . ' -> ACTION ' . $expirationAction . ' returned a non boolean value');
 
             return false;
         }
@@ -365,7 +363,7 @@ class ExpirablePostModel extends PostModel
         }
 
         $this->debug->log(
-        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
             $postId . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
         );
 

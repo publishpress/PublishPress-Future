@@ -114,14 +114,9 @@ class ExpirationScheduler implements SchedulerInterface
     private function unscheduleIfScheduled($postId, $timestamp)
     {
         if ($this->isScheduled($postId)) {
-            $result = $this->removeSchedule($postId);
+            $this->logger->debug($postId . ' -> FOUND SCHEDULED CRON EVENT for the post');
 
-            $errorDetails = $this->error->isWpError($result) ? $this->error->getWpErrorMessage(
-                $result
-            ) : 'no errors found';
-            $message = $postId . ' -> EXISTING CRON EVENT FOUND - UNSCHEDULED - ' . $errorDetails;
-
-            $this->logger->debug($message);
+            $result = $this->unschedule($postId);
         }
     }
 
@@ -134,26 +129,6 @@ class ExpirationScheduler implements SchedulerInterface
         }
 
         return $this->cron->getNextScheduleForEvent(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId]);
-    }
-
-    /**
-     * @param int $postId
-     * @return false|int|WP_Error
-     */
-    private function removeSchedule($postId)
-    {
-        $legacyResult = $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId], true);
-        $result = $this->cron->clearScheduledHook(HooksAbstract::ACTION_EXPIRE_POST, [$postId], true);
-
-        if ($this->error->isWpError($legacyResult)) {
-            return $legacyResult;
-        }
-
-        if ($this->error->isWpError($result)) {
-            return $result;
-        }
-
-        return $legacyResult || $result;
     }
 
     /**
@@ -187,10 +162,25 @@ class ExpirationScheduler implements SchedulerInterface
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_UNSCHEDULE, $postId);
 
         if ($this->isScheduled($postId)) {
-            $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId]);
-            $this->cron->clearScheduledHook(HooksAbstract::ACTION_EXPIRE_POST, [$postId]);
+            $legacyResult = $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId]);
+            $result = $this->cron->clearScheduledHook(HooksAbstract::ACTION_EXPIRE_POST, [$postId]);
 
-            $this->logger->debug(sprintf('%d -> UNSCHEDULED, no errors found', $postId));
+            $errorFeedback = null;
+            if ($this->error->isWpError($legacyResult)) {
+                $errorFeedback = 'found error: ' . $this->error->getWpErrorMessage($legacyResult);
+            }
+
+            if ($this->error->isWpError($result)) {
+                $errorFeedback  = 'found error: ' . $this->error->getWpErrorMessage($result);
+            }
+
+            if (empty($errorFeedback)) {
+                $errorFeedback = 'no errors found';
+            }
+
+            $message = $postId . ' -> CLEARED SCHEDULED CRON EVENT, ' . $errorFeedback;
+
+            $this->logger->debug($message);
         }
 
         $this->removeExpirationDataFromPostMeta($postId);
@@ -211,5 +201,7 @@ class ExpirationScheduler implements SchedulerInterface
                 '_expiration-date-taxonomy',
             ]
         );
+
+        $this->logger->debug($postId . ' -> EXPIRATION DATA REMOVED from the post');
     }
 }
