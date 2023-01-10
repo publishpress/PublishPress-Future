@@ -84,6 +84,7 @@ This section describes how to install the plugin and get it working.
 = UNRELEASED =
 
 * ADDED: Add new filters for allowing customizing the expiration metabox and the email sent when post is expired, #327 (thanks to Menno);
+* CHANGED: Changed pattern of expiration debug log messages to describe the action in a clearer way and add more details;
 * FIXED: Remove debug statement, #326;
 * FIXED: Fix text for default date/time expiration setting description;
 * FIXED: Fix PHP 8 error and remove extract functions, #328;
