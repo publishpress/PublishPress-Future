@@ -255,7 +255,7 @@ msgid "PublishPress"
 msgstr "PublishPress"
 
 #: legacy/views/menu-defaults.php:220 legacy/views/menu-general.php:124
-msgid "Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
+msgid "Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
 msgstr "Establece el valor personalizado que se usará para la fecha de caducidad por defecto. Para información sobre el formato, consulta %1$s. Por ejemplo, puedes introducir %2$s+1 mes%3$s o %4$s+1 semana 2 días 4 horas 2 segundos%5$s o %6$spróximo jueves%7$s."
 
 #: legacy/views/bulk-edit.php:46
@@ -533,7 +533,7 @@ msgid "Custom"
 msgstr "Personalizada"
 
 #: legacy/views/menu-defaults.php:188 legacy/views/menu-general.php:96
-msgid "Default Date/Time Duration"
+msgid "Default date/time offset"
 msgstr "Duración por defecto de fecha/hora"
 
 #: legacy/views/menu-general.php:79

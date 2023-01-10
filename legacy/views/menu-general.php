@@ -92,7 +92,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expired-default-expiration-date"><?php
-                        esc_html_e('Default Date/Time Duration', 'post-expirator'); ?></label></th>
+                        esc_html_e('Default date/time offset', 'post-expirator'); ?></label></th>
                 <td>
                     <div id="expired-custom-container" class="pe-custom-date-container">
                         <label for="expired-custom-expiration-date"><?php
@@ -103,7 +103,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         <p class="description"><?php
                             echo sprintf(
                                 esc_html__(
-                                    'Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
+                                    'Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                     'post-expirator'
                                 ),
                                 '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">PHP strtotime function</a>',
