@@ -14,7 +14,6 @@ $expiredemailnotificationlist = get_option('expirationdateEmailNotificationList'
 $container = \PublishPressFuture\Core\DI\Container::getInstance();
 $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
 
-$expirationdateDefaultDate = $settingsFacade->getDefaultDate();
 $expirationdateDefaultDateCustom = $settingsFacade->getDefaultDateCustom();
 
 $categories = get_option('expirationdateCategoryDefaults');
@@ -93,36 +92,16 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </tr>
             <tr valign="top">
                 <th scope="row"><label for="expired-default-expiration-date"><?php
-                        esc_html_e('Default Date/Time Duration', 'post-expirator'); ?></label></th>
+                        esc_html_e('Default date/time offset', 'post-expirator'); ?></label></th>
                 <td>
-                    <select name="expired-default-expiration-date" id="expired-default-expiration-date"
-                            class="pe-custom-date-toggle">
-                        <option value="custom" <?php
-                            echo ($expirationdateDefaultDate == 'custom') ? ' selected="selected"' : ''; ?>><?php
-                            esc_html_e('Custom', 'post-expirator'); ?></option>
-                        <option value="publish" <?php
-                            echo ($expirationdateDefaultDate == 'publish') ? ' selected="selected"' : ''; ?>><?php
-                            esc_html_e('Post/Page Publish Time', 'post-expirator'); ?></option>
-                    </select>
-                    <p class="description"><?php
-                        esc_html_e(
-                            'Set the default expiration date to be used when creating new posts and pages.  Defaults to none.',
-                            'post-expirator'
-                        ); ?></p>
-                    <?php
-                    $show = ($expirationdateDefaultDate == 'custom') ? 'block' : 'none'; ?>
-                    <div id="expired-custom-container" style="display: <?php
-                    echo esc_attr($show); ?>;" class="pe-custom-date-container">
-                        <br/>
-                        <label for="expired-custom-expiration-date"><?php
-                            esc_html_e('Custom', 'post-expirator'); ?>:</label>
+                    <div id="expired-custom-container" class="pe-custom-date-container">
                         <input type="text" value="<?php
                         echo esc_attr($expirationdateDefaultDateCustom); ?>" name="expired-custom-expiration-date"
                                id="expired-custom-expiration-date"/>
                         <p class="description"><?php
                             echo sprintf(
                                 esc_html__(
-                                    'Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
+                                    'Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                     'post-expirator'
                                 ),
                                 '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">PHP strtotime function</a>',

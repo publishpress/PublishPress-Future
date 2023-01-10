@@ -554,8 +554,9 @@ function postexpirator_update_post_meta($id)
     $shouldSchedule = false;
     $ts = null;
     $opts = [];
+    $isClassicalInterface = isset($_POST['postexpirator_view']);
 
-    if (isset($_POST['postexpirator_view'])) {
+    if ($isClassicalInterface) {
         if (defined('DOING_AJAX') && DOING_AJAX) {
             check_ajax_referer('__postexpirator', '_postexpiratornonce');
         } else {
@@ -565,47 +566,29 @@ function postexpirator_update_post_meta($id)
         // Classic editor, quick edit
         $shouldSchedule = isset($_POST['enable-expirationdate']);
 
-        $default = get_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
-        if ($default === 'publish') {
-            if (! isset($_POST['mm'])
-                || ! isset($_POST['jj'])
-                || ! isset($_POST['aa'])
-                || ! isset($_POST['hh'])
-                || ! isset($_POST['mn'])
-            ) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
-            }
-
-            $month = intval($_POST['mm']);
-            $day = intval($_POST['jj']);
-            $year = intval($_POST['aa']);
-            $hour = intval($_POST['hh']);
-            $minute = intval($_POST['mn']);
-        } else {
-            if (! isset($_POST['expirationdate_month'])
-                || ! isset($_POST['expirationdate_day'])
-                || ! isset($_POST['expirationdate_year'])
-                || ! isset($_POST['expirationdate_hour'])
-                || ! isset($_POST['expirationdate_minute'])
-            ) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
-            }
-
-            $month = intval($_POST['expirationdate_month']);
-            $day = intval($_POST['expirationdate_day']);
-            $year = intval($_POST['expirationdate_year']);
-            $hour = intval($_POST['expirationdate_hour']);
-            $minute = intval($_POST['expirationdate_minute']);
-
-            if (empty($day)) {
-                $day = date('d');
-            }
-            if (empty($year)) {
-                $year = date('Y');
-            }
+        if (! isset($_POST['expirationdate_month'])
+            || ! isset($_POST['expirationdate_day'])
+            || ! isset($_POST['expirationdate_year'])
+            || ! isset($_POST['expirationdate_hour'])
+            || ! isset($_POST['expirationdate_minute'])
+        ) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+            error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
         }
+
+        $month = intval($_POST['expirationdate_month']);
+        $day = intval($_POST['expirationdate_day']);
+        $year = intval($_POST['expirationdate_year']);
+        $hour = intval($_POST['expirationdate_hour']);
+        $minute = intval($_POST['expirationdate_minute']);
+
+        if (empty($day)) {
+            $day = date('d');
+        }
+        if (empty($year)) {
+            $year = date('Y');
+        }
+
         $category = isset($_POST['expirationdate_category'])
             ? PostExpirator_Util::sanitize_array_of_integers(
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
@@ -660,6 +643,7 @@ function postexpirator_update_post_meta($id)
         $payload = @json_decode($payload, true);
 
         if (isset($payload['meta'])) {
+            // Meta has changed, let's update the expiration data.
             if (isset($payload['meta']['_expiration-date-status'])) {
                 $shouldSchedule = $payload['meta']['_expiration-date-status'] === 'saved'
                     && isset($payload['meta']['_expiration-date'])
@@ -692,6 +676,7 @@ function postexpirator_update_post_meta($id)
                 $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
             }
         } else {
+            // Meta has not changed. Let's pass the current expiration data to be rescheduled.
             $shouldSchedule = PostExpirator_Facade::is_expiration_enabled_for_post($id);
 
             if ($shouldSchedule) {
@@ -723,49 +708,53 @@ add_action('save_post', 'postexpirator_update_post_meta');
  *
  * @access private
  */
-function postexpirator_shortcode($atts)
+function postexpirator_shortcode($attrs)
 {
     global $post;
 
     $enabled = PostExpirator_Facade::is_expiration_enabled_for_post($post->ID);
-    $expirationdatets = get_post_meta($post->ID, '_expiration-date', true);
-    if (! $enabled || empty($expirationdatets)) {
+    $expirationDateTs = get_post_meta($post->ID, '_expiration-date', true);
+    if (! $enabled || empty($expirationDateTs)) {
         return false;
     }
 
-    // @TODO remove extract
-    // phpcs:ignore WordPress.PHP.DontExtract.extract_extract
-    extract(
-        shortcode_atts(
-            array(
-                'dateformat' => get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT),
-                'timeformat' => get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT),
-                'type' => 'full',
-                'tz' => date('T'),
-            ),
-            $atts
-        )
+    $attrs = shortcode_atts(
+        array(
+            'dateformat' => get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT),
+            'timeformat' => get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT),
+            'type' => 'full',
+            'tz' => date('T'),
+        ),
+        $attrs
     );
 
-    if (empty($dateformat)) {
+    if (! isset($attrs['dateformat']) || empty($attrs['dateformat'])) {
         global $expirationdateDefaultDateFormat;
-        $dateformat = $expirationdateDefaultDateFormat;
+        $attrs['dateformat'] = $expirationdateDefaultDateFormat;
     }
 
-    if (empty($timeformat)) {
+    if (! isset($attrs['timeformat']) || empty($attrs['timeformat'])) {
         global $expirationdateDefaultTimeFormat;
-        $timeformat = $expirationdateDefaultTimeFormat;
+        $attrs['timeformat'] = $expirationdateDefaultTimeFormat;
     }
 
-    if ($type === 'full') {
-        $format = $dateformat . ' ' . $timeformat;
-    } elseif ($type === 'date') {
-        $format = $dateformat;
-    } elseif ($type === 'time') {
-        $format = $timeformat;
+    if (! isset($attrs['type']) || empty($attrs['type'])) {
+        $attrs['type'] = 'full';
     }
 
-    return PostExpirator_Util::get_wp_date($format, $expirationdatets);
+    if (! isset($attrs['format']) || empty($attrs['format'])) {
+        $attrs['format'] = $attrs['dateformat'] . ' ' . $attrs['timeformat'];
+    }
+
+    if ($attrs['type'] === 'full') {
+        $attrs['format'] = $attrs['dateformat'] . ' ' . $attrs['timeformat'];
+    } elseif ($attrs['type'] === 'date') {
+        $attrs['format'] = $attrs['dateformat'];
+    } elseif ($attrs['type'] === 'time') {
+        $attrs['format'] = $attrs['timeformat'];
+    }
+
+    return PostExpirator_Util::get_wp_date($attrs['format'], $expirationDateTs);
 }
 
 add_shortcode('postexpirator', 'postexpirator_shortcode');
@@ -1074,29 +1063,26 @@ class Walker_PostExpirator_Category_Checklist extends Walker
      * class methods. Includes the element output also.
      *
      * @param string $output Used to append additional content (passed by reference).
-     * @param object $category The data object.
+     * @param object $data_object The data object for category.
      * @param int $depth Depth of the item.
      * @param array $args An array of additional arguments.
      * @param int $current_object_id ID of the current item.
      */
-    public function start_el(&$output, $category, $depth = 0, $args = array(), $current_object_id = 0)
+    public function start_el(&$output, $data_object, $depth = 0, $args = array(), $current_object_id = 0)
     {
-        // @TODO remove extract
-        // phpcs:ignore WordPress.PHP.DontExtract.extract_extract
-        extract($args);
-        if (empty($taxonomy)) {
-            $taxonomy = 'category';
-        }
+        $taxonomy = isset($args['taxonomy']) ? $args['taxonomy'] : 'category';
+        $popular_cats = isset($args['popular_cats']) ? (array)$args['popular_cats'] : [];
+        $selected_cats = isset($args['selected_cats']) ? (array)$args['selected_cats'] : [];
 
         $name = 'expirationdate_category';
 
-        $class = in_array($category->term_id, $popular_cats, true) ? ' class="expirator-category"' : '';
-        $output .= "\n<li id='expirator-{$taxonomy}-{$category->term_id}'$class>" . '<label class="selectit"><input value="' . $category->term_id . '" type="checkbox" name="' . $name . '[]" id="expirator-in-' . $taxonomy . '-' . $category->term_id . '"' . checked(
-                in_array($category->term_id, $selected_cats, true),
+        $class = in_array($data_object->term_id, $popular_cats, true) ? ' class="expirator-category"' : '';
+        $output .= "\n<li id='expirator-{$taxonomy}-{$data_object->term_id}'$class>" . '<label class="selectit"><input value="' . $data_object->term_id . '" type="checkbox" name="' . $name . '[]" id="expirator-in-' . $taxonomy . '-' . $data_object->term_id . '"' . checked(
+                in_array($data_object->term_id, $selected_cats, true),
                 true,
                 false
             ) . disabled(empty($args['disabled']), false, false) . ' ' . $this->disabled . '/> ' . esc_html(
-                apply_filters('the_category', $category->name)
+                apply_filters('the_category', $data_object->name)
             ) . '</label>';
     }
 

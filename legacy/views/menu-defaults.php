@@ -167,58 +167,32 @@ $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::
                 </td>
             </tr>
             <?php
-            $values = array(
-                'inherit' => esc_html__('Inherit from General Settings', 'post-expirator'),
-                'custom' => esc_html__('Custom', 'post-expirator'),
-                'publish' => esc_html__('Publish Time', 'post-expirator'),
-            );
-
-            $show = 'none';
             $customDate = '';
             if ($defaults['default-expire-type'] === 'custom') {
-                $show = 'block';
                 $customDate = $defaults['default-custom-date'];
             }
 
+            $placeholder = '';
+            if ($defaults['default-expire-type'] !== 'custom' || empty($defaults['default-custom-date'])) {
+                $placeholder = $settingsFacade->getDefaultDateCustom();
+            }
             ?>
 
             <tr valign="top">
                 <th scope="row"><label for="expired-default-date-<?php
                     echo esc_attr($postType); ?>"><?php
-                        esc_html_e('Default Date/Time Duration', 'post-expirator'); ?></label></th>
+                        esc_html_e('Default date/time offset', 'post-expirator'); ?></label></th>
                 <td>
-                    <select name="expired-default-date-<?php
-                    echo esc_attr($postType); ?>" id="expired-default-date-<?php
-                    echo esc_attr($postType); ?>" class="pe-custom-date-toggle">
-                        <?php
-                        foreach ($values as $value => $label) { ?>
-                            <option value="<?php
-                            echo esc_attr($value); ?>" <?php
-                            selected($value, $defaults['default-expire-type']); ?>><?php
-                                echo esc_html($label); ?></option>
-                            <?php
-                        } ?>
-                    </select>
-                    <p class="description"><?php
-                        esc_html_e(
-                            'Set the default expiration date to be used when creating a new post of this type.',
-                            'post-expirator'
-                        ); ?></p>
                     <div id="expired-custom-container-<?php
-                    echo esc_attr($postType); ?>" class="pe-custom-date-container" style="display: <?php
-                    echo esc_attr($show); ?>;">
-                        <br/>
-                        <label for="expired-custom-date-<?php
-                        echo esc_attr($postType); ?>"><?php
-                            esc_html_e('Custom', 'post-expirator'); ?>:</label>
+                    echo esc_attr($postType); ?>" class="pe-custom-date-container">
                         <input type="text" value="<?php
-                        echo esc_attr($customDate); ?>" name="expired-custom-date-<?php
+                        echo esc_attr($customDate); ?>" <?php echo empty($placeholder) ? '' : 'placeholder="' . $placeholder . '""'; ?> name="expired-custom-date-<?php
                         echo esc_attr($postType); ?>" id="expired-custom-date-<?php
                         echo esc_attr($postType); ?>"/>
                         <p class="description"><?php
                             echo sprintf(
                                 esc_html__(
-                                    'Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
+                                    'Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                     'post-expirator'
                                 ),
                                 '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">PHP strtotime function</a>',

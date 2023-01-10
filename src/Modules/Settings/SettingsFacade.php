@@ -184,16 +184,7 @@ class SettingsFacade
      */
     public function getDefaultDate()
     {
-        $defaultDateOption = $this->options->getOption(
-            'expirationdateDefaultDate',
-            $this->defaultData[Services::DEFAULT_EXPIRATION_DATE]
-        );
-
-        if ('null' === $defaultDateOption || empty($defaultDateOption)) {
-            $defaultDateOption = 'custom';
-        }
-
-        return $defaultDateOption;
+        return 'custom';
     }
 
     /**

@@ -212,7 +212,7 @@ class ExpirablePostModel extends PostModel
             $options = $this->getExpirationOptions();
 
             if (empty($this->expirationCategories)) {
-                $this->expirationCategories = isset($options['category']) ? $options['category'] : [];
+                $this->expirationCategories = isset($options['category']) ? (array)$options['category'] : [];
             }
 
             foreach ($this->expirationCategories as &$categoryID) {
@@ -235,8 +235,11 @@ class ExpirablePostModel extends PostModel
         $categoryNames = [];
 
         foreach ($categories as $categoryId) {
-            $termModelFactory = $this->termModelFactory;
+            if (empty($categoryId)) {
+                continue;
+            }
 
+            $termModelFactory = $this->termModelFactory;
             $termModel = $termModelFactory($categoryId);
 
             $categoryNames[] = $termModel->getName();
@@ -263,7 +266,6 @@ class ExpirablePostModel extends PostModel
             // Default value.
             if (empty($this->expirationTaxonomy)) {
                 $defaults = $this->settings->getPostTypeDefaults($this->getPostType());
-                ray($defaults)->green();
             }
         }
 
@@ -320,7 +322,7 @@ class ExpirablePostModel extends PostModel
         $postId = $this->getPostId();
 
         if (! $this->isExpirationEnabled() && ! $force) {
-            $this->debug->log($postId . ' -> Post expiration is not activated for the post');
+            $this->debug->log($postId . ' -> Tried to expire but post expiration is NOT ACTIVATED for the post');
 
             return false;
         }
@@ -341,9 +343,7 @@ class ExpirablePostModel extends PostModel
         $expirationAction = $this->getExpirationAction();
 
         if (! $expirationAction) {
-            $this->debug->log(
-                $postId . ' -> Post expiration cancelled, action is not found'
-            );
+            $this->debug->log($postId . ' -> Post expiration cancelled, expiration action is not found');
 
             return false;
         }
@@ -351,7 +351,7 @@ class ExpirablePostModel extends PostModel
         $result = $expirationAction->execute();
 
         if (! is_bool($result)) {
-            $this->debug->log($postId . ' -> ACTION  ' . $expirationAction . ' returned a non boolean value');
+            $this->debug->log($postId . ' -> ACTION ' . $expirationAction . ' returned a non boolean value');
 
             return false;
         }
@@ -366,7 +366,7 @@ class ExpirablePostModel extends PostModel
         }
 
         $this->debug->log(
-        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
             $postId . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
         );
 
@@ -447,6 +447,16 @@ class ExpirablePostModel extends PostModel
             __('Post Expiration Complete "%s"', 'post-expirator'),
             $this->getTitle()
         );
+        $emailSubject = sprintf(__('[%1$s] %2$s'), $this->options->getOption('blogname'), $emailSubject);
+
+        /**
+         * Allows changing the email subject.
+         * @param string $emailSubject
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return string
+         */
+        $emailSubject = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_SUBJECT, $emailSubject, $this, $expirationAction);
 
         $dateTimeFormat = $this->options->getOption('date_format') . ' ' . $this->options->getOption('time_format');
 
@@ -460,6 +470,15 @@ class ExpirablePostModel extends PostModel
             ),
             $emailBody
         );
+
+        /**
+         * Allows changing the email body.
+         * @param string $emailBody
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return string
+         */
+        $emailBody = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_BODY, $emailBody, $this, $expirationAction);
 
         $emailAddresses = array();
 
@@ -490,7 +509,36 @@ class ExpirablePostModel extends PostModel
             }
         }
 
+        /**
+         * Allows changing the email addresses.
+         * @param array<string> $emailAddresses
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return array<string>
+         */
+        $emailAddresses = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_ADDRESSES, $emailAddresses, $this, $expirationAction);
         $emailAddresses = array_unique($emailAddresses);
+
+        $emailHeaders = '';
+        /**
+         * Allows changing the email headers.
+         * @param string $emailHeaders
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return string|array<string>
+         */
+        $emailHeaders = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_HEADERS, $emailHeaders, $this, $expirationAction);
+
+        $emailAttachments = [];
+        /**
+         * Allows changing the email attachments.
+         * @param array<string> $emailAttachments
+         * @param ExpirablePostModel $this
+         * @param ExpirationActionInterface $expirationAction
+         * @return string|array<string>
+         */
+        $emailAttachments = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_ATTACHMENTS, $emailAttachments, $this, $expirationAction);
+
         $emailSent = false;
 
         if (! empty($emailAddresses)) {
@@ -500,8 +548,10 @@ class ExpirablePostModel extends PostModel
             foreach ($emailAddresses as $email) {
                 $emailSent = $this->email->send(
                     $email,
-                    sprintf(__('[%1$s] %2$s'), $this->options->getOption('blogname'), $emailSubject),
-                    $emailBody
+                    $emailSubject,
+                    $emailBody,
+                    $emailHeaders,
+                    $emailAttachments
                 );
 
                 $this->debug->log(

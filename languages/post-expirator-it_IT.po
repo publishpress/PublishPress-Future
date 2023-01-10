@@ -255,7 +255,7 @@ msgid "PublishPress"
 msgstr "PublishPress"
 
 #: legacy/views/menu-defaults.php:220 legacy/views/menu-general.php:124
-msgid "Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
+msgid "Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
 msgstr "Impostare il valore personalizzato da utilizzare per la data di scadenza predefinita.  Per informazioni sulla formattazione, vedere %1$s. Ad esempio, si può inserire %2$s+1 mese%3$s o %4$s+1 settimana 2 giorni 4 ore 2 secondi%5$s o %6$sil prossimo giovedì%7$s."
 
 #: legacy/views/bulk-edit.php:46
@@ -520,8 +520,8 @@ msgid "Default Expiration Taxonomy"
 msgstr "Tassonomia di scadenza predefinita"
 
 #: legacy/views/menu-general.php:108
-msgid "Set the default expiration date to be used when creating new posts and pages.  Defaults to none."
-msgstr "Imposta la data di scadenza predefinita da utilizzare quando si creano nuovi articoli e pagine. Il valore predefinito è nessuno."
+msgid "Set the default expiration date to be used when creating new posts and pages. Defaults to custom."
+msgstr "Imposta la data di scadenza predefinita da utilizzare quando si creano nuovi articoli e pagine. Il valore predefinito è personalizzato."
 
 #: legacy/views/menu-general.php:105
 msgid "Post/Page Publish Time"
@@ -533,7 +533,7 @@ msgid "Custom"
 msgstr "Personalizzato"
 
 #: legacy/views/menu-defaults.php:188 legacy/views/menu-general.php:96
-msgid "Default Date/Time Duration"
+msgid "Default date/time offset"
 msgstr "Durata Data/Ora predefinita"
 
 #: legacy/views/menu-general.php:79

@@ -255,7 +255,7 @@ msgid "PublishPress"
 msgstr "PublishPress"
 
 #: legacy/views/menu-defaults.php:220 legacy/views/menu-general.php:124
-msgid "Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
+msgid "Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
 msgstr "Définissez la valeur personnalisée à utiliser pour la date d’expiration par défaut.  Pour plus d’informations sur le formatage, voir %1$s. Par exemple, vous pouvez saisir %2$s+1 mois%3$s ou %4$s+1 semaine 2 jours 4 heures 2 secondes%5$s ou %6$sjeudi prochain%7$s."
 
 #: legacy/views/bulk-edit.php:46
@@ -520,8 +520,8 @@ msgid "Default Expiration Taxonomy"
 msgstr "Expiration de taxonomie par défaut"
 
 #: legacy/views/menu-general.php:108
-msgid "Set the default expiration date to be used when creating new posts and pages.  Defaults to none."
-msgstr "Définissez la date d’expiration par défaut à utiliser lors de la création de nouveaux articles et de pages. La valeur par défaut est « aucune »."
+msgid "Set the default expiration date to be used when creating new posts and pages. Defaults to custom."
+msgstr "Définissez la date d’expiration par défaut à utiliser lors de la création de nouveaux articles et de pages. La valeur par défaut est Personnalisé."
 
 #: legacy/views/menu-general.php:105
 msgid "Post/Page Publish Time"
@@ -530,10 +530,10 @@ msgstr "Date de publication"
 #: legacy/views/menu-defaults.php:172 legacy/views/menu-defaults.php:213
 #: legacy/views/menu-general.php:102 legacy/views/menu-general.php:118
 msgid "Custom"
-msgstr "Personnalisé "
+msgstr "Personnalisé"
 
 #: legacy/views/menu-defaults.php:188 legacy/views/menu-general.php:96
-msgid "Default Date/Time Duration"
+msgid "Default date/time offset"
 msgstr "Date/heure de durée par défaut"
 
 #: legacy/views/menu-general.php:79

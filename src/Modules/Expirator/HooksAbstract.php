@@ -18,6 +18,14 @@ abstract class HooksAbstract
     const ACTION_UNSCHEDULE_POST_EXPIRATION = 'publishpressfuture_unschedule_expiration';
     const ACTION_EXPIRE_POST = 'publishpressfuture_expire';
     const FILTER_CUSTOM_EXPIRATION_TYPE = 'publishpressfuture_custom_expiration_type';
+    const FILTER_LEGACY_TEMPLATE_PARAMS = 'publishpressfuture_legacy_template_params';
+    const FILTER_LEGACY_TEMPLATE_FILE = 'publishpressfuture_legacy_template_file';
+    const FILTER_EXPIRED_EMAIL_SUBJECT = 'publishpressfuture_expired_email_subject';
+    const FILTER_EXPIRED_EMAIL_BODY = 'publishpressfuture_expired_email_body';
+    const FILTER_EXPIRED_EMAIL_ADDRESSES = 'publishpressfuture_expired_email_addresses';
+    const FILTER_EXPIRED_EMAIL_HEADERS = 'publishpressfuture_expired_email_headers';
+    const FILTER_EXPIRED_EMAIL_ATTACHMENTS = 'publishpressfuture_expired_email_attachments';
+
 
     public static function getActionLegacyMultisiteDelete($blogId)
     {

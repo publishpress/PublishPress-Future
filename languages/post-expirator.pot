@@ -423,7 +423,7 @@ msgstr ""
 
 #: views/menu-defaults.php:173
 #: views/menu-general.php:103
-msgid "Default Date/Time Duration"
+msgid "Default date/time offset"
 msgstr ""
 
 #: views/menu-defaults.php:188
@@ -432,7 +432,7 @@ msgstr ""
 
 #: views/menu-defaults.php:205
 #: views/menu-general.php:134
-msgid "Set the custom value to use for the default expiration date.  For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
+msgid "Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
 msgstr ""
 
 #: views/menu-defaults.php:228
@@ -621,7 +621,7 @@ msgid "Post/Page Publish Time"
 msgstr ""
 
 #: views/menu-general.php:118
-msgid "Set the default expiration date to be used when creating new posts and pages.  Defaults to none."
+msgid "Set the default expiration date to be used when creating new posts and pages. Defaults to custom."
 msgstr ""
 
 #: views/menu-general.php:151
