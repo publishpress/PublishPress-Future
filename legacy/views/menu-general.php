@@ -95,8 +95,6 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         esc_html_e('Default date/time offset', 'post-expirator'); ?></label></th>
                 <td>
                     <div id="expired-custom-container" class="pe-custom-date-container">
-                        <label for="expired-custom-expiration-date"><?php
-                            esc_html_e('Custom', 'post-expirator'); ?>:</label>
                         <input type="text" value="<?php
                         echo esc_attr($expirationdateDefaultDateCustom); ?>" name="expired-custom-expiration-date"
                                id="expired-custom-expiration-date"/>
