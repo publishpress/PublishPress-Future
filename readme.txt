@@ -5,7 +5,7 @@ Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
 Requires at least: 5.3
 Tested up to: 6.1
-Stable tag: 2.8.2
+Stable tag: 2.8.3
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -81,7 +81,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= UNRELEASED =
+= [2.8.3] - 10 Jan, 2023 =
 
 * ADDED: Add new filters for allowing customizing the expiration metabox and the email sent when post is expired, #327 (thanks to Menno);
 * CHANGED: Changed pattern of expiration debug log messages to describe the action in a clearer way and add more details;
