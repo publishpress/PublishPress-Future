@@ -246,15 +246,19 @@
             let categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
             let categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
 
+            if (! categoriesNew && ! categoriesOld) {
+                return [];
+            }
+
             if (typeof categoriesNew === 'object' && categoriesNew.length > 0) {
                 return categoriesNew;
             }
 
             if (categoriesOld && typeof categoriesOld !== 'undefined' && typeof categoriesOld !== 'object') {
-                categories = [categoriesOld];
+                return [categoriesOld];
             }
 
-            return categoriesOld;
+            return [];
 
         }
 

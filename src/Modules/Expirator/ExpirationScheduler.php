@@ -148,7 +148,7 @@ class ExpirationScheduler implements SchedulerInterface
                 '_expiration-date-status' => 'saved',
                 '_expiration-date-options' => $opts,
                 '_expiration-date-type' => $opts['expireType'],
-                '_expiration-date-categories' => isset($opts['category']) ? $opts['category'] : [],
+                '_expiration-date-categories' => isset($opts['category']) ? (array)$opts['category'] : [],
                 '_expiration-date-taxonomy' => isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '',
             ]
         );

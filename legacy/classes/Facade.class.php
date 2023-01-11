@@ -121,7 +121,7 @@ class PostExpirator_Facade
     {
         update_post_meta($id, '_expiration-date-options', $opts);
         update_post_meta($id, '_expiration-date-type', $opts['expireType']);
-        update_post_meta($id, '_expiration-date-categories', isset($opts['category']) ? $opts['category'] : array());
+        update_post_meta($id, '_expiration-date-categories', isset($opts['category']) ? (array)$opts['category'] : []);
         update_post_meta(
             $id,
             '_expiration-date-taxonomy',
@@ -194,7 +194,7 @@ class PostExpirator_Facade
             $expireType = $expireTypeNew;
         }
 
-        $categoriesNew = get_post_meta($id, '_expiration-date-categories', true);
+        $categoriesNew = (array)get_post_meta($id, '_expiration-date-categories', true);
         if (! empty($categoriesNew)) {
             $categories = $categoriesNew;
         }
@@ -210,7 +210,7 @@ class PostExpirator_Facade
             $expireType = $opts['expireType'];
         }
         if (empty($categories)) {
-            $categories = isset($opts['category']) ? $opts['category'] : false;
+            $categories = isset($opts['category']) ? $opts['category'] : [];
         }
 
         if (empty($taxonomyName)) {
