@@ -47,7 +47,7 @@
     "build": "builder/docker/scripts/build build",
     "build:dir": "builder/docker/scripts/build build-dir",
     "build:clean": "builder/docker/scripts/build clean",
-    "cli": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
+    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
     "make-mo": "wp i18n make-mo ./languages ./languages"
   },
   "pot": {
