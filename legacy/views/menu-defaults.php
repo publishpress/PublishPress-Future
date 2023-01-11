@@ -186,7 +186,7 @@ $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::
                     <div id="expired-custom-container-<?php
                     echo esc_attr($postType); ?>" class="pe-custom-date-container">
                         <input type="text" value="<?php
-                        echo esc_attr($customDate); ?>" <?php echo empty($placeholder) ? '' : 'placeholder="' . $placeholder . '""'; ?> name="expired-custom-date-<?php
+                        echo esc_attr($customDate); ?>" <?php echo empty($placeholder) ? '' : 'placeholder="' . esc_attr($placeholder) . '""'; ?> name="expired-custom-date-<?php
                         echo esc_attr($postType); ?>" id="expired-custom-date-<?php
                         echo esc_attr($postType); ?>"/>
                         <p class="description"><?php
