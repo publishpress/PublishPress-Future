@@ -58,8 +58,6 @@ class PostModel
             ]
         );
 
-        wp_transition_post_status($newPostStatus, $post->post_status, $post);
-
         return $updated;
     }
 
