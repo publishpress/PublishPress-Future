@@ -126,6 +126,10 @@ var _SelectField = __webpack_require__(/*! ./fields/SelectField */ "./assets/jsx
 
 var _SelectField2 = _interopRequireDefault(_SelectField);
 
+var _TextField = __webpack_require__(/*! ./fields/TextField */ "./assets/jsx/settings/components/fields/TextField.jsx");
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
@@ -196,6 +200,16 @@ var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
                                 selected: postTypeSettings.taxonomy,
                                 noItemFoundMessage: props.text.noItemsfound,
                                 description: props.text.fieldTaxonomyDescription
+                            })
+                        ),
+                        React.createElement(
+                            _SettingRow2.default,
+                            { label: props.text.fieldWhoToNotify },
+                            React.createElement(_TextField2.default, {
+                                name: 'expirationdate_emailnotification-' + postType,
+                                className: "large-text",
+                                selected: postTypeSettings.emailNotification,
+                                description: props.text.fieldWhoToNotifyDescription
                             })
                         )
                     )
@@ -469,6 +483,41 @@ var SelectField = function SelectField(props) {
 };
 
 exports.default = SelectField;
+
+/***/ }),
+
+/***/ "./assets/jsx/settings/components/fields/TextField.jsx":
+/*!*************************************************************!*\
+  !*** ./assets/jsx/settings/components/fields/TextField.jsx ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var TextField = function TextField(props) {
+    return React.createElement(
+        _react.Fragment,
+        null,
+        React.createElement("input", { type: "text", name: props.name, id: props.name, className: props.className, defaultValue: props.selected }),
+        React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        )
+    );
+}; /*
+    * Copyright (c) 2023. PublishPress, All rights reserved.
+    */
+
+exports.default = TextField;
 
 /***/ }),
 

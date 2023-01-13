@@ -164,6 +164,8 @@ class Controller implements InitializableInterface
                         'fieldTaxonomy' => __('Taxonomy (hierarchical)', 'post-expirator'),
                         'noItemsfound' => __('No taxonomies found', 'post-expirator'),
                         'fieldTaxonomyDescription' => __('Select the hierarchical taxonomy to be used for "category" based expiration.', 'post-expirator'),
+                        'fieldWhoToNotify' => __('Who to notify', 'post-expirator'),
+                        'fieldWhoToNotifyDescription' => __('Enter a comma separate list of emails that you would like to be notified when the post expires.', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => [

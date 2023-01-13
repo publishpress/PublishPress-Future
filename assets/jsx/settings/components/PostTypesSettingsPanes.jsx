@@ -8,6 +8,7 @@ import SettingsFieldset from "./SettingsFieldset";
 import SettingsTable from "./SettingsTable";
 import {Fragment} from "react";
 import SelectField from "./fields/SelectField";
+import TextField from "./fields/TextField";
 
 const PostTypesSettingsPanes = function (props) {
     let panes = [];
@@ -58,6 +59,15 @@ const PostTypesSettingsPanes = function (props) {
                                 selected={postTypeSettings.taxonomy}
                                 noItemFoundMessage={props.text.noItemsfound}
                                 description={props.text.fieldTaxonomyDescription}
+                            />
+                        </SettingRow>
+
+                        <SettingRow label={props.text.fieldWhoToNotify}>
+                            <TextField
+                                name={'expirationdate_emailnotification-' + postType}
+                                className="large-text"
+                                selected={postTypeSettings.emailNotification}
+                                description={props.text.fieldWhoToNotifyDescription}
                             />
                         </SettingRow>
                     </Fragment>
