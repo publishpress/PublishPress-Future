@@ -20,14 +20,15 @@ const PostTypesSettingsPanes = function (props) {
                         <SettingRow label={props.text.fieldLabelActive}>
                             <TrueFalseField
                                 name={'expirationdate_activemeta-' + postType}
-                                trueLabel={props.text.fieldLabelActive}
+                                trueLabel={props.text.fieldLabelActiveTrue}
                                 trueValue={'active'}
-                                falseLabel={props.text.fieldLabelInactive}
+                                falseLabel={props.text.fieldLabelActiveFalse}
                                 falseValue={'inactive'}
                                 description={props.text.fieldLabelActiveDescription}
                                 selected={postTypeSettings.active}
                             />
                         </SettingRow>
+
                         <SettingRow label={props.text.fieldLabelHowToExpire}>
                             <SelectField
                                 name={'expirationdate_expiretype-' + postType}
@@ -35,6 +36,18 @@ const PostTypesSettingsPanes = function (props) {
                                 options={props.expireTypeList}
                                 description={props.text.fieldLabelHowToExpireDescription}
                                 selected={postTypeSettings.howToExpire}
+                            />
+                        </SettingRow>
+
+                        <SettingRow label={props.text.fieldLabelAutoEnable}>
+                            <TrueFalseField
+                                name={'expirationdate_autoenable-' + postType}
+                                trueLabel={props.text.fieldLabelAutoEnableTrue}
+                                trueValue={'1'}
+                                falseLabel={props.text.fieldLabelAutoEnableFalse}
+                                falseValue={'0'}
+                                description={props.text.fieldLabelAutoEnableDescription}
+                                selected={postTypeSettings.autoEnabled}
                             />
                         </SettingRow>
                     </Fragment>

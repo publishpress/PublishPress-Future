@@ -155,9 +155,9 @@ var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
                             { label: props.text.fieldLabelActive },
                             React.createElement(_TrueFalseField2.default, {
                                 name: 'expirationdate_activemeta-' + postType,
-                                trueLabel: props.text.fieldLabelActive,
+                                trueLabel: props.text.fieldLabelActiveTrue,
                                 trueValue: 'active',
-                                falseLabel: props.text.fieldLabelInactive,
+                                falseLabel: props.text.fieldLabelActiveFalse,
                                 falseValue: 'inactive',
                                 description: props.text.fieldLabelActiveDescription,
                                 selected: postTypeSettings.active
@@ -172,6 +172,19 @@ var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
                                 options: props.expireTypeList,
                                 description: props.text.fieldLabelHowToExpireDescription,
                                 selected: postTypeSettings.howToExpire
+                            })
+                        ),
+                        React.createElement(
+                            _SettingRow2.default,
+                            { label: props.text.fieldLabelAutoEnable },
+                            React.createElement(_TrueFalseField2.default, {
+                                name: 'expirationdate_autoenable-' + postType,
+                                trueLabel: props.text.fieldLabelAutoEnableTrue,
+                                trueValue: '1',
+                                falseLabel: props.text.fieldLabelAutoEnableFalse,
+                                falseValue: '0',
+                                description: props.text.fieldLabelAutoEnableDescription,
+                                selected: postTypeSettings.autoEnabled
                             })
                         )
                     )

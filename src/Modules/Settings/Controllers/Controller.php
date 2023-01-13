@@ -115,10 +115,15 @@ class Controller implements InitializableInterface
                             'post-expirator'
                         ),
                         'fieldLabelActive' => __('Active', 'post-expirator'),
-                        'fieldLabelInactive' => __('Inactive', 'post-expirator'),
+                        'fieldLabelActiveTrue' => __('Active', 'post-expirator'),
+                        'fieldLabelActiveFalse' => __('Inactive', 'post-expirator'),
                         'fieldLabelActiveDescription' => __('Select whether the PublishPress Future meta box is active for this post type.', 'post-expirator'),
                         'fieldLabelHowToExpire' => __('How to expire', 'post-expirator'),
                         'fieldLabelHowToExpireDescription' => __('Select the default expire action for the post type.', 'post-expirator'),
+                        'fieldLabelAutoEnable' => __('Auto-Enable?', 'post-expirator'),
+                        'fieldLabelAutoEnableTrue' => __('Enabled', 'post-expirator'),
+                        'fieldLabelAutoEnableFalse' => __('Disabled', 'post-expirator'),
+                        'fieldLabelAutoEnableDescription' => __('Select whether the PublishPress Future is enabled for all new posts.', 'post-expirator'),
                     ],
                     'settings' => $model->getPostTypesSettings(),
                     'expireTypeList' => [
