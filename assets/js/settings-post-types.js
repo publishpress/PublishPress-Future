@@ -152,39 +152,50 @@ var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
                         null,
                         React.createElement(
                             _SettingRow2.default,
-                            { label: props.text.fieldLabelActive },
+                            { label: props.text.fieldActive },
                             React.createElement(_TrueFalseField2.default, {
                                 name: 'expirationdate_activemeta-' + postType,
-                                trueLabel: props.text.fieldLabelActiveTrue,
+                                trueLabel: props.text.fieldActiveTrue,
                                 trueValue: 'active',
-                                falseLabel: props.text.fieldLabelActiveFalse,
+                                falseLabel: props.text.fieldActiveFalse,
                                 falseValue: 'inactive',
-                                description: props.text.fieldLabelActiveDescription,
+                                description: props.text.fieldActiveDescription,
                                 selected: postTypeSettings.active
                             })
                         ),
                         React.createElement(
                             _SettingRow2.default,
-                            { label: props.text.fieldLabelHowToExpire },
+                            { label: props.text.fieldHowToExpire },
                             React.createElement(_SelectField2.default, {
                                 name: 'expirationdate_expiretype-' + postType,
                                 className: 'pe-howtoexpire',
                                 options: props.expireTypeList,
-                                description: props.text.fieldLabelHowToExpireDescription,
+                                description: props.text.fieldHowToExpireDescription,
                                 selected: postTypeSettings.howToExpire
                             })
                         ),
                         React.createElement(
                             _SettingRow2.default,
-                            { label: props.text.fieldLabelAutoEnable },
+                            { label: props.text.fieldAutoEnable },
                             React.createElement(_TrueFalseField2.default, {
                                 name: 'expirationdate_autoenable-' + postType,
-                                trueLabel: props.text.fieldLabelAutoEnableTrue,
+                                trueLabel: props.text.fieldAutoEnableTrue,
                                 trueValue: '1',
-                                falseLabel: props.text.fieldLabelAutoEnableFalse,
+                                falseLabel: props.text.fieldAutoEnableFalse,
                                 falseValue: '0',
-                                description: props.text.fieldLabelAutoEnableDescription,
+                                description: props.text.fieldAutoEnableDescription,
                                 selected: postTypeSettings.autoEnabled
+                            })
+                        ),
+                        React.createElement(
+                            _SettingRow2.default,
+                            { label: props.text.fieldTaxonomy },
+                            React.createElement(_SelectField2.default, {
+                                name: 'expirationdate_taxonomy-' + postType,
+                                options: props.taxonomiesList[postType],
+                                selected: postTypeSettings.taxonomy,
+                                noItemFoundMessage: props.text.noItemsfound,
+                                description: props.text.fieldTaxonomyDescription
                             })
                         )
                     )
@@ -414,36 +425,48 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /*
+                                                                                                                                                                                                                                                                               * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                               */
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var SelectField = function SelectField(props) {
     var optionsList = [];
 
-    props.options.forEach(function (el) {
-        optionsList.push(React.createElement(
-            "option",
-            { value: el.value },
-            el.label
-        ));
-    });
+    if (_typeof(props.options) === 'object' && props.options.forEach) {
+        props.options.forEach(function (el) {
+            optionsList.push(React.createElement(
+                'option',
+                { value: el.value },
+                el.label
+            ));
+        });
+    }
+
+    if (optionsList.length === 0) {
+        return React.createElement(
+            'p',
+            null,
+            props.noItemFoundMessage ? props.noItemFoundMessage : 'No items found'
+        );
+    }
 
     return React.createElement(
         _react.Fragment,
         null,
         React.createElement(
-            "select",
+            'select',
             { name: props.name, id: props.name, className: props.className, defaultValue: props.selected },
             optionsList
         ),
         React.createElement(
-            "p",
-            { className: "description" },
+            'p',
+            { className: 'description' },
             props.description
         )
     );
-}; /*
-    * Copyright (c) 2023. PublishPress, All rights reserved.
-    */
+};
 
 exports.default = SelectField;
 
@@ -550,7 +573,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
                 React.createElement(_PostTypesSettingsPanes2.default, {
                     settings: config.settings,
                     text: config.text,
-                    expireTypeList: config.expireTypeList
+                    expireTypeList: config.expireTypeList,
+                    taxonomiesList: config.taxonomiesList
                 })
             )
         )

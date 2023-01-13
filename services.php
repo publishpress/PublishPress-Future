@@ -32,6 +32,7 @@ use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
 use PublishPressFuture\Modules\Settings\Models\SettingsPostTypesModel;
+use PublishPressFuture\Modules\Settings\Models\TaxonomiesModel;
 use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
@@ -294,7 +295,8 @@ return [
         return new ModuleSettings(
             $container->get(Services::HOOKS),
             $container->get(Services::SETTINGS),
-            $container->get(Services::POST_TYPE_SETTINGS_MODEL_FACTORY)
+            $container->get(Services::POST_TYPE_SETTINGS_MODEL_FACTORY),
+            $container->get(Services::TAXONOMIES_MODEL_FACTORY)
         );
     },
 
@@ -361,6 +363,16 @@ return [
          */
         return static function () use ($container) {
             return new SettingsPostTypesModel();
+        };
+    },
+
+    Services::TAXONOMIES_MODEL_FACTORY => static function (ContainerInterface $container) {
+        /**
+         * @return TaxonomiesModel
+         * @throws
+         */
+        return static function () use ($container) {
+            return new TaxonomiesModel();
         };
     },
 

@@ -7,9 +7,15 @@ import {Fragment} from "react";
 const SelectField = function (props) {
     const optionsList = [];
 
-    props.options.forEach((el) => {
-        optionsList.push(<option value={el.value}>{el.label}</option>);
-    });
+    if (typeof props.options === 'object' && props.options.forEach) {
+        props.options.forEach((el) => {
+            optionsList.push(<option value={el.value}>{el.label}</option>);
+        });
+    }
+
+    if (optionsList.length === 0) {
+        return (<p>{props.noItemFoundMessage ? props.noItemFoundMessage : 'No items found'}</p>)
+    }
 
     return (
         <Fragment>

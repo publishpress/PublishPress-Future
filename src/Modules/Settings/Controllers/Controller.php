@@ -9,7 +9,6 @@ use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Modules\Settings\HooksAbstract;
-use PublishPressFuture\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 
 class Controller implements InitializableInterface
@@ -32,18 +31,25 @@ class Controller implements InitializableInterface
     /**
      * @var callable
      */
-    private $settingsPostTypesModeFactory;
+    private $settingsPostTypesModelFactory;
+
+    /**
+     * @var callable
+     */
+    private $taxonomiesModelFactory;
 
     /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
-     * @param callable $settingsPostTypesModeFactory
+     * @param callable $settingsPostTypesModelFactory
+     * @param callable $taxonomiesModelFactory
      */
-    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModeFactory)
+    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory)
     {
         $this->hooks = $hooks;
         $this->settings = $settings;
-        $this->settingsPostTypesModeFactory = $settingsPostTypesModeFactory;
+        $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
+        $this->taxonomiesModelFactory = $taxonomiesModelFactory;
     }
 
     public function initialize()
@@ -87,6 +93,25 @@ class Controller implements InitializableInterface
         return $this->settings->getDebugIsEnabled($enabled);
     }
 
+    private function convertPostTypesListIntoOptionsList($list)
+    {
+        $optionsList = [];
+
+        foreach ($list as $postType => $taxonomiesList) {
+            $optionsList[$postType] = [];
+
+            if (empty($taxonomiesList)) {
+                continue;
+            }
+
+            foreach ($taxonomiesList as $taxonomySlug => $taxonomyObject) {
+                $optionsList[$postType][] = ['value' => $taxonomySlug, 'label' => $taxonomyObject->label];
+            }
+        }
+
+        return $optionsList;
+    }
+
     public function onAdminEnqueueScript()
     {
         if (
@@ -101,8 +126,11 @@ class Controller implements InitializableInterface
                 true
             );
 
-            $settingsPostTypesModeFactory = $this->settingsPostTypesModeFactory;
-            $model = $settingsPostTypesModeFactory();
+            $settingsPostTypesModelFactory = $this->settingsPostTypesModelFactory;
+            $settingsModel = $settingsPostTypesModelFactory();
+
+            $taxonomiesModelFactory = $this->taxonomiesModelFactory;
+            $taxonomiesModel = $taxonomiesModelFactory();
 
             wp_localize_script(
                 'publishpressfuture-settings-panel',
@@ -114,18 +142,30 @@ class Controller implements InitializableInterface
                             'Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page.',
                             'post-expirator'
                         ),
-                        'fieldLabelActive' => __('Active', 'post-expirator'),
-                        'fieldLabelActiveTrue' => __('Active', 'post-expirator'),
-                        'fieldLabelActiveFalse' => __('Inactive', 'post-expirator'),
-                        'fieldLabelActiveDescription' => __('Select whether the PublishPress Future meta box is active for this post type.', 'post-expirator'),
-                        'fieldLabelHowToExpire' => __('How to expire', 'post-expirator'),
-                        'fieldLabelHowToExpireDescription' => __('Select the default expire action for the post type.', 'post-expirator'),
-                        'fieldLabelAutoEnable' => __('Auto-Enable?', 'post-expirator'),
-                        'fieldLabelAutoEnableTrue' => __('Enabled', 'post-expirator'),
-                        'fieldLabelAutoEnableFalse' => __('Disabled', 'post-expirator'),
-                        'fieldLabelAutoEnableDescription' => __('Select whether the PublishPress Future is enabled for all new posts.', 'post-expirator'),
+                        'fieldActive' => __('Active', 'post-expirator'),
+                        'fieldActiveTrue' => __('Active', 'post-expirator'),
+                        'fieldActiveFalse' => __('Inactive', 'post-expirator'),
+                        'fieldActiveDescription' => __(
+                            'Select whether the PublishPress Future meta box is active for this post type.',
+                            'post-expirator'
+                        ),
+                        'fieldHowToExpire' => __('How to expire', 'post-expirator'),
+                        'fieldHowToExpireDescription' => __(
+                            'Select the default expire action for the post type.',
+                            'post-expirator'
+                        ),
+                        'fieldAutoEnable' => __('Auto-Enable?', 'post-expirator'),
+                        'fieldAutoEnableTrue' => __('Enabled', 'post-expirator'),
+                        'fieldAutoEnableFalse' => __('Disabled', 'post-expirator'),
+                        'fieldAutoEnableDescription' => __(
+                            'Select whether the PublishPress Future is enabled for all new posts.',
+                            'post-expirator'
+                        ),
+                        'fieldTaxonomy' => __('Taxonomy (hierarchical)', 'post-expirator'),
+                        'noItemsfound' => __('No taxonomies found', 'post-expirator'),
+                        'fieldTaxonomyDescription' => __('Select the hierarchical taxonomy to be used for "category" based expiration.', 'post-expirator'),
                     ],
-                    'settings' => $model->getPostTypesSettings(),
+                    'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => [
                         ['value' => 'draft', 'label' => __('Draft', 'post-expirator')],
                         ['value' => 'delete', 'label' => __('Delete', 'post-expirator')],
@@ -136,7 +176,10 @@ class Controller implements InitializableInterface
                         ['value' => 'category', 'label' => __('Taxonomy: Replace', 'post-expirator')],
                         ['value' => 'category-add', 'label' => __('Taxonomy: Add', 'post-expirator')],
                         ['value' => 'category-remove', 'label' => __('Taxonomy: Remove', 'post-expirator')],
-                    ]
+                    ],
+                    'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
+                        $taxonomiesModel->getTaxonomiesByPostType()
+                    ),
                 ]
             );
         }

@@ -19,6 +19,7 @@ import PostTypesSettingsPanes from "./components/PostTypesSettingsPanes";
                         settings={config.settings}
                         text={config.text}
                         expireTypeList={config.expireTypeList}
+                        taxonomiesList={config.taxonomiesList}
                     />
                 </SettingsSection>
             </SettingsForm>
