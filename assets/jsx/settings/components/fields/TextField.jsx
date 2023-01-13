@@ -7,7 +7,14 @@ import {Fragment} from "react";
 const TextField = function (props) {
     return (
         <Fragment>
-            <input type="text" name={props.name} id={props.name} className={props.className} defaultValue={props.selected} />
+            <input
+                type="text"
+                name={props.name}
+                id={props.name}
+                className={props.className}
+                defaultValue={props.selected}
+                placeholder={props.placeholder}
+            />
 
             <p className="description">{props.description}</p>
         </Fragment>

@@ -70,6 +70,15 @@ const PostTypesSettingsPanes = function (props) {
                                 description={props.text.fieldWhoToNotifyDescription}
                             />
                         </SettingRow>
+
+                        <SettingRow label={props.text.fieldDefaultDateTimeOffset}>
+                            <TextField
+                                name={'expired-custom-date-' + postType}
+                                selected={postTypeSettings.defaultExpireOffset}
+                                placeholder={postTypeSettings.globalDefaultExpireOffset}
+                                description={props.text.fieldDefaultDateTimeOffsetDescription}
+                            />
+                        </SettingRow>
                     </Fragment>
                 }
                 />

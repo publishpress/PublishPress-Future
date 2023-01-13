@@ -211,6 +211,16 @@ var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
                                 selected: postTypeSettings.emailNotification,
                                 description: props.text.fieldWhoToNotifyDescription
                             })
+                        ),
+                        React.createElement(
+                            _SettingRow2.default,
+                            { label: props.text.fieldDefaultDateTimeOffset },
+                            React.createElement(_TextField2.default, {
+                                name: 'expired-custom-date-' + postType,
+                                selected: postTypeSettings.defaultExpireOffset,
+                                placeholder: postTypeSettings.globalDefaultExpireOffset,
+                                description: props.text.fieldDefaultDateTimeOffsetDescription
+                            })
                         )
                     )
                 })
@@ -506,7 +516,14 @@ var TextField = function TextField(props) {
     return React.createElement(
         _react.Fragment,
         null,
-        React.createElement("input", { type: "text", name: props.name, id: props.name, className: props.className, defaultValue: props.selected }),
+        React.createElement("input", {
+            type: "text",
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            defaultValue: props.selected,
+            placeholder: props.placeholder
+        }),
         React.createElement(
             "p",
             { className: "description" },

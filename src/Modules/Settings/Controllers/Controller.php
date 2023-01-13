@@ -166,6 +166,20 @@ class Controller implements InitializableInterface
                         'fieldTaxonomyDescription' => __('Select the hierarchical taxonomy to be used for "category" based expiration.', 'post-expirator'),
                         'fieldWhoToNotify' => __('Who to notify', 'post-expirator'),
                         'fieldWhoToNotifyDescription' => __('Enter a comma separate list of emails that you would like to be notified when the post expires.', 'post-expirator'),
+                        'fieldDefaultDateTimeOffset' => __('Default date/time offset', 'post-expirator'),
+                        'fieldDefaultDateTimeOffsetDescription' => sprintf(
+                            __(
+                                'Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
+                                'post-expirator'
+                            ),
+                            '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">PHP strtotime function</a>',
+                            '<code>',
+                            '</code>',
+                            '<code>',
+                            '</code>',
+                            '<code>',
+                            '</code>'
+                        ),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => [
