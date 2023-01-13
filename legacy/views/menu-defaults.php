@@ -6,6 +6,8 @@ $container = \PublishPressFuture\Core\DI\Container::getInstance();
 $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
 ?>
 
+<div id="publishpress-future-settings-post-types"></div>
+
 <form method="post">
     <?php
     wp_nonce_field('postexpirator_menu_defaults', '_postExpiratorMenuDefaults_nonce'); ?>

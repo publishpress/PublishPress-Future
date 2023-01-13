@@ -31,12 +31,13 @@ use PublishPressFuture\Modules\Expirator\Models\DefaultDataModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
+use PublishPressFuture\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
 
 return [
-    Services::PLUGIN_VERSION => '2.8.3',
+    Services::PLUGIN_VERSION => '2.9.0-beta.1',
 
     Services::PLUGIN_SLUG => 'post-expirator',
 
@@ -292,7 +293,8 @@ return [
     Services::MODULE_SETTINGS => static function (ContainerInterface $container) {
         return new ModuleSettings(
             $container->get(Services::HOOKS),
-            $container->get(Services::SETTINGS)
+            $container->get(Services::SETTINGS),
+            $container->get(Services::POST_TYPE_SETTINGS_MODEL_FACTORY)
         );
     },
 
@@ -349,6 +351,16 @@ return [
                 $container->get(Services::TERM_MODEL_FACTORY),
                 $container->get(Services::EXPIRATION_ACTION_FACTORY)
             );
+        };
+    },
+
+    Services::POST_TYPE_SETTINGS_MODEL_FACTORY => static function (ContainerInterface $container) {
+        /**
+         * @return SettingsPostTypesModel
+         * @throws
+         */
+        return static function () use ($container) {
+            return new SettingsPostTypesModel();
         };
     },
 

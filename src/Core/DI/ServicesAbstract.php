@@ -54,4 +54,5 @@ abstract class ServicesAbstract
     const EXPIRATION_ACTION_FACTORY = 'expiration.action.factory';
     const DEFAULT_DATA_MODEL = 'default.data.model.factory';
     const EXPIRATION_ACTION_MAPPER = 'expiration.action.mapper';
+    const POST_TYPE_SETTINGS_MODEL_FACTORY = 'post.type.settings.mode.factory';
 }

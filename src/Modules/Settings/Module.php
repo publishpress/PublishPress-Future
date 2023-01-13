@@ -28,13 +28,20 @@ class Module implements ModuleInterface
     private $settings;
 
     /**
+     * @var callable
+     */
+    private $settingsPostTypesModeFactory;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
+     * @param callable $settingsPostTypesModeFactory
      */
-    public function __construct(HookableInterface $hooks, $settings)
+    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModeFactory)
     {
         $this->hooks = $hooks;
         $this->settings = $settings;
+        $this->settingsPostTypesModeFactory = $settingsPostTypesModeFactory;
 
         $this->controller = $this->getController();
     }
@@ -51,7 +58,8 @@ class Module implements ModuleInterface
     {
         return new Controller(
             $this->hooks,
-            $this->settings
+            $this->settings,
+            $this->settingsPostTypesModeFactory
         );
     }
 }
