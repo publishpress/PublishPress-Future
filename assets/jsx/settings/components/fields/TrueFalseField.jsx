@@ -9,21 +9,21 @@ const TrueFalseField = function (props) {
         <Fragment>
             <input
                 type="radio"
-                name={props.fieldName}
-                id={props.fieldName + '-true'}
+                name={props.name}
+                id={props.name + '-true'}
                 value={props.trueValue}
                 defaultChecked={props.selected}/>
 
-            <label htmlFor={props.fieldName + '-true'}>{props.trueLabel}</label>
+            <label htmlFor={props.name + '-true'}>{props.trueLabel}</label>
             &nbsp;&nbsp;
             <input
                 type="radio"
-                name={props.fieldName}
+                name={props.name}
                 defaultChecked={!props.selected}
-                id={props.fieldName + '-false'}
+                id={props.name + '-false'}
                 value={props.falseValue}/>
             <label
-                htmlFor={props.fieldName + '-false'}>{props.falseLabel}</label>
+                htmlFor={props.name + '-false'}>{props.falseLabel}</label>
 
             <p className="description">{props.description}</p>
         </Fragment>

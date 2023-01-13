@@ -30,6 +30,7 @@ class SettingsPostTypesModel
             $settings[$postType] = [
                 'label' => esc_html($postTypeObject->label),
                 'active' => isset($defaults['autoEnable']) && $defaults['autoEnable'] == 1,
+                'howToExpire' => isset($defaults['expireType']) ? $defaults['expireType'] : '',
             ];
         }
 

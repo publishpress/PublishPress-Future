@@ -120,12 +120,16 @@ var _SettingsTable = __webpack_require__(/*! ./SettingsTable */ "./assets/jsx/se
 
 var _SettingsTable2 = _interopRequireDefault(_SettingsTable);
 
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _SelectField = __webpack_require__(/*! ./fields/SelectField */ "./assets/jsx/settings/components/fields/SelectField.jsx");
+
+var _SelectField2 = _interopRequireDefault(_SelectField);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
     var panes = [];
-
-    console.log(props.settings);
 
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
@@ -138,24 +142,38 @@ var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
             var _ref2 = _slicedToArray(_ref, 2);
 
             var postType = _ref2[0];
-            var settings = _ref2[1];
+            var postTypeSettings = _ref2[1];
 
             panes.push(React.createElement(
                 _SettingsFieldset2.default,
-                { legend: settings.label },
-                React.createElement(_SettingsTable2.default, {
-                    bodyChildren: React.createElement(
-                        _SettingRow2.default,
-                        { label: props.text.fieldLabelActive },
-                        React.createElement(_TrueFalseField2.default, {
-                            fieldName: 'expirationdate_activemeta-' + postType,
-                            trueLabel: props.text.fieldLabelActive,
-                            trueValue: 'active',
-                            falseLabel: props.text.fieldLabelInactive,
-                            falseValue: 'inactive',
-                            description: props.text.fieldLabelActiveDescription,
-                            selected: settings.active
-                        })
+                { legend: postTypeSettings.label },
+                React.createElement(_SettingsTable2.default, { bodyChildren: React.createElement(
+                        _react.Fragment,
+                        null,
+                        React.createElement(
+                            _SettingRow2.default,
+                            { label: props.text.fieldLabelActive },
+                            React.createElement(_TrueFalseField2.default, {
+                                name: 'expirationdate_activemeta-' + postType,
+                                trueLabel: props.text.fieldLabelActive,
+                                trueValue: 'active',
+                                falseLabel: props.text.fieldLabelInactive,
+                                falseValue: 'inactive',
+                                description: props.text.fieldLabelActiveDescription,
+                                selected: postTypeSettings.active
+                            })
+                        ),
+                        React.createElement(
+                            _SettingRow2.default,
+                            { label: props.text.fieldLabelHowToExpire },
+                            React.createElement(_SelectField2.default, {
+                                name: 'expirationdate_expiretype-' + postType,
+                                className: 'pe-howtoexpire',
+                                options: props.expireTypeList,
+                                description: props.text.fieldLabelHowToExpireDescription,
+                                selected: postTypeSettings.howToExpire
+                            })
+                        )
                     )
                 })
             ));
@@ -369,6 +387,55 @@ exports.default = SettingsTable;
 
 /***/ }),
 
+/***/ "./assets/jsx/settings/components/fields/SelectField.jsx":
+/*!***************************************************************!*\
+  !*** ./assets/jsx/settings/components/fields/SelectField.jsx ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var SelectField = function SelectField(props) {
+    var optionsList = [];
+
+    props.options.forEach(function (el) {
+        optionsList.push(React.createElement(
+            "option",
+            { value: el.value },
+            el.label
+        ));
+    });
+
+    return React.createElement(
+        _react.Fragment,
+        null,
+        React.createElement(
+            "select",
+            { name: props.name, id: props.name, className: props.className, defaultValue: props.selected },
+            optionsList
+        ),
+        React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        )
+    );
+}; /*
+    * Copyright (c) 2023. PublishPress, All rights reserved.
+    */
+
+exports.default = SelectField;
+
+/***/ }),
+
 /***/ "./assets/jsx/settings/components/fields/TrueFalseField.jsx":
 /*!******************************************************************!*\
   !*** ./assets/jsx/settings/components/fields/TrueFalseField.jsx ***!
@@ -391,26 +458,26 @@ var TrueFalseField = function TrueFalseField(props) {
         null,
         React.createElement("input", {
             type: "radio",
-            name: props.fieldName,
-            id: props.fieldName + '-true',
+            name: props.name,
+            id: props.name + '-true',
             value: props.trueValue,
             defaultChecked: props.selected }),
         React.createElement(
             "label",
-            { htmlFor: props.fieldName + '-true' },
+            { htmlFor: props.name + '-true' },
             props.trueLabel
         ),
         "\xA0\xA0",
         React.createElement("input", {
             type: "radio",
-            name: props.fieldName,
+            name: props.name,
             defaultChecked: !props.selected,
-            id: props.fieldName + '-false',
+            id: props.name + '-false',
             value: props.falseValue }),
         React.createElement(
             "label",
             {
-                htmlFor: props.fieldName + '-false' },
+                htmlFor: props.name + '-false' },
             props.falseLabel
         ),
         React.createElement(
@@ -467,7 +534,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
                 {
                     title: config.text.settingsSectionTitle,
                     description: config.text.settingsSectionDescription },
-                React.createElement(_PostTypesSettingsPanes2.default, { settings: config.settings, text: config.text })
+                React.createElement(_PostTypesSettingsPanes2.default, {
+                    settings: config.settings,
+                    text: config.text,
+                    expireTypeList: config.expireTypeList
+                })
             )
         )
     );

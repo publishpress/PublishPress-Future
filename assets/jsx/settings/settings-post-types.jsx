@@ -15,7 +15,11 @@ import PostTypesSettingsPanes from "./components/PostTypesSettingsPanes";
                 <SettingsSection
                     title={config.text.settingsSectionTitle}
                     description={config.text.settingsSectionDescription}>
-                    <PostTypesSettingsPanes settings={config.settings} text={config.text} />
+                    <PostTypesSettingsPanes
+                        settings={config.settings}
+                        text={config.text}
+                        expireTypeList={config.expireTypeList}
+                    />
                 </SettingsSection>
             </SettingsForm>
         </StrictMode>

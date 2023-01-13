@@ -117,8 +117,21 @@ class Controller implements InitializableInterface
                         'fieldLabelActive' => __('Active', 'post-expirator'),
                         'fieldLabelInactive' => __('Inactive', 'post-expirator'),
                         'fieldLabelActiveDescription' => __('Select whether the PublishPress Future meta box is active for this post type.', 'post-expirator'),
+                        'fieldLabelHowToExpire' => __('How to expire', 'post-expirator'),
+                        'fieldLabelHowToExpireDescription' => __('Select the default expire action for the post type.', 'post-expirator'),
                     ],
                     'settings' => $model->getPostTypesSettings(),
+                    'expireTypeList' => [
+                        ['value' => 'draft', 'label' => __('Draft', 'post-expirator')],
+                        ['value' => 'delete', 'label' => __('Delete', 'post-expirator')],
+                        ['value' => 'trash', 'label' => __('Trash', 'post-expirator')],
+                        ['value' => 'private', 'label' => __('Private', 'post-expirator')],
+                        ['value' => 'stick', 'label' => __('Stick', 'post-expirator')],
+                        ['value' => 'unstick', 'label' => __('Unstick', 'post-expirator')],
+                        ['value' => 'category', 'label' => __('Taxonomy: Replace', 'post-expirator')],
+                        ['value' => 'category-add', 'label' => __('Taxonomy: Add', 'post-expirator')],
+                        ['value' => 'category-remove', 'label' => __('Taxonomy: Remove', 'post-expirator')],
+                    ]
                 ]
             );
         }
