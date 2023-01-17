@@ -291,7 +291,7 @@ class PostExpirator_Display
             }
         }
 
-//        $this->render_template('menu-general');
+        $this->render_template('menu-general');
     }
 
     /**
