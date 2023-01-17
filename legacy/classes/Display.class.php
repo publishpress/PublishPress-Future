@@ -71,7 +71,10 @@ class PostExpirator_Display
     public function load_tab($tab)
     {
         $function = 'menu_' . $tab;
-        $this->$function();
+
+        if (method_exists($this, $function)) {
+            $this->$function();
+        }
     }
 
     /**
@@ -229,61 +232,6 @@ class PostExpirator_Display
     }
 
     /**
-     * The default menu.
-     */
-    private function menu_defaults()
-    {
-        $types = postexpirator_get_post_types();
-        $defaults = array();
-
-        if (isset($_POST['expirationdateSaveDefaults'])) {
-            if (! isset($_POST['_postExpiratorMenuDefaults_nonce']) || ! wp_verify_nonce(
-                    sanitize_key($_POST['_postExpiratorMenuDefaults_nonce']),
-                    'postexpirator_menu_defaults'
-                )) {
-                print 'Form Validation Failure: Sorry, your nonce did not verify.';
-                exit;
-            } else {
-                // Filter Content
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                foreach ($types as $type) {
-                    if (isset($_POST['expirationdate_expiretype-' . $type])) {
-                        $defaults[$type]['expireType'] = sanitize_key($_POST['expirationdate_expiretype-' . $type]);
-                    }
-                    if (isset($_POST['expirationdate_autoenable-' . $type])) {
-                        $defaults[$type]['autoEnable'] = intval($_POST['expirationdate_autoenable-' . $type]);
-                    }
-                    if (isset($_POST['expirationdate_taxonomy-' . $type])) {
-                        $defaults[$type]['taxonomy'] = sanitize_text_field($_POST['expirationdate_taxonomy-' . $type]);
-                    }
-                    if (isset($_POST['expirationdate_activemeta-' . $type])) {
-                        $defaults[$type]['activeMetaBox'] = sanitize_text_field($_POST['expirationdate_activemeta-' . $type]);
-                    }
-                    // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                    $defaults[$type]['emailnotification'] = trim(sanitize_text_field($_POST['expirationdate_emailnotification-' . $type]));
-
-                    $defaults[$type]['default-expire-type'] = 'custom';
-
-                    if (isset($_POST['expired-custom-date-' . $type])) {
-                        $defaults[$type]['default-custom-date'] = trim(sanitize_text_field($_POST['expired-custom-date-' . $type]));
-                    }
-
-                    // Save Settings
-                    update_option('expirationdateDefaults' . ucfirst($type), $defaults[$type]);
-                }
-                // phpcs:enable
-                echo "<div id='message' class='updated fade'><p>";
-                _e('Saved Options!', 'post-expirator');
-                echo '</p></div>';
-            }
-        }
-
-        $this->render_template('menu-defaults', array('types' => $types, 'defaults' => $defaults));
-    }
-
-    /**
      * Show the Expiration Date options page
      */
     private function menu_general()
@@ -343,7 +291,7 @@ class PostExpirator_Display
             }
         }
 
-        $this->render_template('menu-general');
+//        $this->render_template('menu-general');
     }
 
     /**

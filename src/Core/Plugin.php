@@ -11,6 +11,11 @@ use PublishPressFuture\Framework\ModuleInterface as ModuleInterface;
 class Plugin implements InitializableInterface
 {
     /**
+     * @var bool
+     */
+    private $initialized = false;
+
+    /**
      * @var ModuleInterface[]
      */
     private $modules;
@@ -58,6 +63,12 @@ class Plugin implements InitializableInterface
 
     public function initialize()
     {
+        if ($this->initialized) {
+            return;
+        }
+
+        $this->initialized = true;
+
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
 
         $pluginFile = $this->basePath . '/' . $this->pluginSlug . '.php';

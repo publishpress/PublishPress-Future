@@ -13,7 +13,7 @@ $debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
     <h2><?php
         esc_html_e('PublishPress Future', 'post-expirator'); ?></h2>
     <div id="pe-settings-tabs">
-        <nav class="nav-tab-wrapper postexpirator-nav-tab-wrapper">
+        <nav class="nav-tab-wrapper postexpirator-nav-tab-wrapper" id="postexpirator-nav">
             <a href="<?php
             echo esc_url(admin_url('admin.php?page=publishpress-future&tab=general')); ?>"
                class="pe-tab nav-tab <?php

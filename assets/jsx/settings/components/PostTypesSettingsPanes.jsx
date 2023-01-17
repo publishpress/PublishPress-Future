@@ -35,7 +35,7 @@ const PostTypesSettingsPanes = function (props) {
                                 name={'expirationdate_expiretype-' + postType}
                                 className={'pe-howtoexpire'}
                                 options={props.expireTypeList}
-                                description={props.text.fieldHowToExpireDescription}
+                                description={props.text.fieldHowToExpire1Description}
                                 selected={postTypeSettings.howToExpire}
                             />
                         </SettingRow>
@@ -77,6 +77,7 @@ const PostTypesSettingsPanes = function (props) {
                                 selected={postTypeSettings.defaultExpireOffset}
                                 placeholder={postTypeSettings.globalDefaultExpireOffset}
                                 description={props.text.fieldDefaultDateTimeOffsetDescription}
+                                unescapedDescription={true}
                             />
                         </SettingRow>
                     </Fragment>

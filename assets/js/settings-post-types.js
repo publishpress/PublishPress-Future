@@ -86,6 +86,35 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./assets/jsx/settings/components/ButtonsPanel.jsx":
+/*!*********************************************************!*\
+  !*** ./assets/jsx/settings/components/ButtonsPanel.jsx ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var ButtonsPanel = function ButtonsPanel(props) {
+    return React.createElement(
+        "div",
+        null,
+        props.children
+    );
+};
+
+exports.default = ButtonsPanel;
+
+/***/ }),
+
 /***/ "./assets/jsx/settings/components/PostTypesSettingsPanes.jsx":
 /*!*******************************************************************!*\
   !*** ./assets/jsx/settings/components/PostTypesSettingsPanes.jsx ***!
@@ -174,7 +203,7 @@ var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
                                 name: 'expirationdate_expiretype-' + postType,
                                 className: 'pe-howtoexpire',
                                 options: props.expireTypeList,
-                                description: props.text.fieldHowToExpireDescription,
+                                description: props.text.fieldHowToExpire1Description,
                                 selected: postTypeSettings.howToExpire
                             })
                         ),
@@ -219,7 +248,8 @@ var PostTypesSettingsPanes = function PostTypesSettingsPanes(props) {
                                 name: 'expired-custom-date-' + postType,
                                 selected: postTypeSettings.defaultExpireOffset,
                                 placeholder: postTypeSettings.globalDefaultExpireOffset,
-                                description: props.text.fieldDefaultDateTimeOffsetDescription
+                                description: props.text.fieldDefaultDateTimeOffsetDescription,
+                                unescapedDescription: true
                             })
                         )
                     )
@@ -435,6 +465,75 @@ exports.default = SettingsTable;
 
 /***/ }),
 
+/***/ "./assets/jsx/settings/components/SubmitButton.jsx":
+/*!*********************************************************!*\
+  !*** ./assets/jsx/settings/components/SubmitButton.jsx ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SubmitButton = function SubmitButton(props) {
+    return React.createElement("input", {
+        type: "submit",
+        name: props.name,
+        value: props.text,
+        className: "button-primary"
+    });
+};
+
+exports.default = SubmitButton;
+
+/***/ }),
+
+/***/ "./assets/jsx/settings/components/fields/NonceField.jsx":
+/*!**************************************************************!*\
+  !*** ./assets/jsx/settings/components/fields/NonceField.jsx ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var NonceField = function NonceField(props) {
+    if (!props.name) {
+        props.name = '_wpnonce';
+    }
+
+    if (!props.referrer) {
+        props.referrer = true;
+    }
+
+    return React.createElement(
+        _react.Fragment,
+        null,
+        React.createElement("input", { type: "hidden", name: props.name, id: props.name, value: props.nonce }),
+        props.referrer && React.createElement("input", { type: "hidden", name: "_wp_http_referer", value: props.referrer })
+    );
+}; /*
+    * Copyright (c) 2023. PublishPress, All rights reserved.
+    */
+
+exports.default = NonceField;
+
+/***/ }),
+
 /***/ "./assets/jsx/settings/components/fields/SelectField.jsx":
 /*!***************************************************************!*\
   !*** ./assets/jsx/settings/components/fields/SelectField.jsx ***!
@@ -513,6 +612,19 @@ Object.defineProperty(exports, "__esModule", {
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var TextField = function TextField(props) {
+    var description = void 0;
+
+    if (props.unescapedDescription) {
+        // If using this option, the HTML has to be escaped before injected into the JS interface.
+        description = React.createElement("p", { className: "description", dangerouslySetInnerHTML: { __html: props.description } });
+    } else {
+        description = React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        );
+    }
+
     return React.createElement(
         _react.Fragment,
         null,
@@ -524,11 +636,7 @@ var TextField = function TextField(props) {
             defaultValue: props.selected,
             placeholder: props.placeholder
         }),
-        React.createElement(
-            "p",
-            { className: "description" },
-            props.description
-        )
+        description
     );
 }; /*
     * Copyright (c) 2023. PublishPress, All rights reserved.
@@ -622,15 +730,36 @@ var _PostTypesSettingsPanes = __webpack_require__(/*! ./components/PostTypesSett
 
 var _PostTypesSettingsPanes2 = _interopRequireDefault(_PostTypesSettingsPanes);
 
+var _SubmitButton = __webpack_require__(/*! ./components/SubmitButton */ "./assets/jsx/settings/components/SubmitButton.jsx");
+
+var _SubmitButton2 = _interopRequireDefault(_SubmitButton);
+
+var _ButtonsPanel = __webpack_require__(/*! ./components/ButtonsPanel */ "./assets/jsx/settings/components/ButtonsPanel.jsx");
+
+var _ButtonsPanel2 = _interopRequireDefault(_ButtonsPanel);
+
+var _NonceField = __webpack_require__(/*! ./components/fields/NonceField */ "./assets/jsx/settings/components/fields/NonceField.jsx");
+
+var _NonceField2 = _interopRequireDefault(_NonceField);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(function (wp, config) {
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+(function (wp, config, $) {
     var settingsForm = React.createElement(
         _react.StrictMode,
         null,
         React.createElement(
             _SettingsForm2.default,
             null,
+            React.createElement(_NonceField2.default, {
+                name: "_postExpiratorMenuDefaults_nonce",
+                nonce: config.nonce,
+                referrer: config.referrer
+            }),
             React.createElement(
                 _SettingsSection2.default,
                 {
@@ -642,14 +771,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
                     expireTypeList: config.expireTypeList,
                     taxonomiesList: config.taxonomiesList
                 })
+            ),
+            React.createElement(
+                _ButtonsPanel2.default,
+                null,
+                React.createElement(_SubmitButton2.default, {
+                    name: "expirationdateSaveDefaults",
+                    text: config.text.saveChanges
+                })
             )
         )
     );
 
+    var wrapper = $('<div id="publishpress-future-settings-post-types"></div>');
+    var navBar = $('#postexpirator-nav');
+    wrapper.insertAfter(navBar);
+
     (0, _reactDom.render)(settingsForm, document.getElementById('publishpress-future-settings-post-types'));
-})(window.wp, window.publishpressFutureConfig); /*
-                                                 * Copyright (c) 2023. PublishPress, All rights reserved.
-                                                 */
+})(window.wp, window.publishpressFutureConfig, jQuery);
 
 _PostTypesSettingsPanes2.default;
 
