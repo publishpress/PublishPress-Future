@@ -239,7 +239,10 @@ class Controller implements InitializableInterface
 
     private function saveTabDefaults()
     {
-        $types = postexpirator_get_post_types();
+        $settingsPostTypesModelFactory = $this->settingsPostTypesModelFactory;
+        $settingsModel = $settingsPostTypesModelFactory();
+
+        $postTypes = $settingsModel->getPostTypes();
 
         if (isset($_POST['expirationdateSaveDefaults'])) {
             if (! isset($_POST['_postExpiratorMenuDefaults_nonce']) || ! \wp_verify_nonce(
@@ -247,44 +250,43 @@ class Controller implements InitializableInterface
                     'postexpirator_menu_defaults'
                 )) {
                 wp_die(__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
-            } else {
-                // Filter Content
-                $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                foreach ($types as $type) {
-                    $defaults = [];
-
-                    if (isset($_POST['expirationdate_expiretype-' . $type])) {
-                        $defaults['expireType'] = \sanitize_key($_POST['expirationdate_expiretype-' . $type]);
-                    }
-
-                    if (isset($_POST['expirationdate_autoenable-' . $type])) {
-                        $defaults['autoEnable'] = \intval($_POST['expirationdate_autoenable-' . $type]);
-                    }
-
-                    if (isset($_POST['expirationdate_taxonomy-' . $type])) {
-                        $defaults['taxonomy'] = \sanitize_text_field($_POST['expirationdate_taxonomy-' . $type]);
-                    }
-
-                    if (isset($_POST['expirationdate_activemeta-' . $type])) {
-                        $defaults['activeMetaBox'] = \sanitize_text_field($_POST['expirationdate_activemeta-' . $type]);
-                    }
-
-                    // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                    $defaults['emailnotification'] = trim(\sanitize_text_field($_POST['expirationdate_emailnotification-' . $type]));
-
-                    $defaults['default-expire-type'] = 'custom';
-
-                    if (isset($_POST['expired-custom-date-' . $type])) {
-                        $defaults['default-custom-date'] = trim(\sanitize_text_field($_POST['expired-custom-date-' . $type]));
-                    }
-
-                    // Save Settings
-                    \update_option('expirationdateDefaults' . ucfirst($type), $defaults);
-                }
-                // phpcs:enable
             }
+
+            $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+            // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            foreach ($postTypes as $postType) {
+                $settings = [];
+
+                if (isset($_POST['expirationdate_expiretype-' . $postType])) {
+                    $settings['expireType'] = \sanitize_key($_POST['expirationdate_expiretype-' . $postType]);
+                }
+
+                if (isset($_POST['expirationdate_autoenable-' . $postType])) {
+                    $settings['autoEnable'] = \intval($_POST['expirationdate_autoenable-' . $postType]);
+                }
+
+                if (isset($_POST['expirationdate_taxonomy-' . $postType])) {
+                    $settings['taxonomy'] = \sanitize_text_field($_POST['expirationdate_taxonomy-' . $postType]);
+                }
+
+                if (isset($_POST['expirationdate_activemeta-' . $postType])) {
+                    $settings['activeMetaBox'] = \sanitize_text_field($_POST['expirationdate_activemeta-' . $postType]);
+                }
+
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+                $settings['emailnotification'] = trim(\sanitize_text_field($_POST['expirationdate_emailnotification-' . $postType]));
+
+                $settings['default-expire-type'] = 'custom';
+
+                if (isset($_POST['expired-custom-date-' . $postType])) {
+                    $settings['default-custom-date'] = trim(\sanitize_text_field($_POST['expired-custom-date-' . $postType]));
+                }
+
+                // Save Settings
+                $settingsModel->updatePostTypesSettings($postType, $settings);
+            }
+            // phpcs:enable
         }
     }
 }

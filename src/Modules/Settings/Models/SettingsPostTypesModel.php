@@ -7,7 +7,7 @@ namespace PublishPressFuture\Modules\Settings\Models;
 
 class SettingsPostTypesModel
 {
-    private function getPostTypes()
+    public function getPostTypes()
     {
         return postexpirator_get_post_types();
     }
@@ -42,5 +42,10 @@ class SettingsPostTypesModel
         }
 
         return $settings;
+    }
+
+    public function updatePostTypesSettings($postType, $settings)
+    {
+        \update_option('expirationdateDefaults' . ucfirst($postType), $settings);
     }
 }
