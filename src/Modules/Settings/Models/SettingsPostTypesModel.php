@@ -5,6 +5,9 @@
 
 namespace PublishPressFuture\Modules\Settings\Models;
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
+
 class SettingsPostTypesModel
 {
     public function getPostTypes()
@@ -22,8 +25,8 @@ class SettingsPostTypesModel
             $postTypeObject = get_post_type_object($postType);
 
             // TODO: Use DI here!!
-            $container = \PublishPressFuture\Core\DI\Container::getInstance();
-            $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+            $container = Container::getInstance();
+            $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
