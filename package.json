@@ -11,8 +11,29 @@
     "wordpress-plugin"
   ],
   "license": "GPL-2.0+",
+  "scripts": {
+    "jsbuild:dev": "wp-scripts build --mode development",
+    "jsbuild:watch": "wp-scripts build --mode development --watch",
+    "jsbuild": "wp-scripts build --mode production",
+    "tests:start": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} start",
+    "tests:stop": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} stop",
+    "tests:build:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} brun",
+    "tests:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} run",
+    "build": "/project/dev-workspace/docker/scripts/ppbuild build",
+    "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
+    "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
+    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
+    "make-mo": "wp i18n make-mo ./languages ./languages"
+  },
+  "pot": {
+    "languageteam": "PublishPress Future Translate Team",
+    "lasttranslator": "PublishPress Future Translate Team"
+  },
+  "dependencies": {
+    "@wordpress/components": "^23.2.0"
+  },
   "devDependencies": {
-    "@wordpress/scripts": "^16.1.3",
+    "@wordpress/scripts": "^25.2.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -23,35 +44,9 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "braces": "^3.0.2",
-    "grunt": "^1.3.0",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-mkdir": "^1.0.0",
-    "grunt-phpcbf": "^0.1.1",
-    "grunt-phpcs": "^0.4.0",
-    "grunt-phplint": "^0.1.0",
-    "grunt-wp-i18n": "^1.0.3",
-    "load-grunt-tasks": "^5.1.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
+    "inquirer-autocomplete-prompt": "^3.0.0",
     "inquirer-interrupted-prompt": "^2.0.1",
-    "inquirer-autocomplete-prompt": "^3.0.0"
-  },
-  "scripts": {
-    "jsbuild:dev": "wp-scripts build --mode development",
-    "jsbuild:watch": "wp-scripts build --mode development --watch",
-    "jsbuild": "wp-scripts build --mode production",
-    "tests:start": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} start",
-    "tests:stop": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} stop",
-    "tests:build:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} brun",
-    "tests:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} run",
-    "build": "builder/docker/scripts/build build",
-    "build:dir": "builder/docker/scripts/build build-dir",
-    "build:clean": "builder/docker/scripts/build clean",
-    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
-    "make-mo": "wp i18n make-mo ./languages ./languages"
-  },
-  "pot": {
-    "languageteam": "PostExpirator Translate Team",
-    "lasttranslator": "PostExpirator Translate Team"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
