@@ -34,10 +34,10 @@ const PostTypeSettingsPanel = function (props) {
             let settingsTermsOptions = null;
             let option;
             list.forEach(term => {
-                option = {value: term.slug, label: term.name};
+                option = {value: term.id, label: term.name};
                 options.push(option);
 
-                if (postTypeTaxonomy === props.settings.taxonomy && props.settings.terms.includes(term.slug)) {
+                if (postTypeTaxonomy === props.settings.taxonomy && props.settings.terms.includes(term.id)) {
                     if (settingsTermsOptions === null) {
                         settingsTermsOptions = [];
                     }

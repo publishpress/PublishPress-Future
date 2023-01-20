@@ -69,10 +69,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
                 var expireAction = this.getExpireType(postMeta);
 
-                var categories = [];
-                if (expireAction.includes('category')) {
-                    categories = this.getCategories(postMeta);
-                }
+                var categories = this.getCategories(postMeta);
 
                 if (postMeta['_expiration-date-status'] && postMeta['_expiration-date-status'] === 'saved') {
                     enabled = true;
@@ -298,9 +295,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function getCategories(postMeta) {
                 var categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
                 var categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
+                var defaultCategories = config.defaults.terms.split(',');
 
                 if (!categoriesNew && !categoriesOld) {
-                    return [];
+                    return defaultCategories;
                 }
 
                 if ((typeof categoriesNew === 'undefined' ? 'undefined' : _typeof(categoriesNew)) === 'object' && categoriesNew.length > 0) {
@@ -311,7 +309,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     return [categoriesOld];
                 }
 
-                return [];
+                return defaultCategories;
             }
 
             // fired for the autocomplete

@@ -31,7 +31,8 @@ class SettingsPostTypesModel
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
             $terms = isset($defaults['terms']) ? explode(',', $defaults['terms']) : [];
-            $terms = array_filter($terms, function($value) {return trim($value) !== ''; });
+            $terms = array_map(function($value) {return (int)$value;}, $terms);
+            $terms = array_filter($terms, function($value) {return (int)$value > 0;});
 
             $settings[$postType] = [
                 'label' => esc_html($postTypeObject->label),
