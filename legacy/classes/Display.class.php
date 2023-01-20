@@ -372,7 +372,7 @@ class PostExpirator_Display
          */
         $template = apply_filters(
             ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_FILE,
-            POSTEXPIRATOR_LEGACYDIR . "/views/{$name}.php",
+            POSTEXPIRATOR_BASEDIR . "/src/Views/{$name}.php",
             $name,
             $params
         );
