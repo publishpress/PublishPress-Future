@@ -159,7 +159,7 @@ class Controller implements InitializableInterface
                             'Select the default expire action for the post type.',
                             'post-expirator'
                         ),
-                        'fieldAutoEnable' => __('Auto-Enable?', 'post-expirator'),
+                        'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
                         'fieldAutoEnableTrue' => __('Enabled', 'post-expirator'),
                         'fieldAutoEnableFalse' => __('Disabled', 'post-expirator'),
                         'fieldAutoEnableDescription' => __(
@@ -168,7 +168,7 @@ class Controller implements InitializableInterface
                         ),
                         'fieldTaxonomy' => __('Taxonomy (hierarchical)', 'post-expirator'),
                         'noItemsfound' => __('No taxonomies found', 'post-expirator'),
-                        'fieldTaxonomyDescription' => __('Select the hierarchical taxonomy to be used for "category" based expiration.', 'post-expirator'),
+                        'fieldTaxonomyDescription' => __('Select the hierarchical taxonomy to be used for taxonomy based expiration.', 'post-expirator'),
                         'fieldWhoToNotify' => __('Who to notify', 'post-expirator'),
                         'fieldWhoToNotifyDescription' => __('Enter a comma separate list of emails that you would like to be notified when the post expires.', 'post-expirator'),
                         'fieldDefaultDateTimeOffset' => __('Default date/time offset', 'post-expirator'),
@@ -185,6 +185,7 @@ class Controller implements InitializableInterface
                             '<code>',
                             '</code>'
                         ),
+                        'fieldTerm' => __('Default term', 'post-expirator'),
                         'saveChanges' => __('Save changes', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
@@ -204,6 +205,7 @@ class Controller implements InitializableInterface
                     ),
                     'nonce' => wp_create_nonce('postexpirator_menu_defaults'),
                     'referrer' => esc_html(remove_query_arg('_wp_http_referer')),
+                    'restUrl' => get_rest_url(),
                 ]
             );
         }
@@ -270,6 +272,10 @@ class Controller implements InitializableInterface
                     $settings['taxonomy'] = \sanitize_text_field($_POST['expirationdate_taxonomy-' . $postType]);
                 }
 
+                if (isset($_POST['expirationdate_terms-' . $postType])) {
+                    $settings['terms'] = \sanitize_text_field($_POST['expirationdate_terms-' . $postType]);
+                }
+
                 if (isset($_POST['expirationdate_activemeta-' . $postType])) {
                     $settings['activeMetaBox'] = \sanitize_text_field($_POST['expirationdate_activemeta-' . $postType]);
                 }
@@ -282,6 +288,8 @@ class Controller implements InitializableInterface
                 if (isset($_POST['expired-custom-date-' . $postType])) {
                     $settings['default-custom-date'] = trim(\sanitize_text_field($_POST['expired-custom-date-' . $postType]));
                 }
+
+                ray($settings)->label('controller');
 
                 // Save Settings
                 $settingsModel->updatePostTypesSettings($postType, $settings);

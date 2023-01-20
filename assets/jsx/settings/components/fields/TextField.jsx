@@ -2,7 +2,7 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import {Fragment} from "react";
+import {Fragment, useState, useEffect} from "react";
 
 const TextField = function (props) {
     let description;
@@ -14,6 +14,20 @@ const TextField = function (props) {
         description = <p className="description">{props.description}</p>;
     }
 
+    const [theValue, setTheValue] = useState(props.value);
+
+    const onChange = function (e) {
+        setTheValue(jQuery(e.target).val());
+
+        if (props.onChange) {
+            props.onChange();
+        }
+    };
+    
+    useEffect(() => {
+        setTheValue(props.value);
+    }, [props.value]);
+
     return (
         <Fragment>
             <input
@@ -21,8 +35,9 @@ const TextField = function (props) {
                 name={props.name}
                 id={props.name}
                 className={props.className}
-                defaultValue={props.selected}
+                value={theValue}
                 placeholder={props.placeholder}
+                onChange={onChange}
             />
 
             {description}

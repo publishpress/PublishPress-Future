@@ -17,9 +17,24 @@ const SelectField = function (props) {
         return (<p>{props.noItemFoundMessage ? props.noItemFoundMessage : 'No items found'}</p>)
     }
 
+    const onChange = (e) => {
+        if (! props.onChange) {
+            return;
+        }
+
+        props.onChange(jQuery(e.target).val());
+    };
+
     return (
         <Fragment>
-            <select name={props.name} id={props.name} className={props.className} defaultValue={props.selected}>
+            <select
+                name={props.name}
+                id={props.name}
+                className={props.className}
+                defaultValue={props.selected}
+                onChange={onChange}
+                data-data={props.data}
+            >
                 {optionsList}
             </select>
 

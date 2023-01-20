@@ -6,7 +6,7 @@ import {StrictMode} from "react";
 import {render} from 'react-dom';
 import SettingsSection from "./components/SettingsSection";
 import SettingsForm from "./components/SettingsForm";
-import PostTypesSettingsPanes from "./components/PostTypesSettingsPanes";
+import PostTypesSettingsPanels from "./components/PostTypesSettingsPanels";
 import SubmitButton from "./components/SubmitButton";
 import ButtonsPanel from "./components/ButtonsPanel";
 import NonceField from "./components/fields/NonceField";
@@ -23,11 +23,12 @@ import NonceField from "./components/fields/NonceField";
                 <SettingsSection
                     title={config.text.settingsSectionTitle}
                     description={config.text.settingsSectionDescription}>
-                    <PostTypesSettingsPanes
+                    <PostTypesSettingsPanels
                         settings={config.settings}
                         text={config.text}
                         expireTypeList={config.expireTypeList}
                         taxonomiesList={config.taxonomiesList}
+                        restUrl={config.restUrl}
                     />
                 </SettingsSection>
 
@@ -48,4 +49,4 @@ import NonceField from "./components/fields/NonceField";
     render(settingsForm, document.getElementById('publishpress-future-settings-post-types'));
 })(window.wp, window.publishpressFutureConfig, jQuery);
 
-PostTypesSettingsPanes
+PostTypesSettingsPanels

@@ -30,7 +30,10 @@
     "lasttranslator": "PublishPress Future Translate Team"
   },
   "dependencies": {
-    "@wordpress/components": "^23.2.0"
+    "@wordpress/api-fetch": "^6.22.0",
+    "@wordpress/components": "^23.2.0",
+    "@wordpress/url": "^3.26.0",
+    "react-select": "^5.7.0"
   },
   "devDependencies": {
     "@wordpress/scripts": "^25.2.0",
@@ -46,6 +49,7 @@
     "braces": "^3.0.2",
     "inquirer-autocomplete-prompt": "^3.0.0",
     "inquirer-interrupted-prompt": "^2.0.1",
+    "node-ray": "^1.19.4",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   }

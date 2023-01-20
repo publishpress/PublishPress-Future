@@ -30,6 +30,9 @@ class SettingsPostTypesModel
 
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
+            $terms = isset($defaults['terms']) ? explode(',', $defaults['terms']) : [];
+            $terms = array_filter($terms, function($value) {return trim($value) !== ''; });
+
             $settings[$postType] = [
                 'label' => esc_html($postTypeObject->label),
                 'active' => (! isset($defaults['activeMetaBox']) && in_array($postType, array('post', 'page'), true))
@@ -37,12 +40,15 @@ class SettingsPostTypesModel
                 'howToExpire' => isset($defaults['expireType']) ? $defaults['expireType'] : '',
                 'autoEnabled' => isset($defaults['autoEnable']) && $defaults['autoEnable'] == 1,
                 'taxonomy' => isset($defaults['taxonomy']) ? $defaults['taxonomy'] : false,
+                'terms' => $terms,
                 'emailNotification' => isset($defaults['emailnotification']) ? $defaults['emailnotification'] : '',
                 'defaultExpireType' => isset($defaults['default-expire-type']) ? $defaults['default-expire-type'] : '',
                 'defaultExpireOffset' => isset($defaults['default-custom-date']) ? $defaults['default-custom-date'] : '',
                 'globalDefaultExpireOffset' => $placeholder = $settingsFacade->getDefaultDateCustom(),
             ];
+
         }
+        ray($settings)->label('model');
 
         return $settings;
     }
