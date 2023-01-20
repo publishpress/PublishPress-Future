@@ -46,8 +46,6 @@ const PostTypeSettingsPanel = function (props) {
                 }
             });
 
-            console.log(settingsTermsOptions);
-
             setTermOptions(options);
             setTermsSelectIsLoading(false);
             setSelectedTerms(settingsTermsOptions);

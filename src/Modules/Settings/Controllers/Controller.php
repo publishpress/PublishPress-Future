@@ -289,8 +289,6 @@ class Controller implements InitializableInterface
                     $settings['default-custom-date'] = trim(\sanitize_text_field($_POST['expired-custom-date-' . $postType]));
                 }
 
-                ray($settings)->label('controller');
-
                 // Save Settings
                 $settingsModel->updatePostTypesSettings($postType, $settings);
             }

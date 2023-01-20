@@ -6270,8 +6270,6 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                 }
             });
 
-            console.log(settingsTermsOptions);
-
             setTermOptions(options);
             setTermsSelectIsLoading(false);
             setSelectedTerms(settingsTermsOptions);

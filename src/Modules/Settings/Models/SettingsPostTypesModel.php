@@ -48,7 +48,6 @@ class SettingsPostTypesModel
             ];
 
         }
-        ray($settings)->label('model');
 
         return $settings;
     }
