@@ -527,14 +527,6 @@ msgid ""
 "pages. Defaults to custom."
 msgstr ""
 
-#: views/menu-general.php:189
-msgid "Default Expiration Taxonomy"
-msgstr ""
-
-#: views/menu-general.php:205
-msgid "Sets the default expiration taxonomy for the post."
-msgstr ""
-
 #: views/menu-general.php:211
 msgid "Expiration Email Notification"
 msgstr ""

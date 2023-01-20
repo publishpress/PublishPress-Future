@@ -511,14 +511,6 @@ msgstr "L’activation de cette option affichera la date d’expiration automati
 msgid "Post Footer Display"
 msgstr "Affichage dans le pied de page"
 
-#: legacy/views/menu-general.php:160
-msgid "Sets the default expiration taxonomy for the post."
-msgstr "Définissez la taxonomie d’expiration par défaut pour la publication"
-
-#: legacy/views/menu-general.php:141
-msgid "Default Expiration Taxonomy"
-msgstr "Expiration de taxonomie par défaut"
-
 #: legacy/views/menu-general.php:108
 msgid "Set the default expiration date to be used when creating new posts and pages. Defaults to custom."
 msgstr "Définissez la date d’expiration par défaut à utiliser lors de la création de nouveaux articles et de pages. La valeur par défaut est Personnalisé."

@@ -511,14 +511,6 @@ msgstr "Abilitando l'opzione seguente verrà mostrata automaticamente la data di
 msgid "Post Footer Display"
 msgstr "Visualizzazione nel footer"
 
-#: legacy/views/menu-general.php:160
-msgid "Sets the default expiration taxonomy for the post."
-msgstr "Imposta la tassonomia di scadenza predefinita per l'articolo."
-
-#: legacy/views/menu-general.php:141
-msgid "Default Expiration Taxonomy"
-msgstr "Tassonomia di scadenza predefinita"
-
 #: legacy/views/menu-general.php:108
 msgid "Set the default expiration date to be used when creating new posts and pages. Defaults to custom."
 msgstr "Imposta la data di scadenza predefinita da utilizzare quando si creano nuovi articoli e pagine. Il valore predefinito è personalizzato."
