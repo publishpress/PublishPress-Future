@@ -32,10 +32,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $container = \PublishPressFuture\Core\DI\Container::getInstance();
     $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
 
-    $defaults = $settingsFacade->getPostTypeDefaults($post_type);
+    $defaultsForPostType = $settingsFacade->getPostTypeDefaults($post_type);
     $expireType = 'draft';
-    if (isset($defaults['expireType'])) {
-        $expireType = $defaults['expireType'];
+    if (isset($defaultsForPostType['expireType'])) {
+        $expireType = $defaultsForPostType['expireType'];
     }
 
     // these defaults will be used by quick edit
@@ -69,6 +69,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
             ), true)) {
             $categories = implode(',', $attributes['category']);
         }
+    }
+
+    if (empty($categories)) {
+        $categories = $defaultsForPostType['terms'];
     }
 
     // the hidden fields will be used by quick edit
