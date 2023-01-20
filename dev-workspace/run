@@ -10,4 +10,4 @@
 [[ -f cache/.composer/auth.json ]] || echo '{}' > cache/.composer/auth.json
 
 # Run the terminal service.
-docker compose -f docker/compose.yaml run --rm terminal
+docker compose -f docker/compose.yaml run --rm terminal "$@"
