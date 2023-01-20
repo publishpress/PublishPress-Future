@@ -38,6 +38,8 @@ const SelectField = function (props) {
                 {optionsList}
             </select>
 
+            {props.children}
+
             <p className="description">{props.description}</p>
         </Fragment>
     )

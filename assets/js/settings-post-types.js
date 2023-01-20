@@ -6351,7 +6351,6 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                         options: props.taxonomiesList,
                         selected: postTypeTaxonomy,
                         noItemFoundMessage: props.text.noItemsfound,
-                        description: props.text.fieldTaxonomyDescription,
                         data: props.postType,
                         onChange: onChangeTaxonomy
                     }),
@@ -6361,7 +6360,8 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                         options: termOptions,
                         value: selectedTerms,
                         isLoading: termsSelectIsLoading,
-                        onChange: onChangeTerms
+                        onChange: onChangeTerms,
+                        description: props.text.fieldTaxonomyDescription
                     })
                 ),
                 React.createElement(
@@ -6777,6 +6777,7 @@ var SelectField = function SelectField(props) {
             },
             optionsList
         ),
+        props.children,
         React.createElement(
             'p',
             { className: 'description' },
@@ -6909,6 +6910,11 @@ var TokensField = function TokensField(props) {
     return React.createElement(
         _react.Fragment,
         null,
+        props.label && React.createElement(
+            "label",
+            { className: "publishpress-future-token-label" },
+            props.label
+        ),
         React.createElement(_reactSelect2.default, {
             options: props.options,
             isMulti: true,
@@ -6916,7 +6922,8 @@ var TokensField = function TokensField(props) {
             isLoading: props.isLoading,
             delimiter: ",",
             name: props.name,
-            onChange: onChange
+            onChange: onChange,
+            className: "publishpres-future-token-field"
         }),
         description
     );

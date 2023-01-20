@@ -120,10 +120,10 @@ const PostTypeSettingsPanel = function (props) {
                             options={props.taxonomiesList}
                             selected={postTypeTaxonomy}
                             noItemFoundMessage={props.text.noItemsfound}
-                            description={props.text.fieldTaxonomyDescription}
                             data={props.postType}
                             onChange={onChangeTaxonomy}
-                        />
+                        >
+                        </SelectField>
 
                         {props.taxonomiesList.length > 0 &&
                             <TokensField
@@ -133,6 +133,7 @@ const PostTypeSettingsPanel = function (props) {
                                 value={selectedTerms}
                                 isLoading={termsSelectIsLoading}
                                 onChange={onChangeTerms}
+                                description={props.text.fieldTaxonomyDescription}
                             />
                         }
                     </SettingRow>

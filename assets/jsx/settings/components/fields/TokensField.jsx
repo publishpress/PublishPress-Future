@@ -25,6 +25,10 @@ const TokensField = (props) => {
 
     return (
         <Fragment>
+            {props.label &&
+                <label className="publishpress-future-token-label">{props.label}</label>
+            }
+
             <Select
                 options={props.options}
                 isMulti={true}
@@ -33,6 +37,7 @@ const TokensField = (props) => {
                 delimiter=","
                 name={props.name}
                 onChange={onChange}
+                className="publishpres-future-token-field"
             />
 
             {description}
