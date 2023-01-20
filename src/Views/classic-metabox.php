@@ -139,6 +139,11 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     $taxonomies = get_object_taxonomies($post->post_type, 'object');
     $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
 
+    if (empty($categories)) {
+        $categories = explode(',', $defaultsOption['terms']);
+        $categories = array_map('intval', $categories);
+    }
+
     if (sizeof($taxonomies) === 0) {
         echo '<p>' . esc_html__(
                 'You must assign a hierarchical taxonomy to this post type to use this feature.',
