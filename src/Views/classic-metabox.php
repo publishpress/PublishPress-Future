@@ -124,53 +124,51 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     </div>
 
     <?php
-    if ($post->post_type !== 'page') {
-        if (isset($expireType) && ($expireType === 'category' || $expireType === 'category-add' || $expireType === 'category-remove')) {
-            $catdisplay = 'block';
-        } else {
-            $catdisplay = 'none';
-        }
-
-        echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
-        echo '<br/>' . esc_html__('Expiration Taxonomies', 'post-expirator') . ':<br/>';
-
-        echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
-        echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
-        $walker = new Walker_PostExpirator_Category_Checklist();
-        $taxonomies = get_object_taxonomies($post->post_type, 'object');
-        $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
-
-        if (sizeof($taxonomies) === 0) {
-            echo '<p>' . esc_html__(
-                    'You must assign a hierarchical taxonomy to this post type to use this feature.',
-                    'post-expirator'
-                ) . '</p>';
-        } elseif (sizeof($taxonomies) > 1 && ! isset($defaultsOption['taxonomy'])) {
-            echo '<p>' . esc_html__(
-                    'More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
-                    'post-expirator'
-                ) . '</p>';
-        } else {
-            $keys = array_keys($taxonomies);
-            $taxonomyId = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
-            wp_terms_checklist(0, array(
-                'taxonomy' => $taxonomyId,
-                'walker' => $walker,
-                'selected_cats' => $categories,
-                'checked_ontop' => false
-            ));
-            echo '<input type="hidden" name="taxonomy-hierarchical" value="' . esc_attr($taxonomyId) . '" />';
-        }
-        echo '</ul>';
-        echo '</div>';
-        if (isset($taxonomyId)) {
-            echo '<p class="post-expirator-taxonomy-name">' . esc_html__(
-                    'Taxonomy Name',
-                    'post-expirator'
-                ) . ': ' . esc_html($taxonomyId) . '</p>';
-        }
-        echo '</div>';
+    if (isset($expireType) && ($expireType === 'category' || $expireType === 'category-add' || $expireType === 'category-remove')) {
+        $catdisplay = 'block';
+    } else {
+        $catdisplay = 'none';
     }
+
+    echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
+    echo '<br/>' . esc_html__('Expiration Taxonomies', 'post-expirator') . ':<br/>';
+
+    echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
+    echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
+    $walker = new Walker_PostExpirator_Category_Checklist();
+    $taxonomies = get_object_taxonomies($post->post_type, 'object');
+    $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
+
+    if (sizeof($taxonomies) === 0) {
+        echo '<p>' . esc_html__(
+                'You must assign a hierarchical taxonomy to this post type to use this feature.',
+                'post-expirator'
+            ) . '</p>';
+    } elseif (sizeof($taxonomies) > 1 && ! isset($defaultsOption['taxonomy'])) {
+        echo '<p>' . esc_html__(
+                'More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
+                'post-expirator'
+            ) . '</p>';
+    } else {
+        $keys = array_keys($taxonomies);
+        $taxonomyId = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
+        wp_terms_checklist(0, array(
+            'taxonomy' => $taxonomyId,
+            'walker' => $walker,
+            'selected_cats' => $categories,
+            'checked_ontop' => false
+        ));
+        echo '<input type="hidden" name="taxonomy-hierarchical" value="' . esc_attr($taxonomyId) . '" />';
+    }
+    echo '</ul>';
+    echo '</div>';
+    if (isset($taxonomyId)) {
+        echo '<p class="post-expirator-taxonomy-name">' . esc_html__(
+                'Taxonomy Name',
+                'post-expirator'
+            ) . ': ' . esc_html($taxonomyId) . '</p>';
+    }
+    echo '</div>';
     ?>
 </div>
 
