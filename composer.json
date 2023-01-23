@@ -36,19 +36,32 @@
     {
       "type": "git",
       "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/andergmartins/wordpress-ray"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/publishpress/publishpress-phpcs-standards"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/publishpress/publishpress-instance-protection"
     }
   ],
   "require": {
     "php": ">=5.6.20",
-    "pimple/pimple": "3.2.3",
-    "twig/twig": "1.42.5",
-    "symfony/polyfill-ctype": "1.19.0",
-    "cmb2/cmb2": "^2.6",
     "psr/container": "1.0.0",
-    "publishpress/post-expirator": "dev-development",
-    "alledia/wordpress-edd-license-integration": "^2.3"
+    "publishpress/post-expirator": "dev-develop",
+    "alledia/wordpress-edd-license-integration": "^2.3",
+    "publishpress/publishpress-instance-protection": "^1.0"
   },
   "require-dev": {
-    "overtrue/phplint": "^2.1"
+    "overtrue/phplint": "^2.1",
+    "publishpress/publishpress-phpcs-standards": "dev-main",
+    "spatie/ray": "*",
+    "realcodelab/wordpress-ray": "dev-patch-1",
+    "permafrost-dev/ray-cli": "^1.12"
   }
 }

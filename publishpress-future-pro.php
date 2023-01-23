@@ -15,40 +15,30 @@ use PublishPressFuturePro\LegacyPluginManager;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-if (! defined('PUBLISHPRESS_FUTURE_PRO_VERSION')) {
-    define('PUBLISHPRESS_FUTURE_PRO_VERSION', '2.8.0-alpha.1');
+$includeFileRelativePath = '/publishpress/publishpress-instance-protection/include.php';
+if (file_exists(__DIR__ . '/vendor' . $includeFileRelativePath)) {
+    require_once __DIR__ . '/vendor' . $includeFileRelativePath;
+}
+
+if (class_exists('PublishPressInstanceProtection\\Config')) {
+    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
+    $pluginCheckerConfig->pluginSlug     = 'publishpress-future-pro';
+    $pluginCheckerConfig->pluginName     = 'PublishPress Future Pro';
+    $pluginCheckerConfig->freePluginName = 'PublishPress Future';
+    $pluginCheckerConfig->isProPlugin    = true;
+
+    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
+}
+
+if (! defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
+    define('PUBLISHPRESS_FUTURE_PRO_VERSION', '2.9.0-alpha.1');
     define('PUBLISHPRESS_FUTURE_PRO_BASEDIR', dirname(__FILE__));
     define('PUBLISHPRESS_FUTURE_PRO_BASENAME', basename(__FILE__));
     define('PUBLISHPRESS_FUTURE_PRO_BASEURL', plugins_url('/', __FILE__));
+    define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
 
     $autoloadPath = PUBLISHPRESS_FUTURE_PRO_BASEDIR . '/vendor/autoload.php';
     if (file_exists($autoloadPath)) {
         require_once $autoloadPath;
-    }
-
-    if (LegacyPluginManager::shouldAskToDisableLegacyPlugin()) {
-        add_action(
-            'admin_notices',
-            function () {
-                $msg = sprintf(
-                    '<strong>%s:</strong> %s',
-                    __('Warning', 'publishpress-future-pro'),
-                    __(
-                        'Please, deactivate and remove PublishPress Future before using PublishPress Future Pro.',
-                        'publishpress-future-pro'
-                    )
-                );
-
-                echo "<div class='notice notice-error is-dismissible' style='color:black'><p>" . $msg . '</p></div>';
-            },
-            5
-        );
-    }
-
-    if (! LegacyPluginManager::isLegacyPluginActivated()) {
-        $legacyPluginPath = PUBLISHPRESS_FUTURE_PRO_BASEDIR . '/vendor/publishpress/post-expirator/post-expirator.php';
-        if (file_exists($legacyPluginPath)) {
-            require_once $legacyPluginPath;
-        }
     }
 }

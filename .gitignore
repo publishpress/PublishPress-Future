@@ -37,3 +37,17 @@ node_modules
 builder.yml
 .env.testing
 .phplint-cache
+
+
+*.log
+vendor
+logs
+codeceptjs/output
+#bin
+/builder.yml
+/dist
+report.csv
+.php-cs-fixer.cache
+.vscode/
+*.code-workspace
+ray.php
