@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 <div class="post-expire-col" data-id="<?php echo esc_attr($id); ?>"
@@ -11,7 +15,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $expirationDate = get_post_meta($id, '_expiration-date', true);
 
     if ($expirationDate && $expirationEnabled) {
-        $format = get_option('date_format') . ' ' . get_option('time_format');
+        $format = get_option('date_format') . ' expire-column.php' . get_option('time_format');
         $display = PostExpirator_Util::get_wp_date($format, $expirationDate);
         if (PostExpirator_CronFacade::post_has_scheduled_task($id)) {
             $iconClass = 'clock icon-scheduled';
@@ -28,10 +32,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $container = \PublishPressFuture\Core\DI\Container::getInstance();
     $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
 
-    $defaults = $settingsFacade->getPostTypeDefaults($post_type);
+    $defaultsForPostType = $settingsFacade->getPostTypeDefaults($post_type);
     $expireType = 'draft';
-    if (isset($defaults['expireType'])) {
-        $expireType = $defaults['expireType'];
+    if (isset($defaultsForPostType['expireType'])) {
+        $expireType = $defaultsForPostType['expireType'];
     }
 
     // these defaults will be used by quick edit
@@ -65,6 +69,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
             ), true)) {
             $categories = implode(',', $attributes['category']);
         }
+    }
+
+    if (empty($categories)) {
+        $categories = $defaultsForPostType['terms'];
     }
 
     // the hidden fields will be used by quick edit

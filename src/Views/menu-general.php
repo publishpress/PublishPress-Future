@@ -115,30 +115,6 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     </div>
                 </td>
             </tr>
-            <tr valign="top">
-                <th scope="row"><?php
-                    esc_html_e('Default Expiration Taxonomy', 'post-expirator'); ?></th>
-                <td>
-                    <?php
-                    echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
-                    echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
-                    $walker = new Walker_PostExpirator_Category_Checklist();
-                    wp_terms_checklist(
-                        0,
-                        array(
-                            'taxonomy' => 'category',
-                            'walker' => $walker,
-                            'selected_cats' => $categories,
-                            'checked_ontop' => false
-                        )
-                    );
-                    echo '</ul>';
-                    echo '</div>';
-                    ?>
-                    <p class="description"><?php
-                        esc_html_e('Sets the default expiration taxonomy for the post.', 'post-expirator'); ?></p>
-                </td>
-            </tr>
         </table>
 
         <h3><?php

@@ -157,3 +157,22 @@ span.post-expiration-attributes {
 .post-expirator-timestamp {
 	width: 20% !important;
 }
+
+.publishpress-future-token-label {
+	margin-bottom: 8px;
+	margin-top: 10px;
+	display: block;
+}
+
+.publishpres-future-token-field [class$="-control"] {
+	padding: 0;
+	border: 1px solid #8c8f94;
+}
+
+.publishpres-future-token-field [class$="-ValueContainer"] {
+	padding: 0 4px;
+}
+
+.publishpres-future-token-field [class$="-multiValue"] {
+	background-color: #d3e3fd;
+}

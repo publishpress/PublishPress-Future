@@ -29,10 +29,7 @@
 
             let expireAction = this.getExpireType(postMeta);
 
-            let categories = [];
-            if (expireAction.includes('category')) {
-                categories = this.getCategories(postMeta);
-            }
+            let categories = this.getCategories(postMeta);
 
             if (postMeta['_expiration-date-status'] && postMeta['_expiration-date-status'] === 'saved') {
                 enabled = true;
@@ -245,9 +242,10 @@
         getCategories(postMeta) {
             let categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
             let categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
+            let defaultCategories = config.defaults.terms ? config.defaults.terms.split(',') : [];
 
             if (! categoriesNew && ! categoriesOld) {
-                return [];
+                return defaultCategories;
             }
 
             if (typeof categoriesNew === 'object' && categoriesNew.length > 0) {
@@ -258,8 +256,7 @@
                 return [categoriesOld];
             }
 
-            return [];
-
+            return defaultCategories;
         }
 
         // fired for the autocomplete

@@ -385,6 +385,8 @@ function postexpirator_meta_box($post)
 
     $defaultsOption = $settingsFacade->getPostTypeDefaults($post->post_type);
 
+    $categories = [];
+
     if (empty($postMetaDate)) {
         $defaultExpire = PostExpirator_Facade::get_default_expiry($post->post_type);
 
@@ -393,8 +395,6 @@ function postexpirator_meta_box($post)
         $defaultHour = $defaultExpire['hour'];
         $defaultYear = $defaultExpire['year'];
         $defaultMinute = $defaultExpire['minute'];
-
-        $categories = get_option('expirationdateCategoryDefaults');
 
         if (isset($defaultsOption['expireType'])) {
             $expireType = $defaultsOption['expireType'];

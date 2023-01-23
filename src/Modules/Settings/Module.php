@@ -28,13 +28,27 @@ class Module implements ModuleInterface
     private $settings;
 
     /**
+     * @var callable
+     */
+    private $settingsPostTypesModelFactory;
+
+    /**
+     * @var callable
+     */
+    private $taxonomiesModelFactory;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
+     * @param callable $settingsPostTypesModelFactory
+     * @param callable $taxonomiesModelFactory
      */
-    public function __construct(HookableInterface $hooks, $settings)
+    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory)
     {
         $this->hooks = $hooks;
         $this->settings = $settings;
+        $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
+        $this->taxonomiesModelFactory = $taxonomiesModelFactory;
 
         $this->controller = $this->getController();
     }
@@ -51,7 +65,9 @@ class Module implements ModuleInterface
     {
         return new Controller(
             $this->hooks,
-            $this->settings
+            $this->settings,
+            $this->settingsPostTypesModelFactory,
+            $this->taxonomiesModelFactory
         );
     }
 }
