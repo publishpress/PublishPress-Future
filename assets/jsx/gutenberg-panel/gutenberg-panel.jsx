@@ -242,7 +242,7 @@
         getCategories(postMeta) {
             let categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
             let categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
-            let defaultCategories = config.defaults.terms.split(',');
+            let defaultCategories = config.defaults.terms ? config.defaults.terms.split(',') : [];
 
             if (! categoriesNew && ! categoriesOld) {
                 return defaultCategories;

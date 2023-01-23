@@ -295,7 +295,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
             value: function getCategories(postMeta) {
                 var categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
                 var categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
-                var defaultCategories = config.defaults.terms.split(',');
+                var defaultCategories = config.defaults.terms ? config.defaults.terms.split(',') : [];
 
                 if (!categoriesNew && !categoriesOld) {
                     return defaultCategories;
