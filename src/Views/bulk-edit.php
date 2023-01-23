@@ -9,6 +9,11 @@ $defaultMonth = $defaults['month'];
 $defaultDay = $defaults['day'];
 $defaultHour = $defaults['hour'];
 $defaultMinute = $defaults['minute'];
+
+$container = \PublishPressFuture\Core\DI\Container::getInstance();
+$settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+
+$defaults = $settingsFacade->getPostTypeDefaults($post_type);
 ?>
 <div style="clear:both"></div>
 <div class="inline-edit-col post-expirator-quickedit">
@@ -112,11 +117,6 @@ $defaultMinute = $defaults['minute'];
                         </legend>
                         <label>
                             <?php
-                            $container = \PublishPressFuture\Core\DI\Container::getInstance();
-                            $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
-
-                            $defaults = $settingsFacade->getPostTypeDefaults($post_type);
-
                             _postexpirator_expire_type(array(
                                 'name' => 'expirationdate_expiretype',
                                 'selected' => empty($defaults) ? 'draft' : $defaults['expireType'],
@@ -140,7 +140,8 @@ $defaultMinute = $defaults['minute'];
                                 wp_terms_checklist(0, array(
                                     'taxonomy' => $taxonomy,
                                     'walker' => $walker,
-                                    'checked_ontop' => false
+                                    'checked_ontop' => false,
+                                    'selected_cats' => isset($defaults['terms']) ? (array)$defaults['terms'] : []
                                 ));
                             }
                             ?>
