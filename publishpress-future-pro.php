@@ -10,9 +10,6 @@ Text Domain: post-expirator
 Domain Path: /languages
 */
 
-// Default Values
-use PublishPressFuturePro\LegacyPluginManager;
-
 defined('ABSPATH') or die('No direct script access allowed.');
 
 $includeFileRelativePath = '/publishpress/publishpress-instance-protection/include.php';
@@ -22,10 +19,10 @@ if (file_exists(__DIR__ . '/vendor' . $includeFileRelativePath)) {
 
 if (class_exists('PublishPressInstanceProtection\\Config')) {
     $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
-    $pluginCheckerConfig->pluginSlug     = 'publishpress-future-pro';
-    $pluginCheckerConfig->pluginName     = 'PublishPress Future Pro';
+    $pluginCheckerConfig->pluginSlug = 'publishpress-future-pro';
+    $pluginCheckerConfig->pluginName = 'PublishPress Future Pro';
     $pluginCheckerConfig->freePluginName = 'PublishPress Future';
-    $pluginCheckerConfig->isProPlugin    = true;
+    $pluginCheckerConfig->isProPlugin = true;
 
     $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
 }
@@ -35,10 +32,13 @@ if (! defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
     define('PUBLISHPRESS_FUTURE_PRO_BASEDIR', dirname(__FILE__));
     define('PUBLISHPRESS_FUTURE_PRO_BASENAME', basename(__FILE__));
     define('PUBLISHPRESS_FUTURE_PRO_BASEURL', plugins_url('/', __FILE__));
+    define('PUBLISHPRESS_FUTURE_PRO_FREE_PLUGIN_PATH', __DIR__ . '/vendor/publishpress/post-expirator');
     define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
 
     $autoloadPath = PUBLISHPRESS_FUTURE_PRO_BASEDIR . '/vendor/autoload.php';
     if (file_exists($autoloadPath)) {
         require_once $autoloadPath;
     }
+
+    require_once PUBLISHPRESS_FUTURE_PRO_FREE_PLUGIN_PATH . '/post-expirator.php';
 }
