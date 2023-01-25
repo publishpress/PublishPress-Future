@@ -29,6 +29,7 @@ use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Expirator\Models\CurrentUserModel;
 use PublishPressFuture\Modules\Expirator\Models\DefaultDataModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel;
 use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
 use PublishPressFuture\Modules\Settings\Models\SettingsPostTypesModel;
@@ -296,7 +297,8 @@ return [
             $container->get(Services::HOOKS),
             $container->get(Services::SETTINGS),
             $container->get(Services::POST_TYPE_SETTINGS_MODEL_FACTORY),
-            $container->get(Services::TAXONOMIES_MODEL_FACTORY)
+            $container->get(Services::TAXONOMIES_MODEL_FACTORY),
+            $container->get(Services::EXPIRATION_ACTIONS_MODEL)
         );
     },
 
@@ -377,7 +379,15 @@ return [
     },
 
     Services::EXPIRATION_ACTION_MAPPER => static function (ContainerInterface $container) {
-        return new ExpirationActionMapper();
+        return new ExpirationActionMapper(
+            $container->get(Services::EXPIRATION_ACTIONS_MODEL)
+        );
+    },
+
+    Services::EXPIRATION_ACTIONS_MODEL => static function (ContainerInterface $container) {
+        return new ExpirationActionsModel(
+            $container->get(Services::HOOKS)
+        );
     },
 
     Services::EXPIRATION_ACTION_FACTORY => static function (ContainerInterface $container) {

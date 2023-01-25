@@ -3,37 +3,41 @@
 namespace PublishPressFuture\Modules\Expirator;
 
 use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategorySet;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToDraft;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToTrash;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\StickPost;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\UnstickPost;
 use PublishPressFuture\Modules\Expirator\Interfaces\ActionMapperInterface;
+use PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel;
 
 class ExpirationActionMapper implements ActionMapperInterface
 {
     /**
      * @param array
      */
-    private $actionClassesMap;
+    private $actionsClassMap;
 
-    public function __construct()
+    /**
+     * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
+     */
+    private $actionsModel;
+
+    public function __construct(ExpirationActionsModel $actionsModel)
     {
-        $this->actionClassesMap = [
-            ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => PostStatusToDraft::class,
-            ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => PostStatusToPrivate::class,
-            ExpirationActionsAbstract::POST_STATUS_TO_TRASH => PostStatusToTrash::class,
-            ExpirationActionsAbstract::DELETE_POST => DeletePost::class,
-            ExpirationActionsAbstract::STICK_POST => StickPost::class,
-            ExpirationActionsAbstract::UNSTICK_POST => UnstickPost::class,
-            ExpirationActionsAbstract::POST_CATEGORY_SET => PostCategorySet::class,
-            ExpirationActionsAbstract::POST_CATEGORY_ADD => PostCategoryAdd::class,
-            ExpirationActionsAbstract::POST_CATEGORY_REMOVE => PostCategoryRemove::class,
-        ];
+        $this->actionsModel = $actionsModel;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getActionsClassMap()
+    {
+        if (empty($this->actionsClassMap)) {
+            $this->actionsClassMap = [];
+            $actions = $this->actionsModel->getActions();
+
+            foreach ($actions as $action) {
+                $this->actionsClassMap[$action[ExpirationActionsModel::ACTION_NAME_ATTRIBUTE]] = $action[ExpirationActionsModel::ACTION_CLASS_ATTRIBUTE];
+            }
+        }
+
+        return $this->actionsClassMap;
     }
 
     /**
@@ -43,12 +47,14 @@ class ExpirationActionMapper implements ActionMapperInterface
      *
      * @throws NonexistentPostException
      */
-    public function map($actionName)
+    public function mapToClass($actionName)
     {
-        if (! isset($this->actionClassesMap[$actionName])) {
+        $actionsClassMap = $this->getActionsClassMap();
+
+        if (! isset($actionsClassMap[$actionName])) {
             throw new NonexistentPostException();
         }
 
-        return $this->actionClassesMap[$actionName];
+        return $actionsClassMap[$actionName];
     }
 }

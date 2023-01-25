@@ -138,20 +138,6 @@
             const {categoriesList, catIdVsName} = this.state;
             const {enabled, date, expireAction, categories, taxonomy} = this.state;
 
-            const postType = wp.data.select('core/editor').getCurrentPostType();
-
-            let actionsList = [
-                {label: config.strings.draft, value: 'draft'},
-                {label: config.strings.delete, value: 'delete'},
-                {label: config.strings.trash, value: 'trash'},
-                {label: config.strings.private, value: 'private'},
-                {label: config.strings.stick, value: 'stick'},
-                {label: config.strings.unstick, value: 'unstick'},
-                {label: config.strings.categoryReplace, value: 'category'},
-                {label: config.strings.categoryAdd, value: 'category-add'},
-                {label: config.strings.categoryRemove, value: 'category-remove'},
-            ];
-
             let selectedCats = categories && compact(categories.map((id) => catIdVsName[id] || false));
             if (typeof selectedCats === 'string') {
                 selectedCats = [];
@@ -181,7 +167,7 @@
                             <SelectControl
                                 label={config.strings.howToExpire}
                                 value={expireAction}
-                                options={actionsList}
+                                options={config.actions_options}
                                 onChange={(value) => {
                                     this.setState({expireAction: value, attribute: 'action'})
                                 }}

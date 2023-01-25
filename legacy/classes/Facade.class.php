@@ -1,8 +1,8 @@
 <?php
 
 use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract as Services;
-use PublishPressFuture\Modules\Expirator\CapabilitiesAbstract as Capabilities;
+use PublishPressFuture\Core\DI\ServicesAbstract;
+use PublishPressFuture\Modules\Expirator\CapabilitiesAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
 
 /**
@@ -16,7 +16,7 @@ class PostExpirator_Facade
     /**
      * @deprecated 2.8.0 Use CapabilitiesAbstract::EXPIRE_POST;
      */
-    const DEFAULT_CAPABILITY_EXPIRE_POST = Capabilities::EXPIRE_POST;
+    const DEFAULT_CAPABILITY_EXPIRE_POST = CapabilitiesAbstract::EXPIRE_POST;
 
     /**
      * The singleton instance.
@@ -30,7 +30,7 @@ class PostExpirator_Facade
      * @deprecated 2.8.0
      */
     private $capabilities = array(
-        'expire_post' => Capabilities::EXPIRE_POST,
+        'expire_post' => CapabilitiesAbstract::EXPIRE_POST,
     );
 
     /**
@@ -70,8 +70,8 @@ class PostExpirator_Facade
             return false;
         }
 
-        return $user_role_instance->has_cap(Capabilities::EXPIRE_POST)
-            && $user_role_instance->capabilities[Capabilities::EXPIRE_POST] === true;
+        return $user_role_instance->has_cap(CapabilitiesAbstract::EXPIRE_POST)
+            && $user_role_instance->capabilities[CapabilitiesAbstract::EXPIRE_POST] === true;
     }
 
     /**
@@ -85,7 +85,7 @@ class PostExpirator_Facade
             return;
         }
 
-        $admin_role->add_cap(Capabilities::EXPIRE_POST);
+        $admin_role->add_cap(CapabilitiesAbstract::EXPIRE_POST);
     }
 
     /**
@@ -333,8 +333,9 @@ class PostExpirator_Facade
             return;
         }
 
-        $container = \PublishPressFuture\Core\DI\Container::getInstance();
-        $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+        $container = Container::getInstance();
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
 
         $defaults = $settingsFacade->getPostTypeDefaults($post->post_type);
 
@@ -367,17 +368,9 @@ class PostExpirator_Facade
                     'default_categories' => get_option('expirationdateCategoryDefaults'),
                     'is_12_hours' => get_option('time_format') !== 'H:i',
                     'timezone_offset' => PostExpirator_Util::get_timezone_offset() / 60,
+                    'actions_options' => $actionsModel->getActionsAsOptions(),
                     'strings' => [
                         'category' => __('Taxonomy'),
-                        'draft' => __('Draft', 'post-expirator'),
-                        'delete' => __('Delete', 'post-expirator'),
-                        'trash' => __('Trash', 'post-expirator'),
-                        'private' => __('Private', 'post-expirator'),
-                        'stick' => __('Stick', 'post-expirator'),
-                        'unstick' => __('Unstick', 'post-expirator'),
-                        'categoryReplace' => __('Taxonomy: Replace', 'post-expirator'),
-                        'categoryAdd' => __('Taxonomy: Add', 'post-expirator'),
-                        'categoryRemove' => __('Taxonomy: Remove', 'post-expirator'),
                         'postExpirator' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Post Expiration', 'post-expirator'),
                         'howToExpire' => __('How to expire', 'post-expirator'),
@@ -422,7 +415,7 @@ class PostExpirator_Facade
     public function current_user_can_expire_posts()
     {
         $container = Container::getInstance();
-        $currentUserModelFactory = $container->get(Services::CURRENT_USER_MODEL_FACTORY);
+        $currentUserModelFactory = $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY);
 
         $currentUserModel = $currentUserModelFactory();
 
@@ -437,7 +430,7 @@ class PostExpirator_Facade
     public static function get_default_expiry($post_type)
     {
         $container = Container::getInstance();
-        $defaultDataModel = $container->get(Services::DEFAULT_DATA_MODEL);
+        $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
 
         return $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
     }
@@ -454,7 +447,7 @@ class PostExpirator_Facade
         return array_merge(
             $capabilities,
             array(
-                'PublishPress Future' => [Capabilities::EXPIRE_POST],
+                'PublishPress Future' => [CapabilitiesAbstract::EXPIRE_POST],
             )
         );
     }

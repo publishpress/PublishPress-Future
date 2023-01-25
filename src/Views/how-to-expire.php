@@ -1,4 +1,8 @@
 <?php
+
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 if (! isset($opts['name'])) {
@@ -16,41 +20,19 @@ if (empty($opts['type']) && isset($opts['post_type'])) {
     $opts['type'] = $opts['post_type'];
 }
 
+$container = Container::getInstance();
+$actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+$actions = $actionsModel->getActionsAsOptions();
+
 ?>
 <select name="<?php echo esc_attr($opts['name']); ?>" id="<?php echo esc_attr($opts['id']); ?>" class="pe-howtoexpire">
-    <option value="draft" <?php selected($opts['selected'], 'draft', true); ?>>
-        <?php esc_html_e('Draft', 'post-expirator'); ?>
-    </option>
-
-    <option value="delete" <?php selected($opts['selected'], 'delete', true); ?>>
-        <?php esc_html_e('Delete', 'post-expirator'); ?>
-    </option>
-
-    <option value="trash" <?php selected($opts['selected'], 'trash', true); ?>>
-        <?php esc_html_e('Trash', 'post-expirator'); ?>
-    </option>
-
-    <option value="private" <?php selected($opts['selected'], 'private', true); ?>>
-        <?php esc_html_e('Private', 'post-expirator'); ?>
-    </option>
-
-    <option value="stick" <?php selected($opts['selected'], 'stick', true); ?>>
-        <?php esc_html_e('Stick', 'post-expirator'); ?>
-    </option>
-
-    <option value="unstick" <?php selected($opts['selected'], 'unstick', true); ?>>
-        <?php esc_html_e('Unstick', 'post-expirator'); ?>
-    </option>
-
-    <option value="category" <?php selected($opts['selected'], 'category', true); ?>>
-        <?php esc_html_e('Taxonomy: Replace', 'post-expirator'); ?>
-    </option>
-
-    <option value="category-add" <?php selected($opts['selected'], 'category-add', true); ?>>
-        <?php esc_html_e('Taxonomy: Add', 'post-expirator'); ?>
-    </option>
-
-    <option value="category-remove" <?php selected($opts['selected'], 'category-remove', true); ?>>
-        <?php esc_html_e('Taxonomy: Remove', 'post-expirator'); ?>
-    </option>
+    <?php
+    foreach ($actions as $action) {
+        ?>
+        <option value="<?php echo esc_attr($action['value']); ?>" <?php selected($opts['selected'], $action['value'], true); ?>>
+            <?php echo esc_html($action['label']); ?>
+        </option>
+        <?php
+    }
+    ?>
 </select>

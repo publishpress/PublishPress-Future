@@ -39,17 +39,24 @@ class Controller implements InitializableInterface
     private $taxonomiesModelFactory;
 
     /**
+     * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
+     */
+    private $actionsModel;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param callable $settingsPostTypesModelFactory
      * @param callable $taxonomiesModelFactory
+     * @param $actionsModel
      */
-    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory)
+    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory, $actionsModel)
     {
         $this->hooks = $hooks;
         $this->settings = $settings;
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
+        $this->actionsModel = $actionsModel;
     }
 
     public function initialize()
@@ -189,17 +196,7 @@ class Controller implements InitializableInterface
                         'saveChanges' => __('Save changes', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
-                    'expireTypeList' => [
-                        ['value' => 'draft', 'label' => __('Draft', 'post-expirator')],
-                        ['value' => 'delete', 'label' => __('Delete', 'post-expirator')],
-                        ['value' => 'trash', 'label' => __('Trash', 'post-expirator')],
-                        ['value' => 'private', 'label' => __('Private', 'post-expirator')],
-                        ['value' => 'stick', 'label' => __('Stick', 'post-expirator')],
-                        ['value' => 'unstick', 'label' => __('Unstick', 'post-expirator')],
-                        ['value' => 'category', 'label' => __('Taxonomy: Replace', 'post-expirator')],
-                        ['value' => 'category-add', 'label' => __('Taxonomy: Add', 'post-expirator')],
-                        ['value' => 'category-remove', 'label' => __('Taxonomy: Remove', 'post-expirator')],
-                    ],
+                    'expireTypeList' => $this->actionsModel->getActionsAsOptions(),
                     'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
                         $taxonomiesModel->getTaxonomiesByPostType()
                     ),

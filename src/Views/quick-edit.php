@@ -1,4 +1,8 @@
 <?php
+
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 
@@ -76,8 +80,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
                                 esc_html_e('How to expire', 'post-expirator'); ?></span>
                         </legend>
                         <?php
-                        $container = \PublishPressFuture\Core\DI\Container::getInstance();
-                        $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+                        $container = Container::getInstance();
+                        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
                         $defaults = $settingsFacade->getPostTypeDefaults($post_type);
 

@@ -38,17 +38,24 @@ class Module implements ModuleInterface
     private $taxonomiesModelFactory;
 
     /**
+     * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
+     */
+    private $actionsModel;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param callable $settingsPostTypesModelFactory
      * @param callable $taxonomiesModelFactory
+     * @param \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
      */
-    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory)
+    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory, $actionsModel)
     {
         $this->hooks = $hooks;
         $this->settings = $settings;
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
+        $this->actionsModel = $actionsModel;
 
         $this->controller = $this->getController();
     }
@@ -67,7 +74,8 @@ class Module implements ModuleInterface
             $this->hooks,
             $this->settings,
             $this->settingsPostTypesModelFactory,
-            $this->taxonomiesModelFactory
+            $this->taxonomiesModelFactory,
+            $this->actionsModel
         );
     }
 }

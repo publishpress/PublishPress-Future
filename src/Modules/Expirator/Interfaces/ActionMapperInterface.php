@@ -13,5 +13,5 @@ interface ActionMapperInterface
      *
      * @return ActionableInterface
      */
-    public function map($actionName);
+    public function mapToClass($actionName);
 }

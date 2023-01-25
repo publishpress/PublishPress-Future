@@ -397,7 +397,7 @@ class ExpirablePostModel extends PostModel
      */
     private function getExpirationActionClassName()
     {
-        return $this->expirationActionMapper->map($this->getExpirationType());
+        return $this->expirationActionMapper->mapToClass($this->getExpirationType());
     }
 
     /**
