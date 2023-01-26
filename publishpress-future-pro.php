@@ -10,6 +10,9 @@ Text Domain: post-expirator
 Domain Path: /languages
 */
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuturePro\Core\ServicesAbstract;
+
 defined('ABSPATH') or die('No direct script access allowed.');
 
 $includeFileRelativePath = '/publishpress/publishpress-instance-protection/include.php';
@@ -28,17 +31,38 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 }
 
 if (! defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
-    define('PUBLISHPRESS_FUTURE_PRO_VERSION', '2.9.0-alpha.1');
-    define('PUBLISHPRESS_FUTURE_PRO_BASEDIR', dirname(__FILE__));
-    define('PUBLISHPRESS_FUTURE_PRO_BASENAME', basename(__FILE__));
-    define('PUBLISHPRESS_FUTURE_PRO_BASEURL', plugins_url('/', __FILE__));
-    define('PUBLISHPRESS_FUTURE_PRO_FREE_PLUGIN_PATH', __DIR__ . '/vendor/publishpress/post-expirator');
     define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
 
-    $autoloadPath = PUBLISHPRESS_FUTURE_PRO_BASEDIR . '/vendor/autoload.php';
-    if (file_exists($autoloadPath)) {
-        require_once $autoloadPath;
-    }
+    try {
+        $autoloadPath = __DIR__ . '/vendor/autoload.php';
+        if (file_exists($autoloadPath)) {
+            require_once $autoloadPath;
+        }
 
-    require_once PUBLISHPRESS_FUTURE_PRO_FREE_PLUGIN_PATH . '/post-expirator.php';
+        $services = require __DIR__ . '/services.php';
+        $container = new Container($services);
+
+        $container->get(ServicesAbstract::PLUGIN)->initialize();
+    } catch (Exception $e) {
+        $trace = $e->getTrace();
+
+        $traceText = '';
+
+        foreach ($trace as $item) {
+            $traceText .= $item['file'] . ':' . $item['line'] . ' ' . $item['function'] . '(), ';
+        }
+
+        $message = sprintf(
+            "PUBLISHPRESS FUTURE PRO Exception: %s: %s. Backtrace: %s",
+            get_class($e),
+            $e->getMessage(),
+            $traceText
+        );
+
+        // Make the log message binary safe removing any non-printable chars.
+        $message = addcslashes($message, "\000..\037\177..\377\\");
+
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+        error_log($message);
+    }
 }
