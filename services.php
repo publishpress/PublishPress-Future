@@ -6,6 +6,7 @@ use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuturePro\Core\Plugin;
 use PublishPressFuturePro\Core\ServicesAbstract;
+use PublishPressFuturePro\Models\CustomStatusesModel;
 use PublishPressFuturePro\Modules\CustomStatusesModule;
 use PublishPressFuturePro\Modules\FreePluginModule;
 
@@ -67,7 +68,8 @@ return [
      */
     ServicesAbstract::MODULE_CUSTOM_STATUSES => static function (ContainerInterface $container) {
         return new CustomStatusesModule(
-            $container->get(ServicesAbstract::HOOKS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES)
         );
     },
 
@@ -79,5 +81,12 @@ return [
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::BASE_PATH)
         );
+    },
+
+    /**
+     * @return \PublishPressFuturePro\Models\CustomStatusesModel
+     */
+    ServicesAbstract::MODEL_CUSTOM_STATUSES => static function (ContainerInterface $container) {
+        return new CustomStatusesModel();
     },
 ];

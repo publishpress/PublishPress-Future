@@ -17,4 +17,5 @@ abstract class ServicesAbstract
     const HOOKS = 'hooks';
     const MODULE_CUSTOM_STATUSES = 'module.custom.statuses';
     const MODULE_FREE_PLUGIN = 'module.free.plugin';
+    const MODEL_CUSTOM_STATUSES = 'model.custom.statuses';
 }
