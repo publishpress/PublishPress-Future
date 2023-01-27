@@ -1,0 +1,24 @@
+{
+  "name": "publishpress-future-pro",
+  "description": "PublishPress Future Pro",
+  "type": "commonjs",
+  "license": "GPL-2.0+",
+  "scripts": {
+    "build": "/project/dev-workspace/docker/scripts/ppbuild build",
+    "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
+    "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
+    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
+    "make-mo": "wp i18n make-mo ./languages ./languages"
+  },
+  "pot": {
+    "languageteam": "PublishPress Future Translate Team",
+    "lasttranslator": "PublishPress Future Translate Team"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@wordpress/scripts": "^25.2.0",
+    "node-ray": "^1.19.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
