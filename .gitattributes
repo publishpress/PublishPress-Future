@@ -30,3 +30,4 @@ cs export-ignore
 ray.php export-ignore
 ray-dist.php export-ignore
 dev-workspace export-ignore
+tests export-ignore
