@@ -63,5 +63,10 @@
     "spatie/ray": "*",
     "realcodelab/wordpress-ray": "dev-patch-1",
     "permafrost-dev/ray-cli": "^1.12"
+  },
+  "extra": {
+    "plugin-slug": "publishpress-future-pro",
+    "plugin-name": "publishpress-future-pro",
+    "plugin-folder": "publishpress-future-pro"
   }
 }
