@@ -11,7 +11,7 @@ use PublishPressFuturePro\Modules\CustomStatusesModule;
 use PublishPressFuturePro\Modules\FreePluginModule;
 
 return [
-    ServicesAbstract::PLUGIN_VERSION => '2.9.0-beta.1',
+    ServicesAbstract::PLUGIN_VERSION => '2.9.0-beta.2',
 
     ServicesAbstract::PLUGIN_SLUG => 'publishpress-future-pro',
 
