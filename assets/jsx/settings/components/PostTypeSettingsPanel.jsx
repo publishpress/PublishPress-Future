@@ -18,6 +18,7 @@ const PostTypeSettingsPanel = function (props) {
     const [termOptions, setTermOptions] = useState([]);
     const [termsSelectIsLoading, setTermsSelectIsLoading] = useState(false);
     const [selectedTerms, setSelectedTerms] = useState();
+    const [settingHowToExpire, setSettingHowToExpire] = useState();
 
     const onChangeTaxonomy = function(value) {
         setPostTypeTaxonomy(value);
@@ -26,6 +27,10 @@ const PostTypeSettingsPanel = function (props) {
     const onChangeTerms = (value) => {
         setSelectedTerms(value);
     };
+
+    const onChangeHowToExpire = (value) =>  {
+        setSettingHowToExpire(value);
+    }
 
     useEffect(() => {
         const updateOptionsState = (list) => {
@@ -92,16 +97,6 @@ const PostTypeSettingsPanel = function (props) {
                         />
                     </SettingRow>
 
-                    <SettingRow label={props.text.fieldHowToExpire}>
-                        <SelectField
-                            name={'expirationdate_expiretype-' + props.postType}
-                            className={'pe-howtoexpire'}
-                            options={props.expireTypeList}
-                            description={props.text.fieldHowToExpire1Description}
-                            selected={props.settings.howToExpire}
-                        />
-                    </SettingRow>
-
                     <SettingRow label={props.text.fieldAutoEnable}>
                         <TrueFalseField
                             name={'expirationdate_autoenable-' + props.postType}
@@ -114,29 +109,42 @@ const PostTypeSettingsPanel = function (props) {
                         />
                     </SettingRow>
 
-                    <SettingRow label={props.text.fieldTaxonomy}>
+                    <SettingRow label={props.text.fieldHowToExpire}>
                         <SelectField
-                            name={'expirationdate_taxonomy-' + props.postType}
-                            options={props.taxonomiesList}
-                            selected={postTypeTaxonomy}
-                            noItemFoundMessage={props.text.noItemsfound}
-                            data={props.postType}
-                            onChange={onChangeTaxonomy}
-                        >
-                        </SelectField>
-
-                        {props.taxonomiesList.length > 0 &&
-                            <TokensField
-                                label={props.text.fieldTerm}
-                                name={'expirationdate_terms-' + props.postType}
-                                options={termOptions}
-                                value={selectedTerms}
-                                isLoading={termsSelectIsLoading}
-                                onChange={onChangeTerms}
-                                description={props.text.fieldTaxonomyDescription}
-                            />
-                        }
+                            name={'expirationdate_expiretype-' + props.postType}
+                            className={'pe-howtoexpire'}
+                            options={props.expireTypeList}
+                            description={props.text.fieldHowToExpire1Description}
+                            selected={props.settings.howToExpire}
+                            onChange={onChangeHowToExpire}
+                        />
                     </SettingRow>
+
+                    {['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 &&
+                        <SettingRow label={props.text.fieldTaxonomy}>
+                            <SelectField
+                                name={'expirationdate_taxonomy-' + props.postType}
+                                options={props.taxonomiesList}
+                                selected={postTypeTaxonomy}
+                                noItemFoundMessage={props.text.noItemsfound}
+                                data={props.postType}
+                                onChange={onChangeTaxonomy}
+                            >
+                            </SelectField>
+
+                            {props.taxonomiesList.length > 0 &&
+                                <TokensField
+                                    label={props.text.fieldTerm}
+                                    name={'expirationdate_terms-' + props.postType}
+                                    options={termOptions}
+                                    value={selectedTerms}
+                                    isLoading={termsSelectIsLoading}
+                                    onChange={onChangeTerms}
+                                    description={props.text.fieldTaxonomyDescription}
+                                />
+                            }
+                        </SettingRow>
+                    }
 
                     <SettingRow label={props.text.fieldWhoToNotify}>
                         <TextField
