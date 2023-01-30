@@ -18,7 +18,7 @@ const PostTypeSettingsPanel = function (props) {
     const [termOptions, setTermOptions] = useState([]);
     const [termsSelectIsLoading, setTermsSelectIsLoading] = useState(false);
     const [selectedTerms, setSelectedTerms] = useState();
-    const [settingHowToExpire, setSettingHowToExpire] = useState();
+    const [settingHowToExpire, setSettingHowToExpire] = useState(props.settings.howToExpire);
 
     const onChangeTaxonomy = function(value) {
         setPostTypeTaxonomy(value);
