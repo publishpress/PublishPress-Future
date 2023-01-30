@@ -30,6 +30,9 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
     $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
 }
 
+/**
+ * @throws \Exception
+ */
 function initFreePlugin() {
     if (
         defined('PUBLISHPRESS_FUTURE_BASE_PATH')
@@ -39,24 +42,26 @@ function initFreePlugin() {
     }
 
     if (empty($pluginPath)) {
-        $pluginPath = __DIR__ . '/vendor/publishpress/publishpress-future/post-expirator.php';
+        $pluginPath = __DIR__ . '/vendor/publishpress/post-expirator/post-expirator.php';
     }
 
-    if (is_readable($pluginPath)) {
-        include_once $pluginPath;
+    if (! is_readable($pluginPath)) {
+        throw new Exception('Free plugin is not readable on ' . $pluginPath);
     }
+
+    include_once $pluginPath;
 }
 
 if (! defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
     define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
 
     try {
-        initFreePlugin();
-
         $autoloadPath = __DIR__ . '/vendor/autoload.php';
         if (file_exists($autoloadPath)) {
             require_once $autoloadPath;
         }
+
+        initFreePlugin();
 
         $services = require __DIR__ . '/services.php';
         $container = Container::getInstance();
