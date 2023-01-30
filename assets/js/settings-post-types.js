@@ -6376,16 +6376,6 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                 ),
                 React.createElement(
                     _SettingRow2.default,
-                    { label: props.text.fieldWhoToNotify },
-                    React.createElement(_TextField2.default, {
-                        name: 'expirationdate_emailnotification-' + props.postType,
-                        className: "large-text",
-                        value: props.settings.emailNotification,
-                        description: props.text.fieldWhoToNotifyDescription
-                    })
-                ),
-                React.createElement(
-                    _SettingRow2.default,
                     { label: props.text.fieldDefaultDateTimeOffset },
                     React.createElement(_TextField2.default, {
                         name: 'expired-custom-date-' + props.postType,
@@ -6393,6 +6383,16 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                         placeholder: props.settings.globalDefaultExpireOffset,
                         description: props.text.fieldDefaultDateTimeOffsetDescription,
                         unescapedDescription: true
+                    })
+                ),
+                React.createElement(
+                    _SettingRow2.default,
+                    { label: props.text.fieldWhoToNotify },
+                    React.createElement(_TextField2.default, {
+                        name: 'expirationdate_emailnotification-' + props.postType,
+                        className: "large-text",
+                        value: props.settings.emailNotification,
+                        description: props.text.fieldWhoToNotifyDescription
                     })
                 )
             )

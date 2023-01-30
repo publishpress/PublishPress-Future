@@ -146,15 +146,6 @@ const PostTypeSettingsPanel = function (props) {
                         </SettingRow>
                     }
 
-                    <SettingRow label={props.text.fieldWhoToNotify}>
-                        <TextField
-                            name={'expirationdate_emailnotification-' + props.postType}
-                            className="large-text"
-                            value={props.settings.emailNotification}
-                            description={props.text.fieldWhoToNotifyDescription}
-                        />
-                    </SettingRow>
-
                     <SettingRow label={props.text.fieldDefaultDateTimeOffset}>
                         <TextField
                             name={'expired-custom-date-' + props.postType}
@@ -162,6 +153,15 @@ const PostTypeSettingsPanel = function (props) {
                             placeholder={props.settings.globalDefaultExpireOffset}
                             description={props.text.fieldDefaultDateTimeOffsetDescription}
                             unescapedDescription={true}
+                        />
+                    </SettingRow>
+
+                    <SettingRow label={props.text.fieldWhoToNotify}>
+                        <TextField
+                            name={'expirationdate_emailnotification-' + props.postType}
+                            className="large-text"
+                            value={props.settings.emailNotification}
+                            description={props.text.fieldWhoToNotifyDescription}
                         />
                     </SettingRow>
                 </Fragment>
