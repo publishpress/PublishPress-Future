@@ -71,7 +71,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
         }
     }
 
-    if (empty($categories)) {
+    if (empty($categories) && isset($defaultsForPostType['terms'])) {
         $categories = $defaultsForPostType['terms'];
     }
 
