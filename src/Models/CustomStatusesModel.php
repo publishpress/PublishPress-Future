@@ -21,6 +21,10 @@ class CustomStatusesModel
             'trash',
             'auto-draft',
             'inherit',
+            'request-confirmed',
+            'request-failed',
+            'request-completed',
+            'request-pending',
         ];
 
         $filteredStatuses = [];
