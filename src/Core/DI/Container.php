@@ -59,7 +59,7 @@ class Container implements ContainerInterface
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            throw new ContainerNotInitializedException();
+            self::$instance = new self();
         }
 
         return self::$instance;
