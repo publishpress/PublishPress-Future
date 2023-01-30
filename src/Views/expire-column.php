@@ -15,7 +15,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $expirationDate = get_post_meta($id, '_expiration-date', true);
 
     if ($expirationDate && $expirationEnabled) {
-        $format = get_option('date_format') . ' expire-column.php' . get_option('time_format');
+        $format = get_option('date_format') . ' ' . get_option('time_format');
         $display = PostExpirator_Util::get_wp_date($format, $expirationDate);
         if (PostExpirator_CronFacade::post_has_scheduled_task($id)) {
             $iconClass = 'clock icon-scheduled';
