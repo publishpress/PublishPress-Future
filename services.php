@@ -31,7 +31,6 @@ return [
      */
     ServicesAbstract::MODULES => static function (ContainerInterface $container) {
         $modulesServiceList = [
-            ServicesAbstract::MODULE_FREE_PLUGIN,
             ServicesAbstract::MODULE_CUSTOM_STATUSES,
         ];
 
@@ -70,16 +69,6 @@ return [
         return new CustomStatusesModule(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES)
-        );
-    },
-
-    /**
-     * @return ModuleInterface
-     */
-    ServicesAbstract::MODULE_FREE_PLUGIN => static function (ContainerInterface $container) {
-        return new FreePluginModule(
-            $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::BASE_PATH)
         );
     },
 

@@ -7,15 +7,14 @@ namespace PublishPressFuturePro\Core;
 
 abstract class ServicesAbstract
 {
-    const PLUGIN_VERSION = 'plugin.version';
-    const PLUGIN_SLUG = 'plugin.slug';
-    const PLUGIN_NAME = 'plugin.name';
-    const BASE_PATH = 'base.path';
-    const BASE_URL = 'base.url';
-    const MODULES = 'modules';
-    const PLUGIN = 'plugin';
-    const HOOKS = 'hooks';
-    const MODULE_CUSTOM_STATUSES = 'module.custom.statuses';
-    const MODULE_FREE_PLUGIN = 'module.free.plugin';
-    const MODEL_CUSTOM_STATUSES = 'model.custom.statuses';
+    const PLUGIN_VERSION = 'future.pro/plugin/version';
+    const PLUGIN_SLUG = 'future.pro/plugin/slug';
+    const PLUGIN_NAME = 'future.pro/plugin/name';
+    const BASE_PATH = 'future.pro/base-path';
+    const BASE_URL = 'future.pro/base-url';
+    const MODULES = 'future.pro/modules';
+    const PLUGIN = 'future.pro/plugin';
+    const HOOKS = 'future.pro/hooks';
+    const MODULE_CUSTOM_STATUSES = 'future.pro/module-custom-statuses';
+    const MODEL_CUSTOM_STATUSES = 'future.pro/model-custom-statuses';
 }
