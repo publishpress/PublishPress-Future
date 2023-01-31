@@ -46,8 +46,8 @@ class Container implements ContainerInterface
     public function registerServices($services)
     {
         $this->services = array_merge(
-            $services,
-            [ContainerInterface::class => $this]
+            $this->services,
+            $services
         );
     }
 
