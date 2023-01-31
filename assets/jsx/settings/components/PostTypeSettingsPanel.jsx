@@ -34,7 +34,6 @@ const PostTypeSettingsPanel = function (props) {
     }
 
     const onChangeActive = (value) => {
-        console.log(value);
         setSettingActive(value);
     }
 

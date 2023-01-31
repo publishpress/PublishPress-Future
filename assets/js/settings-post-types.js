@@ -6266,7 +6266,6 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     };
 
     var onChangeActive = function onChangeActive(value) {
-        console.log(value);
         setSettingActive(value);
     };
 
