@@ -219,12 +219,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "1daeb34be93f0191b507f241929e318cf06085ef"
+                "reference": "908fd8253e7755fcad2948331d6fe308a480254a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/1daeb34be93f0191b507f241929e318cf06085ef",
-                "reference": "1daeb34be93f0191b507f241929e318cf06085ef",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/908fd8253e7755fcad2948331d6fe308a480254a",
+                "reference": "908fd8253e7755fcad2948331d6fe308a480254a",
                 "shasum": ""
             },
             "require": {
@@ -300,7 +300,7 @@
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/develop"
             },
-            "time": "2023-01-30T22:27:29+00:00"
+            "time": "2023-01-31T15:34:49+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
