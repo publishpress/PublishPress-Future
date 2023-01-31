@@ -277,8 +277,12 @@ class Controller implements InitializableInterface
                     $settings['activeMetaBox'] = \sanitize_text_field($_POST['expirationdate_activemeta-' . $postType]);
                 }
 
-                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                $settings['emailnotification'] = trim(\sanitize_text_field($_POST['expirationdate_emailnotification-' . $postType]));
+                if (isset($_POST['expirationdate_emailnotification-' . $postType])) {
+                    // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+                    $settings['emailnotification'] = trim(
+                        \sanitize_text_field($_POST['expirationdate_emailnotification-' . $postType])
+                    );
+                }
 
                 $settings['default-expire-type'] = 'custom';
 

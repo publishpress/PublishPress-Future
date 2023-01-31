@@ -6243,10 +6243,15 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
         selectedTerms = _useState8[0],
         setSelectedTerms = _useState8[1];
 
-    var _useState9 = (0, _react.useState)(),
+    var _useState9 = (0, _react.useState)(props.settings.howToExpire),
         _useState10 = _slicedToArray(_useState9, 2),
         settingHowToExpire = _useState10[0],
         setSettingHowToExpire = _useState10[1];
+
+    var _useState11 = (0, _react.useState)(props.settings.active),
+        _useState12 = _slicedToArray(_useState11, 2),
+        settingActive = _useState12[0],
+        setSettingActive = _useState12[1];
 
     var onChangeTaxonomy = function onChangeTaxonomy(value) {
         setPostTypeTaxonomy(value);
@@ -6258,6 +6263,11 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
 
     var onChangeHowToExpire = function onChangeHowToExpire(value) {
         setSettingHowToExpire(value);
+    };
+
+    var onChangeActive = function onChangeActive(value) {
+        console.log(value);
+        setSettingActive(value);
     };
 
     (0, _react.useEffect)(function () {
@@ -6325,75 +6335,80 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                         falseLabel: props.text.fieldActiveFalse,
                         falseValue: 'inactive',
                         description: props.text.fieldActiveDescription,
-                        selected: props.settings.active
+                        selected: props.settings.active,
+                        onChange: onChangeActive
                     })
                 ),
-                React.createElement(
-                    _SettingRow2.default,
-                    { label: props.text.fieldAutoEnable },
-                    React.createElement(_TrueFalseField2.default, {
-                        name: 'expirationdate_autoenable-' + props.postType,
-                        trueLabel: props.text.fieldAutoEnableTrue,
-                        trueValue: '1',
-                        falseLabel: props.text.fieldAutoEnableFalse,
-                        falseValue: '0',
-                        description: props.text.fieldAutoEnableDescription,
-                        selected: props.settings.autoEnabled
-                    })
-                ),
-                React.createElement(
-                    _SettingRow2.default,
-                    { label: props.text.fieldHowToExpire },
-                    React.createElement(_SelectField2.default, {
-                        name: 'expirationdate_expiretype-' + props.postType,
-                        className: 'pe-howtoexpire',
-                        options: props.expireTypeList,
-                        description: props.text.fieldHowToExpire1Description,
-                        selected: props.settings.howToExpire,
-                        onChange: onChangeHowToExpire
-                    })
-                ),
-                ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && React.createElement(
-                    _SettingRow2.default,
-                    { label: props.text.fieldTaxonomy },
-                    React.createElement(_SelectField2.default, {
-                        name: 'expirationdate_taxonomy-' + props.postType,
-                        options: props.taxonomiesList,
-                        selected: postTypeTaxonomy,
-                        noItemFoundMessage: props.text.noItemsfound,
-                        data: props.postType,
-                        onChange: onChangeTaxonomy
-                    }),
-                    props.taxonomiesList.length > 0 && React.createElement(_TokensField2.default, {
-                        label: props.text.fieldTerm,
-                        name: 'expirationdate_terms-' + props.postType,
-                        options: termOptions,
-                        value: selectedTerms,
-                        isLoading: termsSelectIsLoading,
-                        onChange: onChangeTerms,
-                        description: props.text.fieldTaxonomyDescription
-                    })
-                ),
-                React.createElement(
-                    _SettingRow2.default,
-                    { label: props.text.fieldDefaultDateTimeOffset },
-                    React.createElement(_TextField2.default, {
-                        name: 'expired-custom-date-' + props.postType,
-                        value: props.settings.defaultExpireOffset,
-                        placeholder: props.settings.globalDefaultExpireOffset,
-                        description: props.text.fieldDefaultDateTimeOffsetDescription,
-                        unescapedDescription: true
-                    })
-                ),
-                React.createElement(
-                    _SettingRow2.default,
-                    { label: props.text.fieldWhoToNotify },
-                    React.createElement(_TextField2.default, {
-                        name: 'expirationdate_emailnotification-' + props.postType,
-                        className: "large-text",
-                        value: props.settings.emailNotification,
-                        description: props.text.fieldWhoToNotifyDescription
-                    })
+                settingActive && React.createElement(
+                    _react.Fragment,
+                    null,
+                    React.createElement(
+                        _SettingRow2.default,
+                        { label: props.text.fieldAutoEnable },
+                        React.createElement(_TrueFalseField2.default, {
+                            name: 'expirationdate_autoenable-' + props.postType,
+                            trueLabel: props.text.fieldAutoEnableTrue,
+                            trueValue: '1',
+                            falseLabel: props.text.fieldAutoEnableFalse,
+                            falseValue: '0',
+                            description: props.text.fieldAutoEnableDescription,
+                            selected: props.settings.autoEnabled
+                        })
+                    ),
+                    React.createElement(
+                        _SettingRow2.default,
+                        { label: props.text.fieldHowToExpire },
+                        React.createElement(_SelectField2.default, {
+                            name: 'expirationdate_expiretype-' + props.postType,
+                            className: 'pe-howtoexpire',
+                            options: props.expireTypeList,
+                            description: props.text.fieldHowToExpire1Description,
+                            selected: props.settings.howToExpire,
+                            onChange: onChangeHowToExpire
+                        })
+                    ),
+                    ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && React.createElement(
+                        _SettingRow2.default,
+                        { label: props.text.fieldTaxonomy },
+                        React.createElement(_SelectField2.default, {
+                            name: 'expirationdate_taxonomy-' + props.postType,
+                            options: props.taxonomiesList,
+                            selected: postTypeTaxonomy,
+                            noItemFoundMessage: props.text.noItemsfound,
+                            data: props.postType,
+                            onChange: onChangeTaxonomy
+                        }),
+                        props.taxonomiesList.length > 0 && React.createElement(_TokensField2.default, {
+                            label: props.text.fieldTerm,
+                            name: 'expirationdate_terms-' + props.postType,
+                            options: termOptions,
+                            value: selectedTerms,
+                            isLoading: termsSelectIsLoading,
+                            onChange: onChangeTerms,
+                            description: props.text.fieldTaxonomyDescription
+                        })
+                    ),
+                    React.createElement(
+                        _SettingRow2.default,
+                        { label: props.text.fieldDefaultDateTimeOffset },
+                        React.createElement(_TextField2.default, {
+                            name: 'expired-custom-date-' + props.postType,
+                            value: props.settings.defaultExpireOffset,
+                            placeholder: props.settings.globalDefaultExpireOffset,
+                            description: props.text.fieldDefaultDateTimeOffsetDescription,
+                            unescapedDescription: true
+                        })
+                    ),
+                    React.createElement(
+                        _SettingRow2.default,
+                        { label: props.text.fieldWhoToNotify },
+                        React.createElement(_TextField2.default, {
+                            name: 'expirationdate_emailnotification-' + props.postType,
+                            className: "large-text",
+                            value: props.settings.emailNotification,
+                            description: props.text.fieldWhoToNotifyDescription
+                        })
+                    )
                 )
             )
         })
@@ -6959,6 +6974,13 @@ Object.defineProperty(exports, "__esModule", ({
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var TrueFalseField = function TrueFalseField(props) {
+    var onChange = function onChange(e) {
+        if (props.onChange) {
+            props.onChange(e.target.value === props.trueValue && jQuery(e.target).is(':checked'));
+            // Check only the true radio... using the field name? or directly the ID
+        }
+    };
+
     return React.createElement(
         _react.Fragment,
         null,
@@ -6967,7 +6989,9 @@ var TrueFalseField = function TrueFalseField(props) {
             name: props.name,
             id: props.name + '-true',
             value: props.trueValue,
-            defaultChecked: props.selected }),
+            defaultChecked: props.selected,
+            onChange: onChange
+        }),
         React.createElement(
             "label",
             { htmlFor: props.name + '-true' },
@@ -6979,7 +7003,9 @@ var TrueFalseField = function TrueFalseField(props) {
             name: props.name,
             defaultChecked: !props.selected,
             id: props.name + '-false',
-            value: props.falseValue }),
+            value: props.falseValue,
+            onChange: onChange
+        }),
         React.createElement(
             "label",
             {
