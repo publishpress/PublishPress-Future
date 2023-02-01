@@ -1,9 +1,14 @@
 <?php
+/**
+ * @return bool
+ * @author PublishPress
+ * @copyright Copyright (c) 2023, PublishPress
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
+ * @package PublishPressFuturePro
+ */
 
 namespace PublishPressFuturePro {
 
-    const PLUGIN_NAME = 'PublishPress Future Pro';
-    const PLUGIN_SLUG = 'publishpress-future-pro';
     const RELATIVE_PLUGIN_FILE = 'publishpress-future-pro/publishpress-future-pro.php';
     const MIN_PHP_VERSION = '7.2.5';
     const MIN_PHP_VERSION_ID = 70205;

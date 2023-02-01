@@ -6,7 +6,6 @@
 namespace PublishPressFuturePro\Core;
 
 use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuturePro\Core\HooksAbstract;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Framework\ModuleInterface as ModuleInterface;
 

@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PublishPressFuturePro\\": "src/"
+      "PublishPressFuturePro\\": "src/classes"
     }
   },
   "minimum-stability": "stable",

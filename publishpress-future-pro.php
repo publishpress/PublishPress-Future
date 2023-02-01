@@ -10,89 +10,57 @@
  * Domain Path: /languages
  */
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuturePro\Core\ServicesAbstract;
+namespace PublishPressFuturePro {
 
-defined('ABSPATH') or die('No direct script access allowed.');
+    use Exception;
+    use PublishPressFuture\Core\DI\Container;
+    use PublishPressFuturePro\Core\ServicesAbstract;
 
-if (! include_once __DIR__ . '/src/check-php-version.php') {
-    return;
-}
+    defined('ABSPATH') or die('No direct script access allowed.');
 
-$includeFileRelativePath = '/publishpress/publishpress-instance-protection/include.php';
-if (file_exists(__DIR__ . '/vendor' . $includeFileRelativePath)) {
-    require_once __DIR__ . '/vendor' . $includeFileRelativePath;
-}
-
-if (class_exists('PublishPressInstanceProtection\\Config')) {
-    $pluginCheckerConfig = new PublishPressInstanceProtection\Config();
-    $pluginCheckerConfig->pluginSlug = 'publishpress-future-pro';
-    $pluginCheckerConfig->pluginName = 'PublishPress Future Pro';
-    $pluginCheckerConfig->freePluginName = 'PublishPress Future';
-    $pluginCheckerConfig->isProPlugin = true;
-
-    $pluginChecker = new PublishPressInstanceProtection\InstanceChecker($pluginCheckerConfig);
-}
-
-/**
- * @throws \Exception
- */
-function initFreePlugin()
-{
-    if (
-        defined('PUBLISHPRESS_FUTURE_BASE_PATH')
-        && file_exists(PUBLISHPRESS_FUTURE_BASE_PATH . '/post-expirator.php')
-    ) {
-        $pluginPath = PUBLISHPRESS_FUTURE_BASE_PATH . '/post-expirator.php';
+    if (defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
+        return;
     }
 
-    if (empty($pluginPath)) {
-        $pluginPath = __DIR__ . '/vendor/publishpress/post-expirator/post-expirator.php';
-    }
-
-    if (! is_readable($pluginPath)) {
-        throw new Exception('Free plugin is not readable on ' . $pluginPath);
-    }
-
-    include_once $pluginPath;
-}
-
-if (! defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
-    define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
+    const INCLUDES_DIR = __DIR__ . '/src/includes';
+    const VENDOR_DIR = __DIR__ . '/vendor';
+    const PLUGIN_SLUG = 'publishpress-future-pro';
+    const PLUGIN_NAME = 'PublishPress Future Pro';
+    const FREE_PLUGIN_NAME = 'PublishPress Future';
 
     try {
-        $autoloadPath = __DIR__ . '/vendor/autoload.php';
+        // If the PHP version is not compatible, terminate the plugin execution.
+        if (! include_once INCLUDES_DIR . '/check-php-version.php') {
+            return;
+        }
+
+        // Active the plugin instance protection.
+        include_once INCLUDES_DIR . '/plugin-instance-protection.php';
+
+        // If Free plugin is already loaded, terminate the plugin execution.
+        if (defined('PUBLISHPRESS_FUTURE_LOADED')) {
+            return;
+        }
+
+        // Start the autoloader.
+        $autoloadPath = VENDOR_DIR . '/autoload.php';
         if (file_exists($autoloadPath)) {
             require_once $autoloadPath;
         }
 
-        initFreePlugin();
+        // Start the free plugin.
+        require_once __DIR__ . '/src/includes/free-plugin-initializator.php';
 
-        $services = require __DIR__ . '/services.php';
+        // Initialize the plugin.
+        $services = require INCLUDES_DIR . '/services.php';
         $container = Container::getInstance();
         $container->registerServices($services);
 
         $container->get(ServicesAbstract::PLUGIN)->initialize();
+
+        define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
     } catch (Exception $e) {
-        $trace = $e->getTrace();
-
-        $traceText = '';
-
-        foreach ($trace as $item) {
-            $traceText .= $item['file'] . ':' . $item['line'] . ' ' . $item['function'] . '(), ';
-        }
-
-        $message = sprintf(
-            "PUBLISHPRESS FUTURE PRO Exception: %s: %s. Backtrace: %s",
-            get_class($e),
-            $e->getMessage(),
-            $traceText
-        );
-
-        // Make the log message binary safe removing any non-printable chars.
-        $message = addcslashes($message, "\000..\037\177..\377\\");
-
-        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-        error_log($message);
+        include_once INCLUDES_DIR . '/catch-exception.php';
+        logCatchedException($e);
     }
 }

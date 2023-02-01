@@ -8,7 +8,6 @@ use PublishPressFuturePro\Core\Plugin;
 use PublishPressFuturePro\Core\ServicesAbstract;
 use PublishPressFuturePro\Models\CustomStatusesModel;
 use PublishPressFuturePro\Modules\CustomStatusesModule;
-use PublishPressFuturePro\Modules\FreePluginModule;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => '2.9.0-beta.2',
