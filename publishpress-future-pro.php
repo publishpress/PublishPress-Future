@@ -37,7 +37,8 @@ if (class_exists('PublishPressInstanceProtection\\Config')) {
 /**
  * @throws \Exception
  */
-function initFreePlugin() {
+function initFreePlugin()
+{
     if (
         defined('PUBLISHPRESS_FUTURE_BASE_PATH')
         && file_exists(PUBLISHPRESS_FUTURE_BASE_PATH . '/post-expirator.php')
