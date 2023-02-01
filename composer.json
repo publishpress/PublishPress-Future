@@ -51,7 +51,7 @@
     }
   ],
   "require": {
-    "php": ">=5.6.20",
+    "php": ">=7.2.5",
     "psr/container": "1.0.0",
     "publishpress/post-expirator": "dev-develop",
     "alledia/wordpress-edd-license-integration": "^2.3",

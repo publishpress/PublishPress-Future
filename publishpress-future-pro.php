@@ -15,6 +15,10 @@ use PublishPressFuturePro\Core\ServicesAbstract;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
+if (! include_once __DIR__ . '/src/check-php-version.php') {
+    return;
+}
+
 $includeFileRelativePath = '/publishpress/publishpress-instance-protection/include.php';
 if (file_exists(__DIR__ . '/vendor' . $includeFileRelativePath)) {
     require_once __DIR__ . '/vendor' . $includeFileRelativePath;

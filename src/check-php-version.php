@@ -1,0 +1,43 @@
+<?php
+
+namespace PublishPressFuturePro {
+
+    const PLUGIN_NAME = 'PublishPress Future Pro';
+    const PLUGIN_SLUG = 'publishpress-future-pro';
+    const RELATIVE_PLUGIN_FILE = 'publishpress-future-pro/publishpress-future-pro.php';
+    const MIN_PHP_VERSION = '7.2.5';
+    const MIN_PHP_VERSION_ID = 70205;
+
+    if (! (\PHP_VERSION_ID >= MIN_PHP_VERSION_ID)) {
+        \load_plugin_textdomain(PLUGIN_SLUG, null, __DIR__ . '/../languages/');
+
+        \add_action('after_plugin_row_' . RELATIVE_PLUGIN_FILE, function ($pluginFile) {
+            ?>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="3" class="colspanchange">
+                    <div class="notice inline notice-warning notice-alt">
+                        <p>
+                            <span class="dashicons dashicons-warning" style="margin-right: 6px; color: #d63638;"></span>
+                            <?php
+                            echo \esc_html__(
+                                \sprintf(
+                                    '%s requires PHP %s or later. Please upgrade PHP to a compatible version. Your current version is %s.',
+                                    PLUGIN_NAME,
+                                    MIN_PHP_VERSION,
+                                    \PHP_VERSION
+                                )
+                            );
+                            ?>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <?php
+        });
+
+        return false;
+    }
+
+    return true;
+}
