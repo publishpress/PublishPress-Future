@@ -8,7 +8,8 @@
     "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
     "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
-    "make-mo": "wp i18n make-mo ./languages ./languages"
+    "make-mo": "wp i18n make-mo ./languages ./languages",
+    "compat:php72": "phpcs --runtime-set testVersion 7.2"
   },
   "pot": {
     "languageteam": "PublishPress Future Translate Team",

@@ -29,11 +29,8 @@ jobs:
       - name: Update the composer.lock file
         run: composer update --lock
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Check syntax errors
-        run: ./vendor/bin/phplint
+      - name: Check PHP 7.2 compatiblity
+        run: ./vendor/bin/phpcs --runtime-set testVersion 7.2
