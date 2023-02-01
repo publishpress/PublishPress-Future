@@ -1,4 +1,4 @@
-name: PHPLint
+name: PHP 7.2 Compatiblity
 
 on: [ push ]
 
