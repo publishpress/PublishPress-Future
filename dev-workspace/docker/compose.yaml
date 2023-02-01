@@ -1,7 +1,7 @@
 services:
     terminal:
         build: ./docker
-        image: publishpress/future-pro-dev-workspace-terminal
+        image: alledia/future-pro-dev-workspace-terminal:latest
         command: ["zsh"]
         stdin_open: true
         tty: true

@@ -32,6 +32,4 @@
     <rule ref="WordPress-VIP-Go"/>
     <rule ref="VariableAnalysis"/>
     <rule ref="PublishPressStandards"/>
-    <rule ref="PHPCompatibility"/>
-<!--    <rule ref="PSR12"/>-->
 </ruleset>

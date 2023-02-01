@@ -4,12 +4,16 @@
   "type": "commonjs",
   "license": "GPL-2.0+",
   "scripts": {
+    "fixpermissions": "chmod +x /project/dev-workspace/docker/scripts/ppbuild",
     "build": "/project/dev-workspace/docker/scripts/ppbuild build",
     "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
     "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php-80-dev/",
     "make-mo": "wp i18n make-mo ./languages ./languages",
-    "compat:php72": "phpcs --runtime-set testVersion 7.2"
+    "phpcompat:7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
+    "phpcompat:7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
+    "phpcompat:8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
+    "phpcompat:8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1"
   },
   "pot": {
     "languageteam": "PublishPress Future Translate Team",
