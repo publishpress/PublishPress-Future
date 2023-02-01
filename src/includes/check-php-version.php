@@ -9,14 +9,21 @@
 
 namespace PublishPressFuturePro {
 
+    use function add_action;
+    use function esc_html__;
+    use function load_plugin_textdomain;
+
+    use const PHP_VERSION;
+    use const PHP_VERSION_ID;
+
     const RELATIVE_PLUGIN_FILE = 'publishpress-future-pro/publishpress-future-pro.php';
     const MIN_PHP_VERSION = '7.2.5';
     const MIN_PHP_VERSION_ID = 70205;
 
-    if (! (\PHP_VERSION_ID >= MIN_PHP_VERSION_ID)) {
-        \load_plugin_textdomain(PLUGIN_SLUG, null, __DIR__ . '/../languages/');
+    if (! (PHP_VERSION_ID >= MIN_PHP_VERSION_ID)) {
+        load_plugin_textdomain(PLUGIN_SLUG, null, __DIR__ . '/../languages/');
 
-        \add_action('after_plugin_row_' . RELATIVE_PLUGIN_FILE, function ($pluginFile) {
+        add_action('after_plugin_row_' . RELATIVE_PLUGIN_FILE, function ($pluginFile) {
             ?>
             <tr>
                 <td>&nbsp;</td>
@@ -25,12 +32,12 @@ namespace PublishPressFuturePro {
                         <p>
                             <span class="dashicons dashicons-warning" style="margin-right: 6px; color: #d63638;"></span>
                             <?php
-                            echo \esc_html__(
-                                \sprintf(
+                            echo esc_html__(
+                                sprintf(
                                     '%s requires PHP %s or later. Please upgrade PHP to a compatible version. Your current version is %s.',
                                     PLUGIN_NAME,
                                     MIN_PHP_VERSION,
-                                    \PHP_VERSION
+                                    PHP_VERSION
                                 )
                             );
                             ?>
