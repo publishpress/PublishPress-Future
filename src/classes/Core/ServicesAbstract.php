@@ -5,6 +5,8 @@
 
 namespace PublishPressFuturePro\Core;
 
+use PublishPressFuture\Core\DI\ServicesAbstract as ServicesAbstractFree;
+
 abstract class ServicesAbstract
 {
     const PLUGIN_VERSION = 'future.pro/plugin/version';
@@ -14,7 +16,7 @@ abstract class ServicesAbstract
     const BASE_URL = 'future.pro/base-url';
     const MODULES = 'future.pro/modules';
     const PLUGIN = 'future.pro/plugin';
-    const HOOKS = 'future.pro/hooks';
+    const HOOKS = ServicesAbstractFree::HOOKS;
     const MODULE_CUSTOM_STATUSES = 'future.pro/module-custom-statuses';
     const MODEL_CUSTOM_STATUSES = 'future.pro/model-custom-statuses';
 }

@@ -55,13 +55,6 @@ return [
     },
 
     /**
-     * @return HooksFacade
-     */
-    ServicesAbstract::HOOKS => static function (ContainerInterface $container) {
-        return new HooksFacade();
-    },
-
-    /**
      * @return ModuleInterface
      */
     ServicesAbstract::MODULE_CUSTOM_STATUSES => static function (ContainerInterface $container) {
