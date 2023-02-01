@@ -15,14 +15,14 @@ namespace PublishPressFuturePro {
         }
 
         $traceItems = array_map(function ($item) {
-            return $item['file'] . ':' . $item['line'] . ' ' . $item['function'] . '(), ';
+            return $item['file'] . ':' . $item['line'] . ' ' . $item['function'] . '()';
         }, $e->getTrace());
 
         $message = sprintf(
-            "PUBLISHPRESS FUTURE PRO Exception: %s: %s. Backtrace: %s",
+            "PUBLISHPRESS FUTURE PRO - %s: %s. Backtrace: %s",
             get_class($e),
             $e->getMessage(),
-            implode("\n", $traceItems)
+            implode(", ", $traceItems)
         );
 
         // Make the log message binary safe removing any non-printable chars.
