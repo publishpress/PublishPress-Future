@@ -3,7 +3,6 @@
 use Psr\Container\ContainerInterface;
 use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuturePro\Core\Plugin;
 use PublishPressFuturePro\Core\ServicesAbstract;
 use PublishPressFuturePro\Models\CustomStatusesModel;
