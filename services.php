@@ -393,13 +393,11 @@ return [
         );
     },
 
-    ServicesAbstract::EXPIRATION_ACTIONS_SERVICE_PREFIX => 'expiration.actions.',
-
     ServicesAbstract::EXPIRATION_ACTION_FACTORY => static function (ContainerInterface $container) {
         return static function ($actionName, $postModel) use ($container) {
             return new ExpirationActionFactory(
                 $container,
-                $container->get(ServicesAbstract::EXPIRATION_ACTIONS_SERVICE_PREFIX),
+                'expiration.actions.',
             );
         };
     },

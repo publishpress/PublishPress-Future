@@ -56,5 +56,4 @@ abstract class ServicesAbstract
     const EXPIRATION_ACTIONS_MODEL = 'future.free/expiration-actions-model';
     const POST_TYPE_SETTINGS_MODEL_FACTORY = 'future.free/post-type-settings-model-factory';
     const TAXONOMIES_MODEL_FACTORY = 'future.free/taxonomies-model-factory';
-    const EXPIRATION_ACTIONS_SERVICE_PREFIX = 'future.free/expiration-actions-service-prefix';
 }
