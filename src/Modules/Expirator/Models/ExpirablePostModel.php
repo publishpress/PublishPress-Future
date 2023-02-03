@@ -33,11 +33,6 @@ class ExpirablePostModel extends PostModel
     private $users;
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\ExpirationActionMapper
-     */
-    private $expirationActionMapper;
-
-    /**
      * @var \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface
      */
     private $scheduler;
@@ -93,7 +88,7 @@ class ExpirablePostModel extends PostModel
     protected $termModelFactory;
 
     /**
-     * @var callable
+     * @var \PublishPressFuture\Modules\Expirator\ExpirationActionFactory
      */
     protected $expirationActionFactory;
 
@@ -103,7 +98,6 @@ class ExpirablePostModel extends PostModel
      * @param \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade $options
      * @param \PublishPressFuture\Framework\WordPress\Facade\HooksFacade $hooks
      * @param \PublishPressFuture\Framework\WordPress\Facade\UsersFacade $users
-     * @param \PublishPressFuture\Modules\Expirator\ExpirationActionMapper $expirationActionMapper
      * @param \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface $scheduler
      * @param \PublishPressFuture\Modules\Settings\SettingsFacade $settings
      * @param \PublishPressFuture\Framework\WordPress\Facade\EmailFacade $email
@@ -116,7 +110,6 @@ class ExpirablePostModel extends PostModel
         $options,
         $hooks,
         $users,
-        $expirationActionMapper,
         $scheduler,
         $settings,
         $email,
@@ -128,7 +121,6 @@ class ExpirablePostModel extends PostModel
         $this->debug = $debug;
         $this->options = $options;
         $this->hooks = $hooks;
-        $this->expirationActionMapper = $expirationActionMapper;
         $this->scheduler = $scheduler;
         $this->users = $users;
         $this->settings = $settings;
@@ -358,7 +350,7 @@ class ExpirablePostModel extends PostModel
 
         if (! $result) {
             $this->debug->log(
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 $postId . ' -> FAILED ' . print_r($this->getExpirationDataAsArray(), true)
             );
 
@@ -366,7 +358,7 @@ class ExpirablePostModel extends PostModel
         }
 
         $this->debug->log(
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
             $postId . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
         );
 
@@ -389,15 +381,10 @@ class ExpirablePostModel extends PostModel
 
     private function expirationEmailIsEnabled()
     {
-        return (bool)$this->options->getOption('expirationdateEmailNotification', POSTEXPIRATOR_EMAILNOTIFICATION);
-    }
-
-    /**
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
-     */
-    private function getExpirationActionClassName()
-    {
-        return $this->expirationActionMapper->mapToClass($this->getExpirationType());
+        return (bool)$this->options->getOption(
+            'expirationdateEmailNotification',
+            POSTEXPIRATOR_EMAILNOTIFICATION
+        );
     }
 
     /**
@@ -406,13 +393,11 @@ class ExpirablePostModel extends PostModel
     private function getExpirationAction()
     {
         if (empty($this->expirationActionInstance)) {
-            $actionClassName = $this->getExpirationActionClassName();
-
-            $factory = $this->expirationActionFactory;
-
-            $this->expirationActionInstance = $factory($actionClassName, $this);
+            $this->expirationActionInstance = $this->expirationActionFactory->getExpirationAction(
+                $this->getExpirationType(),
+                $this
+            );
         }
-
 
         return $this->expirationActionInstance;
     }
@@ -456,7 +441,12 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string
          */
-        $emailSubject = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_SUBJECT, $emailSubject, $this, $expirationAction);
+        $emailSubject = apply_filters(
+            HooksAbstract::FILTER_EXPIRED_EMAIL_SUBJECT,
+            $emailSubject,
+            $this,
+            $expirationAction
+        );
 
         $dateTimeFormat = $this->options->getOption('date_format') . ' ' . $this->options->getOption('time_format');
 
@@ -516,7 +506,12 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return array<string>
          */
-        $emailAddresses = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_ADDRESSES, $emailAddresses, $this, $expirationAction);
+        $emailAddresses = apply_filters(
+            HooksAbstract::FILTER_EXPIRED_EMAIL_ADDRESSES,
+            $emailAddresses,
+            $this,
+            $expirationAction
+        );
         $emailAddresses = array_unique($emailAddresses);
 
         $emailHeaders = '';
@@ -527,7 +522,12 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string|array<string>
          */
-        $emailHeaders = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_HEADERS, $emailHeaders, $this, $expirationAction);
+        $emailHeaders = apply_filters(
+            HooksAbstract::FILTER_EXPIRED_EMAIL_HEADERS,
+            $emailHeaders,
+            $this,
+            $expirationAction
+        );
 
         $emailAttachments = [];
         /**
@@ -537,7 +537,12 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string|array<string>
          */
-        $emailAttachments = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_ATTACHMENTS, $emailAttachments, $this, $expirationAction);
+        $emailAttachments = apply_filters(
+            HooksAbstract::FILTER_EXPIRED_EMAIL_ATTACHMENTS,
+            $emailAttachments,
+            $this,
+            $expirationAction
+        );
 
         $emailSent = false;
 

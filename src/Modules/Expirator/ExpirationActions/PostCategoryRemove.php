@@ -8,6 +8,8 @@ use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 
 class PostCategoryRemove implements ExpirationActionInterface
 {
+    const SERVICE_NAME = 'expiration.actions.post_category_remove';
+
     /**
      * @var ExpirablePostModel
      */

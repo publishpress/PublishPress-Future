@@ -2,13 +2,14 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 
 class PostCategoryAdd implements ExpirationActionInterface
 {
+    const SERVICE_NAME = 'expiration.actions.post_category_add';
+
     /**
      * @var ExpirablePostModel
      */
@@ -48,7 +49,10 @@ class PostCategoryAdd implements ExpirationActionInterface
         );
 
         return sprintf(
-            __('The following terms (%s) were added to the post: "%s". The full list of terms on the post is: %s.', 'post-expirator'),
+            __(
+                'The following terms (%s) were added to the post: "%s". The full list of terms on the post is: %s.',
+                'post-expirator'
+            ),
             $expirationTaxonomy,
             implode(', ', $expirationTermsName),
             implode(', ', $postTermsName)

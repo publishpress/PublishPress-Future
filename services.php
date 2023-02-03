@@ -23,7 +23,17 @@ use PublishPressFuture\Framework\WordPress\Models\PostModel;
 use PublishPressFuture\Framework\WordPress\Models\TermModel;
 use PublishPressFuture\Framework\WordPress\Models\UserModel;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
-use PublishPressFuture\Modules\Expirator\ExpirationActionMapper;
+use PublishPressFuture\Modules\Expirator\ExpirationActionFactory;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategorySet;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToDraft;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToTrash;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\StickPost;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\UnstickPost;
+use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Expirator\Models\CurrentUserModel;
@@ -348,7 +358,6 @@ return [
                 $container->get(ServicesAbstract::OPTIONS),
                 $container->get(ServicesAbstract::HOOKS),
                 $container->get(ServicesAbstract::USERS),
-                $container->get(ServicesAbstract::EXPIRATION_ACTION_MAPPER),
                 $container->get(ServicesAbstract::EXPIRATION_SCHEDULER),
                 $container->get(ServicesAbstract::SETTINGS),
                 $container->get(ServicesAbstract::EMAIL),
@@ -363,7 +372,7 @@ return [
          * @return SettingsPostTypesModel
          * @throws
          */
-        return static function () use ($container) {
+        return static function () {
             return new SettingsPostTypesModel();
         };
     },
@@ -373,15 +382,9 @@ return [
          * @return TaxonomiesModel
          * @throws
          */
-        return static function () use ($container) {
+        return static function () {
             return new TaxonomiesModel();
         };
-    },
-
-    ServicesAbstract::EXPIRATION_ACTION_MAPPER => static function (ContainerInterface $container) {
-        return new ExpirationActionMapper(
-            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
-        );
     },
 
     ServicesAbstract::EXPIRATION_ACTIONS_MODEL => static function (ContainerInterface $container) {
@@ -390,21 +393,89 @@ return [
         );
     },
 
+    ServicesAbstract::EXPIRATION_ACTIONS_SERVICE_PREFIX => 'expiration.actions.',
+
     ServicesAbstract::EXPIRATION_ACTION_FACTORY => static function (ContainerInterface $container) {
-        /**
-         * @return \PublishPressFuture\Modules\Expirator\Interfaces\ActionableInterface|false
-         * @throws
-         */
-        return static function ($actionClassName, $postModel) use ($container) {
-            if (! class_exists($actionClassName)) {
-                $debug = $container->get(ServicesAbstract::DEBUG);
-
-                $debug->log('Expiration action class ' . $actionClassName . ' is undefined');
-
-                return false;
-            }
-
-            return new $actionClassName($postModel, $container->get(ServicesAbstract::ERROR));
+        return static function ($actionName, $postModel) use ($container) {
+            return new ExpirationActionFactory(
+                $container,
+                $container->get(ServicesAbstract::EXPIRATION_ACTIONS_SERVICE_PREFIX),
+            );
         };
-    }
+    },
+
+    /*
+     * Expiration actions
+     */
+    'expiration.actions.' . ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new PostStatusToDraft($postModel);
+    },
+
+    'expiration.actions.' . ExpirationActionsAbstract::POST_STATUS_TO_TRASH => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new PostStatusToTrash($postModel);
+    },
+
+    'expiration.actions.' . ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new PostStatusToPrivate($postModel);
+    },
+
+    'expiration.actions.' . ExpirationActionsAbstract::DELETE_POST => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new DeletePost($postModel);
+    },
+
+    'expiration.actions.' . ExpirationActionsAbstract::STICK_POST => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new StickPost($postModel);
+    },
+
+    'expiration.actions.' . ExpirationActionsAbstract::UNSTICK_POST => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new UnstickPost($postModel);
+    },
+
+    'expiration.actions.' . ExpirationActionsAbstract::POST_CATEGORY_ADD => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new PostCategoryAdd(
+            $postModel,
+            $container->get(ServicesAbstract::ERROR)
+        );
+    },
+
+    'expiration.actions.' . ExpirationActionsAbstract::POST_CATEGORY_REMOVE => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new PostCategoryRemove(
+            $postModel,
+            $container->get(ServicesAbstract::ERROR)
+        );
+    },
+
+    'expiration.actions.' . ExpirationActionsAbstract::POST_CATEGORY_SET => static function (
+        ContainerInterface $container,
+        ExpirablePostModel $postModel
+    ) {
+        return new PostCategorySet(
+            $postModel,
+            $container->get(ServicesAbstract::ERROR)
+        );
+    },
 ];

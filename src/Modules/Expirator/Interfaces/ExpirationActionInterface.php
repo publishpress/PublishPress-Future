@@ -22,4 +22,9 @@ interface ExpirationActionInterface
      * @return array
      */
     public function getExpirationLog();
+
+    /**
+     * @return string
+     */
+    public function __toString();
 }

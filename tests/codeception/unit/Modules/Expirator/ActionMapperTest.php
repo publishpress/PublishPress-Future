@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace unit\Core\Framework;
+namespace unit\Modules\Expirator;
 
 use Codeception\Test\Unit;
 use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
@@ -82,7 +82,6 @@ class ActionMapperTest extends Unit
                     [
                         ExpirationActionsModel::ACTION_NAME_ATTRIBUTE => ExpirationActionsAbstract::POST_STATUS_TO_DRAFT,
                         ExpirationActionsModel::ACTION_LABEL_ATTRIBUTE => 'Draft',
-                        ExpirationActionsModel::ACTION_CLASS_ATTRIBUTE => PostStatusToDraft::class,
                     ],
                     [
                         ExpirationActionsModel::ACTION_NAME_ATTRIBUTE => ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE,
