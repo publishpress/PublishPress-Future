@@ -1,39 +1,70 @@
-name: PHPLint
+name: PHP Lint
 
 on: [ push ]
 
 jobs:
-  phplint:
+  phpcs:
+    runs-on: ubuntu-latest
 
-    runs-on: ${{ matrix.operating-system }}
+    container:
+      image: alledia/future-pro-dev-workspace-terminal:latest
+      options: -v ${{ github.workspace }}:/project
+
     strategy:
       fail-fast: false
-      matrix:
-        operating-system: [ ubuntu-latest ]
-        php-versions: [ '7.2' ]
-    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+
+    name: PHP Lint on PHP 7.2
+
+    env:
+      COMPOSER_VERSION: 2
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - name: Setup Composer
+        run: composer config --global github-oauth.github.com ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Get composer cache dir
+        id: composer-cache-dir
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies installed with Composer
+        uses: actions/cache@v3
         with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: intl, fileinfo, zip, mbstring, pdo_sqlite
-          ini-values: "post_max_size=256M"
+          path: ${{ steps.composer-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
-      - name: Check PHP Version
-        run: php -v
+      - name: Update composer.lock
+        run: composer update --lock --no-install
 
-      - name: Update the composer.lock file
-        run: composer update --lock
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --no-suggest --prefer-dist
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
+      - name: Get npm cache dir
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+      - uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
 
-      - name: Check syntax errors
-        run: ./vendor/bin/phplint
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Fixes scripts permissions
+        run: chmod +x /project/dev-workspace/docker/scripts/ppbuild
+
+      - name: Build to directory
+        run: npm run build:dir
+
+      - name: Check syntax errors on built directory
+        run: npm run phplint
