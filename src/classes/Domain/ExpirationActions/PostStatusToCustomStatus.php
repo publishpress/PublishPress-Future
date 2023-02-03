@@ -17,22 +17,12 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      */
     private $postModel;
 
-    /**
-     * @var ErrorFacade
-     */
-    private $error;
-
-    /**
-     * @param ExpirablePostModel $postModel
-     * @param ErrorFacade $errorFacade
-     */
-    public function __construct($postModel, $errorFacade)
+    public function __construct(ExpirablePostModel $postModel, ErrorFacade $errorFacade)
     {
         $this->postModel = $postModel;
-        $this->error = $errorFacade;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return ExpirationActionsAbstract::POST_STATUS_TO_DRAFT;
     }
@@ -40,7 +30,7 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
     /**
      * @inheritDoc
      */
-    public function getNotificationText()
+    public function getNotificationText(): string
     {
         return sprintf(
             __('Post status has been successfully changed to "%s".', 'post-expirator'),
@@ -48,10 +38,11 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         );
     }
 
+
     /**
-     * @inheritDoc
+     * @return array<string>
      */
-    public function getExpirationLog()
+    public function getExpirationLog(): array
     {
         return [];
     }
@@ -60,7 +51,7 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      * @inheritDoc
      * @throws NonexistentPostException
      */
-    public function execute()
+    public function execute(): bool
     {
         return $this->postModel->setPostStatus($this->postModel->getExpirationType());
     }

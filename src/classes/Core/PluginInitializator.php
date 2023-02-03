@@ -9,7 +9,7 @@ use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Framework\ModuleInterface as ModuleInterface;
 
-class Plugin implements InitializableInterface
+class PluginInitializator implements InitializableInterface
 {
     /**
      * @var bool
@@ -31,14 +31,14 @@ class Plugin implements InitializableInterface
      * @param HookableInterface $hooksFacade
      */
     public function __construct(
-        $modules,
+        array $modules,
         HookableInterface $hooksFacade
     ) {
         $this->modules = $modules;
         $this->hooks = $hooksFacade;
     }
 
-    public function initialize()
+    public function initialize(): void
     {
         if ($this->initialized) {
             return;
@@ -51,7 +51,7 @@ class Plugin implements InitializableInterface
         $this->initializeModules();
     }
 
-    private function initializeModules()
+    private function initializeModules(): void
     {
         foreach ($this->modules as $module) {
             if (method_exists($module, 'initialize')) {

@@ -14,7 +14,8 @@
     "phpcompat:7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
     "phpcompat:8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
     "phpcompat:8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
-    "phplint": "phplint ./dist/publishpress-future-pro"
+    "check:lint": "phplint ./dist/publishpress-future-pro",
+    "check:stan": "phpstan"
   },
   "pot": {
     "languageteam": "PublishPress Future Translate Team",

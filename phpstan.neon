@@ -1,0 +1,10 @@
+parameters:
+    level: 6
+    paths:
+        - src
+        - publishpress-future-pro.php
+    parallel:
+        maximumNumberOfProcesses: 2
+    phpVersion: 70200
+    scanDirectories:
+        - vendor

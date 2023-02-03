@@ -21,7 +21,7 @@ namespace PublishPressFuturePro {
     const MIN_PHP_VERSION_ID = 70205;
 
     if (! (PHP_VERSION_ID >= MIN_PHP_VERSION_ID)) {
-        load_plugin_textdomain(PLUGIN_SLUG, null, __DIR__ . '/../languages/');
+        load_plugin_textdomain(PLUGIN_SLUG, false, __DIR__ . '/../languages/');
 
         add_action('after_plugin_row_' . RELATIVE_PLUGIN_FILE, function ($pluginFile) {
             ?>

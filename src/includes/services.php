@@ -3,7 +3,7 @@
 use Psr\Container\ContainerInterface;
 use PublishPressFuture\Core\HooksAbstract;
 use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuturePro\Core\Plugin;
+use PublishPressFuturePro\Core\PluginInitializator;
 use PublishPressFuturePro\Core\ServicesAbstract;
 use PublishPressFuturePro\Models\CustomStatusesModel;
 use PublishPressFuturePro\Modules\CustomStatusesModule;
@@ -44,10 +44,10 @@ return [
     },
 
     /**
-     * @return Plugin
+     * @return PluginInitializator
      */
     ServicesAbstract::PLUGIN => static function (ContainerInterface $container) {
-        return new Plugin(
+        return new PluginInitializator(
             $container->get(ServicesAbstract::MODULES),
             $container->get(ServicesAbstract::HOOKS)
         );

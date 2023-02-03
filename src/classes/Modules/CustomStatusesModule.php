@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -10,6 +11,7 @@ use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
 use PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel;
 use PublishPressFuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
+use PublishPressFuturePro\Models\CustomStatusesModel;
 
 use function __;
 
@@ -25,7 +27,7 @@ class CustomStatusesModule implements ModuleInterface
      */
     private $modelCustomStatuses;
 
-    public function __construct(HooksFacade $hooks, $modelCustomStatuses)
+    public function __construct(HooksFacade $hooks, CustomStatusesModel $modelCustomStatuses)
     {
         $this->hooks = $hooks;
         $this->modelCustomStatuses = $modelCustomStatuses;
@@ -39,7 +41,11 @@ class CustomStatusesModule implements ModuleInterface
         );
     }
 
-    public function filterExpirationActions($actions)
+    /**
+     * @param string[] $actions
+     * @return string[]
+     */
+    public function filterExpirationActions(array $actions): array
     {
         $customStatuses = $this->modelCustomStatuses->getCustomStatuses();
 
@@ -47,9 +53,9 @@ class CustomStatusesModule implements ModuleInterface
             $actions[] = [
                 ExpirationActionsModel::ACTION_NAME_ATTRIBUTE => $status,
                 ExpirationActionsModel::ACTION_LABEL_ATTRIBUTE => __(
-                        'Custom status: ',
-                        'publishpress-future-pro'
-                    ) . $statusObject->label,
+                    'Custom status: ',
+                    'publishpress-future-pro'
+                ) . $statusObject->label,
                 ExpirationActionsModel::ACTION_CLASS_ATTRIBUTE => PostStatusToCustomStatus::class
             ];
         }

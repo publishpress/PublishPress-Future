@@ -8,7 +8,7 @@
 
 namespace PublishPressFuturePro {
 
-    function logCatchedException(\Throwable $e)
+    function logCatchedException(\Throwable $e): void
     {
         if (! function_exists('error_log')) {
             return;

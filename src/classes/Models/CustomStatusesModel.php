@@ -9,7 +9,10 @@ use function get_post_stati;
 
 class CustomStatusesModel
 {
-    public function getCustomStatuses()
+    /**
+     * @return \stdClass[]
+     */
+    public function getCustomStatuses(): array
     {
         $statuses = get_post_stati([], 'objects');
         $statusesToIgnore = [
