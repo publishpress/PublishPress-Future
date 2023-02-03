@@ -22,7 +22,7 @@ class ServicesTest extends Unit
     protected $tester;
 
     /**
-     * @var \Psr\Container\ContainerInterface
+     * @var \PublishPressFuture\Core\DI\ContainerInterface
      */
     protected $container;
 
