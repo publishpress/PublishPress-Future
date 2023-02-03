@@ -6,9 +6,8 @@
 namespace PublishPressFuture\Core\DI;
 
 use InvalidArgumentException;
-use Psr\Container\NotFoundExceptionInterface;
 
-class ServiceNotFoundException extends InvalidArgumentException implements NotFoundExceptionInterface
+class ServiceNotFoundException extends InvalidArgumentException
 {
     public function __construct($message = "", $code = 0, $previous = null)
     {
