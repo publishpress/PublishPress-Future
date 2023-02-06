@@ -19,7 +19,7 @@ class PluginInitializator implements InitializableInterface
     /**
      * @var ModuleInterface[]
      */
-    private $modules;
+    private $controllers;
 
     /**
      * @var HookableInterface
@@ -27,14 +27,14 @@ class PluginInitializator implements InitializableInterface
     private $hooks;
 
     /**
-     * @param ModuleInterface[] $modules
+     * @param ModuleInterface[] $controllers
      * @param HookableInterface $hooksFacade
      */
     public function __construct(
-        array $modules,
+        array $controllers,
         HookableInterface $hooksFacade
     ) {
-        $this->modules = $modules;
+        $this->controllers = $controllers;
         $this->hooks = $hooksFacade;
     }
 
@@ -48,14 +48,14 @@ class PluginInitializator implements InitializableInterface
 
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
 
-        $this->initializeModules();
+        $this->initializeControllers();
     }
 
-    private function initializeModules(): void
+    private function initializeControllers(): void
     {
-        foreach ($this->modules as $module) {
-            if (method_exists($module, 'initialize')) {
-                $module->initialize();
+        foreach ($this->controllers as $controller) {
+            if (method_exists($controller, 'initialize')) {
+                $controller->initialize();
             }
         }
     }

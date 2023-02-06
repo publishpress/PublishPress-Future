@@ -7,7 +7,7 @@ use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuturePro\Models\CustomStatusesModel;
-use PublishPressFuturePro\Modules\CustomStatusesModule;
+use PublishPressFuturePro\Controllers\CustomStatusesController;
 
 use function __;
 
@@ -61,7 +61,7 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
     public function execute(): bool
     {
         $newPostStatus = str_replace(
-            CustomStatusesModule::ACTION_PREFIX,
+            CustomStatusesController::ACTION_PREFIX,
             '',
             $this->postModel->getExpirationType()
         );

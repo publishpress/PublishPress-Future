@@ -14,9 +14,9 @@ abstract class ServicesAbstract
     public const PLUGIN_NAME = 'future.pro/plugin/name';
     public const BASE_PATH = 'future.pro/base-path';
     public const BASE_URL = 'future.pro/base-url';
-    public const MODULES = 'future.pro/modules';
+    public const CONTROLLERS = 'future.pro/controllers';
     public const PLUGIN = 'future.pro/plugin';
     public const HOOKS = ServicesAbstractFree::HOOKS;
-    public const MODULE_CUSTOM_STATUSES = 'future.pro/module-custom-statuses';
+    public const CONTROLLER_CUSTOM_STATUSES = 'future.pro/controller-custom-statuses';
     public const MODEL_CUSTOM_STATUSES = 'future.pro/model-custom-statuses';
 }

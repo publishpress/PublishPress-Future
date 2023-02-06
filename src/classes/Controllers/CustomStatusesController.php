@@ -4,7 +4,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Modules;
+namespace PublishPressFuturePro\Controllers;
 
 use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
@@ -16,8 +16,7 @@ use PublishPressFuturePro\Models\CustomStatusesModel;
 
 use function __;
 
-// FIXME: Refactor modules to be Controllers?
-class CustomStatusesModule implements ModuleInterface
+class CustomStatusesController implements ModuleInterface
 {
     public const ACTION_PREFIX = 'custom_status_';
 
