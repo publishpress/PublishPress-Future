@@ -9,14 +9,18 @@ namespace PublishPressFuturePro\Modules;
 use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
-use PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel;
+use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
 use PublishPressFuturePro\Models\CustomStatusesModel;
 
 use function __;
 
+// FIXME: Refactor modules to be Controllers?
 class CustomStatusesModule implements ModuleInterface
 {
+    public const ACTION_PREFIX = 'custom_status_';
+
     /**
      * @var HooksFacade
      */
@@ -39,6 +43,13 @@ class CustomStatusesModule implements ModuleInterface
             ExpirationHooksAbstract::FILTER_EXPIRATION_ACTIONS,
             [$this, 'filterExpirationActions']
         );
+
+        $this->hooks->addFilter(
+            ExpirationHooksAbstract::FILTER_EXPIRATION_ACTION_FACTORY,
+            [$this, 'filterExpirationActionFactory'],
+            10,
+            3
+        );
     }
 
     /**
@@ -50,16 +61,24 @@ class CustomStatusesModule implements ModuleInterface
         $customStatuses = $this->modelCustomStatuses->getCustomStatuses();
 
         foreach ($customStatuses as $status => $statusObject) {
-            $actions[] = [
-                ExpirationActionsModel::ACTION_NAME_ATTRIBUTE => $status,
-                ExpirationActionsModel::ACTION_LABEL_ATTRIBUTE => __(
-                    'Custom status: ',
-                    'publishpress-future-pro'
-                ) . $statusObject->label,
-                ExpirationActionsModel::ACTION_CLASS_ATTRIBUTE => PostStatusToCustomStatus::class
-            ];
+            $actions[self::ACTION_PREFIX . $status] = __(
+                'Custom status: ',
+                'publishpress-future-pro'
+            ) . $statusObject->label;
         }
 
         return $actions;
+    }
+
+    public function filterExpirationActionFactory(
+        $action,
+        string $actionName,
+        ExpirablePostModel $postModel
+    ): ExpirationActionInterface {
+        if (preg_match('/^' . self::ACTION_PREFIX . '/', $actionName)) {
+            return new PostStatusToCustomStatus($this->modelCustomStatuses, $postModel);
+        }
+
+        return $action;
     }
 }

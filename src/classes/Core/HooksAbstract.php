@@ -5,7 +5,13 @@
 
 namespace PublishPressFuturePro\Core;
 
+use PublishPressFuture\Core\HooksAbstract as HooksAbstractFree;
+
 abstract class HooksAbstract
 {
-    const ACTION_INIT_PLUGIN = 'publishpressfuturepro_init_plugin';
+    public const ACTION_INIT_PLUGIN = 'publishpressfuturepro_init_plugin';
+
+    public const FILTER_MODULES_LIST = 'publishpressfuturepro_list_modules';
+
+    public const FILTER_EXPIRATION_ACTION_FACTORY = HooksAbstractFree::FILTER_EXPIRATION_ACTION_FACTORY;
 }

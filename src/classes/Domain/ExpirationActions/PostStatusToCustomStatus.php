@@ -3,10 +3,11 @@
 namespace PublishPressFuturePro\Domain\ExpirationActions;
 
 use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
-use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPressFuturePro\Models\CustomStatusesModel;
+use PublishPressFuturePro\Modules\CustomStatusesModule;
 
 use function __;
 
@@ -17,9 +18,15 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      */
     private $postModel;
 
-    public function __construct(ExpirablePostModel $postModel, ErrorFacade $errorFacade)
+    /**
+     * @var CustomStatusesModel
+     */
+    private $customStatusesModel;
+
+    public function __construct(CustomStatusesModel $customStatusesModel, ExpirablePostModel $postModel)
     {
         $this->postModel = $postModel;
+        $this->customStatusesModel = $customStatusesModel;
     }
 
     public function __toString(): string
@@ -53,6 +60,18 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      */
     public function execute(): bool
     {
-        return $this->postModel->setPostStatus($this->postModel->getExpirationType());
+        $newPostStatus = str_replace(
+            CustomStatusesModule::ACTION_PREFIX,
+            '',
+            $this->postModel->getExpirationType()
+        );
+
+        $customStatuses = $this->customStatusesModel->getCustomStatuses();
+
+        if (! isset($customStatuses[$newPostStatus])) {
+            return false;
+        }
+
+        return $this->postModel->setPostStatus($newPostStatus);
     }
 }

@@ -56,16 +56,12 @@
   ],
   "require": {
     "php": ">=7.2",
-    "psr/container": "1.0.0",
     "publishpress/post-expirator": "dev-develop",
     "alledia/wordpress-edd-license-integration": "^2.3",
     "publishpress/publishpress-instance-protection": "^1.0"
   },
   "require-dev": {
     "publishpress/publishpress-phpcs-standards": "dev-main",
-    "spatie/ray": "*",
-    "realcodelab/wordpress-ray": "dev-patch-1",
-    "permafrost-dev/ray-cli": "^1.12",
     "squizlabs/php_codesniffer": "^3.7",
     "phpcompatibility/php-compatibility": "^9.3.5",
     "wp-coding-standards/wpcs": "^2.3",

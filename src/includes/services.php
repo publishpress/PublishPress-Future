@@ -1,8 +1,8 @@
 <?php
 
-use Psr\Container\ContainerInterface;
-use PublishPressFuture\Core\HooksAbstract;
+use PublishPressFuture\Core\DI\ContainerInterface;
 use PublishPressFuture\Framework\ModuleInterface;
+use PublishPressFuturePro\Core\HooksAbstract;
 use PublishPressFuturePro\Core\PluginInitializator;
 use PublishPressFuturePro\Core\ServicesAbstract;
 use PublishPressFuturePro\Models\CustomStatusesModel;
@@ -46,6 +46,7 @@ return [
     /**
      * @return PluginInitializator
      */
+    // FIXME: Could we simplify this and the above service to use the Free plugin initializator?
     ServicesAbstract::PLUGIN => static function (ContainerInterface $container) {
         return new PluginInitializator(
             $container->get(ServicesAbstract::MODULES),
