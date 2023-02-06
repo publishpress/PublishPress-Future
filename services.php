@@ -34,6 +34,7 @@ use PublishPressFuture\Modules\Expirator\ExpirationActions\StickPost;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\UnstickPost;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
+use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Expirator\Models\CurrentUserModel;
 use PublishPressFuture\Modules\Expirator\Models\DefaultDataModel;
@@ -435,7 +436,7 @@ return [
                     $hook = $container->get(ServicesAbstract::HOOKS);
 
                     return $hook->applyFilters(
-                        HooksAbstract::FILTER_EXPIRATION_ACTION_FACTORY,
+                        ExpirationHooksAbstract::FILTER_EXPIRATION_ACTION_FACTORY,
                         null,
                         $actionName,
                         $postModel,
