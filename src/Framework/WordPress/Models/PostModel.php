@@ -20,13 +20,13 @@ class PostModel
     private $postInstance;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     protected $termModelFactory;
 
     /**
      * @param int|\WP_Post $post
-     * @param callable $termModelFactory
+     * @param \Closure $termModelFactory
      */
     public function __construct($post, $termModelFactory)
     {

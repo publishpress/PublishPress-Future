@@ -41,7 +41,7 @@ class ExpirationScheduler implements SchedulerInterface
     private $datetime;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $postModelFactory;
 
@@ -51,7 +51,7 @@ class ExpirationScheduler implements SchedulerInterface
      * @param ErrorFacade $errorFacade
      * @param LoggerInterface $logger
      * @param DateTimeFacade $datetime
-     * @param callable $postModelFactory
+     * @param \Closure $postModelFactory
      */
     public function __construct($hooksFacade, $cronFacade, $errorFacade, $logger, $datetime, $postModelFactory)
     {

@@ -23,7 +23,6 @@ use PublishPressFuture\Framework\WordPress\Models\PostModel;
 use PublishPressFuture\Framework\WordPress\Models\TermModel;
 use PublishPressFuture\Framework\WordPress\Models\UserModel;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
-use PublishPressFuture\Modules\Expirator\ExpirationActionFactory;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
@@ -313,7 +312,7 @@ return [
     },
 
     ServicesAbstract::POST_MODEL_FACTORY => static function (ContainerInterface $container) {
-        return static function ($postId) use ($container) {
+        return function ($postId) use ($container) {
             return new PostModel(
                 $postId,
                 $container->get(ServicesAbstract::TERM_MODEL_FACTORY)
@@ -322,19 +321,19 @@ return [
     },
 
     ServicesAbstract::TERM_MODEL_FACTORY => static function (ContainerInterface $container) {
-        return static function ($termId) use ($container) {
+        return function ($termId) use ($container) {
             return new TermModel($termId);
         };
     },
 
     ServicesAbstract::USER_MODEL_FACTORY => static function (ContainerInterface $container) {
-        return static function ($user) use ($container) {
+        return function ($user) use ($container) {
             return new UserModel($user);
         };
     },
 
     ServicesAbstract::CURRENT_USER_MODEL_FACTORY => static function (ContainerInterface $container) {
-        return static function () use ($container) {
+        return function () use ($container) {
             return new CurrentUserModel();
         };
     },
@@ -351,7 +350,7 @@ return [
          * @return ExpirablePostModel
          * @throws
          */
-        return static function ($postId) use ($container) {
+        return function ($postId) use ($container) {
             return new ExpirablePostModel(
                 $postId,
                 $container->get(ServicesAbstract::DEBUG),
@@ -394,86 +393,55 @@ return [
     },
 
     ServicesAbstract::EXPIRATION_ACTION_FACTORY => static function (ContainerInterface $container) {
-        return static function ($actionName, $postModel) use ($container) {
-            return new ExpirationActionFactory(
-                $container,
-                'expiration.actions.',
-            );
+        return function ($actionName, $postModel) use ($container) {
+            switch ($actionName) {
+                case ExpirationActionsAbstract::POST_STATUS_TO_DRAFT:
+                    return new PostStatusToDraft($postModel);
+
+                case ExpirationActionsAbstract::POST_STATUS_TO_TRASH:
+                    return new PostStatusToTrash($postModel);
+
+                case ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE:
+                    return new PostStatusToPrivate($postModel);
+
+                case ExpirationActionsAbstract::DELETE_POST:
+                    return new DeletePost($postModel);
+
+                case ExpirationActionsAbstract::STICK_POST:
+                    return new StickPost($postModel);
+
+                case ExpirationActionsAbstract::UNSTICK_POST:
+                    return new UnstickPost($postModel);
+
+                case ExpirationActionsAbstract::POST_CATEGORY_ADD:
+                    return new PostCategoryAdd(
+                        $postModel,
+                        $container->get(ServicesAbstract::ERROR)
+                    );
+
+                case ExpirationActionsAbstract::POST_CATEGORY_REMOVE:
+                    return new PostCategoryRemove(
+                        $postModel,
+                        $container->get(ServicesAbstract::ERROR)
+                    );
+
+                case ExpirationActionsAbstract::POST_CATEGORY_SET:
+                    return new PostCategorySet(
+                        $postModel,
+                        $container->get(ServicesAbstract::ERROR)
+                    );
+
+                default:
+                    $hook = $container->get(ServicesAbstract::HOOKS);
+
+                    return $hook->applyFilters(
+                        HooksAbstract::FILTER_EXPIRATION_ACTION_FACTORY,
+                        null,
+                        $actionName,
+                        $postModel,
+                        $container
+                    );
+            }
         };
-    },
-
-    /*
-     * Expiration actions
-     */
-    'expiration.actions.' . ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new PostStatusToDraft($postModel);
-    },
-
-    'expiration.actions.' . ExpirationActionsAbstract::POST_STATUS_TO_TRASH => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new PostStatusToTrash($postModel);
-    },
-
-    'expiration.actions.' . ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new PostStatusToPrivate($postModel);
-    },
-
-    'expiration.actions.' . ExpirationActionsAbstract::DELETE_POST => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new DeletePost($postModel);
-    },
-
-    'expiration.actions.' . ExpirationActionsAbstract::STICK_POST => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new StickPost($postModel);
-    },
-
-    'expiration.actions.' . ExpirationActionsAbstract::UNSTICK_POST => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new UnstickPost($postModel);
-    },
-
-    'expiration.actions.' . ExpirationActionsAbstract::POST_CATEGORY_ADD => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new PostCategoryAdd(
-            $postModel,
-            $container->get(ServicesAbstract::ERROR)
-        );
-    },
-
-    'expiration.actions.' . ExpirationActionsAbstract::POST_CATEGORY_REMOVE => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new PostCategoryRemove(
-            $postModel,
-            $container->get(ServicesAbstract::ERROR)
-        );
-    },
-
-    'expiration.actions.' . ExpirationActionsAbstract::POST_CATEGORY_SET => static function (
-        ContainerInterface $container,
-        ExpirablePostModel $postModel
-    ) {
-        return new PostCategorySet(
-            $postModel,
-            $container->get(ServicesAbstract::ERROR)
-        );
     },
 ];

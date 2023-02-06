@@ -17,7 +17,7 @@ class BulkEditController implements InitializableInterface
     private $hooks;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $expirablePostModelFactory;
 
@@ -27,7 +27,7 @@ class BulkEditController implements InitializableInterface
     private $sanitization;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $currentUserModelFactory;
 
@@ -40,7 +40,7 @@ class BulkEditController implements InitializableInterface
      * @param HookableInterface $hooksFacade
      * @param callable $expirablePostModelFactory
      * @param \PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade $sanitization
-     * @param callable $currentUserModelFactory
+     * @param \Closure $currentUserModelFactory
      * @param \PublishPressFuture\Framework\WordPress\Facade\RequestFacade $request
      */
     public function __construct(

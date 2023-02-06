@@ -44,7 +44,7 @@ class Module implements ModuleInterface
     private $scheduler;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $expirablePostModelFactory;
 
@@ -54,7 +54,7 @@ class Module implements ModuleInterface
     private $sanitization;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $currentUserModelFactory;
 

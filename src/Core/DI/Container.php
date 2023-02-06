@@ -69,10 +69,10 @@ class Container implements ContainerInterface
      * Finds an entry of the container by its identifier and returns it.
      *
      * @param string $id Identifier of the entry to look for.
-     * @param mixed ...$args
+     *
      * @return mixed Entry.
      */
-    public function get($id, ...$args)
+    public function get($id)
     {
         if (! $this->has($id)) {
             throw new ServiceNotFoundException($id);
@@ -83,14 +83,9 @@ class Container implements ContainerInterface
         }
 
         $value = $this->services[$id];
+
         if ($value instanceof Closure) {
-            $params = [$this];
-
-            if (! empty($args)) {
-                $params = array_merge($params, $args);
-            }
-
-            $value = $value(...$params);
+            $value = $value($this);
         }
 
         $this->resolvedEntries[$id] = $value;

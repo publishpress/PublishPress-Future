@@ -5,13 +5,15 @@
 
 namespace PublishPressFuture\Modules\Expirator\Controllers;
 
+use Closure;
+use Exception;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 class ExpirationController implements InitializableInterface
@@ -32,12 +34,12 @@ class ExpirationController implements InitializableInterface
     private $cron;
 
     /**
-     * @var ExpirationScheduler
+     * @var SchedulerInterface
      */
     private $scheduler;
 
     /**
-     * @var callable
+     * @var Closure
      */
     private $expirablePostModelFactory;
 
@@ -46,14 +48,14 @@ class ExpirationController implements InitializableInterface
      * @param SiteFacade $siteFacade
      * @param CronFacade $cronFacade
      * @param SchedulerInterface $scheduler
-     * @param callable $expirablePostModelFactory
+     * @param Closure $expirablePostModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
         SiteFacade $siteFacade,
         CronFacade $cronFacade,
         SchedulerInterface $scheduler,
-        $expirablePostModelFactory
+        Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
@@ -113,11 +115,20 @@ class ExpirationController implements InitializableInterface
         $this->scheduler->unschedule($postId);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function onActionRunPostExpiration($postId, $force = false)
     {
         $postModelFactory = $this->expirablePostModelFactory;
 
         $postModel = $postModelFactory($postId);
-        $postModel->expire($force);
+
+        if ($postModel instanceof ExpirablePostModel) {
+            $postModel->expire($force);
+            return;
+        }
+
+        throw new Exception('Invalid post model factory');
     }
 }

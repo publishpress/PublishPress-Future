@@ -29,12 +29,12 @@ class Controller implements InitializableInterface
     private $defaultData;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $settingsPostTypesModelFactory;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $taxonomiesModelFactory;
 
@@ -46,8 +46,8 @@ class Controller implements InitializableInterface
     /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
-     * @param callable $settingsPostTypesModelFactory
-     * @param callable $taxonomiesModelFactory
+     * @param \Closure $settingsPostTypesModelFactory
+     * @param \Closure $taxonomiesModelFactory
      * @param $actionsModel
      */
     public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory, $actionsModel)

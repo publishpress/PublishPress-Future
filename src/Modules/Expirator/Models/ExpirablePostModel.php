@@ -5,6 +5,7 @@
 
 namespace PublishPressFuture\Modules\Expirator\Models;
 
+use Closure;
 use PublishPressFuture\Framework\WordPress\Models\PostModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
@@ -80,15 +81,15 @@ class ExpirablePostModel extends PostModel
     /**
      * @var \PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface
      */
-    private $expirationActionInstance;
+    private $expirationActionInstance = null;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     protected $termModelFactory;
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\ExpirationActionFactory
+     * @var \Closure
      */
     protected $expirationActionFactory;
 
@@ -101,8 +102,8 @@ class ExpirablePostModel extends PostModel
      * @param \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface $scheduler
      * @param \PublishPressFuture\Modules\Settings\SettingsFacade $settings
      * @param \PublishPressFuture\Framework\WordPress\Facade\EmailFacade $email
-     * @param callable $termModelFactory
-     * @param callable $expirationActionFactory
+     * @param \Closure $termModelFactory
+     * @param \Closure $expirationActionFactory
      */
     public function __construct(
         $postId,
@@ -334,8 +335,15 @@ class ExpirablePostModel extends PostModel
 
         $expirationAction = $this->getExpirationAction();
 
+
         if (! $expirationAction) {
             $this->debug->log($postId . ' -> Post expiration cancelled, expiration action is not found');
+
+            return false;
+        }
+
+        if (! $expirationAction instanceof ExpirationActionInterface) {
+            $this->debug->log($postId . ' -> Post expiration cancelled, expiration action is not valid');
 
             return false;
         }
@@ -393,10 +401,21 @@ class ExpirablePostModel extends PostModel
     private function getExpirationAction()
     {
         if (empty($this->expirationActionInstance)) {
-            $this->expirationActionInstance = $this->expirationActionFactory->getExpirationAction(
+            $factory = $this->expirationActionFactory;
+
+            if (! $factory instanceof Closure) {
+                return;
+            }
+
+            $actionInstance = $factory(
                 $this->getExpirationType(),
                 $this
             );
+
+
+            if ($actionInstance instanceof ExpirationActionInterface) {
+                $this->expirationActionInstance = $actionInstance;
+            }
         }
 
         return $this->expirationActionInstance;

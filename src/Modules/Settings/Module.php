@@ -28,12 +28,12 @@ class Module implements ModuleInterface
     private $settings;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $settingsPostTypesModelFactory;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     private $taxonomiesModelFactory;
 
@@ -45,8 +45,8 @@ class Module implements ModuleInterface
     /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
-     * @param callable $settingsPostTypesModelFactory
-     * @param callable $taxonomiesModelFactory
+     * @param \Closure $settingsPostTypesModelFactory
+     * @param \Closure $taxonomiesModelFactory
      * @param \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
      */
     public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory, $actionsModel)
