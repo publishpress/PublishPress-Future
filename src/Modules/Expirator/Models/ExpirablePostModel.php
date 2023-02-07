@@ -372,6 +372,7 @@ class ExpirablePostModel extends PostModel
 
         $expirationLog = $expirationAction->getExpirationLog();
 
+        $expirationLog['email_enabled'] = $this->expirationEmailIsEnabled();
         if ($expirationLog['email_enabled']) {
             $expirationLog['email_sent'] = $this->sendEmail($expirationAction);
         }
