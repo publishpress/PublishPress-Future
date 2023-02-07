@@ -370,19 +370,14 @@ class ExpirablePostModel extends PostModel
             $postId . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
         );
 
-        $expirationPostLogData = $expirationAction->getExpirationLog();
-        $expirationPostLogData['expiration_type'] = $this->getExpirationType();
-        $expirationPostLogData['scheduled_for'] = $this->getExpirationDate();
-        $expirationPostLogData['executed_on'] = date('Y-m-d H:i:s');
-        $expirationPostLogData['email_enabled'] = $this->expirationEmailIsEnabled();
+        $expirationLog = $expirationAction->getExpirationLog();
 
-        if ($expirationPostLogData['email_enabled']) {
-            $expirationPostLogData['email_sent'] = $this->sendEmail($expirationAction);
+        if ($expirationLog['email_enabled']) {
+            $expirationLog['email_sent'] = $this->sendEmail($expirationAction);
         }
 
-        $this->addMeta('expiration_log', wp_json_encode($expirationPostLogData));
-
-        do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+        $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
+        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
         return true;
     }
