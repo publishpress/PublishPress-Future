@@ -5,7 +5,7 @@
 
 namespace PublishPressFuturePro\Core;
 
-use PublishPressFuture\Core\HooksAbstract as HooksAbstractFree;
+use PublishPressFuture\Modules\Expirator\HooksAbstract as HooksAbstractFree;
 
 abstract class HooksAbstract
 {
