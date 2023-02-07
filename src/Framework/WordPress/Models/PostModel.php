@@ -52,13 +52,11 @@ class PostModel
     {
         $post = $this->getPostInstance();
 
-        $updated = $this->update(
+        return $this->update(
             [
                 'post_status' => $newPostStatus,
             ]
         );
-
-        return $updated;
     }
 
     /**

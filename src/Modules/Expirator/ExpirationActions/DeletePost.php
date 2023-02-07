@@ -15,6 +15,12 @@ class DeletePost implements ExpirationActionInterface
      */
     private $postModel;
 
+
+    /**
+     * @var array
+     */
+    private $log = [];
+
     /**
      * @param ExpirablePostModel $postModel
      */
@@ -33,15 +39,11 @@ class DeletePost implements ExpirationActionInterface
      */
     public function getNotificationText()
     {
-        return __('Post has been successfully deleted.', 'post-expirator');
-    }
+        if (empty($this->log) || ! $this->log['success']) {
+            return __('Post was not deleted.', 'post-expirator');
+        }
 
-    /**
-     * @inheritDoc
-     */
-    public function getExpirationLog()
-    {
-        return [];
+        return __('Post has been successfully deleted.', 'post-expirator');
     }
 
     /**
@@ -49,6 +51,10 @@ class DeletePost implements ExpirationActionInterface
      */
     public function execute()
     {
-        return $this->postModel->delete();
+        $result = $this->postModel->delete();
+
+        $this->log['success'] = $result;
+
+        return $result;
     }
 }

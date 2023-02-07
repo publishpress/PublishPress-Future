@@ -358,7 +358,7 @@ class ExpirablePostModel extends PostModel
 
         if (! $result) {
             $this->debug->log(
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 $postId . ' -> FAILED ' . print_r($this->getExpirationDataAsArray(), true)
             );
 
@@ -366,15 +366,18 @@ class ExpirablePostModel extends PostModel
         }
 
         $this->debug->log(
-        // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
             $postId . ' -> PROCESSED ' . print_r($this->getExpirationDataAsArray(), true)
         );
 
-        $expirationLog = $expirationAction->getExpirationLog();
+        $expirationLog = $expirationAction->getNotificationText() . ' ';
 
-        $expirationLog['email_enabled'] = $this->expirationEmailIsEnabled();
-        if ($expirationLog['email_enabled']) {
-            $expirationLog['email_sent'] = $this->sendEmail($expirationAction);
+        if ($this->expirationEmailIsEnabled()) {
+            $expirationLog .= __('Email is disabled', 'post-expirator');
+        } else {
+            $emailSent = $this->sendEmail($expirationAction);
+            $expirationLog .= $emailSent
+                ? __('Email sent', 'post-expirator') : __('Email not sent', 'post-expirator');
         }
 
         $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
@@ -419,13 +422,11 @@ class ExpirablePostModel extends PostModel
 
 
     /**
-     * @param ExpirationActionInterface $expirationAction
+     * @param string $actionNotificationText
      * @return bool
      */
-    private function sendEmail($expirationAction)
+    private function sendEmail($actionNotificationText)
     {
-        $actionNotificationText = $expirationAction->getNotificationText();
-
         $emailBody = sprintf(
             __(
                 '%1$s (%2$s) has expired at %3$s. %4$s',

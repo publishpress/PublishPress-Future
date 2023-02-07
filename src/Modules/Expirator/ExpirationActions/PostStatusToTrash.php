@@ -16,6 +16,11 @@ class PostStatusToTrash implements ExpirationActionInterface
     private $postModel;
 
     /**
+     * @var array
+     */
+    private $log = [];
+
+    /**
      * @param ExpirablePostModel $postModel
      */
     public function __construct($postModel)
@@ -33,6 +38,10 @@ class PostStatusToTrash implements ExpirationActionInterface
      */
     public function getNotificationText()
     {
+        if (empty($this->log) || ! $this->log['success']) {
+            return __('Post status didn\'t change.', 'post-expirator');
+        }
+
         return sprintf(
             __('Post status has been successfully changed to "%s".', 'post-expirator'),
             'trash'
@@ -41,17 +50,14 @@ class PostStatusToTrash implements ExpirationActionInterface
 
     /**
      * @inheritDoc
-     */
-    public function getExpirationLog()
-    {
-        return [];
-    }
-
-    /**
-     * @inheritDoc
+     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function execute()
     {
-        return $this->postModel->setPostStatus('trash');
+        $result = $this->postModel->setPostStatus('trash');
+
+        $this->log['success'] = $result;
+
+        return $result;
     }
 }

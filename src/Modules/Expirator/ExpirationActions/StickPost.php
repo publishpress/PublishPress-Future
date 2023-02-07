@@ -16,6 +16,11 @@ class StickPost implements ExpirationActionInterface
     private $postModel;
 
     /**
+     * @var array
+     */
+    private $log = [];
+
+    /**
      * @param ExpirablePostModel $postModel
      */
     public function __construct($postModel)
@@ -33,15 +38,11 @@ class StickPost implements ExpirationActionInterface
      */
     public function getNotificationText()
     {
-        return __('Post has been added to stickies list.', 'post-expirator');
-    }
+        if (empty($this->log) || ! $this->log['success']) {
+            return __('Post didn\'t change.', 'post-expirator');
+        }
 
-    /**
-     * @inheritDoc
-     */
-    public function getExpirationLog()
-    {
-        return [];
+        return __('Post has been added to stickies list.', 'post-expirator');
     }
 
     /**
@@ -49,6 +50,10 @@ class StickPost implements ExpirationActionInterface
      */
     public function execute()
     {
-        return $this->postModel->stick();
+        $result = $this->postModel->stick();
+
+        $this->log['success'] = $result;
+
+        return $result;
     }
 }

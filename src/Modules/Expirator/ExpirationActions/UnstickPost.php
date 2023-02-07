@@ -16,6 +16,11 @@ class UnstickPost implements ExpirationActionInterface
     private $postModel;
 
     /**
+     * @var array
+     */
+    private $log = [];
+
+    /**
      * @param ExpirablePostModel $postModel
      */
     public function __construct($postModel)
@@ -33,15 +38,11 @@ class UnstickPost implements ExpirationActionInterface
      */
     public function getNotificationText()
     {
-        return __('Post has been removed from stickies list.', 'post-expirator');
-    }
+        if (empty($this->log) || ! $this->log['success']) {
+            return __('Post didn\'t change.', 'post-expirator');
+        }
 
-    /**
-     * @inheritDoc
-     */
-    public function getExpirationLog()
-    {
-        return [];
+        return __('Post has been removed from stickies list.', 'post-expirator');
     }
 
     /**
@@ -49,6 +50,10 @@ class UnstickPost implements ExpirationActionInterface
      */
     public function execute()
     {
-        return $this->postModel->unstick();
+        $result = $this->postModel->unstick();
+
+        $this->log['success'] = $result;
+
+        return $result;
     }
 }
