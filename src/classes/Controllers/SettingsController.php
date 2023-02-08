@@ -49,6 +49,11 @@ class SettingsController implements ModuleInterface
             HooksAbstract::ACTION_AFTER_DEBUG_LOG_SETTING,
             [$this, 'renderDebugLogSetting']
         );
+
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_ADMIN_MENU,
+            [$this, 'adminMenu']
+        );
     }
 
     public function routeActions()
@@ -91,5 +96,12 @@ class SettingsController implements ModuleInterface
         $enabled = $this->settingsModel->getWorkflowLogIsEnabled();
 
         include_once $this->templatesPath . '/workflow-log-setting.html.php';
+    }
+
+    public function adminMenu()
+    {
+        global $submenu;
+
+        $submenu['publishpress-future'][0][0] = 'Settings';
     }
 }
