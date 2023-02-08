@@ -13,7 +13,7 @@ use PublishPressFuturePro\Models\SettingsModel;
 use PublishPressFuturePro\Models\WorkflowLogModel;
 
 return [
-    ServicesAbstract::PLUGIN_VERSION => '2.9.0-beta.2',
+    ServicesAbstract::PLUGIN_VERSION => '2.9.0-beta.4',
 
     ServicesAbstract::PLUGIN_SLUG => \PublishPressFuturePro\PLUGIN_SLUG,
 
