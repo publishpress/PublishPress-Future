@@ -22,19 +22,26 @@ class WorkflowLogTable extends WP_List_Table
 
     public function prepare_items()
     {
-        global $wpdb;
-        $tableName = WorkflowLogModel::getTableName();
-        $logs = $wpdb->get_results("SELECT * FROM $tableName");
-
-        foreach ($logs as &$log) {
-            $log->post = get_the_title($log->post_id) . ' [' . $log->post_id . ']';
-        }
-
         $columns = $this->get_columns();
         $hidden = $this->get_hidden_columns();
         $sortable = $this->get_sortable_columns();
         $this->_column_headers = [$columns, $hidden, $sortable];
-        $this->items = $logs;
+
+        $model = new WorkflowLogModel();
+
+        $perPage = $this->get_items_per_page('records_per_page', 20);
+        $currentPage = $this->get_pagenum();
+
+        $totalItems = $model->countAll();
+
+        $this->set_pagination_args([
+            'total_items' => $totalItems,
+            'per_page' => $perPage
+        ]);
+
+        $data = $model->getAll($perPage, $currentPage, $this->get_orderby(), $this->get_order('DESC'));
+
+        $this->items = $data;
     }
 
     public function get_columns()

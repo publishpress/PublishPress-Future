@@ -7,15 +7,36 @@ class WorkflowLogModel
     // Table name
     protected const TABLE_NAME = 'ppfuture_workflow_log';
 
-    public function getAll(): array
+    public function getAll(int $perPage = 20, int $currentPage = 1, $orderBy = '', $order = 'ASC'): array
     {
         global $wpdb;
 
         $tableName = self::getTableName();
 
-        $sql = "SELECT * FROM $tableName";
+        $perPage = (int)$perPage;
+        $currentPage = (int)$currentPage;
+        $offset = $currentPage > 1 ? ($currentPage - 1) * $perPage : 0;
+
+        $sql = "
+            SELECT {$tableName}.*, {$wpdb->posts}.post_title
+            FROM {$tableName}
+            LEFT JOIN {$wpdb->posts} ON {$wpdb->posts}.ID = {$tableName}.post_id
+            LIMIT {$perPage}
+            OFFSET {$offset};
+        ";
 
         return $wpdb->get_results($sql);
+    }
+
+    public function countAll(): int
+    {
+        global $wpdb;
+
+        $tableName = self::getTableName();
+
+        $sql = "SELECT COUNT(*) FROM $tableName";
+
+        return $wpdb->get_var($sql);
     }
 
     public function add(int $postId, string $log): int
