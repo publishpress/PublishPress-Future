@@ -4,14 +4,14 @@ namespace PublishPressFuturePro\Controllers;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
 use PublishPressFuturePro\Core\HooksAbstract;
+use PublishPressFuturePro\Models\SettingsModel;
 use PublishPressFuturePro\Models\WorkflowLogModel;
 use PublishPressFuturePro\Tables\WorkflowLogTable;
 
-use function wp_verify_nonce;
-use function wp_die;
 use function current_user_can;
+use function wp_die;
+use function wp_verify_nonce;
 
 class WorkflowLogController implements ModuleInterface
 {
@@ -26,20 +26,24 @@ class WorkflowLogController implements ModuleInterface
     private $modelWorkflowLog;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
-     */
-    private $options;
-    /**
      * @var string
      */
-    private $basePath;
+    private $templatesPath;
+    /**
+     * @var \PublishPressFuturePro\Models\SettingsModel
+     */
+    private $settingsModel;
 
-    public function __construct(HookableInterface $hooks, WorkflowLogModel $modelWorkflowLog, OptionsFacade $options, string $basePath)
-    {
+    public function __construct(
+        HookableInterface $hooks,
+        WorkflowLogModel $modelWorkflowLog,
+        SettingsModel $settingsModel,
+        string $templatesPath
+    ) {
         $this->hooks = $hooks;
         $this->modelWorkflowLog = $modelWorkflowLog;
-        $this->options = $options;
-        $this->basePath = $basePath;
+        $this->templatesPath = $templatesPath;
+        $this->settingsModel = $settingsModel;
     }
 
 
@@ -63,12 +67,12 @@ class WorkflowLogController implements ModuleInterface
         );
 
         $this->hooks->addAction(
-            HooksAbstract::ADMIN_MENU,
+            HooksAbstract::ACTION_ADMIN_MENU,
             [$this, 'adminMenu']
         );
 
         $this->hooks->addAction(
-            HooksAbstract::ADMIN_INIT,
+            HooksAbstract::ACTION_ADMIN_INIT,
             [$this, 'routeActions']
         );
     }
@@ -85,7 +89,7 @@ class WorkflowLogController implements ModuleInterface
             __('Log', 'publishpress'),
             __('Log', 'publishpress'),
             'manage_options',
-            'publishpress_future_log',
+            'publishpress-future-log',
             [$this, 'renderLogPage']
         );
     }
@@ -95,7 +99,7 @@ class WorkflowLogController implements ModuleInterface
         $table = new WorkflowLogTable();
         $table->prepare_items();
 
-        include_once $this->basePath . '/src/templates/workflow-log.html.php';
+        include_once $this->templatesPath . '/workflow-log.html.php';
     }
 
     public function onActivatePlugin()
@@ -105,18 +109,23 @@ class WorkflowLogController implements ModuleInterface
 
     public function onDeactivatePlugin()
     {
-        $preserveData = (bool)$this->options->getOption('expirationdatePreserveData', 1);
-
-        if (! $preserveData) {
-            // Deactivate the Pro plugin.
+        if (! $this->settingsModel->getPreserveDataOnDeactivation()) {
             WorkflowLogModel::dropTableIfExists();
         }
     }
 
     public function routeActions()
     {
+        if (
+            ! isset($_GET['page'])
+            || $_GET['page'] !== 'publishpress-future-log'
+        ) {
+            return;
+        }
+
         if (isset($_GET['action']) && $_GET['action'] === 'delete-all-logs') {
-            if (! isset($_GET['nonce']) ||
+            if (
+                ! isset($_GET['nonce']) ||
                 ! wp_verify_nonce(sanitize_key($_GET['nonce']), 'delete-all-logs')
             ) {
                 wp_die('Invalid nonce');

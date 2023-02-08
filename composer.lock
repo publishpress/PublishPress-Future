@@ -219,12 +219,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "4e1c5b0599f5c9bda24a2d07105177da81579c09"
+                "reference": "b2bc81fa53ad66fc0dac104a45df733e85f4ae90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/4e1c5b0599f5c9bda24a2d07105177da81579c09",
-                "reference": "4e1c5b0599f5c9bda24a2d07105177da81579c09",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/b2bc81fa53ad66fc0dac104a45df733e85f4ae90",
+                "reference": "b2bc81fa53ad66fc0dac104a45df733e85f4ae90",
                 "shasum": ""
             },
             "require": {
@@ -298,7 +298,7 @@
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/develop"
             },
-            "time": "2023-02-08T01:31:08+00:00"
+            "time": "2023-02-08T14:36:50+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -1701,16 +1701,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.16",
+            "version": "1.9.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "922e2689bb180575d0f57de0443c431a5a698e8f"
+                "reference": "204e459e7822f2c586463029f5ecec31bb45a1f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/922e2689bb180575d0f57de0443c431a5a698e8f",
-                "reference": "922e2689bb180575d0f57de0443c431a5a698e8f",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/204e459e7822f2c586463029f5ecec31bb45a1f2",
+                "reference": "204e459e7822f2c586463029f5ecec31bb45a1f2",
                 "shasum": ""
             },
             "require": {
@@ -1740,7 +1740,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.16"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.17"
             },
             "funding": [
                 {
@@ -1756,7 +1756,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-07T10:42:21+00:00"
+            "time": "2023-02-08T12:25:00+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",

@@ -3,11 +3,13 @@
 use PublishPressFuture\Core\DI\ContainerInterface;
 use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuturePro\Controllers\CustomStatusesController;
+use PublishPressFuturePro\Controllers\SettingsController;
 use PublishPressFuturePro\Controllers\WorkflowLogController;
 use PublishPressFuturePro\Core\HooksAbstract;
 use PublishPressFuturePro\Core\PluginInitializator;
 use PublishPressFuturePro\Core\ServicesAbstract;
 use PublishPressFuturePro\Models\CustomStatusesModel;
+use PublishPressFuturePro\Models\SettingsModel;
 use PublishPressFuturePro\Models\WorkflowLogModel;
 
 return [
@@ -18,6 +20,8 @@ return [
     ServicesAbstract::PLUGIN_NAME => \PublishPressFuturePro\PLUGIN_NAME,
 
     ServicesAbstract::BASE_PATH => \PublishPressFuturePro\BASE_PATH,
+
+    ServicesAbstract::TEMPLATE_PATH => \PublishPressFuturePro\BASE_PATH . '/src/templates',
 
     /**
      * @return string
@@ -33,6 +37,7 @@ return [
         $controllerServicesList = [
             ServicesAbstract::CONTROLLER_CUSTOM_STATUSES,
             ServicesAbstract::CONTROLLER_WORKFLOW_LOG,
+            ServicesAbstract::CONTROLLER_SETTINGS,
         ];
 
         $controllers = [];
@@ -74,8 +79,19 @@ return [
         return new WorkflowLogController(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::MODEL_WORKFLOW_LOG),
-            $container->get(ServicesAbstract::OPTIONS),
-            $container->get(ServicesAbstract::BASE_PATH)
+            $container->get(ServicesAbstract::MODEL_SETTINGS),
+            $container->get(ServicesAbstract::TEMPLATE_PATH)
+        );
+    },
+
+    /**
+     * @return ModuleInterface
+     */
+    ServicesAbstract::CONTROLLER_SETTINGS => static function (ContainerInterface $container) {
+        return new SettingsController(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::MODEL_SETTINGS),
+            $container->get(ServicesAbstract::TEMPLATE_PATH)
         );
     },
 
@@ -91,5 +107,11 @@ return [
      */
     ServicesAbstract::MODEL_WORKFLOW_LOG => static function (ContainerInterface $container) {
         return new WorkflowLogModel();
+    },
+
+    ServicesAbstract::MODEL_SETTINGS => static function (ContainerInterface $container) {
+        return new SettingsModel(
+            $container->get(ServicesAbstract::OPTIONS),
+        );
     },
 ];
