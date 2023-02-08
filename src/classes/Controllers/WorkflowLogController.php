@@ -50,13 +50,6 @@ class WorkflowLogController implements ModuleInterface
     public function initialize()
     {
         $this->hooks->addAction(
-            HooksAbstract::ACTION_POST_EXPIRED,
-            [$this, 'logPostExpired'],
-            10,
-            2
-        );
-
-        $this->hooks->addAction(
             HooksAbstract::ACTION_ACTIVATE_PLUGIN,
             [$this, 'onActivatePlugin']
         );
@@ -66,15 +59,24 @@ class WorkflowLogController implements ModuleInterface
             [$this, 'onDeactivatePlugin']
         );
 
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_ADMIN_MENU,
-            [$this, 'adminMenu']
-        );
+        if ($this->settingsModel->getWorkflowLogIsEnabled()) {
+            $this->hooks->addAction(
+                HooksAbstract::ACTION_ADMIN_MENU,
+                [$this, 'adminMenu']
+            );
 
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_ADMIN_INIT,
-            [$this, 'routeActions']
-        );
+            $this->hooks->addAction(
+                HooksAbstract::ACTION_ADMIN_INIT,
+                [$this, 'routeActions']
+            );
+
+            $this->hooks->addAction(
+                HooksAbstract::ACTION_POST_EXPIRED,
+                [$this, 'logPostExpired'],
+                10,
+                2
+            );
+        }
     }
 
     public function logPostExpired(int $postId, string $expirationLog)
