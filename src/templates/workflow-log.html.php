@@ -2,7 +2,6 @@
     <div id="icon-users" class="icon32"></div>
     <h2><?php echo __('Future Log', 'publishpress-future-pro'); ?></h2>
 
-    <p>TODO: Add support to sortable columns</p>
     <p>TODO: Add button to delete all logs</p>
     <p>TODO: Add setting to disable the log</p>
     <p>TODO: Add Filters</p>

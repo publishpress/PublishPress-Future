@@ -62,6 +62,7 @@ class WorkflowLogTable extends WP_List_Table
     public function get_sortable_columns()
     {
         return [
+            'id' => ['id', false],
             'post_title' => ['post_title', false],
             'created_at' => ['created_at', false],
         ];
@@ -100,5 +101,15 @@ class WorkflowLogTable extends WP_List_Table
             $item->post_title . ' [' . $item->post_id . ']',
             $this->row_actions($actions)
         );
+    }
+
+    private function get_order($default = 'ASC')
+    {
+        return isset($_GET['order']) && in_array(strtoupper($_GET['order']), ['ASC', 'DESC']) ? strtoupper($_GET['order']) : $default;
+    }
+
+    private function get_orderby($default = 'id')
+    {
+        return isset($_GET['orderby']) && in_array($_GET['orderby'], ['id', 'post_title', 'created_at']) ? $_GET['orderby'] : $default;
     }
 }

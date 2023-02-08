@@ -7,7 +7,7 @@ class WorkflowLogModel
     // Table name
     protected const TABLE_NAME = 'ppfuture_workflow_log';
 
-    public function getAll(int $perPage = 20, int $currentPage = 1, $orderBy = '', $order = 'ASC'): array
+    public function getAll(int $perPage = 20, int $currentPage = 1, $orderBy = 'id', $order = 'ASC'): array
     {
         global $wpdb;
 
@@ -17,10 +17,14 @@ class WorkflowLogModel
         $currentPage = (int)$currentPage;
         $offset = $currentPage > 1 ? ($currentPage - 1) * $perPage : 0;
 
+        $orderBy = in_array($orderBy, ['id', 'post_title', 'created_at']) ? $orderBy : 'id';
+        $order = in_array($order, ['ASC', 'DESC']) ? $order : 'ASC';
+
         $sql = "
             SELECT {$tableName}.*, {$wpdb->posts}.post_title
             FROM {$tableName}
             LEFT JOIN {$wpdb->posts} ON {$wpdb->posts}.ID = {$tableName}.post_id
+            ORDER BY {$orderBy} {$order}
             LIMIT {$perPage}
             OFFSET {$offset};
         ";
