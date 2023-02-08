@@ -422,10 +422,11 @@ class ExpirablePostModel extends PostModel
 
 
     /**
+     * @param \PublishPressFuture\Modules\Expirator\Interfaces\ActionableInterface $expirationAction
      * @param string $actionNotificationText
      * @return bool
      */
-    private function sendEmail($actionNotificationText)
+    private function sendEmail($expirationAction, $actionNotificationText)
     {
         $emailBody = sprintf(
             __(
