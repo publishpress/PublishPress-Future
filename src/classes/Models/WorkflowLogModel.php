@@ -7,11 +7,15 @@ class WorkflowLogModel
     // Table name
     protected const TABLE_NAME = 'ppfuture_workflow_log';
 
-    public function getAll()
+    public function getAll(): array
     {
         global $wpdb;
 
-        self::getTableName();
+        $tableName = self::getTableName();
+
+        $sql = "SELECT * FROM $tableName";
+
+        return $wpdb->get_results($sql);
     }
 
     public function add(int $postId, string $log): int
@@ -48,7 +52,7 @@ class WorkflowLogModel
         );
     }
 
-    private static function getTableName(): string
+    public static function getTableName(): string
     {
         global $wpdb;
         return $wpdb->prefix . self::TABLE_NAME;

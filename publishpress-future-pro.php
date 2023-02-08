@@ -23,8 +23,9 @@ namespace PublishPressFuturePro {
         return;
     }
 
-    const INCLUDES_DIR = __DIR__ . '/src/includes';
-    const VENDOR_DIR = __DIR__ . '/vendor';
+    const BASE_PATH = __DIR__;
+    const INCLUDES_DIR = BASE_PATH . '/src/includes';
+    const VENDOR_DIR = BASE_PATH . '/vendor';
     const PLUGIN_SLUG = 'publishpress-future-pro';
     const PLUGIN_NAME = 'PublishPress Future Pro';
     const FREE_PLUGIN_NAME = 'PublishPress Future';

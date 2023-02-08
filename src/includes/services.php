@@ -13,11 +13,11 @@ use PublishPressFuturePro\Models\WorkflowLogModel;
 return [
     ServicesAbstract::PLUGIN_VERSION => '2.9.0-beta.2',
 
-    ServicesAbstract::PLUGIN_SLUG => 'publishpress-future-pro',
+    ServicesAbstract::PLUGIN_SLUG => \PublishPressFuturePro\PLUGIN_SLUG,
 
-    ServicesAbstract::PLUGIN_NAME => 'PublishPress Future Pro',
+    ServicesAbstract::PLUGIN_NAME => \PublishPressFuturePro\PLUGIN_NAME,
 
-    ServicesAbstract::BASE_PATH => __DIR__,
+    ServicesAbstract::BASE_PATH => \PublishPressFuturePro\BASE_PATH,
 
     /**
      * @return string
@@ -74,7 +74,8 @@ return [
         return new WorkflowLogController(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::MODEL_WORKFLOW_LOG),
-            $container->get(ServicesAbstract::OPTIONS)
+            $container->get(ServicesAbstract::OPTIONS),
+            $container->get(ServicesAbstract::BASE_PATH)
         );
     },
 

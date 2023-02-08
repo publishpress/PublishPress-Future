@@ -7,6 +7,7 @@ use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
 use PublishPressFuturePro\Core\HooksAbstract;
 use PublishPressFuturePro\Models\WorkflowLogModel;
+use PublishPressFuturePro\Tables\WorkflowLogTable;
 
 class WorkflowLogController implements ModuleInterface
 {
@@ -24,12 +25,17 @@ class WorkflowLogController implements ModuleInterface
      * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
+    /**
+     * @var string
+     */
+    private $basePath;
 
-    public function __construct(HookableInterface $hooks, WorkflowLogModel $modelWorkflowLog, OptionsFacade $options)
+    public function __construct(HookableInterface $hooks, WorkflowLogModel $modelWorkflowLog, OptionsFacade $options, string $basePath)
     {
         $this->hooks = $hooks;
         $this->modelWorkflowLog = $modelWorkflowLog;
         $this->options = $options;
+        $this->basePath = $basePath;
     }
 
 
@@ -51,11 +57,36 @@ class WorkflowLogController implements ModuleInterface
             HooksAbstract::ACTION_DEACTIVATE_PLUGIN,
             [$this, 'onDeactivatePlugin']
         );
+
+        $this->hooks->addAction(
+            HooksAbstract::ADMIN_MENU,
+            [$this, 'adminMenu']
+        );
     }
 
     public function logPostExpired(int $postId, string $expirationLog)
     {
         $this->modelWorkflowLog->add($postId, $expirationLog);
+    }
+
+    public function adminMenu()
+    {
+        add_submenu_page(
+            'publishpress-future',
+            __('Log', 'publishpress'),
+            __('Log', 'publishpress'),
+            'manage_options',
+            'publishpress_future_log',
+            [$this, 'renderLogPage']
+        );
+    }
+
+    public function renderLogPage()
+    {
+        $table = new WorkflowLogTable();
+        $table->prepare_items();
+
+        include_once $this->basePath . '/src/templates/workflow-log.html.php';
     }
 
     public function onActivatePlugin()
