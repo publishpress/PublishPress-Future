@@ -39,7 +39,13 @@ class WorkflowLogTable extends WP_List_Table
             'per_page' => $perPage
         ]);
 
-        $data = $model->getAll($perPage, $currentPage, $this->get_orderby(), $this->get_order('DESC'));
+        $data = $model->getAll(
+            $perPage,
+            $currentPage,
+            $this->get_orderby(),
+            $this->get_order('DESC'),
+            isset($_REQUEST['postType']) ? $_REQUEST['postType'] : ''
+        );
 
         $this->items = $data;
     }
@@ -105,11 +111,48 @@ class WorkflowLogTable extends WP_List_Table
 
     private function get_order($default = 'ASC')
     {
-        return isset($_GET['order']) && in_array(strtoupper($_GET['order']), ['ASC', 'DESC']) ? strtoupper($_GET['order']) : $default;
+        return isset($_GET['order']) && in_array(strtoupper($_GET['order']), ['ASC', 'DESC']) ? strtoupper(
+            $_GET['order']
+        ) : $default;
     }
 
     private function get_orderby($default = 'id')
     {
         return isset($_GET['orderby']) && in_array($_GET['orderby'], ['id', 'post_title', 'created_at']) ? $_GET['orderby'] : $default;
+    }
+
+    protected function extra_tablenav( $which )
+    {
+        $postTypes = get_post_types(['public' => true], 'object');
+
+        $selected = isset($_GET['postType']) ? sanitize_key($_GET['postType']) : '';
+        ?>
+        <form method="get">
+            <input type="hidden" name="page" value="<?php
+            echo esc_attr($_REQUEST['page']) ?>"/>
+            <input type="hidden" name="orderby" value="<?php
+            echo esc_attr(isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : ''); ?>"/>
+            <input type="hidden" name="order" value="<?php
+            echo esc_attr(isset($_REQUEST['order']) ? $_REQUEST['order'] : ''); ?>"/>
+            <input type="hidden" name="postType" value="<?php
+            echo esc_attr(isset($_REQUEST['postType']) ? $_REQUEST['postType'] : ''); ?>"/>
+            <input type="hidden" name="nonce" value="<?php
+            echo esc_attr(wp_create_nonce('filter-workflow-logs')); ?>"/>
+            <select name="postType">
+                <option value="">All Post Types</option>
+                <?php
+                foreach ($postTypes as $postType) : ?>
+                    <option value="<?php
+                    echo $postType->name; ?>" <?php
+                    selected($selected, $postType->name); ?>>
+                        <?php
+                        echo $postType->label; ?>
+                    </option>
+                    <?php
+                endforeach; ?>
+            </select>
+            <input type="submit" value="Filter" class="button"/>
+        </form>
+        <?php
     }
 }
