@@ -10,9 +10,6 @@
         <?php echo __('Delete All Logs', 'publishpress-future-pro'); ?>
     </a>
 
-    <p>TODO: Add setting to disable the log</p>
-    <p>TODO: Add Filters</p>
-
     <?php
     $table->display(); ?>
 </div>
