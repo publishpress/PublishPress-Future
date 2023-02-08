@@ -2,11 +2,13 @@
 
 use PublishPressFuture\Core\DI\ContainerInterface;
 use PublishPressFuture\Framework\ModuleInterface;
+use PublishPressFuturePro\Controllers\CustomStatusesController;
+use PublishPressFuturePro\Controllers\WorkflowLogController;
 use PublishPressFuturePro\Core\HooksAbstract;
 use PublishPressFuturePro\Core\PluginInitializator;
 use PublishPressFuturePro\Core\ServicesAbstract;
 use PublishPressFuturePro\Models\CustomStatusesModel;
-use PublishPressFuturePro\Controllers\CustomStatusesController;
+use PublishPressFuturePro\Models\WorkflowLogModel;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => '2.9.0-beta.2',
@@ -30,6 +32,7 @@ return [
     ServicesAbstract::CONTROLLERS => static function (ContainerInterface $container) {
         $controllerServicesList = [
             ServicesAbstract::CONTROLLER_CUSTOM_STATUSES,
+            ServicesAbstract::CONTROLLER_WORKFLOW_LOG,
         ];
 
         $controllers = [];
@@ -65,9 +68,27 @@ return [
     },
 
     /**
+     * @return ModuleInterface
+     */
+    ServicesAbstract::CONTROLLER_WORKFLOW_LOG => static function (ContainerInterface $container) {
+        return new WorkflowLogController(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::MODEL_WORKFLOW_LOG),
+            $container->get(ServicesAbstract::OPTIONS)
+        );
+    },
+
+    /**
      * @return \PublishPressFuturePro\Models\CustomStatusesModel
      */
     ServicesAbstract::MODEL_CUSTOM_STATUSES => static function (ContainerInterface $container) {
         return new CustomStatusesModel();
+    },
+
+    /**
+     * @return \PublishPressFuturePro\Models\WorkflowLogModel
+     */
+    ServicesAbstract::MODEL_WORKFLOW_LOG => static function (ContainerInterface $container) {
+        return new WorkflowLogModel();
     },
 ];

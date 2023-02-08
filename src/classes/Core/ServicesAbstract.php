@@ -18,5 +18,8 @@ abstract class ServicesAbstract
     public const PLUGIN = 'future.pro/plugin';
     public const HOOKS = ServicesAbstractFree::HOOKS;
     public const CONTROLLER_CUSTOM_STATUSES = 'future.pro/controller-custom-statuses';
+    public const CONTROLLER_WORKFLOW_LOG = 'future.pro/controller-workflow-log';
     public const MODEL_CUSTOM_STATUSES = 'future.pro/model-custom-statuses';
+    public const MODEL_WORKFLOW_LOG = 'future.pro/model-workflow-log';
+    public const OPTIONS = ServicesAbstractFree::OPTIONS;
 }

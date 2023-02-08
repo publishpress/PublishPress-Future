@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Plugin Name: PublishPress Future Pro
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
@@ -55,6 +56,12 @@ namespace PublishPressFuturePro {
         $services = require INCLUDES_DIR . '/services.php';
         $container = Container::getInstance();
         $container->registerServices($services);
+
+        require_once __DIR__ . '/src/includes/install.php';
+        require_once __DIR__ . '/src/includes/uninstall.php';
+
+        register_activation_hook(__FILE__, 'PublishPressFuturePro\\install');
+        register_deactivation_hook(__FILE__, 'PublishPressFuturePro\\uninstall');
 
         $container->get(ServicesAbstract::PLUGIN)->initialize();
 

@@ -6,8 +6,8 @@ use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPressFuturePro\Models\CustomStatusesModel;
 use PublishPressFuturePro\Controllers\CustomStatusesController;
+use PublishPressFuturePro\Models\CustomStatusesModel;
 
 use function __;
 
@@ -22,6 +22,11 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      * @var CustomStatusesModel
      */
     private $customStatusesModel;
+
+    /**
+     * @var array
+     */
+    private $log = [];
 
     public function __construct(CustomStatusesModel $customStatusesModel, ExpirablePostModel $postModel)
     {
@@ -39,19 +44,14 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      */
     public function getNotificationText(): string
     {
+        if (empty($this->log) || ! $this->log['success']) {
+            return __('Post status didn\'t change.', 'post-expirator');
+        }
+
         return sprintf(
             __('Post status has been successfully changed to "%s".', 'post-expirator'),
-            'draft'
+            $this->log['new_status']
         );
-    }
-
-
-    /**
-     * @return array<string>
-     */
-    public function getExpirationLog(): array
-    {
-        return [];
     }
 
     /**
@@ -69,9 +69,18 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         $customStatuses = $this->customStatusesModel->getCustomStatuses();
 
         if (! isset($customStatuses[$newPostStatus])) {
+            $this->log['success'] = false;
+
             return false;
         }
 
-        return $this->postModel->setPostStatus($newPostStatus);
+        $result = $this->postModel->setPostStatus($newPostStatus);
+
+        $this->log = [
+            'success' => $result,
+            'new_status' => $newPostStatus,
+        ];
+
+        return $result;
     }
 }
