@@ -23,4 +23,6 @@ abstract class HooksAbstract
     public const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuturepro_deactivate_plugin';
 
     public const ADMIN_MENU = 'admin_menu';
+
+    public const ADMIN_INIT = 'admin_init';
 }

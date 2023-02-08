@@ -9,6 +9,10 @@ use PublishPressFuturePro\Core\HooksAbstract;
 use PublishPressFuturePro\Models\WorkflowLogModel;
 use PublishPressFuturePro\Tables\WorkflowLogTable;
 
+use function wp_verify_nonce;
+use function wp_die;
+use function current_user_can;
+
 class WorkflowLogController implements ModuleInterface
 {
     /**
@@ -62,6 +66,11 @@ class WorkflowLogController implements ModuleInterface
             HooksAbstract::ADMIN_MENU,
             [$this, 'adminMenu']
         );
+
+        $this->hooks->addAction(
+            HooksAbstract::ADMIN_INIT,
+            [$this, 'routeActions']
+        );
     }
 
     public function logPostExpired(int $postId, string $expirationLog)
@@ -101,6 +110,21 @@ class WorkflowLogController implements ModuleInterface
         if (! $preserveData) {
             // Deactivate the Pro plugin.
             WorkflowLogModel::dropTableIfExists();
+        }
+    }
+
+    public function routeActions()
+    {
+        if (isset($_GET['action']) && $_GET['action'] === 'delete-all-logs') {
+            if (! isset($_GET['nonce']) ||
+                ! wp_verify_nonce(sanitize_key($_GET['nonce']), 'delete-all-logs')
+            ) {
+                wp_die('Invalid nonce');
+            }
+
+            if (current_user_can('manage_options')) {
+                $this->modelWorkflowLog->deleteAll();
+            }
         }
     }
 }

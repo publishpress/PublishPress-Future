@@ -77,6 +77,13 @@ class WorkflowLogModel
         );
     }
 
+    public function deleteAll(): void
+    {
+        global $wpdb;
+
+        $wpdb->query("TRUNCATE TABLE " . self::getTableName());
+    }
+
     public static function getTableName(): string
     {
         global $wpdb;

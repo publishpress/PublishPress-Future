@@ -1,8 +1,15 @@
 <div class="wrap">
-    <div id="icon-users" class="icon32"></div>
-    <h2><?php echo __('Future Log', 'publishpress-future-pro'); ?></h2>
+    <h1 class="wp-heading-inline"><?php echo __('Future Log', 'publishpress-future-pro'); ?></h1>
+    <?php
+    $deleteUrlArgs = [
+        'action' => 'delete-all-logs',
+        'nonce' => wp_create_nonce('delete-all-logs'),
+    ];
+    ?>
+    <a class="page-title-action" id="delete-all-logs" href="<?php echo add_query_arg($deleteUrlArgs); ?>">
+        <?php echo __('Delete All Logs', 'publishpress-future-pro'); ?>
+    </a>
 
-    <p>TODO: Add button to delete all logs</p>
     <p>TODO: Add setting to disable the log</p>
     <p>TODO: Add Filters</p>
 
