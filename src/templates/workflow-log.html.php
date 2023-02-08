@@ -1,15 +1,20 @@
 <div class="wrap">
     <div id="icon-users" class="icon32"></div>
-    <h2>Future Log</h2>
+    <h2><?php echo __('Future Log', 'publishpress-future-pro'); ?></h2>
 
     <p>TODO: Add support to sortable columns</p>
-    <p>TODO: Add Pagination</p>
-    <p>TODO: Add Filters</p>
     <p>TODO: Add button to delete all logs</p>
+    <p>TODO: Add setting to disable the log</p>
+    <p>TODO: Add Filters</p>
 
     <?php
     $table->display(); ?>
 </div>
+
+<?php
+PostExpirator_Facade::load_assets('settings');
+PostExpirator_Display::getInstance()->publishpress_footer();
+?>
 
 <style type="text/css">
     .wp-list-table .column-id {
