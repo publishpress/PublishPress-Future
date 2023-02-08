@@ -1,4 +1,7 @@
 <?php
+
+use PublishPressFuture\Modules\Debug\HooksAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = PublishPressFuture\Core\DI\Container::getInstance();
@@ -42,6 +45,7 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                 <?php endif; ?>
             </td>
         </tr>
+        <?php do_action(HooksAbstract::ACTION_AFTER_DEBUG_LOG_SETTING); ?>
         <tr>
             <th scope="row"><?php
                 esc_html_e('Purge Debug Log', 'post-expirator'); ?></th>
