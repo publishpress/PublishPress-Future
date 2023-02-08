@@ -76,7 +76,7 @@ class PostCategoryRemove implements ExpirationActionInterface
 
         $updatedTerms = array_diff($originalTerms, $termsToRemove);
 
-        $removedTerms = array_intersect($updatedTerms, $termsToRemove);
+        $removedTerms = array_intersect($originalTerms, $termsToRemove);
 
         $result = $this->postModel->setTerms($updatedTerms, $expirationTaxonomy);
 
