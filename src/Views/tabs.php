@@ -61,8 +61,6 @@ $tabs = apply_filters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
                     <?php echo esc_html($tab['title']); ?>
                 </a>
             <?php endforeach; ?>
-
-            <?php do_action(HooksAbstract::ACTION_SETTINGS_TABS); ?>
         </nav>
 
         <?php
