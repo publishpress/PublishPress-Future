@@ -8,7 +8,7 @@ namespace PublishPressFuture\Modules\Settings\Controllers;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Modules\Settings\HooksAbstract;
+use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 
 class Controller implements InitializableInterface
@@ -70,7 +70,7 @@ class Controller implements InitializableInterface
             [$this, 'onActionDeactivatePlugin']
         );
         $this->hooks->addFilter(
-            HooksAbstract::FILTER_DEBUG_ENABLED,
+            SettingsHooksAbstract::FILTER_DEBUG_ENABLED,
             [$this, 'onFilterDebugEnabled']
         );
         $this->hooks->addAction(
@@ -95,7 +95,7 @@ class Controller implements InitializableInterface
             return;
         }
 
-        $this->hooks->doAction(HooksAbstract::ACTION_DELETE_ALL_SETTINGS);
+        $this->hooks->doAction(SettingsHooksAbstract::ACTION_DELETE_ALL_SETTINGS);
 
         $this->settings->deleteAllSettings();
     }
@@ -212,6 +212,8 @@ class Controller implements InitializableInterface
     {
         $allowedTabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
 
+        $allowedTabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);
+
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
 
@@ -235,7 +237,7 @@ class Controller implements InitializableInterface
             call_user_func([$this, $methodName]);
         }
 
-        $this->hooks->doAction(HooksAbstract::ACTION_SAVE_TAB . $tab);
+        $this->hooks->doAction(SettingsHooksAbstract::ACTION_SAVE_TAB . $tab);
     }
 
     private function saveTabDefaults()
