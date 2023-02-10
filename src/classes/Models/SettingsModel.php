@@ -18,20 +18,48 @@ class SettingsModel
 
     public function getWorkflowLogIsEnabled(): bool
     {
-        return (bool)$this->options->getOption('ppfutureproLogEnabled', 1);
+        return (bool)$this->options->getOption('ppfuturepro_log_enabled', 1);
     }
 
     public function setWorkflowLogIsEnabled(bool $value)
     {
-        if ('unset' === $this->options->getOption('ppfutureproLogEnabled', 'unset')) {
-            $this->options->addOption('ppfutureproLogEnabled', $value ? 1 : 0);
+        if (null === $this->options->getOption('ppfuturepro_log_enabled', null)) {
+            $this->options->addOption('ppfuturepro_log_enabled', $value ? 1 : 0);
         } else {
-            $this->options->updateOption('ppfutureproLogEnabled', $value ? 1 : 0);
+            $this->options->updateOption('ppfuturepro_log_enabled', $value ? 1 : 0);
         }
     }
 
     public function getPreserveDataOnDeactivation(): bool
     {
-        return (bool)$this->options->getOption('expirationdatePreserveData', 1);
+        return (bool)$this->options->getOption('expirationdate_preserve_data', 1);
+    }
+
+    public function getLicenseKey(): string
+    {
+        return (string)$this->options->getOption('ppfuturepro_license_key', '');
+    }
+
+    public function getLicenseStatus(): string
+    {
+        return (string)$this->options->getOption('ppfuturepro_license_status', 'invalid');
+    }
+
+    public function setLicenseKey(string $value)
+    {
+        if (null === $this->options->getOption('ppfuturepro_license_key', null)) {
+            $this->options->addOption('ppfuturepro_license_key', $value);
+        } else {
+            $this->options->updateOption('ppfuturepro_license_key', $value);
+        }
+    }
+
+    public function setLicenseStatus(string $value)
+    {
+        if (null === $this->options->getOption('ppfuturepro_license_status', null)) {
+            $this->options->addOption('ppfuturepro_license_status', $value);
+        } else {
+            $this->options->updateOption('ppfuturepro_license_status', $value);
+        }
     }
 }

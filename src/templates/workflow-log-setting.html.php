@@ -1,4 +1,6 @@
 <?php
+defined('ABSPATH') or die('Direct access not allowed.');
+
 $nonce = wp_create_nonce('workflow-logs-settings');
 ?>
 <tr>

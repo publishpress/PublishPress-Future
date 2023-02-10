@@ -1,0 +1,11 @@
+#future_pro_license_key input {
+    width: 300px;
+}
+
+#future_pro_license_key .ppfuturepro_license_status_valid span {
+    color: #8181da;
+}
+
+#future_pro_license_key .ppfuturepro_license_status_invalid span {
+    color: #d63638;
+}

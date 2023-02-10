@@ -1,0 +1,56 @@
+<?php
+
+namespace PublishPressFuturePro\Controllers;
+
+use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Framework\ModuleInterface;
+use PublishPressFuturePro\Core\HooksAbstract;
+use PublishPressFuturePro\Models\SettingsModel;
+
+use function current_user_can;
+use function wp_die;
+use function wp_verify_nonce;
+
+class EddIntegrationController implements ModuleInterface
+{
+    /**
+     * @var \PublishPressFuture\Core\HookableInterface
+     */
+    private $hooks;
+
+    /**
+     * @var string
+     */
+    private $templatesPath;
+    /**
+     * @var \PublishPressFuturePro\Models\SettingsModel
+     */
+    private $settingsModel;
+    private $eddContainer;
+
+    public function __construct(
+        HookableInterface $hooks,
+        SettingsModel $settingsModel,
+        string $templatesPath,
+        $eddContainer
+    ) {
+        $this->hooks = $hooks;
+        $this->templatesPath = $templatesPath;
+        $this->settingsModel = $settingsModel;
+        $this->eddContainer = $eddContainer;
+    }
+
+
+    public function initialize()
+    {
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_ADMIN_INIT,
+            [$this, 'initializeUpdateManager']
+        );
+    }
+
+    public function initializeUpdateManager()
+    {
+        return $this->eddContainer['update_manager'];
+    }
+}

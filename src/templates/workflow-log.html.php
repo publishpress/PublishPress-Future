@@ -1,3 +1,5 @@
+<?php defined('ABSPATH') or die('Direct access not allowed.'); ?>
+
 <div class="wrap">
     <h1 class="wp-heading-inline"><?php echo __('Future Log', 'publishpress-future-pro'); ?></h1>
     <?php
