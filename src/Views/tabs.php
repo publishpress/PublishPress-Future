@@ -48,6 +48,7 @@ $debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
                     esc_html_e('View Debug Logs', 'post-expirator'); ?></a>
                 <?php
             } ?>
+            <?php do_action(HooksAbstract::ACTION_SETTINGS_TABS); ?>
         </nav>
 
         <?php

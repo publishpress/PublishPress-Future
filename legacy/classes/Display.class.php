@@ -1,7 +1,8 @@
 <?php
 
-use PublishPressFuture\Modules\Settings\HooksAbstract;
+use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
+use PublishPressFuture\Core\HooksAbstract as CoreHooksAbstract;
 
 /**
  * The class that is responsible for all the displays.
@@ -75,6 +76,8 @@ class PostExpirator_Display
         if (method_exists($this, $function)) {
             $this->$function();
         }
+
+        do_action(CoreHooksAbstract::ACTION_LOAD_TAB, $tab);
     }
 
     /**
@@ -89,6 +92,9 @@ class PostExpirator_Display
         PostExpirator_Facade::load_assets('settings');
 
         $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
+
+        $allowed_tabs = apply_filters(CoreHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
+
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
@@ -99,7 +105,7 @@ class PostExpirator_Display
         $this->load_tab($tab);
         $html = ob_get_clean();
 
-        $debugIsEnabled = (bool)apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
+        $debugIsEnabled = (bool)apply_filters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
         if (! $debugIsEnabled) {
             unset($allowed_tabs['viewdebug']);
         }

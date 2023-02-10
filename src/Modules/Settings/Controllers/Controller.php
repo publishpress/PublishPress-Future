@@ -234,6 +234,8 @@ class Controller implements InitializableInterface
         if (method_exists($this, $methodName)) {
             call_user_func([$this, $methodName]);
         }
+
+        $this->hooks->doAction(HooksAbstract::ACTION_SAVE_TAB . $tab);
     }
 
     private function saveTabDefaults()
