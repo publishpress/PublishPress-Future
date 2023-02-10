@@ -37,7 +37,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 echo '<input type="text" value="' . esc_attr($value) . '" id="' . esc_attr(
                     $id
                 ) . '" name="license_key" />';
-                echo '<div class="ppfuturepro_license_status_' . esc_attr(
+                echo '<div class="ppfuturepro_license_status ppfuturepro_license_status_' . esc_attr(
                     $status
                 ) . '">' . esc_html__('Status: ', 'publishpress-future-pro') .
                     '<span>' . esc_html($statusLabel) . '</span></div>';

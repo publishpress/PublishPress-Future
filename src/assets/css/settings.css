@@ -2,6 +2,11 @@
     width: 300px;
 }
 
+#future_pro_license_key .ppfuturepro_license_status {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 #future_pro_license_key .ppfuturepro_license_status_valid span {
     color: #8181da;
 }
