@@ -77,7 +77,7 @@ class PostExpirator_Display
             $this->$function();
         }
 
-        do_action(CoreHooksAbstract::ACTION_LOAD_TAB, $tab);
+        do_action(SettingsHooksAbstract::ACTION_LOAD_TAB, $tab);
     }
 
     /**
@@ -93,7 +93,7 @@ class PostExpirator_Display
 
         $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
 
-        $allowed_tabs = apply_filters(CoreHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
+        $allowed_tabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
