@@ -7,6 +7,45 @@ defined('ABSPATH') or die('Direct access not allowed.');
 $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET['tab']));
 
 $debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
+
+$tabs = [
+    [
+        'title' => __('Defaults', 'publishpress'),
+        'slug'  => 'general',
+        'link' => admin_url('admin.php?page=publishpress-future&tab=general'),
+    ],
+    [
+        'title' => __('Display', 'publishpress'),
+        'slug'  => 'display',
+        'link' => admin_url('admin.php?page=publishpress-future&tab=display'),
+    ],
+    [
+        'title' => __('Post Types', 'publishpress'),
+        'slug'  => 'defaults',
+        'link' => admin_url('admin.php?page=publishpress-future&tab=defaults'),
+    ],
+    [
+        'title' => __('Advanced', 'publishpress'),
+        'slug'  => 'advanced',
+        'link' => admin_url('admin.php?page=publishpress-future&tab=advanced'),
+    ],
+    [
+        'title' => __('Diagnostics', 'publishpress'),
+        'slug'  => 'diagnostics',
+        'link' => admin_url('admin.php?page=publishpress-future&tab=diagnostics'),
+    ],
+];
+
+if ($debugIsEnabled) {
+    $tabs[] = [
+        'title' => __('Debug', 'publishpress'),
+        'slug'  => 'viewdebug',
+        'link' => admin_url('admin.php?page=publishpress-future&tab=viewdebug'),
+    ];
+}
+
+$tabs = apply_filters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
+
 ?>
 
 <div class="wrap">
@@ -14,40 +53,15 @@ $debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
         esc_html_e('PublishPress Future', 'post-expirator'); ?></h2>
     <div id="pe-settings-tabs">
         <nav class="nav-tab-wrapper postexpirator-nav-tab-wrapper" id="postexpirator-nav">
-            <a href="<?php
-            echo esc_url(admin_url('admin.php?page=publishpress-future&tab=general')); ?>"
-               class="pe-tab nav-tab <?php
-               echo ($current_tab === 'general' ? 'nav-tab-active' : ''); ?>"><?php
-                esc_html_e('Defaults', 'post-expirator'); ?></a>
-            <a href="<?php
-            echo esc_url(admin_url('admin.php?page=publishpress-future&tab=display')); ?>"
-               class="pe-tab nav-tab <?php
-               echo ($current_tab === 'display' ? 'nav-tab-active' : ''); ?>"><?php
-                esc_html_e('Display', 'post-expirator'); ?></a>
-            <a href="<?php
-            echo esc_url(admin_url('admin.php?page=publishpress-future&tab=defaults')); ?>"
-               class="pe-tab nav-tab <?php
-               echo ($current_tab === 'defaults' ? 'nav-tab-active' : ''); ?>"><?php
-                esc_html_e('Post Types', 'post-expirator'); ?></a>
-            <a href="<?php
-            echo esc_url(admin_url('admin.php?page=publishpress-future&tab=advanced')); ?>"
-               class="pe-tab nav-tab <?php
-               echo ($current_tab === 'advanced' ? 'nav-tab-active' : ''); ?>"><?php
-                esc_html_e('Advanced', 'post-expirator'); ?></a>
-            <a href="<?php
-            echo esc_url(admin_url('admin.php?page=publishpress-future&tab=diagnostics')); ?>"
-               class="pe-tab nav-tab <?php
-               echo ($current_tab === 'diagnostics' ? 'nav-tab-active' : ''); ?>"><?php
-                esc_html_e('Diagnostics', 'post-expirator'); ?></a>
-            <?php
-            if ($debugIsEnabled) { ?>
-                <a href="<?php
-                echo esc_url(admin_url('admin.php?page=publishpress-future&tab=viewdebug')); ?>"
+            <?php foreach ($tabs as $tab) : ?>
+                <a href="<?php echo esc_url($tab['link']); ?>"
                    class="pe-tab nav-tab <?php
-                   echo ($current_tab === 'viewdebug' ? 'nav-tab-active' : ''); ?>"><?php
-                    esc_html_e('View Debug Logs', 'post-expirator'); ?></a>
-                <?php
-            } ?>
+                   echo ($current_tab === $tab['slug'] ? 'nav-tab-active' : ''); ?>"
+                >
+                    <?php echo esc_html($tab['title']); ?>
+                </a>
+            <?php endforeach; ?>
+
             <?php do_action(HooksAbstract::ACTION_SETTINGS_TABS); ?>
         </nav>
 
