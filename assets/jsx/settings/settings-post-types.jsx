@@ -42,10 +42,6 @@ import NonceField from "./components/fields/NonceField";
         </StrictMode>
     );
 
-    const wrapper = $('<div id="publishpress-future-settings-post-types"></div>');
-    const navBar = $('#postexpirator-nav');
-    wrapper.insertAfter(navBar);
-
     render(settingsForm, document.getElementById('publishpress-future-settings-post-types'));
 })(window.wp, window.publishpressFutureConfig, jQuery);
 

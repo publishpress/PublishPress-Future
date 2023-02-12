@@ -134,7 +134,26 @@ class PostExpirator_Display
             }
         }
 
-        $this->render_template('menu-editor');
+        $params = [
+            'showSideBar' => apply_filters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-editor', $params);
+    }
+
+    private function menu_defaults()
+    {
+        $params = [
+            'showSideBar' => apply_filters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-defaults', $params);
     }
 
     /**
@@ -162,7 +181,14 @@ class PostExpirator_Display
             }
         }
 
-        $this->render_template('menu-display');
+        $params = [
+            'showSideBar' => apply_filters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-display', $params);
     }
 
     /**
@@ -200,7 +226,14 @@ class PostExpirator_Display
             }
         }
 
-        $this->render_template('menu-diagnostics');
+        $params = [
+            'showSideBar' => apply_filters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-diagnostics', $params);
     }
 
     /**
@@ -209,32 +242,15 @@ class PostExpirator_Display
     private function menu_viewdebug()
     {
         require_once POSTEXPIRATOR_LEGACYDIR . '/debug.php';
-        print '<p>' . esc_html__(
-                'Below is a dump of the debugging table, this should be useful for troubleshooting.',
-                'post-expirator'
-            ) . '</p>';
-        $debug = new PostExpiratorDebug();
-        $results = $debug->getTable();
 
-        if (empty($results)) {
-            print '<p>' . esc_html__('Debugging table is currently empty.', 'post-expirator') . '</p>';
+        $params = [
+            'showSideBar' => apply_filters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
 
-            return;
-        }
-        print '<table class="form-table"><tbody><tr><td>';
-        print '<table class="post-expirator-debug striped wp-list-table widefat fixed table-view-list">';
-        print '<thead>';
-        print '<tr><th class="post-expirator-timestamp">' . esc_html__('Timestamp', 'post-expirator') . '</th>';
-        print '<th>' . esc_html__('Message', 'post-expirator') . '</th></tr>';
-        print '</thead>';
-        print '<tbody>';
-        foreach ($results as $result) {
-            print '<tr><td>' . esc_html($result->timestamp) . '</td>';
-            print '<td>' . esc_html($result->message) . '</td></tr>';
-        }
-        print '</tbody>';
-        print '</table>';
-        print '</td></tr></tbody></table>';
+        $this->render_template('menu-debug-log', $params);
     }
 
     /**
@@ -297,7 +313,14 @@ class PostExpirator_Display
             }
         }
 
-        $this->render_template('menu-general');
+        $params = [
+            'showSideBar' => apply_filters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-general', $params);
     }
 
     /**
@@ -349,7 +372,14 @@ class PostExpirator_Display
             }
         }
 
-        $this->render_template('menu-advanced');
+        $params = [
+            'showSideBar' => apply_filters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-advanced', $params);
     }
 
     /**

@@ -97,15 +97,21 @@ class PostExpirator_Facade
             case 'settings':
                 wp_enqueue_style(
                     'pe-settings',
-                    POSTEXPIRATOR_BASEURL . '/assets/css/settings.css',
+                    POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
                     array(),
                     POSTEXPIRATOR_VERSION,
                     false
                 );
                 wp_enqueue_style(
                     'pe-jquery-ui',
-                    POSTEXPIRATOR_BASEURL . '/assets/css/lib/jquery-ui/jquery-ui.min.css',
+                    POSTEXPIRATOR_BASEURL . 'assets/css/lib/jquery-ui/jquery-ui.min.css',
                     array('pe-settings'),
+                    POSTEXPIRATOR_VERSION
+                );
+                wp_enqueue_style(
+                    'pp-wordpress-banners-style',
+                    POSTEXPIRATOR_BASEURL . 'vendor/publishpress/wordpress-banners/assets/css/style.css',
+                    false,
                     POSTEXPIRATOR_VERSION
                 );
                 break;

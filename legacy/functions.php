@@ -833,7 +833,7 @@ function postexpirator_css($screen_id)
         case 'settings_page_post-expirator':
             wp_enqueue_style(
                 'postexpirator-css',
-                POSTEXPIRATOR_BASEURL . '/assets/css/style.css',
+                POSTEXPIRATOR_BASEURL . 'assets/css/style.css',
                 array(),
                 POSTEXPIRATOR_VERSION
             );
@@ -841,7 +841,7 @@ function postexpirator_css($screen_id)
         case 'edit.php':
             wp_enqueue_style(
                 'postexpirator-edit',
-                POSTEXPIRATOR_BASEURL . '/assets/css/edit.css',
+                POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
                 array(),
                 POSTEXPIRATOR_VERSION
             );

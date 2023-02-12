@@ -13,4 +13,5 @@ abstract class HooksAbstract
     const FILTER_ALLOWED_TABS = 'publishpressfuture_allowed_tabs';
     const FILTER_SETTINGS_TABS = 'publishpressfuture_settings_tabs';
     const ACTION_LOAD_TAB = 'publishpressfuture_load_tab';
+    const FILTER_SHOW_PRO_BANNER = 'publishpressfuture_show_pro_banner';
 }
