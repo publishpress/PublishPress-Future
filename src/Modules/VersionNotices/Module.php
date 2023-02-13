@@ -46,15 +46,9 @@ class Module implements ModuleInterface
                                     'message' => 'You\'re using PublishPress Future Free. The Pro version has more features and support. %sUpgrade to Pro%s',
                                     'link'    => 'https://publishpress.com/links/future-banner',
                                     'screens' => [
-                                        ['base' => 'admin', 'id' => 'edit-author', 'taxonomy' => 'author'],
-                                        ['base' => 'term', 'id' => 'edit-author', 'taxonomy' => 'author'],
-                                        ['base' => 'edit', 'id' => 'edit-ppma_boxes', 'post_type' => 'ppma_boxes'],
-                                        ['base' => 'post', 'id' => 'ppma_boxes', 'post_type' => 'ppma_boxes'],
-                                        ['base' => 'edit', 'id' => 'edit-ppmacf_field', 'post_type' => 'ppmacf_field'],
-                                        ['base' => 'post', 'id' => 'ppmacf_field', 'post_type' => 'ppmacf_field'],
                                         [
-                                            'base' => 'authors_page_ppma-modules-settings',
-                                            'id'   => 'authors_page_ppma-modules-settings'
+                                            'base' => 'toplevel_page_publishpress-future',
+                                            'id'   => 'toplevel_page_publishpress-future'
                                         ],
                                     ]
                                 ];
