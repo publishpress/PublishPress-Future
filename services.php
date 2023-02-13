@@ -46,6 +46,7 @@ use PublishPressFuture\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPressFuture\Modules\Settings\Models\TaxonomiesModel;
 use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
+use PublishPressFuture\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
 
 return [
@@ -86,6 +87,7 @@ return [
         $modulesServiceList = [
             ServicesAbstract::MODULE_DEBUG,
             ServicesAbstract::MODULE_INSTANCE_PROTECTION,
+            ServicesAbstract::MODULE_VERSION_NOTICES,
             ServicesAbstract::MODULE_EXPIRATOR,
             ServicesAbstract::MODULE_SETTINGS,
             ServicesAbstract::MODULE_WOOCOMMERCE,
@@ -280,6 +282,15 @@ return [
             $container->get(ServicesAbstract::PATHS),
             $container->get(ServicesAbstract::PLUGIN_SLUG),
             $container->get(ServicesAbstract::PLUGIN_NAME)
+        );
+    },
+
+    /**
+     * @return ModuleInterface
+     */
+    ServicesAbstract::MODULE_VERSION_NOTICES => static function (ContainerInterface $container) {
+        return new ModuleVersionNotices(
+            $container->get(ServicesAbstract::BASE_PATH)
         );
     },
 

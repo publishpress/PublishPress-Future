@@ -6,5 +6,5 @@
  * This file should be automatically loaded by composer.
  */
 if (! defined('PUBLISHPRESS_FUTURE_BASE_PATH')) {
-    define('PUBLISHPRESS_FUTURE_BASE_PATH', __DIR__);
+        define('PUBLISHPRESS_FUTURE_BASE_PATH', __DIR__);
 }
