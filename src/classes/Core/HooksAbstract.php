@@ -39,4 +39,6 @@ abstract class HooksAbstract
     public const ACTION_SAVE_TAB = SettingsHooksAbstractFree::ACTION_SAVE_TAB;
 
     public const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';
+
+    public const ACTION = 'publishpress_authors_show_blocks_recommendation_banner';
 }

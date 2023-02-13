@@ -104,6 +104,7 @@ class SettingsController implements ModuleInterface
             HooksAbstract::ACTION_SAVE_TAB . 'license',
             [$this, 'saveTabLicense']
         );
+
     }
 
     public function routeActions()

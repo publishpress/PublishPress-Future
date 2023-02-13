@@ -51,6 +51,8 @@ namespace PublishPressFuturePro {
         }
 
         // Start the free plugin.
+        define('PUBLISHPRESS_FUTURE_LOADED_BY_PRO', true);
+        define('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES', true);
         require_once __DIR__ . '/src/includes/free-plugin-initializator.php';
 
         // Initialize the plugin.
