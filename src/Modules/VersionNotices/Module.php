@@ -28,7 +28,7 @@ class Module implements ModuleInterface
     {
         if (is_admin() && !defined('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES')) {
             if (!defined('PP_VERSION_NOTICES_LOADED')) {
-                $includesPath = $this->basePath . 'vendor/publishpress/wordpress-version-notices/includes.php';
+                $includesPath = $this->basePath . '/vendor/publishpress/wordpress-version-notices/includes.php';
 
                 if (file_exists($includesPath)) {
                     require_once $includesPath;
