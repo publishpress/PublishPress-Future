@@ -31,8 +31,8 @@ abstract class ServicesAbstract
     public const MODEL_SETTINGS = 'future.pro/model-settings';
     public const OPTIONS = ServicesAbstractFree::OPTIONS;
     public const EDD_CONTAINER = 'future.pro/edd-container';
-    public const EDD_SITE_URL = 'future.pro/pro-site-url';
+    public const EDD_SITE_URL = 'future.pro/edd-site-url';
+    public const EDD_ITEM_ID = 'future.pro/edd-item-id';
     public const LICENSE_KEY = 'future.pro/license-key';
     public const LICENSE_STATUS = 'future.pro/license-status';
-    public const EDD_ITEM_ID = 'future.pro/pro-item-id';
 }

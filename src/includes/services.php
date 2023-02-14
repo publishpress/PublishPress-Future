@@ -19,13 +19,13 @@ use PublishPressFuturePro\Models\SettingsModel;
 use PublishPressFuturePro\Models\WorkflowLogModel;
 
 return [
-    ServicesAbstract::PLUGIN_VERSION => '2.9.0',
+    ServicesAbstract::PLUGIN_VERSION => PLUGIN_VERSION,
 
     ServicesAbstract::PLUGIN_SLUG => PLUGIN_SLUG,
 
     ServicesAbstract::PLUGIN_NAME => PLUGIN_NAME,
 
-    ServicesAbstract::PLUGIN_AUTHOR => 'PublishPress',
+    ServicesAbstract::PLUGIN_AUTHOR => PLUGIN_AUTHOR,
 
     ServicesAbstract::PLUGIN_FILE => 'publishpress-future-pro/publishpress-future-pro.php',
 
@@ -33,9 +33,9 @@ return [
 
     ServicesAbstract::TEMPLATE_PATH => BASE_PATH . '/src/templates',
 
-    ServicesAbstract::EDD_SITE_URL => 'https://publishpress.com',
+    ServicesAbstract::EDD_SITE_URL => EDD_SITE_URL,
 
-    ServicesAbstract::EDD_ITEM_ID => '129032',
+    ServicesAbstract::EDD_ITEM_ID => EDD_ITEM_ID,
 
 
     /**
