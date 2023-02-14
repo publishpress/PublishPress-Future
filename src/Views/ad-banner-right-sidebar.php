@@ -26,7 +26,7 @@
                         echo esc_html__('Fast, professional support', 'publishpress-future'); ?></li>
                 </ul>
                 <div class="upgrade-btn">
-                    <a href="https://publishpress.com/links/future-menu" target="__blank"><?php
+                    <a href="https://publishpress.com/links/future-sidebar" target="__blank"><?php
                         echo esc_html__('Upgrade to Pro', 'publishpress-future'); ?></a>
                 </div>
             </div>
