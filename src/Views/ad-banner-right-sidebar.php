@@ -17,6 +17,8 @@
                 </p>
                 <ul>
                     <li><?php
+                        echo esc_html__('Support for expiry to custom statuses', 'publishpress-future'); ?></li>
+                    <li><?php
                         echo esc_html__('Detailed post expiration log', 'publishpress-future'); ?></li>
                     <li><?php
                         echo esc_html__('Remove PublishPress ads and branding', 'publishpress-future'); ?></li>
