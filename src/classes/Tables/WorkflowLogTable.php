@@ -56,7 +56,7 @@ class WorkflowLogTable extends WP_List_Table
             'id' => __('ID'),
             'post_title' => __('Post', 'publishpress-future-pro'),
             'content' => __('Log', 'publishpress-future-pro'),
-            'created_at' => __('Created At', 'publishpress-future-pro'),
+            'created_at' => __('Log date', 'publishpress-future-pro'),
         ];
     }
 
