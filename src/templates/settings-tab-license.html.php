@@ -20,8 +20,14 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 <?php
                 $value = $this->settingsModel->getLicenseKey();
                 $status = $this->settingsModel->getLicenseStatus();
+                $error = '';
 
                 if (empty($status) || empty($value)) {
+                    $status = 'invalid';
+                }
+
+                if (! in_array($status, array('valid', 'invalid'))) {
+                    $error = $status;
                     $status = 'invalid';
                 }
 
@@ -29,6 +35,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
                     $statusLabel = __('Activated', 'publishpress-future-pro');
                 } else {
                     $statusLabel = __('Inactive', 'publishpress-future-pro');
+
+                    if (! empty($error)) {
+                        $statusLabel .= ' - ' . $error;
+                    }
                 }
 
                 $id = 'future_pro_license_key';
