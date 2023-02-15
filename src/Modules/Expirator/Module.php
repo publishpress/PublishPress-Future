@@ -8,13 +8,12 @@ namespace PublishPressFuture\Modules\Expirator;
 
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
+use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Modules\Expirator\Controllers\BulkEditController;
 use PublishPressFuture\Modules\Expirator\Controllers\ExpirationController;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
 
 class Module implements ModuleInterface
 {
@@ -29,7 +28,7 @@ class Module implements ModuleInterface
     private $site;
 
     /**
-     * @var CronFacade
+     * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
      */
     private $cron;
 
@@ -63,8 +62,16 @@ class Module implements ModuleInterface
      */
     private $request;
 
-    public function __construct($hooks, $site, $cron, $scheduler, $expirablePostModelFactory, $sanitization, $currentUserModelFactory, $request)
-    {
+    public function __construct(
+        $hooks,
+        $site,
+        $cron,
+        $scheduler,
+        $expirablePostModelFactory,
+        $sanitization,
+        $currentUserModelFactory,
+        $request
+    ) {
         $this->hooks = $hooks;
         $this->site = $site;
         $this->cron = $cron;

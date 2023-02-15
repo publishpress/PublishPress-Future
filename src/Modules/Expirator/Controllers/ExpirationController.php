@@ -9,9 +9,9 @@ use Closure;
 use Exception;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
@@ -29,7 +29,7 @@ class ExpirationController implements InitializableInterface
     private $site;
 
     /**
-     * @var CronFacade
+     * @var CronInterface
      */
     private $cron;
 
@@ -46,20 +46,20 @@ class ExpirationController implements InitializableInterface
     /**
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
-     * @param CronFacade $cronFacade
+     * @param CronInterface $cron
      * @param SchedulerInterface $scheduler
      * @param Closure $expirablePostModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
         SiteFacade $siteFacade,
-        CronFacade $cronFacade,
+        CronInterface $cron,
         SchedulerInterface $scheduler,
         Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
-        $this->cron = $cronFacade;
+        $this->cron = $cron;
         $this->scheduler = $scheduler;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
@@ -95,14 +95,14 @@ class ExpirationController implements InitializableInterface
         // TODO: What about custom post types? How to clean up?
 
         if ($this->site->isMultisite()) {
-            $this->cron->clearScheduledHook(
+            $this->cron->clearScheduledAction(
                 HooksAbstract::getActionLegacyMultisiteDelete($this->site->getBlogId())
             );
 
             return;
         }
 
-        $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_DELETE);
+        $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_DELETE);
     }
 
     public function onActionSchedulePostExpiration($postId, $timestamp, $opts)

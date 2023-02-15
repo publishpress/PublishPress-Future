@@ -31,6 +31,8 @@ abstract class ServicesAbstract
     const SETTINGS = 'future.free/settings';
     const LOGGER = 'future.free/logger';
     const CRON = 'future.free/cron';
+    const WP_CRON_ADAPTER = 'future.free/wp.cron.adapter';
+    const WOO_CRON_ADAPTER = 'future.free/woo.cron.adapter';
     const ERROR = 'future.free/error';
     const DATETIME = 'future.free/datetime';
     const OPTIONS = 'future.free/options';

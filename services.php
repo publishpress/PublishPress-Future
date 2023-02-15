@@ -8,7 +8,6 @@ use PublishPressFuture\Core\Plugin;
 use PublishPressFuture\Framework\Logger\Logger;
 use PublishPressFuture\Framework\Logger\LoggerInterface;
 use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPressFuture\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPressFuture\Framework\WordPress\Facade\EmailFacade;
@@ -23,6 +22,8 @@ use PublishPressFuture\Framework\WordPress\Models\PostModel;
 use PublishPressFuture\Framework\WordPress\Models\TermModel;
 use PublishPressFuture\Framework\WordPress\Models\UserModel;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
+use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPressFuture\Modules\Expirator\Adapters\CronToWPCronAdapter;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
@@ -50,7 +51,7 @@ use PublishPressFuture\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
 
 return [
-    ServicesAbstract::PLUGIN_VERSION => '2.9.0',
+    ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_VERSION,
 
     ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
@@ -143,10 +144,24 @@ return [
     },
 
     /**
-     * @return CronFacade
+     * @return \PublishPressFuture\Modules\Expirator\Adapters\CronToWPCronAdapter
+     */
+    ServicesAbstract::WP_CRON_ADAPTER => static function (ContainerInterface $container) {
+        return new CronToWPCronAdapter();
+    },
+
+    /**
+     * @return \PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter
+     */
+    ServicesAbstract::WOO_CRON_ADAPTER => static function (ContainerInterface $container) {
+        return new CronToWooActionSchedulerAdapter();
+    },
+
+    /**
+     * @return \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
      */
     ServicesAbstract::CRON => static function (ContainerInterface $container) {
-        return new CronFacade();
+        return $container->get(ServicesAbstract::WP_CRON_ADAPTER);
     },
 
     /**
