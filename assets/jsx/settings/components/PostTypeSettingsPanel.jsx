@@ -183,8 +183,8 @@ const PostTypeSettingsPanel = function (props) {
         );
     }
 
-    settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props);
-    console.log('After applying settingsRows filter');
+    settingsRows = window.wp.hooks.applyFilters('expirationdate_settings_posttype', settingsRows, props);
+    console.log(window.wp.hooks.filters['expirationdate_settings_posttype']);
 
     return (
         <SettingsFieldset legend={props.legend}>

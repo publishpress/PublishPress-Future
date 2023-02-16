@@ -6413,8 +6413,8 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
         ));
     }
 
-    settingsRows = (0, _hooks.applyFilters)('expirationdate_settings_posttype', settingsRows, props);
-    console.log('After applying settingsRows filter');
+    settingsRows = window.wp.hooks.applyFilters('expirationdate_settings_posttype', settingsRows, props);
+    console.log(window.wp.hooks.filters['expirationdate_settings_posttype']);
 
     return React.createElement(
         _SettingsFieldset2.default,
