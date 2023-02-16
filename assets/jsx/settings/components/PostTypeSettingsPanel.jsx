@@ -184,7 +184,7 @@ const PostTypeSettingsPanel = function (props) {
     }
 
     settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props);
-    console.log('settingsRows', settingsRows);
+    console.log('After applying settingsRows filter');
 
     return (
         <SettingsFieldset legend={props.legend}>
