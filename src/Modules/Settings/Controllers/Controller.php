@@ -75,7 +75,8 @@ class Controller implements InitializableInterface
         );
         $this->hooks->addAction(
             CoreAbstractHooks::ACTION_ADMIN_ENQUEUE_SCRIPT,
-            [$this, 'onAdminEnqueueScript']
+            [$this, 'onAdminEnqueueScript'],
+            15
         );
 
         $this->hooks->addAction(
