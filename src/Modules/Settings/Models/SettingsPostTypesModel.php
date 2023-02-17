@@ -7,6 +7,7 @@ namespace PublishPressFuture\Modules\Settings\Models;
 
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
+use PublishPressFuture\Modules\Settings\HooksAbstract;
 
 class SettingsPostTypesModel
 {
@@ -47,6 +48,12 @@ class SettingsPostTypesModel
                 'defaultExpireOffset' => isset($defaults['default-custom-date']) ? $defaults['default-custom-date'] : '',
                 'globalDefaultExpireOffset' => $placeholder = $settingsFacade->getDefaultDateCustom(),
             ];
+
+            $settings = apply_filters(
+                HooksAbstract::FILTER_SETTINGS_POST_TYPE,
+                $settings,
+                $postType
+            );
 
         }
 
