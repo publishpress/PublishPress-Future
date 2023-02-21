@@ -14,3 +14,8 @@
 #future_pro_license_key .ppfuturepro_license_status_invalid span {
     color: #d63638;
 }
+
+.future_pro_checkbox_selection_control {
+    margin-bottom: 10px;
+    margin-top: 6px;
+}

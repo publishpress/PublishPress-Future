@@ -254,6 +254,7 @@ wp.hooks.addFilter('expirationdate_settings_posttype', 'publishpress/publishpres
 
         var postStatusesCheckboxes = publishpressFutureProSettings.customPostStatuses.map(function (postStatus) {
             var checked = enabledCustomStatuses.includes(postStatus.value);
+            var fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
 
             return React.createElement(
                 "div",
@@ -261,13 +262,15 @@ wp.hooks.addFilter('expirationdate_settings_posttype', 'publishpress/publishpres
                 React.createElement("input", {
                     type: "checkbox",
                     name: 'expirationdate_custom-statuses-' + props.postType + '[]',
+                    id: fieldId,
                     value: postStatus.value,
                     checked: checked,
-                    onChange: handleCustomStatusesChange
+                    onChange: handleCustomStatusesChange,
+                    key: postStatus.value
                 }),
                 React.createElement(
                     "label",
-                    null,
+                    { htmlFor: fieldId },
                     postStatus.label
                 )
             );
@@ -287,7 +290,7 @@ wp.hooks.addFilter('expirationdate_settings_posttype', 'publishpress/publishpres
             ),
             React.createElement(
                 "div",
-                null,
+                { className: 'future_pro_checkbox_selection_control' },
                 React.createElement(
                     "a",
                     { href: "#", onClick: handleSelectAll },

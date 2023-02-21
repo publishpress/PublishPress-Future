@@ -183,43 +183,41 @@ class SettingsController implements ModuleInterface
             return;
         }
 
-        switch ($_GET['tab']) {
-            case 'defaults':
-                wp_enqueue_script(
-                    'publishpress-future-pro-settings-panel',
-                    $this->assetsUrl . '/js/settings.js',
-                    ['react', 'react-dom'],
-                    $this->pluginVersion,
-                    true
-                );
+        if ($_GET['tab'] === 'defaults') {
+            wp_enqueue_script(
+                'publishpress-future-pro-settings-panel',
+                $this->assetsUrl . '/js/settings.js',
+                ['react', 'react-dom'],
+                $this->pluginVersion,
+                true
+            );
 
-                wp_localize_script(
-                    'publishpress-future-pro-settings-panel',
-                    'publishpressFutureProSettings',
-                    [
-                        'text' => [
-                            'enableCustomStatuses' => __('Custom statuses', 'publishpress-future-pro'),
-                            'enableCustomStatusesDesc' => __(
-                                'Enable custom statuses for the post type:',
-                                'publishpress-future-pro'
-                            ),
-                            'enableCustomStatusesTrue' => __('Enabled', 'publishpress-future-pro'),
-                            'enableCustomStatusesFalse' => __('Disabled', 'publishpress-future-pro'),
-                        ],
-                        'settings' => $this->settingsModel->getSettings(),
-                        'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
-                    ]
-                );
-                break;
+            wp_localize_script(
+                'publishpress-future-pro-settings-panel',
+                'publishpressFutureProSettings',
+                [
+                    'text' => [
+                        'enableCustomStatuses' => __('Custom statuses', 'publishpress-future-pro'),
+                        'enableCustomStatusesDesc' => __(
+                            'Enable custom statuses for the post type:',
+                            'publishpress-future-pro'
+                        ),
+                        'enableCustomStatusesTrue' => __('Enabled', 'publishpress-future-pro'),
+                        'enableCustomStatusesFalse' => __('Disabled', 'publishpress-future-pro'),
+                    ],
+                    'settings' => $this->settingsModel->getSettings(),
+                    'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
+                ]
+            );
+        }
 
-            case 'license':
-                wp_enqueue_style(
-                    'publishpress-future-settings-style',
-                    $this->assetsUrl . '/css/settings.css',
-                    [],
-                    $this->pluginVersion
-                );
-                break;
+        if (in_array($_GET['tab'], ['license', 'defaults'], true)) {
+            wp_enqueue_style(
+                'publishpress-future-settings-style',
+                $this->assetsUrl . '/css/settings.css',
+                [],
+                $this->pluginVersion
+            );
         }
     }
 

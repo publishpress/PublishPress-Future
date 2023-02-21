@@ -45,17 +45,20 @@ wp.hooks.addFilter(
 
             const postStatusesCheckboxes = publishpressFutureProSettings.customPostStatuses.map((postStatus) => {
                 const checked = enabledCustomStatuses.includes(postStatus.value);
+                const fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
 
                 return (
                     <div className="pp-checkbox">
                         <input
                             type="checkbox"
                             name={'expirationdate_custom-statuses-' + props.postType + '[]'}
+                            id={fieldId}
                             value={postStatus.value}
                             checked={checked}
                             onChange={handleCustomStatusesChange}
+                            key={postStatus.value}
                         />
-                        <label>{postStatus.label}</label>
+                        <label htmlFor={fieldId}>{postStatus.label}</label>
                     </div>
                 );
             });
@@ -65,7 +68,7 @@ wp.hooks.addFilter(
                     <div>
                         <label>{publishpressFutureProSettings.text.enableCustomStatusesDesc}</label>
                     </div>
-                    <div>
+                    <div className={'future_pro_checkbox_selection_control'}>
                         <a href="#" onClick={handleSelectAll}>Select all</a> <a href="#" onClick={handleUnselectAll}>Unselect all</a>
                     </div>
 
