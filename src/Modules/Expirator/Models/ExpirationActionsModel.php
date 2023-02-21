@@ -38,7 +38,7 @@ class ExpirationActionsModel
     /**
      * @return string[]
      */
-    public function getActions()
+    public function getActions($postType = null)
     {
         if (empty($this->actions)) {
             $actions = [
@@ -55,19 +55,20 @@ class ExpirationActionsModel
 
             $this->actions = $this->hooks->applyFilters(
                 HooksAbstract::FILTER_EXPIRATION_ACTIONS,
-                $actions
+                $actions,
+                $postType
             );
         }
 
         return $this->actions;
     }
 
-    public function getActionsAsOptions()
+    public function getActionsAsOptions($postType = null)
     {
         if (empty($this->actionsAsOptions)) {
             $options = [];
 
-            $actions = $this->getActions();
+            $actions = $this->getActions($postType);
 
             foreach ($actions as $name => $label) {
                 $options[] = [

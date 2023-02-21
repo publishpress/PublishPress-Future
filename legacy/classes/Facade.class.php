@@ -374,7 +374,7 @@ class PostExpirator_Facade
                     'default_categories' => get_option('expirationdateCategoryDefaults'),
                     'is_12_hours' => get_option('time_format') !== 'H:i',
                     'timezone_offset' => PostExpirator_Util::get_timezone_offset() / 60,
-                    'actions_options' => $actionsModel->getActionsAsOptions(),
+                    'actions_options' => $actionsModel->getActionsAsOptions($post->post_type),
                     'strings' => [
                         'category' => __('Taxonomy'),
                         'postExpirator' => __('PublishPress Future', 'post-expirator'),

@@ -22,7 +22,7 @@ if (empty($opts['type']) && isset($opts['post_type'])) {
 
 $container = Container::getInstance();
 $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
-$actions = $actionsModel->getActionsAsOptions();
+$actions = $actionsModel->getActionsAsOptions($opts['type']);
 
 ?>
 <select name="<?php echo esc_attr($opts['name']); ?>" id="<?php echo esc_attr($opts['id']); ?>" class="pe-howtoexpire">
