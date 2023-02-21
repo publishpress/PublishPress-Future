@@ -54,7 +54,6 @@ class SettingsPostTypesModel
                 $settings,
                 $postType
             );
-
         }
 
         return $settings;
