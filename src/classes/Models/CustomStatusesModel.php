@@ -11,6 +11,15 @@ use function get_post_stati;
 class CustomStatusesModel
 {
     /**
+     * @var \PublishPressFuturePro\Models\SettingsModel
+     */
+    private $settingsModel;
+
+    public function __construct(SettingsModel $settingsModel)
+    {
+        $this->settingsModel = $settingsModel;
+    }
+    /**
      * @return \stdClass[]
      */
     public function getCustomStatuses(): array
@@ -57,5 +66,20 @@ class CustomStatusesModel
         }
 
         return $options;
+    }
+
+    public function getSelectedStatusesForPostTypeAsOptions(string $postType): array
+    {
+        $statuses = $this->getCustomStatusesAsOptions();
+        $postTypeStatuses = $this->settingsModel->getEnabledCustomStatusesForPostType($postType);
+        $selectedStatuses = [];
+
+        foreach ($statuses as $status) {
+            if (in_array($status['value'], $postTypeStatuses)) {
+                $selectedStatuses[] = $status;
+            }
+        }
+
+        return $selectedStatuses;
     }
 }

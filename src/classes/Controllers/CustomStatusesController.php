@@ -48,7 +48,9 @@ class CustomStatusesController implements ModuleInterface
     {
         $this->hooks->addFilter(
             ExpirationHooksAbstract::FILTER_EXPIRATION_ACTIONS,
-            [$this, 'filterExpirationActions']
+            [$this, 'filterExpirationActions'],
+            10,
+            2
         );
 
         $this->hooks->addFilter(
@@ -61,18 +63,18 @@ class CustomStatusesController implements ModuleInterface
 
     /**
      * @param string[] $actions
+     * @param string $postType
      * @return string[]
      */
-    public function filterExpirationActions(array $actions): array
+    public function filterExpirationActions(array $actions, string $postType = ''): array
     {
-        // FIXME: Add a conditional checking if the custom statuses is enabled fo rthe post type. We need to know the post type here.
-        $customStatuses = $this->modelCustomStatuses->getCustomStatuses();
+        $customStatuses = $this->modelCustomStatuses->getSelectedStatusesForPostTypeAsOptions($postType);
 
         foreach ($customStatuses as $status => $statusObject) {
             $actions[self::ACTION_PREFIX . $status] = __(
                 'Custom status: ',
                 'publishpress-future-pro'
-            ) . $statusObject->label;
+            ) . $statusObject['label'];
         }
 
         return $actions;

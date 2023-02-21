@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7f701da73739b7180a9004c04cebf5bd",
+    "content-hash": "d5345f0d5e984ac941a96bad9a798c24",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -216,16 +216,16 @@
         },
         {
             "name": "publishpress/post-expirator",
-            "version": "dev-develop",
+            "version": "dev-390-all-custom-statuses-show-every-post-type",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "fe8953b003c2c95498b12fff905779b6f652b700"
+                "reference": "6f6b9259e18ba4f1266ce5e92283f40919a6f7c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/fe8953b003c2c95498b12fff905779b6f652b700",
-                "reference": "fe8953b003c2c95498b12fff905779b6f652b700",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/6f6b9259e18ba4f1266ce5e92283f40919a6f7c5",
+                "reference": "6f6b9259e18ba4f1266ce5e92283f40919a6f7c5",
                 "shasum": ""
             },
             "require": {
@@ -266,7 +266,6 @@
                 "wp-cli/i18n-command": "^2.2",
                 "wp-coding-standards/wpcs": "^2.3"
             },
-            "default-branch": true,
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -299,9 +298,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/390-all-custom-statuses-show-every-post-type"
             },
-            "time": "2023-02-14T16:27:09+00:00"
+            "time": "2023-02-21T22:27:47+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -1802,16 +1801,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.17",
+            "version": "1.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "204e459e7822f2c586463029f5ecec31bb45a1f2"
+                "reference": "1cd5fc530a8b68702f3733ad64294b2a39564198"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/204e459e7822f2c586463029f5ecec31bb45a1f2",
-                "reference": "204e459e7822f2c586463029f5ecec31bb45a1f2",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1cd5fc530a8b68702f3733ad64294b2a39564198",
+                "reference": "1cd5fc530a8b68702f3733ad64294b2a39564198",
                 "shasum": ""
             },
             "require": {
@@ -1841,7 +1840,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.17"
+                "source": "https://github.com/phpstan/phpstan/tree/1.10.1"
             },
             "funding": [
                 {
@@ -1857,7 +1856,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-08T12:25:00+00:00"
+            "time": "2023-02-21T21:57:23+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4287,16 +4286,16 @@
         },
         {
             "name": "wp-cli/i18n-command",
-            "version": "v2.4.1",
+            "version": "v2.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/i18n-command.git",
-                "reference": "22f7e6aa6ba23d0b50c45c75386c8151b991477e"
+                "reference": "43d5cf8968dbddf90907083ad048f12be5ca3d43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/22f7e6aa6ba23d0b50c45c75386c8151b991477e",
-                "reference": "22f7e6aa6ba23d0b50c45c75386c8151b991477e",
+                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/43d5cf8968dbddf90907083ad048f12be5ca3d43",
+                "reference": "43d5cf8968dbddf90907083ad048f12be5ca3d43",
                 "shasum": ""
             },
             "require": {
@@ -4349,9 +4348,9 @@
             "homepage": "https://github.com/wp-cli/i18n-command",
             "support": {
                 "issues": "https://github.com/wp-cli/i18n-command/issues",
-                "source": "https://github.com/wp-cli/i18n-command/tree/v2.4.1"
+                "source": "https://github.com/wp-cli/i18n-command/tree/v2.4.2"
             },
-            "time": "2022-12-09T19:09:17+00:00"
+            "time": "2023-02-17T18:14:41+00:00"
         },
         {
             "name": "wp-cli/mustangostang-spyc",
