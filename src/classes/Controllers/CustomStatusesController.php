@@ -14,6 +14,8 @@ use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
 use PublishPressFuturePro\Models\CustomStatusesModel;
 
+use PublishPressFuturePro\Models\SettingsModel;
+
 use function __;
 
 class CustomStatusesController implements ModuleInterface
@@ -30,10 +32,16 @@ class CustomStatusesController implements ModuleInterface
      */
     private $modelCustomStatuses;
 
-    public function __construct(HooksFacade $hooks, CustomStatusesModel $modelCustomStatuses)
+    /**
+     * @var \PublishPressFuturePro\Models\SettingsModel
+     */
+    private $settingsModel;
+
+    public function __construct(HooksFacade $hooks, CustomStatusesModel $modelCustomStatuses, SettingsModel $settingsModel)
     {
         $this->hooks = $hooks;
         $this->modelCustomStatuses = $modelCustomStatuses;
+        $this->settingsModel = $settingsModel;
     }
 
     public function initialize()
@@ -57,6 +65,7 @@ class CustomStatusesController implements ModuleInterface
      */
     public function filterExpirationActions(array $actions): array
     {
+        // FIXME: Add a conditional checking if the custom statuses is enabled fo rthe post type. We need to know the post type here.
         $customStatuses = $this->modelCustomStatuses->getCustomStatuses();
 
         foreach ($customStatuses as $status => $statusObject) {

@@ -21,6 +21,18 @@ module.exports = [
                     ]// JavaScript files to be ignored.
                 }
             ]
-        }
+        },
+        resolve: {
+            modules: [
+                "node_modules",
+                path.join(__dirname, "vendor", "publishpress"),
+            ],
+            extensions: [".js", ".jsx"]
+        },
+        externals: {
+            "react": "React",
+            "react-dom": "ReactDOM",
+            "react-select": "ReactSelect"
+        },
     }
 ];

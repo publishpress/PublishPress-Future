@@ -5,6 +5,7 @@ namespace PublishPressFuturePro\Controllers;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuturePro\Core\HooksAbstract;
+use PublishPressFuturePro\Models\CustomStatusesModel;
 use PublishPressFuturePro\Models\SettingsModel;
 
 use function current_user_can;
@@ -44,9 +45,25 @@ class SettingsController implements ModuleInterface
      */
     private $pluginVersion;
 
+    /**
+     * @var \PublishPressFuturePro\Models\CustomStatusesModel
+     */
+    private $customStatusesModel;
+
+    /**
+     * @param \PublishPressFuture\Core\HookableInterface $hooks
+     * @param \PublishPressFuturePro\Models\SettingsModel $settingsModel
+     * @param \PublishPressFuturePro\Models\CustomStatusesModel $customStatusesModel
+     * @param string $templatesPath
+     * @param string $assetsUrl
+     * @param $eddContainer
+     * @param int $eddItemId
+     * @param string $pluginVersion
+     */
     public function __construct(
         HookableInterface $hooks,
         SettingsModel $settingsModel,
+        CustomStatusesModel $customStatusesModel,
         string $templatesPath,
         string $assetsUrl,
         $eddContainer,
@@ -60,6 +77,7 @@ class SettingsController implements ModuleInterface
         $this->eddItemId = $eddItemId;
         $this->assetsUrl = $assetsUrl;
         $this->pluginVersion = $pluginVersion;
+        $this->customStatusesModel = $customStatusesModel;
     }
 
 
@@ -101,10 +119,23 @@ class SettingsController implements ModuleInterface
         );
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_SAVE_TAB . 'license',
+            HooksAbstract::ACTION_SAVE_LICENSE_TAB,
             [$this, 'saveTabLicense']
         );
 
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_SAVE_POST_TYPE_SETTINGS,
+            [$this, 'savePostTypeSettings'],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
+            HooksAbstract::FILTER_SETTINGS_POST_TYPE,
+            [$this, 'filterPostTypeSettings'],
+            10,
+            2
+        );
     }
 
     public function routeActions()
@@ -148,17 +179,48 @@ class SettingsController implements ModuleInterface
             ! isset($_GET['page'])
             || $_GET['page'] !== 'publishpress-future'
             || ! isset($_GET['tab'])
-            || $_GET['tab'] !== 'license'
         ) {
             return;
         }
 
-        wp_enqueue_style(
-            'publishpress-future-settings-style',
-            $this->assetsUrl . '/css/settings.css',
-            [],
-            $this->pluginVersion
-        );
+        switch ($_GET['tab']) {
+            case 'defaults':
+                wp_enqueue_script(
+                    'publishpress-future-pro-settings-panel',
+                    $this->assetsUrl . '/js/settings.js',
+                    ['react', 'react-dom'],
+                    $this->pluginVersion,
+                    true
+                );
+
+                wp_localize_script(
+                    'publishpress-future-pro-settings-panel',
+                    'publishpressFutureProSettings',
+                    [
+                        'text' => [
+                            'enableCustomStatuses' => __('Custom statuses', 'publishpress-future-pro'),
+                            'enableCustomStatusesDesc' => __(
+                                'Enable custom statuses for the post type:',
+                                'publishpress-future-pro'
+                            ),
+                            'enableCustomStatusesTrue' => __('Enabled', 'publishpress-future-pro'),
+                            'enableCustomStatusesFalse' => __('Disabled', 'publishpress-future-pro'),
+                        ],
+                        'settings' => $this->settingsModel->getSettings(),
+                        'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
+                    ]
+                );
+                break;
+
+            case 'license':
+                wp_enqueue_style(
+                    'publishpress-future-settings-style',
+                    $this->assetsUrl . '/css/settings.css',
+                    [],
+                    $this->pluginVersion
+                );
+                break;
+        }
     }
 
     public function renderDebugLogSetting()
@@ -228,5 +290,24 @@ class SettingsController implements ModuleInterface
         $licenseManager = $this->eddContainer['license_manager'];
 
         return $licenseManager->validate_license_key($licenseKey, $this->eddItemId);
+    }
+
+    public function savePostTypeSettings(array $settings, string $postType)
+    {
+        $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $this->settingsModel->setEnabledCustomStatusForPostType(
+            $postType,
+            $_POST['expirationdate_custom-statuses-' . $postType] ?? []
+        );
+    }
+
+    public function filterPostTypeSettings(array $settings, string $postType): array
+    {
+        $settings[$postType]['enableCustomStatuses'] = $this->settingsModel->getEnabledCustomStatusesForPostType(
+            $postType
+        );
+
+        return $settings;
     }
 }

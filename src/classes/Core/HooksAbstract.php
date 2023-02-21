@@ -36,9 +36,13 @@ abstract class HooksAbstract
 
     public const FILTER_SETTINGS_TABS = SettingsHooksAbstractFree::FILTER_SETTINGS_TABS;
 
-    public const ACTION_SAVE_TAB = SettingsHooksAbstractFree::ACTION_SAVE_TAB;
+    public const ACTION_SAVE_LICENSE_TAB = SettingsHooksAbstractFree::ACTION_SAVE_TAB . 'license';
+
+    public const ACTION_SAVE_POST_TYPE_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_POST_TYPE_SETTINGS;
 
     public const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';
 
     public const ACTION = 'publishpress_authors_show_blocks_recommendation_banner';
+
+    public const FILTER_SETTINGS_POST_TYPE = SettingsHooksAbstractFree::FILTER_SETTINGS_POST_TYPE;
 }

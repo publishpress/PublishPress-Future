@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -41,5 +42,20 @@ class CustomStatusesModel
         }
 
         return $filteredStatuses;
+    }
+
+    public function getCustomStatusesAsOptions(): array
+    {
+        $statuses = $this->getCustomStatuses();
+        $options = [];
+
+        foreach ($statuses as $status => $statusObject) {
+            $options[] = [
+                'value' => $status,
+                'label' => $statusObject->label,
+            ];
+        }
+
+        return $options;
     }
 }

@@ -91,7 +91,8 @@ return [
     ServicesAbstract::CONTROLLER_CUSTOM_STATUSES => static function (ContainerInterface $container) {
         return new CustomStatusesController(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES)
+            $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES),
+            $container->get(ServicesAbstract::MODEL_SETTINGS)
         );
     },
 
@@ -114,6 +115,7 @@ return [
         return new SettingsController(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::MODEL_SETTINGS),
+            $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES),
             $container->get(ServicesAbstract::TEMPLATE_PATH),
             $container->get(ServicesAbstract::ASSETS_URL),
             $container->get(ServicesAbstract::EDD_CONTAINER),
