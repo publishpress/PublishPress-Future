@@ -318,7 +318,7 @@ class Controller implements InitializableInterface
                 );
 
                 $this->hooks->doAction(
-                    SettingsHooksAbstract::ACTION_SAVE_DEFAULTS_SETTINGS,
+                    SettingsHooksAbstract::ACTION_SAVE_POST_TYPE_SETTINGS,
                     $settings,
                     $postType
                 );
