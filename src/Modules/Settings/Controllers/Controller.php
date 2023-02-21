@@ -311,7 +311,17 @@ class Controller implements InitializableInterface
                     );
                 }
 
-                $settings = apply_filters(SettingsHooksAbstract::FILTER_SAVE_DEFAULTS_SETTINGS, $settings, $postType);
+                $settings = $this->hooks->applyFilters(
+                    SettingsHooksAbstract::FILTER_SAVE_DEFAULTS_SETTINGS,
+                    $settings,
+                    $postType
+                );
+
+                $this->hooks->doAction(
+                    SettingsHooksAbstract::ACTION_SAVE_DEFAULTS_SETTINGS,
+                    $settings,
+                    $postType
+                );
 
                 // Save Settings
                 $settingsModel->updatePostTypesSettings($postType, $settings);
