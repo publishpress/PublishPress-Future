@@ -1,7 +1,8 @@
 node_modules
 *.log
-vendor
-logs
+/vendor
+/tests/codeception/_data/plugins/ray-future/vendor
+./logs
 codeceptjs/output
 #bin
 .idea

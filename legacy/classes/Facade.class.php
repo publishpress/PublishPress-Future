@@ -110,7 +110,7 @@ class PostExpirator_Facade
                 );
                 wp_enqueue_style(
                     'pp-wordpress-banners-style',
-                    POSTEXPIRATOR_BASEURL . 'vendor/publishpress/wordpress-banners/assets/css/style.css',
+                    POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
                     false,
                     POSTEXPIRATOR_VERSION
                 );
