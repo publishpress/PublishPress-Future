@@ -38,7 +38,7 @@ class ExpirationActionsModel
     /**
      * @return string[]
      */
-    public function getActions($postType = null)
+    public function getActions($postType = '')
     {
         if (empty($this->actions)) {
             $actions = [
@@ -63,7 +63,7 @@ class ExpirationActionsModel
         return $this->actions;
     }
 
-    public function getActionsAsOptions($postType = null)
+    public function getActionsAsOptions($postType = '')
     {
         if (empty($this->actionsAsOptions)) {
             $options = [];
