@@ -50,8 +50,13 @@ class Controller implements InitializableInterface
      * @param \Closure $taxonomiesModelFactory
      * @param $actionsModel
      */
-    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory, $actionsModel)
-    {
+    public function __construct(
+        HookableInterface $hooks,
+        $settings,
+        $settingsPostTypesModelFactory,
+        $taxonomiesModelFactory,
+        $actionsModel
+    ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
@@ -75,7 +80,8 @@ class Controller implements InitializableInterface
         );
         $this->hooks->addAction(
             CoreAbstractHooks::ACTION_ADMIN_ENQUEUE_SCRIPT,
-            [$this, 'onAdminEnqueueScript']
+            [$this, 'onAdminEnqueueScript'],
+            15
         );
 
         $this->hooks->addAction(
@@ -175,16 +181,25 @@ class Controller implements InitializableInterface
                         ),
                         'fieldTaxonomy' => __('Taxonomy (hierarchical)', 'post-expirator'),
                         'noItemsfound' => __('No taxonomies found', 'post-expirator'),
-                        'fieldTaxonomyDescription' => __('Select the hierarchical taxonomy and terms to be used for taxonomy based expiration.', 'post-expirator'),
+                        'fieldTaxonomyDescription' => __(
+                            'Select the hierarchical taxonomy and terms to be used for taxonomy based expiration.',
+                            'post-expirator'
+                        ),
                         'fieldWhoToNotify' => __('Who to notify', 'post-expirator'),
-                        'fieldWhoToNotifyDescription' => __('Enter a comma separate list of emails that you would like to be notified when the post expires.', 'post-expirator'),
+                        'fieldWhoToNotifyDescription' => __(
+                            'Enter a comma separate list of emails that you would like to be notified when the post expires.',
+                            'post-expirator'
+                        ),
                         'fieldDefaultDateTimeOffset' => __('Default date/time offset', 'post-expirator'),
                         'fieldDefaultDateTimeOffsetDescription' => sprintf(
                             esc_html__(
                                 'Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                 'post-expirator'
                             ),
-                            '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__('PHP strtotime function', 'post-expirator') . '</a>',
+                            '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__(
+                                'PHP strtotime function',
+                                'post-expirator'
+                            ) . '</a>',
                             '<code>',
                             '</code>',
                             '<code>',
@@ -291,8 +306,22 @@ class Controller implements InitializableInterface
                 $settings['default-expire-type'] = 'custom';
 
                 if (isset($_POST['expired-custom-date-' . $postType])) {
-                    $settings['default-custom-date'] = trim(\sanitize_text_field($_POST['expired-custom-date-' . $postType]));
+                    $settings['default-custom-date'] = trim(
+                        \sanitize_text_field($_POST['expired-custom-date-' . $postType])
+                    );
                 }
+
+                $settings = $this->hooks->applyFilters(
+                    SettingsHooksAbstract::FILTER_SAVE_DEFAULTS_SETTINGS,
+                    $settings,
+                    $postType
+                );
+
+                $this->hooks->doAction(
+                    SettingsHooksAbstract::ACTION_SAVE_POST_TYPE_SETTINGS,
+                    $settings,
+                    $postType
+                );
 
                 // Save Settings
                 $settingsModel->updatePostTypesSettings($postType, $settings);
