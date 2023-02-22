@@ -2,38 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/assets/jsx/Components/PostStatusesSelector.jsx":
-/*!************************************************************!*\
-  !*** ./src/assets/jsx/Components/PostStatusesSelector.jsx ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-/*
- * Copyright (c) 2023. PublishPress, All rights reserved.
- */
-
-// import {Fragment, useState, useEffect} from "react";
-// import apiFetch from '@wordpress/api-fetch';
-// import {addQueryArgs, removeQueryArgs} from '@wordpress/url';
-
-var PostStatusesSelector = function PostStatusesSelector(props) {
-
-    return React.createElement(
-        "div",
-        null,
-        "Hey!"
-    );
-};
-
-exports["default"] = PostStatusesSelector;
-
-/***/ }),
-
 /***/ "./vendor/publishpress/post-expirator/assets/jsx/settings/components/SettingRow.jsx":
 /*!******************************************************************************************!*\
   !*** ./vendor/publishpress/post-expirator/assets/jsx/settings/components/SettingRow.jsx ***!
@@ -204,10 +172,6 @@ var _SettingRow = __webpack_require__(/*! post-expirator/assets/jsx/settings/com
 
 var _SettingRow2 = _interopRequireDefault(_SettingRow);
 
-var _PostStatusesSelector = __webpack_require__(/*! ../Components/PostStatusesSelector */ "./src/assets/jsx/Components/PostStatusesSelector.jsx");
-
-var _PostStatusesSelector2 = _interopRequireDefault(_PostStatusesSelector);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -257,10 +221,10 @@ wp.hooks.addFilter('expirationdate_settings_posttype', 'publishpress/publishpres
             var fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
 
             return React.createElement(
-                "div",
-                { className: "pp-checkbox" },
-                React.createElement("input", {
-                    type: "checkbox",
+                'div',
+                { className: 'pp-checkbox' },
+                React.createElement('input', {
+                    type: 'checkbox',
                     name: 'expirationdate_custom-statuses-' + props.postType + '[]',
                     id: fieldId,
                     value: postStatus.value,
@@ -269,7 +233,7 @@ wp.hooks.addFilter('expirationdate_settings_posttype', 'publishpress/publishpres
                     key: postStatus.value
                 }),
                 React.createElement(
-                    "label",
+                    'label',
                     { htmlFor: fieldId },
                     postStatus.label
                 )
@@ -280,27 +244,27 @@ wp.hooks.addFilter('expirationdate_settings_posttype', 'publishpress/publishpres
             _SettingRow2.default,
             { label: publishpressFutureProSettings.text.enableCustomStatuses },
             React.createElement(
-                "div",
+                'div',
                 null,
                 React.createElement(
-                    "label",
+                    'label',
                     null,
                     publishpressFutureProSettings.text.enableCustomStatusesDesc
                 )
             ),
             React.createElement(
-                "div",
+                'div',
                 { className: 'future_pro_checkbox_selection_control' },
                 React.createElement(
-                    "a",
-                    { href: "#", onClick: handleSelectAll },
-                    "Select all"
+                    'a',
+                    { href: '#', onClick: handleSelectAll },
+                    'Select all'
                 ),
-                " ",
+                ' ',
                 React.createElement(
-                    "a",
-                    { href: "#", onClick: handleUnselectAll },
-                    "Unselect all"
+                    'a',
+                    { href: '#', onClick: handleUnselectAll },
+                    'Unselect all'
                 )
             ),
             postStatusesCheckboxes

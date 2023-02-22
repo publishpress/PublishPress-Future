@@ -2,7 +2,6 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 import SettingRow from "post-expirator/assets/jsx/settings/components/SettingRow";
-import PostStatusesSelector from "../Components/PostStatusesSelector";
 
 wp.hooks.addFilter(
     'expirationdate_settings_posttype',
