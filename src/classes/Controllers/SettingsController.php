@@ -197,6 +197,8 @@ class SettingsController implements ModuleInterface
                         ),
                         'enableCustomStatusesTrue' => __('Enabled', 'publishpress-future-pro'),
                         'enableCustomStatusesFalse' => __('Disabled', 'publishpress-future-pro'),
+                        'selectAll' => __('Select all', 'publishpress-future-pro'),
+                        'unselectAll' => __('Unselect all', 'publishpress-future-pro'),
                     ],
                     'settings' => $this->settingsModel->getSettings(),
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),

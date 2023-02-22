@@ -258,13 +258,13 @@ wp.hooks.addFilter('expirationdate_settings_posttype', 'publishpress/publishpres
                 React.createElement(
                     'a',
                     { href: '#', onClick: handleSelectAll },
-                    'Select all'
+                    publishpressFutureProSettings.text.selectAll
                 ),
                 ' ',
                 React.createElement(
                     'a',
                     { href: '#', onClick: handleUnselectAll },
-                    'Unselect all'
+                    publishpressFutureProSettings.text.unselectAll
                 )
             ),
             postStatusesCheckboxes

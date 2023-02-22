@@ -68,7 +68,7 @@ wp.hooks.addFilter(
                         <label>{publishpressFutureProSettings.text.enableCustomStatusesDesc}</label>
                     </div>
                     <div className={'future_pro_checkbox_selection_control'}>
-                        <a href="#" onClick={handleSelectAll}>Select all</a> <a href="#" onClick={handleUnselectAll}>Unselect all</a>
+                        <a href="#" onClick={handleSelectAll}>{publishpressFutureProSettings.text.selectAll}</a> <a href="#" onClick={handleUnselectAll}>{publishpressFutureProSettings.text.unselectAll}</a>
                     </div>
 
                     {postStatusesCheckboxes}
