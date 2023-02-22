@@ -11,9 +11,15 @@ class SettingsModel
      */
     private $options;
 
-    public function __construct(OptionsFacade $options)
+    /**
+     * @var \PublishPressFuturePro\Models\CustomStatusesModel
+     */
+    private $customStatusesModel;
+
+    public function __construct(OptionsFacade $options, CustomStatusesModel $customStatusesModel)
     {
         $this->options = $options;
+        $this->customStatusesModel = $customStatusesModel;
     }
 
     public function getSettings(): array
@@ -74,21 +80,41 @@ class SettingsModel
         }
     }
 
-    public function getEnabledCustomStatuses(array $default = []): array
+    public function getEnabledCustomStatuses(): array
     {
-        return $this->options->getOption('ppfuturepro_enabled_custom_statuses', $default);
+        $unsetValue = ['__unset__'];
+        $enabledCustomStatuses = $this->options->getOption(
+            'ppfuturepro_enabled_custom_statuses',
+            $unsetValue
+        );
+
+        // Select all the custom statuses if the option is not set for post.
+        if ($unsetValue === $enabledCustomStatuses) {
+            $enabledCustomStatuses = [
+                'post' => array_values($this->customStatusesModel->getCustomStatuses(CustomStatusesModel::OUTPUT_NAMES))
+            ];
+
+            $this->options->addOption('ppfuturepro_enabled_custom_statuses', $enabledCustomStatuses);
+        }
+
+        return $enabledCustomStatuses;
     }
 
-    public function getEnabledCustomStatusesForPostType(string $postType, $default = []): array
+    public function getEnabledCustomStatusesForPostType(string $postType): array
     {
         $statuses = $this->getEnabledCustomStatuses();
 
-        return $statuses[$postType] ?? $default;
+        return $statuses[$postType] ?? [];
     }
 
     public function setEnabledCustomStatuses(array $statuses)
     {
-        if ([-1] === $this->getEnabledCustomStatuses([-1])) {
+        if (
+            [-1] === $this->options->getOption(
+                'ppfuturepro_enabled_custom_statuses',
+                [-1]
+            )
+        ) {
             $this->options->addOption('ppfuturepro_enabled_custom_statuses', $statuses);
             return;
         }
@@ -98,11 +124,6 @@ class SettingsModel
 
     public function setEnabledCustomStatusForPostType(string $postType, array $statuses)
     {
-        if ([-1] === $this->getEnabledCustomStatuses([-1])) {
-            $this->setEnabledCustomStatuses([$postType => $statuses]);
-            return;
-        }
-
         $currentPostStatuses = $this->getEnabledCustomStatuses();
         $this->setEnabledCustomStatuses(array_merge($currentPostStatuses, [$postType => $statuses]));
     }

@@ -10,21 +10,15 @@ use function get_post_stati;
 
 class CustomStatusesModel
 {
-    /**
-     * @var \PublishPressFuturePro\Models\SettingsModel
-     */
-    private $settingsModel;
+    public const OUTPUT_OBJECTS = 'objects';
+    public const OUTPUT_NAMES = 'names';
 
-    public function __construct(SettingsModel $settingsModel)
-    {
-        $this->settingsModel = $settingsModel;
-    }
     /**
      * @return \stdClass[]
      */
-    public function getCustomStatuses(): array
+    public function getCustomStatuses($output = self::OUTPUT_OBJECTS): array
     {
-        $statuses = get_post_stati([], 'objects');
+        $statuses = get_post_stati([], $output);
         $statusesToIgnore = [
             'publish',
             'draft',
@@ -42,12 +36,12 @@ class CustomStatusesModel
 
         $filteredStatuses = [];
 
-        foreach ($statuses as $status => $statusObject) {
-            if (in_array($status, $statusesToIgnore)) {
+        foreach ($statuses as $statusName => $status) {
+            if (in_array($statusName, $statusesToIgnore)) {
                 continue;
             }
 
-            $filteredStatuses[$status] = $statusObject;
+            $filteredStatuses[$statusName] = $status;
         }
 
         return $filteredStatuses;
@@ -68,18 +62,14 @@ class CustomStatusesModel
         return $options;
     }
 
-    public function getSelectedStatusesForPostTypeAsOptions(string $postType): array
+    public function getStatusObject($statusName): ?\stdClass
     {
-        $statuses = $this->getCustomStatusesAsOptions();
-        $postTypeStatuses = $this->settingsModel->getEnabledCustomStatusesForPostType($postType);
-        $selectedStatuses = [];
+        $statuses = $this->getCustomStatuses();
 
-        foreach ($statuses as $status) {
-            if (in_array($status['value'], $postTypeStatuses)) {
-                $selectedStatuses[] = $status;
-            }
+        if (isset($statuses[$statusName])) {
+            return $statuses[$statusName];
         }
 
-        return $selectedStatuses;
+        return null;
     }
 }

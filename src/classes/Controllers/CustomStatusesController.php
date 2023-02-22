@@ -68,13 +68,15 @@ class CustomStatusesController implements ModuleInterface
      */
     public function filterExpirationActions(array $actions, string $postType = ''): array
     {
-        $customStatuses = $this->modelCustomStatuses->getSelectedStatusesForPostTypeAsOptions($postType);
+        $selectedCustomStatuses = $this->settingsModel->getEnabledCustomStatusesForPostType($postType);
 
-        foreach ($customStatuses as $status => $statusObject) {
+        foreach ($selectedCustomStatuses as $status) {
+            $statusObject = $this->modelCustomStatuses->getStatusObject($status);
+
             $actions[self::ACTION_PREFIX . $status] = __(
                 'Custom status: ',
                 'publishpress-future-pro'
-            ) . $statusObject['label'];
+            ) . $statusObject->label;
         }
 
         return $actions;

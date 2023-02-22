@@ -137,9 +137,7 @@ return [
      * @return \PublishPressFuturePro\Models\CustomStatusesModel
      */
     ServicesAbstract::MODEL_CUSTOM_STATUSES => static function (ContainerInterface $container) {
-        return new CustomStatusesModel(
-            $container->get(ServicesAbstract::MODEL_SETTINGS)
-        );
+        return new CustomStatusesModel();
     },
 
     /**
@@ -151,7 +149,8 @@ return [
 
     ServicesAbstract::MODEL_SETTINGS => static function (ContainerInterface $container) {
         return new SettingsModel(
-            $container->get(ServicesAbstract::OPTIONS)
+            $container->get(ServicesAbstract::OPTIONS),
+            $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES)
         );
     },
 

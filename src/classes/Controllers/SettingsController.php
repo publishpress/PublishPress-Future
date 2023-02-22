@@ -129,13 +129,6 @@ class SettingsController implements ModuleInterface
             10,
             2
         );
-
-        $this->hooks->addAction(
-            HooksAbstract::FILTER_SETTINGS_POST_TYPE,
-            [$this, 'filterPostTypeSettings'],
-            10,
-            2
-        );
     }
 
     public function routeActions()
@@ -298,14 +291,5 @@ class SettingsController implements ModuleInterface
             $postType,
             $_POST['expirationdate_custom-statuses-' . $postType] ?? []
         );
-    }
-
-    public function filterPostTypeSettings(array $settings, string $postType): array
-    {
-        $settings[$postType]['enableCustomStatuses'] = $this->settingsModel->getEnabledCustomStatusesForPostType(
-            $postType
-        );
-
-        return $settings;
     }
 }
