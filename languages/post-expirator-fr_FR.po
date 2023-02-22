@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - PublishPress Future: Automatically Unpublish WordPress Posts - Stable (latest release)\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-11-10 14:10+0100\n"
+"PO-Revision-Date: 2023-01-11 15:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -14,7 +14,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:423
+#: legacy/views/menu-defaults.php:184 legacy/views/menu-general.php:95
+msgid "Default date/time offset"
+msgstr "Décalage date/heure par défaut"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:430
 msgid "%1$s (%2$s) has expired at %3$s. %4$s"
 msgstr "%1$s (%2$s) a expiré à %3$s. %4$s"
 
@@ -48,27 +52,27 @@ msgstr "Les termes suivants (%s) ont été ajoutés à la publication : « %s�
 msgid "Post has been successfully deleted."
 msgstr "La publication a bien été supprimée."
 
-#: legacy/classes/Facade.class.php:395 legacy/views/bulk-edit.php:133
+#: legacy/classes/Facade.class.php:385 legacy/views/bulk-edit.php:133
 #: legacy/views/classic-metabox.php:135 legacy/views/quick-edit.php:96
 msgid "Expiration Taxonomies"
 msgstr "Taxonomies d’expiration"
 
-#: legacy/classes/Facade.class.php:390 legacy/views/how-to-expire.php:54
+#: legacy/classes/Facade.class.php:380 legacy/views/how-to-expire.php:54
 #: views/how-to-expire.php:54
 msgid "Taxonomy: Remove"
 msgstr "Taxonomie : Retirer"
 
-#: legacy/classes/Facade.class.php:389 legacy/views/how-to-expire.php:50
+#: legacy/classes/Facade.class.php:379 legacy/views/how-to-expire.php:50
 #: views/how-to-expire.php:50
 msgid "Taxonomy: Add"
 msgstr "Taxonomie : Ajouter"
 
-#: legacy/classes/Facade.class.php:388 legacy/views/how-to-expire.php:46
+#: legacy/classes/Facade.class.php:378 legacy/views/how-to-expire.php:46
 #: views/how-to-expire.php:46
 msgid "Taxonomy: Replace"
 msgstr "Taxonomie : Remplacer"
 
-#: legacy/classes/Facade.class.php:381
+#: legacy/classes/Facade.class.php:371
 msgid "Taxonomy"
 msgstr "Taxonomie"
 
@@ -84,7 +88,7 @@ msgstr "L’évènement cron n’a pas été trouvé !"
 msgid "Cron event scheduled."
 msgstr "L’évènement cron a été planifié."
 
-#: legacy/classes/Display.class.php:82
+#: legacy/classes/Display.class.php:83
 msgid "You do not have permission to configure PublishPress Future."
 msgstr "Vous n’avez pas les droits nécessaires pour configurer PublishPress Future."
 
@@ -108,44 +112,44 @@ msgstr "Sélectionnez si la fonctionnalité PublishPress est activée ou non pou
 msgid "Choose which user roles can use PublishPress Future"
 msgstr "Choisir les rôles pouvant utiliser PublishPress Future"
 
-#: legacy/classes/Display.class.php:479
+#: legacy/classes/Display.class.php:504
 msgid "Contact"
 msgstr "Contact"
 
-#: legacy/classes/Display.class.php:477
+#: legacy/classes/Display.class.php:502
 msgid "Contact the PublishPress team"
 msgstr "Contacter l’équipe PublishPress"
 
-#: legacy/classes/Display.class.php:471
+#: legacy/classes/Display.class.php:496
 msgid "Documentation"
 msgstr "Documentation"
 
-#: legacy/classes/Display.class.php:469
+#: legacy/classes/Display.class.php:494
 msgid "Future Documentation"
 msgstr "Documentation de Future"
 
-#: legacy/classes/Display.class.php:463
+#: legacy/classes/Display.class.php:488
 msgid "About"
 msgstr "À propos"
 
-#: legacy/classes/Display.class.php:461
+#: legacy/classes/Display.class.php:486
 msgid "About PublishPress Future"
 msgstr "À propos de PublishPress Future"
 
-#: legacy/classes/Display.class.php:446
+#: legacy/classes/Display.class.php:471
 msgid "If you like %s, please leave us a %s rating. Thank you!"
 msgstr "Si vous appréciez %s, veuillez nous laisser une note de %s. Merci !"
 
-#: legacy/classes/Display.class.php:56
+#: legacy/classes/Display.class.php:57
 msgid "Future"
 msgstr "Future"
 
-#: legacy/classes/Display.class.php:55
+#: legacy/classes/Display.class.php:56
 msgid "PublishPress Future Options"
 msgstr "Options de PublishPress Future"
 
 #. Plugin Name of the plugin
-#: legacy/classes/Facade.class.php:391 legacy/functions.php:355
+#: legacy/classes/Facade.class.php:381 legacy/functions.php:356
 #: legacy/views/bulk-edit.php:18 legacy/views/tabs.php:14
 msgid "PublishPress Future"
 msgstr "PublishPress Future"
@@ -170,7 +174,7 @@ msgstr "Conserver les données après la désactivation de l’extension"
 msgid "No cron events found for the plugin."
 msgstr "Aucun évènement cron n’a été trouvé pour l’extension."
 
-#: legacy/classes/Facade.class.php:394
+#: legacy/classes/Facade.class.php:384
 msgid "Loading"
 msgstr "Chargement"
 
@@ -202,11 +206,11 @@ msgstr "Veuillez ne rien mettre à jour ici si vous ne savez pas ce que cela imp
 msgid "Advanced Options"
 msgstr "Options avancées"
 
-#: legacy/views/menu-general.php:86
+#: legacy/views/menu-general.php:85
 msgid "The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr "Le format par défaut à utiliser pour afficher le délai d’expiration dans une publication à l’aide du code court ou dans le pied de page.  Pour plus d’informations sur les options de formatage valides, voir : %s."
 
-#: legacy/views/menu-general.php:69
+#: legacy/views/menu-general.php:68
 msgid "The default format to use when displaying the expiration date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr "Le format par défaut à utiliser lors de l’affichage de la date d’expiration dans une publication à l’aide du code court ou dans le pied de page.  Pour plus d’informations sur les options de formatage valides, voir : %s."
 
@@ -226,23 +230,11 @@ msgstr "Code court"
 msgid "Debug Logging"
 msgstr "Journalisation de débogage"
 
-#: legacy/views/menu-defaults.php:203
-msgid "Set the default expiration date to be used when creating a new post of this type."
-msgstr "Définissez la date d’expiration par défaut à utiliser lors de la création d’une nouvelle publication de ce type."
-
-#: legacy/views/menu-defaults.php:173
-msgid "Publish Time"
-msgstr "Heure de publication"
-
-#: legacy/views/menu-defaults.php:171
-msgid "Inherit from General Settings"
-msgstr "Hériter des réglages généraux"
-
 #: legacy/views/bulk-edit.php:109 legacy/views/quick-edit.php:74
 msgid "Type"
 msgstr "Type"
 
-#: legacy/functions.php:1181
+#: legacy/functions.php:1168
 msgid "No taxonomies found"
 msgstr "Aucune taxonomie trouvée"
 
@@ -254,9 +246,9 @@ msgstr "http://publishpress.com"
 msgid "PublishPress"
 msgstr "PublishPress"
 
-#: legacy/views/menu-defaults.php:220 legacy/views/menu-general.php:124
+#: legacy/views/menu-defaults.php:194 legacy/views/menu-general.php:103
 msgid "Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
-msgstr "Définissez la valeur personnalisée à utiliser pour la date d’expiration par défaut.  Pour plus d’informations sur le formatage, voir %1$s. Par exemple, vous pouvez saisir %2$s+1 mois%3$s ou %4$s+1 semaine 2 jours 4 heures 2 secondes%5$s ou %6$sjeudi prochain%7$s."
+msgstr "Définissez le décalage à utiliser pour la date et l’heure d’expiration par défaut. Pour plus d’informations sur le formatage, voir %1$s. Par exemple, vous pouvez saisir %2$s + 1 mois%3$s ou %4$s + 1 semaine 2 jours 4 heures 2 secondes%5$s ou %6$sprochain jeudi%7$s."
 
 #: legacy/views/bulk-edit.php:46
 msgid "Remove from posts"
@@ -286,21 +278,21 @@ msgstr "Modifier la date d’expiration si elle est activée sur les publication
 msgid "No Change"
 msgstr "Aucune modification"
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:496
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:450
 msgid "[%1$s] %2$s"
 msgstr "[%1$s] %2$s"
 
-#: legacy/classes/Facade.class.php:387 legacy/views/how-to-expire.php:42
+#: legacy/classes/Facade.class.php:377 legacy/views/how-to-expire.php:42
 #: views/how-to-expire.php:42
 msgid "Unstick"
 msgstr "Ne plus épingler"
 
-#: legacy/classes/Facade.class.php:386 legacy/views/how-to-expire.php:38
+#: legacy/classes/Facade.class.php:376 legacy/views/how-to-expire.php:38
 #: views/how-to-expire.php:38
 msgid "Stick"
 msgstr "Épingler"
 
-#: legacy/classes/Facade.class.php:384 legacy/views/how-to-expire.php:30
+#: legacy/classes/Facade.class.php:374 legacy/views/how-to-expire.php:30
 #: views/how-to-expire.php:30
 msgid "Trash"
 msgstr "Corbeille"
@@ -309,39 +301,39 @@ msgstr "Corbeille"
 msgid "Enter a comma separate list of emails that you would like to be notified when the post expires."
 msgstr "Saisissez une liste d’e-mails (séparés par des virgules) que vous voulez notifier quand la publication arrive à expiration."
 
-#: legacy/views/menu-general.php:233
+#: legacy/views/menu-general.php:212
 msgid "Enter a comma separate list of emails that you would like to be notified when the post expires.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
 msgstr "Saisissez une liste d’e-mails (séparés par des virgules) que vous voulez notifier quand la publication arrive à expiration. Cela s’appliquera à TOUS les types de contenu. Vous pouvez définir des e-mails spécifiques en fonction du type de contenu dans l’onglet Par défaut."
 
-#: legacy/views/menu-defaults.php:156 legacy/views/menu-general.php:226
+#: legacy/views/menu-defaults.php:156 legacy/views/menu-general.php:205
 msgid "Who to notify"
 msgstr "Personne à notifier"
 
-#: legacy/views/menu-general.php:217
+#: legacy/views/menu-general.php:196
 msgid "This will include all users with the role of \"Administrator\" in the post expiration email."
 msgstr "Inclus tous les utilisateurs avec le rôle « Administrateur » dans l’e-mail informant de l’expiration d’un contenu."
 
-#: legacy/views/menu-general.php:199
+#: legacy/views/menu-general.php:178
 msgid "Include Blog Administrators?"
 msgstr "Inclure les Admins ?"
 
-#: legacy/views/menu-general.php:191
+#: legacy/views/menu-general.php:170
 msgid "This will enable or disable the send of email notification on post expiration."
 msgstr "Cela activera ou désactivera l’envoi d’une notification par e-mail au moment de l’expiration d’un contenu."
 
-#: legacy/views/menu-general.php:175
+#: legacy/views/menu-general.php:154
 msgid "Enable Email Notification?"
 msgstr "Activer la notification par e-mail ?"
 
-#: legacy/views/menu-general.php:168
+#: legacy/views/menu-general.php:147
 msgid "Whenever a post expires, an email can be sent to alert users of the expiration."
 msgstr "Dès qu’un contenu arrive à expiration, un e-mail peut être envoyé pour informer les utilisateurs de l’expiration."
 
-#: legacy/views/menu-general.php:166
+#: legacy/views/menu-general.php:145
 msgid "Expiration Email Notification"
 msgstr "Notification e-mail de l’expiration"
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:440
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:447
 msgid "Post Expiration Complete \"%s\""
 msgstr "Expiration du contenu « %s »"
 
@@ -353,22 +345,22 @@ msgstr "Autorise l’ajout à vos publications d’une date d’expiration (à l
 msgid "http://wordpress.org/extend/plugins/post-expirator/"
 msgstr "http://wordpress.org/extend/plugins/post-expirator/"
 
-#: legacy/classes/Facade.class.php:385 legacy/views/how-to-expire.php:34
+#: legacy/classes/Facade.class.php:375 legacy/views/how-to-expire.php:34
 #: views/how-to-expire.php:34
 msgid "Private"
 msgstr "Privé"
 
-#: legacy/classes/Facade.class.php:383 legacy/views/how-to-expire.php:26
+#: legacy/classes/Facade.class.php:373 legacy/views/how-to-expire.php:26
 #: views/how-to-expire.php:26
 msgid "Delete"
 msgstr "Supprimer"
 
-#: legacy/classes/Facade.class.php:382 legacy/views/how-to-expire.php:22
+#: legacy/classes/Facade.class.php:372 legacy/views/how-to-expire.php:22
 #: views/how-to-expire.php:22
 msgid "Draft"
 msgstr "Brouillon"
 
-#: legacy/classes/Display.class.php:202
+#: legacy/classes/Display.class.php:203
 msgid "Below is a dump of the debugging table, this should be useful for troubleshooting."
 msgstr "Ci-dessous une extraction de la table de débogage, cela devrait vous aider."
 
@@ -409,15 +401,15 @@ msgstr "Désactiver le débogage"
 msgid "Advanced Diagnostics"
 msgstr "Diagnostics avancés"
 
-#: legacy/classes/Display.class.php:188
+#: legacy/classes/Display.class.php:189
 msgid "Debugging Table Emptied"
 msgstr "Table de débogage vidée"
 
-#: legacy/classes/Display.class.php:180
+#: legacy/classes/Display.class.php:181
 msgid "Debugging Enabled"
 msgstr "Débogage activé"
 
-#: legacy/classes/Display.class.php:175
+#: legacy/classes/Display.class.php:176
 msgid "Debugging Disabled"
 msgstr "Débogage désactivé"
 
@@ -457,9 +449,9 @@ msgstr "Utilisez les valeurs ci-dessous pour définir les actions/valeurs par d�
 msgid "Default Expiration Values"
 msgstr "Valeurs d’expiration par défaut"
 
-#: legacy/views/menu-advanced.php:116 legacy/views/menu-defaults.php:243
+#: legacy/views/menu-advanced.php:116 legacy/views/menu-defaults.php:217
 #: legacy/views/menu-display.php:132 legacy/views/menu-editor.php:37
-#: legacy/views/menu-general.php:244
+#: legacy/views/menu-general.php:223
 msgid "Save Changes"
 msgstr "Enregistrer les modifications"
 
@@ -489,13 +481,13 @@ msgstr "Active ou désactive l’affichage de la date d’expiration de la publi
 
 #: legacy/views/menu-defaults.php:128 legacy/views/menu-diagnostics.php:35
 #: legacy/views/menu-diagnostics.php:62 legacy/views/menu-display.php:83
-#: legacy/views/menu-general.php:189 legacy/views/menu-general.php:215
+#: legacy/views/menu-general.php:168 legacy/views/menu-general.php:194
 msgid "Disabled"
 msgstr "Désactivé"
 
 #: legacy/views/menu-defaults.php:120 legacy/views/menu-diagnostics.php:20
 #: legacy/views/menu-diagnostics.php:59 legacy/views/menu-display.php:78
-#: legacy/views/menu-general.php:182 legacy/views/menu-general.php:207
+#: legacy/views/menu-general.php:161 legacy/views/menu-general.php:186
 msgid "Enabled"
 msgstr "Activé"
 
@@ -511,36 +503,19 @@ msgstr "L’activation de cette option affichera la date d’expiration automati
 msgid "Post Footer Display"
 msgstr "Affichage dans le pied de page"
 
-#: legacy/views/menu-general.php:160
+#: legacy/views/menu-general.php:139
 msgid "Sets the default expiration taxonomy for the post."
 msgstr "Définissez la taxonomie d’expiration par défaut pour la publication"
 
-#: legacy/views/menu-general.php:141
+#: legacy/views/menu-general.php:120
 msgid "Default Expiration Taxonomy"
 msgstr "Expiration de taxonomie par défaut"
 
-#: legacy/views/menu-general.php:108
-msgid "Set the default expiration date to be used when creating new posts and pages. Defaults to custom."
-msgstr "Définissez la date d’expiration par défaut à utiliser lors de la création de nouveaux articles et de pages. La valeur par défaut est Personnalisé."
-
-#: legacy/views/menu-general.php:105
-msgid "Post/Page Publish Time"
-msgstr "Date de publication"
-
-#: legacy/views/menu-defaults.php:172 legacy/views/menu-defaults.php:213
-#: legacy/views/menu-general.php:102 legacy/views/menu-general.php:118
-msgid "Custom"
-msgstr "Personnalisé"
-
-#: legacy/views/menu-defaults.php:188 legacy/views/menu-general.php:96
-msgid "Default date/time offset"
-msgstr "Date/heure de durée par défaut"
-
-#: legacy/views/menu-general.php:79
+#: legacy/views/menu-general.php:78
 msgid "Time Format"
 msgstr "Format d’heure"
 
-#: legacy/views/menu-general.php:62
+#: legacy/views/menu-general.php:61
 msgid "Date Format"
 msgstr "Format de date"
 
@@ -561,7 +536,7 @@ msgstr "Voir les logs de déboguage"
 msgid "Diagnostics"
 msgstr "Diagnostics"
 
-#: legacy/views/menu-general.php:58 legacy/views/tabs.php:21
+#: legacy/views/menu-general.php:57 legacy/views/tabs.php:21
 msgid "Defaults"
 msgstr "Défaut"
 
@@ -577,7 +552,7 @@ msgstr "Plus de 1 taxonomie de hiérarchie détectée.  Vous devez attribuer une
 msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
 msgstr "Vous devez assigner une taxonomie hiérarchique à ce type de publication pour utiliser cette fonctionnalité."
 
-#: legacy/classes/Facade.class.php:393 legacy/views/bulk-edit.php:111
+#: legacy/classes/Facade.class.php:383 legacy/views/bulk-edit.php:111
 #: legacy/views/classic-metabox.php:117 legacy/views/menu-defaults.php:96
 #: legacy/views/quick-edit.php:76
 msgid "How to expire"
@@ -612,7 +587,7 @@ msgstr "Année"
 msgid "The published date/time will be used as the expiration value"
 msgstr "La date/heure publiée sera utilisée comme valeur d’expiration"
 
-#: legacy/classes/Facade.class.php:392 legacy/views/bulk-edit.php:26
+#: legacy/classes/Facade.class.php:382 legacy/views/bulk-edit.php:26
 #: legacy/views/classic-metabox.php:11 legacy/views/quick-edit.php:12
 msgid "Enable Post Expiration"
 msgstr "Autoriser l’expiration de vos contenus"
@@ -621,7 +596,7 @@ msgstr "Autoriser l’expiration de vos contenus"
 msgid "Never"
 msgstr "Jamais"
 
-#: legacy/functions.php:76 legacy/functions.php:166
+#: legacy/functions.php:77 legacy/functions.php:167
 msgid "Expires"
 msgstr "Expires"
 
@@ -641,14 +616,14 @@ msgstr "g\\hia"
 msgid "l F jS, Y"
 msgstr "I j F Y"
 
-#: legacy/classes/Display.class.php:218
+#: legacy/classes/Display.class.php:219
 msgid "Message"
 msgstr "Message"
 
-#: legacy/classes/Display.class.php:217
+#: legacy/classes/Display.class.php:218
 msgid "Timestamp"
 msgstr "Horodatage"
 
-#: legacy/classes/Display.class.php:210
+#: legacy/classes/Display.class.php:211
 msgid "Debugging table is currently empty."
 msgstr "La table de débogage est actuellement vide."

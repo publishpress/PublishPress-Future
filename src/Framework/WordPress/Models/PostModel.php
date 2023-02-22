@@ -20,13 +20,13 @@ class PostModel
     private $postInstance;
 
     /**
-     * @var callable
+     * @var \Closure
      */
     protected $termModelFactory;
 
     /**
      * @param int|\WP_Post $post
-     * @param callable $termModelFactory
+     * @param \Closure $termModelFactory
      */
     public function __construct($post, $termModelFactory)
     {
@@ -52,15 +52,11 @@ class PostModel
     {
         $post = $this->getPostInstance();
 
-        $updated = $this->update(
+        return $this->update(
             [
                 'post_status' => $newPostStatus,
             ]
         );
-
-        wp_transition_post_status($newPostStatus, $post->post_status, $post);
-
-        return $updated;
     }
 
     /**

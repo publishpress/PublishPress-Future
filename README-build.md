@@ -54,6 +54,18 @@ The command `tests:build:run` run the PHP build process before running the tests
 
 After `tests:build:run` or `tests:run` you can pass any codeception argument you would normally pass: the suite name, a test file etc.
 
+## Running WP CLI on devkinsta
+
+```bash
+npm run wp
+```
+
+You can pass arguments after the command, normally. But for passing named arguments you need to pass the `--` argument before them, otherwise those named arguments won't bypass and `npm` will interpret them instead. For example:  
+
+```bash
+npm run wp cron event run -- --due-now
+```
+
 ## TODO
 
 * [ ] Wrap all dev dependencies in the docker container, and build scripts;

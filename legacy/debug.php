@@ -1,7 +1,5 @@
 <?php
 
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ContainerNotInitializedException;
 use PublishPressFuture\Core\DI\ServicesAbstract as Services;
@@ -22,8 +20,6 @@ class PostExpiratorDebug
     /**
      * Constructor.
      * @throws ContainerNotInitializedException
-     * @throws NotFoundExceptionInterface
-     * @throws ContainerExceptionInterface
      */
     public function __construct()
     {

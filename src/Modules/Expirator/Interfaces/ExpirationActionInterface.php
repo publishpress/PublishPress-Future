@@ -19,7 +19,7 @@ interface ExpirationActionInterface
     public function getNotificationText();
 
     /**
-     * @return array
+     * @return string
      */
-    public function getExpirationLog();
+    public function __toString();
 }

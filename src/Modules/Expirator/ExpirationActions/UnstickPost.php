@@ -2,22 +2,28 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 
 class UnstickPost implements ExpirationActionInterface
 {
+    const SERVICE_NAME = 'expiration.actions.unstick_post';
+
     /**
      * @var ExpirablePostModel
      */
     private $postModel;
 
     /**
-     * @param ExpirablePostModel $postModel
-     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     * @var array
      */
-    public function __construct($postModel, $errorFacade)
+    private $log = [];
+
+    /**
+     * @param ExpirablePostModel $postModel
+     */
+    public function __construct($postModel)
     {
         $this->postModel = $postModel;
     }
@@ -32,15 +38,11 @@ class UnstickPost implements ExpirationActionInterface
      */
     public function getNotificationText()
     {
-        return __('Post has been removed from stickies list.', 'post-expirator');
-    }
+        if (empty($this->log) || ! $this->log['success']) {
+            return __('Post didn\'t change.', 'post-expirator');
+        }
 
-    /**
-     * @inheritDoc
-     */
-    public function getExpirationLog()
-    {
-        return [];
+        return __('Post has been removed from stickies list.', 'post-expirator');
     }
 
     /**
@@ -48,6 +50,10 @@ class UnstickPost implements ExpirationActionInterface
      */
     public function execute()
     {
-        return $this->postModel->unstick();
+        $result = $this->postModel->unstick();
+
+        $this->log['success'] = $result;
+
+        return $result;
     }
 }

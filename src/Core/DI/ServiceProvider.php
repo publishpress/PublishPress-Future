@@ -8,12 +8,12 @@ namespace PublishPressFuture\Core\DI;
 class ServiceProvider implements ServiceProviderInterface
 {
     /**
-     * @var callable[]
+     * @var \Closure[]
      */
     protected $factories;
 
     /**
-     * @param callable[] $factories
+     * @param \Closure[] $factories
      */
     public function __construct($factories)
     {

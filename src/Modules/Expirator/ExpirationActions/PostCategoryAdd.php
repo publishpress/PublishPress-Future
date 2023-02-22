@@ -2,13 +2,15 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPressFuture\Framework\WordPress\Models\TermsModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 
 class PostCategoryAdd implements ExpirationActionInterface
 {
+    const SERVICE_NAME = 'expiration.actions.post_category_add';
+
     /**
      * @var ExpirablePostModel
      */
@@ -18,6 +20,11 @@ class PostCategoryAdd implements ExpirationActionInterface
      * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
      */
     private $errorFacade;
+
+    /**
+     * @var array
+     */
+    private $log = [];
 
     /**
      * @param ExpirablePostModel $postModel
@@ -39,28 +46,23 @@ class PostCategoryAdd implements ExpirationActionInterface
      */
     public function getNotificationText()
     {
-        $expirationTaxonomy = $this->postModel->getExpirationTaxonomy();
-        $expirationTermsName = $this->postModel->getExpirationCategoryNames();
+        if (empty($this->log)) {
+            return __('No terms were added to the post.', 'post-expirator');
+        } elseif (isset($this->log['error'])) {
+            return $this->log['error'];
+        }
 
-        $postTermsName = array_merge(
-            $this->postModel->getTermNames($expirationTaxonomy),
-            $expirationTermsName
-        );
+        $termsModel = new TermsModel();
 
         return sprintf(
-            __('The following terms (%s) were added to the post: "%s". The full list of terms on the post is: %s.', 'post-expirator'),
-            $expirationTaxonomy,
-            implode(', ', $expirationTermsName),
-            implode(', ', $postTermsName)
+            __(
+                'The following terms (%s) were added to the post: "%s". The full list of terms on the post is: %s.',
+                'post-expirator'
+            ),
+            $this->log['expiration_taxonomy'],
+            $termsModel->getTermNamesByIdAsString($this->log['terms_added'], $this->log['expiration_taxonomy']),
+            $termsModel->getTermNamesByIdAsString($this->log['updated_terms'], $this->log['expiration_taxonomy'])
         );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getExpirationLog()
-    {
-        return [];
     }
 
     /**
@@ -69,13 +71,26 @@ class PostCategoryAdd implements ExpirationActionInterface
     public function execute()
     {
         $expirationTaxonomy = $this->postModel->getExpirationTaxonomy();
-        $newTerms = $this->postModel->getExpirationCategoryIDs();
-        $postTerms = $this->postModel->getTermIDs($expirationTaxonomy);
+        $originalTerms = $this->postModel->getTermIDs($expirationTaxonomy);
+        $termsToAdd = $this->postModel->getExpirationCategoryIDs();
 
-        $mergedTerms = array_merge($postTerms, $newTerms);
+        $updatedTerms = array_merge($originalTerms, $termsToAdd);
 
-        $result = $this->postModel->setTerms($mergedTerms, $expirationTaxonomy);
+        $result = $this->postModel->setTerms($updatedTerms, $expirationTaxonomy);
 
-        return ! $this->errorFacade->isWpError($result);
+        $resultIsError = $this->errorFacade->isWpError($result);
+
+        if (! $resultIsError) {
+            $this->log = [
+                'expiration_taxonomy' => $expirationTaxonomy,
+                'original_terms' => $originalTerms,
+                'terms_added' => $termsToAdd,
+                'updated_terms' => $updatedTerms,
+            ];
+        } else {
+            $this->log['error'] = $result->get_error_message();
+        }
+
+        return ! $resultIsError;
     }
 }

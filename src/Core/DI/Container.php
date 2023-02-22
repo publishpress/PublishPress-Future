@@ -6,7 +6,6 @@
 namespace PublishPressFuture\Core\DI;
 
 use Closure;
-use Psr\Container\ContainerInterface;
 
 /**
  * PHP Dependency Injection Container PSR-11.
@@ -33,22 +32,22 @@ class Container implements ContainerInterface
     /**
      * @var array
      */
-    private $definitions = [];
+    private $services = [];
 
-    public function __construct($definitions = [])
+    public function __construct($services = [])
     {
-        if (! empty($definitions)) {
-            $this->setDefinitions($definitions);
+        if (! empty($services)) {
+            $this->registerServices($services);
         }
 
         self::$instance = $this;
     }
 
-    private function setDefinitions($definitions)
+    public function registerServices($services)
     {
-        $this->definitions = array_merge(
-            $definitions,
-            [ContainerInterface::class => $this]
+        $this->services = array_merge(
+            $this->services,
+            $services
         );
     }
 
@@ -60,7 +59,7 @@ class Container implements ContainerInterface
     public static function getInstance()
     {
         if (empty(self::$instance)) {
-            throw new ContainerNotInitializedException();
+            self::$instance = new self();
         }
 
         return self::$instance;
@@ -72,7 +71,6 @@ class Container implements ContainerInterface
      * @param string $id Identifier of the entry to look for.
      *
      * @return mixed Entry.
-     * @throws ServiceNotFoundException  No entry was found for **this** identifier.
      */
     public function get($id)
     {
@@ -84,7 +82,8 @@ class Container implements ContainerInterface
             return $this->resolvedEntries[$id];
         }
 
-        $value = $this->definitions[$id];
+        $value = $this->services[$id];
+
         if ($value instanceof Closure) {
             $value = $value($this);
         }
@@ -107,21 +106,7 @@ class Container implements ContainerInterface
      */
     public function has($id)
     {
-        return array_key_exists($id, $this->definitions)
+        return array_key_exists($id, $this->services)
             || array_key_exists($id, $this->resolvedEntries);
-    }
-
-    /**
-     * @param ServiceProviderInterface $serviceProvider
-     *
-     * @return void
-     */
-    public function register(ServiceProviderInterface $serviceProvider)
-    {
-        $factories = $serviceProvider->getFactories();
-
-        foreach ($factories as $serviceName => $factory) {
-            $this->definitions[$serviceName] = $factory;
-        }
     }
 }

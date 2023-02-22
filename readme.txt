@@ -5,7 +5,7 @@ Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
 Requires at least: 5.3
 Tested up to: 6.1
-Stable tag: 2.8.3
+Stable tag: 2.9.0
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -80,6 +80,22 @@ This section describes how to install the plugin and get it working.
 3. Settings screen
 
 == Changelog ==
+
+= [2.9.0] - 14 Feb, 2023 =
+
+* ADDED: Add new filter for filtering the expiration actions list: publishpressfuture_expiration_actions;
+* ADDED: Add new constant PUBLISHPRESS_FUTURE_BASE_PATH to define the base path of the plugin;
+* ADDED: Added hooks to extend settings screen;
+* ADDED: Added ads and banners for the Pro plugin;
+* CHANGED: Refactored the UI for the Post Types settings screen closing the fields if not activated, #335, #378;
+* CHANGED: Refactored the services container to be used by the Pro plugin;
+* CHANGED: Changed the order of some settings field in the Post Types settings screen;
+* FIXED: Fix hook transition_post_status running twice, #337;
+* FIXED: Fix bug with choosing a taxonomy change as a default, #335;
+* FIXED: Updated FR and IT translations, #336 (thanks to @wocmultimedia);
+* FIXED: HTML escaping for a field on the settings screen;
+* FIXED: Fix the expiration date column date format;
+* FIXED: Fix option to clear data on uninstall, removing the debug table;
 
 = [2.8.3] - 10 Jan, 2023 =
 

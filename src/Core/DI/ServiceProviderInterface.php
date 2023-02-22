@@ -8,7 +8,7 @@ namespace PublishPressFuture\Core\DI;
 interface ServiceProviderInterface
 {
     /**
-     * @return callable[] A map of service names and theirs factory method.
+     * @return Closure[] A map of service names and theirs factory method.
      */
     public function getFactories();
 }

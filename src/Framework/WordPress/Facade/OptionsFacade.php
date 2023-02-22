@@ -44,4 +44,14 @@ class OptionsFacade
     {
         return \update_option($optionName, $newValue, $autoLoad);
     }
+
+    /**
+     * @param string $optionName
+     * @param mixed $newValue
+     * @return bool
+     */
+    public function addOption($optionName, $newValue)
+    {
+        return \add_option($optionName, $newValue);
+    }
 }

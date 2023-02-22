@@ -16,6 +16,7 @@ abstract class HooksAbstract
     const FILTER_LEGACY_CUSTOM_EXPIRATION_TYPE = 'postexpirator_custom_posttype_expire';
     const ACTION_SCHEDULE_POST_EXPIRATION = 'publishpressfuture_schedule_expiration';
     const ACTION_UNSCHEDULE_POST_EXPIRATION = 'publishpressfuture_unschedule_expiration';
+    const ACTION_POST_EXPIRED = 'publishpressfuture_post_expired';
     const ACTION_EXPIRE_POST = 'publishpressfuture_expire';
     const FILTER_CUSTOM_EXPIRATION_TYPE = 'publishpressfuture_custom_expiration_type';
     const FILTER_LEGACY_TEMPLATE_PARAMS = 'publishpressfuture_legacy_template_params';
@@ -25,6 +26,8 @@ abstract class HooksAbstract
     const FILTER_EXPIRED_EMAIL_ADDRESSES = 'publishpressfuture_expired_email_addresses';
     const FILTER_EXPIRED_EMAIL_HEADERS = 'publishpressfuture_expired_email_headers';
     const FILTER_EXPIRED_EMAIL_ATTACHMENTS = 'publishpressfuture_expired_email_attachments';
+    const FILTER_EXPIRATION_ACTIONS = 'publishpressfuture_expiration_actions';
+    const FILTER_EXPIRATION_ACTION_FACTORY = 'publishpressfuture_expiration_action_factory';
 
 
     public static function getActionLegacyMultisiteDelete($blogId)

@@ -2,12 +2,15 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
+use PublishPressFuture\Framework\WordPress\Models\TermsModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 
 class PostCategoryRemove implements ExpirationActionInterface
 {
+    const SERVICE_NAME = 'expiration.actions.post_category_remove';
+
     /**
      * @var ExpirablePostModel
      */
@@ -17,6 +20,11 @@ class PostCategoryRemove implements ExpirationActionInterface
      * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
      */
     private $errorFacade;
+
+    /**
+     * @var array
+     */
+    private $log = [];
 
     /**
      * @param ExpirablePostModel $postModel
@@ -38,30 +46,23 @@ class PostCategoryRemove implements ExpirationActionInterface
      */
     public function getNotificationText()
     {
-        $expirationTaxonomy = $this->postModel->getExpirationTaxonomy();
-        $expirationTermsName = $this->postModel->getExpirationCategoryNames();
-        $postTermsName = $this->postModel->getTermNames($expirationTaxonomy);
+        if (empty($this->log)) {
+            return __('No terms were removed from the post.', 'post-expirator');
+        } elseif (isset($this->log['error'])) {
+            return $this->log['error'];
+        }
 
-        $removedTerms = array_intersect($postTermsName, $expirationTermsName);
-        $newListOfTerms = array_diff($postTermsName, $expirationTermsName);
+        $termsModel = new TermsModel();
 
         return sprintf(
             __(
                 'The following terms (%s) were removed from the post: "%s". The new list of terms on the post is: %s.',
                 'post-expirator'
             ),
-            $expirationTaxonomy,
-            implode(', ', $removedTerms),
-            implode(', ', $newListOfTerms)
+            $this->log['expiration_taxonomy'],
+            $termsModel->getTermNamesByIdAsString($this->log['removed_terms'], $this->log['expiration_taxonomy']),
+            $termsModel->getTermNamesByIdAsString($this->log['updated_terms'], $this->log['expiration_taxonomy'])
         );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getExpirationLog()
-    {
-        return [];
     }
 
     /**
@@ -70,13 +71,28 @@ class PostCategoryRemove implements ExpirationActionInterface
     public function execute()
     {
         $expirationTaxonomy = $this->postModel->getExpirationTaxonomy();
+        $originalTerms = $this->postModel->getTermIDs($expirationTaxonomy);
         $termsToRemove = $this->postModel->getExpirationCategoryIDs();
-        $postTerms = $this->postModel->getTermIDs($expirationTaxonomy);
 
-        $newPostTerms = array_diff($postTerms, $termsToRemove);
+        $updatedTerms = array_diff($originalTerms, $termsToRemove);
 
-        $result = $this->postModel->setTerms($newPostTerms, $expirationTaxonomy);
+        $removedTerms = array_intersect($originalTerms, $termsToRemove);
 
-        return ! $this->errorFacade->isWpError($result);
+        $result = $this->postModel->setTerms($updatedTerms, $expirationTaxonomy);
+
+        $resultIsError = $this->errorFacade->isWpError($result);
+
+        if (! $resultIsError) {
+            $this->log = [
+                'expiration_taxonomy' => $expirationTaxonomy,
+                'original_terms' => $originalTerms,
+                'removed_terms' => $removedTerms,
+                'updated_terms' => $updatedTerms,
+            ];
+        } else {
+            $this->log['error'] = $result->get_error_message();
+        }
+
+        return ! $resultIsError;
     }
 }

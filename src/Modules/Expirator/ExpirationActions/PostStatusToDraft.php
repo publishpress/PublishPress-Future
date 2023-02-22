@@ -2,22 +2,28 @@
 
 namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 
 class PostStatusToDraft implements ExpirationActionInterface
 {
+    const SERVICE_NAME = 'expiration.actions.post_status_to_draft';
+
     /**
      * @var ExpirablePostModel
      */
     private $postModel;
 
     /**
-     * @param ExpirablePostModel $postModel
-     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     * @var array
      */
-    public function __construct($postModel, $errorFacade)
+    private $log = [];
+
+    /**
+     * @param ExpirablePostModel $postModel
+     */
+    public function __construct($postModel)
     {
         $this->postModel = $postModel;
     }
@@ -32,6 +38,10 @@ class PostStatusToDraft implements ExpirationActionInterface
      */
     public function getNotificationText()
     {
+        if (empty($this->log) || ! $this->log['success']) {
+            return __('Post status didn\'t change.', 'post-expirator');
+        }
+
         return sprintf(
             __('Post status has been successfully changed to "%s".', 'post-expirator'),
             'draft'
@@ -40,18 +50,14 @@ class PostStatusToDraft implements ExpirationActionInterface
 
     /**
      * @inheritDoc
-     */
-    public function getExpirationLog()
-    {
-        return [];
-    }
-
-    /**
-     * @inheritDoc
      * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function execute()
     {
-        return $this->postModel->setPostStatus('draft');
+        $result = $this->postModel->setPostStatus('draft');
+
+        $this->log['success'] = $result;
+
+        return $result;
     }
 }
