@@ -31,7 +31,7 @@
     "@wordpress/url": "^3.28.0"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^25.2.0",
+    "@wordpress/scripts": "^25.4.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
