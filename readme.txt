@@ -81,7 +81,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.9.0] - 14 Feb, 2023 =
+= [2.9.0] - 23 Feb, 2023 =
 
 * ADDED: Add new filter for filtering the expiration actions list: publishpressfuture_expiration_actions;
 * ADDED: Add new constant PUBLISHPRESS_FUTURE_BASE_PATH to define the base path of the plugin;
