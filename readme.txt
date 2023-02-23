@@ -81,7 +81,13 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [2.9.0] - 14 Dec 2021 =
+= [2.9.1] - 23 Feb 2023 =
+
+* FIXED: Fix issue with WordPress banners css file being missed, #393;
+* FIXED: Fix support to delete all settings when uninstalling the plugin;
+* FIXED: Stop automatically addding settings register if not existent and settings page is visited;
+
+= [2.9.0] - 14 Feb 2023 =
 
 * ADDED: Add support for custom statuses, #224;
 * ADDED: Add improved logs for past expiration dates, #233;
