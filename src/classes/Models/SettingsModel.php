@@ -127,4 +127,12 @@ class SettingsModel
         $currentPostStatuses = $this->getEnabledCustomStatuses();
         $this->setEnabledCustomStatuses(array_merge($currentPostStatuses, [$postType => $statuses]));
     }
+
+    public function deleteAllSettings()
+    {
+        $this->options->deleteOption('ppfuturepro_log_enabled');
+        $this->options->deleteOption('ppfuturepro_license_key');
+        $this->options->deleteOption('ppfuturepro_license_status');
+        $this->options->deleteOption('ppfuturepro_enabled_custom_statuses');
+    }
 }

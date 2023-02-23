@@ -129,6 +129,11 @@ class SettingsController implements ModuleInterface
             10,
             2
         );
+
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_DELETE_ALL_SETTINGS,
+            [$this, 'deleteAllSettings']
+        );
     }
 
     public function routeActions()
@@ -293,5 +298,10 @@ class SettingsController implements ModuleInterface
             $postType,
             $_POST['expirationdate_custom-statuses-' . $postType] ?? []
         );
+    }
+
+    public function deleteAllSettings()
+    {
+        $this->settingsModel->deleteAllSettings();
     }
 }

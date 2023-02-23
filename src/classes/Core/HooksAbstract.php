@@ -45,4 +45,6 @@ abstract class HooksAbstract
     public const ACTION = 'publishpress_authors_show_blocks_recommendation_banner';
 
     public const FILTER_SETTINGS_POST_TYPE = SettingsHooksAbstractFree::FILTER_SETTINGS_POST_TYPE;
+
+    public const ACTION_DELETE_ALL_SETTINGS = SettingsHooksAbstractFree::ACTION_DELETE_ALL_SETTINGS;
 }
