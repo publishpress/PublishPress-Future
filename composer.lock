@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5345f0d5e984ac941a96bad9a798c24",
+    "content-hash": "9e9f3489513517b4159a6081a08c54e4",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -216,16 +216,16 @@
         },
         {
             "name": "publishpress/post-expirator",
-            "version": "dev-390-all-custom-statuses-show-every-post-type",
+            "version": "v2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "6f6b9259e18ba4f1266ce5e92283f40919a6f7c5"
+                "reference": "5b45dc24892cee697b27253e871a9eb0b1142929"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/6f6b9259e18ba4f1266ce5e92283f40919a6f7c5",
-                "reference": "6f6b9259e18ba4f1266ce5e92283f40919a6f7c5",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/5b45dc24892cee697b27253e871a9eb0b1142929",
+                "reference": "5b45dc24892cee697b27253e871a9eb0b1142929",
                 "shasum": ""
             },
             "require": {
@@ -298,9 +298,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/390-all-custom-statuses-show-every-post-type"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/v2.9.1"
             },
-            "time": "2023-02-21T22:27:47+00:00"
+            "time": "2023-02-23T17:46:23+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -1801,16 +1801,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.1",
+            "version": "1.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "1cd5fc530a8b68702f3733ad64294b2a39564198"
+                "reference": "a2ffec7db373d8da4973d1d62add872db5cd22dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1cd5fc530a8b68702f3733ad64294b2a39564198",
-                "reference": "1cd5fc530a8b68702f3733ad64294b2a39564198",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a2ffec7db373d8da4973d1d62add872db5cd22dd",
+                "reference": "a2ffec7db373d8da4973d1d62add872db5cd22dd",
                 "shasum": ""
             },
             "require": {
@@ -1840,7 +1840,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.10.1"
+                "source": "https://github.com/phpstan/phpstan/tree/1.10.2"
             },
             "funding": [
                 {
@@ -1856,7 +1856,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-21T21:57:23+00:00"
+            "time": "2023-02-23T14:36:46+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2539,16 +2539,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.7.1",
+            "version": "3.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "1359e176e9307e906dc3d890bcc9603ff6d90619"
+                "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/1359e176e9307e906dc3d890bcc9603ff6d90619",
-                "reference": "1359e176e9307e906dc3d890bcc9603ff6d90619",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879",
                 "shasum": ""
             },
             "require": {
@@ -2584,14 +2584,15 @@
             "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
             "keywords": [
                 "phpcs",
-                "standards"
+                "standards",
+                "static analysis"
             ],
             "support": {
                 "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2022-06-18T07:21:10+00:00"
+            "time": "2023-02-22T23:07:41+00:00"
         },
         {
             "name": "symfony/config",
@@ -4592,7 +4593,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "publishpress/post-expirator": 20,
         "publishpress/publishpress-phpcs-standards": 20
     },
     "prefer-stable": false,
