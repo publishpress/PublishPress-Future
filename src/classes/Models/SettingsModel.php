@@ -93,8 +93,6 @@ class SettingsModel
             $enabledCustomStatuses = [
                 'post' => array_values($this->customStatusesModel->getCustomStatuses(CustomStatusesModel::OUTPUT_NAMES))
             ];
-
-            $this->options->addOption('ppfuturepro_enabled_custom_statuses', $enabledCustomStatuses);
         }
 
         return $enabledCustomStatuses;
