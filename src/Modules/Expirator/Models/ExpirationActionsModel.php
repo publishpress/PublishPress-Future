@@ -82,4 +82,17 @@ class ExpirationActionsModel
 
         return $this->actionsAsOptions;
     }
+
+    public function getActionsAsOptionsForAllPostTypes()
+    {
+        $postTypes = array_values(postexpirator_get_post_types());
+
+        $actions = [];
+
+        foreach ($postTypes as $postType) {
+            $actions[$postType] = $this->getActionsAsOptions($postType);
+        }
+
+        return $actions;
+    }
 }
