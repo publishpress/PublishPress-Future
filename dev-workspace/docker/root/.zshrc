@@ -103,7 +103,7 @@ source $ZSH/oh-my-zsh.sh
 export PROJECT_PATH="/project"
 
 export PROMPT="
-%{$bg[magenta]%}%{$fg[white]%} 🐧 PublishPress Future Free - Dev-Workspace %{$reset_color%}
+%{$bg[magenta]%}%{$fg[white]%} 🐧 PublishPress Future - Dev-Workspace %{$reset_color%} %{$bg[cyan]%}%{$fg[black]%} FREE %{$reset_color%}
 %{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
 %(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
 %{$reset_color%}@ \
