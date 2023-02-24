@@ -100,4 +100,20 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-PROJECT_PATH=/project
+export PROJECT_PATH="/project"
+
+export PROMPT="
+%{$bg[magenta]%}%{$fg[white]%} 🐧 PublishPress Future Free - Dev-Workspace %{$reset_color%}
+%{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
+%(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
+%{$reset_color%}@ \
+%{$fg[green]%}%m \
+%{$reset_color%}in \
+%{$terminfo[bold]$fg[yellow]%}%~%{$reset_color%}\
+${hg_info}\
+${git_info}\
+${svn_info}\
+${venv_info}\
+ \
+[%*] $exit_code
+%{$terminfo[bold]$fg[magenta]%}➜ %{$reset_color%}"
