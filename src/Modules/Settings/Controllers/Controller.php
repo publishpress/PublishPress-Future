@@ -211,7 +211,7 @@ class Controller implements InitializableInterface
                         'saveChanges' => __('Save changes', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
-                    'expireTypeList' => $this->actionsModel->getActionsAsOptions(),
+                    'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(),
                     'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
                         $taxonomiesModel->getTaxonomiesByPostType()
                     ),
