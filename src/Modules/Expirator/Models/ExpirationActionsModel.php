@@ -23,12 +23,12 @@ class ExpirationActionsModel
     /**
      * @var array
      */
-    private $actions;
+    private $actions = [];
 
     /**
      * @var array
      */
-    private $actionsAsOptions;
+    private $actionsAsOptions = [];
 
     public function __construct(HookableInterface $hooks)
     {
@@ -40,7 +40,7 @@ class ExpirationActionsModel
      */
     public function getActions($postType = '')
     {
-        if (empty($this->actions)) {
+        if (! isset($this->actions[$postType])) {
             $actions = [
                 ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => __('Draft', 'post-expirator'),
                 ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => __('Private', 'post-expirator'),
@@ -53,19 +53,19 @@ class ExpirationActionsModel
                 ExpirationActionsAbstract::POST_CATEGORY_REMOVE => __('Taxonomy: Remove', 'post-expirator'),
             ];
 
-            $this->actions = $this->hooks->applyFilters(
+            $this->actions[$postType] = $this->hooks->applyFilters(
                 HooksAbstract::FILTER_EXPIRATION_ACTIONS,
                 $actions,
                 $postType
             );
         }
 
-        return $this->actions;
+        return $this->actions[$postType];
     }
 
     public function getActionsAsOptions($postType = '')
     {
-        if (empty($this->actionsAsOptions)) {
+        if (! isset($this->actionsAsOptions[$postType])) {
             $options = [];
 
             $actions = $this->getActions($postType);
@@ -77,10 +77,10 @@ class ExpirationActionsModel
                 ];
             }
 
-            $this->actionsAsOptions = $options;
+            $this->actionsAsOptions[$postType] = $options;
         }
 
-        return $this->actionsAsOptions;
+        return $this->actionsAsOptions[$postType];
     }
 
     public function getActionsAsOptionsForAllPostTypes()
