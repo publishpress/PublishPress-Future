@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e9f3489513517b4159a6081a08c54e4",
+    "content-hash": "a1a35a1b4fccd42e1d49e3a5b5a1ed9f",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -216,16 +216,16 @@
         },
         {
             "name": "publishpress/post-expirator",
-            "version": "v2.9.1",
+            "version": "dev-release-2.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "5b45dc24892cee697b27253e871a9eb0b1142929"
+                "reference": "fd94876d5841e9b3984f146da9337427a1388a89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/5b45dc24892cee697b27253e871a9eb0b1142929",
-                "reference": "5b45dc24892cee697b27253e871a9eb0b1142929",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/fd94876d5841e9b3984f146da9337427a1388a89",
+                "reference": "fd94876d5841e9b3984f146da9337427a1388a89",
                 "shasum": ""
             },
             "require": {
@@ -298,9 +298,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/v2.9.1"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/release-2.9.2"
             },
-            "time": "2023-02-23T17:46:23+00:00"
+            "time": "2023-02-24T17:11:17+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -4593,6 +4593,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "publishpress/post-expirator": 20,
         "publishpress/publishpress-phpcs-standards": 20
     },
     "prefer-stable": false,
