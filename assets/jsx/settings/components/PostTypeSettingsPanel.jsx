@@ -122,7 +122,7 @@ const PostTypeSettingsPanel = function (props) {
                 <SelectField
                     name={'expirationdate_expiretype-' + props.postType}
                     className={'pe-howtoexpire'}
-                    options={props.expireTypeList}
+                    options={props.expireTypeList[props.postType]}
                     description={props.text.fieldHowToExpireDescription}
                     selected={props.settings.howToExpire}
                     onChange={onChangeHowToExpire}
