@@ -376,7 +376,7 @@ class PostExpirator_Facade
                     'timezone_offset' => PostExpirator_Util::get_timezone_offset() / 60,
                     'actions_options' => $actionsModel->getActionsAsOptions($post->post_type),
                     'strings' => [
-                        'category' => __('Taxonomy'),
+                        'category' => __('Taxonomy', 'post-expirator'),
                         'postExpirator' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Post Expiration', 'post-expirator'),
                         'howToExpire' => __('How to expire', 'post-expirator'),
