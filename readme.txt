@@ -137,6 +137,13 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [2.9.2] - 27 Feb, 2023 =
+
+* FIXED: List of actions in the post type settings is not filtered by post types, #400;
+* FIXED: Include Statuses as a Default option, #395;
+* FIXED: Remove legacy screenshots from the plugin root dir;
+* FIXED: Fix i18n issues, #401;
+
 = [2.9.1] - 23 Feb, 2023 =
 
 * FIXED: Fix location of wordpress-banners style CSS when started by the Pro plugin, #393;
