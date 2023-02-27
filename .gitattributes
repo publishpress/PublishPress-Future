@@ -32,3 +32,4 @@ ray-dist.php export-ignore
 dev-workspace export-ignore
 tests export-ignore
 README-build.md export-ignore
+.wordpress-org export-ignore
