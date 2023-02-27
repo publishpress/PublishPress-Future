@@ -14,7 +14,7 @@ jobs:
       - name: Setup image cache
         run: mkdir -p ~/docker-image-cache
 
-      - name: Prepare cache
+      - name: Calculate cache key
         id: docker-image-cache
         uses: actions/cache@v1
         with:
@@ -34,6 +34,4 @@ jobs:
         working-directory: ./dev-workspace
         run: |
           ./run npm run build:dir
-          ls
-          echo '--------------------'
-          ls ./dist
+          ls ../dist/post-expirator
