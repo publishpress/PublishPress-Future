@@ -20,6 +20,7 @@
     "tests:build:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} brun",
     "tests:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} run",
     "build": "/project/dev-workspace/docker/scripts/ppbuild build",
+    "getversion": "/project/dev-workspace/docker/scripts/ppbuild version",
     "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
     "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
