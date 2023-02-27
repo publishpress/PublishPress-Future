@@ -1,0 +1,36 @@
+name: Deploy to WordPress.org
+on:
+  push:
+    branches:
+      - deploy-workflow
+jobs:
+  deploy:
+    name: New tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+
+      - name: Setup image cache
+        run: mkdir -p ~/docker-image-cache
+
+      - id: docker-image-cache
+        uses: actions/cache@v1
+        with:
+          path: ~/docker-image-cache
+          key: docker-image-cache-${{ hashFiles('./dev-workspace') }}
+
+      - if: steps.docker-image-cache.outputs.cache-hit != 'true'
+        working-directory: ./dev-workspace
+        run: |
+          ./build
+          docker save -o ~/docker-image-cache/alledia-future-dev-workspace-terminal.tar alledia/future-dev-workspace-terminal
+
+      - if: steps.docker-image-cache.outputs.cache-hit == 'true'
+        run: docker load -i ~/docker-image-cache/alledia-future-dev-workspace-terminal.tar
+
+      - name: Build on Dev-workspace
+        working-directory: ./dev-workspace
+        run: |
+          ./run npm run build
+          ls ./dist/post-expirator
