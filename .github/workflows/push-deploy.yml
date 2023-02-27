@@ -5,7 +5,7 @@ on:
       - deploy-workflow
 jobs:
   deploy:
-    name: New tag
+    name: Deploy new tag
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -14,7 +14,8 @@ jobs:
       - name: Setup image cache
         run: mkdir -p ~/docker-image-cache
 
-      - id: docker-image-cache
+      - name: Prepare cache
+        id: docker-image-cache
         uses: actions/cache@v1
         with:
           path: ~/docker-image-cache
@@ -32,5 +33,5 @@ jobs:
       - name: Build on Dev-workspace
         working-directory: ./dev-workspace
         run: |
-          ./run npm run build
+          ./run npm run build:dir
           ls ./dist/post-expirator
