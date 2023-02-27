@@ -363,191 +363,205 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 = [2.4.1] =
 
-* FIXED: Updated deprecated .live jQuery reference.
+* FIXED: Updated deprecated .live jQuery reference;
+* FIXED: Updated deprecated .live jQuery reference;
 
 = [2.4.0] =
 
-* FIXED: Fixed PHP Error with PHP 7.
+* FIXED: Fixed PHP Error with PHP 7;
+* FIXED: Fixed PHP Error with PHP 7;
 
 = [2.3.1] =
 
-* FIXED: Fixed PHP Error that snuck in on some installations.
+* FIXED: Fixed PHP Error that snuck in on some installations;
+* FIXED: Fixed PHP Error that snuck in on some installations;
 
 = [2.3.0] =
 
-* ADDED: Email notification upon post expiration.  A global email can be set, blog admins can be selected and/or specific users based on post type can be notified.
-* ADDED: Expiration Option Added - Stick/Unstick post is now available.
-* ADDED: Expiration Option Added - Trash post is now available.
-* ADDED: Added custom actions that can be hooked into when expiration events are scheduled / unscheduled.
-* FIXED: Minor HTML Code Issues
+* ADDED: Email notification upon post expiration.  A global email can be set, blog admins can be selected and/or specific users based on post type can be notified;
+* ADDED: Email notification upon post expiration.  A global email can be set, blog admins can be selected and/or specific users based on post type can be notified;
+* ADDED: Expiration Option Added - Stick/Unstick post is now available;
+* ADDED: Expiration Option Added - Stick/Unstick post is now available;
+* ADDED: Expiration Option Added - Trash post is now available;
+* ADDED: Expiration Option Added - Trash post is now available;
+* ADDED: Added custom actions that can be hooked into when expiration events are scheduled / unscheduled;
+* ADDED: Added custom actions that can be hooked into when expiration events are scheduled / unscheduled;
+* FIXED: Minor HTML Code Issues;
 
 = [2.2.2] =
 
-* FIXED: Quick Edit did not retain the expire type setting, and defaulted back to "Draft".  This has been resolved.
+* FIXED: Quick Edit did not retain the expire type setting, and defaulted back to "Draft".  This has been resolved;
+* FIXED: Quick Edit did not retain the expire type setting, and defaulted back to "Draft".  This has been resolved;
 
 = [2.2.1] =
 
-* FIXED: Fixed issue with bulk edit not correctly updating the expiration date.
+* FIXED: Fixed issue with bulk edit not correctly updating the expiration date;
+* FIXED: Fixed issue with bulk edit not correctly updating the expiration date;
 
 = [2.2.0] =
 
-* ADDED: Quick Edit - setting expiration date and toggling post expiration status can now be done via quick edit.
-* ADDED: Bulk Edit - changing expiration date on posts that already are configured can now be done via bulk edit.
-* ADDED: Added ability to order by Expiration Date in dashboard.
-* ADDED: Adjusted formatting on defaults page.  Multiple post types are now displayed cleaner.
-* FIXED: Minor Code Cleanup
+* ADDED: Quick Edit - setting expiration date and toggling post expiration status can now be done via quick edit;
+* ADDED: Quick Edit - setting expiration date and toggling post expiration status can now be done via quick edit;
+* ADDED: Bulk Edit - changing expiration date on posts that already are configured can now be done via bulk edit;
+* ADDED: Bulk Edit - changing expiration date on posts that already are configured can now be done via bulk edit;
+* ADDED: Added ability to order by Expiration Date in dashboard;
+* ADDED: Added ability to order by Expiration Date in dashboard;
+* ADDED: Adjusted formatting on defaults page.  Multiple post types are now displayed cleaner;
+* ADDED: Adjusted formatting on defaults page.  Multiple post types are now displayed cleaner;
+* FIXED: Minor Code Cleanup;
 
 = [2.1.4] =
 
-* FIXED: PHP Strict errors with 5.4+
-* FIXED: Removed temporary timezone conversion - now using core functions again
+* FIXED: PHP Strict errors with 5.4+;
+* FIXED: Removed temporary timezone conversion - now using core functions again;
 
 = [2.1.3] =
 
-* FIXED: Default category selection now saves correctly on default settings screen
+* FIXED: Default category selection now saves correctly on default settings screen;
 
 = [2.1.2] =
 
-* ADDED: Added check to show if WP_CRON is enabled on diagnostics page
-* FIXED: Minor Code Cleanup
-* SECURITY: Added form nonce for protect against possible CSRF
-* SECURITY: Fixed XSS issue on settings pages
+* ADDED: Added check to show if WP_CRON is enabled on diagnostics page;
+* FIXED: Minor Code Cleanup;
+* SECURITY: Added form nonce for protect against possible CSRF;
+* SECURITY: Fixed XSS issue on settings pages;
 
 = [2.1.1] =
 
-* ADDED: Added the option to disable post expirator for certain post types if desired
-* FIXED: Fixed php warning issue cause when post type defaults are not set
+* ADDED: Added the option to disable post expirator for certain post types if desired;
+* FIXED: Fixed php warning issue cause when post type defaults are not set;
 
 = [2.1.0] =
 
-* ADDED: Added support for hierarchical custom taxonomy
-* ADDED: Enhanced custom post type support
-* FIXED: Updated debug function to be friendly for scripted calls
-* FIXED: Change to only show public custom post types on defaults screen
-* FIXED: Removed category expiration options for 'pages', which is currently unsupported
-* FIXED: Some date calls were getting "double" converted for the timezone pending how other plugins handled date - this issue should now be resolved
+* ADDED: Added support for hierarchical custom taxonomy;
+* ADDED: Enhanced custom post type support;
+* FIXED: Updated debug function to be friendly for scripted calls;
+* FIXED: Change to only show public custom post types on defaults screen;
+* FIXED: Removed category expiration options for 'pages', which is currently unsupported;
+* FIXED: Some date calls were getting "double" converted for the timezone pending how other plugins handled date - this issue should now be resolved;
 
 = [2.0.1] =
 
-* CHANGED: Old option cleanup
-* REMOVED: Removes old scheduled hook - this was not done completely in the 2.0.0 upgrade
+* CHANGED: Old option cleanup;
+* REMOVED: Removes old scheduled hook - this was not done completely in the 2.0.0 upgrade;
 
 = [2.0.0] =
 
-* ADDED: Improved debug calls and logging
-* ADDED: Added the ability to expire to a "private" post
-* ADDED: Added the ability to expire by adding or removing categories.  The old way of doing things is now known as replacing categories
-* ADDED: Revamped the expiration process - the plugin no longer runs on an minute, hourly, or other schedule.  Each expiration event schedules a unique event to run, conserving system resources and making things more efficient
-* ADDED: The type of expiration event can be selected for each post, directly from the post editing screen
-* ADDED: Ability to set defaults for each post type (including custom posts)
-* ADDED: Renamed expiration-date meta value to _expiration-date
-* ADDED: Revamped timezone handling to be more correct with WordPress standards and fix conflicts with other plugins
-* ADDED: 'Expires' column on post display table now uses the default date/time formats set for the blog
-* FIXED: Removed kses filter calls when then schedule task runs that was causing code entered as unfiltered_html to be removed
-* FIXED: Updated some calls of date to now use date_i18n
-* FIXED: Most (if not all) php error/warnings should be addressed
-* FIXED: Updated wpdb calls in the debug class to use wpdb_prepare correctly
-* FIXED: Changed menu capability option from "edit_plugin" to "manage_options"
+* ADDED: Improved debug calls and logging;
+* ADDED: Added the ability to expire to a "private" post;
+* ADDED: Added the ability to expire by adding or removing categories.  The old way of doing things is now known as replacing categories;
+* ADDED: Revamped the expiration process - the plugin no longer runs on an minute, hourly, or other schedule.  Each expiration event schedules a unique event to run, conserving system resources and making things more efficient;
+* ADDED: The type of expiration event can be selected for each post, directly from the post editing screen;
+* ADDED: Ability to set defaults for each post type (including custom posts);
+* ADDED: Renamed expiration-date meta value to _expiration-date;
+* ADDED: Revamped timezone handling to be more correct with WordPress standards and fix conflicts with other plugins;
+* ADDED: 'Expires' column on post display table now uses the default date/time formats set for the blog;
+* FIXED: Removed kses filter calls when then schedule task runs that was causing code entered as unfiltered_html to be removed;
+* FIXED: Updated some calls of date to now use date_i18n;
+* FIXED: Most (if not all) php error/warnings should be addressed;
+* FIXED: Updated wpdb calls in the debug class to use wpdb_prepare correctly;
+* FIXED: Changed menu capability option from "edit_plugin" to "manage_options";
 
 RELEASE NOTE: This is a major update of the core functions of this plugin.  All current plugins and settings should be upgraded to the new formats and work as expected.  Any posts currently schedule to be expirated in the future will be automatically upgraded to the new format.
 
 = [1.6.2] =
 
-* ADDED: Added the ability to configure the post expirator to be enabled by default for all new posts
-* CHANGED: some instances of mktime to time
-* FIXED: Fixed missing global call for MS installs
+* ADDED: Added the ability to configure the post expirator to be enabled by default for all new posts;
+* CHANGED: some instances of mktime to time;
+* FIXED: Fixed missing global call for MS installs;
 
 = [1.6.1] =
 
-* ADDED: Added option to allow user to select any cron schedule (minute, hourly, twicedaily, daily) - including other defined schedules
-* ADDED: Added option to set default expiration duration - options are none, custom, or publish time
-* FIXED: Tweaked error messages, removed clicks for reset cron event
-* FIXED: Switched cron schedule functions to use "current_time('timestamp')"
-* FIXED: Cleaned up default values code
-* FIXED: Code cleanup - php notice
+* ADDED: Added option to allow user to select any cron schedule (minute, hourly, twicedaily, daily) - including other defined schedules;
+* ADDED: Added option to set default expiration duration - options are none, custom, or publish time;
+* FIXED: Tweaked error messages, removed clicks for reset cron event;
+* FIXED: Switched cron schedule functions to use "current_time('timestamp')";
+* FIXED: Cleaned up default values code;
+* FIXED: Code cleanup - php notice;
 
 = [1.6] =
 
-* ADDED: Added debugging
-* CHANGED: Replaced "Upgrade" tab with new "Diagnostics" tab
-* CHANGED: Various code cleanup
-* FIXED: Fixed invalid html
-* FIXED: Fixed i18n issues with dates
-* FIXED: Fixed problem when using "Network Activate" - reworked plugin activation process
-* FIXED: Reworked expire logic to limit the number of sql queries needed
+* ADDED: Added debugging;
+* CHANGED: Replaced "Upgrade" tab with new "Diagnostics" tab;
+* CHANGED: Various code cleanup;
+* FIXED: Fixed invalid html;
+* FIXED: Fixed i18n issues with dates;
+* FIXED: Fixed problem when using "Network Activate" - reworked plugin activation process;
+* FIXED: Reworked expire logic to limit the number of sql queries needed;
 
 = [1.5.4] =
 
-* CHANGED: Cleaned up deprecated function calls
+* CHANGED: Cleaned up deprecated function calls;
 
 = [1.5.3] =
 
-* FIXED: Fixed bug with sql expiration query (props to Robert & John)
+* FIXED: Fixed bug with sql expiration query (props to Robert & John);
 
 = [1.5.2] =
 
-* FIXED: Fixed bug with shortcode that was displaying the expiration date in the incorrect timezone
-* FIXED: Fixed typo on settings page with incorrect shortcode name
+* FIXED: Fixed bug with shortcode that was displaying the expiration date in the incorrect timezone;
+* FIXED: Fixed typo on settings page with incorrect shortcode name;
 
 = [1.5.1] =
 
-* FIXED: Fixed bug that was not allow custom post types to work
+* FIXED: Fixed bug that was not allow custom post types to work;
 
 = [1.5] =
 
-* CHANGED: Moved Expirator Box to Sidebar and cleaned up meta code
-* ADDED: Added ability to expire post to category
+* CHANGED: Moved Expirator Box to Sidebar and cleaned up meta code;
+* ADDED: Added ability to expire post to category;
 
 = [1.4.3] =
 
-* FIXED: Fixed issue with 3.0 multisite detection
+* FIXED: Fixed issue with 3.0 multisite detection;
 
 = [1.4.2] =
 
-* ADDED: Added post expirator POT to /languages folder
-* FIXED: Fixed issue with plugin admin navigation
-* FIXED: Fixed timezone issue on plugin options screen
+* ADDED: Added post expirator POT to /languages folder;
+* FIXED: Fixed issue with plugin admin navigation;
+* FIXED: Fixed timezone issue on plugin options screen;
 
 = [1.4.1] =
 
-* ADDED: Added support for custom post types (Thanks Thierry)
-* ADDED: Added i18n support (Thanks Thierry)
-* FIXED: Fixed issue where expiration date was not shown in the correct timezone in the footer
-* FIXED: Fixed issue where on some systems the expiration did not happen when scheduled
+* ADDED: Added support for custom post types (Thanks Thierry);
+* ADDED: Added i18n support (Thanks Thierry);
+* FIXED: Fixed issue where expiration date was not shown in the correct timezone in the footer;
+* FIXED: Fixed issue where on some systems the expiration did not happen when scheduled;
 
 = [1.4] =
 
-* FIXED: Fixed compatability issues with Wordpress - plugin was originally coded for WPMU - should now work on both
-* ADDED: Added ability to schedule post expiration by minute
-* FIXED: Fixed timezone - now uses the same timezone as configured by the blog
+* FIXED: Fixed compatability issues with Wordpress - plugin was originally coded for WPMU - should now work on both;
+* ADDED: Added ability to schedule post expiration by minute;
+* FIXED: Fixed timezone - now uses the same timezone as configured by the blog;
 
 RELEASE NOTE: After upgrading, you may need to reset the cron schedules.  Following onscreen notice if prompted.  Previously scheduled posts will not be updated, they will be deleted referncing the old timezone setting.  If you wish to update them, you will need to manually update the expiration time.
 
 = [1.3.1] =
 
-* FIXED: Fixed sporadic issue of expired posts not being removed
+* FIXED: Fixed sporadic issue of expired posts not being removed;
 
 = [1.3] =
 
-* FIXED: Expiration date is now retained across all post status changes
-* FIXED: Modified date/time format options for shortcode postexpirator tag
-* ADDED: Added the ability to add text automatically to the post footer if expiration date is set
+* FIXED: Expiration date is now retained across all post status changes;
+* FIXED: Modified date/time format options for shortcode postexpirator tag;
+* ADDED: Added the ability to add text automatically to the post footer if expiration date is set;
 
 = [1.2.1] =
 
-* FIXED: Fixed issue with display date format not being recognized after upgrade
+* FIXED: Fixed issue with display date format not being recognized after upgrade;
 
 = [1.2] =
 
-* CHANGED: wording from "Expiration Date" to "Post Expirator" and moved the configuration options to the "Settings" tab.
-* ADDED: Added shortcode tag [postexpirator] to display the post expiration date within the post
-* ADDED: Added new setting for the default format
-* FIXED: Fixed bug where expiration date was removed when a post was auto saved
+* CHANGED: wording from "Expiration Date" to "Post Expirator" and moved the configuration options to the "Settings" tab;
+* CHANGED: wording from "Expiration Date" to "Post Expirator" and moved the configuration options to the "Settings" tab;
+* ADDED: Added shortcode tag [postexpirator] to display the post expiration date within the post;
+* ADDED: Added new setting for the default format;
+* FIXED: Fixed bug where expiration date was removed when a post was auto saved;
 
 = [1.1] =
 
-* FIXED: Expired posts retain expiration date
+* FIXED: Expired posts retain expiration date;
 
 = [1.0] =
 
-* ADDED: Initial Release
+* ADDED: The initial release;
