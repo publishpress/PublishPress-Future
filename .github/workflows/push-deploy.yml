@@ -34,4 +34,6 @@ jobs:
         working-directory: ./dev-workspace
         run: |
           ./run npm run build:dir
-          ls ./dist/post-expirator
+          ls
+          echo '--------------------'
+          ls ./dist
