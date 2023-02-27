@@ -449,7 +449,7 @@ class ExpirablePostModel extends PostModel
             __('Post Expiration Complete "%s"', 'post-expirator'),
             $this->getTitle()
         );
-        $emailSubject = sprintf(__('[%1$s] %2$s'), $this->options->getOption('blogname'), $emailSubject);
+        $emailSubject = sprintf(__('[%1$s] %2$s', 'post-expirator'), $this->options->getOption('blogname'), $emailSubject);
 
         /**
          * Allows changing the email subject.

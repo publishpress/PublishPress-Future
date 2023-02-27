@@ -43,7 +43,7 @@ class Module implements ModuleInterface
                             \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
                             function ($settings) {
                                 $settings['publishpress-future'] = [
-                                    'message' => 'You\'re using PublishPress Future Free. The Pro version has more features and support. %sUpgrade to Pro%s',
+                                    'message' => __( 'You\'re using PublishPress Future Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'post-expirator' ),
                                     'link'    => 'https://publishpress.com/links/future-banner',
                                     'screens' => [
                                         [
@@ -62,7 +62,7 @@ class Module implements ModuleInterface
                             function ($settings) {
                                 $settings['publishpress-future'] = [
                                     'parent' => 'publishpress-future',
-                                    'label'  => 'Upgrade to Pro',
+                                    'label'  => __( 'Upgrade to Pro', 'post-expirator' ),
                                     'link'   => 'https://publishpress.com/links/future-menu',
                                 ];
 
