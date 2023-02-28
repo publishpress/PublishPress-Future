@@ -50,7 +50,7 @@ use PublishPressFuture\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
 
 return [
-    ServicesAbstract::PLUGIN_VERSION => '2.9.2-beta.1',
+    ServicesAbstract::PLUGIN_VERSION => '2.9.2-beta.2',
 
     ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
