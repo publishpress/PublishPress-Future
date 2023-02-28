@@ -1,4 +1,4 @@
-name: PHPLint
+name: PHP Lint
 
 on:
   push:
@@ -7,49 +7,72 @@ on:
 
   pull_request:
     branches:
-      - '*'
-
-concurrency:
-  group: phplint-${{ github.ref }}-1
-  cancel-in-progress: true
+      - main
+      - development
 
 jobs:
-  phplint:
-    runs-on: ${{ matrix.operating-system }}
+  phpcs:
+    runs-on: ubuntu-latest
+
+    container:
+      image: alledia/future-dev-workspace-terminal:latest
+      options: -v ${{ github.workspace }}:/project
+
     strategy:
       fail-fast: false
-      matrix:
-        operating-system: [ ubuntu-20.04 ]
-        php-versions: [ '7.4' ]
-    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+
+    name: PHP Lint on PHP 7.2
+
+    env:
+      COMPOSER_VERSION: 2
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: intl, fileinfo, zip, mbstring
-          ini-values: "post_max_size=256M"
+      - name: Setup Composer
+        run: composer config --global github-oauth.github.com ${{ secrets.ACCESS_TOKEN }}
 
-      - name: Show PHP Version
-        run: php -v
-        
-      - name: Get Composer Cache Directory
-        id: composer-cache
+      - name: Get composer cache dir
+        id: composer-cache-dir
         run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-      
-      - uses: actions/cache@v3
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies installed with Composer
+        uses: actions/cache@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
+          path: ${{ steps.composer-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --ignore-platform-reqs
+      - name: Update composer.lock
+        run: composer update --lock --no-install
 
-      - name: Check syntax errors
-        run: ./vendor/bin/phplint
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress --no-suggest --prefer-dist
+
+      - name: Get npm cache dir
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Fixes scripts permissions
+        run: chmod +x /project/dev-workspace/docker/scripts/ppbuild
+
+      - name: Build to directory
+        run: npm run build:dir
+
+      - name: Check syntax errors on built directory
+        run: npm run phplint
