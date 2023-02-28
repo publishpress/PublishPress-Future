@@ -50,7 +50,7 @@ jobs:
 
       - name: Save version number
         working-directory: ./dev-workspace
-        run: ./run npm run getversion
+        run: ./run npm run get-version
 
       - name: Get version number
         id: version
