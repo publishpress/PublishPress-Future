@@ -13,8 +13,9 @@ To release the Free plugin please make sure to check all the checkboxes below.
 
 - [ ] Create the release branch as `release-<version>` based on the development branch.
 - [ ] Make sure to directly merge or use Pull Requests to merge hotfixes or features branches into the release branch.
-- [ ] Build JS files to production running `$ npm run jsbuild` and commit.
-- [ ] Run WP VIP scan to make sure no warnings or errors > 5 exists.
+- [ ] Enter the `dev-workspace` folder and run the command `/run` to enter to the continer. The next commands should run there. 
+- [ ] Build JS files to production running `$ npm run build-js` and commit.
+- [ ] Run WP VIP scan to make sure no warnings or errors > 5 exists: `$ vendor/bin/phpcs`.
 - [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct, commit.
 - [ ] Update the version number to the next stable version and commit.
 - [ ] Build the zip package, running `$ npm run build`.
@@ -28,6 +29,6 @@ To release the Free plugin please make sure to check all the checkboxes below.
 
 ### Post-release Checklist
 
-- [ ] Follow the action's result on (https://github.com/publishpress/publishpress-future/actions)[https://github.com/publishpress/publishpress-future/actions].
+- [ ] Follow the action's result on the [repository actions page](https://github.com/publishpress/publishpress-future/actions).
 - [ ] Go to the [WordPress.org plugin page](https://wordpress.org/plugins/post-expirator/) double check the information confirming the release finished successfully.
 - [ ] Make a final test updating the plugin in a staging site.
