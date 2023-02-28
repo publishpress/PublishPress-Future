@@ -41,7 +41,7 @@ jobs:
 
       - name: Composer install
         working-directory: ./dev-workspace
-        run: ./run composer install
+        run: ./run composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
       - name: Run PHPCS on dev-workspace
         working-directory: ./dev-workspace
