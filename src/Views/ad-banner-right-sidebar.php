@@ -45,7 +45,7 @@
                         'If you need help or have a new feature request, let us know.',
                         'post-expirator'
                     ); ?>
-                    <a class="advert-link" href="https://wordpress.org/plugins/post-expirator/" target="_blank">
+                    <a class="advert-link" href="https://wordpress.org/support/plugin/post-expirator/" target="_blank">
                         <?php
                         echo esc_html__('Request Support', 'post-expirator'); ?>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
