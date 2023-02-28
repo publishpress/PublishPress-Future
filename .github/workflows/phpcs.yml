@@ -3,8 +3,12 @@ on:
   push:
     branches:
       - 'development'
-      - 'main'
+      - 'master'
       - 'release-*'
+
+    pull_request:
+      branches:
+        - '*'
 
 jobs:
   phpcs:
