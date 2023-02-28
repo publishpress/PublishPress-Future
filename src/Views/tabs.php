@@ -10,27 +10,27 @@ $debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
 
 $tabs = [
     [
-        'title' => __('Defaults', 'publishpress'),
+        'title' => __('Defaults', 'post-expirator'),
         'slug'  => 'general',
         'link' => admin_url('admin.php?page=publishpress-future&tab=general'),
     ],
     [
-        'title' => __('Display', 'publishpress'),
+        'title' => __('Display', 'post-expirator'),
         'slug'  => 'display',
         'link' => admin_url('admin.php?page=publishpress-future&tab=display'),
     ],
     [
-        'title' => __('Post Types', 'publishpress'),
+        'title' => __('Post Types', 'post-expirator'),
         'slug'  => 'defaults',
         'link' => admin_url('admin.php?page=publishpress-future&tab=defaults'),
     ],
     [
-        'title' => __('Advanced', 'publishpress'),
+        'title' => __('Advanced', 'post-expirator'),
         'slug'  => 'advanced',
         'link' => admin_url('admin.php?page=publishpress-future&tab=advanced'),
     ],
     [
-        'title' => __('Diagnostics', 'publishpress'),
+        'title' => __('Diagnostics', 'post-expirator'),
         'slug'  => 'diagnostics',
         'link' => admin_url('admin.php?page=publishpress-future&tab=diagnostics'),
     ],
@@ -38,7 +38,7 @@ $tabs = [
 
 if ($debugIsEnabled) {
     $tabs[] = [
-        'title' => __('Debug', 'publishpress'),
+        'title' => __('Debug', 'post-expirator'),
         'slug'  => 'viewdebug',
         'link' => admin_url('admin.php?page=publishpress-future&tab=viewdebug'),
     ];

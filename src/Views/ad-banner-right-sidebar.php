@@ -4,7 +4,7 @@
             <div class="postbox-header pp-advert">
                 <h3 class="advertisement-box-header hndle is-non-sortable">
                     <span><?php
-                        echo esc_html__('Upgrade to PublishPress Future Pro', 'publishpress-future'); ?></span>
+                        echo esc_html__('Upgrade to PublishPress Future Pro', 'post-expirator'); ?></span>
                 </h3>
             </div>
 
@@ -12,22 +12,22 @@
                 <p><?php
                     echo esc_html__(
                         'Enhance the power of PublishPress Future with the Pro version:',
-                        'publishpress-future'
+                        'post-expirator'
                     ); ?>
                 </p>
                 <ul>
                     <li><?php
-                        echo esc_html__('Support for expiry to custom statuses', 'publishpress-future'); ?></li>
+                        echo esc_html__('Support for expiry to custom statuses', 'post-expirator'); ?></li>
                     <li><?php
-                        echo esc_html__('Detailed post expiration log', 'publishpress-future'); ?></li>
+                        echo esc_html__('Detailed post expiration log', 'post-expirator'); ?></li>
                     <li><?php
-                        echo esc_html__('Remove PublishPress ads and branding', 'publishpress-future'); ?></li>
+                        echo esc_html__('Remove PublishPress ads and branding', 'post-expirator'); ?></li>
                     <li><?php
-                        echo esc_html__('Fast, professional support', 'publishpress-future'); ?></li>
+                        echo esc_html__('Fast, professional support', 'post-expirator'); ?></li>
                 </ul>
                 <div class="upgrade-btn">
                     <a href="https://publishpress.com/links/future-sidebar" target="__blank"><?php
-                        echo esc_html__('Upgrade to Pro', 'publishpress-future'); ?></a>
+                        echo esc_html__('Upgrade to Pro', 'post-expirator'); ?></a>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
             <div class="postbox-header">
                 <h3 class="advertisement-box-header hndle is-non-sortable">
                     <span><?php
-                        echo esc_html__('Need PublishPress Future Support?', 'publishpress-future'); ?></span>
+                        echo esc_html__('Need PublishPress Future Support?', 'post-expirator'); ?></span>
                 </h3>
             </div>
 
@@ -43,11 +43,11 @@
                 <p><?php
                     echo esc_html__(
                         'If you need help or have a new feature request, let us know.',
-                        'publishpress-future'
+                        'post-expirator'
                     ); ?>
-                    <a class="advert-link" href="https://wordpress.org/plugins/post-expirator/" target="_blank">
+                    <a class="advert-link" href="https://wordpress.org/support/plugin/post-expirator/" target="_blank">
                         <?php
-                        echo esc_html__('Request Support', 'publishpress-future'); ?>
+                        echo esc_html__('Request Support', 'post-expirator'); ?>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
                              class="linkIcon">
                             <path
@@ -60,12 +60,12 @@
                     <?php
                     echo esc_html__(
                         'Detailed documentation is also available on the plugin website.',
-                        'publishpress-future'
+                        'post-expirator'
                     ); ?>
                     <a class="advert-link" href="https://publishpress.com/knowledge-base/introduction-future/"
                        target="_blank">
                         <?php
-                        echo esc_html__('View Knowledge Base', 'publishpress-future'); ?>
+                        echo esc_html__('View Knowledge Base', 'post-expirator'); ?>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
                              class="linkIcon">
                             <path

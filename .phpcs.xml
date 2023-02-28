@@ -14,16 +14,15 @@
     <file>.</file>
     <exclude-pattern>*/\.github/*</exclude-pattern>
     <exclude-pattern>/\.vscode/*</exclude-pattern>
+    <exclude-pattern>/\.idea/*</exclude-pattern>
     <exclude-pattern>/tests/*</exclude-pattern>
-    <exclude-pattern>/assets_wp/*</exclude-pattern>
+    <exclude-pattern>/.wordpress-org/*</exclude-pattern>
     <exclude-pattern>/bin/*</exclude-pattern>
     <exclude-pattern>/vendor/*</exclude-pattern>
     <exclude-pattern>/dist/*</exclude-pattern>
     <exclude-pattern>/languages/*</exclude-pattern>
     <exclude-pattern>/node_modules/*</exclude-pattern>
-    <exclude-pattern>/twig/*</exclude-pattern>
-    <exclude-pattern>/builder/*</exclude-pattern>
-    <exclude-pattern>/RoboFile.php</exclude-pattern>
+    <exclude-pattern>/dev-workspace/*</exclude-pattern>
 
     <rule ref="WordPressVIPMinimum">
         <exclude name="WordPress.DateTime.RestrictedFunctions.date_date" />
