@@ -51,7 +51,7 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --ignore-platform-reqs
 
       - name: Check syntax errors
         run: ./vendor/bin/phplint
