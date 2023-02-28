@@ -3,14 +3,14 @@ name: PHP 7.2 Support
 on:
   branch:
     branches:
-      - main
-      - develop
-      - release-*
+      - 'main'
+      - 'develop'
+      - 'release-*'
 
   pull_request:
     branches:
-      - main
-      - develop
+      - 'main'
+      - 'develop'
 
 concurrency:
   group: php7.2-support-${{ github.ref }}-1

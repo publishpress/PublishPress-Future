@@ -3,13 +3,13 @@ name: PHPLint
 on:
   branch:
     branches:
-      - main
-      - develop
-      - release-*
+      - 'main'
+      - 'develop'
+      - 'release-*'
 
   pull_request:
     branches:
-      - *
+      - '*'
 
 concurrency:
   group: phplint-${{ github.ref }}-1

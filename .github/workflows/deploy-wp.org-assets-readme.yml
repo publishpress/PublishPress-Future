@@ -2,7 +2,7 @@ name: Plugin asset/readme deploy
 on:
   push:
     branches:
-      - main
+      - 'main'
 jobs:
   deploy-to-trunk:
     name: Deploy assets/readme to trunk

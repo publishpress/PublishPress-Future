@@ -2,13 +2,13 @@ name: VIP Scans and code style checks
 on:
   push:
     branches:
-      - develop
-      - master
-      - release-*
+      - 'develop'
+      - 'master'
+      - 'release-*'
 
     pull_request:
       branches:
-        - *
+        - '*'
 
 jobs:
   phpcs:
