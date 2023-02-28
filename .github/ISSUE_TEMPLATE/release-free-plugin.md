@@ -24,14 +24,10 @@ To release the Free plugin please make sure to check all the checkboxes below.
 
 - [ ] Create a Pull Request and merge the release branch it into the `master` branch.
 - [ ] Merge the `master` branch into the `development` branch.
-- [ ] Create the GitHub release (make sure it is based on the `master` branch and correct tag).
+- [ ] Create the GitHub release (make sure it is based on the `master` branch and correct tag). This will trigger a Github action for automatic deployment on the WordPress SVN repo.
 
-#### SVN Repo
-- [ ] Cleanup the `trunk` directory.
-- [ ] Unzip the built package and move files to the `trunk`.
-- [ ] Remove any eventual file that shouldn't be released in the package (if you find anything, make sure to create an issue to fix the build script).
-- [ ] Look for new files `$ svn status | grep \?` and add them using `$ svn add <each_file_path>`.
-- [ ] Look for removed files `$ svn status | grep !` and remove them `$ svn rm <each_file_path>`.
-- [ ] Create the new tag `$ svn cp trunk tags/<version>`.
-- [ ] Commit the changes `$ svn ci -m 'Releasing <version>'`.
-- [ ] Wait until WordPress updates the version number and make the final test updating the plugin in a staging site.
+### Post-release Checklist
+
+- [ ] Follow the action's result on (https://github.com/publishpress/publishpress-future/actions)[https://github.com/publishpress/publishpress-future/actions].
+- [ ] Go to the [WordPress.org plugin page](https://wordpress.org/plugins/post-expirator/) double check the information confirming the release finished successfully.
+- [ ] Make a final test updating the plugin in a staging site.
