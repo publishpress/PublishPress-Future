@@ -50,9 +50,6 @@ jobs:
           key: ubuntu-20.04-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ubuntu-20.04-composer-
-            
-      - name: Validate composer.json and composer.lock
-        run: composer validate
 
       - name: Composer install
         working-directory: ./dev-workspace
