@@ -12,19 +12,20 @@
   ],
   "license": "GPL-2.0+",
   "scripts": {
-    "jsbuild:dev": "wp-scripts build --mode development",
-    "jsbuild:watch": "wp-scripts build --mode development --watch",
-    "jsbuild": "wp-scripts build --mode production",
+    "build-js:dev": "wp-scripts build --mode development",
+    "build-js:watch": "wp-scripts build --mode development --watch",
+    "build-js": "wp-scripts build --mode production",
     "tests:start": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} start",
     "tests:stop": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} stop",
-    "tests:build:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} brun",
+    "tests:build-run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} brun",
     "tests:run": "node tests/bin/prompt-version.js tests/bin/tests php{{VERSION}} run",
     "build": "/project/dev-workspace/docker/scripts/ppbuild build",
-    "getversion": "/project/dev-workspace/docker/scripts/ppbuild version",
     "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
     "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
+    "get-version": "/project/dev-workspace/docker/scripts/ppbuild version",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
-    "make-mo": "wp i18n make-mo ./languages ./languages"
+    "make-mo": "wp i18n make-mo ./languages ./languages",
+    "gh-cleanup-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE"
   },
   "pot": {
     "languageteam": "PublishPress Future Translate Team",
