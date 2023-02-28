@@ -137,7 +137,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [2.9.2] - 27 Feb, 2023 =
+= [2.9.2] - 28 Feb, 2023 =
 
 * FIXED: List of actions in the post type settings is not filtered by post types, #400;
 * FIXED: Include Statuses as a Default option, #395;
