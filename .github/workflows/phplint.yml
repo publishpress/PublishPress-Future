@@ -1,7 +1,7 @@
 name: PHPLint
 
 on:
-  branch:
+  push:
     branches:
       - 'main'
       - 'develop'
