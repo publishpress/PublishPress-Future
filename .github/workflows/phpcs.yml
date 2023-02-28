@@ -35,6 +35,10 @@ jobs:
         if: steps.docker-image-cache.outputs.cache-hit == 'true'
         run: docker load -i ~/docker-image-cache/alledia-future-dev-workspace-terminal.tar
 
+      - name: Composer install
+        working-directory: ./dev-workspace
+        run: ./run composer install
+
       - name: Run PHPCS on dev-workspace
         working-directory: ./dev-workspace
         run: ./run vendor/bin/phpcs
