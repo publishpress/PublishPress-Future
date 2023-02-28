@@ -2,13 +2,13 @@ name: VIP Scans and code style checks
 on:
   push:
     branches:
-      - 'development'
-      - 'master'
-      - 'release-*'
+      - develop
+      - master
+      - release-*
 
     pull_request:
       branches:
-        - '*'
+        - *
 
 jobs:
   phpcs:
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@master
+        uses: actions/checkout@v3
 
       - name: Setup image cache
         run: mkdir -p ~/docker-image-cache
@@ -38,6 +38,21 @@ jobs:
       - name: Load dev-workspace image from cache
         if: steps.docker-image-cache.outputs.cache-hit == 'true'
         run: docker load -i ~/docker-image-cache/alledia-future-dev-workspace-terminal.tar
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ubuntu-20.04-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ubuntu-20.04-composer-
+            
+      - name: Validate composer.json and composer.lock
+        run: composer validate
 
       - name: Composer install
         working-directory: ./dev-workspace
