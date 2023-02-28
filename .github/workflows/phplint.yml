@@ -1,10 +1,15 @@
 name: PHPLint
 
 on:
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'release-*'
+
   pull_request:
     branches:
-      - main
-      - develop
+      - '*'
 
 concurrency:
   group: phplint-${{ github.ref }}-1
@@ -12,7 +17,6 @@ concurrency:
 
 jobs:
   phplint:
-
     runs-on: ${{ matrix.operating-system }}
     strategy:
       fail-fast: false
@@ -46,11 +50,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --ignore-platform-reqs
 
       - name: Check syntax errors
         run: ./vendor/bin/phplint

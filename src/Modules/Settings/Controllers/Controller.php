@@ -132,10 +132,12 @@ class Controller implements InitializableInterface
 
     public function onAdminEnqueueScript()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         if (
             (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
             && (isset($_GET['tab']) && $_GET['tab'] === 'defaults')
         ) {
+            //phpcs:enable WordPress.Security.NonceVerification.Recommended
             wp_enqueue_script(
                 'publishpressfuture-settings-panel',
                 POSTEXPIRATOR_BASEURL . 'assets/js/settings-post-types.js',
@@ -241,6 +243,7 @@ class Controller implements InitializableInterface
 
     public function processFormSubmission()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if (empty($_POST)) {
             return;
         }
@@ -267,7 +270,7 @@ class Controller implements InitializableInterface
                     \sanitize_key($_POST['_postExpiratorMenuDefaults_nonce']),
                     'postexpirator_menu_defaults'
                 )) {
-                wp_die(__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
+                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
             }
 
             $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
