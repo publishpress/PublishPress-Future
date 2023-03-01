@@ -2,7 +2,3 @@ path: ./dist/post-expirator
 jobs: 10
 extensions:
   - php
-exclude:
-  - vendor
-  - .github
-  - assets
