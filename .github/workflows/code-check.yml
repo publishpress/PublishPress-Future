@@ -1,0 +1,37 @@
+name: VIP Scans and other code checks
+on:
+  push:
+    branches:
+      - 'main'
+
+    pull_request:
+      branches:
+        - '*'
+
+jobs:
+  check:
+    name: Check the code
+    runs-on: ubuntu-latest
+    container:
+      image: alledia/future-dev-workspace-terminal:latest
+      options: -v ${{ github.workspace }}:/project --workdir="/project"
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Composer install
+        run: composer install --no-interaction --no-progress --prefer-dist --ignore-platform-reqs
+
+      - name: Fixes scripts permissions
+        run: chmod +x /project/dev-workspace/docker/scripts/ppbuild
+
+      - name: Build to directory
+        run: npm run build:dir
+
+      - name: PHPLint - Check PHP syntax errors
+        run: npm run check:lint
+
+      - name: PHPCS - Check VIP scan and code standards
+        run: npm run check:phpcs
