@@ -4,9 +4,13 @@ on:
     branches:
       - 'main'
 
-    pull_request:
-      branches:
-        - '*'
+  pull_request:
+    branches:
+      - '*'
+
+  workflow_call:
+
+  workflow_dispatch:
 
 jobs:
   check:
