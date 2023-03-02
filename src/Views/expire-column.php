@@ -3,6 +3,8 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
+use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 <div class="post-expire-col" data-id="<?php echo esc_attr($id); ?>"
@@ -12,7 +14,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $iconTitle = '';
 
     $expirationEnabled = PostExpirator_Facade::is_expiration_enabled_for_post($id);
-    $expirationDate = get_post_meta($id, '_expiration-date', true);
+    $expirationDate = get_post_meta($id, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
 
     if ($expirationDate && $expirationEnabled) {
         $format = get_option('date_format') . ' ' . get_option('time_format');

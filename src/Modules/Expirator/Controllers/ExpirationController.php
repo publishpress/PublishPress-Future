@@ -81,11 +81,15 @@ class ExpirationController implements InitializableInterface
             [$this, 'onActionUnschedulePostExpiration']
         );
         $this->hooks->addAction(
-            HooksAbstract::ACTION_EXPIRE_POST,
+            HooksAbstract::ACTION_RUN_WORKFLOW,
             [$this, 'onActionRunPostExpiration']
         );
         $this->hooks->addAction(
-            HooksAbstract::ACTION_LEGACY_EXPIRE_POST,
+            HooksAbstract::ACTION_LEGACY_EXPIRE_POST2,
+            [$this, 'onActionRunPostExpiration']
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_LEGACY_EXPIRE_POST1,
             [$this, 'onActionRunPostExpiration']
         );
     }
@@ -124,11 +128,10 @@ class ExpirationController implements InitializableInterface
 
         $postModel = $postModelFactory($postId);
 
-        if ($postModel instanceof ExpirablePostModel) {
-            $postModel->expire($force);
-            return;
+        if (! ($postModel instanceof ExpirablePostModel)) {
+            throw new Exception('Invalid post model factory');
         }
 
-        throw new Exception('Invalid post model factory');
+        $postModel->expire($force);
     }
 }

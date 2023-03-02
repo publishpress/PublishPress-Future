@@ -71,8 +71,18 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                     </td>
                 </tr>
                 <tr>
+                    <th scope="row">
+                        <label for="cron-schedule">
+                            <?php esc_html_e('Scheduled Actions', 'post-expirator'); ?>
+                        </label>
+                    </th>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
                     <th scope="row"><label for="cron-schedule"><?php
-                            esc_html_e('Current Cron Schedule', 'post-expirator'); ?></label></th>
+                            esc_html_e('Legacy Cron Schedule', 'post-expirator'); ?></label></th>
                     <td>
                         <?php
                         $cron = PostExpirator_CronFacade::get_plugin_cron_events();
@@ -81,7 +91,8 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                             ?>
                             <p><?php
                                 esc_html_e(
-                                    'No cron events found for the plugin.',
+                                    '
+                                    No cron events found for the plugin using WP Cron.',
                                     'post-expirator'
                                 ); ?></p>
                             <?php

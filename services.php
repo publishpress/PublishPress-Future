@@ -23,7 +23,6 @@ use PublishPressFuture\Framework\WordPress\Models\TermModel;
 use PublishPressFuture\Framework\WordPress\Models\UserModel;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
 use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
-use PublishPressFuture\Modules\Expirator\Adapters\CronToWPCronAdapter;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
@@ -144,13 +143,6 @@ return [
     },
 
     /**
-     * @return \PublishPressFuture\Modules\Expirator\Adapters\CronToWPCronAdapter
-     */
-    ServicesAbstract::WP_CRON_ADAPTER => static function (ContainerInterface $container) {
-        return new CronToWPCronAdapter();
-    },
-
-    /**
      * @return \PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter
      */
     ServicesAbstract::WOO_CRON_ADAPTER => static function (ContainerInterface $container) {
@@ -161,7 +153,7 @@ return [
      * @return \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
      */
     ServicesAbstract::CRON => static function (ContainerInterface $container) {
-        return $container->get(ServicesAbstract::WP_CRON_ADAPTER);
+        return $container->get(ServicesAbstract::WOO_CRON_ADAPTER);
     },
 
     /**
@@ -334,7 +326,8 @@ return [
             $container->get(ServicesAbstract::SETTINGS),
             $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY),
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
-            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
+            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
+            $container->get(ServicesAbstract::CRON)
         );
     },
 

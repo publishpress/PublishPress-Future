@@ -103,7 +103,7 @@ function runExpirationAction()
     if (isset($_GET['tests-future-expire-id'])) {
         $id = (int) $_GET['tests-future-expire-id'];
 
-        do_action(ExpiratorHooks::ACTION_EXPIRE_POST, $id);
+        do_action(ExpiratorHooks::ACTION_RUN_WORKFLOW, $id);
 
         echo 'Did action postExpiratorExpire for ' . $id;
         die;

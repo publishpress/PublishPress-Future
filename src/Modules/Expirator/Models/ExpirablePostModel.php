@@ -10,6 +10,7 @@ use PublishPressFuture\Framework\WordPress\Models\PostModel;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
 
 class ExpirablePostModel extends PostModel
 {
@@ -147,7 +148,7 @@ class ExpirablePostModel extends PostModel
     public function getExpirationType()
     {
         if (empty($this->expirationType)) {
-            $this->expirationType = $this->getMeta('_expiration-date-type', true);
+            $this->expirationType = $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true);
 
             $options = $this->getExpirationOptions();
 
@@ -200,7 +201,7 @@ class ExpirablePostModel extends PostModel
     public function getExpirationCategoryIDs()
     {
         if (empty($this->expirationCategories)) {
-            $this->expirationCategories = (array)$this->getMeta('_expiration-date-categories', true);
+            $this->expirationCategories = (array)$this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
 
             $options = $this->getExpirationOptions();
 
@@ -247,7 +248,7 @@ class ExpirablePostModel extends PostModel
     public function getExpirationTaxonomy()
     {
         if (empty($this->expirationTaxonomy)) {
-            $this->expirationTaxonomy = $this->getMeta('_expiration-date-taxonomy', true);
+            $this->expirationTaxonomy = $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true);
 
             // Legacy value.
             if (empty($this->expirationTaxonomy)) {
@@ -273,7 +274,7 @@ class ExpirablePostModel extends PostModel
         if (is_null($this->expirationIsEnabled)) {
             $date = $this->getExpirationDate();
 
-            $this->expirationIsEnabled = $this->getMeta('_expiration-date-status', true) === 'saved'
+            $this->expirationIsEnabled = $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true) === 'saved'
                 && ! (empty($date));
         }
 
@@ -286,7 +287,7 @@ class ExpirablePostModel extends PostModel
     public function getExpirationDate()
     {
         if (is_null($this->expirationDate)) {
-            $this->expirationDate = $this->getMeta('_expiration-date', true);
+            $this->expirationDate = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
         }
 
         return $this->expirationDate;
@@ -299,7 +300,7 @@ class ExpirablePostModel extends PostModel
     {
         if (empty($this->expirationOptions)) {
             // Option _expiration-date-options is deprecated when using block editor.
-            $this->expirationOptions = $this->getMeta('_expiration-date-options', true);
+            $this->expirationOptions = $this->getMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS, true);
         }
 
         return $this->expirationOptions;

@@ -34,11 +34,10 @@ class CronFacade
      * @param int $timestamp
      * @param string $hook
      * @param array $args
-     * @param bool $returnWpError
      * @return bool|WP_Error
      */
-    public function scheduleSingleEventForHook($timestamp, $hook, $args = [], $returnWpError = false)
+    public function scheduleSingleEventForHook($timestamp, $hook, $args = [])
     {
-        return \wp_schedule_single_event($timestamp, $hook, $args, $returnWpError);
+        return \wp_schedule_single_event($timestamp, $hook, $args);
     }
 }

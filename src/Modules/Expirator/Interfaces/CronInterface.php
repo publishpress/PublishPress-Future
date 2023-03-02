@@ -8,12 +8,16 @@ namespace PublishPressFuture\Modules\Expirator\Interfaces;
 interface CronInterface
 {
     /**
+     * @return string
+     */
+    public function getIdentifier();
+
+    /**
      * @param string $action
      * @param array $args
-     * @param bool $wpError
      * @return int|\WP_Error|false
      */
-    public function clearScheduledAction($action, $args = [], $wpError = false);
+    public function clearScheduledAction($action, $args = []);
 
     /**
      * @param string $action
@@ -26,8 +30,20 @@ interface CronInterface
      * @param int $timestamp
      * @param string $action
      * @param array $args
-     * @param bool $returnWpError
      * @return bool|\WP_Error
      */
-    public function scheduleSingleAction($timestamp, $action, $args = [], $returnWpError = false);
+    public function scheduleSingleAction($timestamp, $action, $args = []);
+
+    /**
+     * @param int $postId
+     * @return true
+     */
+    public function postHasScheduledActions($postId);
+
+    /**
+     * @return array
+     */
+    public function getScheduledActions(string $hook): array;
+
+    public function enqueueAsyncAction(string $action, array $args = [], bool $unique = false): int;
 }

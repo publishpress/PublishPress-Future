@@ -8,6 +8,7 @@ namespace PublishPressFuture\Core;
 abstract class HooksAbstract
 {
     const ACTION_ADMIN_INIT = 'admin_init';
+    const ACTION_ADMIN_NOTICES = 'admin_notices';
     const ACTION_INIT_PLUGIN = 'publishpressfuture_init_plugin';
     const ACTION_ACTIVATE_PLUGIN = 'publishpressfuture_activate_plugin';
     const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture_deactivate_plugin';

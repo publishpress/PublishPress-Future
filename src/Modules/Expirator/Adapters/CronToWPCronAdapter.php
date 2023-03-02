@@ -6,10 +6,18 @@
 namespace PublishPressFuture\Modules\Expirator\Adapters;
 
 use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
+use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 
-class CronToWPCronAdapter implements CronInterface
+class CronToWPCronAdapter
 {
+    const IDENTIFIER = 'wp-cron';
+
+    public function getIdentifier()
+    {
+        return self::IDENTIFIER;
+    }
+
     /**
      * @var \PublishPressFuture\Framework\WordPress\Facade\CronFacade
      */
@@ -23,24 +31,59 @@ class CronToWPCronAdapter implements CronInterface
     /**
      * @inheritDoc
      */
-    public function clearScheduledAction($action, $args = [], $wpError = false)
+    public function clearScheduledAction($action, $args = [])
     {
-        return $this->cron->clearScheduledHook($action, $args, $wpError);
+        return $this->cron->clearScheduledHook($action, $args, false);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getNextScheduleForAction($action, $args = [])
+    public function postHasScheduledActions($postId)
     {
-        return $this->cron->getNextScheduleForHook($action, $args);
+        $events = $this->getScheduledActions();
+
+        foreach ($events as $event) {
+            foreach ($event as $eventValue) {
+                $eventValueKeys = array_keys($eventValue);
+
+                foreach ($eventValueKeys as $eventGUID) {
+                    if (! empty($eventValue[$eventGUID]['args'])) {
+                        if ((int)$eventValue[$eventGUID]['args'][0] === (int)$postId) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function scheduleSingleAction($timestamp, $action, $args = [], $returnWpError = false)
+    private function getValidHooks()
     {
-        return $this->cron->scheduleSingleEventForHook($timestamp, $action, $args, $returnWpError);
+        return [
+            HooksAbstract::ACTION_LEGACY_EXPIRE_POST2,
+            HooksAbstract::ACTION_LEGACY_EXPIRE_POST1,
+        ];
+    }
+
+    public function getScheduledActions()
+    {
+        $cron = _get_cron_array();
+        $events = [];
+
+        $pluginValidHooks = self::getValidHooks();
+
+        foreach ($cron as $time => $value) {
+            foreach ($value as $eventKey => $eventValue) {
+                if (in_array($eventKey, $pluginValidHooks)) {
+                    if (! isset($events[$time])) {
+                        $events[$time] = [];
+                    }
+
+                    $events[$time][$eventKey] = $eventValue;
+                }
+            }
+        }
+
+        return $events;
     }
 }
