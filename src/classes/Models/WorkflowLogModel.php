@@ -53,7 +53,7 @@ class WorkflowLogModel
 
         $tableName = self::getTableName();
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         return (int) $wpdb->get_var("SELECT COUNT(*) FROM $tableName");
     }
 
