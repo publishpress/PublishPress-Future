@@ -16,7 +16,7 @@ $nonce = wp_create_nonce('workflow-logs-settings');
                 'nonce' => $nonce,
             ];
 
-            echo '<a href="' . add_query_arg($disableUrlArgs) . '" class="button">'
+            echo '<a href="' . esc_url(add_query_arg($disableUrlArgs)) . '" class="button">'
                 . esc_html__(
                     'Disable Log',
                     'publishpress-future-pro'
@@ -36,7 +36,7 @@ $nonce = wp_create_nonce('workflow-logs-settings');
                 'nonce' => $nonce,
             ];
 
-            echo '<a href="' . add_query_arg($enableUrlArgs) . '" class="button">'
+            echo '<a href="' . esc_url(add_query_arg($enableUrlArgs)) . '" class="button">'
                 . esc_html__(
                     'Enable Log',
                     'publishpress-future-pro'

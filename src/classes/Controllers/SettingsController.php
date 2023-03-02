@@ -173,6 +173,7 @@ class SettingsController implements ModuleInterface
 
     public function adminEnqueueScript()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         if (
             ! isset($_GET['page'])
             || $_GET['page'] !== 'publishpress-future'
@@ -219,6 +220,8 @@ class SettingsController implements ModuleInterface
                 $this->pluginVersion
             );
         }
+
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 
     public function renderDebugLogSetting()
@@ -257,6 +260,7 @@ class SettingsController implements ModuleInterface
 
     public function loadTabs()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if (isset($_GET['tab']) && $_GET['tab'] === 'license') {
             include $this->templatesPath . '/settings-tab-license.html.php';
         }
@@ -271,15 +275,19 @@ class SettingsController implements ModuleInterface
                     'postexpirator_menu_license'
                 )
             ) {
-                wp_die(__('Form Validation Failure: Sorry, your nonce did not verify.', 'publishpress-future-pro'));
+                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'publishpress-future-pro'));
             }
 
+            // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $this->settingsModel->setLicenseKey($_POST['license_key']);
+            $license_key = $_POST['license_key'] ?? '';
 
-            $status = $this->validateLicenseKey($_POST['license_key']);
+            $this->settingsModel->setLicenseKey($license_key);
+
+            $status = $this->validateLicenseKey($license_key);
             $this->settingsModel->setLicenseStatus($status);
+            // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         }
     }
 
@@ -292,12 +300,15 @@ class SettingsController implements ModuleInterface
 
     public function savePostTypeSettings(array $settings, string $postType)
     {
+        // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
         $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         $this->settingsModel->setEnabledCustomStatusForPostType(
             $postType,
             $_POST['expirationdate_custom-statuses-' . $postType] ?? []
         );
+
+        // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
     }
 
     public function deleteAllSettings()

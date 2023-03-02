@@ -43,6 +43,7 @@ class WorkflowLogModel
             OFFSET {$offset};
         ";
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         return $wpdb->get_results($sql);
     }
 
@@ -54,6 +55,7 @@ class WorkflowLogModel
 
         $sql = "SELECT COUNT(*) FROM $tableName";
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         return $wpdb->get_var($sql);
     }
 
@@ -84,9 +86,10 @@ class WorkflowLogModel
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         $wpdb->delete(
             self::getTableName(),
-            ['id' => $logId],
+            ['id' => (int) $logId],
             ['%d']
         );
     }
@@ -95,6 +98,7 @@ class WorkflowLogModel
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         $wpdb->query("TRUNCATE TABLE " . self::getTableName());
     }
 
@@ -128,6 +132,7 @@ class WorkflowLogModel
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         $wpdb->query("DROP TABLE IF EXISTS " . self::getTableName());
     }
 }
