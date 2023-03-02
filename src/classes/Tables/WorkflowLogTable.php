@@ -53,7 +53,7 @@ class WorkflowLogTable extends WP_List_Table
     public function get_columns()
     {
         return [
-            'id' => __('ID'),
+            'id' => __('ID', 'publishpress-future-pro'),
             'post_title' => __('Post', 'publishpress-future-pro'),
             'content' => __('Log', 'publishpress-future-pro'),
             'created_at' => __('Log date', 'publishpress-future-pro'),
@@ -146,17 +146,17 @@ class WorkflowLogTable extends WP_List_Table
             <input type="hidden" name="nonce" value="<?php
             echo esc_attr(wp_create_nonce('filter-workflow-logs')); ?>"/>
             <select name="postType">
-                <option value="">All Post Types</option>
+                <option value=""><?php echo esc_html__('All Post Types', 'publishpress-future-pro'); ?></option>
                 <?php
                 foreach ($postTypes as $postType) : ?>
                     <option value="<?php echo esc_attr($postType->name); ?>" <?php
                     selected($selected, $postType->name); ?>>
-                        <?php echo esc_html__($postType->label, 'publihspress-future-pro'); ?>
+                        <?php echo $postType->label; ?>
                     </option>
                     <?php
                 endforeach; ?>
             </select>
-            <input type="submit" value="Filter" class="button"/>
+            <input type="submit" value="<?php echo esc_html__('Filter', 'publishpress-future-pro'); ?>" class="button"/>
         </form>
         <?php
 
