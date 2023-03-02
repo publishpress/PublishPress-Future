@@ -56,7 +56,7 @@
   ],
   "require": {
     "php": ">=7.2",
-    "publishpress/post-expirator": "2.9.1.*",
+    "publishpress/post-expirator": "2.9.2",
     "alledia/wordpress-edd-license-integration": "^2.3",
     "publishpress/publishpress-instance-protection": "^1.0"
   },
@@ -75,6 +75,17 @@
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "szepeviktor/phpstan-wordpress": "^1.1",
     "phpstan/extension-installer": "^1.2"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
+    ],
+    "post-update-cmd": [
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
+    ]
+  },
+  "scripts-descriptions": {
+    "tests-php": "Show the available PHP versions for running tests."
   },
   "extra": {
     "plugin-slug": "publishpress-future-pro",

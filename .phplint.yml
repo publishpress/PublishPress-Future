@@ -1,4 +1,4 @@
-path: ./
+path: ./dist/publishpress-future-pro
 jobs: 10
 extensions:
   - php

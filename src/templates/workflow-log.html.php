@@ -1,15 +1,15 @@
 <?php defined('ABSPATH') or die('Direct access not allowed.'); ?>
 
 <div class="wrap">
-    <h1 class="wp-heading-inline"><?php echo __('Future Log', 'publishpress-future-pro'); ?></h1>
+    <h1 class="wp-heading-inline"><?php echo esc_html__('Future Log', 'publishpress-future-pro'); ?></h1>
     <?php
     $deleteUrlArgs = [
         'action' => 'delete-all-logs',
         'nonce' => wp_create_nonce('delete-all-logs'),
     ];
     ?>
-    <a class="page-title-action" id="delete-all-logs" href="<?php echo add_query_arg($deleteUrlArgs); ?>">
-        <?php echo __('Delete All Logs', 'publishpress-future-pro'); ?>
+    <a class="page-title-action" id="delete-all-logs" href="<?php echo esc_url(add_query_arg($deleteUrlArgs)); ?>">
+        <?php echo esc_html__('Delete All Logs', 'publishpress-future-pro'); ?>
     </a>
 
     <?php

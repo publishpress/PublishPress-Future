@@ -44,7 +44,7 @@ class WorkflowLogTable extends WP_List_Table
             $currentPage,
             $this->get_orderby(),
             $this->get_order('DESC'),
-            isset($_REQUEST['postType']) ? $_REQUEST['postType'] : ''
+            isset($_REQUEST['postType']) ? sanitize_key($_REQUEST['postType']) : '' // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         );
 
         $this->items = $data;
@@ -53,7 +53,7 @@ class WorkflowLogTable extends WP_List_Table
     public function get_columns()
     {
         return [
-            'id' => __('ID'),
+            'id' => __('ID', 'publishpress-future-pro'),
             'post_title' => __('Post', 'publishpress-future-pro'),
             'content' => __('Log', 'publishpress-future-pro'),
             'created_at' => __('Log date', 'publishpress-future-pro'),
@@ -83,6 +83,7 @@ class WorkflowLogTable extends WP_List_Table
             case 'created_at':
                 return $item->$column_name;
             default:
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 return print_r($item, true);
         }
     }
@@ -111,48 +112,54 @@ class WorkflowLogTable extends WP_List_Table
 
     private function get_order($default = 'ASC')
     {
-        return isset($_GET['order']) && in_array(strtoupper($_GET['order']), ['ASC', 'DESC']) ? strtoupper(
-            $_GET['order']
-        ) : $default;
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        return isset($_GET['order']) && in_array(strtoupper($_GET['order']), ['ASC', 'DESC'])
+            ? strtoupper(sanitize_key($_GET['order'])) : $default;
+
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 
     private function get_orderby($default = 'id')
     {
-        return isset($_GET['orderby']) && in_array($_GET['orderby'], ['id', 'post_title', 'created_at']) ? $_GET['orderby'] : $default;
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        return isset($_GET['orderby']) && in_array($_GET['orderby'], ['id', 'post_title', 'created_at'])
+            ? sanitize_key($_GET['orderby']) : $default;
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 
     protected function extra_tablenav( $which )
     {
         $postTypes = get_post_types(['public' => true], 'object');
 
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         $selected = isset($_GET['postType']) ? sanitize_key($_GET['postType']) : '';
         ?>
         <form method="get">
             <input type="hidden" name="page" value="<?php
-            echo esc_attr($_REQUEST['page']) ?>"/>
+            echo esc_attr(isset($_REQUEST['page']) ? sanitize_key($_REQUEST['page']) : ''); ?>"/>
             <input type="hidden" name="orderby" value="<?php
-            echo esc_attr(isset($_REQUEST['orderby']) ? $_REQUEST['orderby'] : ''); ?>"/>
+            echo esc_attr(isset($_REQUEST['orderby']) ? sanitize_key($_REQUEST['orderby']) : ''); ?>"/>
             <input type="hidden" name="order" value="<?php
-            echo esc_attr(isset($_REQUEST['order']) ? $_REQUEST['order'] : ''); ?>"/>
+            echo esc_attr(isset($_REQUEST['order']) ? sanitize_key($_REQUEST['order']) : ''); ?>"/>
             <input type="hidden" name="postType" value="<?php
-            echo esc_attr(isset($_REQUEST['postType']) ? $_REQUEST['postType'] : ''); ?>"/>
+            echo esc_attr(isset($_REQUEST['postType']) ? sanitize_key($_REQUEST['postType']) : ''); ?>"/>
             <input type="hidden" name="nonce" value="<?php
             echo esc_attr(wp_create_nonce('filter-workflow-logs')); ?>"/>
             <select name="postType">
-                <option value="">All Post Types</option>
+                <option value=""><?php echo esc_html__('All Post Types', 'publishpress-future-pro'); ?></option>
                 <?php
                 foreach ($postTypes as $postType) : ?>
-                    <option value="<?php
-                    echo $postType->name; ?>" <?php
+                    <option value="<?php echo esc_attr($postType->name); ?>" <?php
                     selected($selected, $postType->name); ?>>
-                        <?php
-                        echo $postType->label; ?>
+                        <?php echo esc_html($postType->label); ?>
                     </option>
                     <?php
                 endforeach; ?>
             </select>
-            <input type="submit" value="Filter" class="button"/>
+            <input type="submit" value="<?php echo esc_attr__('Filter', 'publishpress-future-pro'); ?>" class="button"/>
         </form>
         <?php
+
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 }

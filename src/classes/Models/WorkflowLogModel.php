@@ -43,6 +43,7 @@ class WorkflowLogModel
             OFFSET {$offset};
         ";
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         return $wpdb->get_results($sql);
     }
 
@@ -52,9 +53,8 @@ class WorkflowLogModel
 
         $tableName = self::getTableName();
 
-        $sql = "SELECT COUNT(*) FROM $tableName";
-
-        return $wpdb->get_var($sql);
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        return (int) $wpdb->get_var("SELECT COUNT(*) FROM $tableName");
     }
 
     public function add(int $postId, string $log): int
@@ -84,9 +84,10 @@ class WorkflowLogModel
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         $wpdb->delete(
             self::getTableName(),
-            ['id' => $logId],
+            ['id' => (int) $logId],
             ['%d']
         );
     }
@@ -95,6 +96,7 @@ class WorkflowLogModel
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         $wpdb->query("TRUNCATE TABLE " . self::getTableName());
     }
 
@@ -128,6 +130,7 @@ class WorkflowLogModel
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
         $wpdb->query("DROP TABLE IF EXISTS " . self::getTableName());
     }
 }
