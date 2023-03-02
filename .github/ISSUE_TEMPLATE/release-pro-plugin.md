@@ -27,12 +27,11 @@ To release the plugin please make sure to check all the checkboxes below.
 - [ ] Create a Pull Request and merge the release branch it into the `master` branch.
 - [ ] Merge the `master` branch into the `development` branch.
 - [ ] Create the Github release (make sure it is based on the `master` branch and correct tag).
-
-### Post-release Checklist
-
 - [ ] Follow the action's result on the [repository actions page](https://github.com/publishpress/publishpress-future-pro/actions).
 - [ ] Go to [PublishPress site admin panel](https://publishpress.com/wp-admin) > Downloads, locate "Future Pro", and edit:
   - [ ] File URL on Download Files, uploading the new package to the media library.
   - [ ] On Licensing, update the version number.
   - [ ] On Licensing, update the changelog.
+
+### Post-release Checklist
 - [ ] Make the final test updating the plugin in a staging site.
