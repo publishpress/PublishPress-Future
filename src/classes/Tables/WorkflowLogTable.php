@@ -151,12 +151,12 @@ class WorkflowLogTable extends WP_List_Table
                 foreach ($postTypes as $postType) : ?>
                     <option value="<?php echo esc_attr($postType->name); ?>" <?php
                     selected($selected, $postType->name); ?>>
-                        <?php echo $postType->label; ?>
+                        <?php echo esc_html($postType->label); ?>
                     </option>
                     <?php
                 endforeach; ?>
             </select>
-            <input type="submit" value="<?php echo esc_html__('Filter', 'publishpress-future-pro'); ?>" class="button"/>
+            <input type="submit" value="<?php echo esc_attr__('Filter', 'publishpress-future-pro'); ?>" class="button"/>
         </form>
         <?php
 
