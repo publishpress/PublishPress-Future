@@ -81,6 +81,14 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [2.9.2] - 01 Mar 2023 =
+
+* FIXED: List of actions in the post type settings is not filtered by post types, #400;
+* FIXED: Include Statuses as a Default option, #395;
+* FIXED: Remove legacy screenshots from the plugin root dir;
+* FIXED: Fix i18n issues, #401;
+* FIXED: Fix data sanitization and security issues in the log screen;
+
 = [2.9.1] - 23 Feb 2023 =
 
 * FIXED: Fix issue with WordPress banners css file being missed, #393;
