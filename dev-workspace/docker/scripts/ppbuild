@@ -215,6 +215,9 @@ case "${command}" in
     echo ""
     clean_dist
     ;;
+"version")
+    echo "${plugin_version}" > version.txt
+    ;;
 *)
     echo "invalid option ${command}"
     ;;

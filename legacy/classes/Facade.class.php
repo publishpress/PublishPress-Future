@@ -110,7 +110,7 @@ class PostExpirator_Facade
                 );
                 wp_enqueue_style(
                     'pp-wordpress-banners-style',
-                    POSTEXPIRATOR_BASEURL . 'vendor/publishpress/wordpress-banners/assets/css/style.css',
+                    POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
                     false,
                     POSTEXPIRATOR_VERSION
                 );
@@ -374,9 +374,9 @@ class PostExpirator_Facade
                     'default_categories' => get_option('expirationdateCategoryDefaults'),
                     'is_12_hours' => get_option('time_format') !== 'H:i',
                     'timezone_offset' => PostExpirator_Util::get_timezone_offset() / 60,
-                    'actions_options' => $actionsModel->getActionsAsOptions(),
+                    'actions_options' => $actionsModel->getActionsAsOptions($post->post_type),
                     'strings' => [
-                        'category' => __('Taxonomy'),
+                        'category' => __('Taxonomy', 'post-expirator'),
                         'postExpirator' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Post Expiration', 'post-expirator'),
                         'howToExpire' => __('How to expire', 'post-expirator'),

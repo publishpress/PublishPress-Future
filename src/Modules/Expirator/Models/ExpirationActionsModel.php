@@ -23,12 +23,12 @@ class ExpirationActionsModel
     /**
      * @var array
      */
-    private $actions;
+    private $actions = [];
 
     /**
      * @var array
      */
-    private $actionsAsOptions;
+    private $actionsAsOptions = [];
 
     public function __construct(HookableInterface $hooks)
     {
@@ -38,9 +38,9 @@ class ExpirationActionsModel
     /**
      * @return string[]
      */
-    public function getActions()
+    public function getActions($postType = '')
     {
-        if (empty($this->actions)) {
+        if (! isset($this->actions[$postType])) {
             $actions = [
                 ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => __('Draft', 'post-expirator'),
                 ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => __('Private', 'post-expirator'),
@@ -53,21 +53,22 @@ class ExpirationActionsModel
                 ExpirationActionsAbstract::POST_CATEGORY_REMOVE => __('Taxonomy: Remove', 'post-expirator'),
             ];
 
-            $this->actions = $this->hooks->applyFilters(
+            $this->actions[$postType] = $this->hooks->applyFilters(
                 HooksAbstract::FILTER_EXPIRATION_ACTIONS,
-                $actions
+                $actions,
+                $postType
             );
         }
 
-        return $this->actions;
+        return $this->actions[$postType];
     }
 
-    public function getActionsAsOptions()
+    public function getActionsAsOptions($postType = '')
     {
-        if (empty($this->actionsAsOptions)) {
+        if (! isset($this->actionsAsOptions[$postType])) {
             $options = [];
 
-            $actions = $this->getActions();
+            $actions = $this->getActions($postType);
 
             foreach ($actions as $name => $label) {
                 $options[] = [
@@ -76,9 +77,22 @@ class ExpirationActionsModel
                 ];
             }
 
-            $this->actionsAsOptions = $options;
+            $this->actionsAsOptions[$postType] = $options;
         }
 
-        return $this->actionsAsOptions;
+        return $this->actionsAsOptions[$postType];
+    }
+
+    public function getActionsAsOptionsForAllPostTypes()
+    {
+        $postTypes = array_values(postexpirator_get_post_types());
+
+        $actions = [];
+
+        foreach ($postTypes as $postType) {
+            $actions[$postType] = $this->getActionsAsOptions($postType);
+        }
+
+        return $actions;
     }
 }

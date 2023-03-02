@@ -34,3 +34,5 @@
 - vendor/bin
 - assets/jsx
 - dev-workspace
+- .wordpress-org
+- version.txt

@@ -44,5 +44,3 @@ import NonceField from "./components/fields/NonceField";
 
     render(settingsForm, document.getElementById('publishpress-future-settings-post-types'));
 })(window.wp, window.publishpressFutureConfig, jQuery);
-
-PostTypesSettingsPanels

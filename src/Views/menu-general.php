@@ -75,7 +75,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                                     'The default format to use when displaying the expiration date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
                                     'post-expirator'
                                 ),
-                                '<a href="http://us2.php.net/manual/en/function.date.php" target="_blank">PHP Date Function</a>'
+                                '<a href="http://us2.php.net/manual/en/function.date.php" target="_blank">' . esc_html__('PHP Date Function', 'post-expirator') . '</a>'
                             ); ?></p>
                     </td>
                 </tr>
@@ -92,7 +92,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                                 'The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
                                 'post-expirator'
                             ),
-                            '<a href="http://us2.php.net/manual/en/function.date.php" target="_blank">PHP Date Function</a>'
+                            '<a href="http://us2.php.net/manual/en/function.date.php" target="_blank">'. esc_html__('PHP Date Function', 'post-expirator') . '</a>'
 
                         ); ?></td>
                 </tr>
@@ -110,7 +110,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                                         'Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                         'post-expirator'
                                     ),
-                                    '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">PHP strtotime function</a>',
+                                    '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__('PHP strtotime function', 'post-expirator') . '</a>',
                                     '<code>',
                                     '</code>',
                                     '<code>',
