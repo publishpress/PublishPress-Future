@@ -88,6 +88,7 @@ This section describes how to install the plugin and get it working.
 * FIXED: Remove legacy screenshots from the plugin root dir;
 * FIXED: Fix i18n issues, #401;
 * FIXED: Fix data sanitization and security issues in the log screen;
+* FIXED: Fix PHP warning saying the method `WorkflowLogModel::countALl` returned NULL instead of an integer;
 
 = [2.9.1] - 23 Feb 2023 =
 
