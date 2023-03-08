@@ -8,6 +8,7 @@ namespace PublishPressFuture\Modules\Settings;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\ModuleInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Settings\Controllers\Controller;
 
 class Module implements ModuleInterface
@@ -41,6 +42,10 @@ class Module implements ModuleInterface
      * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
      */
     private $actionsModel;
+    /**
+     * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
+     */
+    private $cron;
 
     /**
      * @param HookableInterface $hooks
@@ -48,14 +53,23 @@ class Module implements ModuleInterface
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
      * @param \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
+     * @param \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface $cron
      */
-    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory, $actionsModel)
+    public function __construct(
+        HookableInterface $hooks,
+        $settings,
+        $settingsPostTypesModelFactory,
+        $taxonomiesModelFactory,
+        $actionsModel,
+        CronInterface $cron
+    )
     {
         $this->hooks = $hooks;
         $this->settings = $settings;
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
+        $this->cron = $cron;
 
         $this->controller = $this->getController();
     }
@@ -75,7 +89,8 @@ class Module implements ModuleInterface
             $this->settings,
             $this->settingsPostTypesModelFactory,
             $this->taxonomiesModelFactory,
-            $this->actionsModel
+            $this->actionsModel,
+            $this->cron
         );
     }
 }

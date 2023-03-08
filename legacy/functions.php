@@ -9,6 +9,7 @@ use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Core\HooksAbstract as CoreHooks;
 use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooks;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
 
 /**
  * Adds links to the plugin listing screen.
@@ -133,11 +134,11 @@ function postexpirator_orderby($query)
             'meta_query', array(
                 'relation' => 'OR',
                 array(
-                    'key' => '_expiration-date',
+                    'key' => PostMetaAbstract::EXPIRATION_TIMESTAMP,
                     'compare' => 'EXISTS',
                 ),
                 array(
-                    'key' => '_expiration-date',
+                    'key' => PostMetaAbstract::EXPIRATION_TIMESTAMP,
                     'compare' => 'NOT EXISTS',
                     'value' => '',
                 ),
@@ -375,8 +376,8 @@ add_action('add_meta_boxes', 'postexpirator_meta_custom');
  */
 function postexpirator_meta_box($post)
 {
-    $postMetaDate = get_post_meta($post->ID, '_expiration-date', true);
-    $postMetaStatus = get_post_meta($post->ID, '_expiration-date-status', true);
+    $postMetaDate = get_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+    $postMetaStatus = get_post_meta($post->ID, PostMetaAbstract::EXPIRATION_STATUS, true);
 
     $expireType = $default = $enabled = '';
 
@@ -460,12 +461,12 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
         'enabled' => $status === 'saved',
     ];
 
-    update_post_meta($post->ID, '_expiration-date', $defaultExpire['ts']);
-    update_post_meta($post->ID, '_expiration-date-status', $status);
-    update_post_meta($post->ID, '_expiration-date-options', $opts);
-    update_post_meta($post->ID, '_expiration-date-type', $postTypeDefaults['expireType']);
-    update_post_meta($post->ID, '_expiration-date-categories', (array)$categories);
-    update_post_meta($post->ID, '_expiration-date-taxonomy', $opts['categoryTaxonomy']);
+    update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, $defaultExpire['ts']);
+    update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_STATUS, $status);
+    update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $opts);
+    update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TYPE, $postTypeDefaults['expireType']);
+    update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TERMS, (array)$categories);
+    update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TAXONOMY, $opts['categoryTaxonomy']);
 }
 
 /**
@@ -644,33 +645,33 @@ function postexpirator_update_post_meta($id)
 
         if (isset($payload['meta'])) {
             // Meta has changed, let's update the expiration data.
-            if (isset($payload['meta']['_expiration-date-status'])) {
-                $shouldSchedule = $payload['meta']['_expiration-date-status'] === 'saved'
-                    && isset($payload['meta']['_expiration-date'])
-                    && false === empty($payload['meta']['_expiration-date']);
+            if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_STATUS])) {
+                $shouldSchedule = $payload['meta'][PostMetaAbstract::EXPIRATION_STATUS] === 'saved'
+                    && isset($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP])
+                    && false === empty($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP]);
             } else {
                 $shouldSchedule = PostExpirator_Facade::is_expiration_enabled_for_post($id);
             }
 
             if ($shouldSchedule) {
-                if (isset($payload['meta']['_expiration-date'])) {
-                    $ts = sanitize_text_field($payload['meta']['_expiration-date']);
+                if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP])) {
+                    $ts = sanitize_text_field($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP]);
                 } else {
-                    $ts = get_post_meta($id, '_expiration-date', true);
+                    $ts = get_post_meta($id, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
                 }
 
-                if (isset($payload['meta']['_expiration-date-type'])) {
-                    $opts['expireType'] = sanitize_key($payload['meta']['_expiration-date-type']);
+                if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_TYPE])) {
+                    $opts['expireType'] = sanitize_key($payload['meta'][PostMetaAbstract::EXPIRATION_TYPE]);
                 } else {
-                    $opts['expireType'] = get_post_meta($id, '_expiration-date-type', true);
+                    $opts['expireType'] = get_post_meta($id, PostMetaAbstract::EXPIRATION_TYPE, true);
                 }
 
-                if (isset($payload['meta']['_expiration-date-categories'])) {
+                if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_TERMS])) {
                     $opts['category'] = PostExpirator_Util::sanitize_array_of_integers(
-                        $payload['meta']['_expiration-date-categories']
+                        $payload['meta'][PostMetaAbstract::EXPIRATION_TERMS]
                     );
                 } else {
-                    $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
+                    $opts['category'] = (array)get_post_meta($id, PostMetaAbstract::EXPIRATION_TERMS, true);
                 }
 
                 $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
@@ -680,10 +681,10 @@ function postexpirator_update_post_meta($id)
             $shouldSchedule = PostExpirator_Facade::is_expiration_enabled_for_post($id);
 
             if ($shouldSchedule) {
-                $ts = get_post_meta($id, '_expiration-date', true);
+                $ts = get_post_meta($id, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
 
-                $opts['expireType'] = get_post_meta($id, '_expiration-date-type', true);
-                $opts['category'] = (array)get_post_meta($id, '_expiration-date-categories', true);
+                $opts['expireType'] = get_post_meta($id, PostMetaAbstract::EXPIRATION_TYPE, true);
+                $opts['category'] = (array)get_post_meta($id, PostMetaAbstract::EXPIRATION_TERMS, true);
                 $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
             }
         }
@@ -713,7 +714,7 @@ function postexpirator_shortcode($attrs)
     global $post;
 
     $enabled = PostExpirator_Facade::is_expiration_enabled_for_post($post->ID);
-    $expirationDateTs = get_post_meta($post->ID, '_expiration-date', true);
+    $expirationDateTs = get_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
     if (! $enabled || empty($expirationDateTs)) {
         return false;
     }
@@ -784,7 +785,7 @@ function postexpirator_add_footer($text)
         return $text;
     }
 
-    $expirationdatets = get_post_meta($post->ID, '_expiration-date', true);
+    $expirationdatets = get_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
     if (! is_numeric($expirationdatets)) {
         return $text;
     }
@@ -890,12 +891,7 @@ function postexpirator_upgrade()
             );
 
             foreach ($results as $result) {
-                wp_schedule_single_event(
-                    $result->meta_value,
-                    ExpiratorHooks::ACTION_EXPIRE_POST,
-                    array($result->post_id)
-                );
-                $opts = array();
+                $opts = [];
                 $opts['id'] = $result->post_id;
                 $posttype = get_post_type($result->post_id);
                 if ($posttype === 'page') {
@@ -904,13 +900,13 @@ function postexpirator_upgrade()
                     $opts['expireType'] = strtolower(get_option('expirationdateExpiredPostStatus', 'Draft'));
                 }
 
-                $cat = get_post_meta($result->post_id, '_expiration-date-category', true);
+                $cat = get_post_meta($result->post_id, PostMetaAbstract::EXPIRATION_TERMS, true);
                 if ((isset($cat) && ! empty($cat))) {
                     $opts['category'] = $cat;
                     $opts['expireType'] = 'category';
                 }
 
-                PostExpirator_Facade::set_expire_principles($result->post_id, $opts);
+                do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $result->post_id, $result->meta_value, $opts);
             }
 
             // update meta key to new format
@@ -918,7 +914,7 @@ function postexpirator_upgrade()
             $wpdb->query(
                 $wpdb->prepare(
                     "UPDATE $wpdb->postmeta SET meta_key = %s WHERE meta_key = %s",
-                    '_expiration-date',
+                    PostMetaAbstract::EXPIRATION_TIMESTAMP,
                     'expiration-date'
                 )
             );
@@ -1288,7 +1284,7 @@ function postexpirator_date_save_bulk_edit()
     }
 
     foreach ($postIds as $postId) {
-        $postExpirationDate = get_post_meta($postId, '_expiration-date', true);
+        $postExpirationDate = get_post_meta($postId, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
 
         if ($status === 'remove-only') {
             do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);

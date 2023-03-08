@@ -4,6 +4,7 @@ use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Modules\Expirator\CapabilitiesAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
 
 /**
  * The class that acts as a facade for the plugin's core functions.
@@ -125,12 +126,12 @@ class PostExpirator_Facade
      */
     public static function set_expire_principles($id, $opts)
     {
-        update_post_meta($id, '_expiration-date-options', $opts);
-        update_post_meta($id, '_expiration-date-type', $opts['expireType']);
-        update_post_meta($id, '_expiration-date-categories', isset($opts['category']) ? (array)$opts['category'] : []);
+        update_post_meta($id, PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $opts);
+        update_post_meta($id, PostMetaAbstract::EXPIRATION_TYPE, $opts['expireType']);
+        update_post_meta($id, PostMetaAbstract::EXPIRATION_TERMS, isset($opts['category']) ? (array)$opts['category'] : []);
         update_post_meta(
             $id,
-            '_expiration-date-taxonomy',
+            PostMetaAbstract::EXPIRATION_TAXONOMY,
             isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : ''
         );
     }
@@ -158,14 +159,14 @@ class PostExpirator_Facade
         }
 
         switch ($meta_key) {
-            case '_expiration-date-status':
+            case PostMetaAbstract::EXPIRATION_STATUS:
                 if (empty($meta_value)) {
                     $this->unschedule_event($post_id);
                 }
 
 
                 break;
-            case '_expiration-date':
+            case PostMetaAbstract::EXPIRATION_TIMESTAMP:
                 $opts = self::get_expire_principles($post_id);
                 $this->schedule_event($post_id, $meta_value, $opts);
 
@@ -178,11 +179,11 @@ class PostExpirator_Facade
      */
     private function unschedule_event($post_id)
     {
-        delete_post_meta($post_id, '_expiration-date');
-        delete_post_meta($post_id, '_expiration-date-options');
-        delete_post_meta($post_id, '_expiration-date-type');
-        delete_post_meta($post_id, '_expiration-date-categories');
-        delete_post_meta($post_id, '_expiration-date-taxonomy');
+        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_TIMESTAMP);
+        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
+        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_TYPE);
+        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_TERMS);
+        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_TAXONOMY);
 
         postexpirator_unschedule_event($post_id);
     }
@@ -195,23 +196,23 @@ class PostExpirator_Facade
     public static function get_expire_principles($id)
     {
         $expireType = $categories = $taxonomyName = $expireStatus = '';
-        $expireTypeNew = get_post_meta($id, '_expiration-date-type', true);
+        $expireTypeNew = get_post_meta($id, PostMetaAbstract::EXPIRATION_TYPE, true);
         if (! empty($expireTypeNew)) {
             $expireType = $expireTypeNew;
         }
 
-        $categoriesNew = (array)get_post_meta($id, '_expiration-date-categories', true);
+        $categoriesNew = (array)get_post_meta($id, PostMetaAbstract::EXPIRATION_TERMS, true);
         if (! empty($categoriesNew)) {
             $categories = $categoriesNew;
         }
 
-        $taxonomyNameNew = get_post_meta($id, '_expiration-date-taxonomy', true);
+        $taxonomyNameNew = get_post_meta($id, PostMetaAbstract::EXPIRATION_TAXONOMY, true);
         if (! empty($taxonomyNameNew)) {
             $taxonomyName = $taxonomyNameNew;
         }
 
         // _expiration-date-options is deprecated when using block editor
-        $opts = get_post_meta($id, '_expiration-date-options', true);
+        $opts = get_post_meta($id, PostMetaAbstract::EXPIRATION_DATE_OPTIONS, true);
         if (empty($expireType) && isset($opts['expireType'])) {
             $expireType = $opts['expireType'];
         }
@@ -251,7 +252,7 @@ class PostExpirator_Facade
 
             register_post_meta(
                 $post_type,
-                '_expiration-date-status',
+                PostMetaAbstract::EXPIRATION_STATUS,
                 array(
                     'single' => true,
                     'type' => 'string',
@@ -263,7 +264,7 @@ class PostExpirator_Facade
             );
             register_post_meta(
                 $post_type,
-                '_expiration-date',
+                PostMetaAbstract::EXPIRATION_TIMESTAMP,
                 array(
                     'single' => true,
                     'type' => 'number',
@@ -275,7 +276,7 @@ class PostExpirator_Facade
             );
             register_post_meta(
                 $post_type,
-                '_expiration-date-type',
+                PostMetaAbstract::EXPIRATION_TYPE,
                 array(
                     'single' => true,
                     'type' => 'string',
@@ -287,7 +288,7 @@ class PostExpirator_Facade
             );
             register_post_meta(
                 $post_type,
-                '_expiration-date-categories',
+                PostMetaAbstract::EXPIRATION_TERMS,
                 array(
                     'single' => true,
                     'type' => 'array',
@@ -309,7 +310,7 @@ class PostExpirator_Facade
             // as it cannot be used easily in the block editor
             register_post_meta(
                 $post_type,
-                '_expiration-date-options',
+                PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
                 array(
                     'single' => true,
                     'type' => 'object',
@@ -460,8 +461,8 @@ class PostExpirator_Facade
 
     public static function is_expiration_enabled_for_post($post_id)
     {
-        $statusEnabled = get_post_meta($post_id, '_expiration-date-status', true) === 'saved';
-        $date = (int)get_post_meta($post_id, '_expiration-date', true);
+        $statusEnabled = get_post_meta($post_id, PostMetaAbstract::EXPIRATION_STATUS, true) === 'saved';
+        $date = (int)get_post_meta($post_id, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
 
         return $statusEnabled && false === empty($date);
     }

@@ -7,11 +7,10 @@ namespace PublishPressFuture\Modules\Expirator;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
+use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
-use WP_Error;
 
 class ExpirationScheduler implements SchedulerInterface
 {
@@ -21,7 +20,7 @@ class ExpirationScheduler implements SchedulerInterface
     private $hooks;
 
     /**
-     * @var CronFacade
+     * @var CronInterface
      */
     private $cron;
 
@@ -47,16 +46,22 @@ class ExpirationScheduler implements SchedulerInterface
 
     /**
      * @param HookableInterface $hooksFacade
-     * @param CronFacade $cronFacade
+     * @param CronInterface $cron
      * @param ErrorFacade $errorFacade
      * @param LoggerInterface $logger
      * @param DateTimeFacade $datetime
      * @param \Closure $postModelFactory
      */
-    public function __construct($hooksFacade, $cronFacade, $errorFacade, $logger, $datetime, $postModelFactory)
-    {
+    public function __construct(
+        $hooksFacade,
+        $cron,
+        $errorFacade,
+        $logger,
+        $datetime,
+        $postModelFactory
+    ) {
         $this->hooks = $hooksFacade;
-        $this->cron = $cronFacade;
+        $this->cron = $cron;
         $this->error = $errorFacade;
         $this->logger = $logger;
         $this->datetime = $datetime;
@@ -77,13 +82,21 @@ class ExpirationScheduler implements SchedulerInterface
 
         $this->unscheduleIfScheduled($postId, $timestamp);
 
-        $scheduled = $this->cron->scheduleSingleEvent($timestamp, HooksAbstract::ACTION_EXPIRE_POST, [$postId], true);
+        $scheduled = $this->cron->scheduleSingleAction(
+            $timestamp,
+            HooksAbstract::ACTION_RUN_WORKFLOW,
+            [
+                'postId' => $postId,
+                'action' => 'expire',
+            ]
+        );
 
         if (! $scheduled) {
             $this->logger->debug(
                 sprintf(
-                    '%d  -> TRIED TO SCHEDULE CRON EVENT at %s (%s) with options %s %s',
+                    '%d  -> TRIED TO SCHEDULE ACTION using %s at %s (%s) with options %s %s',
                     $postId,
+                    $this->cron->getIdentifier(),
                     $this->datetime->getWpDate('r', $timestamp),
                     $timestamp,
                     // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
@@ -101,8 +114,9 @@ class ExpirationScheduler implements SchedulerInterface
 
         $this->logger->debug(
             sprintf(
-                '%d  -> CRON EVENT SCHEDULED at %s (%s) with options %s, no errors found',
+                '%d  -> ACTION SCHEDULED using %s at %s (%s) with options %s, no errors found',
                 $postId,
+                $this->cron->getIdentifier(),
                 $this->datetime->getWpDate('r', $timestamp),
                 $timestamp,
                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
@@ -114,21 +128,16 @@ class ExpirationScheduler implements SchedulerInterface
     private function unscheduleIfScheduled($postId, $timestamp)
     {
         if ($this->isScheduled($postId)) {
-            $this->logger->debug($postId . ' -> FOUND SCHEDULED CRON EVENT for the post');
+            $this->logger->debug($postId . ' -> FOUND SCHEDULED ACTION for the post using ' . $this->cron->getIdentifier());
 
-            $result = $this->unschedule($postId);
+            $this->unschedule($postId);
         }
     }
 
+
     public function isScheduled($postId)
     {
-        $scheduledWithNewHook = $this->cron->getNextScheduleForEvent(HooksAbstract::ACTION_EXPIRE_POST, [$postId]);
-
-        if ($scheduledWithNewHook) {
-            return true;
-        }
-
-        return $this->cron->getNextScheduleForEvent(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId]);
+        return $this->cron->getNextScheduleForAction(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'action' => 'expire']);
     }
 
     /**
@@ -144,12 +153,13 @@ class ExpirationScheduler implements SchedulerInterface
 
         $postModel->updateMeta(
             [
-                '_expiration-date' => $timestamp,
-                '_expiration-date-status' => 'saved',
-                '_expiration-date-options' => $opts,
-                '_expiration-date-type' => $opts['expireType'],
-                '_expiration-date-categories' => isset($opts['category']) ? (array)$opts['category'] : [],
-                '_expiration-date-taxonomy' => isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '',
+                PostMetaAbstract::EXPIRATION_TIMESTAMP => $timestamp,
+                PostMetaAbstract::EXPIRATION_STATUS => 'saved',
+                PostMetaAbstract::EXPIRATION_DATE_OPTIONS => $opts,
+                PostMetaAbstract::EXPIRATION_TYPE => $opts['expireType'],
+                PostMetaAbstract::EXPIRATION_TERMS => isset($opts['category']) ? (array)$opts['category'] : [],
+                PostMetaAbstract::EXPIRATION_TAXONOMY => isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '',
+                PostMetaAbstract::CRON_IDENTIFIER => $this->cron->getIdentifier(),
             ]
         );
     }
@@ -162,23 +172,18 @@ class ExpirationScheduler implements SchedulerInterface
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_UNSCHEDULE, $postId);
 
         if ($this->isScheduled($postId)) {
-            $legacyResult = $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_EXPIRE_POST, [$postId]);
-            $result = $this->cron->clearScheduledHook(HooksAbstract::ACTION_EXPIRE_POST, [$postId]);
+            $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'action' => 'expire']);
 
             $errorFeedback = null;
-            if ($this->error->isWpError($legacyResult)) {
-                $errorFeedback = 'found error: ' . $this->error->getWpErrorMessage($legacyResult);
-            }
-
             if ($this->error->isWpError($result)) {
-                $errorFeedback  = 'found error: ' . $this->error->getWpErrorMessage($result);
+                $errorFeedback = 'found error: ' . $this->error->getWpErrorMessage($result);
             }
 
             if (empty($errorFeedback)) {
                 $errorFeedback = 'no errors found';
             }
 
-            $message = $postId . ' -> CLEARED SCHEDULED CRON EVENT, ' . $errorFeedback;
+            $message = $postId . ' -> CLEARED SCHEDULED ACTION using ' . $this->cron->getIdentifier() . ', ' . $errorFeedback;
 
             $this->logger->debug($message);
         }
@@ -193,15 +198,16 @@ class ExpirationScheduler implements SchedulerInterface
 
         $postModel->deleteMeta(
             [
-                '_expiration-date',
-                '_expiration-date-status',
-                '_expiration-date-options',
-                '_expiration-date-type',
-                '_expiration-date-categories',
-                '_expiration-date-taxonomy',
+                PostMetaAbstract::EXPIRATION_TIMESTAMP,
+                PostMetaAbstract::EXPIRATION_STATUS,
+                PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
+                PostMetaAbstract::EXPIRATION_TYPE,
+                PostMetaAbstract::EXPIRATION_TERMS,
+                PostMetaAbstract::EXPIRATION_TAXONOMY,
+                PostMetaAbstract::CRON_IDENTIFIER,
             ]
         );
 
-        $this->logger->debug($postId . ' -> EXPIRATION DATA REMOVED from the post');
+        $this->logger->debug($postId . ' -> EXPIRATION DATA REMOVED from the post using ' . $this->cron->getIdentifier());
     }
 }
