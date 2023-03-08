@@ -1,4 +1,4 @@
-name: dev-workspace-future-free
+name: devworkspace_future_free
 services:
     terminal:
         build: ./docker
