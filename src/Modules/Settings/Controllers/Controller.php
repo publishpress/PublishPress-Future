@@ -113,7 +113,6 @@ class Controller implements InitializableInterface
     public function onActionActivatePlugin()
     {
         $this->settings->setDefaultSettings();
-        $this->scheduleLegacyPostExpirationsMigration();
     }
 
     public function onActionDeactivatePlugin()

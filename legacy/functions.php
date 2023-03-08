@@ -9,6 +9,7 @@ use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Core\HooksAbstract as CoreHooks;
 use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooks;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPressFuture\Modules\Expirator\Migrations\WPCronToActionsScheduler;
 use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
 
 /**
@@ -940,7 +941,10 @@ function postexpirator_upgrade()
             }
         }
 
+        if (version_compare($version, '3') === -1) {
+            $container->get(ServicesAbstract::CRON)->cron->enqueueAsyncAction(WPCronToActionsScheduler::HOOK);
         }
+    }
 
     $currentVersion = $container->get(ServicesAbstract::PLUGIN_VERSION);
     if ($version !== $currentVersion) {
