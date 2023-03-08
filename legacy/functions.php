@@ -861,20 +861,15 @@ add_action('admin_enqueue_scripts', 'postexpirator_css', 10, 1);
  */
 function postexpirator_upgrade()
 {
+    $container = Container::getInstance();
+
     // Check for current version, if not exists, run activation
     $version = get_option('postexpiratorVersion');
-
-        update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
     if ($version === false) {
         // fresh install
     } else {
         if (version_compare($version, '1.6.1') === -1) {
-            update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
             update_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);
-        }
-
-        if (version_compare($version, '1.6.2') === -1) {
-            update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
         }
 
         if (version_compare($version, '2.0.0-rc1') === -1) {
@@ -933,7 +928,6 @@ function postexpirator_upgrade()
             delete_option('expirationdateAutoEnabled');
             delete_option('expirationdateExpiredPageStatus');
             delete_option('expirationdateExpiredPostStatus');
-            update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
         }
 
         if (version_compare($version, '2.0.1') === -1) {
@@ -944,11 +938,13 @@ function postexpirator_upgrade()
             } else {
                 wp_clear_scheduled_hook('expirationdate_delete');
             }
-
-            update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
         }
 
-        update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
+        }
+
+    $currentVersion = $container->get(ServicesAbstract::PLUGIN_VERSION);
+    if ($version !== $currentVersion) {
+        update_option('postexpiratorVersion', $currentVersion);
     }
 }
 
