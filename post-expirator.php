@@ -12,6 +12,7 @@
 
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
+use PublishPressFuture\Core\HooksAbstract as CoreHooksAbstract;
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     define('PUBLISHPRESS_FUTURE_LOADED', true);
@@ -34,6 +35,9 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
         $container = new Container($services);
 
+        register_activation_hook( __FILE__, function() {
+            do_action(CoreHooksAbstract::ACTION_ACTIVATE_PLUGIN);
+        });
 
         require_once __DIR__ . '/legacy/defines.php';
         require_once __DIR__ . '/legacy/functions.php';

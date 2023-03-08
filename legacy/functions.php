@@ -863,10 +863,10 @@ function postexpirator_upgrade()
 {
     // Check for current version, if not exists, run activation
     $version = get_option('postexpiratorVersion');
-    if ($version === false) { // not installed, run default activation
-        do_action(CoreHooks::ACTION_ACTIVATE_PLUGIN);
 
         update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
+    if ($version === false) {
+        // fresh install
     } else {
         if (version_compare($version, '1.6.1') === -1) {
             update_option('postexpiratorVersion', POSTEXPIRATOR_VERSION);
