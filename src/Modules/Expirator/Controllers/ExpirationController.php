@@ -10,6 +10,7 @@ use Exception;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
+use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
@@ -96,17 +97,10 @@ class ExpirationController implements InitializableInterface
 
     public function onActionDeleteAllSettings()
     {
-        // TODO: What about custom post types? How to clean up?
-
-        if ($this->site->isMultisite()) {
-            $this->cron->clearScheduledAction(
-                HooksAbstract::getActionLegacyMultisiteDelete($this->site->getBlogId())
-            );
-
-            return;
-        }
-
         $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_DELETE);
+
+        $this->cron->cancelActionsByGroup(CronToWooActionSchedulerAdapter::SCHEDULED_ACTION_GROUP);
+
     }
 
     public function onActionSchedulePostExpiration($postId, $timestamp, $opts)

@@ -75,4 +75,9 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     {
         return as_enqueue_async_action($action, $args, self::SCHEDULED_ACTION_GROUP, $unique);
     }
+
+    public function cancelActionsByGroup(string $group)
+    {
+        as_unschedule_all_actions('', [], $group);
+    }
 }

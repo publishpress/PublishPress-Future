@@ -54,4 +54,20 @@ class OptionsFacade
     {
         return \add_option($optionName, $newValue);
     }
+
+    public function getOptionsWithPrefix(string $prefix)
+    {
+        global $wpdb;
+        $options = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE %s",
+                sanitize_key($prefix) . '%'
+            )
+        );
+        $result = [];
+        foreach ($options as $option) {
+            $result[$option->option_name] = $option->option_value;
+        }
+        return $result;
+    }
 }

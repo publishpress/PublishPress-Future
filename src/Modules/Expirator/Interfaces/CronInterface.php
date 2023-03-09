@@ -46,4 +46,6 @@ interface CronInterface
     public function getScheduledActions(string $hook): array;
 
     public function enqueueAsyncAction(string $action, array $args = [], bool $unique = false): int;
+
+    public function cancelActionsByGroup(string $group);
 }
