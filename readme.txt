@@ -22,8 +22,10 @@ Here's an overview of what you can do with PublishPress Future:
 * Receive email notifications when your content expires.
 * Show expiry dates in your content, automatically or with shortcodes.
 
+## PublishPress Future Pro ##
+
 > <strong>Upgrade to PublishPress Future Pro</strong><br />
-> This plugin is the free version of the PublishPress Future plugin. The Pro version comes with all the features you need to schedule changes to your WordPresss content. <a href="https://publishpress.com/future"  title="PublishPress Future Pro">Click here to purchase the best premium WordPress content update plugin now!</a>
+> This plugin is the free version of the PublishPress Future plugin. The Pro version comes with all the features you need to schedule changes to your WordPresss content. <a href="https://publishpress.com/future"  title="PublishPress Future Pro">Click here to purchase the best plugin for scheduling WordPress content updates!</a>
 
 ## Options for Future Actions on Posts
 
@@ -84,7 +86,7 @@ PublishPress Future Pro allows you to keep a detailed record of all the changes 
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
-Join PublishPress and you'll get access to these Pro plugins:
+Join PublishPress and you'll get access to these nine Pro plugins:
 
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
 * [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
