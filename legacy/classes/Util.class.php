@@ -1,5 +1,8 @@
 <?php
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
+
 /**
  * Utility functions.
  */
@@ -75,11 +78,9 @@ class PostExpirator_Util
      */
     public static function get_wp_date($format, $timestamp)
     {
-        $gmtTime = gmdate('Y-m-d H:i:s', $timestamp);
-        $timezone = wp_timezone();
-        $datetime = date_create($gmtTime, new DateTimeZone('+0:00'));
+        $container = Container::getInstance();
 
-        return wp_date($format, $datetime->getTimestamp(), $timezone);
+        return $container->get(ServicesAbstract::DATETIME)->getWpDate($format, $timestamp);
     }
 
     public static function sanitize_array_of_integers($array)
