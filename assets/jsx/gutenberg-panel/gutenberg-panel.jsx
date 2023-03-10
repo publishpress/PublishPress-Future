@@ -224,17 +224,21 @@
             return 'draft';
         }
 
+        arrayIsEmpty(obj) {
+            return !obj || obj.length === 0 || obj[0] === '';
+        }
+
         // what categories to add/remove/replace
         getCategories(postMeta) {
             let categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
             let categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
             let defaultCategories = config.defaults.terms ? config.defaults.terms.split(',') : [];
 
-            if (! categoriesNew && ! categoriesOld) {
+            if (this.arrayIsEmpty(categoriesNew) && this.arrayIsEmpty(categoriesOld)) {
                 return defaultCategories;
             }
 
-            if (typeof categoriesNew === 'object' && categoriesNew.length > 0) {
+            if (! this.arrayIsEmpty(categoriesNew)) {
                 return categoriesNew;
             }
 
