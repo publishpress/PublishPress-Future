@@ -68,16 +68,8 @@ class ExpirationScheduler implements SchedulerInterface
         $this->postModelFactory = $postModelFactory;
     }
 
-    /**
-     * @param int $postId
-     * @param int $timestamp
-     * @param array $opts
-     * @return void
-     */
-    public function schedule($postId, $timestamp, $opts)
+    public function schedule(int $postId, int $timestamp, array $opts): void
     {
-        $postId = (int)$postId;
-
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_SCHEDULE, $postId, $timestamp, $opts);
 
         $this->unscheduleIfScheduled($postId, $timestamp);
