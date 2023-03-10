@@ -35,10 +35,6 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
         $container = new Container($services);
 
-        register_activation_hook( __FILE__, function() {
-            do_action(CoreHooksAbstract::ACTION_ACTIVATE_PLUGIN);
-        });
-
         require_once __DIR__ . '/legacy/defines.php';
         require_once __DIR__ . '/legacy/functions.php';
         require_once __DIR__ . '/legacy/deprecated-functions.php';
