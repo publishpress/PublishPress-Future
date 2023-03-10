@@ -9,31 +9,19 @@ use DateTimeZone;
 
 class DateTimeFacade
 {
-    /**
-     * @return DateTimeZone
-     */
-    public function getTimezone()
+    public function getTimezone(): DateTimeZone
     {
         return \wp_timezone();
     }
 
-    /**
-     * @param string $format
-     * @param int $timestamp
-     * @param DateTimeZone $timezone
-     * @return string|false
-     */
-    public function getLocalizedDate($format, $timestamp = null, $timezone = null)
+    public function getLocalizedDate($format, $timestamp = null, $timezone = null): ?string
     {
-        return \wp_date($format, $timestamp, $timezone);
+        $date = \wp_date($format, $timestamp, $timezone);
+
+        return false === $date ? null : $date;
     }
 
-    /**
-     * @param string $format
-     * @param int $timestamp
-     * @return false|string
-     */
-    public function getWpDate($format, $timestamp)
+    public function getWpDate(string $format, ?int $timestamp): ?string
     {
         $gmtTime = gmdate('Y-m-d H:i:s', $timestamp);
         $timezone = $this->getTimezone();
