@@ -40,7 +40,8 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         require_once __DIR__ . '/legacy/deprecated-functions.php';
         require_once __DIR__ . '/legacy/autoload.php';
 
-        require_once PUBLISHPRESS_FUTURE_BASE_PATH . '/vendor/woocommerce/action-scheduler/action-scheduler.php';
+
+        require_once PUBLISHPRESS_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
 
         $container->get(ServicesAbstract::PLUGIN)->initialize();
     } catch (Exception $e) {

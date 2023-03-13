@@ -42,6 +42,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/publishpress/publishpress-phpcs-standards"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/publishpress/vendor-locator"
     }
   ],
   "require": {
@@ -52,7 +56,8 @@
     "publishpress/wordpress-version-notices": "~1.2",
     "ext-json": "*",
     "psr/container": "1.1.1",
-    "woocommerce/action-scheduler": "^3.5"
+    "woocommerce/action-scheduler": "^3.5",
+    "publishpress/vendor-locator": "dev-main"
   },
   "require-dev": {
     "lucatume/wp-browser": "^3",
