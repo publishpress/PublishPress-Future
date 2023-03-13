@@ -949,7 +949,7 @@ function postexpirator_upgrade()
         }
 
         if (version_compare($version, '3') === -1) {
-            $container->get(ServicesAbstract::CRON)->cron->enqueueAsyncAction(WPCronToActionsScheduler::HOOK);
+            $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(WPCronToActionsScheduler::HOOK);
         }
     }
 
