@@ -72,16 +72,6 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">
-                        <label for="cron-schedule">
-                            <?php esc_html_e('Scheduled Actions', 'post-expirator'); ?>
-                        </label>
-                    </th>
-                    <td>
-
-                    </td>
-                </tr>
-                <tr>
                     <th scope="row"><label for="cron-schedule"><?php
                             esc_html_e('Legacy Cron Schedule', 'post-expirator'); ?></label></th>
                     <td>
@@ -171,6 +161,14 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                             <?php
                         }
                         ?>
+                        <p><?php
+                            // phpcs:disable Generic.Files.LineLength.TooLong
+                            esc_html_e(
+                                'This is a legacy feature and will be removed in a future version.',
+                                'post-expirator'
+                            );
+                            // phpcs:enable
+                            ?></p>
                     </td>
                 </tr>
             </table>

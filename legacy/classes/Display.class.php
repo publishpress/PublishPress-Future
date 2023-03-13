@@ -30,7 +30,6 @@ class PostExpirator_Display
      */
     private function hooks()
     {
-        add_action('admin_menu', [$this, 'add_menu']);
         add_action('init', [$this, 'init']);
     }
 
@@ -48,22 +47,6 @@ class PostExpirator_Display
 
     public function init()
     {
-    }
-
-    /**
-     * Add plugin page menu.
-     */
-    public function add_menu()
-    {
-        add_menu_page(
-            __('PublishPress Future Options', 'post-expirator'),
-            __('Future', 'post-expirator'),
-            'manage_options',
-            'publishpress-future',
-            array(self::$instance, 'settings_tabs'),
-            'dashicons-clock',
-            74
-        );
     }
 
     /**

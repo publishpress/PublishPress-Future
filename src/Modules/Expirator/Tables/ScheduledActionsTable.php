@@ -9,10 +9,21 @@ use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapte
 
 class ScheduledActionsTable extends \ActionScheduler_ListTable
 {
+    public function __construct(
+        \ActionScheduler_Store $store,
+        \ActionScheduler_Logger $logger,
+        \ActionScheduler_QueueRunner $runner
+    ) {
+        parent::__construct($store, $logger, $runner);
+
+        $this->table_header = __('Future Actions', 'post-expirator');
+    }
+
     /**
      * {@inheritDoc}
      */
-    public function prepare_items() {
+    public function prepare_items()
+    {
         $this->prepare_column_headers();
 
         $per_page = $this->get_items_per_page($this->get_per_page_option_name(), $this->items_per_page);
