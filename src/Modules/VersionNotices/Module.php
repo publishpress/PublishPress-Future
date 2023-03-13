@@ -50,6 +50,10 @@ class Module implements ModuleInterface
                                             'base' => 'toplevel_page_publishpress-future',
                                             'id'   => 'toplevel_page_publishpress-future'
                                         ],
+                                        [
+                                            'base' => 'future_page_publishpress-future-scheduled-actions',
+                                            'id'   => 'future_page_publishpress-future-scheduled-actions'
+                                        ]
                                     ]
                                 ];
 

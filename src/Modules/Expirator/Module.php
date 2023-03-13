@@ -13,6 +13,7 @@ use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Modules\Expirator\Controllers\BulkEditController;
 use PublishPressFuture\Modules\Expirator\Controllers\ExpirationController;
+use PublishPressFuture\Modules\Expirator\Controllers\ScheduledActionsController;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 
 class Module implements ModuleInterface
@@ -83,7 +84,9 @@ class Module implements ModuleInterface
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
+        $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
     }
+
 
     /**
      * @inheritDoc
@@ -114,6 +117,13 @@ class Module implements ModuleInterface
             $this->sanitization,
             $this->currentUserModelFactory,
             $this->request
+        );
+    }
+
+    private function factoryScheduledActionsController()
+    {
+        return new ScheduledActionsController (
+            $this->hooks
         );
     }
 }

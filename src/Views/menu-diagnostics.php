@@ -1,6 +1,7 @@
 <?php
 
 use PublishPressFuture\Modules\Debug\HooksAbstract;
+use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');

@@ -41,6 +41,7 @@ use PublishPressFuture\Modules\Expirator\Models\DefaultDataModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel;
 use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
+use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
 use PublishPressFuture\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPressFuture\Modules\Settings\Models\TaxonomiesModel;
@@ -462,6 +463,16 @@ return [
                         $container
                     );
             }
+        };
+    },
+
+    ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY => static function (ContainerInterface $container) {
+        return function() use ($container) {
+            return new ScheduledActionsTable(
+                ActionScheduler::store(),
+                ActionScheduler::logger(),
+                ActionScheduler::runner()
+            );
         };
     },
 ];
