@@ -833,10 +833,17 @@ function postexpirator_css($screen_id)
         case 'post.php':
         case 'post-new.php':
         case 'settings_page_post-expirator':
+        case 'future_page_publishpress-future-scheduled-actions':
             wp_enqueue_style(
                 'postexpirator-css',
                 POSTEXPIRATOR_BASEURL . 'assets/css/style.css',
-                array(),
+                false,
+                POSTEXPIRATOR_VERSION
+            );
+            wp_enqueue_style(
+                'pe-footer',
+                POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
+                false,
                 POSTEXPIRATOR_VERSION
             );
             break;

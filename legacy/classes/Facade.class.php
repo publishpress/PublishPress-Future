@@ -97,16 +97,21 @@ class PostExpirator_Facade
         switch ($for) {
             case 'settings':
                 wp_enqueue_style(
+                    'pe-footer',
+                    POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
+                    false,
+                    POSTEXPIRATOR_VERSION
+                );
+                wp_enqueue_style(
                     'pe-settings',
                     POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
-                    array(),
-                    POSTEXPIRATOR_VERSION,
-                    false
+                    ['pe-footer'],
+                    POSTEXPIRATOR_VERSION
                 );
                 wp_enqueue_style(
                     'pe-jquery-ui',
                     POSTEXPIRATOR_BASEURL . 'assets/css/lib/jquery-ui/jquery-ui.min.css',
-                    array('pe-settings'),
+                    ['pe-settings'],
                     POSTEXPIRATOR_VERSION
                 );
                 wp_enqueue_style(
