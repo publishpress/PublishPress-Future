@@ -17,6 +17,8 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         parent::__construct($store, $logger, $runner);
 
         $this->table_header = __('Future Actions', 'post-expirator');
+
+        unset($this->columns['group']);
     }
 
     /**
