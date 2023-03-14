@@ -88,13 +88,66 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         ));
     }
 
+    protected function display_filter_by_status()
+    {
+        $this->status_counts = $this->store->action_counts() + $this->store->extra_action_counts();
+
+        // for each status, recount the number of actions
+        foreach ($this->status_counts as $status => $count) {
+            $query = array(
+                'status' => $status,
+                'group' => CronToWooActionSchedulerAdapter::SCHEDULED_ACTION_GROUP,
+            );
+            $this->status_counts[$status] = $this->store->query_actions($query, 'count');
+        }
+
+        $status_list_items = array();
+        $request_status = $this->get_request_status();
+
+        // Helper to set 'all' filter when not set on status counts passed in.
+        if (! isset($this->status_counts['all'])) {
+            $this->status_counts = array('all' => array_sum($this->status_counts)) + $this->status_counts;
+        }
+
+        foreach ($this->status_counts as $status_name => $count) {
+            if (0 === $count) {
+                continue;
+            }
+
+            if ($status_name === $request_status || (empty($request_status) && 'all' === $status_name)) {
+                $status_list_item = '<li class="%1$s"><a href="%2$s" class="current">%3$s</a> (%4$d)</li>';
+            } else {
+                $status_list_item = '<li class="%1$s"><a href="%2$s">%3$s</a> (%4$d)</li>';
+            }
+
+            $status_filter_url = ('all' === $status_name) ? remove_query_arg('status') : add_query_arg(
+                'status',
+                $status_name
+            );
+            $status_filter_url = remove_query_arg(array('paged', 's'), $status_filter_url);
+            $status_list_items[] = sprintf(
+                $status_list_item,
+                esc_attr($status_name),
+                esc_url($status_filter_url),
+                esc_html(ucfirst($status_name)),
+                absint($count)
+            );
+        }
+
+        if ($status_list_items) {
+            echo '<ul class="subsubsub">';
+            echo implode(" | \n", $status_list_items); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo '</ul>';
+        }
+    }
+
     public function column_status(array $row)
     {
         $icons = [
             \ActionScheduler_Store::STATUS_COMPLETE => 'dashicons dashicons-yes-alt action-scheduler-status-icon-complete',
-            \ActionScheduler_Store::STATUS_PENDING  => 'dashicons dashicons-clock action-scheduler-status-icon-pending',
-            \ActionScheduler_Store::STATUS_RUNNING  => 'dashicons dashicons-update action-scheduler-status-icon-running',
-            \ActionScheduler_Store::STATUS_FAILED   => 'dashicons dashicons-warning action-scheduler-status-icon-failed',
+            \ActionScheduler_Store::STATUS_PENDING => 'dashicons dashicons-clock action-scheduler-status-icon-pending',
+            \ActionScheduler_Store::STATUS_RUNNING => 'dashicons dashicons-update action-scheduler-status-icon-running',
+            \ActionScheduler_Store::STATUS_FAILED => 'dashicons dashicons-warning action-scheduler-status-icon-failed',
             \ActionScheduler_Store::STATUS_CANCELED => 'dashicons dashicons-no action-scheduler-status-icon-canceled',
         ];
 
