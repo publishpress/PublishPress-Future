@@ -88,11 +88,34 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         ));
     }
 
-    protected function display_filter_by_status()
+    protected function extra_action_counts()
     {
-        $this->status_counts = $this->store->action_counts() + $this->store->extra_action_counts();
+        $extra_actions = array();
 
-        // for each status, recount the number of actions
+        $pastdue_action_counts = ( int )$this->store->query_actions([
+            'status' => \ActionScheduler_Store::STATUS_PENDING,
+            'date' => as_get_datetime_object(),
+            'group' => CronToWooActionSchedulerAdapter::SCHEDULED_ACTION_GROUP,
+        ], 'count');
+
+        if ($pastdue_action_counts) {
+            $extra_actions['past-due'] = $pastdue_action_counts;
+        }
+
+        /**
+         * Allows 3rd party code to add extra action counts (used in filters in the list table).
+         *
+         * @param $extra_actions array Array with format action_count_identifier => action count.
+         * @since 3.5.0
+         */
+        return apply_filters('action_scheduler_extra_action_counts', $extra_actions);
+    }
+
+    protected function update_status_counts()
+    {
+        $this->status_counts = $this->store->action_counts();
+
+        // Update the status count
         foreach ($this->status_counts as $status => $count) {
             $query = array(
                 'status' => $status,
@@ -100,6 +123,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             );
             $this->status_counts[$status] = $this->store->query_actions($query, 'count');
         }
+
+        $this->status_counts = array_merge($this->status_counts, $this->extra_action_counts());
+    }
+
+    protected function display_filter_by_status()
+    {
+        $this->update_status_counts();
 
         $status_list_items = array();
         $request_status = $this->get_request_status();
