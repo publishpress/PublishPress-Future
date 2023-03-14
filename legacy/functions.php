@@ -851,7 +851,7 @@ function postexpirator_css($screen_id)
             wp_enqueue_style(
                 'postexpirator-edit',
                 POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
-                array(),
+                false,
                 POSTEXPIRATOR_VERSION
             );
             break;
