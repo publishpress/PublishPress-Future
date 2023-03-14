@@ -111,7 +111,7 @@ $defaults = $settingsFacade->getPostTypeDefaults($post_type);
                     <div class="post-expirator-date-fields">
                         <legend>
                             <span class="title"><?php
-                                esc_html_e('Type', 'post-expirator'); ?></span>
+                                esc_html_e('Action', 'post-expirator'); ?></span>
                             <span class="screen-reader-text"><?php
                                 esc_html_e('How to expire', 'post-expirator'); ?></span>
                         </legend>
