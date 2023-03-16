@@ -36,6 +36,7 @@ use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPressFuture\Modules\Expirator\Models\ActionArgsModel;
 use PublishPressFuture\Modules\Expirator\Models\CurrentUserModel;
 use PublishPressFuture\Modules\Expirator\Models\DefaultDataModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
@@ -258,7 +259,8 @@ return [
             $container->get(ServicesAbstract::ERROR),
             $container->get(ServicesAbstract::LOGGER),
             $container->get(ServicesAbstract::DATETIME),
-            $container->get(ServicesAbstract::POST_MODEL_FACTORY)
+            $container->get(ServicesAbstract::POST_MODEL_FACTORY),
+            $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY)
         );
     },
 
@@ -382,7 +384,8 @@ return [
                 $container->get(ServicesAbstract::SETTINGS),
                 $container->get(ServicesAbstract::EMAIL),
                 $container->get(ServicesAbstract::TERM_MODEL_FACTORY),
-                $container->get(ServicesAbstract::EXPIRATION_ACTION_FACTORY)
+                $container->get(ServicesAbstract::EXPIRATION_ACTION_FACTORY),
+                $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY)
             );
         };
     },
@@ -473,6 +476,12 @@ return [
                 ActionScheduler::logger(),
                 ActionScheduler::runner()
             );
+        };
+    },
+
+    ServicesAbstract::ACTION_ARGS_MODEL_FACTORY => static function (ContainerInterface $container) {
+        return function () use ($container) {
+            return new ActionArgsModel();
         };
     },
 ];

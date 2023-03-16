@@ -60,4 +60,9 @@ class PostStatusToDraft implements ExpirationActionInterface
 
         return $result;
     }
+
+    public static function getLabel(): string
+    {
+        return __('Change post status to draft', 'post-expirator');
+    }
 }

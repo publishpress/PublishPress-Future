@@ -60,4 +60,9 @@ class PostStatusToPrivate implements ExpirationActionInterface
 
         return $result;
     }
+
+    public static function getLabel(): string
+    {
+        return __('Change post status to private', 'post-expirator');
+    }
 }

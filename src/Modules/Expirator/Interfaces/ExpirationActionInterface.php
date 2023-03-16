@@ -22,4 +22,6 @@ interface ExpirationActionInterface
      * @return string
      */
     public function __toString();
+
+    public static function getLabel(): string;
 }

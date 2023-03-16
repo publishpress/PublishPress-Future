@@ -30,7 +30,7 @@ interface CronInterface
      * @param int $timestamp
      * @param string $action
      * @param array $args
-     * @return bool|\WP_Error
+     * @return int
      */
     public function scheduleSingleAction($timestamp, $action, $args = []);
 

@@ -93,4 +93,9 @@ class PostCategoryAdd implements ExpirationActionInterface
 
         return ! $resultIsError;
     }
+
+    public static function getLabel(): string
+    {
+        return __('Add taxonomy term(s)', 'post-expirator');
+    }
 }

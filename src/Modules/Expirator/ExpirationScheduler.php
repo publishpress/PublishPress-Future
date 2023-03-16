@@ -45,12 +45,18 @@ class ExpirationScheduler implements SchedulerInterface
     private $postModelFactory;
 
     /**
+     * @var \Closure
+     */
+    private $actionArgsModelFactory;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param CronInterface $cron
      * @param ErrorFacade $errorFacade
      * @param LoggerInterface $logger
      * @param DateTimeFacade $datetime
      * @param \Closure $postModelFactory
+     * @param $actionArgsModelFactory
      */
     public function __construct(
         $hooksFacade,
@@ -58,7 +64,8 @@ class ExpirationScheduler implements SchedulerInterface
         $errorFacade,
         $logger,
         $datetime,
-        $postModelFactory
+        $postModelFactory,
+        $actionArgsModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->cron = $cron;
@@ -66,6 +73,7 @@ class ExpirationScheduler implements SchedulerInterface
         $this->logger = $logger;
         $this->datetime = $datetime;
         $this->postModelFactory = $postModelFactory;
+        $this->actionArgsModelFactory = $actionArgsModelFactory;
     }
 
     public function schedule(int $postId, int $timestamp, array $opts): void
@@ -74,35 +82,37 @@ class ExpirationScheduler implements SchedulerInterface
 
         $this->unscheduleIfScheduled($postId, $timestamp);
 
-        $scheduled = $this->cron->scheduleSingleAction(
+        $actionId = $this->cron->scheduleSingleAction(
             $timestamp,
             HooksAbstract::ACTION_RUN_WORKFLOW,
             [
                 'postId' => $postId,
-                'action' => 'expire',
+                'workflow' => 'expire'
             ]
         );
 
-        if (! $scheduled) {
+        if (! $actionId) {
             $this->logger->debug(
                 sprintf(
-                    '%d  -> TRIED TO SCHEDULE ACTION using %s at %s (%s) with options %s %s',
+                    '%d  -> TRIED TO SCHEDULE ACTION using %s at %s (%s) with options %s',
                     $postId,
                     $this->cron->getIdentifier(),
                     $this->datetime->getWpDate('r', $timestamp),
                     $timestamp,
                     // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-                    print_r($opts, true),
-                    $this->error->isWpError($scheduled) ? $this->error->getWpErrorMessage(
-                        $scheduled
-                    ) : 'no errors found'
+                    print_r($opts, true)
                 )
             );
 
             return;
         }
 
-        $this->storeExpirationDataInPostMeta($postId, $timestamp, $opts);
+        $actionArgsModel = ($this->actionArgsModelFactory)();
+        $actionArgsModel->setCronActionId($actionId)
+            ->setPostId($postId)
+            ->setScheduledDateFromUnixTime($timestamp)
+            ->setArgs($opts)
+            ->add();
 
         $this->logger->debug(
             sprintf(
@@ -126,34 +136,9 @@ class ExpirationScheduler implements SchedulerInterface
         }
     }
 
-
     public function isScheduled($postId)
     {
-        return $this->cron->getNextScheduleForAction(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'action' => 'expire']);
-    }
-
-    /**
-     * @param $postId
-     * @param $timestamp
-     * @param $opts
-     * @return void
-     */
-    private function storeExpirationDataInPostMeta($postId, $timestamp, $opts)
-    {
-        $postModelFactory = $this->postModelFactory;
-        $postModel = $postModelFactory($postId);
-
-        $postModel->updateMeta(
-            [
-                PostMetaAbstract::EXPIRATION_TIMESTAMP => $timestamp,
-                PostMetaAbstract::EXPIRATION_STATUS => 'saved',
-                PostMetaAbstract::EXPIRATION_DATE_OPTIONS => $opts,
-                PostMetaAbstract::EXPIRATION_TYPE => $opts['expireType'],
-                PostMetaAbstract::EXPIRATION_TERMS => isset($opts['category']) ? (array)$opts['category'] : [],
-                PostMetaAbstract::EXPIRATION_TAXONOMY => isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '',
-                PostMetaAbstract::CRON_IDENTIFIER => $this->cron->getIdentifier(),
-            ]
-        );
+        return $this->cron->postHasScheduledActions($postId);
     }
 
     /**
@@ -164,7 +149,7 @@ class ExpirationScheduler implements SchedulerInterface
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_UNSCHEDULE, $postId);
 
         if ($this->isScheduled($postId)) {
-            $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'action' => 'expire']);
+            $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire']);
 
             $errorFeedback = null;
             if ($this->error->isWpError($result)) {
@@ -175,31 +160,13 @@ class ExpirationScheduler implements SchedulerInterface
                 $errorFeedback = 'no errors found';
             }
 
+            $actionArgsModel = ($this->actionArgsModelFactory)();
+            $actionArgsModel->loadByPostId($postId);
+            $actionArgsModel->delete();
+
             $message = $postId . ' -> CLEARED SCHEDULED ACTION using ' . $this->cron->getIdentifier() . ', ' . $errorFeedback;
 
             $this->logger->debug($message);
         }
-
-        $this->removeExpirationDataFromPostMeta($postId);
-    }
-
-    private function removeExpirationDataFromPostMeta($postId)
-    {
-        $postModelFactory = $this->postModelFactory;
-        $postModel = $postModelFactory($postId);
-
-        $postModel->deleteMeta(
-            [
-                PostMetaAbstract::EXPIRATION_TIMESTAMP,
-                PostMetaAbstract::EXPIRATION_STATUS,
-                PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
-                PostMetaAbstract::EXPIRATION_TYPE,
-                PostMetaAbstract::EXPIRATION_TERMS,
-                PostMetaAbstract::EXPIRATION_TAXONOMY,
-                PostMetaAbstract::CRON_IDENTIFIER,
-            ]
-        );
-
-        $this->logger->debug($postId . ' -> EXPIRATION DATA REMOVED from the post using ' . $this->cron->getIdentifier());
     }
 }

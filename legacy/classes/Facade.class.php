@@ -54,7 +54,7 @@ class PostExpirator_Facade
     {
         add_action('init', array($this, 'register_post_meta'), 100);
         add_action('enqueue_block_editor_assets', array($this, 'block_editor_assets'));
-        add_action('updated_postmeta', array($this, 'updatedmeta'), 10, 4);
+        add_action('updated_postmeta', array($this, 'onUpdatePostMeta'), 10, 4);
         add_filter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
     }
 
@@ -125,26 +125,9 @@ class PostExpirator_Facade
     }
 
     /**
-     * Set the expire type, categories etc. corresponding to the new (gutenberg) structure.
-     *
-     * @deprecated 2.8.0
-     */
-    public static function set_expire_principles($id, $opts)
-    {
-        update_post_meta($id, PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $opts);
-        update_post_meta($id, PostMetaAbstract::EXPIRATION_TYPE, $opts['expireType']);
-        update_post_meta($id, PostMetaAbstract::EXPIRATION_TERMS, isset($opts['category']) ? (array)$opts['category'] : []);
-        update_post_meta(
-            $id,
-            PostMetaAbstract::EXPIRATION_TAXONOMY,
-            isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : ''
-        );
-    }
-
-    /**
      * Fires when the post meta is updated (in the gutenberg block).
      */
-    public function updatedmeta($meta_id, $post_id, $meta_key, $meta_value)
+    public function onUpdatePostMeta($meta_id, $post_id, $meta_key, $meta_value)
     {
         // allow only through gutenberg
         if (! PostExpirator_Util::is_gutenberg_active()) {
@@ -166,83 +149,42 @@ class PostExpirator_Facade
         switch ($meta_key) {
             case PostMetaAbstract::EXPIRATION_STATUS:
                 if (empty($meta_value)) {
-                    $this->unschedule_event($post_id);
+                    do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post_id);
                 }
 
 
                 break;
             case PostMetaAbstract::EXPIRATION_TIMESTAMP:
-                $opts = self::get_expire_principles($post_id);
-                $this->schedule_event($post_id, $meta_value, $opts);
+                $container = Container::getInstance();
+                $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post_id);
+
+                do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post_id, $meta_value, $postModel->getExpirationDataAsArray());
 
                 break;
         }
-    }
-
-    /**
-     * Wrapper for unscheduling event.
-     */
-    private function unschedule_event($post_id)
-    {
-        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_TIMESTAMP);
-        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
-        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_TYPE);
-        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_TERMS);
-        delete_post_meta($post_id, PostMetaAbstract::EXPIRATION_TAXONOMY);
-
-        postexpirator_unschedule_event($post_id);
     }
 
     /**
      * Get the expiry type, categories etc.
      *
      * Keeps in mind the old (classic editor) and new (gutenberg) structure.
+     *
+     * @deprecated 3.0.0
      */
-    public static function get_expire_principles($id)
+    public static function get_expire_principles($postId): array
     {
-        $expireType = $categories = $taxonomyName = $expireStatus = '';
-        $expireTypeNew = get_post_meta($id, PostMetaAbstract::EXPIRATION_TYPE, true);
-        if (! empty($expireTypeNew)) {
-            $expireType = $expireTypeNew;
-        }
+        $container = Container::getInstance();
+        $actionArgsModel = ($container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY))();
 
-        $categoriesNew = (array)get_post_meta($id, PostMetaAbstract::EXPIRATION_TERMS, true);
-        if (! empty($categoriesNew)) {
-            $categories = $categoriesNew;
-        }
-
-        $taxonomyNameNew = get_post_meta($id, PostMetaAbstract::EXPIRATION_TAXONOMY, true);
-        if (! empty($taxonomyNameNew)) {
-            $taxonomyName = $taxonomyNameNew;
-        }
-
-        // _expiration-date-options is deprecated when using block editor
-        $opts = get_post_meta($id, PostMetaAbstract::EXPIRATION_DATE_OPTIONS, true);
-        if (empty($expireType) && isset($opts['expireType'])) {
-            $expireType = $opts['expireType'];
-        }
-        if (empty($categories)) {
-            $categories = isset($opts['category']) ? $opts['category'] : [];
-        }
-
-        if (empty($taxonomyName)) {
-            $taxonomyName = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
-        }
+        $actionArgsModel->loadByPostId($postId);
+        $args = $actionArgsModel->getArgs();
 
         return array(
-            'expireType' => $expireType,
-            'category' => $categories,
-            'categoryTaxonomy' => $taxonomyName,
-            'enabled' => self::is_expiration_enabled_for_post($id),
+            'expireType' => $args['expireType'] ?? '',
+            'category' => $args['category'] ?? [],
+            'categoryTaxonomy' => $args['categoryTaxonomy'] ?? '',
+            'enabled' => true,
         );
-    }
-
-    /**
-     * Wrapper for scheduling event.
-     */
-    private function schedule_event($post_id, $ts, $opts)
-    {
-        do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post_id, $ts, $opts);
     }
 
     /**
@@ -370,7 +312,9 @@ class PostExpirator_Facade
                 true
             );
 
-            $default_expiry = PostExpirator_Facade::get_default_expiry($post->post_type);
+            $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+
+            $default_expiry = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
             wp_localize_script(
                 'postexpirator-gutenberg-panel',
                 'postExpiratorPanelConfig',
@@ -434,18 +378,6 @@ class PostExpirator_Facade
         return $currentUserModel->userCanExpirePosts();
     }
 
-    /**
-     * Calculates the default expiry date as set in the options.
-     *
-     * @deprecated 2.8.0
-     */
-    public static function get_default_expiry($post_type)
-    {
-        $container = Container::getInstance();
-        $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
-
-        return $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
-    }
 
     /**
      * Add the plugin capabilities to the PublishPress Capabilities plugin.
@@ -464,11 +396,10 @@ class PostExpirator_Facade
         );
     }
 
-    public static function is_expiration_enabled_for_post($post_id)
+    public static function is_expiration_enabled_for_post($postId)
     {
-        $statusEnabled = get_post_meta($post_id, PostMetaAbstract::EXPIRATION_STATUS, true) === 'saved';
-        $date = (int)get_post_meta($post_id, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+        $container = Container::getInstance();
 
-        return $statusEnabled && false === empty($date);
+        return $container->get(ServicesAbstract::EXPIRATION_SCHEDULER)->isScheduled($postId);
     }
 }

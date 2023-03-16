@@ -5,6 +5,8 @@
 
 namespace PublishPressFuture\Modules\Expirator\Tables;
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 
 class ScheduledActionsTable extends \ActionScheduler_ListTable
@@ -19,6 +21,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         $this->table_header = __('Future Actions', 'post-expirator');
 
         unset($this->columns['group']);
+        $this->columns['hook'] = __('Action', 'post-expirator');
     }
 
     /**
@@ -178,7 +181,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             \ActionScheduler_Store::STATUS_PENDING => 'dashicons dashicons-clock action-scheduler-status-icon-pending',
             \ActionScheduler_Store::STATUS_RUNNING => 'dashicons dashicons-update action-scheduler-status-icon-running',
             \ActionScheduler_Store::STATUS_FAILED => 'dashicons dashicons-warning action-scheduler-status-icon-failed',
-            \ActionScheduler_Store::STATUS_CANCELED => 'dashicons dashicons-no action-scheduler-status-icon-canceled',
+            \ActionScheduler_Store::STATUS_CANCELED => 'dashicons dashicons-marker action-scheduler-status-icon-canceled',
         ];
 
         $iconClass = 'dashicons dashicons-editor-help';
@@ -186,7 +189,23 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $iconClass = $icons[$row['status_name']];
         }
 
-        echo '<span class="' . $iconClass . '"></span> ' . $row['status'];
+        echo '<span class="' . esc_attr($iconClass) . '"></span> ' . esc_html($row['status']);
+    }
+
+    public function column_hook(array $row)
+    {
+//        $container = Container::getInstance();
+//        $modelFactory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+
+        if ($row['hook'] === 'publishpress_future/run_workflow' && isset($row['args']['workflow']) && $row['args']['workflow'] === 'expire') {
+//            $model = $modelFactory($row['args']['post_id']);
+//            $action = $model->getExpirationAction();
+//
+//            echo esc_html($action->getLabel());
+//            return;
+        }
+
+        echo esc_html($row['hook'] . " [{$row['ID']}]");
     }
 
 //    /**

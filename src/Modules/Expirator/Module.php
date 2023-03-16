@@ -15,6 +15,7 @@ use PublishPressFuture\Modules\Expirator\Controllers\BulkEditController;
 use PublishPressFuture\Modules\Expirator\Controllers\ExpirationController;
 use PublishPressFuture\Modules\Expirator\Controllers\ScheduledActionsController;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class Module implements ModuleInterface
 {

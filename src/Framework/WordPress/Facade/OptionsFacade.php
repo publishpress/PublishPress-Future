@@ -58,6 +58,7 @@ class OptionsFacade
     public function getOptionsWithPrefix(string $prefix)
     {
         global $wpdb;
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $options = $wpdb->get_results(
             $wpdb->prepare(
                 "SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE %s",

@@ -1,5 +1,7 @@
 <?php
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Modules\Debug\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
@@ -7,7 +9,7 @@ use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = PublishPressFuture\Core\DI\Container::getInstance();
-$debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
+$debug = $container->get(ServicesAbstract::DEBUG);
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -117,7 +119,11 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                                         <?php
                                             $printPostEvent = function ($post) {
                                                 echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
-                                                $attributes = PostExpirator_Facade::get_expire_principles($post->ID);
+
+                                                $container = Container::getInstance();
+                                                $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+                                                $attributes = $postModel->getExpirationDataAsArray();
+
                                                 echo ': <span class="post-expiration-attributes">';
                                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                                                 print_r($attributes);

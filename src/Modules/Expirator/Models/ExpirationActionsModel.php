@@ -6,6 +6,15 @@
 namespace PublishPressFuture\Modules\Expirator\Models;
 
 use PublishPressFuture\Core\HookableInterface;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategorySet;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToDraft;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToTrash;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\StickPost;
+use PublishPressFuture\Modules\Expirator\ExpirationActions\UnstickPost;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
 
@@ -42,15 +51,15 @@ class ExpirationActionsModel
     {
         if (! isset($this->actions[$postType])) {
             $actions = [
-                ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => __('Draft', 'post-expirator'),
-                ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => __('Private', 'post-expirator'),
-                ExpirationActionsAbstract::POST_STATUS_TO_TRASH => __('Trash', 'post-expirator'),
-                ExpirationActionsAbstract::DELETE_POST => __('Delete', 'post-expirator'),
-                ExpirationActionsAbstract::STICK_POST => __('Stick', 'post-expirator'),
-                ExpirationActionsAbstract::UNSTICK_POST => __('Unstick', 'post-expirator'),
-                ExpirationActionsAbstract::POST_CATEGORY_SET => __('Taxonomy: Replace', 'post-expirator'),
-                ExpirationActionsAbstract::POST_CATEGORY_ADD => __('Taxonomy: Add', 'post-expirator'),
-                ExpirationActionsAbstract::POST_CATEGORY_REMOVE => __('Taxonomy: Remove', 'post-expirator'),
+                ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => PostStatusToDraft::getLabel(),
+                ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => PostStatusToPrivate::getLabel(),
+                ExpirationActionsAbstract::POST_STATUS_TO_TRASH => PostStatusToTrash::getLabel(),
+                ExpirationActionsAbstract::DELETE_POST => DeletePost::getLabel(),
+                ExpirationActionsAbstract::STICK_POST => StickPost::getLabel(),
+                ExpirationActionsAbstract::UNSTICK_POST => UnstickPost::getLabel(),
+                ExpirationActionsAbstract::POST_CATEGORY_SET => PostCategorySet::getLabel(),
+                ExpirationActionsAbstract::POST_CATEGORY_ADD => PostCategoryAdd::getLabel(),
+                ExpirationActionsAbstract::POST_CATEGORY_REMOVE => PostCategoryRemove::getLabel(),
             ];
 
             $this->actions[$postType] = $this->hooks->applyFilters(

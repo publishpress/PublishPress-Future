@@ -11,7 +11,7 @@ use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\MigrationInterface;
 
-class WPCronToActionsScheduler implements MigrationInterface
+class V30000WPCronToActionsScheduler implements MigrationInterface
 {
     public const HOOK = ExpiratorHooks::ACTION_MIGRATE_WPCRON_EXPIRATIONS;
 
@@ -76,7 +76,7 @@ class WPCronToActionsScheduler implements MigrationInterface
                 HooksAbstract::ACTION_RUN_WORKFLOW,
                 [
                     'postId' => $postId,
-                    'action' => 'expire',
+                    'workflow' => 'expire',
                 ]
             );
 

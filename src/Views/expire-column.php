@@ -3,6 +3,8 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -13,26 +15,24 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $iconClass = '';
     $iconTitle = '';
 
-    $expirationEnabled = PostExpirator_Facade::is_expiration_enabled_for_post($id);
-    $expirationDate = get_post_meta($id, PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+    $container = Container::getInstance();
+    $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($id);
+
+    $expirationEnabled = $postModel->isExpirationEnabled();
+    $expirationDate = $postModel->getExpirationDate();
 
     if ($expirationDate && $expirationEnabled) {
         $format = get_option('date_format') . ' ' . get_option('time_format');
         $display = PostExpirator_Util::get_wp_date($format, $expirationDate);
-        if (PostExpirator_CronFacade::post_has_scheduled_task($id)) {
-            $iconClass = 'clock icon-scheduled';
-            $iconTitle = __('Cron event scheduled.', 'post-expirator');
-        } else {
-            $iconClass = 'warning icon-missed';
-            $iconTitle = __('Cron event not found!', 'post-expirator');
-        }
+
+        $iconClass = 'clock icon-scheduled';
+        $iconTitle = __('Cron event scheduled.', 'post-expirator');
     } else {
         $display = __('Never', 'post-expirator');
         $iconClass = 'marker icon-never';
     }
 
-    $container = \PublishPressFuture\Core\DI\Container::getInstance();
-    $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
     $defaultsForPostType = $settingsFacade->getPostTypeDefaults($post_type);
     $expireType = 'draft';
@@ -41,7 +41,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
     }
 
     // these defaults will be used by quick edit
-    $defaults = PostExpirator_Facade::get_default_expiry($post_type);
+    $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+
+    $defaults = $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
 
     $defaultYear = $defaults['year'];
     $defaultMonth = $defaults['month'];

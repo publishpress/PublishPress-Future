@@ -1,8 +1,14 @@
 <?php
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
-$defaults = PostExpirator_Facade::get_default_expiry($post_type);
+$container = Container::getInstance();
+$defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+
+$defaults = $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
 
 $defaultYear = $defaults['year'];
 $defaultMonth = $defaults['month'];
@@ -10,8 +16,7 @@ $defaultDay = $defaults['day'];
 $defaultHour = $defaults['hour'];
 $defaultMinute = $defaults['minute'];
 
-$container = \PublishPressFuture\Core\DI\Container::getInstance();
-$settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+$settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
 $defaults = $settingsFacade->getPostTypeDefaults($post_type);
 ?>

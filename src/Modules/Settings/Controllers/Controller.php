@@ -9,7 +9,8 @@ use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
-use PublishPressFuture\Modules\Expirator\Migrations\WPCronToActionsScheduler;
+use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
+use PublishPressFuture\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 
@@ -301,7 +302,7 @@ class Controller implements InitializableInterface
                 wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
             }
 
-            $this->cron->enqueueAsyncAction(WPCronToActionsScheduler::HOOK);
+            $this->cron->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK);
 
             wp_redirect(
                 admin_url(
@@ -338,7 +339,8 @@ class Controller implements InitializableInterface
 
     public function initMigrations()
     {
-        new WPCronToActionsScheduler($this->cron, $this->hooks);
+        new V30000WPCronToActionsScheduler($this->cron, $this->hooks);
+        new V30000ActionArgsSchema($this->cron, $this->hooks);
     }
 
     private function saveTabDefaults()

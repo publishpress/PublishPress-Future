@@ -38,22 +38,14 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     /**
      * @inheritDoc
      */
-    public function scheduleSingleAction($timestamp, $action, $args = [])
+    public function scheduleSingleAction($timestamp, $action, $args = []): int
     {
         return as_schedule_single_action($timestamp, $action, $args, self::SCHEDULED_ACTION_GROUP);
     }
 
     public function postHasScheduledActions($postId): bool
     {
-        $events = $this->getScheduledActions(HooksAbstract::ACTION_RUN_WORKFLOW);
-
-        foreach ($events as $event) {
-            if ((int)$event->get_args()['postId'] === (int)$postId) {
-                return true;
-            }
-        }
-
-        return false;
+        return as_has_scheduled_action(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
     }
 
     public function getScheduledActions(string $hook): array

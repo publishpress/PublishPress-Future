@@ -15,6 +15,7 @@ use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 class ExpirationController implements InitializableInterface

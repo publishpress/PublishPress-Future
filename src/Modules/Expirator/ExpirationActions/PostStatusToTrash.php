@@ -60,4 +60,9 @@ class PostStatusToTrash implements ExpirationActionInterface
 
         return $result;
     }
+
+    public static function getLabel(): string
+    {
+        return __('Change post status to trash', 'post-expirator');
+    }
 }

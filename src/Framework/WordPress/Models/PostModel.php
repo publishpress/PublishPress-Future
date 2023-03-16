@@ -79,7 +79,7 @@ class PostModel
      * @param mixed $metaValue
      * @return false|int
      */
-    public function addMeta($metaKey, $metaValue = null)
+    public function addMeta(string $metaKey, $metaValue = null)
     {
         return add_post_meta($this->getPostId(), $metaKey, $metaValue);
     }
