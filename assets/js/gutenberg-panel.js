@@ -112,11 +112,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                 var _this2 = this;
 
                 return wp.apiFetch({ path: 'publishpress-future/v1/post-expiration/' + this.getPostId() }).then(function (data) {
-                    // this.editPostAttribute('expirationEnabled', data.enabled);
-                    // this.editPostAttribute('expirationAction', data.expireType);
-                    // this.editPostAttribute('expirationDate', data.date);
-                    // this.editPostAttribute('expirationTerms', data.category);
-                    // this.editPostAttribute('expirationTaxonomy', data.categoryTaxonomy);
+                    _this2.editPostAttribute('expirationEnabled', data.enabled);
+                    _this2.editPostAttribute('expirationAction', data.expireType);
+                    _this2.editPostAttribute('expirationDate', data.date);
+                    _this2.editPostAttribute('expirationTerms', data.category);
+                    _this2.editPostAttribute('expirationTaxonomy', data.categoryTaxonomy);
 
                     _this2.setState({
                         expirationEnabled: data.enabled,

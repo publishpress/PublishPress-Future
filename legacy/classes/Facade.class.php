@@ -52,7 +52,6 @@ class PostExpirator_Facade
      */
     private function hooks()
     {
-        add_action('init', array($this, 'register_post_meta'), 100);
         add_action('enqueue_block_editor_assets', array($this, 'block_editor_assets'));
         add_action('updated_postmeta', array($this, 'onUpdatePostMeta'), 10, 4);
         add_filter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
@@ -188,95 +187,6 @@ class PostExpirator_Facade
         );
     }
 
-    /**
-     * Register the post meta to use in the block.
-     */
-    public function register_post_meta()
-    {
-        $post_types = get_post_types(array('public' => true));
-        foreach ($post_types as $post_type) {
-            // this is important for CPTs to show the postMeta.
-            add_post_type_support($post_type, array('custom-fields'));
-
-//            register_post_meta(
-//                $post_type,
-//                PostMetaAbstract::EXPIRATION_STATUS,
-//                array(
-//                    'single' => true,
-//                    'type' => 'string',
-//                    'auth_callback' => function () {
-//                        return current_user_can('edit_posts');
-//                    },
-//                    'show_in_rest' => true,
-//                )
-//            );
-//            register_post_meta(
-//                $post_type,
-//                PostMetaAbstract::EXPIRATION_TIMESTAMP,
-//                array(
-//                    'single' => true,
-//                    'type' => 'number',
-//                    'auth_callback' => function () {
-//                        return current_user_can('edit_posts');
-//                    },
-//                    'show_in_rest' => true,
-//                )
-//            );
-//            register_post_meta(
-//                $post_type,
-//                PostMetaAbstract::EXPIRATION_TYPE,
-//                array(
-//                    'single' => true,
-//                    'type' => 'string',
-//                    'auth_callback' => function () {
-//                        return current_user_can('edit_posts');
-//                    },
-//                    'show_in_rest' => true,
-//                )
-//            );
-//            register_post_meta(
-//                $post_type,
-//                PostMetaAbstract::EXPIRATION_TERMS,
-//                array(
-//                    'single' => true,
-//                    'type' => 'array',
-//                    'auth_callback' => function () {
-//                        return current_user_can('edit_posts');
-//                    },
-//                    'show_in_rest' => array(
-//                        'schema' => array(
-//                            'type' => 'array',
-//                            'items' => array(
-//                                'type' => 'number',
-//                            ),
-//                        ),
-//                    ),
-//                )
-//            );
-
-            // this is the old complex field that we are now deprecating
-            // as it cannot be used easily in the block editor
-//            register_post_meta(
-//                $post_type,
-//                PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
-//                array(
-//                    'single' => true,
-//                    'type' => 'object',
-//                    'auth_callback' => function () {
-//                        return current_user_can('edit_posts');
-//                    },
-//                    'show_in_rest' => array(
-//                        'schema' => array(
-//                            'type' => 'object',
-//                            'additionalProperties' => true,
-//                            'properties' => []
-//                        ),
-//                    ),
-//                )
-//            );
-        }
-    }
-
     public function register_rest_api()
     {
         $apiNamespace = 'publishpress-future/v1';
@@ -371,13 +281,25 @@ class PostExpirator_Facade
 
     public function api_save_expiration_data(WP_REST_Request $request)
     {
-        error_log(print_r($request, true));
-        return rest_ensure_response([
-            'enabled' => $request->get_param('enabled'),
-            'date' => $request->get_param('date'),
-            'action' => $request->get_param('action'),
-            'terms' => $request->get_param('terms'),
-        ]);
+        $postId = absint($request->get_param('postId'));
+
+        $expirationEnabled = (bool)$request->get_param('enabled');
+
+        if ($expirationEnabled) {
+            $opts = [
+                'expireType' => sanitize_key($request->get_param('action')),
+                'category' => array_map('absint', (array)$request->get_param('terms')),
+                'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy')),
+                'enabled' => $expirationEnabled,
+                'date' => absint($request->get_param('date')),
+            ];
+
+            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, absint($request->get_param('date')), $opts);
+        } else {
+            do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+        }
+
+        return rest_ensure_response(true);
     }
 
     /**

@@ -69,11 +69,11 @@
 
         fetchExpirationDataFromApi() {
             return wp.apiFetch({path: 'publishpress-future/v1/post-expiration/' + this.getPostId()}).then((data) => {
-                // this.editPostAttribute('expirationEnabled', data.enabled);
-                // this.editPostAttribute('expirationAction', data.expireType);
-                // this.editPostAttribute('expirationDate', data.date);
-                // this.editPostAttribute('expirationTerms', data.category);
-                // this.editPostAttribute('expirationTaxonomy', data.categoryTaxonomy);
+                this.editPostAttribute('expirationEnabled', data.enabled);
+                this.editPostAttribute('expirationAction', data.expireType);
+                this.editPostAttribute('expirationDate', data.date);
+                this.editPostAttribute('expirationTerms', data.category);
+                this.editPostAttribute('expirationTaxonomy', data.categoryTaxonomy);
 
                 this.setState({
                     expirationEnabled: data.enabled,
@@ -88,7 +88,6 @@
         }
 
         saveCurrentPostData() {
-            //FIXME: Don't we need the editPostAttribute approach anymore? And in the other parts?
             const {expirationEnabled, expirationDate, expirationAction, expirationTerms} = this.state;
             let data;
 
