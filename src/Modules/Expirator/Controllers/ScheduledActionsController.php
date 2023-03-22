@@ -8,6 +8,7 @@ namespace PublishPressFuture\Modules\Expirator\Controllers;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPressFuture\Modules\Expirator\Models\ActionArgsModel;
 
 class ScheduledActionsController implements InitializableInterface
 {
@@ -15,14 +16,20 @@ class ScheduledActionsController implements InitializableInterface
      * @var HookableInterface
      */
     private $hooks;
+    /**
+     * @var \Closure
+     */
+    private $actionArgsModelFactory;
 
     /**
      * @param HookableInterface $hooksFacade
      */
     public function __construct(
-        HookableInterface $hooksFacade
+        HookableInterface $hooksFacade,
+        \Closure $actionArgsModelFactory
     ) {
         $this->hooks = $hooksFacade;
+        $this->actionArgsModelFactory = $actionArgsModelFactory;
     }
 
     public function initialize()
@@ -30,6 +37,10 @@ class ScheduledActionsController implements InitializableInterface
         $this->hooks->addAction(
             HooksAbstract::ACTION_ADMIN_MENU,
             [$this, 'onAdminMenu']
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_SCHEDULER_DELETED_ACTION,
+            [$this, 'onActionSchedulerDeletedAction']
         );
     }
 
@@ -72,5 +83,12 @@ class ScheduledActionsController implements InitializableInterface
         ];
 
         \PostExpirator_Display::getInstance()->render_template('scheduled-actions', $context);
+    }
+
+    public function onActionSchedulerDeletedAction($actionId)
+    {
+        $actionArgsModel = ($this->actionArgsModelFactory)();
+        $actionArgsModel->loadByActionId($actionId);
+        $actionArgsModel->delete();
     }
 }

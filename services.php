@@ -316,7 +316,8 @@ return [
             $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
             $container->get(ServicesAbstract::SANITIZATION),
             $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY),
-            $container->get(ServicesAbstract::REQUEST)
+            $container->get(ServicesAbstract::REQUEST),
+            $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY)
         );
     },
 
