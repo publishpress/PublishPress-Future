@@ -69,6 +69,11 @@ class Module implements ModuleInterface
      */
     private $actionArgsModelFactory;
 
+    /**
+     * @var \Closure
+     */
+    private $scheduledActionsTableFactory;
+
     public function __construct(
         $hooks,
         $site,
@@ -78,7 +83,8 @@ class Module implements ModuleInterface
         $sanitization,
         $currentUserModelFactory,
         $request,
-        \Closure $actionArgsModelFactory
+        \Closure $actionArgsModelFactory,
+        \Closure $scheduledActionsTableFactory
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -89,6 +95,7 @@ class Module implements ModuleInterface
         $this->currentUserModelFactory = $currentUserModelFactory;
         $this->request = $request;
         $this->actionArgsModelFactory = $actionArgsModelFactory;
+        $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
@@ -132,7 +139,8 @@ class Module implements ModuleInterface
     {
         return new ScheduledActionsController (
             $this->hooks,
-            $this->actionArgsModelFactory
+            $this->actionArgsModelFactory,
+            $this->scheduledActionsTableFactory
         );
     }
 }

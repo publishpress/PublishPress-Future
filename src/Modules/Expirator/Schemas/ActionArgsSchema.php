@@ -35,12 +35,15 @@ class ActionArgsSchema
             id bigint(20) NOT NULL AUTO_INCREMENT,
             cron_action_id bigint(20) NOT NULL,
             post_id bigint(20) NOT NULL,
+            enabled tinyint(1) NOT NULL DEFAULT 0,
             scheduled_date datetime NOT NULL,
             created_at datetime NOT NULL,
             args varchar(250) NOT NULL,
             PRIMARY KEY  (id),
             KEY post_id (post_id, id),
+            KEY enabled_post_id (post_id, enabled, id),
             KEY cron_action_id (cron_action_id, id)
+            KEY enabled_cron_action_id (cron_action_id, enabled, id)
         ) ENGINE=InnoDB $charsetCollate;";
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';

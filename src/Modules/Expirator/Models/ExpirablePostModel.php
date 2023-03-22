@@ -274,9 +274,7 @@ class ExpirablePostModel extends PostModel
     public function isExpirationEnabled()
     {
         if (is_null($this->expirationIsEnabled)) {
-            $date = $this->getExpirationDate();
-
-            $this->expirationIsEnabled = ! empty($date);
+            $this->expirationIsEnabled = $this->scheduler->postIsScheduled($this->postId);
         }
 
         return (bool)$this->expirationIsEnabled;

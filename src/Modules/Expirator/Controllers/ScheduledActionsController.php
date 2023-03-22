@@ -5,10 +5,12 @@
 
 namespace PublishPressFuture\Modules\Expirator\Controllers;
 
+use ActionScheduler;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\Models\ActionArgsModel;
+use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
 
 class ScheduledActionsController implements InitializableInterface
 {
@@ -22,14 +24,26 @@ class ScheduledActionsController implements InitializableInterface
     private $actionArgsModelFactory;
 
     /**
+     * @var ScheduledActionsTable
+     */
+    private $listTable;
+
+    /**
+     * @var \Closure
+     */
+    private $scheduledActionsTableFactory;
+
+    /**
      * @param HookableInterface $hooksFacade
      */
     public function __construct(
         HookableInterface $hooksFacade,
-        \Closure $actionArgsModelFactory
+        \Closure $actionArgsModelFactory,
+        \Closure $scheduledActionsTableFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->actionArgsModelFactory = $actionArgsModelFactory;
+        $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
     }
 
     public function initialize()
@@ -41,6 +55,18 @@ class ScheduledActionsController implements InitializableInterface
         $this->hooks->addAction(
             HooksAbstract::ACTION_SCHEDULER_DELETED_ACTION,
             [$this, 'onActionSchedulerDeletedAction']
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_SCHEDULER_CANCELED_ACTION,
+            [$this, 'onActionSchedulerDisableAction']
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_SCHEDULER_AFTER_EXECUTE,
+            [$this, 'onActionSchedulerDisableAction']
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_SCHEDULER_FAILED_EXECUTION,
+            [$this, 'onActionSchedulerDisableAction']
         );
     }
 
@@ -56,7 +82,7 @@ class ScheduledActionsController implements InitializableInterface
             74
         );
 
-        add_submenu_page(
+        $hook_suffix = add_submenu_page(
             'publishpress-future',
             __('Future Actions', 'post-expirator'),
             __('Future Actions', 'post-expirator'),
@@ -64,6 +90,7 @@ class ScheduledActionsController implements InitializableInterface
             'publishpress-future-scheduled-actions',
             [$this, 'renderScheduledActionsTemplate']
         );
+        add_action( 'load-' . $hook_suffix , [$this, 'processAdminUi']);
 
         global $submenu;
 
@@ -78,17 +105,40 @@ class ScheduledActionsController implements InitializableInterface
 
     public function renderScheduledActionsTemplate()
     {
-        $context = [
+        $table = $this->getListTable();
+        $table->display_page();
 
-        ];
-
-        \PostExpirator_Display::getInstance()->render_template('scheduled-actions', $context);
+        \PostExpirator_Display::getInstance()->publishpress_footer();
     }
 
     public function onActionSchedulerDeletedAction($actionId)
     {
         $actionArgsModel = ($this->actionArgsModelFactory)();
-        $actionArgsModel->loadByActionId($actionId);
-        $actionArgsModel->delete();
+        if ($actionArgsModel->loadByActionId($actionId)) {
+            $actionArgsModel->delete();
+        };
+    }
+
+    public function onActionSchedulerDisableAction($actionId)
+    {
+        $actionArgsModel = ($this->actionArgsModelFactory)();
+        if ($actionArgsModel->loadByActionId($actionId)) {
+            $actionArgsModel->setEnabled(false)->save();
+        };
+    }
+
+    private function getListTable(): ScheduledActionsTable
+    {
+        if (null === $this->listTable) {
+            $this->listTable = ($this->scheduledActionsTableFactory)();
+            $this->listTable->process_actions();
+        }
+
+        return $this->listTable;
+    }
+
+    public function processAdminUi()
+    {
+        $this->getListTable();
     }
 }

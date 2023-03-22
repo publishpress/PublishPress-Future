@@ -129,14 +129,14 @@ class ExpirationScheduler implements SchedulerInterface
 
     private function unscheduleIfScheduled($postId, $timestamp)
     {
-        if ($this->isScheduled($postId)) {
+        if ($this->postIsScheduled($postId)) {
             $this->logger->debug($postId . ' -> FOUND SCHEDULED ACTION for the post using ' . $this->cron->getIdentifier());
 
             $this->unschedule($postId);
         }
     }
 
-    public function isScheduled($postId)
+    public function postIsScheduled($postId): bool
     {
         return $this->cron->postHasScheduledActions($postId);
     }
@@ -148,7 +148,7 @@ class ExpirationScheduler implements SchedulerInterface
     {
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_UNSCHEDULE, $postId);
 
-        if ($this->isScheduled($postId)) {
+        if ($this->postIsScheduled($postId)) {
             $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire']);
 
             $errorFeedback = null;
@@ -159,10 +159,6 @@ class ExpirationScheduler implements SchedulerInterface
             if (empty($errorFeedback)) {
                 $errorFeedback = 'no errors found';
             }
-
-            $actionArgsModel = ($this->actionArgsModelFactory)();
-            $actionArgsModel->loadByPostId($postId);
-            $actionArgsModel->delete();
 
             $message = $postId . ' -> CLEARED SCHEDULED ACTION using ' . $this->cron->getIdentifier() . ', ' . $errorFeedback;
 

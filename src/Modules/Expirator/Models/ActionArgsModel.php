@@ -44,6 +44,11 @@ class ActionArgsModel
      */
     private $createdAt;
 
+    /**
+     * @var bool
+     */
+    private $enabled;
+
     public function __construct()
     {
         $this->tableName = ActionArgsSchema::getTableName();
@@ -57,11 +62,12 @@ class ActionArgsModel
             $this->postId = $row->post_id;
             $this->scheduledDate = $row->scheduled_date;
             $this->createdAt = $row->created_at;
+            $this->enabled = absint($row->enabled) === 1;
             $this->args = json_decode($row->args, true);
         }
     }
 
-    public function load(int $id): void
+    public function load(int $id): bool
     {
         global $wpdb;
 
@@ -74,10 +80,14 @@ class ActionArgsModel
             )
         );
 
-        $this->setAttributesFromRow($row);
+        if (! empty($row)) {
+            $this->setAttributesFromRow($row);
+        }
+
+        return is_object($row);
     }
 
-    public function loadByActionId(int $actionid): void
+    public function loadByActionId(int $actionid): bool
     {
         global $wpdb;
 
@@ -90,10 +100,17 @@ class ActionArgsModel
             )
         );
 
-        $this->setAttributesFromRow($row);
+        if (! empty($row)) {
+            $this->setAttributesFromRow($row);
+        }
+
+        return is_object($row);
     }
 
-    public function loadByPostId(int $postId): void
+    /**
+     * Load the enabled action by post ID. We can have only one enabled per post.
+     */
+    public function loadByPostId(int $postId): bool
     {
         global $wpdb;
 
@@ -101,12 +118,16 @@ class ActionArgsModel
         $row = $wpdb->get_row(
             $wpdb->prepare(
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                "SELECT * FROM {$this->tableName} WHERE post_id = %d LIMIT 1",
+                "SELECT * FROM {$this->tableName} WHERE enabled = 1 AND post_id = %d LIMIT 1",
                 $postId
             )
         );
 
-        $this->setAttributesFromRow($row);
+        if (! empty($row)) {
+            $this->setAttributesFromRow($row);
+        }
+
+        return is_object($row);
     }
 
     public function save(): void
@@ -119,6 +140,7 @@ class ActionArgsModel
             [
                 'cron_action_id' => $this->cronActionId,
                 'post_id'   => $this->postId,
+                'enabled'   => $this->enabled ? 1 : 0,
                 'args'      => wp_json_encode($this->args),
                 'scheduled_date' => $this->scheduledDate,
             ],
@@ -137,6 +159,7 @@ class ActionArgsModel
             [
                 'cron_action_id' => $this->cronActionId,
                 'post_id'   => $this->postId,
+                'enabled'   => 1,
                 'args'      => wp_json_encode($this->args),
                 'created_at' => current_time('mysql'),
                 'scheduled_date' => $this->scheduledDate,
@@ -161,7 +184,7 @@ class ActionArgsModel
 
     public function getId(): int
     {
-        return (int)$this->id;
+        return absint($this->id);
     }
 
     /**
@@ -169,7 +192,7 @@ class ActionArgsModel
      */
     public function getCronActionId(): int
     {
-        return (int)$this->cronActionId;
+        return absint($this->cronActionId);
     }
 
     /**
@@ -243,6 +266,17 @@ class ActionArgsModel
     public function getScheduledDate(): string
     {
         return (string)$this->scheduledDate;
+    }
+
+    public function setEnabled(bool $enabled): ActionArgsModel
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
+
+    public function getEnabled(): bool
+    {
+        return (bool)$this->enabled;
     }
 
     /**

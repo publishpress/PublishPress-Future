@@ -19,5 +19,5 @@ interface SchedulerInterface
      * @param int $postId
      * @return bool
      */
-    public function isScheduled($postId);
+    public function postIsScheduled($postId);
 }

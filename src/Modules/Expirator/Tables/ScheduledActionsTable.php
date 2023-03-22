@@ -29,6 +29,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
      */
     public function prepare_items()
     {
+        $this->process_bulk_action();
+        $this->process_row_actions();
+
         $this->prepare_column_headers();
 
         $per_page = $this->get_items_per_page($this->get_per_page_option_name(), $this->items_per_page);
@@ -205,59 +208,46 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 //            return;
         }
 
-        echo esc_html($row['hook'] . " [{$row['ID']}]");
-    }
+        $columnHtml = esc_html($row['hook'] . " [{$row['ID']}]");
+        $columnHtml .= $this->maybe_render_actions($row, 'hook');
 
+        echo $columnHtml;
+    }
+//
 //    /**
-//     * Prints the logs entries inline. We do so to avoid loading Javascript and other hacks to show it in a modal.
+//     * This method is overriding the parent method to remove the wp_safe_redirect call.
+//     * Calling redirect on our admin pages cause a fatal error because output is already
+//     * written, probably by the Upgrade to Pro banner coming from our libraries.
 //     *
-//     * @param \ActionScheduler_LogEntry $log_entry
-//     * @param \DateTimezone $timezone
-//     * @return string
+//     * @return void
 //     */
-//    protected function get_log_entry_html( \ActionScheduler_LogEntry $log_entry, \DateTimezone $timezone ) {
-//        $date = $log_entry->get_date();
-//        $date->setTimezone( $timezone );
-//        return sprintf( '<li><strong>%s</strong> %s</li>', esc_html( $date->format( 'Y-m-d H:i:s O' ) ), esc_html( $log_entry->get_message() ) );
+//    public function process_actions() {
+//        $this->process_bulk_action();
+//        $this->process_row_actions();
 //    }
 //
 //    /**
-//     * Generates content for a single row of the table.
-//     *
-//     * @since 3.1.0
-//     *
-//     * @param object|array $item The current item
+//     * This method is overriding the parent method to remove the wp_safe_redirect call.
+//     * Calling redirect on our admin pages cause a fatal error because output is already
+//     * written, probably by the Upgrade to Pro banner coming from our libraries.
+//     * We might see a fatal error if the user refresh the browser with the same URL, because
+//     * the action will be executed again and the selected row was already deleted.
 //     */
-//    public function single_row( $item ) {
-//        echo '<tr>';
-//        $this->single_row_columns( $item );
-//        echo '</tr>';
-//        echo '<tr class="action-scheduler-log">';
-//        echo '<td colspan="6">';
-//
-//        $log_entries_html = '<ol>';
-//
-//        $timezone = new \DateTimezone( 'UTC' );
-//
-//        foreach ( $item['log_entries'] as $log_entry ) {
-//            $log_entries_html .= $this->get_log_entry_html( $log_entry, $timezone );
+//    protected function process_bulk_action() {
+//        global $wpdb;
+//        // Detect when a bulk action is being triggered.
+//        $action = $this->current_action();
+//        if ( ! $action ) {
+//            return;
 //        }
 //
-//        $log_entries_html .= '</ol>';
-//        echo $log_entries_html;
+//        check_admin_referer( 'bulk-' . $this->_args['plural'] );
 //
-//        echo '</td>';
-//        echo '</tr>';
-//    }
-
-//    public function column_log_entries(array $row)
-//    {
-//        // echo the last item of the array $row['log_entries']
-//        $last_log_entry = end($row['log_entries']);
-//        $date = $last_log_entry->get_date();
-//        $date->setTimezone(new \DateTimezone('UTC'));
-//        echo sprintf('<strong>%s</strong> %s', esc_html($date->format('Y-m-d H:i:s O')), esc_html($last_log_entry->get_message()));
-//        echo '<br>';
-//        echo '<a href="#" class="action-scheduler-log-toggle">Show full log</a>';
+//        $method = 'bulk_' . $action;
+//        if ( array_key_exists( $action, $this->bulk_actions ) && is_callable( array( $this, $method ) ) && ! empty( $_GET['ID'] ) && is_array( $_GET['ID'] ) ) {
+//            $ids_sql = '(' . implode( ',', array_fill( 0, count( $_GET['ID'] ), '%s' ) ) . ')';
+//            $id      = array_map( 'absint', $_GET['ID'] );
+//            $this->$method( $id, $wpdb->prepare( $ids_sql, $id ) ); //phpcs:ignore WordPress.DB.PreparedSQL
+//        }
 //    }
 }
