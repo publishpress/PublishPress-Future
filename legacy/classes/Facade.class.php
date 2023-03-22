@@ -285,7 +285,7 @@ class PostExpirator_Facade
             'methods' => 'GET',
             'callback' => [$this, 'api_get_expiration_data'],
             'permission_callback' => function () {
-                return current_user_can('edit_posts');
+                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
             },
             'args' => [
                 'postId' => [
@@ -303,7 +303,7 @@ class PostExpirator_Facade
             'methods' => 'POST',
             'callback' => [$this, 'api_save_expiration_data'],
             'permission_callback' => function () {
-                return current_user_can('edit_posts');
+                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
             },
             'args' => [
                 'postId' => [
