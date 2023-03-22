@@ -56,6 +56,7 @@ class PostExpirator_Facade
         add_action('enqueue_block_editor_assets', array($this, 'block_editor_assets'));
         add_action('updated_postmeta', array($this, 'onUpdatePostMeta'), 10, 4);
         add_filter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
+        add_action('rest_api_init', [$this, 'register_rest_api']);
     }
 
     /**
@@ -197,83 +198,186 @@ class PostExpirator_Facade
             // this is important for CPTs to show the postMeta.
             add_post_type_support($post_type, array('custom-fields'));
 
-            register_post_meta(
-                $post_type,
-                PostMetaAbstract::EXPIRATION_STATUS,
-                array(
-                    'single' => true,
-                    'type' => 'string',
-                    'auth_callback' => function () {
-                        return current_user_can('edit_posts');
-                    },
-                    'show_in_rest' => true,
-                )
-            );
-            register_post_meta(
-                $post_type,
-                PostMetaAbstract::EXPIRATION_TIMESTAMP,
-                array(
-                    'single' => true,
-                    'type' => 'number',
-                    'auth_callback' => function () {
-                        return current_user_can('edit_posts');
-                    },
-                    'show_in_rest' => true,
-                )
-            );
-            register_post_meta(
-                $post_type,
-                PostMetaAbstract::EXPIRATION_TYPE,
-                array(
-                    'single' => true,
-                    'type' => 'string',
-                    'auth_callback' => function () {
-                        return current_user_can('edit_posts');
-                    },
-                    'show_in_rest' => true,
-                )
-            );
-            register_post_meta(
-                $post_type,
-                PostMetaAbstract::EXPIRATION_TERMS,
-                array(
-                    'single' => true,
-                    'type' => 'array',
-                    'auth_callback' => function () {
-                        return current_user_can('edit_posts');
-                    },
-                    'show_in_rest' => array(
-                        'schema' => array(
-                            'type' => 'array',
-                            'items' => array(
-                                'type' => 'number',
-                            ),
-                        ),
-                    ),
-                )
-            );
+//            register_post_meta(
+//                $post_type,
+//                PostMetaAbstract::EXPIRATION_STATUS,
+//                array(
+//                    'single' => true,
+//                    'type' => 'string',
+//                    'auth_callback' => function () {
+//                        return current_user_can('edit_posts');
+//                    },
+//                    'show_in_rest' => true,
+//                )
+//            );
+//            register_post_meta(
+//                $post_type,
+//                PostMetaAbstract::EXPIRATION_TIMESTAMP,
+//                array(
+//                    'single' => true,
+//                    'type' => 'number',
+//                    'auth_callback' => function () {
+//                        return current_user_can('edit_posts');
+//                    },
+//                    'show_in_rest' => true,
+//                )
+//            );
+//            register_post_meta(
+//                $post_type,
+//                PostMetaAbstract::EXPIRATION_TYPE,
+//                array(
+//                    'single' => true,
+//                    'type' => 'string',
+//                    'auth_callback' => function () {
+//                        return current_user_can('edit_posts');
+//                    },
+//                    'show_in_rest' => true,
+//                )
+//            );
+//            register_post_meta(
+//                $post_type,
+//                PostMetaAbstract::EXPIRATION_TERMS,
+//                array(
+//                    'single' => true,
+//                    'type' => 'array',
+//                    'auth_callback' => function () {
+//                        return current_user_can('edit_posts');
+//                    },
+//                    'show_in_rest' => array(
+//                        'schema' => array(
+//                            'type' => 'array',
+//                            'items' => array(
+//                                'type' => 'number',
+//                            ),
+//                        ),
+//                    ),
+//                )
+//            );
 
             // this is the old complex field that we are now deprecating
             // as it cannot be used easily in the block editor
-            register_post_meta(
-                $post_type,
-                PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
-                array(
-                    'single' => true,
-                    'type' => 'object',
-                    'auth_callback' => function () {
-                        return current_user_can('edit_posts');
-                    },
-                    'show_in_rest' => array(
-                        'schema' => array(
-                            'type' => 'object',
-                            'additionalProperties' => true,
-                            'properties' => []
-                        ),
-                    ),
-                )
-            );
+//            register_post_meta(
+//                $post_type,
+//                PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
+//                array(
+//                    'single' => true,
+//                    'type' => 'object',
+//                    'auth_callback' => function () {
+//                        return current_user_can('edit_posts');
+//                    },
+//                    'show_in_rest' => array(
+//                        'schema' => array(
+//                            'type' => 'object',
+//                            'additionalProperties' => true,
+//                            'properties' => []
+//                        ),
+//                    ),
+//                )
+//            );
         }
+    }
+
+    public function register_rest_api()
+    {
+        $apiNamespace = 'publishpress-future/v1';
+
+        register_rest_route( $apiNamespace, '/post-expiration/(?P<postId>\d+)', [
+            'methods' => 'GET',
+            'callback' => [$this, 'api_get_expiration_data'],
+            'permission_callback' => function () {
+                return current_user_can('edit_posts');
+            },
+            'args' => [
+                'postId' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        return is_numeric($param);
+                    },
+                    'sanitize_callback' => 'absint',
+                    'required' => true,
+                    'type' => 'integer',
+                ],
+            ]
+        ]);
+
+        register_rest_route($apiNamespace, '/post-expiration/(?P<postId>\d+)', [
+            'methods' => 'POST',
+            'callback' => [$this, 'api_save_expiration_data'],
+            'permission_callback' => function () {
+                return current_user_can('edit_posts');
+            },
+            'args' => [
+                'postId' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        return is_numeric($param);
+                    },
+                    'sanitize_callback' => 'absint',
+                    'required' => true,
+                    'type' => 'integer',
+                ],
+                'enabled' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        return is_bool($param);
+                    },
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'required' => false,
+                    'type' => 'bool',
+                ],
+                'date' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        return is_numeric($param);
+                    },
+                    'sanitize_callback' => 'absint',
+                    'required' => true,
+                    'type' => 'integer',
+                ],
+                'action' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        // Get available post expiration actions using the service EXPIRATION_ACTIONS_MODEL.
+                        $container = Container::getInstance();
+                        $expirationActionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+                        $expirationActions = array_keys($expirationActionsModel->getActions());
+
+                        return in_array($param, $expirationActions) || $param === '';
+                    },
+                    'sanitize_callback' => 'sanitize_text_field',
+                    'required' => true,
+                    'type' => 'string',
+                ],
+                'terms' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        return is_array($param);
+                    },
+                    'sanitize_callback' => function ($param, $request, $key) {
+                        return array_map('absint', $param);
+                    },
+                    'required' => true,
+                    'type' => 'array',
+                ],
+            ]
+        ]);
+    }
+
+    public function api_get_expiration_data(WP_REST_Request $request)
+    {
+        $postId = $request->get_param('postId');
+        $container = Container::getInstance();
+        $expirablePostModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($postId);
+
+        $data = $expirablePostModel->getExpirationDataAsArray();
+
+        // return the data as a JSON response
+        return rest_ensure_response( $data );
+    }
+
+    public function api_save_expiration_data(WP_REST_Request $request)
+    {
+        error_log(print_r($request, true));
+        return rest_ensure_response([
+            'enabled' => $request->get_param('enabled'),
+            'date' => $request->get_param('date'),
+            'action' => $request->get_param('action'),
+            'terms' => $request->get_param('terms'),
+        ]);
     }
 
     /**
