@@ -7,23 +7,49 @@ namespace PublishPressFuture\Modules\Expirator\Tables;
 
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
+use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
 
 class ScheduledActionsTable extends \ActionScheduler_ListTable
 {
+    /**
+     * @var \PublishPressFuture\Core\HookableInterface
+     */
+    private $hooksFacade;
+
+
     public function __construct(
         \ActionScheduler_Store $store,
         \ActionScheduler_Logger $logger,
-        \ActionScheduler_QueueRunner $runner
+        \ActionScheduler_QueueRunner $runner,
+        HookableInterface $hooksFacade
     ) {
         parent::__construct($store, $logger, $runner);
+
+        $this->hooksFacade = $hooksFacade;
 
         $this->table_header = __('Future Actions', 'post-expirator');
 
         unset($this->columns['group']);
         $this->columns['hook'] = __('Action', 'post-expirator');
+
+        $this->hooksFacade->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
+    }
+
+    public function enqueueScripts()
+    {
+        wp_enqueue_script('jquery-ui-dialog');
+        wp_enqueue_script(
+            'publishpress-future-future-actions',
+            Container::getInstance()->get(ServicesAbstract::BASE_URL) . '/assets/js/future-actions.js',
+            ['jquery', 'jquery-ui-dialog'],
+            PUBLISHPRESS_FUTURE_VERSION,
+            true
+        );
+
+        wp_enqueue_style( 'wp-jquery-ui-dialog' );
     }
 
     /**
@@ -274,5 +300,64 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
 
         return $columnHtml;
+    }
+
+    /**
+     * Prints the logs entries inline. We do so to avoid loading Javascript and other hacks to show it in a modal.
+     *
+     * @param array $row Action array.
+     * @return string
+     */
+    public function column_log_entries(array $row)
+    {
+        $timezone = new \DateTimeZone('UTC');
+
+        $userLogFormat = get_user_meta(get_current_user_id(), 'publishpressfuture_actions_log_format', true);
+
+        $html = '';
+
+        if ($userLogFormat === 'list') {
+            $html = '<ol>';
+
+            foreach ($row['log_entries'] as $logEntry) {
+                $html .= $this->get_log_entry_html($logEntry, $timezone);
+            }
+
+            $html .= '</ol>';
+
+        }
+
+        if ($userLogFormat === 'popup') {
+            $html = '<a href="javascript:void(0);" class="publishpres-future-view-log" data-id="' . $row['ID'] . '">' . esc_html__(
+                    'View log',
+                    'publishpress-future'
+                ) . '</a>';
+            $html .= '<div class="publishpress-future-log-entries-popup publishpress-future-log-' . $row['ID'] . '" style="display: none;">';
+            $html .= '<h2>' . esc_html__('Action Log Entries', 'publishpress-future') . '</h2>';
+            $html .= '<table class="wp-list-table widefat striped">';
+            $html .= '<thead>';
+            $html .= '<tr>';
+            $html .= '<th>' . esc_html__('Date', 'publishpress-future') . '</th>';
+            $html .= '<th>' . esc_html__('Message', 'publishpress-future') . '</th>';
+            $html .= '</tr>';
+            $html .= '</thead>';
+            $html .= '<tbody>';
+
+            foreach ($row['log_entries'] as $logEntry) {
+                $date = $logEntry->get_date();
+                $date->setTimezone($timezone);
+
+                $html .= '<tr>';
+                $html .= '<td>' . esc_html($date->format('Y-m-d H:i:s O')) . '</td>';
+                $html .= '<td>' . esc_html($logEntry->get_message()) . '</td>';
+                $html .= '</tr>';
+            }
+
+            $html .= '</tbody>';
+            $html .= '</table>';
+            $html .= '</div>';
+        }
+
+        return $html;
     }
 }

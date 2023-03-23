@@ -68,6 +68,8 @@ class ScheduledActionsController implements InitializableInterface
             HooksAbstract::ACTION_SCHEDULER_FAILED_EXECUTION,
             [$this, 'onActionSchedulerDisableAction']
         );
+        $this->hooks->addFilter('screen_settings', [$this, 'filterScreenSettings'], 10, 2);
+        $this->hooks->addFilter('set-screen-option', [$this, 'filterSetScreenOption'], 10);
     }
 
     public function onAdminMenu()
@@ -140,5 +142,66 @@ class ScheduledActionsController implements InitializableInterface
     public function processAdminUi()
     {
         $this->getListTable();
+    }
+
+    public function filterScreenSettings($screenSettings, $screen)
+    {
+        if ($screen->id !== 'future_page_publishpress-future-scheduled-actions') {
+            return $screenSettings;
+        }
+
+        $userLogFormat = get_user_meta(get_current_user_id(), 'publishpressfuture_actions_log_format', true);
+        if (empty($userLogFormat)) {
+            $userLogFormat = 'list';
+        }
+
+        // Add nonce field
+        $screenSettings .= wp_nonce_field('publishpressfuture_actions_log_format', 'publishpressfuture_actions_log_format_nonce', true, false);
+
+        $screenSettings .= '<fieldset class="metabox-prefs">';
+        $screenSettings .= '<legend>' . esc_html__('Log format', 'post-expirator') . '</legend>';
+        $screenSettings .= '<label for="' . $screen->id . '_log_format_list">';
+        $screenSettings .= '<input type="radio" id="' . $screen->id . '_log_format_list" name="publishpressfuture_actions_log_format" value="list" ' . checked(
+                $userLogFormat,
+                'list',
+                false
+            ) . '>';
+        $screenSettings .= esc_html__('List', 'post-expirator');
+        $screenSettings .= '</label>';
+        $screenSettings .= '&nbsp;';
+        $screenSettings .= '<label for="' . $screen->id . '_log_format_popup">';
+        $screenSettings .= '<input type="radio" id="' . $screen->id . '_log_format_popup" name="publishpressfuture_actions_log_format" value="popup" ' . checked(
+                $userLogFormat,
+                'popup',
+                false
+            ) . '>';
+        $screenSettings .= esc_html__('Popup', 'post-expirator');
+        $screenSettings .= '</label>';
+
+        $screenSettings .= '</fieldset>';
+
+        return $screenSettings;
+    }
+
+    public function filterSetScreenOption($status)
+    {
+        if (! isset($_POST['publishpressfuture_actions_log_format_nonce']) || ! wp_verify_nonce(
+                sanitize_key($_POST['publishpressfuture_actions_log_format_nonce']),
+                'publishpressfuture_actions_log_format'
+            )) {
+            return $status;
+        }
+
+        if (isset($_POST['publishpressfuture_actions_log_format'])) {
+            update_user_meta(
+                get_current_user_id(),
+                'publishpressfuture_actions_log_format',
+                sanitize_key($_POST['publishpressfuture_actions_log_format'])
+            );
+        } else {
+            delete_user_meta(get_current_user_id(), 'publishpressfuture_actions_log_format');
+        }
+
+        return $status;
     }
 }

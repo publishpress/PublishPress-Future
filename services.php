@@ -476,7 +476,8 @@ return [
             return new ScheduledActionsTable(
                 ActionScheduler::store(),
                 ActionScheduler::logger(),
-                ActionScheduler::runner()
+                ActionScheduler::runner(),
+                $container->get(ServicesAbstract::HOOKS)
             );
         };
     },
