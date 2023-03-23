@@ -21,6 +21,11 @@ class PostStatusToDraft implements ExpirationActionInterface
     private $log = [];
 
     /**
+     * @var string
+     */
+    private $oldPostStatus;
+
+    /**
      * @param ExpirablePostModel $postModel
      */
     public function __construct($postModel)
@@ -43,7 +48,8 @@ class PostStatusToDraft implements ExpirationActionInterface
         }
 
         return sprintf(
-            __('Post status has been successfully changed to "%s".', 'post-expirator'),
+            __('Post status has been successfully changed from "%s" to "%s".', 'post-expirator'),
+            $this->oldPostStatus,
             'draft'
         );
     }
@@ -54,6 +60,8 @@ class PostStatusToDraft implements ExpirationActionInterface
      */
     public function execute()
     {
+        $this->oldPostStatus = $this->postModel->getPostStatus();
+
         $result = $this->postModel->setPostStatus('draft');
 
         $this->log['success'] = $result;

@@ -171,6 +171,11 @@ class PostModel
         return get_the_title($this->getPostId());
     }
 
+    public function getPostStatus()
+    {
+        return get_post_status($this->getPostId());
+    }
+
     public function getPermalink()
     {
         return get_post_permalink($this->getPostId());

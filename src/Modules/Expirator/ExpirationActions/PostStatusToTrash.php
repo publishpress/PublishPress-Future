@@ -21,6 +21,11 @@ class PostStatusToTrash implements ExpirationActionInterface
     private $log = [];
 
     /**
+     * @var string
+     */
+    private $oldPostStatus;
+
+    /**
      * @param ExpirablePostModel $postModel
      */
     public function __construct($postModel)
@@ -43,7 +48,8 @@ class PostStatusToTrash implements ExpirationActionInterface
         }
 
         return sprintf(
-            __('Post status has been successfully changed to "%s".', 'post-expirator'),
+            __('Post status has been successfully changed from "%s" to "%s".', 'post-expirator'),
+            $this->oldPostStatus,
             'trash'
         );
     }
@@ -54,6 +60,8 @@ class PostStatusToTrash implements ExpirationActionInterface
      */
     public function execute()
     {
+        $this->oldPostStatus = $this->postModel->getPostStatus();
+
         $result = $this->postModel->setPostStatus('trash');
 
         $this->log['success'] = $result;
