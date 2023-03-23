@@ -8,6 +8,7 @@ namespace PublishPressFuture\Modules\Expirator\Tables;
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPressFuture\Modules\Expirator\HooksAbstract;
 
 class ScheduledActionsTable extends \ActionScheduler_ListTable
 {
@@ -197,57 +198,25 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
     public function column_hook(array $row)
     {
-//        $container = Container::getInstance();
-//        $modelFactory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-
-        if ($row['hook'] === 'publishpress_future/run_workflow' && isset($row['args']['workflow']) && $row['args']['workflow'] === 'expire') {
-//            $model = $modelFactory($row['args']['post_id']);
-//            $action = $model->getExpirationAction();
-//
-//            echo esc_html($action->getLabel());
-//            return;
+        $columnHtml = '';
+        if ($row['hook'] === HooksAbstract::ACTION_RUN_WORKFLOW && isset($row['args']['workflow']) && $row['args']['workflow'] === 'expire') {
+            $columnHtml = $this->render_expiration_hook_action($row);
+        } else {
+            $columnHtml = esc_html($row['hook'] . " [{$row['ID']}]");
         }
 
-        $columnHtml = esc_html($row['hook'] . " [{$row['ID']}]");
         $columnHtml .= $this->maybe_render_actions($row, 'hook');
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $columnHtml;
     }
-//
-//    /**
-//     * This method is overriding the parent method to remove the wp_safe_redirect call.
-//     * Calling redirect on our admin pages cause a fatal error because output is already
-//     * written, probably by the Upgrade to Pro banner coming from our libraries.
-//     *
-//     * @return void
-//     */
-//    public function process_actions() {
-//        $this->process_bulk_action();
-//        $this->process_row_actions();
-//    }
-//
-//    /**
-//     * This method is overriding the parent method to remove the wp_safe_redirect call.
-//     * Calling redirect on our admin pages cause a fatal error because output is already
-//     * written, probably by the Upgrade to Pro banner coming from our libraries.
-//     * We might see a fatal error if the user refresh the browser with the same URL, because
-//     * the action will be executed again and the selected row was already deleted.
-//     */
-//    protected function process_bulk_action() {
-//        global $wpdb;
-//        // Detect when a bulk action is being triggered.
-//        $action = $this->current_action();
-//        if ( ! $action ) {
-//            return;
-//        }
-//
-//        check_admin_referer( 'bulk-' . $this->_args['plural'] );
-//
-//        $method = 'bulk_' . $action;
-//        if ( array_key_exists( $action, $this->bulk_actions ) && is_callable( array( $this, $method ) ) && ! empty( $_GET['ID'] ) && is_array( $_GET['ID'] ) ) {
-//            $ids_sql = '(' . implode( ',', array_fill( 0, count( $_GET['ID'] ), '%s' ) ) . ')';
-//            $id      = array_map( 'absint', $_GET['ID'] );
-//            $this->$method( $id, $wpdb->prepare( $ids_sql, $id ) ); //phpcs:ignore WordPress.DB.PreparedSQL
-//        }
-//    }
+
+    private function render_expiration_hook_action(array $row)
+    {
+        $container = Container::getInstance();
+        $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($row['args']['postId']);
+
+        $action = $postModel->getExpirationAction();
+        return esc_html($action->getLabel());
+    }
 }

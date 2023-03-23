@@ -400,13 +400,7 @@ class ExpirablePostModel extends PostModel
     public function getExpirationAction()
     {
         if (empty($this->expirationActionInstance)) {
-            $factory = $this->expirationActionFactory;
-
-            if (! $factory instanceof Closure) {
-                return;
-            }
-
-            $actionInstance = $factory(
+            $actionInstance = ($this->expirationActionFactory)(
                 $this->getExpirationType(),
                 $this
             );
