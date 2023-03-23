@@ -104,4 +104,11 @@ class ExpirationActionsModel
 
         return $actions;
     }
+
+    public function getLabelForAction($actionName)
+    {
+        $actions = $this->getActions();
+
+        return $actions[$actionName] ?? '';
+    }
 }

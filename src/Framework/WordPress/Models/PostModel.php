@@ -176,6 +176,11 @@ class PostModel
         return get_post_permalink($this->getPostId());
     }
 
+    public function getPostEditLink()
+    {
+        return get_edit_post_link($this->getPostId());
+    }
+
     public function getPostId()
     {
         return $this->postId;

@@ -8,6 +8,7 @@ namespace PublishPressFuture\Modules\Expirator\Tables;
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
 
 class ScheduledActionsTable extends \ActionScheduler_ListTable
@@ -207,16 +208,71 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         $columnHtml .= $this->maybe_render_actions($row, 'hook');
 
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo $columnHtml;
+        return $columnHtml;
     }
 
     private function render_expiration_hook_action(array $row)
     {
         $container = Container::getInstance();
+        $argsModel = ($container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY))();
+        $argsModel->loadByActionId($row['ID']);
+
+        return esc_html($argsModel->getActionLabel());
+    }
+
+    public function column_args(array $row)
+    {
+        if (empty($row['args'])) {
+            return apply_filters('action_scheduler_list_table_column_args', '', $row);
+        }
+
+        $columnHtml = '';
+        if ($row['hook'] === HooksAbstract::ACTION_RUN_WORKFLOW && isset($row['args']['workflow']) && $row['args']['workflow'] === 'expire') {
+            $columnHtml = $this->render_expiration_hook_args($row);
+        } else {
+            $columnHtml = '<ul>';
+            foreach ($row['args'] as $key => $value) {
+                $columnHtml .= sprintf(
+                    '<li><code>%s => %s</code></li>',
+                    esc_html(var_export($key, true)), // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+                    esc_html(
+                        var_export($value, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+                    )
+                );
+            }
+
+            $columnHtml .= '</ul>';
+        }
+
+        return apply_filters('action_scheduler_list_table_column_args', $columnHtml, $row);
+    }
+
+    private function render_expiration_hook_args(array $row)
+    {
+        $container = Container::getInstance();
         $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($row['args']['postId']);
 
-        $action = $postModel->getExpirationAction();
-        return esc_html($action->getLabel());
+        $columnHtml = sprintf(
+            esc_html__('%s: [%d] %s%s%s', 'post-expirator'),
+            esc_html__('Post', 'post-expirator'),
+            $postModel->getPostId(),
+            '<a href="' . esc_url($postModel->getPostEditLink()) . '">',
+            $postModel->getTitle(),
+            '</a>'
+        );
+
+        $taxonomyActions = [ExpirationActionsAbstract::POST_CATEGORY_SET, ExpirationActionsAbstract::POST_CATEGORY_REMOVE, ExpirationActionsAbstract::POST_CATEGORY_ADD];
+
+        $argsModel = ($container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY))();
+        $argsModel->loadByActionId($row['ID']);
+
+        if (in_array($argsModel->getAction(), $taxonomyActions)) {
+            $columnHtml .= sprintf(
+                '<br />' . esc_html__('Categories: %s', 'post-expirator'),
+                implode(', ', $argsModel->getTaxonomyTermsNames())
+            );
+        }
+
+        return $columnHtml;
     }
 }

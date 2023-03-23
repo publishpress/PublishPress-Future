@@ -49,9 +49,16 @@ class ActionArgsModel
      */
     private $enabled;
 
-    public function __construct()
+    /**
+     * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
+     */
+    private $expirationActionsModel;
+
+    public function __construct(ExpirationActionsModel $expirationActionsModel)
     {
         $this->tableName = ActionArgsSchema::getTableName();
+
+        $this->expirationActionsModel = $expirationActionsModel;
     }
 
     private function setAttributesFromRow($row): void
@@ -230,6 +237,36 @@ class ActionArgsModel
     public function getArgs(): array
     {
         return (array)$this->args;
+    }
+
+    public function getAction(): string
+    {
+        return $this->args['expireType'] ?? '';
+    }
+
+    public function getActionLabel(): string
+    {
+        return $this->expirationActionsModel->getLabelForAction($this->getAction());
+    }
+
+    public function getTaxonomyTerms(): array
+    {
+        return $this->args['category'] ?? [];
+    }
+
+    public function getTaxonomyTermsNames(): array
+    {
+        $terms = $this->getTaxonomyTerms();
+
+        $names = [];
+        foreach ($terms as $term) {
+            $term = get_term($term);
+            if ($term instanceof \WP_Term) {
+                $names[] = $term->name;
+            }
+        }
+
+        return $names;
     }
 
     /**

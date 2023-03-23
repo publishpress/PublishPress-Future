@@ -483,7 +483,9 @@ return [
 
     ServicesAbstract::ACTION_ARGS_MODEL_FACTORY => static function (ContainerInterface $container) {
         return function () use ($container) {
-            return new ActionArgsModel();
+            return new ActionArgsModel(
+                $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
+            );
         };
     },
 ];
