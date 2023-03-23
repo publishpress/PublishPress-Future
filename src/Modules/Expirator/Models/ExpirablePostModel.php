@@ -380,10 +380,19 @@ class ExpirablePostModel extends PostModel
                 ? __('Email sent', 'post-expirator') : __('Email not sent', 'post-expirator');
         }
 
+        $this->logOnAction($expirationLog);
+
         $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
         $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
+
         return true;
+    }
+
+    private function logOnAction(string $message)
+    {
+        $log = \ActionScheduler_Logger::instance();
+        $log->log($this->actionArgsModel->getCronActionId(), $message);
     }
 
     private function expirationEmailIsEnabled()
