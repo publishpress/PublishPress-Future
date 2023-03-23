@@ -4,6 +4,7 @@ jQuery(document).ready(function ($) {
             autoOpen: false,
             modal: true,
             width: 800,
+            title: publishpressFutureActionsConfig.dialogTitle,
             buttons: {
                 "Close": function () {
                     $(this).dialog("close");

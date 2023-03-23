@@ -48,6 +48,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );
+        wp_localize_script(
+            'publishpress-future-future-actions',
+            'publishpressFutureActionsConfig',
+            [
+                'dialogTitle' => esc_js(__('Action Logs', 'post-expirator')),
+            ]
+        );
 
         wp_enqueue_style( 'wp-jquery-ui-dialog' );
     }
@@ -220,7 +227,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $iconClass = $icons[$row['status_name']];
         }
 
-        echo '<span class="' . esc_attr($iconClass) . '"></span> ' . esc_html($row['status']);
+        return '<span class="' . esc_attr($iconClass) . '"></span> ' . esc_html($row['status']);
     }
 
     public function column_hook(array $row)
@@ -333,7 +340,34 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
                     'publishpress-future'
                 ) . '</a>';
             $html .= '<div class="publishpress-future-log-entries-popup publishpress-future-log-' . $row['ID'] . '" style="display: none;">';
-            $html .= '<h2>' . esc_html__('Action Log Entries', 'publishpress-future') . '</h2>';
+            $html .= '<div>';
+
+            $html .= '<table>';
+            $html .= '<tbody>';
+
+            $html .= '<tr>';
+            $html .= '<td>' . esc_html__('Action: ', 'post-expirator') . '</td><td>' . $this->column_hook($row) . '</td>';
+            $html .= '</tr>';
+
+            $html .= '<tr>';
+            $html .= '<td>' . esc_html__('Status: ', 'post-expirator') . '</td><td>' . $this->column_status($row) . '</td>';
+            $html .= '</tr>';
+
+            $html .= '<tr>';
+            $html .= '<td>' . esc_html__('Arguments: ', 'post-expirator') . '</td><td>' . $this->column_args($row) . '</td>';
+            $html .= '</tr>';
+
+            $html .= '<tr>';
+            $html .= '<td>' . esc_html__('Scheduled date: ', 'post-expirator') . '</td><td>' . $this->column_schedule($row) . '</td>';
+            $html .= '</tr>';
+
+            $html .= '</tbody>';
+            $html .= '</table>';
+
+
+
+            $html .= '<br />';
+
             $html .= '<table class="wp-list-table widefat striped">';
             $html .= '<thead>';
             $html .= '<tr>';
