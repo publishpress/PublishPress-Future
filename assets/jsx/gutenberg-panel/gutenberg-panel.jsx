@@ -15,61 +15,130 @@
                 categoriesList: [],
                 catIdVsName: [],
             }
+
+            wp.data.subscribe(this.listenToPostSave.bind(this));
+            wp.hooks.addAction('after_save_post', 'publishpress-future', () => {
+                console.log('getExpirationEnabled', this.getExpirationEnabled());
+                this.saveCurrentPostData()
+            });
+        }
+
+        listenToPostSave() {
+            // Get the current post ID
+            const postId = this.getPostId();
+
+            const isSavingPost = this.getIsSavingPost();
+            const itemKey = 'ppfuture-expiration-' + postId + '-isSavingPost';
+
+            if (isSavingPost) {
+                sessionStorage.setItem(itemKey, '1');
+            }
+
+            if (!isSavingPost) {
+                let hasSavingRegistered = sessionStorage.getItem(itemKey) === '1';
+
+                if (hasSavingRegistered) {
+                    sessionStorage.removeItem(itemKey);
+                    wp.hooks.doAction('after_save_post', 'publishpress-future');
+                }
+            }
+        }
+
+        getPostType() {
+            return wp.data.select('core/editor').getCurrentPostType();
+        }
+
+        getPostId() {
+            return wp.data.select('core/editor').getCurrentPostId();
+        }
+
+        getIsSavingPost() {
+            return wp.data.select('core/editor').isSavingPost() || wp.data.select('core/editor').isAutosavingPost();
+        }
+
+        editPostAttribute(name, value) {
+            let attribute = {};
+            attribute[name] = value;
+
+            wp.data.dispatch('core/editor').editPost(attribute);
+        }
+
+        getEditedPostAttribute(name) {
+            return wp.data.select("core/editor").getEditedPostAttribute(name);
+        }
+
+        fetchExpirationDataFromApi() {
+            return wp.apiFetch({path: 'publishpress-future/v1/post-expiration/' + this.getPostId()}).then((data) => {
+                this.editPostAttribute('expirationEnabled', data.enabled);
+                this.editPostAttribute('expirationAction', data.expireType);
+                this.editPostAttribute('expirationDate', data.date);
+                this.editPostAttribute('expirationTerms', data.category);
+                this.editPostAttribute('expirationTaxonomy', data.categoryTaxonomy);
+
+                this.setState({
+                    expirationEnabled: data.enabled,
+                    expirationAction: data.expireType,
+                    expirationDate: data.date,
+                    expirationTerms: data.category,
+                    expirationTaxonomy: data.categoryTaxonomy
+                });
+
+                console.log('API return', data);
+            });
+        }
+
+        saveCurrentPostData() {
+            const {expirationEnabled, expirationDate, expirationAction, expirationTerms} = this.state;
+            let data;
+
+            console.log(this.state);
+
+            if (!expirationEnabled) {
+                data = {'enabled': false, 'date': 0, 'action': '', 'terms': []};
+            } else {
+                data = {
+                    enabled: expirationEnabled,
+                    date: expirationDate,
+                    action: expirationAction,
+                    terms: expirationTerms,
+                };
+            }
+
+            wp.apiFetch({
+                path: 'publishpress-future/v1/post-expiration/' + this.getPostId(),
+                method: 'POST',
+                data: data,
+            }).then((data) => {
+                console.log('Post expiration data saved.');
+                console.log(data);
+            });
         }
 
         componentWillMount() {
-            const {attributes} = this.state;
+            this.fetchExpirationDataFromApi().then(this.initialize.bind(this));
+        }
 
-            const postMeta = wp.data.select('core/editor').getEditedPostAttribute('meta');
-            const postType = wp.data.select('core/editor').getCurrentPostType();
-            const setPostMeta = (newMeta) => wp.data.dispatch('core/editor').editPost({meta: newMeta});
+        initialize() {
+            const postType = this.getPostType();
 
-            let enabled = false;
-            let date = new Date();
+            const expirationEnabled = this.getExpirationEnabled();
+            const expirationAction = this.getExpirationAction();
+            const expirationTerms = this.getExpirationTerms();
+            const expirationDate = this.getExpirationDate();
+            const expirationTaxonomy = this.getExpirationTaxonomy();
 
-            let expireAction = this.getExpireType(postMeta);
-
-            let categories = this.getCategories(postMeta);
-
-            if (postMeta['_expiration-date-status'] && postMeta['_expiration-date-status'] === 'saved') {
-                enabled = true;
-            }
-
-            let browserTimezoneOffset = date.getTimezoneOffset() * 60;
-            let wpTimezoneOffset = config.timezone_offset * 60;
-
-            if (postMeta['_expiration-date']) {
-                date.setTime((postMeta['_expiration-date'] + browserTimezoneOffset + wpTimezoneOffset) * 1000);
-            } else {
-                categories = config.default_categories;
-                if (config.default_date) {
-                    date.setTime((parseInt(config.default_date) + browserTimezoneOffset + wpTimezoneOffset) * 1000);
-                }
-
-                // If the date is not set
-                enabled = false;
-            }
-
-            let taxonomy = config.defaults.taxonomy || 'category';
-
-            this.setState({
-                enabled: enabled,
-                date: date,
-                expireAction: expireAction,
-                categories: categories,
-                taxonomy: taxonomy,
+            console.log('Initialized', {
+                enabled: expirationEnabled,
+                date: expirationDate,
+                expirationAction: expirationAction,
+                categories: expirationTerms,
+                taxonomy: expirationTaxonomy,
             });
-
-            // Force all the metadata to be saved. Required for making sure the default settings are stored correctly.
-            setPostMeta({'_expiration-date-status': (enabled ? 'saved' : '')});
-            setPostMeta({'_expiration-date': (date.getTime()) / 1000});
-            setPostMeta({'_expiration-date-type': expireAction});
-            setPostMeta({'_expiration-date-categories': categories});
 
             let categoriesList = [];
             let catIdVsName = [];
 
-            if ((!taxonomy && postType === 'post') || taxonomy === 'category') {
+            if ((!expirationTaxonomy && postType === 'post') || expirationTaxonomy === 'category') {
                 wp.apiFetch({
                     path: wp.url.addQueryArgs('wp/v2/categories', {per_page: -1}),
                 }).then((list) => {
@@ -77,11 +146,15 @@
                         categoriesList[cat.name] = cat;
                         catIdVsName[cat.id] = cat.name;
                     });
-                    this.setState({categoriesList: categoriesList, catIdVsName: catIdVsName, taxonomy: config.strings.category});
+                    this.setState({
+                        categoriesList: categoriesList,
+                        catIdVsName: catIdVsName,
+                        taxonomy: config.strings.category
+                    });
                 });
             } else {
                 wp.apiFetch({
-                    path: wp.url.addQueryArgs(`wp/v2/taxonomies/${taxonomy}`, {context: 'edit'}),
+                    path: wp.url.addQueryArgs(`wp/v2/taxonomies/${expirationTaxonomy}`, {context: 'edit'}),
                 }).then((taxAttributes) => {
                     // fetch all terms
                     wp.apiFetch({
@@ -99,122 +172,63 @@
                     });
                 });
             }
-
         }
 
         componentDidUpdate() {
-            const {enabled, date, expireAction, categories, attribute} = this.state;
-            const setPostMeta = (newMeta) => wp.data.dispatch('core/editor').editPost({meta: newMeta});
-            const postMeta = wp.data.select('core/editor').getEditedPostAttribute('meta');
-
+            const {expirationEnabled, expirationDate, expirationAction, expirationTerms, attribute} = this.state;
+            
             switch (attribute) {
                 case 'enabled':
-                    setPostMeta({'_expiration-date-status': (enabled ? 'saved' : '')});
-                    // if date is not set when the checkbox is enabled, set it to the default date
-                    // this is to prevent the user from having to click the date to set it
-                    if (!postMeta['_expiration-date']) {
-                        setPostMeta({'_expiration-date': this.getDate(date)});
-                    }
+                    this.editPostAttribute('expirationEnabled', expirationEnabled);
                     break;
+
                 case 'date':
-                    if (typeof date === 'string') {
-                        setPostMeta({'_expiration-date': this.getDate(date)});
-                    }
+                    this.editPostAttribute('expirationDate', expirationDate);
                     break;
+
                 case 'action':
-                    setPostMeta({'_expiration-date-type': expireAction});
-                    if (!expireAction.includes('category')) {
-                        setPostMeta({'_expiration-date-categories': []});
+                    this.editPostAttribute('expirationAction', expirationAction);
+                    if (!expirationAction.includes('category')) {
+                        this.editPostAttribute('expirationTerms', []);
                     }
                     break;
                 case 'category':
-                    setPostMeta({'_expiration-date-categories': categories});
+                    this.editPostAttribute('expirationTerms', expirationTerms);
                     break;
             }
-
         }
 
-        render() {
-            const {categoriesList, catIdVsName} = this.state;
-            const {enabled, date, expireAction, categories, taxonomy} = this.state;
+        getExpirationEnabled() {
+            return this.getEditedPostAttribute('expirationEnabled') == true;
+        }
 
-            let selectedCats = categories && compact(categories.map((id) => catIdVsName[id] || false));
-            if (typeof selectedCats === 'string') {
-                selectedCats = [];
+        getExpirationDate() {
+            let storedDate = parseInt(this.getEditedPostAttribute('expirationDate'));
+
+            if (! storedDate) {
+                if (config.default_date) {
+                    storedDate = parseInt(config.default_date);
+                } else {
+                    storedDate = new Date().getTime();
+                }
             }
 
-            return (
-                <PluginDocumentSettingPanel title={config.strings.postExpirator} icon="calendar"
-                                            initialOpen={enabled} className={'post-expirator-panel'}>
-                    <PanelRow>
-                        <CheckboxControl
-                            label={config.strings.enablePostExpiration}
-                            checked={enabled}
-                            onChange={(value) => {
-                                this.setState({enabled: !enabled, attribute: 'enabled'})
-                            }}
-                        />
-                    </PanelRow>
-                    {enabled && (
-                        <Fragment>
-                            <PanelRow>
-                                <DateTimePicker
-                                    currentDate={date}
-                                    onChange={(value) => this.setState({date: value, attribute: 'date'})}
-                                    is12Hour={config.is_12_hours}
-                                />
-                            </PanelRow>
-                            <SelectControl
-                                label={config.strings.howToExpire}
-                                value={expireAction}
-                                options={config.actions_options}
-                                onChange={(value) => {
-                                    this.setState({expireAction: value, attribute: 'action'})
-                                }}
-                            />
-                            {expireAction.includes('category') &&
-                            (
-                                (isEmpty(keys(categoriesList)) && (
-                                    <Fragment>
-                                        {config.strings.loading + ` (${taxonomy})`}
-                                        <Spinner/>
-                                    </Fragment>
-                                ))
-                                ||
-                                (
-                                    <FormTokenField
-                                        label={config.strings.expirationCategories + ` (${taxonomy})`}
-                                        value={selectedCats}
-                                        suggestions={Object.keys(categoriesList)}
-                                        onChange={(value) => {
-                                            this.setState({
-                                                categories: this.selectCategories(value),
-                                                attribute: 'category'
-                                            })
-                                        }}
-                                        maxSuggestions={10}
-                                    />
-                                )
-                            )}
-                        </Fragment>
-                    )}
-                </PluginDocumentSettingPanel>
-            );
+            let date = new Date();
+            // let browserTimezoneOffset = date.getTimezoneOffset() * 60;
+            // let wpTimezoneOffset = config.timezone_offset * 60;
+
+            // date.setTime((storedDate + browserTimezoneOffset + wpTimezoneOffset) * 1000);
+            date.setTime(storedDate * 1000);
+
+            return date.getTime()/1000;
         }
 
         // what action to take on expiration
-        getExpireType(postMeta) {
-            let typeNew = postMeta['_expiration-date-type'];
-            let typeOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['expireType'];
+        getExpirationAction() {
+            let expirationAction = this.getEditedPostAttribute('expirationAction');
 
-
-
-            if (typeNew) {
-                return typeNew;
-            }
-
-            if (typeOld) {
-                return typeOld;
+            if (expirationAction) {
+                return expirationAction;
             }
 
             if (config && config.defaults && config.defaults.expireType) {
@@ -224,25 +238,39 @@
             return 'draft';
         }
 
+        arrayIsEmpty(obj) {
+            return !obj || obj.length === 0 || obj[0] === '';
+        }
+
         // what categories to add/remove/replace
-        getCategories(postMeta) {
-            let categoriesNew = postMeta['_expiration-date-categories'] && postMeta['_expiration-date-categories'];
-            let categoriesOld = postMeta['_expiration-date-options'] && postMeta['_expiration-date-options']['category'];
+        getExpirationTerms() {
+            let categories = this.getEditedPostAttribute('expirationTerms', true);
+
             let defaultCategories = config.defaults.terms ? config.defaults.terms.split(',') : [];
 
-            if (! categoriesNew && ! categoriesOld) {
+            if (this.arrayIsEmpty(categories)) {
                 return defaultCategories;
             }
 
-            if (typeof categoriesNew === 'object' && categoriesNew.length > 0) {
-                return categoriesNew;
+            if (categories && typeof categories !== 'undefined' && typeof categories !== 'object') {
+                return [categories];
             }
 
-            if (categoriesOld && typeof categoriesOld !== 'undefined' && typeof categoriesOld !== 'object') {
-                return [categoriesOld];
+            return categories;
+        }
+
+        getExpirationTaxonomy() {
+            let taxonomy = this.getEditedPostAttribute('expirationTaxonomy');
+
+            if (taxonomy) {
+                return taxonomy;
             }
 
-            return defaultCategories;
+            if (config && config.defaults && config.defaults.taxonomy) {
+                return config.defaults.taxonomy;
+            }
+
+            return 'category';
         }
 
         // fired for the autocomplete
@@ -264,20 +292,95 @@
             return categories.map((cat) => cat.id);
         }
 
-        getDate(date) {
-            let newDate = new Date();
-            let browserTimezoneOffset = new Date().getTimezoneOffset() * 60;
-            let wpTimezoneOffset = config.timezone_offset * 60;
-            newDate.setTime(Date.parse(date));
-            newDate.setTime(newDate.getTime() - (browserTimezoneOffset + wpTimezoneOffset) * 1000);
-            return ((newDate.getTime()) / 1000);
+        onChangeEnabled(value) {
+            this.setState({expirationEnabled: value, attribute: 'enabled'})
+            this.editPostAttribute('expirationEnabled', value);
+            console.log(value);
         }
 
+        onChangeDate(value) {
+            const date = new Date(value).getTime()/1000;
+            this.setState({expirationDate: date, attribute: 'date'});
+            this.editPostAttribute('expirationDate', date);
+            console.log('New date', date, new Date(date * 1000));
+            console.log('Getdate', this.getExpirationDate());
+        }
+
+        onChangeAction(value) {
+            this.setState({expirationAction: value, attribute: 'action'})
+            this.editPostAttribute('expirationAction', value);
+        }
+
+        onChangeTerms(value) {
+            this.setState({
+                expirationTerms: this.selectCategories(value),
+                attribute: 'category'
+            });
+            this.editPostAttribute('expirationTerms', value);
+        }
+
+        render() {
+            const {categoriesList, catIdVsName} = this.state;
+            const {expirationEnabled, expirationDate, expirationAction, expirationTerms, expirationTaxonomy} = this.state;
+
+            let selectedCats = expirationTerms && compact(expirationTerms.map((id) => catIdVsName[id] || false));
+            if (typeof selectedCats === 'string') {
+                selectedCats = [];
+            }
+
+            return (
+                <PluginDocumentSettingPanel title={config.strings.postExpirator} icon="calendar"
+                                            initialOpen={expirationEnabled} className={'post-expirator-panel'}>
+                    <PanelRow>
+                        <CheckboxControl
+                            label={config.strings.enablePostExpiration}
+                            checked={expirationEnabled}
+                            onChange={this.onChangeEnabled.bind(this)}
+                        />
+                    </PanelRow>
+                    {expirationEnabled && (
+                        <Fragment>
+                            <PanelRow>
+                                <DateTimePicker
+                                    currentDate={expirationDate*1000}
+                                    onChange={this.onChangeDate.bind(this)}
+                                    is12Hour={config.is_12_hours}
+                                />
+                            </PanelRow>
+                            <SelectControl
+                                label={config.strings.howToExpire}
+                                value={expirationAction}
+                                options={config.actions_options}
+                                onChange={this.onChangeAction.bind(this)}
+                            />
+                            {expirationAction.includes('category') &&
+                                (
+                                    (isEmpty(keys(categoriesList)) && (
+                                        <Fragment>
+                                            {config.strings.loading + ` (${expirationTaxonomy})`}
+                                            <Spinner/>
+                                        </Fragment>
+                                    ))
+                                    ||
+                                    (
+                                        <FormTokenField
+                                            label={config.strings.expirationCategories + ` (${expirationTaxonomy})`}
+                                            value={selectedCats}
+                                            suggestions={Object.keys(categoriesList)}
+                                            onChange={this.onChangeTerms.bind(this)}
+                                            maxSuggestions={10}
+                                        />
+                                    )
+                                )}
+                        </Fragment>
+                    )}
+                </PluginDocumentSettingPanel>
+            );
+        }
     }
 
     registerPlugin('postexpirator-sidebar', {
         render: PostExpiratorSidebar
     });
-
 
 })(window.wp, window.postExpiratorPanelConfig);

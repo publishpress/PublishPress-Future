@@ -38,6 +38,7 @@ class Logger implements LoggerInterface
         $this->site = $siteFacade;
         $this->settings = $settingsFacade;
 
+        // FIXME: Rename the table to ppfuture_debug_log.
         $this->dbTableName = $this->db->getTablePrefix() . 'postexpirator_debug';
 
         $this->initialize();

@@ -16,7 +16,7 @@ jobs:
     needs: code-check
     runs-on: ubuntu-latest
     container:
-      image: alledia/future-dev-workspace-terminal:latest
+      image: publishpress/dev-workspace-terminal:future-free
       options: -v ${{ github.workspace }}:/project --workdir="/project"
     steps:
       - name: Checkout code

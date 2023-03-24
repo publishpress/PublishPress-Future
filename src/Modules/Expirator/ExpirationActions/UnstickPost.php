@@ -56,4 +56,9 @@ class UnstickPost implements ExpirationActionInterface
 
         return $result;
     }
+
+    public static function getLabel(): string
+    {
+        return __('Unstick post', 'post-expirator');
+    }
 }

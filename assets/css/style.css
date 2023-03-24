@@ -45,3 +45,23 @@ div.pe-classic-fields > div {
 div.pe-classic-fields > div > label {
     font-weight: bold;
 }
+
+.action-scheduler-status-icon-complete {
+    color: #39b741;
+}
+
+.action-scheduler-status-icon-pending {
+    color: #6cc8ff;
+}
+
+.action-scheduler-status-icon-running {
+    color: #4155e0;
+}
+
+.action-scheduler-status-icon-failed {
+    color: #de6c6c;
+}
+
+.action-scheduler-status-icon-canceled {
+    color: #c9c9c9;
+}

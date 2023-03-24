@@ -90,4 +90,9 @@ class PostCategorySet implements ExpirationActionInterface
 
         return ! $resultIsError;
     }
+
+    public static function getLabel(): string
+    {
+        return __('Set taxonomy term(s)', 'post-expirator');
+    }
 }

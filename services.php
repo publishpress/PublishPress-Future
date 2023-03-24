@@ -8,7 +8,6 @@ use PublishPressFuture\Core\Plugin;
 use PublishPressFuture\Framework\Logger\Logger;
 use PublishPressFuture\Framework\Logger\LoggerInterface;
 use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPressFuture\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPressFuture\Framework\WordPress\Facade\EmailFacade;
@@ -23,6 +22,7 @@ use PublishPressFuture\Framework\WordPress\Models\PostModel;
 use PublishPressFuture\Framework\WordPress\Models\TermModel;
 use PublishPressFuture\Framework\WordPress\Models\UserModel;
 use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
+use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
@@ -36,11 +36,13 @@ use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPressFuture\Modules\Expirator\Models\ActionArgsModel;
 use PublishPressFuture\Modules\Expirator\Models\CurrentUserModel;
 use PublishPressFuture\Modules\Expirator\Models\DefaultDataModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel;
 use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
+use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable;
 use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
 use PublishPressFuture\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPressFuture\Modules\Settings\Models\TaxonomiesModel;
@@ -50,7 +52,7 @@ use PublishPressFuture\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
 
 return [
-    ServicesAbstract::PLUGIN_VERSION => '2.9.2',
+    ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_VERSION,
 
     ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
@@ -143,10 +145,17 @@ return [
     },
 
     /**
-     * @return CronFacade
+     * @return \PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter
+     */
+    ServicesAbstract::WOO_CRON_ADAPTER => static function (ContainerInterface $container) {
+        return new CronToWooActionSchedulerAdapter();
+    },
+
+    /**
+     * @return \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
      */
     ServicesAbstract::CRON => static function (ContainerInterface $container) {
-        return new CronFacade();
+        return $container->get(ServicesAbstract::WOO_CRON_ADAPTER);
     },
 
     /**
@@ -250,7 +259,8 @@ return [
             $container->get(ServicesAbstract::ERROR),
             $container->get(ServicesAbstract::LOGGER),
             $container->get(ServicesAbstract::DATETIME),
-            $container->get(ServicesAbstract::POST_MODEL_FACTORY)
+            $container->get(ServicesAbstract::POST_MODEL_FACTORY),
+            $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY)
         );
     },
 
@@ -306,7 +316,9 @@ return [
             $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
             $container->get(ServicesAbstract::SANITIZATION),
             $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY),
-            $container->get(ServicesAbstract::REQUEST)
+            $container->get(ServicesAbstract::REQUEST),
+            $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
+            $container->get(ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY)
         );
     },
 
@@ -319,7 +331,8 @@ return [
             $container->get(ServicesAbstract::SETTINGS),
             $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY),
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
-            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
+            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
+            $container->get(ServicesAbstract::CRON)
         );
     },
 
@@ -373,7 +386,8 @@ return [
                 $container->get(ServicesAbstract::SETTINGS),
                 $container->get(ServicesAbstract::EMAIL),
                 $container->get(ServicesAbstract::TERM_MODEL_FACTORY),
-                $container->get(ServicesAbstract::EXPIRATION_ACTION_FACTORY)
+                $container->get(ServicesAbstract::EXPIRATION_ACTION_FACTORY),
+                $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY)
             );
         };
     },
@@ -454,6 +468,25 @@ return [
                         $container
                     );
             }
+        };
+    },
+
+    ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY => static function (ContainerInterface $container) {
+        return function() use ($container) {
+            return new ScheduledActionsTable(
+                ActionScheduler::store(),
+                ActionScheduler::logger(),
+                ActionScheduler::runner(),
+                $container->get(ServicesAbstract::HOOKS)
+            );
+        };
+    },
+
+    ServicesAbstract::ACTION_ARGS_MODEL_FACTORY => static function (ContainerInterface $container) {
+        return function () use ($container) {
+            return new ActionArgsModel(
+                $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
+            );
         };
     },
 ];

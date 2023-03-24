@@ -1,12 +1,15 @@
 <?php
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Modules\Debug\HooksAbstract;
+use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = PublishPressFuture\Core\DI\Container::getInstance();
-$debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
+$debug = $container->get(ServicesAbstract::DEBUG);
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -72,7 +75,7 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                 </tr>
                 <tr>
                     <th scope="row"><label for="cron-schedule"><?php
-                            esc_html_e('Current Cron Schedule', 'post-expirator'); ?></label></th>
+                            esc_html_e('Legacy Cron Schedule', 'post-expirator'); ?></label></th>
                     <td>
                         <?php
                         $cron = PostExpirator_CronFacade::get_plugin_cron_events();
@@ -81,7 +84,8 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                             ?>
                             <p><?php
                                 esc_html_e(
-                                    'No cron events found for the plugin.',
+                                    '
+                                    No cron events found for the plugin using WP Cron.',
                                     'post-expirator'
                                 ); ?></p>
                             <?php
@@ -115,7 +119,11 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                                         <?php
                                             $printPostEvent = function ($post) {
                                                 echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
-                                                $attributes = PostExpirator_Facade::get_expire_principles($post->ID);
+
+                                                $container = Container::getInstance();
+                                                $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+                                                $attributes = $postModel->getExpirationDataAsArray();
+
                                                 echo ': <span class="post-expiration-attributes">';
                                                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                                                 print_r($attributes);
@@ -159,6 +167,14 @@ $debug = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::DEBUG);
                             <?php
                         }
                         ?>
+                        <p><?php
+                            // phpcs:disable Generic.Files.LineLength.TooLong
+                            esc_html_e(
+                                'This is a legacy feature and will be removed in a future version.',
+                                'post-expirator'
+                            );
+                            // phpcs:enable
+                            ?></p>
                     </td>
                 </tr>
             </table>

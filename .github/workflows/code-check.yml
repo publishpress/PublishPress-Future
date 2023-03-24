@@ -17,7 +17,7 @@ jobs:
     name: Check the code
     runs-on: ubuntu-latest
     container:
-      image: alledia/future-dev-workspace-terminal:latest
+      image: publishpress/dev-workspace-terminal:future-free
       options: -v ${{ github.workspace }}:/project --workdir="/project"
     steps:
       - uses: actions/checkout@v3

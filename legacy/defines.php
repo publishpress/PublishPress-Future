@@ -82,4 +82,4 @@ define('POSTEXPIRATOR_LOADED', true);
 /**
  * @deprecated 2.8.0
  */
-define('POSTEXPIRATOR_LEGACYDIR', POSTEXPIRATOR_BASEDIR . '/legacy');
+define('POSTEXPIRATOR_LEGACYDIR', $container->get(ServicesAbstract::BASE_PATH) . '/legacy');

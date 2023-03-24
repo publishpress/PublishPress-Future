@@ -8,6 +8,9 @@ namespace PublishPressFuture\Modules\Settings\Controllers;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPressFuture\Framework\InitializableInterface;
+use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
+use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
+use PublishPressFuture\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 
@@ -42,6 +45,10 @@ class Controller implements InitializableInterface
      * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
      */
     private $actionsModel;
+    /**
+     * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
+     */
+    private $cron;
 
     /**
      * @param HookableInterface $hooks
@@ -49,19 +56,22 @@ class Controller implements InitializableInterface
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
      * @param $actionsModel
+     * @param \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface $cron
      */
     public function __construct(
         HookableInterface $hooks,
         $settings,
         $settingsPostTypesModelFactory,
         $taxonomiesModelFactory,
-        $actionsModel
+        $actionsModel,
+        CronInterface $cron
     ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
+        $this->cron = $cron;
     }
 
     public function initialize()
@@ -83,10 +93,21 @@ class Controller implements InitializableInterface
             [$this, 'onAdminEnqueueScript'],
             15
         );
-
         $this->hooks->addAction(
             CoreAbstractHooks::ACTION_ADMIN_INIT,
             [$this, 'processFormSubmission']
+        );
+        $this->hooks->addAction(
+            CoreAbstractHooks::ACTION_ADMIN_INIT,
+            [$this, 'processToolsActions']
+        );
+        $this->hooks->addAction(
+            CoreAbstractHooks::ACTION_ADMIN_INIT,
+            [$this, 'initMigrations']
+        );
+        $this->hooks->addAction(
+            CoreAbstractHooks::ACTION_ADMIN_NOTICES,
+            [$this, 'displayAdminNotices']
         );
     }
 
@@ -227,7 +248,16 @@ class Controller implements InitializableInterface
 
     private function getCurrentTab()
     {
-        $allowedTabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
+        $allowedTabs = array(
+            'general',
+            'defaults',
+            'display',
+            'editor',
+            'diagnostics',
+            'viewdebug',
+            'advanced',
+            'tools'
+        );
 
         $allowedTabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);
 
@@ -256,6 +286,61 @@ class Controller implements InitializableInterface
         }
 
         $this->hooks->doAction(SettingsHooksAbstract::ACTION_SAVE_TAB . $tab);
+    }
+
+    public function processToolsActions()
+    {
+        if (empty($_GET['action'])) {
+            return;
+        }
+
+        if ($_GET['action'] === 'future_migrate_legacy_post_expirations') {
+            if (! isset($_GET['nonce']) || ! \wp_verify_nonce(
+                    \sanitize_key($_GET['nonce']),
+                    'future-migrate-legacy-post-expirations'
+                )) {
+                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
+            }
+
+            $this->cron->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK);
+
+            wp_redirect(
+                admin_url(
+                    'admin.php?page=publishpress-future&tab=tools&message=legacy_post_expirations_migration_scheduled'
+                )
+            );
+            exit;
+        }
+    }
+
+    public function displayAdminNotices()
+    {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        if (empty($_GET['message'])) {
+            return;
+        }
+
+        switch ($_GET['message']) {
+            case 'legacy_post_expirations_migration_scheduled':
+                $message = __(
+                    'The legacy post expirations migration has been scheduled and will run asynchronously.',
+                    'post-expirator'
+                );
+                break;
+            default:
+                $message = '';
+        }
+
+        if (! empty($message)) {
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html($message) . '</p></div>';
+        }
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
+    }
+
+    public function initMigrations()
+    {
+        new V30000WPCronToActionsScheduler($this->cron, $this->hooks);
+        new V30000ActionArgsSchema($this->cron, $this->hooks);
     }
 
     private function saveTabDefaults()

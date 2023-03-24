@@ -26,7 +26,7 @@ class Module implements ModuleInterface
      */
     public function initialize()
     {
-        if (is_admin() && !defined('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES')) {
+        if (is_admin() && !defined('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES') && false) {
             if (!defined('PP_VERSION_NOTICES_LOADED')) {
                 $includesPath = $this->basePath . '/vendor/publishpress/wordpress-version-notices/includes.php';
 
@@ -50,6 +50,10 @@ class Module implements ModuleInterface
                                             'base' => 'toplevel_page_publishpress-future',
                                             'id'   => 'toplevel_page_publishpress-future'
                                         ],
+                                        [
+                                            'base' => 'future_page_publishpress-future-scheduled-actions',
+                                            'id'   => 'future_page_publishpress-future-scheduled-actions'
+                                        ]
                                     ]
                                 ];
 

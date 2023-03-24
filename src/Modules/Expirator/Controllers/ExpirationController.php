@@ -9,11 +9,13 @@ use Closure;
 use Exception;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
+use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 class ExpirationController implements InitializableInterface
@@ -29,7 +31,7 @@ class ExpirationController implements InitializableInterface
     private $site;
 
     /**
-     * @var CronFacade
+     * @var CronInterface
      */
     private $cron;
 
@@ -46,20 +48,20 @@ class ExpirationController implements InitializableInterface
     /**
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
-     * @param CronFacade $cronFacade
+     * @param CronInterface $cron
      * @param SchedulerInterface $scheduler
      * @param Closure $expirablePostModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
         SiteFacade $siteFacade,
-        CronFacade $cronFacade,
+        CronInterface $cron,
         SchedulerInterface $scheduler,
         Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
-        $this->cron = $cronFacade;
+        $this->cron = $cron;
         $this->scheduler = $scheduler;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
@@ -81,33 +83,30 @@ class ExpirationController implements InitializableInterface
             [$this, 'onActionUnschedulePostExpiration']
         );
         $this->hooks->addAction(
-            HooksAbstract::ACTION_EXPIRE_POST,
+            HooksAbstract::ACTION_RUN_WORKFLOW,
             [$this, 'onActionRunPostExpiration']
         );
         $this->hooks->addAction(
-            HooksAbstract::ACTION_LEGACY_EXPIRE_POST,
+            HooksAbstract::ACTION_LEGACY_EXPIRE_POST2,
+            [$this, 'onActionRunPostExpiration']
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_LEGACY_EXPIRE_POST1,
             [$this, 'onActionRunPostExpiration']
         );
     }
 
     public function onActionDeleteAllSettings()
     {
-        // TODO: What about custom post types? How to clean up?
+        $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_DELETE);
 
-        if ($this->site->isMultisite()) {
-            $this->cron->clearScheduledHook(
-                HooksAbstract::getActionLegacyMultisiteDelete($this->site->getBlogId())
-            );
+        $this->cron->cancelActionsByGroup(CronToWooActionSchedulerAdapter::SCHEDULED_ACTION_GROUP);
 
-            return;
-        }
-
-        $this->cron->clearScheduledHook(HooksAbstract::ACTION_LEGACY_DELETE);
     }
 
     public function onActionSchedulePostExpiration($postId, $timestamp, $opts)
     {
-        $this->scheduler->schedule($postId, $timestamp, $opts);
+        $this->scheduler->schedule((int)$postId, (int)$timestamp, $opts);
     }
 
     public function onActionUnschedulePostExpiration($postId)
@@ -124,11 +123,10 @@ class ExpirationController implements InitializableInterface
 
         $postModel = $postModelFactory($postId);
 
-        if ($postModel instanceof ExpirablePostModel) {
-            $postModel->expire($force);
-            return;
+        if (! ($postModel instanceof ExpirablePostModel)) {
+            throw new Exception('Invalid post model factory');
         }
 
-        throw new Exception('Invalid post model factory');
+        $postModel->expire($force);
     }
 }

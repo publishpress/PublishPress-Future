@@ -79,7 +79,7 @@ class PostModel
      * @param mixed $metaValue
      * @return false|int
      */
-    public function addMeta($metaKey, $metaValue = null)
+    public function addMeta(string $metaKey, $metaValue = null)
     {
         return add_post_meta($this->getPostId(), $metaKey, $metaValue);
     }
@@ -171,9 +171,19 @@ class PostModel
         return get_the_title($this->getPostId());
     }
 
+    public function getPostStatus()
+    {
+        return get_post_status($this->getPostId());
+    }
+
     public function getPermalink()
     {
         return get_post_permalink($this->getPostId());
+    }
+
+    public function getPostEditLink()
+    {
+        return get_edit_post_link($this->getPostId());
     }
 
     public function getPostId()

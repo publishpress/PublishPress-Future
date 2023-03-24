@@ -7,13 +7,7 @@ namespace PublishPressFuture\Modules\Expirator\Interfaces;
 
 interface SchedulerInterface
 {
-    /**
-     * @param int $postId
-     * @param int $timestamp
-     * @param array $opts
-     * @return void
-     */
-    public function schedule($postId, $timestamp, $opts);
+    public function schedule(int $postId, int $timestamp, array $opts): void;
 
     /**
      * @param int $postId
@@ -25,5 +19,5 @@ interface SchedulerInterface
      * @param int $postId
      * @return bool
      */
-    public function isScheduled($postId);
+    public function postIsScheduled($postId);
 }

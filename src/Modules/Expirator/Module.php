@@ -8,13 +8,14 @@ namespace PublishPressFuture\Modules\Expirator;
 
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
+use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
 use PublishPressFuture\Modules\Expirator\Controllers\BulkEditController;
 use PublishPressFuture\Modules\Expirator\Controllers\ExpirationController;
+use PublishPressFuture\Modules\Expirator\Controllers\ScheduledActionsController;
 use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
+use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class Module implements ModuleInterface
 {
@@ -29,7 +30,7 @@ class Module implements ModuleInterface
     private $site;
 
     /**
-     * @var CronFacade
+     * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
      */
     private $cron;
 
@@ -63,8 +64,28 @@ class Module implements ModuleInterface
      */
     private $request;
 
-    public function __construct($hooks, $site, $cron, $scheduler, $expirablePostModelFactory, $sanitization, $currentUserModelFactory, $request)
-    {
+    /**
+     * @var \Closure
+     */
+    private $actionArgsModelFactory;
+
+    /**
+     * @var \Closure
+     */
+    private $scheduledActionsTableFactory;
+
+    public function __construct(
+        $hooks,
+        $site,
+        $cron,
+        $scheduler,
+        $expirablePostModelFactory,
+        $sanitization,
+        $currentUserModelFactory,
+        $request,
+        \Closure $actionArgsModelFactory,
+        \Closure $scheduledActionsTableFactory
+    ) {
         $this->hooks = $hooks;
         $this->site = $site;
         $this->cron = $cron;
@@ -73,10 +94,14 @@ class Module implements ModuleInterface
         $this->sanitization = $sanitization;
         $this->currentUserModelFactory = $currentUserModelFactory;
         $this->request = $request;
+        $this->actionArgsModelFactory = $actionArgsModelFactory;
+        $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
+        $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
     }
+
 
     /**
      * @inheritDoc
@@ -107,6 +132,15 @@ class Module implements ModuleInterface
             $this->sanitization,
             $this->currentUserModelFactory,
             $this->request
+        );
+    }
+
+    private function factoryScheduledActionsController()
+    {
+        return new ScheduledActionsController (
+            $this->hooks,
+            $this->actionArgsModelFactory,
+            $this->scheduledActionsTableFactory
         );
     }
 }

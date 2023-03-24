@@ -1,5 +1,7 @@
 <?php
 
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPressFuture\Core\HooksAbstract as CoreHooksAbstract;
@@ -28,7 +30,6 @@ class PostExpirator_Display
      */
     private function hooks()
     {
-        add_action('admin_menu', [$this, 'add_menu']);
         add_action('init', [$this, 'init']);
     }
 
@@ -46,22 +47,6 @@ class PostExpirator_Display
 
     public function init()
     {
-    }
-
-    /**
-     * Add plugin page menu.
-     */
-    public function add_menu()
-    {
-        add_menu_page(
-            __('PublishPress Future Options', 'post-expirator'),
-            __('Future', 'post-expirator'),
-            'manage_options',
-            'publishpress-future',
-            array(self::$instance, 'settings_tabs'),
-            'dashicons-clock',
-            74
-        );
     }
 
     /**
@@ -91,7 +76,7 @@ class PostExpirator_Display
 
         PostExpirator_Facade::load_assets('settings');
 
-        $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced');
+        $allowed_tabs = array('general', 'defaults', 'display', 'editor', 'diagnostics', 'viewdebug', 'advanced', 'tools');
 
         $allowed_tabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
 
@@ -251,6 +236,18 @@ class PostExpirator_Display
         ];
 
         $this->render_template('menu-debug-log', $params);
+    }
+
+    private function menu_tools()
+    {
+        $params = [
+            'showSideBar' => apply_filters(
+                SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
+                ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
+            ),
+        ];
+
+        $this->render_template('menu-tools', $params);
     }
 
     /**

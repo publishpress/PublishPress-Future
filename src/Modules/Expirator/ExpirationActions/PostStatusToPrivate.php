@@ -21,6 +21,11 @@ class PostStatusToPrivate implements ExpirationActionInterface
     private $log = [];
 
     /**
+     * @var string
+     */
+    private $oldPostStatus;
+
+    /**
      * @param ExpirablePostModel $postModel
      */
     public function __construct($postModel)
@@ -43,7 +48,8 @@ class PostStatusToPrivate implements ExpirationActionInterface
         }
 
         return sprintf(
-            __('Post status has been successfully changed to "%s".', 'post-expirator'),
+            __('Post status has been successfully changed from "%s" to "%s".', 'post-expirator'),
+            $this->oldPostStatus,
             'private'
         );
     }
@@ -54,10 +60,17 @@ class PostStatusToPrivate implements ExpirationActionInterface
      */
     public function execute()
     {
+        $this->oldPostStatus = $this->postModel->getPostStatus();
+
         $result = $this->postModel->setPostStatus('private');
 
         $this->log['success'] = $result;
 
         return $result;
+    }
+
+    public static function getLabel(): string
+    {
+        return __('Change post status to private', 'post-expirator');
     }
 }

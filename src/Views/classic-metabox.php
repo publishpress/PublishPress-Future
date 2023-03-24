@@ -139,7 +139,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     $taxonomies = get_object_taxonomies($post->post_type, 'object');
     $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
 
-    if (empty($categories)) {
+    if (empty($categories) && isset($defaultsOption['terms'])) {
         $categories = explode(',', $defaultsOption['terms']);
         $categories = array_map('intval', $categories);
     }

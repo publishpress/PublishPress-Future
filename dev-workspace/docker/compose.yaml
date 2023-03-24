@@ -1,7 +1,8 @@
+name: devworkspace_future_free
 services:
     terminal:
         build: ./docker
-        image: alledia/future-dev-workspace-terminal
+        image: publishpress/dev-workspace-terminal:future-free
         command: ["zsh"]
         stdin_open: true
         tty: true
