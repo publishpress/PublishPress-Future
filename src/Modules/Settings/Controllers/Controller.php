@@ -323,7 +323,7 @@ class Controller implements InitializableInterface
         switch ($_GET['message']) {
             case 'legacy_post_expirations_migration_scheduled':
                 $message = __(
-                    'The legacy post expirations migration has been scheduled and will run asynchronously.',
+                    'The legacy future actions migration has been scheduled and will run asynchronously.',
                     'post-expirator'
                 );
                 break;

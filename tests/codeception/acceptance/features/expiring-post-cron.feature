@@ -1,5 +1,5 @@
 Feature: Expiring posts
-  In order to control the post expiration of a post in the Gutenberg editor
+  In order to control the future action of a post in the Gutenberg editor
   As an admin
   I need to be able to configure a post to expire or not, using the component panel
 
@@ -12,7 +12,7 @@ Feature: Expiring posts
   # Scenario: New post expires if expiration date is in the past
   #   Given post "post" exists
   #   And I am editing post "post"
-  #   And I check the Enable Post Expiration checkbox on Gutenberg
+  #   And I check the Enable Future Action checkbox on Gutenberg
   #   And I set the expiration date to yesterday as draft on Gutenberg
   #   When I publish the post on Gutenberg
   #   And I run expiring cron for post "post"

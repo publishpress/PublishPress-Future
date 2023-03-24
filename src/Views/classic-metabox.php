@@ -8,7 +8,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $enabled; ?>/>
     <label for="enable-expirationdate"><?php
-        esc_html_e('Enable Post Expiration', 'post-expirator'); ?></label>
+        esc_html_e('Enable Future Action', 'post-expirator'); ?></label>
 </p>
 
 <?php
@@ -114,7 +114,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     </div>
     <div>
         <label><?php
-            esc_html_e('How to expire', 'post-expirator'); ?></label>
+            esc_html_e('Action to run', 'post-expirator'); ?></label>
         <?php
         _postexpirator_expire_type(array(
             'type' => $post->post_type,

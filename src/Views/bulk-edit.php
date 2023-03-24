@@ -33,7 +33,7 @@ $defaults = $settingsFacade->getPostTypeDefaults($post_type);
                                 esc_html_e('Date', 'post-expirator'); ?></span></legend>
                         <label>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('Enable Post Expiration', 'post-expirator'); ?></span>
+                                esc_html_e('Enable Future Action', 'post-expirator'); ?></span>
                             <select name="expirationdate_status">
                                 <option value="no-change" data-show-fields="false" selected>
                                     --<?php
@@ -118,7 +118,7 @@ $defaults = $settingsFacade->getPostTypeDefaults($post_type);
                             <span class="title"><?php
                                 esc_html_e('Action', 'post-expirator'); ?></span>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('How to expire', 'post-expirator'); ?></span>
+                                esc_html_e('Action to run', 'post-expirator'); ?></span>
                         </legend>
                         <label>
                             <?php

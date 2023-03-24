@@ -141,7 +141,7 @@ msgstr ""
 #: views/bulk-edit.php:24
 #: views/classic-metabox.php:6
 #: views/quick-edit.php:8
-msgid "Enable Post Expiration"
+msgid "Enable Future Action"
 msgstr ""
 
 #: classes/Facade.class.php:376
@@ -227,7 +227,7 @@ msgid "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now bee
 msgstr ""
 
 #: post-expirator.php:1247
-msgid "Post Expiration Complete \"%s\""
+msgid "Future Action Complete \"%s\""
 msgstr ""
 
 #: post-expirator.php:1931
@@ -538,7 +538,7 @@ msgstr ""
 
 #: views/menu-display.php:79
 #: views/menu-general.php:271
-msgid "This will enable or disable displaying the post expiration date in the post footer."
+msgid "This will enable or disable displaying the future action date in the post footer."
 msgstr ""
 
 #: views/menu-display.php:87
@@ -548,7 +548,7 @@ msgstr ""
 
 #: views/menu-display.php:92
 #: views/menu-general.php:287
-msgid "Enter the text you would like to appear at the bottom of every post that will expire.  The following placeholders will be replaced with the post expiration date in the following format:"
+msgid "Enter the text you would like to appear at the bottom of every post that will expire.  The following placeholders will be replaced with the future action date in the following format:"
 msgstr ""
 
 #: views/menu-display.php:110
@@ -637,7 +637,7 @@ msgid "Enable Email Notification?"
 msgstr ""
 
 #: views/menu-general.php:199
-msgid "This will enable or disable the send of email notification on post expiration."
+msgid "This will enable or disable the send of email notification on future action."
 msgstr ""
 
 #: views/menu-general.php:207
@@ -645,7 +645,7 @@ msgid "Include Blog Administrators?"
 msgstr ""
 
 #: views/menu-general.php:223
-msgid "This will include all users with the role of \"Administrator\" in the post expiration email."
+msgid "This will include all users with the role of \"Administrator\" in the future action email."
 msgstr ""
 
 #: views/menu-general.php:239

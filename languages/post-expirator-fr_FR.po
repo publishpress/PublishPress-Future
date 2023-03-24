@@ -310,7 +310,7 @@ msgid "Who to notify"
 msgstr "Personne à notifier"
 
 #: legacy/views/menu-general.php:196
-msgid "This will include all users with the role of \"Administrator\" in the post expiration email."
+msgid "This will include all users with the role of \"Administrator\" in the future action email."
 msgstr "Inclus tous les utilisateurs avec le rôle « Administrateur » dans l’e-mail informant de l’expiration d’un contenu."
 
 #: legacy/views/menu-general.php:178
@@ -318,7 +318,7 @@ msgid "Include Blog Administrators?"
 msgstr "Inclure les Admins ?"
 
 #: legacy/views/menu-general.php:170
-msgid "This will enable or disable the send of email notification on post expiration."
+msgid "This will enable or disable the send of email notification on future action."
 msgstr "Cela activera ou désactivera l’envoi d’une notification par e-mail au moment de l’expiration d’un contenu."
 
 #: legacy/views/menu-general.php:154
@@ -334,7 +334,7 @@ msgid "Expiration Email Notification"
 msgstr "Notification e-mail de l’expiration"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:447
-msgid "Post Expiration Complete \"%s\""
+msgid "Future Action Complete \"%s\""
 msgstr "Expiration du contenu « %s »"
 
 #. Description of the plugin
@@ -468,7 +468,7 @@ msgid "Footer Style"
 msgstr "Style du pied de page"
 
 #: legacy/views/menu-display.php:98
-msgid "Enter the text you would like to appear at the bottom of every post that will expire.  The following placeholders will be replaced with the post expiration date in the following format:"
+msgid "Enter the text you would like to appear at the bottom of every post that will expire.  The following placeholders will be replaced with the future action date in the following format:"
 msgstr "Entrez le texte que vous souhaitez afficher au bas de chaque publication qui expirera. Les textes indicatifs ci-après seront remplacées par la date d’expiration dans le format indiqué :"
 
 #: legacy/views/menu-display.php:93
@@ -476,7 +476,7 @@ msgid "Footer Contents"
 msgstr "Contenus du pied de page"
 
 #: legacy/views/menu-display.php:85
-msgid "This will enable or disable displaying the post expiration date in the post footer."
+msgid "This will enable or disable displaying the future action date in the post footer."
 msgstr "Active ou désactive l’affichage de la date d’expiration de la publication dans le pied de page."
 
 #: legacy/views/menu-defaults.php:128 legacy/views/menu-diagnostics.php:35
@@ -589,7 +589,7 @@ msgstr "La date/heure publiée sera utilisée comme valeur d’expiration"
 
 #: legacy/classes/Facade.class.php:382 legacy/views/bulk-edit.php:26
 #: legacy/views/classic-metabox.php:11 legacy/views/quick-edit.php:12
-msgid "Enable Post Expiration"
+msgid "Enable Future Action"
 msgstr "Autoriser l’expiration de vos contenus"
 
 #: legacy/views/expire-column.php:24

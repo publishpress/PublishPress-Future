@@ -12,7 +12,7 @@ $container = PublishPressFuture\Core\DI\Container::getInstance();
                 <tbody>
                 <tr valign="top">
                     <th scope="row"><?php
-                        _e('Migrate legacy post expirations', 'post-expirator'); ?>
+                        _e('Migrate legacy future actions', 'post-expirator'); ?>
                     </th>
                     <td>
                         <?php
@@ -25,7 +25,7 @@ $container = PublishPressFuture\Core\DI\Container::getInstance();
 
                         <p class="description">
                             <?php esc_html_e(
-                                'Migrate legacy post expirations from WP Cron to the new Action Scheduler. This will run in the background and may take a while.',
+                                'Migrate legacy future actions from WP Cron to the new Action Scheduler. This will run in the background and may take a while.',
                                 'post-expirator'
                             ); ?>
                         </p>

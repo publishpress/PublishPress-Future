@@ -13,11 +13,11 @@ Feature: Do not mark post for expiring on Gutenberg if data is corrupted
     Given post "post_1" exists
     And post "post_1" has metadata "_expiration-date-status" as "saved"
     When I am editing post "post_1"
-    Then the checkbox Enable Post Expiration is deactivated on the component panel
+    Then the checkbox Enable Future Action is deactivated on the component panel
 
   @admin @gutenberg
   Scenario: Gutenberg: _expiration-date-status=empty
     Given post "post_2" exists
     And post "post_2" has metadata "_expiration-date-status" as "0"
     When I am editing post "post_2"
-    Then the checkbox Enable Post Expiration is deactivated on the component panel
+    Then the checkbox Enable Future Action is deactivated on the component panel

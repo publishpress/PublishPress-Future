@@ -145,7 +145,7 @@ msgstr ""
 "\". A lista completa das categorias no post é: \"%6$s\"."
 
 #: post-expirator.php:1251
-msgid "Post Expiration Complete \"%s\""
+msgid "Future Action Complete \"%s\""
 msgstr "Expiração do post completo \"%s\""
 
 #: post-expirator.php:1927
@@ -174,7 +174,7 @@ msgstr "Data"
 
 #: views/bulk-edit.php:24 views/classic-metabox.php:6 views/quick-edit.php:8
 #: assets/jsx/block.jsx:168
-msgid "Enable Post Expiration"
+msgid "Enable Future Action"
 msgstr "Habilitar Expiração do Post"
 
 #: views/bulk-edit.php:28
@@ -580,7 +580,7 @@ msgstr ""
 
 #: views/menu-general.php:306
 msgid ""
-"This will enable or disable displaying the post expiration date in the post "
+"This will enable or disable displaying the future action date in the post "
 "footer."
 msgstr ""
 

@@ -150,7 +150,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             esc_html_e('Disabled', 'post-expirator'); ?></label>
                         <p class="description"><?php
                             esc_html_e(
-                                'This will enable or disable the send of email notification on post expiration.',
+                                'This will enable or disable the send of email notification on future action.',
                                 'post-expirator'
                             ); ?></p>
                     </td>
@@ -176,7 +176,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             esc_html_e('Disabled', 'post-expirator'); ?></label>
                         <p class="description"><?php
                             esc_html_e(
-                                'This will include all users with the role of "Administrator" in the post expiration email.',
+                                'This will include all users with the role of "Administrator" in the future action email.',
                                 'post-expirator'
                             ); ?></p>
                     </td>

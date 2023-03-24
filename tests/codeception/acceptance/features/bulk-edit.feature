@@ -13,7 +13,7 @@ Feature: Bulk edit posts in the admin
     Given posts "bef_post_a, bef_post_b, bef_post_c" exist
     When I am on the list of posts
     And I bulk edit the posts "bef_post_a, bef_post_b, bef_post_c"
-    Then I see the fields to change post expiration on bulk edit panel
+    Then I see the fields to change future action on bulk edit panel
 
   @admin
   Scenario: Option to change on posts with no expiration do not change posts

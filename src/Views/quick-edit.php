@@ -13,7 +13,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
             <label>
                 <input name="enable-expirationdate" type="checkbox"/>
                 <span class=""><?php
-                    esc_html_e('Enable Post Expiration', 'post-expirator'); ?></span>
+                    esc_html_e('Enable Future Action', 'post-expirator'); ?></span>
             </label>
             <fieldset class="inline-edit-date">
                 <div class="pe-qe-fields" style="display: none">

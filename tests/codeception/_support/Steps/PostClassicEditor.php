@@ -15,7 +15,7 @@ trait PostClassicEditor
     }
 
     /**
-     * @Then the checkbox Enable Post Expiration is deactivated on the metabox
+     * @Then the checkbox Enable Future Action is deactivated on the metabox
      */
     public function checkboxEnablePostExpirationIsDeactivatedOnMetabox()
     {
@@ -24,7 +24,7 @@ trait PostClassicEditor
     }
 
     /**
-     * @Then the checkbox Enable Post Expiration is activated on the metabox
+     * @Then the checkbox Enable Future Action is activated on the metabox
      */
     public function checkboxEnablePostExpirationIsAactivatedOnMetabox()
     {

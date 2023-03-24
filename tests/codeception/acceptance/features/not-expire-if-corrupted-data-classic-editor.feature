@@ -13,11 +13,11 @@ Feature: Do not mark post for expiring on Classic Editor if data is corrupted
     Given post "post_1" exists
     And post "post_1" has metadata "_expiration-date-status" as "saved"
     When I am editing post "post_1"
-    Then the checkbox Enable Post Expiration is deactivated on the metabox
+    Then the checkbox Enable Future Action is deactivated on the metabox
 
   @admin @classic-editor
   Scenario: Classic Editor: _expiration-date-status=emptys
     Given post "post_2" exists
     And post "post_2" has metadata "_expiration-date-status" as "0"
     When I am editing post "post_2"
-    Then the checkbox Enable Post Expiration is deactivated on the metabox
+    Then the checkbox Enable Future Action is deactivated on the metabox
