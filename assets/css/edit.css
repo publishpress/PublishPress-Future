@@ -43,3 +43,15 @@ div.pe-qe-fields > div {
     border: 2px solid #b15b5b;
     background-color: #ffdede;
 }
+
+.future-action-gray {
+    color: #afafaf;
+}
+
+.future-action-action-name {
+    font-style: italic;
+}
+
+.future-action-action-date {
+    font-weight: bold;
+}

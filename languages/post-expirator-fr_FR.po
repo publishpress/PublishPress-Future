@@ -207,11 +207,11 @@ msgid "Advanced Options"
 msgstr "Options avancées"
 
 #: legacy/views/menu-general.php:85
-msgid "The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
+msgid "The default format to use when displaying the action time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr "Le format par défaut à utiliser pour afficher le délai d’expiration dans une publication à l’aide du code court ou dans le pied de page.  Pour plus d’informations sur les options de formatage valides, voir : %s."
 
 #: legacy/views/menu-general.php:68
-msgid "The default format to use when displaying the expiration date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
+msgid "The default format to use when displaying the action date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr "Le format par défaut à utiliser lors de l’affichage de la date d’expiration dans une publication à l’aide du code court ou dans le pied de page.  Pour plus d’informations sur les options de formatage valides, voir : %s."
 
 #: legacy/views/menu-display.php:37
@@ -247,7 +247,7 @@ msgid "PublishPress"
 msgstr "PublishPress"
 
 #: legacy/views/menu-defaults.php:194 legacy/views/menu-general.php:103
-msgid "Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
+msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
 msgstr "Définissez le décalage à utiliser pour la date et l’heure d’expiration par défaut. Pour plus d’informations sur le formatage, voir %1$s. Par exemple, vous pouvez saisir %2$s + 1 mois%3$s ou %4$s + 1 semaine 2 jours 4 heures 2 secondes%5$s ou %6$sprochain jeudi%7$s."
 
 #: legacy/views/bulk-edit.php:46
@@ -298,11 +298,11 @@ msgid "Trash"
 msgstr "Corbeille"
 
 #: legacy/views/menu-defaults.php:163
-msgid "Enter a comma separate list of emails that you would like to be notified when the post expires."
+msgid "Enter a comma separate list of emails that you would like to be notified when the action runs."
 msgstr "Saisissez une liste d’e-mails (séparés par des virgules) que vous voulez notifier quand la publication arrive à expiration."
 
 #: legacy/views/menu-general.php:212
-msgid "Enter a comma separate list of emails that you would like to be notified when the post expires.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
+msgid "Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
 msgstr "Saisissez une liste d’e-mails (séparés par des virgules) que vous voulez notifier quand la publication arrive à expiration. Cela s’appliquera à TOUS les types de contenu. Vous pouvez définir des e-mails spécifiques en fonction du type de contenu dans l’onglet Par défaut."
 
 #: legacy/views/menu-defaults.php:156 legacy/views/menu-general.php:205
@@ -310,7 +310,7 @@ msgid "Who to notify"
 msgstr "Personne à notifier"
 
 #: legacy/views/menu-general.php:196
-msgid "This will include all users with the role of \"Administrator\" in the future action email."
+msgid "This will include all users with the role of \"Administrator\" in the email."
 msgstr "Inclus tous les utilisateurs avec le rôle « Administrateur » dans l’e-mail informant de l’expiration d’un contenu."
 
 #: legacy/views/menu-general.php:178
@@ -326,11 +326,11 @@ msgid "Enable Email Notification?"
 msgstr "Activer la notification par e-mail ?"
 
 #: legacy/views/menu-general.php:147
-msgid "Whenever a post expires, an email can be sent to alert users of the expiration."
+msgid "Whenever an action runs, an email can be sent to alert users."
 msgstr "Dès qu’un contenu arrive à expiration, un e-mail peut être envoyé pour informer les utilisateurs de l’expiration."
 
 #: legacy/views/menu-general.php:145
-msgid "Expiration Email Notification"
+msgid "Email Notification"
 msgstr "Notification e-mail de l’expiration"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:447
@@ -426,7 +426,7 @@ msgid "Auto-Enable?"
 msgstr "Activer automatiquement"
 
 #: legacy/views/menu-defaults.php:106
-msgid "Select the default expire action for the post type."
+msgid "Select the default action for the post type."
 msgstr "Sélectionnez le mode d’expiration par défaut pour ce type de publication."
 
 #: legacy/views/menu-defaults.php:87
@@ -468,7 +468,7 @@ msgid "Footer Style"
 msgstr "Style du pied de page"
 
 #: legacy/views/menu-display.php:98
-msgid "Enter the text you would like to appear at the bottom of every post that will expire.  The following placeholders will be replaced with the future action date in the following format:"
+msgid "Enter the text you would like to appear at the bottom of every post which has an action scheduled.  The following placeholders will be replaced with the future action date in the following format:"
 msgstr "Entrez le texte que vous souhaitez afficher au bas de chaque publication qui expirera. Les textes indicatifs ci-après seront remplacées par la date d’expiration dans le format indiqué :"
 
 #: legacy/views/menu-display.php:93
@@ -496,7 +496,7 @@ msgid "Show in post footer?"
 msgstr "Afficher dans le pied de page de la publication ?"
 
 #: legacy/views/menu-display.php:66
-msgid "Enabling this below will display the expiration date automatically at the end of any post which is set to expire."
+msgid "Enabling this below will display the action date automatically at the end of any post which is set to run an action."
 msgstr "L’activation de cette option affichera la date d’expiration automatiquement à la fin de toute publication qui doit expirer."
 
 #: legacy/views/menu-display.php:64
@@ -555,7 +555,7 @@ msgstr "Vous devez assigner une taxonomie hiérarchique à ce type de publicatio
 #: legacy/classes/Facade.class.php:383 legacy/views/bulk-edit.php:111
 #: legacy/views/classic-metabox.php:117 legacy/views/menu-defaults.php:96
 #: legacy/views/quick-edit.php:76
-msgid "How to expire"
+msgid "Action"
 msgstr "Mode d’expiration"
 
 #: legacy/views/bulk-edit.php:97 legacy/views/classic-metabox.php:110
@@ -597,8 +597,8 @@ msgid "Never"
 msgstr "Jamais"
 
 #: legacy/functions.php:77 legacy/functions.php:167
-msgid "Expires"
-msgstr "Expires"
+msgid "Future action"
+msgstr "Future action"
 
 #: legacy/functions.php:24
 msgid "Settings"

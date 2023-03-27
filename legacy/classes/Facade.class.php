@@ -357,7 +357,7 @@ class PostExpirator_Facade
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                         'howToExpire' => __('Action to run', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
-                        'expirationCategories' => __('Expiration Taxonomies', 'post-expirator'),
+                        'expirationCategories' => __('Terms', 'post-expirator'),
                     ]
                 ]
             );

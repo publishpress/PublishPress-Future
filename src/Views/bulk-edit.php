@@ -135,7 +135,7 @@ $defaults = $settingsFacade->getPostTypeDefaults($post_type);
                             <span class="title"><?php
                                 echo esc_html($tax_label); ?></span>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('Expiration Taxonomies', 'post-expirator'); ?></span>
+                                esc_html_e('Terms', 'post-expirator'); ?></span>
                         </legend>
                         <ul id="categorychecklist"
                             class="list:category categorychecklist cat-checklist category-checklist">

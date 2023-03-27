@@ -190,9 +190,9 @@ class Controller implements InitializableInterface
                             'Select whether the PublishPress Future meta box is active for this post type.',
                             'post-expirator'
                         ),
-                        'fieldHowToExpire' => __('How to expire', 'post-expirator'),
+                        'fieldHowToExpire' => __('Action', 'post-expirator'),
                         'fieldHowToExpireDescription' => __(
-                            'Select the default expire action for the post type.',
+                            'Select the default action for the post type.',
                             'post-expirator'
                         ),
                         'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
@@ -210,13 +210,13 @@ class Controller implements InitializableInterface
                         ),
                         'fieldWhoToNotify' => __('Who to notify', 'post-expirator'),
                         'fieldWhoToNotifyDescription' => __(
-                            'Enter a comma separate list of emails that you would like to be notified when the post expires.',
+                            'Enter a comma separate list of emails that you would like to be notified when the action runs.',
                             'post-expirator'
                         ),
                         'fieldDefaultDateTimeOffset' => __('Default date/time offset', 'post-expirator'),
                         'fieldDefaultDateTimeOffsetDescription' => sprintf(
                             esc_html__(
-                                'Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
+                                'Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                 'post-expirator'
                             ),
                             '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__(

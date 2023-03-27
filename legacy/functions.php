@@ -58,7 +58,7 @@ function postexpirator_init()
 add_action('plugins_loaded', 'postexpirator_init');
 
 /**
- * Adds an 'Expires' column to the post display table.
+ * Adds an 'Future action' column to the post display table.
  *
  * @internal
  *
@@ -78,7 +78,7 @@ function postexpirator_add_column($columns, $type)
             ), true)) || (is_array(
                 $defaults
             ) && $defaults['activeMetaBox'] === 'active')) {
-        $columns['expirationdate'] = __('Expires', 'post-expirator');
+        $columns['expirationdate'] = __('Future Action', 'post-expirator');
     }
 
     return $columns;
@@ -104,7 +104,7 @@ function postexpirator_manage_sortable_columns()
 add_action('admin_init', 'postexpirator_manage_sortable_columns', 100);
 
 /**
- * Adds an 'Expires' column to the post display table.
+ * Adds an 'Future Action' column to the post display table.
  *
  * @internal
  *
@@ -158,7 +158,7 @@ function postexpirator_posts_join($join, $query)
 add_filter('posts_join', 'postexpirator_posts_join', 10, 2);
 
 /**
- * Adds an 'Expires' column to the page display table.
+ * Adds an 'Future Action' column to the page display table.
  *
  * @internal
  *
@@ -172,7 +172,7 @@ function postexpirator_add_column_page($columns)
     $defaults = $settingsFacade->getPostTypeDefaults('page');
 
     if (! isset($defaults['activeMetaBox']) || $defaults['activeMetaBox'] === 'active') {
-        $columns['expirationdate'] = __('Expires', 'post-expirator');
+        $columns['expirationdate'] = __('Future Action', 'post-expirator');
     }
 
     return $columns;
@@ -181,7 +181,7 @@ function postexpirator_add_column_page($columns)
 add_filter('manage_pages_columns', 'postexpirator_add_column_page');
 
 /**
- * Fills the 'Expires' column of the post display table.
+ * Fills the 'Future Action' column of the post display table.
  *
  * @internal
  *
