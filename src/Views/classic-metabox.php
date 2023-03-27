@@ -142,7 +142,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
 
     if (isset($taxonomyId)) {
         $taxonomyObj= get_taxonomy($taxonomyId);
-        echo '<label>' . $taxonomyObj->label . '</label><br/>';
+        echo '<label>' . esc_html($taxonomyObj->label) . '</label><br/>';
     }
 
     echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
