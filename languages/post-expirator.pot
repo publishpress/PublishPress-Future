@@ -141,7 +141,7 @@ msgstr ""
 #: views/bulk-edit.php:24
 #: views/classic-metabox.php:6
 #: views/quick-edit.php:8
-msgid "Enable Post Expiration"
+msgid "Enable Future Action"
 msgstr ""
 
 #: classes/Facade.class.php:376
@@ -149,7 +149,7 @@ msgstr ""
 #: views/classic-metabox.php:109
 #: views/menu-defaults.php:84
 #: views/quick-edit.php:72
-msgid "How to expire"
+msgid "Action"
 msgstr ""
 
 #: classes/Facade.class.php:377
@@ -193,7 +193,7 @@ msgstr ""
 
 #: post-expirator.php:86
 #: post-expirator.php:172
-msgid "Expires"
+msgid "Future action"
 msgstr ""
 
 #: post-expirator.php:804
@@ -227,7 +227,7 @@ msgid "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now bee
 msgstr ""
 
 #: post-expirator.php:1247
-msgid "Post Expiration Complete \"%s\""
+msgid "Future Action Complete \"%s\""
 msgstr ""
 
 #: post-expirator.php:1931
@@ -357,7 +357,7 @@ msgid "Select whether the PublishPress Future meta box is active for this post t
 msgstr ""
 
 #: views/menu-defaults.php:94
-msgid "Select the default expire action for the post type."
+msgid "Select the default action for the post type."
 msgstr ""
 
 #: views/menu-defaults.php:100
@@ -398,7 +398,7 @@ msgid "Who to notify"
 msgstr ""
 
 #: views/menu-defaults.php:147
-msgid "Enter a comma separate list of emails that you would like to be notified when the post expires."
+msgid "Enter a comma separate list of emails that you would like to be notified when the action runs."
 msgstr ""
 
 #: views/menu-defaults.php:155
@@ -432,7 +432,7 @@ msgstr ""
 
 #: views/menu-defaults.php:205
 #: views/menu-general.php:134
-msgid "Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
+msgid "Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
 msgstr ""
 
 #: views/menu-defaults.php:228
@@ -528,7 +528,7 @@ msgstr ""
 
 #: views/menu-display.php:62
 #: views/menu-general.php:250
-msgid "Enabling this below will display the expiration date automatically at the end of any post which is set to expire."
+msgid "Enabling this below will display the action date automatically at the end of any post which is set to run an action."
 msgstr ""
 
 #: views/menu-display.php:69
@@ -538,7 +538,7 @@ msgstr ""
 
 #: views/menu-display.php:79
 #: views/menu-general.php:271
-msgid "This will enable or disable displaying the post expiration date in the post footer."
+msgid "This will enable or disable displaying the future action date in the post footer."
 msgstr ""
 
 #: views/menu-display.php:87
@@ -548,7 +548,7 @@ msgstr ""
 
 #: views/menu-display.php:92
 #: views/menu-general.php:287
-msgid "Enter the text you would like to appear at the bottom of every post that will expire.  The following placeholders will be replaced with the post expiration date in the following format:"
+msgid "Enter the text you would like to appear at the bottom of every post which has an action scheduled.  The following placeholders will be replaced with the future action date in the following format:"
 msgstr ""
 
 #: views/menu-display.php:110
@@ -605,7 +605,7 @@ msgid "Date Format"
 msgstr ""
 
 #: views/menu-general.php:76
-msgid "The default format to use when displaying the expiration date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
+msgid "The default format to use when displaying the action date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr ""
 
 #: views/menu-general.php:86
@@ -613,7 +613,7 @@ msgid "Time Format"
 msgstr ""
 
 #: views/menu-general.php:93
-msgid "The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
+msgid "The default format to use when displaying the action time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s."
 msgstr ""
 
 #: views/menu-general.php:115
@@ -625,11 +625,11 @@ msgid "Set the default expiration date to be used when creating new posts and pa
 msgstr ""
 
 #: views/menu-general.php:176
-msgid "Expiration Email Notification"
+msgid "Email Notification"
 msgstr ""
 
 #: views/menu-general.php:178
-msgid "Whenever a post expires, an email can be sent to alert users of the expiration."
+msgid "Whenever an action runs, an email can be sent to alert users."
 msgstr ""
 
 #: views/menu-general.php:185
@@ -637,7 +637,7 @@ msgid "Enable Email Notification?"
 msgstr ""
 
 #: views/menu-general.php:199
-msgid "This will enable or disable the send of email notification on post expiration."
+msgid "This will enable or disable the send of email notification on future action."
 msgstr ""
 
 #: views/menu-general.php:207
@@ -645,11 +645,11 @@ msgid "Include Blog Administrators?"
 msgstr ""
 
 #: views/menu-general.php:223
-msgid "This will include all users with the role of \"Administrator\" in the post expiration email."
+msgid "This will include all users with the role of \"Administrator\" in the email."
 msgstr ""
 
 #: views/menu-general.php:239
-msgid "Enter a comma separate list of emails that you would like to be notified when the post expires.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
+msgid "Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
 msgstr ""
 
 #: views/menu-general.php:338

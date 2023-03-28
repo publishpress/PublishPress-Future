@@ -129,20 +129,20 @@ trait Post
 
 
     /**
-     * @Given I check the Enable Post Expiration checkbox
-     * @When I check the Enable Post Expiration checkbox
+     * @Given I check the Enable Future Action checkbox
+     * @When I check the Enable Future Action checkbox
      */
     public function iCheckTheEnablePostExpirationCheckbox()
     {
-        $this->checkOption('Enable Post Expiration');
+        $this->checkOption('Enable Future Action');
     }
 
     /**
-     * @When I uncheck the Enable Post Expiration checkbox
+     * @When I uncheck the Enable Future Action checkbox
      */
     public function iUncheckTheEnablePostExpirationCheckbox()
     {
-        $this->uncheckOption('Enable Post Expiration');
+        $this->uncheckOption('Enable Future Action');
     }
 
     /**
@@ -184,12 +184,12 @@ trait Post
     }
 
     /**
-     * @Then I see the checkbox to enable post expiration
+     * @Then I see the checkbox to enable future action
      */
     public function iSeeTheCheckboxToEnablePostExpiration()
     {
         $this->seeElement('fieldset.post-expirator-quickedit');
-        $this->see('Enable Post Expiration', 'fieldset.post-expirator-quickedit label span');
+        $this->see('Enable Future Action', 'fieldset.post-expirator-quickedit label span');
     }
 
     /**
@@ -211,7 +211,7 @@ trait Post
     }
 
     /**
-     * @Then I see the fields to change post expiration on bulk edit panel
+     * @Then I see the fields to change future action on bulk edit panel
      */
     public function iSeeTheFieldsToChangePostExpirationOnBulkEditPanel()
     {

@@ -8,7 +8,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $enabled; ?>/>
     <label for="enable-expirationdate"><?php
-        esc_html_e('Enable Post Expiration', 'post-expirator'); ?></label>
+        esc_html_e('Enable Future Action', 'post-expirator'); ?></label>
 </p>
 
 <?php
@@ -114,7 +114,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     </div>
     <div>
         <label><?php
-            esc_html_e('How to expire', 'post-expirator'); ?></label>
+            esc_html_e('Action to run', 'post-expirator'); ?></label>
         <?php
         _postexpirator_expire_type(array(
             'type' => $post->post_type,
@@ -130,14 +130,24 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
         $catdisplay = 'none';
     }
 
-    echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
-    echo '<br/>' . esc_html__('Expiration Taxonomies', 'post-expirator') . ':<br/>';
-
-    echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
-    echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
     $walker = new Walker_PostExpirator_Category_Checklist();
     $taxonomies = get_object_taxonomies($post->post_type, 'object');
     $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
+    $keys = array_keys($taxonomies);
+    $taxonomyId = $defaultsOption['taxonomy'] ?? $keys[0];
+
+    echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
+
+    echo '<br/>';
+
+    if (isset($taxonomyId)) {
+        $taxonomyObj= get_taxonomy($taxonomyId);
+        echo '<label>' . esc_html($taxonomyObj->label) . '</label><br/>';
+    }
+
+    echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
+    echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
+
 
     if (empty($categories) && isset($defaultsOption['terms'])) {
         $categories = explode(',', $defaultsOption['terms']);
@@ -155,8 +165,6 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
                 'post-expirator'
             ) . '</p>';
     } else {
-        $keys = array_keys($taxonomies);
-        $taxonomyId = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
         wp_terms_checklist(0, array(
             'taxonomy' => $taxonomyId,
             'walker' => $walker,
@@ -167,12 +175,6 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     }
     echo '</ul>';
     echo '</div>';
-    if (isset($taxonomyId)) {
-        echo '<p class="post-expirator-taxonomy-name">' . esc_html__(
-                'Taxonomy Name',
-                'post-expirator'
-            ) . ': ' . esc_html($taxonomyId) . '</p>';
-    }
     echo '</div>';
     ?>
 </div>

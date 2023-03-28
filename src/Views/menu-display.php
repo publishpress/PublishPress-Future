@@ -67,7 +67,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                 esc_html_e('Post Footer Display', 'post-expirator'); ?></h3>
             <p class="description"><?php
                 esc_html_e(
-                    'Enabling this below will display the expiration date automatically at the end of any post which is set to expire.',
+                    'Enabling this below will display the action date automatically at the end of any post which is set to run an action.',
                     'post-expirator'
                 ); ?></p>
             <table class="form-table">
@@ -86,7 +86,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                             esc_html_e('Disabled', 'post-expirator'); ?></label>
                         <p class="description"><?php
                             esc_html_e(
-                                'This will enable or disable displaying the post expiration date in the post footer.',
+                                'This will enable or disable displaying the future action date in the post footer.',
                                 'post-expirator'
                             ); ?></p>
                     </td>
@@ -99,7 +99,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                             echo esc_textarea($expirationdateFooterContents); ?></textarea>
                         <p class="description"><?php
                             esc_html_e(
-                                'Enter the text you would like to appear at the bottom of every post that will expire.  The following placeholders will be replaced with the post expiration date in the following format:',
+                                'Enter the text you would like to appear at the bottom of every post which has an action scheduled.  The following placeholders will be replaced with the future action date in the following format:',
                                 'post-expirator'
                             ); ?></p>
                         <ul class="pe-list">

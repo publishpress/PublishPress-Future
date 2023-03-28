@@ -315,14 +315,14 @@ class ExpirablePostModel extends PostModel
         $postId = $this->getPostId();
 
         if (! $this->isExpirationEnabled() && ! $force) {
-            $this->debug->log($postId . ' -> Tried to expire but post expiration is NOT ACTIVATED for the post');
+            $this->debug->log($postId . ' -> Tried to run action but future action is NOT ACTIVATED for the post');
 
             return false;
         }
 
         if (! $this->isExpirationEnabled() && $force) {
             $this->debug->log(
-                $postId . ' -> Post expiration is not activated for the post, but $force = true'
+                $postId . ' -> Future action is not activated for the post, but $force = true'
             );
         }
 
@@ -337,13 +337,13 @@ class ExpirablePostModel extends PostModel
 
 
         if (! $expirationAction) {
-            $this->debug->log($postId . ' -> Post expiration cancelled, expiration action is not found');
+            $this->debug->log($postId . ' -> Future action cancelled, expiration action is not found');
 
             return false;
         }
 
         if (! $expirationAction instanceof ExpirationActionInterface) {
-            $this->debug->log($postId . ' -> Post expiration cancelled, expiration action is not valid');
+            $this->debug->log($postId . ' -> Future action cancelled, expiration action is not valid');
 
             return false;
         }
@@ -449,7 +449,7 @@ class ExpirablePostModel extends PostModel
         }
 
         $emailSubject = sprintf(
-            __('Post Expiration Complete "%s"', 'post-expirator'),
+            __('Future Action Complete "%s"', 'post-expirator'),
             $this->getTitle()
         );
         $emailSubject = sprintf(__('[%1$s] %2$s', 'post-expirator'), $this->options->getOption('blogname'), $emailSubject);

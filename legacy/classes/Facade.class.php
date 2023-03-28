@@ -59,7 +59,7 @@ class PostExpirator_Facade
     }
 
     /**
-     * Return true if the specific user role can expire posts.
+     * Return true if the specific user role can run future actions.
      *
      * @return bool
      */
@@ -242,7 +242,7 @@ class PostExpirator_Facade
                 ],
                 'action' => [
                     'validate_callback' => function ($param, $request, $key) {
-                        // Get available post expiration actions using the service EXPIRATION_ACTIONS_MODEL.
+                        // Get available future action actions using the service EXPIRATION_ACTIONS_MODEL.
                         $container = Container::getInstance();
                         $expirationActionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
                         $expirationActions = array_keys($expirationActionsModel->getActions());
@@ -354,10 +354,10 @@ class PostExpirator_Facade
                     'strings' => [
                         'category' => __('Taxonomy', 'post-expirator'),
                         'postExpirator' => __('PublishPress Future', 'post-expirator'),
-                        'enablePostExpiration' => __('Enable Post Expiration', 'post-expirator'),
-                        'howToExpire' => __('How to expire', 'post-expirator'),
+                        'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                        'howToExpire' => __('Action to run', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
-                        'expirationCategories' => __('Expiration Taxonomies', 'post-expirator'),
+                        'expirationCategories' => __('Terms', 'post-expirator'),
                     ]
                 ]
             );

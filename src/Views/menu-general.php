@@ -72,7 +72,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         <p class="description"><?php
                             echo sprintf(
                                 esc_html__(
-                                    'The default format to use when displaying the expiration date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
+                                    'The default format to use when displaying the action date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
                                     'post-expirator'
                                 ),
                                 '<a href="http://us2.php.net/manual/en/function.date.php" target="_blank">' . esc_html__('PHP Date Function', 'post-expirator') . '</a>'
@@ -89,7 +89,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         <p class="description"><?php
                         echo sprintf(
                             esc_html__(
-                                'The default format to use when displaying the expiration time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
+                                'The default format to use when displaying the action time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
                                 'post-expirator'
                             ),
                             '<a href="http://us2.php.net/manual/en/function.date.php" target="_blank">'. esc_html__('PHP Date Function', 'post-expirator') . '</a>'
@@ -107,7 +107,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             <p class="description"><?php
                                 echo sprintf(
                                     esc_html__(
-                                        'Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
+                                        'Set the offset to use for the default action date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s.',
                                         'post-expirator'
                                     ),
                                     '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__('PHP strtotime function', 'post-expirator') . '</a>',
@@ -124,10 +124,10 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </table>
 
             <h3><?php
-                esc_html_e('Expiration Email Notification', 'post-expirator'); ?></h3>
+                esc_html_e('Email Notification', 'post-expirator'); ?></h3>
             <p class="description"><?php
                 esc_html_e(
-                    'Whenever a post expires, an email can be sent to alert users of the expiration.',
+                    'Whenever an action runs, an email can be sent to alert users.',
                     'post-expirator'
                 ); ?></p>
             <table class="form-table">
@@ -150,7 +150,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             esc_html_e('Disabled', 'post-expirator'); ?></label>
                         <p class="description"><?php
                             esc_html_e(
-                                'This will enable or disable the send of email notification on post expiration.',
+                                'This will enable or disable the send of email notification on future action.',
                                 'post-expirator'
                             ); ?></p>
                     </td>
@@ -176,7 +176,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             esc_html_e('Disabled', 'post-expirator'); ?></label>
                         <p class="description"><?php
                             esc_html_e(
-                                'This will include all users with the role of "Administrator" in the post expiration email.',
+                                'This will include all users with the role of "Administrator" in the email.',
                                 'post-expirator'
                             ); ?></p>
                     </td>
@@ -192,7 +192,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         echo esc_attr($expiredemailnotificationlist); ?>"/>
                         <p class="description"><?php
                             esc_html_e(
-                                'Enter a comma separate list of emails that you would like to be notified when the post expires.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab.',
+                                'Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab.',
                                 'post-expirator'
                             ); ?></p>
                     </td>

@@ -158,7 +158,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                     method: 'POST',
                     data: data
                 }).then(function (data) {
-                    console.log('Post expiration data saved.');
+                    console.log('Future action data saved.');
                     console.log(data);
                 });
             }

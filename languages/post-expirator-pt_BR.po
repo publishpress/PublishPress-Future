@@ -96,7 +96,7 @@ msgid "Settings"
 msgstr "Configurações"
 
 #: post-expirator.php:86 post-expirator.php:172
-msgid "Expires"
+msgid "Future action"
 msgstr "Expira"
 
 #: post-expirator.php:808 post-expirator.php:830 post-expirator.php:852
@@ -145,7 +145,7 @@ msgstr ""
 "\". A lista completa das categorias no post é: \"%6$s\"."
 
 #: post-expirator.php:1251
-msgid "Post Expiration Complete \"%s\""
+msgid "Future Action Complete \"%s\""
 msgstr "Expiração do post completo \"%s\""
 
 #: post-expirator.php:1927
@@ -174,7 +174,7 @@ msgstr "Data"
 
 #: views/bulk-edit.php:24 views/classic-metabox.php:6 views/quick-edit.php:8
 #: assets/jsx/block.jsx:168
-msgid "Enable Post Expiration"
+msgid "Enable Future Action"
 msgstr "Habilitar Expiração do Post"
 
 #: views/bulk-edit.php:28
@@ -231,7 +231,7 @@ msgstr "Tipo"
 
 #: views/bulk-edit.php:106 views/classic-metabox.php:109
 #: views/menu-defaults.php:93 views/quick-edit.php:69 assets/jsx/block.jsx:185
-msgid "How to expire"
+msgid "Action"
 msgstr "Como expirar"
 
 #: views/bulk-edit.php:124 views/classic-metabox.php:127
@@ -332,7 +332,7 @@ msgstr ""
 "Selecione se a espiração de post está habilitada para este tipo de post."
 
 #: views/menu-defaults.php:102
-msgid "Select the default expire action for the post type."
+msgid "Select the default action for the post type."
 msgstr "Selecione a ação padrão para espirar para o tipo de post."
 
 #: views/menu-defaults.php:109
@@ -367,7 +367,7 @@ msgstr "A quem notificar"
 #: views/menu-defaults.php:164
 msgid ""
 "Enter a comma separate list of emails that you would like to be notified "
-"when the post expires."
+"when the action runs."
 msgstr ""
 "Entre com uma lista de emails separada por vírgula que você gostaria que "
 "fossem notificados quanto o post expira."
@@ -395,7 +395,7 @@ msgstr ""
 
 #: views/menu-defaults.php:226 views/menu-general.php:172
 msgid ""
-"Set the offset to use for the default expiration date and time. For "
+"Set the offset to use for the default action date and time. For "
 "information on formatting, see %1$s. For example, you could enter %2$s+1 "
 "month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday"
 "%7$s."
@@ -501,7 +501,7 @@ msgstr ""
 
 #: views/menu-general.php:107
 msgid ""
-"The default format to use when displaying the expiration date within a post "
+"The default format to use when displaying the action date within a post "
 "using the shortcode or within the footer.  For information on valid "
 "formatting options, see: %s."
 msgstr ""
@@ -512,7 +512,7 @@ msgstr ""
 
 #: views/menu-general.php:128
 msgid ""
-"The default format to use when displaying the expiration time within a post "
+"The default format to use when displaying the action time within a post "
 "using the shortcode or within the footer.  For information on valid "
 "formatting options, see: %s."
 msgstr ""
@@ -528,12 +528,12 @@ msgid ""
 msgstr ""
 
 #: views/menu-general.php:211
-msgid "Expiration Email Notification"
+msgid "Email Notification"
 msgstr ""
 
 #: views/menu-general.php:213
 msgid ""
-"Whenever a post expires, an email can be sent to alert users of the "
+"Whenever an action runs, an email can be sent to alert users of the "
 "expiration."
 msgstr ""
 
@@ -560,7 +560,7 @@ msgstr ""
 #: views/menu-general.php:274
 msgid ""
 "Enter a comma separate list of emails that you would like to be notified "
-"when the post expires.  This will be applied to ALL post types.  You can set "
+"when the action runs.  This will be applied to ALL post types.  You can set "
 "post type specific emails on the Defaults tab."
 msgstr ""
 
@@ -570,8 +570,8 @@ msgstr ""
 
 #: views/menu-general.php:285
 msgid ""
-"Enabling this below will display the expiration date automatically at the "
-"end of any post which is set to expire."
+"Enabling this below will display the action date automatically at the "
+"end of any post which is set to run an action."
 msgstr ""
 
 #: views/menu-general.php:292
@@ -580,7 +580,7 @@ msgstr ""
 
 #: views/menu-general.php:306
 msgid ""
-"This will enable or disable displaying the post expiration date in the post "
+"This will enable or disable displaying the future action date in the post "
 "footer."
 msgstr ""
 

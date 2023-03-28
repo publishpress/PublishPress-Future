@@ -109,7 +109,7 @@
                 method: 'POST',
                 data: data,
             }).then((data) => {
-                console.log('Post expiration data saved.');
+                console.log('Future action data saved.');
                 console.log(data);
             });
         }

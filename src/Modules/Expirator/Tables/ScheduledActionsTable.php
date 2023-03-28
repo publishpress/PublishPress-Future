@@ -301,7 +301,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         if (in_array($argsModel->getAction(), $taxonomyActions)) {
             $columnHtml .= sprintf(
-                '<br />' . esc_html__('Categories: %s', 'post-expirator'),
+                '<br />' . esc_html__('Terms: %s', 'post-expirator'),
                 implode(', ', $argsModel->getTaxonomyTermsNames())
             );
         }

@@ -13,7 +13,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
             <label>
                 <input name="enable-expirationdate" type="checkbox"/>
                 <span class=""><?php
-                    esc_html_e('Enable Post Expiration', 'post-expirator'); ?></span>
+                    esc_html_e('Enable Future Action', 'post-expirator'); ?></span>
             </label>
             <fieldset class="inline-edit-date">
                 <div class="pe-qe-fields" style="display: none">
@@ -77,7 +77,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                             <span class="title"><?php
                                 esc_html_e('Action', 'post-expirator'); ?></span>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('How to expire', 'post-expirator'); ?></span>
+                                esc_html_e('Action', 'post-expirator'); ?></span>
                         </legend>
                         <?php
                         $container = Container::getInstance();
@@ -97,7 +97,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                             <span class="title"><?php
                                 echo esc_html($tax_label); ?></span>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('Expiration Taxonomies', 'post-expirator'); ?></span>
+                                esc_html_e('Terms', 'post-expirator'); ?></span>
                         </legend>
                         <ul id="categorychecklist"
                             class="list:category categorychecklist cat-checklist category-checklist">
