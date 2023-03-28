@@ -119,7 +119,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                             esc_html_e('Footer Style', 'post-expirator'); ?></label></th>
                     <td>
                         <textarea name="expired-footer-style" id="expired-footer-style" rows="3" cols="50"><?php
-                            echo esc_attr($expirationdateFooterStyle); ?></textarea>
+                            echo esc_textarea($expirationdateFooterStyle); ?></textarea>
                         <br>
                         <div>
                             <label><?php echo esc_html__('Example: ', 'post-expirator'); ?></label>
