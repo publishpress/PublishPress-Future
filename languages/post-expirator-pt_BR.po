@@ -11,8 +11,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. Plugin Name of the plugin
 #: classes/Display.class.php:50 post-expirator.php:350 views/bulk-edit.php:16
@@ -141,8 +141,8 @@ msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
-"%1$s (%2$s) expirou em %3$s. O seguinte post \"%4$s\" já foi removido: \"%5$s"
-"\". A lista completa das categorias no post é: \"%6$s\"."
+"%1$s (%2$s) expirou em %3$s. O seguinte post \"%4$s\" já foi removido: "
+"\"%5$s\". A lista completa das categorias no post é: \"%6$s\"."
 
 #: post-expirator.php:1251
 msgid "Future Action Complete \"%s\""
@@ -326,8 +326,7 @@ msgid "Inactive"
 msgstr "Desativar"
 
 #: views/menu-defaults.php:83
-msgid ""
-"Select whether the meta box is active for this post type."
+msgid "Select whether the meta box is active for this post type."
 msgstr ""
 "Selecione se a espiração de post está habilitada para este tipo de post."
 
@@ -395,10 +394,9 @@ msgstr ""
 
 #: views/menu-defaults.php:226 views/menu-general.php:172
 msgid ""
-"Set the offset to use for the default action date and time. For "
-"information on formatting, see %1$s. For example, you could enter %2$s+1 "
-"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday"
-"%7$s."
+"Set the offset to use for the default action date and time. For information "
+"on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or "
+"%4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
 msgstr ""
 
 #: views/menu-defaults.php:250 views/menu-general.php:429
@@ -570,8 +568,8 @@ msgstr ""
 
 #: views/menu-general.php:285
 msgid ""
-"Enabling this below will display the action date automatically at the "
-"end of any post which is set to run an action."
+"Enabling this below will display the action date automatically at the end of "
+"any post which is set to run an action."
 msgstr ""
 
 #: views/menu-general.php:292
