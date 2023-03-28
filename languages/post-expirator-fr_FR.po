@@ -605,8 +605,8 @@ msgid "Settings"
 msgstr "Réglages"
 
 #: services.php:48
-msgid "Post expires at EXPIRATIONTIME on EXPIRATIONDATE"
-msgstr "La publication expire à EXPIRATIONTIME le EXPIRATIONDATE"
+msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
+msgstr "La publication expire à EXPIRATIONTIME le ACTIONDATE"
 
 #: services.php:47
 msgid "g:ia"

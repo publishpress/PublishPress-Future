@@ -622,8 +622,8 @@ msgid "Settings"
 msgstr "Ajustes"
 
 #: services.php:48
-msgid "Post expires at EXPIRATIONTIME on EXPIRATIONDATE"
-msgstr "La entrada caduca en EXPIRATIONTIME el EXPIRATIONDATE"
+msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
+msgstr "La entrada caduca en EXPIRATIONTIME el ACTIONDATE"
 
 #: services.php:47
 msgid "g:ia"
