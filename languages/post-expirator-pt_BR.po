@@ -88,8 +88,8 @@ msgid "g:ia"
 msgstr "g:ia"
 
 #: post-expirator.php:17
-msgid "Post expires at EXPIRATIONTIME on EXPIRATIONDATE"
-msgstr "O post expira às EXPIRATIONTIME do dia EXPIRATIONDATE"
+msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
+msgstr "O post expira às EXPIRATIONTIME do dia ACTIONDATE"
 
 #: post-expirator.php:44
 msgid "Settings"

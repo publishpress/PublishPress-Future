@@ -184,7 +184,7 @@ msgid "g:ia"
 msgstr ""
 
 #: post-expirator.php:17
-msgid "Post expires at EXPIRATIONTIME on EXPIRATIONDATE"
+msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
 
 #: post-expirator.php:44

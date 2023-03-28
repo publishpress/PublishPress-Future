@@ -62,7 +62,7 @@ return [
         ServicesAbstract::DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
         ServicesAbstract::DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
         ServicesAbstract::DEFAULT_FOOTER_CONTENT => __(
-            'Post expires at EXPIRATIONTIME on EXPIRATIONDATE',
+            'Post expires at EXPIRATIONTIME on ACTIONDATE',
             'post-expirator'
         ),
         ServicesAbstract::DEFAULT_FOOTER_STYLE => 'font-style: italic;',

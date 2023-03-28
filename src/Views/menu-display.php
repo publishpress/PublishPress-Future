@@ -33,7 +33,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
             <h3><?php
                 esc_html_e('Shortcode', 'post-expirator'); ?></h3>
             <p><?php
-                echo sprintf(esc_html__('Valid %s attributes:', 'post-expirator'), '<code>[postexpirator]</code>'); ?></p>
+                echo sprintf(esc_html__('Valid %s attributes:', 'post-expirator'), '<code>[futureaction]</code>'); ?></p>
             <ul class="pe-list">
                 <li><p><?php
                         echo sprintf(
@@ -103,13 +103,13 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                                 'post-expirator'
                             ); ?></p>
                         <ul class="pe-list">
-                            <li><p class="description">EXPIRATIONFULL -> <?php
+                            <li><p class="description">ACTIONFULL -> <?php
                                     echo esc_html(date_i18n(
                                         "$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat"
                                     )); ?></p></li>
-                            <li><p class="description">EXPIRATIONDATE -> <?php
+                            <li><p class="description">ACTIONDATE -> <?php
                                     echo esc_html(date_i18n("$expirationdateDefaultDateFormat")); ?></p></li>
-                            <li><p class="description">EXPIRATIONTIME -> <?php
+                            <li><p class="description">ACTIONTIME -> <?php
                                     echo esc_html(date_i18n("$expirationdateDefaultTimeFormat")); ?></p></li>
                         </ul>
                     </td>
@@ -118,12 +118,15 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                     <th scope="row"><label for="expired-footer-style"><?php
                             esc_html_e('Footer Style', 'post-expirator'); ?></label></th>
                     <td>
-                        <input type="text" name="expired-footer-style" id="expired-footer-style" value="<?php
-                        echo esc_attr($expirationdateFooterStyle); ?>" size="25"/>
-                        (<span style="<?php
-                        echo esc_attr($expirationdateFooterStyle); ?>"><?php
-                            esc_html_e('This post will expire on', 'post-expirator'); ?><?php
-                            echo esc_html(date_i18n("$expirationdateDefaultDateFormat $expirationdateDefaultTimeFormat")); ?></span>)
+                        <textarea name="expired-footer-style" id="expired-footer-style" rows="3" cols="50"><?php
+                            echo esc_textarea($expirationdateFooterStyle); ?></textarea>
+                        <br>
+                        <div>
+                            <label><?php echo esc_html__('Example: ', 'post-expirator'); ?></label>
+                            <div style="background: white; padding: 10px; <?php echo esc_attr($expirationdateFooterStyle); ?>"><?php
+                                echo esc_html(postexpirator_get_footer_text(true)); ?></div>
+                        </div>
+
                         <p class="description"><?php
                             esc_html_e('The inline css which will be used to style the footer text.', 'post-expirator'); ?></p>
                     </td>

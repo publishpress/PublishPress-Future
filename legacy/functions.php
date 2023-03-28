@@ -774,7 +774,58 @@ function postexpirator_shortcode($attrs)
     return PostExpirator_Util::get_wp_date($attrs['format'], $expirationDateTs);
 }
 
+/**
+ * @deprecated 3.0.0 Use "futureaction" short instead
+ */
 add_shortcode('postexpirator', 'postexpirator_shortcode');
+add_shortcode('futureaction', 'postexpirator_shortcode');
+
+function postexpirator_get_footer_text($useDemoText =  false)
+{
+    if ($useDemoText) {
+        $expirationDate = time() + 60 * 60 * 24 * 7;
+    } else {
+        global $post;
+
+        $container = Container::getInstance();
+        $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+
+        $expirationDate = $postModel->getExpirationDate();
+    }
+
+    $dateformat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
+    $timeformat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
+    $expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
+
+
+    $search = [
+        // Deprecated placeholders
+        'EXPIRATIONFULL',
+        'EXPIRATIONDATE',
+        'EXPIRATIONTIME',
+        // New placeholders
+        'ACTIONFULL',
+        'ACTIONDATE',
+        'ACTIONTIME',
+    ];
+
+    $replace = [
+        // Deprecated placeholders
+        PostExpirator_Util::get_wp_date("$dateformat $timeformat", $expirationDate),
+        PostExpirator_Util::get_wp_date($dateformat, $expirationDate),
+        PostExpirator_Util::get_wp_date($timeformat, $expirationDate),
+        // New placeholders
+        PostExpirator_Util::get_wp_date("$dateformat $timeformat", $expirationDate),
+        PostExpirator_Util::get_wp_date($dateformat, $expirationDate),
+        PostExpirator_Util::get_wp_date($timeformat, $expirationDate)
+    ];
+
+    return str_replace(
+        $search,
+        $replace,
+        $expirationdateFooterContents
+    );
+}
 
 /**
  * Add the footer.
@@ -804,35 +855,18 @@ function postexpirator_add_footer($text)
         return $text;
     }
 
-    $expirationdatets = $postModel->getExpirationDate();
-    if (! is_numeric($expirationdatets)) {
+    $expirationDate = $postModel->getExpirationDate();
+    if (! is_numeric($expirationDate)) {
         return $text;
     }
 
-    $dateformat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
-    $timeformat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
-    $expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
+    $footerText = postexpirator_get_footer_text();
+
     $expirationdateFooterStyle = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
 
-    $search = array(
-        'EXPIRATIONFULL',
-        'EXPIRATIONDATE',
-        'EXPIRATIONTIME',
-    );
+    $appendToFooter = '<p style="' . esc_attr($expirationdateFooterStyle) . '">' . esc_html($footerText) . '</p>';
 
-    $replace = array(
-        PostExpirator_Util::get_wp_date("$dateformat $timeformat", $expirationdatets),
-        PostExpirator_Util::get_wp_date($dateformat, $expirationdatets),
-        PostExpirator_Util::get_wp_date($timeformat, $expirationdatets)
-    );
-
-    $add_to_footer = '<p style="' . $expirationdateFooterStyle . '">' . str_replace(
-            $search,
-            $replace,
-            $expirationdateFooterContents
-        ) . '</p>';
-
-    return $text . $add_to_footer;
+    return $text . $appendToFooter;
 }
 
 add_action('the_content', 'postexpirator_add_footer', 0);
