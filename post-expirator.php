@@ -12,7 +12,11 @@
 
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Core\HooksAbstract as CoreHooksAbstract;
+
+// If the PHP version is not compatible, terminate the plugin execution.
+if (! include_once __DIR__ . '/src/check-php-version.php') {
+    return;
+}
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     define('PUBLISHPRESS_FUTURE_LOADED', true);
