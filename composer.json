@@ -38,18 +38,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/andergmartins/wordpress-ray"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/publishpress/publishpress-phpcs-standards"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/publishpress/vendor-locator"
     }
   ],
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.2.5",
     "publishpress/wordpress-reviews": "^1.1",
     "publishpress/publishpress-instance-protection": "^1.0",
     "publishpress/wordpress-banners": "^1.2",
