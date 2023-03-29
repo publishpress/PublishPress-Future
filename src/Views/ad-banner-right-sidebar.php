@@ -19,8 +19,6 @@
                     <li><?php
                         echo esc_html__('Support for expiry to custom statuses', 'post-expirator'); ?></li>
                     <li><?php
-                        echo esc_html__('Detailed future action log', 'post-expirator'); ?></li>
-                    <li><?php
                         echo esc_html__('Remove PublishPress ads and branding', 'post-expirator'); ?></li>
                     <li><?php
                         echo esc_html__('Fast, professional support', 'post-expirator'); ?></li>
