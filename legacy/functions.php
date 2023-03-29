@@ -926,7 +926,7 @@ function postexpirator_upgrade()
     // Check for current version, if not exists, run activation
     $version = get_option('postexpiratorVersion');
     if ($version === false) {
-        // fresh install
+        $container->get(ServicesAbstract::HOOKS)->doAction(V30000ActionArgsSchema::HOOK);
     } else {
         if (version_compare($version, '1.6.1') === -1) {
             update_option('expirationdateDefaultDate', POSTEXPIRATOR_EXPIREDEFAULT);

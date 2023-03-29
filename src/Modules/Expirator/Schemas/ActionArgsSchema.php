@@ -12,7 +12,7 @@ class ActionArgsSchema
         return $wpdb->prefix . self::TABLE_NAME;
     }
 
-    protected static function tableExists($tableName)
+    public static function tableExists($tableName)
     {
         global $wpdb;
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -42,7 +42,7 @@ class ActionArgsSchema
             PRIMARY KEY  (id),
             KEY post_id (post_id, id),
             KEY enabled_post_id (post_id, enabled, id),
-            KEY cron_action_id (cron_action_id, id)
+            KEY cron_action_id (cron_action_id, id),
             KEY enabled_cron_action_id (cron_action_id, enabled, id)
         ) ENGINE=InnoDB $charsetCollate;";
 
