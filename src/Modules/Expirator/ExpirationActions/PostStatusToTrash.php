@@ -71,6 +71,6 @@ class PostStatusToTrash implements ExpirationActionInterface
 
     public static function getLabel(): string
     {
-        return __('Change post status to trash', 'post-expirator');
+        return __('Change status to trash', 'post-expirator');
     }
 }

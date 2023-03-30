@@ -71,6 +71,6 @@ class PostStatusToPrivate implements ExpirationActionInterface
 
     public static function getLabel(): string
     {
-        return __('Change post status to private', 'post-expirator');
+        return __('Change status to private', 'post-expirator');
     }
 }

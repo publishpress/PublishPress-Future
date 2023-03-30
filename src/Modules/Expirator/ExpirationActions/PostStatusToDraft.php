@@ -71,6 +71,6 @@ class PostStatusToDraft implements ExpirationActionInterface
 
     public static function getLabel(): string
     {
-        return __('Change post status to draft', 'post-expirator');
+        return __('Change status to draft', 'post-expirator');
     }
 }
