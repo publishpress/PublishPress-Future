@@ -2,9 +2,9 @@
 Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
-Tags: expire posts, update posts, schedule changes, automatic changes, 
+Tags: expire posts, update posts, schedule changes, automatic changes,
 Requires at least: 5.3
-Tested up to: 6.1
+Tested up to: 6.2
 Stable tag: 2.9.2
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
@@ -72,7 +72,7 @@ For each expiration event, a custom cron job is scheduled. This can help reduce 
 
 [Click here to see the technical details for this plugin](https://publishpress.com/knowledge-base/scheduling-cron-jobs/).
 
-## Logs for All Your Post Changes 
+## Logs for All Your Post Changes
 
 PublishPress Future Pro allows you to keep a detailed record of all the changes that happen to your posts. PublishPress Future records several key data points for all actions:
 
@@ -135,7 +135,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 Yes, the PublishPress Future plugin allows you to schedule automatic changes to posts, pages and other content types including WooCommerce products. To enable this feature, go to Future > Post Types. Check the “Active” box for the post type you're using with Elementor.
 
 [Click here for more details on Elementor post changes](https://publishpress.com/knowledge-base/schedule-changes-elementor/)
-    
+
 
 == Changelog ==
 
