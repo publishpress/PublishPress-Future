@@ -8,6 +8,7 @@ namespace PublishPressFuture\Modules\Settings;
 
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\ModuleInterface;
+use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
 use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Settings\Controllers\Controller;
 
@@ -46,6 +47,10 @@ class Module implements ModuleInterface
      * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
      */
     private $cron;
+    /**
+     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     */
+    private $options;
 
     /**
      * @param HookableInterface $hooks
@@ -54,6 +59,7 @@ class Module implements ModuleInterface
      * @param \Closure $taxonomiesModelFactory
      * @param \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
      * @param \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface $cron
+     * @param \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade $options
      */
     public function __construct(
         HookableInterface $hooks,
@@ -61,7 +67,8 @@ class Module implements ModuleInterface
         $settingsPostTypesModelFactory,
         $taxonomiesModelFactory,
         $actionsModel,
-        CronInterface $cron
+        CronInterface $cron,
+        OptionsFacade $options
     )
     {
         $this->hooks = $hooks;
@@ -70,6 +77,7 @@ class Module implements ModuleInterface
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
         $this->cron = $cron;
+        $this->options = $options;
 
         $this->controller = $this->getController();
     }
@@ -90,7 +98,8 @@ class Module implements ModuleInterface
             $this->settingsPostTypesModelFactory,
             $this->taxonomiesModelFactory,
             $this->actionsModel,
-            $this->cron
+            $this->cron,
+            $this->options
         );
     }
 }

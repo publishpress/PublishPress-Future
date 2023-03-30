@@ -8,9 +8,11 @@ namespace PublishPressFuture\Modules\Settings\Controllers;
 use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPressFuture\Framework\InitializableInterface;
+use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
 use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPressFuture\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
+use PublishPressFuture\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPressFuture\Modules\Settings\SettingsFacade;
 
@@ -45,6 +47,12 @@ class Controller implements InitializableInterface
      * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
      */
     private $actionsModel;
+
+    /**
+     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     */
+    private $options;
+
     /**
      * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
      */
@@ -57,6 +65,7 @@ class Controller implements InitializableInterface
      * @param \Closure $taxonomiesModelFactory
      * @param $actionsModel
      * @param \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface $cron
+     * @param \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade $options
      */
     public function __construct(
         HookableInterface $hooks,
@@ -64,7 +73,8 @@ class Controller implements InitializableInterface
         $settingsPostTypesModelFactory,
         $taxonomiesModelFactory,
         $actionsModel,
-        CronInterface $cron
+        CronInterface $cron,
+        OptionsFacade $options
     ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
@@ -72,6 +82,7 @@ class Controller implements InitializableInterface
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
         $this->cron = $cron;
+        $this->options = $options;
     }
 
     public function initialize()
@@ -341,6 +352,7 @@ class Controller implements InitializableInterface
     {
         new V30000WPCronToActionsScheduler($this->cron, $this->hooks);
         new V30000ActionArgsSchema($this->cron, $this->hooks);
+        new V30000ReplaceFooterPlaceholders($this->hooks, $this->options);
     }
 
     private function saveTabDefaults()

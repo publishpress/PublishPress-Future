@@ -10,6 +10,7 @@ use PublishPressFuture\Core\HooksAbstract as CoreHooks;
 use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooks;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
+use PublishPressFuture\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
 use PublishPressFuture\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
 use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
@@ -1004,6 +1005,7 @@ function postexpirator_upgrade()
             $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK);
             $container->get(ServicesAbstract::HOOKS)->doAction(V30000ActionArgsSchema::HOOK);
             // FIXME: Add migration from post meta to the args table.
+            $container->get(ServicesAbstract::HOOKS)->doAction(V30000ReplaceFooterPlaceholders::HOOK);
         }
     }
 
