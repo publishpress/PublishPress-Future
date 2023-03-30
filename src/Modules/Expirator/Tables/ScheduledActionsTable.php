@@ -36,6 +36,20 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         $this->columns['hook'] = __('Action', 'post-expirator');
 
         $this->hooksFacade->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
+
+        $this->row_actions = array(
+			'hook' => array(
+				'run' => array(
+					'name'  => __( 'Run', 'post-expirator' ),
+					'desc'  => __( 'Process the action now', 'post-expirator' ),
+				),
+				'cancel' => array(
+					'name'  => __( 'Cancel', 'post-expirator' ),
+					'desc'  => __( 'Cancel the action. This will prevent the action from running in the future', 'post-expirator' ),
+					'class' => 'cancel trash',
+				),
+			),
+		);
     }
 
     public function enqueueScripts()
