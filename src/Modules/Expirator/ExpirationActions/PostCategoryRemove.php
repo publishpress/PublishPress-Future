@@ -98,6 +98,6 @@ class PostCategoryRemove implements ExpirationActionInterface
 
     public static function getLabel(): string
     {
-        return __('Remove taxonomy term(s)', 'post-expirator');
+        return __('Remove selected terms', 'post-expirator');
     }
 }

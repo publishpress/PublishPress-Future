@@ -93,6 +93,6 @@ class PostCategorySet implements ExpirationActionInterface
 
     public static function getLabel(): string
     {
-        return __('Set taxonomy term(s)', 'post-expirator');
+        return __('Remove all current terms and add new terms', 'post-expirator');
     }
 }
