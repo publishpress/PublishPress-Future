@@ -39,6 +39,7 @@ class UnstickPost implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
+            // FIXME: This should be a different message not mentioning Post
             return __('Post didn\'t change.', 'post-expirator');
         }
 
@@ -59,6 +60,6 @@ class UnstickPost implements ExpirationActionInterface
 
     public static function getLabel(): string
     {
-        return __('Unstick post', 'post-expirator');
+        return __('Unstick', 'post-expirator');
     }
 }

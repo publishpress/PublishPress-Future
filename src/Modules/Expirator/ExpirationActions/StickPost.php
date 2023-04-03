@@ -59,6 +59,6 @@ class StickPost implements ExpirationActionInterface
 
     public static function getLabel(): string
     {
-        return __('Stick post', 'post-expirator');
+        return __('Stick', 'post-expirator');
     }
 }
