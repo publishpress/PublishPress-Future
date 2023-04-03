@@ -44,11 +44,11 @@ class PostStatusToDraft implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
-            return __('Post status didn\'t change.', 'post-expirator');
+            return __('Status didn\'t change.', 'post-expirator');
         }
 
         return sprintf(
-            __('Post status has been successfully changed from "%s" to "%s".', 'post-expirator'),
+            __('Status has been successfully changed from "%s" to "%s".', 'post-expirator'),
             $this->oldPostStatus,
             'draft'
         );

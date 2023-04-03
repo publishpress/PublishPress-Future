@@ -47,7 +47,10 @@ class PostCategorySet implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log)) {
-            return __('No terms were changed on the post.', 'post-expirator');
+            return sprintf(
+                __('No terms were changed on the %s.', 'post-expirator'),
+                strtolower($this->postModel->getPostTypeSingularLabel())
+            );
         } elseif (isset($this->log['error'])) {
             return $this->log['error'];
         }
@@ -56,11 +59,12 @@ class PostCategorySet implements ExpirationActionInterface
 
         return sprintf(
             __(
-                'The following terms (%s) were set to the post: "%s". The old list of terms on the post was: %s.',
+                'The following terms (%s) were set to the %s: "%s". The old list of terms on the post was: %s.',
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],
             $termsModel->getTermNamesByIdAsString($this->log['updated_terms'], $this->log['expiration_taxonomy']),
+            strtolower($this->postModel->getPostTypeSingularLabel()),
             $termsModel->getTermNamesByIdAsString($this->log['original_terms'], $this->log['expiration_taxonomy'])
         );
     }

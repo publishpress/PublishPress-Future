@@ -40,10 +40,16 @@ class DeletePost implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
-            return __('Post was not deleted.', 'post-expirator');
+            return sprintf(
+                __('%s was not deleted.', 'post-expirator'),
+                $this->postModel->getPostTypeSingularLabel()
+            );
         }
 
-        return __('Post has been successfully deleted.', 'post-expirator');
+        return sprintf(
+            __('%s has been successfully deleted.', 'post-expirator'),
+            $this->postModel->getPostTypeSingularLabel()
+        );
     }
 
     /**

@@ -253,4 +253,11 @@ class PostModel
 
         return true;
     }
+
+    public function getPostTypeSingularLabel(): string
+    {
+        $postTypeObj = get_post_type_object($this->getPostType());
+
+        return $postTypeObj->labels->singular_name;
+    }
 }

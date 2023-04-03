@@ -39,11 +39,16 @@ class UnstickPost implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
-            // FIXME: This should be a different message not mentioning Post
-            return __('Post didn\'t change.', 'post-expirator');
+            return sprintf(
+                __('%s didn\'t change.', 'post-expirator'),
+                $this->postModel->getPostTypeSingularLabel()
+            );
         }
 
-        return __('Post has been removed from stickies list.', 'post-expirator');
+        return sprintf(
+            __('%s has been removed from stickies list.', 'post-expirator'),
+            $this->postModel->getPostTypeSingularLabel()
+        );
     }
 
     /**

@@ -301,7 +301,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         $columnHtml = sprintf(
             esc_html__('%s: [%d] %s%s%s', 'post-expirator'),
-            esc_html__('Post', 'post-expirator'),
+            esc_html($postModel->getPostTypeSingularLabel()),
             $postModel->getPostId(),
             '<a href="' . esc_url($postModel->getPostEditLink()) . '">',
             $postModel->getTitle(),

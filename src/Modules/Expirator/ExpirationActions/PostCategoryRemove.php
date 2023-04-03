@@ -47,7 +47,10 @@ class PostCategoryRemove implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log)) {
-            return __('No terms were removed from the post.', 'post-expirator');
+            return sprintf(
+                __('No terms were removed from the %s.', 'post-expirator'),
+                strtolower($this->postModel->getPostTypeSingularLabel())
+            );
         } elseif (isset($this->log['error'])) {
             return $this->log['error'];
         }
@@ -56,11 +59,12 @@ class PostCategoryRemove implements ExpirationActionInterface
 
         return sprintf(
             __(
-                'The following terms (%s) were removed from the post: "%s". The new list of terms on the post is: %s.',
+                'The following terms (%s) were removed from the %s: "%s". The new list of terms on the post is: %s.',
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],
             $termsModel->getTermNamesByIdAsString($this->log['removed_terms'], $this->log['expiration_taxonomy']),
+            strtolower($this->postModel->getPostTypeSingularLabel()),
             $termsModel->getTermNamesByIdAsString($this->log['updated_terms'], $this->log['expiration_taxonomy'])
         );
     }

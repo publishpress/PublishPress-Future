@@ -39,10 +39,16 @@ class StickPost implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
-            return __('Post didn\'t change.', 'post-expirator');
+            return sprintf(
+                __('%s didn\'t change.', 'post-expirator'),
+                $this->postModel->getPostTypeSingularLabel()
+            );
         }
 
-        return __('Post has been added to stickies list.', 'post-expirator');
+        return sprintf(
+            __('%s has been added to stickies list.', 'post-expirator'),
+            $this->postModel->getPostTypeSingularLabel()
+        );
     }
 
     /**
