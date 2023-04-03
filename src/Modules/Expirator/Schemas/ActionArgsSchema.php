@@ -32,14 +32,14 @@ class ActionArgsSchema
         $charsetCollate = $wpdb->get_charset_collate();
 
         $sql = "CREATE TABLE " . self::getTableName() . " (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
-            cron_action_id bigint(20) NOT NULL,
-            post_id bigint(20) NOT NULL,
-            enabled tinyint(1) NOT NULL DEFAULT 0,
+            id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            cron_action_id bigint(20) UNSIGNED NOT NULL,
+            post_id bigint(20) UNSIGNED NOT NULL,
+            enabled tinyint(1) NOT NULL DEFAULT '0',
             scheduled_date datetime NOT NULL,
             created_at datetime NOT NULL,
             args varchar(250) NOT NULL,
-            PRIMARY KEY  (id),
+            PRIMARY KEY (id),
             KEY post_id (post_id, id),
             KEY enabled_post_id (post_id, enabled, id),
             KEY cron_action_id (cron_action_id, id),
