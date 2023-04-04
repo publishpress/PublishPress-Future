@@ -35,33 +35,30 @@ $postTypeObject = get_post_type_object($post_type);
                             <span class="screen-reader-text"><?php
                                 esc_html_e('Enable Future Action', 'post-expirator'); ?></span>
                             <select name="expirationdate_status">
-                                <option value="no-change" data-show-fields="false" selected>
-                                    — <?php
-                                    esc_html_e('No Change', 'post-expirator'); ?> —
-                                </option>
-                                <option
-                                    value="change-only"
-                                    data-show-fields="true"><?php echo sprintf(
-                                            esc_html__('Modify enabled future action for %s', 'post-expirator'),
-                                            strtolower($postTypeObject->labels->singular_name)
-                                        ); ?>
-                                    </option>
+                                <option value="no-change" data-show-fields="false" selected>— <?php
+                                    esc_html_e('No Change', 'post-expirator'); ?> —</option>
+
+                                <option value="change-add"
+                                        data-show-fields="true"><?php echo sprintf(
+                                            esc_html__('Add or update action for %s', 'post-expirator'),
+                                            strtolower($postTypeObject->labels->name)
+                                        ); ?></option>
                                 <option
                                     value="add-only"
                                     data-show-fields="true"><?php echo sprintf(
-                                            esc_html__('Add future action if not enabled for the %s', 'post-expirator'),
-                                            strtolower($postTypeObject->labels->singular_name)
+                                            esc_html__('Add action if none exists for %s', 'post-expirator'),
+                                            strtolower($postTypeObject->labels->name)
                                         ); ?></option>
-                                <option value="change-add"
-
-                                        data-show-fields="true"><?php echo sprintf(
-                                            esc_html__('Add/modify future action regardless of action status on %s', 'post-expirator'),
-                                            strtolower($postTypeObject->labels->singular_name)
+                                <option
+                                    value="change-only"
+                                    data-show-fields="true"><?php echo sprintf(
+                                            esc_html__('Update the existing actions for %s', 'post-expirator'),
+                                            strtolower($postTypeObject->labels->name)
                                         ); ?></option>
                                 <option value="remove-only"
                                         data-show-fields="false"><?php echo sprintf(
-                                            esc_html__('Remove future action on %s', 'post-expirator'),
-                                            strtolower($postTypeObject->labels->singular_name)
+                                            esc_html__('Remove action from %s', 'post-expirator'),
+                                            strtolower($postTypeObject->labels->name)
                                         ); ?></option>
                             </select>
                         </label><br /><br />
