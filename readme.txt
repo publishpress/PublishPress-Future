@@ -4,6 +4,7 @@ Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire posts, update posts, schedule changes, automatic changes,
 Requires at least: 5.3
+Requires PHP: 7.2.5
 Tested up to: 6.2
 Stable tag: 2.9.2
 
