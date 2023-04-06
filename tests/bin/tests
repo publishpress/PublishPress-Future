@@ -4,7 +4,8 @@ start_time=$(date +%s)
 script_version="1.0.0"
 
 source_path=$(pwd)
-scripts_path="${source_path}/builder/docker/scripts"
+scripts_path="${source_path}/dev-workspace/docker/scripts"
+dev_workspace_path="${source_path}/dev-workspace"
 
 #######################################
 # Get the plugin name from composer.json file.
@@ -290,7 +291,7 @@ run_bootstrap() {
 # Outputs: The output of the builder command.
 #######################################
 run_builder() {
-    HIDE_HEADER=1 "$scripts_path"/build build-dir
+    HIDE_HEADER=1 "$dev_workspace_path"/run npm run build:dir
 }
 
 #######################################

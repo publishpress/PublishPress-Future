@@ -81,9 +81,6 @@
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
     ]
   },
-  "scripts-descriptions": {
-    "tests-php": "Show the available PHP versions for running tests."
-  },
   "extra": {
     "plugin-slug": "post-expirator",
     "plugin-name": "publishpress-future",

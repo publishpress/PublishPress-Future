@@ -16,3 +16,4 @@ services:
             - ../cache/.oh-my-zsh/log:/root/.oh-my-zsh/log
             - ../cache/.composer/cache:/root/.composer/cache
             - ../cache/.composer/auth.json:/root/.composer/auth.json
+            - /var/run/docker.sock:/var/run/docker.sock
