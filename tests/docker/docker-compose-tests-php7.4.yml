@@ -3,8 +3,9 @@ version: '3.1'
 services:
 
   wordpress:
-    image: wordpress:6.1.1-php7.4-apache
+    image: wordpress:6.2.0-php7.4-apache
     restart: always
+    hostname: wordpress
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
@@ -22,6 +23,7 @@ services:
   db:
     image: mariadb:10.5.8
     restart: always
+    hostname: db
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress

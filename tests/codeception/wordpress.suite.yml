@@ -24,3 +24,4 @@ modules:
                 - post-expirator/post-expirator.php
                 - pre-tests/pre-tests.php
                 - ray-future/ray-future.php
+bootstrap: bootstrap.php

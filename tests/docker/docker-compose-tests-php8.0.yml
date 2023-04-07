@@ -3,8 +3,9 @@ version: '3.1'
 services:
 
   wordpress:
-    image: wordpress:6.1.1-php8.0-apache
+    image: wordpress:6.2.0-php8.0-apache
     restart: always
+    hostname: wordpress
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
@@ -12,7 +13,7 @@ services:
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
     volumes:
-      - ./volumes/php8.0-wordpress:/var/www/html
+      - /Users/andersonmartins/Projects/git/publishpress/publishpress-future/tests/docker/volumes/php8.0-wordpress:/var/www/html
     depends_on:
       - db
     ports:
@@ -22,6 +23,7 @@ services:
   db:
     image: mariadb:10.5.8
     restart: always
+    hostname: db
     environment:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress

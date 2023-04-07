@@ -48,14 +48,19 @@ RUN set -ex; \
         nano \
         vim \
         zsh \
+        iputils-ping \
+        net-tools \
+        default-mysql-client \
+        bsdmainutils \
         docker.io \
+        docker-compose \
         yarn \
         ; \
     mkdir -p /usr/src/php/ext/yaml; \
     curl -fsSL https://pecl.php.net/get/yaml | tar xvz -C "/usr/src/php/ext/yaml" --strip 1; \
     \
     docker-php-ext-configure zip; \
-	docker-php-ext-install zip gettext yaml; \
+	docker-php-ext-install zip gettext yaml mysqli pdo_mysql; \
     \
     apt-get purge -y --auto-remove; \
 	rm -rf /var/lib/apt/lists/*
