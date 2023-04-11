@@ -196,7 +196,7 @@ class Controller implements InitializableInterface
                 'publishpressFutureConfig',
                 [
                     'text' => [
-                        'settingsSectionTitle' => __('Default Expiration Values', 'post-expirator'),
+                        'settingsSectionTitle' => __('Default Values', 'post-expirator'),
                         'settingsSectionDescription' => __(
                             'Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page.',
                             'post-expirator'
