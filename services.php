@@ -333,7 +333,8 @@ return [
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
             $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
             $container->get(ServicesAbstract::CRON),
-            $container->get(ServicesAbstract::OPTIONS)
+            $container->get(ServicesAbstract::OPTIONS),
+            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
         );
     },
 

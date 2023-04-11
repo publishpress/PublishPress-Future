@@ -14,7 +14,7 @@ use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class V30000ActionArgsSchema implements MigrationInterface
 {
-    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_WPCRON_EXPIRATIONS;
+    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_CREATE_ACTION_ARGS_SCHEMA;
 
     /**
      * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface

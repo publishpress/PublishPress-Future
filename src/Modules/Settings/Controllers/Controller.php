@@ -59,6 +59,11 @@ class Controller implements InitializableInterface
     private $cron;
 
     /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
@@ -74,7 +79,8 @@ class Controller implements InitializableInterface
         $taxonomiesModelFactory,
         $actionsModel,
         CronInterface $cron,
-        OptionsFacade $options
+        OptionsFacade $options,
+        \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
@@ -83,6 +89,7 @@ class Controller implements InitializableInterface
         $this->actionsModel = $actionsModel;
         $this->cron = $cron;
         $this->options = $options;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public function initialize()
@@ -113,7 +120,7 @@ class Controller implements InitializableInterface
             [$this, 'processToolsActions']
         );
         $this->hooks->addAction(
-            CoreAbstractHooks::ACTION_ADMIN_INIT,
+            CoreAbstractHooks::ACTION_INIT,
             [$this, 'initMigrations']
         );
         $this->hooks->addAction(
@@ -350,8 +357,8 @@ class Controller implements InitializableInterface
 
     public function initMigrations()
     {
-        new V30000WPCronToActionsScheduler($this->cron, $this->hooks);
         new V30000ActionArgsSchema($this->cron, $this->hooks);
+        new V30000WPCronToActionsScheduler($this->cron, $this->hooks, $this->expirablePostModelFactory);
         new V30000ReplaceFooterPlaceholders($this->hooks, $this->options);
     }
 

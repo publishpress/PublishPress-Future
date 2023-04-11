@@ -53,6 +53,11 @@ class Module implements ModuleInterface
     private $options;
 
     /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
@@ -68,7 +73,8 @@ class Module implements ModuleInterface
         $taxonomiesModelFactory,
         $actionsModel,
         CronInterface $cron,
-        OptionsFacade $options
+        OptionsFacade $options,
+        \Closure $expirablePostModelFactory
     )
     {
         $this->hooks = $hooks;
@@ -78,6 +84,7 @@ class Module implements ModuleInterface
         $this->actionsModel = $actionsModel;
         $this->cron = $cron;
         $this->options = $options;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
 
         $this->controller = $this->getController();
     }
@@ -99,7 +106,8 @@ class Module implements ModuleInterface
             $this->taxonomiesModelFactory,
             $this->actionsModel,
             $this->cron,
-            $this->options
+            $this->options,
+            $this->expirablePostModelFactory
         );
     }
 }

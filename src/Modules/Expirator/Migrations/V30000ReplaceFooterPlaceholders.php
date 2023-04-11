@@ -14,7 +14,7 @@ use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class V30000ReplaceFooterPlaceholders implements MigrationInterface
 {
-    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_WPCRON_EXPIRATIONS;
+    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS;
 
     private $hooksFacade;
     /**

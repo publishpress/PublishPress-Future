@@ -926,6 +926,7 @@ function postexpirator_upgrade()
 
     // Check for current version, if not exists, run activation
     $version = get_option('postexpiratorVersion');
+
     if ($version === false) {
         $container->get(ServicesAbstract::HOOKS)->doAction(V30000ActionArgsSchema::HOOK);
     } else {

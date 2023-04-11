@@ -46,13 +46,16 @@ class ActionArgsSchema
             KEY enabled_cron_action_id (cron_action_id, enabled, id)
         ) ENGINE=InnoDB $charsetCollate;";
 
-        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        if (! function_exists('dbDelta')) {
+            require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+        }
+
         dbDelta($sql);
     }
 
     public static function dropTableIfExists(): void
     {
-        if (!self::tableExists(self::getTableName())) {
+        if (! self::tableExists(self::getTableName())) {
             return;
         }
 
