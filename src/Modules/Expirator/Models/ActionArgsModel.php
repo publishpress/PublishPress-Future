@@ -141,6 +141,9 @@ class ActionArgsModel
     {
         global $wpdb;
 
+        // For now we only support one action per post
+        $this->disableAllForPost($this->postId);
+
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $wpdb->update(
             $this->tableName,
@@ -174,6 +177,26 @@ class ActionArgsModel
         );
 
         return $wpdb->insert_id;
+    }
+
+    public function disableAllForPost(int $postId = null): void
+    {
+        global $wpdb;
+
+        if (empty($postId)) {
+            $postId = $this->postId;
+        }
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->update(
+            $this->tableName,
+            [
+                'enabled' => 0,
+            ],
+            [
+                'post_id' => $postId,
+            ]
+        );
     }
 
     public function delete(): void
