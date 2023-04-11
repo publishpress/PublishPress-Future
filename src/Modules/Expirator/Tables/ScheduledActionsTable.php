@@ -337,6 +337,10 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         $html = '';
 
+        if (! in_array((string)$userLogFormat, ['list', 'popup'])) {
+            $userLogFormat = 'popup';
+        }
+
         if ($userLogFormat === 'list') {
             $html = '<ol>';
 
