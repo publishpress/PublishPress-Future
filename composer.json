@@ -23,40 +23,10 @@
       "PublishPressFuturePro\\": "src/classes"
     }
   },
-  "minimum-stability": "stable",
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/OSTraining/WordPress-EDD-License-Integration"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/OSTraining/EDD-License-handler"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/PublishPress-Future.git"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/andergmartins/wordpress-ray"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/publishpress/publishpress-phpcs-standards"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/publishpress-instance-protection"
-    }
-  ],
+  "minimum-stability": "dev",
   "require": {
-    "php": ">=7.2",
-    "publishpress/post-expirator": "2.9.2",
+    "php": ">=7.2.5",
+    "publishpress/publishpress-future": "dev-release-3.0.0",
     "alledia/wordpress-edd-license-integration": "^2.3",
     "publishpress/publishpress-instance-protection": "^1.0"
   },
@@ -74,7 +44,8 @@
     "automattic/vipwpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "szepeviktor/phpstan-wordpress": "^1.1",
-    "phpstan/extension-installer": "^1.2"
+    "phpstan/extension-installer": "^1.2",
+    "giacocorsiglia/wordpress-stubs": "dev-master"
   },
   "scripts": {
     "post-install-cmd": [
