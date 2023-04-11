@@ -351,7 +351,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         if ($userLogFormat === 'popup') {
             $html = '<a href="javascript:void(0);" class="publishpres-future-view-log" data-id="' . $row['ID'] . '">' . esc_html__(
                     'View log',
-                    'publishpress-future'
+                    'post-expirator'
                 ) . '</a>';
             $html .= '<div class="publishpress-future-log-entries-popup publishpress-future-log-' . $row['ID'] . '" style="display: none;">';
             $html .= '<div>';
@@ -385,8 +385,8 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $html .= '<table class="wp-list-table widefat striped">';
             $html .= '<thead>';
             $html .= '<tr>';
-            $html .= '<th>' . esc_html__('Date', 'publishpress-future') . '</th>';
-            $html .= '<th>' . esc_html__('Message', 'publishpress-future') . '</th>';
+            $html .= '<th>' . esc_html__('Date', 'post-expirator') . '</th>';
+            $html .= '<th>' . esc_html__('Message', 'post-expirator') . '</th>';
             $html .= '</tr>';
             $html .= '</thead>';
             $html .= '<tbody>';
