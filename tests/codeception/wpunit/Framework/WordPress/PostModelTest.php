@@ -1,5 +1,5 @@
 <?php
-namespace wordpress\Framework\WordPress;
+namespace wpunit\Framework\WordPress;
 
 use Codeception\TestCase\WPTestCase;
 use PublishPressFuture\Framework\WordPress\Models\PostModel;
@@ -25,7 +25,9 @@ class PostModelTest extends WPTestCase
 
         $this->assertEquals('TitleA', $post->post_title);
 
-        $postModel = new PostModel($postId);
+        $dummyTermModelFactory = function() {};
+
+        $postModel = new PostModel($postId, $dummyTermModelFactory);
         $postModel->update(['post_title' => 'TitleB']);
 
         $post = get_post($postId);
@@ -39,6 +41,8 @@ class PostModelTest extends WPTestCase
                 'post_status' => 'draft',
             ]
         );
+
+        $dummyTermModelFactory = function() {};
 
         $post = get_post($postId);
 
@@ -55,7 +59,7 @@ class PostModelTest extends WPTestCase
         });
 
         // Update the post
-        $postModel = new PostModel($postId);
+        $postModel = new PostModel($postId, $dummyTermModelFactory);
         $postModel->setPostStatus('private');
 
         $post = get_post($postId);

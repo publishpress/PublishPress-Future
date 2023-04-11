@@ -1,5 +1,5 @@
 <?php
-namespace wordpress\Framework\WordPress;
+namespace wpunit\Framework\WordPress;
 
 use Codeception\TestCase\WPTestCase;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;

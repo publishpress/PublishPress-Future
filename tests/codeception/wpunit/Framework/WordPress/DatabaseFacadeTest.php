@@ -1,25 +1,34 @@
 <?php
-namespace wordpress\Framework\WordPress;
+namespace Framework\WordPress;
 
-use Codeception\TestCase\WPTestCase;
 use PDO;
 use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
-use WordpressTester;
 
-class DatabaseFacadeTest extends WPTestCase
+class DatabaseFacadeTest extends \Codeception\TestCase\WPTestCase
 {
     /**
-     * @var WordpressTester
+     * @var \WpunitTester
      */
     protected $tester;
 
     protected $dbDriver;
 
-    public function _before()
+    public function setUp(): void
     {
+        // Before...
+        parent::setUp();
+
         if (empty($this->dbDriver)) {
             $this->dbDriver = $this->getModule('WPDb')->_getDriver();
         }
+    }
+
+    public function tearDown(): void
+    {
+        // Your tear down methods here.
+
+        // Then...
+        parent::tearDown();
     }
 
     protected function getTables()
@@ -27,6 +36,7 @@ class DatabaseFacadeTest extends WPTestCase
         return $this->dbDriver->executeQuery('SHOW TABLES', [])->fetchAll(PDO::FETCH_COLUMN);
     }
 
+    // Tests
     public function testGetTablePrefix()
     {
         $facade = new DatabaseFacade();

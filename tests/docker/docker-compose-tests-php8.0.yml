@@ -19,6 +19,10 @@ services:
     ports:
       - 443
       - 80
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"
+    environment:
+      - DOCKER_HOST_IP=${DOCKER_HOST_IP}
 
   db:
     image: mariadb:10.5.8
@@ -31,3 +35,5 @@ services:
       MYSQL_ROOT_PASSWORD: wordpress
     ports:
       - 3306
+    extra_hosts:
+      - "dockerhost:${DOCKER_HOST_IP}"

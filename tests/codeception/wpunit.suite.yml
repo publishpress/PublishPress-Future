@@ -1,10 +1,10 @@
-actor: WordpressTester
+actor: WpunitTester
 modules:
     enabled:
-        - \Helper\Wordpress
+        - \Helper\Wpunit
+        - WPDb
         - WPLoader
         - Sequence
-        - WPDb
     config:
         WPDb:
             dump: "tests/codeception/_data/sql/dump.sql"
@@ -14,8 +14,10 @@ modules:
             letAdminEmailVerification: false
             letCron: false
         WPLoader:
-            isolatedInstall: true
+            loadOnly: false
+            isolatedInstall: false
             tablePrefix: "wp_"
+            installationTableHandling: drop
             plugins:
                 - post-expirator/post-expirator.php
                 - pre-tests/pre-tests.php

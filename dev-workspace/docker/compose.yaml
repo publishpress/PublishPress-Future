@@ -18,5 +18,6 @@ services:
             - ../cache/.composer/auth.json:/root/.composer/auth.json
             - /var/run/docker.sock:/var/run/docker.sock
         extra_hosts:
-          - "dockerhost:${DOCKER_HOST_IP}"
-
+            - "dockerhost:${DOCKER_HOST_IP}"
+        environment:
+            - DOCKER_HOST_IP=${DOCKER_HOST_IP}

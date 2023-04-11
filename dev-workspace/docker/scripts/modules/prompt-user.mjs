@@ -11,7 +11,7 @@ export const promptUser = () => {
             type: "list",
             name: "version",
             message: "Select a PHP version",
-            choices: ["5.6", "7.4", "8.0", "8.1", "8.2"]
+            choices: ["5.6", "7.2", "7.4", "8.0", "8.1", "8.2"]
         },
     ]);
 };

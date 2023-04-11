@@ -167,13 +167,13 @@ create_env_file() {
     wordpress_container_port=$(get_service_port "${wordpress_container_name}" 80)
     mount_path=$(get_mount_path)
 
-    test_site_db_host="dockerhost"
+    test_site_db_host="host.docker.internal"
     test_site_db_port="${db_container_port}"
     test_site_db_name="wordpress"
     test_site_db_user="root"
     test_site_db_password="wordpress"
-    test_site_wp_url="http:\/\/dockerhost:${wordpress_container_port}"
-    test_site_wp_domain="dockerhost:${wordpress_container_port}"
+    test_site_wp_url="http:\/\/host.docker.internal:${wordpress_container_port}"
+    test_site_wp_domain="host.docker.internal:${wordpress_container_port}"
     test_site_name="Tests on ${php_version}"
     test_site_admin_username="admin"
     test_site_admin_password="admin"
