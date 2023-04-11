@@ -10,7 +10,6 @@ use PublishPressFuture\Modules\Expirator\HooksAbstract;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
 use PublishPressFuture\Modules\Expirator\Interfaces\MigrationInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class V30000WPCronToActionsScheduler implements MigrationInterface
