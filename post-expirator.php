@@ -13,18 +13,13 @@
 use PublishPressFuture\Core\DI\Container;
 use PublishPressFuture\Core\DI\ServicesAbstract;
 
-// If the PHP version is not compatible, terminate the plugin execution.
-if (! include_once __DIR__ . '/src/check-php-version.php') {
-    return;
-}
-
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     define('PUBLISHPRESS_FUTURE_LOADED', true);
     define('PUBLISHPRESS_FUTURE_VERSION', '3.0.0-beta.3');
 
     try {
         // If the PHP version is not compatible, terminate the plugin execution.
-        if (! include_once __DIR__ . '/check-php-version.php') {
+        if (! include_once __DIR__ . '/src/check-php-version.php') {
             return;
         }
 
