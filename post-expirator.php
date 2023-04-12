@@ -15,7 +15,10 @@ use PublishPressFuture\Core\DI\ServicesAbstract;
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     define('PUBLISHPRESS_FUTURE_LOADED', true);
-    define('PUBLISHPRESS_FUTURE_VERSION', '3.0.0-beta.3');
+
+    if (! defined('PUBLISHPRESS_FUTURE_VERSION')) {
+        define('PUBLISHPRESS_FUTURE_VERSION', '3.0.0-beta.3');
+    }
 
     try {
         // If the PHP version is not compatible, terminate the plugin execution.
