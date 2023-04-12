@@ -34,10 +34,13 @@ namespace PublishPressFuture {
         load_plugin_textdomain($data['plugin_slug'], false, __DIR__ . '/../languages/');
 
         add_action('after_plugin_row_' . $data['plugin_file'], function ($pluginFile) use ($data) {
+            /**
+             * @var \WP_Plugins_List_Table $wpListTable
+             */
+            $wpListTable = _get_list_table('WP_Plugins_List_Table', ['screen' => get_current_screen(),] );
             ?>
-            <tr>
-                <td>&nbsp;</td>
-                <td colspan="3" class="colspanchange">
+            <tr class="plugin-update-tr active">
+                <td colspan="<?php echo esc_attr($wpListTable->get_column_count()); ?>" class="plugin-update colspanchange">
                     <div class="notice inline notice-warning notice-alt">
                         <p>
                             <span class="dashicons dashicons-warning" style="margin-right: 6px; color: #d63638;"></span>
