@@ -241,12 +241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "17f1e9fdde0e8d027fb85e7b1e02e76b9a17a310"
+                "reference": "ced0761657ba6c0f40b6534e3d92523e20e51af1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/17f1e9fdde0e8d027fb85e7b1e02e76b9a17a310",
-                "reference": "17f1e9fdde0e8d027fb85e7b1e02e76b9a17a310",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/ced0761657ba6c0f40b6534e3d92523e20e51af1",
+                "reference": "ced0761657ba6c0f40b6534e3d92523e20e51af1",
                 "shasum": ""
             },
             "require": {
@@ -283,7 +283,6 @@
                 "phpstan/extension-installer": "^1.2",
                 "phpstan/phpstan": "^1.3",
                 "publishpress/publishpress-phpcs-standards": "dev-main",
-                "sebastian/phpcpd": "^6.0",
                 "squizlabs/php_codesniffer": "^3.5",
                 "szepeviktor/phpstan-wordpress": "^1.1",
                 "wp-cli/i18n-command": "^2.2",
@@ -323,7 +322,7 @@
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/release-3.0.0"
             },
-            "time": "2023-03-29T23:04:58+00:00"
+            "time": "2023-04-12T16:29:53+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -514,16 +513,16 @@
         },
         {
             "name": "publishpress/wordpress-version-notices",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/wordpress-version-notices.git",
-                "reference": "e9f23aabe02502b17ad5cb25434f74509ee7ed1e"
+                "reference": "ea8a694f10385275393c3e36b524d40019a591fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/wordpress-version-notices/zipball/e9f23aabe02502b17ad5cb25434f74509ee7ed1e",
-                "reference": "e9f23aabe02502b17ad5cb25434f74509ee7ed1e",
+                "url": "https://api.github.com/repos/publishpress/wordpress-version-notices/zipball/ea8a694f10385275393c3e36b524d40019a591fa",
+                "reference": "ea8a694f10385275393c3e36b524d40019a591fa",
                 "shasum": ""
             },
             "require": {
@@ -565,9 +564,9 @@
             "description": "Library for displaying version notices for Pro plugins in WordPress.",
             "support": {
                 "issues": "https://github.com/publishpress/wordpress-version-notices/issues",
-                "source": "https://github.com/publishpress/wordpress-version-notices/tree/1.3.0"
+                "source": "https://github.com/publishpress/wordpress-version-notices/tree/1.3.1"
             },
-            "time": "2023-03-29T17:00:36+00:00"
+            "time": "2023-04-05T21:15:43+00:00"
         },
         {
             "name": "woocommerce/action-scheduler",
@@ -1172,16 +1171,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.15.1",
+            "version": "v3.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "d48755372a113bddb99f749e34805d83f3acfe04"
+                "reference": "d40f9436e1c448d309fa995ab9c14c5c7a96f2dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/d48755372a113bddb99f749e34805d83f3acfe04",
-                "reference": "d48755372a113bddb99f749e34805d83f3acfe04",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/d40f9436e1c448d309fa995ab9c14c5c7a96f2dc",
+                "reference": "d40f9436e1c448d309fa995ab9c14c5c7a96f2dc",
                 "shasum": ""
             },
             "require": {
@@ -1256,7 +1255,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.15.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.16.0"
             },
             "funding": [
                 {
@@ -1264,7 +1263,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-13T23:26:30+00:00"
+            "time": "2023-04-02T19:30:06+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -1736,16 +1735,16 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v6.1.1",
+            "version": "v6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "601c429ba8d91ef50a2a1bec05a7cd38b88064ff"
+                "reference": "b73fe99eadf9fb56363619dac0343b6d19907dce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/601c429ba8d91ef50a2a1bec05a7cd38b88064ff",
-                "reference": "601c429ba8d91ef50a2a1bec05a7cd38b88064ff",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/b73fe99eadf9fb56363619dac0343b6d19907dce",
+                "reference": "b73fe99eadf9fb56363619dac0343b6d19907dce",
                 "shasum": ""
             },
             "require-dev": {
@@ -1753,7 +1752,7 @@
                 "php": "~7.3 || ~8.0",
                 "php-stubs/generator": "^0.8.3",
                 "phpdocumentor/reflection-docblock": "^5.3",
-                "phpstan/phpstan": "^1.2"
+                "phpstan/phpstan": "^1.9"
             },
             "suggest": {
                 "paragonie/sodium_compat": "Pure PHP implementation of libsodium",
@@ -1774,9 +1773,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.1.1"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.2.0"
             },
-            "time": "2023-02-09T11:10:35+00:00"
+            "time": "2023-03-31T09:48:52+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -1970,16 +1969,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.x-dev",
+            "version": "1.11.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "ea2670af42ff2e938a417227d3eac27a415a0548"
+                "reference": "1e639618c2af0a97f61217ddad80a5007fbe7659"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ea2670af42ff2e938a417227d3eac27a415a0548",
-                "reference": "ea2670af42ff2e938a417227d3eac27a415a0548",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1e639618c2af0a97f61217ddad80a5007fbe7659",
+                "reference": "1e639618c2af0a97f61217ddad80a5007fbe7659",
                 "shasum": ""
             },
             "require": {
@@ -2029,7 +2028,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-29T15:16:12+00:00"
+            "time": "2023-04-13T14:48:52+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2477,12 +2476,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "34be1d116d753004b5b9b9a1333d0c06ec8291c9"
+                "reference": "7e53eb5309d8748956d3aaf8a9e20cf211260817"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/34be1d116d753004b5b9b9a1333d0c06ec8291c9",
-                "reference": "34be1d116d753004b5b9b9a1333d0c06ec8291c9",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/7e53eb5309d8748956d3aaf8a9e20cf211260817",
+                "reference": "7e53eb5309d8748956d3aaf8a9e20cf211260817",
                 "shasum": ""
             },
             "require": {
@@ -2537,7 +2536,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-03-28T15:50:21+00:00"
+            "time": "2023-04-04T09:34:52+00:00"
         },
         {
             "name": "sebastian/phpcpd",
@@ -2660,12 +2659,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "d8a00fb972b9317ef4decf66725a25e712cc4cbe"
+                "reference": "dc5582dc5a93a235557af73e523c389aac9a8e88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/d8a00fb972b9317ef4decf66725a25e712cc4cbe",
-                "reference": "d8a00fb972b9317ef4decf66725a25e712cc4cbe",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/dc5582dc5a93a235557af73e523c389aac9a8e88",
+                "reference": "dc5582dc5a93a235557af73e523c389aac9a8e88",
                 "shasum": ""
             },
             "require": {
@@ -2711,7 +2710,7 @@
                 "source": "https://github.com/sirbrillig/phpcs-variable-analysis",
                 "wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
             },
-            "time": "2023-03-13T14:54:42+00:00"
+            "time": "2023-03-31T16:46:32+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -2777,12 +2776,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "140f413a89ecdd30f4c6938188b218f80fa386ac"
+                "reference": "3e2717ea077b50517e21bd3153507139242eab83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/140f413a89ecdd30f4c6938188b218f80fa386ac",
-                "reference": "140f413a89ecdd30f4c6938188b218f80fa386ac",
+                "url": "https://api.github.com/repos/symfony/config/zipball/3e2717ea077b50517e21bd3153507139242eab83",
+                "reference": "3e2717ea077b50517e21bd3153507139242eab83",
                 "shasum": ""
             },
             "require": {
@@ -2847,7 +2846,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-13T17:33:58+00:00"
+            "time": "2023-04-02T01:25:41+00:00"
         },
         {
             "name": "symfony/console",
@@ -2855,12 +2854,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "3cd51fd2e6c461ca678f84d419461281bd87a0a8"
+                "reference": "3105944c52330eb286938ba481ff33fa7be15c3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/3cd51fd2e6c461ca678f84d419461281bd87a0a8",
-                "reference": "3cd51fd2e6c461ca678f84d419461281bd87a0a8",
+                "url": "https://api.github.com/repos/symfony/console/zipball/3105944c52330eb286938ba481ff33fa7be15c3b",
+                "reference": "3105944c52330eb286938ba481ff33fa7be15c3b",
                 "shasum": ""
             },
             "require": {
@@ -2946,7 +2945,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-25T09:27:28+00:00"
+            "time": "2023-04-12T06:43:40+00:00"
         },
         {
             "name": "symfony/dependency-injection",
@@ -2954,12 +2953,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "a75fc8cc52f5c5d65047f728beca149ef2124850"
+                "reference": "59ea6d5d1870ab4dbdeb7119838dcdaa553feba1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/a75fc8cc52f5c5d65047f728beca149ef2124850",
-                "reference": "a75fc8cc52f5c5d65047f728beca149ef2124850",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/59ea6d5d1870ab4dbdeb7119838dcdaa553feba1",
+                "reference": "59ea6d5d1870ab4dbdeb7119838dcdaa553feba1",
                 "shasum": ""
             },
             "require": {
@@ -3033,7 +3032,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-28T12:36:16+00:00"
+            "time": "2023-04-08T16:26:10+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -3273,12 +3272,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "bf3226d895bb4cd6635ef42649ec4a5818e3bf01"
+                "reference": "ebd0ca75299ab3629c4283c28222536c0f3033a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/bf3226d895bb4cd6635ef42649ec4a5818e3bf01",
-                "reference": "bf3226d895bb4cd6635ef42649ec4a5818e3bf01",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/ebd0ca75299ab3629c4283c28222536c0f3033a6",
+                "reference": "ebd0ca75299ab3629c4283c28222536c0f3033a6",
                 "shasum": ""
             },
             "require": {
@@ -3328,7 +3327,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-14T09:04:20+00:00"
+            "time": "2023-04-02T01:25:41+00:00"
         },
         {
             "name": "symfony/finder",
@@ -4485,22 +4484,22 @@
         },
         {
             "name": "szepeviktor/phpstan-wordpress",
-            "version": "v1.1.7",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/szepeviktor/phpstan-wordpress.git",
-                "reference": "979dcb81a01942b576b9fbf72dcb9515c57a4aa8"
+                "reference": "534f2666a169ee7389722460178764db976ea1c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/979dcb81a01942b576b9fbf72dcb9515c57a4aa8",
-                "reference": "979dcb81a01942b576b9fbf72dcb9515c57a4aa8",
+                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/534f2666a169ee7389722460178764db976ea1c3",
+                "reference": "534f2666a169ee7389722460178764db976ea1c3",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2 || ^8.0",
                 "php-stubs/wordpress-stubs": "^4.7 || ^5.0 || ^6.0",
-                "phpstan/phpstan": "^1.8.7",
+                "phpstan/phpstan": "^1.10.0",
                 "symfony/polyfill-php73": "^1.12.0"
             },
             "require-dev": {
@@ -4538,7 +4537,7 @@
             ],
             "support": {
                 "issues": "https://github.com/szepeviktor/phpstan-wordpress/issues",
-                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.1.7"
+                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.2.0"
             },
             "funding": [
                 {
@@ -4550,7 +4549,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-04T13:10:27+00:00"
+            "time": "2023-04-08T07:07:36+00:00"
         },
         {
             "name": "wp-cli/i18n-command",
@@ -4678,12 +4677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/php-cli-tools.git",
-                "reference": "f6be76b7c4ee2ef93c9531b8a37bdb7ce42c3728"
+                "reference": "0f503a790698cb36cf835e5c8d09cd4b64bf2325"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/php-cli-tools/zipball/f6be76b7c4ee2ef93c9531b8a37bdb7ce42c3728",
-                "reference": "f6be76b7c4ee2ef93c9531b8a37bdb7ce42c3728",
+                "url": "https://api.github.com/repos/wp-cli/php-cli-tools/zipball/0f503a790698cb36cf835e5c8d09cd4b64bf2325",
+                "reference": "0f503a790698cb36cf835e5c8d09cd4b64bf2325",
                 "shasum": ""
             },
             "require": {
@@ -4732,9 +4731,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wp-cli/php-cli-tools/issues",
-                "source": "https://github.com/wp-cli/php-cli-tools/tree/v0.11.17"
+                "source": "https://github.com/wp-cli/php-cli-tools/tree/v0.11.18"
             },
-            "time": "2023-01-12T01:18:21+00:00"
+            "time": "2023-04-04T16:03:53+00:00"
         },
         {
             "name": "wp-cli/wp-cli",
@@ -4742,12 +4741,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "a71167e1030462275a48c419854261efceba11e3"
+                "reference": "8283bbe5a5987ed9ca6281f5b2df6fb01010b166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/a71167e1030462275a48c419854261efceba11e3",
-                "reference": "a71167e1030462275a48c419854261efceba11e3",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/8283bbe5a5987ed9ca6281f5b2df6fb01010b166",
+                "reference": "8283bbe5a5987ed9ca6281f5b2df6fb01010b166",
                 "shasum": ""
             },
             "require": {
@@ -4806,7 +4805,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2023-03-15T11:37:29+00:00"
+            "time": "2023-04-10T13:08:43+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
