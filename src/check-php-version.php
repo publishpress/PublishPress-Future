@@ -37,10 +37,15 @@ namespace PublishPressFuture {
             /**
              * @var \WP_Plugins_List_Table $wpListTable
              */
-            $wpListTable = _get_list_table('WP_Plugins_List_Table', ['screen' => get_current_screen(),] );
+            $wpListTable = _get_list_table(
+                'WP_Plugins_List_Table',
+                ['screen' => get_current_screen(),]
+            );
             ?>
             <tr class="plugin-update-tr active">
-                <td colspan="<?php echo esc_attr($wpListTable->get_column_count()); ?>" class="plugin-update colspanchange">
+                <td colspan="<?php echo esc_attr($wpListTable->get_column_count()); ?>"
+                    class="plugin-update colspanchange">
+
                     <div class="notice inline notice-warning notice-alt">
                         <p>
                             <span class="dashicons dashicons-warning" style="margin-right: 6px; color: #d63638;"></span>
@@ -52,8 +57,7 @@ namespace PublishPressFuture {
                                     $data['min_php_version'],
                                     PHP_VERSION
                                 )
-                            );
-                            ?>
+                            ); ?>
                         </p>
                     </div>
                 </td>
