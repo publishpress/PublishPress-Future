@@ -241,12 +241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "ced0761657ba6c0f40b6534e3d92523e20e51af1"
+                "reference": "dfc05b474f42ff04a6d5ba26d7df698c87b8231b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/ced0761657ba6c0f40b6534e3d92523e20e51af1",
-                "reference": "ced0761657ba6c0f40b6534e3d92523e20e51af1",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/dfc05b474f42ff04a6d5ba26d7df698c87b8231b",
+                "reference": "dfc05b474f42ff04a6d5ba26d7df698c87b8231b",
                 "shasum": ""
             },
             "require": {
@@ -322,7 +322,7 @@
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/release-3.0.0"
             },
-            "time": "2023-04-12T16:29:53+00:00"
+            "time": "2023-04-14T13:34:26+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -1973,12 +1973,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "1e639618c2af0a97f61217ddad80a5007fbe7659"
+                "reference": "e054977cf43eb28826df5f90b6f3609a102cb190"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1e639618c2af0a97f61217ddad80a5007fbe7659",
-                "reference": "1e639618c2af0a97f61217ddad80a5007fbe7659",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e054977cf43eb28826df5f90b6f3609a102cb190",
+                "reference": "e054977cf43eb28826df5f90b6f3609a102cb190",
                 "shasum": ""
             },
             "require": {
@@ -2028,7 +2028,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-13T14:48:52+00:00"
+            "time": "2023-04-14T12:30:32+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
