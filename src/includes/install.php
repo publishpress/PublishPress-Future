@@ -10,7 +10,6 @@
 namespace PublishPressFuturePro {
 
     use PublishPressFuturePro\Core\HooksAbstract;
-    use PublishPressFuturePro\Models\WorkflowLogModel;
 
     function install()
     {

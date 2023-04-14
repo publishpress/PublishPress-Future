@@ -23,11 +23,9 @@ abstract class ServicesAbstract
     public const PLUGIN = 'future.pro/plugin';
     public const HOOKS = ServicesAbstractFree::HOOKS;
     public const CONTROLLER_CUSTOM_STATUSES = 'future.pro/controller-custom-statuses';
-    public const CONTROLLER_WORKFLOW_LOG = 'future.pro/controller-workflow-log';
     public const CONTROLLER_SETTINGS = 'future.pro/controller-settings';
     public const CONTROLLER_EDD_INTEGRATION = 'future.pro/controller-edd-integration';
     public const MODEL_CUSTOM_STATUSES = 'future.pro/model-custom-statuses';
-    public const MODEL_WORKFLOW_LOG = 'future.pro/model-workflow-log';
     public const MODEL_SETTINGS = 'future.pro/model-settings';
     public const OPTIONS = ServicesAbstractFree::OPTIONS;
     public const EDD_CONTAINER = 'future.pro/edd-container';

@@ -12,7 +12,6 @@ namespace PublishPressFuturePro {
     use PublishPressFuture\Core\DI\Container;
     use PublishPressFuture\Core\DI\ServicesAbstract;
     use PublishPressFuturePro\Core\HooksAbstract;
-    use PublishPressFuturePro\Models\WorkflowLogModel;
 
     function uninstall()
     {

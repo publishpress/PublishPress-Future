@@ -10,13 +10,11 @@ use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuturePro\Controllers\CustomStatusesController;
 use PublishPressFuturePro\Controllers\EddIntegrationController;
 use PublishPressFuturePro\Controllers\SettingsController;
-use PublishPressFuturePro\Controllers\WorkflowLogController;
 use PublishPressFuturePro\Core\HooksAbstract;
 use PublishPressFuturePro\Core\PluginInitializator;
 use PublishPressFuturePro\Core\ServicesAbstract;
 use PublishPressFuturePro\Models\CustomStatusesModel;
 use PublishPressFuturePro\Models\SettingsModel;
-use PublishPressFuturePro\Models\WorkflowLogModel;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => PLUGIN_VERSION,
@@ -58,7 +56,6 @@ return [
     ServicesAbstract::CONTROLLERS => static function (ContainerInterface $container) {
         $controllerServicesList = [
             ServicesAbstract::CONTROLLER_CUSTOM_STATUSES,
-            ServicesAbstract::CONTROLLER_WORKFLOW_LOG,
             ServicesAbstract::CONTROLLER_SETTINGS,
             ServicesAbstract::CONTROLLER_EDD_INTEGRATION,
         ];
@@ -99,18 +96,6 @@ return [
     /**
      * @return ModuleInterface
      */
-    ServicesAbstract::CONTROLLER_WORKFLOW_LOG => static function (ContainerInterface $container) {
-        return new WorkflowLogController(
-            $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::MODEL_WORKFLOW_LOG),
-            $container->get(ServicesAbstract::MODEL_SETTINGS),
-            $container->get(ServicesAbstract::TEMPLATE_PATH)
-        );
-    },
-
-    /**
-     * @return ModuleInterface
-     */
     ServicesAbstract::CONTROLLER_SETTINGS => static function (ContainerInterface $container) {
         return new SettingsController(
             $container->get(ServicesAbstract::HOOKS),
@@ -138,13 +123,6 @@ return [
      */
     ServicesAbstract::MODEL_CUSTOM_STATUSES => static function (ContainerInterface $container) {
         return new CustomStatusesModel();
-    },
-
-    /**
-     * @return \PublishPressFuturePro\Models\WorkflowLogModel
-     */
-    ServicesAbstract::MODEL_WORKFLOW_LOG => static function (ContainerInterface $container) {
-        return new WorkflowLogModel();
     },
 
     ServicesAbstract::MODEL_SETTINGS => static function (ContainerInterface $container) {

@@ -25,26 +25,11 @@ class SettingsModel
     public function getSettings(): array
     {
         return [
-            'workflowLogIsEnabled' => $this->getWorkflowLogIsEnabled(),
             'preserveDataOnDeactivation' => $this->getPreserveDataOnDeactivation(),
             'licenseKey' => $this->getLicenseKey(),
             'licenseStatus' => $this->getLicenseStatus(),
             'enabledCustomStatuses' => $this->getEnabledCustomStatuses(),
         ];
-    }
-
-    public function getWorkflowLogIsEnabled(): bool
-    {
-        return (bool)$this->options->getOption('ppfuturepro_log_enabled', 1);
-    }
-
-    public function setWorkflowLogIsEnabled(bool $value)
-    {
-        if (null === $this->options->getOption('ppfuturepro_log_enabled', null)) {
-            $this->options->addOption('ppfuturepro_log_enabled', $value ? 1 : 0);
-        } else {
-            $this->options->updateOption('ppfuturepro_log_enabled', $value ? 1 : 0);
-        }
     }
 
     public function getPreserveDataOnDeactivation(): bool

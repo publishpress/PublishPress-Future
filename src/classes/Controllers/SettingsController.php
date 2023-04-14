@@ -93,16 +93,6 @@ class SettingsController implements ModuleInterface
             [$this, 'adminEnqueueScript']
         );
 
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_AFTER_DEBUG_LOG_SETTING,
-            [$this, 'renderDebugLogSetting']
-        );
-
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_ADMIN_MENU,
-            [$this, 'adminMenu']
-        );
-
         $this->hooks->addFilter(
             HooksAbstract::FILTER_ALLOWED_TABS,
             [$this, 'filterAllowedTabs']
@@ -158,16 +148,6 @@ class SettingsController implements ModuleInterface
             if (! current_user_can('manage_options')) {
                 wp_die('You do not have permission to do this');
             }
-
-            switch ($_GET['action']) {
-                case 'enable-workflow-logs':
-                    $this->settingsModel->setWorkflowLogIsEnabled(1);
-                    break;
-
-                case 'disable-workflow-logs':
-                    $this->settingsModel->setWorkflowLogIsEnabled(0);
-                    break;
-            }
         }
     }
 
@@ -222,22 +202,6 @@ class SettingsController implements ModuleInterface
         }
 
         // phpcs:enable WordPress.Security.NonceVerification.Recommended
-    }
-
-    public function renderDebugLogSetting()
-    {
-        $enabled = $this->settingsModel->getWorkflowLogIsEnabled();
-
-        include_once $this->templatesPath . '/workflow-log-setting.html.php';
-    }
-
-    public function adminMenu()
-    {
-        global $submenu;
-
-        if (isset($submenu['publishpress-future']) && isset($submenu['publishpress-future'][0])) {
-            $submenu['publishpress-future'][0][0] = 'Settings';
-        }
     }
 
     public function filterAllowedTabs($tabs)

@@ -24,11 +24,7 @@ abstract class HooksAbstract
 
     public const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuturepro_deactivate_plugin';
 
-    public const ACTION_ADMIN_MENU = 'admin_menu';
-
     public const ACTION_ADMIN_INIT = 'admin_init';
-
-    public const ACTION_AFTER_DEBUG_LOG_SETTING = DebugHooksAbstractFree::ACTION_AFTER_DEBUG_LOG_SETTING;
 
     public const FILTER_ALLOWED_TABS = SettingsHooksAbstractFree::FILTER_ALLOWED_TABS;
 
