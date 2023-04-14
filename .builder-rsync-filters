@@ -23,8 +23,6 @@
 - builder
 - builder.yml
 - codeception.dist.yml
-- composer.json
-- composer.lock
 - cs
 - dev-workspace
 - dist
