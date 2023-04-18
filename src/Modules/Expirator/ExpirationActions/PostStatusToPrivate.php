@@ -47,10 +47,13 @@ class PostStatusToPrivate implements ExpirationActionInterface
             return __('Status didn\'t change.', 'post-expirator');
         }
 
+        $oldPostStatus = get_post_status_object($this->oldPostStatus);
+        $newPostStatus = get_post_status_object('private');
+
         return sprintf(
             __('Status has been successfully changed from "%s" to "%s".', 'post-expirator'),
-            $this->oldPostStatus,
-            'private'
+            $oldPostStatus->label,
+            $newPostStatus->label
         );
     }
 
@@ -71,6 +74,11 @@ class PostStatusToPrivate implements ExpirationActionInterface
 
     public static function getLabel(): string
     {
-        return __('Change status to private', 'post-expirator');
+        $newPostStatus = get_post_status_object('private');
+
+        return sprintf(
+            __('Change status to %s', 'post-expirator'),
+            $newPostStatus->label
+        );
     }
 }
