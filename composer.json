@@ -36,12 +36,12 @@
     "ext-json": "*",
     "woocommerce/action-scheduler": "^3.5",
     "publishpress/psr-container": "^2.0.1.7",
-    "publishpress/wordpress-reviews": "^1.1",
-    "publishpress/instance-protection": "^2.0",
-    "publishpress/wordpress-banners": "^1.2",
-    "publishpress/wordpress-version-notices": "^2.0",
+    "publishpress/pimple-pimple": "^3.5.0.7",
     "publishpress/vendor-locator": "dev-main",
-    "publishpress/pimple-pimple": "^3.5.0.7"
+    "publishpress/instance-protection": "^2.0",
+    "publishpress/wordpress-reviews": "^1.1",
+    "publishpress/wordpress-banners": "^1.2",
+    "publishpress/wordpress-version-notices": "^2.0"
   },
   "require-dev": {
     "lucatume/wp-browser": "^3",
