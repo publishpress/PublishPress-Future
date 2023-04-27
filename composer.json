@@ -27,9 +27,6 @@
   },
   "minimum-stability": "stable",
   "autoload": {
-    "psr-4": {
-      "PublishPressFuture\\": "./src"
-    },
     "files": [
       "./define-base-path.php"
     ]
@@ -38,12 +35,13 @@
     "php": ">=7.2.5",
     "ext-json": "*",
     "woocommerce/action-scheduler": "^3.5",
-    "publishpress/psr-container": "^2.0.1.0",
+    "publishpress/psr-container": "^2.0.1.7",
     "publishpress/wordpress-reviews": "^1.1",
     "publishpress/instance-protection": "^2.0",
     "publishpress/wordpress-banners": "^1.2",
     "publishpress/wordpress-version-notices": "^2.0",
-    "publishpress/vendor-locator": "dev-main"
+    "publishpress/vendor-locator": "dev-main",
+    "publishpress/pimple-pimple": "^3.5.0.7"
   },
   "require-dev": {
     "lucatume/wp-browser": "^3",

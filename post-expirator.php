@@ -31,21 +31,26 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             require_once $autoloadPath;
         }
 
-        $pluginFile = __FILE__;
+        add_action('plugins_loaded', function() {
+            $pluginFile = __FILE__;
 
-        $services = require __DIR__ . '/services.php';
+            require_once __DIR__ . '/autoload.php';
+            \PublishPressFuture\Autoloader::register();
 
-        $container = new Container($services);
+            $services = require __DIR__ . '/services.php';
 
-        require_once __DIR__ . '/legacy/defines.php';
-        require_once __DIR__ . '/legacy/functions.php';
-        require_once __DIR__ . '/legacy/deprecated-functions.php';
-        require_once __DIR__ . '/legacy/autoload.php';
+            $container = new Container($services);
 
+            require_once __DIR__ . '/legacy/defines.php';
+            require_once __DIR__ . '/legacy/functions.php';
+            require_once __DIR__ . '/legacy/deprecated-functions.php';
+            require_once __DIR__ . '/legacy/autoload.php';
 
-        require_once PUBLISHPRESS_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
+            require_once PUBLISHPRESS_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
 
-        $container->get(ServicesAbstract::PLUGIN)->initialize();
+            $container->get(ServicesAbstract::PLUGIN)->initialize();
+        }, -20, 0);
+
     } catch (Exception $e) {
         $trace = $e->getTrace();
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3d9120226ce979dbc31c2fdc931a755",
+    "content-hash": "bb0075bb99586637483f8a38b64e4ae3",
     "packages": [
         {
             "name": "publishpress/instance-protection",
@@ -47,30 +47,45 @@
         },
         {
             "name": "publishpress/pimple-pimple",
-            "version": "3.5.0.1",
+            "version": "3.5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-pimple-pimple.git",
-                "reference": "a01cdb8ecbe7d58e2f532166d8c941cc9a2fd888"
+                "reference": "2974517f906cdebac620dc5aeabf5f8ac34ebe70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-pimple-pimple/zipball/a01cdb8ecbe7d58e2f532166d8c941cc9a2fd888",
-                "reference": "a01cdb8ecbe7d58e2f532166d8c941cc9a2fd888",
+                "url": "https://api.github.com/repos/publishpress/library-pimple-pimple/zipball/2974517f906cdebac620dc5aeabf5f8ac34ebe70",
+                "reference": "2974517f906cdebac620dc5aeabf5f8ac34ebe70",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
-                "publishpress/psr-container": "2.0.1.1"
+                "publishpress/psr-container": "^2.0.1.1"
             },
             "require-dev": {
                 "brianhenryie/strauss": "^0.14.0",
-                "pimple/pimple": "3.5.0"
+                "codeception/module-asserts": "^1.0",
+                "codeception/module-cli": "^1.0",
+                "codeception/module-db": "^1.0",
+                "codeception/module-filesystem": "^1.0",
+                "codeception/module-phpbrowser": "^1.0",
+                "codeception/module-webdriver": "^1.0",
+                "codeception/util-universalframework": "^1.0",
+                "lucatume/wp-browser": "^3.1",
+                "pimple/pimple": "3.5.0",
+                "publishpress/codeception-extension-extended-copier": "^1.0",
+                "publishpress/version-loader-generator": "^1.0"
             },
             "type": "library",
             "extra": {
+                "generator": {
+                    "lib-class-test": "class_exists('PublishPress\\Pimple\\Container')",
+                    "action-initialize-priority": "-185",
+                    "action-register-priority": "-200"
+                },
                 "strauss": {
-                    "target_directory": "src-prefixed",
+                    "target_directory": "lib",
                     "namespace_prefix": "PublishPress\\",
                     "classmap_prefix": "PublishPress_",
                     "constant_prefix": "PUBLISHPRESS_",
@@ -98,7 +113,7 @@
             },
             "autoload": {
                 "files": [
-                    "src-prefixed/autoload.php"
+                    "lib/include.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -124,22 +139,22 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/library-pimple-pimple/issues",
-                "source": "https://github.com/publishpress/library-pimple-pimple/tree/3.5.0.1"
+                "source": "https://github.com/publishpress/library-pimple-pimple/tree/3.5.0.7"
             },
-            "time": "2023-04-12T21:48:27+00:00"
+            "time": "2023-04-26T01:54:50+00:00"
         },
         {
             "name": "publishpress/psr-container",
-            "version": "2.0.1.1",
+            "version": "2.0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-psr-container.git",
-                "reference": "5b5749838a30de8872063bbd698b756436f1ffba"
+                "reference": "f69f504b2feb966c80789e24c2cf237e32c6cab9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-psr-container/zipball/5b5749838a30de8872063bbd698b756436f1ffba",
-                "reference": "5b5749838a30de8872063bbd698b756436f1ffba",
+                "url": "https://api.github.com/repos/publishpress/library-psr-container/zipball/f69f504b2feb966c80789e24c2cf237e32c6cab9",
+                "reference": "f69f504b2feb966c80789e24c2cf237e32c6cab9",
                 "shasum": ""
             },
             "require": {
@@ -147,12 +162,27 @@
             },
             "require-dev": {
                 "brianhenryie/strauss": "^0.14.0",
-                "psr/container": "2.0.1"
+                "codeception/module-asserts": "^1.0",
+                "codeception/module-cli": "^1.0",
+                "codeception/module-db": "^1.0",
+                "codeception/module-filesystem": "^1.0",
+                "codeception/module-phpbrowser": "^1.0",
+                "codeception/module-webdriver": "^1.0",
+                "codeception/util-universalframework": "^1.0",
+                "lucatume/wp-browser": "^3.1",
+                "psr/container": "2.0.1",
+                "publishpress/codeception-extension-extended-copier": "^1.0",
+                "publishpress/version-loader-generator": "^1.0"
             },
             "type": "library",
             "extra": {
+                "generator": {
+                    "lib-class-test": "interface_exists('PublishPress\\Psr\\Container\\ContainerInterface')",
+                    "action-initialize-priority": "-190",
+                    "action-register-priority": "-200"
+                },
                 "strauss": {
-                    "target_directory": "src-prefixed",
+                    "target_directory": "lib",
                     "namespace_prefix": "PublishPress\\",
                     "classmap_prefix": "PublishPress_",
                     "constant_prefix": "PUBLISHPRESS_",
@@ -179,7 +209,7 @@
             },
             "autoload": {
                 "files": [
-                    "src-prefixed/autoload.php"
+                    "lib/include.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -208,9 +238,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/library-psr-container/issues",
-                "source": "https://github.com/publishpress/library-psr-container/tree/2.0.1.1"
+                "source": "https://github.com/publishpress/library-psr-container/tree/2.0.1.7"
             },
-            "time": "2023-04-12T17:06:00+00:00"
+            "time": "2023-04-26T01:36:16+00:00"
         },
         {
             "name": "publishpress/vendor-locator",
@@ -362,16 +392,16 @@
         },
         {
             "name": "publishpress/wordpress-version-notices",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-wordpress-version-notices.git",
-                "reference": "58b8c4bd8bf14759511b10d7a68a98aa129f7c58"
+                "reference": "e14d377949dd67d27fe27d483a79b0ae353b0966"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-wordpress-version-notices/zipball/58b8c4bd8bf14759511b10d7a68a98aa129f7c58",
-                "reference": "58b8c4bd8bf14759511b10d7a68a98aa129f7c58",
+                "url": "https://api.github.com/repos/publishpress/library-wordpress-version-notices/zipball/e14d377949dd67d27fe27d483a79b0ae353b0966",
+                "reference": "e14d377949dd67d27fe27d483a79b0ae353b0966",
                 "shasum": ""
             },
             "require": {
@@ -390,13 +420,22 @@
                 "codeception/util-universalframework": "^1.0",
                 "composer/composer": "2.2.12",
                 "lucatume/wp-browser": "^3",
-                "overtrue/phplint": "^2.1"
+                "overtrue/phplint": "^2.1",
+                "publishpress/version-loader-generator": "^1.0"
             },
             "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PPVersionNotices\\": "src/"
+            "extra": {
+                "generator": {
+                    "lib-class-test": "class_exists('PPVersionNotices\\ServicesProvider')",
+                    "src-dir": "src",
+                    "action-initialize-priority": "-150",
+                    "action-register-priority": "-190"
                 }
+            },
+            "autoload": {
+                "files": [
+                    "src/include.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -413,9 +452,9 @@
             "description": "Library for displaying version notices for Pro plugins in WordPress.",
             "support": {
                 "issues": "https://github.com/publishpress/library-wordpress-version-notices/issues",
-                "source": "https://github.com/publishpress/library-wordpress-version-notices/tree/2.0.0"
+                "source": "https://github.com/publishpress/library-wordpress-version-notices/tree/2.0.2"
             },
-            "time": "2023-04-18T17:17:49+00:00"
+            "time": "2023-04-26T15:29:22+00:00"
         },
         {
             "name": "woocommerce/action-scheduler",
@@ -2905,7 +2944,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v9.52.6",
+            "version": "v9.52.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -2960,7 +2999,7 @@
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v9.52.6",
+            "version": "v9.52.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -3006,7 +3045,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v9.52.6",
+            "version": "v9.52.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -3054,7 +3093,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v9.52.6",
+            "version": "v9.52.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -3100,7 +3139,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v9.52.6",
+            "version": "v9.52.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -3396,16 +3435,16 @@
         },
         {
             "name": "mikehaertl/php-shellcommand",
-            "version": "1.6.4",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikehaertl/php-shellcommand.git",
-                "reference": "3488d7803df1e8f1a343d3d0ca452d527ad8d5e5"
+                "reference": "e79ea528be155ffdec6f3bf1a4a46307bb49e545"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikehaertl/php-shellcommand/zipball/3488d7803df1e8f1a343d3d0ca452d527ad8d5e5",
-                "reference": "3488d7803df1e8f1a343d3d0ca452d527ad8d5e5",
+                "url": "https://api.github.com/repos/mikehaertl/php-shellcommand/zipball/e79ea528be155ffdec6f3bf1a4a46307bb49e545",
+                "reference": "e79ea528be155ffdec6f3bf1a4a46307bb49e545",
                 "shasum": ""
             },
             "require": {
@@ -3436,9 +3475,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mikehaertl/php-shellcommand/issues",
-                "source": "https://github.com/mikehaertl/php-shellcommand/tree/1.6.4"
+                "source": "https://github.com/mikehaertl/php-shellcommand/tree/1.7.0"
             },
-            "time": "2021-03-17T06:54:33+00:00"
+            "time": "2023-04-19T08:25:22+00:00"
         },
         {
             "name": "mikemclin/laravel-wp-password",
@@ -4356,16 +4395,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.13",
+            "version": "1.10.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "f07bf8c6980b81bf9e49d44bd0caf2e737614a70"
+                "reference": "d232901b09e67538e5c86a724be841bea5768a7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f07bf8c6980b81bf9e49d44bd0caf2e737614a70",
-                "reference": "f07bf8c6980b81bf9e49d44bd0caf2e737614a70",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d232901b09e67538e5c86a724be841bea5768a7c",
+                "reference": "d232901b09e67538e5c86a724be841bea5768a7c",
                 "shasum": ""
             },
             "require": {
@@ -4414,7 +4453,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-12T19:29:52+00:00"
+            "time": "2023-04-19T13:47:27+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -8561,16 +8600,16 @@
         },
         {
             "name": "szepeviktor/phpstan-wordpress",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/szepeviktor/phpstan-wordpress.git",
-                "reference": "534f2666a169ee7389722460178764db976ea1c3"
+                "reference": "5b5cc77ed51fdaf64efe3f00b5aae4b709d2cfa9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/534f2666a169ee7389722460178764db976ea1c3",
-                "reference": "534f2666a169ee7389722460178764db976ea1c3",
+                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/5b5cc77ed51fdaf64efe3f00b5aae4b709d2cfa9",
+                "reference": "5b5cc77ed51fdaf64efe3f00b5aae4b709d2cfa9",
                 "shasum": ""
             },
             "require": {
@@ -8614,19 +8653,9 @@
             ],
             "support": {
                 "issues": "https://github.com/szepeviktor/phpstan-wordpress/issues",
-                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.2.0"
+                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.3.0"
             },
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/szepeviktor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/szepeviktor",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-04-08T07:07:36+00:00"
+            "time": "2023-04-23T06:15:06+00:00"
         },
         {
             "name": "theseer/tokenizer",
