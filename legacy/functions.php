@@ -4,16 +4,16 @@
  * This file provides access to all legacy functions that are now deprecated.
  */
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Core\HooksAbstract as CoreHooks;
-use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooks;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
-use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
-use PublishPressFuture\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
-use PublishPressFuture\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
-use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
-use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Core\HooksAbstract as CoreHooks;
+use PublishPress\Future\Modules\Debug\HooksAbstract as DebugHooks;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
+use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
+use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 /**
  * Adds links to the plugin listing screen.
@@ -1041,7 +1041,7 @@ function postexpirator_activate()
  */
 function expirationdate_deactivate()
 {
-    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPressFuture\Framework\PluginFacade class.');
+    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPress\Future\Framework\PluginFacade class.');
 }
 
 /**

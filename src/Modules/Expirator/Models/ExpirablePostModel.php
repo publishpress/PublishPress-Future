@@ -3,49 +3,49 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Models;
+namespace PublishPress\Future\Modules\Expirator\Models;
 
 use Closure;
-use PublishPressFuture\Framework\WordPress\Models\PostModel;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
+use PublishPress\Future\Framework\WordPress\Models\PostModel;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 
 class ExpirablePostModel extends PostModel
 {
     /**
-     * @var \PublishPressFuture\Modules\Debug\Debug
+     * @var \PublishPress\Future\Modules\Debug\Debug
      */
     private $debug;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\HooksFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\HooksFacade
      */
     private $hooks;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\UsersFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\UsersFacade
      */
     private $users;
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface
      */
     private $scheduler;
 
     /**
-     * @var \PublishPressFuture\Modules\Settings\SettingsFacade
+     * @var \PublishPress\Future\Modules\Settings\SettingsFacade
      */
     private $settings;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\EmailFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\EmailFacade
      */
     private $email;
 
@@ -80,7 +80,7 @@ class ExpirablePostModel extends PostModel
     private $expirationOptions = [];
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface
      */
     private $expirationActionInstance = null;
 
@@ -98,19 +98,19 @@ class ExpirablePostModel extends PostModel
      */
     private $postId;
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Models\ActionArgsModel
+     * @var \PublishPress\Future\Modules\Expirator\Models\ActionArgsModel
      */
     private $actionArgsModel;
 
     /**
      * @param int $postId
-     * @param \PublishPressFuture\Modules\Debug\Debug $debug
-     * @param \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade $options
-     * @param \PublishPressFuture\Framework\WordPress\Facade\HooksFacade $hooks
-     * @param \PublishPressFuture\Framework\WordPress\Facade\UsersFacade $users
-     * @param \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface $scheduler
-     * @param \PublishPressFuture\Modules\Settings\SettingsFacade $settings
-     * @param \PublishPressFuture\Framework\WordPress\Facade\EmailFacade $email
+     * @param \PublishPress\Future\Modules\Debug\Debug $debug
+     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
+     * @param \PublishPress\Future\Framework\WordPress\Facade\HooksFacade $hooks
+     * @param \PublishPress\Future\Framework\WordPress\Facade\UsersFacade $users
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface $scheduler
+     * @param \PublishPress\Future\Modules\Settings\SettingsFacade $settings
+     * @param \PublishPress\Future\Framework\WordPress\Facade\EmailFacade $email
      * @param \Closure $termModelFactory
      * @param \Closure $expirationActionFactory
      * @param \Closure $actionArgsModelFactory
@@ -308,7 +308,7 @@ class ExpirablePostModel extends PostModel
     /**
      * @param bool $force
      * @return bool
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function expire($force = false)
     {
@@ -404,7 +404,7 @@ class ExpirablePostModel extends PostModel
     }
 
     /**
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function getExpirationAction()
     {
@@ -425,7 +425,7 @@ class ExpirablePostModel extends PostModel
 
 
     /**
-     * @param \PublishPressFuture\Modules\Expirator\Interfaces\ActionableInterface $expirationAction
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\ActionableInterface $expirationAction
      * @param string $actionNotificationText
      * @return bool
      */

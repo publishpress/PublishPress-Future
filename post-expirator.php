@@ -10,8 +10,9 @@
  * Domain Path: /languages
  */
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
+use PublishPress\Future\Core\Autoloader;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     try {
@@ -26,30 +27,30 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             return;
         }
 
-        $autoloadPath = __DIR__ . '/vendor/autoload.php';
-        if (! class_exists('PublishPressFuture\\Core\\Plugin') && is_readable($autoloadPath)) {
-            require_once $autoloadPath;
+        $vendorAutoloadPath = __DIR__ . '/vendor/autoload.php';
+        if (is_readable($vendorAutoloadPath)) {
+            require_once $vendorAutoloadPath;
         }
 
         add_action('plugins_loaded', function() {
+            require_once __DIR__ . '/src/Core/Autoloader.php';
+            Autoloader::register();
+            
             $pluginFile = __FILE__;
-
-            require_once __DIR__ . '/autoload.php';
-            \PublishPressFuture\Autoloader::register();
 
             $services = require __DIR__ . '/services.php';
 
             $container = new Container($services);
 
             require_once __DIR__ . '/legacy/defines.php';
+            require_once __DIR__ . '/legacy/deprecated.php';
             require_once __DIR__ . '/legacy/functions.php';
-            require_once __DIR__ . '/legacy/deprecated-functions.php';
             require_once __DIR__ . '/legacy/autoload.php';
 
             require_once PUBLISHPRESS_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
 
             $container->get(ServicesAbstract::PLUGIN)->initialize();
-        }, -20, 0);
+        }, 10, 0);
 
     } catch (Exception $e) {
         $trace = $e->getTrace();

@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\Schemas;
+namespace PublishPress\Future\Modules\Expirator\Schemas;
 
 class ActionArgsSchema
 {

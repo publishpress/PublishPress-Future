@@ -3,14 +3,14 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator;
+namespace PublishPress\Future\Modules\Expirator;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Framework\WordPress\Facade\DateTimeFacade;
-use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
-use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
-use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
+use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 
 class ExpirationScheduler implements SchedulerInterface
 {

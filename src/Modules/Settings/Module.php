@@ -3,14 +3,14 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Settings;
+namespace PublishPress\Future\Modules\Settings;
 
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
-use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
-use PublishPressFuture\Modules\Settings\Controllers\Controller;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Settings\Controllers\Controller;
 
 class Module implements ModuleInterface
 {
@@ -40,15 +40,15 @@ class Module implements ModuleInterface
     private $taxonomiesModelFactory;
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
+     * @var \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel
      */
     private $actionsModel;
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
      */
     private $cron;
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
 
@@ -62,9 +62,9 @@ class Module implements ModuleInterface
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
-     * @param \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
-     * @param \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface $cron
-     * @param \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade $options
+     * @param \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cron
+     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      */
     public function __construct(
         HookableInterface $hooks,

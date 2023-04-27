@@ -3,10 +3,10 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\PostMetaAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>

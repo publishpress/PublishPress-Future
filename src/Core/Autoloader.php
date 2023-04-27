@@ -5,7 +5,7 @@
  */
 
 
-namespace PublishPressFuture;
+namespace PublishPress\Future\Core;
 
 class Autoloader
 {
@@ -14,9 +14,9 @@ class Autoloader
      *
      * @return void
      */
-    public static function register()
+    public static function register(): void
     {
-        spl_autoload_register(array(new self(), 'autoload'));
+        spl_autoload_register([new self(), 'autoload']);
     }
 
     /**
@@ -26,13 +26,13 @@ class Autoloader
      *
      * @return void
      */
-    public static function autoload($class)
+    public static function autoload(string $class): void
     {
         // base directory for the namespace prefix
-        $base_dir = __DIR__ . '/src/';
+        $baseDir = __DIR__ . '/src/';
 
         // namespace prefix
-        $prefix = 'PublishPressFuture\\';
+        $prefix = 'PublishPress\\Future\\';
 
         // does the class use the namespace prefix?
         $len = strlen($prefix);
@@ -43,10 +43,10 @@ class Autoloader
         }
 
         // get the relative class name
-        $relative_class = substr($class, $len);
+        $relativeClass = substr($class, $len);
 
         // replace the namespace prefix with the base directory, replace namespace separators with directory separators
-        $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+        $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
 
         // if the file exists, require it
         if (file_exists($file)) {

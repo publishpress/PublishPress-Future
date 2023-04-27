@@ -3,14 +3,14 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Migrations;
+namespace PublishPress\Future\Modules\Expirator\Migrations;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
-use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
-use PublishPressFuture\Modules\Expirator\Interfaces\MigrationInterface;
-use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class V30000ReplaceFooterPlaceholders implements MigrationInterface
 {
@@ -18,12 +18,12 @@ class V30000ReplaceFooterPlaceholders implements MigrationInterface
 
     private $hooksFacade;
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
     private $optionsFacade;
 
     /**
-     * @param \PublishPressFuture\Core\HookableInterface $hooksFacade
+     * @param \PublishPress\Future\Core\HookableInterface $hooksFacade
      * @param OptionsFacade $optionsFacade
      */
     public function __construct(

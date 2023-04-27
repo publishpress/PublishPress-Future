@@ -1,55 +1,55 @@
 <?php
 
-use PublishPressFuture\Core\DI\ContainerInterface;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Core\HooksAbstract;
-use PublishPressFuture\Core\Paths;
-use PublishPressFuture\Core\Plugin;
-use PublishPressFuture\Framework\Logger\Logger;
-use PublishPressFuture\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
-use PublishPressFuture\Framework\WordPress\Facade\DateTimeFacade;
-use PublishPressFuture\Framework\WordPress\Facade\EmailFacade;
-use PublishPressFuture\Framework\WordPress\Facade\ErrorFacade;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
-use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
-use PublishPressFuture\Framework\WordPress\Facade\RequestFacade;
-use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
-use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Framework\WordPress\Facade\UsersFacade;
-use PublishPressFuture\Framework\WordPress\Models\PostModel;
-use PublishPressFuture\Framework\WordPress\Models\TermModel;
-use PublishPressFuture\Framework\WordPress\Models\UserModel;
-use PublishPressFuture\Modules\Debug\Module as ModuleDebug;
-use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategorySet;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToDraft;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToTrash;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\StickPost;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\UnstickPost;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\ExpirationScheduler;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPressFuture\Modules\Expirator\Models\ActionArgsModel;
-use PublishPressFuture\Modules\Expirator\Models\CurrentUserModel;
-use PublishPressFuture\Modules\Expirator\Models\DefaultDataModel;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel;
-use PublishPressFuture\Modules\Expirator\Module as ModuleExpirator;
-use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable;
-use PublishPressFuture\Modules\InstanceProtection\Module as ModuleInstanceProtection;
-use PublishPressFuture\Modules\Settings\Models\SettingsPostTypesModel;
-use PublishPressFuture\Modules\Settings\Models\TaxonomiesModel;
-use PublishPressFuture\Modules\Settings\Module as ModuleSettings;
-use PublishPressFuture\Modules\Settings\SettingsFacade;
-use PublishPressFuture\Modules\VersionNotices\Module as ModuleVersionNotices;
-use PublishPressFuture\Modules\WooCommerce\Module as ModuleWooCommerce;
+use PublishPress\Future\Core\DI\ContainerInterface;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Core\HooksAbstract;
+use PublishPress\Future\Core\Paths;
+use PublishPress\Future\Core\Plugin;
+use PublishPress\Future\Framework\Logger\Logger;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
+use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
+use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
+use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
+use PublishPress\Future\Framework\WordPress\Facade\UsersFacade;
+use PublishPress\Future\Framework\WordPress\Models\PostModel;
+use PublishPress\Future\Framework\WordPress\Models\TermModel;
+use PublishPress\Future\Framework\WordPress\Models\UserModel;
+use PublishPress\Future\Modules\Debug\Module as ModuleDebug;
+use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemove;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategorySet;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToDraft;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToTrash;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\StickPost;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\UnstickPost;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\ExpirationScheduler;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
+use PublishPress\Future\Modules\Expirator\Models\DefaultDataModel;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
+use PublishPress\Future\Modules\Expirator\Module as ModuleExpirator;
+use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable;
+use PublishPress\Future\Modules\InstanceProtection\Module as ModuleInstanceProtection;
+use PublishPress\Future\Modules\Settings\Models\SettingsPostTypesModel;
+use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
+use PublishPress\Future\Modules\Settings\Module as ModuleSettings;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
+use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_VERSION,
@@ -145,14 +145,14 @@ return [
     },
 
     /**
-     * @return \PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter
+     * @return \PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter
      */
     ServicesAbstract::WOO_CRON_ADAPTER => static function (ContainerInterface $container) {
         return new CronToWooActionSchedulerAdapter();
     },
 
     /**
-     * @return \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
+     * @return \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
      */
     ServicesAbstract::CRON => static function (ContainerInterface $container) {
         return $container->get(ServicesAbstract::WOO_CRON_ADAPTER);
@@ -215,24 +215,24 @@ return [
     },
 
     /**
-     * @return \PublishPressFuture\Framework\WordPress\Facade\RequestFacade
+     * @return \PublishPress\Future\Framework\WordPress\Facade\RequestFacade
      */
     ServicesAbstract::REQUEST => static function (ContainerInterface $container) {
         return new RequestFacade();
     },
 
     /**
-     * @return \PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade
+     * @return \PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade
      */
     ServicesAbstract::SANITIZATION => static function (ContainerInterface $container) {
         return new SanitizationFacade();
     },
 
     /**
-     * @return PublishPressFuture\Modules\Debug\Debug|null
+     * @return PublishPress\Future\Modules\Debug\Debug|null
      */
     ServicesAbstract::DEBUG => static function (ContainerInterface $container) {
-        return new PublishPressFuture\Modules\Debug\Debug(
+        return new PublishPress\Future\Modules\Debug\Debug(
             $container->get(ServicesAbstract::LOGGER),
             $container->get(ServicesAbstract::SETTINGS)
         );

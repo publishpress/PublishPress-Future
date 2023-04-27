@@ -1,14 +1,14 @@
 <?php
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Modules\Debug\HooksAbstract;
-use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable;
-use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Debug\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable;
+use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-$container = PublishPressFuture\Core\DI\Container::getInstance();
+$container = PublishPress\Future\Core\DI\Container::getInstance();
 $debug = $container->get(ServicesAbstract::DEBUG);
 ?>
 

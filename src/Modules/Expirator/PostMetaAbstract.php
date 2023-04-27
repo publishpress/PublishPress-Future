@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator;
+namespace PublishPress\Future\Modules\Expirator;
 
 
 abstract class PostMetaAbstract

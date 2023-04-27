@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-$container = PublishPressFuture\Core\DI\Container::getInstance();
+$container = PublishPress\Future\Core\DI\Container::getInstance();
 ?>
 
     <div class="pp-columns-wrapper<?php

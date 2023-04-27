@@ -1,7 +1,7 @@
 <?php
 
 use PublishPress\WordPressBanners\BannersMain;
-use PublishPressFuture\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -15,8 +15,8 @@ $expiredemailnotificationadmins = get_option(
 );
 $expiredemailnotificationlist = get_option('expirationdateEmailNotificationList', '');
 
-$container = \PublishPressFuture\Core\DI\Container::getInstance();
-$settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+$container = \PublishPress\Future\Core\DI\Container::getInstance();
+$settingsFacade = $container->get(\PublishPress\Future\Core\DI\ServicesAbstract::SETTINGS);
 
 $expirationdateDefaultDateCustom = $settingsFacade->getDefaultDateCustom();
 

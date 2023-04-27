@@ -3,10 +3,10 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator;
+namespace PublishPress\Future\Modules\Expirator;
 
 
-use PublishPressFuture\Framework\InitializableInterface;
+use PublishPress\Future\Framework\InitializableInterface;
 use PublishPressFuture\Framework\ModuleInterface;
 use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
 use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;

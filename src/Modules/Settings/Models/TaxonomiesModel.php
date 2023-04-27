@@ -3,7 +3,7 @@
  * Copyright (c) 2022-2023. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Settings\Models;
+namespace PublishPress\Future\Modules\Settings\Models;
 
 class TaxonomiesModel
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PublishPressFuture\Modules\Debug;
+namespace PublishPress\Future\Modules\Debug;
 
 abstract class HooksAbstract
 {

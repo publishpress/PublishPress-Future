@@ -3,10 +3,10 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core;
+namespace PublishPress\Future\Core;
 
-use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Framework\ModuleInterface as ModuleInterface;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 
 class Plugin implements InitializableInterface
 {

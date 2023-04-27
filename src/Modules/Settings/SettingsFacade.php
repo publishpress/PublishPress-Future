@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Settings;
+namespace PublishPress\Future\Modules\Settings;
 
 use PublishPressFuture\Core\DI\ServicesAbstract as Services;
 use PublishPressFuture\Core\HookableInterface;
