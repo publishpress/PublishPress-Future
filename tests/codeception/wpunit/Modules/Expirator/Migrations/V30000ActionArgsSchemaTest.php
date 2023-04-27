@@ -1,9 +1,9 @@
 <?php
 namespace Modules\Expirator\Migrations;
 
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
-use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
+use PublishPress\Future\Framework\WordPress\Facade\CronFacade;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 
 class V30000ActionArgsSchemaTest extends \Codeception\TestCase\WPTestCase
 {

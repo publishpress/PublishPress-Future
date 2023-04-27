@@ -3,14 +3,14 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Controllers;
+namespace PublishPress\Future\Modules\Expirator\Controllers;
 
 use ActionScheduler;
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
-use PublishPressFuture\Modules\Expirator\Models\ActionArgsModel;
-use PublishPressFuture\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
+use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
 
 class ScheduledActionsController implements InitializableInterface
 {

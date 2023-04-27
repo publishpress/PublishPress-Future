@@ -3,11 +3,11 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Models;
+namespace PublishPress\Future\Modules\Expirator\Models;
 
-use PublishPressFuture\Modules\Expirator\CapabilitiesAbstract as Capabilities;
+use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract as Capabilities;
 
-class CurrentUserModel extends \PublishPressFuture\Framework\WordPress\Models\CurrentUserModel
+class CurrentUserModel extends \PublishPress\Future\Framework\WordPress\Models\CurrentUserModel
 {
     public function userCanExpirePosts()
     {

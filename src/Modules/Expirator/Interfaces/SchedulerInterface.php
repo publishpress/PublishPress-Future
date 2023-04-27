@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Interfaces;
+namespace PublishPress\Future\Modules\Expirator\Interfaces;
 
 interface SchedulerInterface
 {

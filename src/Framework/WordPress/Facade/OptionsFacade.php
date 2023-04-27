@@ -3,9 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Facade;
+namespace PublishPress\Future\Framework\WordPress\Facade;
 
-use function PublishPressFuture\Framework\WordPress\get_option;
+use function PublishPress\Future\Framework\WordPress\get_option;
 
 class OptionsFacade
 {

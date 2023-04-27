@@ -1,8 +1,8 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\Exceptions;
+namespace PublishPress\Future\Modules\Expirator\Exceptions;
 
-use PublishPressFuture\Framework\BaseException;
+use PublishPress\Future\Framework\BaseException;
 
 class UndefinedActionException extends BaseException
 {

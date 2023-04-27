@@ -4,7 +4,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Models;
+namespace PublishPress\Future\Framework\WordPress\Models;
 
 class TermsModel
 {

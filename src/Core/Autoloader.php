@@ -29,10 +29,10 @@ class Autoloader
     public static function autoload(string $class): void
     {
         // base directory for the namespace prefix
-        $baseDir = __DIR__ . '/src/';
+        $baseDir = __DIR__ . '/../';
 
         // namespace prefix
-        $prefix = 'PublishPress\\Future\\';
+        $prefix = 'PublishPress\Future\\';
 
         // does the class use the namespace prefix?
         $len = strlen($prefix);

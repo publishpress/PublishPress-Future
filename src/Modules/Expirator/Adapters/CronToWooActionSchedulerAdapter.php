@@ -3,10 +3,10 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Adapters;
+namespace PublishPress\Future\Modules\Expirator\Adapters;
 
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 
 class CronToWooActionSchedulerAdapter implements CronInterface
 {

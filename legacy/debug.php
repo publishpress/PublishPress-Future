@@ -1,9 +1,9 @@
 <?php
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ContainerNotInitializedException;
-use PublishPressFuture\Core\DI\ServicesAbstract as Services;
-use PublishPressFuture\Modules\Debug\DebugInterface;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ContainerNotInitializedException;
+use PublishPress\Future\Core\DI\ServicesAbstract as Services;
+use PublishPress\Future\Modules\Debug\DebugInterface;
 
 /**
  * The class that adds debug entries to the database.

@@ -3,11 +3,11 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\VersionNotices;
+namespace PublishPress\Future\Modules\VersionNotices;
 
 
-use PublishPressFuture\Core\Paths;
-use PublishPressFuture\Framework\ModuleInterface;
+use PublishPress\Future\Core\Paths;
+use PublishPress\Future\Framework\ModuleInterface;
 
 class Module implements ModuleInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
+namespace PublishPress\Future\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 class PostStatusToTrash implements ExpirationActionInterface
 {
@@ -59,7 +59,7 @@ class PostStatusToTrash implements ExpirationActionInterface
 
     /**
      * @inheritDoc
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function execute()
     {

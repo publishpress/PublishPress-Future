@@ -3,20 +3,20 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Controllers;
+namespace PublishPress\Future\Modules\Expirator\Controllers;
 
 use Closure;
 use Exception;
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\CronInterface;
-use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
-use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
+use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 class ExpirationController implements InitializableInterface
 {

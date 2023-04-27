@@ -8,7 +8,7 @@ namespace unit\Core\DI;
 use Codeception\Test\Feature\Stub;
 use Codeception\Test\Unit;
 use Exception;
-use PublishPressFuture\Core\DI\ServiceProvider;
+use PublishPress\Future\Core\DI\ServiceProvider;
 use UnitTester;
 
 class ServiceProviderTest extends Unit

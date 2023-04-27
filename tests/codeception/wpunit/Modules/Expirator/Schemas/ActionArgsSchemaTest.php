@@ -2,7 +2,7 @@
 
 namespace Modules\Expirator\Schemas;
 
-use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class ActionArgsSchemaTest extends \Codeception\TestCase\WPTestCase
 {

@@ -5,8 +5,8 @@ namespace Steps;
 use DateTime;
 use Exception;
 use PostExpirator_Util;
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract as Services;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 
 use function sq;
 

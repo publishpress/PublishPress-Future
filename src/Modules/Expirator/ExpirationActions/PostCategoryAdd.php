@@ -1,11 +1,11 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
+namespace PublishPress\Future\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Framework\WordPress\Models\TermsModel;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Framework\WordPress\Models\TermsModel;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 class PostCategoryAdd implements ExpirationActionInterface
 {
@@ -17,7 +17,7 @@ class PostCategoryAdd implements ExpirationActionInterface
     private $postModel;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\ErrorFacade
      */
     private $errorFacade;
 
@@ -28,7 +28,7 @@ class PostCategoryAdd implements ExpirationActionInterface
 
     /**
      * @param ExpirablePostModel $postModel
-     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     * @param \PublishPress\Future\Framework\WordPress\Facade\ErrorFacade $errorFacade
      */
     public function __construct($postModel, $errorFacade)
     {

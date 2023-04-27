@@ -1,8 +1,8 @@
 <?php
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
 /**
  * Utility functions.

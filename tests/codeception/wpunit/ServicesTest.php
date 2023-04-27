@@ -3,10 +3,10 @@
 use Codeception\Util\Shared\Asserts;
 use PublishPress\Psr\Container\ContainerExceptionInterface;
 use PublishPress\Psr\Container\NotFoundExceptionInterface;
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Framework\WordPress\Models\PostModel;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Framework\WordPress\Models\PostModel;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 class Test extends \Codeception\TestCase\WPTestCase
 {
@@ -16,7 +16,7 @@ class Test extends \Codeception\TestCase\WPTestCase
     protected $tester;
 
     /**
-     * @var \PublishPressFuture\Core\DI\ContainerInterface
+     * @var \PublishPress\Future\Core\DI\ContainerInterface
      */
     protected $container;
 

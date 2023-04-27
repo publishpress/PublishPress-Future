@@ -1,6 +1,6 @@
 <?php
 
-use PublishPressFuture\Core\DI\ServicesAbstract;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 
 $defaultData = $container->get(ServicesAbstract::DEFAULT_DATA);
 

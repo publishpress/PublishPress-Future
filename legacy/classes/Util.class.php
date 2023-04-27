@@ -1,7 +1,7 @@
 <?php
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 
 /**
  * Utility functions.
@@ -74,7 +74,7 @@ class PostExpirator_Util
     }
 
     /**
-     * @deprecated 2.8.0 Use PublishPressFuture/Core/Helper/Date::getWpDate instead
+     * @deprecated 2.8.0 Use PublishPress\Future/Core/Helper/Date::getWpDate instead
      */
     public static function get_wp_date($format, $timestamp)
     {

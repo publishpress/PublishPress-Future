@@ -3,12 +3,12 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Facade;
+namespace PublishPress\Future\Framework\WordPress\Facade;
 
-use PublishPressFuture\Core\HookableInterface;
+use PublishPress\Future\Core\HookableInterface;
 
-use function PublishPressFuture\Framework\WordPress\add_action;
-use function PublishPressFuture\Framework\WordPress\add_filter;
+use function PublishPress\Future\Framework\WordPress\add_action;
+use function PublishPress\Future\Framework\WordPress\add_filter;
 
 class HooksFacade implements HookableInterface
 {

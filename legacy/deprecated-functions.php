@@ -1,6 +1,6 @@
 <?php
 
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**

@@ -1,10 +1,10 @@
 <?php
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
-use PublishPressFuture\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
+use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 
 /**
  * The class that is responsible for all the displays.

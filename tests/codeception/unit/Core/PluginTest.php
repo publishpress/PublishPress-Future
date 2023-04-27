@@ -8,9 +8,9 @@ namespace unit\Core;
 use Codeception\Stub\Expected;
 use Codeception\Test\Unit;
 use Exception;
-use PublishPressFuture\Core\HooksAbstract;
-use PublishPressFuture\Core\Plugin;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Core\HooksAbstract;
+use PublishPress\Future\Core\Plugin;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use stdClass;
 use UnitTester;
 

@@ -3,10 +3,10 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Models;
+namespace PublishPress\Future\Framework\WordPress\Models;
 
 
-use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentTermException;
+use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException;
 
 class TermModel
 {
@@ -37,7 +37,7 @@ class TermModel
 
     /**
      * @return \WP_Term
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentTermException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException
      */
     public function getTermInstance()
     {
@@ -54,7 +54,7 @@ class TermModel
 
     /**
      * @return bool
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentTermException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException
      */
     public function termExists()
     {
@@ -69,7 +69,7 @@ class TermModel
     }
 
     /**
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentTermException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException
      */
     public function getName()
     {

@@ -3,19 +3,19 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Tables;
+namespace PublishPress\Future\Modules\Expirator\Tables;
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 
 class ScheduledActionsTable extends \ActionScheduler_ListTable
 {
     /**
-     * @var \PublishPressFuture\Core\HookableInterface
+     * @var \PublishPress\Future\Core\HookableInterface
      */
     private $hooksFacade;
 

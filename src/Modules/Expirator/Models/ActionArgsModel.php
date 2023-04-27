@@ -3,9 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Models;
+namespace PublishPress\Future\Modules\Expirator\Models;
 
-use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class ActionArgsModel
 {
@@ -50,7 +50,7 @@ class ActionArgsModel
     private $enabled;
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
+     * @var \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel
      */
     private $expirationActionsModel;
 

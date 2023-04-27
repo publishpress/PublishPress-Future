@@ -4,7 +4,7 @@
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
  * Author: PublishPress
- * Version: 3.0.0-beta.5
+ * Version: 3.0.0-beta.6
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
@@ -19,7 +19,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         define('PUBLISHPRESS_FUTURE_LOADED', true);
 
         if (! defined('PUBLISHPRESS_FUTURE_VERSION')) {
-            define('PUBLISHPRESS_FUTURE_VERSION', '3.0.0-beta.5');
+            define('PUBLISHPRESS_FUTURE_VERSION', '3.0.0-beta.6');
         }
 
         // If the PHP version is not compatible, terminate the plugin execution.
@@ -32,14 +32,19 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             require_once $vendorAutoloadPath;
         }
 
-        add_action('plugins_loaded', function() {
+        // These libraries loads on plugins_loaded hook with priority 1 or lower, so this require can't be done inside a hook.
+        require_once PUBLISHPRESS_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
+        require_once PUBLISHPRESS_VENDOR_PATH . '/publishpress/psr-container/lib/include.php';
+        require_once PUBLISHPRESS_VENDOR_PATH . '/publishpress/pimple-pimple/lib/include.php';
+
+        // Priority should be higher than 1 so it is loaded after ActionScheduler is loaded (which loads on 1).
+        add_action('plugins_loaded', function () {
             require_once __DIR__ . '/src/Core/Autoloader.php';
             Autoloader::register();
-            
+
             $pluginFile = __FILE__;
 
             $services = require __DIR__ . '/services.php';
-
             $container = new Container($services);
 
             require_once __DIR__ . '/legacy/defines.php';
@@ -47,10 +52,8 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             require_once __DIR__ . '/legacy/functions.php';
             require_once __DIR__ . '/legacy/autoload.php';
 
-            require_once PUBLISHPRESS_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
-
             $container->get(ServicesAbstract::PLUGIN)->initialize();
-        }, 10, 0);
+        }, 2, 0);
 
     } catch (Exception $e) {
         $trace = $e->getTrace();

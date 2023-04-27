@@ -5,9 +5,9 @@
 
 namespace PublishPress\Future\Modules\Settings\Models;
 
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract;
 
 class SettingsPostTypesModel
 {

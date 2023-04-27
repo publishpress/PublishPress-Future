@@ -7,15 +7,15 @@ namespace PublishPress\Future\Modules\Expirator;
 
 
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
-use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
-use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Modules\Expirator\Controllers\BulkEditController;
-use PublishPressFuture\Modules\Expirator\Controllers\ExpirationController;
-use PublishPressFuture\Modules\Expirator\Controllers\ScheduledActionsController;
-use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPressFuture\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
+use PublishPress\Future\Modules\Expirator\Controllers\BulkEditController;
+use PublishPress\Future\Modules\Expirator\Controllers\ExpirationController;
+use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController;
+use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 class Module implements ModuleInterface
 {
@@ -30,7 +30,7 @@ class Module implements ModuleInterface
     private $site;
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Interfaces\CronInterface
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
      */
     private $cron;
 
@@ -60,7 +60,7 @@ class Module implements ModuleInterface
     private $currentUserModelFactory;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\RequestFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\RequestFacade
      */
     private $request;
 

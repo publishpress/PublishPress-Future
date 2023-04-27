@@ -3,10 +3,10 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\WooCommerce;
+namespace PublishPress\Future\Modules\WooCommerce;
 
 
-use PublishPressFuture\Framework\ModuleInterface;
+use PublishPress\Future\Framework\ModuleInterface;
 
 class Module implements ModuleInterface
 {

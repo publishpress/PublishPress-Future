@@ -5,9 +5,9 @@
 
 namespace PublishPress\Future\Modules\Settings;
 
-use PublishPressFuture\Core\DI\ServicesAbstract as Services;
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Core\DI\ServicesAbstract as Services;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 
 class SettingsFacade
 {

@@ -2,7 +2,7 @@
 namespace Framework\WordPress;
 
 use PDO;
-use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
+use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
 
 class DatabaseFacadeTest extends \Codeception\TestCase\WPTestCase
 {

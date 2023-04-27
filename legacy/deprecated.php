@@ -11,11 +11,6 @@ class_alias(
 );
 
 class_alias(
-    'PublishPress\\Future\\Core\\DI\\Container',
-    'PublishPressFuture\\Core\\DI\\Container'
-);
-
-class_alias(
     'PublishPress\\Future\\Core\\DI\\ServiceNotFoundException',
     'PublishPressFuture\\Core\\DI\\ServiceNotFoundException'
 );

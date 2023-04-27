@@ -7,8 +7,8 @@ namespace unit\Core\DI;
 
 use Codeception\Test\Feature\Stub;
 use Codeception\Test\Unit;
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServiceNotFoundException;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServiceNotFoundException;
 use stdClass;
 use UnitTester;
 

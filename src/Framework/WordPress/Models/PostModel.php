@@ -3,9 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Models;
+namespace PublishPress\Future\Framework\WordPress\Models;
 
-use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
+use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use WP_Post;
 
 class PostModel
@@ -46,7 +46,7 @@ class PostModel
      * @param string $newPostStatus
      *
      * @return bool
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function setPostStatus($newPostStatus)
     {
@@ -135,7 +135,7 @@ class PostModel
 
     /**
      * @return bool
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function postExists()
     {
@@ -146,7 +146,7 @@ class PostModel
 
     /**
      * @return WP_Post
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     private function getPostInstance()
     {

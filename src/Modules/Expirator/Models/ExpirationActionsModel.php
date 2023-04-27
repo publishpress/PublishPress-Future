@@ -3,20 +3,20 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Models;
+namespace PublishPress\Future\Modules\Expirator\Models;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\DeletePost;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryAdd;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategoryRemove;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostCategorySet;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToDraft;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\PostStatusToTrash;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\StickPost;
-use PublishPressFuture\Modules\Expirator\ExpirationActions\UnstickPost;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemove;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategorySet;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToDraft;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToTrash;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\StickPost;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\UnstickPost;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 
 class ExpirationActionsModel
 {
@@ -25,7 +25,7 @@ class ExpirationActionsModel
     const ACTION_LABEL_ATTRIBUTE = 'label';
 
     /**
-     * @var \PublishPressFuture\Core\HookableInterface
+     * @var \PublishPress\Future\Core\HookableInterface
      */
     private $hooks;
 
