@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Framework;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 interface InitializableInterface
 {
     /**

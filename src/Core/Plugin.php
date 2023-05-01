@@ -8,6 +8,8 @@ namespace PublishPress\Future\Core;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Plugin implements InitializableInterface
 {
     /**

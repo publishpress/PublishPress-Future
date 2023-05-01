@@ -12,6 +12,8 @@ use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Settings\Controllers\Controller;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Module implements ModuleInterface
 {
     /**

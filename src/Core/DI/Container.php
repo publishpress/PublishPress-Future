@@ -7,6 +7,8 @@ namespace PublishPress\Future\Core\DI;
 
 use Closure;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * PHP Dependency Injection Container PSR-11.
  * Based on code from https://dev.to/fadymr/php-create-dependency-injection-container-psr-11-like-php-di-or-pimple-128i

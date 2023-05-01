@@ -12,6 +12,8 @@ use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ExpirationScheduler implements SchedulerInterface
 {
     /**

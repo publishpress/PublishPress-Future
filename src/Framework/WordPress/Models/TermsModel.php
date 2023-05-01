@@ -6,6 +6,8 @@
 
 namespace PublishPress\Future\Framework\WordPress\Models;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class TermsModel
 {
     public function getTermNamesByIdAsString($termIds, $taxonomy)

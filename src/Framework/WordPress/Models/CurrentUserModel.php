@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Framework\WordPress\Models;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class CurrentUserModel extends UserModel
 {
     public function __construct()

@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Modules\Settings\Models;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class TaxonomiesModel
 {
     private function getPostTypes()

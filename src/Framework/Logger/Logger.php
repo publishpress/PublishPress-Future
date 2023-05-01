@@ -10,6 +10,8 @@ use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Logger implements LoggerInterface
 {
     /**

@@ -2,6 +2,8 @@
 
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
      * Schedules the single event.

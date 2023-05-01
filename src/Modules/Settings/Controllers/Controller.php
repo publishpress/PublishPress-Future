@@ -16,6 +16,8 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlacehol
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Controller implements InitializableInterface
 {
     /**

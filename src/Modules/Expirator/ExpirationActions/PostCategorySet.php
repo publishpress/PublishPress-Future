@@ -7,6 +7,8 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class PostCategorySet implements ExpirationActionInterface
 {
     const SERVICE_NAME = 'expiration.actions.post_category_set';

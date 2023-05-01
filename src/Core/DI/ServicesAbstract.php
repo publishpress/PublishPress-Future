@@ -5,6 +5,7 @@
 
 namespace PublishPress\Future\Core\DI;
 
+defined('ABSPATH') or die('Direct access not allowed.');
 abstract class ServicesAbstract
 {
     const PLUGIN = 'future.free/plugin';

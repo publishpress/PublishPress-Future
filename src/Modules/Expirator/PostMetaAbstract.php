@@ -2,6 +2,7 @@
 
 namespace PublishPress\Future\Modules\Expirator;
 
+defined('ABSPATH') or die('Direct access not allowed.');
 
 abstract class PostMetaAbstract
 {

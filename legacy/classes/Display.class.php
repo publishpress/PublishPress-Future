@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * The class that is responsible for all the displays.
  */

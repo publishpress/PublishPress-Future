@@ -5,6 +5,8 @@ use PublishPress\Future\Core\DI\ContainerNotInitializedException;
 use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 use PublishPress\Future\Modules\Debug\DebugInterface;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * The class that adds debug entries to the database.
  *

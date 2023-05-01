@@ -8,6 +8,8 @@ namespace PublishPress\Future\Modules\Debug;
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Debug implements DebugInterface
 {
     /**

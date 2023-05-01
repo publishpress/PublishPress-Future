@@ -2,6 +2,8 @@
 
 namespace PublishPress\Future\Modules\Expirator\Schemas;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ActionArgsSchema
 {
     protected const TABLE_NAME = 'ppfuture_actions_args';

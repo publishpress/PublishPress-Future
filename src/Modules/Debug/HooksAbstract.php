@@ -2,6 +2,8 @@
 
 namespace PublishPress\Future\Modules\Debug;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 abstract class HooksAbstract
 {
     const ACTION_DEBUG_LOG = 'publishpressfuture_debug_log';

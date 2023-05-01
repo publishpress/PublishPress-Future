@@ -17,6 +17,8 @@ use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Module implements ModuleInterface
 {
     /**

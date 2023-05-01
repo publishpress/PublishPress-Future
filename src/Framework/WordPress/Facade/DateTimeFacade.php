@@ -7,6 +7,8 @@ namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use DateTimeZone;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class DateTimeFacade
 {
     public function getTimezone(): DateTimeZone

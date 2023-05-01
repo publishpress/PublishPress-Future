@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class UnstickPost implements ExpirationActionInterface
 {
     const SERVICE_NAME = 'expiration.actions.unstick_post';

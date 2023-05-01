@@ -9,6 +9,8 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class BulkEditController implements InitializableInterface
 {
     /**

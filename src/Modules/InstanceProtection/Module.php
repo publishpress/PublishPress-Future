@@ -11,6 +11,8 @@ use PublishPress\Future\Framework\ModuleInterface;
 use PublishPressInstanceProtection\Config;
 use PublishPressInstanceProtection\InstanceChecker;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Module implements ModuleInterface
 {
     public function __construct(Paths $paths, $pluginSlug, $pluginName)

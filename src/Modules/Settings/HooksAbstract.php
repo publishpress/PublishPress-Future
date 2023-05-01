@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Modules\Settings;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 abstract class HooksAbstract
 {
     const ACTION_DELETE_ALL_SETTINGS = 'publishpressfuture_delete_settings';

@@ -12,6 +12,8 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ExpirablePostModel extends PostModel
 {
     /**

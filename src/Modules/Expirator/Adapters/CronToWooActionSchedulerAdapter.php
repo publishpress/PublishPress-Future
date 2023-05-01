@@ -8,6 +8,8 @@ namespace PublishPress\Future\Modules\Expirator\Adapters;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class CronToWooActionSchedulerAdapter implements CronInterface
 {
     public const SCHEDULED_ACTION_GROUP = 'publishpress-future';

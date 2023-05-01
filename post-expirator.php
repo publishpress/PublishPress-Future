@@ -14,6 +14,8 @@ use PublishPress\Future\Core\Autoloader;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
     try {
         define('PUBLISHPRESS_FUTURE_LOADED', true);

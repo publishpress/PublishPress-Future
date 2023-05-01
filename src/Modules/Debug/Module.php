@@ -11,6 +11,8 @@ use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Debug\Controllers\Controller;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Module implements ModuleInterface
 {
     /**

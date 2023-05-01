@@ -9,6 +9,8 @@ use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class SettingsFacade
 {
     /**

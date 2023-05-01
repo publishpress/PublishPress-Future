@@ -7,6 +7,8 @@ namespace PublishPress\Future\Core\DI;
 
 use InvalidArgumentException;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ServiceNotFoundException extends InvalidArgumentException
 {
     public function __construct($message = "", $code = 0, $previous = null)

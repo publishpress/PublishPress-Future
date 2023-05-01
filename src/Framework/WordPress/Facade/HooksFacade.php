@@ -10,6 +10,8 @@ use PublishPress\Future\Core\HookableInterface;
 use function PublishPress\Future\Framework\WordPress\add_action;
 use function PublishPress\Future\Framework\WordPress\add_filter;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class HooksFacade implements HookableInterface
 {
     /**

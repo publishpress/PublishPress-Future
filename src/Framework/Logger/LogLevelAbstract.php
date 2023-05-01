@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Framework\Logger;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * Describes log levels.
  */

@@ -18,6 +18,8 @@ use PublishPress\Future\Modules\Expirator\ExpirationActions\UnstickPost;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ExpirationActionsModel
 {
     const ACTION_NAME_ATTRIBUTE = 'name';

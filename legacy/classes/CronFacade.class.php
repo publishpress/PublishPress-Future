@@ -4,6 +4,8 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * Utility functions.
  */

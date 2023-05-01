@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 use PublishPress\Future\Core\DI\ContainerInterface;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HooksAbstract;

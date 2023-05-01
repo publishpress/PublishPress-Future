@@ -1,3 +1,6 @@
+<?php
+defined('ABSPATH') or die('Direct access not allowed.');
+?>
 <div class="pp-column-right">
     <div class="pp-advertisement-right-sidebar">
         <div class="advertisement-box-content postbox pp-advert">

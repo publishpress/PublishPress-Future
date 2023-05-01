@@ -9,6 +9,8 @@ namespace PublishPress\Future\Modules\VersionNotices;
 use PublishPress\Future\Core\Paths;
 use PublishPress\Future\Framework\ModuleInterface;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Module implements ModuleInterface
 {
     /**

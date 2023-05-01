@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Core;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 abstract class HooksAbstract
 {
     const ACTION_INIT = 'init';

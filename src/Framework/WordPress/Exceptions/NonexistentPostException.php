@@ -7,6 +7,8 @@ namespace PublishPress\Future\Framework\WordPress\Exceptions;
 
 use PublishPress\Future\Framework\BaseException;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class NonexistentPostException extends BaseException
 {
 

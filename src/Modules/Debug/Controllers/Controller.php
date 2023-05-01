@@ -11,6 +11,8 @@ use PublishPress\Future\Framework\Logger\LoggerInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Debug\HooksAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class Controller implements InitializableInterface
 {
     /**

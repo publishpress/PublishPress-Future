@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class_alias(
     'PublishPress\\Future\\Core\\DI\\Container',
     'PublishPressFuture\\Core\\DI\\Container'

@@ -8,6 +8,9 @@ namespace PublishPress\Future\Framework\WordPress\Models;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use WP_Post;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
+
 class PostModel
 {
     /**

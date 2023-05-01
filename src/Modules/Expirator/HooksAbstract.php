@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Modules\Expirator;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 abstract class HooksAbstract
 {
     const ACTION_ADMIN_INIT = 'admin_init';

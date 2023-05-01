@@ -12,6 +12,8 @@ use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class V30000ReplaceFooterPlaceholders implements MigrationInterface
 {
     public const HOOK = ExpiratorHooks::ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS;

@@ -18,6 +18,8 @@ use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ExpirationController implements InitializableInterface
 {
     /**

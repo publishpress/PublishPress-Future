@@ -12,6 +12,8 @@ use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapt
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ScheduledActionsTable extends \ActionScheduler_ListTable
 {
     /**

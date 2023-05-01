@@ -1,4 +1,5 @@
 <?php
+defined('ABSPATH') or die('Direct access not allowed.');
 
 echo '<select name="' . esc_attr($name) . '" id="' . esc_attr($id) . '"' . ($disabled === true ? ' disabled="disabled"' : '') . ' onchange="' . esc_attr($onchange) . '">';
 

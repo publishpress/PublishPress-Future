@@ -9,6 +9,8 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Settings\HooksAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class SettingsPostTypesModel
 {
     public function getPostTypes()

@@ -17,6 +17,8 @@ namespace PublishPress\Future {
 
     use const PHP_VERSION;
 
+    defined('ABSPATH') or die('Direct access not allowed.');
+
     $data = [
         'plugin_name' => 'PublishPress Future',
         'plugin_slug' => 'post-expirator',

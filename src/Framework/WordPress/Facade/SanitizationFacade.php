@@ -5,6 +5,7 @@
 
 namespace PublishPress\Future\Framework\WordPress\Facade;
 
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class SanitizationFacade
 {

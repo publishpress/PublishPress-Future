@@ -2,6 +2,8 @@
 
 use PublishPress\Future\Core\DI\ServicesAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 $defaultData = $container->get(ServicesAbstract::DEFAULT_DATA);
 
 if (! defined('POSTEXPIRATOR_VERSION')) {

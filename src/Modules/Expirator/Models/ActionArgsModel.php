@@ -7,6 +7,8 @@ namespace PublishPress\Future\Modules\Expirator\Models;
 
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ActionArgsModel
 {
     /**

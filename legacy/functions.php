@@ -15,6 +15,8 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsSchedu
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * Adds links to the plugin listing screen.
  *

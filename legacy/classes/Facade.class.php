@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * The class that acts as a facade for the plugin's core functions.
  *

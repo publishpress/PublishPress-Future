@@ -12,6 +12,8 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 class ScheduledActionsController implements InitializableInterface
 {
     /**
