@@ -16,6 +16,8 @@ use PublishPressFuturePro\Core\ServicesAbstract;
 use PublishPressFuturePro\Models\CustomStatusesModel;
 use PublishPressFuturePro\Models\SettingsModel;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 return [
     ServicesAbstract::PLUGIN_VERSION => PLUGIN_VERSION,
 

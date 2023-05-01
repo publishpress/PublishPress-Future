@@ -8,6 +8,7 @@
 
 namespace PublishPressFuturePro {
 
+    defined('ABSPATH') or die('No direct script access allowed.');
     function logCatchedException(\Throwable $e): void
     {
         if (! function_exists('error_log')) {

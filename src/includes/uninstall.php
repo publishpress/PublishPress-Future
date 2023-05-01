@@ -13,6 +13,8 @@ namespace PublishPressFuturePro {
     use PublishPressFuture\Core\DI\ServicesAbstract;
     use PublishPressFuturePro\Core\HooksAbstract;
 
+    defined('ABSPATH') or die('No direct script access allowed.');
+
     function uninstall()
     {
         // Deactivate the Pro plugin.

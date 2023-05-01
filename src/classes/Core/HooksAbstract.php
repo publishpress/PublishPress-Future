@@ -10,6 +10,8 @@ use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstractFr
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstractFree;
 use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooksAbstractFree;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 abstract class HooksAbstract
 {
     public const ACTION_INIT_PLUGIN = 'publishpressfuturepro_init_plugin';

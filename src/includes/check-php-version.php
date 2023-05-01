@@ -17,6 +17,8 @@ namespace PublishPressFuturePro {
 
     use const PHP_VERSION;
 
+    defined('ABSPATH') or die('No direct script access allowed.');
+
     $data = [
         'plugin_name' => 'PublishPress Future Pro',
         'plugin_slug' => 'publishpress-future-pro',

@@ -18,6 +18,8 @@ use PublishPressFuturePro\Models\SettingsModel;
 
 use function __;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 class CustomStatusesController implements ModuleInterface
 {
     public const ACTION_PREFIX = 'custom_status_';

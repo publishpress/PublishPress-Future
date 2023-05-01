@@ -11,6 +11,8 @@ use PublishPressFuturePro\Models\CustomStatusesModel;
 
 use function __;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 class PostStatusToCustomStatus implements ExpirationActionInterface
 {
     /**

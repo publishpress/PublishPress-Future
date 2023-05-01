@@ -11,6 +11,8 @@ use function current_user_can;
 use function wp_die;
 use function wp_verify_nonce;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 class EddIntegrationController implements ModuleInterface
 {
     /**

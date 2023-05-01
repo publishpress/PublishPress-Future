@@ -9,6 +9,8 @@
 
 namespace PublishPressFuturePro {
 
+    defined('ABSPATH') or die('No direct script access allowed.');
+
     if (
         defined('PUBLISHPRESS_FUTURE_BASE_PATH')
         && file_exists(PUBLISHPRESS_FUTURE_BASE_PATH . '/post-expirator.php')

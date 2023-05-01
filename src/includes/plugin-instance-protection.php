@@ -11,6 +11,7 @@ namespace PublishPressFuturePro {
     use PublishPressInstanceProtection\Config;
     use PublishPressInstanceProtection\InstanceChecker;
 
+    defined('ABSPATH') or die('No direct script access allowed.');
     const INSTANCE_PROTECTION_INCLUDE_FILE = VENDOR_DIR . '/publishpress/publishpress-instance-protection/include.php';
 
     if (file_exists(INSTANCE_PROTECTION_INCLUDE_FILE)) {

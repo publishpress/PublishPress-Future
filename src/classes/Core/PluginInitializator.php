@@ -9,6 +9,8 @@ use PublishPressFuture\Core\HookableInterface;
 use PublishPressFuture\Framework\InitializableInterface;
 use PublishPressFuture\Framework\ModuleInterface as ModuleInterface;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 class PluginInitializator implements InitializableInterface
 {
     /**

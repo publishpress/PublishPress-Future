@@ -4,6 +4,8 @@ namespace PublishPressFuturePro\Models;
 
 use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 class SettingsModel
 {
     /**

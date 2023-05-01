@@ -11,6 +11,7 @@ namespace PublishPressFuturePro {
 
     use PublishPressFuturePro\Core\HooksAbstract;
 
+    defined('ABSPATH') or die('No direct script access allowed.');
     function install()
     {
         do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);

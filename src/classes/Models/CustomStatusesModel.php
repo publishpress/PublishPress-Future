@@ -8,6 +8,8 @@ namespace PublishPressFuturePro\Models;
 
 use function get_post_stati;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 class CustomStatusesModel
 {
     public const OUTPUT_OBJECTS = 'objects';
