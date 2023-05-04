@@ -14,7 +14,8 @@ To release the plugin please make sure to check all the checkboxes below.
 - [ ] Create the release branch as `release-<version>` based on the development branch.
 - [ ] Make sure to directly merge or use Pull Requests to merge hotfixes or features branches into the release branch.
 - [ ] Enter the `dev-workspace` folder and run the command `/run` to enter to the continer. The next commands should run there.
-- [ ] Run `$ composer update --dry-run` and check if there is any relevant update. Check if you need to lock the current version for any dependency. No dev requirement should be added to the git repository. If any update is needed, run `$ composer update` and commit the changes.
+- [ ] Run composer update `--no-dev --dry-run` and check if there is any relevant update on any requirement. This won't change the code, just show a simulation of running the update command. Evaluate the need of releasing with this library updated, or if we can add that for a next release
+- [ ] If any update should be included on this release (from previous step) make sure to run the update command only for the specific dependeny: `composer update the/lib:version-constraint"`. Make sure to check compatibility with the plugin and what version we should be using. Check if you need to lock the current version for any dependency using exact version numbers instead of relative version constraints. Make sure to add any change of dependencies to the changelog.
 - [ ] Build JS files to production running `$ npm run build-js` and commit.
 - [ ] Run WP VIP scan to make sure no warnings or errors > 5 exists: `$ vendor/bin/phpcs`.
 - [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct.
