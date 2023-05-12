@@ -4,10 +4,12 @@
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
  * Author: PublishPress
- * Version: 3.0.0-beta.6
+ * Version: 3.0.0-beta.7
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
+ * Requires at least: 5.3
+ * Requires PHP: 7.2.5
  */
 
 use PublishPress\Future\Core\Autoloader;
@@ -21,12 +23,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         define('PUBLISHPRESS_FUTURE_LOADED', true);
 
         if (! defined('PUBLISHPRESS_FUTURE_VERSION')) {
-            define('PUBLISHPRESS_FUTURE_VERSION', '3.0.0-beta.6');
-        }
-
-        // If the PHP version is not compatible, terminate the plugin execution.
-        if (! include_once __DIR__ . '/src/check-php-version.php') {
-            return;
+            define('PUBLISHPRESS_FUTURE_VERSION', '3.0.0-beta.7');
         }
 
         $vendorAutoloadPath = __DIR__ . '/vendor/autoload.php';
@@ -35,9 +32,10 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         }
 
         // These libraries loads on plugins_loaded hook with priority 1 or lower, so this require can't be done inside a hook.
-        require_once PUBLISHPRESS_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
-        require_once PUBLISHPRESS_VENDOR_PATH . '/publishpress/psr-container/lib/include.php';
-        require_once PUBLISHPRESS_VENDOR_PATH . '/publishpress/pimple-pimple/lib/include.php';
+        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/publishpress/psr-container/lib/include.php';
+        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/publishpress/pimple-pimple/lib/include.php';
+        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/publishpress/wordpress-version-notices/src/include.php';
+        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
 
         // Priority should be higher than 1 so it is loaded after ActionScheduler is loaded (which loads on 1).
         add_action('plugins_loaded', function () {
