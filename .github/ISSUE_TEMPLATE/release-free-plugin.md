@@ -1,5 +1,5 @@
 ---
-name: Release (team only)
+name: Release the Free version (team only)
 about: Describes default checklist for the plugin's release process.
 title: Release PublishPress Future v[VERSION]
 labels: release
