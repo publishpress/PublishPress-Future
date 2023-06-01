@@ -2,7 +2,6 @@
   "name": "post-expirator",
   "version": "2.7.0",
   "description": "post-expirator",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/publishpress/PublishPress-Future.git"
