@@ -77,7 +77,26 @@
     ],
     "post-update-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
-    ]
+    ],
+    "build-js:dev": "wp-scripts build --mode development",
+    "build-js:watch": "wp-scripts build --mode development --watch",
+    "build-js": "wp-scripts build --mode production",
+    "tests:start": "node /project/dev-workspace/docker/scripts/prompt-tests-php-version.js dev-workspace/docker/scripts/pptests php{{VERSION}} start",
+    "tests:stop": "node /project/dev-workspace/docker/scripts/prompt-tests-php-version.js dev-workspace/docker/scripts/pptests php{{VERSION}} stop",
+    "tests:brun": "node /project/dev-workspace/docker/scripts/prompt-tests-php-version.js dev-workspace/docker/scripts/pptests php{{VERSION}} brun",
+    "tests:run": "node /project/dev-workspace/docker/scripts/prompt-tests-php-version.js dev-workspace/docker/scripts/pptests php{{VERSION}} run",
+    "tests:brun80": "dev-workspace/docker/scripts/pptests php8.0 brun",
+    "tests:run80": "dev-workspace/docker/scripts/pptests php8.0 run",
+    "tests:ip": "dev-workspace/docker/scripts/pptests php8.0 ip",
+    "build": "/project/dev-workspace/docker/scripts/ppbuild build",
+    "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
+    "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
+    "get-version": "/project/dev-workspace/docker/scripts/ppbuild version",
+    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
+    "make-mo": "wp i18n make-mo ./languages ./languages",
+    "gh-cleanup-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
+    "check:lint": "phplint",
+    "check:phpcs": "phpcs"
   },
   "extra": {
     "plugin-slug": "post-expirator",
