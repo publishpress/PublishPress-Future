@@ -121,7 +121,8 @@ $debug = $container->get(ServicesAbstract::DEBUG);
                                                 echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
 
                                                 $container = Container::getInstance();
-                                                $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+                                                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+                                                $postModel = $factory($post->ID);
                                                 $attributes = $postModel->getExpirationDataAsArray();
 
                                                 echo ': <span class="post-expiration-attributes">';

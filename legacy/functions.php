@@ -201,7 +201,8 @@ function postexpirator_show_value($column_name)
     // get the attributes that quick edit functionality requires
     // and save it as a JSON encoded HTML attribute
     $container = Container::getInstance();
-    $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+    $postModel = $factory($post->ID);
 
     PostExpirator_Display::getInstance()->render_template('expire-column', [
         'id' => $post->ID,
@@ -389,7 +390,8 @@ add_action('add_meta_boxes', 'postexpirator_meta_custom');
 function postexpirator_meta_box($post)
 {
     $container = Container::getInstance();
-    $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+    $postModel = $factory($post->ID);
 
     $postMetaDate = $postModel->getExpirationDate();
 
@@ -561,7 +563,8 @@ function postexpirator_update_post_meta($id)
 
     $container = Container::getInstance();
     $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-    $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($id);
+    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+    $postModel = $factory($id);
     $scheduler = $container->get(ServicesAbstract::EXPIRATION_SCHEDULER);
 
     $postTypeDefaults = $settingsFacade->getPostTypeDefaults($posttype);
@@ -729,7 +732,8 @@ function postexpirator_shortcode($attrs)
     global $post;
 
     $container = Container::getInstance();
-    $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+    $postModel = $factory($post->ID);
 
     $enabled = $postModel->isExpirationEnabled();
     $expirationDateTs = $postModel->getExpirationDate();
@@ -790,7 +794,8 @@ function postexpirator_get_footer_text($useDemoText =  false)
         global $post;
 
         $container = Container::getInstance();
-        $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+        $postModel = $factory($post->ID);
 
         $expirationDate = $postModel->getExpirationDate();
     }
@@ -849,7 +854,8 @@ function postexpirator_add_footer($text)
     }
 
     $container = Container::getInstance();
-    $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post->ID);
+    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+    $postModel = $factory($post->ID);
 
     $enabled = $postModel->isExpirationEnabled();
 
@@ -1354,7 +1360,8 @@ function postexpirator_date_save_bulk_edit()
     $container = Container::getInstance();
 
     foreach ($postIds as $postId) {
-        $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($postId);
+        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+        $postModel = $factory($postId);
 
         $postExpirationDate = $postModel->getExpirationDate();
 

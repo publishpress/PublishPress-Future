@@ -112,7 +112,9 @@ class ExpirationScheduler implements SchedulerInterface
             return;
         }
 
-        $actionArgsModel = ($this->actionArgsModelFactory)();
+        $factory = $this->actionArgsModelFactory;
+
+        $actionArgsModel = $factory();
         $actionArgsModel->setCronActionId($actionId)
             ->setPostId($postId)
             ->setScheduledDateFromUnixTime($timestamp)

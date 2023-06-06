@@ -17,7 +17,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $iconTitle = '';
 
     $container = Container::getInstance();
-    $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($id);
+    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+    $postModel = $factory($id);
 
     $expirationEnabled = $postModel->isExpirationEnabled();
     $expirationDate = $postModel->getExpirationDate();

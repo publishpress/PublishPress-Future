@@ -263,7 +263,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     private function render_expiration_hook_action(array $row)
     {
         $container = Container::getInstance();
-        $argsModel = ($container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY))();
+        $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
+
+        $argsModel = $argsModelFactory();
         $argsModel->loadByActionId($row['ID']);
 
         return esc_html($argsModel->getActionLabel());
@@ -299,7 +301,8 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     private function render_expiration_hook_args(array $row)
     {
         $container = Container::getInstance();
-        $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($row['args']['postId']);
+        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+        $postModel = $factory($row['args']['postId']);
 
         $columnHtml = sprintf(
             esc_html__('%s: [%d] %s%s%s', 'post-expirator'),
@@ -312,7 +315,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         $taxonomyActions = [ExpirationActionsAbstract::POST_CATEGORY_SET, ExpirationActionsAbstract::POST_CATEGORY_REMOVE, ExpirationActionsAbstract::POST_CATEGORY_ADD];
 
-        $argsModel = ($container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY))();
+        $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
+
+        $argsModel = $argsModelFactory();
         $argsModel->loadByActionId($row['ID']);
 
         if (in_array($argsModel->getAction(), $taxonomyActions)) {

@@ -117,7 +117,8 @@ class ScheduledActionsController implements InitializableInterface
 
     public function onActionSchedulerDeletedAction($actionId)
     {
-        $actionArgsModel = ($this->actionArgsModelFactory)();
+        $factory = $this->actionArgsModelFactory;
+        $actionArgsModel = $factory();
         if ($actionArgsModel->loadByActionId($actionId)) {
             $actionArgsModel->delete();
         };
@@ -125,7 +126,8 @@ class ScheduledActionsController implements InitializableInterface
 
     public function onActionSchedulerDisableAction($actionId)
     {
-        $actionArgsModel = ($this->actionArgsModelFactory)();
+        $factory = $this->actionArgsModelFactory;
+        $actionArgsModel = $factory();
         if ($actionArgsModel->loadByActionId($actionId)) {
             $actionArgsModel->setEnabled(false)->save();
         };
@@ -137,7 +139,8 @@ class ScheduledActionsController implements InitializableInterface
     private function getListTable()
     {
         if (null === $this->listTable) {
-            $this->listTable = ($this->scheduledActionsTableFactory)();
+            $factory = $this->scheduledActionsTableFactory;
+            $this->listTable = $factory();
             $this->listTable->process_actions();
         }
 

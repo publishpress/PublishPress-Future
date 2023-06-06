@@ -143,7 +143,7 @@ class ExpirablePostModel extends PostModel
         $this->termModelFactory = $termModelFactory;
         $this->expirationActionFactory = $expirationActionFactory;
 
-        $this->actionArgsModel = ($actionArgsModelFactory)();
+        $this->actionArgsModel = $actionArgsModelFactory();
         $this->actionArgsModel->loadByPostId($this->postId);
     }
 
@@ -415,7 +415,8 @@ class ExpirablePostModel extends PostModel
     public function getExpirationAction()
     {
         if (empty($this->expirationActionInstance)) {
-            $actionInstance = ($this->expirationActionFactory)(
+            $factory = $this->expirationActionFactory;
+            $actionInstance = $factory(
                 $this->getExpirationType(),
                 $this
             );

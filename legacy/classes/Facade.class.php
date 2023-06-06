@@ -158,7 +158,8 @@ class PostExpirator_Facade
                 break;
             case PostMetaAbstract::EXPIRATION_TIMESTAMP:
                 $container = Container::getInstance();
-                $postModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($post_id);
+                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+                $postModel = $factory($post_id);
 
                 do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post_id, $meta_value, $postModel->getExpirationDataAsArray());
 
@@ -177,7 +178,9 @@ class PostExpirator_Facade
     public static function get_expire_principles($postId)
     {
         $container = Container::getInstance();
-        $actionArgsModel = ($container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY))();
+        $factory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
+
+        $actionArgsModel = $factory();
 
         $actionArgsModel->loadByPostId($postId);
         $args = $actionArgsModel->getArgs();
@@ -274,7 +277,8 @@ class PostExpirator_Facade
     {
         $postId = $request->get_param('postId');
         $container = Container::getInstance();
-        $expirablePostModel = ($container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY))($postId);
+        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+        $expirablePostModel = $factory($postId);
 
         $data = $expirablePostModel->getExpirationDataAsArray();
 

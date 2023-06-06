@@ -86,7 +86,8 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
         foreach ($events as $eventData) {
             $postId = $eventData['args'][0];
 
-            $postModel = ($this->expirablePostModelFactory)($postId);
+            $factory = $this->expirablePostModelFactory;
+            $postModel = $factory($postId);
 
             $expireType = $postModel->getMeta('_expiration-date-type', true);
             $expirationEnabled = $postModel->getMeta('_expiration-date-status', true) === 'saved';
