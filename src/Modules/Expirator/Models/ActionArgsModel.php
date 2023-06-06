@@ -63,7 +63,7 @@ class ActionArgsModel
         $this->expirationActionsModel = $expirationActionsModel;
     }
 
-    private function setAttributesFromRow($row): void
+    private function setAttributesFromRow($row)
     {
         if (is_object($row)) {
             $this->id = $row->id;
@@ -76,7 +76,11 @@ class ActionArgsModel
         }
     }
 
-    public function load(int $id): bool
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function load($id)
     {
         global $wpdb;
 
@@ -96,7 +100,11 @@ class ActionArgsModel
         return is_object($row);
     }
 
-    public function loadByActionId(int $actionid): bool
+    /**
+     * @param int $actionid
+     * @return bool
+     */
+    public function loadByActionId($actionid)
     {
         global $wpdb;
 
@@ -118,8 +126,11 @@ class ActionArgsModel
 
     /**
      * Load the enabled action by post ID. We can have only one enabled per post.
+     *
+     * @param int $postId
+     * @return bool
      */
-    public function loadByPostId(int $postId): bool
+    public function loadByPostId($postId)
     {
         global $wpdb;
 
@@ -139,7 +150,7 @@ class ActionArgsModel
         return is_object($row);
     }
 
-    public function save(): void
+    public function save()
     {
         global $wpdb;
 
@@ -162,7 +173,10 @@ class ActionArgsModel
         );
     }
 
-    public function add(): int
+    /**
+     * @return int
+     */
+    public function add()
     {
         global $wpdb;
 
@@ -181,7 +195,11 @@ class ActionArgsModel
         return $wpdb->insert_id;
     }
 
-    public function disableAllForPost(int $postId = null): void
+    /**
+     * @param int|null $postId
+     * @return void
+     */
+    public function disableAllForPost($postId = null)
     {
         global $wpdb;
 
@@ -201,7 +219,7 @@ class ActionArgsModel
         );
     }
 
-    public function delete(): void
+    public function delete()
     {
         global $wpdb;
 
@@ -214,7 +232,10 @@ class ActionArgsModel
         );
     }
 
-    public function getId(): int
+    /**
+     * @return int
+     */
+    public function getId()
     {
         return absint($this->id);
     }
@@ -222,7 +243,7 @@ class ActionArgsModel
     /**
      * @return int
      */
-    public function getCronActionId(): int
+    public function getCronActionId()
     {
         return absint($this->cronActionId);
     }
@@ -231,7 +252,7 @@ class ActionArgsModel
      * @param int $cronActionId
      * @return ActionArgsModel
      */
-    public function setCronActionId(int $cronActionId): ActionArgsModel
+    public function setCronActionId($cronActionId)
     {
         $this->cronActionId = $cronActionId;
         return $this;
@@ -241,7 +262,7 @@ class ActionArgsModel
     /**
      * @return int
      */
-    public function getPostId(): int
+    public function getPostId()
     {
         return (int)$this->postId;
     }
@@ -250,7 +271,7 @@ class ActionArgsModel
      * @param int $postId
      * @return ActionArgsModel
      */
-    public function setPostId(int $postId): ActionArgsModel
+    public function setPostId($postId)
     {
         $this->postId = $postId;
         return $this;
@@ -259,27 +280,36 @@ class ActionArgsModel
     /**
      * @return array
      */
-    public function getArgs(): array
+    public function getArgs()
     {
         return (array)$this->args;
     }
 
-    public function getAction(): string
+    public function getAction()
     {
-        return $this->args['expireType'] ?? '';
+        return isset($this->args['expireType']) ? $this->args['expireType'] : '';
     }
 
-    public function getActionLabel(): string
+    /**
+     * @return string
+     */
+    public function getActionLabel()
     {
         return $this->expirationActionsModel->getLabelForAction($this->getAction());
     }
 
-    public function getTaxonomyTerms(): array
+    /**
+     * @return array
+     */
+    public function getTaxonomyTerms()
     {
-        return $this->args['category'] ?? [];
+        return isset($this->args['category']) ? $this->args['category'] : [];
     }
 
-    public function getTaxonomyTermsNames(): array
+    /**
+     * @return array
+     */
+    public function getTaxonomyTermsNames()
     {
         $terms = $this->getTaxonomyTerms();
 
@@ -298,7 +328,7 @@ class ActionArgsModel
      * @param array $args
      * @return ActionArgsModel
      */
-    public function setArgs(array $args): ActionArgsModel
+    public function setArgs($args)
     {
         $this->args = $args;
         return $this;
@@ -307,7 +337,7 @@ class ActionArgsModel
     /**
      * @return string
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt()
     {
         return (string)$this->createdAt;
     }
@@ -316,7 +346,7 @@ class ActionArgsModel
      * @param string $createdAt
      * @return ActionArgsModel
      */
-    public function setCreatedAt(string $createdAt): ActionArgsModel
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -325,18 +355,25 @@ class ActionArgsModel
     /**
      * @return string
      */
-    public function getScheduledDate(): string
+    public function getScheduledDate()
     {
         return (string)$this->scheduledDate;
     }
 
-    public function setEnabled(bool $enabled): ActionArgsModel
+    /**
+     * @param bool $enabled
+     * @return $this
+     */
+    public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
         return $this;
     }
 
-    public function getEnabled(): bool
+    /**
+     * @return bool
+     */
+    public function getEnabled()
     {
         return (bool)$this->enabled;
     }
@@ -344,7 +381,7 @@ class ActionArgsModel
     /**
      * @return int
      */
-    public function getScheduledDateAsUnixTime(): int
+    public function getScheduledDateAsUnixTime()
     {
         return date('U', strtotime($this->getScheduledDate()));
     }
@@ -353,7 +390,7 @@ class ActionArgsModel
      * @param string $scheduledDate
      * @return ActionArgsModel
      */
-    public function setScheduledDate(string $scheduledDate): ActionArgsModel
+    public function setScheduledDate($scheduledDate)
     {
         $this->scheduledDate = $scheduledDate;
         return $this;
@@ -363,7 +400,7 @@ class ActionArgsModel
      * @param int $scheduledDate
      * @return ActionArgsModel
      */
-    public function setScheduledDateFromUnixTime(int $scheduledDate): ActionArgsModel
+    public function setScheduledDateFromUnixTime($scheduledDate)
     {
         $this->scheduledDate = date('Y-m-d H:i:s', $scheduledDate);
         return $this;

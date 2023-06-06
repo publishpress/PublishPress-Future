@@ -111,6 +111,6 @@ class ExpirationActionsModel
     {
         $actions = $this->getActions();
 
-        return $actions[$actionName] ?? '';
+        return isset($actions[$actionName]) ? $actions[$actionName] : '';
     }
 }

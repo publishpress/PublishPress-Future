@@ -74,7 +74,10 @@ class PostStatusToPrivate implements ExpirationActionInterface
         return $result;
     }
 
-    public static function getLabel(): string
+    /**
+     * @return string
+     */
+    public static function getLabel()
     {
         $newPostStatus = get_post_status_object('private');
 

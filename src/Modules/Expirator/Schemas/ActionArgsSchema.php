@@ -6,9 +6,12 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ActionArgsSchema
 {
-    protected const TABLE_NAME = 'ppfuture_actions_args';
+    const TABLE_NAME = 'ppfuture_actions_args';
 
-    public static function getTableName(): string
+    /**
+     * @return string
+     */
+    public static function getTableName()
     {
         global $wpdb;
         return $wpdb->prefix . self::TABLE_NAME;
@@ -23,7 +26,7 @@ class ActionArgsSchema
         return $table === $tableName;
     }
 
-    public static function createTableIfNotExists(): void
+    public static function createTableIfNotExists()
     {
         if (self::tableExists(self::getTableName())) {
             return;
@@ -55,7 +58,7 @@ class ActionArgsSchema
         dbDelta($sql);
     }
 
-    public static function dropTableIfExists(): void
+    public static function dropTableIfExists()
     {
         if (! self::tableExists(self::getTableName())) {
             return;

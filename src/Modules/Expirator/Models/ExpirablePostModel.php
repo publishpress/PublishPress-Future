@@ -166,7 +166,7 @@ class ExpirablePostModel extends PostModel
         if (empty($this->expirationType)) {
             $options = $this->getExpirationOptions();
 
-            $this->expirationType = $options['expireType'] ?? '';
+            $this->expirationType = isset($options['expireType']) ? $options['expireType'] : '';
 
             $postType = $this->getPostType();
 
@@ -210,12 +210,12 @@ class ExpirablePostModel extends PostModel
     /**
      * @return int[]
      */
-    public function getExpirationCategoryIDs(): array
+    public function getExpirationCategoryIDs()
     {
         if (empty($this->expirationCategories)) {
             $options = $this->getExpirationOptions();
 
-            $this->expirationCategories = $options['category'] ?? [];
+            $this->expirationCategories = isset($options['category']) ? $options['category'] : [];
             $this->expirationCategories = (array)$this->expirationCategories;
 
             foreach ($this->expirationCategories as &$categoryID) {
@@ -231,7 +231,7 @@ class ExpirablePostModel extends PostModel
     /**
      * @return string[]
      */
-    public function getExpirationCategoryNames(): array
+    public function getExpirationCategoryNames()
     {
         $categories = $this->getExpirationCategoryIDs();
 
@@ -259,7 +259,7 @@ class ExpirablePostModel extends PostModel
         if (empty($this->expirationTaxonomy)) {
             $options = $this->getExpirationOptions();
 
-            $this->expirationTaxonomy = $options['categoryTaxonomy'] ?? '';
+            $this->expirationTaxonomy = isset($options['categoryTaxonomy']) ? $options['categoryTaxonomy'] : '';
 
             // Default value.
             if (empty($this->expirationTaxonomy)) {
@@ -391,7 +391,11 @@ class ExpirablePostModel extends PostModel
         return true;
     }
 
-    private function logOnAction(string $message)
+    /**
+     * @param string $message
+     * @return void
+     */
+    private function logOnAction($message)
     {
         $log = \ActionScheduler_Logger::instance();
         $log->log($this->actionArgsModel->getCronActionId(), $message);

@@ -1,8 +1,8 @@
 <?php
 
 use Codeception\Util\Shared\Asserts;
-use PublishPress\Psr\Container\ContainerExceptionInterface;
-use PublishPress\Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\WordPress\Models\PostModel;

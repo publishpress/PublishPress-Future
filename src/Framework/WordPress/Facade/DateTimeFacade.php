@@ -11,19 +11,33 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class DateTimeFacade
 {
-    public function getTimezone(): DateTimeZone
+    /**
+     * @return \DateTimeZone
+     */
+    public function getTimezone()
     {
         return \wp_timezone();
     }
 
-    public function getLocalizedDate($format, $timestamp = null, $timezone = null): ?string
+    /**
+     * @param $format
+     * @param $timestamp
+     * @param $timezone
+     * @return string|null
+     */
+    public function getLocalizedDate($format, $timestamp = null, $timezone = null)
     {
         $date = \wp_date($format, $timestamp, $timezone);
 
         return false === $date ? null : $date;
     }
 
-    public function getWpDate(string $format, ?int $timestamp): ?string
+    /**
+     * @param string $format
+     * @param int|null $timestamp
+     * @return string|null
+     */
+    public function getWpDate($format, $timestamp)
     {
         $gmtTime = gmdate('Y-m-d H:i:s', $timestamp);
         $timezone = $this->getTimezone();

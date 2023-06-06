@@ -131,7 +131,10 @@ class ScheduledActionsController implements InitializableInterface
         };
     }
 
-    private function getListTable(): ScheduledActionsTable
+    /**
+     * @return \PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable
+     */
+    private function getListTable()
     {
         if (null === $this->listTable) {
             $this->listTable = ($this->scheduledActionsTableFactory)();

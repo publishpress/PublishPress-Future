@@ -106,7 +106,7 @@ class Container implements ContainerInterface
      *
      * @return bool
      */
-    public function has(string $id): bool
+    public function has($id)
     {
         return array_key_exists($id, $this->services)
             || array_key_exists($id, $this->resolvedEntries);

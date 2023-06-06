@@ -97,7 +97,10 @@ class PostCategorySet implements ExpirationActionInterface
         return ! $resultIsError;
     }
 
-    public static function getLabel(): string
+    /**
+     * @return string
+     */
+    public static function getLabel()
     {
         return __('Remove all current terms and add new terms', 'post-expirator');
     }

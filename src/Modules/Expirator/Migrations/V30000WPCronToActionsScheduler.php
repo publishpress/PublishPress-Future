@@ -16,7 +16,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class V30000WPCronToActionsScheduler implements MigrationInterface
 {
-    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_WPCRON_EXPIRATIONS;
+    const HOOK = ExpiratorHooks::ACTION_MIGRATE_WPCRON_EXPIRATIONS;
 
     /**
      * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
@@ -48,7 +48,10 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
         $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
-    private function getLegacyScheduledActions(): array
+    /**
+     * @return array
+     */
+    private function getLegacyScheduledActions()
     {
         $cron = _get_cron_array();
         $events = [];
@@ -76,7 +79,7 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
         return $events;
     }
 
-    public function migrate(): void
+    public function migrate()
     {
         $events = $this->getLegacyScheduledActions();
 

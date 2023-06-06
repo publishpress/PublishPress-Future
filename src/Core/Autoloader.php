@@ -16,7 +16,7 @@ class Autoloader
      *
      * @return void
      */
-    public static function register(): void
+    public static function register()
     {
         spl_autoload_register([new self(), 'autoload']);
     }
@@ -28,7 +28,7 @@ class Autoloader
      *
      * @return void
      */
-    public static function autoload(string $class): void
+    public static function autoload($class)
     {
         // base directory for the namespace prefix
         $baseDir = __DIR__ . '/../';

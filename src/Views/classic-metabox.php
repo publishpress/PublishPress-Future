@@ -134,7 +134,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
     $taxonomies = get_object_taxonomies($post->post_type, 'object');
     $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
     $keys = array_keys($taxonomies);
-    $taxonomyId = $defaultsOption['taxonomy'] ?? $keys[0];
+    $taxonomyId = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
 
     echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
 

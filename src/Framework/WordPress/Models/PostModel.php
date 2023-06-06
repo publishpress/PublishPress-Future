@@ -82,7 +82,7 @@ class PostModel
      * @param mixed $metaValue
      * @return false|int
      */
-    public function addMeta(string $metaKey, $metaValue = null)
+    public function addMeta($metaKey, $metaValue = null)
     {
         return add_post_meta($this->getPostId(), $metaKey, $metaValue);
     }
@@ -257,7 +257,10 @@ class PostModel
         return true;
     }
 
-    public function getPostTypeSingularLabel(): string
+    /**
+     * @return string
+     */
+    public function getPostTypeSingularLabel()
     {
         $postTypeObj = get_post_type_object($this->getPostType());
 

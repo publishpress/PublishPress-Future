@@ -43,11 +43,22 @@ interface CronInterface
     public function postHasScheduledActions($postId);
 
     /**
+     * @param string $hook
      * @return array
      */
-    public function getScheduledActions(string $hook): array;
+    public function getScheduledActions($hook);
 
-    public function enqueueAsyncAction(string $action, array $args = [], bool $unique = false): int;
+    /**
+     * @param string $action
+     * @param array $args
+     * @param bool $unique
+     * @return int
+     */
+    public function enqueueAsyncAction($action, $args = [], $unique = false);
 
-    public function cancelActionsByGroup(string $group);
+    /**
+     * @param string $group
+     * @return mixed
+     */
+    public function cancelActionsByGroup($group);
 }

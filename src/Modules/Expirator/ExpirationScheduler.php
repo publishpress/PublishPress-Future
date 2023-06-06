@@ -78,7 +78,10 @@ class ExpirationScheduler implements SchedulerInterface
         $this->actionArgsModelFactory = $actionArgsModelFactory;
     }
 
-    public function schedule(int $postId, int $timestamp, array $opts): void
+    /**
+     * @inheritDoc
+     */
+    public function schedule($postId, $timestamp, $opts)
     {
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_SCHEDULE, $postId, $timestamp, $opts);
 
@@ -138,7 +141,11 @@ class ExpirationScheduler implements SchedulerInterface
         }
     }
 
-    public function postIsScheduled($postId): bool
+    /**
+     * @param $postId
+     * @return bool
+     */
+    public function postIsScheduled($postId)
     {
         return $this->cron->postHasScheduledActions($postId);
     }

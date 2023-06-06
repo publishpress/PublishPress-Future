@@ -16,7 +16,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class V30000ReplaceFooterPlaceholders implements MigrationInterface
 {
-    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS;
+    const HOOK = ExpiratorHooks::ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS;
 
     private $hooksFacade;
     /**
@@ -38,7 +38,7 @@ class V30000ReplaceFooterPlaceholders implements MigrationInterface
         $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
     }
 
-    public function migrate(): void
+    public function migrate()
     {
         // FIXME: Add a flag to know if the migration was already executed. Add a way to force the migration.
         // FIXME: Use the settings facade to get the option, not it directly.

@@ -57,7 +57,11 @@ class OptionsFacade
         return \add_option($optionName, $newValue);
     }
 
-    public function getOptionsWithPrefix(string $prefix)
+    /**
+     * @param string $prefix
+     * @return array
+     */
+    public function getOptionsWithPrefix($prefix)
     {
         global $wpdb;
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching

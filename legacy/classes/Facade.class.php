@@ -172,8 +172,9 @@ class PostExpirator_Facade
      * Keeps in mind the old (classic editor) and new (gutenberg) structure.
      *
      * @deprecated 3.0.0
+     * @return array
      */
-    public static function get_expire_principles($postId): array
+    public static function get_expire_principles($postId)
     {
         $container = Container::getInstance();
         $actionArgsModel = ($container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY))();
@@ -182,9 +183,9 @@ class PostExpirator_Facade
         $args = $actionArgsModel->getArgs();
 
         return array(
-            'expireType' => $args['expireType'] ?? '',
-            'category' => $args['category'] ?? [],
-            'categoryTaxonomy' => $args['categoryTaxonomy'] ?? '',
+            'expireType' => isset($args['expireType']) ? $args['expireType'] : '',
+            'category' => isset($args['category']) ? $args['category'] : [],
+            'categoryTaxonomy' => isset($args['categoryTaxonomy']) ? $args['categoryTaxonomy'] : '',
             'enabled' => true,
         );
     }

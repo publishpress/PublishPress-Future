@@ -12,11 +12,14 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class CronToWooActionSchedulerAdapter implements CronInterface
 {
-    public const SCHEDULED_ACTION_GROUP = 'publishpress-future';
+    const SCHEDULED_ACTION_GROUP = 'publishpress-future';
 
-    public const IDENTIFIER = 'woo-action-scheduler';
+    const IDENTIFIER = 'woo-action-scheduler';
 
-    public function getIdentifier(): string
+    /**
+     * @return string
+     */
+    public function getIdentifier()
     {
         return self::IDENTIFIER;
     }
@@ -40,17 +43,25 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     /**
      * @inheritDoc
      */
-    public function scheduleSingleAction($timestamp, $action, $args = []): int
+    public function scheduleSingleAction($timestamp, $action, $args = [])
     {
         return as_schedule_single_action($timestamp, $action, $args, self::SCHEDULED_ACTION_GROUP);
     }
 
-    public function postHasScheduledActions($postId): bool
+    /**
+     * @param $postId
+     * @return bool
+     */
+    public function postHasScheduledActions($postId)
     {
         return as_has_scheduled_action(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
     }
 
-    public function getScheduledActions(string $hook): array
+    /**
+     * @param string $hook
+     * @return array
+     */
+    public function getScheduledActions($hook)
     {
         $args = [
             'group' => self::SCHEDULED_ACTION_GROUP,
@@ -65,12 +76,22 @@ class CronToWooActionSchedulerAdapter implements CronInterface
         return as_get_scheduled_actions($args);
     }
 
-    public function enqueueAsyncAction(string $action, array $args = [], bool $unique = false): int
+    /**
+     * @param $action
+     * @param array $args
+     * @param $unique
+     * @return int
+     */
+    public function enqueueAsyncAction($action, $args = [], $unique = false)
     {
         return as_enqueue_async_action($action, $args, self::SCHEDULED_ACTION_GROUP, $unique);
     }
 
-    public function cancelActionsByGroup(string $group)
+    /**
+     * @param string $group
+     * @return void
+     */
+    public function cancelActionsByGroup($group)
     {
         as_unschedule_all_actions('', [], $group);
     }

@@ -66,7 +66,10 @@ class DeletePost implements ExpirationActionInterface
         return $result;
     }
 
-    public static function getLabel(): string
+    /**
+     * @return string
+     */
+    public static function getLabel()
     {
         return __('Delete', 'post-expirator');
     }

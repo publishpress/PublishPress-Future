@@ -9,7 +9,7 @@
  * Text Domain: post-expirator
  * Domain Path: /languages
  * Requires at least: 5.3
- * Requires PHP: 7.2.5
+ * Requires PHP: 5.6
  */
 
 use PublishPress\Future\Core\Autoloader;
@@ -32,14 +32,14 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         }
 
         // These libraries loads on plugins_loaded hook with priority 1 or lower, so this require can't be done inside a hook.
-        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/publishpress/psr-container/lib/include.php';
-        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/publishpress/pimple-pimple/lib/include.php';
-        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/publishpress/wordpress-version-notices/src/include.php';
+//        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/publishpress/wordpress-version-notices/src/include.php';
         require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
 
         // Priority should be higher than 1 so it is loaded after ActionScheduler is loaded (which loads on 1).
         add_action('plugins_loaded', function () {
-            require_once __DIR__ . '/src/Core/Autoloader.php';
+            if (! class_exists('PublishPress\Future\Core\Autoloader')) {
+                require_once __DIR__ . '/src/Core/Autoloader.php';
+            }
             Autoloader::register();
 
             $pluginFile = __FILE__;

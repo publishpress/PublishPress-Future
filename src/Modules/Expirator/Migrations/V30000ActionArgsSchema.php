@@ -16,7 +16,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class V30000ActionArgsSchema implements MigrationInterface
 {
-    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_CREATE_ACTION_ARGS_SCHEMA;
+    const HOOK = ExpiratorHooks::ACTION_MIGRATE_CREATE_ACTION_ARGS_SCHEMA;
 
     /**
      * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
@@ -39,7 +39,7 @@ class V30000ActionArgsSchema implements MigrationInterface
         $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
     }
 
-    public function migrate(): void
+    public function migrate()
     {
         ActionArgsSchema::createTableIfNotExists();
     }

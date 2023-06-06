@@ -102,7 +102,10 @@ class PostCategoryRemove implements ExpirationActionInterface
         return ! $resultIsError;
     }
 
-    public static function getLabel(): string
+    /**
+     * @return string
+     */
+    public static function getLabel()
     {
         return __('Remove selected terms', 'post-expirator');
     }
