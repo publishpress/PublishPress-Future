@@ -1,9 +1,9 @@
 <?php
 
-/*
+/**
  * Plugin Name: PublishPress Future Pro
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
- * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
+ * Description: PublishPress Future allows you to schedule automatic changes to posts, pages and other content types.
  * Author: PublishPress
  * Version: 3.0.0-beta.1
  * Author URI: http://publishpress.com
