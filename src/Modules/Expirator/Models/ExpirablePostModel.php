@@ -435,8 +435,16 @@ class ExpirablePostModel extends PostModel
      * @param string $actionNotificationText
      * @return bool
      */
-    private function sendEmail(ExpirationActionInterface $expirationAction)
+    private function sendEmail(ExpirationActionInterface $expirationAction, $deprecatedActionNotificationText = '')
     {
+        if (! empty($deprecatedActionNotificationText)) {
+            _deprecated_argument(
+                __METHOD__,
+                '3.0.0',
+                'Message now comes from ExpirationActionInterface::getNotificationText() instead of from $deprecatedActionNotificationText'
+            );
+        }
+
         $emailBody = sprintf(
             __(
                  '%s. %s on %s. The post link is %s',
