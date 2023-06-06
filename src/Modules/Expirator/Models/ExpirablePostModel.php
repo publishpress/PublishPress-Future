@@ -446,13 +446,16 @@ class ExpirablePostModel extends PostModel
             );
         }
 
+        // Remove period of the end to not break the sentence.
+        $notificationText = rtrim($expirationAction->getNotificationText(), '.');
+
         $emailBody = sprintf(
             __(
                  '%s. %s on %s. The post link is %s',
                 'post-expirator'
             ),
             '##POSTTITLE##',
-            $expirationAction->getNotificationText(),
+            $notificationText,
             '##ACTIONDATE##',
             '##POSTLINK##'
         );
