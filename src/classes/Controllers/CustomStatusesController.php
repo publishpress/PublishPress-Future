@@ -13,7 +13,6 @@ use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPressFuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
 use PublishPressFuturePro\Models\CustomStatusesModel;
-
 use PublishPressFuturePro\Models\SettingsModel;
 
 use function __;
@@ -22,7 +21,7 @@ defined('ABSPATH') or die('No direct script access allowed.');
 
 class CustomStatusesController implements ModuleInterface
 {
-    public const ACTION_PREFIX = 'custom_status_';
+    const ACTION_PREFIX = 'custom_status_';
 
     /**
      * @var HooksFacade
@@ -68,12 +67,12 @@ class CustomStatusesController implements ModuleInterface
      * @param string $postType
      * @return string[]
      */
-    public function filterExpirationActions(array $actions, string $postType = ''): array
+    public function filterExpirationActions($actions, $postType = '')
     {
         $customStatuses = $this->modelCustomStatuses->getCustomStatusesAsOptions();
 
         if (empty($postType)) {
-            $selectedCustomStatuses = array_map(function($item) {
+            $selectedCustomStatuses = array_map(function ($item) {
                 return $item['value'];
             }, $customStatuses);
         } else {
@@ -94,11 +93,17 @@ class CustomStatusesController implements ModuleInterface
         return $actions;
     }
 
+    /**
+     * @param $action
+     * @param string $actionName
+     * @param \PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel $postModel
+     * @return \PublishPressFuturePro\Domain\ExpirationActions\PostStatusToCustomStatus
+     */
     public function filterExpirationActionFactory(
         $action,
-        string $actionName,
+        $actionName,
         ExpirablePostModel $postModel
-    ): ExpirationActionInterface {
+    ) {
         if (preg_match('/^' . self::ACTION_PREFIX . '/', $actionName)) {
             return new PostStatusToCustomStatus($this->modelCustomStatuses, $postModel);
         }

@@ -33,7 +33,7 @@ class EddIntegrationController implements ModuleInterface
     public function __construct(
         HookableInterface $hooks,
         SettingsModel $settingsModel,
-        string $templatesPath,
+        $templatesPath,
         $eddContainer
     ) {
         $this->hooks = $hooks;

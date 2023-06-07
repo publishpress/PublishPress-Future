@@ -66,11 +66,11 @@ class SettingsController implements ModuleInterface
         HookableInterface $hooks,
         SettingsModel $settingsModel,
         CustomStatusesModel $customStatusesModel,
-        string $templatesPath,
-        string $assetsUrl,
+        $templatesPath,
+        $assetsUrl,
         $eddContainer,
-        int $eddItemId,
-        string $pluginVersion
+        $eddItemId,
+        $pluginVersion
     ) {
         $this->hooks = $hooks;
         $this->templatesPath = $templatesPath;
@@ -247,7 +247,7 @@ class SettingsController implements ModuleInterface
             // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $license_key = $_POST['license_key'] ?? '';
+            $license_key = isset($_POST['license_key']) ? $_POST['license_key'] : '';
 
             $this->settingsModel->setLicenseKey($license_key);
 
@@ -257,21 +257,31 @@ class SettingsController implements ModuleInterface
         }
     }
 
-    private function validateLicenseKey($licenseKey): string
+    /**
+     * @param string $licenseKey
+     *
+     * @return string
+     */
+    private function validateLicenseKey($licenseKey)
     {
         $licenseManager = $this->eddContainer['license_manager'];
 
         return $licenseManager->validate_license_key($licenseKey, $this->eddItemId);
     }
 
-    public function savePostTypeSettings(array $settings, string $postType)
+    /**
+     * @param array  $settings
+     * @param string $postType
+     */
+    public function savePostTypeSettings($settings, $postType)
     {
         // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
         $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         $this->settingsModel->setEnabledCustomStatusForPostType(
             $postType,
-            $_POST['expirationdate_custom-statuses-' . $postType] ?? []
+            isset($_POST['expirationdate_custom-statuses-' . $postType])
+                ? $_POST['expirationdate_custom-statuses-' . $postType] : []
         );
 
         // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing

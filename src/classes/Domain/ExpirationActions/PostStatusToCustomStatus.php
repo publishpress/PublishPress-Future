@@ -36,15 +36,19 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         $this->customStatusesModel = $customStatusesModel;
     }
 
-    public function __toString(): string
+    /**
+     * @return string
+     */
+    public function __toString()
     {
         return ExpirationActionsAbstract::POST_STATUS_TO_DRAFT;
     }
 
+
     /**
-     * @inheritDoc
+     * @return string
      */
-    public function getNotificationText(): string
+    public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
             return __('Post status didn\'t change.', 'post-expirator');
@@ -59,8 +63,9 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
     /**
      * @inheritDoc
      * @throws NonexistentPostException
+     * @return bool
      */
-    public function execute(): bool
+    public function execute()
     {
         $newPostStatus = str_replace(
             CustomStatusesController::ACTION_PREFIX,

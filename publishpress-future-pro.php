@@ -9,6 +9,8 @@
  * Author URI: http://publishpress.com
  * Text Domain: publishpress-future-pro
  * Domain Path: /languages
+ * Requires at least: 5.3
+ * Requires PHP: 5.6
  */
 
 namespace PublishPressFuturePro {

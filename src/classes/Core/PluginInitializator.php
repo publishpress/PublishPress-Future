@@ -40,7 +40,7 @@ class PluginInitializator implements InitializableInterface
         $this->hooks = $hooksFacade;
     }
 
-    public function initialize(): void
+    public function initialize()
     {
         if ($this->initialized) {
             return;
@@ -53,7 +53,7 @@ class PluginInitializator implements InitializableInterface
         $this->initializeControllers();
     }
 
-    private function initializeControllers(): void
+    private function initializeControllers()
     {
         foreach ($this->controllers as $controller) {
             if (method_exists($controller, 'initialize')) {

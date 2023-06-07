@@ -12,13 +12,13 @@ defined('ABSPATH') or die('No direct script access allowed.');
 
 class CustomStatusesModel
 {
-    public const OUTPUT_OBJECTS = 'objects';
-    public const OUTPUT_NAMES = 'names';
+    const OUTPUT_OBJECTS = 'objects';
+    const OUTPUT_NAMES = 'names';
 
     /**
      * @return \stdClass[]
      */
-    public function getCustomStatuses($output = self::OUTPUT_OBJECTS): array
+    public function getCustomStatuses($output = self::OUTPUT_OBJECTS)
     {
         $statuses = get_post_stati([], $output);
         $statusesToIgnore = [
@@ -49,7 +49,10 @@ class CustomStatusesModel
         return $filteredStatuses;
     }
 
-    public function getCustomStatusesAsOptions(): array
+    /**
+     * @return array
+     */
+    public function getCustomStatusesAsOptions()
     {
         $statuses = $this->getCustomStatuses();
         $options = [];
@@ -64,7 +67,11 @@ class CustomStatusesModel
         return $options;
     }
 
-    public function getStatusObject($statusName): ?\stdClass
+    /**
+     * @param string $statusName
+     * @return \stdClass|null
+     */
+    public function getStatusObject($statusName)
     {
         $statuses = $this->getCustomStatuses();
 
