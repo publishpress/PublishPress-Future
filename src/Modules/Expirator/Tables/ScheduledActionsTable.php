@@ -75,6 +75,20 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         wp_enqueue_style( 'wp-jquery-ui-dialog' );
     }
 
+    protected function get_request_order()
+    {
+        //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $order = isset($_GET['order']) ? strtolower(
+            sanitize_text_field(wp_unslash($_GET['order']))
+        ) : '';
+
+        if (empty($order)) {
+            $order = 'desc';
+        }
+
+        return 'desc' === $order ? 'DESC' : 'ASC';
+    }
+
     /**
      * {@inheritDoc}
      */
