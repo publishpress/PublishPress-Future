@@ -6,8 +6,6 @@
 namespace PublishPress\Future\Modules\Expirator\Migrations;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
@@ -47,7 +45,7 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
 
         $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
         $this->hooksFacade->addAction(
-            HooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
+            ExpiratorHooks::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
             [$this, 'formatLogActionColumn']
         );
         $this->expirablePostModelFactory = $expirablePostModelFactory;
@@ -107,7 +105,7 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
                 'date' => $eventData['time'],
             ];
 
-            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $eventData['time'], $args);
+            do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $eventData['time'], $args);
 
             $postModel->deleteMeta('_expiration-date-type');
             $postModel->deleteMeta('_expiration-date-status');

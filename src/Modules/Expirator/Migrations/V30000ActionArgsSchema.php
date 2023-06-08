@@ -6,7 +6,6 @@
 namespace PublishPress\Future\Modules\Expirator\Migrations;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
@@ -38,7 +37,7 @@ class V30000ActionArgsSchema implements MigrationInterface
 
         $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
         $this->hooksFacade->addAction(
-            HooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
+            ExpiratorHooks::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
             [$this, 'formatLogActionColumn']
         );
     }
