@@ -85,7 +85,7 @@ class CustomStatusesController implements ModuleInterface
             }
 
             $actions[self::ACTION_PREFIX . $customStatus['value']] = esc_html__(
-                'Custom status: ',
+                'Change status to ',
                 'publishpress-future-pro'
             ) . $customStatus['label'];
         }

@@ -4,7 +4,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Models;
+namespace PublishPress\FuturePro\Models;
+
+use PublishPress\FuturePro\Controllers\CustomStatusesController;
 
 use function get_post_stati;
 
@@ -75,8 +77,11 @@ class CustomStatusesModel
     {
         $statuses = $this->getCustomStatuses();
 
-        if (isset($statuses[$statusName])) {
-            return $statuses[$statusName];
+        $prefix = CustomStatusesController::ACTION_PREFIX;
+        $notPrefixedStatusName = str_replace($prefix, '', $statusName);
+
+        if (isset($statuses[$notPrefixedStatusName])) {
+            return $statuses[$notPrefixedStatusName];
         }
 
         return null;
