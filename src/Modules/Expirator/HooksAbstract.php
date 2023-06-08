@@ -39,6 +39,7 @@ abstract class HooksAbstract
     const FILTER_EXPIRED_EMAIL_ATTACHMENTS = 'publishpressfuture_expired_email_attachments';
     const FILTER_EXPIRATION_ACTIONS = 'publishpressfuture_expiration_actions';
     const FILTER_EXPIRATION_ACTION_FACTORY = 'publishpressfuture_expiration_action_factory';
+    const FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK = 'publishpressfuture_action_scheduler_column_hook';
 
 
     public static function getActionLegacyMultisiteDelete($blogId)

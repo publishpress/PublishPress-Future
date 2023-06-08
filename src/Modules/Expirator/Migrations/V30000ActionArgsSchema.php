@@ -37,10 +37,27 @@ class V30000ActionArgsSchema implements MigrationInterface
         $this->hooksFacade = $hooksFacade;
 
         $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
+        $this->hooksFacade->addAction(
+            HooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
+            [$this, 'formatLogActionColumn']
+        );
     }
 
     public function migrate()
     {
         ActionArgsSchema::createTableIfNotExists();
+    }
+
+    /**
+     * @param string $text
+     * @param array $row
+     * @return string
+     */
+    public function formatLogActionColumn($text, $row)
+    {
+        if ($row['hook'] === self::HOOK) {
+            return __('Migrate legacy actions arguments schema after v3.0.0', 'publishpress-future');
+        }
+        return $text;
     }
 }

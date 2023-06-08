@@ -7,6 +7,7 @@ namespace PublishPress\Future\Modules\Expirator\Migrations;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
@@ -36,6 +37,10 @@ class V30000ReplaceFooterPlaceholders implements MigrationInterface
         $this->optionsFacade = $optionsFacade;
 
         $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
+        $this->hooksFacade->addAction(
+            HooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
+            [$this, 'formatLogActionColumn']
+        );
     }
 
     public function migrate()
@@ -53,5 +58,18 @@ class V30000ReplaceFooterPlaceholders implements MigrationInterface
         $currentText = str_replace('EXPIRATIONTIME', 'ACTIONTIME', $currentText);
 
         $this->optionsFacade->updateOption('expirationdateFooterContents', $currentText);
+    }
+
+    /**
+     * @param string $text
+     * @param array $row
+     * @return string
+     */
+    public function formatLogActionColumn($text, $row)
+    {
+        if ($row['hook'] === self::HOOK) {
+            return __('Migrate legacy footer placeholders after v3.0.0', 'publishpress-future');
+        }
+        return $text;
     }
 }

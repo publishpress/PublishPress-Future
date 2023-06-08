@@ -266,7 +266,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         if ($row['hook'] === HooksAbstract::ACTION_RUN_WORKFLOW && isset($row['args']['workflow']) && $row['args']['workflow'] === 'expire') {
             $columnHtml = $this->render_expiration_hook_action($row);
         } else {
-            $columnHtml = esc_html($row['hook'] . " [{$row['ID']}]");
+            $columnHtml = esc_html(
+                $this->hooksFacade->applyFilters(
+                    HooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
+                    $row['hook'] . " [{$row['ID']}]",
+                    $row
+                )
+            );
         }
 
         $columnHtml .= $this->maybe_render_actions($row, 'hook');
