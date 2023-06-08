@@ -4,7 +4,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Core;
+namespace PublishPress\FuturePro\Core;
 
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstractFree;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstractFree;

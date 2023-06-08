@@ -6,7 +6,7 @@
  * @package PublishPressFuturePro
  */
 
-namespace PublishPressFuturePro {
+namespace PublishPress\FuturePro {
 
     use PublishPressInstanceProtection\Config;
     use PublishPressInstanceProtection\InstanceChecker;

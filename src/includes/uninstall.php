@@ -7,11 +7,11 @@
  * @package PublishPressFuturePro
  */
 
-namespace PublishPressFuturePro {
+namespace PublishPress\FuturePro {
 
-    use PublishPressFuture\Core\DI\Container;
-    use PublishPressFuture\Core\DI\ServicesAbstract;
-    use PublishPressFuturePro\Core\HooksAbstract;
+    use PublishPress\Future\Core\DI\Container;
+    use PublishPress\Future\Core\DI\ServicesAbstract;
+    use PublishPress\FuturePro\Core\HooksAbstract;
 
     defined('ABSPATH') or die('No direct script access allowed.');
 

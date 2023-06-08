@@ -3,11 +3,11 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Core;
+namespace PublishPress\FuturePro\Core;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Framework\ModuleInterface as ModuleInterface;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 

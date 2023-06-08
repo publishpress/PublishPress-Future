@@ -1,12 +1,12 @@
 <?php
 
-namespace PublishPressFuturePro\Controllers;
+namespace PublishPress\FuturePro\Controllers;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuturePro\Core\HooksAbstract;
-use PublishPressFuturePro\Models\CustomStatusesModel;
-use PublishPressFuturePro\Models\SettingsModel;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Models\CustomStatusesModel;
+use PublishPress\FuturePro\Models\SettingsModel;
 
 use function current_user_can;
 use function wp_die;
@@ -26,7 +26,7 @@ class SettingsController implements ModuleInterface
      */
     private $templatesPath;
     /**
-     * @var \PublishPressFuturePro\Models\SettingsModel
+     * @var \PublishPress\FuturePro\Models\SettingsModel
      */
     private $settingsModel;
 
@@ -48,14 +48,14 @@ class SettingsController implements ModuleInterface
     private $pluginVersion;
 
     /**
-     * @var \PublishPressFuturePro\Models\CustomStatusesModel
+     * @var \PublishPress\FuturePro\Models\CustomStatusesModel
      */
     private $customStatusesModel;
 
     /**
-     * @param \PublishPressFuture\Core\HookableInterface $hooks
-     * @param \PublishPressFuturePro\Models\SettingsModel $settingsModel
-     * @param \PublishPressFuturePro\Models\CustomStatusesModel $customStatusesModel
+     * @param \PublishPress\Future\Core\HookableInterface $hooks
+     * @param \PublishPress\FuturePro\Models\SettingsModel $settingsModel
+     * @param \PublishPress\FuturePro\Models\CustomStatusesModel $customStatusesModel
      * @param string $templatesPath
      * @param string $assetsUrl
      * @param $eddContainer

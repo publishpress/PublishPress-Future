@@ -13,11 +13,11 @@
  * Requires PHP: 5.6
  */
 
-namespace PublishPressFuturePro {
+namespace PublishPress\FuturePro {
 
     use Exception;
     use PublishPress\Future\Core\DI\Container;
-    use PublishPressFuturePro\Core\ServicesAbstract;
+    use PublishPress\FuturePro\Core\ServicesAbstract;
 
     defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -68,10 +68,10 @@ namespace PublishPressFuturePro {
             register_activation_hook(__FILE__, 'PublishPressFuturePro\\install');
             register_deactivation_hook(__FILE__, 'PublishPressFuturePro\\uninstall');
 
-            $container->get(ServicesAbstract::PLUGIN)->initialize();
 
-            define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
-        }, 1, 0);
+                require_once __DIR__ . '/src/includes/install.php';
+                require_once __DIR__ . '/src/includes/uninstall.php';
+                require_once __DIR__ . '/src/includes/deprecated.php';
     } catch (Exception $e) {
         include_once INCLUDES_DIR . '/catch-exception.php';
 

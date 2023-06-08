@@ -1,11 +1,11 @@
 <?php
 
-namespace PublishPressFuturePro\Controllers;
+namespace PublishPress\FuturePro\Controllers;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuturePro\Core\HooksAbstract;
-use PublishPressFuturePro\Models\SettingsModel;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Models\SettingsModel;
 
 use function current_user_can;
 use function wp_die;
@@ -25,7 +25,7 @@ class EddIntegrationController implements ModuleInterface
      */
     private $templatesPath;
     /**
-     * @var \PublishPressFuturePro\Models\SettingsModel
+     * @var \PublishPress\FuturePro\Models\SettingsModel
      */
     private $settingsModel;
     private $eddContainer;

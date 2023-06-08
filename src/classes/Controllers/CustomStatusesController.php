@@ -4,16 +4,16 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Controllers;
+namespace PublishPress\FuturePro\Controllers;
 
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPressFuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
-use PublishPressFuturePro\Models\CustomStatusesModel;
-use PublishPressFuturePro\Models\SettingsModel;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\FuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
+use PublishPress\FuturePro\Models\CustomStatusesModel;
+use PublishPress\FuturePro\Models\SettingsModel;
 
 use function __;
 
@@ -29,12 +29,12 @@ class CustomStatusesController implements ModuleInterface
     private $hooks;
 
     /**
-     * @var \PublishPressFuturePro\Models\CustomStatusesModel
+     * @var \PublishPress\FuturePro\Models\CustomStatusesModel
      */
     private $modelCustomStatuses;
 
     /**
-     * @var \PublishPressFuturePro\Models\SettingsModel
+     * @var \PublishPress\FuturePro\Models\SettingsModel
      */
     private $settingsModel;
 
@@ -96,8 +96,8 @@ class CustomStatusesController implements ModuleInterface
     /**
      * @param $action
      * @param string $actionName
-     * @param \PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel $postModel
-     * @return \PublishPressFuturePro\Domain\ExpirationActions\PostStatusToCustomStatus
+     * @param \PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel $postModel
+     * @return \PublishPress\FuturePro\Domain\ExpirationActions\PostStatusToCustomStatus
      */
     public function filterExpirationActionFactory(
         $action,

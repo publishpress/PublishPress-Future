@@ -1,20 +1,20 @@
 <?php
 
-namespace PublishPressFuturePro\Models;
+namespace PublishPress\FuturePro\Models;
 
-use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
 class SettingsModel
 {
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
 
     /**
-     * @var \PublishPressFuturePro\Models\CustomStatusesModel
+     * @var \PublishPress\FuturePro\Models\CustomStatusesModel
      */
     private $customStatusesModel;
 

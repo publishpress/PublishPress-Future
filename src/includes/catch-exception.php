@@ -7,7 +7,7 @@
  * @package PublishPressFuturePro
  */
 
-namespace PublishPressFuturePro {
+namespace PublishPress\FuturePro {
     defined('ABSPATH') or die('No direct script access allowed.');
 
     if (! function_exists(__NAMESPACE__ . '\\logCatchException')) {

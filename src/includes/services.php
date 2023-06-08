@@ -1,20 +1,20 @@
 <?php
 
-namespace PublishPressFuturePro;
+namespace PublishPress\FuturePro;
 
 use PublishPress\EDD_License\Core\Container as EDDContainer;
 use PublishPress\EDD_License\Core\Services as EDDServices;
 use PublishPress\EDD_License\Core\ServicesConfig as EDDServicesConfig;
-use PublishPressFuture\Core\DI\ContainerInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuturePro\Controllers\CustomStatusesController;
-use PublishPressFuturePro\Controllers\EddIntegrationController;
-use PublishPressFuturePro\Controllers\SettingsController;
-use PublishPressFuturePro\Core\HooksAbstract;
-use PublishPressFuturePro\Core\PluginInitializator;
-use PublishPressFuturePro\Core\ServicesAbstract;
-use PublishPressFuturePro\Models\CustomStatusesModel;
-use PublishPressFuturePro\Models\SettingsModel;
+use PublishPress\Future\Core\DI\ContainerInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\FuturePro\Controllers\CustomStatusesController;
+use PublishPress\FuturePro\Controllers\EddIntegrationController;
+use PublishPress\FuturePro\Controllers\SettingsController;
+use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Core\PluginInitializator;
+use PublishPress\FuturePro\Core\ServicesAbstract;
+use PublishPress\FuturePro\Models\CustomStatusesModel;
+use PublishPress\FuturePro\Models\SettingsModel;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -121,7 +121,7 @@ return [
     },
 
     /**
-     * @return \PublishPressFuturePro\Models\CustomStatusesModel
+     * @return \PublishPress\FuturePro\Models\CustomStatusesModel
      */
     ServicesAbstract::MODEL_CUSTOM_STATUSES => static function (ContainerInterface $container) {
         return new CustomStatusesModel();

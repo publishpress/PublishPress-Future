@@ -4,7 +4,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Core;
+namespace PublishPress\FuturePro\Core;
 
 use PublishPressFuture\Core\DI\ServicesAbstract as ServicesAbstractFree;
 

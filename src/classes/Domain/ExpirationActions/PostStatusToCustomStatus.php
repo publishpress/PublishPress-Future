@@ -1,13 +1,13 @@
 <?php
 
-namespace PublishPressFuturePro\Domain\ExpirationActions;
+namespace PublishPress\FuturePro\Domain\ExpirationActions;
 
-use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPressFuturePro\Controllers\CustomStatusesController;
-use PublishPressFuturePro\Models\CustomStatusesModel;
+use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\FuturePro\Controllers\CustomStatusesController;
+use PublishPress\FuturePro\Models\CustomStatusesModel;
 
 use function __;
 
@@ -36,12 +36,19 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         $this->customStatusesModel = $customStatusesModel;
     }
 
+    private function getPostTypeFromPostModel()
+    {
+        return $this->customStatusesModel->getStatusObject($this->postModel->getExpirationType());
+    }
+
     /**
      * @return string
      */
     public function __toString()
     {
-        return ExpirationActionsAbstract::POST_STATUS_TO_DRAFT;
+        $postType = $this->getPostTypeFromPostModel();
+
+        return $postType->name;
     }
 
 
@@ -89,5 +96,26 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         ];
 
         return $result;
+    }
+
+    public static function getLabel()
+    {
+        return __('Change post status to custom status', 'publishpress-future-pro');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        $expirationType = $this->postModel->getExpirationType();
+        $postStatus = str_replace(CustomStatusesController::ACTION_PREFIX, '', $expirationType);
+
+        $postStatusObject = get_post_status_object($postStatus);
+
+        return sprintf(
+            __('Change post status to %s', 'publishpress-future-pro'),
+            $postStatusObject->label
+        );
     }
 }
