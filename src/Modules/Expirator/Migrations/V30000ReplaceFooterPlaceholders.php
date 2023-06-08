@@ -36,7 +36,9 @@ class V30000ReplaceFooterPlaceholders implements MigrationInterface
         $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
         $this->hooksFacade->addAction(
             ExpiratorHooks::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
-            [$this, 'formatLogActionColumn']
+            [$this, 'formatLogActionColumn'],
+            10,
+            2
         );
     }
 
