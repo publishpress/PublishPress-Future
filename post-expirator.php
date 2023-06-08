@@ -53,7 +53,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             require_once __DIR__ . '/legacy/autoload.php';
 
             $container->get(ServicesAbstract::PLUGIN)->initialize();
-        }, 2, 0);
+        }, 10, 0);
 
     } catch (Exception $e) {
         $trace = $e->getTrace();
