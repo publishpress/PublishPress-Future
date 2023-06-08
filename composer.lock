@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ac1093598c51bebc1a56a727ccb3644",
+    "content-hash": "e663991b6c9ed3b01e1695e5b8f53318",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -2016,12 +2016,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "f8186b6413ac3c4e366899b20dd0ef57adf2bc9b"
+                "reference": "c9b1edf752c20502f2ea6bf2a09e2574d44e01ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f8186b6413ac3c4e366899b20dd0ef57adf2bc9b",
-                "reference": "f8186b6413ac3c4e366899b20dd0ef57adf2bc9b",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c9b1edf752c20502f2ea6bf2a09e2574d44e01ff",
+                "reference": "c9b1edf752c20502f2ea6bf2a09e2574d44e01ff",
                 "shasum": ""
             },
             "require": {
@@ -2071,7 +2071,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-07T16:00:24+00:00"
+            "time": "2023-06-08T13:17:20+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
