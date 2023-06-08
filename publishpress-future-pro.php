@@ -77,6 +77,7 @@ namespace PublishPressFuturePro {
         define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
     } catch (Exception $e) {
         include_once INCLUDES_DIR . '/catch-exception.php';
-        logCatchedException($e);
+
+        logCatchException($e);
     }
 }
