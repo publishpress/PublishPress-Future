@@ -31,11 +31,8 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             require_once $vendorAutoloadPath;
         }
 
-        // These libraries loads on plugins_loaded hook with priority 1 or lower, so this require can't be done inside a hook.
-//        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/publishpress/wordpress-version-notices/src/include.php';
         require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
 
-        // Priority should be higher than 1 so it is loaded after ActionScheduler is loaded (which loads on 1).
         add_action('plugins_loaded', function () {
             if (! class_exists('PublishPress\Future\Core\Autoloader')) {
                 require_once __DIR__ . '/src/Core/Autoloader.php';
