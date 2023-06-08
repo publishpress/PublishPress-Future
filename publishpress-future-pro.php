@@ -36,6 +36,8 @@ namespace PublishPress\FuturePro {
     const FREE_PLUGIN_NAME = 'PublishPress Future';
     const PLUGIN_AUTHOR = 'PublishPress';
 
+    include_once INCLUDES_DIR . '/catch-exception.php';
+
     try {
         // Active the plugin instance protection.
         include_once INCLUDES_DIR . '/plugin-instance-protection.php';
@@ -57,24 +59,33 @@ namespace PublishPress\FuturePro {
         require_once __DIR__ . '/src/includes/free-plugin-launcher.php';
 
         add_action('plugins_loaded', function () {
-            // Initialize the plugin.
-            $services = require INCLUDES_DIR . '/services.php';
-            $container = Container::getInstance();
-            $container->registerServices($services);
+            try {
+                if (! class_exists('PublishPress\Future\Core\DI\Container')) {
+                    throw new Exception(
+                        'PublishPress Future Pro can\'t fully load because PublishPress Future library was not found.'
+                    );
+                }
 
-            require_once __DIR__ . '/src/includes/install.php';
-            require_once __DIR__ . '/src/includes/uninstall.php';
-
-            register_activation_hook(__FILE__, 'PublishPressFuturePro\\install');
-            register_deactivation_hook(__FILE__, 'PublishPressFuturePro\\uninstall');
-
+                // Initialize the plugin.
+                $services = require INCLUDES_DIR . '/services.php';
+                $container = Container::getInstance();
+                $container->registerServices($services);
 
                 require_once __DIR__ . '/src/includes/install.php';
                 require_once __DIR__ . '/src/includes/uninstall.php';
                 require_once __DIR__ . '/src/includes/deprecated.php';
-    } catch (Exception $e) {
-        include_once INCLUDES_DIR . '/catch-exception.php';
 
+                register_activation_hook(__FILE__, 'PublishPress\\FuturePro\\install');
+                register_deactivation_hook(__FILE__, 'PublishPress\\FuturePro\\uninstall');
+
+                $container->get(ServicesAbstract::PLUGIN)->initialize();
+
+                define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
+            } catch (Exception $e) {
+                logCatchException($e);
+            }
+        }, 12, 0);
+    } catch (Exception $e) {
         logCatchException($e);
     }
 }
