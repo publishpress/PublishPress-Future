@@ -16,7 +16,7 @@
 namespace PublishPressFuturePro {
 
     use Exception;
-    use PublishPressFuture\Core\DI\Container;
+    use PublishPress\Future\Core\DI\Container;
     use PublishPressFuturePro\Core\ServicesAbstract;
 
     defined('ABSPATH') or die('No direct script access allowed.');
@@ -37,11 +37,6 @@ namespace PublishPressFuturePro {
     const PLUGIN_AUTHOR = 'PublishPress';
 
     try {
-        // If the PHP version is not compatible, terminate the plugin execution.
-        if (! include_once INCLUDES_DIR . '/check-php-version.php') {
-            return;
-        }
-
         // Active the plugin instance protection.
         include_once INCLUDES_DIR . '/plugin-instance-protection.php';
 
@@ -61,20 +56,22 @@ namespace PublishPressFuturePro {
         define('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES', true);
         require_once __DIR__ . '/src/includes/free-plugin-launcher.php';
 
-        // Initialize the plugin.
-        $services = require INCLUDES_DIR . '/services.php';
-        $container = Container::getInstance();
-        $container->registerServices($services);
+        add_action('plugins_loaded', function () {
+            // Initialize the plugin.
+            $services = require INCLUDES_DIR . '/services.php';
+            $container = Container::getInstance();
+            $container->registerServices($services);
 
-        require_once __DIR__ . '/src/includes/install.php';
-        require_once __DIR__ . '/src/includes/uninstall.php';
+            require_once __DIR__ . '/src/includes/install.php';
+            require_once __DIR__ . '/src/includes/uninstall.php';
 
-        register_activation_hook(__FILE__, 'PublishPressFuturePro\\install');
-        register_deactivation_hook(__FILE__, 'PublishPressFuturePro\\uninstall');
+            register_activation_hook(__FILE__, 'PublishPressFuturePro\\install');
+            register_deactivation_hook(__FILE__, 'PublishPressFuturePro\\uninstall');
 
-        $container->get(ServicesAbstract::PLUGIN)->initialize();
+            $container->get(ServicesAbstract::PLUGIN)->initialize();
 
-        define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
+            define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
+        }, 1, 0);
     } catch (Exception $e) {
         include_once INCLUDES_DIR . '/catch-exception.php';
 
