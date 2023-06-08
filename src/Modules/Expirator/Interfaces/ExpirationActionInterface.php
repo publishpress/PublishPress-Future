@@ -28,4 +28,9 @@ interface ExpirationActionInterface
      * @return string
      */
     public static function getLabel();
+
+    /**
+     * @return string
+     */
+    public function getDynamicLabel();
 }

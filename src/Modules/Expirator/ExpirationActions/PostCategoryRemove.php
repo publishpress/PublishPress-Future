@@ -109,4 +109,12 @@ class PostCategoryRemove implements ExpirationActionInterface
     {
         return __('Remove selected terms', 'post-expirator');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        return self::getLabel();
+    }
 }

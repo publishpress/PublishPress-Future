@@ -72,4 +72,12 @@ class StickPost implements ExpirationActionInterface
     {
         return __('Stick', 'post-expirator');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        return self::getLabel();
+    }
 }

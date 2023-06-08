@@ -73,4 +73,12 @@ class DeletePost implements ExpirationActionInterface
     {
         return __('Delete', 'post-expirator');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        return self::getLabel();
+    }
 }

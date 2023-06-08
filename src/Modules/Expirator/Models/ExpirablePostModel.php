@@ -421,7 +421,6 @@ class ExpirablePostModel extends PostModel
                 $this
             );
 
-
             if ($actionInstance instanceof ExpirationActionInterface) {
                 $this->expirationActionInstance = $actionInstance;
             }

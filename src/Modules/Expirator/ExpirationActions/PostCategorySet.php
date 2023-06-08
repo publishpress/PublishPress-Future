@@ -104,4 +104,12 @@ class PostCategorySet implements ExpirationActionInterface
     {
         return __('Remove all current terms and add new terms', 'post-expirator');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        return self::getLabel();
+    }
 }

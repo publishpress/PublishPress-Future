@@ -72,4 +72,12 @@ class UnstickPost implements ExpirationActionInterface
     {
         return __('Unstick', 'post-expirator');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        return self::getLabel();
+    }
 }

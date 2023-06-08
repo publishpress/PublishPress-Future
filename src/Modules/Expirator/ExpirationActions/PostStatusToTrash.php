@@ -86,4 +86,12 @@ class PostStatusToTrash implements ExpirationActionInterface
             $newPostStatus->label
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        return self::getLabel();
+    }
 }

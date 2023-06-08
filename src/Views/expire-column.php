@@ -32,7 +32,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
         echo sprintf(
             esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
             '<span class="future-action-action-name">',
-            esc_html($action->getLabel()),
+            esc_html($action->getDynamicLabel()),
             '</span>',
             esc_html(PostExpirator_Util::get_wp_date($format, $expirationDate)),
             '<span class="future-action-action-date">',
