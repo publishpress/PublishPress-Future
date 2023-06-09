@@ -262,11 +262,11 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
     public function column_hook(array $row)
     {
-        $columnHtml = '';
+        $columnHtml = '<span title="' . esc_attr($row['hook']) . '">';
         if ($row['hook'] === HooksAbstract::ACTION_RUN_WORKFLOW && isset($row['args']['workflow']) && $row['args']['workflow'] === 'expire') {
-            $columnHtml = $this->render_expiration_hook_action($row);
+            $columnHtml .= $this->render_expiration_hook_action($row);
         } else {
-            $columnHtml = esc_html(
+            $columnHtml .= esc_html(
                 $this->hooksFacade->applyFilters(
                     HooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
                     $row['hook'] . " [{$row['ID']}]",
@@ -274,6 +274,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
                 )
             );
         }
+        $columnHtml .= '</span>';
 
         $columnHtml .= $this->maybe_render_actions($row, 'hook');
 
