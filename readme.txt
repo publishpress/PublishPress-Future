@@ -142,6 +142,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 = [3.0.0] - UNRELEASED =
 
+* ADDED: Add Deutch translation files, #429;
 * CHANGED: Post expiration queue migrated from WP Cron to Action Scheduler library from WooCommerce, #149;
 * CHANGED: Deprecate hook "publishpressfuture_expire" in favor of "publishpress_future/run_workflow". New hook has two arguments: postId and action, #149;
 * CHANGED: Changed the label "Type" to "Action" in the bulk edit field;
@@ -149,12 +150,23 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Added the old post status in the log message when the post expires changing status;
 * CHANGED: Change the text of options in the bulk edit field, for more clearance;
 * CHANGED: Change text of Post Types settings tab;
+* CHANGED: FIXED: Replace "Expiry" with "Actions", #392;
 * FIXED: Fix PHP warning about undefined index 'terms', #412;
 * FIXED: Fix error on block editor: can't read "length" of undefined;
 * FIXED: Fix escaping on a few admin text;
 * FIXED: Fix text and positions of expiration fields in the bulk edit form;
 * FIXED: Fix email notifications, #414;
 * FIXED: Fix PHP Fatal error: Uncaught TypeError: gmdate(): Argument #2 ($timestamp) must be of type ?int, #413;
+* FIXED: All the expirations scheduled to the future run if we call "wp cron events run --all", #340;
+* FIXED: Deactivation of the plugin does not remove the cron jobs and settings, #107;
+* FIXED: Can we make the cron schedule more human-readable, #231;
+* FIXED: Expiration actions related to taxonomy are not working if default way to expire is not taxonomy related, #409;
+* FIXED: Database error on a new site install, #424;
+* FIXED: Bulk Edit Text doesn't match Quick Edit, #422;
+* FIXED: Expiration Email Notification is not working, #414;
+* FIXED: Capital case for statuses, #430;
+* FIXED: Make sure all files has protection against direct access, #436;
+* FIXED: Fix fatal error sending expiration email, #434, #433;
 
 = [2.9.2] - 28 Feb, 2023 =
 
@@ -182,6 +194,8 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: HTML escaping for a field on the settings screen;
 * FIXED: Fix the expiration date column date format;
 * FIXED: Fix option to clear data on uninstall, removing the debug table;
+* FIXED: Combining Multiple Cron Events #149;
+
 
 = [2.8.3] - 10 Jan, 2023 =
 
