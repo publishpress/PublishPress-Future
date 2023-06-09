@@ -69,9 +69,24 @@ class ExpirationActionsModel
                 $actions,
                 $postType
             );
+
+            $this->actions[$postType] = $this->sortActions($this->actions[$postType]);
         }
 
         return $this->actions[$postType];
+    }
+
+    private function sortActions($actions)
+    {
+        $sortedActions = [];
+
+        foreach ($actions as $name => $label) {
+            $sortedActions[$name] = $label;
+        }
+
+        asort($sortedActions);
+
+        return $sortedActions;
     }
 
     public function getActionsAsOptions($postType = '')
