@@ -1,0 +1,128 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Future Pro\n"
+"POT-Creation-Date: 2023-06-12 12:01-0300\n"
+"PO-Revision-Date: 2023-06-12 12:11-0300\n"
+"Last-Translator: \n"
+"Language-Team: Angelo Giammarresi - info@wocmultimedia.com\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.3.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: publishpress-future-pro.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: languages/publishpress-future-pro-it_IT.po\n"
+"X-Poedit-SearchPath-2: .\n"
+"X-Poedit-SearchPath-3: src\n"
+"X-Poedit-SearchPath-4: vendor\n"
+"X-Poedit-SearchPath-5: vendor/alledia/edd-sl-plugin-updater/"
+"EDD_SL_Plugin_Updater.php\n"
+
+#: src/classes/Controllers/CustomStatusesController.php:88
+msgid "Change status to "
+msgstr "Cambiar estado a "
+
+#: src/classes/Controllers/SettingsController.php:181
+msgid "Custom statuses"
+msgstr "Estados personalizados"
+
+#: src/classes/Controllers/SettingsController.php:183
+msgid "Enable custom statuses for the post type:"
+msgstr "Activar los estados personalizados para el tipo de contenido:"
+
+#: src/classes/Controllers/SettingsController.php:186
+msgid "Enabled"
+msgstr "Activado"
+
+#: src/classes/Controllers/SettingsController.php:187
+msgid "Disabled"
+msgstr "Desactivado"
+
+#: src/classes/Controllers/SettingsController.php:188
+msgid "Select all"
+msgstr "Seleccionar todo"
+
+#: src/classes/Controllers/SettingsController.php:189
+msgid "Unselect all"
+msgstr "Deseleccionar todo"
+
+#: src/classes/Controllers/SettingsController.php:244
+msgid "Form Validation Failure: Sorry, your nonce did not verify."
+msgstr ""
+"Error en la validación del formulario: Lo sentimos, tu nonce no ha sido "
+"verificado."
+
+#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:61
+msgid "Post status didn't change."
+msgstr "El estado de la publicación no ha cambiado."
+
+#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:65
+#, php-format
+msgid "Post status has been successfully changed to \"%s\"."
+msgstr "El estado de la publicación se ha cambiado correctamente a «%s»."
+
+#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:103
+msgid "Change post status to custom status"
+msgstr "Cambiar el estado de la publicación a estado personalizado"
+
+#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:117
+#, php-format
+msgid "Change post status to %s"
+msgstr "Cambiar el estado de la publicación a %s"
+
+#: src/templates/settings-tab-license.html.php:11
+#: src/templates/settings-tab-license.html.php:17
+msgid "License"
+msgstr "Licencia"
+
+#: src/templates/settings-tab-license.html.php:35
+msgid "Activated"
+msgstr "Activado"
+
+#: src/templates/settings-tab-license.html.php:37
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: src/templates/settings-tab-license.html.php:52
+msgid "Status: "
+msgstr "Estado: "
+
+#: src/templates/settings-tab-license.html.php:55
+msgid "Enter the license key for being able to update the plugin."
+msgstr "Introduce la clave de licencia para poder actualizar el plugin."
+
+#: src/templates/settings-tab-license.html.php:67
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#. Plugin Name of the plugin/theme
+msgid "PublishPress Future Pro"
+msgstr "PublishPress Future Pro"
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/post-expirator/"
+msgstr "http://wordpress.org/extend/plugins/post-expirator/"
+
+#. Description of the plugin/theme
+msgid ""
+"PublishPress Future allows you to schedule automatic changes to posts, pages "
+"and other content types."
+msgstr ""
+"PublishPress Future le permite programar cambios automáticos en "
+"publicaciones, páginas y otros tipos de contenido."
+
+#. Author of the plugin/theme
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin/theme
+msgid "http://publishpress.com"
+msgstr "http://publishpress.com"
