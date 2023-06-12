@@ -82,6 +82,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.0.0] - UNRELEASED =
+
+* CHANGED: Updated base plugin to 3.0.0;
+
 = [2.9.2] - 01 Mar 2023 =
 
 * FIXED: List of actions in the post type settings is not filtered by post types, #400;
