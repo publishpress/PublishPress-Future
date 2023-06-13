@@ -140,7 +140,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [3.0.0] - UNRELEASED =
+= [3.0.0] - [13 Jun, 2023] =
 
 * ADDED: Add Deutch translation files, #429;
 * CHANGED: Post expiration queue migrated from WP Cron to Action Scheduler library from WooCommerce, #149;
