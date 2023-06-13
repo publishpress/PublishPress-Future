@@ -32,10 +32,10 @@ jobs:
         run: chmod +x /project/dev-workspace/docker/scripts/ppbuild
 
       - name: Build to directory
-        run: yarn run build:dir
+        run: composer build:dir
 
       - name: PHPLint - Check PHP syntax errors
-        run: yarn run check:lint
+        run: composer check:lint
 
       - name: PHPCS - Check VIP scan and code standards
-        run: yarn run check:phpcs
+        run: composer check:phpcs
