@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e663991b6c9ed3b01e1695e5b8f53318",
+    "content-hash": "4c437eb8a821696e09a15a1beab8b4ef",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -278,16 +278,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-release-3.0.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "e0b348d1a9e7b0adc30964af3f378f74a1bce88a"
+                "reference": "a12e6f29cac55f15e83f7cfe5675542b6482742d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/e0b348d1a9e7b0adc30964af3f378f74a1bce88a",
-                "reference": "e0b348d1a9e7b0adc30964af3f378f74a1bce88a",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/a12e6f29cac55f15e83f7cfe5675542b6482742d",
+                "reference": "a12e6f29cac55f15e83f7cfe5675542b6482742d",
                 "shasum": ""
             },
             "require": {
@@ -359,9 +359,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/release-3.0.0"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/v3.0.0"
             },
-            "time": "2023-06-09T20:19:26+00:00"
+            "time": "2023-06-13T16:38:02+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -1000,12 +1000,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "4b68cf86b766ec429f4f68af648817cdfb360582"
+                "reference": "a77f4cc1734b23ffb7c0bb4578a0d3b568cf4adc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/4b68cf86b766ec429f4f68af648817cdfb360582",
-                "reference": "4b68cf86b766ec429f4f68af648817cdfb360582",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/a77f4cc1734b23ffb7c0bb4578a0d3b568cf4adc",
+                "reference": "a77f4cc1734b23ffb7c0bb4578a0d3b568cf4adc",
                 "shasum": ""
             },
             "require": {
@@ -1069,7 +1069,7 @@
                 "issues": "https://github.com/doctrine/annotations/issues",
                 "source": "https://github.com/doctrine/annotations/tree/2.0.x"
             },
-            "time": "2023-03-27T17:43:32+00:00"
+            "time": "2023-06-13T17:54:52+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -1718,12 +1718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "1121d4b04af06e33e9659bac3a6741b91cab1de1"
+                "reference": "f58b36c8deaff8481a7e7712bc453c0b9a4b12db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/1121d4b04af06e33e9659bac3a6741b91cab1de1",
-                "reference": "1121d4b04af06e33e9659bac3a6741b91cab1de1",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/f58b36c8deaff8481a7e7712bc453c0b9a4b12db",
+                "reference": "f58b36c8deaff8481a7e7712bc453c0b9a4b12db",
                 "shasum": ""
             },
             "require": {
@@ -1766,7 +1766,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pdepend/pdepend/issues",
-                "source": "https://github.com/pdepend/pdepend/tree/2.14.0"
+                "source": "https://github.com/pdepend/pdepend/tree/master"
             },
             "funding": [
                 {
@@ -1774,7 +1774,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-26T13:15:18+00:00"
+            "time": "2023-06-12T09:10:15+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -2016,12 +2016,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "613c57c741bcdb685ef44a6fab85efaae35bf72d"
+                "reference": "658599a82e7203bf3d9611cc6e6544ff970f00d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/613c57c741bcdb685ef44a6fab85efaae35bf72d",
-                "reference": "613c57c741bcdb685ef44a6fab85efaae35bf72d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/658599a82e7203bf3d9611cc6e6544ff970f00d5",
+                "reference": "658599a82e7203bf3d9611cc6e6544ff970f00d5",
                 "shasum": ""
             },
             "require": {
@@ -2071,7 +2071,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-09T16:13:46+00:00"
+            "time": "2023-06-13T14:33:57+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4751,7 +4751,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "publishpress/publishpress-future": 20,
         "publishpress/publishpress-phpcs-standards": 20,
         "giacocorsiglia/wordpress-stubs": 20
     },
