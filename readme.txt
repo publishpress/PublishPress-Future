@@ -82,7 +82,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [3.0.0] - UNRELEASED =
+= [3.0.0] - 13 Jun 2023 =
 
 * CHANGED: Updated base plugin to 3.0.0;
 
