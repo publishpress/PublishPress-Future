@@ -39,27 +39,27 @@ $postTypeObject = get_post_type_object($post_type);
                                     esc_html_e('No Change', 'post-expirator'); ?> —</option>
 
                                 <option value="change-add"
-                                        data-show-fields="true"><?php echo sprintf(
-                                            esc_html__('Add or update action for %s', 'post-expirator'),
+                                        data-show-fields="true"><?php echo esc_html(sprintf(
+                                            __('Add or update action for %s', 'post-expirator'),
                                             strtolower($postTypeObject->labels->name)
-                                        ); ?></option>
+                                        )); ?></option>
                                 <option
                                     value="add-only"
-                                    data-show-fields="true"><?php echo sprintf(
-                                            esc_html__('Add action if none exists for %s', 'post-expirator'),
+                                    data-show-fields="true"><?php echo esc_html(sprintf(
+                                            __('Add action if none exists for %s', 'post-expirator'),
                                             strtolower($postTypeObject->labels->name)
-                                        ); ?></option>
+                                        )); ?></option>
                                 <option
                                     value="change-only"
-                                    data-show-fields="true"><?php echo sprintf(
-                                            esc_html__('Update the existing actions for %s', 'post-expirator'),
+                                    data-show-fields="true"><?php echo esc_html(sprintf(
+                                            __('Update the existing actions for %s', 'post-expirator'),
                                             strtolower($postTypeObject->labels->name)
-                                        ); ?></option>
+                                        )); ?></option>
                                 <option value="remove-only"
-                                        data-show-fields="false"><?php echo sprintf(
-                                            esc_html__('Remove action from %s', 'post-expirator'),
+                                        data-show-fields="false"><?php echo esc_html(sprintf(
+                                            __('Remove action from %s', 'post-expirator'),
                                             strtolower($postTypeObject->labels->name)
-                                        ); ?></option>
+                                        )); ?></option>
                             </select>
                         </label><br /><br />
 

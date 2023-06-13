@@ -77,7 +77,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
     protected function get_request_order()
     {
-        //phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         $order = isset($_GET['order']) ? strtolower(
             sanitize_text_field(wp_unslash($_GET['order']))
         ) : '';
@@ -87,6 +87,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
 
         return 'desc' === $order ? 'DESC' : 'ASC';
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 
     /**
