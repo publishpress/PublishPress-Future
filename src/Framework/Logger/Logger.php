@@ -3,12 +3,14 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\Logger;
+namespace PublishPress\Future\Framework\Logger;
 
-use PublishPressFuture\Framework\Logger\LogLevelAbstract as LogLevel;
-use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
-use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Framework\Logger\LogLevelAbstract as LogLevel;
+use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class Logger implements LoggerInterface
 {
@@ -38,6 +40,7 @@ class Logger implements LoggerInterface
         $this->site = $siteFacade;
         $this->settings = $settingsFacade;
 
+        // FIXME: Rename the table to ppfuture_debug_log.
         $this->dbTableName = $this->db->getTablePrefix() . 'postexpirator_debug';
 
         $this->initialize();

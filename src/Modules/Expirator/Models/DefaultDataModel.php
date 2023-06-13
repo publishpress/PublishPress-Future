@@ -3,23 +3,25 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Models;
+namespace PublishPress\Future\Modules\Expirator\Models;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class DefaultDataModel
 {
     /**
-     * @var \PublishPressFuture\Modules\Settings\SettingsFacade
+     * @var \PublishPress\Future\Modules\Settings\SettingsFacade
      */
     private $settings;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
 
     /**
-     * @param \PublishPressFuture\Modules\Settings\SettingsFacade $settings
-     * @param \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade $options
+     * @param \PublishPress\Future\Modules\Settings\SettingsFacade $settings
+     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      */
     public function __construct($settings, $options)
     {

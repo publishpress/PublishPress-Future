@@ -3,7 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator;
+namespace PublishPress\Future\Modules\Expirator;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 abstract class CapabilitiesAbstract
 {

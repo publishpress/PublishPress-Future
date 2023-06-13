@@ -37,7 +37,7 @@ Feature: Settings - Tab Post Types - Auto-Enable
     When I enable auto-enable for "<post_type>"
     And I save the changes
     And I am adding a new "<post_type>" post
-    Then the checkbox Enable Post Expiration is activated on the component panel
+    Then the checkbox Enable Future Action is activated on the component panel
 
     Examples:
     | post_type |
@@ -50,7 +50,7 @@ Feature: Settings - Tab Post Types - Auto-Enable
     When I disable auto-enable for "<post_type>"
     And I save the changes
     And I am adding a new "<post_type>" post
-    Then the checkbox Enable Post Expiration is deactivated on the component panel
+    Then the checkbox Enable Future Action is deactivated on the component panel
 
     Examples:
     | post_type |

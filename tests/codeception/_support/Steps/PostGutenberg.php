@@ -23,7 +23,7 @@ trait PostGutenberg
     }
 
     /**
-     * @Then the checkbox Enable Post Expiration is deactivated on the component panel
+     * @Then the checkbox Enable Future Action is deactivated on the component panel
      */
     public function checkboxEnablePostExpirationIsDeactivatedOnComponentPanel()
     {
@@ -33,7 +33,7 @@ trait PostGutenberg
     }
 
     /**
-     * @Then the checkbox Enable Post Expiration is activated on the component panel
+     * @Then the checkbox Enable Future Action is activated on the component panel
      */
     public function checkboxEnablePostExpirationIsActivatedOnComponentPanel()
     {
@@ -52,7 +52,7 @@ trait PostGutenberg
     }
 
     /**
-     * @When I check the Enable Post Expiration checkbox on Gutenberg
+     * @When I check the Enable Future Action checkbox on Gutenberg
      */
     public function iCheckTheEnablePostExpirationCheckboxOnGutenberg()
     {
@@ -60,7 +60,7 @@ trait PostGutenberg
     }
 
     /**
-     * @When  I uncheck the Enable Post Expiration checkbox on Gutenberg
+     * @When  I uncheck the Enable Future Action checkbox on Gutenberg
      */
     public function iUncheckTheEnablePostExpirationCheckboxOnGutenberg()
     {

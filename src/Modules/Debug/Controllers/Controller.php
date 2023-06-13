@@ -3,13 +3,15 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Debug\Controllers;
+namespace PublishPress\Future\Modules\Debug\Controllers;
 
-use PublishPressFuture\Core\HooksAbstract as CoreAbstractHooks;
-use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
-use PublishPressFuture\Modules\Debug\HooksAbstract;
+use PublishPress\Future\Core\HooksAbstract as CoreAbstractHooks;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Modules\Debug\HooksAbstract;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class Controller implements InitializableInterface
 {

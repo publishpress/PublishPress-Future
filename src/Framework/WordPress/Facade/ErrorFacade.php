@@ -3,9 +3,11 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Facade;
+namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use WP_Error;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class ErrorFacade
 {

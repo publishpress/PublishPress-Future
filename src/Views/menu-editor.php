@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-use PublishPressFuture\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract;
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">

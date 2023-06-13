@@ -1,38 +1,45 @@
 <?php
 
-use \PublishPressFuture\Modules\Settings\HooksAbstract;
+use \PublishPress\Future\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
+
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET['tab']));
 
 $debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
+$baseLink = 'admin.php?page=publishpress-future&tab=';
 
 $tabs = [
     [
         'title' => __('Defaults', 'post-expirator'),
         'slug'  => 'general',
-        'link' => admin_url('admin.php?page=publishpress-future&tab=general'),
+        'link' => admin_url($baseLink . 'general'),
     ],
     [
         'title' => __('Display', 'post-expirator'),
         'slug'  => 'display',
-        'link' => admin_url('admin.php?page=publishpress-future&tab=display'),
+        'link' => admin_url($baseLink . 'display'),
     ],
     [
         'title' => __('Post Types', 'post-expirator'),
         'slug'  => 'defaults',
-        'link' => admin_url('admin.php?page=publishpress-future&tab=defaults'),
+        'link' => admin_url($baseLink . 'defaults'),
     ],
     [
         'title' => __('Advanced', 'post-expirator'),
         'slug'  => 'advanced',
-        'link' => admin_url('admin.php?page=publishpress-future&tab=advanced'),
+        'link' => admin_url($baseLink . 'advanced'),
     ],
     [
         'title' => __('Diagnostics', 'post-expirator'),
         'slug'  => 'diagnostics',
-        'link' => admin_url('admin.php?page=publishpress-future&tab=diagnostics'),
+        'link' => admin_url($baseLink . 'diagnostics'),
+    ],
+    [
+        'title' => __('Tools', 'post-expirator'),
+        'slug'  => 'tools',
+        'link' => admin_url($baseLink . 'tools'),
     ],
 ];
 

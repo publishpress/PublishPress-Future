@@ -1,8 +1,8 @@
 <?php
-namespace wordpress\Framework\WordPress;
+namespace wpunit\Framework\WordPress;
 
 use Codeception\TestCase\WPTestCase;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use WordpressTester;
 
 use function add_action;

@@ -3,13 +3,15 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Debug;
+namespace PublishPress\Future\Modules\Debug;
 
 
-use PublishPressFuture\Framework\Logger\LoggerInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
-use PublishPressFuture\Modules\Debug\Controllers\Controller;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Modules\Debug\Controllers\Controller;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class Module implements ModuleInterface
 {

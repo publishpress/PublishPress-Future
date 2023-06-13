@@ -3,11 +3,15 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core;
+namespace PublishPress\Future\Core;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 abstract class HooksAbstract
 {
+    const ACTION_INIT = 'init';
     const ACTION_ADMIN_INIT = 'admin_init';
+    const ACTION_ADMIN_NOTICES = 'admin_notices';
     const ACTION_INIT_PLUGIN = 'publishpressfuture_init_plugin';
     const ACTION_ACTIVATE_PLUGIN = 'publishpressfuture_activate_plugin';
     const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture_deactivate_plugin';

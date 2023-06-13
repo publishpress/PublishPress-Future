@@ -3,15 +3,15 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Facade;
+namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use WP_Error;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class CronFacade
 {
     /**
-     * Undocumented function
-     *
      * @param string $hook
      * @param array $args
      * @param bool $wpError
@@ -27,7 +27,7 @@ class CronFacade
      * @param array $args
      * @return false|int
      */
-    public function getNextScheduleForEvent($hook, $args = [])
+    public function getNextScheduleForHook($hook, $args = [])
     {
         return \wp_next_scheduled($hook, $args);
     }
@@ -36,11 +36,10 @@ class CronFacade
      * @param int $timestamp
      * @param string $hook
      * @param array $args
-     * @param bool $returnWpError
      * @return bool|WP_Error
      */
-    public function scheduleSingleEvent($timestamp, $hook, $args = [], $returnWpError = false)
+    public function scheduleSingleEventForHook($timestamp, $hook, $args = [])
     {
-        return \wp_schedule_single_event($timestamp, $hook, $args, $returnWpError);
+        return \wp_schedule_single_event($timestamp, $hook, $args);
     }
 }

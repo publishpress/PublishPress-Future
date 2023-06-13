@@ -3,13 +3,15 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\InstanceProtection;
+namespace PublishPress\Future\Modules\InstanceProtection;
 
 
-use PublishPressFuture\Core\Paths;
-use PublishPressFuture\Framework\ModuleInterface;
+use PublishPress\Future\Core\Paths;
+use PublishPress\Future\Framework\ModuleInterface;
 use PublishPressInstanceProtection\Config;
 use PublishPressInstanceProtection\InstanceChecker;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class Module implements ModuleInterface
 {

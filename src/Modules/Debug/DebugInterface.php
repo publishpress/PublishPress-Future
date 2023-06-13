@@ -3,8 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Debug;
+namespace PublishPress\Future\Modules\Debug;
 
+defined('ABSPATH') or die('Direct access not allowed.');
 
 interface DebugInterface
 {

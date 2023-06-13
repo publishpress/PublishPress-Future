@@ -3,7 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Settings;
+namespace PublishPress\Future\Modules\Settings;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 abstract class HooksAbstract
 {

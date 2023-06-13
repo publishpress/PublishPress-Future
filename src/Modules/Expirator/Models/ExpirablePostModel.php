@@ -3,48 +3,51 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Models;
+namespace PublishPress\Future\Modules\Expirator\Models;
 
 use Closure;
-use PublishPressFuture\Framework\WordPress\Models\PostModel;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Framework\WordPress\Models\PostModel;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirablePostModel extends PostModel
 {
     /**
-     * @var \PublishPressFuture\Modules\Debug\Debug
+     * @var \PublishPress\Future\Modules\Debug\Debug
      */
     private $debug;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\HooksFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\HooksFacade
      */
     private $hooks;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\UsersFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\UsersFacade
      */
     private $users;
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface
      */
     private $scheduler;
 
     /**
-     * @var \PublishPressFuture\Modules\Settings\SettingsFacade
+     * @var \PublishPress\Future\Modules\Settings\SettingsFacade
      */
     private $settings;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\EmailFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\EmailFacade
      */
     private $email;
 
@@ -79,7 +82,7 @@ class ExpirablePostModel extends PostModel
     private $expirationOptions = [];
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface
      */
     private $expirationActionInstance = null;
 
@@ -92,18 +95,27 @@ class ExpirablePostModel extends PostModel
      * @var \Closure
      */
     protected $expirationActionFactory;
+    /**
+     * @var int
+     */
+    private $postId;
+    /**
+     * @var \PublishPress\Future\Modules\Expirator\Models\ActionArgsModel
+     */
+    private $actionArgsModel;
 
     /**
      * @param int $postId
-     * @param \PublishPressFuture\Modules\Debug\Debug $debug
-     * @param \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade $options
-     * @param \PublishPressFuture\Framework\WordPress\Facade\HooksFacade $hooks
-     * @param \PublishPressFuture\Framework\WordPress\Facade\UsersFacade $users
-     * @param \PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface $scheduler
-     * @param \PublishPressFuture\Modules\Settings\SettingsFacade $settings
-     * @param \PublishPressFuture\Framework\WordPress\Facade\EmailFacade $email
+     * @param \PublishPress\Future\Modules\Debug\Debug $debug
+     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
+     * @param \PublishPress\Future\Framework\WordPress\Facade\HooksFacade $hooks
+     * @param \PublishPress\Future\Framework\WordPress\Facade\UsersFacade $users
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface $scheduler
+     * @param \PublishPress\Future\Modules\Settings\SettingsFacade $settings
+     * @param \PublishPress\Future\Framework\WordPress\Facade\EmailFacade $email
      * @param \Closure $termModelFactory
      * @param \Closure $expirationActionFactory
+     * @param \Closure $actionArgsModelFactory
      */
     public function __construct(
         $postId,
@@ -115,10 +127,12 @@ class ExpirablePostModel extends PostModel
         $settings,
         $email,
         $termModelFactory,
-        $expirationActionFactory
+        $expirationActionFactory,
+        $actionArgsModelFactory
     ) {
         parent::__construct($postId, $termModelFactory);
 
+        $this->postId = $postId;
         $this->debug = $debug;
         $this->options = $options;
         $this->hooks = $hooks;
@@ -128,6 +142,9 @@ class ExpirablePostModel extends PostModel
         $this->email = $email;
         $this->termModelFactory = $termModelFactory;
         $this->expirationActionFactory = $expirationActionFactory;
+
+        $this->actionArgsModel = $actionArgsModelFactory();
+        $this->actionArgsModel->loadByPostId($this->postId);
     }
 
     public function getExpirationDataAsArray()
@@ -147,14 +164,9 @@ class ExpirablePostModel extends PostModel
     public function getExpirationType()
     {
         if (empty($this->expirationType)) {
-            $this->expirationType = $this->getMeta('_expiration-date-type', true);
-
             $options = $this->getExpirationOptions();
 
-            if (empty($this->expirationType)) {
-                $this->expirationType = isset($options['expireType'])
-                    ? $options['expireType'] : '';
-            }
+            $this->expirationType = isset($options['expireType']) ? $options['expireType'] : '';
 
             $postType = $this->getPostType();
 
@@ -194,19 +206,17 @@ class ExpirablePostModel extends PostModel
         return $this->expirationType;
     }
 
+    // FIXME: Rename "category" with "term"
     /**
      * @return int[]
      */
     public function getExpirationCategoryIDs()
     {
         if (empty($this->expirationCategories)) {
-            $this->expirationCategories = (array)$this->getMeta('_expiration-date-categories', true);
-
             $options = $this->getExpirationOptions();
 
-            if (empty($this->expirationCategories)) {
-                $this->expirationCategories = isset($options['category']) ? (array)$options['category'] : [];
-            }
+            $this->expirationCategories = isset($options['category']) ? $options['category'] : [];
+            $this->expirationCategories = (array)$this->expirationCategories;
 
             foreach ($this->expirationCategories as &$categoryID) {
                 $categoryID = (int)$categoryID;
@@ -247,14 +257,9 @@ class ExpirablePostModel extends PostModel
     public function getExpirationTaxonomy()
     {
         if (empty($this->expirationTaxonomy)) {
-            $this->expirationTaxonomy = $this->getMeta('_expiration-date-taxonomy', true);
+            $options = $this->getExpirationOptions();
 
-            // Legacy value.
-            if (empty($this->expirationTaxonomy)) {
-                $options = $this->getExpirationOptions();
-
-                $this->expirationTaxonomy = isset($options['categoryTaxonomy']) ? $options['categoryTaxonomy'] : '';
-            }
+            $this->expirationTaxonomy = isset($options['categoryTaxonomy']) ? $options['categoryTaxonomy'] : '';
 
             // Default value.
             if (empty($this->expirationTaxonomy)) {
@@ -271,10 +276,7 @@ class ExpirablePostModel extends PostModel
     public function isExpirationEnabled()
     {
         if (is_null($this->expirationIsEnabled)) {
-            $date = $this->getExpirationDate();
-
-            $this->expirationIsEnabled = $this->getMeta('_expiration-date-status', true) === 'saved'
-                && ! (empty($date));
+            $this->expirationIsEnabled = $this->scheduler->postIsScheduled($this->postId);
         }
 
         return (bool)$this->expirationIsEnabled;
@@ -286,7 +288,7 @@ class ExpirablePostModel extends PostModel
     public function getExpirationDate()
     {
         if (is_null($this->expirationDate)) {
-            $this->expirationDate = $this->getMeta('_expiration-date', true);
+            $this->expirationDate = $this->actionArgsModel->getScheduledDateAsUnixTime();
         }
 
         return $this->expirationDate;
@@ -299,7 +301,7 @@ class ExpirablePostModel extends PostModel
     {
         if (empty($this->expirationOptions)) {
             // Option _expiration-date-options is deprecated when using block editor.
-            $this->expirationOptions = $this->getMeta('_expiration-date-options', true);
+            $this->expirationOptions = $this->actionArgsModel->getArgs();
         }
 
         return $this->expirationOptions;
@@ -308,21 +310,21 @@ class ExpirablePostModel extends PostModel
     /**
      * @param bool $force
      * @return bool
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function expire($force = false)
     {
         $postId = $this->getPostId();
 
         if (! $this->isExpirationEnabled() && ! $force) {
-            $this->debug->log($postId . ' -> Tried to expire but post expiration is NOT ACTIVATED for the post');
+            $this->debug->log($postId . ' -> Tried to run action but future action is NOT ACTIVATED for the post');
 
             return false;
         }
 
         if (! $this->isExpirationEnabled() && $force) {
             $this->debug->log(
-                $postId . ' -> Post expiration is not activated for the post, but $force = true'
+                $postId . ' -> Future action is not activated for the post, but $force = true'
             );
         }
 
@@ -337,13 +339,13 @@ class ExpirablePostModel extends PostModel
 
 
         if (! $expirationAction) {
-            $this->debug->log($postId . ' -> Post expiration cancelled, expiration action is not found');
+            $this->debug->log($postId . ' -> Future action cancelled, expiration action is not found');
 
             return false;
         }
 
         if (! $expirationAction instanceof ExpirationActionInterface) {
-            $this->debug->log($postId . ' -> Post expiration cancelled, expiration action is not valid');
+            $this->debug->log($postId . ' -> Future action cancelled, expiration action is not valid');
 
             return false;
         }
@@ -375,15 +377,28 @@ class ExpirablePostModel extends PostModel
         if (! $this->expirationEmailIsEnabled()) {
             $expirationLog .= __('Email is disabled', 'post-expirator');
         } else {
-            $emailSent = $this->sendEmail($expirationAction);
+            $emailSent = $this->sendEmail($expirationAction, 'Hey!');
             $expirationLog .= $emailSent
                 ? __('Email sent', 'post-expirator') : __('Email not sent', 'post-expirator');
         }
 
+        $this->logOnAction($expirationLog);
+
         $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
         $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
+
         return true;
+    }
+
+    /**
+     * @param string $message
+     * @return void
+     */
+    private function logOnAction($message)
+    {
+        $log = \ActionScheduler_Logger::instance();
+        $log->log($this->actionArgsModel->getCronActionId(), $message);
     }
 
     private function expirationEmailIsEnabled()
@@ -395,22 +410,16 @@ class ExpirablePostModel extends PostModel
     }
 
     /**
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
-    private function getExpirationAction()
+    public function getExpirationAction()
     {
         if (empty($this->expirationActionInstance)) {
             $factory = $this->expirationActionFactory;
-
-            if (! $factory instanceof Closure) {
-                return;
-            }
-
             $actionInstance = $factory(
                 $this->getExpirationType(),
                 $this
             );
-
 
             if ($actionInstance instanceof ExpirationActionInterface) {
                 $this->expirationActionInstance = $actionInstance;
@@ -422,21 +431,32 @@ class ExpirablePostModel extends PostModel
 
 
     /**
-     * @param \PublishPressFuture\Modules\Expirator\Interfaces\ActionableInterface $expirationAction
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\ActionableInterface $expirationAction
      * @param string $actionNotificationText
      * @return bool
      */
-    private function sendEmail($expirationAction, $actionNotificationText)
+    private function sendEmail(ExpirationActionInterface $expirationAction, $deprecatedActionNotificationText = '')
     {
+        if (! empty($deprecatedActionNotificationText)) {
+            _deprecated_argument(
+                __METHOD__,
+                '3.0.0',
+                'Message now comes from ExpirationActionInterface::getNotificationText() instead of from $deprecatedActionNotificationText'
+            );
+        }
+
+        // Remove period of the end to not break the sentence.
+        $notificationText = rtrim($expirationAction->getNotificationText(), '.');
+
         $emailBody = sprintf(
             __(
-                '%1$s (%2$s) has expired at %3$s. %4$s',
+                 '%s. %s on %s. The post link is %s',
                 'post-expirator'
             ),
             '##POSTTITLE##',
-            '##POSTLINK##',
-            '##EXPIRATIONDATE##',
-            $actionNotificationText
+            $notificationText,
+            '##ACTIONDATE##',
+            '##POSTLINK##'
         );
 
         if (empty($emailBody)) {
@@ -446,7 +466,7 @@ class ExpirablePostModel extends PostModel
         }
 
         $emailSubject = sprintf(
-            __('Post Expiration Complete "%s"', 'post-expirator'),
+            __('Future Action Complete "%s"', 'post-expirator'),
             $this->getTitle()
         );
         $emailSubject = sprintf(__('[%1$s] %2$s', 'post-expirator'), $this->options->getOption('blogname'), $emailSubject);
@@ -469,8 +489,19 @@ class ExpirablePostModel extends PostModel
 
         $emailBody = str_replace('##POSTTITLE##', $this->getTitle(), $emailBody);
         $emailBody = str_replace('##POSTLINK##', $this->getPermalink(), $emailBody);
+
+        // Replace the expiration date with the action date using the old placebolder
         $emailBody = str_replace(
             '##EXPIRATIONDATE##',
+            get_date_from_gmt(
+                gmdate('Y-m-d H:i:s', $this->getExpirationDate()),
+                $dateTimeFormat
+            ),
+            $emailBody
+        );
+        // Replace the expiration date with the action date using the new placebolder
+        $emailBody = str_replace(
+            '##ACTIONDATE##',
             get_date_from_gmt(
                 gmdate('Y-m-d H:i:s', $this->getExpirationDate()),
                 $dateTimeFormat
@@ -568,6 +599,12 @@ class ExpirablePostModel extends PostModel
 
             // Send each email.
             foreach ($emailAddresses as $email) {
+                if (empty($email)) {
+                    $this->debug->log($this->getPostId() . ' -> EMPTY EMAIL ADDRESS, SKIPPING');
+
+                    continue;
+                }
+
                 $emailSent = $this->email->send(
                     $email,
                     $emailSubject,

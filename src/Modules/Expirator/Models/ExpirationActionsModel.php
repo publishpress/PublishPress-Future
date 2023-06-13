@@ -3,11 +3,22 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Models;
+namespace PublishPress\Future\Modules\Expirator\Models;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemove;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategorySet;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToDraft;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToTrash;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\StickPost;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\UnstickPost;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirationActionsModel
 {
@@ -16,7 +27,7 @@ class ExpirationActionsModel
     const ACTION_LABEL_ATTRIBUTE = 'label';
 
     /**
-     * @var \PublishPressFuture\Core\HookableInterface
+     * @var \PublishPress\Future\Core\HookableInterface
      */
     private $hooks;
 
@@ -42,15 +53,15 @@ class ExpirationActionsModel
     {
         if (! isset($this->actions[$postType])) {
             $actions = [
-                ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => __('Draft', 'post-expirator'),
-                ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => __('Private', 'post-expirator'),
-                ExpirationActionsAbstract::POST_STATUS_TO_TRASH => __('Trash', 'post-expirator'),
-                ExpirationActionsAbstract::DELETE_POST => __('Delete', 'post-expirator'),
-                ExpirationActionsAbstract::STICK_POST => __('Stick', 'post-expirator'),
-                ExpirationActionsAbstract::UNSTICK_POST => __('Unstick', 'post-expirator'),
-                ExpirationActionsAbstract::POST_CATEGORY_SET => __('Taxonomy: Replace', 'post-expirator'),
-                ExpirationActionsAbstract::POST_CATEGORY_ADD => __('Taxonomy: Add', 'post-expirator'),
-                ExpirationActionsAbstract::POST_CATEGORY_REMOVE => __('Taxonomy: Remove', 'post-expirator'),
+                ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => PostStatusToDraft::getLabel(),
+                ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => PostStatusToPrivate::getLabel(),
+                ExpirationActionsAbstract::POST_STATUS_TO_TRASH => PostStatusToTrash::getLabel(),
+                ExpirationActionsAbstract::DELETE_POST => DeletePost::getLabel(),
+                ExpirationActionsAbstract::STICK_POST => StickPost::getLabel(),
+                ExpirationActionsAbstract::UNSTICK_POST => UnstickPost::getLabel(),
+                ExpirationActionsAbstract::POST_CATEGORY_SET => PostCategorySet::getLabel(),
+                ExpirationActionsAbstract::POST_CATEGORY_ADD => PostCategoryAdd::getLabel(),
+                ExpirationActionsAbstract::POST_CATEGORY_REMOVE => PostCategoryRemove::getLabel(),
             ];
 
             $this->actions[$postType] = $this->hooks->applyFilters(
@@ -58,9 +69,24 @@ class ExpirationActionsModel
                 $actions,
                 $postType
             );
+
+            $this->actions[$postType] = $this->sortActions($this->actions[$postType]);
         }
 
         return $this->actions[$postType];
+    }
+
+    private function sortActions($actions)
+    {
+        $sortedActions = [];
+
+        foreach ($actions as $name => $label) {
+            $sortedActions[$name] = $label;
+        }
+
+        asort($sortedActions);
+
+        return $sortedActions;
     }
 
     public function getActionsAsOptions($postType = '')
@@ -94,5 +120,12 @@ class ExpirationActionsModel
         }
 
         return $actions;
+    }
+
+    public function getLabelForAction($actionName)
+    {
+        $actions = $this->getActions();
+
+        return isset($actions[$actionName]) ? $actions[$actionName] : '';
     }
 }

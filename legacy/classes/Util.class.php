@@ -1,5 +1,10 @@
 <?php
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * Utility functions.
  */
@@ -71,15 +76,13 @@ class PostExpirator_Util
     }
 
     /**
-     * @deprecated 2.8.0 Use PublishPressFuture/Core/Helper/Date::getWpDate instead
+     * @deprecated 2.8.0 Use PublishPress\Future/Core/Helper/Date::getWpDate instead
      */
     public static function get_wp_date($format, $timestamp)
     {
-        $gmtTime = gmdate('Y-m-d H:i:s', $timestamp);
-        $timezone = wp_timezone();
-        $datetime = date_create($gmtTime, new DateTimeZone('+0:00'));
+        $container = Container::getInstance();
 
-        return wp_date($format, $datetime->getTimestamp(), $timezone);
+        return $container->get(ServicesAbstract::DATETIME)->getWpDate($format, $timestamp);
     }
 
     public static function sanitize_array_of_integers($array)

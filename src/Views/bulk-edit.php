@@ -1,8 +1,14 @@
 <?php
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
-$defaults = PostExpirator_Facade::get_default_expiry($post_type);
+$container = Container::getInstance();
+$defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+
+$defaults = $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
 
 $defaultYear = $defaults['year'];
 $defaultMonth = $defaults['month'];
@@ -10,48 +16,57 @@ $defaultDay = $defaults['day'];
 $defaultHour = $defaults['hour'];
 $defaultMinute = $defaults['minute'];
 
-$container = \PublishPressFuture\Core\DI\Container::getInstance();
-$settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+$settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
 $defaults = $settingsFacade->getPostTypeDefaults($post_type);
+
+$postTypeObject = get_post_type_object($post_type);
 ?>
 <div style="clear:both"></div>
 <div class="inline-edit-col post-expirator-quickedit">
     <div class="inline-edit-col">
         <div class="inline-edit-group">
             <legend class="inline-edit-legend"><?php
-                esc_html_e('PublishPress Future', 'post-expirator'); ?></legend>
+                esc_html_e('Future Action', 'post-expirator'); ?></legend>
             <fieldset class="inline-edit-date">
                 <div class="pe-qe-fields">
                     <div>
-                        <legend><span class="title"><?php
-                                esc_html_e('Date', 'post-expirator'); ?></span></legend>
                         <label>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('Enable Post Expiration', 'post-expirator'); ?></span>
+                                esc_html_e('Enable Future Action', 'post-expirator'); ?></span>
                             <select name="expirationdate_status">
-                                <option value="no-change" data-show-fields="false" selected>
-                                    --<?php
-                                    esc_html_e('No Change', 'post-expirator'); ?>--
-                                </option>
-                                <option value="change-only" data-show-fields="true"
-                                        title="<?php
-                                        esc_attr_e('Change expiry date if enabled on p  osts', 'post-expirator'); ?>"><?php
-                                    esc_html_e('Change on posts', 'post-expirator'); ?></option>
-                                <option value="add-only" data-show-fields="true"
-                                        title="<?php
-                                        esc_attr_e('Add expiry date if not enabled on posts', 'post-expirator'); ?>"><?php
-                                    esc_html_e('Add to posts', 'post-expirator'); ?></option>
-                                <option value="change-add"
+                                <option value="no-change" data-show-fields="false" selected>— <?php
+                                    esc_html_e('No Change', 'post-expirator'); ?> —</option>
 
-                                        data-show-fields="true"><?php
-                                    esc_html_e('Change & Add', 'post-expirator'); ?></option>
+                                <option value="change-add"
+                                        data-show-fields="true"><?php echo sprintf(
+                                            esc_html__('Add or update action for %s', 'post-expirator'),
+                                            strtolower($postTypeObject->labels->name)
+                                        ); ?></option>
+                                <option
+                                    value="add-only"
+                                    data-show-fields="true"><?php echo sprintf(
+                                            esc_html__('Add action if none exists for %s', 'post-expirator'),
+                                            strtolower($postTypeObject->labels->name)
+                                        ); ?></option>
+                                <option
+                                    value="change-only"
+                                    data-show-fields="true"><?php echo sprintf(
+                                            esc_html__('Update the existing actions for %s', 'post-expirator'),
+                                            strtolower($postTypeObject->labels->name)
+                                        ); ?></option>
                                 <option value="remove-only"
-                                        data-show-fields="false"><?php
-                                    esc_html_e('Remove from posts', 'post-expirator'); ?></option>
+                                        data-show-fields="false"><?php echo sprintf(
+                                            esc_html__('Remove action from %s', 'post-expirator'),
+                                            strtolower($postTypeObject->labels->name)
+                                        ); ?></option>
                             </select>
-                        </label>
+                        </label><br /><br />
+
                         <span class="post-expirator-date-fields">
+                            <legend><span class="title"><?php
+                                esc_html_e('Date', 'post-expirator'); ?></span></legend>
+
                             <label>
                                 <span class="screen-reader-text"><?php
                                     esc_html_e('Month', 'post-expirator'); ?></span>
@@ -111,9 +126,9 @@ $defaults = $settingsFacade->getPostTypeDefaults($post_type);
                     <div class="post-expirator-date-fields">
                         <legend>
                             <span class="title"><?php
-                                esc_html_e('Type', 'post-expirator'); ?></span>
+                                esc_html_e('Action', 'post-expirator'); ?></span>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('How to expire', 'post-expirator'); ?></span>
+                                esc_html_e('Action to run', 'post-expirator'); ?></span>
                         </legend>
                         <label>
                             <?php
@@ -130,7 +145,7 @@ $defaults = $settingsFacade->getPostTypeDefaults($post_type);
                             <span class="title"><?php
                                 echo esc_html($tax_label); ?></span>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('Expiration Taxonomies', 'post-expirator'); ?></span>
+                                esc_html_e('Terms', 'post-expirator'); ?></span>
                         </legend>
                         <ul id="categorychecklist"
                             class="list:category categorychecklist cat-checklist category-checklist">

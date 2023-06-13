@@ -1,35 +1,48 @@
 <?php
-/**
- * Copyright (c) 2022. PublishPress, All rights reserved.
- */
 
-namespace wordpress;
-
-use Codeception\Test\Unit;
+use Codeception\Util\Shared\Asserts;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use PublishPressFuture\Core\DI\Container;
-use PublishPressFuture\Core\DI\ServicesAbstract;
-use PublishPressFuture\Framework\WordPress\Models\PostModel;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
-use UnitTester;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Framework\WordPress\Models\PostModel;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
-class ServicesTest extends Unit
+class Test extends \Codeception\TestCase\WPTestCase
 {
     /**
-     * @var UnitTester
+     * @var \WpunitTester
      */
     protected $tester;
 
     /**
-     * @var \PublishPressFuture\Core\DI\ContainerInterface
+     * @var \PublishPress\Future\Core\DI\ContainerInterface
      */
     protected $container;
 
-    public function _before()
+    public function setUp(): void
     {
+        // Before...
+        parent::setUp();
+
         $services = require __DIR__ . '/../../../services.php';
         $this->container = new Container($services);
+    }
+
+    public function tearDown(): void
+    {
+        // Your tear down methods here.
+
+        // Then...
+        parent::tearDown();
+    }
+
+    // Tests
+    public function testItWorks()
+    {
+        $post = static::factory()->post->create_and_get();
+
+        $this->assertInstanceOf(\WP_Post::class, $post);
     }
 
     /**

@@ -3,9 +3,11 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\DI;
+namespace PublishPress\Future\Core\DI;
 
 use InvalidArgumentException;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class ServiceNotFoundException extends InvalidArgumentException
 {

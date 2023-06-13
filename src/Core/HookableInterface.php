@@ -3,7 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core;
+namespace PublishPress\Future\Core;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 interface HookableInterface
 {

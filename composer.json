@@ -21,36 +21,28 @@
     },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "automattic/jetpack-autoloader": true
     }
   },
+  "prefer-stable": true,
   "minimum-stability": "stable",
   "autoload": {
-    "psr-4": {
-      "PublishPressFuture\\": "./src"
-    },
     "files": [
       "./define-base-path.php"
     ]
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/andergmartins/wordpress-ray"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/publishpress/publishpress-phpcs-standards"
-    }
-  ],
   "require": {
-    "php": ">=5.6.20",
-    "publishpress/wordpress-reviews": "^1.1",
-    "publishpress/publishpress-instance-protection": "^1.0",
-    "publishpress/wordpress-banners": "^1.2",
-    "publishpress/wordpress-version-notices": "^1",
+    "php": ">=5.6",
     "ext-json": "*",
-    "psr/container": "1.0.0"
+    "woocommerce/action-scheduler": "^3.5",
+    "psr/container": "1.0.0",
+    "pimple/pimple": "3.2.3",
+    "publishpress/vendor-locator-future": "^1.0",
+    "publishpress/instance-protection": "^1.0",
+    "publishpress/wordpress-reviews": "^1.1",
+    "publishpress/wordpress-banners": "^1.2",
+    "publishpress/wordpress-version-notices": "1.1.4"
   },
   "require-dev": {
     "lucatume/wp-browser": "^3",
@@ -68,7 +60,6 @@
     "wp-coding-standards/wpcs": "^2.3",
     "phpmd/phpmd": "^2.13",
     "squizlabs/php_codesniffer": "^3.5",
-    "sebastian/phpcpd": "^6.0",
     "overtrue/phplint": "^2.1",
     "wp-cli/i18n-command": "^2.2",
     "friendsofphp/php-cs-fixer": "^3.4",
@@ -82,15 +73,25 @@
     "phpstan/extension-installer": "^1.2"
   },
   "scripts": {
-    "post-install-cmd": [
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
-    ],
-    "post-update-cmd": [
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
-    ]
-  },
-  "scripts-descriptions": {
-    "tests-php": "Show the available PHP versions for running tests."
+    "build-js:dev": "wp-scripts build --mode development",
+    "build-js:watch": "wp-scripts build --mode development --watch",
+    "build-js": "wp-scripts build --mode production",
+    "tests:start": "node /project/dev-workspace/docker/scripts/prompt-tests-php-version.js dev-workspace/docker/scripts/pptests php{{VERSION}} start",
+    "tests:stop": "node /project/dev-workspace/docker/scripts/prompt-tests-php-version.js dev-workspace/docker/scripts/pptests php{{VERSION}} stop",
+    "tests:brun": "node /project/dev-workspace/docker/scripts/prompt-tests-php-version.js dev-workspace/docker/scripts/pptests php{{VERSION}} brun",
+    "tests:run": "node /project/dev-workspace/docker/scripts/prompt-tests-php-version.js dev-workspace/docker/scripts/pptests php{{VERSION}} run",
+    "tests:brun80": "dev-workspace/docker/scripts/pptests php8.0 brun",
+    "tests:run80": "dev-workspace/docker/scripts/pptests php8.0 run",
+    "tests:ip": "dev-workspace/docker/scripts/pptests php8.0 ip",
+    "build": "/project/dev-workspace/docker/scripts/ppbuild build",
+    "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
+    "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
+    "get-version": "/project/dev-workspace/docker/scripts/ppbuild version",
+    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
+    "make-mo": "wp i18n make-mo ./languages ./languages",
+    "gh-cleanup-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
+    "check:lint": "phplint",
+    "check:phpcs": "phpcs"
   },
   "extra": {
     "plugin-slug": "post-expirator",

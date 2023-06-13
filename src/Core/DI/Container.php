@@ -3,9 +3,11 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Core\DI;
+namespace PublishPress\Future\Core\DI;
 
 use Closure;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 /**
  * PHP Dependency Injection Container PSR-11.

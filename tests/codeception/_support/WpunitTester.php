@@ -1,7 +1,5 @@
 <?php
 
-use Codeception\Actor;
-
 
 /**
  * Inherited Methods
@@ -18,9 +16,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
 */
-class WordpressTester extends Actor
+class WpunitTester extends \Codeception\Actor
 {
-    use _generated\WordpressTesterActions;
+    use _generated\WpunitTesterActions;
 
     /**
      * Define custom actions here

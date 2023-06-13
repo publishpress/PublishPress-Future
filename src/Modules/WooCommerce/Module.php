@@ -3,10 +3,12 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\WooCommerce;
+namespace PublishPress\Future\Modules\WooCommerce;
 
 
-use PublishPressFuture\Framework\ModuleInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class Module implements ModuleInterface
 {

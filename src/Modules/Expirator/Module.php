@@ -3,18 +3,21 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator;
+namespace PublishPress\Future\Modules\Expirator;
 
 
-use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\CronFacade;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
-use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Modules\Expirator\Controllers\BulkEditController;
-use PublishPressFuture\Modules\Expirator\Controllers\ExpirationController;
-use PublishPressFuture\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
+use PublishPress\Future\Modules\Expirator\Controllers\BulkEditController;
+use PublishPress\Future\Modules\Expirator\Controllers\ExpirationController;
+use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController;
+use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class Module implements ModuleInterface
 {
@@ -29,7 +32,7 @@ class Module implements ModuleInterface
     private $site;
 
     /**
-     * @var CronFacade
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
      */
     private $cron;
 
@@ -59,12 +62,32 @@ class Module implements ModuleInterface
     private $currentUserModelFactory;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\RequestFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\RequestFacade
      */
     private $request;
 
-    public function __construct($hooks, $site, $cron, $scheduler, $expirablePostModelFactory, $sanitization, $currentUserModelFactory, $request)
-    {
+    /**
+     * @var \Closure
+     */
+    private $actionArgsModelFactory;
+
+    /**
+     * @var \Closure
+     */
+    private $scheduledActionsTableFactory;
+
+    public function __construct(
+        $hooks,
+        $site,
+        $cron,
+        $scheduler,
+        $expirablePostModelFactory,
+        $sanitization,
+        $currentUserModelFactory,
+        $request,
+        \Closure $actionArgsModelFactory,
+        \Closure $scheduledActionsTableFactory
+    ) {
         $this->hooks = $hooks;
         $this->site = $site;
         $this->cron = $cron;
@@ -73,10 +96,14 @@ class Module implements ModuleInterface
         $this->sanitization = $sanitization;
         $this->currentUserModelFactory = $currentUserModelFactory;
         $this->request = $request;
+        $this->actionArgsModelFactory = $actionArgsModelFactory;
+        $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
+        $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
     }
+
 
     /**
      * @inheritDoc
@@ -107,6 +134,15 @@ class Module implements ModuleInterface
             $this->sanitization,
             $this->currentUserModelFactory,
             $this->request
+        );
+    }
+
+    private function factoryScheduledActionsController()
+    {
+        return new ScheduledActionsController (
+            $this->hooks,
+            $this->actionArgsModelFactory,
+            $this->scheduledActionsTableFactory
         );
     }
 }

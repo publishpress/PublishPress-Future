@@ -3,11 +3,13 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Controllers;
+namespace PublishPress\Future\Modules\Expirator\Controllers;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class BulkEditController implements InitializableInterface
 {
@@ -22,7 +24,7 @@ class BulkEditController implements InitializableInterface
     private $expirablePostModelFactory;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade
      */
     private $sanitization;
 
@@ -32,16 +34,16 @@ class BulkEditController implements InitializableInterface
     private $currentUserModelFactory;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\RequestFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\RequestFacade
      */
     private $request;
 
     /**
      * @param HookableInterface $hooksFacade
      * @param callable $expirablePostModelFactory
-     * @param \PublishPressFuture\Framework\WordPress\Facade\SanitizationFacade $sanitization
+     * @param \PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade $sanitization
      * @param \Closure $currentUserModelFactory
-     * @param \PublishPressFuture\Framework\WordPress\Facade\RequestFacade $request
+     * @param \PublishPress\Future\Framework\WordPress\Facade\RequestFacade $request
      */
     public function __construct(
         HookableInterface $hooksFacade,

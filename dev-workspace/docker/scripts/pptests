@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 start_time=$(date +%s)
 
-script_version="1.0.0"
+script_version="2.0.0"
 
-source_path=$(pwd)
-scripts_path="${source_path}/builder/docker/scripts"
+scripts_path="${PROJECT_PATH}/dev-workspace/docker/scripts"
+dev_workspace_path="${PROJECT_PATH}/dev-workspace"
 
 #######################################
 # Get the plugin name from composer.json file.
 # Globals:
 #   scripts_path
-#   source_path
+#   PROJECT_PATH
 # Returns:
 #   The plugin name.
 #######################################
 get_plugin_name() {
-    php "${scripts_path}/parse-json.php" "${source_path}/composer.json" name | awk -F/ '{print $NF}'
+    php "${scripts_path}/parse-json.php" "${PROJECT_PATH}/composer.json" name | awk -F/ '{print $NF}'
 }
 plugin_name=$(get_plugin_name)
 
@@ -23,11 +23,10 @@ php_version="${1}"
 command="${2}"
 flat_php_version="${php_version//./}"
 container_name="${plugin_name}-tests-${flat_php_version}"
-wordpress_container_name="${container_name}-wordpress-1"
-db_container_name="${container_name}-db-1"
-project_root_path=$(pwd)
-codeception_envs_path="${project_root_path}/tests/codeception/_envs"
-remote_path_in_container="/var/www/html"
+wordpress_container_name="${container_name}_wordpress_1"
+db_container_name="${container_name}_db_1"
+codeception_envs_path="${PROJECT_PATH}/tests/codeception/_envs"
+dir_in_test_container="/var/www/html"
 cols=$(tput cols)
 
 #######################################
@@ -49,10 +48,10 @@ echo_step() {
 #   php_version
 #   container_name
 # Outputs:
-#   Docker compose output
+#   Docker-compose output
 #######################################
 start_services() {
-    docker compose -f "./tests/docker/docker-compose-tests-${php_version}.yml" -p "${container_name}" up -d
+    docker-compose -f $PROJECT_PATH/tests/docker/docker-compose-tests-$php_version.yml -p "${container_name}" up -d
 }
 
 #######################################
@@ -63,10 +62,10 @@ start_services() {
 #   php_version
 #   container_name
 # Outputs:
-#   Docker compose output
+#   Docker-compose output
 #######################################
 stop_services() {
-    docker compose -f "./tests/docker/docker-compose-tests-${php_version}.yml" -p "${container_name}" down
+    docker-compose -f "${PROJECT_PATH}/tests/docker/docker-compose-tests-${php_version}.yml" -p "${container_name}" down
 }
 
 #######################################
@@ -131,7 +130,11 @@ END
 #   The path
 #######################################
 get_mount_path() {
-    docker inspect -f '{{range.Mounts}}{{.Source}}{{end}}' "${wordpress_container_name}"
+    mount_path=$(docker inspect -f '{{range.Mounts}}{{.Source}}{{end}}' "${wordpress_container_name}")    # Remove from mount_path, all the path before /tests/codeception
+    mount_path=${mount_path#*"/tests/docker/"}
+    mount_path="${PROJECT_PATH}/tests/docker/${mount_path}"
+
+    echo "${mount_path}"
 }
 
 #######################################
@@ -140,11 +143,11 @@ get_mount_path() {
 # the group www-data.
 # Globals:
 #   wordpress_container_name
-#   remote_path_in_container
+#   dir_in_test_container
 #######################################
 fix_volume_permissions() {
-    docker exec "${wordpress_container_name}" find "${remote_path_in_container}" -type d -exec chmod 777 {} \;
-    docker exec "${wordpress_container_name}" find "${remote_path_in_container}" -type f -exec chmod 666 {} \;
+    docker exec "${wordpress_container_name}" find "${dir_in_test_container}" -type d -exec chmod 777 {} \;
+    docker exec "${wordpress_container_name}" find "${dir_in_test_container}" -type f -exec chmod 666 {} \;
 }
 
 #######################################
@@ -158,19 +161,19 @@ fix_volume_permissions() {
 create_env_file() {
     env_file_name="${php_version}.yml"
     env_file_path="${codeception_envs_path}/${env_file_name}"
-    template_file_path="${project_root_path}/tests/env.acceptance.template.yml"
+    template_file_path="${PROJECT_PATH}/tests/env.acceptance.template.yml"
 
     db_container_port=$(get_service_port "${db_container_name}" 3306)
     wordpress_container_port=$(get_service_port "${wordpress_container_name}" 80)
     mount_path=$(get_mount_path)
 
-    test_site_db_host="127.0.0.1"
+    test_site_db_host="host.docker.internal"
     test_site_db_port="${db_container_port}"
     test_site_db_name="wordpress"
     test_site_db_user="root"
     test_site_db_password="wordpress"
-    test_site_wp_url="http:\/\/127.0.0.1:${wordpress_container_port}"
-    test_site_wp_domain="127.0.0.1:${wordpress_container_port}"
+    test_site_wp_url="http:\/\/host.docker.internal:${wordpress_container_port}"
+    test_site_wp_domain="host.docker.internal:${wordpress_container_port}"
     test_site_name="Tests on ${php_version}"
     test_site_admin_username="admin"
     test_site_admin_password="admin"
@@ -180,22 +183,36 @@ create_env_file() {
 
     # Copy the template file and replace the variables
     cp "${template_file_path}" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_DB_HOST%/${test_site_db_host}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_DB_PORT%/${test_site_db_port}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_DB_NAME%/${test_site_db_name}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_DB_USER%/${test_site_db_user}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_DB_PASSWORD%/${test_site_db_password}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_WP_URL%/${test_site_wp_url}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_WP_DOMAIN%/${test_site_wp_domain}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_NAME%/${test_site_name}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_ADMIN_USERNAME%/${test_site_admin_username}/g" "${env_file_path}"
-    sed -i.bak "s/%TEST_SITE_ADMIN_PASSWORD%/${test_site_admin_password}/g" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_DB_HOST%" "${test_site_db_host}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_DB_PORT%" "${test_site_db_port}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_DB_NAME%" "${test_site_db_name}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_DB_USER%" "${test_site_db_user}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_DB_PASSWORD%" "${test_site_db_password}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_WP_URL%" "${test_site_wp_url}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_WP_DOMAIN%" "${test_site_wp_domain}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_NAME%" "${test_site_name}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_ADMIN_USERNAME%" "${test_site_admin_username}" "${env_file_path}"
+    replace_placeholder "%TEST_SITE_ADMIN_PASSWORD%" "${test_site_admin_password}" "${env_file_path}"
 
     wp_root_folder=$(echo "${mount_path}" | sed "s/\//:::/g")
-    sed -i.bak "s/%WP_ROOT_FOLDER%/${wp_root_folder}/g" "${env_file_path}"
-    sed -i.bak "s/:::/\//g" "${env_file_path}"
+    replace_placeholder "%WP_ROOT_FOLDER%" "${wp_root_folder}" "${env_file_path}"
+    replace_placeholder ":::" "/" "${env_file_path}"
+}
 
-    rm -f "${env_file_path}".bak
+replace_placeholder() {
+  # Set the placeholder and replacement values
+  placeholder="$1"
+  replacement="$2"
+  file_path="$3"
+
+  # Get the contents of the file as a string
+  file=$(cat "$file_path")
+
+  # Replace the placeholder in the file contents
+  file=${file//$placeholder/$replacement}
+
+  # Write the updated file contents back to the file
+  echo "$file" > "$file_path"
 }
 
 #######################################
@@ -251,10 +268,10 @@ EOF
 # Delete all the volumes containing the
 # WordPress installation for tests.
 # Globals:
-#   project_root_path
+#   PROJECT_PATH
 #######################################
 clean_volumes() {
-    rm -rf "${project_root_path}/tests/docker/volumes/php*"
+    rm -rf "${PROJECT_PATH}/tests/docker/volumes/php*"
 }
 
 #######################################
@@ -281,7 +298,7 @@ add_user_group() {
 #######################################
 run_bootstrap() {
     mount_path=$(get_mount_path)
-    tests/bin/bootstrap "${mount_path}"
+    $dev_workspace_path/docker/scripts/tests-bootstrap "${mount_path}"
 }
 
 #######################################
@@ -290,7 +307,7 @@ run_bootstrap() {
 # Outputs: The output of the builder command.
 #######################################
 run_builder() {
-    HIDE_HEADER=1 "$scripts_path"/build build-dir
+    HIDE_HEADER=1 yarn run build:dir
 }
 
 #######################################
@@ -300,7 +317,7 @@ run_builder() {
 #   A list of codeception envs
 #######################################
 get_php_versions() {
-    find tests/docker/ -type f -name 'docker-compose-tests-php*\.yml' | sed 's/tests\/docker\/docker-compose-tests-//g' | sed 's/\.yml//g' | sed 's/\/\//\//g'
+    find $PROJECT_PATH/tests/docker/ -type f -name 'docker-compose-tests-php*\.yml' | sed 's/tests\/docker\/docker-compose-tests-//g' | sed 's/\.yml//g' | sed 's/\/\//\//g'
 }
 
 #######################################
@@ -308,14 +325,21 @@ get_php_versions() {
 #######################################
 
 start_chromedriver() {
-    chromedriver --url-base=/wd/hub &
+    # Local chromedriver
+    # chromedriver --url-base=/wd/hub &
+
+    # Docker based chromedriver
+    # Check: https://github.com/SeleniumHQ/docker-selenium
+    docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-chrome:4.8.3-20230404
 }
 
 #######################################
 # Stop ChromeDriver
 #######################################
 stop_chromedriver() {
-    ps aux | pgrep chromedriver | awk ' { print $2 } ' | xargs kill -9
+    #  Only needed for local chromedriver
+    # ps aux | pgrep chromedriver | awk ' { print $2 } ' | xargs kill -9
+    echo 'ok'
 }
 
 #######################################
@@ -493,12 +517,12 @@ case "${command}" in
     echo ""
 
     echo_step "Cleaning up codeception output"
-    "$source_path"/vendor/bin/codecept clean
+    "$PROJECT_PATH"/vendor/bin/codecept clean
 
     echo_step "Running codeception tests: ${*:3}, env: ${php_version}"
 
     echo ""
-    "$source_path"/vendor/bin/codecept run "${*:3}" --env "${php_version}"
+    "$PROJECT_PATH"/vendor/bin/codecept run "${*:3}" --env "${php_version}"
 
     echo ""
     echo "Finish running tests!"
@@ -511,14 +535,14 @@ case "${command}" in
     echo ""
 
     echo_step "Cleaning up codeception output"
-    "$source_path"/vendor/bin/codecept clean
+    "$PROJECT_PATH"/vendor/bin/codecept clean
 
     # Arguments passed to this command, after the third one, will all be passed to
     # codeception run command
     echo_step "Running codeception tests: ${*:3}, env: ${php_version}"
 
     echo ""
-    "$source_path"/vendor/bin/codecept run "${*:3}" --env "${php_version}"
+    "$PROJECT_PATH"/vendor/bin/codecept run "${*:3}" --env "${php_version}"
 
     echo ""
     echo "Finish running tests!"

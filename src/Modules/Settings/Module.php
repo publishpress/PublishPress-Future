@@ -3,12 +3,16 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Settings;
+namespace PublishPress\Future\Modules\Settings;
 
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Modules\Settings\Controllers\Controller;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Settings\Controllers\Controller;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class Module implements ModuleInterface
 {
@@ -38,24 +42,51 @@ class Module implements ModuleInterface
     private $taxonomiesModelFactory;
 
     /**
-     * @var \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel
+     * @var \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel
      */
     private $actionsModel;
+    /**
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
+     */
+    private $cron;
+    /**
+     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
+     */
+    private $options;
+
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
 
     /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
-     * @param \PublishPressFuture\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
+     * @param \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cron
+     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      */
-    public function __construct(HookableInterface $hooks, $settings, $settingsPostTypesModelFactory, $taxonomiesModelFactory, $actionsModel)
+    public function __construct(
+        HookableInterface $hooks,
+        $settings,
+        $settingsPostTypesModelFactory,
+        $taxonomiesModelFactory,
+        $actionsModel,
+        CronInterface $cron,
+        OptionsFacade $options,
+        \Closure $expirablePostModelFactory
+    )
     {
         $this->hooks = $hooks;
         $this->settings = $settings;
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
+        $this->cron = $cron;
+        $this->options = $options;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
 
         $this->controller = $this->getController();
     }
@@ -75,7 +106,10 @@ class Module implements ModuleInterface
             $this->settings,
             $this->settingsPostTypesModelFactory,
             $this->taxonomiesModelFactory,
-            $this->actionsModel
+            $this->actionsModel,
+            $this->cron,
+            $this->options,
+            $this->expirablePostModelFactory
         );
     }
 }

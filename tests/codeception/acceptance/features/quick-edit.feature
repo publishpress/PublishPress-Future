@@ -1,5 +1,5 @@
 Feature: Quick edit posts in the admin
-  In order to quickly edit a post expiration
+  In order to quickly edit a future action
   As an admin
   I need to be able to use the quick edit and change expiration for a post
 
@@ -13,4 +13,4 @@ Feature: Quick edit posts in the admin
     Given post "post_1" exists
     When I am on the list of posts
     And I click on the quick edit action for "post_1"
-    Then I see the checkbox to enable post expiration
+    Then I see the checkbox to enable future action

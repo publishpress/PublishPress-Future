@@ -2,7 +2,7 @@
 
 start_time=$(date +%s)
 
-script_version="1.1.2"
+script_version="1.2.3"
 
 command=${1}
 source_path=$(pwd)
@@ -83,7 +83,7 @@ echo_step() {
 #######################################
 clean_dist() {
     echo_step "Removing the folder ${tmp_build_dir} if exists"
-    rm -rf "${tmp_build_dir}"
+    rm -rf "${tmp_build_dir}" "${tmp_build_dir}-tmp"
 }
 
 #######################################
@@ -98,13 +98,18 @@ clean_dist() {
 build_to_dir() {
     clean_dist
 
-    echo_step "Copying plugin files to the dist dir"
+    echo_step "Copying plugin files to the dist dir filtering the files listed on .rsync-filters-pre-build"
     mkdir -p "${tmp_build_dir}"
-    rsync -r -f 'merge .builder-rsync-filters' "${source_path}/" "${tmp_build_dir}"
+    rsync -r -f 'merge .rsync-filters-pre-build' "${source_path}/" "${tmp_build_dir}"
 
     echo_step "Running composer install"
     echo ""
     composer install --no-dev --working-dir="${tmp_build_dir}"
+
+    echo_step "Removing files listed on .rsync-filters-post-build"
+    rsync -r -f 'merge .rsync-filters-post-build' "${tmp_build_dir}/" "${tmp_build_dir}-tmp"
+    rm -rf "${tmp_build_dir}"
+    mv "${tmp_build_dir}-tmp" "${tmp_build_dir}"
 
     echo ""
 }
@@ -206,6 +211,7 @@ case "${command}" in
     echo ""
     build_to_dir
     pack_built_dir
+    clean_dist
     echo ""
     echo "Plugin successfully built to a zip file!"
     show_time

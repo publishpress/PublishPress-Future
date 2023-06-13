@@ -2,6 +2,8 @@
 
 use PublishPress\WordPressReviews\ReviewsController;
 
+defined('ABSPATH') or die('Direct access not allowed.');
+
 /**
  * WordPress reviews functions.
  */

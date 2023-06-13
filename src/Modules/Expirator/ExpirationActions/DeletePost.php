@@ -1,10 +1,12 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
+namespace PublishPress\Future\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class DeletePost implements ExpirationActionInterface
 {
@@ -40,10 +42,16 @@ class DeletePost implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
-            return __('Post was not deleted.', 'post-expirator');
+            return sprintf(
+                __('%s was not deleted.', 'post-expirator'),
+                $this->postModel->getPostTypeSingularLabel()
+            );
         }
 
-        return __('Post has been successfully deleted.', 'post-expirator');
+        return sprintf(
+            __('%s has been successfully deleted.', 'post-expirator'),
+            $this->postModel->getPostTypeSingularLabel()
+        );
     }
 
     /**
@@ -56,5 +64,21 @@ class DeletePost implements ExpirationActionInterface
         $this->log['success'] = $result;
 
         return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getLabel()
+    {
+        return __('Delete', 'post-expirator');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        return self::getLabel();
     }
 }

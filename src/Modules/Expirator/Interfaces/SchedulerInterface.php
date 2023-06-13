@@ -3,7 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Expirator\Interfaces;
+namespace PublishPress\Future\Modules\Expirator\Interfaces;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 interface SchedulerInterface
 {
@@ -25,5 +27,5 @@ interface SchedulerInterface
      * @param int $postId
      * @return bool
      */
-    public function isScheduled($postId);
+    public function postIsScheduled($postId);
 }

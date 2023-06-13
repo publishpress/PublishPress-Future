@@ -1,6 +1,6 @@
 <?php
 
-use PublishPressFuture\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -17,9 +17,9 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             wp_nonce_field('postexpirator_menu_advanced', '_postExpiratorMenuAdvanced_nonce'); ?>
 
             <h3><?php
-                _e('Advanced Options', 'post-expirator'); ?></h3>
+                esc_html_e('Advanced Options', 'post-expirator'); ?></h3>
             <p class="description"><?php
-                _e(
+                esc_html_e(
                     'Please do not update anything here unless you know what it entails. For advanced users only.',
                     'post-expirator'
                 ); ?></p>
@@ -29,21 +29,21 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row"><?php
-                        _e('Block Editor Support', 'post-expirator'); ?></th>
+                        esc_html_e('Block Editor Support', 'post-expirator'); ?></th>
                     <td>
                         <input type="radio" name="gutenberg-support" id="gutenberg-support-enabled"
                                value="1" <?php
                         echo intval($gutenberg) === 1 ? 'checked' : ''; ?>/> <label
                                 for="gutenberg-support-enabled"><?php
-                            _e('Show Gutenberg style box', 'post-expirator'); ?></label>
+                            esc_html_e('Show Gutenberg style box', 'post-expirator'); ?></label>
                         &nbsp;&nbsp;
                         <input type="radio" name="gutenberg-support" id="gutenberg-support-disabled"
                                value="0" <?php
                         echo intval($gutenberg) === 0 ? 'checked' : ''; ?>/> <label
                                 for="gutenberg-support-disabled"><?php
-                            _e('Show Classic Editor style box', 'post-expirator'); ?></label>
+                            esc_html_e('Show Classic Editor style box', 'post-expirator'); ?></label>
                         <p class="description"><?php
-                            _e(
+                            esc_html_e(
                                 'Toggle between native support for the Block Editor or the backward compatible Classic Editor style metabox.',
                                 'post-expirator'
                             ); ?></p>
@@ -52,7 +52,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                 <tr valign="top">
                     <th scope="row">
                         <?php
-                        _e('Choose which user roles can use PublishPress Future', 'post-expirator'); ?>
+                        esc_html_e('Choose which user roles can use PublishPress Future', 'post-expirator'); ?>
                     </th>
                     <td class="pe-checklist">
                         <?php
@@ -83,7 +83,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                 <tr valign="top">
                     <th scope="row">
                         <?php
-                        _e('Preserve data after deactivating the plugin', 'post-expirator'); ?>
+                        esc_html_e('Preserve data after deactivating the plugin', 'post-expirator'); ?>
                     </th>
                     <td>
                         <input type="radio" name="expired-preserve-data-deactivating"
@@ -92,7 +92,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         echo $preserveData ? ' checked="checked"' : ''; ?>/>
                         <label for="expired-preserve-data-deactivating-true">
                             <?php
-                            _e('Preserve data', 'post-expirator'); ?>
+                            esc_html_e('Preserve data', 'post-expirator'); ?>
                         </label>
                         &nbsp;&nbsp;
                         <input type="radio" name="expired-preserve-data-deactivating"
@@ -101,11 +101,11 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
                         <label for="expired-preserve-data-deactivating-false">
                             <?php
-                            _e('Delete data', 'post-expirator'); ?>
+                            esc_html_e('Delete data', 'post-expirator'); ?>
                         </label>
                         <p class="description">
                             <?php
-                            _e(
+                            esc_html_e(
                                 'Toggle between preserving or deleting data after the plugin is deactivated.',
                                 'post-expirator'
                             ); ?>
@@ -116,8 +116,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
 
             <p class="submit">
                 <input type="submit" name="expirationdateSave" class="button-primary"
-                       value="<?php
-                       _e('Save Changes', 'post-expirator'); ?>"/>
+                       value="<?php esc_attr_e('Save Changes', 'post-expirator'); ?>"/>
             </p>
         </form>
     </div>

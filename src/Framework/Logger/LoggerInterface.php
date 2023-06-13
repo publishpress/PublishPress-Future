@@ -3,7 +3,9 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\Logger;
+namespace PublishPress\Future\Framework\Logger;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 interface LoggerInterface
 {

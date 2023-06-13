@@ -3,10 +3,12 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Exceptions;
+namespace PublishPress\Future\Framework\WordPress\Exceptions;
 
 
-use PublishPressFuture\Framework\BaseException;
+use PublishPress\Future\Framework\BaseException;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class WordPressErrorException extends BaseException
 {

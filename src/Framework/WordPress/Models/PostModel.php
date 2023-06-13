@@ -3,10 +3,13 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Models;
+namespace PublishPress\Future\Framework\WordPress\Models;
 
-use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
+use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use WP_Post;
+
+defined('ABSPATH') or die('Direct access not allowed.');
+
 
 class PostModel
 {
@@ -46,7 +49,7 @@ class PostModel
      * @param string $newPostStatus
      *
      * @return bool
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function setPostStatus($newPostStatus)
     {
@@ -135,7 +138,7 @@ class PostModel
 
     /**
      * @return bool
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function postExists()
     {
@@ -146,7 +149,7 @@ class PostModel
 
     /**
      * @return WP_Post
-     * @throws \PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     private function getPostInstance()
     {
@@ -171,9 +174,19 @@ class PostModel
         return get_the_title($this->getPostId());
     }
 
+    public function getPostStatus()
+    {
+        return get_post_status($this->getPostId());
+    }
+
     public function getPermalink()
     {
         return get_post_permalink($this->getPostId());
+    }
+
+    public function getPostEditLink()
+    {
+        return get_edit_post_link($this->getPostId());
     }
 
     public function getPostId()
@@ -242,5 +255,15 @@ class PostModel
         unstick_post($this->getPostId());
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostTypeSingularLabel()
+    {
+        $postTypeObj = get_post_type_object($this->getPostType());
+
+        return $postTypeObj->labels->singular_name;
     }
 }

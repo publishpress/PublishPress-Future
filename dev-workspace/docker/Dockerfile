@@ -6,6 +6,22 @@ FROM php:8.0-cli
 
 RUN set -ex; \
 	\
+  # Prepare for installing docker-cli
+  apt-get update && \
+    apt-get install -y \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg-agent \
+        software-properties-common && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" && \
+  \
+  # Prepare for installing yarn
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+  \
+  # Install base dependencies
 	apt-get update; \
     apt-get install -y \
         build-essential \
@@ -32,13 +48,19 @@ RUN set -ex; \
         nano \
         vim \
         zsh \
+        iputils-ping \
+        net-tools \
+        default-mysql-client \
+        bsdmainutils \
+        docker.io \
+        docker-compose \
+        yarn \
         ; \
-	\
     mkdir -p /usr/src/php/ext/yaml; \
     curl -fsSL https://pecl.php.net/get/yaml | tar xvz -C "/usr/src/php/ext/yaml" --strip 1; \
     \
     docker-php-ext-configure zip; \
-	docker-php-ext-install zip gettext yaml; \
+	docker-php-ext-install zip gettext yaml mysqli pdo_mysql; \
     \
     apt-get purge -y --auto-remove; \
 	rm -rf /var/lib/apt/lists/*
@@ -171,6 +193,7 @@ RUN node --version
 RUN npm install -g npm@${NPM_VERSION}
 
 RUN npm --version
+RUN yarn --version
 
 ####################################################################################################
 # Install Python libs

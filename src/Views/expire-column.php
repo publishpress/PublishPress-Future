@@ -3,6 +3,11 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 <div class="post-expire-col" data-id="<?php echo esc_attr($id); ?>"
@@ -11,26 +16,51 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $iconClass = '';
     $iconTitle = '';
 
-    $expirationEnabled = PostExpirator_Facade::is_expiration_enabled_for_post($id);
-    $expirationDate = get_post_meta($id, '_expiration-date', true);
+    $container = Container::getInstance();
+    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+    $postModel = $factory($id);
 
-    if ($expirationDate && $expirationEnabled) {
+    $expirationEnabled = $postModel->isExpirationEnabled();
+    $expirationDate = $postModel->getExpirationDate();
+
+    if ($expirationEnabled) {
+        ?><span class="dashicons dashicons-clock icon-scheduled" title="<?php echo esc_attr__('Cron event scheduled.', 'post-expirator'); ?>"></span> <?php
+
         $format = get_option('date_format') . ' ' . get_option('time_format');
-        $display = PostExpirator_Util::get_wp_date($format, $expirationDate);
-        if (PostExpirator_CronFacade::post_has_scheduled_task($id)) {
-            $iconClass = 'clock icon-scheduled';
-            $iconTitle = __('Cron event scheduled.', 'post-expirator');
-        } else {
-            $iconClass = 'warning icon-missed';
-            $iconTitle = __('Cron event not found!', 'post-expirator');
+        $action = $postModel->getExpirationAction();
+
+        echo sprintf(
+            esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
+            '<span class="future-action-action-name">',
+            esc_html($action->getDynamicLabel()),
+            '</span>',
+            esc_html(PostExpirator_Util::get_wp_date($format, $expirationDate)),
+            '<span class="future-action-action-date">',
+            '</span>'
+        );
+
+        $categoryActions = [
+            ExpirationActionsAbstract::POST_CATEGORY_ADD,
+            ExpirationActionsAbstract::POST_CATEGORY_SET,
+            ExpirationActionsAbstract::POST_CATEGORY_REMOVE,
+        ];
+
+        if (in_array($action, $categoryActions)) {
+            $categories = $postModel->getExpirationCategoryNames();
+            if (!empty($categories)) {
+                ?>
+                <div class="future-action-gray">[<?php echo esc_html(implode(', ', $categories)); ?>]</div>
+                <?php
+            }
         }
     } else {
-        $display = __('Never', 'post-expirator');
-        $iconClass = 'marker icon-never';
+        ?>
+        <span aria-hidden="true">—</span>
+        <span class="screen-reader-text"><?php echo esc_html__('No future action', 'post-expirator'); ?></span>
+        <?php
     }
 
-    $container = \PublishPressFuture\Core\DI\Container::getInstance();
-    $settingsFacade = $container->get(\PublishPressFuture\Core\DI\ServicesAbstract::SETTINGS);
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
     $defaultsForPostType = $settingsFacade->getPostTypeDefaults($post_type);
     $expireType = 'draft';
@@ -39,18 +69,20 @@ defined('ABSPATH') or die('Direct access not allowed.');
     }
 
     // these defaults will be used by quick edit
-    $defaults = PostExpirator_Facade::get_default_expiry($post_type);
+    $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+
+    $defaults = $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
 
     $defaultYear = $defaults['year'];
     $defaultMonth = $defaults['month'];
     $defaultDay = $defaults['day'];
     $defaultHour = $defaults['hour'];
     $defaultMinute = $defaults['minute'];
-    $enabled = $expirationDate && $expirationEnabled ? 'true' : 'false';
+    $enabled = $expirationEnabled ? 'true' : 'false';
     $categories = '';
 
     // Values for Quick Edit
-    if ($expirationDate) {
+    if ($expirationEnabled) {
         $date = gmdate('Y-m-d H:i:s', $expirationDate);
         $defaultYear = get_date_from_gmt($date, 'Y');
         $defaultMonth = get_date_from_gmt($date, 'm');
@@ -75,11 +107,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
         $categories = $defaultsForPostType['terms'];
     }
 
-    // the hidden fields will be used by quick edit
+    // The hidden fields will be used by quick edit.
     ?>
-    <span class="dashicons dashicons-<?php echo esc_attr($iconClass); ?>" title="<?php echo esc_attr($iconTitle); ?>"></span>
 
-    <?php echo esc_html($display); ?>
     <input type="hidden" id="expirationdate_year-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultYear); ?>" />
     <input type="hidden" id="expirationdate_month-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultMonth); ?>" />
     <input type="hidden" id="expirationdate_day-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultDay); ?>" />

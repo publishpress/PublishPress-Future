@@ -1,8 +1,11 @@
-name: Plugin asset/readme deploy
+name: Deploy assets/readme to WordPress.org
 on:
   push:
     branches:
       - 'main'
+
+  workflow_dispatch:
+
 jobs:
   deploy-to-trunk:
     name: Deploy assets/readme to trunk

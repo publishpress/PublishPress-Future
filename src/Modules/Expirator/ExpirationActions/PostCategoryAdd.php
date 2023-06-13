@@ -1,11 +1,13 @@
 <?php
 
-namespace PublishPressFuture\Modules\Expirator\ExpirationActions;
+namespace PublishPress\Future\Modules\Expirator\ExpirationActions;
 
-use PublishPressFuture\Framework\WordPress\Models\TermsModel;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Framework\WordPress\Models\TermsModel;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class PostCategoryAdd implements ExpirationActionInterface
 {
@@ -17,7 +19,7 @@ class PostCategoryAdd implements ExpirationActionInterface
     private $postModel;
 
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\ErrorFacade
      */
     private $errorFacade;
 
@@ -28,7 +30,7 @@ class PostCategoryAdd implements ExpirationActionInterface
 
     /**
      * @param ExpirablePostModel $postModel
-     * @param \PublishPressFuture\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     * @param \PublishPress\Future\Framework\WordPress\Facade\ErrorFacade $errorFacade
      */
     public function __construct($postModel, $errorFacade)
     {
@@ -47,7 +49,10 @@ class PostCategoryAdd implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log)) {
-            return __('No terms were added to the post.', 'post-expirator');
+            return sprintf(
+                __('No terms were added to the %s.', 'post-expirator'),
+                strtolower($this->postModel->getPostTypeSingularLabel())
+            );
         } elseif (isset($this->log['error'])) {
             return $this->log['error'];
         }
@@ -56,11 +61,12 @@ class PostCategoryAdd implements ExpirationActionInterface
 
         return sprintf(
             __(
-                'The following terms (%s) were added to the post: "%s". The full list of terms on the post is: %s.',
+                'The following terms (%s) were added to the %s: "%s". The full list of terms on the post is: %s.',
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],
             $termsModel->getTermNamesByIdAsString($this->log['terms_added'], $this->log['expiration_taxonomy']),
+            strtolower($this->postModel->getPostTypeSingularLabel()),
             $termsModel->getTermNamesByIdAsString($this->log['updated_terms'], $this->log['expiration_taxonomy'])
         );
     }
@@ -92,5 +98,21 @@ class PostCategoryAdd implements ExpirationActionInterface
         }
 
         return ! $resultIsError;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getLabel()
+    {
+        return __('Keep all current terms and add new terms', 'post-expirator');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        return self::getLabel();
     }
 }

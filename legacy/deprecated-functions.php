@@ -1,6 +1,8 @@
 <?php
 
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 if (! function_exists('_scheduleExpiratorEvent')) {
     /**
@@ -272,7 +274,7 @@ function postexpirator_register_expiration_meta($id, $log)
 function postexpirator_expire_post($postId)
 {
     do_action(
-        ExpiratorHooks::ACTION_EXPIRE_POST,
+        ExpiratorHooks::ACTION_RUN_WORKFLOW,
         $postId
     );
 }

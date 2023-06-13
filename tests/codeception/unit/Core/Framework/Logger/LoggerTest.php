@@ -9,10 +9,10 @@ use Codeception\Stub\Expected;
 use Codeception\Test\Feature\Stub;
 use Codeception\Test\Unit;
 use Exception;
-use PublishPressFuture\Framework\Logger\Logger;
-use PublishPressFuture\Framework\WordPress\Facade\DatabaseFacade;
-use PublishPressFuture\Framework\WordPress\Facade\SiteFacade;
-use PublishPressFuture\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Framework\Logger\Logger;
+use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
+use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 use UnitTester;
 
 class LoggerTest extends Unit

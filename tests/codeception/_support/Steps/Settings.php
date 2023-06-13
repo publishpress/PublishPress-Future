@@ -407,7 +407,7 @@ trait Settings
     public function settingsIsSetToShowInThePostFooter()
     {
         $this->haveOptionInDatabase('expirationdateDisplayFooter', true);
-        $this->haveOptionInDatabase('expirationdateFooterContents', 'Post expires at EXPIRATIONTIME on EXPIRATIONDATE');
+        $this->haveOptionInDatabase('expirationdateFooterContents', 'Post expires at EXPIRATIONTIME on ACTIONDATE');
     }
 
     /**

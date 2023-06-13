@@ -3,10 +3,12 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Modules\Debug;
+namespace PublishPress\Future\Modules\Debug;
 
 
-use PublishPressFuture\Framework\Logger\LoggerInterface;
+use PublishPress\Future\Framework\Logger\LoggerInterface;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class Debug implements DebugInterface
 {
@@ -16,7 +18,7 @@ class Debug implements DebugInterface
     private $logger;
 
     /**
-     * @var \PublishPressFuture\Modules\Settings\SettingsFacade
+     * @var \PublishPress\Future\Modules\Settings\SettingsFacade
      */
     private $settings;
 

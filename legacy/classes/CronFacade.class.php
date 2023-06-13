@@ -1,6 +1,10 @@
 <?php
 
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 /**
  * Utility functions.
@@ -9,27 +13,13 @@ class PostExpirator_CronFacade
 {
     /**
      * @return array
+     * @deprecated
      */
     public static function get_plugin_cron_events()
     {
-        $cron = _get_cron_array();
-        $events = [];
-
-        $plugin_valid_events = self::get_valid_events();
-
-        foreach ($cron as $time => $value) {
-            foreach ($value as $event_key => $event_value) {
-                if (in_array($event_key, $plugin_valid_events)) {
-                    if (! isset($events[$time])) {
-                        $events[$time] = [];
-                    }
-
-                    $events[$time][$event_key] = $event_value;
-                }
-            }
-        }
-
-        return $events;
+        $container = Container::getInstance();
+        $cron      = $container->get(ServicesAbstract::CRON);
+        return $cron->getScheduledActions(ExpiratorHooks::ACTION_LEGACY_EXPIRE_POST2);
     }
 
     /**
@@ -40,32 +30,13 @@ class PostExpirator_CronFacade
         return ! defined('DISABLE_WP_CRON') || DISABLE_WP_CRON == false;
     }
 
-    private static function get_valid_events()
-    {
-        return [
-            ExpiratorHooks::ACTION_EXPIRE_POST,
-            ExpiratorHooks::ACTION_LEGACY_EXPIRE_POST,
-        ];
-    }
-
+    /**
+     * @deprecated
+     */
     public static function post_has_scheduled_task($post_id)
     {
-        $events = self::get_plugin_cron_events();
-
-        foreach ($events as $event) {
-            foreach ($event as $eventValue) {
-                $eventValueKeys = array_keys($eventValue);
-
-                foreach ($eventValueKeys as $eventGUID) {
-                    if (! empty($eventValue[$eventGUID]['args'])) {
-                        if ((int)$eventValue[$eventGUID]['args'][0] === (int)$post_id) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
+        $container = Container::getInstance();
+        $cron      = $container->get(ServicesAbstract::CRON);
+        return $cron->postHasScheduledActions($post_id);
     }
 }

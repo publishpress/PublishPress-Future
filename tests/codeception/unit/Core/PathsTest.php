@@ -6,7 +6,7 @@
 namespace unit\Core;
 
 use Codeception\Test\Unit;
-use PublishPressFuture\Core\Paths;
+use PublishPress\Future\Core\Paths;
 use UnitTester;
 
 class PathsTest extends Unit

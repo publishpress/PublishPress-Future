@@ -3,14 +3,16 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuture\Framework\WordPress\Facade;
+namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use DateTimeZone;
+
+defined('ABSPATH') or die('Direct access not allowed.');
 
 class DateTimeFacade
 {
     /**
-     * @return DateTimeZone
+     * @return \DateTimeZone
      */
     public function getTimezone()
     {
@@ -18,20 +20,22 @@ class DateTimeFacade
     }
 
     /**
-     * @param string $format
-     * @param int $timestamp
-     * @param DateTimeZone $timezone
-     * @return string|false
+     * @param $format
+     * @param $timestamp
+     * @param $timezone
+     * @return string|null
      */
     public function getLocalizedDate($format, $timestamp = null, $timezone = null)
     {
-        return \wp_date($format, $timestamp, $timezone);
+        $date = \wp_date($format, $timestamp, $timezone);
+
+        return false === $date ? null : $date;
     }
 
     /**
      * @param string $format
-     * @param int $timestamp
-     * @return false|string
+     * @param int|null $timestamp
+     * @return string|null
      */
     public function getWpDate($format, $timestamp)
     {
