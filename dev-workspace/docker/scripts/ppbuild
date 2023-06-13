@@ -100,14 +100,14 @@ build_to_dir() {
 
     echo_step "Copying plugin files to the dist dir"
     mkdir -p "${tmp_build_dir}"
-    rsync -r -f 'merge .builder-rsync-filters' "${source_path}/" "${tmp_build_dir}"
+    rsync -r -f 'merge .rsync-filters-pre-build' "${source_path}/" "${tmp_build_dir}"
 
     echo_step "Running composer install"
     echo ""
     composer install --no-dev --working-dir="${tmp_build_dir}"
 
-    echo_step "Removing files listed on the file .builder-post-rsync-filters-post"
-    rsync -r -f 'merge .builder-post-rsync-filters-post' "${tmp_build_dir}/" "${tmp_build_dir}-tmp"
+    echo_step "Removing files listed on the file .rsync-filters-post-build"
+    rsync -r -f 'merge .rsync-filters-post-build' "${tmp_build_dir}/" "${tmp_build_dir}-tmp"
     rm -rf "${tmp_build_dir}"
     mv "${tmp_build_dir}-tmp" "${tmp_build_dir}"
 
