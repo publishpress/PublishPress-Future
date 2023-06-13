@@ -4,47 +4,45 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Core;
+namespace PublishPress\FuturePro\Core;
 
 use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstractFree;
 use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstractFree;
 use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooksAbstractFree;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 abstract class HooksAbstract
 {
-    public const ACTION_INIT_PLUGIN = 'publishpressfuturepro_init_plugin';
+    const ACTION_INIT_PLUGIN = 'publishpressfuturepro_init_plugin';
 
-    public const ACTION_POST_EXPIRED = ExpirationHooksAbstractFree::ACTION_POST_EXPIRED;
+    const ACTION_POST_EXPIRED = ExpirationHooksAbstractFree::ACTION_POST_EXPIRED;
 
-    public const FILTER_CONTROLLERS_LIST = 'publishpressfuturepro_list_modules';
+    const FILTER_CONTROLLERS_LIST = 'publishpressfuturepro_list_modules';
 
-    public const FILTER_EXPIRATION_ACTION_FACTORY = ExpirationHooksAbstractFree::FILTER_EXPIRATION_ACTION_FACTORY;
+    const FILTER_EXPIRATION_ACTION_FACTORY = ExpirationHooksAbstractFree::FILTER_EXPIRATION_ACTION_FACTORY;
 
-    public const ACTION_ACTIVATE_PLUGIN = 'publishpressfuturepro_activate_plugin';
+    const ACTION_ACTIVATE_PLUGIN = 'publishpressfuturepro_activate_plugin';
 
-    public const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuturepro_deactivate_plugin';
+    const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuturepro_deactivate_plugin';
 
-    public const ACTION_ADMIN_MENU = 'admin_menu';
+    const ACTION_ADMIN_INIT = 'admin_init';
 
-    public const ACTION_ADMIN_INIT = 'admin_init';
+    const FILTER_ALLOWED_TABS = SettingsHooksAbstractFree::FILTER_ALLOWED_TABS;
 
-    public const ACTION_AFTER_DEBUG_LOG_SETTING = DebugHooksAbstractFree::ACTION_AFTER_DEBUG_LOG_SETTING;
+    const ACTION_LOAD_TAB = SettingsHooksAbstractFree::ACTION_LOAD_TAB;
 
-    public const FILTER_ALLOWED_TABS = SettingsHooksAbstractFree::FILTER_ALLOWED_TABS;
+    const FILTER_SETTINGS_TABS = SettingsHooksAbstractFree::FILTER_SETTINGS_TABS;
 
-    public const ACTION_LOAD_TAB = SettingsHooksAbstractFree::ACTION_LOAD_TAB;
+    const ACTION_SAVE_LICENSE_TAB = SettingsHooksAbstractFree::ACTION_SAVE_TAB . 'license';
 
-    public const FILTER_SETTINGS_TABS = SettingsHooksAbstractFree::FILTER_SETTINGS_TABS;
+    const ACTION_SAVE_POST_TYPE_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_POST_TYPE_SETTINGS;
 
-    public const ACTION_SAVE_LICENSE_TAB = SettingsHooksAbstractFree::ACTION_SAVE_TAB . 'license';
+    const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';
 
-    public const ACTION_SAVE_POST_TYPE_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_POST_TYPE_SETTINGS;
+    const ACTION = 'publishpress_authors_show_blocks_recommendation_banner';
 
-    public const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';
+    const FILTER_SETTINGS_POST_TYPE = SettingsHooksAbstractFree::FILTER_SETTINGS_POST_TYPE;
 
-    public const ACTION = 'publishpress_authors_show_blocks_recommendation_banner';
-
-    public const FILTER_SETTINGS_POST_TYPE = SettingsHooksAbstractFree::FILTER_SETTINGS_POST_TYPE;
-
-    public const ACTION_DELETE_ALL_SETTINGS = SettingsHooksAbstractFree::ACTION_DELETE_ALL_SETTINGS;
+    const ACTION_DELETE_ALL_SETTINGS = SettingsHooksAbstractFree::ACTION_DELETE_ALL_SETTINGS;
 }

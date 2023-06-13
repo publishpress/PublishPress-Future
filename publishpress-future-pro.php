@@ -1,21 +1,23 @@
 <?php
 
-/*
+/**
  * Plugin Name: PublishPress Future Pro
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
- * Description: Allows you to add an expiration date (minute) to posts which you can configure to either delete the post, change it to a draft, or update the post categories at expiration time.
+ * Description: PublishPress Future allows you to schedule automatic changes to posts, pages and other content types.
  * Author: PublishPress
- * Version: 2.9.2
+ * Version: 3.0.0
  * Author URI: http://publishpress.com
  * Text Domain: publishpress-future-pro
  * Domain Path: /languages
+ * Requires at least: 5.3
+ * Requires PHP: 5.6
  */
 
-namespace PublishPressFuturePro {
+namespace PublishPress\FuturePro {
 
     use Exception;
-    use PublishPressFuture\Core\DI\Container;
-    use PublishPressFuturePro\Core\ServicesAbstract;
+    use PublishPress\Future\Core\DI\Container;
+    use PublishPress\FuturePro\Core\ServicesAbstract;
 
     defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -23,7 +25,7 @@ namespace PublishPressFuturePro {
         return;
     }
 
-    const PLUGIN_VERSION = '2.9.2';
+    const PLUGIN_VERSION = '3.0.0';
     const EDD_ITEM_ID = '129032';
     const EDD_SITE_URL = 'https://publishpress.com';
     const BASE_PATH = __DIR__;
@@ -34,12 +36,9 @@ namespace PublishPressFuturePro {
     const FREE_PLUGIN_NAME = 'PublishPress Future';
     const PLUGIN_AUTHOR = 'PublishPress';
 
-    try {
-        // If the PHP version is not compatible, terminate the plugin execution.
-        if (! include_once INCLUDES_DIR . '/check-php-version.php') {
-            return;
-        }
+    include_once INCLUDES_DIR . '/catch-exception.php';
 
+    try {
         // Active the plugin instance protection.
         include_once INCLUDES_DIR . '/plugin-instance-protection.php';
 
@@ -57,24 +56,36 @@ namespace PublishPressFuturePro {
         // Start the free plugin.
         define('PUBLISHPRESS_FUTURE_LOADED_BY_PRO', true);
         define('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES', true);
-        require_once __DIR__ . '/src/includes/free-plugin-initializator.php';
+        require_once __DIR__ . '/src/includes/free-plugin-launcher.php';
 
-        // Initialize the plugin.
-        $services = require INCLUDES_DIR . '/services.php';
-        $container = Container::getInstance();
-        $container->registerServices($services);
+        add_action('plugins_loaded', function () {
+            try {
+                if (! class_exists('PublishPress\Future\Core\DI\Container')) {
+                    throw new Exception(
+                        'PublishPress Future Pro can\'t fully load because PublishPress Future library was not found.'
+                    );
+                }
 
-        require_once __DIR__ . '/src/includes/install.php';
-        require_once __DIR__ . '/src/includes/uninstall.php';
+                // Initialize the plugin.
+                $services = require INCLUDES_DIR . '/services.php';
+                $container = Container::getInstance();
+                $container->registerServices($services);
 
-        register_activation_hook(__FILE__, 'PublishPressFuturePro\\install');
-        register_deactivation_hook(__FILE__, 'PublishPressFuturePro\\uninstall');
+                require_once __DIR__ . '/src/includes/install.php';
+                require_once __DIR__ . '/src/includes/uninstall.php';
+                require_once __DIR__ . '/src/includes/deprecated.php';
 
-        $container->get(ServicesAbstract::PLUGIN)->initialize();
+                register_activation_hook(__FILE__, 'PublishPress\\FuturePro\\install');
+                register_deactivation_hook(__FILE__, 'PublishPress\\FuturePro\\uninstall');
 
-        define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
+                $container->get(ServicesAbstract::PLUGIN)->initialize();
+
+                define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
+            } catch (Exception $e) {
+                logCatchException($e);
+            }
+        }, 12, 0);
     } catch (Exception $e) {
-        include_once INCLUDES_DIR . '/catch-exception.php';
-        logCatchedException($e);
+        logCatchException($e);
     }
 }

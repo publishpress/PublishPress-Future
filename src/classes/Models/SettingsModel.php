@@ -1,18 +1,20 @@
 <?php
 
-namespace PublishPressFuturePro\Models;
+namespace PublishPress\FuturePro\Models;
 
-use PublishPressFuture\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+
+defined('ABSPATH') or die('No direct script access allowed.');
 
 class SettingsModel
 {
     /**
-     * @var \PublishPressFuture\Framework\WordPress\Facade\OptionsFacade
+     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
 
     /**
-     * @var \PublishPressFuturePro\Models\CustomStatusesModel
+     * @var \PublishPress\FuturePro\Models\CustomStatusesModel
      */
     private $customStatusesModel;
 
@@ -22,10 +24,12 @@ class SettingsModel
         $this->customStatusesModel = $customStatusesModel;
     }
 
-    public function getSettings(): array
+    /**
+     * @return array
+     */
+    public function getSettings()
     {
         return [
-            'workflowLogIsEnabled' => $this->getWorkflowLogIsEnabled(),
             'preserveDataOnDeactivation' => $this->getPreserveDataOnDeactivation(),
             'licenseKey' => $this->getLicenseKey(),
             'licenseStatus' => $this->getLicenseStatus(),
@@ -33,36 +37,35 @@ class SettingsModel
         ];
     }
 
-    public function getWorkflowLogIsEnabled(): bool
-    {
-        return (bool)$this->options->getOption('ppfuturepro_log_enabled', 1);
-    }
-
-    public function setWorkflowLogIsEnabled(bool $value)
-    {
-        if (null === $this->options->getOption('ppfuturepro_log_enabled', null)) {
-            $this->options->addOption('ppfuturepro_log_enabled', $value ? 1 : 0);
-        } else {
-            $this->options->updateOption('ppfuturepro_log_enabled', $value ? 1 : 0);
-        }
-    }
-
-    public function getPreserveDataOnDeactivation(): bool
+    /**
+     * @return bool
+     */
+    public function getPreserveDataOnDeactivation()
     {
         return (bool)$this->options->getOption('expirationdate_preserve_data', 1);
     }
 
-    public function getLicenseKey(): string
+    /**
+     * @return string
+     */
+    public function getLicenseKey()
     {
         return (string)$this->options->getOption('ppfuturepro_license_key', '');
     }
 
-    public function getLicenseStatus(): string
+    /**
+     * @return string
+     */
+    public function getLicenseStatus()
     {
         return (string)$this->options->getOption('ppfuturepro_license_status', 'invalid');
     }
 
-    public function setLicenseKey(string $value)
+    /**
+     * @param string $value
+     * @return void
+     */
+    public function setLicenseKey($value)
     {
         if (null === $this->options->getOption('ppfuturepro_license_key', null)) {
             $this->options->addOption('ppfuturepro_license_key', $value);
@@ -71,7 +74,10 @@ class SettingsModel
         }
     }
 
-    public function setLicenseStatus(string $value)
+    /**
+     * @param string $value
+     */
+    public function setLicenseStatus($value)
     {
         if (null === $this->options->getOption('ppfuturepro_license_status', null)) {
             $this->options->addOption('ppfuturepro_license_status', $value);
@@ -80,7 +86,10 @@ class SettingsModel
         }
     }
 
-    public function getEnabledCustomStatuses(): array
+    /**
+     * @return array
+     */
+    public function getEnabledCustomStatuses()
     {
         $unsetValue = ['__unset__'];
         $enabledCustomStatuses = $this->options->getOption(
@@ -98,14 +107,22 @@ class SettingsModel
         return $enabledCustomStatuses;
     }
 
-    public function getEnabledCustomStatusesForPostType(string $postType): array
+    /**
+     * @param string $postType
+     * @return array
+     */
+    public function getEnabledCustomStatusesForPostType($postType)
     {
         $statuses = $this->getEnabledCustomStatuses();
 
-        return $statuses[$postType] ?? [];
+        return isset($statuses[$postType]) ? $statuses[$postType] : [];
     }
 
-    public function setEnabledCustomStatuses(array $statuses)
+    /**
+     * @param array $statuses
+     * @return void
+     */
+    public function setEnabledCustomStatuses($statuses)
     {
         if (
             [-1] === $this->options->getOption(
@@ -120,7 +137,12 @@ class SettingsModel
         $this->options->updateOption('ppfuturepro_enabled_custom_statuses', $statuses);
     }
 
-    public function setEnabledCustomStatusForPostType(string $postType, array $statuses)
+    /**
+     * @param string $postType
+     * @param array $statuses
+     * @return void
+     */
+    public function setEnabledCustomStatusForPostType($postType, array $statuses)
     {
         $currentPostStatuses = $this->getEnabledCustomStatuses();
         $this->setEnabledCustomStatuses(array_merge($currentPostStatuses, [$postType => $statuses]));

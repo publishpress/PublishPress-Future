@@ -20,43 +20,13 @@
   },
   "autoload": {
     "psr-4": {
-      "PublishPressFuturePro\\": "src/classes"
+      "PublishPress\\FuturePro\\": "src/classes"
     }
   },
-  "minimum-stability": "stable",
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/OSTraining/WordPress-EDD-License-Integration"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/OSTraining/EDD-License-handler"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/PublishPress-Future.git"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/PublishPress-Plugin-Builder"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/andergmartins/wordpress-ray"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/publishpress/publishpress-phpcs-standards"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/publishpress/publishpress-instance-protection"
-    }
-  ],
+  "minimum-stability": "dev",
   "require": {
-    "php": ">=7.2",
-    "publishpress/post-expirator": "2.9.2",
+    "php": ">=5.6",
+    "publishpress/publishpress-future": "3.0.0",
     "alledia/wordpress-edd-license-integration": "^2.3",
     "publishpress/publishpress-instance-protection": "^1.0"
   },
@@ -74,7 +44,8 @@
     "automattic/vipwpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "szepeviktor/phpstan-wordpress": "^1.1",
-    "phpstan/extension-installer": "^1.2"
+    "phpstan/extension-installer": "^1.2",
+    "giacocorsiglia/wordpress-stubs": "dev-master"
   },
   "scripts": {
     "post-install-cmd": [
@@ -82,7 +53,25 @@
     ],
     "post-update-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
-    ]
+    ],
+    "build-js:dev": "wp-scripts build --mode development",
+    "build-js:watch": "wp-scripts build --mode development --watch",
+    "build-js": "wp-scripts build --mode production",
+    "fix-permissions": "chmod +x /project/dev-workspace/docker/scripts/ppbuild",
+    "build": "/project/dev-workspace/docker/scripts/ppbuild build",
+    "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
+    "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
+    "get-version": "/project/dev-workspace/docker/scripts/ppbuild version",
+    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
+    "make-mo": "wp i18n make-mo ./languages ./languages",
+    "gh-cleanup-workflows": "user=publishpress repo=publishpress-future-pro; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
+    "phpcompat:7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
+    "phpcompat:7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
+    "phpcompat:8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
+    "phpcompat:8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
+    "check:lint": "phplint",
+    "check:phpcs": "phpcs",
+    "check:stan": "phpstan"
   },
   "scripts-descriptions": {
     "tests-php": "Show the available PHP versions for running tests."

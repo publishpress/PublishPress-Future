@@ -1,15 +1,17 @@
 <?php
 
-namespace PublishPressFuturePro\Domain\ExpirationActions;
+namespace PublishPress\FuturePro\Domain\ExpirationActions;
 
-use PublishPressFuture\Framework\WordPress\Exceptions\NonexistentPostException;
-use PublishPressFuture\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPressFuturePro\Controllers\CustomStatusesController;
-use PublishPressFuturePro\Models\CustomStatusesModel;
+use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\FuturePro\Controllers\CustomStatusesController;
+use PublishPress\FuturePro\Models\CustomStatusesModel;
 
 use function __;
+
+defined('ABSPATH') or die('No direct script access allowed.');
 
 class PostStatusToCustomStatus implements ExpirationActionInterface
 {
@@ -34,15 +36,26 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         $this->customStatusesModel = $customStatusesModel;
     }
 
-    public function __toString(): string
+    private function getPostTypeFromPostModel()
     {
-        return ExpirationActionsAbstract::POST_STATUS_TO_DRAFT;
+        return $this->customStatusesModel->getStatusObject($this->postModel->getExpirationType());
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
-    public function getNotificationText(): string
+    public function __toString()
+    {
+        $postType = $this->getPostTypeFromPostModel();
+
+        return $postType->name;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
             return __('Post status didn\'t change.', 'post-expirator');
@@ -57,8 +70,9 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
     /**
      * @inheritDoc
      * @throws NonexistentPostException
+     * @return bool
      */
-    public function execute(): bool
+    public function execute()
     {
         $newPostStatus = str_replace(
             CustomStatusesController::ACTION_PREFIX,
@@ -82,5 +96,26 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         ];
 
         return $result;
+    }
+
+    public static function getLabel()
+    {
+        return __('Change post status to custom status', 'publishpress-future-pro');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDynamicLabel()
+    {
+        $expirationType = $this->postModel->getExpirationType();
+        $postStatus = str_replace(CustomStatusesController::ACTION_PREFIX, '', $expirationType);
+
+        $postStatusObject = get_post_status_object($postStatus);
+
+        return sprintf(
+            __('Change post status to %s', 'publishpress-future-pro'),
+            $postStatusObject->label
+        );
     }
 }

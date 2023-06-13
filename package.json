@@ -1,40 +1,19 @@
 {
   "name": "publishpress-future-pro",
   "description": "PublishPress Future Pro",
-  "type": "commonjs",
   "license": "GPL-2.0+",
-  "scripts": {
-    "build-js:dev": "wp-scripts build --mode development",
-    "build-js:watch": "wp-scripts build --mode development --watch",
-    "build-js": "wp-scripts build --mode production",
-    "fix-permissions": "chmod +x /project/dev-workspace/docker/scripts/ppbuild",
-    "build": "/project/dev-workspace/docker/scripts/ppbuild build",
-    "build:dir": "/project/dev-workspace/docker/scripts/ppbuild build-dir",
-    "build:clean": "/project/dev-workspace/docker/scripts/ppbuild clean",
-    "get-version": "/project/dev-workspace/docker/scripts/ppbuild version",
-    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
-    "make-mo": "wp i18n make-mo ./languages ./languages",
-    "gh-cleanup-workflows": "user=publishpress repo=publishpress-future-pro; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
-    "phpcompat:7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
-    "phpcompat:7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
-    "phpcompat:8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
-    "phpcompat:8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
-    "check:lint": "phplint",
-    "check:phpcs": "phpcs",
-    "check:stan": "phpstan"
-  },
   "pot": {
     "languageteam": "PublishPress Future Translate Team",
     "lasttranslator": "PublishPress Future Translate Team"
   },
   "dependencies": {
-    "@wordpress/api-fetch": "^6.24.0",
-    "@wordpress/components": "^23.2.0",
-    "@wordpress/hooks": "^3.27.0",
-    "@wordpress/url": "^3.28.0"
+    "@wordpress/api-fetch": "^6.32.0",
+    "@wordpress/components": "^23.9.0",
+    "@wordpress/hooks": "^3.35.0",
+    "@wordpress/url": "^3.36.0"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^25.4.0",
+    "@wordpress/scripts": "^25.5.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -47,9 +26,9 @@
     "braces": "^3.0.2",
     "inquirer-autocomplete-prompt": "^3.0.0",
     "inquirer-interrupted-prompt": "^2.0.1",
-    "node-ray": "^1.19.4",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "node-ray": "^1.21.0",
+    "webpack": "^5.86.0",
+    "webpack-cli": "^5.1.4"
   },
   "peerDependencies": {
     "react": "^17.0.2",

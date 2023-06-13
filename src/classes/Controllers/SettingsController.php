@@ -1,16 +1,18 @@
 <?php
 
-namespace PublishPressFuturePro\Controllers;
+namespace PublishPress\FuturePro\Controllers;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuturePro\Core\HooksAbstract;
-use PublishPressFuturePro\Models\CustomStatusesModel;
-use PublishPressFuturePro\Models\SettingsModel;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Models\CustomStatusesModel;
+use PublishPress\FuturePro\Models\SettingsModel;
 
 use function current_user_can;
 use function wp_die;
 use function wp_verify_nonce;
+
+defined('ABSPATH') or die('No direct script access allowed.');
 
 class SettingsController implements ModuleInterface
 {
@@ -24,7 +26,7 @@ class SettingsController implements ModuleInterface
      */
     private $templatesPath;
     /**
-     * @var \PublishPressFuturePro\Models\SettingsModel
+     * @var \PublishPress\FuturePro\Models\SettingsModel
      */
     private $settingsModel;
 
@@ -46,14 +48,14 @@ class SettingsController implements ModuleInterface
     private $pluginVersion;
 
     /**
-     * @var \PublishPressFuturePro\Models\CustomStatusesModel
+     * @var \PublishPress\FuturePro\Models\CustomStatusesModel
      */
     private $customStatusesModel;
 
     /**
-     * @param \PublishPressFuture\Core\HookableInterface $hooks
-     * @param \PublishPressFuturePro\Models\SettingsModel $settingsModel
-     * @param \PublishPressFuturePro\Models\CustomStatusesModel $customStatusesModel
+     * @param \PublishPress\Future\Core\HookableInterface $hooks
+     * @param \PublishPress\FuturePro\Models\SettingsModel $settingsModel
+     * @param \PublishPress\FuturePro\Models\CustomStatusesModel $customStatusesModel
      * @param string $templatesPath
      * @param string $assetsUrl
      * @param $eddContainer
@@ -64,11 +66,11 @@ class SettingsController implements ModuleInterface
         HookableInterface $hooks,
         SettingsModel $settingsModel,
         CustomStatusesModel $customStatusesModel,
-        string $templatesPath,
-        string $assetsUrl,
+        $templatesPath,
+        $assetsUrl,
         $eddContainer,
-        int $eddItemId,
-        string $pluginVersion
+        $eddItemId,
+        $pluginVersion
     ) {
         $this->hooks = $hooks;
         $this->templatesPath = $templatesPath;
@@ -91,16 +93,6 @@ class SettingsController implements ModuleInterface
         $this->hooks->addAction(
             HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
             [$this, 'adminEnqueueScript']
-        );
-
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_AFTER_DEBUG_LOG_SETTING,
-            [$this, 'renderDebugLogSetting']
-        );
-
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_ADMIN_MENU,
-            [$this, 'adminMenu']
         );
 
         $this->hooks->addFilter(
@@ -158,16 +150,6 @@ class SettingsController implements ModuleInterface
             if (! current_user_can('manage_options')) {
                 wp_die('You do not have permission to do this');
             }
-
-            switch ($_GET['action']) {
-                case 'enable-workflow-logs':
-                    $this->settingsModel->setWorkflowLogIsEnabled(1);
-                    break;
-
-                case 'disable-workflow-logs':
-                    $this->settingsModel->setWorkflowLogIsEnabled(0);
-                    break;
-            }
         }
     }
 
@@ -224,22 +206,6 @@ class SettingsController implements ModuleInterface
         // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 
-    public function renderDebugLogSetting()
-    {
-        $enabled = $this->settingsModel->getWorkflowLogIsEnabled();
-
-        include_once $this->templatesPath . '/workflow-log-setting.html.php';
-    }
-
-    public function adminMenu()
-    {
-        global $submenu;
-
-        if (isset($submenu['publishpress-future']) && isset($submenu['publishpress-future'][0])) {
-            $submenu['publishpress-future'][0][0] = 'Settings';
-        }
-    }
-
     public function filterAllowedTabs($tabs)
     {
         $tabs[] = 'license';
@@ -281,7 +247,7 @@ class SettingsController implements ModuleInterface
             // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $license_key = $_POST['license_key'] ?? '';
+            $license_key = isset($_POST['license_key']) ? $_POST['license_key'] : '';
 
             $this->settingsModel->setLicenseKey($license_key);
 
@@ -291,21 +257,31 @@ class SettingsController implements ModuleInterface
         }
     }
 
-    private function validateLicenseKey($licenseKey): string
+    /**
+     * @param string $licenseKey
+     *
+     * @return string
+     */
+    private function validateLicenseKey($licenseKey)
     {
         $licenseManager = $this->eddContainer['license_manager'];
 
         return $licenseManager->validate_license_key($licenseKey, $this->eddItemId);
     }
 
-    public function savePostTypeSettings(array $settings, string $postType)
+    /**
+     * @param array  $settings
+     * @param string $postType
+     */
+    public function savePostTypeSettings($settings, $postType)
     {
         // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
         $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         $this->settingsModel->setEnabledCustomStatusForPostType(
             $postType,
-            $_POST['expirationdate_custom-statuses-' . $postType] ?? []
+            isset($_POST['expirationdate_custom-statuses-' . $postType])
+                ? $_POST['expirationdate_custom-statuses-' . $postType] : []
         );
 
         // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing

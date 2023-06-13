@@ -4,19 +4,23 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Models;
+namespace PublishPress\FuturePro\Models;
+
+use PublishPress\FuturePro\Controllers\CustomStatusesController;
 
 use function get_post_stati;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 class CustomStatusesModel
 {
-    public const OUTPUT_OBJECTS = 'objects';
-    public const OUTPUT_NAMES = 'names';
+    const OUTPUT_OBJECTS = 'objects';
+    const OUTPUT_NAMES = 'names';
 
     /**
      * @return \stdClass[]
      */
-    public function getCustomStatuses($output = self::OUTPUT_OBJECTS): array
+    public function getCustomStatuses($output = self::OUTPUT_OBJECTS)
     {
         $statuses = get_post_stati([], $output);
         $statusesToIgnore = [
@@ -47,7 +51,10 @@ class CustomStatusesModel
         return $filteredStatuses;
     }
 
-    public function getCustomStatusesAsOptions(): array
+    /**
+     * @return array
+     */
+    public function getCustomStatusesAsOptions()
     {
         $statuses = $this->getCustomStatuses();
         $options = [];
@@ -62,12 +69,19 @@ class CustomStatusesModel
         return $options;
     }
 
-    public function getStatusObject($statusName): ?\stdClass
+    /**
+     * @param string $statusName
+     * @return \stdClass|null
+     */
+    public function getStatusObject($statusName)
     {
         $statuses = $this->getCustomStatuses();
 
-        if (isset($statuses[$statusName])) {
-            return $statuses[$statusName];
+        $prefix = CustomStatusesController::ACTION_PREFIX;
+        $notPrefixedStatusName = str_replace($prefix, '', $statusName);
+
+        if (isset($statuses[$notPrefixedStatusName])) {
+            return $statuses[$notPrefixedStatusName];
         }
 
         return null;

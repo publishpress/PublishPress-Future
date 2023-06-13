@@ -3,11 +3,13 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Core;
+namespace PublishPress\FuturePro\Core;
 
-use PublishPressFuture\Core\HookableInterface;
-use PublishPressFuture\Framework\InitializableInterface;
-use PublishPressFuture\Framework\ModuleInterface as ModuleInterface;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
+
+defined('ABSPATH') or die('No direct script access allowed.');
 
 class PluginInitializator implements InitializableInterface
 {
@@ -38,7 +40,7 @@ class PluginInitializator implements InitializableInterface
         $this->hooks = $hooksFacade;
     }
 
-    public function initialize(): void
+    public function initialize()
     {
         if ($this->initialized) {
             return;
@@ -51,7 +53,7 @@ class PluginInitializator implements InitializableInterface
         $this->initializeControllers();
     }
 
-    private function initializeControllers(): void
+    private function initializeControllers()
     {
         foreach ($this->controllers as $controller) {
             if (method_exists($controller, 'initialize')) {

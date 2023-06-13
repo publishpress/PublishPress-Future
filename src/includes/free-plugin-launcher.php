@@ -7,7 +7,9 @@
  * @package PublishPressFuturePro
  */
 
-namespace PublishPressFuturePro {
+namespace PublishPress\FuturePro {
+
+    defined('ABSPATH') or die('No direct script access allowed.');
 
     if (
         defined('PUBLISHPRESS_FUTURE_BASE_PATH')

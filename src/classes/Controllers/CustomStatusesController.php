@@ -4,23 +4,24 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPressFuturePro\Controllers;
+namespace PublishPress\FuturePro\Controllers;
 
-use PublishPressFuture\Framework\ModuleInterface;
-use PublishPressFuture\Framework\WordPress\Facade\HooksFacade;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
-use PublishPressFuture\Modules\Expirator\Interfaces\ExpirationActionInterface;
-use PublishPressFuture\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPressFuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
-use PublishPressFuturePro\Models\CustomStatusesModel;
-
-use PublishPressFuturePro\Models\SettingsModel;
+use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\FuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
+use PublishPress\FuturePro\Models\CustomStatusesModel;
+use PublishPress\FuturePro\Models\SettingsModel;
 
 use function __;
 
+defined('ABSPATH') or die('No direct script access allowed.');
+
 class CustomStatusesController implements ModuleInterface
 {
-    public const ACTION_PREFIX = 'custom_status_';
+    const ACTION_PREFIX = 'custom_status_';
 
     /**
      * @var HooksFacade
@@ -28,12 +29,12 @@ class CustomStatusesController implements ModuleInterface
     private $hooks;
 
     /**
-     * @var \PublishPressFuturePro\Models\CustomStatusesModel
+     * @var \PublishPress\FuturePro\Models\CustomStatusesModel
      */
     private $modelCustomStatuses;
 
     /**
-     * @var \PublishPressFuturePro\Models\SettingsModel
+     * @var \PublishPress\FuturePro\Models\SettingsModel
      */
     private $settingsModel;
 
@@ -66,12 +67,12 @@ class CustomStatusesController implements ModuleInterface
      * @param string $postType
      * @return string[]
      */
-    public function filterExpirationActions(array $actions, string $postType = ''): array
+    public function filterExpirationActions($actions, $postType = '')
     {
         $customStatuses = $this->modelCustomStatuses->getCustomStatusesAsOptions();
 
         if (empty($postType)) {
-            $selectedCustomStatuses = array_map(function($item) {
+            $selectedCustomStatuses = array_map(function ($item) {
                 return $item['value'];
             }, $customStatuses);
         } else {
@@ -84,7 +85,7 @@ class CustomStatusesController implements ModuleInterface
             }
 
             $actions[self::ACTION_PREFIX . $customStatus['value']] = esc_html__(
-                'Custom status: ',
+                'Change status to ',
                 'publishpress-future-pro'
             ) . $customStatus['label'];
         }
@@ -92,11 +93,17 @@ class CustomStatusesController implements ModuleInterface
         return $actions;
     }
 
+    /**
+     * @param $action
+     * @param string $actionName
+     * @param \PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel $postModel
+     * @return \PublishPress\FuturePro\Domain\ExpirationActions\PostStatusToCustomStatus
+     */
     public function filterExpirationActionFactory(
         $action,
-        string $actionName,
+        $actionName,
         ExpirablePostModel $postModel
-    ): ExpirationActionInterface {
+    ) {
         if (preg_match('/^' . self::ACTION_PREFIX . '/', $actionName)) {
             return new PostStatusToCustomStatus($this->modelCustomStatuses, $postModel);
         }
