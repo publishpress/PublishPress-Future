@@ -37,47 +37,42 @@ class Module implements ModuleInterface
                 }
             }
 
-            add_action(
-                'plugins_loaded',
-                function () {
-                    if (current_user_can('install_plugins')) {
-                        add_filter(
-                            \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
-                            function ($settings) {
-                                $settings['publishpress-future'] = [
-                                    'message' => __( 'You\'re using PublishPress Future Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'post-expirator' ),
-                                    'link'    => 'https://publishpress.com/links/future-banner',
-                                    'screens' => [
-                                        [
-                                            'base' => 'toplevel_page_publishpress-future',
-                                            'id'   => 'toplevel_page_publishpress-future'
-                                        ],
-                                        [
-                                            'base' => 'future_page_publishpress-future-scheduled-actions',
-                                            'id'   => 'future_page_publishpress-future-scheduled-actions'
-                                        ]
-                                    ]
-                                ];
+            if (current_user_can('install_plugins')) {
+                add_filter(
+                    \PPVersionNotices\Module\TopNotice\Module::SETTINGS_FILTER,
+                    function ($settings) {
+                        $settings['publishpress-future'] = [
+                            'message' => __( 'You\'re using PublishPress Future Free. The Pro version has more features and support. %sUpgrade to Pro%s', 'post-expirator' ),
+                            'link'    => 'https://publishpress.com/links/future-banner',
+                            'screens' => [
+                                [
+                                    'base' => 'toplevel_page_publishpress-future',
+                                    'id'   => 'toplevel_page_publishpress-future'
+                                ],
+                                [
+                                    'base' => 'future_page_publishpress-future-scheduled-actions',
+                                    'id'   => 'future_page_publishpress-future-scheduled-actions'
+                                ]
+                            ]
+                        ];
 
-                                return $settings;
-                            }
-                        );
-
-                        add_filter(
-                            'pp_version_notice_menu_link_settings',
-                            function ($settings) {
-                                $settings['publishpress-future'] = [
-                                    'parent' => 'publishpress-future',
-                                    'label'  => __( 'Upgrade to Pro', 'post-expirator' ),
-                                    'link'   => 'https://publishpress.com/links/future-menu',
-                                ];
-
-                                return $settings;
-                            }
-                        );
+                        return $settings;
                     }
-                }
-            );
+                );
+
+                add_filter(
+                    'pp_version_notice_menu_link_settings',
+                    function ($settings) {
+                        $settings['publishpress-future'] = [
+                            'parent' => 'publishpress-future',
+                            'label'  => __( 'Upgrade to Pro', 'post-expirator' ),
+                            'link'   => 'https://publishpress.com/links/future-menu',
+                        ];
+
+                        return $settings;
+                    }
+                );
+            }
         }
     }
 }
