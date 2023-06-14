@@ -61,4 +61,7 @@ abstract class ServicesAbstract
     const TAXONOMIES_MODEL_FACTORY = 'future.free/taxonomies-model-factory';
     const SCHEDULED_ACTIONS_TABLE_FACTORY = 'future.free/scheduled-actions-table';
     const ACTION_ARGS_MODEL_FACTORY = 'future.free/actions-args-mode-factory';
+    const ACTION_SCHEDULER_STORE = 'future.free/action-scheduler/store';
+    const ACTION_SCHEDULER_LOGGER = 'future.free/action-scheduler/logger';
+    const ACTION_SCHEDULER_RUNNER = 'future.free/action-scheduler/runner';
 }

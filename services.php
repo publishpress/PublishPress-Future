@@ -478,9 +478,9 @@ return [
     ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY => static function (ContainerInterface $container) {
         return function() use ($container) {
             return new ScheduledActionsTable(
-                ActionScheduler::store(),
-                ActionScheduler::logger(),
-                ActionScheduler::runner(),
+                $container->get(ServicesAbstract::ACTION_SCHEDULER_STORE),
+                $container->get(ServicesAbstract::ACTION_SCHEDULER_LOGGER),
+                $container->get(ServicesAbstract::ACTION_SCHEDULER_RUNNER),
                 $container->get(ServicesAbstract::HOOKS)
             );
         };
@@ -492,5 +492,17 @@ return [
                 $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
             );
         };
+    },
+
+    ServicesAbstract::ACTION_SCHEDULER_STORE => static function (ContainerInterface $container) {
+        return ActionScheduler::store();
+    },
+
+    ServicesAbstract::ACTION_SCHEDULER_RUNNER => static function (ContainerInterface $container) {
+        return ActionScheduler::runner();
+    },
+
+    ServicesAbstract::ACTION_SCHEDULER_LOGGER => static function (ContainerInterface $container) {
+        return ActionScheduler::logger();
     },
 ];
