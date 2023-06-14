@@ -1009,10 +1009,9 @@ function postexpirator_upgrade()
             }
         }
 
-        if (version_compare($version, '3') === -1) {
+        if (version_compare($version, '3.0.0') === -1) {
             $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK);
             $container->get(ServicesAbstract::HOOKS)->doAction(V30000ActionArgsSchema::HOOK);
-            // FIXME: Add migration from post meta to the args table.
             $container->get(ServicesAbstract::HOOKS)->doAction(V30000ReplaceFooterPlaceholders::HOOK);
         }
     }

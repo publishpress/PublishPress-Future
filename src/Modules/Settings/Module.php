@@ -60,6 +60,11 @@ class Module implements ModuleInterface
     private $expirablePostModelFactory;
 
     /**
+     * @var \Closure
+     */
+    private $migrationsFactory;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
@@ -67,6 +72,7 @@ class Module implements ModuleInterface
      * @param \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
      * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cron
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
+     * @param \Closure $migrationsFactoy
      */
     public function __construct(
         HookableInterface $hooks,
@@ -76,7 +82,8 @@ class Module implements ModuleInterface
         $actionsModel,
         CronInterface $cron,
         OptionsFacade $options,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        $migrationsFactoy
     )
     {
         $this->hooks = $hooks;
@@ -87,6 +94,7 @@ class Module implements ModuleInterface
         $this->cron = $cron;
         $this->options = $options;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->migrationsFactory = $migrationsFactoy;
 
         $this->controller = $this->getController();
     }
@@ -109,7 +117,8 @@ class Module implements ModuleInterface
             $this->actionsModel,
             $this->cron,
             $this->options,
-            $this->expirablePostModelFactory
+            $this->expirablePostModelFactory,
+            $this->migrationsFactory
         );
     }
 }

@@ -66,6 +66,11 @@ class Controller implements InitializableInterface
     private $expirablePostModelFactory;
 
     /**
+     * @var \Closure
+     */
+    private $migrationsFactory;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
@@ -73,6 +78,7 @@ class Controller implements InitializableInterface
      * @param $actionsModel
      * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cron
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
+     * @param \Closure $migrationsFactory
      */
     public function __construct(
         HookableInterface $hooks,
@@ -82,7 +88,8 @@ class Controller implements InitializableInterface
         $actionsModel,
         CronInterface $cron,
         OptionsFacade $options,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        $migrationsFactory
     ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
@@ -92,6 +99,7 @@ class Controller implements InitializableInterface
         $this->cron = $cron;
         $this->options = $options;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->migrationsFactory = $migrationsFactory;
     }
 
     public function initialize()
@@ -359,9 +367,8 @@ class Controller implements InitializableInterface
 
     public function initMigrations()
     {
-        new V30000ActionArgsSchema($this->cron, $this->hooks);
-        new V30000WPCronToActionsScheduler($this->cron, $this->hooks, $this->expirablePostModelFactory);
-        new V30000ReplaceFooterPlaceholders($this->hooks, $this->options);
+        $factory = $this->migrationsFactory;
+        $factory();
     }
 
     private function saveTabDefaults()

@@ -38,6 +38,9 @@ use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationScheduler;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
+use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
+use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use PublishPress\Future\Modules\Expirator\Models\DefaultDataModel;
@@ -52,6 +55,7 @@ use PublishPress\Future\Modules\Settings\Module as ModuleSettings;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
+use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_VERSION,
@@ -336,7 +340,8 @@ return [
             $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
             $container->get(ServicesAbstract::CRON),
             $container->get(ServicesAbstract::OPTIONS),
-            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+            $container->get(ServicesAbstract::MIGRATIONS_FACTORY)
         );
     },
 
@@ -504,5 +509,25 @@ return [
 
     ServicesAbstract::ACTION_SCHEDULER_LOGGER => static function (ContainerInterface $container) {
         return ActionScheduler::logger();
+    },
+
+    ServicesAbstract::MIGRATIONS_FACTORY => static function (ContainerInterface $container) {
+        return function () use ($container) {
+            return [
+                new V30000ActionArgsSchema(
+                    $container->get(ServicesAbstract::CRON),
+                    $container->get(ServicesAbstract::HOOKS)
+                ),
+                new V30000WPCronToActionsScheduler(
+                    $container->get(ServicesAbstract::CRON),
+                    $container->get(ServicesAbstract::HOOKS),
+                    $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                ),
+                new V30000ReplaceFooterPlaceholders(
+                    $container->get(ServicesAbstract::HOOKS),
+                    $container->get(ServicesAbstract::OPTIONS)
+                ),
+            ];
+        };
     },
 ];
