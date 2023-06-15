@@ -65,8 +65,8 @@ class PostCategorySet implements ExpirationActionInterface
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],
-            $termsModel->getTermNamesByIdAsString($this->log['updated_terms'], $this->log['expiration_taxonomy']),
             strtolower($this->postModel->getPostTypeSingularLabel()),
+            $termsModel->getTermNamesByIdAsString($this->log['updated_terms'], $this->log['expiration_taxonomy']),
             $termsModel->getTermNamesByIdAsString($this->log['original_terms'], $this->log['expiration_taxonomy'])
         );
     }
