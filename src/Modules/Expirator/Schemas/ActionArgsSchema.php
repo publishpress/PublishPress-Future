@@ -15,8 +15,10 @@ class ActionArgsSchema
         return $wpdb->prefix . 'ppfuture_actions_args';
     }
 
-    public static function tableExists($tableName)
+    public static function tableExists()
     {
+        $tableName = self::getTableName();
+
         global $wpdb;
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $table = $wpdb->get_var("SHOW TABLES LIKE '$tableName'");

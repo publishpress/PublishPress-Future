@@ -3,6 +3,7 @@
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Debug\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
@@ -70,6 +71,26 @@ $debug = $container->get(ServicesAbstract::DEBUG);
                         <?php else : ?>
                             <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php
                                 esc_html_e('Disabled', 'post-expirator'); ?></span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php
+                        esc_html_e('DB Schema', 'post-expirator'); ?></th>
+                    <td>
+                        <?php if (ActionArgsSchema::tableExists()) : ?>
+                            <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
+                                esc_html_e('Ok', 'post-expirator'); ?></span>
+                        <?php else : ?>
+                            <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php
+                                esc_html_e('Table not found', 'post-expirator'); ?></span>
+                            <?php
+                            $nonce = wp_create_nonce('future-fix-db-schema');
+                            $url = admin_url('admin.php?action=future_fix_db_schema&nonce=' . $nonce);
+                            ?>
+                            <a href="<?php echo esc_url($url); ?>" class="button">
+                                <?php esc_html_e('Fix DB Schema', 'post-expirator'); ?>
+                            </a>
                         <?php endif; ?>
                     </td>
                 </tr>

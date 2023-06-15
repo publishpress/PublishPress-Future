@@ -149,6 +149,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: First letter of future actions log is not capitalized on some messages in the popup view;
 * FIXED: Fix log message when actions related to taxonomy terms run;
 * CHANGED: Changed privacy for method PublishPress\Future\Framework\WordPress\Models\PostModel::getPostInstance from `private` to `protected`;
+* ADDED: Add diagnostic check for DB schema in the Settings page;
 
 = [3.0.0] - [13 Jun, 2023] =
 
