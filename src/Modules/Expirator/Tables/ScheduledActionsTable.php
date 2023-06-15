@@ -310,7 +310,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             foreach ($row['args'] as $key => $value) {
                 $columnHtml .= sprintf(
                     '<li><code>%s => %s</code></li>',
-                    esc_html(var_export($key, true)),
+                    esc_html(var_export($key, true)), // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
                     // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
                     esc_html(
                         var_export($value, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export

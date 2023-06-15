@@ -371,19 +371,20 @@ class Controller implements InitializableInterface
             ActionArgsSchema::createTableIfNotExists();
 
             if (ActionArgsSchema::tableExists()) {
+                // phpcs:ignore WordPressVIPMinimum.Security.ExitAfterRedirect.NoExit
                 wp_redirect(
                     admin_url(
                         'admin.php?page=publishpress-future&tab=diagnostics&message=db_schema_fixed'
                     )
                 );
             } else {
+                // phpcs:ignore WordPressVIPMinimum.Security.ExitAfterRedirect.NoExit
                 wp_redirect(
                     admin_url(
                         'admin.php?page=publishpress-future&tab=diagnostics&message=db_schema_not_fixed'
                     )
                 );
             }
-
             exit;
         }
     }
