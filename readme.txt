@@ -6,7 +6,7 @@ Tags: expire, posts, pages, schedule
 Requires at least: 5.3
 Requires PHP: 5.6
 Tested up to: 6.2
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -81,6 +81,10 @@ This section describes how to install the plugin and get it working.
 3. Settings screen
 
 == Changelog ==
+
+= [3.0.1] - 15 Jun 2023 =
+
+* CHANGED: Updated base plugin to 3.0.1;
 
 = [3.0.0] - 13 Jun 2023 =
 
