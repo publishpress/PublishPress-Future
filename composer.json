@@ -90,14 +90,14 @@
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
     "make-mo": "wp i18n make-mo ./languages ./languages",
     "gh-cleanup-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
-    "check:lint": [
-      "@build:dir",
-      "phplint"
-    ],
-    "check:phpcs": [
-      "@build:dir",
-      "phpcs"
-    ]
+    "check:lint": "phplint",
+    "check:phpcs": "phpcs",
+    "check:stan": "phpstan",
+    "phpcompat:7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
+    "phpcompat:7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
+    "phpcompat:8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
+    "phpcompat:8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
+    "phpcompat:8.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2"
   },
   "extra": {
     "plugin-slug": "post-expirator",
