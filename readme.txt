@@ -143,6 +143,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 = [3.0.1] - [UNRELEASED] =
 
 * FIXED: Restore post expiration data on post meta fields, #452;
+* FIXED: Fix PHP warning about undefined index 'categoryTaxonomy';
 
 = [3.0.0] - [13 Jun, 2023] =
 
