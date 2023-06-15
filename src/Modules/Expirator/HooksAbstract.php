@@ -25,6 +25,7 @@ abstract class HooksAbstract
     const ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS = 'publishpress_future/v30000_replace_footer_placeholders';
     const ACTION_MIGRATE_WPCRON_EXPIRATIONS = 'publishpress_future/v30000_migrate_wpcron_expirations';
     const ACTION_MIGRATE_CREATE_ACTION_ARGS_SCHEMA = 'publishpress_future/v30000_create_actions_args_schema';
+    const ACTION_MIGRATE_RESTORE_POST_META = 'publishpress_future/v30001_restore_post_meta';
     const ACTION_SCHEDULER_DELETED_ACTION = 'action_scheduler_deleted_action';
     const ACTION_SCHEDULER_CANCELED_ACTION = 'action_scheduler_canceled_action';
     const ACTION_SCHEDULER_AFTER_EXECUTE = 'action_scheduler_after_execute';

@@ -6,19 +6,19 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ActionArgsSchema
 {
-    const TABLE_NAME = 'ppfuture_actions_args';
-
     /**
      * @return string
      */
     public static function getTableName()
     {
         global $wpdb;
-        return $wpdb->prefix . self::TABLE_NAME;
+        return $wpdb->prefix . 'ppfuture_actions_args';
     }
 
-    public static function tableExists($tableName)
+    public static function tableExists()
     {
+        $tableName = self::getTableName();
+
         global $wpdb;
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $table = $wpdb->get_var("SHOW TABLES LIKE '$tableName'");

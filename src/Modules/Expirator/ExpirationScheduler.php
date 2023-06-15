@@ -12,6 +12,8 @@ use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 
+use function tad\WPBrowser\vendorDir;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirationScheduler implements SchedulerInterface
@@ -132,6 +134,17 @@ class ExpirationScheduler implements SchedulerInterface
                 print_r($opts, true)
             )
         );
+
+        $postModelFactory = $this->postModelFactory;
+        $postModel = $postModelFactory($postId);
+
+        // Metadata is used by 3rd party plugins.
+        $postModel->updateMeta('_expiration-date-type', isset($opts['expireType']) ? $opts['expireType'] : '');
+        $postModel->updateMeta('_expiration-date-status', 'saved');
+        $postModel->updateMeta('_expiration-date-taxonomy', isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '');
+        $postModel->updateMeta('_expiration-date-categories', isset($opts['category']) ? $opts['category'] : '');
+        $postModel->updateMeta('_expiration-date', $timestamp);
+        $postModel->updateMeta('_expiration-date-options', $opts);
     }
 
     private function unscheduleIfScheduled($postId, $timestamp)
@@ -174,6 +187,15 @@ class ExpirationScheduler implements SchedulerInterface
             $message = $postId . ' -> CLEARED SCHEDULED ACTION using ' . $this->cron->getIdentifier() . ', ' . $errorFeedback;
 
             $this->logger->debug($message);
+
+            $this->deleteExpirationPostMeta($postId);
         }
+    }
+
+    protected function deleteExpirationPostMeta($postId)
+    {
+        $postModelFactory = $this->postModelFactory;
+        $postModel = $postModelFactory($postId);
+        $postModel->deleteExpirationPostMeta();
     }
 }

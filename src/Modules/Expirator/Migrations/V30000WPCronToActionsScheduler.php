@@ -109,13 +109,6 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
 
             do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $eventData['time'], $args);
 
-            $postModel->deleteMeta('_expiration-date-type');
-            $postModel->deleteMeta('_expiration-date-status');
-            $postModel->deleteMeta('_expiration-date-taxonomy');
-            $postModel->deleteMeta('_expiration-date-categories');
-            $postModel->deleteMeta('_expiration-date');
-            $postModel->deleteMeta('_expiration-date-options');
-
             wp_unschedule_event($eventData['time'], $eventData['hook'], $eventData['args']);
         }
     }

@@ -12,6 +12,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
+use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
@@ -1009,11 +1010,18 @@ function postexpirator_upgrade()
             }
         }
 
-        if (version_compare($version, '3') === -1) {
-            $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK);
+        if (version_compare($version, '3.0.0') === -1) {
+            $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK, [], true);
             $container->get(ServicesAbstract::HOOKS)->doAction(V30000ActionArgsSchema::HOOK);
-            // FIXME: Add migration from post meta to the args table.
             $container->get(ServicesAbstract::HOOKS)->doAction(V30000ReplaceFooterPlaceholders::HOOK);
+        }
+
+        if (version_compare($version, '3.0.1') === -1) {
+            if (! get_option('pp_future_V30001RestorePostMeta')) {
+                $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30001RestorePostMeta::HOOK, [], true);
+
+                update_option('pp_future_V30001RestorePostMeta', true);
+            }
         }
     }
 

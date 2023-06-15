@@ -91,7 +91,10 @@
     "make-mo": "wp i18n make-mo ./languages ./languages",
     "gh-cleanup-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
     "check:lint": "phplint",
-    "check:phpcs": "phpcs"
+    "check:phpcs": [
+      "@build:dir",
+      "phpcs"
+    ]
   },
   "extra": {
     "plugin-slug": "post-expirator",

@@ -40,18 +40,21 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         $this->hooksFacade->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
 
         $this->row_actions = array(
-			'hook' => array(
-				'run' => array(
-					'name'  => __( 'Run', 'post-expirator' ),
-					'desc'  => __( 'Process the action now', 'post-expirator' ),
-				),
-				'cancel' => array(
-					'name'  => __( 'Cancel', 'post-expirator' ),
-					'desc'  => __( 'Cancel the action. This will prevent the action from running in the future', 'post-expirator' ),
-					'class' => 'cancel trash',
-				),
-			),
-		);
+            'hook' => array(
+                'run' => array(
+                    'name' => __('Run', 'post-expirator'),
+                    'desc' => __('Process the action now', 'post-expirator'),
+                ),
+                'cancel' => array(
+                    'name' => __('Cancel', 'post-expirator'),
+                    'desc' => __(
+                        'Cancel the action. This will prevent the action from running in the future',
+                        'post-expirator'
+                    ),
+                    'class' => 'cancel trash',
+                ),
+            ),
+        );
     }
 
     public function enqueueScripts()
@@ -72,7 +75,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             ]
         );
 
-        wp_enqueue_style( 'wp-jquery-ui-dialog' );
+        wp_enqueue_style('wp-jquery-ui-dialog');
     }
 
     protected function get_request_order()
@@ -308,6 +311,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
                 $columnHtml .= sprintf(
                     '<li><code>%s => %s</code></li>',
                     esc_html(var_export($key, true)), // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
+                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
                     esc_html(
                         var_export($value, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
                     )
@@ -335,7 +339,11 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             '</a>'
         );
 
-        $taxonomyActions = [ExpirationActionsAbstract::POST_CATEGORY_SET, ExpirationActionsAbstract::POST_CATEGORY_REMOVE, ExpirationActionsAbstract::POST_CATEGORY_ADD];
+        $taxonomyActions = [
+            ExpirationActionsAbstract::POST_CATEGORY_SET,
+            ExpirationActionsAbstract::POST_CATEGORY_REMOVE,
+            ExpirationActionsAbstract::POST_CATEGORY_ADD
+        ];
 
         $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
 
@@ -378,7 +386,6 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             }
 
             $html .= '</ol>';
-
         }
 
         if ($userLogFormat === 'popup') {
@@ -393,24 +400,31 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $html .= '<tbody>';
 
             $html .= '<tr>';
-            $html .= '<td>' . esc_html__('Action: ', 'post-expirator') . '</td><td>' . $this->column_hook($row) . '</td>';
+            $html .= '<td>' . esc_html__('Action: ', 'post-expirator') . '</td><td>' . $this->column_hook(
+                    $row
+                ) . '</td>';
             $html .= '</tr>';
 
             $html .= '<tr>';
-            $html .= '<td>' . esc_html__('Status: ', 'post-expirator') . '</td><td>' . $this->column_status($row) . '</td>';
+            $html .= '<td>' . esc_html__('Status: ', 'post-expirator') . '</td><td>' . $this->column_status(
+                    $row
+                ) . '</td>';
             $html .= '</tr>';
 
             $html .= '<tr>';
-            $html .= '<td>' . esc_html__('Arguments: ', 'post-expirator') . '</td><td>' . $this->column_args($row) . '</td>';
+            $html .= '<td>' . esc_html__('Arguments: ', 'post-expirator') . '</td><td>' . $this->column_args(
+                    $row
+                ) . '</td>';
             $html .= '</tr>';
 
             $html .= '<tr>';
-            $html .= '<td>' . esc_html__('Scheduled date: ', 'post-expirator') . '</td><td>' . $this->column_schedule($row) . '</td>';
+            $html .= '<td>' . esc_html__('Scheduled date: ', 'post-expirator') . '</td><td>' . $this->column_schedule(
+                    $row
+                ) . '</td>';
             $html .= '</tr>';
 
             $html .= '</tbody>';
             $html .= '</table>';
-
 
 
             $html .= '<br />';
@@ -430,7 +444,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
                 $html .= '<tr>';
                 $html .= '<td>' . esc_html($date->format('Y-m-d H:i:s O')) . '</td>';
-                $html .= '<td>' . esc_html($logEntry->get_message()) . '</td>';
+                $html .= '<td>' . esc_html(ucfirst($logEntry->get_message())) . '</td>';
                 $html .= '</tr>';
             }
 

@@ -151,7 +151,7 @@ class PostModel
      * @return WP_Post
      * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
-    private function getPostInstance()
+    protected function getPostInstance()
     {
         if (empty($this->postInstance)) {
             $this->postInstance = \get_post($this->getPostId());

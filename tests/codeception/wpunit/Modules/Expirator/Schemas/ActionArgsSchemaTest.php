@@ -33,7 +33,7 @@ class ActionArgsSchemaTest extends \Codeception\TestCase\WPTestCase
         $this->tester->importSql(["CREATE TABLE IF NOT EXISTS $tableName (id INT)"]);
 
         $this->tester->seeTableInDatabase($tableName);
-        $this->assertTrue(ActionArgsSchema::tableExists($tableName));
+        $this->assertTrue(ActionArgsSchema::tableExists());
     }
 
     /**
@@ -46,7 +46,7 @@ class ActionArgsSchemaTest extends \Codeception\TestCase\WPTestCase
         $this->tester->dontHaveTableInDatabase($tableName);
 
         $this->tester->dontSeeTableInDatabase($tableName);
-        $this->assertFalse(ActionArgsSchema::tableExists($tableName));
+        $this->assertFalse(ActionArgsSchema::tableExists());
     }
 
     /**

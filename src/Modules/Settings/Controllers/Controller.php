@@ -13,6 +13,8 @@ use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
+use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
@@ -66,6 +68,11 @@ class Controller implements InitializableInterface
     private $expirablePostModelFactory;
 
     /**
+     * @var \Closure
+     */
+    private $migrationsFactory;
+
+    /**
      * @param HookableInterface $hooks
      * @param SettingsFacade $settings
      * @param \Closure $settingsPostTypesModelFactory
@@ -73,6 +80,7 @@ class Controller implements InitializableInterface
      * @param $actionsModel
      * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cron
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
+     * @param \Closure $migrationsFactory
      */
     public function __construct(
         HookableInterface $hooks,
@@ -82,7 +90,8 @@ class Controller implements InitializableInterface
         $actionsModel,
         CronInterface $cron,
         OptionsFacade $options,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        $migrationsFactory
     ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
@@ -92,6 +101,7 @@ class Controller implements InitializableInterface
         $this->cron = $cron;
         $this->options = $options;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->migrationsFactory = $migrationsFactory;
     }
 
     public function initialize()
@@ -322,13 +332,59 @@ class Controller implements InitializableInterface
                 wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
             }
 
-            $this->cron->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK);
+            $this->cron->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK, [], true);
 
             wp_redirect(
                 admin_url(
                     'admin.php?page=publishpress-future&tab=tools&message=legacy_post_expirations_migration_scheduled'
                 )
             );
+            exit;
+        }
+
+        if ($_GET['action'] === 'future_restore_legacy_action_arguments') {
+            if (! isset($_GET['nonce']) || ! \wp_verify_nonce(
+                    \sanitize_key($_GET['nonce']),
+                    'future-restore-legacy-action-arguments'
+                )) {
+                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
+            }
+
+            $this->cron->enqueueAsyncAction(V30001RestorePostMeta::HOOK, [], true);
+
+            wp_redirect(
+                admin_url(
+                    'admin.php?page=publishpress-future&tab=tools&message=legacy_post_expirations_data_restored'
+                )
+            );
+            exit;
+        }
+
+        if ($_GET['action'] === 'future_fix_db_schema') {
+            if (! isset($_GET['nonce']) || ! \wp_verify_nonce(
+                    \sanitize_key($_GET['nonce']),
+                    'future-fix-db-schema'
+                )) {
+                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
+            }
+
+            ActionArgsSchema::createTableIfNotExists();
+
+            if (ActionArgsSchema::tableExists()) {
+                // phpcs:ignore WordPressVIPMinimum.Security.ExitAfterRedirect.NoExit
+                wp_redirect(
+                    admin_url(
+                        'admin.php?page=publishpress-future&tab=diagnostics&message=db_schema_fixed'
+                    )
+                );
+            } else {
+                // phpcs:ignore WordPressVIPMinimum.Security.ExitAfterRedirect.NoExit
+                wp_redirect(
+                    admin_url(
+                        'admin.php?page=publishpress-future&tab=diagnostics&message=db_schema_not_fixed'
+                    )
+                );
+            }
             exit;
         }
     }
@@ -347,6 +403,27 @@ class Controller implements InitializableInterface
                     'post-expirator'
                 );
                 break;
+
+            case 'legacy_post_expirations_data_restored':
+                $message = __(
+                    'The legacy actions arguments restoration has been scheduled and will run asynchronously.',
+                    'post-expirator'
+                );
+                break;
+
+            case 'db_schema_fixed':
+                $message = __(
+                    'The database schema was fixed.',
+                    'post-expirator'
+                );
+                break;
+
+            case 'db_schema_not_fixed':
+                $message = __(
+                    'The database schema could not be fixed. Please, contact the support team.',
+                    'post-expirator'
+                );
+                break;
             default:
                 $message = '';
         }
@@ -359,9 +436,8 @@ class Controller implements InitializableInterface
 
     public function initMigrations()
     {
-        new V30000ActionArgsSchema($this->cron, $this->hooks);
-        new V30000WPCronToActionsScheduler($this->cron, $this->hooks, $this->expirablePostModelFactory);
-        new V30000ReplaceFooterPlaceholders($this->hooks, $this->options);
+        $factory = $this->migrationsFactory;
+        $factory();
     }
 
     private function saveTabDefaults()
