@@ -26,7 +26,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=5.6",
-    "publishpress/publishpress-future": "3.0.0",
+    "publishpress/publishpress-future": "3.0.1",
     "alledia/wordpress-edd-license-integration": "^2.3",
     "publishpress/publishpress-instance-protection": "^1.0"
   },
