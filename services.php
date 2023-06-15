@@ -396,7 +396,8 @@ return [
                 $container->get(ServicesAbstract::EMAIL),
                 $container->get(ServicesAbstract::TERM_MODEL_FACTORY),
                 $container->get(ServicesAbstract::EXPIRATION_ACTION_FACTORY),
-                $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY)
+                $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
+                $container->get(ServicesAbstract::DEFAULT_DATA_MODEL)
             );
         };
     },

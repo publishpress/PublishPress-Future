@@ -6,6 +6,7 @@
 namespace PublishPress\Future\Modules\Expirator\Models;
 
 use Closure;
+use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPress\Future\Framework\WordPress\Models\PostModel;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
@@ -99,10 +100,16 @@ class ExpirablePostModel extends PostModel
      * @var int
      */
     private $postId;
+
     /**
      * @var \PublishPress\Future\Modules\Expirator\Models\ActionArgsModel
      */
     private $actionArgsModel;
+
+    /**
+     * @var \PublishPress\Future\Modules\Expirator\Models\DefaultDataModel
+     */
+    private $defaultDataModel;
 
     /**
      * @param int $postId
@@ -116,6 +123,7 @@ class ExpirablePostModel extends PostModel
      * @param \Closure $termModelFactory
      * @param \Closure $expirationActionFactory
      * @param \Closure $actionArgsModelFactory
+     * @param \PublishPress\Future\Modules\Expirator\Models\DefaultDataModel $defaultDataModel
      */
     public function __construct(
         $postId,
@@ -128,7 +136,8 @@ class ExpirablePostModel extends PostModel
         $email,
         $termModelFactory,
         $expirationActionFactory,
-        $actionArgsModelFactory
+        $actionArgsModelFactory,
+        $defaultDataModel
     ) {
         parent::__construct($postId, $termModelFactory);
 
@@ -142,6 +151,7 @@ class ExpirablePostModel extends PostModel
         $this->email = $email;
         $this->termModelFactory = $termModelFactory;
         $this->expirationActionFactory = $expirationActionFactory;
+        $this->defaultDataModel = $defaultDataModel;
 
         $this->actionArgsModel = $actionArgsModelFactory();
         $this->actionArgsModel->loadByPostId($this->postId);
@@ -164,28 +174,28 @@ class ExpirablePostModel extends PostModel
     public function getExpirationType()
     {
         if (empty($this->expirationType)) {
+            $postType = $this->getPostType();
+
+            try {
+                if ($this->getPostStatus() === 'auto-draft') {
+                    $settings = $this->settings->getPostTypeDefaults($this->getPostType());
+
+                    if (! empty($settings['expireType'])) {
+                        $this->expirationType = $this->hooks->applyFilters(
+                            HooksAbstract::FILTER_CUSTOM_EXPIRATION_TYPE,
+                            $settings['expireType'],
+                            $postType
+                        );
+
+                        return $this->expirationType;
+                    }
+                }
+            } catch (NonexistentPostException $e) {
+            }
+
             $options = $this->getExpirationOptions();
 
             $this->expirationType = isset($options['expireType']) ? $options['expireType'] : '';
-
-            $postType = $this->getPostType();
-
-            if (empty($this->expirationType)) {
-                switch ($postType) {
-                    case 'page':
-                        $this->expirationType = $this->options->getOption(
-                            'expirationdateExpiredPageStatus',
-                            ExpirationActionsAbstract::POST_STATUS_TO_DRAFT
-                        );
-                        break;
-                    case 'post':
-                        $this->expirationType = $this->options->getOption(
-                            'expirationdateExpiredPostStatus',
-                            ExpirationActionsAbstract::POST_STATUS_TO_DRAFT
-                        );
-                        break;
-                }
-            }
 
             /**
              * @deprecated
@@ -257,6 +267,17 @@ class ExpirablePostModel extends PostModel
     public function getExpirationTaxonomy()
     {
         if (empty($this->expirationTaxonomy)) {
+            try {
+                if ($this->getPostStatus() === 'auto-draft') {
+                    $settings = $this->settings->getPostTypeDefaults($this->getPostType());
+
+                    if (! empty($settings['taxonomy'])) {
+                        return $settings['taxonomy'];
+                    }
+                }
+            } catch (NonexistentPostException $e) {
+            }
+
             $options = $this->getExpirationOptions();
 
             $this->expirationTaxonomy = isset($options['categoryTaxonomy']) ? $options['categoryTaxonomy'] : '';
@@ -276,6 +297,17 @@ class ExpirablePostModel extends PostModel
     public function isExpirationEnabled()
     {
         if (is_null($this->expirationIsEnabled)) {
+            try {
+                if ($this->getPostStatus() === 'auto-draft') {
+                    $settings = $this->settings->getPostTypeDefaults($this->getPostType());
+
+                    if ($settings['autoEnable']) {
+                        return true;
+                    }
+                }
+            } catch (NonexistentPostException $e) {
+            }
+
             $this->expirationIsEnabled = $this->scheduler->postIsScheduled($this->postId);
         }
 
@@ -288,6 +320,17 @@ class ExpirablePostModel extends PostModel
     public function getExpirationDate()
     {
         if (is_null($this->expirationDate)) {
+            try {
+                if ($this->getPostStatus() === 'auto-draft') {
+                    $defaultData = $this->defaultDataModel->getDefaultExpirationDateForPostType($this->getPostType());
+
+                    if (! empty($defaultData['ts'])) {
+                        return $defaultData['ts'];
+                    }
+                }
+            } catch (NonexistentPostException $e) {
+            }
+
             $this->expirationDate = $this->actionArgsModel->getScheduledDateAsUnixTime();
         }
 
