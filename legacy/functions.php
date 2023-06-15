@@ -1017,7 +1017,11 @@ function postexpirator_upgrade()
         }
 
         if (version_compare($version, '3.0.1') === -1) {
-            $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30001RestorePostMeta::HOOK, [], true);
+            if (! get_option('pp_future_V30001RestorePostMeta')) {
+                $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30001RestorePostMeta::HOOK, [], true);
+
+                update_option('pp_future_V30001RestorePostMeta', true);
+            }
         }
     }
 
