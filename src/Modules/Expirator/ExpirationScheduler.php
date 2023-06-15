@@ -139,10 +139,10 @@ class ExpirationScheduler implements SchedulerInterface
         $postModel = $postModelFactory($postId);
 
         // Metadata is used by 3rd party plugins.
-        $postModel->updateMeta('_expiration-date-type', $opts['expireType']);
+        $postModel->updateMeta('_expiration-date-type', isset($opts['expireType']) ? $opts['expireType'] : '');
         $postModel->updateMeta('_expiration-date-status', 'saved');
-        $postModel->updateMeta('_expiration-date-taxonomy', $opts['categoryTaxonomy']);
-        $postModel->updateMeta('_expiration-date-categories', $opts['category']);
+        $postModel->updateMeta('_expiration-date-taxonomy', isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '');
+        $postModel->updateMeta('_expiration-date-categories', isset($opts['category']) ? $opts['category'] : '');
         $postModel->updateMeta('_expiration-date', $timestamp);
         $postModel->updateMeta('_expiration-date-options', $opts);
     }
