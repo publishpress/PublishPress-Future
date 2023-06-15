@@ -30,6 +30,7 @@ $container = PublishPress\Future\Core\DI\Container::getInstance();
                             ); ?>
                         </p>
                     </td>
+                </tr>
                 </tbody>
             </table>
         </div>
