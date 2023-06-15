@@ -142,14 +142,14 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 = [3.0.1] - [UNRELEASED] =
 
+* ADDED: Add diagnostic check for DB schema in the Settings page;
+* CHANGED: Changed privacy for method PublishPress\Future\Framework\WordPress\Models\PostModel::getPostInstance from `private` to `protected`;
 * FIXED: Restore future action data on post meta fields, #452;
 * FIXED: Fix PHP warning about undefined index 'categoryTaxonomy';
 * FIXED: Fix auto-enabled future action on new posts, #447;
 * FIXED: Fix default future action type on custom post types;
 * FIXED: First letter of future actions log is not capitalized on some messages in the popup view;
 * FIXED: Fix log message when actions related to taxonomy terms run;
-* CHANGED: Changed privacy for method PublishPress\Future\Framework\WordPress\Models\PostModel::getPostInstance from `private` to `protected`;
-* ADDED: Add diagnostic check for DB schema in the Settings page;
 
 = [3.0.0] - [13 Jun, 2023] =
 
