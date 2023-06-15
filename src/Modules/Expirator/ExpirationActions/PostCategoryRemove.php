@@ -61,12 +61,12 @@ class PostCategoryRemove implements ExpirationActionInterface
 
         return sprintf(
             __(
-                'The following terms (%s) were removed from the %s: "%s". The new list of terms on the post is: %s.',
+                'The following terms (%s) were removed from the %s: %s. The new list of terms on the post is: %s.',
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],
-            $termsModel->getTermNamesByIdAsString($this->log['removed_terms'], $this->log['expiration_taxonomy']),
             strtolower($this->postModel->getPostTypeSingularLabel()),
+            $termsModel->getTermNamesByIdAsString($this->log['removed_terms'], $this->log['expiration_taxonomy']),
             $termsModel->getTermNamesByIdAsString($this->log['updated_terms'], $this->log['expiration_taxonomy'])
         );
     }

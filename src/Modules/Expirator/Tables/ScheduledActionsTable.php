@@ -444,7 +444,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
                 $html .= '<tr>';
                 $html .= '<td>' . esc_html($date->format('Y-m-d H:i:s O')) . '</td>';
-                $html .= '<td>' . esc_html($logEntry->get_message()) . '</td>';
+                $html .= '<td>' . esc_html(ucfirst($logEntry->get_message())) . '</td>';
                 $html .= '</tr>';
             }
 
