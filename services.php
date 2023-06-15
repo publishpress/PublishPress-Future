@@ -265,7 +265,7 @@ return [
             $container->get(ServicesAbstract::ERROR),
             $container->get(ServicesAbstract::LOGGER),
             $container->get(ServicesAbstract::DATETIME),
-            $container->get(ServicesAbstract::POST_MODEL_FACTORY),
+            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
             $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY)
         );
     },
@@ -526,6 +526,13 @@ return [
                 new V30000ReplaceFooterPlaceholders(
                     $container->get(ServicesAbstract::HOOKS),
                     $container->get(ServicesAbstract::OPTIONS)
+                ),
+                new V30001RestorePostMeta(
+                    $container->get(ServicesAbstract::CRON),
+                    $container->get(ServicesAbstract::HOOKS),
+                    $container->get(ServicesAbstract::OPTIONS),
+                    $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                    $container->get(ServicesAbstract::ACTION_SCHEDULER_STORE)
                 ),
             ];
         };

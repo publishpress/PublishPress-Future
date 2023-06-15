@@ -387,6 +387,7 @@ class ExpirablePostModel extends PostModel
         $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
         $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
+        $this->deleteExpirationPostMeta();
 
         return true;
     }
@@ -625,5 +626,15 @@ class ExpirablePostModel extends PostModel
         }
 
         return $emailSent;
+    }
+
+    public function deleteExpirationPostMeta()
+    {
+        $this->deleteMeta('_expiration-date-type');
+        $this->deleteMeta('_expiration-date-status');
+        $this->deleteMeta('_expiration-date-taxonomy');
+        $this->deleteMeta('_expiration-date-categories');
+        $this->deleteMeta('_expiration-date');
+        $this->deleteMeta('_expiration-date-options');
     }
 }

@@ -13,6 +13,7 @@ use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
+use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
@@ -330,11 +331,29 @@ class Controller implements InitializableInterface
                 wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
             }
 
-            $this->cron->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK);
+            $this->cron->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK, [], true);
 
             wp_redirect(
                 admin_url(
                     'admin.php?page=publishpress-future&tab=tools&message=legacy_post_expirations_migration_scheduled'
+                )
+            );
+            exit;
+        }
+
+        if ($_GET['action'] === 'future_restore_legacy_action_arguments') {
+            if (! isset($_GET['nonce']) || ! \wp_verify_nonce(
+                    \sanitize_key($_GET['nonce']),
+                    'future-restore-legacy-action-arguments'
+                )) {
+                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
+            }
+
+            $this->cron->enqueueAsyncAction(V30001RestorePostMeta::HOOK, [], true);
+
+            wp_redirect(
+                admin_url(
+                    'admin.php?page=publishpress-future&tab=tools&message=legacy_post_expirations_data_restored'
                 )
             );
             exit;
@@ -352,6 +371,13 @@ class Controller implements InitializableInterface
             case 'legacy_post_expirations_migration_scheduled':
                 $message = __(
                     'The legacy future actions migration has been scheduled and will run asynchronously.',
+                    'post-expirator'
+                );
+                break;
+
+            case 'legacy_post_expirations_data_restored':
+                $message = __(
+                    'The legacy actions arguments restoration has been scheduled and will run asynchronously.',
                     'post-expirator'
                 );
                 break;
