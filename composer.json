@@ -69,14 +69,9 @@
     "phpcompat:7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
     "phpcompat:8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
     "phpcompat:8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
-    "check:lint": [
-      "@build:dir",
-      "phplint"
-    ],
-    "check:phpcs": [
-      "@build:dir",
-      "phpcs"
-    ],
+    "phpcompat:8.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2",
+    "check:lint": "phplint",
+    "check:phpcs": "phpcs",
     "check:stan": "phpstan"
   },
   "extra": {
