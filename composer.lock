@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c437eb8a821696e09a15a1beab8b4ef",
+    "content-hash": "c47e147c8653a3a90d0b4f9025d7d536",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -278,16 +278,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "a12e6f29cac55f15e83f7cfe5675542b6482742d"
+                "reference": "6ff2552e087a36891bed03a433ed161932d8460e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/a12e6f29cac55f15e83f7cfe5675542b6482742d",
-                "reference": "a12e6f29cac55f15e83f7cfe5675542b6482742d",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/6ff2552e087a36891bed03a433ed161932d8460e",
+                "reference": "6ff2552e087a36891bed03a433ed161932d8460e",
                 "shasum": ""
             },
             "require": {
@@ -359,9 +359,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/v3.0.0"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/v3.0.1"
             },
-            "time": "2023-06-13T16:38:02+00:00"
+            "time": "2023-06-15T21:16:26+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -607,16 +607,16 @@
         },
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.6.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "1373570a9ee03a0be31c73df086d1e4343a27347"
+                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/1373570a9ee03a0be31c73df086d1e4343a27347",
-                "reference": "1373570a9ee03a0be31c73df086d1e4343a27347",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
+                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
                 "shasum": ""
             },
             "require-dev": {
@@ -641,9 +641,9 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.0"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.1"
             },
-            "time": "2023-05-10T19:25:40+00:00"
+            "time": "2023-06-14T19:23:12+00:00"
         }
     ],
     "packages-dev": [
@@ -2016,12 +2016,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "658599a82e7203bf3d9611cc6e6544ff970f00d5"
+                "reference": "8709a0c5a1cd9f20762c3e33b7d1db74c081afee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/658599a82e7203bf3d9611cc6e6544ff970f00d5",
-                "reference": "658599a82e7203bf3d9611cc6e6544ff970f00d5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8709a0c5a1cd9f20762c3e33b7d1db74c081afee",
+                "reference": "8709a0c5a1cd9f20762c3e33b7d1db74c081afee",
                 "shasum": ""
             },
             "require": {
@@ -2071,7 +2071,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-13T14:33:57+00:00"
+            "time": "2023-06-15T18:57:15+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
