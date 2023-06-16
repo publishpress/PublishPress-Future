@@ -208,7 +208,7 @@ function postexpirator_show_value($column_name)
     PostExpirator_Display::getInstance()->render_template('expire-column', [
         'id' => $post->ID,
         'post_type' => $post->post_type,
-        'attributes' => $postModel->getExpirationDataAsArray(),
+        'attributes' => $postModel->getExpirationDataAsArray()
     ]);
 }
 
