@@ -161,7 +161,7 @@ echo empty($enabled) ? 'none' : 'flex'; ?>">
             ) . '</p>';
     } elseif (sizeof($taxonomies) > 1 && ! isset($defaultsOption['taxonomy'])) {
         echo '<p>' . esc_html__(
-                'More than 1 heirachical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
+                'More than 1 hierarchical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
                 'post-expirator'
             ) . '</p>';
     } else {
