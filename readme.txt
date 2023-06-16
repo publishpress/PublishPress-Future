@@ -140,6 +140,13 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.0.2] - [UNRELEASED] =
+
+* FIXED: Fix warning displayed in the classic editor if a taxonomy is not properly selected, #453;
+* FIXED: Fix typo in a message when a taxonomy is not properly selected;
+* FIXED: Fix a blank post type label in the Arguments column in the Actions Log list when a post type is not registered anymore;
+* FIXED: FIx error message in the Future Action column if the action is not found anymore, #454;
+
 = [3.0.1] - [15 Jun, 2023] =
 
 * ADDED: Add diagnostic check for DB schema in the Settings page;
@@ -150,9 +157,6 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix default future action type on custom post types;
 * FIXED: First letter of future actions log is not capitalized on some messages in the popup view;
 * FIXED: Fix log message when actions related to taxonomy terms run;
-* FIXED: Fix warning displayed in the classic editor if a taxonomy is not properly selected, #453;
-* FIXED: Fix typo in a message when a taxonomy is not properly selected;
-* FIXED: Fix a blank post type label in the Arguments column in the Actions Log list when a post type is not registered anymore;
 
 = [3.0.0] - [13 Jun, 2023] =
 
