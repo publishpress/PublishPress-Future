@@ -140,7 +140,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [3.0.2] - [UNRELEASED] =
+= [3.0.2] - [19 Jun, 2023] =
 
 * FIXED: Fix warning displayed in the classic editor if a taxonomy is not properly selected, #453;
 * FIXED: Fix typo in a message when a taxonomy is not properly selected;
@@ -150,6 +150,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix label "Action" on a few screens, #458;
 * FIXED: Fix broken screen due by a long select field in Classic Editor, #458;
 * FIXED: Fix Future action ordering not working on "Posts" screen, #462;
+* FIXED: Update .pot file and some translation strings;
 
 = [3.0.1] - [15 Jun, 2023] =
 
