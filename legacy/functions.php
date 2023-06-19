@@ -136,7 +136,16 @@ function postexpirator_orderby($orderBy, $query)
     }
 
     if ('expirationdate' === $query->get('orderby')) {
-        $orderBy = ActionArgsSchema::getTableName() . '.' . 'scheduled_date';
+        $order = strtoupper($query->get('order'));
+
+        if (! in_array($order, [
+            'ASC',
+            'DESC'
+        ], true)) {
+            $order = 'ASC';
+        }
+
+        $orderBy = ActionArgsSchema::getTableName() . '.scheduled_date ' . $order;
     }
 
     return $orderBy;
@@ -153,8 +162,10 @@ function postexpirator_posts_join($join, $query)
         return $join;
     }
 
+    $actionArgsSchemaTableName = ActionArgsSchema::getTableName();
+
     if ('expirationdate' === $query->get('orderby')) {
-        $join .= " LEFT JOIN " . ActionArgsSchema::getTableName() . " ON " . ActionArgsSchema::getTableName() . ".post_id = " . $wpdb->posts . ".ID";
+        $join .= " LEFT JOIN {$actionArgsSchemaTableName} ON {$actionArgsSchemaTableName}.post_id = {$wpdb->posts}.ID AND {$actionArgsSchemaTableName}.enabled = '1'";
     }
 
     return $join;
