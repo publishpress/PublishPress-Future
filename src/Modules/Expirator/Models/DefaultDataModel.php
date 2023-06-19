@@ -76,7 +76,9 @@ class DefaultDataModel
         }
 
         if ('custom' === $defaultDate) {
-            $custom = $this->settings->getDefaultDateCustom();
+            if (empty($customDate)) {
+                $customDate = $this->settings->getDefaultDateCustom();
+            }
 
             if (! empty($customDate)) {
                 $timezoneString = $this->options->getOption('timezone_string');
