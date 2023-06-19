@@ -65,3 +65,7 @@ div.pe-classic-fields > div > label {
 .action-scheduler-status-icon-canceled {
     color: #c9c9c9;
 }
+
+.postbox-container #expirationdate_expiretype {
+    width: 240px;
+}

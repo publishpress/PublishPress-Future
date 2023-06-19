@@ -148,6 +148,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: FIx error message in the Future Action column if the action is not found anymore, #454;
 * FIXED: Fix default date/time offset, #455;
 * FIXED: Fix label "Action" on a few screens, #458;
+* FIXED: Fix broken screen due by a long select field in Classic Editor, #458;
 
 = [3.0.1] - [15 Jun, 2023] =
 
