@@ -146,6 +146,8 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix typo in a message when a taxonomy is not properly selected;
 * FIXED: Fix a blank post type label in the Arguments column in the Actions Log list when a post type is not registered anymore;
 * FIXED: FIx error message in the Future Action column if the action is not found anymore, #454;
+* FIXED: Fix default date/time offset, #455;
+* FIXED: Fix label "Action" on a few screens, #458;
 
 = [3.0.1] - [15 Jun, 2023] =
 
