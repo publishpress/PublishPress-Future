@@ -114,7 +114,7 @@ if ($default === 'publish') {
         </div>
         <div>
             <label><?php
-                esc_html_e('Action to run', 'post-expirator'); ?></label>
+                esc_html_e('Action', 'post-expirator'); ?></label>
             <?php
             _postexpirator_expire_type(array(
                 'type' => $post->post_type,

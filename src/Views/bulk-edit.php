@@ -128,7 +128,7 @@ $postTypeObject = get_post_type_object($post_type);
                             <span class="title"><?php
                                 esc_html_e('Action', 'post-expirator'); ?></span>
                             <span class="screen-reader-text"><?php
-                                esc_html_e('Action to run', 'post-expirator'); ?></span>
+                                esc_html_e('Action', 'post-expirator'); ?></span>
                         </legend>
                         <label>
                             <?php
