@@ -380,7 +380,6 @@ class ExpirablePostModel extends PostModel
 
         $expirationAction = $this->getExpirationAction();
 
-
         if (! $expirationAction) {
             $this->debug->log($postId . ' -> Future action cancelled, expiration action is not found');
 

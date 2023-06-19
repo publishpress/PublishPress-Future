@@ -68,7 +68,7 @@ add_action('plugins_loaded', 'postexpirator_init');
  *
  * @access private
  */
-function postexpirator_add_column($columns, $type)
+function postexpirator_add_column($columns, $type = 'page')
 {
     $container = Container::getInstance();
     $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
@@ -89,6 +89,7 @@ function postexpirator_add_column($columns, $type)
 }
 
 add_filter('manage_posts_columns', 'postexpirator_add_column', 10, 2);
+add_filter('manage_pages_columns', 'postexpirator_add_column', 11, 1);
 
 /**
  * Adds sortable columns.
@@ -135,7 +136,16 @@ function postexpirator_orderby($orderBy, $query)
     }
 
     if ('expirationdate' === $query->get('orderby')) {
-        $orderBy = ActionArgsSchema::getTableName() . '.' . 'scheduled_date';
+        $order = strtoupper($query->get('order'));
+
+        if (! in_array($order, [
+            'ASC',
+            'DESC'
+        ], true)) {
+            $order = 'ASC';
+        }
+
+        $orderBy = ActionArgsSchema::getTableName() . '.scheduled_date ' . $order;
     }
 
     return $orderBy;
@@ -152,37 +162,16 @@ function postexpirator_posts_join($join, $query)
         return $join;
     }
 
+    $actionArgsSchemaTableName = ActionArgsSchema::getTableName();
+
     if ('expirationdate' === $query->get('orderby')) {
-        $join .= " LEFT JOIN " . ActionArgsSchema::getTableName() . " ON " . ActionArgsSchema::getTableName() . ".post_id = " . $wpdb->posts . ".ID";
+        $join .= " LEFT JOIN {$actionArgsSchemaTableName} ON {$actionArgsSchemaTableName}.post_id = {$wpdb->posts}.ID AND {$actionArgsSchemaTableName}.enabled = '1'";
     }
 
     return $join;
 }
 
 add_filter('posts_join', 'postexpirator_posts_join', 10, 2);
-
-/**
- * Adds an 'Future Action' column to the page display table.
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_add_column_page($columns)
-{
-    $container = Container::getInstance();
-    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-
-    $defaults = $settingsFacade->getPostTypeDefaults('page');
-
-    if (! isset($defaults['activeMetaBox']) || $defaults['activeMetaBox'] === 'active') {
-        $columns['expirationdate'] = __('Future Action', 'post-expirator');
-    }
-
-    return $columns;
-}
-
-add_filter('manage_pages_columns', 'postexpirator_add_column_page');
 
 /**
  * Fills the 'Future Action' column of the post display table.
@@ -208,7 +197,7 @@ function postexpirator_show_value($column_name)
     PostExpirator_Display::getInstance()->render_template('expire-column', [
         'id' => $post->ID,
         'post_type' => $post->post_type,
-        'attributes' => $postModel->getExpirationDataAsArray(),
+        'attributes' => $postModel->getExpirationDataAsArray()
     ]);
 }
 

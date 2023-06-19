@@ -264,6 +264,10 @@ class PostModel
     {
         $postTypeObj = get_post_type_object($this->getPostType());
 
-        return $postTypeObj->labels->singular_name;
+        if (is_object($postTypeObj)) {
+            return $postTypeObj->labels->singular_name;
+        }
+
+        return sprintf('[%s]', $this->getPostType());
     }
 }

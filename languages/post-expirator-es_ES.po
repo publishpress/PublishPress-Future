@@ -6,8 +6,8 @@ msgstr ""
 "WordPress Posts - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
 "future\n"
-"POT-Creation-Date: 2023-03-28 20:56-0300\n"
-"PO-Revision-Date: 2023-06-12 12:19-0300\n"
+"POT-Creation-Date: 2023-06-12 12:22-0300\n"
+"PO-Revision-Date: 2023-06-19 14:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3\n"
 
 #. Plugin Name of the plugin
 #: classes/Display.class.php:50 classes/Facade.class.php:374
@@ -191,59 +191,51 @@ msgstr "Caduca"
 
 #: post-expirator.php:804 post-expirator.php:826 post-expirator.php:848
 #: post-expirator.php:870
-#, fuzzy
-#| msgid "Post status has been successfully changed to \"%s\"."
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post status has been successfully changed "
 "to \"%4$s\"."
-msgstr "El estado de la entrada se ha cambiado correctamente a «%s»."
+msgstr ""
+"%1$s (%2$s) ha caducado a las %3$s. El estado de la entrada se ha cambiado "
+"correctamente a «%4$s»."
 
 #: post-expirator.php:892
-#, fuzzy
-#| msgid "%1$s (%2$s) has expired at %3$s. %4$s"
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "set."
-msgstr "%1$s (%2$s) ha caducado a las %3$s. %4$s"
+msgstr ""
+"%1$s (%2$s) ha caducado a las %3$s. El estado de la entrada «%4$s» ha sido "
+"establecido con éxito."
 
 #: post-expirator.php:911
-#, fuzzy
-#| msgid "%1$s (%2$s) has expired at %3$s. %4$s"
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been successfully "
 "removed."
-msgstr "%1$s (%2$s) ha caducado a las %3$s. %4$s"
+msgstr ""
+"%1$s (%2$s) ha caducado a las %3$s. El estado de la entrada «%4$s» ha sido "
+"quitado con éxito."
 
 #: post-expirator.php:937 post-expirator.php:979
-#, fuzzy
-#| msgid "%1$s (%2$s) has expired at %3$s. %4$s"
 msgid ""
 "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to \"%5$s\"."
-msgstr "%1$s (%2$s) ha caducado a las %3$s. %4$s"
+msgstr ""
+"%1$s (%2$s) ha caducado a las %3$s. La entrada «%4$s» se ha cambiado a "
+"«%5$s»."
 
 #: post-expirator.php:1037 post-expirator.php:1080
-#, fuzzy
-#| msgid ""
-#| "The following terms (%s) were added to the post: \"%s\". The full list of "
-#| "terms on the post is: %s."
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "added: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
-"Los siguientes términos (%s) han sido añadidos a la entrada: «%s». La lista "
-"completa de términos en la entrada es: %s."
+"%1$s (%2$s) ha caducado a las %3$s. La siguiente entrada «%4$s» ha sido "
+"añadida: «%5$s». La lista completa de categorías de la entrada es: «%6$s»."
 
 #: post-expirator.php:1145 post-expirator.php:1195
-#, fuzzy
-#| msgid ""
-#| "The following terms (%s) were added to the post: \"%s\". The full list of "
-#| "terms on the post is: %s."
 msgid ""
 "%1$s (%2$s) has expired at %3$s. The following post \"%4$s\" have now been "
 "removed: \"%5$s\". The full list of categories on the post are: \"%6$s\"."
 msgstr ""
-"Los siguientes términos (%s) han sido añadidos a la entrada: «%s». La lista "
-"completa de términos en la entrada es: %s."
+"%1$s (%2$s) ha caducado a las %3$s. La siguiente entrada «%4$s» ha sido "
+"eliminada: «%5$s». La lista completa de categorías de la entrada es: «%6$s»."
 
 #: post-expirator.php:1247
 msgid "Future Action Complete \"%s\""
@@ -639,6 +631,9 @@ msgid ""
 "allows you to select if you want the post changed to a draft status or "
 "deleted when it expires."
 msgstr ""
+"El plugin PublishPress Future establece un valor meta personalizado y, "
+"opcionalmente, te permite seleccionar si quieres que la entrada pase a "
+"estado borrador o se elimine cuando caduque."
 
 #: views/menu-general.php:65 views/tabs.php:15
 msgid "Defaults"

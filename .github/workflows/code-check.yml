@@ -31,6 +31,9 @@ jobs:
       - name: Fixes scripts permissions
         run: chmod +x /project/dev-workspace/docker/scripts/ppbuild
 
+      - name: Build the package to a dir
+        run: composer build:dir
+
       - name: PHPLint - Check PHP syntax errors
         run: composer check:lint
 

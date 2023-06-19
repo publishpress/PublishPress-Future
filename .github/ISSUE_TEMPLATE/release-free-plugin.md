@@ -19,6 +19,7 @@ To release the Free plugin please make sure to check all the checkboxes below.
 - [ ] Check Github's Dependabot warnings or pull requests, looking for any relevant report. Remove any false-positive first.
 - [ ] Build JS files to production running `$ yarn run build-js` and commit.
 - [ ] Run WP VIP scan to make sure no warnings or errors > 5 exists: `$ vendor/bin/phpcs`.
+- [ ] Update the `.pot` file.
 - [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct, commit.
 - [ ] Update the version number to the next stable version in the main plugin file and `readme.txt`. Commit the changes to the release branch.
 - [ ] Build the zip package, running `$ yarn run build`. It should create a package in the `./dist` dir.

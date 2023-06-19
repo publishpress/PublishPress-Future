@@ -6,7 +6,7 @@ Tags: expire posts, update posts, schedule changes, automatic changes,
 Requires at least: 5.3
 Requires PHP: 5.6
 Tested up to: 6.2
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -139,6 +139,18 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 
 == Changelog ==
+
+= [3.0.2] - [19 Jun, 2023] =
+
+* FIXED: Fix warning displayed in the classic editor if a taxonomy is not properly selected, #453;
+* FIXED: Fix typo in a message when a taxonomy is not properly selected;
+* FIXED: Fix a blank post type label in the Arguments column in the Actions Log list when a post type is not registered anymore;
+* FIXED: FIx error message in the Future Action column if the action is not found anymore, #454;
+* FIXED: Fix default date/time offset, #455;
+* FIXED: Fix label "Action" on a few screens, #458;
+* FIXED: Fix broken screen due by a long select field in Classic Editor, #458;
+* FIXED: Fix Future action ordering not working on "Posts" screen, #462;
+* FIXED: Update .pot file and some translation strings;
 
 = [3.0.1] - [15 Jun, 2023] =
 

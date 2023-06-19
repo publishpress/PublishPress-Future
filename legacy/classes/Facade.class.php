@@ -362,7 +362,7 @@ class PostExpirator_Facade
                         'category' => __('Taxonomy', 'post-expirator'),
                         'postExpirator' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                        'howToExpire' => __('Action to run', 'post-expirator'),
+                        'howToExpire' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
                         'expirationCategories' => __('Terms', 'post-expirator'),
                     ]
