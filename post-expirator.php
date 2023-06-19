@@ -1,4 +1,5 @@
-<?php 2-beta.1/**
+<?php
+/**
  * Plugin Name: PublishPress Future
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: PublishPress Future allows you to schedule automatic changes to posts, pages and other content types.
