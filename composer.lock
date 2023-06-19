@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c47e147c8653a3a90d0b4f9025d7d536",
+    "content-hash": "a0e7b89f46a168f85feb72e937015e40",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -278,16 +278,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "6ff2552e087a36891bed03a433ed161932d8460e"
+                "reference": "c358f676b549c5277c0506c0e241a7d0a431955f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/6ff2552e087a36891bed03a433ed161932d8460e",
-                "reference": "6ff2552e087a36891bed03a433ed161932d8460e",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/c358f676b549c5277c0506c0e241a7d0a431955f",
+                "reference": "c358f676b549c5277c0506c0e241a7d0a431955f",
                 "shasum": ""
             },
             "require": {
@@ -359,9 +359,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/v3.0.1"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/v3.0.2"
             },
-            "time": "2023-06-15T21:16:26+00:00"
+            "time": "2023-06-19T18:27:24+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -1208,16 +1208,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.17.0",
+            "version": "v3.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "3f0ed862f22386c55a767461ef5083bddceeed79"
+                "reference": "b123395c9fa3a70801f816f13606c0f3a7ada8df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/3f0ed862f22386c55a767461ef5083bddceeed79",
-                "reference": "3f0ed862f22386c55a767461ef5083bddceeed79",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/b123395c9fa3a70801f816f13606c0f3a7ada8df",
+                "reference": "b123395c9fa3a70801f816f13606c0f3a7ada8df",
                 "shasum": ""
             },
             "require": {
@@ -1292,7 +1292,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.17.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.18.0"
             },
             "funding": [
                 {
@@ -1300,7 +1300,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-05-22T19:59:32+00:00"
+            "time": "2023-06-18T22:25:45+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -2016,12 +2016,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8709a0c5a1cd9f20762c3e33b7d1db74c081afee"
+                "reference": "f389385d12d3efbf40e8e6c946c2fda60fd183b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8709a0c5a1cd9f20762c3e33b7d1db74c081afee",
-                "reference": "8709a0c5a1cd9f20762c3e33b7d1db74c081afee",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f389385d12d3efbf40e8e6c946c2fda60fd183b6",
+                "reference": "f389385d12d3efbf40e8e6c946c2fda60fd183b6",
                 "shasum": ""
             },
             "require": {
@@ -2071,7 +2071,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-15T18:57:15+00:00"
+            "time": "2023-06-19T16:12:27+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2459,12 +2459,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/diff.git",
-                "reference": "6ffdc65031044e645593bae0fa92b4f69a5452ab"
+                "reference": "33e52ac898b9358e0e3972b0e0bd8cffeb7bb1b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/6ffdc65031044e645593bae0fa92b4f69a5452ab",
-                "reference": "6ffdc65031044e645593bae0fa92b4f69a5452ab",
+                "url": "https://api.github.com/repos/sebastianbergmann/diff/zipball/33e52ac898b9358e0e3972b0e0bd8cffeb7bb1b6",
+                "reference": "33e52ac898b9358e0e3972b0e0bd8cffeb7bb1b6",
                 "shasum": ""
             },
             "require": {
@@ -2519,7 +2519,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-05-25T05:57:58+00:00"
+            "time": "2023-06-19T06:34:24+00:00"
         },
         {
             "name": "sebastian/phpcpd",
