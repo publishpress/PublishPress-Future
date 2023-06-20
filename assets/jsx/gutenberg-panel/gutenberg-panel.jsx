@@ -14,6 +14,11 @@
             this.state = {
                 categoriesList: [],
                 catIdVsName: [],
+                expirationEnabled: false,
+                expirationAction: '',
+                expirationDate: '',
+                expirationTerms: [],
+                expirationTaxonomy: ''
             }
 
             wp.data.subscribe(this.listenToPostSave.bind(this));
@@ -140,6 +145,16 @@
                 categories: expirationTerms,
                 taxonomy: expirationTaxonomy,
             });
+
+            this.setState({
+                expirationEnabled: expirationEnabled,
+                expirationAction: expirationAction,
+                expirationDate: expirationDate,
+                expirationTerms: expirationTerms,
+                expirationTaxonomy: expirationTaxonomy
+            });
+
+            this.debugLog('Default config', config.defaults);
 
             let categoriesList = [];
             let catIdVsName = [];
