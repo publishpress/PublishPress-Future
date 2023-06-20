@@ -18,9 +18,15 @@
 
             wp.data.subscribe(this.listenToPostSave.bind(this));
             wp.hooks.addAction('after_save_post', 'publishpress-future', () => {
-                console.log('getExpirationEnabled', this.getExpirationEnabled());
+                this.debugLog('getExpirationEnabled', this.getExpirationEnabled());
                 this.saveCurrentPostData()
             });
+        }
+
+        debugLog(description, message) {
+            if (console && config.is_debug_enabled) {
+                console.log(description, message);
+            }
         }
 
         listenToPostSave() {
@@ -83,7 +89,7 @@
                     expirationTaxonomy: data.categoryTaxonomy
                 });
 
-                console.log('API return', data);
+                this.debugLog('API return', data);
             });
         }
 
@@ -91,7 +97,7 @@
             const {expirationEnabled, expirationDate, expirationAction, expirationTerms} = this.state;
             let data;
 
-            console.log(this.state);
+            this.debugLog('State', this.state);
 
             if (!expirationEnabled) {
                 data = {'enabled': false, 'date': 0, 'action': '', 'terms': []};
@@ -109,8 +115,8 @@
                 method: 'POST',
                 data: data,
             }).then((data) => {
-                console.log('Future action data saved.');
-                console.log(data);
+                this.debugLog('Future action data saved.');
+                this.debugLog(data);
             });
         }
 
@@ -127,7 +133,7 @@
             const expirationDate = this.getExpirationDate();
             const expirationTaxonomy = this.getExpirationTaxonomy();
 
-            console.log('Initialized', {
+            this.debugLog('Initialized', {
                 enabled: expirationEnabled,
                 date: expirationDate,
                 expirationAction: expirationAction,
@@ -295,15 +301,15 @@
         onChangeEnabled(value) {
             this.setState({expirationEnabled: value, attribute: 'enabled'})
             this.editPostAttribute('expirationEnabled', value);
-            console.log(value);
+            this.debugLog(value);
         }
 
         onChangeDate(value) {
             const date = new Date(value).getTime()/1000;
             this.setState({expirationDate: date, attribute: 'date'});
             this.editPostAttribute('expirationDate', date);
-            console.log('New date', date, new Date(date * 1000));
-            console.log('Getdate', this.getExpirationDate());
+            this.debugLog('New date', date, new Date(date * 1000));
+            this.debugLog('Getdate', this.getExpirationDate());
         }
 
         onChangeAction(value) {

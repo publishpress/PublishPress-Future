@@ -346,6 +346,7 @@ class PostExpirator_Facade
             );
 
             $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+            $debug = $container->get(ServicesAbstract::DEBUG);
 
             $default_expiry = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
             wp_localize_script(
@@ -358,6 +359,7 @@ class PostExpirator_Facade
                     'is_12_hours' => get_option('time_format') !== 'H:i',
                     'timezone_offset' => PostExpirator_Util::get_timezone_offset() / 60,
                     'actions_options' => $actionsModel->getActionsAsOptions($post->post_type),
+                    'is_debug_enabled' => $debug->isEnabled(),
                     'strings' => [
                         'category' => __('Taxonomy', 'post-expirator'),
                         'postExpirator' => __('PublishPress Future', 'post-expirator'),
