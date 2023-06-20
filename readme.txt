@@ -140,6 +140,12 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.0.3] - [UNRELEASED] =
+
+* FIXED: Error on the block editor: The "postexpirator-sidebar" plugin has encountered an error and cannot be rendered, #475;
+* FIXED: Error message in the future action column: Action scheduled but its definition is not available anymore, #474;
+* CHANGED: Update message when future action data is corrupted for the post;
+
 = [3.0.2] - [19 Jun, 2023] =
 
 * FIXED: Fix warning displayed in the classic editor if a taxonomy is not properly selected, #453;
