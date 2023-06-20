@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0e7b89f46a168f85feb72e937015e40",
+    "content-hash": "730d9672db241b1e8bd071ef1fb3b378",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -278,16 +278,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "v3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "c358f676b549c5277c0506c0e241a7d0a431955f"
+                "reference": "5a308fe7017162ff80e9a946c4d6672bde98c5ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/c358f676b549c5277c0506c0e241a7d0a431955f",
-                "reference": "c358f676b549c5277c0506c0e241a7d0a431955f",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/5a308fe7017162ff80e9a946c4d6672bde98c5ca",
+                "reference": "5a308fe7017162ff80e9a946c4d6672bde98c5ca",
                 "shasum": ""
             },
             "require": {
@@ -359,9 +359,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/v3.0.2"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.0.3"
             },
-            "time": "2023-06-19T18:27:24+00:00"
+            "time": "2023-06-20T21:00:03+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -1718,12 +1718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "f58b36c8deaff8481a7e7712bc453c0b9a4b12db"
+                "reference": "855eff23b6399678fede7a29923ca01b27e343b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/f58b36c8deaff8481a7e7712bc453c0b9a4b12db",
-                "reference": "f58b36c8deaff8481a7e7712bc453c0b9a4b12db",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/855eff23b6399678fede7a29923ca01b27e343b8",
+                "reference": "855eff23b6399678fede7a29923ca01b27e343b8",
                 "shasum": ""
             },
             "require": {
@@ -1774,7 +1774,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-12T09:10:15+00:00"
+            "time": "2023-06-20T19:52:02+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -2016,12 +2016,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "f389385d12d3efbf40e8e6c946c2fda60fd183b6"
+                "reference": "fdd43e498a5db2516d024311af8a5c2354aa505e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f389385d12d3efbf40e8e6c946c2fda60fd183b6",
-                "reference": "f389385d12d3efbf40e8e6c946c2fda60fd183b6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/fdd43e498a5db2516d024311af8a5c2354aa505e",
+                "reference": "fdd43e498a5db2516d024311af8a5c2354aa505e",
                 "shasum": ""
             },
             "require": {
@@ -2071,7 +2071,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-19T16:12:27+00:00"
+            "time": "2023-06-20T05:41:07+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
