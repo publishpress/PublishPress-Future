@@ -56,7 +56,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
             }
         } else {
             ?><span class="dashicons dashicons-warning icon-missed" title="<?php echo esc_attr__('This action will can not run correctly.', 'post-expirator'); ?>"></span> <?php
-            echo esc_html__('Action scheduled but its definition is not available anymore. Did you disable the plugin that defined it?', 'post-expirator');
+            echo esc_html__('Action could not be scheduled due to a configuration issue. Please attempt to schedule it again.', 'post-expirator');
         }
     } else {
         ?>
