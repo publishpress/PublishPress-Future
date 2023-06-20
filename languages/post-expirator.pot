@@ -2,20 +2,20 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.0.2\n"
+"Project-Id-Version: PublishPress Future 3.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-19T17:35:40+00:00\n"
+"POT-Creation-Date: 2023-06-20T20:58:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: post-expirator\n"
 
 #. Plugin Name of the plugin
-#: legacy/classes/Facade.class.php:363
+#: legacy/classes/Facade.class.php:365
 #: legacy/functions.php:360
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:80
 #: src/Views/tabs.php:60
@@ -87,18 +87,18 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:362
+#: legacy/classes/Facade.class.php:364
 msgid "Taxonomy"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:364
+#: legacy/classes/Facade.class.php:366
 #: src/Views/bulk-edit.php:36
 #: src/Views/classic-metabox.php:11
 #: src/Views/quick-edit.php:16
 msgid "Enable Future Action"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:365
+#: legacy/classes/Facade.class.php:367
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:38
 #: src/Modules/Settings/Controllers/Controller.php:223
 #: src/Views/bulk-edit.php:129
@@ -109,11 +109,11 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:366
+#: legacy/classes/Facade.class.php:368
 msgid "Loading"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:367
+#: legacy/classes/Facade.class.php:369
 #: src/Views/bulk-edit.php:148
 #: src/Views/quick-edit.php:100
 msgid "Terms"
@@ -577,7 +577,7 @@ msgid "This action will can not run correctly."
 msgstr ""
 
 #: src/Views/expire-column.php:59
-msgid "Action scheduled but its definition is not available anymore. Did you disable the plugin that defined it?"
+msgid "Action could not be scheduled due to a configuration issue. Please attempt to schedule it again."
 msgstr ""
 
 #: src/Views/expire-column.php:64
