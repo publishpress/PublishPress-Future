@@ -82,6 +82,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.0.3] - 20 Jun 2023 =
+
+* CHANGED: Updated base plugin to 3.0.3;
+
 = [3.0.2] - 19 Jun 2023 =
 
 * CHANGED: Updated base plugin to 3.0.2;
