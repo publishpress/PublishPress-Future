@@ -470,7 +470,7 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
         'enabled' => true,
     ];
 
-     do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $defaultExpire['ts'], $opts);
+    do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $defaultExpire['ts'], $opts);
 }
 
 /**
