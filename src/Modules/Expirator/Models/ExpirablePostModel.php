@@ -223,6 +223,21 @@ class ExpirablePostModel extends PostModel
     public function getExpirationCategoryIDs()
     {
         if (empty($this->expirationCategories)) {
+            $postType = $this->getPostType();
+
+            try {
+                if ($this->getPostStatus() === 'auto-draft') {
+                    $settings = $this->settings->getPostTypeDefaults($this->getPostType());
+
+                    if (! empty($settings['terms'])) {
+                        $this->expirationCategories = $settings['terms'];
+
+                        return explode(',', $this->expirationCategories);
+                    }
+                }
+            } catch (NonexistentPostException $e) {
+            }
+
             $options = $this->getExpirationOptions();
 
             $this->expirationCategories = isset($options['category']) ? $options['category'] : [];
