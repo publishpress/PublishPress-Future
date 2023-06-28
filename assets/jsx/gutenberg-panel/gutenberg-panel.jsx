@@ -18,9 +18,9 @@
     } = wp.data;
     const {apiFetch} = wp;
 
-    const debugLog = (description, message) => {
+    const debugLog = (description, ...message) => {
         if (console && config.is_debug_enabled) {
-            console.debug('[Future]', description, message);
+            console.debug('[Future]', description, ...message);
         }
     }
 
@@ -199,15 +199,6 @@
             },
             getTaxonomyName(state) {
                 return state.taxonomyName;
-            },
-            getData(state) {
-                return {
-                    futureAction: state.futureAction,
-                    futureActionDate: state.futureActionDate,
-                    futureActionEnabled: state.futureActionEnabled,
-                    futureActionTerms: state.futureActionTerms,
-                    futureActionTaxonomy: state.futureActionTaxonomy
-                }
             }
         }
     });
@@ -251,26 +242,45 @@
 
         const handleEnabledChange = (isChecked) => {
             setFutureActionEnabled(isChecked);
-            editPostAttribute('enabled', isChecked);
+
+            const newAttribute = {
+                'enabled': isChecked
+            }
+
+            // User default values to other fields
+            if (isChecked) {
+                setFutureAction(DEFAULT_STATE.futureAction);
+                setFutureActionDate(DEFAULT_STATE.futureActionDate);
+                setFutureActionTerms(DEFAULT_STATE.futureActionTerms);
+                setFutureActionTaxonomy(DEFAULT_STATE.futureActionTaxonomy);
+
+                newAttribute['action'] = DEFAULT_STATE.futureAction;
+                newAttribute['date'] = DEFAULT_STATE.futureActionDate;
+                newAttribute['terms'] = DEFAULT_STATE.futureActionTerms;
+                newAttribute['taxonomy'] = DEFAULT_STATE.futureActionTaxonomy;
+            }
+
+            editPostAttribute(newAttribute);
         }
 
         const handleActionChange = (value) => {
             setFutureAction(value);
-            editPostAttribute('action', value);
-        };
+            editPostAttribute({'action': value});
+        }
 
         const handleDateChange = (value) => {
             const date = new Date(value).getTime()/1000;
+            debugLog('handleDateChange', value, date);
 
             setFutureActionDate(date);
-            editPostAttribute('date', value);
+            editPostAttribute({'date': date});
         }
 
         const handleTermsChange = (value) => {
             value = mapTermsFromNameToId(value);
 
             setFutureActionTerms(value);
-            editPostAttribute('terms', value);
+            editPostAttribute({'terms': value});
         }
 
         const getPostId = () => {
@@ -332,7 +342,7 @@
             }
         }
 
-        const editPostAttribute = (name, value) => {
+        const editPostAttribute = (newAttribute) => {
             const attribute = {
                 publishpress_future_action: {
                     enabled: futureActionEnabled,
@@ -343,21 +353,25 @@
                 }
             };
 
-            attribute.publishpress_future_action[name] = value;
+            // For each property on newAttribute, set the value on attribute
+            for (const [name, value] of Object.entries(newAttribute)) {
+                attribute.publishpress_future_action[name] = value;
+            }
 
             editPost(attribute);
-            debugLog('editPostAttribute', attribute);
+            debugLog('editPostAttribute', newAttribute, attribute);
         }
-
 
         const init = () => {
             fetchFutureActionData();
             fetchTerms();
 
             const isCleanNewPost = select('core/editor').isCleanNewPost();
+            debugLog('futureActionEnabled', futureActionEnabled);
+            debugLog('isCleanNewPost', isCleanNewPost);
 
             if (futureActionEnabled && isCleanNewPost) {
-                editPostAttribute('enabled', true);
+                handleEnabledChange(true);
             }
         }
 

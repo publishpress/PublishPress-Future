@@ -6,6 +6,8 @@ var __webpack_exports__ = {};
   \********************************************************/
 
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 (function (wp, config) {
@@ -25,26 +27,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         keys = _lodash.keys,
         compact = _lodash.compact;
     var _React = React,
-        useEffect = _React.useEffect,
-        useState = _React.useState;
-    var _wp$hooks = wp.hooks,
-        addAction = _wp$hooks.addAction,
-        doAction = _wp$hooks.doAction;
+        useEffect = _React.useEffect;
     var addQueryArgs = wp.url.addQueryArgs;
     var _wp$data = wp.data,
         useSelect = _wp$data.useSelect,
         useDispatch = _wp$data.useDispatch,
         register = _wp$data.register,
         createReduxStore = _wp$data.createReduxStore,
-        select = _wp$data.select,
-        subscribe = _wp$data.subscribe,
-        dispatch = _wp$data.dispatch;
+        select = _wp$data.select;
     var apiFetch = wp.apiFetch;
 
 
-    var debugLog = function debugLog(description, message) {
+    var debugLog = function debugLog(description) {
+        for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            message[_key - 1] = arguments[_key];
+        }
+
         if (console && config.is_debug_enabled) {
-            console.debug('[Future]', description, message);
+            var _console;
+
+            (_console = console).debug.apply(_console, ['[Future]', description].concat(message));
         }
     };
 
@@ -221,15 +223,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             getTaxonomyName: function getTaxonomyName(state) {
                 return state.taxonomyName;
-            },
-            getData: function getData(state) {
-                return {
-                    futureAction: state.futureAction,
-                    futureActionDate: state.futureActionDate,
-                    futureActionEnabled: state.futureActionEnabled,
-                    futureActionTerms: state.futureActionTerms,
-                    futureActionTaxonomy: state.futureActionTaxonomy
-                };
             }
         }
     });
@@ -287,26 +280,44 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         var handleEnabledChange = function handleEnabledChange(isChecked) {
             setFutureActionEnabled(isChecked);
-            editPostAttribute('enabled', isChecked);
+
+            var newAttribute = {
+                'enabled': isChecked
+
+                // User default values to other fields
+            };if (isChecked) {
+                setFutureAction(DEFAULT_STATE.futureAction);
+                setFutureActionDate(DEFAULT_STATE.futureActionDate);
+                setFutureActionTerms(DEFAULT_STATE.futureActionTerms);
+                setFutureActionTaxonomy(DEFAULT_STATE.futureActionTaxonomy);
+
+                newAttribute['action'] = DEFAULT_STATE.futureAction;
+                newAttribute['date'] = DEFAULT_STATE.futureActionDate;
+                newAttribute['terms'] = DEFAULT_STATE.futureActionTerms;
+                newAttribute['taxonomy'] = DEFAULT_STATE.futureActionTaxonomy;
+            }
+
+            editPostAttribute(newAttribute);
         };
 
         var handleActionChange = function handleActionChange(value) {
             setFutureAction(value);
-            editPostAttribute('action', value);
+            editPostAttribute({ 'action': value });
         };
 
         var handleDateChange = function handleDateChange(value) {
             var date = new Date(value).getTime() / 1000;
+            debugLog('handleDateChange', value, date);
 
             setFutureActionDate(date);
-            editPostAttribute('date', value);
+            editPostAttribute({ 'date': date });
         };
 
         var handleTermsChange = function handleTermsChange(value) {
             value = mapTermsFromNameToId(value);
 
             setFutureActionTerms(value);
-            editPostAttribute('terms', value);
+            editPostAttribute({ 'terms': value });
         };
 
         var getPostId = function getPostId() {
@@ -368,7 +379,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         };
 
-        var editPostAttribute = function editPostAttribute(name, value) {
+        var editPostAttribute = function editPostAttribute(newAttribute) {
             var attribute = {
                 publishpress_future_action: {
                     enabled: futureActionEnabled,
@@ -379,10 +390,39 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 }
             };
 
-            attribute.publishpress_future_action[name] = value;
+            // For each property on newAttribute, set the value on attribute
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = Object.entries(newAttribute)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var _ref = _step.value;
+
+                    var _ref2 = _slicedToArray(_ref, 2);
+
+                    var name = _ref2[0];
+                    var value = _ref2[1];
+
+                    attribute.publishpress_future_action[name] = value;
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
 
             editPost(attribute);
-            debugLog('editPostAttribute', attribute);
+            debugLog('editPostAttribute', newAttribute, attribute);
         };
 
         var init = function init() {
@@ -390,9 +430,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             fetchTerms();
 
             var isCleanNewPost = select('core/editor').isCleanNewPost();
+            debugLog('futureActionEnabled', futureActionEnabled);
+            debugLog('isCleanNewPost', isCleanNewPost);
 
             if (futureActionEnabled && isCleanNewPost) {
-                editPostAttribute('enabled', true);
+                handleEnabledChange(true);
             }
         };
 

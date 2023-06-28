@@ -139,6 +139,16 @@ class ExpirationController implements InitializableInterface
                     $postModelFactory = $this->expirablePostModelFactory;
                     $postModel = $postModelFactory($post['id']);
 
+                    if ('auto-draft' === $post['status']) {
+                        return [
+                            'enabled' => false,
+                            'date' => 0,
+                            'action' => '',
+                            'terms' => [],
+                            'taxonomy' => ''
+                        ];
+                    }
+
                     return [
                         'enabled' => $postModel->isExpirationEnabled(),
                         'date' => $postModel->getExpirationDate(),
