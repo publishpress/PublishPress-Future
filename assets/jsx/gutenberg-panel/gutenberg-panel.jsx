@@ -456,7 +456,7 @@
                         />
 
                         {
-                            futureAction.includes('category') && (
+                            String(futureAction).includes('category') && (
                                 isFetchingTerms && (
                                     <Fragment>
                                         {config.strings.loading + ` (${futureActionTaxonomy})`}
