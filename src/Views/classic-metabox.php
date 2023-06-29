@@ -166,7 +166,10 @@ if ($default === 'publish') {
             echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
 
 
-            $categories = [];
+            if (! is_array($categories) || empty($categories)) {
+                $categories = [];
+            }
+
             if (empty($categories) && isset($defaultsOption['terms'])) {
                 $categories = explode(',', $defaultsOption['terms']);
                 $categories = array_map('intval', $categories);
