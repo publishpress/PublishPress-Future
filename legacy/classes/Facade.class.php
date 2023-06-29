@@ -402,10 +402,7 @@ class PostExpirator_Facade
                         'howToExpire' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
                         'expirationCategories' => __('Terms', 'post-expirator'),
-                        'noTermsFound' => sprintf(
-                            __('No terms found for %s', 'post-expirator'),
-                            strtolower($postTypeObj->labels->singular_name)
-                        ),
+                        'noTermsFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
                     ]
                 ]
             );
