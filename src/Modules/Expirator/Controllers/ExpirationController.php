@@ -18,6 +18,7 @@ use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -49,24 +50,32 @@ class ExpirationController implements InitializableInterface
     private $expirablePostModelFactory;
 
     /**
+     * @var \Closure
+     */
+    private $settingsModelFactory;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
      * @param CronInterface $cron
      * @param SchedulerInterface $scheduler
      * @param Closure $expirablePostModelFactory
+     * @param Closure $settingsModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
         SiteFacade $siteFacade,
         CronInterface $cron,
         SchedulerInterface $scheduler,
-        Closure $expirablePostModelFactory
+        Closure $expirablePostModelFactory,
+        Closure $settingsModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
         $this->cron = $cron;
         $this->scheduler = $scheduler;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->settingsModelFactory = $settingsModelFactory;
     }
 
     public function initialize()
@@ -131,54 +140,65 @@ class ExpirationController implements InitializableInterface
 
     public function handleRestAPIInit()
     {
-        register_rest_field(
-            'post',
-            'publishpress_future_action',
-            [
-                'get_callback' => function ($post) {
-                    $postModelFactory = $this->expirablePostModelFactory;
-                    $postModel = $postModelFactory($post['id']);
+        $factory = $this->settingsModelFactory;
+        $settingsModel = $factory();
+        $settings = $settingsModel->getPostTypesSettings();
 
-                    if ('auto-draft' === $post['status']) {
+        $activePostTypes = array_filter($settings, function ($postTypeSettings) {
+            return $postTypeSettings['active'];
+        });
+        $activePostTypes = array_keys($activePostTypes);
+
+        foreach ($activePostTypes as $postType) {
+            register_rest_field(
+                $postType,
+                'publishpress_future_action',
+                [
+                    'get_callback' => function ($post) {
+                        $postModelFactory = $this->expirablePostModelFactory;
+                        $postModel = $postModelFactory($post['id']);
+
+                        if ('auto-draft' === $post['status']) {
+                            return [
+                                'enabled' => false,
+                                'date' => 0,
+                                'action' => '',
+                                'terms' => [],
+                                'taxonomy' => ''
+                            ];
+                        }
+
                         return [
-                            'enabled' => false,
-                            'date' => 0,
-                            'action' => '',
-                            'terms' => [],
-                            'taxonomy' => ''
+                            'enabled' => $postModel->isExpirationEnabled(),
+                            'date' => $postModel->getExpirationDate(),
+                            'action' => $postModel->getExpirationType(),
+                            'terms' => $postModel->getExpirationCategoryIDs(),
+                            'taxonomy' => $postModel->getExpirationTaxonomy(),
                         ];
-                    }
+                    },
+                    'update_callback' => function ($value, $post) {
+                        if (isset($value['enabled']) && (bool)$value['enabled']) {
+                            $opts = [
+                                'expireType' => $value['action'],
+                                'category' => $value['terms'],
+                                'categoryTaxonomy' => $value['taxonomy'],
+                                'enabled' => true,
+                            ];
 
-                    return [
-                        'enabled' => $postModel->isExpirationEnabled(),
-                        'date' => $postModel->getExpirationDate(),
-                        'action' => $postModel->getExpirationType(),
-                        'terms' => $postModel->getExpirationCategoryIDs(),
-                        'taxonomy' => $postModel->getExpirationTaxonomy(),
-                    ];
-                },
-                'update_callback' => function ($value, $post) {
-                    if (isset($value['enabled']) && (bool)$value['enabled']) {
-                        $opts = [
-                            'expireType' => $value['action'],
-                            'category' => $value['terms'],
-                            'categoryTaxonomy' => $value['taxonomy'],
-                            'enabled' => true,
-                        ];
+                            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post->ID, $value['date'], $opts);
+                            return true;
+                        }
 
-                        do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post->ID, $value['date'], $opts);
+                        do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
+
                         return true;
-                    }
-
-                    do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
-
-                    return true;
-                },
-                'schema' => [
-                    'description' => 'Future action enabled for the post',
-                    'type' => 'object',
+                    },
+                    'schema' => [
+                        'description' => 'Future action',
+                        'type' => 'object',
+                    ]
                 ]
-            ]
-        );
+            );
+        }
     }
 }

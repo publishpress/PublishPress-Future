@@ -59,7 +59,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             futureActionTaxonomy: null,
             termsListByName: null,
             termsListById: null,
-            taxonomyName: null
+            taxonomyName: null,
+            isFetchingTerms: false
         };
 
         if (!config || !config.defaults) {
@@ -189,6 +190,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'SET_TAXONOMY_NAME',
                     taxonomyName: taxonomyName
                 };
+            },
+            setIsFetchingTerms: function setIsFetchingTerms(isFetchingTerms) {
+                return {
+                    type: 'SET_IS_FETCHING_TERMS',
+                    isFetchingTerms: isFetchingTerms
+                };
             }
         },
         selectors: {
@@ -223,6 +230,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             getTaxonomyName: function getTaxonomyName(state) {
                 return state.taxonomyName;
+            },
+            getIsFetchingTerms: function getIsFetchingTerms(state) {
+                return state.isFetchingTerms;
             }
         }
     });
@@ -252,6 +262,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         var termsListById = useSelect(function (select) {
             return select('publishpress-future/store').getTermsListById();
         }, []);
+        var isFetchingTerms = useSelect(function (select) {
+            return select('publishpress-future/store').getIsFetchingTerms();
+        }, []);
 
         var _useDispatch = useDispatch('publishpress-future/store'),
             setFutureAction = _useDispatch.setFutureAction,
@@ -261,7 +274,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             setFutureActionTaxonomy = _useDispatch.setFutureActionTaxonomy,
             setTermsListByName = _useDispatch.setTermsListByName,
             setTermsListById = _useDispatch.setTermsListById,
-            setTaxonomyName = _useDispatch.setTaxonomyName;
+            setTaxonomyName = _useDispatch.setTaxonomyName,
+            setIsFetchingTerms = _useDispatch.setIsFetchingTerms;
 
         var _useDispatch2 = useDispatch('core/editor'),
             editPost = _useDispatch2.editPost;
@@ -295,6 +309,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 newAttribute['date'] = DEFAULT_STATE.futureActionDate;
                 newAttribute['terms'] = DEFAULT_STATE.futureActionTerms;
                 newAttribute['taxonomy'] = DEFAULT_STATE.futureActionTaxonomy;
+
+                fetchTerms();
             }
 
             editPostAttribute(newAttribute);
@@ -307,7 +323,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         var handleDateChange = function handleDateChange(value) {
             var date = new Date(value).getTime() / 1000;
-            debugLog('handleDateChange', value, date);
 
             setFutureActionDate(date);
             editPostAttribute({ 'date': date });
@@ -328,10 +343,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return select('core/editor').getCurrentPostType();
         };
 
-        var fetchFutureActionData = function fetchFutureActionData() {
+        var fetchFutureActionData = function fetchFutureActionData(callback) {
             var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
 
-            setFutureActionEnabled(data.enabled);
+            setFutureActionEnabled(data.enabled).then(callback);
             setFutureAction(data.action);
             setFutureActionDate(data.date);
             setFutureActionTerms(data.terms);
@@ -339,16 +354,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
 
         var fetchTerms = function fetchTerms() {
+            debugLog('fetchTerms', 'Fetching terms...');
             var futureActionTaxonomy = select('publishpress-future/store').getFutureActionTaxonomy();
             var postType = getPostType();
 
             var termsListByName = {};
             var termsListById = {};
 
+            setIsFetchingTerms(true);
+
+            debugLog('futureActionTaxonomy', futureActionTaxonomy);
+
             if (!futureActionTaxonomy && postType === 'post' || futureActionTaxonomy === 'category') {
+                debugLog('fetchTerms', 'Fetching categories...');
                 apiFetch({
                     path: addQueryArgs('wp/v2/categories', { per_page: -1 })
                 }).then(function (list) {
+                    debugLog('list', list);
                     list.forEach(function (cat) {
                         termsListByName[cat.name] = cat;
                         termsListById[cat.id] = cat.name;
@@ -357,24 +379,39 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     setTermsListByName(termsListByName);
                     setTermsListById(termsListById);
                     setTaxonomyName(config.strings.category);
+                    setIsFetchingTerms(false);
                 });
             } else {
+                debugLog('fetchTerms', 'Fetching taxonomies...');
                 apiFetch({
-                    path: addQueryArgs('wp/v2/taxonomies/' + futureActionTaxonomy, { context: 'edit', per_page: -1 })
-                }).then(function (taxAttributes) {
-                    // fetch all terms
-                    apiFetch({
-                        path: addQueryArgs('wp/v2/' + taxAttributes.rest_base, { context: 'edit', per_page: -1 })
-                    }).then(function (terms) {
-                        terms.forEach(function (term) {
-                            termsListByName[decodeEntities(term.name)] = term;
-                            termsListById[term.id] = decodeEntities(term.name);
-                        });
+                    path: addQueryArgs('publishpress-future/v1/taxonomies/' + postType)
+                }).then(function (response) {
+                    debugLog('taxonomies', response.taxonomies);
 
-                        setTermsListByName(termsListByName);
-                        setTermsListById(termsListById);
-                        setTaxonomyName(decodeEntities(taxAttributes.name));
-                    });
+                    if (response.taxonomies.length > 0) {
+                        apiFetch({
+                            path: addQueryArgs('wp/v2/taxonomies/' + futureActionTaxonomy, { context: 'edit', per_page: -1 })
+                        }).then(function (taxAttributes) {
+                            debugLog('taxAttributes', taxAttributes);
+                            // fetch all terms
+                            apiFetch({
+                                path: addQueryArgs('wp/v2/' + taxAttributes.rest_base, { context: 'edit', per_page: -1 })
+                            }).then(function (terms) {
+                                debugLog('terms', terms);
+                                terms.forEach(function (term) {
+                                    termsListByName[decodeEntities(term.name)] = term;
+                                    termsListById[term.id] = decodeEntities(term.name);
+                                });
+
+                                setTermsListByName(termsListByName);
+                                setTermsListById(termsListById);
+                                setTaxonomyName(decodeEntities(taxAttributes.name));
+                                setIsFetchingTerms(false);
+                            });
+                        });
+                    } else {
+                        debugLog('fetchTerms', 'No taxonomies found');
+                    }
                 });
             }
         };
@@ -425,20 +462,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             debugLog('editPostAttribute', newAttribute, attribute);
         };
 
-        var init = function init() {
+        useEffect(function () {
             fetchFutureActionData();
-            fetchTerms();
 
+            // We need to get the value directly from the store because the value from the state is not updated yet
+            var enabled = select('publishpress-future/store').getFutureActionEnabled();
             var isCleanNewPost = select('core/editor').isCleanNewPost();
-            debugLog('futureActionEnabled', futureActionEnabled);
+
+            debugLog('enabled', enabled);
             debugLog('isCleanNewPost', isCleanNewPost);
 
-            if (futureActionEnabled && isCleanNewPost) {
-                handleEnabledChange(true);
-            }
-        };
+            if (enabled) {
+                if (isCleanNewPost) {
+                    handleEnabledChange(true);
+                }
 
-        useEffect(init, []);
+                fetchTerms();
+            }
+        }, []);
 
         var selectedTerms = [];
         debugLog('futureActionTerms', futureActionTerms);
@@ -483,11 +524,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     options: config.actions_options,
                     onChange: handleActionChange
                 }),
-                futureAction.includes('category') && (isEmpty(keys(termsListByName)) && React.createElement(
+                futureAction.includes('category') && (isFetchingTerms && React.createElement(
                     Fragment,
                     null,
                     config.strings.loading + (' (' + futureActionTaxonomy + ')'),
                     React.createElement(Spinner, null)
+                ) || isEmpty(keys(termsListByName)) && React.createElement(
+                    'p',
+                    null,
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    config.strings.noTermsFound
                 ) || React.createElement(FormTokenField, {
                     label: config.strings.expirationCategories + (' (' + futureActionTaxonomy + ')'),
                     value: selectedTerms,

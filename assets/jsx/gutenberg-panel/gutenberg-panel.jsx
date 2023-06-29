@@ -33,7 +33,8 @@
             futureActionTaxonomy: null,
             termsListByName: null,
             termsListById: null,
-            taxonomyName: null
+            taxonomyName: null,
+            isFetchingTerms: false,
         }
 
         if (! config || ! config.defaults) {
@@ -165,6 +166,12 @@
                     type: 'SET_TAXONOMY_NAME',
                     taxonomyName: taxonomyName
                 };
+            },
+            setIsFetchingTerms(isFetchingTerms) {
+                return {
+                    type: 'SET_IS_FETCHING_TERMS',
+                    isFetchingTerms: isFetchingTerms
+                }
             }
         },
         selectors: {
@@ -199,6 +206,9 @@
             },
             getTaxonomyName(state) {
                 return state.taxonomyName;
+            },
+            getIsFetchingTerms(state) {
+                return state.isFetchingTerms;
             }
         }
     });
@@ -214,6 +224,7 @@
         const futureActionTaxonomy = useSelect((select) => select('publishpress-future/store').getFutureActionTaxonomy(), []);
         const termsListByName = useSelect((select) => select('publishpress-future/store').getTermsListByName(), []);
         const termsListById = useSelect((select) => select('publishpress-future/store').getTermsListById(), []);
+        const isFetchingTerms = useSelect((select) => select('publishpress-future/store').getIsFetchingTerms(), []);
 
         const {
             setFutureAction,
@@ -223,7 +234,8 @@
             setFutureActionTaxonomy,
             setTermsListByName,
             setTermsListById,
-            setTaxonomyName
+            setTaxonomyName,
+            setIsFetchingTerms
         } = useDispatch('publishpress-future/store');
 
         const {editPost} = useDispatch('core/editor');
@@ -258,6 +270,8 @@
                 newAttribute['date'] = DEFAULT_STATE.futureActionDate;
                 newAttribute['terms'] = DEFAULT_STATE.futureActionTerms;
                 newAttribute['taxonomy'] = DEFAULT_STATE.futureActionTaxonomy;
+
+                fetchTerms();
             }
 
             editPostAttribute(newAttribute);
@@ -270,7 +284,6 @@
 
         const handleDateChange = (value) => {
             const date = new Date(value).getTime()/1000;
-            debugLog('handleDateChange', value, date);
 
             setFutureActionDate(date);
             editPostAttribute({'date': date});
@@ -291,10 +304,10 @@
             return select('core/editor').getCurrentPostType();
         }
 
-        const fetchFutureActionData = () => {
+        const fetchFutureActionData = (callback) => {
             const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
 
-            setFutureActionEnabled(data.enabled);
+            setFutureActionEnabled(data.enabled).then(callback);
             setFutureAction(data.action);
             setFutureActionDate(data.date);
             setFutureActionTerms(data.terms);
@@ -302,16 +315,23 @@
         }
 
         const fetchTerms = () => {
+            debugLog('fetchTerms', 'Fetching terms...');
             const futureActionTaxonomy = select('publishpress-future/store').getFutureActionTaxonomy();
             const postType = getPostType();
 
             let termsListByName = {};
             let termsListById = {};
 
+            setIsFetchingTerms(true);
+
+            debugLog('futureActionTaxonomy', futureActionTaxonomy);
+
             if ((!futureActionTaxonomy && postType === 'post') || futureActionTaxonomy === 'category') {
+                debugLog('fetchTerms', 'Fetching categories...');
                 apiFetch({
                     path: addQueryArgs('wp/v2/categories', {per_page: -1}),
                 }).then((list) => {
+                    debugLog('list', list);
                     list.forEach(cat => {
                         termsListByName[cat.name] = cat;
                         termsListById[cat.id] = cat.name;
@@ -320,24 +340,39 @@
                     setTermsListByName(termsListByName);
                     setTermsListById(termsListById);
                     setTaxonomyName(config.strings.category);
+                    setIsFetchingTerms(false);
                 });
             } else {
+                debugLog('fetchTerms', 'Fetching taxonomies...');
                 apiFetch({
-                    path: addQueryArgs(`wp/v2/taxonomies/${futureActionTaxonomy}`, {context: 'edit', per_page: -1}),
-                }).then((taxAttributes) => {
-                    // fetch all terms
-                    apiFetch({
-                        path: addQueryArgs(`wp/v2/${taxAttributes.rest_base}`, {context: 'edit', per_page: -1}),
-                    }).then((terms) => {
-                        terms.forEach(term => {
-                            termsListByName[decodeEntities(term.name)] = term;
-                            termsListById[term.id] = decodeEntities(term.name);
-                        });
+                    path: addQueryArgs(`publishpress-future/v1/taxonomies/` + postType),
+                }).then((response) => {
+                    debugLog('taxonomies', response.taxonomies);
 
-                        setTermsListByName(termsListByName);
-                        setTermsListById(termsListById);
-                        setTaxonomyName(decodeEntities(taxAttributes.name));
-                    });
+                    if (response.taxonomies.length > 0) {
+                        apiFetch({
+                            path: addQueryArgs(`wp/v2/taxonomies/${futureActionTaxonomy}`, {context: 'edit', per_page: -1}),
+                        }).then((taxAttributes) => {
+                            debugLog('taxAttributes', taxAttributes);
+                            // fetch all terms
+                            apiFetch({
+                                path: addQueryArgs(`wp/v2/${taxAttributes.rest_base}`, {context: 'edit', per_page: -1}),
+                            }).then((terms) => {
+                                debugLog('terms', terms);
+                                terms.forEach(term => {
+                                    termsListByName[decodeEntities(term.name)] = term;
+                                    termsListById[term.id] = decodeEntities(term.name);
+                                });
+
+                                setTermsListByName(termsListByName);
+                                setTermsListById(termsListById);
+                                setTaxonomyName(decodeEntities(taxAttributes.name));
+                                setIsFetchingTerms(false);
+                            });
+                        });
+                    } else {
+                        debugLog('fetchTerms', 'No taxonomies found');
+                    }
                 });
             }
         }
@@ -362,20 +397,24 @@
             debugLog('editPostAttribute', newAttribute, attribute);
         }
 
-        const init = () => {
+        useEffect(() => {
             fetchFutureActionData();
-            fetchTerms();
 
+            // We need to get the value directly from the store because the value from the state is not updated yet
+            const enabled = select('publishpress-future/store').getFutureActionEnabled();
             const isCleanNewPost = select('core/editor').isCleanNewPost();
-            debugLog('futureActionEnabled', futureActionEnabled);
+
+            debugLog('enabled', enabled);
             debugLog('isCleanNewPost', isCleanNewPost);
 
-            if (futureActionEnabled && isCleanNewPost) {
-                handleEnabledChange(true);
-            }
-        }
+            if (enabled) {
+                if (isCleanNewPost) {
+                    handleEnabledChange(true);
+                }
 
-        useEffect(init, []);
+                fetchTerms();
+            }
+        }, []);
 
         let selectedTerms = [];
         debugLog('futureActionTerms', futureActionTerms);
@@ -414,25 +453,31 @@
                             options={config.actions_options}
                             onChange={handleActionChange}
                         />
-                        {futureAction.includes('category') &&
-                            (
-                                (isEmpty(keys(termsListByName)) && (
+
+                        {
+                            futureAction.includes('category') && (
+                                isFetchingTerms && (
                                     <Fragment>
                                         {config.strings.loading + ` (${futureActionTaxonomy})`}
                                         <Spinner/>
                                     </Fragment>
-                                ))
-                                ||
-                                (
-                                    <FormTokenField
-                                        label={config.strings.expirationCategories + ` (${futureActionTaxonomy})`}
-                                        value={selectedTerms}
-                                        suggestions={Object.keys(termsListByName)}
-                                        onChange={handleTermsChange}
-                                        maxSuggestions={10}
-                                    />
                                 )
-                            )}
+                                || (
+                                    isEmpty(keys(termsListByName)) && (
+                                        <p><i className="dashicons dashicons-warning"></i> {config.strings.noTermsFound}</p>
+                                    )
+                                    || (
+                                        <FormTokenField
+                                            label={config.strings.expirationCategories + ` (${futureActionTaxonomy})`}
+                                            value={selectedTerms}
+                                            suggestions={Object.keys(termsListByName)}
+                                            onChange={handleTermsChange}
+                                            maxSuggestions={10}
+                                        />
+                                    )
+                                )
+                            )
+                        }
                     </Fragment>
                 )}
             </PluginDocumentSettingPanel>

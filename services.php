@@ -324,7 +324,8 @@ return [
             $container->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY),
             $container->get(ServicesAbstract::REQUEST),
             $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
-            $container->get(ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY)
+            $container->get(ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY),
+            $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY)
         );
     },
 

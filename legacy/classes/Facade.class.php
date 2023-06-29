@@ -271,6 +271,24 @@ class PostExpirator_Facade
                 ],
             ]
         ]);
+
+        register_rest_route( $apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
+            'methods' => 'GET',
+            'callback' => [$this, 'api_get_post_type_taxonomies'],
+            'permission_callback' => function () {
+                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+            },
+            'args' => [
+                'postType' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        return sanitize_key($param);
+                    },
+                    'sanitize_callback' => 'sanitize_key',
+                    'required' => true,
+                    'type' => 'string',
+                ],
+            ]
+        ]);
     }
 
     public function api_get_expiration_data(WP_REST_Request $request)
@@ -307,6 +325,21 @@ class PostExpirator_Facade
         }
 
         return rest_ensure_response(true);
+    }
+
+    public function api_get_post_type_taxonomies(WP_REST_Request $request)
+    {
+        $postType = $request->get_param('postType');
+
+        $taxonomies = get_object_taxonomies($postType, 'objects');
+        $taxonomies = array_map(function ($taxonomy) {
+            return [
+                'name' => $taxonomy->name,
+                'label' => $taxonomy->label,
+            ];
+        }, $taxonomies);
+
+        return rest_ensure_response(['taxonomies' => $taxonomies]);
     }
 
     /**
@@ -348,6 +381,8 @@ class PostExpirator_Facade
             $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
             $debug = $container->get(ServicesAbstract::DEBUG);
 
+            $postTypeObj = get_post_type_object($post->post_type);
+
             $default_expiry = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
             wp_localize_script(
                 'postexpirator-gutenberg-panel',
@@ -367,6 +402,10 @@ class PostExpirator_Facade
                         'howToExpire' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
                         'expirationCategories' => __('Terms', 'post-expirator'),
+                        'noTermsFound' => sprintf(
+                            __('No terms found for %s', 'post-expirator'),
+                            strtolower($postTypeObj->labels->singular_name)
+                        ),
                     ]
                 ]
             );
