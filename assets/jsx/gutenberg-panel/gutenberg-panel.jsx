@@ -445,6 +445,7 @@
                                 onChange={handleDateChange}
                                 __nextRemoveHelpButton={true}
                                 is12Hour={config.is_12_hours}
+                                startOfWeek={config.start_of_week}
                             />
                         </PanelRow>
                         <SelectControl

@@ -206,9 +206,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 // let date = new Date();
                 // let browserTimezoneOffset = date.getTimezoneOffset() * 60;
                 // let wpTimezoneOffset = config.timezone_offset * 60;
-
-                // date.setTime((storedDate + browserTimezoneOffset + wpTimezoneOffset) * 1000);
-                // date.setTime(state.futureActionDate * 1000);
+                //
+                // debugLog('getFutureActionDate', state.futureActionDate, browserTimezoneOffset, wpTimezoneOffset);
+                //
+                // date.setTime((state.futureActionDate + browserTimezoneOffset + wpTimezoneOffset) * 1000);
+                // // date.setTime(state.futureActionDate * 1000);
                 //
                 // return date.getTime()/1000;
                 return state.futureActionDate;
@@ -515,7 +517,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         currentDate: futureActionDate * 1000,
                         onChange: handleDateChange,
                         __nextRemoveHelpButton: true,
-                        is12Hour: config.is_12_hours
+                        is12Hour: config.is_12_hours,
+                        startOfWeek: config.start_of_week
                     })
                 ),
                 React.createElement(SelectControl, {
