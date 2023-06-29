@@ -140,6 +140,13 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.0.4] - [29 Jun, 2023] =
+
+* FIXED: Fix "Save changes" notification on block editor when post is not edited, #449;
+* FIXED: Fix unchecked category on classic editor when editing a post with future action enabled, #481;
+* FIXED: Update French translation, #473;
+* FIXED: Fix the start of the week on the calendar, honoring the site setting, #484;
+
 = [3.0.3] - [20 Jun, 2023] =
 
 * FIXED: Error on the block editor: The "postexpirator-sidebar" plugin has encountered an error and cannot be rendered, #475;
