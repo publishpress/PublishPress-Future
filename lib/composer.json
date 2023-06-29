@@ -1,0 +1,15 @@
+{
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "vendor-dir": "vendor",
+        "preferred-install": {
+            "*": "dist"
+        },
+        "platform-check": false,
+        "autoloader-suffix": "PublishPressFuture"
+    },
+    "require": {
+        "php": ">=5.6"
+    }
+}
