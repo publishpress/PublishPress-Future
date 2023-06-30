@@ -17,4 +17,5 @@ abstract class HooksAbstract
     const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture_deactivate_plugin';
     const ACTION_ADMIN_ENQUEUE_SCRIPT= 'admin_enqueue_scripts';
     const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';
+    const ACTION_INSERT_POST = 'wp_insert_post';
 }

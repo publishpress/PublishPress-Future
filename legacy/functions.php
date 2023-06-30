@@ -37,29 +37,6 @@ function postexpirator_plugin_action_links($links, $file)
 
 add_filter('plugin_action_links', 'postexpirator_plugin_action_links', 10, 2);
 
-/**
- * Load translation, if it exists.
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_init()
-{
-    $container = Container::getInstance();
-    $plugin_dir = basename($container->get(ServicesAbstract::BASE_PATH));
-    load_plugin_textdomain('post-expirator', null, $plugin_dir . '/languages/');
-
-    PostExpirator_Reviews::init();
-
-    if (class_exists('WP_CLI')) {
-        PostExpirator_Cli::getInstance();
-    }
-
-    add_action('wp_insert_post', 'postexpirator_set_default_meta_for_post', 10, 3);
-}
-
-add_action('plugins_loaded', 'postexpirator_init');
 
 /**
  * Adds an 'Future action' column to the post display table.
