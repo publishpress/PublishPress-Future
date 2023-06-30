@@ -1,3 +1,8 @@
+- .distignore
+- .git
+- .gitattributes
+- .github
+- .gitignore
 - .rsync-filters-post-build
 - .rsync-filters-pre-build
 - /vendor/composer/pimple/pimple/.github
@@ -8,6 +13,7 @@
 - /vendor/pimple/pimple/CHANGELOG
 - /vendor/pimple/pimple/composer.json
 - /vendor/pimple/pimple/phpunit.xml.dist
+- /vendor/pimple/pimple/src/Pimple/Tests
 - /vendor/psr/container/.gitignore
 - /vendor/psr/container/README.md
 - /vendor/psr/container/composer.json
