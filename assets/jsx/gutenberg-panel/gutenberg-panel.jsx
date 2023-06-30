@@ -19,7 +19,7 @@
     const {apiFetch} = wp;
 
     const debugLog = (description, ...message) => {
-        if (console && config.is_debug_enabled) {
+        if (console && config.isDebugEnabled) {
             console.debug('[Future]', description, ...message);
         }
     }
@@ -37,30 +37,30 @@
             isFetchingTerms: false,
         }
 
-        if (! config || ! config.defaults) {
+        if (! config || ! config.postTypeDefaultConfig) {
             return defaultState;
         }
 
-        if (config.defaults.autoEnable) {
+        if (config.postTypeDefaultConfig.autoEnable) {
             defaultState.futureActionEnabled = true;
         }
 
-        if (config.defaults.expireType) {
-            defaultState.futureAction = config.defaults.expireType;
+        if (config.postTypeDefaultConfig.expireType) {
+            defaultState.futureAction = config.postTypeDefaultConfig.expireType;
         }
 
-        if (config.default_date) {
-            defaultState.futureActionDate = parseInt(config.default_date);
+        if (config.defaultDate) {
+            defaultState.futureActionDate = parseInt(config.defaultDate);
         } else {
             defaultState.futureActionDate = new Date().getTime();
         }
 
-        if (config.defaults.taxonomy) {
-            defaultState.futureActionTaxonomy = config.defaults.taxonomy;
+        if (config.postTypeDefaultConfig.taxonomy) {
+            defaultState.futureActionTaxonomy = config.postTypeDefaultConfig.taxonomy;
         }
 
-        if (config.defaults.terms) {
-            defaultState.futureActionTerms = config.defaults.terms.split(',').map(term => parseInt(term));
+        if (config.postTypeDefaultConfig.terms) {
+            defaultState.futureActionTerms = config.postTypeDefaultConfig.terms.split(',').map(term => parseInt(term));
         }
 
         return defaultState;
@@ -179,14 +179,6 @@
                 return state.futureAction;
             },
             getFutureActionDate(state) {
-                // let date = new Date();
-                // let browserTimezoneOffset = date.getTimezoneOffset() * 60;
-                // let wpTimezoneOffset = config.timezone_offset * 60;
-
-                // date.setTime((storedDate + browserTimezoneOffset + wpTimezoneOffset) * 1000);
-                // date.setTime(state.futureActionDate * 1000);
-                //
-                // return date.getTime()/1000;
                 return state.futureActionDate;
             },
             getFutureActionEnabled(state) {
@@ -427,7 +419,7 @@
         }
 
         return (
-            <PluginDocumentSettingPanel title={config.strings.postExpirator} icon="calendar"
+            <PluginDocumentSettingPanel title={config.strings.panelTitle} icon="calendar"
                                         initialOpen={futureActionEnabled} className={'post-expirator-panel'}
             >
                 <PanelRow>
@@ -444,14 +436,14 @@
                                 currentDate={futureActionDate*1000}
                                 onChange={handleDateChange}
                                 __nextRemoveHelpButton={true}
-                                is12Hour={config.is_12_hours}
-                                startOfWeek={config.start_of_week}
+                                is12Hour={config.is12hours}
+                                startOfWeek={config.startOfWeek}
                             />
                         </PanelRow>
                         <SelectControl
-                            label={config.strings.howToExpire}
+                            label={config.strings.action}
                             value={futureAction}
-                            options={config.actions_options}
+                            options={config.actionsSelectOptions}
                             onChange={handleActionChange}
                         />
 
@@ -469,7 +461,7 @@
                                     )
                                     || (
                                         <FormTokenField
-                                            label={config.strings.expirationCategories + ` (${futureActionTaxonomy})`}
+                                            label={config.strings.terms + ` (${futureActionTaxonomy})`}
                                             value={selectedTerms}
                                             suggestions={Object.keys(termsListByName)}
                                             onChange={handleTermsChange}
