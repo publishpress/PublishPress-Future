@@ -1,4 +1,4 @@
-name: devworkspace_permissions_pro
+name: devworkspace_future_pro
 services:
     terminal:
         build: ./docker
