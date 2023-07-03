@@ -298,6 +298,7 @@
 
         const fetchFutureActionData = (callback) => {
             const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+            debugLog('fetchFutureActionData', data);
 
             setFutureActionEnabled(data.enabled).then(callback);
             setFutureAction(data.action);
