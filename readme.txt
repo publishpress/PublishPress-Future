@@ -149,6 +149,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix the start of the week on the calendar, honoring the site setting, #484;
 * FIXED: Fix the taxonomy field for custom post types;
 * FIXED: Fix consistency in the message in the block editor, compared to classic editor, when no taxonomy is selected;
+* FIXED: Update the .pot file;
 * CHANGED: The name of the block editor component changed from `postexpirator-sidebar` to `publishpress-future-action`, #449;
 * CHANGED: Update the Action Scheduler library from 3.6.0 to 3.6.1;
 * REMOVED: Remove internal function `postexpirator_init`;
