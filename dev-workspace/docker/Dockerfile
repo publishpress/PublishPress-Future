@@ -71,12 +71,7 @@ RUN set -ex; \
 
 # More info: https://github.com/deluan/zsh-in-docker
 
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.3/zsh-in-docker.sh)" -- \
-    -t ys \
-    -p git \
-    -p asdf \
-    -p ag \
-    -p wp-cli
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 COPY root/.zshrc /root/.zshrc
 
@@ -200,6 +195,14 @@ RUN yarn --version
 ####################################################################################################
 
 # RUN pip3 install med2image
+
+####################################################################################################
+# Install WP-CLI
+####################################################################################################
+
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+  && chmod +x wp-cli.phar \
+  && mv wp-cli.phar /usr/local/bin/wp
 
 ####################################################################################################
 # Configure the image

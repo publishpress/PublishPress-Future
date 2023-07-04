@@ -1,407 +1,486 @@
+
 (function (wp, config) {
 
     const {registerPlugin} = wp.plugins;
     const {PluginDocumentSettingPanel} = wp.editPost;
     const {PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner} = wp.components;
-    const {Fragment, Component} = wp.element;
+    const {Fragment} = wp.element;
     const {decodeEntities} = wp.htmlEntities;
     const {isEmpty, keys, compact} = lodash;
-
-    class PostExpiratorSidebar extends Component {
-        constructor() {
-            super(...arguments);
-
-            this.state = {
-                categoriesList: [],
-                catIdVsName: [],
-                expirationEnabled: false,
-                expirationAction: '',
-                expirationDate: '',
-                expirationTerms: [],
-                expirationTaxonomy: ''
-            }
-
-            wp.data.subscribe(this.listenToPostSave.bind(this));
-            wp.hooks.addAction('after_save_post', 'publishpress-future', () => {
-                this.debugLog('getExpirationEnabled', this.getExpirationEnabled());
-                this.saveCurrentPostData()
-            });
-        }
-
-        debugLog(description, message) {
-            if (console && config.is_debug_enabled) {
-                console.log(description, message);
-            }
-        }
-
-        listenToPostSave() {
-            // Get the current post ID
-            const postId = this.getPostId();
-
-            const isSavingPost = this.getIsSavingPost();
-            const itemKey = 'ppfuture-expiration-' + postId + '-isSavingPost';
-
-            if (isSavingPost) {
-                sessionStorage.setItem(itemKey, '1');
-            }
-
-            if (!isSavingPost) {
-                let hasSavingRegistered = sessionStorage.getItem(itemKey) === '1';
-
-                if (hasSavingRegistered) {
-                    sessionStorage.removeItem(itemKey);
-                    wp.hooks.doAction('after_save_post', 'publishpress-future');
-                }
-            }
-        }
-
-        getPostType() {
-            return wp.data.select('core/editor').getCurrentPostType();
-        }
-
-        getPostId() {
-            return wp.data.select('core/editor').getCurrentPostId();
-        }
-
-        getIsSavingPost() {
-            return wp.data.select('core/editor').isSavingPost() || wp.data.select('core/editor').isAutosavingPost();
-        }
-
-        editPostAttribute(name, value) {
-            let attribute = {};
-            attribute[name] = value;
-
-            wp.data.dispatch('core/editor').editPost(attribute);
-        }
-
-        getEditedPostAttribute(name) {
-            return wp.data.select("core/editor").getEditedPostAttribute(name);
-        }
-
-        fetchExpirationDataFromApi() {
-            return wp.apiFetch({path: 'publishpress-future/v1/post-expiration/' + this.getPostId()}).then((data) => {
-                this.editPostAttribute('expirationEnabled', data.enabled);
-                this.editPostAttribute('expirationAction', data.expireType);
-                this.editPostAttribute('expirationDate', data.date);
-                this.editPostAttribute('expirationTerms', data.category);
-                this.editPostAttribute('expirationTaxonomy', data.categoryTaxonomy);
-
-                this.setState({
-                    expirationEnabled: data.enabled,
-                    expirationAction: data.expireType,
-                    expirationDate: data.date,
-                    expirationTerms: data.category,
-                    expirationTaxonomy: data.categoryTaxonomy
-                });
-
-                this.debugLog('API return', data);
-            });
-        }
-
-        saveCurrentPostData() {
-            const {expirationEnabled, expirationDate, expirationAction, expirationTerms} = this.state;
-            let data;
-
-            this.debugLog('State', this.state);
-
-            if (!expirationEnabled) {
-                data = {'enabled': false, 'date': 0, 'action': '', 'terms': []};
-            } else {
-                data = {
-                    enabled: expirationEnabled,
-                    date: expirationDate,
-                    action: expirationAction,
-                    terms: expirationTerms,
-                };
-            }
-
-            wp.apiFetch({
-                path: 'publishpress-future/v1/post-expiration/' + this.getPostId(),
-                method: 'POST',
-                data: data,
-            }).then((data) => {
-                this.debugLog('Future action data saved.');
-                this.debugLog(data);
-            });
-        }
-
-        componentWillMount() {
-            this.fetchExpirationDataFromApi().then(this.initialize.bind(this));
-        }
-
-        initialize() {
-            const postType = this.getPostType();
-
-            const expirationEnabled = this.getExpirationEnabled();
-            const expirationAction = this.getExpirationAction();
-            const expirationTerms = this.getExpirationTerms();
-            const expirationDate = this.getExpirationDate();
-            const expirationTaxonomy = this.getExpirationTaxonomy();
-
-            this.debugLog('Initialized', {
-                enabled: expirationEnabled,
-                date: expirationDate,
-                expirationAction: expirationAction,
-                categories: expirationTerms,
-                taxonomy: expirationTaxonomy,
-            });
-
-            this.setState({
-                expirationEnabled: expirationEnabled,
-                expirationAction: expirationAction,
-                expirationDate: expirationDate,
-                expirationTerms: expirationTerms,
-                expirationTaxonomy: expirationTaxonomy
-            });
-
-            this.debugLog('Default config', config.defaults);
-
-            let categoriesList = [];
-            let catIdVsName = [];
-
-            if ((!expirationTaxonomy && postType === 'post') || expirationTaxonomy === 'category') {
-                wp.apiFetch({
-                    path: wp.url.addQueryArgs('wp/v2/categories', {per_page: -1}),
-                }).then((list) => {
-                    list.forEach(cat => {
-                        categoriesList[cat.name] = cat;
-                        catIdVsName[cat.id] = cat.name;
-                    });
-                    this.setState({
-                        categoriesList: categoriesList,
-                        catIdVsName: catIdVsName,
-                        taxonomy: config.strings.category
-                    });
-                });
-            } else {
-                wp.apiFetch({
-                    path: wp.url.addQueryArgs(`wp/v2/taxonomies/${expirationTaxonomy}`, {context: 'edit'}),
-                }).then((taxAttributes) => {
-                    // fetch all terms
-                    wp.apiFetch({
-                        path: wp.url.addQueryArgs(`wp/v2/${taxAttributes.rest_base}`, {context: 'edit'}),
-                    }).then((terms) => {
-                        terms.forEach(term => {
-                            categoriesList[decodeEntities(term.name)] = term;
-                            catIdVsName[term.id] = decodeEntities(term.name);
-                        });
-                        this.setState({
-                            categoriesList: categoriesList,
-                            catIdVsName: catIdVsName,
-                            taxonomy: decodeEntities(taxAttributes.name)
-                        });
-                    });
-                });
-            }
-        }
-
-        componentDidUpdate() {
-            const {expirationEnabled, expirationDate, expirationAction, expirationTerms, attribute} = this.state;
-            
-            switch (attribute) {
-                case 'enabled':
-                    this.editPostAttribute('expirationEnabled', expirationEnabled);
-                    break;
-
-                case 'date':
-                    this.editPostAttribute('expirationDate', expirationDate);
-                    break;
-
-                case 'action':
-                    this.editPostAttribute('expirationAction', expirationAction);
-                    if (!expirationAction.includes('category')) {
-                        this.editPostAttribute('expirationTerms', []);
-                    }
-                    break;
-                case 'category':
-                    this.editPostAttribute('expirationTerms', expirationTerms);
-                    break;
-            }
-        }
-
-        getExpirationEnabled() {
-            return this.getEditedPostAttribute('expirationEnabled') == true;
-        }
-
-        getExpirationDate() {
-            let storedDate = parseInt(this.getEditedPostAttribute('expirationDate'));
-
-            if (! storedDate) {
-                if (config.default_date) {
-                    storedDate = parseInt(config.default_date);
-                } else {
-                    storedDate = new Date().getTime();
-                }
-            }
-
-            let date = new Date();
-            // let browserTimezoneOffset = date.getTimezoneOffset() * 60;
-            // let wpTimezoneOffset = config.timezone_offset * 60;
-
-            // date.setTime((storedDate + browserTimezoneOffset + wpTimezoneOffset) * 1000);
-            date.setTime(storedDate * 1000);
-
-            return date.getTime()/1000;
-        }
-
-        // what action to take on expiration
-        getExpirationAction() {
-            let expirationAction = this.getEditedPostAttribute('expirationAction');
-
-            if (expirationAction) {
-                return expirationAction;
-            }
-
-            if (config && config.defaults && config.defaults.expireType) {
-                return config.defaults.expireType;
-            }
-
-            return 'draft';
-        }
-
-        arrayIsEmpty(obj) {
-            return !obj || obj.length === 0 || obj[0] === '';
-        }
-
-        // what categories to add/remove/replace
-        getExpirationTerms() {
-            let categories = this.getEditedPostAttribute('expirationTerms', true);
-
-            let defaultCategories = config.defaults.terms ? config.defaults.terms.split(',') : [];
-
-            if (this.arrayIsEmpty(categories)) {
-                return defaultCategories;
-            }
-
-            if (categories && typeof categories !== 'undefined' && typeof categories !== 'object') {
-                return [categories];
-            }
-
-            return categories;
-        }
-
-        getExpirationTaxonomy() {
-            let taxonomy = this.getEditedPostAttribute('expirationTaxonomy');
-
-            if (taxonomy) {
-                return taxonomy;
-            }
-
-            if (config && config.defaults && config.defaults.taxonomy) {
-                return config.defaults.taxonomy;
-            }
-
-            return 'category';
-        }
-
-        // fired for the autocomplete
-        selectCategories(tokens) {
-            const {categoriesList, catIdVsName} = this.state;
-
-            var hasNoSuggestion = tokens.some(function (token) {
-                return typeof token === 'string' && !categoriesList[token];
-            });
-
-            if (hasNoSuggestion) {
-                return;
-            }
-
-            var categories = tokens.map(function (token) {
-                return typeof token === 'string' ? categoriesList[token] : token;
-            })
-
-            return categories.map((cat) => cat.id);
-        }
-
-        onChangeEnabled(value) {
-            this.setState({expirationEnabled: value, attribute: 'enabled'})
-            this.editPostAttribute('expirationEnabled', value);
-            this.debugLog(value);
-        }
-
-        onChangeDate(value) {
-            const date = new Date(value).getTime()/1000;
-            this.setState({expirationDate: date, attribute: 'date'});
-            this.editPostAttribute('expirationDate', date);
-            this.debugLog('New date', date, new Date(date * 1000));
-            this.debugLog('Getdate', this.getExpirationDate());
-        }
-
-        onChangeAction(value) {
-            this.setState({expirationAction: value, attribute: 'action'})
-            this.editPostAttribute('expirationAction', value);
-        }
-
-        onChangeTerms(value) {
-            this.setState({
-                expirationTerms: this.selectCategories(value),
-                attribute: 'category'
-            });
-            this.editPostAttribute('expirationTerms', value);
-        }
-
-        render() {
-            const {categoriesList, catIdVsName} = this.state;
-            const {expirationEnabled, expirationDate, expirationAction, expirationTerms, expirationTaxonomy} = this.state;
-
-            let selectedCats = expirationTerms && compact(expirationTerms.map((id) => catIdVsName[id] || false));
-            if (typeof selectedCats === 'string') {
-                selectedCats = [];
-            }
-
-            return (
-                <PluginDocumentSettingPanel title={config.strings.postExpirator} icon="calendar"
-                                            initialOpen={expirationEnabled} className={'post-expirator-panel'}>
-                    <PanelRow>
-                        <CheckboxControl
-                            label={config.strings.enablePostExpiration}
-                            checked={expirationEnabled}
-                            onChange={this.onChangeEnabled.bind(this)}
-                        />
-                    </PanelRow>
-                    {expirationEnabled && (
-                        <Fragment>
-                            <PanelRow>
-                                <DateTimePicker
-                                    currentDate={expirationDate*1000}
-                                    onChange={this.onChangeDate.bind(this)}
-                                    is12Hour={config.is_12_hours}
-                                />
-                            </PanelRow>
-                            <SelectControl
-                                label={config.strings.howToExpire}
-                                value={expirationAction}
-                                options={config.actions_options}
-                                onChange={this.onChangeAction.bind(this)}
-                            />
-                            {expirationAction.includes('category') &&
-                                (
-                                    (isEmpty(keys(categoriesList)) && (
-                                        <Fragment>
-                                            {config.strings.loading + ` (${expirationTaxonomy})`}
-                                            <Spinner/>
-                                        </Fragment>
-                                    ))
-                                    ||
-                                    (
-                                        <FormTokenField
-                                            label={config.strings.expirationCategories + ` (${expirationTaxonomy})`}
-                                            value={selectedCats}
-                                            suggestions={Object.keys(categoriesList)}
-                                            onChange={this.onChangeTerms.bind(this)}
-                                            maxSuggestions={10}
-                                        />
-                                    )
-                                )}
-                        </Fragment>
-                    )}
-                </PluginDocumentSettingPanel>
-            );
+    const {useEffect} = React;
+    const {addQueryArgs} = wp.url;
+    const {
+        useSelect,
+        useDispatch,
+        register,
+        createReduxStore,
+        select
+    } = wp.data;
+    const {apiFetch} = wp;
+
+    const debugLog = (description, ...message) => {
+        if (console && config.isDebugEnabled) {
+            console.debug('[Future]', description, ...message);
         }
     }
 
-    registerPlugin('postexpirator-sidebar', {
-        render: PostExpiratorSidebar
+    const getDefaultState = () => {
+        let defaultState = {
+            futureAction: null,
+            futureActionDate: 0,
+            futureActionEnabled: false,
+            futureActionTerms: [],
+            futureActionTaxonomy: null,
+            termsListByName: null,
+            termsListById: null,
+            taxonomyName: null,
+            isFetchingTerms: false,
+        }
+
+        if (! config || ! config.postTypeDefaultConfig) {
+            return defaultState;
+        }
+
+        if (config.postTypeDefaultConfig.autoEnable) {
+            defaultState.futureActionEnabled = true;
+        }
+
+        if (config.postTypeDefaultConfig.expireType) {
+            defaultState.futureAction = config.postTypeDefaultConfig.expireType;
+        }
+
+        if (config.defaultDate) {
+            defaultState.futureActionDate = parseInt(config.defaultDate);
+        } else {
+            defaultState.futureActionDate = new Date().getTime();
+        }
+
+        if (config.postTypeDefaultConfig.taxonomy) {
+            defaultState.futureActionTaxonomy = config.postTypeDefaultConfig.taxonomy;
+        }
+
+        if (config.postTypeDefaultConfig.terms) {
+            defaultState.futureActionTerms = config.postTypeDefaultConfig.terms.split(',').map(term => parseInt(term));
+        }
+
+        return defaultState;
+    }
+
+    // Step 1: Create the Redux store
+    const DEFAULT_STATE = getDefaultState();
+
+    debugLog('DEFAULT_STATE', DEFAULT_STATE);
+
+    const store = createReduxStore('publishpress-future/store', {
+        reducer(state = DEFAULT_STATE, action) {
+            switch (action.type) {
+                case 'SET_FUTURE_ACTION':
+                    return {
+                        ...state,
+                        futureAction: action.futureAction,
+                    };
+                case 'SET_FUTURE_ACTION_DATE':
+                    return {
+                        ...state,
+                        futureActionDate: action.futureActionDate,
+                    }
+                case 'SET_FUTURE_ACTION_ENABLED':
+                    return {
+                        ...state,
+                        futureActionEnabled: action.futureActionEnabled,
+                    }
+                case 'SET_FUTURE_ACTION_TERMS':
+                    return {
+                        ...state,
+                        futureActionTerms: action.futureActionTerms,
+                    }
+                case 'SET_FUTURE_ACTION_TAXONOMY':
+                    return {
+                        ...state,
+                        futureActionTaxonomy: action.futureActionTaxonomy,
+                    }
+                case 'SET_TERMS_LIST_BY_NAME':
+                    return {
+                        ...state,
+                        termsListByName: action.termsListByName,
+                    }
+                case 'SET_TERMS_LIST_BY_ID':
+                    return {
+                        ...state,
+                        termsListById: action.termsListById,
+                    }
+                case 'SET_TAXONOMY_NAME':
+                    return {
+                        ...state,
+                        taxonomyName: action.taxonomyName,
+                    }
+            }
+
+            return state;
+        },
+        actions: {
+            setFutureAction(futureAction) {
+                return {
+                    type: 'SET_FUTURE_ACTION',
+                    futureAction: futureAction
+                };
+            },
+            setFutureActionDate(futureActionDate) {
+                return {
+                    type: 'SET_FUTURE_ACTION_DATE',
+                    futureActionDate: futureActionDate
+                };
+            },
+            setFutureActionEnabled(futureActionEnabled) {
+                return {
+                    type: 'SET_FUTURE_ACTION_ENABLED',
+                    futureActionEnabled: futureActionEnabled
+                };
+            },
+            setFutureActionTerms(futureActionTerms) {
+                return {
+                    type: 'SET_FUTURE_ACTION_TERMS',
+                    futureActionTerms: futureActionTerms
+                };
+            },
+            setFutureActionTaxonomy(futureActionTaxonomy) {
+                return {
+                    type: 'SET_FUTURE_ACTION_TAXONOMY',
+                    futureActionTaxonomy: futureActionTaxonomy
+                };
+            },
+            setTermsListByName(termsListByName) {
+                return {
+                    type: 'SET_TERMS_LIST_BY_NAME',
+                    termsListByName: termsListByName
+                };
+            },
+            setTermsListById(termsListById) {
+                return {
+                    type: 'SET_TERMS_LIST_BY_ID',
+                    termsListById: termsListById
+                };
+            },
+            setTaxonomyName(taxonomyName) {
+                return {
+                    type: 'SET_TAXONOMY_NAME',
+                    taxonomyName: taxonomyName
+                };
+            },
+            setIsFetchingTerms(isFetchingTerms) {
+                return {
+                    type: 'SET_IS_FETCHING_TERMS',
+                    isFetchingTerms: isFetchingTerms
+                }
+            }
+        },
+        selectors: {
+            getFutureAction(state) {
+                return state.futureAction;
+            },
+            getFutureActionDate(state) {
+                return state.futureActionDate;
+            },
+            getFutureActionEnabled(state) {
+                return state.futureActionEnabled;
+            },
+            getFutureActionTerms(state) {
+                return state.futureActionTerms;
+            },
+            getFutureActionTaxonomy(state) {
+                return state.futureActionTaxonomy;
+            },
+            getTermsListByName(state) {
+                return state.termsListByName;
+            },
+            getTermsListById(state) {
+                return state.termsListById;
+            },
+            getTaxonomyName(state) {
+                return state.taxonomyName;
+            },
+            getIsFetchingTerms(state) {
+                return state.isFetchingTerms;
+            }
+        }
+    });
+
+    register(store);
+
+    // Step 2: Create the component
+    const MyPluginDocumentSettingPanel = () => {
+        const futureAction = useSelect((select) => select('publishpress-future/store').getFutureAction(), []);
+        const futureActionDate = useSelect((select) => select('publishpress-future/store').getFutureActionDate(), []);
+        const futureActionEnabled = useSelect((select) => select('publishpress-future/store').getFutureActionEnabled(), []);
+        const futureActionTerms = useSelect((select) => select('publishpress-future/store').getFutureActionTerms(), []);
+        const futureActionTaxonomy = useSelect((select) => select('publishpress-future/store').getFutureActionTaxonomy(), []);
+        const termsListByName = useSelect((select) => select('publishpress-future/store').getTermsListByName(), []);
+        const termsListById = useSelect((select) => select('publishpress-future/store').getTermsListById(), []);
+        const isFetchingTerms = useSelect((select) => select('publishpress-future/store').getIsFetchingTerms(), []);
+
+        const {
+            setFutureAction,
+            setFutureActionDate,
+            setFutureActionEnabled,
+            setFutureActionTerms,
+            setFutureActionTaxonomy,
+            setTermsListByName,
+            setTermsListById,
+            setTaxonomyName,
+            setIsFetchingTerms
+        } = useDispatch('publishpress-future/store');
+
+        const {editPost} = useDispatch('core/editor');
+
+        const mapTermsFromIdToName = (terms) => {
+            return terms.map((term) => {
+                return termsListById[term];
+            });
+        }
+
+        const mapTermsFromNameToId = (terms) => {
+            return terms.map((term) => {
+                return termsListByName[term].id;
+            });
+        }
+
+        const handleEnabledChange = (isChecked) => {
+            setFutureActionEnabled(isChecked);
+
+            const newAttribute = {
+                'enabled': isChecked
+            }
+
+            // User default values to other fields
+            if (isChecked) {
+                setFutureAction(DEFAULT_STATE.futureAction);
+                setFutureActionDate(DEFAULT_STATE.futureActionDate);
+                setFutureActionTerms(DEFAULT_STATE.futureActionTerms);
+                setFutureActionTaxonomy(DEFAULT_STATE.futureActionTaxonomy);
+
+                newAttribute['action'] = DEFAULT_STATE.futureAction;
+                newAttribute['date'] = DEFAULT_STATE.futureActionDate;
+                newAttribute['terms'] = DEFAULT_STATE.futureActionTerms;
+                newAttribute['taxonomy'] = DEFAULT_STATE.futureActionTaxonomy;
+
+                fetchTerms();
+            }
+
+            editPostAttribute(newAttribute);
+        }
+
+        const handleActionChange = (value) => {
+            setFutureAction(value);
+            editPostAttribute({'action': value});
+        }
+
+        const handleDateChange = (value) => {
+            const date = new Date(value).getTime()/1000;
+
+            setFutureActionDate(date);
+            editPostAttribute({'date': date});
+        }
+
+        const handleTermsChange = (value) => {
+            value = mapTermsFromNameToId(value);
+
+            setFutureActionTerms(value);
+            editPostAttribute({'terms': value});
+        }
+
+        const getPostId = () => {
+            return select('core/editor').getCurrentPostId();
+        }
+
+        const getPostType = () => {
+            return select('core/editor').getCurrentPostType();
+        }
+
+        const fetchFutureActionData = (callback) => {
+            const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+            debugLog('fetchFutureActionData', data);
+
+            setFutureActionEnabled(data.enabled).then(callback);
+            setFutureAction(data.action);
+            setFutureActionDate(data.date);
+            setFutureActionTerms(data.terms);
+            setFutureActionTaxonomy(data.taxonomy);
+        }
+
+        const fetchTerms = () => {
+            debugLog('fetchTerms', 'Fetching terms...');
+            const futureActionTaxonomy = select('publishpress-future/store').getFutureActionTaxonomy();
+            const postType = getPostType();
+
+            let termsListByName = {};
+            let termsListById = {};
+
+            setIsFetchingTerms(true);
+
+            debugLog('futureActionTaxonomy', futureActionTaxonomy);
+
+            if ((!futureActionTaxonomy && postType === 'post') || futureActionTaxonomy === 'category') {
+                debugLog('fetchTerms', 'Fetching categories...');
+                apiFetch({
+                    path: addQueryArgs('wp/v2/categories', {per_page: -1}),
+                }).then((list) => {
+                    debugLog('list', list);
+                    list.forEach(cat => {
+                        termsListByName[cat.name] = cat;
+                        termsListById[cat.id] = cat.name;
+                    });
+
+                    setTermsListByName(termsListByName);
+                    setTermsListById(termsListById);
+                    setTaxonomyName(config.strings.category);
+                    setIsFetchingTerms(false);
+                });
+            } else {
+                debugLog('fetchTerms', 'Fetching taxonomies...');
+                apiFetch({
+                    path: addQueryArgs(`publishpress-future/v1/taxonomies/` + postType),
+                }).then((response) => {
+                    debugLog('taxonomies', response.taxonomies);
+
+                    if (response.taxonomies.length > 0) {
+                        apiFetch({
+                            path: addQueryArgs(`wp/v2/taxonomies/${futureActionTaxonomy}`, {context: 'edit', per_page: -1}),
+                        }).then((taxAttributes) => {
+                            debugLog('taxAttributes', taxAttributes);
+                            // fetch all terms
+                            apiFetch({
+                                path: addQueryArgs(`wp/v2/${taxAttributes.rest_base}`, {context: 'edit', per_page: -1}),
+                            }).then((terms) => {
+                                debugLog('terms', terms);
+                                terms.forEach(term => {
+                                    termsListByName[decodeEntities(term.name)] = term;
+                                    termsListById[term.id] = decodeEntities(term.name);
+                                });
+
+                                setTermsListByName(termsListByName);
+                                setTermsListById(termsListById);
+                                setTaxonomyName(decodeEntities(taxAttributes.name));
+                                setIsFetchingTerms(false);
+                            });
+                        });
+                    } else {
+                        debugLog('fetchTerms', 'No taxonomies found');
+                    }
+                });
+            }
+        }
+
+        const editPostAttribute = (newAttribute) => {
+            const attribute = {
+                publishpress_future_action: {
+                    enabled: futureActionEnabled,
+                    date: futureActionDate,
+                    action: futureAction,
+                    terms: futureActionTerms,
+                    taxonomy: futureActionTaxonomy
+                }
+            };
+
+            // For each property on newAttribute, set the value on attribute
+            for (const [name, value] of Object.entries(newAttribute)) {
+                attribute.publishpress_future_action[name] = value;
+            }
+
+            editPost(attribute);
+            debugLog('editPostAttribute', newAttribute, attribute);
+        }
+
+        useEffect(() => {
+            fetchFutureActionData();
+
+            // We need to get the value directly from the store because the value from the state is not updated yet
+            const enabled = select('publishpress-future/store').getFutureActionEnabled();
+            const isCleanNewPost = select('core/editor').isCleanNewPost();
+
+            debugLog('enabled', enabled);
+            debugLog('isCleanNewPost', isCleanNewPost);
+
+            if (enabled) {
+                if (isCleanNewPost) {
+                    handleEnabledChange(true);
+                }
+
+                fetchTerms();
+            }
+        }, []);
+
+        let selectedTerms = [];
+        debugLog('futureActionTerms', futureActionTerms);
+        if (futureActionTerms && futureActionTerms.length > 0 && termsListById) {
+            selectedTerms = compact(mapTermsFromIdToName(futureActionTerms));
+
+            if (typeof selectedTerms === 'string') {
+                selectedTerms = [];
+            }
+        }
+
+        return (
+            <PluginDocumentSettingPanel title={config.strings.panelTitle} icon="calendar"
+                                        initialOpen={futureActionEnabled} className={'post-expirator-panel'}
+            >
+                <PanelRow>
+                    <CheckboxControl
+                        label={config.strings.enablePostExpiration}
+                        checked={futureActionEnabled}
+                        onChange={handleEnabledChange}
+                    />
+                </PanelRow>
+                {futureActionEnabled && (
+                    <Fragment>
+                        <PanelRow>
+                            <DateTimePicker
+                                currentDate={futureActionDate*1000}
+                                onChange={handleDateChange}
+                                __nextRemoveHelpButton={true}
+                                is12Hour={config.is12hours}
+                                startOfWeek={config.startOfWeek}
+                            />
+                        </PanelRow>
+                        <SelectControl
+                            label={config.strings.action}
+                            value={futureAction}
+                            options={config.actionsSelectOptions}
+                            onChange={handleActionChange}
+                        />
+
+                        {
+                            String(futureAction).includes('category') && (
+                                isFetchingTerms && (
+                                    <Fragment>
+                                        {config.strings.loading + ` (${futureActionTaxonomy})`}
+                                        <Spinner/>
+                                    </Fragment>
+                                )
+                                || (
+                                    isEmpty(keys(termsListByName)) && (
+                                        <p><i className="dashicons dashicons-warning"></i> {config.strings.noTermsFound}</p>
+                                    )
+                                    || (
+                                        <FormTokenField
+                                            label={config.strings.terms + ` (${futureActionTaxonomy})`}
+                                            value={selectedTerms}
+                                            suggestions={Object.keys(termsListByName)}
+                                            onChange={handleTermsChange}
+                                            maxSuggestions={10}
+                                        />
+                                    )
+                                )
+                            )
+                        }
+                    </Fragment>
+                )}
+            </PluginDocumentSettingPanel>
+        );
+    };
+
+    // Step 3: Connect the component to the Redux store
+    registerPlugin('publishpress-future-action', {
+        render: MyPluginDocumentSettingPanel
     });
 
 })(window.wp, window.postExpiratorPanelConfig);

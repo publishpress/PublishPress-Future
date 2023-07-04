@@ -153,6 +153,10 @@ class SettingsFacade
             (array)$this->options->getOption('expirationdateDefaults' . ucfirst($postType))
         );
 
+        if (empty($defaults['expireType'])) {
+            $defaults['expireType'] = 'draft';
+        }
+
         if ($defaults['default-expire-type'] === 'null' || empty($defaults['default-expire-type'])) {
             $defaults['default-expire-type'] = 'inherit';
         }

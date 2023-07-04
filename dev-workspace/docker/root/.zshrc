@@ -100,6 +100,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias wp="wp --allow-root"
+
 export PROJECT_PATH="/project"
 
 export PROMPT="

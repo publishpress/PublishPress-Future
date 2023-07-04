@@ -271,6 +271,24 @@ class PostExpirator_Facade
                 ],
             ]
         ]);
+
+        register_rest_route( $apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
+            'methods' => 'GET',
+            'callback' => [$this, 'api_get_post_type_taxonomies'],
+            'permission_callback' => function () {
+                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+            },
+            'args' => [
+                'postType' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        return sanitize_key($param);
+                    },
+                    'sanitize_callback' => 'sanitize_key',
+                    'required' => true,
+                    'type' => 'string',
+                ],
+            ]
+        ]);
     }
 
     public function api_get_expiration_data(WP_REST_Request $request)
@@ -309,6 +327,21 @@ class PostExpirator_Facade
         return rest_ensure_response(true);
     }
 
+    public function api_get_post_type_taxonomies(WP_REST_Request $request)
+    {
+        $postType = $request->get_param('postType');
+
+        $taxonomies = get_object_taxonomies($postType, 'objects');
+        $taxonomies = array_map(function ($taxonomy) {
+            return [
+                'name' => $taxonomy->name,
+                'label' => $taxonomy->label,
+            ];
+        }, $taxonomies);
+
+        return rest_ensure_response(['taxonomies' => $taxonomies]);
+    }
+
     /**
      * Load the block's backend assets only if the meta box is active for this post type.
      */
@@ -324,18 +357,21 @@ class PostExpirator_Facade
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
         $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
 
-        $defaults = $settingsFacade->getPostTypeDefaults($post->post_type);
+        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($post->post_type);
 
         // if settings are not configured, show the metabox by default only for posts and pages
         if (
-            (! isset($defaults['activeMetaBox']) && in_array(
+            (! isset($postTypeDefaultConfig['activeMetaBox'])
+                && in_array(
                     $post->post_type,
                     [
                         'post',
                         'page',
                     ],
                     true
-                )) || $defaults['activeMetaBox'] === 'active'
+                )
+            )
+            || $postTypeDefaultConfig['activeMetaBox'] === 'active'
         ) {
             wp_enqueue_script(
                 'postexpirator-gutenberg-panel',
@@ -348,25 +384,25 @@ class PostExpirator_Facade
             $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
             $debug = $container->get(ServicesAbstract::DEBUG);
 
-            $default_expiry = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
+            $defaultExpirationDate = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
             wp_localize_script(
                 'postexpirator-gutenberg-panel',
                 'postExpiratorPanelConfig',
                 [
-                    'defaults' => $defaults,
-                    'default_date' => $default_expiry['ts'],
-                    'default_categories' => get_option('expirationdateCategoryDefaults'),
-                    'is_12_hours' => get_option('time_format') !== 'H:i',
-                    'timezone_offset' => PostExpirator_Util::get_timezone_offset() / 60,
-                    'actions_options' => $actionsModel->getActionsAsOptions($post->post_type),
-                    'is_debug_enabled' => $debug->isEnabled(),
+                    'postTypeDefaultConfig' => $postTypeDefaultConfig,
+                    'defaultDate' => $defaultExpirationDate['ts'],
+                    'is12hours' => get_option('time_format') !== 'H:i',
+                    'startOfWeek' => get_option('start_of_week', 0),
+                    'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
+                    'isDebugEnabled' => $debug->isEnabled(),
                     'strings' => [
                         'category' => __('Taxonomy', 'post-expirator'),
-                        'postExpirator' => __('PublishPress Future', 'post-expirator'),
+                        'panelTitle' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                        'howToExpire' => __('Action', 'post-expirator'),
+                        'action' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
-                        'expirationCategories' => __('Terms', 'post-expirator'),
+                        'terms' => __('Terms', 'post-expirator'),
+                        'noTermsFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
                     ]
                 ]
             );

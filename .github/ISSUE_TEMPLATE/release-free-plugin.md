@@ -17,12 +17,12 @@ To release the Free plugin please make sure to check all the checkboxes below.
 - [ ] Run `composer update --no-dev --dry-run` and check if there is any relevant update on any requirement. This won't change the code, just show a simulation of running the update command. Evaluate the need of releasing with this library updated, or if we can add that for a next release
 - [ ] If any update should be included on this release (from previous step) make sure to run the update command only for the specific dependeny: `composer update the/lib:version-constraint"`. Make sure to check compatibility with the plugin and what version we should be using. Check if you need to lock the current version for any dependency using exact version numbers instead of relative version constraints. Make sure to add any change of dependencies to the changelog.
 - [ ] Check Github's Dependabot warnings or pull requests, looking for any relevant report. Remove any false-positive first.
-- [ ] Build JS files to production running `$ yarn run build-js` and commit.
-- [ ] Run WP VIP scan to make sure no warnings or errors > 5 exists: `$ vendor/bin/phpcs`.
-- [ ] Update the `.pot` file.
-- [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct, commit.
+- [ ] Build JS files to production running `composer build:js` and commit.
+- [ ] Run WP VIP scan to make sure no warnings or errors > 5 exists: `composer check:phpcs`.
 - [ ] Update the version number to the next stable version in the main plugin file and `readme.txt`. Commit the changes to the release branch.
-- [ ] Build the zip package, running `$ yarn run build`. It should create a package in the `./dist` dir.
+- [ ] Update the `.pot` file using `composer gen:pot`.
+- [ ] Update the changelog - make sure all the changes are there with a user-friendly description and that the release date is correct, commit.
+- [ ] Build the zip package, running `composer build`. It should create a package in the `./dist` dir.
 - [ ] Send the new package to the team for testing.
 
 ### Release Checklist

@@ -71,6 +71,16 @@ class Plugin implements InitializableInterface
 
         $this->initialized = true;
 
+        $pluginDir = basename($this->basePath);
+        load_plugin_textdomain('post-expirator', null, $pluginDir . '/languages/');
+
+        \PostExpirator_Reviews::init();
+
+        if (class_exists('WP_CLI')) {
+            \PostExpirator_Cli::getInstance();
+        }
+
+        $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, 'postexpirator_set_default_meta_for_post', 10, 3);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
 
         $pluginFile = $this->basePath . '/' . $this->pluginSlug . '.php';
