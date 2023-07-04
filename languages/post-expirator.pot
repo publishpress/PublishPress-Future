@@ -2,21 +2,21 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.0.3\n"
+"Project-Id-Version: PublishPress Future 3.0.4-rc.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-20T20:58:05+00:00\n"
+"POT-Creation-Date: 2023-07-04T19:21:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: post-expirator\n"
 
 #. Plugin Name of the plugin
-#: legacy/classes/Facade.class.php:365
-#: legacy/functions.php:360
+#: legacy/classes/Facade.class.php:400
+#: legacy/functions.php:337
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:80
 #: src/Views/tabs.php:60
 msgid "PublishPress Future"
@@ -87,18 +87,18 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:364
+#: legacy/classes/Facade.class.php:399
 msgid "Taxonomy"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:366
+#: legacy/classes/Facade.class.php:401
 #: src/Views/bulk-edit.php:36
 #: src/Views/classic-metabox.php:11
 #: src/Views/quick-edit.php:16
 msgid "Enable Future Action"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:367
+#: legacy/classes/Facade.class.php:402
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:38
 #: src/Modules/Settings/Controllers/Controller.php:223
 #: src/Views/bulk-edit.php:129
@@ -109,14 +109,19 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:368
+#: legacy/classes/Facade.class.php:403
 msgid "Loading"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:369
+#: legacy/classes/Facade.class.php:404
 #: src/Views/bulk-edit.php:148
 #: src/Views/quick-edit.php:100
 msgid "Terms"
+msgstr ""
+
+#: legacy/classes/Facade.class.php:405
+#: src/Views/classic-metabox.php:138
+msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
 msgstr ""
 
 #: legacy/functions.php:32
@@ -124,12 +129,12 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: legacy/functions.php:85
+#: legacy/functions.php:62
 #: src/Views/bulk-edit.php:30
 msgid "Future Action"
 msgstr ""
 
-#: legacy/functions.php:1232
+#: legacy/functions.php:1209
 #: src/Modules/Settings/Controllers/Controller.php:236
 msgid "No taxonomies found"
 msgstr ""
@@ -255,27 +260,27 @@ msgstr ""
 msgid "Unstick"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:420
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:435
 msgid "Email is disabled"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:424
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:439
 msgid "Email sent"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:424
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:439
 msgid "Email not sent"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:495
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:510
 msgid "%s. %s on %s. The post link is %s"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:512
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:527
 msgid "Future Action Complete \"%s\""
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:515
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:530
 msgid "[%1$s] %2$s"
 msgstr ""
 
@@ -554,10 +559,6 @@ msgstr ""
 
 #: src/Views/classic-metabox.php:18
 msgid "The published date/time will be used as the expiration value"
-msgstr ""
-
-#: src/Views/classic-metabox.php:138
-msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
 msgstr ""
 
 #: src/Views/classic-metabox.php:143
