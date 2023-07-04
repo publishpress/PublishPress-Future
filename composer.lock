@@ -282,12 +282,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "7a63bd0505317c61c9ad3b090825e64cd72e387b"
+                "reference": "88aae7943a51dd51fdcfa1b7d32502320cb187c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/7a63bd0505317c61c9ad3b090825e64cd72e387b",
-                "reference": "7a63bd0505317c61c9ad3b090825e64cd72e387b",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/88aae7943a51dd51fdcfa1b7d32502320cb187c2",
+                "reference": "88aae7943a51dd51fdcfa1b7d32502320cb187c2",
                 "shasum": ""
             },
             "require": {
@@ -361,7 +361,7 @@
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/3.0-branch"
             },
-            "time": "2023-06-30T18:38:42+00:00"
+            "time": "2023-07-04T19:44:45+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -2066,12 +2066,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8033cd44381f3a15e1f73b15f214e5b0dd3e8b2a"
+                "reference": "df77e6640e48e25332468f959b6f11ca05c2f045"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8033cd44381f3a15e1f73b15f214e5b0dd3e8b2a",
-                "reference": "8033cd44381f3a15e1f73b15f214e5b0dd3e8b2a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/df77e6640e48e25332468f959b6f11ca05c2f045",
+                "reference": "df77e6640e48e25332468f959b6f11ca05c2f045",
                 "shasum": ""
             },
             "require": {
@@ -2121,7 +2121,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-30T13:41:31+00:00"
+            "time": "2023-07-04T19:41:37+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4073,12 +4073,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "e3c46cc5689c8782944274bb30702106ecbe3b64"
+                "reference": "86ca4c74afe24bc1889bc45a20adbd47c3131c08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/e3c46cc5689c8782944274bb30702106ecbe3b64",
-                "reference": "e3c46cc5689c8782944274bb30702106ecbe3b64",
+                "url": "https://api.github.com/repos/symfony/process/zipball/86ca4c74afe24bc1889bc45a20adbd47c3131c08",
+                "reference": "86ca4c74afe24bc1889bc45a20adbd47c3131c08",
                 "shasum": ""
             },
             "require": {
@@ -4127,7 +4127,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-17T11:26:05+00:00"
+            "time": "2023-07-03T12:14:50+00:00"
         },
         {
             "name": "symfony/service-contracts",
