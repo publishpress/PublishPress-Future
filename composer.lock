@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3ede9a0e72e9c524772c5390cc5a234",
+    "content-hash": "2e258413ced32e073cff5e7925a012cd",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -278,16 +278,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-3.0-branch",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "88aae7943a51dd51fdcfa1b7d32502320cb187c2"
+                "reference": "f9f146c669a3405d78a2826de005722a182e4b85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/88aae7943a51dd51fdcfa1b7d32502320cb187c2",
-                "reference": "88aae7943a51dd51fdcfa1b7d32502320cb187c2",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/f9f146c669a3405d78a2826de005722a182e4b85",
+                "reference": "f9f146c669a3405d78a2826de005722a182e4b85",
                 "shasum": ""
             },
             "require": {
@@ -359,9 +359,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.0-branch"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.0.4"
             },
-            "time": "2023-07-04T19:44:45+00:00"
+            "time": "2023-07-04T22:03:28+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -4799,7 +4799,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "publishpress/publishpress-future": 20,
         "publishpress/publishpress-phpcs-standards": 20,
         "giacocorsiglia/wordpress-stubs": 20
     },
