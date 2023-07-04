@@ -63,7 +63,7 @@
     "get:version": "ppbuild version",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
     "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
-    "gn:pot": "wp i18n make-pot --exclude=/dev-workspace --exclude=/.wordpress-org --exclude=/.github --exclude=/dist --exclude=/tests --exclude=/vendor --exclude=/libraries/internal-vendor . ./languages/publishpress-future-pro.pot --allow-root",
+    "gen:pot": "wp i18n make-pot . ./languages/publishpress-future-pro.pot --domain=publishpress-future-pro --exclude=dev-workspace,.wordpress-org,.github,dist,tests --allow-root",
     "cleanup:gh-workflows": "user=publishpress repo=publishpress-future-pro; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
     "check:php-7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
     "check:php-7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
