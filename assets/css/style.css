@@ -69,3 +69,7 @@ div.pe-classic-fields > div > label {
 .postbox-container #expirationdate_expiretype {
     width: 240px;
 }
+
+.future-action-date-panel {
+    margin-bottom: 15px;
+}

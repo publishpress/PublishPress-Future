@@ -432,7 +432,7 @@
                 </PanelRow>
                 {futureActionEnabled && (
                     <Fragment>
-                        <PanelRow>
+                        <PanelRow className={'future-action-date-panel'}>
                             <DateTimePicker
                                 currentDate={futureActionDate*1000}
                                 onChange={handleDateChange}
