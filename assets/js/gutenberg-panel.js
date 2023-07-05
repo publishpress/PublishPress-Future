@@ -1,2 +1,550 @@
-(()=>{"use strict";var t=function(t,e){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return function(t,e){var n=[],r=!0,u=!1,o=void 0;try{for(var i,s=t[Symbol.iterator]();!(r=(i=s.next()).done)&&(n.push(i.value),!e||n.length!==e);r=!0);}catch(t){u=!0,o=t}finally{try{!r&&s.return&&s.return()}finally{if(u)throw o}}return n}(t,e);throw new TypeError("Invalid attempt to destructure non-iterable instance")},e=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t[r]=n[r])}return t};!function(n,r){var u,o=n.plugins.registerPlugin,i=n.editPost.PluginDocumentSettingPanel,s=n.components,a=s.PanelRow,c=s.DateTimePicker,f=s.CheckboxControl,l=s.SelectControl,m=s.FormTokenField,T=s.Spinner,p=n.element.Fragment,A=n.htmlEntities.decodeEntities,y=lodash,g=y.isEmpty,E=y.keys,d=y.compact,h=React.useEffect,_=n.url.addQueryArgs,b=n.data,F=b.useSelect,x=b.useDispatch,N=b.register,S=b.createReduxStore,D=b.select,v=n.apiFetch,I=function(t){for(var e=arguments.length,n=Array(e>1?e-1:0),u=1;u<e;u++)n[u-1]=arguments[u];var o;console&&r.isDebugEnabled&&(o=console).debug.apply(o,["[Future]",t].concat(n))},R=(u={futureAction:null,futureActionDate:0,futureActionEnabled:!1,futureActionTerms:[],futureActionTaxonomy:null,termsListByName:null,termsListById:null,taxonomyName:null,isFetchingTerms:!1},r&&r.postTypeDefaultConfig?(r.postTypeDefaultConfig.autoEnable&&(u.futureActionEnabled=!0),r.postTypeDefaultConfig.expireType&&(u.futureAction=r.postTypeDefaultConfig.expireType),r.defaultDate?u.futureActionDate=parseInt(r.defaultDate):u.futureActionDate=(new Date).getTime(),r.postTypeDefaultConfig.taxonomy&&(u.futureActionTaxonomy=r.postTypeDefaultConfig.taxonomy),r.postTypeDefaultConfig.terms&&(u.futureActionTerms=r.postTypeDefaultConfig.terms.split(",").map((function(t){return parseInt(t)}))),u):u);I("DEFAULT_STATE",R);var C=S("publishpress-future/store",{reducer:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:R,n=arguments[1];switch(n.type){case"SET_FUTURE_ACTION":return e({},t,{futureAction:n.futureAction});case"SET_FUTURE_ACTION_DATE":return e({},t,{futureActionDate:n.futureActionDate});case"SET_FUTURE_ACTION_ENABLED":return e({},t,{futureActionEnabled:n.futureActionEnabled});case"SET_FUTURE_ACTION_TERMS":return e({},t,{futureActionTerms:n.futureActionTerms});case"SET_FUTURE_ACTION_TAXONOMY":return e({},t,{futureActionTaxonomy:n.futureActionTaxonomy});case"SET_TERMS_LIST_BY_NAME":return e({},t,{termsListByName:n.termsListByName});case"SET_TERMS_LIST_BY_ID":return e({},t,{termsListById:n.termsListById});case"SET_TAXONOMY_NAME":return e({},t,{taxonomyName:n.taxonomyName})}return t},actions:{setFutureAction:function(t){return{type:"SET_FUTURE_ACTION",futureAction:t}},setFutureActionDate:function(t){return{type:"SET_FUTURE_ACTION_DATE",futureActionDate:t}},setFutureActionEnabled:function(t){return{type:"SET_FUTURE_ACTION_ENABLED",futureActionEnabled:t}},setFutureActionTerms:function(t){return{type:"SET_FUTURE_ACTION_TERMS",futureActionTerms:t}},setFutureActionTaxonomy:function(t){return{type:"SET_FUTURE_ACTION_TAXONOMY",futureActionTaxonomy:t}},setTermsListByName:function(t){return{type:"SET_TERMS_LIST_BY_NAME",termsListByName:t}},setTermsListById:function(t){return{type:"SET_TERMS_LIST_BY_ID",termsListById:t}},setTaxonomyName:function(t){return{type:"SET_TAXONOMY_NAME",taxonomyName:t}},setIsFetchingTerms:function(t){return{type:"SET_IS_FETCHING_TERMS",isFetchingTerms:t}}},selectors:{getFutureAction:function(t){return t.futureAction},getFutureActionDate:function(t){return t.futureActionDate},getFutureActionEnabled:function(t){return t.futureActionEnabled},getFutureActionTerms:function(t){return t.futureActionTerms},getFutureActionTaxonomy:function(t){return t.futureActionTaxonomy},getTermsListByName:function(t){return t.termsListByName},getTermsListById:function(t){return t.termsListById},getTaxonomyName:function(t){return t.taxonomyName},getIsFetchingTerms:function(t){return t.isFetchingTerms}}});N(C),o("publishpress-future-action",{render:function(){var e=F((function(t){return t("publishpress-future/store").getFutureAction()}),[]),n=F((function(t){return t("publishpress-future/store").getFutureActionDate()}),[]),u=F((function(t){return t("publishpress-future/store").getFutureActionEnabled()}),[]),o=F((function(t){return t("publishpress-future/store").getFutureActionTerms()}),[]),s=F((function(t){return t("publishpress-future/store").getFutureActionTaxonomy()}),[]),y=F((function(t){return t("publishpress-future/store").getTermsListByName()}),[]),b=F((function(t){return t("publishpress-future/store").getTermsListById()}),[]),N=F((function(t){return t("publishpress-future/store").getIsFetchingTerms()}),[]),S=x("publishpress-future/store"),C=S.setFutureAction,O=S.setFutureActionDate,B=S.setFutureActionEnabled,L=S.setFutureActionTerms,U=S.setFutureActionTaxonomy,w=S.setTermsListByName,M=S.setTermsListById,P=S.setTaxonomyName,k=S.setIsFetchingTerms,Y=x("core/editor").editPost,j=function(t){B(t);var e={enabled:t};t&&(C(R.futureAction),O(R.futureActionDate),L(R.futureActionTerms),U(R.futureActionTaxonomy),e.action=R.futureAction,e.date=R.futureActionDate,e.terms=R.futureActionTerms,e.taxonomy=R.futureActionTaxonomy,X()),H(e)},X=function(){I("fetchTerms","Fetching terms...");var t=D("publishpress-future/store").getFutureActionTaxonomy(),e=D("core/editor").getCurrentPostType(),n={},u={};k(!0),I("futureActionTaxonomy",t),!t&&"post"===e||"category"===t?(I("fetchTerms","Fetching categories..."),v({path:_("wp/v2/categories",{per_page:-1})}).then((function(t){I("list",t),t.forEach((function(t){n[t.name]=t,u[t.id]=t.name})),w(n),M(u),P(r.strings.category),k(!1)}))):(I("fetchTerms","Fetching taxonomies..."),v({path:_("publishpress-future/v1/taxonomies/"+e)}).then((function(e){I("taxonomies",e.taxonomies),e.taxonomies.length>0?v({path:_("wp/v2/taxonomies/"+t,{context:"edit",per_page:-1})}).then((function(t){I("taxAttributes",t),v({path:_("wp/v2/"+t.rest_base,{context:"edit",per_page:-1})}).then((function(e){I("terms",e),e.forEach((function(t){n[A(t.name)]=t,u[t.id]=A(t.name)})),w(n),M(u),P(A(t.name)),k(!1)}))})):I("fetchTerms","No taxonomies found")})))},H=function(r){var i={publishpress_future_action:{enabled:u,date:n,action:e,terms:o,taxonomy:s}},a=!0,c=!1,f=void 0;try{for(var l,m=Object.entries(r)[Symbol.iterator]();!(a=(l=m.next()).done);a=!0){var T=l.value,p=t(T,2),A=p[0],y=p[1];i.publishpress_future_action[A]=y}}catch(t){c=!0,f=t}finally{try{!a&&m.return&&m.return()}finally{if(c)throw f}}Y(i),I("editPostAttribute",r,i)};h((function(){var t;t=D("core/editor").getEditedPostAttribute("publishpress_future_action"),I("fetchFutureActionData",t),B(t.enabled).then(undefined),C(t.action),O(t.date),L(t.terms),U(t.taxonomy);var e=D("publishpress-future/store").getFutureActionEnabled(),n=D("core/editor").isCleanNewPost();I("enabled",e),I("isCleanNewPost",n),e&&(n&&j(!0),X())}),[]);var W=[];return I("futureActionTerms",o),o&&o.length>0&&b&&"string"==typeof(W=d(o.map((function(t){return b[t]}))))&&(W=[]),React.createElement(i,{title:r.strings.panelTitle,icon:"calendar",initialOpen:u,className:"post-expirator-panel"},React.createElement(a,null,React.createElement(f,{label:r.strings.enablePostExpiration,checked:u,onChange:j})),u&&React.createElement(p,null,React.createElement(a,null,React.createElement(c,{currentDate:1e3*n,onChange:function(t){var e=new Date(t).getTime()/1e3;O(e),H({date:e})},__nextRemoveHelpButton:!0,is12Hour:r.is12hours,startOfWeek:r.startOfWeek})),React.createElement(l,{label:r.strings.action,value:e,options:r.actionsSelectOptions,onChange:function(t){C(t),H({action:t})}}),String(e).includes("category")&&(N&&React.createElement(p,null,r.strings.loading+" ("+s+")",React.createElement(T,null))||g(E(y))&&React.createElement("p",null,React.createElement("i",{className:"dashicons dashicons-warning"})," ",r.strings.noTermsFound)||React.createElement(m,{label:r.strings.terms+" ("+s+")",value:W,suggestions:Object.keys(y),onChange:function(t){t=t.map((function(t){return y[t].id})),L(t),H({terms:t})},maxSuggestions:10}))))}})}(window.wp,window.postExpiratorPanelConfig)})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+var __webpack_exports__ = {};
+/*!********************************************************!*\
+  !*** ./assets/jsx/gutenberg-panel/gutenberg-panel.jsx ***!
+  \********************************************************/
+
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+(function (wp, config) {
+    var registerPlugin = wp.plugins.registerPlugin;
+    var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
+    var _wp$components = wp.components,
+        PanelRow = _wp$components.PanelRow,
+        DateTimePicker = _wp$components.DateTimePicker,
+        CheckboxControl = _wp$components.CheckboxControl,
+        SelectControl = _wp$components.SelectControl,
+        FormTokenField = _wp$components.FormTokenField,
+        Spinner = _wp$components.Spinner;
+    var Fragment = wp.element.Fragment;
+    var decodeEntities = wp.htmlEntities.decodeEntities;
+    var _lodash = lodash,
+        isEmpty = _lodash.isEmpty,
+        keys = _lodash.keys,
+        compact = _lodash.compact;
+    var _React = React,
+        useEffect = _React.useEffect;
+    var addQueryArgs = wp.url.addQueryArgs;
+    var _wp$data = wp.data,
+        useSelect = _wp$data.useSelect,
+        useDispatch = _wp$data.useDispatch,
+        register = _wp$data.register,
+        createReduxStore = _wp$data.createReduxStore,
+        select = _wp$data.select;
+    var apiFetch = wp.apiFetch;
+
+
+    var debugLog = function debugLog(description) {
+        for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            message[_key - 1] = arguments[_key];
+        }
+
+        if (console && config.isDebugEnabled) {
+            var _console;
+
+            (_console = console).debug.apply(_console, ['[Future]', description].concat(message));
+        }
+    };
+
+    var getDefaultState = function getDefaultState() {
+        var defaultState = {
+            futureAction: null,
+            futureActionDate: 0,
+            futureActionEnabled: false,
+            futureActionTerms: [],
+            futureActionTaxonomy: null,
+            termsListByName: null,
+            termsListById: null,
+            taxonomyName: null,
+            isFetchingTerms: false
+        };
+
+        if (!config || !config.postTypeDefaultConfig) {
+            return defaultState;
+        }
+
+        if (config.postTypeDefaultConfig.autoEnable) {
+            defaultState.futureActionEnabled = true;
+        }
+
+        if (config.postTypeDefaultConfig.expireType) {
+            defaultState.futureAction = config.postTypeDefaultConfig.expireType;
+        }
+
+        if (config.defaultDate) {
+            defaultState.futureActionDate = parseInt(config.defaultDate);
+        } else {
+            defaultState.futureActionDate = new Date().getTime();
+        }
+
+        if (config.postTypeDefaultConfig.taxonomy) {
+            defaultState.futureActionTaxonomy = config.postTypeDefaultConfig.taxonomy;
+        }
+
+        if (config.postTypeDefaultConfig.terms) {
+            defaultState.futureActionTerms = config.postTypeDefaultConfig.terms.split(',').map(function (term) {
+                return parseInt(term);
+            });
+        }
+
+        return defaultState;
+    };
+
+    // Step 1: Create the Redux store
+    var DEFAULT_STATE = getDefaultState();
+
+    debugLog('DEFAULT_STATE', DEFAULT_STATE);
+
+    var store = createReduxStore('publishpress-future/store', {
+        reducer: function reducer() {
+            var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+            var action = arguments[1];
+
+            switch (action.type) {
+                case 'SET_FUTURE_ACTION':
+                    return _extends({}, state, {
+                        futureAction: action.futureAction
+                    });
+                case 'SET_FUTURE_ACTION_DATE':
+                    return _extends({}, state, {
+                        futureActionDate: action.futureActionDate
+                    });
+                case 'SET_FUTURE_ACTION_ENABLED':
+                    return _extends({}, state, {
+                        futureActionEnabled: action.futureActionEnabled
+                    });
+                case 'SET_FUTURE_ACTION_TERMS':
+                    return _extends({}, state, {
+                        futureActionTerms: action.futureActionTerms
+                    });
+                case 'SET_FUTURE_ACTION_TAXONOMY':
+                    return _extends({}, state, {
+                        futureActionTaxonomy: action.futureActionTaxonomy
+                    });
+                case 'SET_TERMS_LIST_BY_NAME':
+                    return _extends({}, state, {
+                        termsListByName: action.termsListByName
+                    });
+                case 'SET_TERMS_LIST_BY_ID':
+                    return _extends({}, state, {
+                        termsListById: action.termsListById
+                    });
+                case 'SET_TAXONOMY_NAME':
+                    return _extends({}, state, {
+                        taxonomyName: action.taxonomyName
+                    });
+            }
+
+            return state;
+        },
+
+        actions: {
+            setFutureAction: function setFutureAction(futureAction) {
+                return {
+                    type: 'SET_FUTURE_ACTION',
+                    futureAction: futureAction
+                };
+            },
+            setFutureActionDate: function setFutureActionDate(futureActionDate) {
+                return {
+                    type: 'SET_FUTURE_ACTION_DATE',
+                    futureActionDate: futureActionDate
+                };
+            },
+            setFutureActionEnabled: function setFutureActionEnabled(futureActionEnabled) {
+                return {
+                    type: 'SET_FUTURE_ACTION_ENABLED',
+                    futureActionEnabled: futureActionEnabled
+                };
+            },
+            setFutureActionTerms: function setFutureActionTerms(futureActionTerms) {
+                return {
+                    type: 'SET_FUTURE_ACTION_TERMS',
+                    futureActionTerms: futureActionTerms
+                };
+            },
+            setFutureActionTaxonomy: function setFutureActionTaxonomy(futureActionTaxonomy) {
+                return {
+                    type: 'SET_FUTURE_ACTION_TAXONOMY',
+                    futureActionTaxonomy: futureActionTaxonomy
+                };
+            },
+            setTermsListByName: function setTermsListByName(termsListByName) {
+                return {
+                    type: 'SET_TERMS_LIST_BY_NAME',
+                    termsListByName: termsListByName
+                };
+            },
+            setTermsListById: function setTermsListById(termsListById) {
+                return {
+                    type: 'SET_TERMS_LIST_BY_ID',
+                    termsListById: termsListById
+                };
+            },
+            setTaxonomyName: function setTaxonomyName(taxonomyName) {
+                return {
+                    type: 'SET_TAXONOMY_NAME',
+                    taxonomyName: taxonomyName
+                };
+            },
+            setIsFetchingTerms: function setIsFetchingTerms(isFetchingTerms) {
+                return {
+                    type: 'SET_IS_FETCHING_TERMS',
+                    isFetchingTerms: isFetchingTerms
+                };
+            }
+        },
+        selectors: {
+            getFutureAction: function getFutureAction(state) {
+                return state.futureAction;
+            },
+            getFutureActionDate: function getFutureActionDate(state) {
+                return state.futureActionDate;
+            },
+            getFutureActionEnabled: function getFutureActionEnabled(state) {
+                return state.futureActionEnabled;
+            },
+            getFutureActionTerms: function getFutureActionTerms(state) {
+                return state.futureActionTerms;
+            },
+            getFutureActionTaxonomy: function getFutureActionTaxonomy(state) {
+                return state.futureActionTaxonomy;
+            },
+            getTermsListByName: function getTermsListByName(state) {
+                return state.termsListByName;
+            },
+            getTermsListById: function getTermsListById(state) {
+                return state.termsListById;
+            },
+            getTaxonomyName: function getTaxonomyName(state) {
+                return state.taxonomyName;
+            },
+            getIsFetchingTerms: function getIsFetchingTerms(state) {
+                return state.isFetchingTerms;
+            }
+        }
+    });
+
+    register(store);
+
+    // Step 2: Create the component
+    var MyPluginDocumentSettingPanel = function MyPluginDocumentSettingPanel() {
+        var futureAction = useSelect(function (select) {
+            return select('publishpress-future/store').getFutureAction();
+        }, []);
+        var futureActionDate = useSelect(function (select) {
+            return select('publishpress-future/store').getFutureActionDate();
+        }, []);
+        var futureActionEnabled = useSelect(function (select) {
+            return select('publishpress-future/store').getFutureActionEnabled();
+        }, []);
+        var futureActionTerms = useSelect(function (select) {
+            return select('publishpress-future/store').getFutureActionTerms();
+        }, []);
+        var futureActionTaxonomy = useSelect(function (select) {
+            return select('publishpress-future/store').getFutureActionTaxonomy();
+        }, []);
+        var termsListByName = useSelect(function (select) {
+            return select('publishpress-future/store').getTermsListByName();
+        }, []);
+        var termsListById = useSelect(function (select) {
+            return select('publishpress-future/store').getTermsListById();
+        }, []);
+        var isFetchingTerms = useSelect(function (select) {
+            return select('publishpress-future/store').getIsFetchingTerms();
+        }, []);
+
+        var _useDispatch = useDispatch('publishpress-future/store'),
+            setFutureAction = _useDispatch.setFutureAction,
+            setFutureActionDate = _useDispatch.setFutureActionDate,
+            setFutureActionEnabled = _useDispatch.setFutureActionEnabled,
+            setFutureActionTerms = _useDispatch.setFutureActionTerms,
+            setFutureActionTaxonomy = _useDispatch.setFutureActionTaxonomy,
+            setTermsListByName = _useDispatch.setTermsListByName,
+            setTermsListById = _useDispatch.setTermsListById,
+            setTaxonomyName = _useDispatch.setTaxonomyName,
+            setIsFetchingTerms = _useDispatch.setIsFetchingTerms;
+
+        var _useDispatch2 = useDispatch('core/editor'),
+            editPost = _useDispatch2.editPost;
+
+        var mapTermsFromIdToName = function mapTermsFromIdToName(terms) {
+            return terms.map(function (term) {
+                return termsListById[term];
+            });
+        };
+
+        var mapTermsFromNameToId = function mapTermsFromNameToId(terms) {
+            return terms.map(function (term) {
+                return termsListByName[term].id;
+            });
+        };
+
+        var handleEnabledChange = function handleEnabledChange(isChecked) {
+            setFutureActionEnabled(isChecked);
+
+            var newAttribute = {
+                'enabled': isChecked
+
+                // User default values to other fields
+            };if (isChecked) {
+                setFutureAction(DEFAULT_STATE.futureAction);
+                setFutureActionDate(DEFAULT_STATE.futureActionDate);
+                setFutureActionTerms(DEFAULT_STATE.futureActionTerms);
+                setFutureActionTaxonomy(DEFAULT_STATE.futureActionTaxonomy);
+
+                newAttribute['action'] = DEFAULT_STATE.futureAction;
+                newAttribute['date'] = DEFAULT_STATE.futureActionDate;
+                newAttribute['terms'] = DEFAULT_STATE.futureActionTerms;
+                newAttribute['taxonomy'] = DEFAULT_STATE.futureActionTaxonomy;
+
+                fetchTerms();
+            }
+
+            editPostAttribute(newAttribute);
+        };
+
+        var handleActionChange = function handleActionChange(value) {
+            setFutureAction(value);
+            editPostAttribute({ 'action': value });
+        };
+
+        var handleDateChange = function handleDateChange(value) {
+            var date = new Date(value).getTime() / 1000;
+
+            setFutureActionDate(date);
+            editPostAttribute({ 'date': date });
+        };
+
+        var handleTermsChange = function handleTermsChange(value) {
+            value = mapTermsFromNameToId(value);
+
+            setFutureActionTerms(value);
+            editPostAttribute({ 'terms': value });
+        };
+
+        var getPostId = function getPostId() {
+            return select('core/editor').getCurrentPostId();
+        };
+
+        var getPostType = function getPostType() {
+            return select('core/editor').getCurrentPostType();
+        };
+
+        var fetchFutureActionData = function fetchFutureActionData(callback) {
+            var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+            debugLog('fetchFutureActionData', data);
+
+            setFutureActionEnabled(data.enabled).then(callback);
+            setFutureAction(data.action);
+            setFutureActionDate(data.date);
+            setFutureActionTerms(data.terms);
+            setFutureActionTaxonomy(data.taxonomy);
+        };
+
+        var fetchTerms = function fetchTerms() {
+            debugLog('fetchTerms', 'Fetching terms...');
+            var futureActionTaxonomy = select('publishpress-future/store').getFutureActionTaxonomy();
+            var postType = getPostType();
+
+            var termsListByName = {};
+            var termsListById = {};
+
+            setIsFetchingTerms(true);
+
+            debugLog('futureActionTaxonomy', futureActionTaxonomy);
+
+            if (!futureActionTaxonomy && postType === 'post' || futureActionTaxonomy === 'category') {
+                debugLog('fetchTerms', 'Fetching categories...');
+                apiFetch({
+                    path: addQueryArgs('wp/v2/categories', { per_page: -1 })
+                }).then(function (list) {
+                    debugLog('list', list);
+                    list.forEach(function (cat) {
+                        termsListByName[cat.name] = cat;
+                        termsListById[cat.id] = cat.name;
+                    });
+
+                    setTermsListByName(termsListByName);
+                    setTermsListById(termsListById);
+                    setTaxonomyName(config.strings.category);
+                    setIsFetchingTerms(false);
+                });
+            } else {
+                debugLog('fetchTerms', 'Fetching taxonomies...');
+                apiFetch({
+                    path: addQueryArgs('publishpress-future/v1/taxonomies/' + postType)
+                }).then(function (response) {
+                    debugLog('taxonomies', response.taxonomies);
+
+                    if (response.taxonomies.length > 0) {
+                        apiFetch({
+                            path: addQueryArgs('wp/v2/taxonomies/' + futureActionTaxonomy, { context: 'edit', per_page: -1 })
+                        }).then(function (taxAttributes) {
+                            debugLog('taxAttributes', taxAttributes);
+                            // fetch all terms
+                            apiFetch({
+                                path: addQueryArgs('wp/v2/' + taxAttributes.rest_base, { context: 'edit', per_page: -1 })
+                            }).then(function (terms) {
+                                debugLog('terms', terms);
+                                terms.forEach(function (term) {
+                                    termsListByName[decodeEntities(term.name)] = term;
+                                    termsListById[term.id] = decodeEntities(term.name);
+                                });
+
+                                setTermsListByName(termsListByName);
+                                setTermsListById(termsListById);
+                                setTaxonomyName(decodeEntities(taxAttributes.name));
+                                setIsFetchingTerms(false);
+                            });
+                        });
+                    } else {
+                        debugLog('fetchTerms', 'No taxonomies found');
+                    }
+                });
+            }
+        };
+
+        var editPostAttribute = function editPostAttribute(newAttribute) {
+            var attribute = {
+                publishpress_future_action: {
+                    enabled: futureActionEnabled,
+                    date: futureActionDate,
+                    action: futureAction,
+                    terms: futureActionTerms,
+                    taxonomy: futureActionTaxonomy
+                }
+            };
+
+            // For each property on newAttribute, set the value on attribute
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = Object.entries(newAttribute)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var _ref = _step.value;
+
+                    var _ref2 = _slicedToArray(_ref, 2);
+
+                    var name = _ref2[0];
+                    var value = _ref2[1];
+
+                    attribute.publishpress_future_action[name] = value;
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            editPost(attribute);
+            debugLog('editPostAttribute', newAttribute, attribute);
+        };
+
+        useEffect(function () {
+            fetchFutureActionData();
+
+            // We need to get the value directly from the store because the value from the state is not updated yet
+            var enabled = select('publishpress-future/store').getFutureActionEnabled();
+            var isCleanNewPost = select('core/editor').isCleanNewPost();
+
+            debugLog('enabled', enabled);
+            debugLog('isCleanNewPost', isCleanNewPost);
+
+            if (enabled) {
+                if (isCleanNewPost) {
+                    handleEnabledChange(true);
+                }
+
+                fetchTerms();
+            }
+        }, []);
+
+        var selectedTerms = [];
+        debugLog('futureActionTerms', futureActionTerms);
+        if (futureActionTerms && futureActionTerms.length > 0 && termsListById) {
+            selectedTerms = compact(mapTermsFromIdToName(futureActionTerms));
+
+            if (typeof selectedTerms === 'string') {
+                selectedTerms = [];
+            }
+        }
+
+        return React.createElement(
+            PluginDocumentSettingPanel,
+            { title: config.strings.panelTitle, icon: 'calendar',
+                initialOpen: futureActionEnabled, className: 'post-expirator-panel'
+            },
+            React.createElement(
+                PanelRow,
+                null,
+                React.createElement(CheckboxControl, {
+                    label: config.strings.enablePostExpiration,
+                    checked: futureActionEnabled,
+                    onChange: handleEnabledChange
+                })
+            ),
+            futureActionEnabled && React.createElement(
+                Fragment,
+                null,
+                React.createElement(
+                    PanelRow,
+                    { className: 'future-action-date-panel' },
+                    React.createElement(DateTimePicker, {
+                        currentDate: futureActionDate * 1000,
+                        onChange: handleDateChange,
+                        __nextRemoveHelpButton: true,
+                        is12Hour: config.is12hours,
+                        startOfWeek: config.startOfWeek
+                    })
+                ),
+                React.createElement(SelectControl, {
+                    label: config.strings.action,
+                    value: futureAction,
+                    options: config.actionsSelectOptions,
+                    onChange: handleActionChange
+                }),
+                String(futureAction).includes('category') && (isFetchingTerms && React.createElement(
+                    Fragment,
+                    null,
+                    config.strings.loading + (' (' + futureActionTaxonomy + ')'),
+                    React.createElement(Spinner, null)
+                ) || isEmpty(keys(termsListByName)) && React.createElement(
+                    'p',
+                    null,
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    config.strings.noTermsFound
+                ) || React.createElement(FormTokenField, {
+                    label: config.strings.terms + (' (' + futureActionTaxonomy + ')'),
+                    value: selectedTerms,
+                    suggestions: Object.keys(termsListByName),
+                    onChange: handleTermsChange,
+                    maxSuggestions: 10
+                }))
+            )
+        );
+    };
+
+    // Step 3: Connect the component to the Redux store
+    registerPlugin('publishpress-future-action', {
+        render: MyPluginDocumentSettingPanel
+    });
+})(window.wp, window.postExpiratorPanelConfig);
+/******/ })()
+;
 //# sourceMappingURL=gutenberg-panel.js.map
