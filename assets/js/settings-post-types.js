@@ -7089,6 +7089,19 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
 
         settingsRows.push(React.createElement(
             _SettingRow2.default,
+            { label: props.text.fieldTaxonomy },
+            React.createElement(_SelectField2.default, {
+                name: 'expirationdate_taxonomy-' + props.postType,
+                options: props.taxonomiesList,
+                selected: postTypeTaxonomy,
+                noItemFoundMessage: props.text.noItemsfound,
+                data: props.postType,
+                onChange: onChangeTaxonomy
+            })
+        ));
+
+        settingsRows.push(React.createElement(
+            _SettingRow2.default,
             { label: props.text.fieldHowToExpire },
             React.createElement(_SelectField2.default, {
                 name: 'expirationdate_expiretype-' + props.postType,
@@ -7097,32 +7110,17 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                 description: props.text.fieldHowToExpireDescription,
                 selected: props.settings.howToExpire,
                 onChange: onChangeHowToExpire
+            }),
+            props.taxonomiesList.length > 0 && ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && React.createElement(_TokensField2.default, {
+                label: props.text.fieldTerm,
+                name: 'expirationdate_terms-' + props.postType,
+                options: termOptions,
+                value: selectedTerms,
+                isLoading: termsSelectIsLoading,
+                onChange: onChangeTerms,
+                description: props.text.fieldTermDescription
             })
         ));
-
-        if (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1) {
-            settingsRows.push(React.createElement(
-                _SettingRow2.default,
-                { label: props.text.fieldTaxonomy },
-                React.createElement(_SelectField2.default, {
-                    name: 'expirationdate_taxonomy-' + props.postType,
-                    options: props.taxonomiesList,
-                    selected: postTypeTaxonomy,
-                    noItemFoundMessage: props.text.noItemsfound,
-                    data: props.postType,
-                    onChange: onChangeTaxonomy
-                }),
-                props.taxonomiesList.length > 0 && React.createElement(_TokensField2.default, {
-                    label: props.text.fieldTerm,
-                    name: 'expirationdate_terms-' + props.postType,
-                    options: termOptions,
-                    value: selectedTerms,
-                    isLoading: termsSelectIsLoading,
-                    onChange: onChangeTerms,
-                    description: props.text.fieldTermDescription
-                })
-            ));
-        }
 
         settingsRows.push(React.createElement(
             _SettingRow2.default,

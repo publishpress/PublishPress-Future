@@ -118,6 +118,20 @@ const PostTypeSettingsPanel = function (props) {
         );
 
         settingsRows.push(
+            <SettingRow label={props.text.fieldTaxonomy}>
+                <SelectField
+                    name={'expirationdate_taxonomy-' + props.postType}
+                    options={props.taxonomiesList}
+                    selected={postTypeTaxonomy}
+                    noItemFoundMessage={props.text.noItemsfound}
+                    data={props.postType}
+                    onChange={onChangeTaxonomy}
+                >
+                </SelectField>
+            </SettingRow>
+        );
+
+        settingsRows.push(
             <SettingRow label={props.text.fieldHowToExpire}>
                 <SelectField
                     name={'expirationdate_expiretype-' + props.postType}
@@ -127,37 +141,20 @@ const PostTypeSettingsPanel = function (props) {
                     selected={props.settings.howToExpire}
                     onChange={onChangeHowToExpire}
                 />
+
+                {(props.taxonomiesList.length > 0 && (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1)) &&
+                    <TokensField
+                        label={props.text.fieldTerm}
+                        name={'expirationdate_terms-' + props.postType}
+                        options={termOptions}
+                        value={selectedTerms}
+                        isLoading={termsSelectIsLoading}
+                        onChange={onChangeTerms}
+                        description={props.text.fieldTermDescription}
+                    />
+                }
             </SettingRow>
         );
-
-        if (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1) {
-            settingsRows.push(
-                <SettingRow label={props.text.fieldTaxonomy}>
-                    <SelectField
-                        name={'expirationdate_taxonomy-' + props.postType}
-                        options={props.taxonomiesList}
-                        selected={postTypeTaxonomy}
-                        noItemFoundMessage={props.text.noItemsfound}
-                        data={props.postType}
-                        onChange={onChangeTaxonomy}
-                    >
-                    </SelectField>
-
-                    {props.taxonomiesList.length > 0 &&
-                        <TokensField
-                            label={props.text.fieldTerm}
-                            name={'expirationdate_terms-' + props.postType}
-                            options={termOptions}
-                            value={selectedTerms}
-                            isLoading={termsSelectIsLoading}
-                            onChange={onChangeTerms}
-                            description={props.text.fieldTermDescription}
-                        />
-                    }
-                </SettingRow>
-            );
-        }
-
 
         settingsRows.push(
             <SettingRow label={props.text.fieldDefaultDateTimeOffset}>
