@@ -325,6 +325,7 @@
                     path: addQueryArgs('wp/v2/categories', {per_page: -1}),
                 }).then((list) => {
                     debugLog('list', list);
+
                     list.forEach(cat => {
                         termsListByName[cat.name] = cat;
                         termsListById[cat.id] = cat.name;
@@ -340,9 +341,9 @@
                 apiFetch({
                     path: addQueryArgs(`publishpress-future/v1/taxonomies/` + postType),
                 }).then((response) => {
-                    debugLog('taxonomies', response.taxonomies);
+                    debugLog('response', response);
 
-                    if (response.taxonomies.length > 0) {
+                    if (parseInt(response.count) > 0) {
                         apiFetch({
                             path: addQueryArgs(`wp/v2/taxonomies/${futureActionTaxonomy}`, {context: 'edit', per_page: -1}),
                         }).then((taxAttributes) => {
@@ -456,18 +457,22 @@
                                         <Spinner/>
                                     </Fragment>
                                 )
-                                || (
-                                    isEmpty(keys(termsListByName)) && (
-                                        <p><i className="dashicons dashicons-warning"></i> {config.strings.noTermsFound}</p>
+                                || (! futureActionTaxonomy && (
+                                        <p><i className="dashicons dashicons-warning"></i> {config.strings.noTaxonomyFound}</p>
                                     )
                                     || (
-                                        <FormTokenField
-                                            label={config.taxonomyName}
-                                            value={selectedTerms}
-                                            suggestions={Object.keys(termsListByName)}
-                                            onChange={handleTermsChange}
-                                            maxSuggestions={10}
-                                        />
+                                        isEmpty(keys(termsListByName)) && (
+                                            <p><i className="dashicons dashicons-warning"></i> {config.strings.noTermsFound}</p>
+                                        )
+                                        || (
+                                            <FormTokenField
+                                                label={config.taxonomyName}
+                                                value={selectedTerms}
+                                                suggestions={Object.keys(termsListByName)}
+                                                onChange={handleTermsChange}
+                                                maxSuggestions={10}
+                                            />
+                                        )
                                     )
                                 )
                             )

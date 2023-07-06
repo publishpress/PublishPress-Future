@@ -381,7 +381,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 }).then(function (response) {
                     debugLog('taxonomies', response.taxonomies);
 
-                    if (response.taxonomies.length > 0) {
+                    if (parseInt(response.count) > 0) {
                         apiFetch({
                             path: addQueryArgs('wp/v2/taxonomies/' + futureActionTaxonomy, { context: 'edit', per_page: -1 })
                         }).then(function (taxAttributes) {
@@ -523,6 +523,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     null,
                     config.strings.loading + (' (' + futureActionTaxonomy + ')'),
                     React.createElement(Spinner, null)
+                ) || !futureActionTaxonomy && React.createElement(
+                    'p',
+                    null,
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    config.strings.noTaxonomyFound
                 ) || isEmpty(keys(termsListByName)) && React.createElement(
                     'p',
                     null,

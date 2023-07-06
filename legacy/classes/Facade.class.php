@@ -339,7 +339,7 @@ class PostExpirator_Facade
             ];
         }, $taxonomies);
 
-        return rest_ensure_response(['taxonomies' => $taxonomies]);
+        return rest_ensure_response(['taxonomies' => $taxonomies, 'count' => count($taxonomies)]);
     }
 
     /**
@@ -390,6 +390,14 @@ class PostExpirator_Facade
                 $taxonomyName = $taxonomy->label;
             }
 
+            $taxonomyTerms = [];
+            if (! empty($postTypeDefaultConfig['taxonomy'])) {
+                $taxonomyTerms = get_terms([
+                    'taxonomy' => $postTypeDefaultConfig['taxonomy'],
+                    'hide_empty' => false,
+                ]);
+            }
+
             $defaultExpirationDate = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
             wp_localize_script(
                 'postexpirator-gutenberg-panel',
@@ -402,13 +410,19 @@ class PostExpirator_Facade
                     'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
                     'isDebugEnabled' => $debug->isEnabled(),
                     'taxonomyName' => $taxonomyName,
+                    'taxonomyTerms' => $taxonomyTerms,
                     'strings' => [
                         'category' => __('Taxonomy', 'post-expirator'),
                         'panelTitle' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                         'action' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
-                        'noTermsFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
+                        // translators: %s is the name of the taxonomy in plural form.
+                        'noTermsFound' => sprintf(
+                            __('No %s found.', 'post-expirator'),
+                            strtolower($taxonomyName)
+                        ),
+                        'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
                     ]
                 ]
             );

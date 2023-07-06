@@ -9,13 +9,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-04T19:41:08+00:00\n"
+"POT-Creation-Date: 2023-07-06T21:23:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: post-expirator\n"
 
 #. Plugin Name of the plugin
-#: legacy/classes/Facade.class.php:400
+#: legacy/classes/Facade.class.php:416
 #: legacy/functions.php:337
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:80
 #: src/Views/tabs.php:60
@@ -87,18 +87,18 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:399
+#: legacy/classes/Facade.class.php:415
 msgid "Taxonomy"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:401
+#: legacy/classes/Facade.class.php:417
 #: src/Views/bulk-edit.php:36
 #: src/Views/classic-metabox.php:11
 #: src/Views/quick-edit.php:16
 msgid "Enable Future Action"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:402
+#: legacy/classes/Facade.class.php:418
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:38
 #: src/Modules/Settings/Controllers/Controller.php:223
 #: src/Views/bulk-edit.php:129
@@ -109,17 +109,15 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:403
+#: legacy/classes/Facade.class.php:419
 msgid "Loading"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:404
-#: src/Views/bulk-edit.php:148
-#: src/Views/quick-edit.php:100
-msgid "Terms"
+#: legacy/classes/Facade.class.php:422
+msgid "No %s found."
 msgstr ""
 
-#: legacy/classes/Facade.class.php:405
+#: legacy/classes/Facade.class.php:425
 #: src/Views/classic-metabox.php:138
 msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
 msgstr ""
@@ -555,6 +553,11 @@ msgstr ""
 #: src/Views/classic-metabox.php:110
 #: src/Views/quick-edit.php:67
 msgid "Minute"
+msgstr ""
+
+#: src/Views/bulk-edit.php:148
+#: src/Views/quick-edit.php:100
+msgid "Terms"
 msgstr ""
 
 #: src/Views/classic-metabox.php:18
