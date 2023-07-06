@@ -384,6 +384,12 @@ class PostExpirator_Facade
             $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
             $debug = $container->get(ServicesAbstract::DEBUG);
 
+            $taxonomyName= '';
+            if (! empty($postTypeDefaultConfig['taxonomy'])) {
+                $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
+                $taxonomyName = $taxonomy->label;
+            }
+
             $defaultExpirationDate = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
             wp_localize_script(
                 'postexpirator-gutenberg-panel',
@@ -395,13 +401,13 @@ class PostExpirator_Facade
                     'startOfWeek' => get_option('start_of_week', 0),
                     'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
                     'isDebugEnabled' => $debug->isEnabled(),
+                    'taxonomyName' => $taxonomyName,
                     'strings' => [
                         'category' => __('Taxonomy', 'post-expirator'),
                         'panelTitle' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                         'action' => __('Action', 'post-expirator'),
                         'loading' => __('Loading', 'post-expirator'),
-                        'terms' => __('Terms', 'post-expirator'),
                         'noTermsFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
                     ]
                 ]

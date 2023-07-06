@@ -530,7 +530,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     ' ',
                     config.strings.noTermsFound
                 ) || React.createElement(FormTokenField, {
-                    label: config.strings.terms + (' (' + futureActionTaxonomy + ')'),
+                    label: config.taxonomyName,
                     value: selectedTerms,
                     suggestions: Object.keys(termsListByName),
                     onChange: handleTermsChange,

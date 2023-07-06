@@ -462,7 +462,7 @@
                                     )
                                     || (
                                         <FormTokenField
-                                            label={config.strings.terms + ` (${futureActionTaxonomy})`}
+                                            label={config.taxonomyName}
                                             value={selectedTerms}
                                             suggestions={Object.keys(termsListByName)}
                                             onChange={handleTermsChange}
