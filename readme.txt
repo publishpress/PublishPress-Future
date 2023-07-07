@@ -140,6 +140,14 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.0.5] - [UNRELEASED] =
+
+* ADDED: Add a setting field to control the style of the Future Action column on posts lists (Advanced tab), #482;
+* FIXED: Fix the message that prevented to select terms for a future action, #488;
+* FIXED: Fix the taxonomy field in the Post Types settings page, that was not visible unless you select a taxonomy related default action, #496;
+* FIXED: Fix the space after the "reset" button on the calendar field, in the block editor, #465;
+* CHANGED: Improve the label for the terms field in the block editor panel, #483;
+
 = [3.0.4] - [04 Jul, 2023] =
 
 * FIXED: Fix "Save changes" notification on block editor when post is not edited, #449;
