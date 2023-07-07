@@ -170,11 +170,13 @@ function postexpirator_show_value($column_name)
     $container = Container::getInstance();
     $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
     $postModel = $factory($post->ID);
+    $settings = $container->get(ServicesAbstract::SETTINGS);
 
     PostExpirator_Display::getInstance()->render_template('expire-column', [
         'id' => $post->ID,
         'post_type' => $post->post_type,
-        'attributes' => $postModel->getExpirationDataAsArray()
+        'attributes' => $postModel->getExpirationDataAsArray(),
+        'column_style' => $settings->getColumnStyle(),
     ]);
 }
 

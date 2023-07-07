@@ -30,30 +30,35 @@ defined('ABSPATH') or die('Direct access not allowed.');
         if (is_object($action)) {
             ?><span class="dashicons dashicons-clock icon-scheduled" title="<?php echo esc_attr__('Cron event scheduled.', 'post-expirator'); ?>"></span> <?php
 
-            echo sprintf(
-                esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
-                '<span class="future-action-action-name">',
-                esc_html($action->getDynamicLabel()),
-                '</span>',
-                esc_html(PostExpirator_Util::get_wp_date($format, $expirationDate)),
-                '<span class="future-action-action-date">',
-                '</span>'
-            );
+            if ($column_style === 'simple') {
+                echo esc_html(PostExpirator_Util::get_wp_date($format, $expirationDate));
+            } else {
+                echo sprintf(
+                    esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
+                    '<span class="future-action-action-name">',
+                    esc_html($action->getDynamicLabel()),
+                    '</span>',
+                    esc_html(PostExpirator_Util::get_wp_date($format, $expirationDate)),
+                    '<span class="future-action-action-date">',
+                    '</span>'
+                );
 
-            $categoryActions = [
-                ExpirationActionsAbstract::POST_CATEGORY_ADD,
-                ExpirationActionsAbstract::POST_CATEGORY_SET,
-                ExpirationActionsAbstract::POST_CATEGORY_REMOVE,
-            ];
+                $categoryActions = [
+                    ExpirationActionsAbstract::POST_CATEGORY_ADD,
+                    ExpirationActionsAbstract::POST_CATEGORY_SET,
+                    ExpirationActionsAbstract::POST_CATEGORY_REMOVE,
+                ];
 
-            if (in_array($action, $categoryActions)) {
-                $categories = $postModel->getExpirationCategoryNames();
-                if (!empty($categories)) {
-                    ?>
-                    <div class="future-action-gray">[<?php echo esc_html(implode(', ', $categories)); ?>]</div>
-                    <?php
+                if (in_array($action, $categoryActions)) {
+                    $categories = $postModel->getExpirationCategoryNames();
+                    if (!empty($categories)) {
+                        ?>
+                        <div class="future-action-gray">[<?php echo esc_html(implode(', ', $categories)); ?>]</div>
+                        <?php
+                    }
                 }
             }
+
         } else {
             ?><span class="dashicons dashicons-warning icon-missed" title="<?php echo esc_attr__('This action will can not run correctly.', 'post-expirator'); ?>"></span> <?php
             echo esc_html__('Action could not be scheduled due to a configuration issue. Please attempt to schedule it again.', 'post-expirator');

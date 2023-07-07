@@ -195,4 +195,9 @@ class SettingsFacade
 
         return $defaultDateOption;
     }
+
+    public function getColumnStyle()
+    {
+        return $this->options->getOption('expirationdateColumnStyle', 'verbose');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
-use PublishPress\Future\Modules\Settings\HooksAbstract;
+use PublishPressFuture\Core\DI\Container;
+use PublishPressFuture\Core\DI\ServicesAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -9,6 +10,8 @@ $preserveData = (bool)get_option('expirationdatePreserveData', true);
 
 $user_roles = wp_roles()->get_names();
 $plugin_facade = PostExpirator_Facade::getInstance();
+$container = Container::getInstance();
+
 ?>
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
     <div class="pp-column-left">
@@ -45,6 +48,38 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                         <p class="description"><?php
                             esc_html_e(
                                 'Toggle between native support for the Block Editor or the backward compatible Classic Editor style metabox.',
+                                'post-expirator'
+                            ); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php
+                        esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
+                    <td>
+                        <?php
+                        $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
+                        ?>
+                        <input type="radio" name="future-action-column-style"
+                               id="future-action-column-style-verbose"
+                               value="verbose" <?php
+                        echo $columnStyle === 'verbose' ? 'checked' : ''; ?>/>
+                        <label for="future-action-column-style-verbose"><?php
+                            esc_html_e('Detailed', 'post-expirator'); ?></label>
+                        <p class="description"><?php
+                            esc_html_e(
+                                'Display the status icon, the action name and the date/time in the Future Action column. Uses more space.',
+                                'post-expirator'
+                            ); ?></p>
+                        <br/>
+                        <input type="radio" name="future-action-column-style"
+                               id="future-action-column-style-simple"
+                               value="simple" <?php
+                        echo $columnStyle === 'simple' ? 'checked' : ''; ?>/>
+                        <label for="future-action-column-style-simple"><?php
+                            esc_html_e('Simplified', 'post-expirator'); ?></label>
+                        <p class="description"><?php
+                            esc_html_e(
+                                'Display the status icon and the date/time in the Future Action column.',
                                 'post-expirator'
                             ); ?></p>
                     </td>
