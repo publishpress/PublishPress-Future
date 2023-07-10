@@ -44,7 +44,7 @@ class ActionArgsSchema
             scheduled_date datetime NOT NULL,
             created_at datetime NOT NULL,
             args varchar(250) NOT NULL,
-            PRIMARY KEY (id),
+            PRIMARY KEY  (id),
             KEY post_id (post_id, id),
             KEY enabled_post_id (post_id, enabled, id),
             KEY cron_action_id (cron_action_id, id),
