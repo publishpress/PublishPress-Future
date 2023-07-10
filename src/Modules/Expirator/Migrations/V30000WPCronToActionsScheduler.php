@@ -41,8 +41,6 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
         $this->cronAdapter = $cronAdapter;
         $this->hooksFacade = $hooksFacade;
 
-        ActionArgsSchema::createTableIfNotExists();
-
         $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
         $this->hooksFacade->addAction(
             ExpiratorHooks::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
