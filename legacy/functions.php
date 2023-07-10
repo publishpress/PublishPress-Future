@@ -979,9 +979,10 @@ function postexpirator_upgrade()
         }
 
         if (version_compare($version, '3.0.0') === -1) {
-            $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK, [], true);
+            // TODO: DB migration should probably check a database version option and not the plugin version.
             $container->get(ServicesAbstract::HOOKS)->doAction(V30000ActionArgsSchema::HOOK);
             $container->get(ServicesAbstract::HOOKS)->doAction(V30000ReplaceFooterPlaceholders::HOOK);
+            $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK, [], true);
         }
 
         if (version_compare($version, '3.0.1') === -1) {

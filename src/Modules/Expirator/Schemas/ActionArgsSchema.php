@@ -55,7 +55,15 @@ class ActionArgsSchema
             require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         }
 
-        dbDelta($sql);
+        // We are forced to suppress errors here because dbDelta() will run a "DESCRIBE"
+        // query on the table that do not exist yet, and that will trigger an error.
+        $suppressErrors = $wpdb->suppress_errors(true);
+        $result = dbDelta($sql);
+        $wpdb->suppress_errors($suppressErrors);
+
+        if (! empty($result)) {
+            error_log('PUBLISHPRESS FUTURE: Result of creating table ' . self::getTableName() . ': ' . implode("\n", $result));
+        }
     }
 
     public static function dropTableIfExists()
