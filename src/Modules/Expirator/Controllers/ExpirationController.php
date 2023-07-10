@@ -81,10 +81,6 @@ class ExpirationController implements InitializableInterface
     public function initialize()
     {
         $this->hooks->addAction(
-            SettingsHooksAbstract::ACTION_DELETE_ALL_SETTINGS,
-            [$this, 'onActionDeleteAllSettings']
-        );
-        $this->hooks->addAction(
             HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
             [$this, 'onActionSchedulePostExpiration'],
             10,
