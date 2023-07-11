@@ -128,16 +128,8 @@ class Controller implements InitializableInterface
             [$this, 'processFormSubmission']
         );
         $this->hooks->addAction(
-            CoreAbstractHooks::ACTION_ADMIN_INIT,
-            [$this, 'processToolsActions']
-        );
-        $this->hooks->addAction(
             CoreAbstractHooks::ACTION_INIT,
             [$this, 'initMigrations']
-        );
-        $this->hooks->addAction(
-            CoreAbstractHooks::ACTION_ADMIN_NOTICES,
-            [$this, 'displayAdminNotices']
         );
     }
 
@@ -282,11 +274,9 @@ class Controller implements InitializableInterface
             'general',
             'defaults',
             'display',
-            'editor',
             'diagnostics',
             'viewdebug',
             'advanced',
-            'tools'
         );
 
         $allowedTabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);
@@ -316,122 +306,6 @@ class Controller implements InitializableInterface
         }
 
         $this->hooks->doAction(SettingsHooksAbstract::ACTION_SAVE_TAB . $tab);
-    }
-
-    public function processToolsActions()
-    {
-        if (empty($_GET['action'])) {
-            return;
-        }
-
-        if ($_GET['action'] === 'future_migrate_legacy_post_expirations') {
-            if (! isset($_GET['nonce']) || ! \wp_verify_nonce(
-                    \sanitize_key($_GET['nonce']),
-                    'future-migrate-legacy-post-expirations'
-                )) {
-                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
-            }
-
-            $this->cron->enqueueAsyncAction(V30000WPCronToActionsScheduler::HOOK, [], true);
-
-            wp_redirect(
-                admin_url(
-                    'admin.php?page=publishpress-future&tab=tools&message=legacy_post_expirations_migration_scheduled'
-                )
-            );
-            exit;
-        }
-
-        if ($_GET['action'] === 'future_restore_legacy_action_arguments') {
-            if (! isset($_GET['nonce']) || ! \wp_verify_nonce(
-                    \sanitize_key($_GET['nonce']),
-                    'future-restore-legacy-action-arguments'
-                )) {
-                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
-            }
-
-            $this->cron->enqueueAsyncAction(V30001RestorePostMeta::HOOK, [], true);
-
-            wp_redirect(
-                admin_url(
-                    'admin.php?page=publishpress-future&tab=tools&message=legacy_post_expirations_data_restored'
-                )
-            );
-            exit;
-        }
-
-        if ($_GET['action'] === 'future_fix_db_schema') {
-            if (! isset($_GET['nonce']) || ! \wp_verify_nonce(
-                    \sanitize_key($_GET['nonce']),
-                    'future-fix-db-schema'
-                )) {
-                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
-            }
-
-            ActionArgsSchema::createTableIfNotExists();
-
-            if (ActionArgsSchema::tableExists()) {
-                // phpcs:ignore WordPressVIPMinimum.Security.ExitAfterRedirect.NoExit
-                wp_redirect(
-                    admin_url(
-                        'admin.php?page=publishpress-future&tab=diagnostics&message=db_schema_fixed'
-                    )
-                );
-            } else {
-                // phpcs:ignore WordPressVIPMinimum.Security.ExitAfterRedirect.NoExit
-                wp_redirect(
-                    admin_url(
-                        'admin.php?page=publishpress-future&tab=diagnostics&message=db_schema_not_fixed'
-                    )
-                );
-            }
-            exit;
-        }
-    }
-
-    public function displayAdminNotices()
-    {
-        // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        if (empty($_GET['message'])) {
-            return;
-        }
-
-        switch ($_GET['message']) {
-            case 'legacy_post_expirations_migration_scheduled':
-                $message = __(
-                    'The legacy future actions migration has been scheduled and will run asynchronously.',
-                    'post-expirator'
-                );
-                break;
-
-            case 'legacy_post_expirations_data_restored':
-                $message = __(
-                    'The legacy actions arguments restoration has been scheduled and will run asynchronously.',
-                    'post-expirator'
-                );
-                break;
-
-            case 'db_schema_fixed':
-                $message = __(
-                    'The database schema was fixed.',
-                    'post-expirator'
-                );
-                break;
-
-            case 'db_schema_not_fixed':
-                $message = __(
-                    'The database schema could not be fixed. Please, contact the support team.',
-                    'post-expirator'
-                );
-                break;
-            default:
-                $message = '';
-        }
-
-        if (! empty($message)) {
-            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html($message) . '</p></div>';
-        }
-        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 
     public function initMigrations()

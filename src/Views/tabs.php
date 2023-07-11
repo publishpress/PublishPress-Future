@@ -32,14 +32,9 @@ $tabs = [
         'link' => admin_url($baseLink . 'advanced'),
     ],
     [
-        'title' => __('Diagnostics', 'post-expirator'),
+        'title' => __('Diagnostics and Tools', 'post-expirator'),
         'slug'  => 'diagnostics',
         'link' => admin_url($baseLink . 'diagnostics'),
-    ],
-    [
-        'title' => __('Tools', 'post-expirator'),
-        'slug'  => 'tools',
-        'link' => admin_url($baseLink . 'tools'),
     ],
 ];
 

@@ -19,14 +19,46 @@ $debug = $container->get(ServicesAbstract::DEBUG);
             <?php
             wp_nonce_field('postexpirator_menu_diagnostics', '_postExpiratorMenuDiagnostics_nonce'); ?>
             <h3><?php
-                esc_html_e('Advanced Diagnostics', 'post-expirator'); ?></h3>
+                esc_html_e('Advanced Diagnostics and Tools', 'post-expirator'); ?></h3>
             <table class="form-table">
+                <tr>
+                    <th scope="row"><?php
+                        esc_html_e('WP-Cron Status Check', 'post-expirator'); ?></th>
+                    <td>
+                        <?php if (PostExpirator_CronFacade::is_cron_enabled()) : ?>
+                            <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
+                                esc_html_e('Passed', 'post-expirator'); ?></span>
+                        <?php else : ?>
+                            <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php
+                                esc_html_e('WP Cron Disabled', 'post-expirator'); ?></span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php
+                        esc_html_e('Database Schema Check', 'post-expirator'); ?></th>
+                    <td>
+                        <?php if (ActionArgsSchema::tableExists()) : ?>
+                            <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
+                                esc_html_e('Passed', 'post-expirator'); ?></span>
+                        <?php else : ?>
+                            <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php
+                                esc_html_e('Action Arguments table not found', 'post-expirator'); ?></span>
+
+                            <input type="submit" class="button" name="fix-db-schema" id="fix-db-schema" value="<?php
+                            esc_attr_e('Fix Database', 'post-expirator'); ?>"/>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+
+                <tr><td colspan="2"><hr></td></tr>
+
                 <tr>
                     <th scope="row"><label for="postexpirator-log"><?php
                             esc_html_e('Debug Logging', 'post-expirator'); ?></label></th>
                     <td>
                         <?php if ($debug->isEnabled()) : ?>
-                            <i class="dashicons dashicons-yes-alt pe-status pe-status-enabled"></i> <span><?php
+                            <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
                                 esc_html_e('Enabled', 'post-expirator'); ?></span>
                             <?php
                             echo '<input type="submit" class="button" name="debugging-disable" id="debugging-disable" value=" '
@@ -34,12 +66,17 @@ $debug = $container->get(ServicesAbstract::DEBUG);
                                     'Disable Debugging',
                                     'post-expirator'
                                 ) . '" />'; ?>
+
+                            <input type="submit" class="button" name="purge-debug" id="purge-debug" value="<?php
+                            esc_attr_e('Purge Debug Log', 'post-expirator'); ?>"/>
+                            <br /><br />
+
                             <?php
                             echo '<a href="' . esc_url(
-                                admin_url(
-                                    'admin.php?page=publishpress-future&tab=viewdebug'
-                                )
-                            ) . '">' . esc_html__('View Debug Logs', 'post-expirator') . '</a>'; ?>
+                                    admin_url(
+                                        'admin.php?page=publishpress-future&tab=viewdebug'
+                                    )
+                                ) . '">' . esc_html__('View Debug Logs', 'post-expirator') . '</a>'; ?>
                         <?php else : ?>
                             <i class="dashicons dashicons-no-alt pe-status pe-status-disabled"></i> <span><?php
                                 esc_html_e('Disabled', 'post-expirator'); ?></span>
@@ -53,47 +90,45 @@ $debug = $container->get(ServicesAbstract::DEBUG);
                     </td>
                 </tr>
                 <?php do_action(HooksAbstract::ACTION_AFTER_DEBUG_LOG_SETTING); ?>
+
+                <tr><td colspan="2"><hr></td></tr>
+
                 <tr>
                     <th scope="row"><?php
-                        esc_html_e('Purge Debug Log', 'post-expirator'); ?></th>
+                        esc_html_e('Migrate legacy future actions', 'post-expirator'); ?>
+                    </th>
                     <td>
-                        <input type="submit" class="button" name="purge-debug" id="purge-debug" value="<?php
-                        esc_attr_e('Purge Debug Log', 'post-expirator'); ?>"/>
+                        <input type="submit" class="button" name="migrate-legacy-actions" id="migrate-legacy-actions" value="<?php
+                        esc_attr_e('Enqueue Migration', 'post-expirator'); ?>"/>
+
+                        <p class="description">
+                            <?php esc_html_e(
+                                'Migrate legacy future actions from WP Cron to the new Action Scheduler. This will run in the background and may take a while.',
+                                'post-expirator'
+                            ); ?>
+                        </p>
                     </td>
                 </tr>
+
                 <tr>
                     <th scope="row"><?php
-                        esc_html_e('WP-Cron Status', 'post-expirator'); ?></th>
+                        esc_html_e('Restore legacy action arguments', 'post-expirator'); ?>
+                    </th>
                     <td>
-                        <?php if (PostExpirator_CronFacade::is_cron_enabled()) : ?>
-                            <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
-                                esc_html_e('Enabled', 'post-expirator'); ?></span>
-                        <?php else : ?>
-                            <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php
-                                esc_html_e('Disabled', 'post-expirator'); ?></span>
-                        <?php endif; ?>
+                        <input type="submit" class="button" name="restore-post-meta" id="restore-post-meta" value="<?php
+                        esc_attr_e('Enqueue Data Restoration', 'post-expirator'); ?>"/>
+
+                        <p class="description">
+                            <?php esc_html_e(
+                                'Restore legacy action arguments as Post Meta. Useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while.',
+                                'post-expirator'
+                            ); ?>
+                        </p>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row"><?php
-                        esc_html_e('DB Schema', 'post-expirator'); ?></th>
-                    <td>
-                        <?php if (ActionArgsSchema::tableExists()) : ?>
-                            <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
-                                esc_html_e('Ok', 'post-expirator'); ?></span>
-                        <?php else : ?>
-                            <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php
-                                esc_html_e('Table not found', 'post-expirator'); ?></span>
-                            <?php
-                            $nonce = wp_create_nonce('future-fix-db-schema');
-                            $url = admin_url('admin.php?action=future_fix_db_schema&nonce=' . $nonce);
-                            ?>
-                            <a href="<?php echo esc_url($url); ?>" class="button">
-                                <?php esc_html_e('Fix DB Schema', 'post-expirator'); ?>
-                            </a>
-                        <?php endif; ?>
-                    </td>
-                </tr>
+
+                <tr><td colspan="2"><hr></td></tr>
+
                 <tr>
                     <th scope="row"><label for="cron-schedule"><?php
                             esc_html_e('Legacy Cron Schedule', 'post-expirator'); ?></label></th>
