@@ -12,7 +12,7 @@ $baseLink = 'admin.php?page=publishpress-future&tab=';
 
 $tabs = [
     [
-        'title' => __('Defaults', 'post-expirator'),
+        'title' => __('General', 'post-expirator'),
         'slug'  => 'general',
         'link' => admin_url($baseLink . 'general'),
     ],
