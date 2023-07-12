@@ -386,11 +386,13 @@ function postexpirator_meta_box($post)
             $expireType = $defaultsOption['expireType'];
         }
     } else {
-        $defaultMonth = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'm');
-        $defaultDay = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'd');
-        $defaultYear = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'Y');
-        $defaultHour = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'H');
-        $defaultMinute = get_date_from_gmt(gmdate('Y-m-d H:i:s', $postMetaDate), 'i');
+        $gmDate = gmdate('Y-m-d H:i:s', $postMetaDate);
+
+        $defaultMonth = get_date_from_gmt($gmDate, 'm');
+        $defaultDay = get_date_from_gmt($gmDate, 'd');
+        $defaultYear = get_date_from_gmt($gmDate, 'Y');
+        $defaultHour = get_date_from_gmt($gmDate, 'H');
+        $defaultMinute = get_date_from_gmt($gmDate, 'i');
 
         $attributes = $postModel->getExpirationDataAsArray();
         $expireType = $attributes['expireType'];

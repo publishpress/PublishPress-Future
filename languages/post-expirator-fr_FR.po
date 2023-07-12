@@ -7,7 +7,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
 "future\n"
 "POT-Creation-Date: 2023-06-12 12:22-0300\n"
-"PO-Revision-Date: 2023-06-20 12:20+0200\n"
+"PO-Revision-Date: 2023-07-12 15:08-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.3\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Plugin Name of the plugin
 #: classes/Display.class.php:50 classes/Facade.class.php:374
@@ -461,8 +461,8 @@ msgid ""
 msgstr ""
 "Définissez le décalage à utiliser pour la date et l’heure d’expiration par "
 "défaut. Pour plus d’informations sur le formatage, voir %1$s. Par exemple, "
-"vous pouvez saisir %2$s + 1 mois%3$s ou %4$s + 1 semaine 2 jours 4 heures 2 "
-"secondes%5$s ou %6$sprochain jeudi%7$s."
+"vous pouvez saisir %2$s+ 1 month%3$s ou %4$s+ 1 week 2 days 4 hours 2 "
+"seconds%5$s ou %6$snext Thursday%7$s."
 
 #: views/menu-defaults.php:228 views/menu-display.php:126
 #: views/menu-editor.php:33 views/menu-general.php:438

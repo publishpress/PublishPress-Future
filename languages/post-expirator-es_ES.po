@@ -7,7 +7,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
 "future\n"
 "POT-Creation-Date: 2023-06-12 12:22-0300\n"
-"PO-Revision-Date: 2023-06-19 14:42+0200\n"
+"PO-Revision-Date: 2023-07-12 15:08-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.3\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Plugin Name of the plugin
 #: classes/Display.class.php:50 classes/Facade.class.php:374
@@ -456,8 +456,8 @@ msgid ""
 msgstr ""
 "Establece el valor personalizado que se usará para la fecha de caducidad por "
 "defecto. Para información sobre el formato, consulta %1$s. Por ejemplo, "
-"puedes introducir %2$s+1 mes%3$s o %4$s+1 semana 2 días 4 horas 2 "
-"segundos%5$s o %6$spróximo jueves%7$s."
+"puedes introducir %2$s+1 month%3$s o %4$s+1 week 2 days 4 hours 2 "
+"seconds%5$s o %6$snext Thursday%7$s."
 
 #: views/menu-defaults.php:228 views/menu-display.php:126
 #: views/menu-editor.php:33 views/menu-general.php:438

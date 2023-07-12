@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - PublishPress Future: Automatically Unpublish WordPress Posts - Stable (latest release)\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-06-06 11:29-0300\n"
+"PO-Revision-Date: 2023-07-12 15:08-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: src/Views/menu-general.php:78 src/Views/menu-general.php:95
 msgid "PHP Date Function"
@@ -390,7 +390,7 @@ msgstr "PublishPress"
 #: src/Modules/Settings/Controllers/Controller.php:197
 #: src/Views/menu-general.php:109
 msgid "Set the offset to use for the default expiration date and time. For information on formatting, see %1$s. For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s."
-msgstr "Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 maand%3$s of %4$s+1 week 2 dagen 4 uur 2 seconden%5$s of %6$skomende donderdag%7$s invoeren."
+msgstr "Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 month%3$s of %4$s+1 week 2 days 4 hours 2 seconds%5$s of %6$snext Thursday%7$s invoeren."
 
 #: src/Views/bulk-edit.php:51
 msgid "Remove from posts"
