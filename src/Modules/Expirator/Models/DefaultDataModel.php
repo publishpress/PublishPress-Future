@@ -52,7 +52,7 @@ class DefaultDataModel
             html_entity_decode($dateTimeOffset, ENT_QUOTES)
         );
 
-        $calculatedDate = strtotime($dateTimeOffset);
+        $calculatedDate = strtotime($dateTimeOffset, (int)gmdate('U'));
 
         if (false === $calculatedDate) {
             error_log(
