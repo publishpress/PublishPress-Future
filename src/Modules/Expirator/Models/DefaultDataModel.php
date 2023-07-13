@@ -40,7 +40,7 @@ class DefaultDataModel
         $postTypeDefaults = $this->settings->getPostTypeDefaults($postType);
         if (isset($postTypeDefaults['default-expire-type'])
             && 'custom' === $postTypeDefaults['default-expire-type']
-            && ! empty($postTypeDefaults['default-expire-date'])
+            && ! empty($postTypeDefaults['default-custom-date'])
         ) {
             $dateTimeOffset = $postTypeDefaults['default-custom-date'];
         }
