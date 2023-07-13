@@ -176,6 +176,7 @@ class SettingsFacade
 
     /**
      * @return mixed
+     * @deprecated Use getDefaultDateCustom() instead
      */
     public function getDefaultDate()
     {
@@ -184,8 +185,14 @@ class SettingsFacade
 
     /**
      * @return mixed
+     * @deprecated Use getGeneralDateTimeOffset() instead
      */
     public function getDefaultDateCustom()
+    {
+        return $this->getGeneralDateTimeOffset();
+    }
+
+    public function getGeneralDateTimeOffset()
     {
         $defaultDateOption = $this->options->getOption('expirationdateDefaultDateCustom');
 

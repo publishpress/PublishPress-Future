@@ -29,94 +29,47 @@ class DefaultDataModel
         $this->options = $options;
     }
 
-
-
     /**
      * @param string $postType
      * @return array
      */
     public function getDefaultExpirationDateForPostType($postType)
     {
-        $defaultMonth = date_i18n('m');
-        $defaultDay = date_i18n('d');
-        $defaultHour = date_i18n('H');
-        $defaultYear = date_i18n('Y');
-        $defaultMinute = date_i18n('i');
-        $timestamp = time();
+        $dateTimeOffset = $this->settings->getGeneralDateTimeOffset();
 
-        $defaultDate = $customDate = $generalDate = $generalCustomDate = '';
-
-        // Get the values from the general settings.
-        $generalDate = $this->settings->getDefaultDate();
-
-        if ('custom' === $generalDate) {
-            $custom = $this->settings->getDefaultDateCustom();
-            if ($custom !== false) {
-                $generalCustomDate = $custom;
-            }
+        $postTypeDefaults = $this->settings->getPostTypeDefaults($postType);
+        if (isset($postTypeDefaults['default-expire-type'])
+            && 'custom' === $postTypeDefaults['default-expire-type']
+            && ! empty($postTypeDefaults['default-expire-date'])
+        ) {
+            $dateTimeOffset = $postTypeDefaults['default-custom-date'];
         }
 
-        // Get the values for the post_type.
-        $defaults = $this->settings->getPostTypeDefaults($postType);
+        // Strip the quotes in case the user provides them.
+        $dateTimeOffset = str_replace(
+            '"',
+            '',
+            html_entity_decode($dateTimeOffset, ENT_QUOTES)
+        );
 
-        if (isset($defaults['default-expire-type'])) {
-            $defaultDate = $defaults['default-expire-type'];
-            switch ($defaultDate) {
-                case 'custom':
-                    $customDate = $defaults['default-custom-date'];
-                    break;
-                case 'inherit':
-                    $customDate = $generalCustomDate;
-                    $defaultDate = $generalDate;
-                    break;
-            }
-        } else {
-            $defaultDate = $generalDate;
-            $customDate = $generalCustomDate;
+        $calculatedDate = strtotime($dateTimeOffset);
+
+        if (false === $calculatedDate) {
+            error_log('PUBLISHPRESS FUTURE: Invalid date/time offset: ' . $dateTimeOffset);
+
+            $calculatedDate = time();
         }
 
-        if ('custom' === $defaultDate) {
-            if (empty($customDate)) {
-                $customDate = $this->settings->getDefaultDateCustom();
-            }
-
-            if (! empty($customDate)) {
-                $timezoneString = $this->options->getOption('timezone_string');
-                if ($timezoneString) {
-                    // @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
-                    // phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
-                    date_default_timezone_set($timezoneString);
-                }
-
-                // strip the quotes in case the user provides them.
-                $customDate = str_replace(
-                    '"',
-                    '',
-                    html_entity_decode($customDate, ENT_QUOTES)
-                );
-
-                $timestamp = time() + (strtotime($customDate) - time());
-                if ($timezoneString) {
-                    // @TODO Using date_default_timezone_set() and similar isn't allowed, instead use WP internal timezone support.
-                    // phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
-                    date_default_timezone_set('UTC');
-                }
-            }
-
-            $defaultMonth = get_date_from_gmt(gmdate('Y-m-d H:i:s', $timestamp), 'm');
-            $defaultDay = get_date_from_gmt(gmdate('Y-m-d H:i:s', $timestamp), 'd');
-            $defaultYear = get_date_from_gmt(gmdate('Y-m-d H:i:s', $timestamp), 'Y');
-            $defaultHour = get_date_from_gmt(gmdate('Y-m-d H:i:s', $timestamp), 'H');
-            $defaultMinute = get_date_from_gmt(gmdate('Y-m-d H:i:s', $timestamp), 'i');
-        }
+        $gmDate = gmdate('Y-m-d H:i:s', $calculatedDate);
+        $date = explode('-', get_date_from_gmt($gmDate, 'Y-m-d-H-i'));
 
         return array(
-            'month' => $defaultMonth,
-            'day' => $defaultDay,
-            'year' => $defaultYear,
-            'hour' => $defaultHour,
-            'minute' => $defaultMinute,
-            'ts' => $timestamp,
+            'year' => $date[0],
+            'month' => $date[1],
+            'day' => $date[2],
+            'hour' => $date[3],
+            'minute' => $date[4],
+            'ts' => $calculatedDate,
         );
     }
 

@@ -48,7 +48,7 @@ class SettingsPostTypesModel
                 'emailNotification' => isset($defaults['emailnotification']) ? $defaults['emailnotification'] : '',
                 'defaultExpireType' => isset($defaults['default-expire-type']) ? $defaults['default-expire-type'] : '',
                 'defaultExpireOffset' => isset($defaults['default-custom-date']) ? $defaults['default-custom-date'] : '',
-                'globalDefaultExpireOffset' => $placeholder = $settingsFacade->getDefaultDateCustom(),
+                'globalDefaultExpireOffset' => $placeholder = $settingsFacade->getGeneralDateTimeOffset(),
             ];
 
             $settings = apply_filters(

@@ -18,7 +18,7 @@ $expiredemailnotificationlist = get_option('expirationdateEmailNotificationList'
 $container = \PublishPress\Future\Core\DI\Container::getInstance();
 $settingsFacade = $container->get(\PublishPress\Future\Core\DI\ServicesAbstract::SETTINGS);
 
-$expirationdateDefaultDateCustom = $settingsFacade->getDefaultDateCustom();
+$expirationdateDefaultDateCustom = $settingsFacade->getGeneralDateTimeOffset();
 
 $categories = get_option('expirationdateCategoryDefaults');
 
