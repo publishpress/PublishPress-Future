@@ -55,13 +55,20 @@ class DefaultDataModel
         $calculatedDate = strtotime($dateTimeOffset);
 
         if (false === $calculatedDate) {
-            error_log('PUBLISHPRESS FUTURE: Invalid date/time offset: ' . $dateTimeOffset);
+            error_log(
+                sprintf(
+                    'PUBLISHPRESS FUTURE: Invalid date/time offset "%s" for post type "%s"',
+                    $dateTimeOffset,
+                    $postType
+                )
+            );
 
             $calculatedDate = time();
         }
 
         $gmDate = gmdate('Y-m-d H:i:s', $calculatedDate);
-        $date = explode('-', get_date_from_gmt($gmDate, 'Y-m-d-H-i'));
+        $date = get_date_from_gmt($gmDate, 'Y-m-d-H-i');
+        $date = explode('-', $date);
 
         return array(
             'year' => $date[0],
