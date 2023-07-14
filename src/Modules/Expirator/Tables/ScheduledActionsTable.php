@@ -21,6 +21,12 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
      */
     private $hooksFacade;
 
+    /**
+     * Array of seconds for common time periods, like week or month, alongside an internationalised string representation, i.e. "Day" or "Days"
+     *
+     * @var array
+     */
+    private static $time_periods;
 
     public function __construct(
         \ActionScheduler_Store $store,
@@ -55,6 +61,45 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
                 ),
             ),
         );
+
+        self::$time_periods = array(
+            array(
+                'seconds' => YEAR_IN_SECONDS,
+                /* translators: %s: amount of time */
+                'names'   => _n_noop( '%s year', '%s years', 'action-scheduler' ),
+            ),
+            array(
+                'seconds' => MONTH_IN_SECONDS,
+                /* translators: %s: amount of time */
+                'names'   => _n_noop( '%s month', '%s months', 'action-scheduler' ),
+            ),
+            array(
+                'seconds' => WEEK_IN_SECONDS,
+                /* translators: %s: amount of time */
+                'names'   => _n_noop( '%s week', '%s weeks', 'action-scheduler' ),
+            ),
+            array(
+                'seconds' => DAY_IN_SECONDS,
+                /* translators: %s: amount of time */
+                'names'   => _n_noop( '%s day', '%s days', 'action-scheduler' ),
+            ),
+            array(
+                'seconds' => HOUR_IN_SECONDS,
+                /* translators: %s: amount of time */
+                'names'   => _n_noop( '%s hour', '%s hours', 'action-scheduler' ),
+            ),
+            array(
+                'seconds' => MINUTE_IN_SECONDS,
+                /* translators: %s: amount of time */
+                'names'   => _n_noop( '%s minute', '%s minutes', 'action-scheduler' ),
+            ),
+            array(
+                'seconds' => 1,
+                /* translators: %s: amount of time */
+                'names'   => _n_noop( '%s second', '%s seconds', 'action-scheduler' ),
+            ),
+        );
+
     }
 
     public function enqueueScripts()
@@ -454,5 +499,97 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
 
         return $html;
+    }
+
+    /**
+     * Get the scheduled date in a human friendly format.
+     *
+     * @param \ActionScheduler_Schedule $schedule
+     * @return string
+     */
+    protected function get_schedule_display_string(\ActionScheduler_Schedule $schedule)
+    {
+        $schedule_display_string = '';
+
+        if (is_a($schedule, 'ActionScheduler_NullSchedule')) {
+            return __('Async', 'post-expirator');
+        }
+
+        if (! method_exists($schedule, 'get_date') || ! $schedule->get_date()) {
+            return '0000-00-00 00:00:00';
+        }
+
+        $next_timestamp = $schedule->get_date()->getTimestamp();
+
+        $gmt_schedule_display_string .= $schedule->get_date()->format('Y-m-d H:i:s O');
+        $schedule_display_string .= wp_date('Y-m-d H:i:s O', $next_timestamp);
+        $schedule_display_string .= '<br/>';
+
+        if (gmdate('U') > $next_timestamp) {
+            /* translators: %s: date interval */
+            $schedule_display_string .= sprintf(
+                __(' (%s ago)', 'action-scheduler'),
+                self::human_interval(gmdate('U') - $next_timestamp)
+            );
+        } else {
+            /* translators: %s: date interval */
+            $schedule_display_string .= sprintf(
+                __(' (%s)', 'action-scheduler'),
+                self::human_interval($next_timestamp - gmdate('U'))
+            );
+        }
+
+        $schedule_display_string = '<span title="' . esc_attr($gmt_schedule_display_string) . '">' . $schedule_display_string . '</span>';
+
+        return $schedule_display_string;
+    }
+
+    /**
+     * Convert an interval of seconds into a two part human friendly string.
+     *
+     * The WordPress human_time_diff() function only calculates the time difference to one degree, meaning
+     * even if an action is 1 day and 11 hours away, it will display "1 day". This function goes one step
+     * further to display two degrees of accuracy.
+     *
+     * Inspired by the Crontrol::interval() function by Edward Dale: https://wordpress.org/plugins/wp-crontrol/
+     *
+     * @param int $interval A interval in seconds.
+     * @param int $periods_to_include Depth of time periods to include, e.g. for an interval of 70, and $periods_to_include of 2, both minutes and seconds would be included. With a value of 1, only minutes would be included.
+     * @return string A human friendly string representation of the interval.
+     */
+    private static function human_interval($interval, $periods_to_include = 2)
+    {
+        if ($interval <= 0) {
+            return __('Now!', 'action-scheduler');
+        }
+
+        $output = '';
+
+        for (
+            $time_period_index = 0, $periods_included = 0, $seconds_remaining = $interval; $time_period_index < count(
+            self::$time_periods
+        ) && $seconds_remaining > 0 && $periods_included < $periods_to_include; $time_period_index++
+        ) {
+            $periods_in_interval = floor($seconds_remaining / self::$time_periods[$time_period_index]['seconds']);
+
+            if ($periods_in_interval > 0) {
+                if (! empty($output)) {
+                    $output .= ' ';
+                }
+                $output .= sprintf(
+                    _n(
+                        self::$time_periods[$time_period_index]['names'][0],
+                        self::$time_periods[$time_period_index]['names'][1],
+                        $periods_in_interval,
+                        'action-scheduler'
+                    ),
+                    $periods_in_interval
+                );
+                $seconds_remaining -= $periods_in_interval * self::$time_periods[$time_period_index]['seconds'];
+                $periods_included++;
+            }
+        }
+
+        return $output;
     }
 }
