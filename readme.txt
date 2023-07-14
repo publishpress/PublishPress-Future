@@ -146,7 +146,20 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix the message that prevented to select terms for a future action, #488;
 * FIXED: Fix the taxonomy field in the Post Types settings page, that was not visible unless you select a taxonomy related default action, #496;
 * FIXED: Fix the space after the "reset" button on the calendar field, in the block editor, #465;
+* FIXED: Fix error displayed when trying to deactivate the plugin with "Preserve data after deactivating the plugin" as "Delete data", #499;
+* FIXED: Fix DB error when trying to create the action args table, due to DESCRIBE query on a table that do not exists yet, #450;
+* FIXED: Fix default expiration date time for post type on different timezones;
+* FIXED: Fix date and time on block editor with different timezones, #498;
 * CHANGED: Improve the label for the terms field in the block editor panel, #483;
+* CHANGED: Merge the settings tabs "Diagnostics" and "Tools", #501;
+* CHANGED: Update the .pot file;
+* CHANGED: Renamed the settings tab "Defaults" to "General";
+* CHANGED: Added some instructions comments to translators;
+* CHANGED: The default date interval for global and post type settings now only accepts EN format, $495;
+* CHANGED: Add log message when date time offset is invalid when trying to schedule a future action;
+* CHANGED: Change the date format on "Scheduled Date" column in the Future Actions list to use the site timezone and not GMT date. GMT date is now displayed on the tooltip;
+* DEPRECATED: The methods getDefaultDate and getDefaultDateCustom on SettingsFacade class are deprecated;
+
 
 = [3.0.4] - [04 Jul, 2023] =
 
