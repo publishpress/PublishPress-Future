@@ -27,7 +27,7 @@
     const getDefaultState = () => {
         let defaultState = {
             futureAction: null,
-            futureActionDate: 0,
+            futureActionDate: new Date(),
             futureActionEnabled: false,
             futureActionTerms: [],
             futureActionTaxonomy: null,
@@ -50,9 +50,9 @@
         }
 
         if (config.defaultDate) {
-            defaultState.futureActionDate = parseInt(config.defaultDate);
+            defaultState.futureActionDate = new Date(config.defaultDate);
         } else {
-            defaultState.futureActionDate = new Date().getTime();
+            defaultState.futureActionDate = new Date();
         }
 
         if (config.postTypeDefaultConfig.taxonomy) {
@@ -128,7 +128,7 @@
             setFutureActionDate(futureActionDate) {
                 return {
                     type: 'SET_FUTURE_ACTION_DATE',
-                    futureActionDate: futureActionDate
+                    futureActionDate: new Date(futureActionDate)
                 };
             },
             setFutureActionEnabled(futureActionEnabled) {
@@ -208,7 +208,7 @@
     register(store);
 
     // Step 2: Create the component
-    const MyPluginDocumentSettingPanel = () => {
+    const FutureActionSettingPanel = () => {
         const futureAction = useSelect((select) => select('publishpress-future/store').getFutureAction(), []);
         const futureActionDate = useSelect((select) => select('publishpress-future/store').getFutureActionDate(), []);
         const futureActionEnabled = useSelect((select) => select('publishpress-future/store').getFutureActionEnabled(), []);
@@ -275,7 +275,7 @@
         }
 
         const handleDateChange = (value) => {
-            const date = new Date(value).getTime()/1000;
+            const date = new Date(value);
 
             setFutureActionDate(date);
             editPostAttribute({'date': date});
@@ -286,10 +286,6 @@
 
             setFutureActionTerms(value);
             editPostAttribute({'terms': value});
-        }
-
-        const getPostId = () => {
-            return select('core/editor').getCurrentPostId();
         }
 
         const getPostType = () => {
@@ -378,7 +374,8 @@
                     date: futureActionDate,
                     action: futureAction,
                     terms: futureActionTerms,
-                    taxonomy: futureActionTaxonomy
+                    taxonomy: futureActionTaxonomy,
+                    browser_timezone_offset: new Date().getTimezoneOffset()
                 }
             };
 
@@ -420,6 +417,10 @@
             }
         }
 
+        const currentDate = new Date(futureActionDate);
+        debugLog('futureActionDate', futureActionDate);
+        debugLog('currentDate', currentDate);
+
         return (
             <PluginDocumentSettingPanel title={config.strings.panelTitle} icon="calendar"
                                         initialOpen={futureActionEnabled} className={'post-expirator-panel'}
@@ -435,7 +436,7 @@
                     <Fragment>
                         <PanelRow className={'future-action-date-panel'}>
                             <DateTimePicker
-                                currentDate={futureActionDate*1000}
+                                currentDate={currentDate}
                                 onChange={handleDateChange}
                                 __nextRemoveHelpButton={true}
                                 is12Hour={config.is12hours}
@@ -483,9 +484,8 @@
         );
     };
 
-    // Step 3: Connect the component to the Redux store
     registerPlugin('publishpress-future-action', {
-        render: MyPluginDocumentSettingPanel
+        render: FutureActionSettingPanel
     });
 
 })(window.wp, window.postExpiratorPanelConfig);

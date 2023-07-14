@@ -362,7 +362,7 @@ function postexpirator_meta_box($post)
     $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
     $postModel = $factory($post->ID);
 
-    $postMetaDate = $postModel->getExpirationDate();
+    $postMetaDate = $postModel->getExpirationDateAsUnixTime();
 
     $expireType = $default = $enabled = '';
 
@@ -646,7 +646,7 @@ function postexpirator_update_post_meta($id)
                 if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP])) {
                     $ts = sanitize_text_field($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP]);
                 } else {
-                    $ts = $postModel->getExpirationDate();
+                    $ts = $postModel->getExpirationDateAsUnixTime();
                 }
 
                 if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_TYPE])) {
@@ -670,7 +670,7 @@ function postexpirator_update_post_meta($id)
             $shouldSchedule = $postModel->isExpirationEnabled();
 
             if ($shouldSchedule) {
-                $ts = $postModel->getExpirationDate();
+                $ts = $postModel->getExpirationDateAsUnixTime();
 
                 $opts['expireType'] = $postModel->getExpirationType();
                 $opts['category'] = (array)$postModel->getExpirationCategoryIDs();
@@ -707,7 +707,7 @@ function postexpirator_shortcode($attrs)
     $postModel = $factory($post->ID);
 
     $enabled = $postModel->isExpirationEnabled();
-    $expirationDateTs = $postModel->getExpirationDate();
+    $expirationDateTs = $postModel->getExpiratigetExpirationDateAsUnixTimeonDate();
     if (! $enabled || empty($expirationDateTs)) {
         return false;
     }
@@ -768,7 +768,7 @@ function postexpirator_get_footer_text($useDemoText =  false)
         $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
         $postModel = $factory($post->ID);
 
-        $expirationDate = $postModel->getExpirationDate();
+        $expirationDate = $postModel->getExpirationDateAsUnixTime();
     }
 
     $dateformat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
@@ -834,7 +834,7 @@ function postexpirator_add_footer($text)
         return $text;
     }
 
-    $expirationDate = $postModel->getExpirationDate();
+    $expirationDate = $postModel->getExpirationDateAsUnixTime();
     if (! is_numeric($expirationDate)) {
         return $text;
     }
@@ -1342,7 +1342,7 @@ function postexpirator_date_save_bulk_edit()
         $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
         $postModel = $factory($postId);
 
-        $postExpirationDate = $postModel->getExpirationDate();
+        $postExpirationDate = $postModel->getExpirationDateAsUnixTime();
 
         if ($status === 'remove-only') {
             do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);

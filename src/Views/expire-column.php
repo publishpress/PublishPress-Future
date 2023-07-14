@@ -21,7 +21,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
     $postModel = $factory($id);
 
     $expirationEnabled = $postModel->isExpirationEnabled();
-    $expirationDate = $postModel->getExpirationDate();
+    $expirationDate = $postModel->getExpirationDateAsUnixTime();
 
     if ($expirationEnabled) {
         $format = get_option('date_format') . ' ' . get_option('time_format');

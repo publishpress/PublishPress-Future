@@ -402,7 +402,7 @@ class ActionArgsModel
      */
     public function setScheduledDateFromUnixTime($scheduledDate)
     {
-        $this->scheduledDate = date('Y-m-d H:i:s', $scheduledDate);
+        $this->scheduledDate = gmdate('Y-m-d H:i:s', $scheduledDate);
         return $this;
     }
 }

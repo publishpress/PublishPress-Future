@@ -162,16 +162,18 @@ class ExpirationController implements InitializableInterface
                                 'date' => 0,
                                 'action' => '',
                                 'terms' => [],
-                                'taxonomy' => ''
+                                'taxonomy' => '',
+                                'browser_timezone_offset' => 0
                             ];
                         }
 
                         return [
                             'enabled' => $postModel->isExpirationEnabled(),
-                            'date' => $postModel->getExpirationDate(),
+                            'date' => $postModel->getExpirationDateString(false),
                             'action' => $postModel->getExpirationType(),
                             'terms' => $postModel->getExpirationCategoryIDs(),
                             'taxonomy' => $postModel->getExpirationTaxonomy(),
+                            'browser_timezone_offset' => 0
                         ];
                     },
                     'update_callback' => function ($value, $post) {
@@ -183,7 +185,15 @@ class ExpirationController implements InitializableInterface
                                 'enabled' => true,
                             ];
 
-                            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post->ID, $value['date'], $opts);
+                            $browserTimezoneOffset = (int)$value['browser_timezone_offset'] * MINUTE_IN_SECONDS;
+                            $wpTimezoneOffset = get_option('gmt_offset') * HOUR_IN_SECONDS;
+
+                            // The user believes he typed the date time in the site's timezone, but the DateTimePicker
+                            // component sends the date time in the user's local timezone. We need to convert the date
+                            // time to the site's timezone and then to UTC.
+                            $gmtActionTime = strtotime($value['date']) - $browserTimezoneOffset - $wpTimezoneOffset;
+
+                            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post->ID, $gmtActionTime, $opts);
                             return true;
                         }
 
