@@ -160,7 +160,6 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Change the date format on "Scheduled Date" column in the Future Actions list to use the site timezone and not GMT date. GMT date is now displayed on the tooltip;
 * DEPRECATED: The methods getDefaultDate and getDefaultDateCustom on SettingsFacade class are deprecated;
 
-
 = [3.0.4] - [04 Jul, 2023] =
 
 * FIXED: Fix "Save changes" notification on block editor when post is not edited, #449;

@@ -24,10 +24,14 @@
         }
     }
 
+    const getCurrentTime = () => {
+        return (new Date()).getTime()/1000;
+    }
+
     const getDefaultState = () => {
         let defaultState = {
             futureAction: null,
-            futureActionDate: new Date(),
+            futureActionDate: getCurrentTime(),
             futureActionEnabled: false,
             futureActionTerms: [],
             futureActionTaxonomy: null,
@@ -50,9 +54,9 @@
         }
 
         if (config.defaultDate) {
-            defaultState.futureActionDate = new Date(config.defaultDate);
+            defaultState.futureActionDate = parseInt(config.defaultDate);
         } else {
-            defaultState.futureActionDate = new Date();
+            defaultState.futureActionDate = getCurrentTime();
         }
 
         if (config.postTypeDefaultConfig.taxonomy) {
@@ -128,7 +132,7 @@
             setFutureActionDate(futureActionDate) {
                 return {
                     type: 'SET_FUTURE_ACTION_DATE',
-                    futureActionDate: new Date(futureActionDate)
+                    futureActionDate: futureActionDate
                 };
             },
             setFutureActionEnabled(futureActionEnabled) {
@@ -275,7 +279,7 @@
         }
 
         const handleDateChange = (value) => {
-            const date = new Date(value);
+            const date = value;
 
             setFutureActionDate(date);
             editPostAttribute({'date': date});
@@ -298,7 +302,7 @@
 
             setFutureActionEnabled(data.enabled).then(callback);
             setFutureAction(data.action);
-            setFutureActionDate(data.date);
+            setFutureActionDate((new Date(data.date)).getTime()/1000);
             setFutureActionTerms(data.terms);
             setFutureActionTaxonomy(data.taxonomy);
         }
@@ -417,7 +421,7 @@
             }
         }
 
-        const currentDate = new Date(futureActionDate);
+        const currentDate = futureActionDate;
         debugLog('futureActionDate', futureActionDate);
         debugLog('currentDate', currentDate);
 
@@ -436,7 +440,7 @@
                     <Fragment>
                         <PanelRow className={'future-action-date-panel'}>
                             <DateTimePicker
-                                currentDate={currentDate}
+                                currentDate={currentDate*1000}
                                 onChange={handleDateChange}
                                 __nextRemoveHelpButton={true}
                                 is12Hour={config.is12hours}
