@@ -82,6 +82,12 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.0.5] - UNRELEASED =
+
+* CHANGED: Updated base plugin to 3.0.5;
+* FIXED: Updated .pot file, #493;
+* FIXED: Updated translations for es_ES, fr_FR, it_IT, #493;
+
 = [3.0.4] - 04 Jul 2023 =
 
 * CHANGED: Updated base plugin to 3.0.4;
