@@ -521,7 +521,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         $next_timestamp = $schedule->get_date()->getTimestamp();
 
-        $gmt_schedule_display_string .= $schedule->get_date()->format('Y-m-d H:i:s O');
+        $gmt_schedule_display_string = $schedule->get_date()->format('Y-m-d H:i:s O');
         $schedule_display_string .= wp_date('Y-m-d H:i:s O', $next_timestamp);
         $schedule_display_string .= '<br/>';
 
