@@ -65,12 +65,7 @@ $container = Container::getInstance();
                         echo $columnStyle === 'verbose' ? 'checked' : ''; ?>/>
                         <label for="future-action-column-style-verbose"><?php
                             esc_html_e('Detailed', 'post-expirator'); ?></label>
-                        <p class="description"><?php
-                            esc_html_e(
-                                'Display the status icon, the action name and the date/time in the Future Action column. Uses more space.',
-                                'post-expirator'
-                            ); ?></p>
-                        <br/>
+                        &nbsp;&nbsp;
                         <input type="radio" name="future-action-column-style"
                                id="future-action-column-style-simple"
                                value="simple" <?php
@@ -79,7 +74,7 @@ $container = Container::getInstance();
                             esc_html_e('Simplified', 'post-expirator'); ?></label>
                         <p class="description"><?php
                             esc_html_e(
-                                'Display the status icon and the date/time in the Future Action column.',
+                                '"Detailed" will display all information in the Future Action column. "Simplified" will display only the icon and date/time.',
                                 'post-expirator'
                             ); ?></p>
                     </td>
