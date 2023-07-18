@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
 "future-pro\n"
 "POT-Creation-Date: 2023-07-18T16:47:03+00:00\n"
-"PO-Revision-Date: 2023-07-18 14:11-0300\n"
+"PO-Revision-Date: 2023-07-18 21:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: Angelo Giammarresi - info@wocmultimedia.com\n"
 "Language: fr_FR\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: publishpress-future-pro.php\n"
@@ -37,13 +37,12 @@ msgid "http://wordpress.org/extend/plugins/post-expirator/"
 msgstr "http://wordpress.org/extend/plugins/post-expirator/"
 
 #. Description of the plugin
-#, fuzzy
 msgid ""
 "PublishPress Future allows you to schedule automatic changes to posts, pages "
 "and other content types."
 msgstr ""
-"PublishPress Future vous permet de programmer des changements automatiques "
-"sur les articles, les pages et autres types de contenu."
+"PublishPress Future vous permet de programmer des modifications automatiques "
+"des publications, des pages et d’autres types de publication."
 
 #. Author of the plugin
 msgid "PublishPress"
@@ -54,7 +53,6 @@ msgid "http://publishpress.com"
 msgstr "http://publishpress.com"
 
 #: src/classes/Controllers/CustomStatusesController.php:87
-#, fuzzy
 msgid "Change status to "
 msgstr "Modifier l’état en "
 
@@ -89,14 +87,12 @@ msgstr ""
 "vérifié."
 
 #: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:103
-#, fuzzy
 msgid "Change post status to custom status"
-msgstr "Changer le statut d'un message en statut personnalisé"
+msgstr "Modifier l’état de la publication en état personnalisé"
 
 #: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:117
-#, fuzzy
 msgid "Change post status to %s"
-msgstr "Modifier le statut du message en %s"
+msgstr "Modifier l’état de la publication en %s"
 
 #: src/templates/settings-tab-license.html.php:11
 #: src/templates/settings-tab-license.html.php:17
