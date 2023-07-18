@@ -539,9 +539,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             );
         }
 
-        $schedule_display_string = '<span title="' . esc_attr($gmt_schedule_display_string) . '">' . $schedule_display_string . '</span>';
-
-        return $schedule_display_string;
+        return '<span title="' . esc_attr($gmt_schedule_display_string) . '">' . $schedule_display_string . '</span>';
     }
 
     /**
