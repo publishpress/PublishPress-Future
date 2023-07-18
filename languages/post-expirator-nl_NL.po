@@ -158,7 +158,7 @@ msgstr "Bericht werd niet verwijderd."
 
 #: src/Modules/Settings/Controllers/Controller.php:195
 #: src/Views/menu-general.php:101
-msgid "Default date/time offset"
+msgid "Default Date/Time Offset"
 msgstr "Standaard datum/tijd offset"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:432
@@ -249,7 +249,7 @@ msgid "Select whether the PublishPress Future is enabled for all new posts."
 msgstr "Selecteer of de PublishPress Future is ingeschakeld voor alle nieuwe berichten."
 
 #: src/Views/menu-advanced.php:55
-msgid "Choose which user roles can use PublishPress Future"
+msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr "Kies welke gebruikersrollen PublishPress Future kunnen gebruiken"
 
 #: legacy/classes/Display.class.php:488
@@ -307,7 +307,7 @@ msgid "Preserve data"
 msgstr "Gegevens bewaren"
 
 #: src/Views/menu-advanced.php:86
-msgid "Preserve data after deactivating the plugin"
+msgid "Preserve Data After Deactivating the Plugin"
 msgstr "Bewaar gegevens na het deactiveren van de plugin"
 
 #: src/Views/menu-diagnostics.php:83
@@ -446,7 +446,7 @@ msgstr "Voer een komma gescheiden lijst met e-mails in die je wilt laten weten w
 
 #: src/Modules/Settings/Controllers/Controller.php:190
 #: src/Views/menu-general.php:187
-msgid "Who to notify"
+msgid "Who to Notify"
 msgstr "Wie te berichten"
 
 #: src/Views/menu-general.php:178
@@ -555,7 +555,7 @@ msgid "Select the hierarchical taxonomy to be used for \"category\" based expira
 msgstr "Selecteer de hiërarchische taxonomie welke gebruikt zal worden voor \"categorie\" gebaseerde verlooptijd."
 
 #: src/Modules/Settings/Controllers/Controller.php:184
-msgid "Taxonomy (hierarchical)"
+msgid "Taxonomy (Hierarchical)"
 msgstr "Taxonomie (hiërarchisch)"
 
 #: src/Modules/Settings/Controllers/Controller.php:177
@@ -631,7 +631,7 @@ msgid "Enabled"
 msgstr "Ingeschakeld"
 
 #: src/Views/menu-display.php:76
-msgid "Show in post footer?"
+msgid "Show in Post Footer?"
 msgstr "Toon in bericht footer?"
 
 #: src/Views/menu-display.php:69

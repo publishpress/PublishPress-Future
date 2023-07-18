@@ -412,7 +412,7 @@ msgid "Select whether the PublishPress Future is enabled for all new posts."
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:227
-msgid "Taxonomy (hierarchical)"
+msgid "Taxonomy (Hierarchical)"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:229
@@ -421,7 +421,7 @@ msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:233
 #: src/Views/menu-general.php:189
-msgid "Who to notify"
+msgid "Who to Notify"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:234
@@ -430,7 +430,7 @@ msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:238
 #: src/Views/menu-general.php:101
-msgid "Default date/time offset"
+msgid "Default Date/Time Offset"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:241
@@ -633,11 +633,11 @@ msgid "Display the status icon and the date/time in the Future Action column."
 msgstr ""
 
 #: src/Views/menu-advanced.php:90
-msgid "Choose which user roles can use PublishPress Future"
+msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr ""
 
 #: src/Views/menu-advanced.php:121
-msgid "Preserve data after deactivating the plugin"
+msgid "Preserve Data After Deactivating the Plugin"
 msgstr ""
 
 #: src/Views/menu-advanced.php:130
@@ -795,7 +795,7 @@ msgid "Enabling this below will display the action date automatically at the end
 msgstr ""
 
 #: src/Views/menu-display.php:76
-msgid "Show in post footer?"
+msgid "Show in Post Footer?"
 msgstr ""
 
 #: src/Views/menu-display.php:88

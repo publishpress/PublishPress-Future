@@ -95,11 +95,11 @@ $debug = $container->get(ServicesAbstract::DEBUG);
 
                 <tr>
                     <th scope="row"><?php
-                        esc_html_e('Migrate legacy future actions', 'post-expirator'); ?>
+                        esc_html_e('Migrate Legacy Future Actions', 'post-expirator'); ?>
                     </th>
                     <td>
                         <input type="submit" class="button" name="migrate-legacy-actions" id="migrate-legacy-actions" value="<?php
-                        esc_attr_e('Enqueue Migration', 'post-expirator'); ?>"/>
+                        esc_attr_e('Run Migration', 'post-expirator'); ?>"/>
 
                         <p class="description">
                             <?php esc_html_e(
@@ -112,15 +112,15 @@ $debug = $container->get(ServicesAbstract::DEBUG);
 
                 <tr>
                     <th scope="row"><?php
-                        esc_html_e('Restore legacy action arguments', 'post-expirator'); ?>
+                        esc_html_e('Restore Legacy Action Arguments', 'post-expirator'); ?>
                     </th>
                     <td>
                         <input type="submit" class="button" name="restore-post-meta" id="restore-post-meta" value="<?php
-                        esc_attr_e('Enqueue Data Restoration', 'post-expirator'); ?>"/>
+                        esc_attr_e('Run Data Restoration', 'post-expirator'); ?>"/>
 
                         <p class="description">
                             <?php esc_html_e(
-                                'Restore legacy action arguments as Post Meta. Useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while.',
+                                'Restore legacy action arguments as Post Meta. This is useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while.',
                                 'post-expirator'
                             ); ?>
                         </p>

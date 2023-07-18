@@ -409,11 +409,11 @@ msgstr ""
 "toutes les nouvelles publications."
 
 #: views/menu-defaults.php:125
-msgid "Taxonomy (hierarchical)"
+msgid "Taxonomy (Hierarchical)"
 msgstr "Taxonomie (hiérarchique)"
 
 #: views/menu-defaults.php:140 views/menu-general.php:232
-msgid "Who to notify"
+msgid "Who to Notify"
 msgstr "Personne à notifier"
 
 #: views/menu-defaults.php:147
@@ -442,7 +442,7 @@ msgid "Publish Time"
 msgstr "Heure de publication"
 
 #: views/menu-defaults.php:173 views/menu-general.php:103
-msgid "Default date/time offset"
+msgid "Default Date/Time Offset"
 msgstr "Décalage date/heure par défaut"
 
 #: views/menu-defaults.php:188
@@ -571,7 +571,7 @@ msgstr ""
 "à la fin de toute publication qui doit expirer."
 
 #: views/menu-display.php:69 views/menu-general.php:257
-msgid "Show in post footer?"
+msgid "Show in Post Footer?"
 msgstr "Afficher dans le pied de page de la publication ?"
 
 #: views/menu-display.php:79 views/menu-general.php:271
@@ -743,11 +743,11 @@ msgstr ""
 "implique. Pour les utilisateurs/utilisatrices avancés uniquement."
 
 #: views/menu-general.php:373
-msgid "Choose which user roles can use PublishPress Future"
+msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr "Choisir les rôles pouvant utiliser PublishPress Future"
 
 #: views/menu-general.php:404
-msgid "Preserve data after deactivating the plugin"
+msgid "Preserve Data After Deactivating the Plugin"
 msgstr "Conserver les données après la désactivation de l’extension"
 
 #: views/menu-general.php:413

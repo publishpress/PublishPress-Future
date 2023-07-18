@@ -98,7 +98,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                 </tr>
                 <tr valign="top">
                     <th scope="row"><label for="expired-default-expiration-date"><?php
-                            esc_html_e('Default date/time offset', 'post-expirator'); ?></label></th>
+                            esc_html_e('Default Date/Time Offset', 'post-expirator'); ?></label></th>
                     <td>
                         <div id="expired-custom-container" class="pe-custom-date-container">
                             <input type="text" value="<?php
@@ -186,7 +186,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                 <tr valign="top">
                     <th scope="row"><label
                                 for="expired-email-notification-list"><?php
-                            esc_html_e('Who to notify', 'post-expirator'); ?></label>
+                            esc_html_e('Who to Notify', 'post-expirator'); ?></label>
                     </th>
                     <td>
                         <input class="large-text" type="text" name="expired-email-notification-list"

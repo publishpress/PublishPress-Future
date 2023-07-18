@@ -73,7 +73,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row"><?php
-                        esc_html_e('Show in post footer?', 'post-expirator'); ?></th>
+                        esc_html_e('Show in Post Footer?', 'post-expirator'); ?></th>
                     <td>
                         <input type="radio" name="expired-display-footer" id="expired-display-footer-true" value="1" <?php
                         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

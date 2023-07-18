@@ -82,7 +82,7 @@ $container = Container::getInstance();
                 <tr valign="top">
                     <th scope="row">
                         <?php
-                        esc_html_e('Choose which user roles can use PublishPress Future', 'post-expirator'); ?>
+                        esc_html_e('Choose Which User Roles Can Use PublishPress Future', 'post-expirator'); ?>
                     </th>
                     <td class="pe-checklist">
                         <?php
@@ -113,7 +113,7 @@ $container = Container::getInstance();
                 <tr valign="top">
                     <th scope="row">
                         <?php
-                        esc_html_e('Preserve data after deactivating the plugin', 'post-expirator'); ?>
+                        esc_html_e('Preserve Data After Deactivating the Plugin', 'post-expirator'); ?>
                     </th>
                     <td>
                         <input type="radio" name="expired-preserve-data-deactivating"

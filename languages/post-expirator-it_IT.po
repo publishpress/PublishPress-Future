@@ -405,11 +405,11 @@ msgstr ""
 "Selezionare se PublishPress Future è abilitato per tutti i nuovi articoli."
 
 #: views/menu-defaults.php:125
-msgid "Taxonomy (hierarchical)"
+msgid "Taxonomy (Hierarchical)"
 msgstr "Tassonomia (gerarchica)"
 
 #: views/menu-defaults.php:140 views/menu-general.php:232
-msgid "Who to notify"
+msgid "Who to Notify"
 msgstr "Chi avvisare"
 
 #: views/menu-defaults.php:147
@@ -438,7 +438,7 @@ msgid "Publish Time"
 msgstr "Ora di pubblicazione"
 
 #: views/menu-defaults.php:173 views/menu-general.php:103
-msgid "Default date/time offset"
+msgid "Default Date/Time Offset"
 msgstr "Offset data/ora predefinito"
 
 #: views/menu-defaults.php:188
@@ -563,7 +563,7 @@ msgstr ""
 "scadenza alla fine di ogni articolo che è impostato per scadere."
 
 #: views/menu-display.php:69 views/menu-general.php:257
-msgid "Show in post footer?"
+msgid "Show in Post Footer?"
 msgstr "Mostrare nel footer dell'articolo?"
 
 #: views/menu-display.php:79 views/menu-general.php:271
@@ -736,11 +736,11 @@ msgstr ""
 "conseguenze. Solo per utenti avanzati."
 
 #: views/menu-general.php:373
-msgid "Choose which user roles can use PublishPress Future"
+msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr "Scegli quali ruoli utente possono utilizzare PublishPress Future"
 
 #: views/menu-general.php:404
-msgid "Preserve data after deactivating the plugin"
+msgid "Preserve Data After Deactivating the Plugin"
 msgstr "Conserva i dati dopo la disattivazione del plugin"
 
 #: views/menu-general.php:413

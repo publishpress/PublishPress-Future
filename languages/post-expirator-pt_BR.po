@@ -356,11 +356,11 @@ msgstr ""
 "Selecione se o a expiração de posts está ativa para todos os novos posts."
 
 #: views/menu-defaults.php:139
-msgid "Taxonomy (hierarchical)"
+msgid "Taxonomy (Hierarchical)"
 msgstr "Taxonomia (hierárquica)"
 
 #: views/menu-defaults.php:154 views/menu-general.php:267
-msgid "Who to notify"
+msgid "Who to Notify"
 msgstr "A quem notificar"
 
 #: views/menu-defaults.php:164
@@ -389,7 +389,7 @@ msgid "Publish Time"
 msgstr "Hora de Publicação"
 
 #: views/menu-defaults.php:191 views/menu-general.php:139
-msgid "Default date/time offset"
+msgid "Default Date/Time Offset"
 msgstr ""
 
 #: views/menu-defaults.php:226 views/menu-general.php:172
@@ -573,7 +573,7 @@ msgid ""
 msgstr ""
 
 #: views/menu-general.php:292
-msgid "Show in post footer?"
+msgid "Show in Post Footer?"
 msgstr ""
 
 #: views/menu-general.php:306
@@ -634,7 +634,7 @@ msgid ""
 msgstr ""
 
 #: views/menu-general.php:396
-msgid "Choose which user roles can use PublishPress Future"
+msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr ""
 
 #: views/tabs.php:15

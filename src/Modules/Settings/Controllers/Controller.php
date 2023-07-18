@@ -224,18 +224,18 @@ class Controller implements InitializableInterface
                             'Select whether the PublishPress Future is enabled for all new posts.',
                             'post-expirator'
                         ),
-                        'fieldTaxonomy' => __('Taxonomy (hierarchical)', 'post-expirator'),
+                        'fieldTaxonomy' => __('Taxonomy (Hierarchical)', 'post-expirator'),
                         'noItemsfound' => __('No taxonomies found', 'post-expirator'),
                         'fieldTaxonomyDescription' => __(
                             'Select the hierarchical taxonomy and terms to be used for taxonomy based expiration.',
                             'post-expirator'
                         ),
-                        'fieldWhoToNotify' => __('Who to notify', 'post-expirator'),
+                        'fieldWhoToNotify' => __('Who to Notify', 'post-expirator'),
                         'fieldWhoToNotifyDescription' => __(
                             'Enter a comma separate list of emails that you would like to be notified when the action runs.',
                             'post-expirator'
                         ),
-                        'fieldDefaultDateTimeOffset' => __('Default date/time offset', 'post-expirator'),
+                        'fieldDefaultDateTimeOffset' => __('Default Date/Time Offset', 'post-expirator'),
                         'fieldDefaultDateTimeOffsetDescription' => sprintf(
                             // translator: Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
                             esc_html__(
