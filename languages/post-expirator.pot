@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.0.5-beta.2\n"
+"Project-Id-Version: PublishPress Future 3.0.5-beta.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-14T20:13:30+00:00\n"
+"POT-Creation-Date: 2023-07-18T21:20:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: post-expirator\n"
@@ -620,39 +620,35 @@ msgstr ""
 msgid "Detailed"
 msgstr ""
 
-#: src/Views/menu-advanced.php:69
-msgid "Display the status icon, the action name and the date/time in the Future Action column. Uses more space."
-msgstr ""
-
-#: src/Views/menu-advanced.php:79
+#: src/Views/menu-advanced.php:74
 msgid "Simplified"
 msgstr ""
 
-#: src/Views/menu-advanced.php:81
-msgid "Display the status icon and the date/time in the Future Action column."
+#: src/Views/menu-advanced.php:76
+msgid "\"Detailed\" will display all information in the Future Action column. \"Simplified\" will display only the icon and date/time."
 msgstr ""
 
-#: src/Views/menu-advanced.php:90
+#: src/Views/menu-advanced.php:85
 msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr ""
 
-#: src/Views/menu-advanced.php:121
+#: src/Views/menu-advanced.php:116
 msgid "Preserve Data After Deactivating the Plugin"
 msgstr ""
 
-#: src/Views/menu-advanced.php:130
+#: src/Views/menu-advanced.php:125
 msgid "Preserve data"
 msgstr ""
 
-#: src/Views/menu-advanced.php:139
+#: src/Views/menu-advanced.php:134
 msgid "Delete data"
 msgstr ""
 
-#: src/Views/menu-advanced.php:143
+#: src/Views/menu-advanced.php:138
 msgid "Toggle between preserving or deleting data after the plugin is deactivated."
 msgstr ""
 
-#: src/Views/menu-advanced.php:154
+#: src/Views/menu-advanced.php:149
 #: src/Views/menu-display.php:138
 #: src/Views/menu-general.php:207
 msgid "Save Changes"
@@ -720,11 +716,11 @@ msgid "Enable Debugging"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:98
-msgid "Migrate legacy future actions"
+msgid "Migrate Legacy Future Actions"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:102
-msgid "Enqueue Migration"
+msgid "Run Migration"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:105
@@ -732,15 +728,15 @@ msgid "Migrate legacy future actions from WP Cron to the new Action Scheduler. T
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:115
-msgid "Restore legacy action arguments"
+msgid "Restore Legacy Action Arguments"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:119
-msgid "Enqueue Data Restoration"
+msgid "Run Data Restoration"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:122
-msgid "Restore legacy action arguments as Post Meta. Useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while."
+msgid "Restore legacy action arguments as Post Meta. This is useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while."
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:134
