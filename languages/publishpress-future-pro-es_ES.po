@@ -1,8 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Future Pro\n"
-"POT-Creation-Date: 2023-06-12 12:01-0300\n"
-"PO-Revision-Date: 2023-06-12 12:11-0300\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
+"future-pro\n"
+"POT-Creation-Date: 2023-07-18T16:47:03+00:00\n"
+"PO-Revision-Date: 2023-07-18 14:10-0300\n"
 "Last-Translator: \n"
 "Language-Team: Angelo Giammarresi - info@wocmultimedia.com\n"
 "Language: es_ES\n"
@@ -10,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: publishpress-future-pro.php\n"
@@ -26,7 +28,31 @@ msgstr ""
 "X-Poedit-SearchPath-5: vendor/alledia/edd-sl-plugin-updater/"
 "EDD_SL_Plugin_Updater.php\n"
 
-#: src/classes/Controllers/CustomStatusesController.php:88
+#. Plugin Name of the plugin
+msgid "PublishPress Future Pro"
+msgstr "PublishPress Future Pro"
+
+#. Plugin URI of the plugin
+msgid "http://wordpress.org/extend/plugins/post-expirator/"
+msgstr "http://wordpress.org/extend/plugins/post-expirator/"
+
+#. Description of the plugin
+msgid ""
+"PublishPress Future allows you to schedule automatic changes to posts, pages "
+"and other content types."
+msgstr ""
+"PublishPress Future le permite programar cambios automáticos en "
+"publicaciones, páginas y otros tipos de contenido."
+
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin
+msgid "http://publishpress.com"
+msgstr "http://publishpress.com"
+
+#: src/classes/Controllers/CustomStatusesController.php:87
 msgid "Change status to "
 msgstr "Cambiar estado a "
 
@@ -34,7 +60,7 @@ msgstr "Cambiar estado a "
 msgid "Custom statuses"
 msgstr "Estados personalizados"
 
-#: src/classes/Controllers/SettingsController.php:183
+#: src/classes/Controllers/SettingsController.php:182
 msgid "Enable custom statuses for the post type:"
 msgstr "Activar los estados personalizados para el tipo de contenido:"
 
@@ -60,21 +86,11 @@ msgstr ""
 "Error en la validación del formulario: Lo sentimos, tu nonce no ha sido "
 "verificado."
 
-#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:61
-msgid "Post status didn't change."
-msgstr "El estado de la publicación no ha cambiado."
-
-#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:65
-#, php-format
-msgid "Post status has been successfully changed to \"%s\"."
-msgstr "El estado de la publicación se ha cambiado correctamente a «%s»."
-
 #: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:103
 msgid "Change post status to custom status"
 msgstr "Cambiar el estado de la publicación a estado personalizado"
 
 #: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:117
-#, php-format
 msgid "Change post status to %s"
 msgstr "Cambiar el estado de la publicación a %s"
 
@@ -95,7 +111,7 @@ msgstr "Inactivo"
 msgid "Status: "
 msgstr "Estado: "
 
-#: src/templates/settings-tab-license.html.php:55
+#: src/templates/settings-tab-license.html.php:54
 msgid "Enter the license key for being able to update the plugin."
 msgstr "Introduce la clave de licencia para poder actualizar el plugin."
 
@@ -103,26 +119,9 @@ msgstr "Introduce la clave de licencia para poder actualizar el plugin."
 msgid "Save Changes"
 msgstr "Guardar cambios"
 
-#. Plugin Name of the plugin/theme
-msgid "PublishPress Future Pro"
-msgstr "PublishPress Future Pro"
+#~ msgid "Post status didn't change."
+#~ msgstr "El estado de la publicación no ha cambiado."
 
-#. Plugin URI of the plugin/theme
-msgid "http://wordpress.org/extend/plugins/post-expirator/"
-msgstr "http://wordpress.org/extend/plugins/post-expirator/"
-
-#. Description of the plugin/theme
-msgid ""
-"PublishPress Future allows you to schedule automatic changes to posts, pages "
-"and other content types."
-msgstr ""
-"PublishPress Future le permite programar cambios automáticos en "
-"publicaciones, páginas y otros tipos de contenido."
-
-#. Author of the plugin/theme
-msgid "PublishPress"
-msgstr "PublishPress"
-
-#. Author URI of the plugin/theme
-msgid "http://publishpress.com"
-msgstr "http://publishpress.com"
+#, php-format
+#~ msgid "Post status has been successfully changed to \"%s\"."
+#~ msgstr "El estado de la publicación se ha cambiado correctamente a «%s»."
