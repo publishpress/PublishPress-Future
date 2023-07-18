@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-18T21:20:51+00:00\n"
+"POT-Creation-Date: 2023-07-18T21:43:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: post-expirator\n"
@@ -474,7 +474,7 @@ msgid "Enhance the power of PublishPress Future with the Pro version:"
 msgstr ""
 
 #: src/Views/ad-banner-right-sidebar.php:23
-msgid "Support for expiry to custom statuses"
+msgid "Support for future actions to custom statuses"
 msgstr ""
 
 #: src/Views/ad-banner-right-sidebar.php:25
