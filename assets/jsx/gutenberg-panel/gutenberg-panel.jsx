@@ -279,7 +279,7 @@
         }
 
         const handleDateChange = (value) => {
-            const date = value;
+            const date = new Date(value).getTime()/1000;
 
             setFutureActionDate(date);
             editPostAttribute({'date': date});

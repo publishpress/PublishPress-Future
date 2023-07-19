@@ -191,7 +191,7 @@ class ExpirationController implements InitializableInterface
                             // The user believes he typed the date time in the site's timezone, but the DateTimePicker
                             // component sends the date time in the user's local timezone. We need to convert the date
                             // time to the site's timezone and then to UTC.
-                            $gmtActionTime = strtotime($value['date']) - $browserTimezoneOffset - $wpTimezoneOffset;
+                            $gmtActionTime = $value['date'] - $browserTimezoneOffset - $wpTimezoneOffset;
 
                             do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post->ID, $gmtActionTime, $opts);
                             return true;
