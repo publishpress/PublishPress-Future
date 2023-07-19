@@ -207,6 +207,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 * ADDED: Add Dutch translation files, #429;
 * CHANGED: Namespace has been changed from `PublishPressFuture` to `PublishPress\Future`;
+* CHANGED: Functions, autoload, class aliases and class loading have been moved into a hook for the action `plugins_loaded` with priority 10;
 * CHANGED: Post expiration queue migrated from WP Cron to Action Scheduler library from WooCommerce, #149;
 * CHANGED: Deprecate hook "publishpressfuture_expire" in favor of "publishpress_future/run_workflow". New hook has two arguments: postId and action, #149;
 * CHANGED: Changed the label "Type" to "Action" in the bulk edit field;
