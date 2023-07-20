@@ -400,6 +400,13 @@ class ExpirablePostModel extends PostModel
             );
         }
 
+        // Stores the post title and post type in the action args for using if the post is deleted later.
+        $args = $this->actionArgsModel->getArgs();
+        $args['post_title'] = $this->getTitle();
+        $args['post_type'] = $this->getPostType();
+        $this->actionArgsModel->setArgs($args);
+        $this->actionArgsModel->save();
+
         /*
          * Remove KSES - wp_cron runs as an unauthenticated user, which will by default trigger kses filtering,
          * even if the post was published by a admin user.  It is fairly safe here to remove the filter call since
@@ -499,6 +506,36 @@ class ExpirablePostModel extends PostModel
         }
 
         return $this->expirationActionInstance;
+    }
+
+    public function getPostType()
+    {
+        $postType = parent::getPostType();
+
+        if (empty($postType)) {
+            $args = $this->actionArgsModel->getArgs();
+
+            if (! empty($args['post_type'])) {
+                $postType = $args['post_type'];
+            }
+        }
+
+        return $postType;
+    }
+
+    public function getTitle()
+    {
+        $title = parent::getTitle();
+
+        if (empty($title)) {
+            $args = $this->actionArgsModel->getArgs();
+
+            if (! empty($args['post_title'])) {
+                $title = $args['post_title'];
+            }
+        }
+
+        return $title;
     }
 
 
