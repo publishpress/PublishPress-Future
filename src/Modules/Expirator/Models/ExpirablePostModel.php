@@ -562,7 +562,7 @@ class ExpirablePostModel extends PostModel
         $emailBody = str_replace('##POSTTITLE##', $this->getTitle(), $emailBody);
         $emailBody = str_replace('##POSTLINK##', $this->getPermalink(), $emailBody);
 
-        // Replace the expiration date with the action date using the old placebolder
+        // Replace the expiration date with the action date using the old placeholder
         $emailBody = str_replace(
             '##EXPIRATIONDATE##',
             get_date_from_gmt(
@@ -571,7 +571,7 @@ class ExpirablePostModel extends PostModel
             ),
             $emailBody
         );
-        // Replace the expiration date with the action date using the new placebolder
+        // Replace the expiration date with the action date using the new placeholder
         $emailBody = str_replace(
             '##ACTIONDATE##',
             get_date_from_gmt(

@@ -101,10 +101,10 @@ class ActionArgsModel
     }
 
     /**
-     * @param int $actionid
+     * @param int $actionId
      * @return bool
      */
-    public function loadByActionId($actionid)
+    public function loadByActionId($actionId)
     {
         global $wpdb;
 
@@ -113,7 +113,7 @@ class ActionArgsModel
             $wpdb->prepare(
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT * FROM {$this->tableName} WHERE cron_action_id = %d LIMIT 1",
-                $actionid
+                $actionId
             )
         );
 
