@@ -161,6 +161,9 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Add log message when date time offset is invalid when trying to schedule a future action;
 * CHANGED: Change the date format on "Scheduled Date" column in the Future Actions list to use the site timezone and not GMT date. GMT date is now displayed on the tooltip;
 * CHANGED: Changed text and buttons labels on Diagnostics and Tools settings tab, #506;
+* CHANGED: Add method getExpirationDateAsUnixTime to the ExpirablePostModel class;
+* CHANGED: Changed method getTitle on ExpirablePostModel to return title from args if post is not found anymore;
+* CHANGED: Changed method getPostType on ExpirablePostModel to return post type from args if post is not found anymore;
 * DEPRECATED: The methods getDefaultDate and getDefaultDateCustom on SettingsFacade class are deprecated;
 
 = [3.0.4] - [04 Jul, 2023] =
