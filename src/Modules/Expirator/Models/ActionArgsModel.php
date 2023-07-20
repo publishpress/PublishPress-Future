@@ -138,7 +138,7 @@ class ActionArgsModel
         $row = $wpdb->get_row(
             $wpdb->prepare(
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                "SELECT * FROM {$this->tableName} WHERE enabled = 1 AND post_id = %d LIMIT 1",
+                "SELECT * FROM {$this->tableName} WHERE post_id = %d ORDER BY enabled DESC, id DESC LIMIT 1",
                 $postId
             )
         );
