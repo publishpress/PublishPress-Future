@@ -150,6 +150,8 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix DB error when trying to create the action args table, due to DESCRIBE query on a table that do not exists yet, #450;
 * FIXED: Fix default expiration date time for post type on different timezones;
 * FIXED: Fix date and time on block editor with different timezones, #498;
+* FIXED: Fix missed title and post type info in emails or logs when the post is deleted, #507;
+* FIXED: Notice: Undefined variable: gmt_schedule_display_string, in the columns in the Future Action screens, #504;
 * CHANGED: Improve the label for the terms field in the block editor panel, #483;
 * CHANGED: Merge the settings tabs "Diagnostics" and "Tools", #501;
 * CHANGED: Update the .pot file;
@@ -158,6 +160,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: The default date interval for global and post type settings now only accepts EN format, $495;
 * CHANGED: Add log message when date time offset is invalid when trying to schedule a future action;
 * CHANGED: Change the date format on "Scheduled Date" column in the Future Actions list to use the site timezone and not GMT date. GMT date is now displayed on the tooltip;
+* CHANGED: Changed text and buttons labels on Diagnostics and Tools settings tab, #506;
 * DEPRECATED: The methods getDefaultDate and getDefaultDateCustom on SettingsFacade class are deprecated;
 
 = [3.0.4] - [04 Jul, 2023] =
