@@ -476,7 +476,20 @@ function postexpirator_js_admin_header()
                 init();
             });
 
+            function toggleCategorySelection(element)
+            {
+                if ($(element).val().indexOf('category') !== -1) {
+                    $('#expired-category-selection').show();
+                    $('#expired-category-wrapper').show();
+                } else {
+                    $('#expired-category-selection').hide();
+                    $('#expired-category-wrapper').hide();
+                }
+            }
+
             function init() {
+                toggleCategorySelection($('.pe-howtoexpire'));
+
                 $('#enable-expirationdate').on('click', function (e) {
                     if ($(this).is(':checked')) {
                         $('.pe-classic-fields').show();
@@ -486,11 +499,7 @@ function postexpirator_js_admin_header()
                 });
 
                 $('.pe-howtoexpire').on('change', function (e) {
-                    if ($(this).val().indexOf('category') !== -1) {
-                        $('#expired-category-selection').show();
-                    } else {
-                        $('#expired-category-selection').hide();
-                    }
+                    toggleCategorySelection(this);
                 });
             }
         })(jQuery);

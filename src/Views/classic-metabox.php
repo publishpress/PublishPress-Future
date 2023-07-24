@@ -134,61 +134,63 @@ if ($default === 'publish') {
         $taxonomies = get_object_taxonomies($post->post_type, 'object');
         $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
 
-        if (empty($taxonomies)) {
-            echo '<p>' . esc_html__(
-                    'You must assign a hierarchical taxonomy to this post type to use this feature.',
-                    'post-expirator'
-                ) . '</p>';
-        } elseif (count($taxonomies) > 1 && ! isset($defaultsOption['taxonomy'])) {
-            echo '<p>' . esc_html__(
-                    'More than 1 hierarchical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
-                    'post-expirator'
-                ) . '</p>';
-        } else {
-            $keys = array_keys($taxonomies);
+        ?><div id="expired-category-wrapper">
+            <?php
+            if (empty($taxonomies)) {
+                echo '<p>' . esc_html__(
+                        'You must assign a hierarchical taxonomy to this post type to use this feature.',
+                        'post-expirator'
+                    ) . '</p>';
+            } elseif (count($taxonomies) > 1 && ! isset($defaultsOption['taxonomy'])) {
+                echo '<p>' . esc_html__(
+                        'More than 1 hierarchical taxonomy detected.  You must assign a default taxonomy on the settings screen.',
+                        'post-expirator'
+                    ) . '</p>';
+            } else {
+                $keys = array_keys($taxonomies);
 
-            if (! empty($taxonomies)) {
-                $keys = array('category');
+                if (! empty($taxonomies)) {
+                    $keys = array('category');
+                }
+
+                $taxonomyId = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
+
+                echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
+
+                echo '<br/>';
+
+                if (isset($taxonomyId)) {
+                    $taxonomyObj = get_taxonomy($taxonomyId);
+                    echo '<label>' . esc_html($taxonomyObj->label) . '</label><br/>';
+                }
+
+                echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
+                echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
+
+
+                if (! is_array($categories) || empty($categories)) {
+                    $categories = [];
+                }
+
+                if (empty($categories) && isset($defaultsOption['terms'])) {
+                    $categories = explode(',', $defaultsOption['terms']);
+                    $categories = array_map('intval', $categories);
+                }
+
+                wp_terms_checklist(0, array(
+                    'taxonomy' => $taxonomyId,
+                    'walker' => $walker,
+                    'selected_cats' => $categories,
+                    'checked_ontop' => false
+                ));
+                echo '<input type="hidden" name="taxonomy-hierarchical" value="' . esc_attr($taxonomyId) . '" />';
+
+                echo '</ul>';
+                echo '</div>';
+                echo '</div>';
             }
-
-            $taxonomyId = isset($defaultsOption['taxonomy']) ? $defaultsOption['taxonomy'] : $keys[0];
-
-            echo '<div id="expired-category-selection" style="display: ' . esc_attr($catdisplay) . '">';
-
-            echo '<br/>';
-
-            if (isset($taxonomyId)) {
-                $taxonomyObj = get_taxonomy($taxonomyId);
-                echo '<label>' . esc_html($taxonomyObj->label) . '</label><br/>';
-            }
-
-            echo '<div class="wp-tab-panel" id="post-expirator-cat-list">';
-            echo '<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">';
-
-
-            if (! is_array($categories) || empty($categories)) {
-                $categories = [];
-            }
-
-            if (empty($categories) && isset($defaultsOption['terms'])) {
-                $categories = explode(',', $defaultsOption['terms']);
-                $categories = array_map('intval', $categories);
-            }
-
-            wp_terms_checklist(0, array(
-                'taxonomy' => $taxonomyId,
-                'walker' => $walker,
-                'selected_cats' => $categories,
-                'checked_ontop' => false
-            ));
-            echo '<input type="hidden" name="taxonomy-hierarchical" value="' . esc_attr($taxonomyId) . '" />';
-
-            echo '</ul>';
-            echo '</div>';
-            echo '</div>';
-        }
-
-        ?>
+            ?>
+        </div>
     </div>
 
     <input name="expirationdate_formcheck" value="true" type="hidden"/>
