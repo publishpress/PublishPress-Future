@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3ede9a0e72e9c524772c5390cc5a234",
+    "content-hash": "8c7914fbc25382e51a9ef3c589895b39",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -278,16 +278,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-3.0-branch",
+            "version": "3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "805e411fd59cc6fc339266c832baf055ed03670c"
+                "reference": "cd7da52c49047a46646be87e60fec319940178bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/805e411fd59cc6fc339266c832baf055ed03670c",
-                "reference": "805e411fd59cc6fc339266c832baf055ed03670c",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/cd7da52c49047a46646be87e60fec319940178bf",
+                "reference": "cd7da52c49047a46646be87e60fec319940178bf",
                 "shasum": ""
             },
             "require": {
@@ -359,9 +359,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.0-branch"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.0.5"
             },
-            "time": "2023-07-25T15:57:37+00:00"
+            "time": "2023-07-25T14:50:19+00:00"
         },
         {
             "name": "publishpress/publishpress-instance-protection",
@@ -2066,12 +2066,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "9116f1b71d30a3b863719e5592f5374c6049015a"
+                "reference": "63c00b1f6454b32351ec25cdf7cd88994bd52ffc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9116f1b71d30a3b863719e5592f5374c6049015a",
-                "reference": "9116f1b71d30a3b863719e5592f5374c6049015a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/63c00b1f6454b32351ec25cdf7cd88994bd52ffc",
+                "reference": "63c00b1f6454b32351ec25cdf7cd88994bd52ffc",
                 "shasum": ""
             },
             "require": {
@@ -2121,7 +2121,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-25T12:42:38+00:00"
+            "time": "2023-07-25T16:40:13+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4799,7 +4799,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "publishpress/publishpress-future": 20,
         "publishpress/publishpress-phpcs-standards": 20,
         "giacocorsiglia/wordpress-stubs": 20
     },
