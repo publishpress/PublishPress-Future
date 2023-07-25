@@ -140,7 +140,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [3.0.5] - [UNRELEASED] =
+= [3.0.5] - 25 Jul, 2023 =
 
 * ADDED: Add a setting field to control the style of the Future Action column on posts lists (Advanced tab), #482;
 * FIXED: Fix the message that prevented to select terms for a future action, #488;
@@ -166,7 +166,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Changed method getPostType on ExpirablePostModel to return post type from args if post is not found anymore;
 * DEPRECATED: The methods getDefaultDate and getDefaultDateCustom on SettingsFacade class are deprecated;
 
-= [3.0.4] - [04 Jul, 2023] =
+= [3.0.4] - 04 Jul, 2023 =
 
 * FIXED: Fix "Save changes" notification on block editor when post is not edited, #449;
 * FIXED: Fix unchecked category on classic editor when editing a post with future action enabled, #481;
@@ -180,13 +180,13 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Update the Action Scheduler library from 3.6.0 to 3.6.1;
 * REMOVED: Remove internal function `postexpirator_init`;
 
-= [3.0.3] - [20 Jun, 2023] =
+= [3.0.3] - 20 Jun, 2023 =
 
 * FIXED: Error on the block editor: The "postexpirator-sidebar" plugin has encountered an error and cannot be rendered, #475;
 * FIXED: Error message in the future action column: Action scheduled but its definition is not available anymore, #474;
 * CHANGED: Update message when future action data is corrupted for the post;
 
-= [3.0.2] - [19 Jun, 2023] =
+= [3.0.2] - 19 Jun, 2023 =
 
 * FIXED: Fix warning displayed in the classic editor if a taxonomy is not properly selected, #453;
 * FIXED: Fix typo in a message when a taxonomy is not properly selected;
@@ -198,7 +198,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix Future action ordering not working on "Posts" screen, #462;
 * FIXED: Update .pot file and some translation strings;
 
-= [3.0.1] - [15 Jun, 2023] =
+= [3.0.1] - 15 Jun, 2023 =
 
 * ADDED: Add diagnostic check for DB schema in the Settings page;
 * CHANGED: Changed privacy for method PublishPress\Future\Framework\WordPress\Models\PostModel::getPostInstance from `private` to `protected`;
@@ -209,7 +209,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: First letter of future actions log is not capitalized on some messages in the popup view;
 * FIXED: Fix log message when actions related to taxonomy terms run;
 
-= [3.0.0] - [13 Jun, 2023] =
+= [3.0.0] - 13 Jun, 2023 =
 
 * ADDED: Add Dutch translation files, #429;
 * CHANGED: Namespace has been changed from `PublishPressFuture` to `PublishPress\Future`;
