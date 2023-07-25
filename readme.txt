@@ -12,7 +12,7 @@ Add an expiration date to posts. When your post is automatically unpublished, yo
 
 == Description ==
 
-The PublishPress Future plugin allows you to make automatic changes to posts. pages and other content types. On a date you choose, PublishPree Future can delete your post, change the status, or update the post categories, or make other changes.
+The PublishPress Future plugin allows you to make automatic changes to posts, pages and other content types. On a date you choose, PublishPress Future can delete your post, change the status, or update the post categories, or make other changes.
 
 Here's an overview of what you can do with PublishPress Future:
 
