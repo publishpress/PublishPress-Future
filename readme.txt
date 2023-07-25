@@ -152,6 +152,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix date and time on block editor with different timezones, #498;
 * FIXED: Fix missed title and post type info in emails or logs when the post is deleted, #507;
 * FIXED: Notice: Undefined variable: gmt_schedule_display_string, in the columns in the Future Action screens, #504;
+* FIXED: Update ES, FR, and IT translations, #509;
 * CHANGED: Improve the label for the terms field in the block editor panel, #483;
 * CHANGED: Merge the settings tabs "Diagnostics" and "Tools", #501;
 * CHANGED: Update the .pot file;
