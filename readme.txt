@@ -82,7 +82,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [3.0.5] - UNRELEASED =
+= [3.0.5] - 25 Jul 2023 =
 
 * CHANGED: Updated base plugin to 3.0.5;
 * FIXED: Updated .pot file, #493;
