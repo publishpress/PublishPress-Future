@@ -62,6 +62,7 @@ class ActionArgsSchema
         $wpdb->suppress_errors($suppressErrors);
 
         if (! empty($result)) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             error_log('PUBLISHPRESS FUTURE: Result of creating table ' . self::getTableName() . ': ' . implode("\n", $result));
         }
     }

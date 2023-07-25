@@ -55,6 +55,7 @@ class DefaultDataModel
         $calculatedDate = strtotime($dateTimeOffset, (int)gmdate('U'));
 
         if (false === $calculatedDate) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             error_log(
                 sprintf(
                     'PUBLISHPRESS FUTURE: Invalid date/time offset "%s" for post type "%s"',
