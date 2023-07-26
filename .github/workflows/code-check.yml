@@ -12,9 +12,9 @@ on:
 
   workflow_dispatch:
     inputs:
-      debug_enabled:
+      debug_enabled_code_check:
         type: boolean
-        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'
+        description: 'Enable "tmate" debugging for the code check'
         required: false
         default: false
 jobs:
@@ -33,9 +33,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup tmate session for Debugging, if inputs.debug_enabled is true
+      - name: Setup tmate session for Debugging, if inputs.debug_enabled_code_check is true
         uses: mxschmitt/action-tmate@v3
-        if: ${{ inputs.debug_enabled }}
+        if: ${{ inputs.debug_enabled_code_check }}
         timeout-minutes: 10
         with:
           detached: true
