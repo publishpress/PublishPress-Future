@@ -162,8 +162,11 @@ show_time() {
 #   The repeated string.
 #######################################
 repeat() {
-    for ((c = 1; c <= "${2}"; c++)); do
-        echo -n "${1}"
+    local string="$1"
+    local times="${2:-1}"  # Use the second argument or set a default value of 1
+
+    for ((c = 1; c <= times; c++)); do
+        echo -n "$string"
     done
 }
 
