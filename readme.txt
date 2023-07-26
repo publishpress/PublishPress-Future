@@ -140,6 +140,11 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.0.6] - 26 Jul, 2023 =
+
+* FIXED: Fix JavaScript error on the block editor: Uncaught TypeError: Cannot read properties of undefined (reading 'indexOf'), #517;
+* FIXED: Fix fatal error on content with shortcode: Call to undefined method ...ExpirablePostModel::getExpiratigetExpirationDateAsUnixTimeonDate(), #516;
+
 = [3.0.5] - 25 Jul, 2023 =
 
 * ADDED: Add a setting field to control the style of the Future Action column on posts lists (Advanced tab), #482;
