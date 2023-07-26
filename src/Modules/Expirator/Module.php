@@ -120,6 +120,8 @@ class Module implements ModuleInterface
         foreach ($this->controllers as $controller) {
             $controller->initialize();
         }
+
+        $this->hooks->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
     }
 
     private function factoryExpirationController()
@@ -151,6 +153,31 @@ class Module implements ModuleInterface
             $this->hooks,
             $this->actionArgsModelFactory,
             $this->scheduledActionsTableFactory
+        );
+    }
+
+    public function enqueueScripts()
+    {
+        $currentScreen = get_current_screen();
+
+        if ($currentScreen->base !== 'post') {
+            return;
+        }
+
+        $isNewPostPage = $currentScreen->action === 'add';
+        $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+        if (! $isEditPostPage && ! $isNewPostPage) {
+            return;
+        }
+
+
+        wp_enqueue_script(
+            'publishpress-future-expirator',
+            POSTEXPIRATOR_BASEURL . 'assets/js/expirator-classic-editor.js',
+            ['jquery'],
+            PUBLISHPRESS_FUTURE_VERSION,
+            true
         );
     }
 }
