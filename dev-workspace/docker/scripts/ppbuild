@@ -180,7 +180,7 @@ echo_box_line() {
     local width=$cols
 
     # Calculate the number of fill characters needed
-    local fill_length=$(($width - ${#start_char} - ${#content} - ${#end_char}))
+    local fill_length=$(( $width - ${#start_char} - ${#content} - ${#end_char}))
     local fill=$(printf "%0.s$fill_char" $(seq 1 $fill_length))
 
     # Output the line
