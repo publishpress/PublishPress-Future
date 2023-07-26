@@ -4,6 +4,12 @@ on:
     types: [ published ]
 
   workflow_dispatch:
+    inputs:
+      debug_enabled:
+        type: boolean
+        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'
+        required: false
+        default: false
 
 jobs:
   code-check:
@@ -18,6 +24,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup tmate session for Debugging, if inputs.debug_enabled is true
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+        timeout-minutes: 10
+        with:
+          detached: true
 
       - name: Build the package on ./dev-workspace
         run: |
