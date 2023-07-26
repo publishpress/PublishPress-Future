@@ -11,7 +11,6 @@
 
 # Get the host IP address.
 DOCKER_HOST_IP=$(./docker/scripts/host-ip)
-echo "Host IP: $DOCKER_HOST_IP"
 
 # Run the terminal service.
 DOCKER_HOST_IP=$DOCKER_HOST_IP docker compose -f docker/compose.yaml run --rm terminal "$@"
