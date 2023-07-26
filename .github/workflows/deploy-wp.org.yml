@@ -8,7 +8,7 @@ on:
 jobs:
   code-check:
     name: Check the code
-    uses: $GITHUB_WORKSPACE/.github/workflows/code-check.yml
+    uses: ${{ github.workspace }}/.github/workflows/code-check.yml
     secrets: inherit
 
   deploy-wp-org:
@@ -30,7 +30,7 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SLUG: post-expirator
-          BUILD_DIR: $GITHUB_WORKSPACE/dist/post-expirator
+          BUILD_DIR: ${{ github.workspace }}/dist/post-expirator
 
       - name: Save version number to version.txt
         run: |
@@ -47,6 +47,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: $GITHUB_WORKSPACE/dist/
+          asset_path: ${{ github.workspace }}/dist/
           asset_name: publishpress-future-${{ steps.get-version.outputs.version }}.zip
           asset_content_type: application/zip
