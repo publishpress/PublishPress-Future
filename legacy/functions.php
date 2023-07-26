@@ -716,7 +716,7 @@ function postexpirator_shortcode($attrs)
     $postModel = $factory($post->ID);
 
     $enabled = $postModel->isExpirationEnabled();
-    $expirationDateTs = $postModel->getExpiratigetExpirationDateAsUnixTimeonDate();
+    $expirationDateTs = $postModel->getExpirationDateAsUnixTime();
     if (! $enabled || empty($expirationDateTs)) {
         return false;
     }
