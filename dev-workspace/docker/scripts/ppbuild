@@ -2,7 +2,7 @@
 
 start_time=$(date +%s)
 
-script_version="1.2.1"
+script_version="1.2.2"
 
 command=${1}
 source_path=$(pwd)
