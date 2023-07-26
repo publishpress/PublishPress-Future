@@ -27,7 +27,7 @@ jobs:
 
       - name: Setup tmate session for Debugging, if inputs.debug_enabled is true
         uses: mxschmitt/action-tmate@v3
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+        if: ${{ inputs.debug_enabled }}
         timeout-minutes: 10
         with:
           detached: true
