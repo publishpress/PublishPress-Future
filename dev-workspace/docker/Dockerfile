@@ -55,6 +55,7 @@ RUN set -ex; \
         docker.io \
         docker-compose \
         yarn \
+        iproute2 \
         ; \
     mkdir -p /usr/src/php/ext/yaml; \
     curl -fsSL https://pecl.php.net/get/yaml | tar xvz -C "/usr/src/php/ext/yaml" --strip 1; \

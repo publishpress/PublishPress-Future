@@ -25,11 +25,6 @@ jobs:
       image: publishpress/dev-workspace-terminal:future-free
       options: -v ${{ github.workspace }}:/project --workdir="/project"
     steps:
-      - name: Install linux packages
-        run: |
-          apt-get update
-          apt-get install -y iproute2
-
       - name: Checkout code
         uses: actions/checkout@v3
 
