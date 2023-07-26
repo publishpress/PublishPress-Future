@@ -8,7 +8,7 @@ on:
 jobs:
   code-check:
     name: Check the code
-    uses: ${{ github.workspace }}/.github/workflows/code-check.yml
+    uses: ./.github/workflows/code-check.yml
     secrets: inherit
 
   deploy-wp-org:
