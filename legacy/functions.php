@@ -455,62 +455,6 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
 }
 
 /**
- * Add's ajax javascript.
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_js_admin_header()
-{
-    $facade = PostExpirator_Facade::getInstance();
-
-    if (! $facade->current_user_can_expire_posts()) {
-        return;
-    }
-    ?>
-    <script type="text/javascript">
-        //<![CDATA[
-        (function ($) {
-            $(document).ready(function () {
-                init();
-            });
-
-            function toggleCategorySelection(element)
-            {
-                if ($(element).val().indexOf('category') !== -1) {
-                    $('#expired-category-selection').show();
-                    $('#expired-category-wrapper').show();
-                } else {
-                    $('#expired-category-selection').hide();
-                    $('#expired-category-wrapper').hide();
-                }
-            }
-
-            function init() {
-                toggleCategorySelection($('.pe-howtoexpire'));
-
-                $('#enable-expirationdate').on('click', function (e) {
-                    if ($(this).is(':checked')) {
-                        $('.pe-classic-fields').show();
-                    } else {
-                        $('.pe-classic-fields').hide();
-                    }
-                });
-
-                $('.pe-howtoexpire').on('change', function (e) {
-                    toggleCategorySelection(this);
-                });
-            }
-        })(jQuery);
-        //]]>
-    </script>
-    <?php
-}
-
-add_action('admin_head', 'postexpirator_js_admin_header');
-
-/**
  * Called when post is saved - stores expiration-date meta value
  *
  * @internal
@@ -716,7 +660,7 @@ function postexpirator_shortcode($attrs)
     $postModel = $factory($post->ID);
 
     $enabled = $postModel->isExpirationEnabled();
-    $expirationDateTs = $postModel->getExpiratigetExpirationDateAsUnixTimeonDate();
+    $expirationDateTs = $postModel->getExpirationDateAsUnixTime();
     if (! $enabled || empty($expirationDateTs)) {
         return false;
     }
