@@ -50,9 +50,16 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             define('PUBLISHPRESS_FUTURE_VERSION', '3.1.0-alpha.1');
         }
 
-        $vendorAutoloadPath = __DIR__ . '/vendor/autoload.php';
-        if (is_readable($vendorAutoloadPath)) {
-            require_once $vendorAutoloadPath;
+        if (! defined('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH')) {
+            define('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH', __DIR__ . '/lib/vendor');
+        }
+
+        $autoloadFilePath = PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/autoload.php';
+        if (! class_exists('ComposerAutoloaderInitPublishPressFuture')
+            && is_file($autoloadFilePath)
+            && is_readable($autoloadFilePath)
+        ) {
+            require_once $autoloadFilePath;
         }
 
         require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
