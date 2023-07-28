@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '72f4fe459664dd54cc077082980b0236250131b2',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => '90febd5e2711bea82aa7fc43c83157107dc56c29',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '72f4fe459664dd54cc077082980b0236250131b2',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '90febd5e2711bea82aa7fc43c83157107dc56c29',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -43,15 +43,6 @@
             'reference' => '6a4e7038c95fac43264b1d61a5cdae2b1e3cc4ee',
             'type' => 'library',
             'install_path' => __DIR__ . '/../publishpress/instance-protection',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
-        'publishpress/vendor-locator-future' => array(
-            'pretty_version' => '1.0.0',
-            'version' => '1.0.0.0',
-            'reference' => '8c703f59ae5e6c6bc31898d91fca62a405fdd070',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../publishpress/vendor-locator-future',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

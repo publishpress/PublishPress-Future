@@ -7,7 +7,6 @@ namespace Composer\Autoload;
 class ComposerStaticInitPublishPressFuture
 {
     public static $files = array (
-        'f8bfd4c5c7018cdd6b24a61a7f6491de' => __DIR__ . '/..' . '/publishpress/vendor-locator-future/includes.php',
         '0078757fbd019a5f202f2be6585c3626' => __DIR__ . '/..' . '/publishpress/wordpress-banners/BannersMain.php',
         '41c664bd04a95c2d6a2f2a3e00f06593' => __DIR__ . '/..' . '/publishpress/wordpress-reviews/ReviewsController.php',
     );

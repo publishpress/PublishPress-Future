@@ -62,7 +62,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             require_once $autoloadFilePath;
         }
 
-        require_once PUBLISHPRESS_FUTURE_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
+        require_once PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
 
         add_action('plugins_loaded', function () {
             try {
