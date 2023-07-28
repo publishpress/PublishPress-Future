@@ -38,6 +38,10 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
     try {
         define('PUBLISHPRESS_FUTURE_LOADED', true);
+        /**
+         * @deprecated
+         */
+        define('PUBLISHPRESS_FUTURE_BASE_PATH', __DIR__);
 
         if (! defined('PUBLISHPRESS_FUTURE_VERSION')) {
             define('PUBLISHPRESS_FUTURE_VERSION', '3.1.0-alpha.1');

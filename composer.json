@@ -27,11 +27,6 @@
   },
   "prefer-stable": true,
   "minimum-stability": "stable",
-  "autoload": {
-    "files": [
-      "./define-base-path.php"
-    ]
-  },
   "require": {
     "php": ">=7.2.5",
     "ext-json": "*",
