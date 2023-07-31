@@ -2,7 +2,7 @@ name: devworkspace_future_pro
 services:
     terminal:
         build: ./docker
-        image: publishpress/dev-workspace-terminal:future-pro
+        image: publishpress/dev-workspace-terminal:future-pro-2.0
         command: ["zsh"]
         stdin_open: true
         tty: true
