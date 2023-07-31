@@ -41,7 +41,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
         if (! defined('PUBLISHPRESS_FUTURE_BASE_PATH')) {
             /**
-             * @deprecated
+             * @deprecated Since 3.1.0. Use the value from service ServicesAbstract::BASE_PATH instead.
              */
             define('PUBLISHPRESS_FUTURE_BASE_PATH', __DIR__);
         }
@@ -52,6 +52,13 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
         if (! defined('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH')) {
             define('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH', __DIR__ . '/lib/vendor');
+        }
+
+        if (! defined('PUBLISHPRESS_FUTURE_VENDOR_PATH')) {
+            /**
+             * @deprecated Since 3.1.0. Use PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH instead.
+             */
+            define('PUBLISHPRESS_FUTURE_VENDOR_PATH', PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH);
         }
 
         $autoloadFilePath = PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/autoload.php';
