@@ -21,7 +21,7 @@ class Paths
 
     public function getVendorDirPath()
     {
-        return $this->getBaseDirPath() . '/vendor';
+        return $this->getBaseDirPath() . '/lib/vendor';
     }
 
     public function getBaseDirPath()

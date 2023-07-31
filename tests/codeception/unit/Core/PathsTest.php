@@ -51,8 +51,8 @@ class PathsTest extends Unit
     public function baseDirVendorProvider()
     {
         return [
-            ['/tmp', '/tmp/vendor'],
-            ['/tmp/', '/tmp/vendor'],
+            ['/tmp', '/tmp/lib/vendor'],
+            ['/tmp/', '/tmp/lib/vendor'],
         ];
     }
 }

@@ -306,7 +306,7 @@ return [
      */
     ServicesAbstract::MODULE_VERSION_NOTICES => static function (ContainerInterface $container) {
         return new ModuleVersionNotices(
-            $container->get(ServicesAbstract::BASE_PATH)
+            $container->get(ServicesAbstract::PATHS)
         );
     },
 
