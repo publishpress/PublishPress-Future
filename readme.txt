@@ -143,6 +143,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 = [3.1.0] - UNRELEASED =
 
 * FIXED: Fix compatibility with Composer-based installations, using prefixed libraries, #522;
+* FIXED: Fix notice about using `FILTER_SANITIZE_STRING` on PHP 8, #525;
 * CHANGED: Remove the file `define-base-path.php`. The constant `PUBLISHPRESS_FUTURE_BASE_PATH` is deprecated and is now defined in the main plugin file;
 * CHANGED: Internal dependencies moved from `vendor` to `lib/vendor`, #522;
 * CHANGED: Replaced Pimple library with a prefixed version of the library to avoid conflicts with other plugins, #522;

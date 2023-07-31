@@ -141,7 +141,7 @@ class PostExpirator_Display
                 exit;
             } else {
                 // Filter Content
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateDisplayFooter', $_POST['expired-display-footer']);
@@ -273,7 +273,7 @@ class PostExpirator_Display
                 exit;
             } else {
                 // Filter Content
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateDefaultDateFormat', sanitize_text_field($_POST['expired-default-date-format']));
@@ -343,7 +343,7 @@ class PostExpirator_Display
                 exit;
             } else {
                 // Filter Content
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateGutenbergSupport', sanitize_text_field($_POST['gutenberg-support']));
