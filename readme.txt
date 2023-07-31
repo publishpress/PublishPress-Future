@@ -140,6 +140,20 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.1.0] - UNRELEASED =
+
+* FIXED: Fix compatibility with Composer-based installations, using prefixed libraries, #522;
+* CHANGED: Remove the file `define-base-path.php`. The constant `PUBLISHPRESS_FUTURE_BASE_PATH` is deprecated and is now defined in the main plugin file;
+* CHANGED: Internal dependencies moved from `vendor` to `lib/vendor`, #522;
+* CHANGED: Replaced Pimple library with a prefixed version of the library to avoid conflicts with other plugins, #522;
+* CHANGED: Replaced Psr/Container library with a prefixed version of the library to avoid conflicts with other plugins, #522;
+* CHANGED: Change min PHP version to 7.2.5. If not compatible, the plugin will not execute;
+* CHANGED: Change min WP version to 5.5. If not compatible, the plugin will not execute;
+* CHANGED: Updated internal libraries to latest versions;
+* CHANGED: Changed the priority of the hook `plugins_loaded` on the main plugin file from 10 to 5, #522;
+* CHANGED: Removed the `vendor-locator-future` library. Internal vendor is now on a fixed path, on `lib/vendor`, #522;
+* CHANGED: Deprecated constant `PUBLISHPRESS_FUTURE_VENDOR_PATH` in favor of `PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH`;
+
 = [3.0.6] - 26 Jul, 2023 =
 
 * FIXED: Fix JavaScript error on the block editor: Uncaught TypeError: Cannot read properties of undefined (reading 'indexOf'), #517;
