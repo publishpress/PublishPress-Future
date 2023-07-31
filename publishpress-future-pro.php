@@ -9,8 +9,8 @@
  * Author URI: http://publishpress.com
  * Text Domain: publishpress-future-pro
  * Domain Path: /languages
- * Requires at least: 5.3
- * Requires PHP: 5.6
+ * Requires at least: 5.5
+ * Requires PHP: 7.2.5
  */
 
 namespace PublishPress\FuturePro {
@@ -22,6 +22,19 @@ namespace PublishPress\FuturePro {
     defined('ABSPATH') or die('No direct script access allowed.');
 
     if (defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
+        return;
+    }
+
+    global $wp_version;
+
+    $min_php_version = '7.2.5';
+    $min_wp_version  = '5.5';
+
+    // If the PHP or WP version is not compatible, terminate the plugin execution.
+    $invalid_php_version = version_compare(phpversion(), $min_php_version, '<');
+    $invalid_wp_version = version_compare($wp_version, $min_wp_version, '<');
+
+    if ($invalid_php_version || $invalid_wp_version) {
         return;
     }
 
