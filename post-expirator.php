@@ -85,7 +85,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             } catch (Exception $e) {
                 logCatchException($e);
             }
-        }, 10, 0);
+        }, 5, 0);
 
     } catch (Exception $e) {
         logCatchException($e);
