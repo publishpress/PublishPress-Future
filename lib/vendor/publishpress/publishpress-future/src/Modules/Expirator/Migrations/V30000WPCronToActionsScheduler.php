@@ -1,0 +1,126 @@
+<?php
+/**
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+namespace PublishPress\Future\Modules\Expirator\Migrations;
+
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
+use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
+
+defined('ABSPATH') or die('Direct access not allowed.');
+
+class V30000WPCronToActionsScheduler implements MigrationInterface
+{
+    const HOOK = ExpiratorHooks::ACTION_MIGRATE_WPCRON_EXPIRATIONS;
+
+    /**
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
+     */
+    private $cronAdapter;
+
+    private $hooksFacade;
+
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
+    /**
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cronAdapter
+     * @param \PublishPress\Future\Core\HookableInterface $hooksFacade
+     */
+    public function __construct(
+        CronInterface $cronAdapter,
+        HookableInterface $hooksFacade,
+        \Closure $expirablePostModelFactory
+    ) {
+        $this->cronAdapter = $cronAdapter;
+        $this->hooksFacade = $hooksFacade;
+
+        $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
+        $this->hooksFacade->addAction(
+            ExpiratorHooks::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
+            [$this, 'formatLogActionColumn'],
+            10,
+            2
+        );
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
+    }
+
+    /**
+     * @return array
+     */
+    private function getLegacyScheduledActions()
+    {
+        $cron = _get_cron_array();
+        $events = [];
+
+        $pluginValidHooks = [
+            ExpiratorHooks::ACTION_LEGACY_EXPIRE_POST2,
+            ExpiratorHooks::ACTION_LEGACY_EXPIRE_POST1,
+        ];
+
+        foreach ($cron as $time => $value) {
+            foreach ($value as $eventKey => $eventValue) {
+                if (in_array($eventKey, $pluginValidHooks)) {
+                    foreach ($eventValue as $eventGUID => $eventData) {
+                        $events[] = [
+                            'guid' => $eventGUID,
+                            'hook' => $eventKey,
+                            'time' => $time,
+                            'args' => array_values($eventData['args']),
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $events;
+    }
+
+    public function migrate()
+    {
+        $events = $this->getLegacyScheduledActions();
+
+        foreach ($events as $eventData) {
+            $postId = $eventData['args'][0];
+
+            $factory = $this->expirablePostModelFactory;
+            $postModel = $factory($postId);
+
+            $expireType = $postModel->getMeta('_expiration-date-type', true);
+            $expirationEnabled = $postModel->getMeta('_expiration-date-status', true) === 'saved';
+            $expirationTaxonomy = $postModel->getMeta('_expiration-date-taxonomy', true);
+            $expirationCategories = (array)$postModel->getMeta('_expiration-date-categories', true);
+
+            $args = [
+                'expireType' => $expireType,
+                'category' => $expirationCategories,
+                'categoryTaxonomy' => $expirationTaxonomy,
+                'enabled' => $expirationEnabled,
+                'date' => $eventData['time'],
+            ];
+
+            do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $eventData['time'], $args);
+
+            wp_unschedule_event($eventData['time'], $eventData['hook'], $eventData['args']);
+        }
+    }
+
+    /**
+     * @param string $text
+     * @param array $row
+     * @return string
+     */
+    public function formatLogActionColumn($text, $row)
+    {
+        if ($row['hook'] === self::HOOK) {
+            return __('Migrate legacy scheduled actions after v3.0.0', 'publishpress-future');
+        }
+        return $text;
+    }
+}

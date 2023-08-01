@@ -18,17 +18,9 @@
       "phpstan/extension-installer": true
     }
   },
-  "autoload": {
-    "psr-4": {
-      "PublishPress\\FuturePro\\": "src/classes"
-    }
-  },
   "minimum-stability": "dev",
   "require": {
-    "php": ">=7.2.5",
-    "publishpress/publishpress-future": "3.0.6",
-    "alledia/wordpress-edd-license-integration": "^2.3",
-    "publishpress/publishpress-instance-protection": "^1.0"
+    "php": ">=7.2.5"
   },
   "require-dev": {
     "publishpress/publishpress-phpcs-standards": "dev-main",
@@ -77,12 +69,17 @@
     "check:phpcs": "phpcs",
     "check:stan": "phpstan",
     "check:longpath": "longpath .",
+    "check:deps": "checkdep ./lib publishpress/publishpress-future",
+    "fix:deps": "mergedep ./lib publishpress/publishpress-future",
     "post-install-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
     ],
     "post-update-cmd": [
       "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
-    ]
+    ],
+    "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
+    "pre-update-cmd": "composer update --working-dir=./lib",
+    "pre-install-cmd": "composer install --working-dir=./lib"
   },
   "extra": {
     "plugin-slug": "publishpress-future-pro",

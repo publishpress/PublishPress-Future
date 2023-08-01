@@ -1,0 +1,75 @@
+/* settings */
+.post-expirator-adminnotice {
+    background-color: red;
+}
+
+.post-expirator-addcolumn {
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+/* metabox */
+#post-expirator-cat-list {
+    max-width: 250px;
+}
+
+#post-expirator-cat-list ul {
+    margin: 0;
+}
+
+#post-expirator-cat-list ul ul {
+    margin-left: 18px;
+}
+
+.post-expirator-taxonomy-name {
+    margin: 0px;
+    font-style: italic;
+    font-size: x-small;
+}
+
+div.pe-classic-fields {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.pe-classic-fields > div {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+div.pe-classic-fields > div > label {
+    font-weight: bold;
+}
+
+.action-scheduler-status-icon-complete {
+    color: #39b741;
+}
+
+.action-scheduler-status-icon-pending {
+    color: #6cc8ff;
+}
+
+.action-scheduler-status-icon-running {
+    color: #4155e0;
+}
+
+.action-scheduler-status-icon-failed {
+    color: #de6c6c;
+}
+
+.action-scheduler-status-icon-canceled {
+    color: #c9c9c9;
+}
+
+.postbox-container #expirationdate_expiretype {
+    width: 240px;
+}
+
+.future-action-date-panel {
+    margin-bottom: 15px;
+}

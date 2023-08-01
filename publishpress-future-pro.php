@@ -43,7 +43,7 @@ namespace PublishPress\FuturePro {
     const EDD_SITE_URL = 'https://publishpress.com';
     const BASE_PATH = __DIR__;
     const INCLUDES_DIR = BASE_PATH . '/src/includes';
-    const VENDOR_DIR = BASE_PATH . '/vendor';
+    const VENDOR_DIR = BASE_PATH . '/lib/vendor';
     const PLUGIN_SLUG = 'publishpress-future-pro';
     const PLUGIN_NAME = 'PublishPress Future Pro';
     const FREE_PLUGIN_NAME = 'PublishPress Future';
@@ -61,14 +61,19 @@ namespace PublishPress\FuturePro {
         }
 
         // Start the autoloader.
-        $autoloadPath = VENDOR_DIR . '/autoload.php';
-        if (file_exists($autoloadPath)) {
-            require_once $autoloadPath;
+        $autoloadFilePath = VENDOR_DIR . '/autoload.php';
+        if (
+            ! class_exists('ComposerAutoloaderInitPublishPressFuturePro')
+            && is_file($autoloadFilePath)
+            && is_readable($autoloadFilePath)
+        ) {
+            require_once $autoloadFilePath;
         }
 
         // Start the free plugin.
         define('PUBLISHPRESS_FUTURE_LOADED_BY_PRO', true);
         define('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES', true);
+
         require_once __DIR__ . '/src/includes/free-plugin-launcher.php';
 
         add_action('plugins_loaded', function () {
