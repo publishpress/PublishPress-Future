@@ -51,7 +51,12 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         }
 
         if (! defined('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH')) {
-            define('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH', __DIR__ . '/lib/vendor');
+            $vendorPath = __DIR__ . '/lib/vendor';
+            if (defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO') && PUBLISHPRESS_FUTURE_LOADED_BY_PRO) {
+                $vendorPath = PublishPress\FuturePro\VENDOR_DIR;
+            }
+
+            define('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH', $vendorPath);
         }
 
         if (! defined('PUBLISHPRESS_FUTURE_VENDOR_PATH')) {
