@@ -5,7 +5,6 @@ node_modules
 /tests/codeception/_data/plugins/ray-future/vendor
 ./logs
 codeceptjs/output
-#bin
 .idea
 .DS_Store
 /builder.yml
@@ -17,11 +16,4 @@ report.csv
 *.code-workspace
 ray.php
 /version.txt
-/lib/vendor/pimple/pimple/ext/pimple/tests
-/lib/vendor/pimple/pimple/.travis.yml
-/lib/vendor/pimple/pimple/CHANGELOG
 /lib/vendor/woocommerce/action-scheduler/changelog.txt
-/lib/vendor/pimple/pimple/composer.json
-/lib/vendor/psr/container/composer.json
-/lib/vendor/publishpress/vendor-locator-future/composer.json
-/lib/vendor/pimple/pimple/ext
