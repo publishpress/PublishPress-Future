@@ -40,3 +40,5 @@ version.txt export-ignore
 webpack.config.js export-ignore
 yarn.lock export-ignore
 .phpcs-php-compatibility.xml export-ignore
+composer.json export-ignore
+composer.lock export-ignore
