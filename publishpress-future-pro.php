@@ -102,7 +102,7 @@ namespace PublishPress\FuturePro {
             } catch (Exception $e) {
                 logCatchException($e);
             }
-        }, 12, 0);
+        }, 8, 0);
     } catch (Exception $e) {
         logCatchException($e);
     }
