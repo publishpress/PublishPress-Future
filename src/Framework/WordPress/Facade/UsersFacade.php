@@ -1,16 +1,3 @@
 <?php
-/**
- * Copyright (c) 2022. PublishPress, All rights reserved.
- */
 
-namespace PublishPress\Future\Framework\WordPress\Facade;
-
-defined('ABSPATH') or die('Direct access not allowed.');
-
-class UsersFacade
-{
-    public function getUsers($args = [])
-    {
-        return get_users($args);
-    }
-}
+require_once realpath(__DIR__ . '/../../../../../../../lib/vendor/publishpress/publishpress-future/src/Framework/WordPress/Facade/UsersFacade.php');

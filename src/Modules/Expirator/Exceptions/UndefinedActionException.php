@@ -1,12 +1,3 @@
 <?php
 
-namespace PublishPress\Future\Modules\Expirator\Exceptions;
-
-use PublishPress\Future\Framework\BaseException;
-
-defined('ABSPATH') or die('Direct access not allowed.');
-
-class UndefinedActionException extends BaseException
-{
-
-}
+require_once realpath(__DIR__ . '/../../../../../../../lib/vendor/publishpress/publishpress-future/src/Modules/Expirator/Exceptions/UndefinedActionException.php');

@@ -1,13 +1,3 @@
 <?php
 
-namespace PublishPress\Future\Modules\Expirator\Interfaces;
-
-defined('ABSPATH') or die('Direct access not allowed.');
-
-interface ActionableInterface
-{
-    /**
-     * @return void
-     */
-    public function setAction($action);
-}
+require_once realpath(__DIR__ . '/../../../../../../../lib/vendor/publishpress/publishpress-future/src/Modules/Expirator/Interfaces/ActionableInterface.php');

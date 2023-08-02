@@ -1,16 +1,3 @@
 <?php
-/**
- * Copyright (c) 2022. PublishPress, All rights reserved.
- */
 
-namespace PublishPress\Future\Framework\WordPress\Exceptions;
-
-
-use PublishPress\Future\Framework\BaseException;
-
-defined('ABSPATH') or die('Direct access not allowed.');
-
-class WordPressErrorException extends BaseException
-{
-
-}
+require_once realpath(__DIR__ . '/../../../../../../../lib/vendor/publishpress/publishpress-future/src/Framework/WordPress/Exceptions/WordPressErrorException.php');

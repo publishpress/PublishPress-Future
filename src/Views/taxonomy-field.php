@@ -1,14 +1,3 @@
 <?php
-defined('ABSPATH') or die('Direct access not allowed.');
 
-echo '<select name="' . esc_attr($name) . '" id="' . esc_attr($id) . '"' . ($disabled === true ? ' disabled="disabled"' : '') . ' onchange="' . esc_attr($onchange) . '">';
-
-foreach ($taxonomies as $taxonomy) {
-    echo '<option value="' . esc_attr($taxonomy->name) . '" ' . ($selected === esc_attr($taxonomy->name) ? 'selected="selected"' : '') . '>' . esc_html($taxonomy->label) . '</option>';
-}
-
-echo '</select>';
-echo '<p class="description">' . esc_html__(
-        'Select the hierarchical taxonomy to be used for "category" based expiration.',
-        'post-expirator'
-    ) . '</p>';
+require_once realpath(__DIR__ . '/../../../../../lib/vendor/publishpress/publishpress-future/src/Views/taxonomy-field.php');

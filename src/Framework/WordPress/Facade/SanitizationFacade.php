@@ -1,20 +1,3 @@
 <?php
-/**
- * Copyright (c) 2022. PublishPress, All rights reserved.
- */
 
-namespace PublishPress\Future\Framework\WordPress\Facade;
-
-defined('ABSPATH') or die('Direct access not allowed.');
-
-class SanitizationFacade
-{
-    /**
-     * @param string $key
-     * @return string
-     */
-    public function sanitizeKey($key)
-    {
-        return sanitize_key($key);
-    }
-}
+require_once realpath(__DIR__ . '/../../../../../../../lib/vendor/publishpress/publishpress-future/src/Framework/WordPress/Facade/SanitizationFacade.php');

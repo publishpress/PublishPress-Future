@@ -1,4 +1,0 @@
-path: ./dist/post-expirator
-jobs: 10
-extensions:
-  - php
