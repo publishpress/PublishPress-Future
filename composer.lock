@@ -4,8 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f36611a71dd2384e44e1419f6ce11ca2",
-    "packages": [],
+    "content-hash": "06c9f7111db1499b43775afdaceae589",
+    "packages": [
+        {
+            "name": "publishpress/publishpress-future",
+            "version": "dev-3.1.0-alias-plugin",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/PublishPress-Future.git",
+                "reference": "c1a3ebe35f40bab0332182e18db11e3a37f80b56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/c1a3ebe35f40bab0332182e18db11e3a37f80b56",
+                "reference": "c1a3ebe35f40bab0332182e18db11e3a37f80b56",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "plugin-slug": "post-expirator",
+                "plugin-name": "publishpress-future",
+                "plugin-folder": "post-expirator"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com"
+                }
+            ],
+            "description": "Deprecated plugin code. Will be removed soon.",
+            "homepage": "https://publishpress.com/",
+            "support": {
+                "issues": "https://github.com/publishpress/PublishPress-Future/issues",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.0-alias-plugin"
+            },
+            "time": "2023-08-02T19:02:36+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "automattic/vipwpcs",
@@ -1426,12 +1468,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "902642f4042092b6f60c00675a415dab98eb65ce"
+                "reference": "ddfa4c5c103b190437ceeb559c706b1b91b5c2d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/902642f4042092b6f60c00675a415dab98eb65ce",
-                "reference": "902642f4042092b6f60c00675a415dab98eb65ce",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ddfa4c5c103b190437ceeb559c706b1b91b5c2d5",
+                "reference": "ddfa4c5c103b190437ceeb559c706b1b91b5c2d5",
                 "shasum": ""
             },
             "require": {
@@ -1481,7 +1523,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-08-01T18:50:34+00:00"
+            "time": "2023-08-02T14:22:44+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2904,7 +2946,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "dev-main",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -2967,7 +3009,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/main"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/1.x"
             },
             "funding": [
                 {
@@ -2987,7 +3029,7 @@
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
-            "version": "dev-main",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
@@ -3049,7 +3091,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/main"
+                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/1.x"
             },
             "funding": [
                 {
@@ -3069,7 +3111,7 @@
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
-            "version": "dev-main",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
@@ -3134,7 +3176,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/main"
+                "source": "https://github.com/symfony/polyfill-intl-normalizer/tree/1.x"
             },
             "funding": [
                 {
@@ -3154,7 +3196,7 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "dev-main",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
@@ -3218,7 +3260,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/main"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/1.x"
             },
             "funding": [
                 {
@@ -3238,7 +3280,7 @@
         },
         {
             "name": "symfony/polyfill-php73",
-            "version": "dev-main",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
@@ -3298,7 +3340,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/main"
+                "source": "https://github.com/symfony/polyfill-php73/tree/1.x"
             },
             "funding": [
                 {
@@ -3318,7 +3360,7 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "dev-main",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
@@ -3382,7 +3424,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/main"
+                "source": "https://github.com/symfony/polyfill-php80/tree/1.x"
             },
             "funding": [
                 {
@@ -3402,7 +3444,7 @@
         },
         {
             "name": "symfony/polyfill-php81",
-            "version": "dev-main",
+            "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php81.git",
@@ -3462,7 +3504,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php81/tree/main"
+                "source": "https://github.com/symfony/polyfill-php81/tree/1.x"
             },
             "funding": [
                 {
@@ -4215,6 +4257,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "publishpress/publishpress-future": 20,
         "publishpress/publishpress-phpcs-standards": 20,
         "giacocorsiglia/wordpress-stubs": 20
     },
