@@ -24,11 +24,46 @@ class Module implements ModuleInterface
         $this->paths = $paths->getBaseDirPath();
     }
 
+    protected function checkLibraryVersion()
+    {
+        if (
+            defined('PP_VERSION_NOTICES_VERSION')
+            && version_compare(PP_VERSION_NOTICES_VERSION, '2.1.2', '<=')) {
+
+            // Only log this error once in an hour to avoid flooding the log.
+            if (! get_transient('pp_future_version_notices_version_error')) {
+                set_transient('pp_future_version_notices_version_error', true, HOUR_IN_SECONDS);
+
+                error_log('PublishPress Future: Library PublishPress Version Notices is not compatible with this version of PublishPress Future. Please update PublishPress plugins to the latest versions.');
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    protected function checkLibraryIsLoaded()
+    {
+        return class_exists('PublishPress\\WordpressVersionNotices\\Module\\TopNotice\\Module');
+    }
+
+
     /**
      * @inheritDoc
      */
     public function initialize()
     {
+        if (! $this->checkLibraryVersion()) {
+            return;
+        }
+
+        // This comes after version check, because the class is not available on older versions,
+        // generating false positive.
+        if(! $this->checkLibraryIsLoaded()) {
+            return;
+        }
+
         if (is_admin() && ! defined('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES')) {
             if (! defined('PP_VERSION_NOTICES_LOADED')) {
                 $includesPath = $this->paths->getVendorDirPath(
