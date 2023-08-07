@@ -28,7 +28,7 @@ class Module implements ModuleInterface
     {
         if (
             defined('PP_VERSION_NOTICES_VERSION')
-            && version_compare(PP_VERSION_NOTICES_VERSION, '2.1.2', '<=')) {
+            && version_compare(PP_VERSION_NOTICES_VERSION, '2.1.1', '<')) {
 
             // Only log this error once in an hour to avoid flooding the log.
             if (! get_transient('pp_future_version_notices_version_error')) {
