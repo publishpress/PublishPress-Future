@@ -8,6 +8,8 @@ use PostExpirator_Util;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
+
 use function sq;
 
 trait Post
@@ -322,16 +324,16 @@ trait Post
             $postId = $this->getPostIdFromSlug(sq($postSlug));
 
             $unixTime = $nextWeekDate->format('U');
-            $this->havePostmetaInDatabase($postId, '_expiration-date-status', 'saved');
-            $this->havePostmetaInDatabase($postId, '_expiration-date', $unixTime);
-            $this->havePostmetaInDatabase($postId, '_expiration-date-type', 'draft');
+            $this->havePostmetaInDatabase($postId, PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+            $this->havePostmetaInDatabase($postId, PostMetaAbstract::EXPIRATION_TIMESTAMP, $unixTime);
+            $this->havePostmetaInDatabase($postId, PostMetaAbstract::EXPIRATION_TYPE, 'draft');
             $opts = [
                 'expireType' => 'draft',
                 'category' => null,
                 'categoryTaxonomy' => '',
                 'enabled' => true,
             ];
-            $this->havePostmetaInDatabase($postId, '_expiration-date-options', serialize($opts));
+            $this->havePostmetaInDatabase($postId, PostMetaAbstract::EXPIRATION_DATE_OPTIONS, serialize($opts));
 
             $container = Container::getInstance();
             $scheduler = $container->get(Services::EXPIRATION_SCHEDULER);
@@ -358,16 +360,16 @@ trait Post
             $postId = $this->getPostIdFromSlug(sq($postSlug));
 
             $unixTime = $yesterdayDate->format('U');
-            $this->havePostmetaInDatabase($postId, '_expiration-date-status', 'saved');
-            $this->havePostmetaInDatabase($postId, '_expiration-date', $unixTime);
-            $this->havePostmetaInDatabase($postId, '_expiration-date-type', 'draft');
+            $this->havePostmetaInDatabase($postId, PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+            $this->havePostmetaInDatabase($postId, PostMetaAbstract::EXPIRATION_TIMESTAMP, $unixTime);
+            $this->havePostmetaInDatabase($postId, PostMetaAbstract::EXPIRATION_TYPE, 'draft');
             $opts = [
                 'expireType' => 'draft',
                 'category' => null,
                 'categoryTaxonomy' => '',
                 'enabled' => true,
             ];
-            $this->havePostmetaInDatabase($postId, '_expiration-date-options', serialize($opts));
+            $this->havePostmetaInDatabase($postId, PostMetaAbstract::EXPIRATION_DATE_OPTIONS, serialize($opts));
 
             $container = Container::getInstance();
             $scheduler = $container->get(Services::EXPIRATION_SCHEDULER);

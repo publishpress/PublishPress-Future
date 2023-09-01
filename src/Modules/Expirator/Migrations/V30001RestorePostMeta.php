@@ -11,6 +11,7 @@ use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapt
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 use function tad\WPBrowser\vendorDir;
@@ -110,12 +111,12 @@ class V30001RestorePostMeta implements MigrationInterface
                 continue;
             }
 
-            $postModel->updateMeta('_expiration-date-type', $expirationData['expireType']);
-            $postModel->updateMeta('_expiration-date-status', 'saved');
-            $postModel->updateMeta('_expiration-date-taxonomy', $expirationData['categoryTaxonomy']);
-            $postModel->updateMeta('_expiration-date-categories', $expirationData['category']);
-            $postModel->updateMeta('_expiration-date', $expirationData['date']);
-            $postModel->updateMeta('_expiration-date-options', $postModel->getExpirationOptions());
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $expirationData['expireType']);
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $expirationData['categoryTaxonomy']);
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $expirationData['category']);
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $expirationData['date']);
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $postModel->getExpirationOptions());
         }
 
         return $events;

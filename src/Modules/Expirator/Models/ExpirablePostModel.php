@@ -738,11 +738,11 @@ class ExpirablePostModel extends PostModel
 
     public function deleteExpirationPostMeta()
     {
-        $this->deleteMeta('_expiration-date-type');
-        $this->deleteMeta('_expiration-date-status');
-        $this->deleteMeta('_expiration-date-taxonomy');
-        $this->deleteMeta('_expiration-date-categories');
-        $this->deleteMeta('_expiration-date');
-        $this->deleteMeta('_expiration-date-options');
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_TYPE);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_STATUS);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_TAXONOMY);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_TERMS);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
     }
 }
