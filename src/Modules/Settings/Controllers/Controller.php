@@ -48,21 +48,6 @@ class Controller implements InitializableInterface
     private $actionsModel;
 
     /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
-     */
-    private $options;
-
-    /**
-     * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
-     */
-    private $cron;
-
-    /**
-     * @var \Closure
-     */
-    private $expirablePostModelFactory;
-
-    /**
      * @var \Closure
      */
     private $migrationsFactory;
@@ -73,8 +58,6 @@ class Controller implements InitializableInterface
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
      * @param $actionsModel
-     * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cron
-     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      * @param \Closure $migrationsFactory
      */
     public function __construct(
@@ -83,9 +66,6 @@ class Controller implements InitializableInterface
         $settingsPostTypesModelFactory,
         $taxonomiesModelFactory,
         $actionsModel,
-        CronInterface $cron,
-        OptionsFacade $options,
-        \Closure $expirablePostModelFactory,
         $migrationsFactory
     ) {
         $this->hooks = $hooks;
@@ -93,9 +73,6 @@ class Controller implements InitializableInterface
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
-        $this->cron = $cron;
-        $this->options = $options;
-        $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->migrationsFactory = $migrationsFactory;
     }
 
