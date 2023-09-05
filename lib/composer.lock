@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
-            "version": "v1.6.22",
+            "version": "v1.6.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/EDD-SL-Plugin-Updater.git",
-                "reference": "56525f1acd28e340f7a7e523638c1424ca7f0e0a"
+                "reference": "38253d04ac8875a88f62a3ebdca8034473f77418"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/EDD-SL-Plugin-Updater/zipball/56525f1acd28e340f7a7e523638c1424ca7f0e0a",
-                "reference": "56525f1acd28e340f7a7e523638c1424ca7f0e0a",
+                "url": "https://api.github.com/repos/publishpress/EDD-SL-Plugin-Updater/zipball/38253d04ac8875a88f62a3ebdca8034473f77418",
+                "reference": "38253d04ac8875a88f62a3ebdca8034473f77418",
                 "shasum": ""
             },
             "require": {
@@ -56,9 +56,9 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/EDD-SL-Plugin-Updater/issues",
-                "source": "https://github.com/publishpress/EDD-SL-Plugin-Updater/tree/v1.6.22"
+                "source": "https://github.com/publishpress/EDD-SL-Plugin-Updater/tree/v1.6.23"
             },
-            "time": "2022-09-23T19:16:06+00:00"
+            "time": "2023-08-30T19:32:16+00:00"
         },
         {
             "name": "publishpress/instance-protection",
@@ -302,12 +302,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "6bb57e80d68192b029e4b168c8de62ab2c3d8ea2"
+                "reference": "7751166d206abf0c9198a078fb7c3774e18e65c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/6bb57e80d68192b029e4b168c8de62ab2c3d8ea2",
-                "reference": "6bb57e80d68192b029e4b168c8de62ab2c3d8ea2",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/7751166d206abf0c9198a078fb7c3774e18e65c7",
+                "reference": "7751166d206abf0c9198a078fb7c3774e18e65c7",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +368,7 @@
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/415-upgrade-to-php-5-drop"
             },
-            "time": "2023-08-01T21:09:05+00:00"
+            "time": "2023-09-05T20:25:46+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -627,16 +627,16 @@
         },
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef"
+                "reference": "4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
-                "reference": "7fd383cad3d64b419ec81bcd05bab44355a6e6ef",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc",
+                "reference": "4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc",
                 "shasum": ""
             },
             "require-dev": {
@@ -661,9 +661,9 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.1"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.2"
             },
-            "time": "2023-06-14T19:23:12+00:00"
+            "time": "2023-08-09T19:43:41+00:00"
         }
     ],
     "packages-dev": [],
