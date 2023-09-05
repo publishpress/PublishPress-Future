@@ -455,7 +455,7 @@ class ExpirablePostModel extends PostModel
         if (! $this->expirationEmailIsEnabled()) {
             $expirationLog .= __('Email is disabled', 'post-expirator');
         } else {
-            $emailSent = $this->sendEmail($expirationAction, 'Hey!');
+            $emailSent = $this->sendEmail($expirationAction);
             $expirationLog .= $emailSent
                 ? __('Email sent', 'post-expirator') : __('Email not sent', 'post-expirator');
         }
