@@ -12,6 +12,7 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: 1
+      DOCKER_HOST_IP: ${DOCKER_HOST_IP}
     volumes:
       - /Users/andersonmartins/Projects/git/publishpress/publishpress-future/tests/docker/volumes/php8.0-wordpress:/var/www/html
     depends_on:
@@ -21,8 +22,6 @@ services:
       - "80"
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
-    environment:
-      - DOCKER_HOST_IP=${DOCKER_HOST_IP}
 
   db:
     image: mariadb:10.5.8
