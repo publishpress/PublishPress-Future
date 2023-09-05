@@ -455,7 +455,7 @@ class ExpirablePostModel extends PostModel
         if (! $this->expirationEmailIsEnabled()) {
             $expirationLog .= __('Email is disabled', 'post-expirator');
         } else {
-            $emailSent = $this->sendEmail($expirationAction, 'Hey!');
+            $emailSent = $this->sendEmail($expirationAction);
             $expirationLog .= $emailSent
                 ? __('Email sent', 'post-expirator') : __('Email not sent', 'post-expirator');
         }
@@ -540,17 +540,19 @@ class ExpirablePostModel extends PostModel
 
 
     /**
-     * @param \PublishPress\Future\Modules\Expirator\Interfaces\ActionableInterface $expirationAction
-     * @param string $actionNotificationText
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface $expirationAction
+     * #[Deprecated]
+     * @param string $deprecatedActionNotificationText Deprecated since 3.0.0
+     *
      * @return bool
      */
-    private function sendEmail(ExpirationActionInterface $expirationAction, $deprecatedActionNotificationText = '')
+    private function sendEmail(ExpirationActionInterface $expirationAction, string $deprecatedActionNotificationText = '')
     {
         if (! empty($deprecatedActionNotificationText)) {
             _deprecated_argument(
                 __METHOD__,
                 '3.0.0',
-                'Message now comes from ExpirationActionInterface::getNotificationText() instead of from $deprecatedActionNotificationText'
+                'Message now comes from ExpirationActionInterface::getNotificationText() instead of from the second parameter'
             );
         }
 
@@ -738,11 +740,11 @@ class ExpirablePostModel extends PostModel
 
     public function deleteExpirationPostMeta()
     {
-        $this->deleteMeta('_expiration-date-type');
-        $this->deleteMeta('_expiration-date-status');
-        $this->deleteMeta('_expiration-date-taxonomy');
-        $this->deleteMeta('_expiration-date-categories');
-        $this->deleteMeta('_expiration-date');
-        $this->deleteMeta('_expiration-date-options');
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_TYPE);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_STATUS);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_TAXONOMY);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_TERMS);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
     }
 }

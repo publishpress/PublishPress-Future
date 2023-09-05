@@ -28,7 +28,7 @@ class ActionArgsSchema
 
     public static function createTableIfNotExists()
     {
-        if (self::tableExists(self::getTableName())) {
+        if (self::tableExists()) {
             return;
         }
 
@@ -69,7 +69,7 @@ class ActionArgsSchema
 
     public static function dropTableIfExists()
     {
-        if (! self::tableExists(self::getTableName())) {
+        if (! self::tableExists()) {
             return;
         }
 
