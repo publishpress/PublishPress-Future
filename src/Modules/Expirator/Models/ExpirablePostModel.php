@@ -540,17 +540,19 @@ class ExpirablePostModel extends PostModel
 
 
     /**
-     * @param \PublishPress\Future\Modules\Expirator\Interfaces\ActionableInterface $expirationAction
-     * @param string $actionNotificationText
+     * @param \PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface $expirationAction
+     * #[Deprecated]
+     * @param string $deprecatedActionNotificationText Deprecated since 3.0.0
+     *
      * @return bool
      */
-    private function sendEmail(ExpirationActionInterface $expirationAction, $deprecatedActionNotificationText = '')
+    private function sendEmail(ExpirationActionInterface $expirationAction, string $deprecatedActionNotificationText = '')
     {
         if (! empty($deprecatedActionNotificationText)) {
             _deprecated_argument(
                 __METHOD__,
                 '3.0.0',
-                'Message now comes from ExpirationActionInterface::getNotificationText() instead of from $deprecatedActionNotificationText'
+                'Message now comes from ExpirationActionInterface::getNotificationText() instead of from the second parameter'
             );
         }
 
