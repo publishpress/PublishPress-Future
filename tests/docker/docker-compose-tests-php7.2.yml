@@ -17,8 +17,8 @@ services:
     depends_on:
       - db
     ports:
-      - 443
-      - 80
+      - "443"
+      - "80"
 
   db:
     image: mariadb:10.5.8
@@ -30,4 +30,4 @@ services:
       MYSQL_PASSWORD: wordpress
       MYSQL_ROOT_PASSWORD: wordpress
     ports:
-      - 3306
+      - "3306"

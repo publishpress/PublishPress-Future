@@ -17,8 +17,8 @@ services:
     depends_on:
       - db
     ports:
-      - 443
-      - 80
+      - "443"
+      - "80"
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
     environment:
@@ -34,6 +34,6 @@ services:
       MYSQL_PASSWORD: wordpress
       MYSQL_ROOT_PASSWORD: wordpress
     ports:
-      - 3306
+      - "3306"
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
