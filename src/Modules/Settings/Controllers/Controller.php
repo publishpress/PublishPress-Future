@@ -10,11 +10,6 @@ use PublishPress\Future\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
-use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
-use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
-use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
-use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
-use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
