@@ -140,7 +140,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [3.1.0] - UNRELEASED =
+= [3.1.0] - 06 Sep, 2023 =
 
 * FIXED: Fix compatibility with Composer-based installations, using prefixed libraries, #522;
 * FIXED: Fix notice about using `FILTER_SANITIZE_STRING` on PHP 8, #525;
