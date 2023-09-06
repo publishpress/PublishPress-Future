@@ -21,7 +21,7 @@ class Paths
 
     public function getVendorDirPath()
     {
-        return $this->getBaseDirPath() . '/vendor';
+        return PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH;
     }
 
     public function getBaseDirPath()

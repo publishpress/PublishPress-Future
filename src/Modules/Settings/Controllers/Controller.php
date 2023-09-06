@@ -10,11 +10,6 @@ use PublishPress\Future\Core\HooksAbstract as CoreAbstractHooks;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
-use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
-use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
-use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
-use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
-use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
@@ -53,21 +48,6 @@ class Controller implements InitializableInterface
     private $actionsModel;
 
     /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
-     */
-    private $options;
-
-    /**
-     * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
-     */
-    private $cron;
-
-    /**
-     * @var \Closure
-     */
-    private $expirablePostModelFactory;
-
-    /**
      * @var \Closure
      */
     private $migrationsFactory;
@@ -78,8 +58,6 @@ class Controller implements InitializableInterface
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
      * @param $actionsModel
-     * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cron
-     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      * @param \Closure $migrationsFactory
      */
     public function __construct(
@@ -88,9 +66,6 @@ class Controller implements InitializableInterface
         $settingsPostTypesModelFactory,
         $taxonomiesModelFactory,
         $actionsModel,
-        CronInterface $cron,
-        OptionsFacade $options,
-        \Closure $expirablePostModelFactory,
         $migrationsFactory
     ) {
         $this->hooks = $hooks;
@@ -98,9 +73,6 @@ class Controller implements InitializableInterface
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
-        $this->cron = $cron;
-        $this->options = $options;
-        $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->migrationsFactory = $migrationsFactory;
     }
 
@@ -243,7 +215,7 @@ class Controller implements InitializableInterface
                                     . For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s. Please, use only terms in English.',
                                 'post-expirator'
                             ),
-                            '<a href="http://php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__(
+                            '<a href="https://www.php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__(
                                 'PHP strtotime function',
                                 'post-expirator'
                             ) . '</a>',
@@ -331,7 +303,7 @@ class Controller implements InitializableInterface
                 wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
             }
 
-            $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             foreach ($postTypes as $postType) {

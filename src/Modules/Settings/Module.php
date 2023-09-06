@@ -45,19 +45,6 @@ class Module implements ModuleInterface
      * @var \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel
      */
     private $actionsModel;
-    /**
-     * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface
-     */
-    private $cron;
-    /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
-     */
-    private $options;
-
-    /**
-     * @var \Closure
-     */
-    private $expirablePostModelFactory;
 
     /**
      * @var \Closure
@@ -70,8 +57,6 @@ class Module implements ModuleInterface
      * @param \Closure $settingsPostTypesModelFactory
      * @param \Closure $taxonomiesModelFactory
      * @param \PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel $actionsModel
-     * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cron
-     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      * @param \Closure $migrationsFactoy
      */
     public function __construct(
@@ -80,9 +65,6 @@ class Module implements ModuleInterface
         $settingsPostTypesModelFactory,
         $taxonomiesModelFactory,
         $actionsModel,
-        CronInterface $cron,
-        OptionsFacade $options,
-        \Closure $expirablePostModelFactory,
         $migrationsFactoy
     )
     {
@@ -91,9 +73,6 @@ class Module implements ModuleInterface
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
         $this->actionsModel = $actionsModel;
-        $this->cron = $cron;
-        $this->options = $options;
-        $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->migrationsFactory = $migrationsFactoy;
 
         $this->controller = $this->getController();
@@ -115,9 +94,6 @@ class Module implements ModuleInterface
             $this->settingsPostTypesModelFactory,
             $this->taxonomiesModelFactory,
             $this->actionsModel,
-            $this->cron,
-            $this->options,
-            $this->expirablePostModelFactory,
             $this->migrationsFactory
         );
     }

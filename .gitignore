@@ -1,10 +1,10 @@
 node_modules
 *.log
 /vendor
+/lib/**/.git
 /tests/codeception/_data/plugins/ray-future/vendor
 ./logs
 codeceptjs/output
-#bin
 .idea
 .DS_Store
 /builder.yml
@@ -16,3 +16,4 @@ report.csv
 *.code-workspace
 ray.php
 /version.txt
+/lib/vendor/woocommerce/action-scheduler/changelog.txt

@@ -15,12 +15,16 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class Module implements ModuleInterface
 {
+    private $pluginSlug;
+
+    private $pluginName;
+
     public function __construct(Paths $paths, $pluginSlug, $pluginName)
     {
         $includeFile = $paths->getVendorDirPath()
-            . '/publishpress/publishpress-instance-protection/include.php';
+            . '/publishpress/instance-protection/include.php';
 
-        if (is_readable($includeFile)) {
+        if (is_file($includeFile) && is_readable($includeFile)) {
             // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
             require_once $includeFile;
         }
@@ -29,11 +33,8 @@ class Module implements ModuleInterface
             return null;
         }
 
-        $pluginCheckerConfig = new Config();
-        $pluginCheckerConfig->pluginSlug = $pluginSlug;
-        $pluginCheckerConfig->pluginName = $pluginName;
-
-        new InstanceChecker($pluginCheckerConfig);
+        $this->pluginSlug = $pluginSlug;
+        $this->pluginName = $pluginName;
     }
 
     /**
@@ -41,5 +42,10 @@ class Module implements ModuleInterface
      */
     public function initialize()
     {
+        $pluginCheckerConfig = new Config();
+        $pluginCheckerConfig->pluginSlug = $this->pluginSlug;
+        $pluginCheckerConfig->pluginName = $this->pluginName;
+
+        new InstanceChecker($pluginCheckerConfig);
     }
 }

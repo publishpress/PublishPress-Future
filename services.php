@@ -306,7 +306,7 @@ return [
      */
     ServicesAbstract::MODULE_VERSION_NOTICES => static function (ContainerInterface $container) {
         return new ModuleVersionNotices(
-            $container->get(ServicesAbstract::BASE_PATH)
+            $container->get(ServicesAbstract::PATHS)
         );
     },
 
@@ -339,9 +339,6 @@ return [
             $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY),
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
             $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
-            $container->get(ServicesAbstract::CRON),
-            $container->get(ServicesAbstract::OPTIONS),
-            $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
             $container->get(ServicesAbstract::MIGRATIONS_FACTORY)
         );
     },

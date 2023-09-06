@@ -9,6 +9,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -92,10 +93,10 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
             $factory = $this->expirablePostModelFactory;
             $postModel = $factory($postId);
 
-            $expireType = $postModel->getMeta('_expiration-date-type', true);
-            $expirationEnabled = $postModel->getMeta('_expiration-date-status', true) === 'saved';
-            $expirationTaxonomy = $postModel->getMeta('_expiration-date-taxonomy', true);
-            $expirationCategories = (array)$postModel->getMeta('_expiration-date-categories', true);
+            $expireType = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true);
+            $expirationEnabled = $postModel->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true) === 'saved';
+            $expirationTaxonomy = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true);
+            $expirationCategories = (array)$postModel->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
 
             $args = [
                 'expireType' => $expireType,
