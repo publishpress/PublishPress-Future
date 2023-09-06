@@ -11,6 +11,8 @@
 .rsync-filters-post-build export-ignore
 .rsync-filters-pre-build export-ignore
 .vscode export-ignore
+/dist export-ignore
+/vendor
 Gruntfile.js export-ignore
 README.md export-ignore
 RoboFile.php export-ignore
@@ -21,7 +23,6 @@ codeception.dist.yml export-ignore
 composer.lock export-ignore
 cs export-ignore
 dev-workspace export-ignore
-/dist export-ignore
 jsconfig.json export-ignore
 node_modules export-ignore
 package-lock.json export-ignore
@@ -33,4 +34,4 @@ ray.php export-ignore
 screenshot-*.png export-ignore
 tests export-ignore
 webpack.config.js export-ignore
-/vendor
+yarn.lock export-ignore
