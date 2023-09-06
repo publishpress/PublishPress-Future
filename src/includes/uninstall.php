@@ -7,21 +7,20 @@
  * @package PublishPressFuturePro
  */
 
-namespace PublishPress\FuturePro {
+namespace PublishPress\FuturePro;
 
-    use PublishPress\Future\Core\DI\Container;
-    use PublishPress\Future\Core\DI\ServicesAbstract;
-    use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\FuturePro\Core\HooksAbstract;
 
-    defined('ABSPATH') or die('No direct script access allowed.');
+defined('ABSPATH') or die('No direct script access allowed.');
 
-    function uninstall()
-    {
-        // Deactivate the Pro plugin.
-        do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
+function uninstall()
+{
+    // Deactivate the Pro plugin.
+    do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
 
-        // Deactivate the Free plugin.
-        $container = Container::getInstance();
-        $container->get(ServicesAbstract::PLUGIN)->deactivatePlugin();
-    }
+    // Deactivate the Free plugin.
+    $container = Container::getInstance();
+    $container->get(ServicesAbstract::PLUGIN)->deactivatePlugin();
 }

@@ -1,0 +1,1264 @@
+# Translation of Plugins - PublishPress Future: Automatically Unpublish WordPress Posts - Stable (latest release) in Dutch
+# This file is distributed under the same license as the Plugins - PublishPress Future: Automatically Unpublish WordPress Posts - Stable (latest release) package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugins - PublishPress Future: Automatically Unpublish "
+"WordPress Posts - Stable (latest release)\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
+"POT-Creation-Date: 2023-07-18T21:43:27+00:00\n"
+"PO-Revision-Date: 2023-07-18 18:58-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#. Plugin Name of the plugin
+#: legacy/classes/Facade.class.php:416 legacy/functions.php:339
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:80
+#: src/Views/tabs.php:55
+msgid "PublishPress Future"
+msgstr "PublishPress Future"
+
+#. Plugin URI of the plugin
+msgid "http://wordpress.org/extend/plugins/post-expirator/"
+msgstr "http://wordpress.org/extend/plugins/post-expirator/"
+
+#. Description of the plugin
+msgid ""
+"PublishPress Future allows you to schedule automatic changes to posts, pages "
+"and other content types."
+msgstr ""
+
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin
+msgid "http://publishpress.com"
+msgstr "http://publishpress.com"
+
+#: legacy/classes/Display.class.php:88
+msgid "You do not have permission to configure PublishPress Future."
+msgstr "Je hebt geen toestemming om PublishPress Future te configureren."
+
+#: legacy/classes/Display.class.php:181
+msgid "Debugging Disabled"
+msgstr "Debugging uitgeschakeld"
+
+#: legacy/classes/Display.class.php:186
+msgid "Debugging Enabled"
+msgstr "Debugging ingeschakeld"
+
+#: legacy/classes/Display.class.php:194
+msgid "Debugging Table Emptied"
+msgstr "Debugging tabel leeggemaakt"
+
+#: legacy/classes/Display.class.php:200
+msgid ""
+"The legacy future actions migration has been enqueued and will run "
+"asynchronously."
+msgstr ""
+
+#: legacy/classes/Display.class.php:209
+msgid ""
+"The legacy actions arguments restoration has been enqueued and will run "
+"asynchronously."
+msgstr ""
+
+#: legacy/classes/Display.class.php:219
+msgid "The database schema was fixed."
+msgstr ""
+
+#: legacy/classes/Display.class.php:224
+msgid ""
+"The database schema could not be fixed. Please, contact the support team."
+msgstr ""
+
+#: legacy/classes/Display.class.php:315 legacy/classes/Display.class.php:376
+msgid "Saved Options!"
+msgstr "Opgeslagen instellingen!"
+
+#: legacy/classes/Display.class.php:461
+msgid "If you like %s, please leave us a %s rating. Thank you!"
+msgstr "Als je %s leuk vindt, laat dan een %s waardering achter. Bedankt!"
+
+#: legacy/classes/Display.class.php:476
+msgid "About PublishPress Future"
+msgstr "Over PublishPress Future"
+
+#: legacy/classes/Display.class.php:478
+msgid "About"
+msgstr "Over"
+
+#: legacy/classes/Display.class.php:484
+msgid "Future Documentation"
+msgstr "Future documentatie"
+
+#: legacy/classes/Display.class.php:486
+msgid "Documentation"
+msgstr "Documentatie"
+
+#: legacy/classes/Display.class.php:492
+msgid "Contact the PublishPress team"
+msgstr "Neem contact op met het PublishPress team"
+
+#: legacy/classes/Display.class.php:494
+msgid "Contact"
+msgstr "Contact"
+
+#: legacy/classes/Facade.class.php:415
+msgid "Taxonomy"
+msgstr "Taxonomie"
+
+#: legacy/classes/Facade.class.php:417 src/Views/bulk-edit.php:36
+#: src/Views/classic-metabox.php:11 src/Views/quick-edit.php:16
+#, fuzzy
+#| msgid "PublishPress Future Options"
+msgid "Enable Future Action"
+msgstr "PublishPress Future opties"
+
+#: legacy/classes/Facade.class.php:418
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:44
+#: src/Modules/Settings/Controllers/Controller.php:215
+#: src/Views/bulk-edit.php:129 src/Views/bulk-edit.php:131
+#: src/Views/classic-metabox.php:117 src/Views/quick-edit.php:78
+#: src/Views/quick-edit.php:80
+#, fuzzy
+#| msgid "Active"
+msgid "Action"
+msgstr "Actief"
+
+#: legacy/classes/Facade.class.php:419
+msgid "Loading"
+msgstr "Laden"
+
+#: legacy/classes/Facade.class.php:422
+#, fuzzy
+#| msgid "No taxonomies found"
+msgid "No %s found."
+msgstr "Geen taxonomieën gevonden"
+
+#: legacy/classes/Facade.class.php:425 src/Views/classic-metabox.php:138
+msgid ""
+"You must assign a hierarchical taxonomy to this post type to use this "
+"feature."
+msgstr ""
+"Je moet een hiërarchische taxonomie toewijzen aan dit berichttype om deze "
+"functie te gebruiken."
+
+#: legacy/functions.php:32
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:103
+msgid "Settings"
+msgstr "Instellingen"
+
+#: legacy/functions.php:62 src/Views/bulk-edit.php:30
+#, fuzzy
+#| msgid "Future Documentation"
+msgid "Future Action"
+msgstr "Future documentatie"
+
+#: legacy/functions.php:1214
+#: src/Modules/Settings/Controllers/Controller.php:228
+msgid "No taxonomies found"
+msgstr "Geen taxonomieën gevonden"
+
+#: services.php:68
+msgid "l F jS, Y"
+msgstr "l j F Y"
+
+#: services.php:69
+msgid "g:ia"
+msgstr "g:i"
+
+#: services.php:70
+#, fuzzy
+#| msgid "Post expires at EXPIRATIONTIME on EXPIRATIONDATE"
+msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
+msgstr "Bericht vervalt om VERVALTIJD op VERVALDATUM"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:81
+msgid "Future"
+msgstr "Future"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:91
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:92
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:41
+#, fuzzy
+#| msgid "Future Documentation"
+msgid "Future Actions"
+msgstr "Future documentatie"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:170
+msgid "Log format"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:177
+msgid "List"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:186
+msgid "Popup"
+msgstr ""
+
+#: src/Modules/Expirator/ExpirationActions/DeletePost.php:46
+#, fuzzy
+#| msgid "Post was not deleted."
+msgid "%s was not deleted."
+msgstr "Bericht werd niet verwijderd."
+
+#: src/Modules/Expirator/ExpirationActions/DeletePost.php:52
+#, fuzzy
+#| msgid "Post has been successfully deleted."
+msgid "%s has been successfully deleted."
+msgstr "Het bericht is succesvol verwijderd."
+
+#: src/Modules/Expirator/ExpirationActions/DeletePost.php:74
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:53
+#, fuzzy
+#| msgid "No terms were added to the post."
+msgid "No terms were added to the %s."
+msgstr "Er werden geen termen aan het bericht toegevoegd."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:63
+#, fuzzy
+#| msgid ""
+#| "The following terms (%s) were added to the post: \"%s\". The full list of "
+#| "terms on the post is: %s."
+msgid ""
+"The following terms (%s) were added to the %s: \"%s\". The full list of "
+"terms on the post is: %s."
+msgstr ""
+"De volgende termen (%s) werden toegevoegd aan het bericht: \"%s\". De "
+"volledige lijst van termen op de bericht is: %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:108
+msgid "Keep all current terms and add new terms"
+msgstr ""
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:53
+#, fuzzy
+#| msgid "No terms were removed from the post."
+msgid "No terms were removed from the %s."
+msgstr "Er werden geen termen uit het bericht verwijderd."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:63
+#, fuzzy
+#| msgid ""
+#| "The following terms (%s) were removed from the post: \"%s\". The new list "
+#| "of terms on the post is: %s."
+msgid ""
+"The following terms (%s) were removed from the %s: %s. The new list of terms "
+"on the post is: %s."
+msgstr ""
+"De volgende termen (%s) werden uit het bericht verwijderd: \"%s\". De nieuwe "
+"lijst van termen op het bericht is: %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:110
+msgid "Remove selected terms"
+msgstr ""
+
+#: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:53
+#, fuzzy
+#| msgid "No terms were changed on the post."
+msgid "No terms were changed on the %s."
+msgstr "Er werden geen termen gewijzigd op het bericht."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:63
+#, fuzzy
+#| msgid ""
+#| "The following terms (%s) were set to the post: \"%s\". The old list of "
+#| "terms on the post was: %s."
+msgid ""
+"The following terms (%s) were set to the %s: \"%s\". The old list of terms "
+"on the post was: %s."
+msgstr ""
+"De volgende termen (%s) werden ingesteld op het bericht: \"%s\". De oude "
+"lijst van termen op het bericht was: %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:105
+msgid "Remove all current terms and add new terms"
+msgstr ""
+
+#: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:49
+#: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:49
+#: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:49
+#, fuzzy
+#| msgid "Post status didn't change."
+msgid "Status didn't change."
+msgstr "De status van het bericht is niet veranderd."
+
+#: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:56
+#: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:56
+#: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:56
+#, fuzzy
+#| msgid "Post status has been successfully changed to \"%s\"."
+msgid "Status has been successfully changed from \"%s\" to \"%s\"."
+msgstr "Berichtstatus is succesvol gewijzigd naar \"%s\"."
+
+#: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:85
+#: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:85
+#: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:85
+msgid "Change status to %s"
+msgstr ""
+
+#: src/Modules/Expirator/ExpirationActions/StickPost.php:45
+#: src/Modules/Expirator/ExpirationActions/UnstickPost.php:45
+#, fuzzy
+#| msgid "Post didn't change."
+msgid "%s didn't change."
+msgstr "Bericht is niet veranderd."
+
+#: src/Modules/Expirator/ExpirationActions/StickPost.php:51
+#, fuzzy
+#| msgid "Post has been added to stickies list."
+msgid "%s has been added to stickies list."
+msgstr "Bericht is toegevoegd aan stickies lijst."
+
+#: src/Modules/Expirator/ExpirationActions/StickPost.php:73
+msgid "Stick"
+msgstr "Stick"
+
+#: src/Modules/Expirator/ExpirationActions/UnstickPost.php:51
+#, fuzzy
+#| msgid "Post has been removed from stickies list."
+msgid "%s has been removed from stickies list."
+msgstr "Bericht is verwijderd van stickies lijst."
+
+#: src/Modules/Expirator/ExpirationActions/UnstickPost.php:73
+msgid "Unstick"
+msgstr "Unstick"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:449
+msgid "Email is disabled"
+msgstr "E-mail is uitgeschakeld"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:453
+msgid "Email sent"
+msgstr "E-mail verzonden"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:453
+msgid "Email not sent"
+msgstr "E-mail niet verzonden"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:524
+msgid "%s. %s on %s. The post link is %s"
+msgstr ""
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:541
+#, fuzzy
+#| msgid "Post Expiration Complete \"%s\""
+msgid "Future Action Complete \"%s\""
+msgstr "Bericht verlooptijd compleet \"%s\""
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:544
+msgid "[%1$s] %2$s"
+msgstr "[%1$s] %2$s"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:51
+msgid "Run"
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:52
+msgid "Process the action now"
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:55
+msgid "Cancel"
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:56
+msgid ""
+"Cancel the action. This will prevent the action from running in the future"
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:119
+msgid "Action Logs"
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:379
+msgid "%s: [%d] %s%s%s"
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:400
+msgid "Terms: %s"
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:437
+#, fuzzy
+#| msgid "View Debug Logs"
+msgid "View log"
+msgstr "Debug logboeken bekijken"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:448
+msgid "Action: "
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:454
+msgid "Status: "
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:460
+msgid "Arguments: "
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:466
+msgid "Scheduled date: "
+msgstr ""
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:480
+#: src/Views/bulk-edit.php:68 src/Views/menu-diagnostics.php:164
+#: src/Views/quick-edit.php:22
+msgid "Date"
+msgstr "Datum"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:481
+#: src/Views/menu-debug-log.php:32
+msgid "Message"
+msgstr "Bericht"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:515
+msgid "Async"
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:203
+#, fuzzy
+#| msgid "Defaults"
+msgid "Default Values"
+msgstr "Standaard"
+
+#: src/Modules/Settings/Controllers/Controller.php:204
+msgid ""
+"Use the values below to set the default actions/values to be used for each "
+"for the corresponding post types.  These values can all be overwritten when "
+"creating/editing the post/page."
+msgstr ""
+"Gebruik de volgende standaard instellingen voor de geselecteerde bericht "
+"types. Deze waardes kunnen overschreven worden bij het aanmaken/bewerken van "
+"een bericht of pagina."
+
+#: src/Modules/Settings/Controllers/Controller.php:208
+#: src/Modules/Settings/Controllers/Controller.php:209
+msgid "Active"
+msgstr "Actief"
+
+#: src/Modules/Settings/Controllers/Controller.php:210
+msgid "Inactive"
+msgstr "Niet actief"
+
+#: src/Modules/Settings/Controllers/Controller.php:211
+msgid ""
+"Select whether the PublishPress Future meta box is active for this post type."
+msgstr ""
+"Selecteer of de PublishPress Future metabox actief is voor dit berichttype."
+
+#: src/Modules/Settings/Controllers/Controller.php:216
+#, fuzzy
+#| msgid "Select the default expire action for the post type."
+msgid "Select the default action for the post type."
+msgstr "Stel de standaard verval-methode in voor dit berichttype."
+
+#: src/Modules/Settings/Controllers/Controller.php:220
+msgid "Auto-enable?"
+msgstr "Auto-inschakelen?"
+
+#: src/Modules/Settings/Controllers/Controller.php:221
+#: src/Views/menu-diagnostics.php:62 src/Views/menu-display.php:81
+#: src/Views/menu-general.php:145 src/Views/menu-general.php:170
+msgid "Enabled"
+msgstr "Ingeschakeld"
+
+#: src/Modules/Settings/Controllers/Controller.php:222
+#: src/Views/menu-diagnostics.php:82 src/Views/menu-display.php:86
+#: src/Views/menu-general.php:152 src/Views/menu-general.php:178
+msgid "Disabled"
+msgstr "Uitgeschakeld"
+
+#: src/Modules/Settings/Controllers/Controller.php:223
+msgid "Select whether the PublishPress Future is enabled for all new posts."
+msgstr ""
+"Selecteer of de PublishPress Future is ingeschakeld voor alle nieuwe "
+"berichten."
+
+#: src/Modules/Settings/Controllers/Controller.php:227
+msgid "Taxonomy (Hierarchical)"
+msgstr "Taxonomie (hiërarchisch)"
+
+#: src/Modules/Settings/Controllers/Controller.php:229
+msgid ""
+"Select the hierarchical taxonomy and terms to be used for taxonomy based "
+"expiration."
+msgstr ""
+"Selecteer de hiërarchische taxonomie en de termen die moeten worden gebruikt "
+"voor expiratie op basis van taxonomie."
+
+#: src/Modules/Settings/Controllers/Controller.php:233
+#: src/Views/menu-general.php:189
+msgid "Who to Notify"
+msgstr "Wie te berichten"
+
+#: src/Modules/Settings/Controllers/Controller.php:234
+#, fuzzy
+#| msgid ""
+#| "Enter a comma separate list of emails that you would like to be notified "
+#| "when the post expires."
+msgid ""
+"Enter a comma separate list of emails that you would like to be notified "
+"when the action runs."
+msgstr ""
+"Voer een komma gescheiden lijst met e-mails in die je wilt laten weten "
+"wanneer het bericht verloopt."
+
+#: src/Modules/Settings/Controllers/Controller.php:238
+#: src/Views/menu-general.php:101
+msgid "Default Date/Time Offset"
+msgstr "Standaard datum/tijd offset"
+
+#: src/Modules/Settings/Controllers/Controller.php:241
+#, fuzzy
+#| msgid ""
+#| "Set the offset to use for the default expiration date and time. For "
+#| "information on formatting, see %1$s. For example, you could enter %2$s+1 "
+#| "month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
+#| "Thursday%7$s."
+msgid ""
+"Set the offset to use for the default action date and time. For information "
+"on formatting, see %1$s\n"
+"                                    . For example, you could enter %2$s+1 "
+"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
+"Thursday%7$s. Please, use only terms in English."
+msgstr ""
+"Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie "
+"over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 month%3$s of %4$s+1 "
+"week 2 days 4 hours 2 seconds%5$s of %6$snext Thursday%7$s invoeren."
+
+#: src/Modules/Settings/Controllers/Controller.php:246
+#: src/Views/menu-general.php:115
+msgid "PHP strtotime function"
+msgstr "PHP strtotime functie"
+
+#: src/Modules/Settings/Controllers/Controller.php:257
+msgid "Default terms:"
+msgstr "Standaard terms:"
+
+#: src/Modules/Settings/Controllers/Controller.php:258
+msgid "Save changes"
+msgstr "Wijzigingen opslaan"
+
+#: src/Modules/Settings/Controllers/Controller.php:331
+msgid "Form Validation Failure: Sorry, your nonce did not verify."
+msgstr "Formulier validatie fout: je nonce is niet geverifieerd."
+
+#: src/Modules/VersionNotices/Module.php:45
+msgid ""
+"You're using PublishPress Future Free. The Pro version has more features and "
+"support. %sUpgrade to Pro%s"
+msgstr ""
+"Je gebruikt PublishPress Future Free. De Pro versie heeft meer functies en "
+"ondersteuning. %sUpgrade naar Pro%s"
+
+#: src/Modules/VersionNotices/Module.php:68
+#: src/Views/ad-banner-right-sidebar.php:31
+msgid "Upgrade to Pro"
+msgstr "Upgrade naar Pro"
+
+#: src/Views/ad-banner-right-sidebar.php:10
+msgid "Upgrade to PublishPress Future Pro"
+msgstr "Upgrade naar PublishPress Future pro"
+
+#: src/Views/ad-banner-right-sidebar.php:16
+msgid "Enhance the power of PublishPress Future with the Pro version:"
+msgstr "Vergroot de kracht van PublishPress future met de pro versie:"
+
+#: src/Views/ad-banner-right-sidebar.php:23
+msgid "Support for future actions to custom statuses"
+msgstr "Ondersteuning voor verlopen naar aangepaste statussen"
+
+#: src/Views/ad-banner-right-sidebar.php:25
+msgid "Remove PublishPress ads and branding"
+msgstr "PublishPress advertenties en branding verwijderen"
+
+#: src/Views/ad-banner-right-sidebar.php:27
+msgid "Fast, professional support"
+msgstr "Snelle, professionele ondersteuning"
+
+#: src/Views/ad-banner-right-sidebar.php:39
+msgid "Need PublishPress Future Support?"
+msgstr "Toekomstige ondersteuning voor PublishPress nodig?"
+
+#: src/Views/ad-banner-right-sidebar.php:45
+msgid "If you need help or have a new feature request, let us know."
+msgstr ""
+"Als je hulp nodig hebt of een nieuwe functie aanvraag hebt, laat het ons "
+"weten."
+
+#: src/Views/ad-banner-right-sidebar.php:51
+msgid "Request Support"
+msgstr "Ondersteuning aanvragen"
+
+#: src/Views/ad-banner-right-sidebar.php:62
+msgid "Detailed documentation is also available on the plugin website."
+msgstr ""
+"Gedetailleerde documentatie is ook beschikbaar op de site van de plugin."
+
+#: src/Views/ad-banner-right-sidebar.php:69
+msgid "View Knowledge Base"
+msgstr "Kennisbank bekijken"
+
+#: src/Views/bulk-edit.php:39
+msgid "No Change"
+msgstr "Geen wijziging"
+
+#: src/Views/bulk-edit.php:43
+msgid "Add or update action for %s"
+msgstr ""
+
+#: src/Views/bulk-edit.php:49
+msgid "Add action if none exists for %s"
+msgstr ""
+
+#: src/Views/bulk-edit.php:55
+msgid "Update the existing actions for %s"
+msgstr ""
+
+#: src/Views/bulk-edit.php:60
+#, fuzzy
+#| msgid "Remove from posts"
+msgid "Remove action from %s"
+msgstr "Verwijderen uit berichten"
+
+#: src/Views/bulk-edit.php:72 src/Views/classic-metabox.php:56
+#: src/Views/quick-edit.php:25
+msgid "Month"
+msgstr "Maand"
+
+#: src/Views/bulk-edit.php:96 src/Views/classic-metabox.php:78
+#: src/Views/quick-edit.php:47
+msgid "Day"
+msgstr "Dag"
+
+#: src/Views/bulk-edit.php:103 src/Views/classic-metabox.php:27
+#: src/Views/quick-edit.php:54
+msgid "Year"
+msgstr "Jaar"
+
+#: src/Views/bulk-edit.php:110 src/Views/classic-metabox.php:85
+#: src/Views/quick-edit.php:61
+msgid "Hour"
+msgstr "Uur"
+
+#: src/Views/bulk-edit.php:117 src/Views/classic-metabox.php:110
+#: src/Views/quick-edit.php:67
+msgid "Minute"
+msgstr "Minuut"
+
+#: src/Views/bulk-edit.php:148 src/Views/quick-edit.php:100
+msgid "Terms"
+msgstr ""
+
+#: src/Views/classic-metabox.php:18
+msgid "The published date/time will be used as the expiration value"
+msgstr "De datum/tijd van publicatie wordt gebruikt als vervaldatum"
+
+#: src/Views/classic-metabox.php:143
+#, fuzzy
+#| msgid ""
+#| "More than 1 heirachical taxonomy detected.  You must assign a default "
+#| "taxonomy on the settings screen."
+msgid ""
+"More than 1 hierarchical taxonomy detected.  You must assign a default "
+"taxonomy on the settings screen."
+msgstr ""
+"Meer dan 1 hiërarchische taxonomie gedetecteerd. Je moet een standaard "
+"taxonomie op het instellingen scherm toewijzen."
+
+#: src/Views/expire-column.php:31
+msgid "Cron event scheduled."
+msgstr "Cron gebeurtenis gepland."
+
+#: src/Views/expire-column.php:37
+msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
+msgstr ""
+
+#: src/Views/expire-column.php:63
+msgid "This action will can not run correctly."
+msgstr ""
+
+#: src/Views/expire-column.php:64
+msgid ""
+"Action could not be scheduled due to a configuration issue. Please attempt "
+"to schedule it again."
+msgstr ""
+
+#: src/Views/expire-column.php:69
+#, fuzzy
+#| msgid "Future Documentation"
+msgid "No future action"
+msgstr "Future documentatie"
+
+#: src/Views/menu-advanced.php:23
+msgid "Advanced Options"
+msgstr "Geavanceerde opties"
+
+#: src/Views/menu-advanced.php:25
+msgid ""
+"Please do not update anything here unless you know what it entails. For "
+"advanced users only."
+msgstr ""
+"Update hier niets, tenzij je weet wat het inhoudt. Alleen voor gevorderde "
+"gebruikers."
+
+#: src/Views/menu-advanced.php:35
+msgid "Block Editor Support"
+msgstr "Ondersteuning voor blok-editor"
+
+#: src/Views/menu-advanced.php:41
+msgid "Show Gutenberg style box"
+msgstr "Gutenberg stijl box tonen"
+
+#: src/Views/menu-advanced.php:47
+msgid "Show Classic Editor style box"
+msgstr "Stijl box klassieke editor weergeven"
+
+#: src/Views/menu-advanced.php:49
+msgid ""
+"Toggle between native support for the Block Editor or the backward "
+"compatible Classic Editor style metabox."
+msgstr ""
+"Toggle tussen native ondersteuning voor de blok-editor of de achterwaarts "
+"compatibele klassieke editor stijl metabox."
+
+#: src/Views/menu-advanced.php:57
+msgid "Future Action Column Style"
+msgstr ""
+
+#: src/Views/menu-advanced.php:67
+msgid "Detailed"
+msgstr ""
+
+#: src/Views/menu-advanced.php:74
+msgid "Simplified"
+msgstr ""
+
+#: src/Views/menu-advanced.php:76
+msgid ""
+"\"Detailed\" will display all information in the Future Action column. "
+"\"Simplified\" will display only the icon and date/time."
+msgstr ""
+
+#: src/Views/menu-advanced.php:85
+msgid "Choose Which User Roles Can Use PublishPress Future"
+msgstr "Kies welke gebruikersrollen PublishPress Future kunnen gebruiken"
+
+#: src/Views/menu-advanced.php:116
+msgid "Preserve Data After Deactivating the Plugin"
+msgstr "Bewaar gegevens na het deactiveren van de plugin"
+
+#: src/Views/menu-advanced.php:125
+msgid "Preserve data"
+msgstr "Gegevens bewaren"
+
+#: src/Views/menu-advanced.php:134
+msgid "Delete data"
+msgstr "Gegevens wissen"
+
+#: src/Views/menu-advanced.php:138
+msgid ""
+"Toggle between preserving or deleting data after the plugin is deactivated."
+msgstr ""
+"Toggle tussen bewaren of wissen van gegevens nadat de plugin gedeactiveerd "
+"is."
+
+#: src/Views/menu-advanced.php:149 src/Views/menu-display.php:138
+#: src/Views/menu-general.php:207
+msgid "Save Changes"
+msgstr "Wijzigingen opslaan"
+
+#: src/Views/menu-debug-log.php:7
+msgid ""
+"Below is a dump of the debugging table, this should be useful for "
+"troubleshooting."
+msgstr ""
+"Onderstaand is een overzicht van de debugging tabel, welke handig is voor "
+"foutopsporing."
+
+#: src/Views/menu-debug-log.php:24
+msgid "Debugging table is currently empty."
+msgstr "Debugging tabel is momenteel leeg."
+
+#: src/Views/menu-debug-log.php:31
+msgid "Timestamp"
+msgstr "Tijdstempel"
+
+#: src/Views/menu-diagnostics.php:22
+#, fuzzy
+#| msgid "Advanced Diagnostics"
+msgid "Advanced Diagnostics and Tools"
+msgstr "Geavanceerde diagnose"
+
+#: src/Views/menu-diagnostics.php:26
+#, fuzzy
+#| msgid "WP-Cron Status"
+msgid "WP-Cron Status Check"
+msgstr "WP-Cron status"
+
+#: src/Views/menu-diagnostics.php:30 src/Views/menu-diagnostics.php:43
+msgid "Passed"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:33
+#, fuzzy
+#| msgid "Disabled"
+msgid "WP Cron Disabled"
+msgstr "Uitgeschakeld"
+
+#: src/Views/menu-diagnostics.php:39
+msgid "Database Schema Check"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:46
+#, fuzzy
+#| msgid "Cron event not found!"
+msgid "Action Arguments table not found"
+msgstr "Cron gebeurtenis niet gevonden!"
+
+#: src/Views/menu-diagnostics.php:49
+msgid "Fix Database"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:58
+msgid "Debug Logging"
+msgstr "Debug logging"
+
+#: src/Views/menu-diagnostics.php:65
+msgid "Disable Debugging"
+msgstr "Debuggen uitschakelen"
+
+#: src/Views/menu-diagnostics.php:71
+msgid "Purge Debug Log"
+msgstr "Debug log opschonen"
+
+#: src/Views/menu-diagnostics.php:79
+msgid "View Debug Logs"
+msgstr "Debug logboeken bekijken"
+
+#: src/Views/menu-diagnostics.php:85
+msgid "Enable Debugging"
+msgstr "Debuggen inschakelen"
+
+#: src/Views/menu-diagnostics.php:98
+msgid "Migrate Legacy Future Actions"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:102
+msgid "Run Migration"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:105
+msgid ""
+"Migrate legacy future actions from WP Cron to the new Action Scheduler. This "
+"will run in the background and may take a while."
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:115
+msgid "Restore Legacy Action Arguments"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:119
+msgid "Run Data Restoration"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:122
+msgid ""
+"Restore legacy action arguments as Post Meta. This is useful if you have "
+"issues with 3rd party plugins that read that data. This will run in the "
+"background and may take a while."
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:134
+#, fuzzy
+#| msgid "Current Cron Schedule"
+msgid "Legacy Cron Schedule"
+msgstr "Huidige cron planning"
+
+#: src/Views/menu-diagnostics.php:142
+msgid ""
+"\n"
+"                                    No cron events found for the plugin "
+"using WP Cron."
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:152
+msgid ""
+"The below table will show all currently scheduled cron events for the plugin "
+"with the next run time."
+msgstr ""
+"De onderstaande tabel toont alle momenteel geplande cron gebeurtenissen voor "
+"de plugin met de volgende runtime."
+
+#: src/Views/menu-diagnostics.php:167
+msgid "Event"
+msgstr "Gebeurtenis"
+
+#: src/Views/menu-diagnostics.php:170
+msgid "Posts and expiration settings"
+msgstr "Bericht en verval instellingen"
+
+#: src/Views/menu-diagnostics.php:229
+msgid "This is a legacy feature and will be removed in a future version."
+msgstr ""
+
+#: src/Views/menu-display.php:34
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: src/Views/menu-display.php:36
+msgid "Valid %s attributes:"
+msgstr "Geldige %s attributen:"
+
+#: src/Views/menu-display.php:40
+msgid ""
+"%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
+msgstr ""
+"%1$s - geldige opties zijn %2$sfull%3$s (standaard), %4$sdate%5$s, "
+"%6$stime%7$s"
+
+#: src/Views/menu-display.php:54 src/Views/menu-display.php:59
+msgid "%s - format set here will override the value set on the settings page"
+msgstr ""
+"%s - format dat hier is ingesteld, overschrijft de waarde die is ingesteld "
+"op de instellingenpagina"
+
+#: src/Views/menu-display.php:67
+msgid "Post Footer Display"
+msgstr "Bericht footer weergave"
+
+#: src/Views/menu-display.php:69
+#, fuzzy
+#| msgid ""
+#| "Enabling this below will display the expiration date automatically at the "
+#| "end of any post which is set to expire."
+msgid ""
+"Enabling this below will display the action date automatically at the end of "
+"any post which is set to run an action."
+msgstr ""
+"Bij het inschakelen van deze optie zal de vervaldatum automatisch aan het "
+"einde van het bericht getoond worden."
+
+#: src/Views/menu-display.php:76
+msgid "Show in Post Footer?"
+msgstr "Toon in bericht footer?"
+
+#: src/Views/menu-display.php:88
+#, fuzzy
+#| msgid ""
+#| "This will enable or disable displaying the post expiration date in the "
+#| "post footer."
+msgid ""
+"This will enable or disable displaying the future action date in the post "
+"footer."
+msgstr ""
+"Dit zal het tonen van de vervaldatum in- of uitschakelen voor het tonen aan "
+"het einde (footer) van de post."
+
+#: src/Views/menu-display.php:96
+msgid "Footer Contents"
+msgstr "Footer inhoud"
+
+#: src/Views/menu-display.php:101
+#, fuzzy
+#| msgid ""
+#| "Enter the text you would like to appear at the bottom of every post that "
+#| "will expire.  The following placeholders will be replaced with the post "
+#| "expiration date in the following format:"
+msgid ""
+"Enter the text you would like to appear at the bottom of every post which "
+"has an action scheduled.  The following placeholders will be replaced with "
+"the future action date in the following format:"
+msgstr ""
+"Vul de tekst in die je wilt zien onderaan elk bericht dat verstrijkt. De "
+"volgende plaatshouders worden vervangen door de vervaldatum in het volgende "
+"format:"
+
+#: src/Views/menu-display.php:119
+msgid "Footer Style"
+msgstr "Footer stijl"
+
+#: src/Views/menu-display.php:125
+msgid "Example: "
+msgstr ""
+
+#: src/Views/menu-display.php:131
+msgid "The inline css which will be used to style the footer text."
+msgstr "De inline css welke gebruikt wordt voor de stijl van de footer tekst."
+
+#: src/Views/menu-general.php:63
+msgid "Defaults"
+msgstr "Standaard"
+
+#: src/Views/menu-general.php:67
+msgid "Date Format"
+msgstr "Datum format"
+
+#: src/Views/menu-general.php:74
+#, fuzzy
+#| msgid ""
+#| "The default format to use when displaying the expiration date within a "
+#| "post using the shortcode or within the footer.  For information on valid "
+#| "formatting options, see: %s."
+msgid ""
+"The default format to use when displaying the action date within a post "
+"using the shortcode or within the footer.  For information on valid "
+"formatting options, see: %s."
+msgstr ""
+"De standaard format die moet worden gebruikt bij het weergeven van de "
+"vervaldatum in een bericht met behulp van de shortcode of in de footer.  Zie "
+"voor informatie over geldige format opties: %s."
+
+#: src/Views/menu-general.php:78 src/Views/menu-general.php:95
+msgid "PHP Date Function"
+msgstr "PHP date functie"
+
+#: src/Views/menu-general.php:84
+msgid "Time Format"
+msgstr "Tijd format"
+
+#: src/Views/menu-general.php:91
+#, fuzzy
+#| msgid ""
+#| "The default format to use when displaying the expiration time within a "
+#| "post using the shortcode or within the footer.  For information on valid "
+#| "formatting options, see: %s."
+msgid ""
+"The default format to use when displaying the action time within a post "
+"using the shortcode or within the footer.  For information on valid "
+"formatting options, see: %s."
+msgstr ""
+"De standaardindeling die moet worden gebruikt bij het weergeven van de "
+"verlooptijd binnen een bericht met behulp van de shortcode of in de footer.  "
+"Zie voor informatie over geldige opmaakopties: %s."
+
+#: src/Views/menu-general.php:110
+#, fuzzy
+#| msgid ""
+#| "Set the offset to use for the default expiration date and time. For "
+#| "information on formatting, see %1$s. For example, you could enter %2$s+1 "
+#| "month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
+#| "Thursday%7$s."
+msgid ""
+"Set the offset to use for the default action date and time. For information "
+"on formatting, see %1$s\n"
+"                                        . For example, you could enter "
+"%2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
+"Thursday%7$s. Please, use only terms in English."
+msgstr ""
+"Stel de offset in voor de standaard vervaldatum en -tijd. Voor informatie "
+"over de lay-out, zie %1$s. Je kunt bijvoorbeeld %2$s+1 month%3$s of %4$s+1 "
+"week 2 days 4 hours 2 seconds%5$s of %6$snext Thursday%7$s invoeren."
+
+#: src/Views/menu-general.php:129
+#, fuzzy
+#| msgid "Enable Email Notification?"
+msgid "Email Notification"
+msgstr "E-mailmelding inschakelen?"
+
+#: src/Views/menu-general.php:131
+#, fuzzy
+#| msgid ""
+#| "Whenever a post expires, an email can be sent to alert users of the "
+#| "expiration."
+msgid "Whenever an action runs, an email can be sent to alert users."
+msgstr ""
+"Wanneer een bericht verstrijkt, kan een e-mail worden verzonden om "
+"gebruikers van het verstrijken te waarschuwen."
+
+#: src/Views/menu-general.php:138
+msgid "Enable Email Notification?"
+msgstr "E-mailmelding inschakelen?"
+
+#: src/Views/menu-general.php:154
+#, fuzzy
+#| msgid ""
+#| "This will enable or disable the send of email notification on post "
+#| "expiration."
+msgid ""
+"This will enable or disable the send of email notification on future action."
+msgstr ""
+"Deze optie zal het verzenden van e-mails op de vervaldatum in of "
+"uitschakelen."
+
+#: src/Views/menu-general.php:162
+msgid "Include Blog Administrators?"
+msgstr "Inclusief blog beheerders?"
+
+#: src/Views/menu-general.php:180
+#, fuzzy
+#| msgid ""
+#| "This will include all users with the role of \"Administrator\" in the "
+#| "post expiration email."
+msgid ""
+"This will include all users with the role of \"Administrator\" in the email."
+msgstr ""
+"Hiermee worden de beheerders op de hoogte gebracht via e-mail op de "
+"vervaldatum."
+
+#: src/Views/menu-general.php:196
+#, fuzzy
+#| msgid ""
+#| "Enter a comma separate list of emails that you would like to be notified "
+#| "when the post expires.  This will be applied to ALL post types.  You can "
+#| "set post type specific emails on the Defaults tab."
+msgid ""
+"Enter a comma separate list of emails that you would like to be notified "
+"when the action runs.  This will be applied to ALL post types.  You can set "
+"post type specific emails on the Defaults tab."
+msgstr ""
+"Voer een komma gescheiden lijst met e-mails in die je wilt laten weten "
+"wanneer het bericht verloopt.  Dit wordt toegepast op ALLE berichttypen.  Je "
+"kunt specifieke e-mails van het berichttype instellen op het tab Standaard "
+"instellingen."
+
+#: src/Views/tabs.php:15
+msgid "General"
+msgstr ""
+
+#: src/Views/tabs.php:20
+msgid "Display"
+msgstr "Tonen"
+
+#: src/Views/tabs.php:25
+msgid "Post Types"
+msgstr "Berichttypen"
+
+#: src/Views/tabs.php:30
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+#: src/Views/tabs.php:35
+#, fuzzy
+#| msgid "Diagnostics"
+msgid "Diagnostics and Tools"
+msgstr "Diagnose"
+
+#: src/Views/tabs.php:43
+msgid "Debug"
+msgstr "Debuggen"
+
+#: src/Views/taxonomy-field.php:11
+msgid ""
+"Select the hierarchical taxonomy to be used for \"category\" based "
+"expiration."
+msgstr ""
+"Selecteer de hiërarchische taxonomie welke gebruikt zal worden voor "
+"\"categorie\" gebaseerde verlooptijd."
+
+#~ msgid "You are probably offline."
+#~ msgstr "Je bent waarschijnlijk offline."
+
+#~ msgid ""
+#~ "Media upload failed. If this is a photo or a large image, please scale it "
+#~ "down and try again."
+#~ msgstr ""
+#~ "Uploaden media mislukt. Als dit een foto of een grote afbeelding is, "
+#~ "verklein deze dan en probeer opnieuw."
+
+#~ msgid "An unknown error occurred."
+#~ msgstr "Er is een onbekende fout opgetreden."
+
+#~ msgid "The response is not a valid JSON response."
+#~ msgstr "De reactie is geen geldige JSON reactie."
+
+#~ msgctxt "text direction"
+#~ msgid "ltr"
+#~ msgstr "ltr"
+
+#~ msgid "Detailed post expiration log"
+#~ msgstr "Gedetailleerd vervaldatum bericht log"
+
+#~ msgid "%1$s (%2$s) has expired at %3$s. %4$s"
+#~ msgstr "%1$s (%2$s) is verlopen op %3$s. %4$s"
+
+#~ msgid "Expiration Taxonomies"
+#~ msgstr "Verloop taxonomieën"
+
+#~ msgid "Taxonomy: Remove"
+#~ msgstr "Taxonomie: verwijderen"
+
+#~ msgid "Taxonomy: Add"
+#~ msgstr "Taxonomie: toevoegen"
+
+#~ msgid "Taxonomy: Replace"
+#~ msgstr "Taxonomie: vervang"
+
+#~ msgid "Editor"
+#~ msgstr "Editor"
+
+#~ msgid "No cron events found for the plugin."
+#~ msgstr "Geen cron evenementen gevonden voor de plugin."
+
+#~ msgid "Type"
+#~ msgstr "Type"
+
+#~ msgid "Change & Add"
+#~ msgstr "Wijzig & toevoegen"
+
+#~ msgid "Add to posts"
+#~ msgstr "Toevoegen aan berichten"
+
+#~ msgid "Add expiry date if not enabled on posts"
+#~ msgstr "Vervaldatum toevoegen als deze niet is ingeschakeld op berichten"
+
+#~ msgid "Change on posts"
+#~ msgstr "Wijzigen in berichten"
+
+#~ msgid "Change expiry date if enabled on p  osts"
+#~ msgstr "Vervaldatum wijzigen indien ingeschakeld op berichten"
+
+#~ msgid "Trash"
+#~ msgstr "Prullenbak"
+
+#~ msgid "Expiration Email Notification"
+#~ msgstr "E-mailadres voor meldingen"
+
+#~ msgid ""
+#~ "Allows you to add an expiration date (minute) to posts which you can "
+#~ "configure to either delete the post, change it to a draft, or update the "
+#~ "post categories at expiration time."
+#~ msgstr ""
+#~ "Stelt je in staat om een vervaldatum (en tijd) in te stellen voor een "
+#~ "bericht/pagina en de status te veranderen in concept of het bericht te "
+#~ "verwijderen op de vervaldatum. Het is ook mogelijk om de categorie "
+#~ "automatisch te laten aanpassen op de vervaldatum."
+
+#~ msgid "Private"
+#~ msgstr "Privé"
+
+#~ msgid "Draft"
+#~ msgstr "Concept"
+
+#~ msgid "Default Expiration Values"
+#~ msgstr "Standaard verlooptijd instellingen"
+
+#~ msgid "This post will expire on"
+#~ msgstr "Dit bericht vervalt op"
+
+#~ msgid "Taxonomy Name"
+#~ msgstr "Taxonomienaam"
+
+#~ msgid "How to expire"
+#~ msgstr "Verval methode"
+
+#~ msgid "Enable Post Expiration"
+#~ msgstr "Bericht verlopen inschakelen"
+
+#~ msgid "Never"
+#~ msgstr "Nooit"
+
+#~ msgid "Expires"
+#~ msgstr "Vervalt"

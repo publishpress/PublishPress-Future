@@ -18,17 +18,10 @@
       "phpstan/extension-installer": true
     }
   },
-  "autoload": {
-    "psr-4": {
-      "PublishPress\\FuturePro\\": "src/classes"
-    }
-  },
   "minimum-stability": "dev",
   "require": {
-    "php": ">=5.6",
-    "publishpress/publishpress-future": "3.0.6",
-    "alledia/wordpress-edd-license-integration": "^2.3",
-    "publishpress/publishpress-instance-protection": "^1.0"
+    "php": ">=7.2.5",
+    "publishpress/publishpress-future": "dev-3.1.0-alias-plugin"
   },
   "require-dev": {
     "publishpress/publishpress-phpcs-standards": "dev-main",
@@ -48,23 +41,27 @@
     "giacocorsiglia/wordpress-stubs": "dev-master"
   },
   "scripts": {
-    "post-install-cmd": [
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
-    ],
-    "post-update-cmd": [
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
-    ],
-    "build:js-dev": "wp-scripts build --mode development",
-    "build:js-watch": "wp-scripts build --mode development --watch",
-    "build:js": "wp-scripts build --mode production",
     "build": "ppbuild build",
     "build:dir": "ppbuild build-dir",
     "build:clean": "ppbuild clean",
+    "build:js-dev": "wp-scripts build --mode development",
+    "build:js-watch": "wp-scripts build --mode development --watch",
+    "build:js": "wp-scripts build --mode production",
     "get:version": "ppbuild version",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
     "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
     "gen:pot": "wp i18n make-pot . ./languages/publishpress-future-pro.pot --domain=publishpress-future-pro --exclude=dev-workspace,.wordpress-org,.github,dist,tests --allow-root",
     "cleanup:gh-workflows": "user=publishpress repo=publishpress-future-pro; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
+    "gen:alias-plugin": "php dev-workspace/scripts/gen-alias-plugin.php",
+    "check:php": [
+      "@check:php-5.6",
+      "@check:php-7.2",
+      "@check:php-7.4",
+      "@check:php-8.0",
+      "@check:php-8.1",
+      "@check:php-8.2"
+    ],
+    "check:php-5.6": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./publishpress-future-pro.php",
     "check:php-7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
     "check:php-7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
     "check:php-8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
@@ -72,7 +69,19 @@
     "check:php-8.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2",
     "check:lint": "phplint",
     "check:phpcs": "phpcs",
-    "check:stan": "phpstan"
+    "check:stan": "phpstan",
+    "check:longpath": "longpath .",
+    "check:deps": "checkdep ./lib publishpress/publishpress-future",
+    "fix:deps": "mergedep ./lib publishpress/publishpress-future",
+    "post-install-cmd": [
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
+    ],
+    "post-update-cmd": [
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
+    ],
+    "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
+    "pre-update-cmd": "composer update --working-dir=./lib",
+    "pre-install-cmd": "composer install --working-dir=./lib"
   },
   "extra": {
     "plugin-slug": "publishpress-future-pro",

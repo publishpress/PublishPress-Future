@@ -1,10 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Future Pro\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
-"future-pro\n"
-"POT-Creation-Date: 2023-07-18T16:47:03+00:00\n"
-"PO-Revision-Date: 2023-07-25 13:35-0300\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
+"POT-Creation-Date: 2023-07-04T22:01:48+00:00\n"
+"PO-Revision-Date: 2023-07-30 10:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: Angelo Giammarresi - info@wocmultimedia.com\n"
 "Language: it_IT\n"
@@ -12,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: publishpress-future-pro.php\n"
@@ -41,8 +40,8 @@ msgid ""
 "PublishPress Future allows you to schedule automatic changes to posts, pages "
 "and other content types."
 msgstr ""
-"PublishPress Future consente di programmare modifiche automatiche a post, "
-"pagine e altri tipi di contenuti."
+"PublishPress Future consente di programmare modifiche automatiche ad "
+"articoli, pagine e altri tipi di contenuti."
 
 #. Author of the plugin
 msgid "PublishPress"
@@ -86,11 +85,11 @@ msgstr "Errore di convalida del modulo: il nonce non è stato verificato."
 
 #: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:103
 msgid "Change post status to custom status"
-msgstr "Cambiare lo stato del post in uno stato personalizzato"
+msgstr "Cambiare lo stato delll'articolo in uno stato personalizzato"
 
 #: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:117
 msgid "Change post status to %s"
-msgstr "Cambiare lo stato del post in %s"
+msgstr "Cambiare lo stato dell'articolo in %s"
 
 #: src/templates/settings-tab-license.html.php:11
 #: src/templates/settings-tab-license.html.php:17

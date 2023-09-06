@@ -1,0 +1,107 @@
+{
+  "name": "publishpress/publishpress-future",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "description": "",
+  "authors": [
+    {
+      "name": "PublishPress",
+      "email": "help@publishpress.com",
+      "homepage": "https://publishpress.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Aaron Axelsen",
+      "homepage": "http://postexpirator.tuxdocs.net/"
+    }
+  ],
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpstan/extension-installer": true,
+      "automattic/jetpack-autoloader": true
+    }
+  },
+  "prefer-stable": true,
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.2.5",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "lucatume/wp-browser": "^3",
+    "codeception/module-asserts": "^1.0",
+    "codeception/module-phpbrowser": "^1.0",
+    "codeception/module-webdriver": "^1.0",
+    "codeception/module-db": "^1.0",
+    "codeception/module-filesystem": "^1.0",
+    "codeception/module-cli": "^1.0",
+    "codeception/util-universalframework": "^1.0",
+    "codeception/module-rest": "^1.3",
+    "codeception/module-sequence": "^2.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+    "phpcompatibility/php-compatibility": "^9.3",
+    "wp-coding-standards/wpcs": "^2.3",
+    "phpmd/phpmd": "^2.13",
+    "squizlabs/php_codesniffer": "^3.5",
+    "overtrue/phplint": "^2.1",
+    "wp-cli/i18n-command": "^2.2",
+    "friendsofphp/php-cs-fixer": "^3.4",
+    "phpstan/phpstan": "^1.3",
+    "behat/behat": "^3.10",
+    "automattic/vipwpcs": "^2.3",
+    "publishpress/publishpress-phpcs-standards": "dev-main",
+    "ext-pdo": "*",
+    "ext-yaml": "*",
+    "szepeviktor/phpstan-wordpress": "^1.1",
+    "phpstan/extension-installer": "^1.2"
+  },
+  "scripts": {
+    "build": "ppbuild build",
+    "build:dir": "ppbuild build-dir",
+    "build:clean": "ppbuild clean",
+    "build:js": "wp-scripts build --mode production",
+    "build:js-dev": "wp-scripts build --mode development",
+    "build:js-watch": "wp-scripts build --mode development --watch",
+    "get:version": "ppbuild version",
+    "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
+    "gen:pot": "wp i18n make-pot . languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests, --allow-root",
+    "cleanup:gh-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
+    "check:longpath": "longpath .",
+    "check:lint": "phplint",
+    "check:phpcs": "phpcs",
+    "check:stan": "phpstan",
+    "check:php": [
+      "@check:php56",
+      "@check:php72",
+      "@check:php74",
+      "@check:php80",
+      "@check:php81",
+      "@check:php82"
+    ],
+    "check:php56": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php",
+    "check:php72": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
+    "check:php74": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
+    "check:php80": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
+    "check:php81": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
+    "check:php82": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2",
+    "tests:start": "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} start",
+    "tests:stop": "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} stop",
+    "tests:brun": "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} brun",
+    "tests:run": "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} run",
+    "tests:brun80": "pptests php8.0 brun",
+    "tests:run80": "pptests php8.0 run",
+    "tests:ip": "pptests php8.0 ip",
+    "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
+    "pre-update-cmd": "composer update --working-dir=./lib",
+    "pre-install-cmd": "composer install --working-dir=./lib"
+  },
+  "extra": {
+    "plugin-slug": "post-expirator",
+    "plugin-name": "publishpress-future",
+    "plugin-folder": "post-expirator"
+  }
+}

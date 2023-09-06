@@ -2,9 +2,9 @@
 
 namespace PublishPress\FuturePro;
 
-use PublishPress\EDD_License\Core\Container as EDDContainer;
-use PublishPress\EDD_License\Core\Services as EDDServices;
-use PublishPress\EDD_License\Core\ServicesConfig as EDDServicesConfig;
+use PublishPress\WordPressEDDLicense\Container as EDDContainer;
+use PublishPress\WordPressEDDLicense\Services as EDDServices;
+use PublishPress\WordPressEDDLicense\ServicesConfig as EDDServicesConfig;
 use PublishPress\Future\Core\DI\ContainerInterface;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\FuturePro\Controllers\CustomStatusesController;

@@ -7,24 +7,18 @@
  * @package PublishPressFuturePro
  */
 
-namespace PublishPress\FuturePro {
+namespace PublishPress\FuturePro;
 
-    defined('ABSPATH') or die('No direct script access allowed.');
+use Exception;
 
-    if (
-        defined('PUBLISHPRESS_FUTURE_BASE_PATH')
-        && file_exists(PUBLISHPRESS_FUTURE_BASE_PATH . '/post-expirator.php')
-    ) {
-        $pluginPath = PUBLISHPRESS_FUTURE_BASE_PATH . '/post-expirator.php';
-    }
+defined('ABSPATH') or die('No direct script access allowed.');
 
-    if (empty($pluginPath)) {
-        $pluginPath = __DIR__ . '/../vendor/publishpress/post-expirator/post-expirator.php';
-    }
-
-    if (! is_readable($pluginPath)) {
-        throw new \Exception('Free plugin is not readable on ' . $pluginPath);
-    }
-
-    include_once $pluginPath;
+$pluginPath = VENDOR_DIR . '/publishpress/publishpress-future/post-expirator.php';
+if (
+    ! is_file($pluginPath)
+    || ! is_readable($pluginPath)
+) {
+    throw new Exception('Free plugin is not readable on ' . $pluginPath);
 }
+
+include_once $pluginPath;

@@ -6,7 +6,7 @@
 
 namespace PublishPress\FuturePro\Core;
 
-use PublishPressFuture\Core\DI\ServicesAbstract as ServicesAbstractFree;
+use PublishPress\Future\Core\DI\ServicesAbstract as ServicesAbstractFree;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 abstract class ServicesAbstract

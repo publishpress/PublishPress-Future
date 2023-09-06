@@ -6,9 +6,8 @@
 
 namespace PublishPress\FuturePro\Core;
 
-use PublishPressFuture\Modules\Settings\HooksAbstract as SettingsHooksAbstractFree;
-use PublishPressFuture\Modules\Expirator\HooksAbstract as ExpirationHooksAbstractFree;
-use PublishPressFuture\Modules\Debug\HooksAbstract as DebugHooksAbstractFree;
+use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstractFree;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstractFree;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 

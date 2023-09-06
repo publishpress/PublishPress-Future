@@ -16,7 +16,7 @@ defined('ABSPATH') or die('No direct script access allowed.');
 class EddIntegrationController implements ModuleInterface
 {
     /**
-     * @var \PublishPressFuture\Core\HookableInterface
+     * @var \PublishPress\Future\Core\HookableInterface
      */
     private $hooks;
 

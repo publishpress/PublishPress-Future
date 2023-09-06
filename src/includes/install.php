@@ -7,13 +7,13 @@
  * @package PublishPressFuturePro
  */
 
-namespace PublishPress\FuturePro {
+namespace PublishPress\FuturePro;
 
-    use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Core\HooksAbstract;
 
-    defined('ABSPATH') or die('No direct script access allowed.');
-    function install()
-    {
-        do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
-    }
+defined('ABSPATH') or die('No direct script access allowed.');
+
+function install()
+{
+    do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
 }

@@ -1,0 +1,1131 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Post Expirator 2.4.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
+"POT-Creation-Date: 2023-07-18T21:43:27+00:00\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: PostExpirator Translate Team\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.3.2\n"
+
+#. Plugin Name of the plugin
+#: legacy/classes/Facade.class.php:416 legacy/functions.php:339
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:80
+#: src/Views/tabs.php:55
+msgid "PublishPress Future"
+msgstr "PublishPress Future"
+
+#. Plugin URI of the plugin
+msgid "http://wordpress.org/extend/plugins/post-expirator/"
+msgstr "http://wordpress.org/extend/plugins/post-expirator/"
+
+#. Description of the plugin
+msgid ""
+"PublishPress Future allows you to schedule automatic changes to posts, pages "
+"and other content types."
+msgstr ""
+"O PublishPress Future permite que você programe alterações automáticas em "
+"posts, páginas e outros tipos de conteúdo."
+
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin
+msgid "http://publishpress.com"
+msgstr "http://publishpress.com"
+
+#: legacy/classes/Display.class.php:88
+msgid "You do not have permission to configure PublishPress Future."
+msgstr "Você não tem permissão para configuar o PublishPress Future."
+
+#: legacy/classes/Display.class.php:181
+msgid "Debugging Disabled"
+msgstr "Depuração Desativada"
+
+#: legacy/classes/Display.class.php:186
+msgid "Debugging Enabled"
+msgstr "Depuração Ativada"
+
+#: legacy/classes/Display.class.php:194
+msgid "Debugging Table Emptied"
+msgstr "Tabela de Depuração Esvaziada"
+
+#: legacy/classes/Display.class.php:200
+msgid ""
+"The legacy future actions migration has been enqueued and will run "
+"asynchronously."
+msgstr ""
+"A migração de ações futuras legadas foi enfileirada e será executada de "
+"forma assíncrona."
+
+#: legacy/classes/Display.class.php:209
+msgid ""
+"The legacy actions arguments restoration has been enqueued and will run "
+"asynchronously."
+msgstr ""
+"A restauração dos argumentos de ações legadas foi enfileirada e será "
+"executada de forma assíncrona."
+
+#: legacy/classes/Display.class.php:219
+msgid "The database schema was fixed."
+msgstr "A estrutura do banco de dados foi corrigida."
+
+#: legacy/classes/Display.class.php:224
+msgid ""
+"The database schema could not be fixed. Please, contact the support team."
+msgstr ""
+"A estrutura do banco de dados não pode ser corrigida. Por favor, entre em "
+"contaot com o suporte."
+
+#: legacy/classes/Display.class.php:315 legacy/classes/Display.class.php:376
+msgid "Saved Options!"
+msgstr "Configurações salvas!"
+
+#: legacy/classes/Display.class.php:461
+msgid "If you like %s, please leave us a %s rating. Thank you!"
+msgstr "Se você gosta do %s, por favor deixe uma avaliação %s. Obrigado!"
+
+#: legacy/classes/Display.class.php:476
+msgid "About PublishPress Future"
+msgstr "Sobre PublishPress Future"
+
+#: legacy/classes/Display.class.php:478
+msgid "About"
+msgstr "Sobre"
+
+#: legacy/classes/Display.class.php:484
+msgid "Future Documentation"
+msgstr "Documentação do Future"
+
+#: legacy/classes/Display.class.php:486
+msgid "Documentation"
+msgstr "Documentação"
+
+#: legacy/classes/Display.class.php:492
+msgid "Contact the PublishPress team"
+msgstr "Entre em contato com a equipe do PublishPress"
+
+#: legacy/classes/Display.class.php:494
+msgid "Contact"
+msgstr "Contato"
+
+#: legacy/classes/Facade.class.php:415
+msgid "Taxonomy"
+msgstr "Taxonomia"
+
+#: legacy/classes/Facade.class.php:417 src/Views/bulk-edit.php:36
+#: src/Views/classic-metabox.php:11 src/Views/quick-edit.php:16
+msgid "Enable Future Action"
+msgstr "Habilitar Ação Futura"
+
+#: legacy/classes/Facade.class.php:418
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:44
+#: src/Modules/Settings/Controllers/Controller.php:215
+#: src/Views/bulk-edit.php:129 src/Views/bulk-edit.php:131
+#: src/Views/classic-metabox.php:117 src/Views/quick-edit.php:78
+#: src/Views/quick-edit.php:80
+msgid "Action"
+msgstr "Ação"
+
+#: legacy/classes/Facade.class.php:419
+msgid "Loading"
+msgstr "Carregando"
+
+#: legacy/classes/Facade.class.php:422
+msgid "No %s found."
+msgstr "Não foram encontradas %s."
+
+#: legacy/classes/Facade.class.php:425 src/Views/classic-metabox.php:138
+msgid ""
+"You must assign a hierarchical taxonomy to this post type to use this "
+"feature."
+msgstr ""
+"Você deve atribuir uma taxonomia herdeira a este tipo de post para usar este "
+"recurso."
+
+#: legacy/functions.php:32
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:103
+msgid "Settings"
+msgstr "Configurações"
+
+#: legacy/functions.php:62 src/Views/bulk-edit.php:30
+msgid "Future Action"
+msgstr "Ação Futura"
+
+#: legacy/functions.php:1214
+#: src/Modules/Settings/Controllers/Controller.php:228
+msgid "No taxonomies found"
+msgstr "Não foram encontradas taxonomias"
+
+#: services.php:68
+msgid "l F jS, Y"
+msgstr "l F jS, Y"
+
+#: services.php:69
+msgid "g:ia"
+msgstr "g:ia"
+
+#: services.php:70
+msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
+msgstr "O post expira às EXPIRATIONTIME do dia ACTIONDATE"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:81
+msgid "Future"
+msgstr "Future"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:91
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:92
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:41
+msgid "Future Actions"
+msgstr "Ações Futuras"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:170
+msgid "Log format"
+msgstr "Formato de log"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:177
+msgid "List"
+msgstr "Lista"
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:186
+msgid "Popup"
+msgstr "Popup"
+
+#: src/Modules/Expirator/ExpirationActions/DeletePost.php:46
+msgid "%s was not deleted."
+msgstr "%s não foi excluído."
+
+#: src/Modules/Expirator/ExpirationActions/DeletePost.php:52
+msgid "%s has been successfully deleted."
+msgstr "%s foi excluído com sucesso."
+
+#: src/Modules/Expirator/ExpirationActions/DeletePost.php:74
+msgid "Delete"
+msgstr "Excluir"
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:53
+msgid "No terms were added to the %s."
+msgstr "Nenhum termo foi adicionado à %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:63
+msgid ""
+"The following terms (%s) were added to the %s: \"%s\". The full list of "
+"terms on the post is: %s."
+msgstr ""
+"Os seguintes termos (%s) foram adicionados ao %s: \"%s\". A lista completa "
+"de termos na postagem é: %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryAdd.php:108
+msgid "Keep all current terms and add new terms"
+msgstr "Manter todos os termos atuais e adicionar novos termos"
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:53
+msgid "No terms were removed from the %s."
+msgstr "Nenhum termo foi removido de %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:63
+msgid ""
+"The following terms (%s) were removed from the %s: %s. The new list of terms "
+"on the post is: %s."
+msgstr ""
+"Os seguintes termos (%s) foram removidos do %s: %s. A nova lista de termos "
+"na postagem é: %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategoryRemove.php:110
+msgid "Remove selected terms"
+msgstr "Remover termos selecionados"
+
+#: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:53
+msgid "No terms were changed on the %s."
+msgstr "Nenhum termo foi alterado no %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:63
+msgid ""
+"The following terms (%s) were set to the %s: \"%s\". The old list of terms "
+"on the post was: %s."
+msgstr ""
+"Os seguintes termos (%s) foram definidos para %s: \"%s\". A lista antiga de "
+"termos na postagem era: %s."
+
+#: src/Modules/Expirator/ExpirationActions/PostCategorySet.php:105
+msgid "Remove all current terms and add new terms"
+msgstr "Remover todos os termos atuais e adicionar novos termos"
+
+#: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:49
+#: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:49
+#: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:49
+msgid "Status didn't change."
+msgstr "O status não mudou."
+
+#: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:56
+#: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:56
+#: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:56
+msgid "Status has been successfully changed from \"%s\" to \"%s\"."
+msgstr "O status foi alterado com êxito de \"%s\" para \"%s\"."
+
+#: src/Modules/Expirator/ExpirationActions/PostStatusToDraft.php:85
+#: src/Modules/Expirator/ExpirationActions/PostStatusToPrivate.php:85
+#: src/Modules/Expirator/ExpirationActions/PostStatusToTrash.php:85
+msgid "Change status to %s"
+msgstr "Alterar o status para %s"
+
+#: src/Modules/Expirator/ExpirationActions/StickPost.php:45
+#: src/Modules/Expirator/ExpirationActions/UnstickPost.php:45
+msgid "%s didn't change."
+msgstr "%s não foi alterado."
+
+#: src/Modules/Expirator/ExpirationActions/StickPost.php:51
+msgid "%s has been added to stickies list."
+msgstr "%s foi adicionado à lista de fixados."
+
+#: src/Modules/Expirator/ExpirationActions/StickPost.php:73
+msgid "Stick"
+msgstr "Fixar"
+
+#: src/Modules/Expirator/ExpirationActions/UnstickPost.php:51
+msgid "%s has been removed from stickies list."
+msgstr "%s foi removido da lista de fixados."
+
+#: src/Modules/Expirator/ExpirationActions/UnstickPost.php:73
+msgid "Unstick"
+msgstr "Desafixar"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:449
+msgid "Email is disabled"
+msgstr "O e-mail está desativado"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:453
+msgid "Email sent"
+msgstr "Email enviado"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:453
+msgid "Email not sent"
+msgstr "E-mail não enviado"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:524
+msgid "%s. %s on %s. The post link is %s"
+msgstr "%s. %s em %s. O link da postagem é %s"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:541
+msgid "Future Action Complete \"%s\""
+msgstr "Ação Futura Completa “%s”"
+
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:544
+msgid "[%1$s] %2$s"
+msgstr "[%1$s] %2$s"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:51
+msgid "Run"
+msgstr "Executar"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:52
+msgid "Process the action now"
+msgstr "Processar a ação agora"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:55
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:56
+msgid ""
+"Cancel the action. This will prevent the action from running in the future"
+msgstr "Cancelar a ação. Isso impedirá que a ação seja executada no futuro"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:119
+msgid "Action Logs"
+msgstr "Registros de Ações"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:379
+msgid "%s: [%d] %s%s%s"
+msgstr "%s: [%d] %s%s%s"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:400
+msgid "Terms: %s"
+msgstr "Termos: %s"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:437
+msgid "View log"
+msgstr "Visualizar o log"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:448
+msgid "Action: "
+msgstr "Ação: "
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:454
+msgid "Status: "
+msgstr "Status: "
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:460
+msgid "Arguments: "
+msgstr "Argumentos: "
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:466
+msgid "Scheduled date: "
+msgstr "Data programada: "
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:480
+#: src/Views/bulk-edit.php:68 src/Views/menu-diagnostics.php:164
+#: src/Views/quick-edit.php:22
+msgid "Date"
+msgstr "Data"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:481
+#: src/Views/menu-debug-log.php:32
+msgid "Message"
+msgstr "Mensagem"
+
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:515
+msgid "Async"
+msgstr "Assíncrono"
+
+#: src/Modules/Settings/Controllers/Controller.php:203
+msgid "Default Values"
+msgstr "Valores Padrão"
+
+#: src/Modules/Settings/Controllers/Controller.php:204
+msgid ""
+"Use the values below to set the default actions/values to be used for each "
+"for the corresponding post types.  These values can all be overwritten when "
+"creating/editing the post/page."
+msgstr ""
+"Use os valores abaixo para definir as ações/valores padrão a serem usados "
+"para cada um para os tipos de postagem correspondentes.  Todos esses valores "
+"podem ser substituídos ao criar/editar o post/página."
+
+#: src/Modules/Settings/Controllers/Controller.php:208
+#: src/Modules/Settings/Controllers/Controller.php:209
+msgid "Active"
+msgstr "Ativar"
+
+#: src/Modules/Settings/Controllers/Controller.php:210
+msgid "Inactive"
+msgstr "Desativar"
+
+#: src/Modules/Settings/Controllers/Controller.php:211
+msgid ""
+"Select whether the PublishPress Future meta box is active for this post type."
+msgstr ""
+"Selecione se o painel de Ações Futuras está habilitado para este tipo de "
+"post."
+
+#: src/Modules/Settings/Controllers/Controller.php:216
+msgid "Select the default action for the post type."
+msgstr "Selecione a ação padrão para espirar para o tipo de post."
+
+#: src/Modules/Settings/Controllers/Controller.php:220
+msgid "Auto-enable?"
+msgstr "Habilitar automaticamente?"
+
+#: src/Modules/Settings/Controllers/Controller.php:221
+#: src/Views/menu-diagnostics.php:62 src/Views/menu-display.php:81
+#: src/Views/menu-general.php:145 src/Views/menu-general.php:170
+msgid "Enabled"
+msgstr "Habilitar"
+
+#: src/Modules/Settings/Controllers/Controller.php:222
+#: src/Views/menu-diagnostics.php:82 src/Views/menu-display.php:86
+#: src/Views/menu-general.php:152 src/Views/menu-general.php:178
+msgid "Disabled"
+msgstr "Desabilitar"
+
+#: src/Modules/Settings/Controllers/Controller.php:223
+msgid "Select whether the PublishPress Future is enabled for all new posts."
+msgstr ""
+"Selecione se o painel de Ações Futuras está ativado para todas as novas "
+"postagens."
+
+#: src/Modules/Settings/Controllers/Controller.php:227
+msgid "Taxonomy (Hierarchical)"
+msgstr "Taxonomia (hierárquica)"
+
+#: src/Modules/Settings/Controllers/Controller.php:229
+msgid ""
+"Select the hierarchical taxonomy and terms to be used for taxonomy based "
+"expiration."
+msgstr ""
+"Selecione a taxonomia hierárquica e termos a serem usados para ações "
+"baseadas em “taxonomia”."
+
+#: src/Modules/Settings/Controllers/Controller.php:233
+#: src/Views/menu-general.php:189
+msgid "Who to Notify"
+msgstr "A quem notificar"
+
+#: src/Modules/Settings/Controllers/Controller.php:234
+msgid ""
+"Enter a comma separate list of emails that you would like to be notified "
+"when the action runs."
+msgstr ""
+"Entre com uma lista de emails separada por vírgula que você gostaria que "
+"fossem notificados quanto a ação futura for executada."
+
+#: src/Modules/Settings/Controllers/Controller.php:238
+#: src/Views/menu-general.php:101
+msgid "Default Date/Time Offset"
+msgstr "Deslocamento padrão de data/hora"
+
+#: src/Modules/Settings/Controllers/Controller.php:241
+msgid ""
+"Set the offset to use for the default action date and time. For information "
+"on formatting, see %1$s\n"
+"                                    . For example, you could enter %2$s+1 "
+"month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
+"Thursday%7$s. Please, use only terms in English."
+msgstr ""
+"Defina o deslocamento a ser usado para a data e hora da ação padrão. Para "
+"obter informações sobre formatação, consulte %1$s\n"
+"                                    . Por exemplo, você poderia inserir "
+"%2$s+1 month%3$s ou %4$s+1 week 2 days 4 hours 2 seconds%5$s ou %6$next "
+"Thursday%7$s. Por favor, use apenas termos em inglês."
+
+#: src/Modules/Settings/Controllers/Controller.php:246
+#: src/Views/menu-general.php:115
+msgid "PHP strtotime function"
+msgstr "Função strtotime do PHP"
+
+#: src/Modules/Settings/Controllers/Controller.php:257
+msgid "Default terms:"
+msgstr "Termos padrão:"
+
+#: src/Modules/Settings/Controllers/Controller.php:258
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+#: src/Modules/Settings/Controllers/Controller.php:331
+msgid "Form Validation Failure: Sorry, your nonce did not verify."
+msgstr "Falha na validação do formulário: Desculpe, seu nonce é inválido."
+
+#: src/Modules/VersionNotices/Module.php:45
+msgid ""
+"You're using PublishPress Future Free. The Pro version has more features and "
+"support. %sUpgrade to Pro%s"
+msgstr ""
+"Você está usando o PublishPress Future Free. A versão Pro tem mais recursos "
+"e suporte. %sAtualize para a versão Pro%s"
+
+#: src/Modules/VersionNotices/Module.php:68
+#: src/Views/ad-banner-right-sidebar.php:31
+msgid "Upgrade to Pro"
+msgstr "Atualizar para Pro"
+
+#: src/Views/ad-banner-right-sidebar.php:10
+msgid "Upgrade to PublishPress Future Pro"
+msgstr "Faça upgrade para o PublishPress Future Pro"
+
+#: src/Views/ad-banner-right-sidebar.php:16
+msgid "Enhance the power of PublishPress Future with the Pro version:"
+msgstr "Aumente o poder do PublishPress Future com a versão Pro:"
+
+#: src/Views/ad-banner-right-sidebar.php:23
+msgid "Support for future actions to custom statuses"
+msgstr "Suporte para ações futuras em status personalizados"
+
+#: src/Views/ad-banner-right-sidebar.php:25
+msgid "Remove PublishPress ads and branding"
+msgstr "Remover os anúncios e a marca do PublishPress"
+
+#: src/Views/ad-banner-right-sidebar.php:27
+msgid "Fast, professional support"
+msgstr "Suporte rápido e profissional"
+
+#: src/Views/ad-banner-right-sidebar.php:39
+msgid "Need PublishPress Future Support?"
+msgstr "Precisa de suporte para PublishPress Future?"
+
+#: src/Views/ad-banner-right-sidebar.php:45
+msgid "If you need help or have a new feature request, let us know."
+msgstr ""
+"Se precisar de ajuda ou tiver uma solicitação de novo recurso, entre em "
+"contato conosco."
+
+#: src/Views/ad-banner-right-sidebar.php:51
+msgid "Request Support"
+msgstr "Solicitar Suporte"
+
+#: src/Views/ad-banner-right-sidebar.php:62
+msgid "Detailed documentation is also available on the plugin website."
+msgstr "A documentação detalhada também está disponível no site do plug-in."
+
+#: src/Views/ad-banner-right-sidebar.php:69
+msgid "View Knowledge Base"
+msgstr "Ver Base de Conhecimento"
+
+#: src/Views/bulk-edit.php:39
+msgid "No Change"
+msgstr "Nenhuma alteração"
+
+#: src/Views/bulk-edit.php:43
+msgid "Add or update action for %s"
+msgstr "Adicionar ou atualizar ação para %s"
+
+#: src/Views/bulk-edit.php:49
+msgid "Add action if none exists for %s"
+msgstr "Adicionar ação se não houver nenhuma para %s"
+
+#: src/Views/bulk-edit.php:55
+msgid "Update the existing actions for %s"
+msgstr "Atualizar as ações existentes para %s"
+
+#: src/Views/bulk-edit.php:60
+msgid "Remove action from %s"
+msgstr "Remover ação de %s"
+
+#: src/Views/bulk-edit.php:72 src/Views/classic-metabox.php:56
+#: src/Views/quick-edit.php:25
+msgid "Month"
+msgstr "Mês"
+
+#: src/Views/bulk-edit.php:96 src/Views/classic-metabox.php:78
+#: src/Views/quick-edit.php:47
+msgid "Day"
+msgstr "Dia"
+
+#: src/Views/bulk-edit.php:103 src/Views/classic-metabox.php:27
+#: src/Views/quick-edit.php:54
+msgid "Year"
+msgstr "Ano"
+
+#: src/Views/bulk-edit.php:110 src/Views/classic-metabox.php:85
+#: src/Views/quick-edit.php:61
+msgid "Hour"
+msgstr "Hora"
+
+#: src/Views/bulk-edit.php:117 src/Views/classic-metabox.php:110
+#: src/Views/quick-edit.php:67
+msgid "Minute"
+msgstr "Minuto"
+
+#: src/Views/bulk-edit.php:148 src/Views/quick-edit.php:100
+msgid "Terms"
+msgstr "Termos"
+
+#: src/Views/classic-metabox.php:18
+msgid "The published date/time will be used as the expiration value"
+msgstr "A data/hora publicada será usada como valor de expiração"
+
+#: src/Views/classic-metabox.php:143
+msgid ""
+"More than 1 hierarchical taxonomy detected.  You must assign a default "
+"taxonomy on the settings screen."
+msgstr ""
+"Mais de 1 taxonomia hierárquica detectada.  Você deve atribuir uma taxonomia "
+"padrão na tela de configurações."
+
+#: src/Views/expire-column.php:31
+msgid "Cron event scheduled."
+msgstr "Evento Cron programado."
+
+#: src/Views/expire-column.php:37
+msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
+msgstr "%1$s%2$s%3$s em %5$s%4$s%6$s"
+
+#: src/Views/expire-column.php:63
+msgid "This action will can not run correctly."
+msgstr "Essa ação não poderá ser executada corretamente."
+
+#: src/Views/expire-column.php:64
+msgid ""
+"Action could not be scheduled due to a configuration issue. Please attempt "
+"to schedule it again."
+msgstr ""
+"A ação não pôde ser agendada devido a um problema de configuração. Tente "
+"agendá-la novamente."
+
+#: src/Views/expire-column.php:69
+msgid "No future action"
+msgstr "Nenhuma ação futura"
+
+#: src/Views/menu-advanced.php:23
+msgid "Advanced Options"
+msgstr "Opções avançadas"
+
+#: src/Views/menu-advanced.php:25
+msgid ""
+"Please do not update anything here unless you know what it entails. For "
+"advanced users only."
+msgstr ""
+"Não atualize nada aqui, a menos que você saiba o que isso implica. Somente "
+"para usuários avançados."
+
+#: src/Views/menu-advanced.php:35
+msgid "Block Editor Support"
+msgstr "Suporte ao Block Editor"
+
+#: src/Views/menu-advanced.php:41
+msgid "Show Gutenberg style box"
+msgstr "Mostrar caixa estilo Gutenberg"
+
+#: src/Views/menu-advanced.php:47
+msgid "Show Classic Editor style box"
+msgstr "Mostrar caixa estilo Editor Clássico"
+
+#: src/Views/menu-advanced.php:49
+msgid ""
+"Toggle between native support for the Block Editor or the backward "
+"compatible Classic Editor style metabox."
+msgstr ""
+"Alterne entre o suporte nativo para o Block Editor ou a metabox de estilo do "
+"Classic Editor compatível com versões anteriores."
+
+#: src/Views/menu-advanced.php:57
+msgid "Future Action Column Style"
+msgstr "Estilo de Coluna de Ações Futuras"
+
+#: src/Views/menu-advanced.php:67
+msgid "Detailed"
+msgstr "Detalhado"
+
+#: src/Views/menu-advanced.php:74
+msgid "Simplified"
+msgstr "Simplificado"
+
+#: src/Views/menu-advanced.php:76
+msgid ""
+"\"Detailed\" will display all information in the Future Action column. "
+"\"Simplified\" will display only the icon and date/time."
+msgstr ""
+"\"Detailed\" (Detalhado) exibirá todas as informações na coluna Future "
+"Action (Ação futura). \"Simplified\" (Simplificado) exibirá apenas o ícone e "
+"a data/hora."
+
+#: src/Views/menu-advanced.php:85
+msgid "Choose Which User Roles Can Use PublishPress Future"
+msgstr "Escolha quais funções de usuário podem usar o PublishPress Future"
+
+#: src/Views/menu-advanced.php:116
+msgid "Preserve Data After Deactivating the Plugin"
+msgstr "Preservar Dados Após Desativar o Plug-in"
+
+#: src/Views/menu-advanced.php:125
+msgid "Preserve data"
+msgstr "Preservar dados"
+
+#: src/Views/menu-advanced.php:134
+msgid "Delete data"
+msgstr "Excluir dados"
+
+#: src/Views/menu-advanced.php:138
+msgid ""
+"Toggle between preserving or deleting data after the plugin is deactivated."
+msgstr ""
+"Alternar entre preservar ou excluir dados depois que o plug-in for "
+"desativado."
+
+#: src/Views/menu-advanced.php:149 src/Views/menu-display.php:138
+#: src/Views/menu-general.php:207
+msgid "Save Changes"
+msgstr "Salvar Alterações"
+
+#: src/Views/menu-debug-log.php:7
+msgid ""
+"Below is a dump of the debugging table, this should be useful for "
+"troubleshooting."
+msgstr ""
+"Abaixo está o conteúdo da tabela de depuração, isso pode ser útil para a "
+"solução de problemas."
+
+#: src/Views/menu-debug-log.php:24
+msgid "Debugging table is currently empty."
+msgstr "A tabela de depuração está atualmente vazia."
+
+#: src/Views/menu-debug-log.php:31
+msgid "Timestamp"
+msgstr "Data/Hora"
+
+#: src/Views/menu-diagnostics.php:22
+msgid "Advanced Diagnostics and Tools"
+msgstr "Diagnósticos Avançados e Ferramentas"
+
+#: src/Views/menu-diagnostics.php:26
+msgid "WP-Cron Status Check"
+msgstr "Verificação do status do WP-Cron"
+
+#: src/Views/menu-diagnostics.php:30 src/Views/menu-diagnostics.php:43
+msgid "Passed"
+msgstr "Aprovado"
+
+#: src/Views/menu-diagnostics.php:33
+msgid "WP Cron Disabled"
+msgstr "WP Cron desativado"
+
+#: src/Views/menu-diagnostics.php:39
+msgid "Database Schema Check"
+msgstr "Verificação da Estrutura do Banco de Dados"
+
+#: src/Views/menu-diagnostics.php:46
+msgid "Action Arguments table not found"
+msgstr "Tabela de Argumentos de Ações não encontrada"
+
+#: src/Views/menu-diagnostics.php:49
+msgid "Fix Database"
+msgstr "Corrigir banco de dados"
+
+#: src/Views/menu-diagnostics.php:58
+msgid "Debug Logging"
+msgstr "Registro de depuração"
+
+#: src/Views/menu-diagnostics.php:65
+msgid "Disable Debugging"
+msgstr "Desativar a depuração"
+
+#: src/Views/menu-diagnostics.php:71
+msgid "Purge Debug Log"
+msgstr "Limpar registro de depuração"
+
+#: src/Views/menu-diagnostics.php:79
+msgid "View Debug Logs"
+msgstr "Exibir registros de depuração"
+
+#: src/Views/menu-diagnostics.php:85
+msgid "Enable Debugging"
+msgstr "Habilitar Depuração"
+
+#: src/Views/menu-diagnostics.php:98
+msgid "Migrate Legacy Future Actions"
+msgstr "Migrar Ações Futuras Legadas"
+
+#: src/Views/menu-diagnostics.php:102
+msgid "Run Migration"
+msgstr "Executar a Migração"
+
+#: src/Views/menu-diagnostics.php:105
+msgid ""
+"Migrate legacy future actions from WP Cron to the new Action Scheduler. This "
+"will run in the background and may take a while."
+msgstr ""
+"Migre as ações futuras legadas do WP Cron para o novo Action Scheduler. Isso "
+"será executado em segundo plano e pode demorar um pouco."
+
+#: src/Views/menu-diagnostics.php:115
+msgid "Restore Legacy Action Arguments"
+msgstr "Restaurar Argumentos de Ações Legados"
+
+#: src/Views/menu-diagnostics.php:119
+msgid "Run Data Restoration"
+msgstr "Executar Restauração de Dados"
+
+#: src/Views/menu-diagnostics.php:122
+msgid ""
+"Restore legacy action arguments as Post Meta. This is useful if you have "
+"issues with 3rd party plugins that read that data. This will run in the "
+"background and may take a while."
+msgstr ""
+"Restaurar argumentos de ação legados como Post Meta. Isso é útil se você "
+"tiver problemas com plug-ins de terceiros que leem esses dados. Isso será "
+"executado em segundo plano e pode demorar um pouco."
+
+#: src/Views/menu-diagnostics.php:134
+msgid "Legacy Cron Schedule"
+msgstr "Lista de Eventos Cron Legados"
+
+#: src/Views/menu-diagnostics.php:142
+msgid ""
+"\n"
+"                                    No cron events found for the plugin "
+"using WP Cron."
+msgstr ""
+"\n"
+"                                    Não foram encontrados eventos cron para "
+"o plug-in usando o WP Cron."
+
+#: src/Views/menu-diagnostics.php:152
+msgid ""
+"The below table will show all currently scheduled cron events for the plugin "
+"with the next run time."
+msgstr ""
+"A tabela abaixo mostrará todos os eventos cron atualmente agendados para o "
+"plug-in com o próximo tempo de execução."
+
+#: src/Views/menu-diagnostics.php:167
+msgid "Event"
+msgstr "Evento"
+
+#: src/Views/menu-diagnostics.php:170
+msgid "Posts and expiration settings"
+msgstr "Configurações de postagens e expiração"
+
+#: src/Views/menu-diagnostics.php:229
+msgid "This is a legacy feature and will be removed in a future version."
+msgstr "Esse é um recurso legado e será removido em uma versão futura."
+
+#: src/Views/menu-display.php:34
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: src/Views/menu-display.php:36
+msgid "Valid %s attributes:"
+msgstr "Atributos válidos %s:"
+
+#: src/Views/menu-display.php:40
+msgid ""
+"%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
+msgstr ""
+"%1$s - as opções válidas são %2$sfull%3$s (padrão), %4$sdate%5$s, "
+"%6$stime%7$s"
+
+#: src/Views/menu-display.php:54 src/Views/menu-display.php:59
+msgid "%s - format set here will override the value set on the settings page"
+msgstr ""
+"%s - o formato definido aqui substituirá o valor definido na página de "
+"configurações"
+
+#: src/Views/menu-display.php:67
+msgid "Post Footer Display"
+msgstr "Exibição no Rodapé do Post"
+
+#: src/Views/menu-display.php:69
+msgid ""
+"Enabling this below will display the action date automatically at the end of "
+"any post which is set to run an action."
+msgstr ""
+"A ativação da opção abaixo exibirá a data da ação automaticamente no final "
+"de qualquer postagem definida para executar uma ação."
+
+#: src/Views/menu-display.php:76
+msgid "Show in Post Footer?"
+msgstr "Mostrar no Rodapé do Post?"
+
+#: src/Views/menu-display.php:88
+msgid ""
+"This will enable or disable displaying the future action date in the post "
+"footer."
+msgstr ""
+"Isso ativará ou desativará a exibição da data da ação futura no rodapé da "
+"postagem."
+
+#: src/Views/menu-display.php:96
+msgid "Footer Contents"
+msgstr "Conteúdo do Rodapé"
+
+#: src/Views/menu-display.php:101
+msgid ""
+"Enter the text you would like to appear at the bottom of every post which "
+"has an action scheduled.  The following placeholders will be replaced with "
+"the future action date in the following format:"
+msgstr ""
+"Digite o texto que você deseja que apareça na parte inferior de cada "
+"postagem que tenha uma ação programada.  Os seguintes espaços reservados "
+"serão substituídos pela data da ação futura no seguinte formato:"
+
+#: src/Views/menu-display.php:119
+msgid "Footer Style"
+msgstr "Estilo de Rodapé"
+
+#: src/Views/menu-display.php:125
+msgid "Example: "
+msgstr "Exemplo: "
+
+#: src/Views/menu-display.php:131
+msgid "The inline css which will be used to style the footer text."
+msgstr "O css em linha que será usado para estilizar o texto do rodapé."
+
+#: src/Views/menu-general.php:63
+msgid "Defaults"
+msgstr "Padrões"
+
+#: src/Views/menu-general.php:67
+msgid "Date Format"
+msgstr "Formato da Data"
+
+#: src/Views/menu-general.php:74
+msgid ""
+"The default format to use when displaying the action date within a post "
+"using the shortcode or within the footer.  For information on valid "
+"formatting options, see: %s."
+msgstr ""
+"O formato padrão a ser usado ao exibir a data da ação em uma postagem usando "
+"o shortcode ou no rodapé.  Para obter informações sobre as opções de "
+"formatação válidas, consulte: %s."
+
+#: src/Views/menu-general.php:78 src/Views/menu-general.php:95
+msgid "PHP Date Function"
+msgstr "Função de Data do PHP"
+
+#: src/Views/menu-general.php:84
+msgid "Time Format"
+msgstr "Formato da Hora"
+
+#: src/Views/menu-general.php:91
+msgid ""
+"The default format to use when displaying the action time within a post "
+"using the shortcode or within the footer.  For information on valid "
+"formatting options, see: %s."
+msgstr ""
+"O formato padrão a ser usado ao exibir a hora da ação em uma postagem usando "
+"o shortcode ou no rodapé.  Para obter informações sobre as opções de "
+"formatação válidas, consulte: %s."
+
+#: src/Views/menu-general.php:110
+msgid ""
+"Set the offset to use for the default action date and time. For information "
+"on formatting, see %1$s\n"
+"                                        . For example, you could enter "
+"%2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext "
+"Thursday%7$s. Please, use only terms in English."
+msgstr ""
+"Defina o deslocamento a ser usado para a data e hora da ação padrão. Para "
+"obter informações sobre formatação, consulte %1$s\n"
+"                                        . Por exemplo, você poderia inserir "
+"%2$s+1 month%3$s ou %4$s+1 week 2 day 4 hours 2 seconds%5$s ou %6$snext "
+"Thursday%7$s. Por favor, use apenas termos em inglês."
+
+#: src/Views/menu-general.php:129
+msgid "Email Notification"
+msgstr "Notificação por Email"
+
+#: src/Views/menu-general.php:131
+msgid "Whenever an action runs, an email can be sent to alert users."
+msgstr ""
+"Sempre que uma ação é executada, um e-mail pode ser enviado para alertar os "
+"usuários."
+
+#: src/Views/menu-general.php:138
+msgid "Enable Email Notification?"
+msgstr "Habilitar a Notificação por E-mail?"
+
+#: src/Views/menu-general.php:154
+msgid ""
+"This will enable or disable the send of email notification on future action."
+msgstr ""
+"Isso ativará ou desativará o envio de notificações por e-mail sobre ações "
+"futuras."
+
+#: src/Views/menu-general.php:162
+msgid "Include Blog Administrators?"
+msgstr "Incluir Administradores do Blog?"
+
+#: src/Views/menu-general.php:180
+msgid ""
+"This will include all users with the role of \"Administrator\" in the email."
+msgstr ""
+"Isso incluirá no e-mail todos os usuários com a função de \"Administrador\"."
+
+#: src/Views/menu-general.php:196
+msgid ""
+"Enter a comma separate list of emails that you would like to be notified "
+"when the action runs.  This will be applied to ALL post types.  You can set "
+"post type specific emails on the Defaults tab."
+msgstr ""
+"Insira uma lista separada por vírgulas de e-mails que você gostaria de ser "
+"notificado quando a ação for executada.  Isso será aplicado a TODOS os tipos "
+"de postagem.  Você pode definir e-mails específicos para cada tipo de "
+"postagem na guia Defaults (Padrões)."
+
+#: src/Views/tabs.php:15
+msgid "General"
+msgstr "Geral"
+
+#: src/Views/tabs.php:20
+msgid "Display"
+msgstr "Exibição"
+
+#: src/Views/tabs.php:25
+msgid "Post Types"
+msgstr "Tipos de Post"
+
+#: src/Views/tabs.php:30
+msgid "Advanced"
+msgstr "Avançado"
+
+#: src/Views/tabs.php:35
+msgid "Diagnostics and Tools"
+msgstr "Diagnósticos e Ferramentas"
+
+#: src/Views/tabs.php:43
+msgid "Debug"
+msgstr "Depuração"
+
+#: src/Views/taxonomy-field.php:11
+msgid ""
+"Select the hierarchical taxonomy to be used for \"category\" based "
+"expiration."
+msgstr ""
+"Selecione a taxonomia hierárquica a ser usada para expiração baseada em "
+"\"categoria\"."
+
+#~ msgid ""
+#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been "
+#~ "successfully set."
+#~ msgstr ""
+#~ "%1$s (%2$s) expirou em %3$s. O status de \"%4$s\" foi definido com "
+#~ "sucesso."
+
+#~ msgid ""
+#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" status has been "
+#~ "successfully removed."
+#~ msgstr ""
+#~ "%1$s (%2$s) expirou em %3$s. O status de \"%4$s\" foi removido com "
+#~ "sucesso."
+
+#~ msgid ""
+#~ "%1$s (%2$s) has expired at %3$s. Post \"%4$s\" have now been set to "
+#~ "\"%5$s\"."
+#~ msgstr ""
+#~ "%1$s (%2$s) expirou em %3$s. O post \"%4$s\" já foi definido para "
+#~ "\"%5$s\"."
+
+#~ msgid "You're not allowed to set posts to expire"
+#~ msgstr "Você não tem permissão para colocar este post para expirar"
+
+#~ msgid "Forbidden"
+#~ msgstr "Acesso negado"
+
+#~ msgid "Change expiry date if enabled on posts"
+#~ msgstr "Alterar a data de validade se habilitada em postagens"
+
+#~ msgid "Change on posts"
+#~ msgstr "Alteração nos posts"
+
+#~ msgid "Add expiry date if not enabled on posts"
+#~ msgstr "Adicionar data de validade se não estiver habilitado em postagens"
+
+#~ msgid "Add to posts"
+#~ msgstr "Adicionar às postagens"
+
+#~ msgid "Change & Add"
+#~ msgstr "Alterar e Adicionar"
+
+#~ msgid "Type"
+#~ msgstr "Tipo"
+
+#~ msgid "Expiration Taxonomies"
+#~ msgstr "Categorias para expiração"
+
+#~ msgid "Never"
+#~ msgstr "Nunca"
+
+#~ msgid "Draft"
+#~ msgstr "Rascunho"
+
+#~ msgid "Trash"
+#~ msgstr "Lixeira"
+
+#~ msgid "Private"
+#~ msgstr "Privado"
+
+#~ msgid "Taxonomy: Replace"
+#~ msgstr "Categoria: Substituir"
+
+#~ msgid "Taxonomy: Add"
+#~ msgstr "Categoria: Adicionar"
+
+#~ msgid "Taxonomy: Remove"
+#~ msgstr "Categoria: Remover"
+
+#~ msgid "None"
+#~ msgstr "Nenhum"
+
+#~ msgid "Inherit from General Settings"
+#~ msgstr "Herdado de Configuraçes Gerais"
+
+#~ msgid "Custom"
+#~ msgstr "Customizado"
+
+#~ msgid "Publish Time"
+#~ msgstr "Hora de Publicação"

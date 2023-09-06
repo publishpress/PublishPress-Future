@@ -12,40 +12,23 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 
-# Ignores the "dev" composer file
-/src/vendor
-/packages
-
-codeception.yml
-tests/acceptance.suite.yml
-tests/functional.suite.yml
-tests/unit.suite.yml
-tests/wpunit.suite.yml
-
 .svn
 .git
 wpcom-helper.php
 
-/local.sh
 node_modules
 
 /.properties.ini
 
-/vendor/
+/vendor
 .idea/
-/dist/
-builder.yml
+/dist
 .env.testing
 .phplint-cache
 
 
 *.log
-vendor
-logs
-codeceptjs/output
 #bin
-/builder.yml
-/dist
 report.csv
 .php-cs-fixer.cache
 .vscode/
