@@ -82,7 +82,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [3.1.0] - UNRELEASED =
+= [3.1.0] - 06 Sep, 2023 =
 
 * CHANGED: Updated base plugin to 3.1.0;
 * CHANGED: Change min PHP version to 7.2.5. If not compatible, the plugin will not execute;
