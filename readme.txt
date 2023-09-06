@@ -92,10 +92,11 @@ This section describes how to install the plugin and get it working.
 * CHANGED: Replaced Psr/Container library with a prefixed version of the library to avoid conflicts with other plugins, #522;
 * CHANGED: Updated internal libraries to the latest versions;
 * CHANGED: Changed the priority of the hook `plugins_loaded` on the main plugin file to 8, #522;
+* CHANGED: Changed the priority of plugins_loaded callback from 12 to 8;
+* CHANGED: Update `.pot` and `.mo` files;
 * FIXED: Fix compatibility with Composer-based installations, using prefixed libraries, #522;
 * FIXED: Update translations for IT, #524;
 * FIXED: Fix some calls to the deprecated namespace `PublishPressFuture`, refactoring to the new namespace `PublishPress\Future`;
-* CHANGED: Changed the priority of plugins_loaded callback from 12 to 8;
 
 = [3.0.6] - 26 Jul 2023 =
 
