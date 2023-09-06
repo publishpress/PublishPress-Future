@@ -302,12 +302,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "7751166d206abf0c9198a078fb7c3774e18e65c7"
+                "reference": "e0927a700fcbd0667b80acb1d961e1e2d05736b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/7751166d206abf0c9198a078fb7c3774e18e65c7",
-                "reference": "7751166d206abf0c9198a078fb7c3774e18e65c7",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/e0927a700fcbd0667b80acb1d961e1e2d05736b4",
+                "reference": "e0927a700fcbd0667b80acb1d961e1e2d05736b4",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +368,7 @@
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues",
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/415-upgrade-to-php-5-drop"
             },
-            "time": "2023-09-05T20:25:46+00:00"
+            "time": "2023-09-06T13:21:02+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
