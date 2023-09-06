@@ -155,6 +155,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Removed the `vendor-locator-future` library. Internal vendor is now on a fixed path, `lib/vendor`, #522;
 * CHANGED: Deprecated constant `PUBLISHPRESS_FUTURE_VENDOR_PATH` in favor of `PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH`;
 * CHANGED: Update Action Scheduler library to 3.6.2;
+* CHANGED: Update the .pot and .mo files;
 
 = [3.0.6] - 26 Jul, 2023 =
 
