@@ -34,6 +34,7 @@ class Module implements ModuleInterface
             if (! get_transient('pp_future_version_notices_version_error')) {
                 set_transient('pp_future_version_notices_version_error', true, HOUR_IN_SECONDS);
 
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                 error_log('PublishPress Future: Library PublishPress Version Notices is not compatible with this version of PublishPress Future. Please update PublishPress plugins to the latest versions.');
             }
 
