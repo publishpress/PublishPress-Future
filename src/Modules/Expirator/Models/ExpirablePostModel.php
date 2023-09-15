@@ -323,7 +323,7 @@ class ExpirablePostModel extends PostModel
             } catch (NonexistentPostException $e) {
             }
 
-            $this->expirationIsEnabled = $this->scheduler->postIsScheduled($this->postId);
+            $this->expirationIsEnabled = $this->scheduler->postIsScheduled($this->getPostId());
         }
 
         return (bool)$this->expirationIsEnabled;
@@ -746,5 +746,40 @@ class ExpirablePostModel extends PostModel
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TERMS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
+    }
+
+    /**
+     * This method will schedule/unschedule future actions for the post based
+     * on the future action data found in the post meta. If no post meta is
+     * found, the post will be unscheduled.
+     *
+     * But it will represent a limitation when we support multiple future actions
+     * scheduled for the same post.
+     *
+     * @return void
+     */
+    public function syncScheduleWithPostMeta()
+    {
+        $timestampInPostMeta = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+        $scheduledInPostMeta = ! empty($timestampInPostMeta)
+                               && $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true) === 'saved';
+        $scheduled = $this->isExpirationEnabled();
+
+        if (! $scheduledInPostMeta && $scheduled) {
+            $this->scheduler->unschedule($this->getPostId());
+
+            return;
+        }
+
+        if ($scheduledInPostMeta) {
+            $opts = [
+                'expireType' => $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+                'id' => $this->getPostId(),
+                'category' => $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true),
+                'categoryTaxonomy' => $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true)
+            ];
+
+            $this->scheduler->schedule($this->getPostId(), $timestampInPostMeta, $opts);
+        }
     }
 }
