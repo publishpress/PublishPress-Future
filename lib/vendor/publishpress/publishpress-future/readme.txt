@@ -140,6 +140,11 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.1.1] - UNRELEASED =
+
+* ADDED: Add new bulk action for posts to update future action scheduler based on post's metadata, #538;
+* FIXED: Fix compatibility with 3rd party plugins that import posts, #538;
+
 = [3.1.0] - 06 Sep, 2023 =
 
 * FIXED: Fix compatibility with Composer-based installations, using prefixed libraries, #522;

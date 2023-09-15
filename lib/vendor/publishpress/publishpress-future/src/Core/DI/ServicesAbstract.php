@@ -66,4 +66,5 @@ abstract class ServicesAbstract
     const ACTION_SCHEDULER_LOGGER = 'future.free/action-scheduler/logger';
     const ACTION_SCHEDULER_RUNNER = 'future.free/action-scheduler/runner';
     const MIGRATIONS_FACTORY = 'future.free/migrations';
+    const NOTICES = 'future.free/notices-facade';
 }

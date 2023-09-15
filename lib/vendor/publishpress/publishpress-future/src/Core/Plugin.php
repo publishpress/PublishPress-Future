@@ -7,6 +7,7 @@ namespace PublishPress\Future\Core;
 
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -43,24 +44,32 @@ class Plugin implements InitializableInterface
     private $pluginSlug;
 
     /**
+     * @var NoticeFacade
+     */
+    private $notices;
+
+    /**
      * @param ModuleInterface[] $modules
      * @param object $legacyPlugin
      * @param HookableInterface $hooksFacade
      * @param string $pluginSlug
      * @param string $basePath
+     * @param NoticeFacade $notices
      */
     public function __construct(
         $modules,
         $legacyPlugin,
         HookableInterface $hooksFacade,
         $pluginSlug,
-        $basePath
+        $basePath,
+        NoticeFacade $notices
     ) {
         $this->modules = $modules;
         $this->legacyPlugin = $legacyPlugin;
         $this->hooks = $hooksFacade;
         $this->basePath = $basePath;
         $this->pluginSlug = $pluginSlug;
+        $this->notices = $notices;
     }
 
     public function initialize()
@@ -86,6 +95,8 @@ class Plugin implements InitializableInterface
         $pluginFile = $this->basePath . '/' . $this->pluginSlug . '.php';
         $this->hooks->registerActivationHook($pluginFile, [$this, 'activatePlugin']);
         $this->hooks->registerDeactivationHook($pluginFile, [$this, 'deactivatePlugin']);
+
+        $this->notices->init();
 
         $this->initializeModules();
     }

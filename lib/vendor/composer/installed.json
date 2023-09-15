@@ -304,17 +304,17 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.1.0",
-            "version_normalized": "3.1.0.0",
+            "version": "3.1.1-beta.1",
+            "version_normalized": "3.1.1.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "33d84eda85717b51e85ccd38f93a2eec98c78200"
+                "reference": "3eca7163be7b7cf0e18c20f96ec494088ff7b0b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/33d84eda85717b51e85ccd38f93a2eec98c78200",
-                "reference": "33d84eda85717b51e85ccd38f93a2eec98c78200",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/3eca7163be7b7cf0e18c20f96ec494088ff7b0b4",
+                "reference": "3eca7163be7b7cf0e18c20f96ec494088ff7b0b4",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "wp-cli/i18n-command": "^2.2",
                 "wp-coding-standards/wpcs": "^2.3"
             },
-            "time": "2023-09-06T15:36:38+00:00",
+            "time": "2023-09-15T16:33:55+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -357,7 +357,106 @@
                 "plugin-folder": "post-expirator"
             },
             "installation-source": "dist",
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "build": [
+                    "ppbuild build"
+                ],
+                "build:dir": [
+                    "ppbuild build-dir"
+                ],
+                "build:clean": [
+                    "ppbuild clean"
+                ],
+                "build:js": [
+                    "wp-scripts build --mode production"
+                ],
+                "build:js-dev": [
+                    "wp-scripts build --mode development"
+                ],
+                "build:js-watch": [
+                    "wp-scripts build --mode development --watch"
+                ],
+                "get:version": [
+                    "ppbuild version"
+                ],
+                "gen:mo": [
+                    "wp i18n make-mo ./languages ./languages --allow-root"
+                ],
+                "gen:pot": [
+                    "wp i18n make-pot . languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests, --allow-root"
+                ],
+                "cleanup:gh-workflows": [
+                    "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE"
+                ],
+                "check:longpath": [
+                    "longpath ."
+                ],
+                "check:lint": [
+                    "phplint"
+                ],
+                "check:phpcs": [
+                    "phpcs"
+                ],
+                "check:stan": [
+                    "phpstan"
+                ],
+                "check:php": [
+                    "@check:php56",
+                    "@check:php72",
+                    "@check:php74",
+                    "@check:php80",
+                    "@check:php81",
+                    "@check:php82"
+                ],
+                "check:php56": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php"
+                ],
+                "check:php72": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2"
+                ],
+                "check:php74": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4"
+                ],
+                "check:php80": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0"
+                ],
+                "check:php81": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1"
+                ],
+                "check:php82": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2"
+                ],
+                "tests:start": [
+                    "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} start"
+                ],
+                "tests:stop": [
+                    "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} stop"
+                ],
+                "tests:brun": [
+                    "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} brun"
+                ],
+                "tests:run": [
+                    "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} run"
+                ],
+                "tests:brun80": [
+                    "pptests php8.0 brun"
+                ],
+                "tests:run80": [
+                    "pptests php8.0 run"
+                ],
+                "tests:ip": [
+                    "pptests php8.0 ip"
+                ],
+                "pre-autoload-dump": [
+                    "composer dumpautoload --working-dir=./lib"
+                ],
+                "pre-update-cmd": [
+                    "composer update --working-dir=./lib"
+                ],
+                "pre-install-cmd": [
+                    "composer install --working-dir=./lib"
+                ]
+            },
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -374,8 +473,8 @@
                 }
             ],
             "support": {
-                "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.0"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.1-beta.1",
+                "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "install-path": "../publishpress/publishpress-future"
         },
@@ -648,17 +747,17 @@
         },
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.6.2",
-            "version_normalized": "3.6.2.0",
+            "version": "3.6.3",
+            "version_normalized": "3.6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc"
+                "reference": "c33dd732e37c90f37c3f9662f7eed888c11dc60d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc",
-                "reference": "4eb2fa9737a53e4d284dafcf3e0bf428b5f941bc",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/c33dd732e37c90f37c3f9662f7eed888c11dc60d",
+                "reference": "c33dd732e37c90f37c3f9662f7eed888c11dc60d",
                 "shasum": ""
             },
             "require-dev": {
@@ -667,7 +766,7 @@
                 "wp-cli/wp-cli": "~2.5.0",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2023-08-09T19:43:41+00:00",
+            "time": "2023-09-13T13:40:20+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "scripts-description": {
@@ -685,7 +784,7 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.2"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.3"
             },
             "install-path": "../woocommerce/action-scheduler"
         }
