@@ -144,6 +144,10 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 * ADDED: Add new bulk action for posts to update future action scheduler based on post's metadata, #538;
 * FIXED: Fix compatibility with 3rd party plugins that import posts, #538;
+* DEPRECATED: Deprecate class PublishPress\Future\Core\DI\ContainerInterface in favor of PublishPress\Psr\Container\ContainerInterface;
+* DEPRECATED: Deprecate class PublishPress\Future\Core\DI\ContainerNotInitializedException;
+* DEPRECATED: Deprecate class PublishPress\Future\Core\DI\ServiceProvider;
+* DEPRECATED: Deprecate interface PublishPress\Future\Core\DI\ServiceProviderInterface;
 
 = [3.1.0] - 06 Sep, 2023 =
 
