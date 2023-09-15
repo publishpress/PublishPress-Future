@@ -82,6 +82,11 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.1.1] - UNRELEASED =
+
+* ADDED: Add new bulk action for posts to update future action scheduler based on post's metadata, #538;
+* FIXED: Fix compatibility with 3rd party plugins that import posts, #538;
+
 = [3.1.0] - 06 Sep, 2023 =
 
 * CHANGED: Updated base plugin to 3.1.0;
