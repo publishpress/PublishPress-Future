@@ -1,7 +1,6 @@
 <?php
 
 use PublishPress\Future\Core\DI\Container;
-use PublishPress\Future\Core\DI\ContainerNotInitializedException;
 use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 use PublishPress\Future\Modules\Debug\DebugInterface;
 
@@ -21,7 +20,6 @@ class PostExpiratorDebug
 
     /**
      * Constructor.
-     * @throws ContainerNotInitializedException
      */
     public function __construct()
     {
