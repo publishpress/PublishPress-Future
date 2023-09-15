@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06c9f7111db1499b43775afdaceae589",
+    "content-hash": "8938b15b25031b24ff9dbf9d885a10c6",
     "packages": [
         {
             "name": "publishpress/publishpress-future",
@@ -29,7 +29,6 @@
                 "plugin-name": "publishpress-future",
                 "plugin-folder": "post-expirator"
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
@@ -42,8 +41,8 @@
             "description": "Deprecated plugin code. Will be removed soon.",
             "homepage": "https://publishpress.com/",
             "support": {
-                "issues": "https://github.com/publishpress/PublishPress-Future/issues",
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.0-alias-plugin"
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.0-alias-plugin",
+                "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "time": "2023-08-02T19:02:36+00:00"
         }
@@ -457,16 +456,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.25.1",
+            "version": "v3.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "8e21d69801de6b5ecb0dbe0bcdf967b335b1260b"
+                "reference": "d023ba6684055f6ea1da1352d8a02baca0426983"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/8e21d69801de6b5ecb0dbe0bcdf967b335b1260b",
-                "reference": "8e21d69801de6b5ecb0dbe0bcdf967b335b1260b",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/d023ba6684055f6ea1da1352d8a02baca0426983",
+                "reference": "d023ba6684055f6ea1da1352d8a02baca0426983",
                 "shasum": ""
             },
             "require": {
@@ -540,7 +539,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.25.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.26.1"
             },
             "funding": [
                 {
@@ -548,7 +547,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-09-04T01:22:52+00:00"
+            "time": "2023-09-08T19:09:07+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -965,12 +964,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "4dff4874304bcbe7e969ac2522dc360646b8c05d"
+                "reference": "8b513efa2390024ebc487d0feeea17b4b78fc186"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/4dff4874304bcbe7e969ac2522dc360646b8c05d",
-                "reference": "4dff4874304bcbe7e969ac2522dc360646b8c05d",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/8b513efa2390024ebc487d0feeea17b4b78fc186",
+                "reference": "8b513efa2390024ebc487d0feeea17b4b78fc186",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1020,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-09-01T15:36:15+00:00"
+            "time": "2023-09-07T10:27:45+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -1262,12 +1261,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "6523cc67aa72963fbe3b008238e77211fe4b4551"
+                "reference": "31210af4d0f2eaa8d60fd1ea2eb24544e9d9ecf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6523cc67aa72963fbe3b008238e77211fe4b4551",
-                "reference": "6523cc67aa72963fbe3b008238e77211fe4b4551",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/31210af4d0f2eaa8d60fd1ea2eb24544e9d9ecf9",
+                "reference": "31210af4d0f2eaa8d60fd1ea2eb24544e9d9ecf9",
                 "shasum": ""
             },
             "require": {
@@ -1317,7 +1316,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-09-05T14:22:44+00:00"
+            "time": "2023-09-15T14:22:32+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1887,12 +1886,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "3b71162a6bf0cde2bff1752e40a1788d8273d049"
+                "reference": "191ed14c00358f5cb4c286c3e9137510f52ff5c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/3b71162a6bf0cde2bff1752e40a1788d8273d049",
-                "reference": "3b71162a6bf0cde2bff1752e40a1788d8273d049",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/191ed14c00358f5cb4c286c3e9137510f52ff5c0",
+                "reference": "191ed14c00358f5cb4c286c3e9137510f52ff5c0",
                 "shasum": ""
             },
             "require": {
@@ -1938,7 +1937,7 @@
                 "source": "https://github.com/sirbrillig/phpcs-variable-analysis",
                 "wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
             },
-            "time": "2023-08-05T23:46:11+00:00"
+            "time": "2023-09-13T17:22:00+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1946,12 +1945,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "b0ecdf10fa5a15bbf341b6dd75d1b23bd803aaaf"
+                "reference": "7566b4d89de1d08d2a8ad85910507d6633a35d28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/b0ecdf10fa5a15bbf341b6dd75d1b23bd803aaaf",
-                "reference": "b0ecdf10fa5a15bbf341b6dd75d1b23bd803aaaf",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/7566b4d89de1d08d2a8ad85910507d6633a35d28",
+                "reference": "7566b4d89de1d08d2a8ad85910507d6633a35d28",
                 "shasum": ""
             },
             "require": {
@@ -1996,7 +1995,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2023-08-27T15:25:51+00:00"
+            "time": "2023-09-11T11:08:03+00:00"
         },
         {
             "name": "symfony/config",
@@ -3878,12 +3877,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "ee2be5aed2abe6d251b152fe61533e40cc45606a"
+                "reference": "8114cb4ef3a901c19f23a65cca7dca59c7335f1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/ee2be5aed2abe6d251b152fe61533e40cc45606a",
-                "reference": "ee2be5aed2abe6d251b152fe61533e40cc45606a",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/8114cb4ef3a901c19f23a65cca7dca59c7335f1c",
+                "reference": "8114cb4ef3a901c19f23a65cca7dca59c7335f1c",
                 "shasum": ""
             },
             "require": {
@@ -3941,7 +3940,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2023-08-30T17:54:44+00:00"
+            "time": "2023-09-13T13:25:50+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

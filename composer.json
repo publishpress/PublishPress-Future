@@ -18,6 +18,15 @@
       "phpstan/extension-installer": true
     }
   },
+  "repositories": [
+    {
+      "type": "github",
+      "url": "https://github.com/publishpress/publishpress-future",
+      "only": [
+        "publishpress/publishpress-future"
+      ]
+    }
+  ],
   "minimum-stability": "dev",
   "require": {
     "php": ">=7.2.5",
