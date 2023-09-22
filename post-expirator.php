@@ -119,7 +119,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             }
         );
 
-        add_action('plugins_loaded', function () {
+        add_action('init', function () {
             try {
                 loadDependencies();
 
@@ -128,7 +128,7 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             } catch (Exception $e) {
                 logCatchException($e);
             }
-        }, 5, 0);
+        }, 10, 0);
     } catch (Exception $e) {
         logCatchException($e);
     }
