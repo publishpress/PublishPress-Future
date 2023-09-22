@@ -12,11 +12,14 @@
  * Requires PHP: 7.2.5
  */
 
+namespace PublishPress\Future;
+
+use Exception;
 use PublishPress\Future\Core\Autoloader;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
-
-use function PublishPress\Future\logCatchException;
+use PublishPress\Future\Core\Plugin;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -76,29 +79,56 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
         require_once PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/woocommerce/action-scheduler/action-scheduler.php';
 
+        if (! class_exists('PublishPress\Future\Core\Autoloader')) {
+            require_once __DIR__ . '/src/Core/Autoloader.php';
+        }
+        Autoloader::register();
+
+        function loadDependencies()
+        {
+            if (defined('PUBLISHPRESS_FUTURE_LOADED_DEPENDENCIES')) {
+                return;
+            }
+
+            $pluginFile = __FILE__;
+
+            $services = require __DIR__ . '/services.php';
+            $container = new Container($services);
+
+            require_once __DIR__ . '/legacy/defines.php';
+            require_once __DIR__ . '/legacy/deprecated.php';
+            require_once __DIR__ . '/legacy/functions.php';
+            require_once __DIR__ . '/legacy/autoload.php';
+
+            define('PUBLISHPRESS_FUTURE_LOADED_DEPENDENCIES', true);
+        }
+
+        HooksFacade::registerActivationHook(
+            __FILE__,
+            function () {
+                loadDependencies();
+                Plugin::onActivate();
+            }
+        );
+
+        HooksFacade::registerDeactivationHook(
+            __FILE__,
+            function () {
+                    loadDependencies();
+                    Plugin::onDeactivate();
+            }
+        );
+
         add_action('plugins_loaded', function () {
             try {
-                if (! class_exists('PublishPress\Future\Core\Autoloader')) {
-                    require_once __DIR__ . '/src/Core/Autoloader.php';
-                }
-                Autoloader::register();
+                loadDependencies();
 
-                $pluginFile = __FILE__;
-
-                $services = require __DIR__ . '/services.php';
-                $container = new Container($services);
-
-                require_once __DIR__ . '/legacy/defines.php';
-                require_once __DIR__ . '/legacy/deprecated.php';
-                require_once __DIR__ . '/legacy/functions.php';
-                require_once __DIR__ . '/legacy/autoload.php';
-
+                $container = Container::getInstance();
                 $container->get(ServicesAbstract::PLUGIN)->initialize();
             } catch (Exception $e) {
                 logCatchException($e);
             }
         }, 5, 0);
-
     } catch (Exception $e) {
         logCatchException($e);
     }

@@ -2,7 +2,6 @@
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-use PublishPress\Future\Core\DI\ContainerInterface;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Paths;
@@ -56,6 +55,7 @@ use PublishPress\Future\Modules\Settings\Module as ModuleSettings;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
+use PublishPress\Psr\Container\ContainerInterface;
 use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 
 return [

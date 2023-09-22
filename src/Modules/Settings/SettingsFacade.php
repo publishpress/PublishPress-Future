@@ -5,6 +5,7 @@
 
 namespace PublishPress\Future\Modules\Settings;
 
+use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
@@ -69,22 +70,27 @@ class SettingsFacade
         }
     }
 
-    public function setDefaultSettings()
+    public static function setDefaultSettings()
     {
+        $container = Container::getInstance();
+
+        $defaultData = $container->get(Services::DEFAULT_DATA);
+        $options = $container->get(Services::OPTIONS);
+
         $defaultValues = [
-            'expirationdateDefaultDateFormat' => $this->defaultData[Services::DEFAULT_DATE_FORMAT],
-            'expirationdateDefaultTimeFormat' => $this->defaultData[Services::DEFAULT_TIME_FORMAT],
-            'expirationdateFooterContents' => $this->defaultData[Services::DEFAULT_FOOTER_CONTENT],
-            'expirationdateFooterStyle' => $this->defaultData[Services::DEFAULT_FOOTER_STYLE],
-            'expirationdateDisplayFooter' => $this->defaultData[Services::DEFAULT_FOOTER_DISPLAY],
-            'expirationdateDebug' => $this->defaultData[Services::DEFAULT_DEBUG],
-            'expirationdateDefaultDate' => $this->defaultData[Services::DEFAULT_EXPIRATION_DATE],
+            'expirationdateDefaultDateFormat' => $defaultData[Services::DEFAULT_DATE_FORMAT],
+            'expirationdateDefaultTimeFormat' => $defaultData[Services::DEFAULT_TIME_FORMAT],
+            'expirationdateFooterContents' => $defaultData[Services::DEFAULT_FOOTER_CONTENT],
+            'expirationdateFooterStyle' => $defaultData[Services::DEFAULT_FOOTER_STYLE],
+            'expirationdateDisplayFooter' => $defaultData[Services::DEFAULT_FOOTER_DISPLAY],
+            'expirationdateDebug' => $defaultData[Services::DEFAULT_DEBUG],
+            'expirationdateDefaultDate' => $defaultData[Services::DEFAULT_EXPIRATION_DATE],
             'expirationdateGutenbergSupport' => 1,
         ];
 
         foreach ($defaultValues as $optionName => $defaultValue) {
-            if ($this->options->getOption($optionName) === false) {
-                $this->options->updateOption($optionName, $defaultValue);
+            if ($options->getOption($optionName) === false) {
+                $options->updateOption($optionName, $defaultValue);
             }
         }
     }

@@ -53,9 +53,11 @@ interface HookableInterface
      */
     public function doAction($actionName, ...$args);
 
+    public static function registerActivationHook($pluginFile, $callback);
+
     /**
      * @param string $pluginFile
      * @param callable $callback
      */
-    public function registerDeactivationHook($pluginFile, $callback);
+    public static function registerDeactivationHook($pluginFile, $callback);
 }
