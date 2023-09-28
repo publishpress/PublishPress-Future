@@ -123,13 +123,14 @@ class BulkActionController implements InitializableInterface
     private function getSelectedPostsFromRequest(): array
     {
         return array_filter(
-            $_REQUEST['post'] ?? [],
+            $_REQUEST['post'] ?? [], // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             'intval'
         );
     }
 
     public function syncSchedulerWithPostMeta()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if ( ! isset($_REQUEST['action']) || $_REQUEST['action'] !== self::BULK_ACTION_SYNC) {
             return;
         }

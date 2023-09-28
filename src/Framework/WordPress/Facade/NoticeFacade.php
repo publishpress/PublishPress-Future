@@ -61,12 +61,15 @@ class NoticeFacade {
 
     public function renderNotices()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if (! isset($_GET['notice'])) {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         if (isset($this->notices[$_GET['notice']])) {
-            $notice = $this->notices[$_GET['notice']];
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $notice = $this->notices[sanitize_key($_GET['notice'])];
 
             ?>
             <div class="notice notice-<?php esc_attr_e($notice['type']); ?> <?php echo $notice['dismiss'] ? 'is-dismissible' : ''; ?>">
