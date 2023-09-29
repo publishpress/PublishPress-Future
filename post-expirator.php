@@ -106,7 +106,6 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         HooksFacade::registerActivationHook(
             __FILE__,
             function () {
-                loadDependencies();
                 Plugin::onActivate();
             }
         );

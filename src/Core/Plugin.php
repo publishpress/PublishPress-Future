@@ -116,23 +116,17 @@ class Plugin implements InitializableInterface
      */
     public static function onActivate()
     {
-        $container = Container::getInstance();
-        $hooks = $container->get(ServicesAbstract::HOOKS);
-
         /**
          * Callbacks hooked to this action can't be defined in callbacks of other actions like
          * `plugins_loaded` or `init` because this hook will be executed before those actions.
          */
-        $hooks->doAction(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
+        do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
 
         SettingsFacade::setDefaultSettings();
     }
 
     public static function onDeactivate()
     {
-        $container = Container::getInstance();
-        $hooks = $container->get(ServicesAbstract::HOOKS);
-
-        $hooks->doAction(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
+        do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
     }
 }

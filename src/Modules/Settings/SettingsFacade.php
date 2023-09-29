@@ -70,27 +70,26 @@ class SettingsFacade
         }
     }
 
+    // We can't use services from the container here because it is called before they are available, on plugin activation.
     public static function setDefaultSettings()
     {
-        $container = Container::getInstance();
-
-        $defaultData = $container->get(Services::DEFAULT_DATA);
-        $options = $container->get(Services::OPTIONS);
-
         $defaultValues = [
-            'expirationdateDefaultDateFormat' => $defaultData[Services::DEFAULT_DATE_FORMAT],
-            'expirationdateDefaultTimeFormat' => $defaultData[Services::DEFAULT_TIME_FORMAT],
-            'expirationdateFooterContents' => $defaultData[Services::DEFAULT_FOOTER_CONTENT],
-            'expirationdateFooterStyle' => $defaultData[Services::DEFAULT_FOOTER_STYLE],
-            'expirationdateDisplayFooter' => $defaultData[Services::DEFAULT_FOOTER_DISPLAY],
-            'expirationdateDebug' => $defaultData[Services::DEFAULT_DEBUG],
-            'expirationdateDefaultDate' => $defaultData[Services::DEFAULT_EXPIRATION_DATE],
+            'expirationdateDefaultDateFormat' => __('l F jS, Y', 'post-expirator'),
+            'expirationdateDefaultTimeFormat' => __('g:ia', 'post-expirator'),
+            'expirationdateFooterContents' => __(
+                'Post expires at EXPIRATIONTIME on ACTIONDATE',
+                'post-expirator'
+            ),
+            'expirationdateFooterStyle' => 'font-style: italic;',
+            'expirationdateDisplayFooter' => '0',
+            'expirationdateDebug' => '0',
+            'expirationdateDefaultDate' => 'null',
             'expirationdateGutenbergSupport' => 1,
         ];
 
         foreach ($defaultValues as $optionName => $defaultValue) {
-            if ($options->getOption($optionName) === false) {
-                $options->updateOption($optionName, $defaultValue);
+            if (get_option($optionName) === false) {
+                update_option($optionName, $defaultValue);
             }
         }
     }
