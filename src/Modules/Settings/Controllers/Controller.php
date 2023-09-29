@@ -93,7 +93,8 @@ class Controller implements InitializableInterface
         );
         $this->hooks->addAction(
             CoreAbstractHooks::ACTION_INIT,
-            [$this, 'initMigrations']
+            [$this, 'initMigrations'],
+            20
         );
     }
 
