@@ -6,7 +6,6 @@
 namespace PublishPress\Future\Core\DI;
 
 use Closure;
-use PublishPress\Psr\Container\ContainerInterface as PsrContainerInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -17,7 +16,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
  * @copyright 2019 F.R Michel
  * @copyright 2022 PublishPress
  */
-class Container implements PsrContainerInterface
+class Container implements ContainerInterface
 {
     /**
      * Singleton instance. This should be kept until we are
@@ -25,7 +24,7 @@ class Container implements PsrContainerInterface
      * legacy code. Otherwise, the legacy code can't reuse the
      * new code structure.
      *
-     * @var PsrContainerInterface
+     * @var ContainerInterface
      */
     private static $instance;
 
@@ -48,7 +47,7 @@ class Container implements PsrContainerInterface
         self::$instance = $this;
     }
 
-    private function registerServices($services)
+    public function registerServices($services)
     {
         $this->services = array_merge(
             $this->services,
@@ -57,7 +56,7 @@ class Container implements PsrContainerInterface
     }
 
     /**
-     * @return PsrContainerInterface
+     * @return ContainerInterface
      */
     public static function getInstance()
     {
