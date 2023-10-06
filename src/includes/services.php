@@ -19,23 +19,23 @@ use PublishPress\FuturePro\Models\SettingsModel;
 defined('ABSPATH') or die('No direct script access allowed.');
 
 return [
-    ServicesAbstract::PLUGIN_VERSION => PLUGIN_VERSION,
+    ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
 
-    ServicesAbstract::PLUGIN_SLUG => PLUGIN_SLUG,
+    ServicesAbstract::PLUGIN_SLUG => PUBLISHPRESS_FUTURE_PRO_PLUGIN_SLUG,
 
-    ServicesAbstract::PLUGIN_NAME => PLUGIN_NAME,
+    ServicesAbstract::PLUGIN_NAME => PUBLISHPRESS_FUTURE_PRO_PLUGIN_NAME,
 
-    ServicesAbstract::PLUGIN_AUTHOR => PLUGIN_AUTHOR,
+    ServicesAbstract::PLUGIN_AUTHOR => PUBLISHPRESS_FUTURE_PRO_PLUGIN_AUTHOR,
 
     ServicesAbstract::PLUGIN_FILE => 'publishpress-future-pro/publishpress-future-pro.php',
 
-    ServicesAbstract::BASE_PATH => BASE_PATH,
+    ServicesAbstract::BASE_PATH => PUBLISHPRESS_FUTURE_PRO_BASE_PATH,
 
-    ServicesAbstract::TEMPLATE_PATH => BASE_PATH . '/src/templates',
+    ServicesAbstract::TEMPLATE_PATH => PUBLISHPRESS_FUTURE_PRO_BASE_PATH . '/src/templates',
 
-    ServicesAbstract::EDD_SITE_URL => EDD_SITE_URL,
+    ServicesAbstract::EDD_SITE_URL => PUBLISHPRESS_FUTURE_PRO_EDD_SITE_URL,
 
-    ServicesAbstract::EDD_ITEM_ID => EDD_ITEM_ID,
+    ServicesAbstract::EDD_ITEM_ID => PUBLISHPRESS_FUTURE_PRO_EDD_ITEM_ID,
 
 
     /**

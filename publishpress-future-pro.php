@@ -38,22 +38,22 @@ if ($invalid_php_version || $invalid_wp_version) {
     return;
 }
 
-const PLUGIN_VERSION = '3.1.1-beta.1';
-const EDD_ITEM_ID    = '129032';
-const EDD_SITE_URL   = 'https://publishpress.com';
-const BASE_PATH      = __DIR__;
-const INCLUDES_DIR   = BASE_PATH . '/src/includes';
-const VENDOR_DIR     = BASE_PATH . '/lib/vendor';
-const PLUGIN_SLUG    = 'publishpress-future-pro';
-const PLUGIN_NAME    = 'PublishPress Future Pro';
-const FREE_PLUGIN_NAME = 'PublishPress Future';
-const PLUGIN_AUTHOR = 'PublishPress';
+define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION', '3.1.1-beta.1');
+define('PUBLISHPRESS_FUTURE_PRO_EDD_ITEM_ID', '129032');
+define('PUBLISHPRESS_FUTURE_PRO_EDD_SITE_URL', 'https://publishpress.com');
+define('PUBLISHPRESS_FUTURE_PRO_BASE_PATH', __DIR__);
+define('PUBLISHPRESS_FUTURE_PRO_INCLUDES_DIR', PUBLISHPRESS_FUTURE_PRO_BASE_PATH . '/src/includes');
+define('PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR', PUBLISHPRESS_FUTURE_PRO_BASE_PATH . '/lib/vendor');
+define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_SLUG', 'publishpress-future-pro');
+define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_NAME', 'PublishPress Future Pro');
+define('PUBLISHPRESS_FUTURE_PRO_FREE_PLUGIN_NAME', 'PublishPress Future');
+define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_AUTHOR', 'PublishPress');
 
-include_once INCLUDES_DIR . '/catch-exception.php';
+include_once PUBLISHPRESS_FUTURE_PRO_INCLUDES_DIR . '/catch-exception.php';
 
 try {
     // Active the plugin instance protection.
-    include_once INCLUDES_DIR . '/plugin-instance-protection.php';
+    include_once PUBLISHPRESS_FUTURE_PRO_INCLUDES_DIR . '/plugin-instance-protection.php';
 
     // If Free plugin is already loaded, terminate the plugin execution.
     if (defined('PUBLISHPRESS_FUTURE_LOADED')) {
@@ -61,7 +61,7 @@ try {
     }
 
     // Start the autoloader.
-    $autoloadFilePath = VENDOR_DIR . '/autoload.php';
+    $autoloadFilePath = PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR . '/autoload.php';
     if (
         ! class_exists('ComposerAutoloaderInitPublishPressFuturePro')
         && is_file($autoloadFilePath)
@@ -85,7 +85,7 @@ try {
             }
 
             // Initialize the plugin.
-            $services = require INCLUDES_DIR . '/services.php';
+            $services = require PUBLISHPRESS_FUTURE_PRO_INCLUDES_DIR . '/services.php';
             $container = Container::getInstance();
             $container->registerServices($services);
 
