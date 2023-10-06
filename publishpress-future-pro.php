@@ -76,7 +76,7 @@ try {
 
     require_once __DIR__ . '/src/includes/free-plugin-launcher.php';
 
-    add_action('plugins_loaded', function () {
+    add_action('init', function () {
         try {
             if (! class_exists('PublishPress\Future\Core\DI\Container')) {
                 throw new Exception(
@@ -102,7 +102,7 @@ try {
         } catch (Exception $e) {
             logCatchException($e);
         }
-    }, 8, 0);
+    }, 12, 0);
 } catch (Exception $e) {
     logCatchException($e);
 }
