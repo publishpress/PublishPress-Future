@@ -45,7 +45,7 @@ abstract class HooksAbstract
     const FILTER_EXPIRATION_ACTION_FACTORY = 'publishpressfuture_expiration_action_factory';
     const FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK = 'publishpressfuture_action_scheduler_column_hook';
     const ACTION_SYNC_SCHEDULER_WITH_POST_META = 'admin_action_sync_scheduler_with_post_meta';
-    const FILTER_BULK_ACTIONS_POST_EDIT = 'bulk_actions-edit-post';
+    const FILTER_BULK_ACTIONS_POST_EDIT = 'bulk_actions-edit-%s';
 
     public static function getActionLegacyMultisiteDelete($blogId)
     {

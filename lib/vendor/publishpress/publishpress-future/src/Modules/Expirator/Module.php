@@ -193,6 +193,12 @@ class Module implements ModuleInterface
             return;
         }
 
+        $currentUserModelFactory = $this->currentUserModelFactory;
+        $currentUserModel = $currentUserModelFactory();
+
+        if (! $currentUserModel->userCanExpirePosts()) {
+            return;
+        }
 
         wp_enqueue_script(
             'publishpress-future-expirator',

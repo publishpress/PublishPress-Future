@@ -404,6 +404,7 @@ class ExpirablePostModel extends PostModel
         $args = $this->actionArgsModel->getArgs();
         $args['post_title'] = $this->getTitle();
         $args['post_type'] = $this->getPostType();
+        $args['post_link'] = $this->getPermalink();
         $this->actionArgsModel->setArgs($args);
         $this->actionArgsModel->save();
 
@@ -536,6 +537,21 @@ class ExpirablePostModel extends PostModel
         }
 
         return $title;
+    }
+
+    public function getPermalink()
+    {
+        $permalink = parent::getPermalink();
+
+        if (empty($permalink)) {
+            $args = $this->actionArgsModel->getArgs();
+
+            if (! empty($args['post_link'])) {
+                $permalink = $args['post_link'];
+            }
+        }
+
+        return $permalink;
     }
 
 

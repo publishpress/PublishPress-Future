@@ -5,6 +5,7 @@
 
 namespace PublishPress\Future\Modules\Settings;
 
+use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
@@ -69,22 +70,26 @@ class SettingsFacade
         }
     }
 
-    public function setDefaultSettings()
+    // We can't use services from the container here because it is called before they are available, on plugin activation.
+    public static function setDefaultSettings()
     {
         $defaultValues = [
-            'expirationdateDefaultDateFormat' => $this->defaultData[Services::DEFAULT_DATE_FORMAT],
-            'expirationdateDefaultTimeFormat' => $this->defaultData[Services::DEFAULT_TIME_FORMAT],
-            'expirationdateFooterContents' => $this->defaultData[Services::DEFAULT_FOOTER_CONTENT],
-            'expirationdateFooterStyle' => $this->defaultData[Services::DEFAULT_FOOTER_STYLE],
-            'expirationdateDisplayFooter' => $this->defaultData[Services::DEFAULT_FOOTER_DISPLAY],
-            'expirationdateDebug' => $this->defaultData[Services::DEFAULT_DEBUG],
-            'expirationdateDefaultDate' => $this->defaultData[Services::DEFAULT_EXPIRATION_DATE],
+            'expirationdateDefaultDateFormat' => __('l F jS, Y', 'post-expirator'),
+            'expirationdateDefaultTimeFormat' => __('g:ia', 'post-expirator'),
+            'expirationdateFooterContents' => __(
+                'Post expires at EXPIRATIONTIME on ACTIONDATE',
+                'post-expirator'
+            ),
+            'expirationdateFooterStyle' => 'font-style: italic;',
+            'expirationdateDisplayFooter' => '0',
+            'expirationdateDebug' => '0',
+            'expirationdateDefaultDate' => 'null',
             'expirationdateGutenbergSupport' => 1,
         ];
 
         foreach ($defaultValues as $optionName => $defaultValue) {
-            if ($this->options->getOption($optionName) === false) {
-                $this->options->updateOption($optionName, $defaultValue);
+            if (get_option($optionName) === false) {
+                update_option($optionName, $defaultValue);
             }
         }
     }

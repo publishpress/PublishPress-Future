@@ -304,17 +304,17 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.1.1-beta.1",
-            "version_normalized": "3.1.1.0-beta1",
+            "version": "dev-develop-3.1.1",
+            "version_normalized": "dev-develop-3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "3eca7163be7b7cf0e18c20f96ec494088ff7b0b4"
+                "reference": "3b25e22a519d565d7a3142c7729445c3ab17ff87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/3eca7163be7b7cf0e18c20f96ec494088ff7b0b4",
-                "reference": "3eca7163be7b7cf0e18c20f96ec494088ff7b0b4",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/3b25e22a519d565d7a3142c7729445c3ab17ff87",
+                "reference": "3b25e22a519d565d7a3142c7729445c3ab17ff87",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "wp-cli/i18n-command": "^2.2",
                 "wp-coding-standards/wpcs": "^2.3"
             },
-            "time": "2023-09-15T16:33:55+00:00",
+            "time": "2023-10-06T17:27:36+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -473,7 +473,7 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.1-beta.1",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop-3.1.1",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "install-path": "../publishpress/publishpress-future"
@@ -607,17 +607,17 @@
         },
         {
             "name": "publishpress/wordpress-reviews",
-            "version": "v1.1.19",
-            "version_normalized": "1.1.19.0",
+            "version": "v1.1.20",
+            "version_normalized": "1.1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/library-wordpress-reviews.git",
-                "reference": "028e573eb7c5da2455a7a823cabbbe5e3f89ca9c"
+                "reference": "6d0b687a66439721b0432ef1320fd818cd56309f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/library-wordpress-reviews/zipball/028e573eb7c5da2455a7a823cabbbe5e3f89ca9c",
-                "reference": "028e573eb7c5da2455a7a823cabbbe5e3f89ca9c",
+                "url": "https://api.github.com/repos/publishpress/library-wordpress-reviews/zipball/6d0b687a66439721b0432ef1320fd818cd56309f",
+                "reference": "6d0b687a66439721b0432ef1320fd818cd56309f",
                 "shasum": ""
             },
             "require": {
@@ -636,12 +636,11 @@
                 "overtrue/phplint": "^2.1",
                 "phpmd/phpmd": "^2.8",
                 "publishpress/publishpress-plugin-builder": "^1.2",
-                "sebastian/phpcpd": "^5.0",
                 "squizlabs/php_codesniffer": "^3.5",
                 "wp-cli/i18n-command": "^2.2",
                 "wp-cli/wp-cli": "^2.5"
             },
-            "time": "2022-06-03T13:38:53+00:00",
+            "time": "2023-10-06T17:22:31+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -672,7 +671,7 @@
             ],
             "support": {
                 "issues": "https://github.com/publishpress/library-wordpress-reviews/issues",
-                "source": "https://github.com/publishpress/library-wordpress-reviews/tree/v1.1.19"
+                "source": "https://github.com/publishpress/library-wordpress-reviews/tree/v1.1.20"
             },
             "install-path": "../publishpress/wordpress-reviews"
         },

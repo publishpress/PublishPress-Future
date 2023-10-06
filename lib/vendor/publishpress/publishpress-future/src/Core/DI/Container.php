@@ -6,6 +6,7 @@
 namespace PublishPress\Future\Core\DI;
 
 use Closure;
+use PublishPress\Psr\Container\ContainerInterface as PsrContainerInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -16,7 +17,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
  * @copyright 2019 F.R Michel
  * @copyright 2022 PublishPress
  */
-class Container implements ContainerInterface
+class Container implements PsrContainerInterface
 {
     /**
      * Singleton instance. This should be kept until we are
@@ -24,13 +25,15 @@ class Container implements ContainerInterface
      * legacy code. Otherwise, the legacy code can't reuse the
      * new code structure.
      *
-     * @var ContainerInterface
+     * @var PsrContainerInterface
      */
     private static $instance;
+
     /**
      * @var array
      */
     private $resolvedEntries = [];
+
     /**
      * @var array
      */
@@ -38,14 +41,14 @@ class Container implements ContainerInterface
 
     public function __construct($services = [])
     {
-        if (! empty($services)) {
+        if ( ! empty($services)) {
             $this->registerServices($services);
         }
 
         self::$instance = $this;
     }
 
-    public function registerServices($services)
+    private function registerServices($services)
     {
         $this->services = array_merge(
             $this->services,
@@ -54,9 +57,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @return ContainerInterface
-     *
-     * @throws ContainerNotInitializedException
+     * @return PsrContainerInterface
      */
     public static function getInstance()
     {
@@ -74,9 +75,9 @@ class Container implements ContainerInterface
      *
      * @return mixed Entry.
      */
-    public function get($id)
+    public function get(string $id)
     {
-        if (! $this->has($id)) {
+        if ( ! $this->has($id)) {
             throw new ServiceNotFoundException($id);
         }
 
@@ -106,9 +107,9 @@ class Container implements ContainerInterface
      *
      * @return bool
      */
-    public function has($id)
+    public function has(string $id): bool
     {
         return array_key_exists($id, $this->services)
-            || array_key_exists($id, $this->resolvedEntries);
+               || array_key_exists($id, $this->resolvedEntries);
     }
 }
