@@ -2,7 +2,6 @@
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-use PublishPress\Future\Core\DI\ContainerInterface;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Paths;
@@ -15,6 +14,7 @@ use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
@@ -55,6 +55,7 @@ use PublishPress\Future\Modules\Settings\Module as ModuleSettings;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
+use PublishPress\Psr\Container\ContainerInterface;
 use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 
 return [
@@ -121,7 +122,8 @@ return [
             $container->get(ServicesAbstract::LEGACY_PLUGIN),
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::PLUGIN_SLUG),
-            $container->get(ServicesAbstract::BASE_PATH)
+            $container->get(ServicesAbstract::BASE_PATH),
+            $container->get(ServicesAbstract::NOTICES)
         );
     },
 
@@ -211,6 +213,15 @@ return [
      */
     ServicesAbstract::USERS => static function (ContainerInterface $container) {
         return new UsersFacade();
+    },
+
+    /**
+     * @return \PublishPress\Future\Framework\WordPress\Facade\NoticeFacade
+     */
+    ServicesAbstract::NOTICES => static function (ContainerInterface $container) {
+        return new NoticeFacade(
+            $container->get(ServicesAbstract::HOOKS)
+        );
     },
 
     /**
@@ -325,7 +336,8 @@ return [
             $container->get(ServicesAbstract::REQUEST),
             $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
             $container->get(ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY),
-            $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY)
+            $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY),
+            $container->get(ServicesAbstract::NOTICES)
         );
     },
 

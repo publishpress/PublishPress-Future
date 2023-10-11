@@ -28,7 +28,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
         $action = $postModel->getExpirationAction();
 
         if (is_object($action)) {
-            ?><span class="dashicons dashicons-clock icon-scheduled" title="<?php echo esc_attr__('Cron event scheduled.', 'post-expirator'); ?>"></span> <?php
+            ?><span class="dashicons dashicons-clock icon-scheduled" aria-hidden="true"></span> <?php
 
             if ($column_style === 'simple') {
                 echo esc_html(PostExpirator_Util::get_wp_date($format, $expirationDate));
@@ -60,7 +60,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
             }
 
         } else {
-            ?><span class="dashicons dashicons-warning icon-missed" title="<?php echo esc_attr__('This action will can not run correctly.', 'post-expirator'); ?>"></span> <?php
+            ?><span class="dashicons dashicons-warning icon-missed" aria-hidden="true"></span> <?php
             echo esc_html__('Action could not be scheduled due to a configuration issue. Please attempt to schedule it again.', 'post-expirator');
         }
     } else {

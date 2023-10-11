@@ -9,8 +9,10 @@ namespace PublishPress\Future\Modules\Expirator;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
+use PublishPress\Future\Modules\Expirator\Controllers\BulkActionController;
 use PublishPress\Future\Modules\Expirator\Controllers\BulkEditController;
 use PublishPress\Future\Modules\Expirator\Controllers\ExpirationController;
 use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController;
@@ -81,6 +83,11 @@ class Module implements ModuleInterface
      */
     private $settingsModelFactory;
 
+    /**
+     * @var \PublishPress\Future\Framework\WordPress\Facade\NoticeFacade
+     */
+    private $noticesFacade;
+
     public function __construct(
         $hooks,
         $site,
@@ -92,7 +99,8 @@ class Module implements ModuleInterface
         $request,
         \Closure $actionArgsModelFactory,
         \Closure $scheduledActionsTableFactory,
-        \Closure $settingsModelFactory
+        \Closure $settingsModelFactory,
+        NoticeFacade $noticesFacade
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -105,10 +113,12 @@ class Module implements ModuleInterface
         $this->actionArgsModelFactory = $actionArgsModelFactory;
         $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
         $this->settingsModelFactory = $settingsModelFactory;
+        $this->noticesFacade = $noticesFacade;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
         $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
+        $this->controllers['bulk_action'] = $this->factoryBulkActionController();
     }
 
 
@@ -156,6 +166,18 @@ class Module implements ModuleInterface
         );
     }
 
+    private function factoryBulkActionController()
+    {
+        return new BulkActionController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request,
+            $this->noticesFacade
+        );
+    }
+
     public function enqueueScripts()
     {
         $currentScreen = get_current_screen();
@@ -171,6 +193,12 @@ class Module implements ModuleInterface
             return;
         }
 
+        $currentUserModelFactory = $this->currentUserModelFactory;
+        $currentUserModel = $currentUserModelFactory();
+
+        if (! $currentUserModel->userCanExpirePosts()) {
+            return;
+        }
 
         wp_enqueue_script(
             'publishpress-future-expirator',

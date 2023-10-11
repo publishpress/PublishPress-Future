@@ -33,20 +33,20 @@ class Controller implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(HooksAbstract::ACTION_DEBUG_LOG, [$this, 'onActionDebugLog']);
+        $this->hooks->addAction(HooksAbstract::ACTION_DEBUG_LOG, [$this, 'onDebugLog']);
 
         $this->hooks->addAction(
             CoreAbstractHooks::ACTION_DEACTIVATE_PLUGIN,
-            [$this, 'onActionDeactivatePlugin']
+            [$this, 'onDeactivatePlugin']
         );
     }
 
-    public function onActionDebugLog($message)
+    public function onDebugLog($message)
     {
         $this->logger->debug($message);
     }
 
-    public function onActionDeactivatePlugin()
+    public function onDeactivatePlugin()
     {
         $preserveData = (bool)get_option('expirationdatePreserveData', 1);
 

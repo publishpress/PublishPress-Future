@@ -78,14 +78,6 @@ class Controller implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(
-            CoreAbstractHooks::ACTION_ACTIVATE_PLUGIN,
-            [$this, 'onActionActivatePlugin']
-        );
-        $this->hooks->addAction(
-            CoreAbstractHooks::ACTION_DEACTIVATE_PLUGIN,
-            [$this, 'onActionDeactivatePlugin']
-        );
         $this->hooks->addFilter(
             SettingsHooksAbstract::FILTER_DEBUG_ENABLED,
             [$this, 'onFilterDebugEnabled']
@@ -101,7 +93,8 @@ class Controller implements InitializableInterface
         );
         $this->hooks->addAction(
             CoreAbstractHooks::ACTION_INIT,
-            [$this, 'initMigrations']
+            [$this, 'initMigrations'],
+            20
         );
     }
 
