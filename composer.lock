@@ -107,12 +107,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
-                "reference": "73b47b99f928364693ab1f48480c949186283e82"
+                "reference": "00104306927c7a0919b4ced2aaa6782c1e61a3c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/73b47b99f928364693ab1f48480c949186283e82",
-                "reference": "73b47b99f928364693ab1f48480c949186283e82",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/00104306927c7a0919b4ced2aaa6782c1e61a3c9",
+                "reference": "00104306927c7a0919b4ced2aaa6782c1e61a3c9",
                 "shasum": ""
             },
             "require": {
@@ -155,7 +155,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/main"
+                "source": "https://github.com/composer/pcre/tree/3.1.1"
             },
             "funding": [
                 {
@@ -171,7 +171,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-09-01T08:40:22+00:00"
+            "time": "2023-10-11T07:11:09+00:00"
         },
         {
             "name": "composer/semver",
@@ -1262,12 +1262,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "6d18bbd3f01dc1f72cc8d54f8b5276407d860220"
+                "reference": "131ad963d089f8a838d7ebca70c77f0074669526"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6d18bbd3f01dc1f72cc8d54f8b5276407d860220",
-                "reference": "6d18bbd3f01dc1f72cc8d54f8b5276407d860220",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/131ad963d089f8a838d7ebca70c77f0074669526",
+                "reference": "131ad963d089f8a838d7ebca70c77f0074669526",
                 "shasum": ""
             },
             "require": {
@@ -1317,7 +1317,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-09T20:34:51+00:00"
+            "time": "2023-10-11T14:23:18+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
