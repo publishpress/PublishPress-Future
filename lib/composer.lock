@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8f324f972f1a5d69abb33f06ef1eea8",
+    "content-hash": "9c5a7b2a32ce63bfd055825460b7abf2",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-develop-3.1.1",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "a0ff603354c64e5dab2f558cf2973fc4775a01f9"
+                "reference": "ff86d03d1800cc87b7e79c930c984ee0b93dc02a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/a0ff603354c64e5dab2f558cf2973fc4775a01f9",
-                "reference": "a0ff603354c64e5dab2f558cf2973fc4775a01f9",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/ff86d03d1800cc87b7e79c930c984ee0b93dc02a",
+                "reference": "ff86d03d1800cc87b7e79c930c984ee0b93dc02a",
                 "shasum": ""
             },
             "require": {
@@ -464,10 +464,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop-3.1.1",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.1",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2023-10-11T15:07:15+00:00"
+            "time": "2023-10-11T19:39:47+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -725,16 +725,16 @@
         },
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.6.3",
+            "version": "3.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "c33dd732e37c90f37c3f9662f7eed888c11dc60d"
+                "reference": "e7dafe215be5ef823392204535ee2e241f99a8cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/c33dd732e37c90f37c3f9662f7eed888c11dc60d",
-                "reference": "c33dd732e37c90f37c3f9662f7eed888c11dc60d",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/e7dafe215be5ef823392204535ee2e241f99a8cb",
+                "reference": "e7dafe215be5ef823392204535ee2e241f99a8cb",
                 "shasum": ""
             },
             "require-dev": {
@@ -759,17 +759,15 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.3"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.4"
             },
-            "time": "2023-09-13T13:40:20+00:00"
+            "time": "2023-10-11T18:24:47+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "publishpress/publishpress-future": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

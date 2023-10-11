@@ -304,17 +304,17 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-develop-3.1.1",
-            "version_normalized": "dev-develop-3.1.1",
+            "version": "3.1.1",
+            "version_normalized": "3.1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "a0ff603354c64e5dab2f558cf2973fc4775a01f9"
+                "reference": "ff86d03d1800cc87b7e79c930c984ee0b93dc02a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/a0ff603354c64e5dab2f558cf2973fc4775a01f9",
-                "reference": "a0ff603354c64e5dab2f558cf2973fc4775a01f9",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/ff86d03d1800cc87b7e79c930c984ee0b93dc02a",
+                "reference": "ff86d03d1800cc87b7e79c930c984ee0b93dc02a",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "wp-cli/i18n-command": "^2.2",
                 "wp-coding-standards/wpcs": "^2.3"
             },
-            "time": "2023-10-11T15:07:15+00:00",
+            "time": "2023-10-11T19:39:47+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -473,7 +473,7 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop-3.1.1",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.1",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "install-path": "../publishpress/publishpress-future"
@@ -746,17 +746,17 @@
         },
         {
             "name": "woocommerce/action-scheduler",
-            "version": "3.6.3",
-            "version_normalized": "3.6.3.0",
+            "version": "3.6.4",
+            "version_normalized": "3.6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/woocommerce/action-scheduler.git",
-                "reference": "c33dd732e37c90f37c3f9662f7eed888c11dc60d"
+                "reference": "e7dafe215be5ef823392204535ee2e241f99a8cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/c33dd732e37c90f37c3f9662f7eed888c11dc60d",
-                "reference": "c33dd732e37c90f37c3f9662f7eed888c11dc60d",
+                "url": "https://api.github.com/repos/woocommerce/action-scheduler/zipball/e7dafe215be5ef823392204535ee2e241f99a8cb",
+                "reference": "e7dafe215be5ef823392204535ee2e241f99a8cb",
                 "shasum": ""
             },
             "require-dev": {
@@ -765,7 +765,7 @@
                 "wp-cli/wp-cli": "~2.5.0",
                 "yoast/phpunit-polyfills": "^1.0"
             },
-            "time": "2023-09-13T13:40:20+00:00",
+            "time": "2023-10-11T18:24:47+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "scripts-description": {
@@ -783,7 +783,7 @@
             "homepage": "https://actionscheduler.org/",
             "support": {
                 "issues": "https://github.com/woocommerce/action-scheduler/issues",
-                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.3"
+                "source": "https://github.com/woocommerce/action-scheduler/tree/3.6.4"
             },
             "install-path": "../woocommerce/action-scheduler"
         }
