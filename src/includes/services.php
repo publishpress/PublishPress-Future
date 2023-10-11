@@ -80,7 +80,8 @@ return [
     ServicesAbstract::PLUGIN => static function (ContainerInterface $container) {
         return new PluginInitializator(
             $container->get(ServicesAbstract::CONTROLLERS),
-            $container->get(ServicesAbstract::HOOKS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::BASE_PATH)
         );
     },
 
