@@ -5,8 +5,13 @@
 
 namespace PublishPress\Future\Core;
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
+use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
+
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -43,24 +48,32 @@ class Plugin implements InitializableInterface
     private $pluginSlug;
 
     /**
+     * @var NoticeFacade
+     */
+    private $notices;
+
+    /**
      * @param ModuleInterface[] $modules
      * @param object $legacyPlugin
      * @param HookableInterface $hooksFacade
      * @param string $pluginSlug
      * @param string $basePath
+     * @param NoticeFacade $notices
      */
     public function __construct(
         $modules,
         $legacyPlugin,
         HookableInterface $hooksFacade,
         $pluginSlug,
-        $basePath
+        $basePath,
+        NoticeFacade $notices
     ) {
         $this->modules = $modules;
         $this->legacyPlugin = $legacyPlugin;
         $this->hooks = $hooksFacade;
         $this->basePath = $basePath;
         $this->pluginSlug = $pluginSlug;
+        $this->notices = $notices;
     }
 
     public function initialize()
@@ -83,9 +96,7 @@ class Plugin implements InitializableInterface
         $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, 'postexpirator_set_default_meta_for_post', 10, 3);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
 
-        $pluginFile = $this->basePath . '/' . $this->pluginSlug . '.php';
-        $this->hooks->registerActivationHook($pluginFile, [$this, 'activatePlugin']);
-        $this->hooks->registerDeactivationHook($pluginFile, [$this, 'deactivatePlugin']);
+        $this->notices->init();
 
         $this->initializeModules();
     }
@@ -99,12 +110,23 @@ class Plugin implements InitializableInterface
         }
     }
 
-    public function activatePlugin() {
-        $this->hooks->doAction(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
+    /**
+     * This method is static because it is called before the plugin is initialized.
+     * @return void
+     */
+    public static function onActivate()
+    {
+        /**
+         * Callbacks hooked to this action can't be defined in callbacks of other actions like
+         * `plugins_loaded` or `init` because this hook will be executed before those actions.
+         */
+        do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
+
+        SettingsFacade::setDefaultSettings();
     }
 
-    public function deactivatePlugin()
+    public static function onDeactivate()
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
+        do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
     }
 }

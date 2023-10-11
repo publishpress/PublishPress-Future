@@ -13,7 +13,7 @@ use PublishPressInstanceProtection\InstanceChecker;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-const INSTANCE_PROTECTION_INCLUDE_FILE = VENDOR_DIR . '/publishpress/instance-protection/include.php';
+const INSTANCE_PROTECTION_INCLUDE_FILE = PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR . '/publishpress/instance-protection/include.php';
 
 if (file_exists(INSTANCE_PROTECTION_INCLUDE_FILE)) {
     require_once INSTANCE_PROTECTION_INCLUDE_FILE;
@@ -21,9 +21,9 @@ if (file_exists(INSTANCE_PROTECTION_INCLUDE_FILE)) {
 
 if (class_exists(Config::class)) {
     $pluginCheckerConfig = new Config();
-    $pluginCheckerConfig->pluginSlug = PLUGIN_SLUG;
-    $pluginCheckerConfig->pluginName = PLUGIN_NAME;
-    $pluginCheckerConfig->freePluginName = FREE_PLUGIN_NAME;
+    $pluginCheckerConfig->pluginSlug = PUBLISHPRESS_FUTURE_PRO_PLUGIN_SLUG;
+    $pluginCheckerConfig->pluginName = PUBLISHPRESS_FUTURE_PRO_PLUGIN_NAME;
+    $pluginCheckerConfig->freePluginName = PUBLISHPRESS_FUTURE_PRO_FREE_PLUGIN_NAME;
     $pluginCheckerConfig->isProPlugin = true;
 
     new InstanceChecker($pluginCheckerConfig);

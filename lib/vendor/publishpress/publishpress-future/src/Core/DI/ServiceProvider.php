@@ -7,6 +7,9 @@ namespace PublishPress\Future\Core\DI;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+/**
+ * @deprecated 3.1.1
+ */
 class ServiceProvider implements ServiceProviderInterface
 {
     /**

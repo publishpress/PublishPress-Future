@@ -13,7 +13,7 @@ use Exception;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-$pluginPath = VENDOR_DIR . '/publishpress/publishpress-future/post-expirator.php';
+$pluginPath = PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR . '/publishpress/publishpress-future/post-expirator.php';
 if (
     ! is_file($pluginPath)
     || ! is_readable($pluginPath)

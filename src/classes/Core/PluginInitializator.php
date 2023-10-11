@@ -29,15 +29,23 @@ class PluginInitializator implements InitializableInterface
     private $hooks;
 
     /**
+     * @var string
+     */
+    private $basePath;
+
+    /**
      * @param ModuleInterface[] $controllers
      * @param HookableInterface $hooksFacade
+     * @param string $basePath
      */
     public function __construct(
         array $controllers,
-        HookableInterface $hooksFacade
+        HookableInterface $hooksFacade,
+        string $basePath
     ) {
         $this->controllers = $controllers;
         $this->hooks = $hooksFacade;
+        $this->basePath = $basePath;
     }
 
     public function initialize()
@@ -50,6 +58,7 @@ class PluginInitializator implements InitializableInterface
 
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
 
+        $this->loadTextDomain();
         $this->initializeControllers();
     }
 
@@ -60,5 +69,20 @@ class PluginInitializator implements InitializableInterface
                 $controller->initialize();
             }
         }
+    }
+
+    private function loadTextDomain()
+    {
+        $basename = basename($this->basePath);
+        load_plugin_textdomain(
+            'post-expirator',
+            null,
+            $basename . '/lib/vendor/publishpress/publishpress-future/languages/'
+        );
+        load_plugin_textdomain(
+            'publishpress-future-pro',
+            null,
+            $basename . '/languages/'
+        );
     }
 }

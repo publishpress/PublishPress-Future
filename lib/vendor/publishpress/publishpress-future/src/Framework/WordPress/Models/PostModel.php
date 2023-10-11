@@ -189,9 +189,9 @@ class PostModel
         return get_edit_post_link($this->getPostId());
     }
 
-    public function getPostId()
+    public function getPostId(): int
     {
-        return $this->postId;
+        return (int)$this->postId;
     }
 
     public function getTerms($taxonomy = 'post_tag', $args = [])
