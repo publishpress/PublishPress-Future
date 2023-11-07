@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.1.1-beta.2\n"
+"Project-Id-Version: PublishPress Future 3.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-09-28T14:45:54+00:00\n"
+"POT-Creation-Date: 2023-11-07T22:29:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: post-expirator\n"
 
 #. Plugin Name of the plugin
@@ -116,7 +116,7 @@ msgstr ""
 
 #: legacy/classes/Facade.class.php:418
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:44
-#: src/Modules/Settings/Controllers/Controller.php:179
+#: src/Modules/Settings/Controllers/Controller.php:180
 #: src/Views/bulk-edit.php:129
 #: src/Views/bulk-edit.php:131
 #: src/Views/classic-metabox.php:117
@@ -149,19 +149,22 @@ msgid "Future Action"
 msgstr ""
 
 #: legacy/functions.php:1167
-#: src/Modules/Settings/Controllers/Controller.php:192
+#: src/Modules/Settings/Controllers/Controller.php:193
 msgid "No taxonomies found"
 msgstr ""
 
 #: services.php:69
+#: src/Modules/Settings/SettingsFacade.php:77
 msgid "l F jS, Y"
 msgstr ""
 
 #: services.php:70
+#: src/Modules/Settings/SettingsFacade.php:78
 msgid "g:ia"
 msgstr ""
 
 #: services.php:71
+#: src/Modules/Settings/SettingsFacade.php:79
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
 
@@ -374,36 +377,36 @@ msgstr ""
 msgid "Async"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:167
+#: src/Modules/Settings/Controllers/Controller.php:168
 msgid "Default Values"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:168
+#: src/Modules/Settings/Controllers/Controller.php:169
 msgid "Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:172
 #: src/Modules/Settings/Controllers/Controller.php:173
+#: src/Modules/Settings/Controllers/Controller.php:174
 msgid "Active"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:174
+#: src/Modules/Settings/Controllers/Controller.php:175
 msgid "Inactive"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:175
+#: src/Modules/Settings/Controllers/Controller.php:176
 msgid "Select whether the PublishPress Future meta box is active for this post type."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:180
+#: src/Modules/Settings/Controllers/Controller.php:181
 msgid "Select the default action for the post type."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:184
+#: src/Modules/Settings/Controllers/Controller.php:185
 msgid "Auto-enable?"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:185
+#: src/Modules/Settings/Controllers/Controller.php:186
 #: src/Views/menu-diagnostics.php:62
 #: src/Views/menu-display.php:81
 #: src/Views/menu-general.php:145
@@ -411,7 +414,7 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:186
+#: src/Modules/Settings/Controllers/Controller.php:187
 #: src/Views/menu-diagnostics.php:82
 #: src/Views/menu-display.php:86
 #: src/Views/menu-general.php:152
@@ -419,52 +422,52 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:187
+#: src/Modules/Settings/Controllers/Controller.php:188
 msgid "Select whether the PublishPress Future is enabled for all new posts."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:191
+#: src/Modules/Settings/Controllers/Controller.php:192
 msgid "Taxonomy (Hierarchical)"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:193
+#: src/Modules/Settings/Controllers/Controller.php:194
 msgid "Select the hierarchical taxonomy and terms to be used for taxonomy based expiration."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:197
+#: src/Modules/Settings/Controllers/Controller.php:198
 #: src/Views/menu-general.php:189
 msgid "Who to Notify"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:198
+#: src/Modules/Settings/Controllers/Controller.php:199
 msgid "Enter a comma separate list of emails that you would like to be notified when the action runs."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:202
+#: src/Modules/Settings/Controllers/Controller.php:203
 #: src/Views/menu-general.php:101
 msgid "Default Date/Time Offset"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:205
+#: src/Modules/Settings/Controllers/Controller.php:206
 msgid ""
 "Set the offset to use for the default action date and time. For information on formatting, see %1$s\n"
 "                                    . For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s. Please, use only terms in English."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:210
+#: src/Modules/Settings/Controllers/Controller.php:211
 #: src/Views/menu-general.php:115
 msgid "PHP strtotime function"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:221
+#: src/Modules/Settings/Controllers/Controller.php:222
 msgid "Default terms:"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:222
+#: src/Modules/Settings/Controllers/Controller.php:223
 msgid "Save changes"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:295
+#: src/Modules/Settings/Controllers/Controller.php:296
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
