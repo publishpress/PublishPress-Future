@@ -82,6 +82,11 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.1.2] - 07 Nov, 2023 =
+
+* CHANGED: Update the library woocommerce/action-scheduler from 3.6.3 to 3.6.4;
+* FIXED: Fix compatibility with WP 6.4 removing dependency of lodash, #555;
+
 = [3.1.1] - 11 Oct, 2023 =
 
 * ADDED: Add new bulk action for posts to update future action scheduler based on post's metadata, #538;
