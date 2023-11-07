@@ -7,3 +7,4 @@
 - .rsync-filters-pre-build
 - /vendor
 - composer.lock
+- lib/vendor/bin
