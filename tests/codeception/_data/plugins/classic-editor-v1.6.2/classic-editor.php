@@ -689,7 +689,7 @@ class Classic_Editor {
 		wp_enqueue_script(
 			'classic-editor-plugin',
 			plugins_url( 'js/block-editor-plugin.js', __FILE__ ),
-			array( 'wp-element', 'wp-components', 'lodash' ),
+			array( 'wp-element', 'wp-components' ),
 			'1.4',
 			true
 		);

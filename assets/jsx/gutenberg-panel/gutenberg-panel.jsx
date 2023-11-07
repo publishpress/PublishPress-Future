@@ -6,7 +6,6 @@
     const {PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner} = wp.components;
     const {Fragment} = wp.element;
     const {decodeEntities} = wp.htmlEntities;
-    const {isEmpty, keys, compact} = lodash;
     const {useEffect} = React;
     const {addQueryArgs} = wp.url;
     const {
@@ -17,6 +16,12 @@
         select
     } = wp.data;
     const {apiFetch} = wp;
+
+    const compact = (array) => {
+        return array.filter((item) => {
+            return item !== null && item !== undefined && item !== '';
+        });
+    }
 
     const debugLog = (description, ...message) => {
         if (console && config.isDebugEnabled) {
@@ -425,6 +430,11 @@
         debugLog('futureActionDate', futureActionDate);
         debugLog('currentDate', currentDate);
 
+        let termsListByNameKeys;
+        if (typeof termsListByName === 'object' && termsListByName !== null) {
+            termsListByNameKeys = Object.keys(termsListByName);
+        }
+
         return (
             <PluginDocumentSettingPanel title={config.strings.panelTitle} icon="calendar"
                                         initialOpen={futureActionEnabled} className={'post-expirator-panel'}
@@ -466,7 +476,7 @@
                                         <p><i className="dashicons dashicons-warning"></i> {config.strings.noTaxonomyFound}</p>
                                     )
                                     || (
-                                        isEmpty(keys(termsListByName)) && (
+                                        termsListByNameKeys.length === 0 && (
                                             <p><i className="dashicons dashicons-warning"></i> {config.strings.noTermsFound}</p>
                                         )
                                         || (
