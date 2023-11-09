@@ -140,7 +140,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [3.1.3] - UNRELEASED =
+= [3.1.3] - 09 Nov, 2023 =
 
 * FIXED: Fix JS error Cannot read properties of undefined (reading ‘length’) on the block editor, #561;
 
