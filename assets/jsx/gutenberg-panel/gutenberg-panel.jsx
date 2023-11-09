@@ -430,7 +430,7 @@
         debugLog('futureActionDate', futureActionDate);
         debugLog('currentDate', currentDate);
 
-        let termsListByNameKeys;
+        let termsListByNameKeys = [];
         if (typeof termsListByName === 'object' && termsListByName !== null) {
             termsListByNameKeys = Object.keys(termsListByName);
         }
