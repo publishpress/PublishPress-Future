@@ -304,17 +304,17 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.1.2",
-            "version_normalized": "3.1.2.0",
+            "version": "3.1.3",
+            "version_normalized": "3.1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "365186397ad11fade621bfec7f0ccce4e8602e02"
+                "reference": "b7e84bcc54423562d8d9ceaabbb03501296b49d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/365186397ad11fade621bfec7f0ccce4e8602e02",
-                "reference": "365186397ad11fade621bfec7f0ccce4e8602e02",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/b7e84bcc54423562d8d9ceaabbb03501296b49d0",
+                "reference": "b7e84bcc54423562d8d9ceaabbb03501296b49d0",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "wp-cli/i18n-command": "^2.2",
                 "wp-coding-standards/wpcs": "^2.3"
             },
-            "time": "2023-11-07T23:12:27+00:00",
+            "time": "2023-11-09T16:07:26+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -473,7 +473,7 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.2",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.3",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "install-path": "../publishpress/publishpress-future"
