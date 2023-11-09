@@ -82,6 +82,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.1.3] - 09 Nov, 2023 =
+
+* FIXED: Fix JS error Cannot read properties of undefined (reading ‘length’) on the block editor, #561;
+
 = [3.1.2] - 07 Nov, 2023 =
 
 * CHANGED: Update the library woocommerce/action-scheduler from 3.6.3 to 3.6.4;
