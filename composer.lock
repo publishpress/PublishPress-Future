@@ -1263,12 +1263,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d6bc3d67e3d6b8f3ba09d8cc58aaa896bb1f0e33"
+                "reference": "435349d963251e6efcbde8f5a3688b8e7027a470"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d6bc3d67e3d6b8f3ba09d8cc58aaa896bb1f0e33",
-                "reference": "d6bc3d67e3d6b8f3ba09d8cc58aaa896bb1f0e33",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/435349d963251e6efcbde8f5a3688b8e7027a470",
+                "reference": "435349d963251e6efcbde8f5a3688b8e7027a470",
                 "shasum": ""
             },
             "require": {
@@ -1318,7 +1318,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-06T17:28:28+00:00"
+            "time": "2023-11-09T13:53:31+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
