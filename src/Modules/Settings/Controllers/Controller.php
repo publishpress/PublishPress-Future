@@ -332,9 +332,14 @@ class Controller implements InitializableInterface
                 $settings['default-expire-type'] = 'custom';
 
                 if (isset($_POST['expired-custom-date-' . $postType])) {
-                    $settings['default-custom-date'] = trim(
-                        \sanitize_text_field($_POST['expired-custom-date-' . $postType])
+                    $customExpirationDate = \sanitize_text_field($_POST['expired-custom-date-' . $postType]);
+                    $customExpirationDate = preg_replace(
+                        '/[\'"`]/',
+                        '',
+                        trim(html_entity_decode($customExpirationDate, ENT_QUOTES))
                     );
+
+                    $settings['default-custom-date'] = $customExpirationDate;
                 }
 
                 $settings = $this->hooks->applyFilters(
