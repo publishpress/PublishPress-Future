@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
+use PublishPress\Future\Modules\Settings\SettingsFacade;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class DefaultDataModel
@@ -43,6 +45,13 @@ class DefaultDataModel
             && ! empty($postTypeDefaults['default-custom-date'])
         ) {
             $dateTimeOffset = $postTypeDefaults['default-custom-date'];
+            $dateTimeOffset = html_entity_decode($dateTimeOffset, ENT_QUOTES);
+            $dateTimeOffset = preg_replace('/["\'`]/', '', $dateTimeOffset);
+            $dateTimeOffset = trim($dateTimeOffset);
+
+            if (empty($dateTimeOffset)) {
+                $dateTimeOffset = SettingsFacade::DEFAULT_CUSTOM_DATE;
+            }
         }
 
         $calculatedDate = strtotime($dateTimeOffset, (int)gmdate('U'));
@@ -64,14 +73,13 @@ class DefaultDataModel
         $date = get_date_from_gmt($gmDate, 'Y-m-d-H-i');
         $date = explode('-', $date);
 
-        return array(
+        return [
             'year' => $date[0],
             'month' => $date[1],
             'day' => $date[2],
             'hour' => $date[3],
             'minute' => $date[4],
             'ts' => $calculatedDate,
-        );
+        ];
     }
-
 }

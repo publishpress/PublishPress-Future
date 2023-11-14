@@ -201,14 +201,15 @@ class SettingsFacade
     {
         $defaultDateOption = $this->options->getOption('expirationdateDefaultDateCustom');
 
+        $defaultDateOption = html_entity_decode($defaultDateOption, ENT_QUOTES);
+        $defaultDateOption = preg_replace('/["\'`]/', '', $defaultDateOption);
+        $defaultDateOption = trim($defaultDateOption);
+
         if (empty($defaultDateOption)) {
             $defaultDateOption = self::DEFAULT_CUSTOM_DATE;
         }
 
-        $defaultDateOption = html_entity_decode($defaultDateOption, ENT_QUOTES);
-        $defaultDateOption = preg_replace('/["\'`]/', '', $defaultDateOption);
-
-        return trim($defaultDateOption);
+        return $defaultDateOption;
     }
 
     public function getColumnStyle()
