@@ -37,6 +37,10 @@ class DefaultDataModel
      */
     public function getDefaultExpirationDateForPostType($postType)
     {
+        if (!is_string($postType) || empty($postType)) {
+            throw new \InvalidArgumentException('Invalid post type');
+        }
+
         $dateTimeOffset = $this->settings->getGeneralDateTimeOffset();
 
         $postTypeDefaults = $this->settings->getPostTypeDefaults($postType);
@@ -57,14 +61,7 @@ class DefaultDataModel
         $calculatedDate = strtotime($dateTimeOffset, (int)gmdate('U'));
 
         if (false === $calculatedDate) {
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-            error_log(
-                sprintf(
-                    'PUBLISHPRESS FUTURE: Invalid date/time offset "%s" for post type "%s"',
-                    $dateTimeOffset,
-                    $postType
-                )
-            );
+            throw new \Exception("Invalid date/time offset \"$dateTimeOffset\" for post type \"$postType\"");
 
             $calculatedDate = time();
         }
@@ -72,6 +69,10 @@ class DefaultDataModel
         $gmDate = gmdate('Y-m-d H:i:s', $calculatedDate);
         $date = get_date_from_gmt($gmDate, 'Y-m-d-H-i');
         $date = explode('-', $date);
+
+        if (count($date) < 5) {
+            throw new \Exception('Unexpected date format: ' . $gmDate);
+        }
 
         return [
             'year' => $date[0],
