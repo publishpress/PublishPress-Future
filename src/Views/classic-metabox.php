@@ -27,15 +27,15 @@ if ($default === 'publish') {
                 esc_html_e('Year', 'post-expirator'); ?></label>
             <select name="expirationdate_year" id="expirationdate_year">
                 <?php
-                $currentyear = date('Y');
+                $currentYear = date('Y');
 
-                if ($defaultyear < $currentyear) {
-                    $currentyear = $defaultyear;
+                if ($defaultYear < $currentYear) {
+                    $currentYear = $defaultYear;
                 }
 
-                for ($i = $currentyear; $i <= $currentyear + 10; $i++) {
+                for ($i = $currentYear; $i <= $currentYear + 10; $i++) {
                     // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-                    if ($i == $defaultyear) {
+                    if ($i == $defaultYear) {
                         $selected = ' selected="selected"';
                     } else {
                         $selected = '';
@@ -57,7 +57,7 @@ if ($default === 'publish') {
             <select name="expirationdate_month" id="expirationdate_month">
                 <?php
                 for ($i = 1; $i <= 12; $i++) {
-                    if ($defaultmonth === date_i18n('m', mktime(0, 0, 0, $i, 1, date_i18n('Y')))) {
+                    if ($defaultMonth === date_i18n('m', mktime(0, 0, 0, $i, 1, date_i18n('Y')))) {
                         $selected = ' selected="selected"';
                     } else {
                         $selected = '';
@@ -77,7 +77,7 @@ if ($default === 'publish') {
             <label><?php
                 esc_html_e('Day', 'post-expirator'); ?></label>
             <input type="text" id="expirationdate_day" name="expirationdate_day" value="<?php
-            echo esc_attr($defaultday); ?>"
+            echo esc_attr($defaultDay); ?>"
                    size="2"/>
         </div>
         <div>
@@ -89,7 +89,7 @@ if ($default === 'publish') {
                 <?php
                 for ($i = 1; $i <= 24; $i++) {
                     $hour = date_i18n('H', mktime($i, 0, 0, date_i18n('n'), date_i18n('j'), date_i18n('Y')));
-                    if ($defaulthour === $hour) {
+                    if ($defaultHour === $hour) {
                         $selected = ' selected="selected"';
                     } else {
                         $selected = '';
@@ -109,7 +109,7 @@ if ($default === 'publish') {
             <label><?php
                 esc_html_e('Minute', 'post-expirator'); ?></label>
             <input type="text" id="expirationdate_minute" name="expirationdate_minute" value="<?php
-            echo esc_attr($defaultminute); ?>"
+            echo esc_attr($defaultMinute); ?>"
                    size="2"/>
         </div>
         <div>
