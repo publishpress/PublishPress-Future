@@ -362,7 +362,7 @@ function postexpirator_meta_box($post)
     $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
     $postModel = $factory($post->ID);
 
-    $expirationDate = $postModel->getExpirationDateAsUnixTime();
+    $expirationDateAsUnixTime = $postModel->getExpirationDateAsUnixTime();
 
     $expireType = $default = $enabled = '';
 
@@ -372,7 +372,7 @@ function postexpirator_meta_box($post)
 
     $categories = [];
 
-    if (empty($expirationDate)) {
+    if (empty($expirationDateAsUnixTime)) {
         $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
         $defaultExpire = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
 
@@ -386,7 +386,7 @@ function postexpirator_meta_box($post)
             $expireType = $defaultsOption['expireType'];
         }
     } else {
-        $gmDate = gmdate('Y-m-d H:i:s', $expirationDate);
+        $gmDate = gmdate('Y-m-d H:i:s', $expirationDateAsUnixTime);
 
         $defaultMonth = get_date_from_gmt($gmDate, 'm');
         $defaultDay = get_date_from_gmt($gmDate, 'd');
