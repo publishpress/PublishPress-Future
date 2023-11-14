@@ -11,6 +11,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class DefaultDataModel
 {
+    const EXPECTED_DATE_PARTS = 5;
+
     /**
      * @var \PublishPress\Future\Modules\Settings\SettingsFacade
      */
@@ -33,24 +35,45 @@ class DefaultDataModel
 
     private function getDateTimeOffset($postType)
     {
-        $dateTimeOffset = $this->settings->getGeneralDateTimeOffset();
+        $customDateTimeOffset = $this->settings->getGeneralDateTimeOffset();
 
         $postTypeDefaults = $this->settings->getPostTypeDefaults($postType);
         if (isset($postTypeDefaults['default-expire-type'])
             && 'custom' === $postTypeDefaults['default-expire-type']
             && ! empty($postTypeDefaults['default-custom-date'])
         ) {
-            $dateTimeOffset = $postTypeDefaults['default-custom-date'];
-            $dateTimeOffset = html_entity_decode($dateTimeOffset, ENT_QUOTES);
-            $dateTimeOffset = preg_replace('/["\'`]/', '', $dateTimeOffset);
-            $dateTimeOffset = trim($dateTimeOffset);
+            $customDateTimeOffset = $postTypeDefaults['default-custom-date'];
+            $customDateTimeOffset = html_entity_decode($customDateTimeOffset, ENT_QUOTES);
+            $customDateTimeOffset = preg_replace('/["\'`]/', '', $customDateTimeOffset);
+            $customDateTimeOffset = trim($customDateTimeOffset);
 
-            if (empty($dateTimeOffset)) {
-                $dateTimeOffset = SettingsFacade::DEFAULT_CUSTOM_DATE;
+            if (empty($customDateTimeOffset)) {
+                $customDateTimeOffset = SettingsFacade::DEFAULT_CUSTOM_DATE;
             }
         }
 
-        return $dateTimeOffset;
+        return $customDateTimeOffset;
+    }
+
+    private function extractDateParts($calculatedDate)
+    {
+        $gmDate = gmdate('Y-m-d H:i:s', $calculatedDate);
+
+        $date = get_date_from_gmt($gmDate, 'Y-m-d-H-i');
+        $date = explode('-', $date);
+
+        if (count($date) < self::EXPECTED_DATE_PARTS) {
+            throw new \Exception('Unexpected date format: ' . $gmDate);
+        }
+
+        return [
+            'year' => $date[0],
+            'month' => $date[1],
+            'day' => $date[2],
+            'hour' => $date[3],
+            'minute' => $date[4],
+            'ts' => $calculatedDate,
+        ];
     }
 
     /**
@@ -60,7 +83,7 @@ class DefaultDataModel
     public function getDefaultExpirationDateForPostType($postType)
     {
         if (!is_string($postType) || empty($postType)) {
-            throw new \InvalidArgumentException('Invalid post type');
+            throw new \InvalidArgumentException('Invalid post type: ' . var_export($postType, true));
         }
 
         $dateTimeOffset = $this->getDateTimeOffset($postType);
@@ -73,21 +96,6 @@ class DefaultDataModel
             $calculatedDate = time();
         }
 
-        $gmDate = gmdate('Y-m-d H:i:s', $calculatedDate);
-        $date = get_date_from_gmt($gmDate, 'Y-m-d-H-i');
-        $date = explode('-', $date);
-
-        if (count($date) < 5) {
-            throw new \Exception('Unexpected date format: ' . $gmDate);
-        }
-
-        return [
-            'year' => $date[0],
-            'month' => $date[1],
-            'day' => $date[2],
-            'hour' => $date[3],
-            'minute' => $date[4],
-            'ts' => $calculatedDate,
-        ];
+        return $this->extractDateParts($calculatedDate);
     }
 }
