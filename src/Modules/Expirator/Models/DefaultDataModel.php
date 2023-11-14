@@ -31,16 +31,8 @@ class DefaultDataModel
         $this->options = $options;
     }
 
-    /**
-     * @param string $postType
-     * @return array
-     */
-    public function getDefaultExpirationDateForPostType($postType)
+    private function getDateTimeOffset($postType)
     {
-        if (!is_string($postType) || empty($postType)) {
-            throw new \InvalidArgumentException('Invalid post type');
-        }
-
         $dateTimeOffset = $this->settings->getGeneralDateTimeOffset();
 
         $postTypeDefaults = $this->settings->getPostTypeDefaults($postType);
@@ -57,6 +49,21 @@ class DefaultDataModel
                 $dateTimeOffset = SettingsFacade::DEFAULT_CUSTOM_DATE;
             }
         }
+
+        return $dateTimeOffset;
+    }
+
+    /**
+     * @param string $postType
+     * @return array
+     */
+    public function getDefaultExpirationDateForPostType($postType)
+    {
+        if (!is_string($postType) || empty($postType)) {
+            throw new \InvalidArgumentException('Invalid post type');
+        }
+
+        $dateTimeOffset = $this->getDateTimeOffset($postType);
 
         $calculatedDate = strtotime($dateTimeOffset, (int)gmdate('U'));
 
