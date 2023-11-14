@@ -46,10 +46,10 @@ class DefaultDataModel
         }
 
         // Strip the quotes in case the user provides them.
-        $dateTimeOffset = str_replace(
-            '"',
+        $dateTimeOffset = preg_replace(
+            '/[\'"`]/',
             '',
-            html_entity_decode($dateTimeOffset, ENT_QUOTES)
+            trim(html_entity_decode($dateTimeOffset, ENT_QUOTES))
         );
 
         $calculatedDate = strtotime($dateTimeOffset, (int)gmdate('U'));
