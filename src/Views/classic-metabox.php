@@ -11,15 +11,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
             esc_html_e('Enable Future Action', 'post-expirator'); ?></label>
     </p>
 
-<?php
-if ($default === 'publish') {
-    ?>
-    <em><?php
-        esc_html_e('The published date/time will be used as the expiration value', 'post-expirator'); ?></em>
-    <?php
-    return;
-}
-?>
     <div class="pe-classic-fields" style="display: <?php
     echo empty($enabled) ? 'none' : 'flex'; ?>">
         <div>

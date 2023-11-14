@@ -364,7 +364,7 @@ function postexpirator_meta_box($post)
 
     $expirationDateAsUnixTime = $postModel->getExpirationDateAsUnixTime();
 
-    $expireType = $default = $enabled = '';
+    $expireType = $enabled = '';
 
     $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
@@ -407,7 +407,6 @@ function postexpirator_meta_box($post)
         'classic-metabox', [
             'post' => $post,
             'enabled' => $enabled,
-            'default' => $default,
             'defaultsOption' => $defaultsOption,
             'defaultMonth' => $defaultMonth,
             'defaultDay' => $defaultDay,
