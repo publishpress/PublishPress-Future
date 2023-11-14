@@ -364,13 +364,13 @@ function postexpirator_meta_box($post)
 
     $expirationDateAsUnixTime = $postModel->getExpirationDateAsUnixTime();
 
-    $expireType = $enabled = '';
+    $expireType = '';
 
     $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
     $defaultsOption = $settingsFacade->getPostTypeDefaults($post->post_type);
 
-    $categories = [];
+    $terms = [];
 
     if (empty($expirationDateAsUnixTime)) {
         $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
@@ -396,24 +396,20 @@ function postexpirator_meta_box($post)
 
         $attributes = $postModel->getExpirationDataAsArray();
         $expireType = $attributes['expireType'];
-        $categories = $attributes['category'];
-    }
-
-    if ($postModel->isExpirationEnabled($post->ID)) {
-        $enabled = ' checked="checked"';
+        $terms = $attributes['category'];
     }
 
     PostExpirator_Display::getInstance()->render_template(
         'classic-metabox', [
             'post' => $post,
-            'enabled' => $enabled,
+            'enabled' => $postModel->isExpirationEnabled($post->ID),
             'defaultsOption' => $defaultsOption,
-            'defaultMonth' => $defaultMonth,
-            'defaultDay' => $defaultDay,
-            'defaultHour' => $defaultHour,
-            'defaultYear' => $defaultYear,
-            'defaultMinute' => $defaultMinute,
-            'categories' => $categories,
+            'defaultMonth' => (int)$defaultMonth,
+            'defaultDay' => (int)$defaultDay,
+            'defaultHour' => (int)$defaultHour,
+            'defaultYear' => (int)$defaultYear,
+            'defaultMinute' => (int)$defaultMinute,
+            'terms' => $terms,
             'expireType' => $expireType,
         ]
     );

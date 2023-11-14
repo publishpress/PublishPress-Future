@@ -83,6 +83,7 @@ class DefaultDataModel
     public function getDefaultExpirationDateForPostType($postType)
     {
         if (!is_string($postType) || empty($postType)) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export
             throw new \InvalidArgumentException('Invalid post type: ' . var_export($postType, true));
         }
 
