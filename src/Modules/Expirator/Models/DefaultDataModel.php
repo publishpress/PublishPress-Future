@@ -45,13 +45,6 @@ class DefaultDataModel
             $dateTimeOffset = $postTypeDefaults['default-custom-date'];
         }
 
-        // Strip the quotes in case the user provides them.
-        $dateTimeOffset = preg_replace(
-            '/[\'"`]/',
-            '',
-            trim(html_entity_decode($dateTimeOffset, ENT_QUOTES))
-        );
-
         $calculatedDate = strtotime($dateTimeOffset, (int)gmdate('U'));
 
         if (false === $calculatedDate) {

@@ -205,7 +205,10 @@ class SettingsFacade
             $defaultDateOption = self::DEFAULT_CUSTOM_DATE;
         }
 
-        return $defaultDateOption;
+        $defaultDateOption = html_entity_decode($defaultDateOption, ENT_QUOTES);
+        $defaultDateOption = preg_replace('/["\'`]/', '', $defaultDateOption);
+
+        return trim($defaultDateOption);
     }
 
     public function getColumnStyle()
