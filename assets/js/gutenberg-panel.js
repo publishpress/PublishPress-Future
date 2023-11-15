@@ -1,137 +1,345 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
-/*!********************************************************!*\
-  !*** ./assets/jsx/gutenberg-panel/gutenberg-panel.jsx ***!
-  \********************************************************/
+/******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/jsx/FutureActionPanel.jsx":
+/*!******************************************!*\
+  !*** ./assets/jsx/FutureActionPanel.jsx ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _wp$components = wp.components,
+    PanelRow = _wp$components.PanelRow,
+    DateTimePicker = _wp$components.DateTimePicker,
+    CheckboxControl = _wp$components.CheckboxControl,
+    SelectControl = _wp$components.SelectControl,
+    FormTokenField = _wp$components.FormTokenField,
+    Spinner = _wp$components.Spinner;
+var Fragment = wp.element.Fragment;
+var decodeEntities = wp.htmlEntities.decodeEntities;
+var _React = React,
+    useEffect = _React.useEffect;
+var addQueryArgs = wp.url.addQueryArgs;
+var _wp$data = wp.data,
+    useSelect = _wp$data.useSelect,
+    useDispatch = _wp$data.useDispatch,
+    select = _wp$data.select;
+var _wp = wp,
+    apiFetch = _wp.apiFetch;
+var _utils = './utils',
+    compact = _utils.compact;
+var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(props) {
+    var action = useSelect(function (select) {
+        return select('publishpress-future/future-action').getAction();
+    }, []);
+    var date = useSelect(function (select) {
+        return select('publishpress-future/future-action').getDate();
+    }, []);
+    var enabled = useSelect(function (select) {
+        return select('publishpress-future/future-action').getEnabled();
+    }, []);
+    var terms = useSelect(function (select) {
+        return select('publishpress-future/future-action').getTerms();
+    }, []);
+    var taxonomy = useSelect(function (select) {
+        return select('publishpress-future/future-action').getTaxonomy();
+    }, []);
+    var taxonomyName = useSelect(function (select) {
+        return select('publishpress-future/future-action').getTaxonomyName();
+    }, []);
+    var termsListByName = useSelect(function (select) {
+        return select('publishpress-future/future-action').getTermsListByName();
+    }, []);
+    var termsListById = useSelect(function (select) {
+        return select('publishpress-future/future-action').getTermsListById();
+    }, []);
+    var isFetchingTerms = useSelect(function (select) {
+        return select('publishpress-future/future-action').getIsFetchingTerms();
+    }, []);
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+    var _useDispatch = useDispatch('publishpress-future/future-action'),
+        setAction = _useDispatch.setAction,
+        setDate = _useDispatch.setDate,
+        setEnabled = _useDispatch.setEnabled,
+        setTerms = _useDispatch.setTerms,
+        setTaxonomy = _useDispatch.setTaxonomy,
+        setTermsListByName = _useDispatch.setTermsListByName,
+        setTermsListById = _useDispatch.setTermsListById,
+        setTaxonomyName = _useDispatch.setTaxonomyName,
+        setIsFetchingTerms = _useDispatch.setIsFetchingTerms;
 
-(function (wp, config) {
-    var registerPlugin = wp.plugins.registerPlugin;
-    var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
-    var _wp$components = wp.components,
-        PanelRow = _wp$components.PanelRow,
-        DateTimePicker = _wp$components.DateTimePicker,
-        CheckboxControl = _wp$components.CheckboxControl,
-        SelectControl = _wp$components.SelectControl,
-        FormTokenField = _wp$components.FormTokenField,
-        Spinner = _wp$components.Spinner;
-    var Fragment = wp.element.Fragment;
-    var decodeEntities = wp.htmlEntities.decodeEntities;
-    var _React = React,
-        useEffect = _React.useEffect;
-    var addQueryArgs = wp.url.addQueryArgs;
-    var _wp$data = wp.data,
-        useSelect = _wp$data.useSelect,
-        useDispatch = _wp$data.useDispatch,
-        register = _wp$data.register,
-        createReduxStore = _wp$data.createReduxStore,
-        select = _wp$data.select;
-    var apiFetch = wp.apiFetch;
-
-
-    var compact = function compact(array) {
-        return array.filter(function (item) {
-            return item !== null && item !== undefined && item !== '';
+    var mapTermsListById = function mapTermsListById(terms) {
+        return terms.map(function (term) {
+            return termsListById[term];
         });
     };
 
-    var debugLog = function debugLog(description) {
-        for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-            message[_key - 1] = arguments[_key];
-        }
-
-        if (console && config.isDebugEnabled) {
-            var _console;
-
-            (_console = console).debug.apply(_console, ['[Future]', description].concat(message));
-        }
+    var mapTermsListByName = function mapTermsListByName(terms) {
+        return terms.map(function (term) {
+            return termsListByName[term].id;
+        });
     };
 
-    var getCurrentTime = function getCurrentTime() {
-        return new Date().getTime() / 1000;
-    };
-
-    var getDefaultState = function getDefaultState() {
-        var defaultState = {
-            futureAction: null,
-            futureActionDate: getCurrentTime(),
-            futureActionEnabled: false,
-            futureActionTerms: [],
-            futureActionTaxonomy: null,
-            termsListByName: null,
-            termsListById: null,
-            taxonomyName: null,
-            isFetchingTerms: false
-        };
-
-        if (!config || !config.postTypeDefaultConfig) {
-            return defaultState;
-        }
-
-        if (config.postTypeDefaultConfig.autoEnable) {
-            defaultState.futureActionEnabled = true;
-        }
-
-        if (config.postTypeDefaultConfig.expireType) {
-            defaultState.futureAction = config.postTypeDefaultConfig.expireType;
-        }
-
-        if (config.defaultDate) {
-            defaultState.futureActionDate = parseInt(config.defaultDate);
-        } else {
-            defaultState.futureActionDate = getCurrentTime();
-        }
-
-        if (config.postTypeDefaultConfig.taxonomy) {
-            defaultState.futureActionTaxonomy = config.postTypeDefaultConfig.taxonomy;
-        }
-
-        if (config.postTypeDefaultConfig.terms) {
-            defaultState.futureActionTerms = config.postTypeDefaultConfig.terms.split(',').map(function (term) {
-                return parseInt(term);
+    var callOnChangeData = function callOnChangeData() {
+        if (typeof props.onChangeData === 'function') {
+            props.onChangeData({
+                enabled: enabled,
+                action: action,
+                date: date,
+                terms: terms,
+                taxonomy: taxonomy
             });
         }
-
-        return defaultState;
     };
 
-    // Step 1: Create the Redux store
-    var DEFAULT_STATE = getDefaultState();
+    var handleEnabledChange = function handleEnabledChange(isChecked) {
+        setEnabled(isChecked);
 
-    debugLog('DEFAULT_STATE', DEFAULT_STATE);
+        if (isChecked) {
+            setAction(props.action);
+            // setDate(props.date);
+            setTerms(props.terms);
+            setTaxonomy(props.taxonomy);
 
-    var store = createReduxStore('publishpress-future/store', {
+            fetchTerms();
+        }
+
+        callOnChangeData();
+    };
+
+    var handleActionChange = function handleActionChange(value) {
+        setAction(value);
+
+        callOnChangeData();
+    };
+
+    var handleDateChange = function handleDateChange(value) {
+        var date = new Date(value).getTime() / 1000;
+
+        setDate(date);
+
+        callOnChangeData();
+    };
+
+    var handleTermsChange = function handleTermsChange(value) {
+        value = mapTermsListByName(value);
+
+        setTerms(value);
+
+        callOnChangeData();
+    };
+
+    var fetchTerms = function fetchTerms() {
+        var termsListByName = {};
+        var termsListById = {};
+
+        setIsFetchingTerms(true);
+
+        if (!taxonomy && props.postType === 'post' || taxonomy === 'category') {
+            apiFetch({
+                path: addQueryArgs('wp/v2/categories', { per_page: -1 })
+            }).then(function (list) {
+                list.forEach(function (cat) {
+                    termsListByName[cat.name] = cat;
+                    termsListById[cat.id] = cat.name;
+                });
+
+                setTermsListByName(termsListByName);
+                setTermsListById(termsListById);
+                setTaxonomyName(props.strings.category);
+                setIsFetchingTerms(false);
+            });
+        } else {
+            apiFetch({
+                path: addQueryArgs('publishpress-future/v1/taxonomies/' + props.postType)
+            }).then(function (response) {
+                if (parseInt(response.count) > 0) {
+                    apiFetch({
+                        path: addQueryArgs('wp/v2/taxonomies/' + taxonomy, { context: 'edit', per_page: -1 })
+                    }).then(function (taxonomyAttributes) {
+                        // fetch all terms
+                        apiFetch({
+                            path: addQueryArgs('wp/v2/' + taxonomyAttributes.rest_base, { context: 'edit', per_page: -1 })
+                        }).then(function (terms) {
+                            terms.forEach(function (term) {
+                                termsListByName[decodeEntities(term.name)] = term;
+                                termsListById[term.id] = decodeEntities(term.name);
+                            });
+
+                            setTermsListByName(termsListByName);
+                            setTermsListById(termsListById);
+                            setTaxonomyName(decodeEntities(taxonomyAttributes.name));
+                            setIsFetchingTerms(false);
+                        });
+                    });
+                }
+            });
+        }
+    };
+
+    useEffect(function () {
+        setEnabled(props.enabled);
+        setAction(props.action);
+        setDate(new Date(props.date).getTime() / 1000);
+        setTerms(props.terms);
+        setTaxonomy(props.taxonomy);
+
+        // We need to get the value directly from the store because the value from the state is not updated yet
+        if (props.enabled) {
+            if (props.isCleanNewPost) {
+                handleEnabledChange(true);
+            }
+
+            fetchTerms();
+        }
+    }, []);
+
+    var selectedTerms = [];
+    if (terms && terms.length > 0 && termsListById) {
+        selectedTerms = compact(mapTermsListById(terms));
+
+        if (typeof selectedTerms === 'string') {
+            selectedTerms = [];
+        }
+    }
+
+    var termsListByNameKeys = [];
+    if ((typeof termsListByName === 'undefined' ? 'undefined' : _typeof(termsListByName)) === 'object' && termsListByName !== null) {
+        termsListByNameKeys = Object.keys(termsListByName);
+    }
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(
+            PanelRow,
+            null,
+            React.createElement(CheckboxControl, {
+                label: props.strings.enablePostExpiration,
+                checked: enabled,
+                onChange: handleEnabledChange
+            })
+        ),
+        enabled && React.createElement(
+            Fragment,
+            null,
+            React.createElement(
+                PanelRow,
+                { className: 'future-action-date-panel' },
+                React.createElement(DateTimePicker, {
+                    currentDate: date * 1000,
+                    onChange: handleDateChange,
+                    __nextRemoveHelpButton: true,
+                    is12Hour: props.is12hours,
+                    startOfWeek: props.startOfWeek
+                })
+            ),
+            React.createElement(SelectControl, {
+                label: props.strings.action,
+                value: action,
+                options: props.actionsSelectOptions,
+                onChange: handleActionChange
+            }),
+            String(action).includes('category') && (isFetchingTerms && React.createElement(
+                Fragment,
+                null,
+                props.strings.loading + (' (' + taxonomy + ')'),
+                React.createElement(Spinner, null)
+            ) || !taxonomy && React.createElement(
+                'p',
+                null,
+                React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                ' ',
+                props.strings.noTaxonomyFound
+            ) || termsListByNameKeys.length === 0 && React.createElement(
+                'p',
+                null,
+                React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                ' ',
+                props.strings.noTermsFound
+            ) || React.createElement(FormTokenField, {
+                label: taxonomyName,
+                value: selectedTerms,
+                suggestions: Object.keys(termsListByName),
+                onChange: handleTermsChange,
+                maxSuggestions: 10
+            }))
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/data.jsx":
+/*!*****************************!*\
+  !*** ./assets/jsx/data.jsx ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.createStore = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _time = __webpack_require__(/*! ./time */ "./assets/jsx/time.jsx");
+
+var createStore = exports.createStore = function createStore(props) {
+    var _wp$data = wp.data,
+        register = _wp$data.register,
+        createReduxStore = _wp$data.createReduxStore;
+
+
+    var defaultState = {
+        action: props.defaultState.action,
+        date: props.defaultState.date ? parseInt(props.defaultState.date) : (0, _time.getCurrentTime)(),
+        enabled: props.defaultState.autoEnable,
+        terms: props.defaultState.terms ? props.defaultState.terms.split(',').map(function (term) {
+            return parseInt(term);
+        }) : [],
+        taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,
+        termsListByName: null,
+        termsListById: null,
+        taxonomyName: null,
+        isFetchingTerms: false
+    };
+
+    var store = createReduxStore('publishpress-future/future-action', {
         reducer: function reducer() {
-            var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+            var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
             var action = arguments[1];
 
             switch (action.type) {
-                case 'SET_FUTURE_ACTION':
+                case 'SET_ACTION':
                     return _extends({}, state, {
-                        futureAction: action.futureAction
+                        action: action.action
                     });
-                case 'SET_FUTURE_ACTION_DATE':
+                case 'SET_DATE':
                     return _extends({}, state, {
-                        futureActionDate: action.futureActionDate
+                        date: action.date
                     });
-                case 'SET_FUTURE_ACTION_ENABLED':
+                case 'SET_ENABLED':
                     return _extends({}, state, {
-                        futureActionEnabled: action.futureActionEnabled
+                        enabled: action.enabled
                     });
-                case 'SET_FUTURE_ACTION_TERMS':
+                case 'SET_TERMS':
                     return _extends({}, state, {
-                        futureActionTerms: action.futureActionTerms
+                        terms: action.terms
                     });
-                case 'SET_FUTURE_ACTION_TAXONOMY':
+                case 'SET_TAXONOMY':
                     return _extends({}, state, {
-                        futureActionTaxonomy: action.futureActionTaxonomy
+                        taxonomy: action.taxonomy
                     });
                 case 'SET_TERMS_LIST_BY_NAME':
                     return _extends({}, state, {
@@ -151,34 +359,34 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
 
         actions: {
-            setFutureAction: function setFutureAction(futureAction) {
+            setAction: function setAction(action) {
                 return {
-                    type: 'SET_FUTURE_ACTION',
-                    futureAction: futureAction
+                    type: 'SET_ACTION',
+                    action: action
                 };
             },
-            setFutureActionDate: function setFutureActionDate(futureActionDate) {
+            setDate: function setDate(date) {
                 return {
-                    type: 'SET_FUTURE_ACTION_DATE',
-                    futureActionDate: futureActionDate
+                    type: 'SET_DATE',
+                    date: date
                 };
             },
-            setFutureActionEnabled: function setFutureActionEnabled(futureActionEnabled) {
+            setEnabled: function setEnabled(enabled) {
                 return {
-                    type: 'SET_FUTURE_ACTION_ENABLED',
-                    futureActionEnabled: futureActionEnabled
+                    type: 'SET_ENABLED',
+                    enabled: enabled
                 };
             },
-            setFutureActionTerms: function setFutureActionTerms(futureActionTerms) {
+            setTerms: function setTerms(terms) {
                 return {
-                    type: 'SET_FUTURE_ACTION_TERMS',
-                    futureActionTerms: futureActionTerms
+                    type: 'SET_TERMS',
+                    terms: terms
                 };
             },
-            setFutureActionTaxonomy: function setFutureActionTaxonomy(futureActionTaxonomy) {
+            setTaxonomy: function setTaxonomy(taxonomy) {
                 return {
-                    type: 'SET_FUTURE_ACTION_TAXONOMY',
-                    futureActionTaxonomy: futureActionTaxonomy
+                    type: 'SET_TAXONOMY',
+                    taxonomy: taxonomy
                 };
             },
             setTermsListByName: function setTermsListByName(termsListByName) {
@@ -207,20 +415,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         selectors: {
-            getFutureAction: function getFutureAction(state) {
-                return state.futureAction;
+            getAction: function getAction(state) {
+                return state.action;
             },
-            getFutureActionDate: function getFutureActionDate(state) {
-                return state.futureActionDate;
+            getDate: function getDate(state) {
+                return state.date;
             },
-            getFutureActionEnabled: function getFutureActionEnabled(state) {
-                return state.futureActionEnabled;
+            getEnabled: function getEnabled(state) {
+                return state.enabled;
             },
-            getFutureActionTerms: function getFutureActionTerms(state) {
-                return state.futureActionTerms;
+            getTerms: function getTerms(state) {
+                return state.terms;
             },
-            getFutureActionTaxonomy: function getFutureActionTaxonomy(state) {
-                return state.futureActionTaxonomy;
+            getTaxonomy: function getTaxonomy(state) {
+                return state.taxonomy;
             },
             getTermsListByName: function getTermsListByName(state) {
                 return state.termsListByName;
@@ -239,189 +447,132 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     register(store);
 
-    // Step 2: Create the component
-    var FutureActionSettingPanel = function FutureActionSettingPanel() {
-        var futureAction = useSelect(function (select) {
-            return select('publishpress-future/store').getFutureAction();
-        }, []);
-        var futureActionDate = useSelect(function (select) {
-            return select('publishpress-future/store').getFutureActionDate();
-        }, []);
-        var futureActionEnabled = useSelect(function (select) {
-            return select('publishpress-future/store').getFutureActionEnabled();
-        }, []);
-        var futureActionTerms = useSelect(function (select) {
-            return select('publishpress-future/store').getFutureActionTerms();
-        }, []);
-        var futureActionTaxonomy = useSelect(function (select) {
-            return select('publishpress-future/store').getFutureActionTaxonomy();
-        }, []);
-        var termsListByName = useSelect(function (select) {
-            return select('publishpress-future/store').getTermsListByName();
-        }, []);
-        var termsListById = useSelect(function (select) {
-            return select('publishpress-future/store').getTermsListById();
-        }, []);
-        var isFetchingTerms = useSelect(function (select) {
-            return select('publishpress-future/store').getIsFetchingTerms();
-        }, []);
+    return store;
+};
 
-        var _useDispatch = useDispatch('publishpress-future/store'),
-            setFutureAction = _useDispatch.setFutureAction,
-            setFutureActionDate = _useDispatch.setFutureActionDate,
-            setFutureActionEnabled = _useDispatch.setFutureActionEnabled,
-            setFutureActionTerms = _useDispatch.setFutureActionTerms,
-            setFutureActionTaxonomy = _useDispatch.setFutureActionTaxonomy,
-            setTermsListByName = _useDispatch.setTermsListByName,
-            setTermsListById = _useDispatch.setTermsListById,
-            setTaxonomyName = _useDispatch.setTaxonomyName,
-            setIsFetchingTerms = _useDispatch.setIsFetchingTerms;
+/***/ }),
 
-        var _useDispatch2 = useDispatch('core/editor'),
-            editPost = _useDispatch2.editPost;
+/***/ "./assets/jsx/time.jsx":
+/*!*****************************!*\
+  !*** ./assets/jsx/time.jsx ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, exports) => {
 
-        var mapTermsFromIdToName = function mapTermsFromIdToName(terms) {
-            return terms.map(function (term) {
-                return termsListById[term];
-            });
-        };
 
-        var mapTermsFromNameToId = function mapTermsFromNameToId(terms) {
-            return terms.map(function (term) {
-                return termsListByName[term].id;
-            });
-        };
 
-        var handleEnabledChange = function handleEnabledChange(isChecked) {
-            setFutureActionEnabled(isChecked);
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+var getCurrentTime = exports.getCurrentTime = function getCurrentTime() {
+    return new Date().getTime() / 1000;
+};
 
-            var newAttribute = {
-                'enabled': isChecked
+/***/ }),
 
-                // User default values to other fields
-            };if (isChecked) {
-                setFutureAction(DEFAULT_STATE.futureAction);
-                setFutureActionDate(DEFAULT_STATE.futureActionDate);
-                setFutureActionTerms(DEFAULT_STATE.futureActionTerms);
-                setFutureActionTaxonomy(DEFAULT_STATE.futureActionTaxonomy);
+/***/ "./assets/jsx/utils.jsx":
+/*!******************************!*\
+  !*** ./assets/jsx/utils.jsx ***!
+  \******************************/
+/***/ ((__unused_webpack_module, exports) => {
 
-                newAttribute['action'] = DEFAULT_STATE.futureAction;
-                newAttribute['date'] = DEFAULT_STATE.futureActionDate;
-                newAttribute['terms'] = DEFAULT_STATE.futureActionTerms;
-                newAttribute['taxonomy'] = DEFAULT_STATE.futureActionTaxonomy;
 
-                fetchTerms();
-            }
 
-            editPostAttribute(newAttribute);
-        };
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+var compact = exports.compact = function compact(array) {
+    return array.filter(function (item) {
+        return item !== null && item !== undefined && item !== '';
+    });
+};
 
-        var handleActionChange = function handleActionChange(value) {
-            setFutureAction(value);
-            editPostAttribute({ 'action': value });
-        };
+var debugLogFactory = exports.debugLogFactory = function debugLogFactory(config) {
+    return function (description) {
+        for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            message[_key - 1] = arguments[_key];
+        }
 
-        var handleDateChange = function handleDateChange(value) {
-            var date = new Date(value).getTime() / 1000;
+        if (console && config.isDebugEnabled) {
+            var _console;
 
-            setFutureActionDate(date);
-            editPostAttribute({ 'date': date });
-        };
+            (_console = console).debug.apply(_console, ['[Future]', description].concat(message));
+        }
+    };
+};
 
-        var handleTermsChange = function handleTermsChange(value) {
-            value = mapTermsFromNameToId(value);
+/***/ })
 
-            setFutureActionTerms(value);
-            editPostAttribute({ 'terms': value });
-        };
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!********************************************************!*\
+  !*** ./assets/jsx/gutenberg-panel/gutenberg-panel.jsx ***!
+  \********************************************************/
 
-        var getPostType = function getPostType() {
-            return select('core/editor').getCurrentPostType();
-        };
 
-        var fetchFutureActionData = function fetchFutureActionData(callback) {
-            var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
-            debugLog('fetchFutureActionData', data);
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-            setFutureActionEnabled(data.enabled).then(callback);
-            setFutureAction(data.action);
-            setFutureActionDate(new Date(data.date).getTime() / 1000);
-            setFutureActionTerms(data.terms);
-            setFutureActionTaxonomy(data.taxonomy);
-        };
+var _data = __webpack_require__(/*! ../data */ "./assets/jsx/data.jsx");
 
-        var fetchTerms = function fetchTerms() {
-            debugLog('fetchTerms', 'Fetching terms...');
-            var futureActionTaxonomy = select('publishpress-future/store').getFutureActionTaxonomy();
-            var postType = getPostType();
+var _FutureActionPanel = __webpack_require__(/*! ../FutureActionPanel */ "./assets/jsx/FutureActionPanel.jsx");
 
-            var termsListByName = {};
-            var termsListById = {};
+var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
 
-            setIsFetchingTerms(true);
+(function (wp, config) {
+    var registerPlugin = wp.plugins.registerPlugin;
 
-            debugLog('futureActionTaxonomy', futureActionTaxonomy);
 
-            if (!futureActionTaxonomy && postType === 'post' || futureActionTaxonomy === 'category') {
-                debugLog('fetchTerms', 'Fetching categories...');
-                apiFetch({
-                    path: addQueryArgs('wp/v2/categories', { per_page: -1 })
-                }).then(function (list) {
-                    debugLog('list', list);
+    var debugLog = (0, _utils.debugLogFactory)(config);
 
-                    list.forEach(function (cat) {
-                        termsListByName[cat.name] = cat;
-                        termsListById[cat.id] = cat.name;
-                    });
+    (0, _data.createStore)({
+        defaultState: {
+            autoEnable: config.postTypeDefaultConfig.autoEnable,
+            action: config.postTypeDefaultConfig.expireType,
+            date: config.defaultDate,
+            taxonomy: config.postTypeDefaultConfig.taxonomy,
+            ters: config.postTypeDefaultConfig.terms
+        }
+    });
 
-                    setTermsListByName(termsListByName);
-                    setTermsListById(termsListById);
-                    setTaxonomyName(config.strings.category);
-                    setIsFetchingTerms(false);
-                });
-            } else {
-                debugLog('fetchTerms', 'Fetching taxonomies...');
-                apiFetch({
-                    path: addQueryArgs('publishpress-future/v1/taxonomies/' + postType)
-                }).then(function (response) {
-                    debugLog('response', response);
+    var GutenbergFutureActionPanel = function GutenbergFutureActionPanel() {
+        var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
+        var _wp$data = wp.data,
+            useDispatch = _wp$data.useDispatch,
+            select = _wp$data.select;
 
-                    if (parseInt(response.count) > 0) {
-                        apiFetch({
-                            path: addQueryArgs('wp/v2/taxonomies/' + futureActionTaxonomy, { context: 'edit', per_page: -1 })
-                        }).then(function (taxAttributes) {
-                            debugLog('taxAttributes', taxAttributes);
-                            // fetch all terms
-                            apiFetch({
-                                path: addQueryArgs('wp/v2/' + taxAttributes.rest_base, { context: 'edit', per_page: -1 })
-                            }).then(function (terms) {
-                                debugLog('terms', terms);
-                                terms.forEach(function (term) {
-                                    termsListByName[decodeEntities(term.name)] = term;
-                                    termsListById[term.id] = decodeEntities(term.name);
-                                });
-
-                                setTermsListByName(termsListByName);
-                                setTermsListById(termsListById);
-                                setTaxonomyName(decodeEntities(taxAttributes.name));
-                                setIsFetchingTerms(false);
-                            });
-                        });
-                    } else {
-                        debugLog('fetchTerms', 'No taxonomies found');
-                    }
-                });
-            }
-        };
+        var _useDispatch = useDispatch('core/editor'),
+            editPost = _useDispatch.editPost;
 
         var editPostAttribute = function editPostAttribute(newAttribute) {
             var attribute = {
                 publishpress_future_action: {
-                    enabled: futureActionEnabled,
-                    date: futureActionDate,
-                    action: futureAction,
-                    terms: futureActionTerms,
-                    taxonomy: futureActionTaxonomy,
                     browser_timezone_offset: new Date().getTimezoneOffset()
                 }
             };
@@ -458,113 +609,55 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
 
             editPost(attribute);
-            debugLog('editPostAttribute', newAttribute, attribute);
         };
 
-        useEffect(function () {
-            fetchFutureActionData();
+        var onChangeData = function onChangeData(data) {
+            debugLog(data);
 
-            // We need to get the value directly from the store because the value from the state is not updated yet
-            var enabled = select('publishpress-future/store').getFutureActionEnabled();
-            var isCleanNewPost = select('core/editor').isCleanNewPost();
+            var newAttribute = {
+                'enabled': data.enabled
+            };
 
-            debugLog('enabled', enabled);
-            debugLog('isCleanNewPost', isCleanNewPost);
-
-            if (enabled) {
-                if (isCleanNewPost) {
-                    handleEnabledChange(true);
-                }
-
-                fetchTerms();
+            if (data.enabled) {
+                newAttribute['action'] = data.action;
+                newAttribute['date'] = data.date;
+                newAttribute['terms'] = data.terms;
+                newAttribute['taxonomy'] = data.taxonomy;
             }
-        }, []);
 
-        var selectedTerms = [];
-        debugLog('futureActionTerms', futureActionTerms);
-        if (futureActionTerms && futureActionTerms.length > 0 && termsListById) {
-            selectedTerms = compact(mapTermsFromIdToName(futureActionTerms));
+            editPostAttribute(newAttribute);
+        };
 
-            if (typeof selectedTerms === 'string') {
-                selectedTerms = [];
-            }
-        }
-
-        var currentDate = futureActionDate;
-        debugLog('futureActionDate', futureActionDate);
-        debugLog('currentDate', currentDate);
-
-        var termsListByNameKeys = [];
-        if ((typeof termsListByName === 'undefined' ? 'undefined' : _typeof(termsListByName)) === 'object' && termsListByName !== null) {
-            termsListByNameKeys = Object.keys(termsListByName);
-        }
+        var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
 
         return React.createElement(
             PluginDocumentSettingPanel,
-            { title: config.strings.panelTitle, icon: 'calendar',
-                initialOpen: futureActionEnabled, className: 'post-expirator-panel'
-            },
-            React.createElement(
-                PanelRow,
-                null,
-                React.createElement(CheckboxControl, {
-                    label: config.strings.enablePostExpiration,
-                    checked: futureActionEnabled,
-                    onChange: handleEnabledChange
-                })
-            ),
-            futureActionEnabled && React.createElement(
-                Fragment,
-                null,
-                React.createElement(
-                    PanelRow,
-                    { className: 'future-action-date-panel' },
-                    React.createElement(DateTimePicker, {
-                        currentDate: currentDate * 1000,
-                        onChange: handleDateChange,
-                        __nextRemoveHelpButton: true,
-                        is12Hour: config.is12hours,
-                        startOfWeek: config.startOfWeek
-                    })
-                ),
-                React.createElement(SelectControl, {
-                    label: config.strings.action,
-                    value: futureAction,
-                    options: config.actionsSelectOptions,
-                    onChange: handleActionChange
-                }),
-                String(futureAction).includes('category') && (isFetchingTerms && React.createElement(
-                    Fragment,
-                    null,
-                    config.strings.loading + (' (' + futureActionTaxonomy + ')'),
-                    React.createElement(Spinner, null)
-                ) || !futureActionTaxonomy && React.createElement(
-                    'p',
-                    null,
-                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                    ' ',
-                    config.strings.noTaxonomyFound
-                ) || termsListByNameKeys.length === 0 && React.createElement(
-                    'p',
-                    null,
-                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                    ' ',
-                    config.strings.noTermsFound
-                ) || React.createElement(FormTokenField, {
-                    label: config.taxonomyName,
-                    value: selectedTerms,
-                    suggestions: Object.keys(termsListByName),
-                    onChange: handleTermsChange,
-                    maxSuggestions: 10
-                }))
-            )
+            {
+                name: 'publishpress-future-action-panel',
+                title: config.strings.panelTitle,
+                icon: 'calendar',
+                initialOpen: config.postTypeDefaultConfig.autoEnable,
+                className: 'post-expirator-panel' },
+            React.createElement(_FutureActionPanel.FutureActionPanel, {
+                postType: select('core/editor').getCurrentPostType(),
+                isCleanNewPost: select('core/editor').isCleanNewPost(),
+                actionsSelectOptions: config.actionsSelectOptions,
+                enabled: data.enabled,
+                action: data.action,
+                date: data.date,
+                terms: data.terms,
+                taxonomy: data.taxonomy,
+                onChangeData: onChangeData,
+                strings: config.strings })
         );
     };
 
     registerPlugin('publishpress-future-action', {
-        render: FutureActionSettingPanel
+        render: GutenbergFutureActionPanel
     });
 })(window.wp, window.postExpiratorPanelConfig);
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=gutenberg-panel.js.map
