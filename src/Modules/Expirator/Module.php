@@ -5,7 +5,8 @@
 
 namespace PublishPress\Future\Modules\Expirator;
 
-
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
@@ -201,11 +202,68 @@ class Module implements ModuleInterface
         }
 
         wp_enqueue_script(
-            'publishpress-future-expirator',
-            POSTEXPIRATOR_BASEURL . 'assets/js/expirator-classic-editor.js',
-            ['jquery'],
+            'publishpress-future-classic-metabox',
+            POSTEXPIRATOR_BASEURL . 'assets/js/classic-metabox.js',
+            ['react', 'react-dom', 'wp-i18n', 'wp-components', 'wp-url', 'wp-data'],
             PUBLISHPRESS_FUTURE_VERSION,
             true
+        );
+
+
+
+        $container = Container::getInstance();
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+        $postType = $currentScreen->post_type;
+
+        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
+
+
+        $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+        $debug = $container->get(ServicesAbstract::DEBUG);
+
+        $taxonomyName= '';
+        if (! empty($postTypeDefaultConfig['taxonomy'])) {
+            $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
+            $taxonomyName = $taxonomy->label;
+        }
+
+        $taxonomyTerms = [];
+        if (! empty($postTypeDefaultConfig['taxonomy'])) {
+            $taxonomyTerms = get_terms([
+                'taxonomy' => $postTypeDefaultConfig['taxonomy'],
+                'hide_empty' => false,
+            ]);
+        }
+
+        $defaultExpirationDate = $defaultDataModel->getDefaultExpirationDateForPostType($postType);
+
+        wp_localize_script(
+            'publishpress-future-classic-metabox',
+            'publishpressFutureClassicMetabox',
+            [
+                'postTypeDefaultConfig' => $postTypeDefaultConfig,
+                'defaultDate' => $defaultExpirationDate['ts'],
+                'is12hours' => get_option('time_format') !== 'H:i',
+                'startOfWeek' => get_option('start_of_week', 0),
+                'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+                'isDebugEnabled' => $debug->isEnabled(),
+                'taxonomyName' => $taxonomyName,
+                'taxonomyTerms' => $taxonomyTerms,
+                'strings' => [
+                    'category' => __('Taxonomy', 'post-expirator'),
+                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
+                    'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                    'action' => __('Action', 'post-expirator'),
+                    'loading' => __('Loading', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'noTermsFound' => sprintf(
+                        __('No %s found.', 'post-expirator'),
+                        strtolower($taxonomyName)
+                    ),
+                    'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
+                ]
+            ]
         );
     }
 }

@@ -1,6 +1,15 @@
 <?php
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
+<div id="publishpress-future-classic-metabox"></div>
+
+
+<hr/>
+
+
+
+
+
 <p>
     <input
         type="checkbox"
@@ -13,10 +22,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
     </label>
 </p>
 
-<div class="pe-classic-fields" style="display: <?php echo $enabled ? 'flex' : 'none'; ?>">
-    <div>
-        <label><?php esc_html_e('Year', 'post-expirator'); ?></label>
-        <select name="expirationdate_year" id="expirationdate_year">
+    <p>
+        <input type="checkbox" name="enable-expirationdate" id="enable-expirationdate" value="checked"
             <?php
             $currentYear = date('Y');
 
