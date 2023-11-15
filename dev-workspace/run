@@ -20,11 +20,19 @@ is_online() {
 }
 
 pull_image() {
-    docker compose -f dev-workspace/docker/compose.yaml pull
+    # Check if we are inside dev-workspace subdirectory. If not, appent it to the path.
+    if [[ ! "$PWD" =~ dev-workspace$ ]]; then
+        cd dev-workspace
+    fi
+    docker compose -f ./docker/compose.yaml pull
 }
 
 run_terminal_service() {
-    docker compose -f dev-workspace/docker/compose.yaml run --rm terminal "$@"
+    # Check if we are inside dev-workspace subdirectory. If not, appent it to the path.
+    if [[ ! "$PWD" =~ dev-workspace$ ]]; then
+        cd dev-workspace
+    fi
+    docker compose -f ./docker/compose.yaml run --rm terminal "$@"
 }
 
 if [ "$(is_online)" -eq 1 ]; then
