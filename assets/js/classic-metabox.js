@@ -6,15 +6,18 @@
 /*!******************************************!*\
   !*** ./assets/jsx/FutureActionPanel.jsx ***!
   \******************************************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
 
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
+exports.FutureActionPanel = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
 
 var _wp$components = wp.components,
     PanelRow = _wp$components.PanelRow,
@@ -34,8 +37,6 @@ var _wp$data = wp.data,
     select = _wp$data.select;
 var _wp = wp,
     apiFetch = _wp.apiFetch;
-var _utils = './utils',
-    compact = _utils.compact;
 var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(props) {
     var action = useSelect(function (select) {
         return select('publishpress-future/future-action').getAction();
@@ -88,15 +89,9 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         });
     };
 
-    var callOnChangeData = function callOnChangeData() {
+    var callOnChangeData = function callOnChangeData(attribute, value) {
         if (typeof props.onChangeData === 'function') {
-            props.onChangeData({
-                enabled: enabled,
-                action: action,
-                date: date,
-                terms: terms,
-                taxonomy: taxonomy
-            });
+            props.onChangeData(attribute, value);
         }
     };
 
@@ -112,13 +107,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             fetchTerms();
         }
 
-        callOnChangeData();
+        callOnChangeData('enabled', isChecked);
     };
 
     var handleActionChange = function handleActionChange(value) {
         setAction(value);
 
-        callOnChangeData();
+        callOnChangeData('action', value);
     };
 
     var handleDateChange = function handleDateChange(value) {
@@ -126,7 +121,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
 
         setDate(date);
 
-        callOnChangeData();
+        callOnChangeData('date', date);
     };
 
     var handleTermsChange = function handleTermsChange(value) {
@@ -134,7 +129,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
 
         setTerms(value);
 
-        callOnChangeData();
+        callOnChangeData('terms', value);
     };
 
     var fetchTerms = function fetchTerms() {
@@ -204,7 +199,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
 
     var selectedTerms = [];
     if (terms && terms.length > 0 && termsListById) {
-        selectedTerms = compact(mapTermsListById(terms));
+        selectedTerms = (0, _utils.compact)(mapTermsListById(terms));
 
         if (typeof selectedTerms === 'string') {
             selectedTerms = [];
@@ -465,6 +460,52 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 var getCurrentTime = exports.getCurrentTime = function getCurrentTime() {
     return new Date().getTime() / 1000;
+};
+
+var formatUnixTimestamp = exports.formatUnixTimestamp = function formatUnixTimestamp(unixTimestamp) {
+    var date = new Date(unixTimestamp * 1000); // Convert to milliseconds by multiplying by 1000
+
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    var day = ("0" + date.getDate()).slice(-2);
+    var hours = ("0" + date.getHours()).slice(-2);
+    var minutes = ("0" + date.getMinutes()).slice(-2);
+    var seconds = ("0" + date.getSeconds()).slice(-2);
+
+    return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/utils.jsx":
+/*!******************************!*\
+  !*** ./assets/jsx/utils.jsx ***!
+  \******************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+var compact = exports.compact = function compact(array) {
+    return array.filter(function (item) {
+        return item !== null && item !== undefined && item !== '';
+    });
+};
+
+var debugLogFactory = exports.debugLogFactory = function debugLogFactory(config) {
+    return function (description) {
+        for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            message[_key - 1] = arguments[_key];
+        }
+
+        if (console && config.isDebugEnabled) {
+            var _console;
+
+            (_console = console).debug.apply(_console, ['[Future]', description].concat(message));
+        }
+    };
 };
 
 /***/ })

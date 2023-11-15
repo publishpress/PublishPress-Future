@@ -1,3 +1,5 @@
+import { compact } from './utils';
+
 const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner } = wp.components;
 const { Fragment } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
@@ -9,7 +11,6 @@ const {
     select
 } = wp.data;
 const { apiFetch } = wp;
-const {compact} = './utils';
 
 export const FutureActionPanel = (props) => {
     const action = useSelect((select) => select('publishpress-future/future-action').getAction(), []);
@@ -46,15 +47,9 @@ export const FutureActionPanel = (props) => {
         });
     }
 
-    const callOnChangeData = () => {
+    const callOnChangeData = (attribute, value) => {
         if (typeof props.onChangeData === 'function') {
-            props.onChangeData({
-                enabled: enabled,
-                action: action,
-                date: date,
-                terms: terms,
-                taxonomy: taxonomy
-            });
+            props.onChangeData(attribute, value);
         }
     }
 
@@ -70,13 +65,13 @@ export const FutureActionPanel = (props) => {
             fetchTerms();
         }
 
-        callOnChangeData();
+        callOnChangeData('enabled', isChecked);
     }
 
     const handleActionChange = (value) => {
         setAction(value);
 
-        callOnChangeData();
+        callOnChangeData('action', value);
     }
 
     const handleDateChange = (value) => {
@@ -84,7 +79,7 @@ export const FutureActionPanel = (props) => {
 
         setDate(date);
 
-        callOnChangeData();
+        callOnChangeData('date', date);
     }
 
     const handleTermsChange = (value) => {
@@ -92,7 +87,7 @@ export const FutureActionPanel = (props) => {
 
         setTerms(value);
 
-        callOnChangeData();
+        callOnChangeData('terms', value);
     }
 
     const fetchTerms = () => {

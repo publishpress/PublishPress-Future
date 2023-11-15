@@ -1,6 +1,7 @@
 import { createStore } from '../data';
 import { FutureActionPanel } from '../FutureActionPanel';
 import { debugLogFactory } from '../utils';
+import { formatUnixTimestamp } from '../time';
 
 (function (wp, config) {
     const { registerPlugin } = wp.plugins;
@@ -37,18 +38,18 @@ import { debugLogFactory } from '../utils';
             editPost(attribute);
         }
 
-        const onChangeData = (data) => {
-            debugLog(data);
+        const onChangeData = (attribute, value) => {
+            const store = select('publishpress-future/future-action');
 
             const newAttribute = {
-                'enabled': data.enabled
+                'enabled': store.getEnabled()
             }
 
             if (data.enabled) {
-                newAttribute['action'] = data.action;
-                newAttribute['date'] = data.date;
-                newAttribute['terms'] = data.terms;
-                newAttribute['taxonomy'] = data.taxonomy;
+                newAttribute['action'] = store.getAction();
+                newAttribute['date'] = store.getDate();
+                newAttribute['terms'] = store.getTerms();
+                newAttribute['taxonomy'] = store.getTaxonomy();
             }
 
             editPostAttribute(newAttribute);
@@ -73,6 +74,9 @@ import { debugLogFactory } from '../utils';
                     terms={data.terms}
                     taxonomy={data.taxonomy}
                     onChangeData={onChangeData}
+                    is12hours={config.is12hours}
+                    startOfWeek={config.startOfWeek}
+
                     strings={config.strings} />
             </PluginDocumentSettingPanel>
         );
