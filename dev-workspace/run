@@ -20,11 +20,11 @@ is_online() {
 }
 
 pull_image() {
-    docker compose -f docker/compose.yaml pull
+    docker compose -f dev-workspace/docker/compose.yaml pull
 }
 
 run_terminal_service() {
-    docker compose -f docker/compose.yaml run --rm terminal "$@"
+    docker compose -f dev-workspace/docker/compose.yaml run --rm terminal "$@"
 }
 
 if [ "$(is_online)" -eq 1 ]; then
