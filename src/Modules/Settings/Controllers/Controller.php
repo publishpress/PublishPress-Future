@@ -333,13 +333,10 @@ class Controller implements InitializableInterface
 
                 if (isset($_POST['expired-custom-date-' . $postType])) {
                     $customExpirationDate = \sanitize_text_field($_POST['expired-custom-date-' . $postType]);
-                    $customExpirationDate = preg_replace(
-                        '/[\'"`]/',
-                        '',
-                        trim(html_entity_decode($customExpirationDate, ENT_QUOTES))
-                    );
+                    $customExpirationDate = html_entity_decode($customExpirationDate, ENT_QUOTES);
+                    $customExpirationDate = preg_replace('/[\'"`]/', '', $customExpirationDate);
 
-                    $settings['default-custom-date'] = $customExpirationDate;
+                    $settings['default-custom-date'] = trim($customExpirationDate);
                 }
 
                 $settings = $this->hooks->applyFilters(

@@ -362,17 +362,17 @@ function postexpirator_meta_box($post)
     $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
     $postModel = $factory($post->ID);
 
-    $expirationDate = $postModel->getExpirationDateAsUnixTime();
+    $expirationDateAsUnixTime = $postModel->getExpirationDateAsUnixTime();
 
-    $expireType = $default = $enabled = '';
+    $expireType = '';
 
     $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
     $defaultsOption = $settingsFacade->getPostTypeDefaults($post->post_type);
 
-    $categories = [];
+    $terms = [];
 
-    if (empty($expirationDate)) {
+    if (empty($expirationDateAsUnixTime)) {
         $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
         $defaultExpire = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
 
@@ -386,7 +386,7 @@ function postexpirator_meta_box($post)
             $expireType = $defaultsOption['expireType'];
         }
     } else {
-        $gmDate = gmdate('Y-m-d H:i:s', $expirationDate);
+        $gmDate = gmdate('Y-m-d H:i:s', $expirationDateAsUnixTime);
 
         $defaultMonth = get_date_from_gmt($gmDate, 'm');
         $defaultDay = get_date_from_gmt($gmDate, 'd');
@@ -396,25 +396,20 @@ function postexpirator_meta_box($post)
 
         $attributes = $postModel->getExpirationDataAsArray();
         $expireType = $attributes['expireType'];
-        $categories = $attributes['category'];
-    }
-
-    if ($postModel->isExpirationEnabled($post->ID)) {
-        $enabled = ' checked="checked"';
+        $terms = $attributes['category'];
     }
 
     PostExpirator_Display::getInstance()->render_template(
         'classic-metabox', [
             'post' => $post,
-            'enabled' => $enabled,
-            'default' => $default,
+            'enabled' => $postModel->isExpirationEnabled($post->ID),
             'defaultsOption' => $defaultsOption,
-            'defaultmonth' => $defaultMonth,
-            'defaultday' => $defaultDay,
-            'defaulthour' => $defaultHour,
-            'defaultyear' => $defaultYear,
-            'defaultminute' => $defaultMinute,
-            'categories' => $categories,
+            'defaultMonth' => (int)$defaultMonth,
+            'defaultDay' => (int)$defaultDay,
+            'defaultHour' => (int)$defaultHour,
+            'defaultYear' => (int)$defaultYear,
+            'defaultMinute' => (int)$defaultMinute,
+            'terms' => $terms,
             'expireType' => $expireType,
         ]
     );

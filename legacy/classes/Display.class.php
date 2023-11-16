@@ -289,13 +289,10 @@ class PostExpirator_Display
                 update_option('expirationdateDefaultDate', 'custom');
 
                 $customExpirationDate = sanitize_text_field($_POST['expired-custom-expiration-date']);
-                $customExpirationDate = preg_replace(
-                    '/[\'"`]/',
-                    '',
-                    trim(html_entity_decode($customExpirationDate, ENT_QUOTES))
-                );
+                $customExpirationDate = html_entity_decode($customExpirationDate, ENT_QUOTES);
+                $customExpirationDate = preg_replace('/["\'`]/', '', $customExpirationDate);
 
-                update_option('expirationdateDefaultDateCustom', $customExpirationDate);
+                update_option('expirationdateDefaultDateCustom', trim($customExpirationDate));
                 // phpcs:enable
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
