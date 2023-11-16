@@ -1,12 +1,9 @@
 import { createStore } from '../data';
 import { FutureActionPanel } from '../FutureActionPanel';
-import { debugLogFactory } from '../utils';
-import { formatUnixTimestamp } from '../time';
+import { formatTimeToUnixTimestamp } from '../time';
 
 (function (wp, config) {
     const { registerPlugin } = wp.plugins;
-
-    const debugLog = debugLogFactory(config);
 
     createStore({
         defaultState: {
@@ -56,6 +53,8 @@ import { formatUnixTimestamp } from '../time';
         }
 
         const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+
+        console.log('date', data.date, formatTimeToUnixTimestamp(data.date));
 
         return (
             <PluginDocumentSettingPanel

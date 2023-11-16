@@ -14,3 +14,9 @@ export const formatUnixTimestamp = (unixTimestamp) => {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+export const formatTimeToUnixTimestamp = (time) => {
+    const date = new Date(time);
+
+    return date.getTime()/1000;
+}

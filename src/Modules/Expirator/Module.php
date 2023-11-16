@@ -204,12 +204,17 @@ class Module implements ModuleInterface
         wp_enqueue_script(
             'publishpress-future-classic-metabox',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-metabox.js',
-            ['react', 'react-dom', 'wp-i18n', 'wp-components', 'wp-url', 'wp-data'],
+            ['react', 'react-dom', 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch'],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );
 
-
+        wp_enqueue_style(
+            'publishpress-future-classic-metabox',
+            POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
+            ['wp-components'],
+            PUBLISHPRESS_FUTURE_VERSION
+        );
 
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
@@ -250,6 +255,8 @@ class Module implements ModuleInterface
                 'isDebugEnabled' => $debug->isEnabled(),
                 'taxonomyName' => $taxonomyName,
                 'taxonomyTerms' => $taxonomyTerms,
+                'postType' => $currentScreen->post_type,
+                'isNewPost' => $isNewPostPage,
                 'strings' => [
                     'category' => __('Taxonomy', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),

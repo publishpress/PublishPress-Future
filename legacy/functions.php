@@ -371,6 +371,7 @@ function postexpirator_meta_box($post)
     $defaultsOption = $settingsFacade->getPostTypeDefaults($post->post_type);
 
     $terms = [];
+    $defaultDate = 0;
 
     if (empty($expirationDateAsUnixTime)) {
         $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
@@ -382,17 +383,13 @@ function postexpirator_meta_box($post)
         $defaultYear = $defaultExpire['year'];
         $defaultMinute = $defaultExpire['minute'];
 
+        $defaultDate = date('Y-m-d H:i:s', mktime($defaultHour, $defaultMinute, 0, $defaultMonth, $defaultDay, $defaultYear));
+
         if (isset($defaultsOption['expireType'])) {
             $expireType = $defaultsOption['expireType'];
         }
     } else {
-        $gmDate = gmdate('Y-m-d H:i:s', $expirationDateAsUnixTime);
-
-        $defaultMonth = get_date_from_gmt($gmDate, 'm');
-        $defaultDay = get_date_from_gmt($gmDate, 'd');
-        $defaultYear = get_date_from_gmt($gmDate, 'Y');
-        $defaultHour = get_date_from_gmt($gmDate, 'H');
-        $defaultMinute = get_date_from_gmt($gmDate, 'i');
+        $defaultDate = gmdate('Y-m-d H:i:s', $expirationDateAsUnixTime);
 
         $attributes = $postModel->getExpirationDataAsArray();
         $expireType = $attributes['expireType'];
@@ -404,13 +401,10 @@ function postexpirator_meta_box($post)
             'post' => $post,
             'enabled' => $postModel->isExpirationEnabled($post->ID),
             'defaultsOption' => $defaultsOption,
-            'defaultMonth' => (int)$defaultMonth,
-            'defaultDay' => (int)$defaultDay,
-            'defaultHour' => (int)$defaultHour,
-            'defaultYear' => (int)$defaultYear,
-            'defaultMinute' => (int)$defaultMinute,
+            'defaultDate' => (int)strtotime($defaultDate),
             'terms' => $terms,
             'expireType' => $expireType,
+            'taxonomy' => $defaultsOption['taxonomy'],
         ]
     );
 }
@@ -450,7 +444,7 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
 }
 
 /**
- * Called when post is saved - stores expiration-date meta value
+ * Called when post is saved on classic editor. Stores future action date meta values.
  *
  * @internal
  *
@@ -470,7 +464,7 @@ function postexpirator_update_post_meta($id)
     }
 
     // Do not process Bulk edit here. It is processed on the function "postexpirator_date_save_bulk_edit"
-    if (isset($_GET['postexpirator_view']) && $_GET['postexpirator_view'] === 'bulk-edit') {
+    if (isset($_GET['future_action_view']) && $_GET['future_action_view'] === 'bulk-edit') {
         return;
     }
 
@@ -491,13 +485,13 @@ function postexpirator_update_post_meta($id)
     $shouldSchedule = false;
     $ts = null;
     $opts = [];
-    $isClassicalInterface = isset($_POST['postexpirator_view']);
+    $isClassicalInterface = isset($_POST['future_action_view']);
 
     if ($isClassicalInterface) {
         if (defined('DOING_AJAX') && DOING_AJAX) {
-            check_ajax_referer('__postexpirator', '_postexpiratornonce');
+            check_ajax_referer('__future_action', '_future_action_nonce');
         } else {
-            check_admin_referer('__postexpirator', '_postexpiratornonce');
+            check_admin_referer('__future_action', '_future_action_nonce');
         }
 
         // Classic editor, quick edit
@@ -1212,8 +1206,8 @@ function postexpirator_date_save_bulk_edit()
 
     if (
         'edit' !== $doAction
-        || ! isset($_REQUEST['postexpirator_view'])
-        || $_REQUEST['postexpirator_view'] !== 'bulk-edit'
+        || ! isset($_REQUEST['future_action_view'])
+        || $_REQUEST['future_action_view'] !== 'bulk-edit'
         || ! isset($_REQUEST['expirationdate_status'])
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         || sanitize_key($_REQUEST['expirationdate_status']) === 'no-change'

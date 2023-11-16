@@ -7,8 +7,7 @@ const { useEffect } = React;
 const { addQueryArgs } = wp.url;
 const {
     useSelect,
-    useDispatch,
-    select
+    useDispatch
 } = wp.data;
 const { apiFetch } = wp;
 
@@ -36,12 +35,20 @@ export const FutureActionPanel = (props) => {
     } = useDispatch('publishpress-future/future-action');
 
     const mapTermsListById = (terms) => {
+        if (typeof terms !== 'object' || terms === null) {
+            return {};
+        }
+
         return terms.map((term) => {
             return termsListById[term];
         });
     }
 
     const mapTermsListByName = (terms) => {
+        if (typeof terms !== 'object' || terms === null) {
+            return {};
+        }
+
         return terms.map((term) => {
             return termsListByName[term].id;
         });
@@ -58,7 +65,7 @@ export const FutureActionPanel = (props) => {
 
         if (isChecked) {
             setAction(props.action);
-            // setDate(props.date);
+            setDate(props.date);
             setTerms(props.terms);
             setTaxonomy(props.taxonomy);
 
@@ -75,7 +82,8 @@ export const FutureActionPanel = (props) => {
     }
 
     const handleDateChange = (value) => {
-        const date = new Date(value).getTime() / 1000;
+        console.log('handleDateChange', value);
+        const date = new Date(value).getTime();
 
         setDate(date);
 
@@ -141,7 +149,7 @@ export const FutureActionPanel = (props) => {
     useEffect(() => {
         setEnabled(props.enabled);
         setAction(props.action);
-        setDate((new Date(props.date)).getTime() / 1000);
+        setDate((new Date(props.date)).getTime());
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
@@ -168,6 +176,9 @@ export const FutureActionPanel = (props) => {
     if (typeof termsListByName === 'object' && termsListByName !== null) {
         termsListByNameKeys = Object.keys(termsListByName);
     }
+
+    // TODO: Why is this different on block editor and classic editor?
+    console.log('currentDate', date);
 
     return (
         <Fragment>

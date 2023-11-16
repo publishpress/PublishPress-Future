@@ -33,8 +33,7 @@ var _React = React,
 var addQueryArgs = wp.url.addQueryArgs;
 var _wp$data = wp.data,
     useSelect = _wp$data.useSelect,
-    useDispatch = _wp$data.useDispatch,
-    select = _wp$data.select;
+    useDispatch = _wp$data.useDispatch;
 var _wp = wp,
     apiFetch = _wp.apiFetch;
 var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(props) {
@@ -78,12 +77,20 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setIsFetchingTerms = _useDispatch.setIsFetchingTerms;
 
     var mapTermsListById = function mapTermsListById(terms) {
+        if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) !== 'object' || terms === null) {
+            return {};
+        }
+
         return terms.map(function (term) {
             return termsListById[term];
         });
     };
 
     var mapTermsListByName = function mapTermsListByName(terms) {
+        if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) !== 'object' || terms === null) {
+            return {};
+        }
+
         return terms.map(function (term) {
             return termsListByName[term].id;
         });
@@ -100,7 +107,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
 
         if (isChecked) {
             setAction(props.action);
-            // setDate(props.date);
+            setDate(props.date);
             setTerms(props.terms);
             setTaxonomy(props.taxonomy);
 
@@ -117,7 +124,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     };
 
     var handleDateChange = function handleDateChange(value) {
-        var date = new Date(value).getTime() / 1000;
+        console.log('handleDateChange', value);
+        var date = new Date(value).getTime();
 
         setDate(date);
 
@@ -183,7 +191,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     useEffect(function () {
         setEnabled(props.enabled);
         setAction(props.action);
-        setDate(new Date(props.date).getTime() / 1000);
+        setDate(new Date(props.date).getTime());
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
@@ -210,6 +218,9 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     if ((typeof termsListByName === 'undefined' ? 'undefined' : _typeof(termsListByName)) === 'object' && termsListByName !== null) {
         termsListByNameKeys = Object.keys(termsListByName);
     }
+
+    // TODO: Why is this different on block editor and classic editor?
+    console.log('currentDate', date);
 
     return React.createElement(
         Fragment,
@@ -475,6 +486,12 @@ var formatUnixTimestamp = exports.formatUnixTimestamp = function formatUnixTimes
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 };
 
+var formatTimeToUnixTimestamp = exports.formatTimeToUnixTimestamp = function formatTimeToUnixTimestamp(time) {
+    var date = new Date(time);
+
+    return date.getTime() / 1000;
+};
+
 /***/ }),
 
 /***/ "./assets/jsx/utils.jsx":
@@ -551,15 +568,11 @@ var _data = __webpack_require__(/*! ../data */ "./assets/jsx/data.jsx");
 
 var _FutureActionPanel = __webpack_require__(/*! ../FutureActionPanel */ "./assets/jsx/FutureActionPanel.jsx");
 
-var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
-
 var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
 
 (function (wp, config) {
     var registerPlugin = wp.plugins.registerPlugin;
 
-
-    var debugLog = (0, _utils.debugLogFactory)(config);
 
     (0, _data.createStore)({
         defaultState: {
@@ -639,6 +652,8 @@ var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
         };
 
         var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+
+        console.log('date', data.date, (0, _time.formatTimeToUnixTimestamp)(data.date));
 
         return React.createElement(
             PluginDocumentSettingPanel,

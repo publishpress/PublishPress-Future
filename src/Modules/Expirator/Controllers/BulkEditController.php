@@ -77,11 +77,11 @@ class BulkEditController implements InitializableInterface
         }
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        if (! isset($_REQUEST['postexpirator_view'])) {
+        if (! isset($_REQUEST['future_action_view'])) {
             return;
         }
 
-        if ($_REQUEST['postexpirator_view'] !== 'bulk-edit') {
+        if ($_REQUEST['future_action_view'] !== 'bulk-edit') {
             return;
         }
 

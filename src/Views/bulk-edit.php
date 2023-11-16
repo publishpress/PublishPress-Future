@@ -164,7 +164,7 @@ $postTypeObject = get_post_type_object($post_type);
                     </div>
                 </div>
                 <input name="expirationdate_quickedit" value="true" type="hidden"/>
-                <input name="postexpirator_view" value="bulk-edit" type="hidden"/>
+                <input name="future_action_view" value="bulk-edit" type="hidden"/>
             </fieldset>
         </div>
     </div>
