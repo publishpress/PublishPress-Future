@@ -182,7 +182,6 @@ class ExpirationController implements InitializableInterface
                                 'expireType' => $value['action'],
                                 'category' => $value['terms'],
                                 'categoryTaxonomy' => $value['taxonomy'],
-                                'enabled' => true,
                             ];
 
                             $browserTimezoneOffset = (int)$value['browser_timezone_offset'] * MINUTE_IN_SECONDS;

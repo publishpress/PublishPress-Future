@@ -314,9 +314,7 @@ class PostExpirator_Facade
             $opts = [
                 'expireType' => sanitize_key($request->get_param('action')),
                 'category' => array_map('absint', (array)$request->get_param('terms')),
-                'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy')),
-                'enabled' => $expirationEnabled,
-                'date' => absint($request->get_param('date')),
+                'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy'))
             ];
 
             do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, absint($request->get_param('date')), $opts);

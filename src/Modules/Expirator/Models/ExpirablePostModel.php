@@ -401,12 +401,11 @@ class ExpirablePostModel extends PostModel
         }
 
         // Stores the post title and post type in the action args for using if the post is deleted later.
-        $args = $this->actionArgsModel->getArgs();
-        $args['post_title'] = $this->getTitle();
-        $args['post_type'] = $this->getPostType();
-        $args['post_link'] = $this->getPermalink();
-        $this->actionArgsModel->setArgs($args);
-        $this->actionArgsModel->save();
+        $this->actionArgsModel
+            ->setArg('post_title', $this->getTitle())
+            ->setArg('post_type', $this->getPostType())
+            ->setArg('post_link', $this->getPermalink())
+            ->save();
 
         /*
          * Remove KSES - wp_cron runs as an unauthenticated user, which will by default trigger kses filtering,
@@ -790,7 +789,6 @@ class ExpirablePostModel extends PostModel
         if ($scheduledInPostMeta) {
             $opts = [
                 'expireType' => $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
-                'id' => $this->getPostId(),
                 'category' => $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true),
                 'categoryTaxonomy' => $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true)
             ];

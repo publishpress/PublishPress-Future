@@ -443,7 +443,6 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
         'expireType' => $postTypeDefaults['expireType'],
         'category' => $categories,
         'categoryTaxonomy' => (string)$postTypeDefaults['taxonomy'],
-        'enabled' => true,
     ];
 
     do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $defaultExpire['ts'], $opts);
@@ -551,7 +550,6 @@ function postexpirator_update_post_meta($id)
         } else {
             // Schedule/Update Expiration
             $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
-            $opts['id'] = $id;
 
             if ($opts['expireType'] === 'category' || $opts['expireType'] === 'category-add' || $opts['expireType'] === 'category-remove') {
                 if (isset($category) && ! empty($category)) {
@@ -628,8 +626,6 @@ function postexpirator_update_post_meta($id)
     }
 
     if ($shouldSchedule) {
-        $opts['id'] = $id;
-
         do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $id, $ts, $opts);
     } else {
         do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $id);
@@ -875,7 +871,6 @@ function postexpirator_upgrade()
 
             foreach ($results as $result) {
                 $opts = [];
-                $opts['id'] = $result->post_id;
                 $posttype = get_post_type($result->post_id);
                 if ($posttype === 'page') {
                     $opts['expireType'] = strtolower(get_option('expirationdateExpiredPageStatus', 'Draft'));
