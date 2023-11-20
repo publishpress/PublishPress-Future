@@ -232,7 +232,11 @@ class ExpirablePostModel extends PostModel
                     if (! empty($settings['terms'])) {
                         $this->expirationCategories = $settings['terms'];
 
-                        return explode(',', $this->expirationCategories);
+                        if (is_string($this->expirationCategories)) {
+                            $this->expirationCategories = explode(',', $this->expirationCategories);
+                        }
+
+                        return $this->expirationCategories;
                     }
                 }
             } catch (NonexistentPostException $e) {
