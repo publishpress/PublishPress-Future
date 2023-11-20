@@ -344,7 +344,7 @@ class ExpirablePostModel extends PostModel
     }
 
     /**
-     * @return int|false
+     * @return string|false
      */
     public function getExpirationDateString($gmt = true)
     {
@@ -354,7 +354,7 @@ class ExpirablePostModel extends PostModel
                     $defaultData = $this->defaultDataModel->getDefaultExpirationDateForPostType($this->getPostType());
 
                     if (! empty($defaultData['ts'])) {
-                        return $defaultData['ts'];
+                        return wp_date('Y-m-d H:i:s', (int)$defaultData['ts']);
                     }
                 }
             } catch (NonexistentPostException $e) {
