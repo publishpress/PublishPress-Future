@@ -335,6 +335,17 @@ class ActionArgsModel
     }
 
     /**
+     * @param string $key
+     * @param mixed $value
+     * @return ActionsArgsModel
+     */
+    public function setArg(string $key, mixed $value)
+    {
+        $this->args[$key] = $value;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getCreatedAt()

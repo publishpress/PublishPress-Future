@@ -116,6 +116,12 @@ class ExpirationScheduler implements SchedulerInterface
 
         $factory = $this->actionArgsModelFactory;
 
+        unset($opts['enabled']);
+        unset($opts['id']);
+        $opts['date'] = $timestamp;
+        $opts['category'] = isset($opts['category']) ? $opts['category'] : [];
+        $opts['categoryTaxonomy'] = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
+
         $actionArgsModel = $factory();
         $actionArgsModel->setCronActionId($actionId)
             ->setPostId($postId)

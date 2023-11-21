@@ -232,7 +232,11 @@ class ExpirablePostModel extends PostModel
                     if (! empty($settings['terms'])) {
                         $this->expirationCategories = $settings['terms'];
 
-                        return explode(',', $this->expirationCategories);
+                        if (is_string($this->expirationCategories)) {
+                            $this->expirationCategories = explode(',', $this->expirationCategories);
+                        }
+
+                        return $this->expirationCategories;
                     }
                 }
             } catch (NonexistentPostException $e) {
@@ -340,7 +344,7 @@ class ExpirablePostModel extends PostModel
     }
 
     /**
-     * @return int|false
+     * @return string|false
      */
     public function getExpirationDateString($gmt = true)
     {
@@ -350,7 +354,7 @@ class ExpirablePostModel extends PostModel
                     $defaultData = $this->defaultDataModel->getDefaultExpirationDateForPostType($this->getPostType());
 
                     if (! empty($defaultData['ts'])) {
-                        return $defaultData['ts'];
+                        return wp_date('Y-m-d H:i:s', (int)$defaultData['ts']);
                     }
                 }
             } catch (NonexistentPostException $e) {
@@ -401,12 +405,11 @@ class ExpirablePostModel extends PostModel
         }
 
         // Stores the post title and post type in the action args for using if the post is deleted later.
-        $args = $this->actionArgsModel->getArgs();
-        $args['post_title'] = $this->getTitle();
-        $args['post_type'] = $this->getPostType();
-        $args['post_link'] = $this->getPermalink();
-        $this->actionArgsModel->setArgs($args);
-        $this->actionArgsModel->save();
+        $this->actionArgsModel
+            ->setArg('post_title', $this->getTitle())
+            ->setArg('post_type', $this->getPostType())
+            ->setArg('post_link', $this->getPermalink())
+            ->save();
 
         /*
          * Remove KSES - wp_cron runs as an unauthenticated user, which will by default trigger kses filtering,
@@ -790,7 +793,6 @@ class ExpirablePostModel extends PostModel
         if ($scheduledInPostMeta) {
             $opts = [
                 'expireType' => $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
-                'id' => $this->getPostId(),
                 'category' => $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true),
                 'categoryTaxonomy' => $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true)
             ];
