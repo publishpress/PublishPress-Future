@@ -523,7 +523,7 @@ function postexpirator_update_post_meta($id)
         $category = isset($_POST['expirationdate_category'])
             ? PostExpirator_Util::sanitize_array_of_integers(
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                $_POST['expirationdate_category']
+                sanitize_text_field(wp_unslash($_POST['expirationdate_category']))
             ) : [];
 
         $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
