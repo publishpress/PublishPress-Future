@@ -437,11 +437,9 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
         return;
     }
 
-    $categories = get_option('expirationdateCategoryDefaults');
-
     $opts = [
         'expireType' => $postTypeDefaults['expireType'],
-        'category' => $categories,
+        'category' => explode(',', $postTypeDefaults['terms']),
         'categoryTaxonomy' => (string)$postTypeDefaults['taxonomy'],
     ];
 
