@@ -38,34 +38,34 @@ var _wp = wp,
     apiFetch = _wp.apiFetch;
 var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(props) {
     var action = useSelect(function (select) {
-        return select('publishpress-future/future-action').getAction();
+        return select(props.storeName).getAction();
     }, []);
     var date = useSelect(function (select) {
-        return select('publishpress-future/future-action').getDate();
+        return select(props.storeName).getDate();
     }, []);
     var enabled = useSelect(function (select) {
-        return select('publishpress-future/future-action').getEnabled();
+        return select(props.storeName).getEnabled();
     }, []);
     var terms = useSelect(function (select) {
-        return select('publishpress-future/future-action').getTerms();
+        return select(props.storeName).getTerms();
     }, []);
     var taxonomy = useSelect(function (select) {
-        return select('publishpress-future/future-action').getTaxonomy();
+        return select(props.storeName).getTaxonomy();
     }, []);
     var taxonomyName = useSelect(function (select) {
-        return select('publishpress-future/future-action').getTaxonomyName();
+        return select(props.storeName).getTaxonomyName();
     }, []);
     var termsListByName = useSelect(function (select) {
-        return select('publishpress-future/future-action').getTermsListByName();
+        return select(props.storeName).getTermsListByName();
     }, []);
     var termsListById = useSelect(function (select) {
-        return select('publishpress-future/future-action').getTermsListById();
+        return select(props.storeName).getTermsListById();
     }, []);
     var isFetchingTerms = useSelect(function (select) {
-        return select('publishpress-future/future-action').getIsFetchingTerms();
+        return select(props.storeName).getIsFetchingTerms();
     }, []);
 
-    var _useDispatch = useDispatch('publishpress-future/future-action'),
+    var _useDispatch = useDispatch(props.storeName),
         setAction = _useDispatch.setAction,
         setDate = _useDispatch.setDate,
         setEnabled = _useDispatch.setEnabled,
@@ -241,7 +241,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 PanelRow,
                 { className: 'future-action-date-panel' },
                 React.createElement(DateTimePicker, {
-                    currentDate: date * 1000,
+                    currentDate: date,
                     onChange: handleDateChange,
                     __nextRemoveHelpButton: true,
                     is12Hour: props.is12hours,
@@ -321,7 +321,7 @@ var createStore = exports.createStore = function createStore(props) {
         isFetchingTerms: false
     };
 
-    var store = createReduxStore('publishpress-future/future-action', {
+    var store = createReduxStore(props.name, {
         reducer: function reducer() {
             var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
             var action = arguments[1];
@@ -452,8 +452,6 @@ var createStore = exports.createStore = function createStore(props) {
     });
 
     register(store);
-
-    return store;
 };
 
 /***/ }),
@@ -525,6 +523,10 @@ var debugLogFactory = exports.debugLogFactory = function debugLogFactory(config)
     };
 };
 
+var isGutenbergEnabled = exports.isGutenbergEnabled = function isGutenbergEnabled() {
+    return document.body.classList.contains('block-editor-page');
+};
+
 /***/ })
 
 /******/ 	});
@@ -573,8 +575,10 @@ var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
 (function (wp, config) {
     var registerPlugin = wp.plugins.registerPlugin;
 
+    var storeName = 'publishpress-future/future-action';
 
     (0, _data.createStore)({
+        name: storeName,
         defaultState: {
             autoEnable: config.postTypeDefaultConfig.autoEnable,
             action: config.postTypeDefaultConfig.expireType,
@@ -635,7 +639,7 @@ var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
         };
 
         var onChangeData = function onChangeData(attribute, value) {
-            var store = select('publishpress-future/future-action');
+            var store = select(storeName);
 
             var newAttribute = {
                 'enabled': store.getEnabled()
@@ -653,7 +657,7 @@ var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
 
         var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
 
-        console.log('date', data.date, (0, _time.formatTimeToUnixTimestamp)(data.date));
+        console.log('data', data);
 
         return React.createElement(
             PluginDocumentSettingPanel,
@@ -675,7 +679,7 @@ var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
                 onChangeData: onChangeData,
                 is12hours: config.is12hours,
                 startOfWeek: config.startOfWeek,
-
+                storeName: storeName,
                 strings: config.strings })
         );
     };

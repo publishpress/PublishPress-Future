@@ -4,8 +4,10 @@ import { formatTimeToUnixTimestamp } from '../time';
 
 (function (wp, config) {
     const { registerPlugin } = wp.plugins;
+    const storeName = 'publishpress-future/future-action';
 
     createStore({
+        name: storeName,
         defaultState: {
             autoEnable: config.postTypeDefaultConfig.autoEnable,
             action: config.postTypeDefaultConfig.expireType,
@@ -36,7 +38,7 @@ import { formatTimeToUnixTimestamp } from '../time';
         }
 
         const onChangeData = (attribute, value) => {
-            const store = select('publishpress-future/future-action');
+            const store = select(storeName);
 
             const newAttribute = {
                 'enabled': store.getEnabled()
@@ -54,7 +56,7 @@ import { formatTimeToUnixTimestamp } from '../time';
 
         const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
 
-        console.log('date', data.date, formatTimeToUnixTimestamp(data.date));
+        console.log('data', data);
 
         return (
             <PluginDocumentSettingPanel
@@ -75,7 +77,7 @@ import { formatTimeToUnixTimestamp } from '../time';
                     onChangeData={onChangeData}
                     is12hours={config.is12hours}
                     startOfWeek={config.startOfWeek}
-
+                    storeName={storeName}
                     strings={config.strings} />
             </PluginDocumentSettingPanel>
         );
