@@ -336,9 +336,9 @@ class ExpirablePostModel extends PostModel
     /**
      * @return int|false
      */
-    public function getExpirationDateAsUnixTime()
+    public function getExpirationDateAsUnixTime($gmt = true)
     {
-        $this->expirationDate = $this->getExpirationDateString();
+        $this->expirationDate = $this->getExpirationDateString($gmt);
 
         return (int)strtotime($this->expirationDate);
     }

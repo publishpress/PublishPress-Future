@@ -12,15 +12,15 @@ const {
 const { apiFetch } = wp;
 
 export const FutureActionPanel = (props) => {
-    const action = useSelect((select) => select('publishpress-future/future-action').getAction(), []);
-    const date = useSelect((select) => select('publishpress-future/future-action').getDate(), []);
-    const enabled = useSelect((select) => select('publishpress-future/future-action').getEnabled(), []);
-    const terms = useSelect((select) => select('publishpress-future/future-action').getTerms(), []);
-    const taxonomy = useSelect((select) => select('publishpress-future/future-action').getTaxonomy(), []);
-    const taxonomyName = useSelect((select) => select('publishpress-future/future-action').getTaxonomyName(), []);
-    const termsListByName = useSelect((select) => select('publishpress-future/future-action').getTermsListByName(), []);
-    const termsListById = useSelect((select) => select('publishpress-future/future-action').getTermsListById(), []);
-    const isFetchingTerms = useSelect((select) => select('publishpress-future/future-action').getIsFetchingTerms(), []);
+    const action = useSelect((select) => select(props.storeName).getAction(), []);
+    const date = useSelect((select) => select(props.storeName).getDate(), []);
+    const enabled = useSelect((select) => select(props.storeName).getEnabled(), []);
+    const terms = useSelect((select) => select(props.storeName).getTerms(), []);
+    const taxonomy = useSelect((select) => select(props.storeName).getTaxonomy(), []);
+    const taxonomyName = useSelect((select) => select(props.storeName).getTaxonomyName(), []);
+    const termsListByName = useSelect((select) => select(props.storeName).getTermsListByName(), []);
+    const termsListById = useSelect((select) => select(props.storeName).getTermsListById(), []);
+    const isFetchingTerms = useSelect((select) => select(props.storeName).getIsFetchingTerms(), []);
 
     const {
         setAction,
@@ -32,7 +32,7 @@ export const FutureActionPanel = (props) => {
         setTermsListById,
         setTaxonomyName,
         setIsFetchingTerms
-    } = useDispatch('publishpress-future/future-action');
+    } = useDispatch(props.storeName);
 
     const mapTermsListById = (terms) => {
         if (typeof terms !== 'object' || terms === null) {
@@ -193,7 +193,7 @@ export const FutureActionPanel = (props) => {
                 <Fragment>
                     <PanelRow className={'future-action-date-panel'}>
                         <DateTimePicker
-                            currentDate={date * 1000}
+                            currentDate={date}
                             onChange={handleDateChange}
                             __nextRemoveHelpButton={true}
                             is12Hour={props.is12hours}

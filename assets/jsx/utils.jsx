@@ -11,3 +11,7 @@ export const debugLogFactory = (config) => {
         }
     }
 }
+
+export const isGutenbergEnabled = () => {
+    return document.body.classList.contains('block-editor-page');
+}

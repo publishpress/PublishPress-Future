@@ -6,7 +6,6 @@
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
-use PublishPress\Future\Core\HooksAbstract as CoreHooks;
 use PublishPress\Future\Modules\Debug\HooksAbstract as DebugHooks;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
@@ -362,7 +361,7 @@ function postexpirator_meta_box($post)
     $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
     $postModel = $factory($post->ID);
 
-    $expirationDateAsUnixTime = $postModel->getExpirationDateAsUnixTime();
+    $expirationDateAsUnixTime = $postModel->getExpirationDateAsUnixTime(false);
 
     $expireType = '';
 
@@ -383,13 +382,15 @@ function postexpirator_meta_box($post)
         $defaultYear = $defaultExpire['year'];
         $defaultMinute = $defaultExpire['minute'];
 
+        // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         $defaultDate = date('Y-m-d H:i:s', mktime($defaultHour, $defaultMinute, 0, $defaultMonth, $defaultDay, $defaultYear));
 
         if (isset($defaultsOption['expireType'])) {
             $expireType = $defaultsOption['expireType'];
         }
     } else {
-        $defaultDate = gmdate('Y-m-d H:i:s', $expirationDateAsUnixTime);
+        // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+        $defaultDate = date('Y-m-d H:i:s', $expirationDateAsUnixTime);
 
         $attributes = $postModel->getExpirationDataAsArray();
         $expireType = $attributes['expireType'];
@@ -401,7 +402,7 @@ function postexpirator_meta_box($post)
             'post' => $post,
             'enabled' => $postModel->isExpirationEnabled($post->ID),
             'defaultsOption' => $defaultsOption,
-            'defaultDate' => (int)strtotime($defaultDate),
+            'defaultDate' => $defaultDate,
             'terms' => $terms,
             'expireType' => $expireType,
             'taxonomy' => $defaultsOption['taxonomy'],
@@ -511,9 +512,11 @@ function postexpirator_update_post_meta($id)
         $minute = intval($_POST['expirationdate_minute']);
 
         if (empty($day)) {
+            // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
             $day = date('d');
         }
         if (empty($year)) {
+            // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
             $year = date('Y');
         }
 
@@ -556,7 +559,7 @@ function postexpirator_update_post_meta($id)
             $payload = wpcom_vip_file_get_contents('php://input');
         } else {
             // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsRemoteFile
-            $payload = @file_get_contents('php://input');
+            $payload = file_get_contents('php://input');
         }
 
         if (empty($payload)) {
@@ -653,7 +656,7 @@ function postexpirator_shortcode($attrs)
             'dateformat' => get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT),
             'timeformat' => get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT),
             'type' => 'full',
-            'tz' => date('T'),
+            'tz' => date('T'), // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         ),
         $attrs
     );

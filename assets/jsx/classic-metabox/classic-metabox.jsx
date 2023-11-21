@@ -1,41 +1,32 @@
-import { formatUnixTimestamp } from '../../js/classic-metabox';
-import { createStore } from '../data';
 import { FutureActionPanel } from '../FutureActionPanel';
+import { createStore } from '../data';
+import { formatTimeToUnixTimestamp, formatUnixTimestamp } from '../time';
+import { isGutenbergEnabled } from '../utils';
 
-(function (wp, config) {
-    // Exit if Gutenberg is enabled.
-    if (document.body.classList.contains('block-editor-page')) {
+((wp, config) => {
+    if (isGutenbergEnabled()) {
         return;
     }
 
-    const {createRoot} = ReactDOM;
-
-    createStore({
-        defaultState: {
-            autoEnable: config.postTypeDefaultConfig.autoEnable,
-            action: config.postTypeDefaultConfig.expireType,
-            date: config.defaultDate,
-            taxonomy: config.postTypeDefaultConfig.taxonomy,
-            ters: config.postTypeDefaultConfig.terms,
-        }
-    });
+    const storeName = 'publishpress-future/future-action';
 
     const ClassicFutureActionPanel = () => {
         const { select } = wp.data;
+        const browserTimezoneOffset = new Date().getTimezoneOffset();
 
         const getElementByName = (name) => {
             return document.getElementsByName(name)[0];
         }
 
         const onChangeData = (attribute, value) => {
-            const store = select('publishpress-future/future-action');
+            const store = select(storeName);
 
             getElementByName('future_action_enabled').value = store.getEnabled() ? 1 : 0;
             getElementByName('future_action_action').value = store.getAction();
             getElementByName('future_action_date').value = store.getDate();
             getElementByName('future_action_terms').value = store.getTerms().join(',');
             getElementByName('future_action_taxonomy').value = store.getTaxonomy();
-            getElementByName('future_action_browser_timezone_offset').value = new Date().getTimezoneOffset();
+            getElementByName('future_action_browser_timezone_offset').value = browserTimezoneOffset;
         }
 
         const data = {
@@ -46,8 +37,6 @@ import { FutureActionPanel } from '../FutureActionPanel';
             taxonomy: getElementByName('future_action_taxonomy').value,
         };
 
-        console.log('date', formatUnixTimestamp(data.date), data.date);
-
         return (
             <div className={'post-expirator-panel'}>
                 <FutureActionPanel
@@ -56,17 +45,33 @@ import { FutureActionPanel } from '../FutureActionPanel';
                     actionsSelectOptions={config.actionsSelectOptions}
                     enabled={data.enabled}
                     action={data.action}
-                    date={parseInt(data.date)}
+                    date={data.date}
                     terms={data.terms}
                     taxonomy={data.taxonomy}
                     onChangeData={onChangeData}
                     is12hours={config.is12hours}
                     startOfWeek={config.startOfWeek}
-
+                    storeName={storeName}
                     strings={config.strings} />
             </div>
         );
     };
+
+    const { createRoot } = ReactDOM;
+    const { select } = wp.data;
+
+    if (!select(storeName)) {
+        createStore({
+            name: storeName,
+            defaultState: {
+                autoEnable: config.postTypeDefaultConfig.autoEnable,
+                action: config.postTypeDefaultConfig.expireType,
+                date: config.defaultDate,
+                taxonomy: config.postTypeDefaultConfig.taxonomy,
+                ters: config.postTypeDefaultConfig.terms,
+            }
+        });
+    }
 
     const container = document.getElementById("publishpress-future-classic-metabox");
     const root = createRoot(container);

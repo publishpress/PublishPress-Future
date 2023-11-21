@@ -18,7 +18,7 @@ export const createStore = (props) => {
         isFetchingTerms: false,
     }
 
-    const store = createReduxStore('publishpress-future/future-action', {
+    const store = createReduxStore(props.name, {
         reducer(state = defaultState, action) {
             switch (action.type) {
                 case 'SET_ACTION':
