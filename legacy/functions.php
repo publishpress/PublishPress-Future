@@ -481,17 +481,9 @@ function postexpirator_update_post_meta($id)
             'categoryTaxonomy' => sanitize_text_field($_POST['future_action_taxonomy']),
         ];
 
-        $browserTimezoneOffset = isset($_POST['future_action_browser_timezone_offset']) ? (int)$_POST['future_action_browser_timezone_offset'] * MINUTE_IN_SECONDS : 0;
-        $wpTimezoneOffset = get_option('gmt_offset') * HOUR_IN_SECONDS;
+        $date = strtotime(sanitize_text_field($_POST['future_action_date']));
 
-        /*
-         * The user believes he typed the date time in the site's timezone, but the DateTimePicker
-         * component sends the date time in the user's local timezone. We need to convert the date
-         * time to the site's timezone and then to UTC.
-         */
-        $gmtActionTime = $_POST['future_action_date'] - $browserTimezoneOffset - $wpTimezoneOffset;
-
-        do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $id, $gmtActionTime, $opts);
+        do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $id, $date, $opts);
 
         return;
     }
