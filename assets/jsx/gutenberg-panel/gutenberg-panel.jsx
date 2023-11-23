@@ -49,13 +49,11 @@ import { FutureActionPanel } from '../FutureActionPanel';
                 newAttribute['terms'] = store.getTerms();
                 newAttribute['taxonomy'] = store.getTaxonomy();
             }
-            console.log(newAttribute);
 
             editPostAttribute(newAttribute);
         }
 
         const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
-        console.log('data', data);
 
         return (
             <PluginDocumentSettingPanel
