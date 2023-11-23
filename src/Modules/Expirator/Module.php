@@ -224,7 +224,9 @@ class Module implements ModuleInterface
         $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
 
 
-        $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+        $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+        $defaultDataModel = $defaultDataModelFactory->create($postType);
+
         $debug = $container->get(ServicesAbstract::DEBUG);
 
         $taxonomyName= '';
@@ -241,14 +243,14 @@ class Module implements ModuleInterface
             ]);
         }
 
-        $defaultExpirationDate = $defaultDataModel->getDefaultExpirationDateForPostType($postType);
+        $defaultExpirationDate = $defaultDataModel->getActionDateParts();
 
         wp_localize_script(
             'publishpress-future-classic-metabox',
             'publishpressFutureClassicMetabox',
             [
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,
-                'defaultDate' => $defaultExpirationDate['ts'],
+                'defaultDate' => $defaultExpirationDate['iso'],
                 'is12hours' => get_option('time_format') !== 'H:i',
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),

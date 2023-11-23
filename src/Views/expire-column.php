@@ -50,10 +50,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 ];
 
                 if (in_array($action, $categoryActions)) {
-                    $categories = $postModel->getExpirationCategoryNames();
-                    if (!empty($categories)) {
+                    $terms = $postModel->getExpirationCategoryNames();
+                    if (!empty($terms)) {
                         ?>
-                        <div class="future-action-gray">[<?php echo esc_html(implode(', ', $categories)); ?>]</div>
+                        <div class="future-action-gray">[<?php echo esc_html(implode(', ', $terms)); ?>]</div>
                         <?php
                     }
                 }
@@ -70,28 +70,22 @@ defined('ABSPATH') or die('Direct access not allowed.');
         <?php
     }
 
-    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+    $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+    $defaultDataModel = $defaultDataModelFactory->create($post_type);
 
-    $defaultsForPostType = $settingsFacade->getPostTypeDefaults($post_type);
-    $expireType = 'draft';
-    if (isset($defaultsForPostType['expireType'])) {
-        $expireType = $defaultsForPostType['expireType'];
-    }
+    $expireType = $defaultDataModel->getAction();
 
-    // these defaults will be used by quick edit
-    $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+    $defaultDateParts = $defaultDataModel->getActionDateParts();
 
-    $defaults = $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
-
-    $defaultYear = $defaults['year'];
-    $defaultMonth = $defaults['month'];
-    $defaultDay = $defaults['day'];
-    $defaultHour = $defaults['hour'];
-    $defaultMinute = $defaults['minute'];
+    $defaultYear = $defaultDateParts['year'];
+    $defaultMonth = $defaultDateParts['month'];
+    $defaultDay = $defaultDateParts['day'];
+    $defaultHour = $defaultDateParts['hour'];
+    $defaultMinute = $defaultDateParts['minute'];
     $enabled = $expirationEnabled ? 'true' : 'false';
-    $categories = '';
+    $terms = '';
 
-    // Values for Quick Edit
+    // Values for Quick Edit.
     if ($expirationEnabled) {
         $date = gmdate('Y-m-d H:i:s', $expirationDate);
         $defaultYear = get_date_from_gmt($date, 'Y');
@@ -109,12 +103,12 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 'category-add',
                 'category-remove'
             ), true)) {
-            $categories = implode(',', $attributes['category']);
-        }
-    }
+            $terms = implode(',', $attributes['category']);
 
-    if (empty($categories) && isset($defaultsForPostType['terms'])) {
-        $categories = $defaultsForPostType['terms'];
+            if (empty($terms)) {
+                $terms = $defaultDataModel->getTermsAsString();
+            }
+        }
     }
 
     // The hidden fields will be used by quick edit.
@@ -127,5 +121,5 @@ defined('ABSPATH') or die('Direct access not allowed.');
     <input type="hidden" id="expirationdate_minute-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultMinute); ?>" />
     <input type="hidden" id="expirationdate_enabled-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($enabled); ?>" />
     <input type="hidden" id="expirationdate_expireType-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($expireType); ?>" />
-    <input type="hidden" id="expirationdate_categories-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($categories); ?>" />
+    <input type="hidden" id="expirationdate_categories-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($terms); ?>" />
 </div>

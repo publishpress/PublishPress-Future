@@ -6,9 +6,10 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = Container::getInstance();
-$defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+$defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+$defaultDataModel = $defaultDataModelFactory->create($post_type);
 
-$defaults = $defaultDataModel->getDefaultExpirationDateForPostType($post_type);
+$defaults = $defaultDataModel->getActionDateParts();
 
 $defaultYear = $defaults['year'];
 $defaultMonth = $defaults['month'];

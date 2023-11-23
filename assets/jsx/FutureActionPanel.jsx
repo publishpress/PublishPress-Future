@@ -1,3 +1,4 @@
+import { normalizeUnixTimeToMilliseconds, formatTimestampToUnixTime } from './time';
 import { compact } from './utils';
 
 const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner } = wp.components;
@@ -82,12 +83,9 @@ export const FutureActionPanel = (props) => {
     }
 
     const handleDateChange = (value) => {
-        console.log('handleDateChange', value);
-        const date = new Date(value).getTime();
+        setDate(value);
 
-        setDate(date);
-
-        callOnChangeData('date', date);
+        callOnChangeData('date', value);
     }
 
     const handleTermsChange = (value) => {
@@ -149,7 +147,7 @@ export const FutureActionPanel = (props) => {
     useEffect(() => {
         setEnabled(props.enabled);
         setAction(props.action);
-        setDate((new Date(props.date)).getTime());
+        setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
@@ -176,9 +174,6 @@ export const FutureActionPanel = (props) => {
     if (typeof termsListByName === 'object' && termsListByName !== null) {
         termsListByNameKeys = Object.keys(termsListByName);
     }
-
-    // TODO: Why is this different on block editor and classic editor?
-    console.log('currentDate', date);
 
     return (
         <Fragment>

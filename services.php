@@ -7,8 +7,6 @@ use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Paths;
 use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\Logger\Logger;
-use PublishPress\Future\Framework\Logger\LoggerInterface;
-use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
@@ -37,13 +35,11 @@ use PublishPress\Future\Modules\Expirator\ExpirationActions\UnstickPost;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationScheduler;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
-use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
-use PublishPress\Future\Modules\Expirator\Models\DefaultDataModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 use PublishPress\Future\Modules\Expirator\Module as ModuleExpirator;
@@ -55,8 +51,9 @@ use PublishPress\Future\Modules\Settings\Module as ModuleSettings;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
+use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
+use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use PublishPress\Psr\Container\ContainerInterface;
-use PublishPressFuture\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 
 return [
     ServicesAbstract::PLUGIN_VERSION => PUBLISHPRESS_FUTURE_VERSION,
@@ -382,8 +379,8 @@ return [
         };
     },
 
-    ServicesAbstract::DEFAULT_DATA_MODEL => static function (ContainerInterface $container) {
-        return new DefaultDataModel(
+    ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY => static function (ContainerInterface $container) {
+        return new PostTypeDefaultDataModelFactory(
             $container->get(ServicesAbstract::SETTINGS),
             $container->get(ServicesAbstract::OPTIONS)
         );
@@ -407,7 +404,7 @@ return [
                 $container->get(ServicesAbstract::TERM_MODEL_FACTORY),
                 $container->get(ServicesAbstract::EXPIRATION_ACTION_FACTORY),
                 $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
-                $container->get(ServicesAbstract::DEFAULT_DATA_MODEL)
+                $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY)
             );
         };
     },

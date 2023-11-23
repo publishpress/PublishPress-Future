@@ -44,15 +44,15 @@ add_filter('plugin_action_links', 'postexpirator_plugin_action_links', 10, 2);
  *
  * @access private
  */
-function postexpirator_add_column($columns, $type = 'page')
+function postexpirator_add_column($columns, $postType = 'page')
 {
     $container = Container::getInstance();
     $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
-    $defaults = $settingsFacade->getPostTypeDefaults($type);
+    $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
-    // if settings are not configured, show the metabox by default only for posts and pages
-    if ((! isset($defaults['activeMetaBox']) && in_array($type, array(
+    // If settings are not configured, show the metabox by default only for posts and pages
+    if ((! isset($defaults['activeMetaBox']) && in_array($postType, array(
                 'post',
                 'page'
             ), true)) || (is_array(
@@ -361,51 +361,39 @@ function postexpirator_meta_box($post)
     $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
     $postModel = $factory($post->ID);
 
-    $expirationDateAsUnixTime = $postModel->getExpirationDateAsUnixTime(false);
+    $isEnabled = $postModel->isExpirationEnabled();
 
-    $expireType = '';
+    $data = [];
 
-    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-
-    $defaultsOption = $settingsFacade->getPostTypeDefaults($post->post_type);
-
-    $terms = [];
-    $defaultDate = 0;
-
-    if (empty($expirationDateAsUnixTime)) {
-        $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
-        $defaultExpire = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
-
-        $defaultMonth = $defaultExpire['month'];
-        $defaultDay = $defaultExpire['day'];
-        $defaultHour = $defaultExpire['hour'];
-        $defaultYear = $defaultExpire['year'];
-        $defaultMinute = $defaultExpire['minute'];
-
-        // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-        $defaultDate = date('Y-m-d H:i:s', mktime($defaultHour, $defaultMinute, 0, $defaultMonth, $defaultDay, $defaultYear));
-
-        if (isset($defaultsOption['expireType'])) {
-            $expireType = $defaultsOption['expireType'];
-        }
+    if ('auto-draft' === $post->post_status && ! $isEnabled) {
+        $data = [
+            'enabled' => false,
+            'date' => 0,
+            'action' => '',
+            'terms' => [],
+            'taxonomy' => '',
+            'browser_timezone_offset' => 0
+        ];
     } else {
-        // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-        $defaultDate = date('Y-m-d H:i:s', $expirationDateAsUnixTime);
-
-        $attributes = $postModel->getExpirationDataAsArray();
-        $expireType = $attributes['expireType'];
-        $terms = $attributes['category'];
+        $data = [
+            'enabled' => $postModel->isExpirationEnabled(),
+            'date' => $postModel->getExpirationDateString(false),
+            'action' => $postModel->getExpirationType(),
+            'terms' => $postModel->getExpirationCategoryIDs(),
+            'taxonomy' => $postModel->getExpirationTaxonomy(),
+            'browser_timezone_offset' => 0
+        ];
     }
 
     PostExpirator_Display::getInstance()->render_template(
         'classic-metabox', [
             'post' => $post,
-            'enabled' => $postModel->isExpirationEnabled($post->ID),
-            'defaultsOption' => $defaultsOption,
-            'defaultDate' => $defaultDate,
-            'terms' => $terms,
-            'expireType' => $expireType,
-            'taxonomy' => $defaultsOption['taxonomy'],
+            'enabled' => $data['enabled'],
+            'action' => $data['action'],
+            'date' => $data['date'],
+            'terms' => $data['terms'],
+            'taxonomy' => $data['taxonomy'],
+            'browser_timezone_offset' => $data['browser_timezone_offset'],
         ]
     );
 }
@@ -418,15 +406,14 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
 
     $container = Container::getInstance();
     $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+    $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+    $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
 
-    $postTypeDefaults = $settingsFacade->getPostTypeDefaults($post->post_type);
-
-    if (empty($postTypeDefaults) || (int)$postTypeDefaults['autoEnable'] !== 1) {
+    if (! $defaultDataModel->isAutoEnabled()) {
         return;
     }
 
-    $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
-    $defaultExpire = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
+    $defaultExpire = $defaultDataModel->getActionDateParts();
 
     if (empty($defaultExpire['ts'])) {
         return;
@@ -450,12 +437,12 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
  */
 function postexpirator_update_post_meta($id)
 {
-    // don't run the echo if this is an auto save
+    // Don't run if this is an auto save
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return;
     }
 
-    // don't run the echo if the function is called for saving revision.
+    // Don't update data if the function is called for saving revision.
     $posttype = get_post_type((int)$id);
     if ($posttype === 'revision') {
         return;
@@ -466,165 +453,50 @@ function postexpirator_update_post_meta($id)
         return;
     }
 
-    $facade = PostExpirator_Facade::getInstance();
+    $currentUserModelFactory = Container::getInstance()->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY);
+    $currentUserModel = $currentUserModelFactory();
 
-    if (! $facade->current_user_can_expire_posts()) {
+    if (! $currentUserModel->userCanExpirePosts()) {
         return;
     }
 
-    $container = Container::getInstance();
-    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-    $postModel = $factory($id);
-    $scheduler = $container->get(ServicesAbstract::EXPIRATION_SCHEDULER);
-
-    $postTypeDefaults = $settingsFacade->getPostTypeDefaults($posttype);
-
-    $shouldSchedule = false;
-    $ts = null;
-    $opts = [];
-    $isClassicalInterface = isset($_POST['future_action_view']);
-
-    if ($isClassicalInterface) {
-        if (defined('DOING_AJAX') && DOING_AJAX) {
-            check_ajax_referer('__future_action', '_future_action_nonce');
-        } else {
-            check_admin_referer('__future_action', '_future_action_nonce');
-        }
-
-        // Classic editor, quick edit
-        $shouldSchedule = isset($_POST['enable-expirationdate']);
-
-        if (! isset($_POST['expirationdate_month'])
-            || ! isset($_POST['expirationdate_day'])
-            || ! isset($_POST['expirationdate_year'])
-            || ! isset($_POST['expirationdate_hour'])
-            || ! isset($_POST['expirationdate_minute'])
-        ) {
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-            error_log('PUBLISHPRESS FUTURE: Missing expiration date on POST');
-        }
-
-        $month = intval($_POST['expirationdate_month']);
-        $day = intval($_POST['expirationdate_day']);
-        $year = intval($_POST['expirationdate_year']);
-        $hour = intval($_POST['expirationdate_hour']);
-        $minute = intval($_POST['expirationdate_minute']);
-
-        if (empty($day)) {
-            // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-            $day = date('d');
-        }
-        if (empty($year)) {
-            // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-            $year = date('Y');
-        }
-
-        $category = isset($_POST['expirationdate_category'])
-            ? PostExpirator_Util::sanitize_array_of_integers(
-                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-                sanitize_text_field(wp_unslash($_POST['expirationdate_category']))
-            ) : [];
-
-        $ts = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
-
-        if (isset($_POST['expirationdate_quickedit'])) {
-            $opts = $postModel->getExpirationDataAsArray();
-
-            if (isset($_POST['expirationdate_expiretype'])) {
-                $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
-                if (in_array($opts['expireType'], array(
-                    'category',
-                    'category-add',
-                    'category-remove'
-                ), true)) {
-                    $opts['category'] = $category;
-                    $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
-                }
-            }
-        } else {
-            // Schedule/Update Expiration
-            $opts['expireType'] = sanitize_key($_POST['expirationdate_expiretype']);
-
-            if ($opts['expireType'] === 'category' || $opts['expireType'] === 'category-add' || $opts['expireType'] === 'category-remove') {
-                if (isset($category) && ! empty($category)) {
-                    $opts['category'] = $category;
-                    $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
-                }
-            }
-        }
-    } else {
-        // Gutenberg or script request
-        if (function_exists('`wpcom_vip_file_get_contents')) {
-            $payload = wpcom_vip_file_get_contents('php://input');
-        } else {
-            // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsRemoteFile
-            $payload = file_get_contents('php://input');
-        }
-
-        if (empty($payload)) {
-            do_action(
-                DebugHooks::ACTION_DEBUG_LOG,
-                $id . ' -> NO PAYLOAD ON SAVE_POST'
-            );
-
-            return;
-        }
-
-        $payload = @json_decode($payload, true);
-
-        if (isset($payload['meta'])) {
-            // Meta has changed, let's update the expiration data.
-            if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_STATUS])) {
-                $shouldSchedule = $payload['meta'][PostMetaAbstract::EXPIRATION_STATUS] === 'saved'
-                    && isset($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP])
-                    && false === empty($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP]);
-            } else {
-                $shouldSchedule = $postModel->isExpirationEnabled();
-            }
-
-            if ($shouldSchedule) {
-                if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP])) {
-                    $ts = sanitize_text_field($payload['meta'][PostMetaAbstract::EXPIRATION_TIMESTAMP]);
-                } else {
-                    $ts = $postModel->getExpirationDateAsUnixTime();
-                }
-
-                if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_TYPE])) {
-                    $opts['expireType'] = sanitize_key($payload['meta'][PostMetaAbstract::EXPIRATION_TYPE]);
-                } else {
-                    $opts['expireType'] = $postModel->getExpirationType();
-                }
-
-                if (isset($payload['meta'][PostMetaAbstract::EXPIRATION_TERMS])) {
-                    $opts['category'] = PostExpirator_Util::sanitize_array_of_integers(
-                        $payload['meta'][PostMetaAbstract::EXPIRATION_TERMS]
-                    );
-                } else {
-                    $opts['category'] = (array)$postModel->getExpirationCategoryIDs();
-                }
-
-                $opts['categoryTaxonomy'] = $postTypeDefaults['taxonomy'];
-            }
-        } else {
-            // Meta has not changed. Let's pass the current expiration data to be rescheduled.
-            $shouldSchedule = $postModel->isExpirationEnabled();
-
-            if ($shouldSchedule) {
-                $ts = $postModel->getExpirationDateAsUnixTime();
-
-                $opts['expireType'] = $postModel->getExpirationType();
-                $opts['category'] = (array)$postModel->getExpirationCategoryIDs();
-                $opts['categoryTaxonomy'] = $postModel->getExpirationTaxonomy();
-            }
-        }
+    // Don't run if was triggered by block editor. It is processed on the method "ExpirationController::handleRestAPIInit".
+    if (empty($_POST['future_action_view'])) {
+        return;
     }
+
+    if (defined('DOING_AJAX') && DOING_AJAX) {
+        check_ajax_referer('__future_action', '_future_action_nonce');
+    } else {
+        check_admin_referer('__future_action', '_future_action_nonce');
+    }
+
+    // Classic editor, quick edit
+    $shouldSchedule = isset($_POST['future_action_enabled']) && $_POST['future_action_enabled'] === '1';
 
     if ($shouldSchedule) {
-        do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $id, $ts, $opts);
-    } else {
-        do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $id);
+        $opts = [
+            'expireType' => sanitize_text_field($_POST['future_action_action']),
+            'category' => sanitize_text_field($_POST['future_action_terms']),
+            'categoryTaxonomy' => sanitize_text_field($_POST['future_action_taxonomy']),
+        ];
+
+        $browserTimezoneOffset = isset($_POST['future_action_browser_timezone_offset']) ? (int)$_POST['future_action_browser_timezone_offset'] * MINUTE_IN_SECONDS : 0;
+        $wpTimezoneOffset = get_option('gmt_offset') * HOUR_IN_SECONDS;
+
+        /*
+         * The user believes he typed the date time in the site's timezone, but the DateTimePicker
+         * component sends the date time in the user's local timezone. We need to convert the date
+         * time to the site's timezone and then to UTC.
+         */
+        $gmtActionTime = $_POST['future_action_date'] - $browserTimezoneOffset - $wpTimezoneOffset;
+
+        do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $id, $gmtActionTime, $opts);
+
+        return true;
     }
+
+    do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $id);
 }
 
 add_action('save_post', 'postexpirator_update_post_meta');
@@ -1194,6 +1066,7 @@ function postexpirator_quickedit_javascript()
 
 add_action('admin_print_scripts-edit.php', 'postexpirator_quickedit_javascript');
 
+// TODO: Can we move this to the same function as the quick edit and classic editor?
 function postexpirator_date_save_bulk_edit()
 {
     // Save Bulk edit data
@@ -1232,9 +1105,10 @@ function postexpirator_date_save_bulk_edit()
     $postType = get_post_type($postIds[0]);
 
     $container = Container::getInstance();
-    $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
+    $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL);
+    $defaultDataModel = $defaultDataModelFactory->create($postType);
 
-    $defaults = $defaultDataModel->getDefaultExpirationDateForPostType($postType);
+    $defaults = $defaultDataModel->getActionDateParts();
 
     $year = $defaults['year'];
     if (isset($_REQUEST['expirationdate_year'])) {

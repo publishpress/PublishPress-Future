@@ -17,6 +17,8 @@ exports.FutureActionPanel = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var _time = __webpack_require__(/*! ./time */ "./assets/jsx/time.jsx");
+
 var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
 
 var _wp$components = wp.components,
@@ -124,12 +126,9 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     };
 
     var handleDateChange = function handleDateChange(value) {
-        console.log('handleDateChange', value);
-        var date = new Date(value).getTime();
+        setDate(value);
 
-        setDate(date);
-
-        callOnChangeData('date', date);
+        callOnChangeData('date', value);
     };
 
     var handleTermsChange = function handleTermsChange(value) {
@@ -191,7 +190,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     useEffect(function () {
         setEnabled(props.enabled);
         setAction(props.action);
-        setDate(new Date(props.date).getTime());
+        setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
@@ -218,9 +217,6 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     if ((typeof termsListByName === 'undefined' ? 'undefined' : _typeof(termsListByName)) === 'object' && termsListByName !== null) {
         termsListByNameKeys = Object.keys(termsListByName);
     }
-
-    // TODO: Why is this different on block editor and classic editor?
-    console.log('currentDate', date);
 
     return React.createElement(
         Fragment,
@@ -309,7 +305,7 @@ var createStore = exports.createStore = function createStore(props) {
 
     var defaultState = {
         action: props.defaultState.action,
-        date: props.defaultState.date ? parseInt(props.defaultState.date) : (0, _time.getCurrentTime)(),
+        date: props.defaultState.date ? props.defaultState.date : (0, _time.getCurrentTimeAsTimestamp)(),
         enabled: props.defaultState.autoEnable,
         terms: props.defaultState.terms ? props.defaultState.terms.split(',').map(function (term) {
             return parseInt(term);
@@ -452,6 +448,8 @@ var createStore = exports.createStore = function createStore(props) {
     });
 
     register(store);
+
+    return store;
 };
 
 /***/ }),
@@ -467,12 +465,16 @@ var createStore = exports.createStore = function createStore(props) {
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
-var getCurrentTime = exports.getCurrentTime = function getCurrentTime() {
-    return new Date().getTime() / 1000;
+var getCurrentTimeInSeconds = exports.getCurrentTimeInSeconds = function getCurrentTimeInSeconds() {
+    return normalizeUnixTimeToSeconds(new Date().getTime());
 };
 
-var formatUnixTimestamp = exports.formatUnixTimestamp = function formatUnixTimestamp(unixTimestamp) {
-    var date = new Date(unixTimestamp * 1000); // Convert to milliseconds by multiplying by 1000
+var getCurrentTimeAsTimestamp = exports.getCurrentTimeAsTimestamp = function getCurrentTimeAsTimestamp() {
+    return formatUnixTimeToTimestamp(getCurrentTimeInSeconds());
+};
+
+var formatUnixTimeToTimestamp = exports.formatUnixTimeToTimestamp = function formatUnixTimeToTimestamp(unixTimestamp) {
+    var date = new Date(normalizeUnixTimeToMilliseconds(unixTimestamp));
 
     var year = date.getFullYear();
     var month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero-based
@@ -484,10 +486,26 @@ var formatUnixTimestamp = exports.formatUnixTimestamp = function formatUnixTimes
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 };
 
-var formatTimeToUnixTimestamp = exports.formatTimeToUnixTimestamp = function formatTimeToUnixTimestamp(time) {
+var formatTimestampToUnixTime = exports.formatTimestampToUnixTime = function formatTimestampToUnixTime(time) {
     var date = new Date(time);
 
-    return date.getTime() / 1000;
+    return normalizeUnixTimeToSeconds(date.getTime());
+};
+
+var timeIsInSeconds = exports.timeIsInSeconds = function timeIsInSeconds(time) {
+    return parseInt(time).toString().length === 10;
+};
+
+var normalizeUnixTimeToSeconds = exports.normalizeUnixTimeToSeconds = function normalizeUnixTimeToSeconds(time) {
+    time = parseInt(time);
+
+    return timeIsInSeconds() ? time : time / 1000;
+};
+
+var normalizeUnixTimeToMilliseconds = exports.normalizeUnixTimeToMilliseconds = function normalizeUnixTimeToMilliseconds(time) {
+    time = parseInt(time);
+
+    return timeIsInSeconds() ? time * 1000 : time;
 };
 
 /***/ }),
@@ -567,8 +585,6 @@ var __webpack_exports__ = {};
 var _FutureActionPanel = __webpack_require__(/*! ../FutureActionPanel */ "./assets/jsx/FutureActionPanel.jsx");
 
 var _data = __webpack_require__(/*! ../data */ "./assets/jsx/data.jsx");
-
-var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
 
 var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
 

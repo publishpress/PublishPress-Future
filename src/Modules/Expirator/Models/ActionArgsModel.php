@@ -306,6 +306,11 @@ class ActionArgsModel
         return isset($this->args['category']) ? $this->args['category'] : [];
     }
 
+    public function getTaxonomy()
+    {
+        return isset($this->args['categoryTaxonomy']) ? $this->args['categoryTaxonomy'] : '';
+    }
+
     /**
      * @return array
      */

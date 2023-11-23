@@ -143,6 +143,10 @@ class SettingsFacade
 
     public function getPostTypeDefaults($postType)
     {
+        if (isset($this->cache['postTypeDefaults']) && isset($this->cache['postTypeDefaults'][$postType])) {
+            return $this->cache['postTypeDefaults'][$postType];
+        }
+
         $defaults = [
             'expireType' => null,
             'autoEnable' => null,
@@ -176,7 +180,18 @@ class SettingsFacade
             }
         }
 
-        return $defaults;
+        // Enable by default for post and page.
+        if (is_null($defaults['activeMetaBox'])) {
+            $defaults['activeMetaBox'] = in_array($postType, ['post', 'page'], true) ? 'active' : 'inactive';
+        }
+
+        if (! isset($this->cache['postTypeDefaults'])) {
+            $this->cache['postTypeDefaults'] = [];
+        }
+
+        $this->cache['postTypeDefaults'][$postType] = $defaults;
+
+        return $this->cache['postTypeDefaults'][$postType];
     }
 
     /**

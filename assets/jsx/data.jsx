@@ -1,4 +1,4 @@
-import { getCurrentTime } from './time';
+import { getCurrentTimeAsTimestamp } from './time';
 
 export const createStore = (props) => {
     const {
@@ -8,7 +8,7 @@ export const createStore = (props) => {
 
     let defaultState = {
         action: props.defaultState.action,
-        date: props.defaultState.date ? parseInt(props.defaultState.date) : getCurrentTime(),
+        date: props.defaultState.date ? props.defaultState.date : getCurrentTimeAsTimestamp(),
         enabled: props.defaultState.autoEnable,
         terms: props.defaultState.terms ? props.defaultState.terms.split(',').map(term => parseInt(term)) : [],
         taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,

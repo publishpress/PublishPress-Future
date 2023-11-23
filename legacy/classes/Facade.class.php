@@ -354,6 +354,7 @@ class PostExpirator_Facade
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
         $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+        $options = $container->get(ServicesAbstract::OPTIONS);
 
         $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($post->post_type);
 
@@ -379,8 +380,8 @@ class PostExpirator_Facade
                 true
             );
 
-            $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
-            $debug = $container->get(ServicesAbstract::DEBUG);
+            $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+            $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
 
             $taxonomyName= '';
             if (! empty($postTypeDefaultConfig['taxonomy'])) {
@@ -396,17 +397,17 @@ class PostExpirator_Facade
                 ]);
             }
 
-            $defaultExpirationDate = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
+            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
             wp_localize_script(
                 'postexpirator-gutenberg-panel',
                 'postExpiratorPanelConfig',
                 [
                     'postTypeDefaultConfig' => $postTypeDefaultConfig,
-                    'defaultDate' => $defaultExpirationDate['ts'],
-                    'is12hours' => get_option('time_format') !== 'H:i',
-                    'startOfWeek' => get_option('start_of_week', 0),
+                    'defaultDate' => $defaultExpirationDate['iso'],
+                    'is12hours' => $options->getOption('time_format') !== 'H:i',
+                    'startOfWeek' => $options->getOption('start_of_week', 0),
                     'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
-                    'isDebugEnabled' => $debug->isEnabled(),
+                    'isDebugEnabled' => $container->get(ServicesAbstract::DEBUG)->isEnabled(),
                     'taxonomyName' => $taxonomyName,
                     'taxonomyTerms' => $taxonomyTerms,
                     'strings' => [

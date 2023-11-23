@@ -1,6 +1,5 @@
 import { createStore } from '../data';
 import { FutureActionPanel } from '../FutureActionPanel';
-import { formatTimeToUnixTimestamp } from '../time';
 
 (function (wp, config) {
     const { registerPlugin } = wp.plugins;
@@ -44,18 +43,18 @@ import { formatTimeToUnixTimestamp } from '../time';
                 'enabled': store.getEnabled()
             }
 
-            if (data.enabled) {
+            if (newAttribute.enabled) {
                 newAttribute['action'] = store.getAction();
                 newAttribute['date'] = store.getDate();
                 newAttribute['terms'] = store.getTerms();
                 newAttribute['taxonomy'] = store.getTaxonomy();
             }
+            console.log(newAttribute);
 
             editPostAttribute(newAttribute);
         }
 
         const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
-
         console.log('data', data);
 
         return (

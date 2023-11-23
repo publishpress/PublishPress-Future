@@ -3,13 +3,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 <div id="publishpress-future-classic-metabox"></div>
 
-
-<hr/>
-
-
 <input type="hidden" name="future_action_enabled" value="<?php echo $enabled ? 1 : 0; ?>" />
-<input type="hidden" name="future_action_date" value="<?php echo esc_attr($defaultDate); ?>" />
-<input type="hidden" name="future_action_action" value="<?php echo esc_attr($expireType); ?>" />
+<input type="hidden" name="future_action_date" value="<?php echo esc_attr($date); ?>" />
+<input type="hidden" name="future_action_action" value="<?php echo esc_attr($action); ?>" />
 <input type="hidden" name="future_action_terms" value="<?php echo esc_attr(implode(',', $terms)); ?>" />
 <input type="hidden" name="future_action_taxonomy" value="<?php echo esc_attr($taxonomy); ?>" />
 <input type="hidden" name="future_action_browser_timezone_offset" value="0" />
