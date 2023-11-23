@@ -405,7 +405,6 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
     }
 
     $container = Container::getInstance();
-    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
     $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
     $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
 
