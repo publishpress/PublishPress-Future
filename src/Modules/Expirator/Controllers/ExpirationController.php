@@ -212,7 +212,7 @@ class ExpirationController implements InitializableInterface
                             return true;
                         }
 
-                        do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
+                        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
 
                         return true;
                     },
