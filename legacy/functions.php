@@ -493,7 +493,7 @@ function postexpirator_update_post_meta($id)
 
         do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $id, $gmtActionTime, $opts);
 
-        return true;
+        return;
     }
 
     do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $id);
