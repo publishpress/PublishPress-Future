@@ -165,7 +165,6 @@ class ExpirationController implements InitializableInterface
                                 'action' => '',
                                 'terms' => [],
                                 'taxonomy' => '',
-                                'browser_timezone_offset' => 0
                             ];
                         }
 
@@ -192,7 +191,6 @@ class ExpirationController implements InitializableInterface
                             'action' => $action,
                             'terms' => $terms,
                             'taxonomy' => $taxonomy,
-                            'browser_timezone_offset' => 0
                         ];
                     },
                     'update_callback' => function ($value, $post) {

@@ -6,7 +6,6 @@
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
@@ -50,10 +49,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 ];
 
                 if (in_array($action, $categoryActions)) {
-                    $terms = $postModel->getExpirationCategoryNames();
-                    if (!empty($terms)) {
+                    $actionTerms = $postModel->getExpirationCategoryNames();
+                    if (!empty($actionTerms)) {
                         ?>
-                        <div class="future-action-gray">[<?php echo esc_html(implode(', ', $terms)); ?>]</div>
+                        <div class="future-action-gray">[<?php echo esc_html(implode(', ', $actionTerms)); ?>]</div>
                         <?php
                     }
                 }
@@ -70,56 +69,17 @@ defined('ABSPATH') or die('Direct access not allowed.');
         <?php
     }
 
-    $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
-    $defaultDataModel = $defaultDataModelFactory->create($post_type);
+    $actionEnabled = $postModel->isExpirationEnabled();
+    $actionDate = $postModel->getExpirationDateString(false);
+    $actionTaxonomy = $postModel->getExpirationTaxonomy();
+    $action = $postModel->getExpirationAction();
+    $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
 
-    $expireType = $defaultDataModel->getAction();
-
-    $defaultDateParts = $defaultDataModel->getActionDateParts();
-
-    $defaultYear = $defaultDateParts['year'];
-    $defaultMonth = $defaultDateParts['month'];
-    $defaultDay = $defaultDateParts['day'];
-    $defaultHour = $defaultDateParts['hour'];
-    $defaultMinute = $defaultDateParts['minute'];
-    $enabled = $expirationEnabled ? 'true' : 'false';
-    $terms = '';
-
-    // Values for Quick Edit.
-    if ($expirationEnabled) {
-        $date = gmdate('Y-m-d H:i:s', $expirationDate);
-        $defaultYear = get_date_from_gmt($date, 'Y');
-        $defaultMonth = get_date_from_gmt($date, 'm');
-        $defaultDay = get_date_from_gmt($date, 'd');
-        $defaultHour = get_date_from_gmt($date, 'H');
-        $defaultMinute = get_date_from_gmt($date, 'i');
-        if (isset($attributes['expireType'])) {
-            $expireType = $attributes['expireType'];
-        }
-        if (
-            isset($attributes['category'])
-            && ! empty($attributes['category']) && in_array($expireType, array(
-                'category',
-                'category-add',
-                'category-remove'
-            ), true)) {
-            $terms = implode(',', $attributes['category']);
-
-            if (empty($terms)) {
-                $terms = $defaultDataModel->getTermsAsString();
-            }
-        }
-    }
-
-    // The hidden fields will be used by quick edit.
+    // The hidden fields will be used by quick edit to feed the react component.
     ?>
-
-    <input type="hidden" id="expirationdate_year-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultYear); ?>" />
-    <input type="hidden" id="expirationdate_month-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultMonth); ?>" />
-    <input type="hidden" id="expirationdate_day-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultDay); ?>" />
-    <input type="hidden" id="expirationdate_hour-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultHour); ?>" />
-    <input type="hidden" id="expirationdate_minute-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($defaultMinute); ?>" />
-    <input type="hidden" id="expirationdate_enabled-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($enabled); ?>" />
-    <input type="hidden" id="expirationdate_expireType-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($expireType); ?>" />
-    <input type="hidden" id="expirationdate_categories-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($terms); ?>" />
+    <input type="hidden" id="future_action_date-<?php echo esc_attr($id); ?>" name="future_action_date" value="<?php echo esc_attr($actionDate); ?>" />
+    <input type="hidden" id="future_action_enabled-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($actionEnabled); ?>" />
+    <input type="hidden" id="future_action_action-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($action); ?>" />
+    <input type="hidden" id="future_action_terms-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($actionTerms); ?>" />
+    <input type="hidden" id="future_action_taxonomy-<?php echo esc_attr($id); ?>" value="<?php echo esc_attr($actionTaxonomy); ?>" />
 </div>

@@ -371,8 +371,7 @@ function postexpirator_meta_box($post)
             'date' => 0,
             'action' => '',
             'terms' => [],
-            'taxonomy' => '',
-            'browser_timezone_offset' => 0
+            'taxonomy' => ''
         ];
     } else {
         $data = [
@@ -380,8 +379,7 @@ function postexpirator_meta_box($post)
             'date' => $postModel->getExpirationDateString(false),
             'action' => $postModel->getExpirationType(),
             'terms' => $postModel->getExpirationCategoryIDs(),
-            'taxonomy' => $postModel->getExpirationTaxonomy(),
-            'browser_timezone_offset' => 0
+            'taxonomy' => $postModel->getExpirationTaxonomy()
         ];
     }
 
@@ -392,8 +390,7 @@ function postexpirator_meta_box($post)
             'action' => $data['action'],
             'date' => $data['date'],
             'terms' => $data['terms'],
-            'taxonomy' => $data['taxonomy'],
-            'browser_timezone_offset' => $data['browser_timezone_offset'],
+            'taxonomy' => $data['taxonomy']
         ]
     );
 }
@@ -479,6 +476,10 @@ function postexpirator_update_post_meta($id)
             'category' => sanitize_text_field($_POST['future_action_terms']),
             'categoryTaxonomy' => sanitize_text_field($_POST['future_action_taxonomy']),
         ];
+
+        if (! empty($opts['category'])) {
+            $opts['category'] = explode(',', preg_replace('/[^0-9,]/', '', $opts['category']));
+        }
 
         $date = strtotime(sanitize_text_field($_POST['future_action_date']));
 
@@ -1037,10 +1038,23 @@ function _postexpirator_taxonomy($opts)
 function postexpirator_quickedit_javascript()
 {
     // if using code as plugin
-    wp_enqueue_script('postexpirator-edit', POSTEXPIRATOR_BASEURL . '/assets/js/admin-edit.js', array(
-        'jquery',
-        'inline-edit-post'
-    ), POSTEXPIRATOR_VERSION, true);
+    wp_enqueue_script(
+        'postexpirator-edit',
+         POSTEXPIRATOR_BASEURL . '/assets/js/admin-edit.js',
+         ['jquery', 'inline-edit-post'],
+         POSTEXPIRATOR_VERSION,
+         true
+    );
+
+    wp_enqueue_script(
+        'postexpirator-quick-edit',
+         POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
+         ['react', 'react-dom', 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch'],
+         POSTEXPIRATOR_VERSION,
+         true
+    );
+
+    wp_enqueue_style('wp-components');
 
     global $wp_version;
 
@@ -1052,6 +1066,78 @@ function postexpirator_quickedit_javascript()
                 'bulk_edit' => 'manage_wp_posts_using_bulk_quick_save_bulk_edit',
             ),
         )
+    );
+
+    $currentScreen = get_current_screen();
+    $container = Container::getInstance();
+    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+    $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+    $postType = $currentScreen->post_type;
+
+    $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
+
+
+    $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+    $defaultDataModel = $defaultDataModelFactory->create($postType);
+
+    $debug = $container->get(ServicesAbstract::DEBUG);
+
+    $taxonomyName= '';
+    if (! empty($postTypeDefaultConfig['taxonomy'])) {
+        $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
+        $taxonomyName = $taxonomy->label;
+    }
+
+    $taxonomyTerms = [];
+    if (! empty($postTypeDefaultConfig['taxonomy'])) {
+        $taxonomyTerms = get_terms([
+            'taxonomy' => $postTypeDefaultConfig['taxonomy'],
+            'hide_empty' => false,
+        ]);
+    }
+
+    $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+    $nonce = wp_create_nonce('__future_action');
+
+
+
+
+    // TODO: Make his dynamic
+    $isNewPostPage = false;
+
+
+
+
+
+    wp_localize_script(
+        'postexpirator-quick-edit',
+        'publishpressFutureQuickEdit',
+        [
+            'postTypeDefaultConfig' => $postTypeDefaultConfig,
+            'defaultDate' => $defaultExpirationDate['iso'],
+            'is12hours' => get_option('time_format') !== 'H:i',
+            'startOfWeek' => get_option('start_of_week', 0),
+            'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+            'isDebugEnabled' => $debug->isEnabled(),
+            'taxonomyName' => $taxonomyName,
+            'taxonomyTerms' => $taxonomyTerms,
+            'postType' => $currentScreen->post_type,
+            'isNewPost' => $isNewPostPage,
+            'nonce' => $nonce,
+            'strings' => [
+                'category' => __('Taxonomy', 'post-expirator'),
+                'panelTitle' => __('PublishPress Future', 'post-expirator'),
+                'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                'action' => __('Action', 'post-expirator'),
+                'loading' => __('Loading', 'post-expirator'),
+                // translators: %s is the name of the taxonomy in plural form.
+                'noTermsFound' => sprintf(
+                    __('No %s found.', 'post-expirator'),
+                    strtolower($taxonomyName)
+                ),
+                'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
+            ]
+        ]
     );
 }
 

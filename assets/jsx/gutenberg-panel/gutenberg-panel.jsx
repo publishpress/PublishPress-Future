@@ -12,7 +12,7 @@ import { FutureActionPanel } from '../FutureActionPanel';
             action: config.postTypeDefaultConfig.expireType,
             date: config.defaultDate,
             taxonomy: config.postTypeDefaultConfig.taxonomy,
-            ters: config.postTypeDefaultConfig.terms,
+            terms: config.postTypeDefaultConfig.terms,
         }
     });
 
@@ -23,9 +23,7 @@ import { FutureActionPanel } from '../FutureActionPanel';
 
         const editPostAttribute = (newAttribute) => {
             const attribute = {
-                publishpress_future_action: {
-                    browser_timezone_offset: new Date().getTimezoneOffset()
-                }
+                publishpress_future_action: {}
             };
 
             // For each property on newAttribute, set the value on attribute

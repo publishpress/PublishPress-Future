@@ -51,3 +51,8 @@ div.pe-qe-fields > div {
 .future-action-action-date {
     font-weight: bold;
 }
+
+#publishpress-future-quick-edit label {
+    display: inline-block;
+    max-width: 100%;
+}

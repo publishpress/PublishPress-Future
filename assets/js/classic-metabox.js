@@ -545,6 +545,50 @@ var isGutenbergEnabled = exports.isGutenbergEnabled = function isGutenbergEnable
     return document.body.classList.contains('block-editor-page');
 };
 
+var getElementByName = exports.getElementByName = function getElementByName(name) {
+    return document.getElementsByName(name)[0];
+};
+
+var getFieldByName = exports.getFieldByName = function getFieldByName(name, postId) {
+    return document.querySelector('#the-list tr#post-' + postId + ' .column-expirationdate input#future_action_' + name + '-' + postId);
+};
+
+var getFieldValueByName = exports.getFieldValueByName = function getFieldValueByName(name, postId) {
+    var field = getFieldByName(name, postId);
+
+    if (!field) {
+        return null;
+    }
+
+    return field.value;
+};
+
+var getFieldValueByNameAsArrayOfInt = exports.getFieldValueByNameAsArrayOfInt = function getFieldValueByNameAsArrayOfInt(name, postId) {
+    var field = getFieldByName(name, postId);
+
+    if (!field || !field.value) {
+        return [];
+    }
+
+    if (typeof field.value === 'number') {
+        field.value = field.value.toString();
+    }
+
+    return field.value.split(',').map(function (term) {
+        return parseInt(term);
+    });
+};
+
+var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function getFieldValueByNameAsBool(name, postId) {
+    var field = getFieldByName(name, postId);
+
+    if (!field) {
+        return false;
+    }
+
+    return field.value === '1' || field.value === 'true';
+};
+
 /***/ })
 
 /******/ 	});
@@ -612,7 +656,6 @@ var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
             getElementByName('future_action_date').value = store.getDate();
             getElementByName('future_action_terms').value = store.getTerms().join(',');
             getElementByName('future_action_taxonomy').value = store.getTaxonomy();
-            getElementByName('future_action_browser_timezone_offset').value = browserTimezoneOffset;
         };
 
         var data = {
@@ -658,7 +701,7 @@ var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
                 action: config.postTypeDefaultConfig.expireType,
                 date: config.defaultDate,
                 taxonomy: config.postTypeDefaultConfig.taxonomy,
-                ters: config.postTypeDefaultConfig.terms
+                terms: config.postTypeDefaultConfig.terms
             }
         });
     }

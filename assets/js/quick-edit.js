@@ -621,131 +621,148 @@ var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function get
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!********************************************************!*\
-  !*** ./assets/jsx/gutenberg-panel/gutenberg-panel.jsx ***!
-  \********************************************************/
+/*!***********************************!*\
+  !*** ./assets/jsx/quick-edit.jsx ***!
+  \***********************************/
 
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+var _FutureActionPanel = __webpack_require__(/*! ./FutureActionPanel */ "./assets/jsx/FutureActionPanel.jsx");
 
-var _data = __webpack_require__(/*! ../data */ "./assets/jsx/data.jsx");
+var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 
-var _FutureActionPanel = __webpack_require__(/*! ../FutureActionPanel */ "./assets/jsx/FutureActionPanel.jsx");
+var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
 
-(function (wp, config) {
-    var registerPlugin = wp.plugins.registerPlugin;
-
+(function (wp, config, inlineEditPost) {
     var storeName = 'publishpress-future/future-action';
+    var delayToUnmountAfterSaving = 1000;
 
-    (0, _data.createStore)({
-        name: storeName,
-        defaultState: {
-            autoEnable: config.postTypeDefaultConfig.autoEnable,
-            action: config.postTypeDefaultConfig.expireType,
-            date: config.defaultDate,
-            taxonomy: config.postTypeDefaultConfig.taxonomy,
-            terms: config.postTypeDefaultConfig.terms
-        }
-    });
+    var QuickEditFutureActionPanel = function QuickEditFutureActionPanel(props) {
+        var useSelect = wp.data.useSelect;
+        var _React = React,
+            useEffect = _React.useEffect;
 
-    var GutenbergFutureActionPanel = function GutenbergFutureActionPanel() {
-        var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
-        var _wp$data = wp.data,
-            useDispatch = _wp$data.useDispatch,
-            select = _wp$data.select;
 
-        var _useDispatch = useDispatch('core/editor'),
-            editPost = _useDispatch.editPost;
+        var onChangeData = function onChangeData(attribute, value) {};
 
-        var editPostAttribute = function editPostAttribute(newAttribute) {
-            var attribute = {
-                publishpress_future_action: {}
-            };
-
-            // For each property on newAttribute, set the value on attribute
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = Object.entries(newAttribute)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var _ref = _step.value;
-
-                    var _ref2 = _slicedToArray(_ref, 2);
-
-                    var name = _ref2[0];
-                    var value = _ref2[1];
-
-                    attribute.publishpress_future_action[name] = value;
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            editPost(attribute);
-        };
-
-        var onChangeData = function onChangeData(attribute, value) {
-            var store = select(storeName);
-
-            var newAttribute = {
-                'enabled': store.getEnabled()
-            };
-
-            if (newAttribute.enabled) {
-                newAttribute['action'] = store.getAction();
-                newAttribute['date'] = store.getDate();
-                newAttribute['terms'] = store.getTerms();
-                newAttribute['taxonomy'] = store.getTaxonomy();
-            }
-
-            editPostAttribute(newAttribute);
-        };
-
-        var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+        var date = useSelect(function (select) {
+            return select(storeName).getDate();
+        }, []);
+        var enabled = useSelect(function (select) {
+            return select(storeName).getEnabled();
+        }, []);
+        var action = useSelect(function (select) {
+            return select(storeName).getAction();
+        }, []);
+        var terms = useSelect(function (select) {
+            return select(storeName).getTerms();
+        }, []);
+        var taxonomy = useSelect(function (select) {
+            return select(storeName).getTaxonomy();
+        }, []);
 
         return React.createElement(
-            PluginDocumentSettingPanel,
-            {
-                name: 'publishpress-future-action-panel',
-                title: config.strings.panelTitle,
-                icon: 'calendar',
-                initialOpen: config.postTypeDefaultConfig.autoEnable,
-                className: 'post-expirator-panel' },
+            'div',
+            { className: 'post-expirator-panel' },
             React.createElement(_FutureActionPanel.FutureActionPanel, {
-                postType: select('core/editor').getCurrentPostType(),
-                isCleanNewPost: select('core/editor').isCleanNewPost(),
+                postType: config.postType,
+                isCleanNewPost: config.isNewPost,
                 actionsSelectOptions: config.actionsSelectOptions,
-                enabled: data.enabled,
-                action: data.action,
-                date: data.date,
-                terms: data.terms,
-                taxonomy: data.taxonomy,
+                enabled: enabled,
+                action: action,
+                date: date,
+                terms: terms,
+                taxonomy: taxonomy,
                 onChangeData: onChangeData,
                 is12hours: config.is12hours,
                 startOfWeek: config.startOfWeek,
                 storeName: storeName,
-                strings: config.strings })
+                strings: config.strings }),
+            React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: enabled ? 1 : 0 }),
+            React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action }),
+            React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date }),
+            React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: terms.join(',') }),
+            React.createElement('input', { type: 'hidden', name: 'future_action_taxonomy', value: taxonomy }),
+            React.createElement('input', { type: 'hidden', name: 'future_action_view', value: 'quick-edit' }),
+            React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: config.nonce })
         );
     };
 
-    registerPlugin('publishpress-future-action', {
-        render: GutenbergFutureActionPanel
-    });
-})(window.wp, window.postExpiratorPanelConfig);
+    // We create a copy of the WP inline edit post function
+    var wpInlineEdit = inlineEditPost.edit;
+    var wpInlineEditRevert = inlineEditPost.revert;
+
+    var getPostId = function getPostId(id) {
+        // If id is a string or a number, return it directly
+        if (typeof id === 'string' || typeof id === 'number') {
+            return id;
+        }
+
+        // Otherwise, assume it's an HTML element and extract the post ID
+        var trElement = id.closest('tr');
+        var trId = trElement.id;
+        var postId = trId.split('-')[1];
+
+        return postId;
+    };
+
+    // We override the function with our own code
+    inlineEditPost.edit = function (id) {
+        var _ReactDOM = ReactDOM,
+            createRoot = _ReactDOM.createRoot;
+        var select = wp.data.select;
+
+
+        var postId = getPostId(id);
+
+        // Call the original WP edit function.
+        wpInlineEdit.apply(this, arguments);
+
+        // Initiate our component.
+        if (!select(storeName)) {
+            var enabled = (0, _utils.getFieldValueByNameAsBool)('enabled', postId);
+            var action = (0, _utils.getFieldValueByName)('action', postId);
+            var date = (0, _utils.getFieldValueByName)('date', postId);
+            var terms = (0, _utils.getFieldValueByName)('terms', postId);
+            var taxonomy = (0, _utils.getFieldValueByName)('taxonomy', postId);
+
+            console.log('Creating store', storeName, enabled, action, date, terms, taxonomy);
+
+            (0, _data.createStore)({
+                name: storeName,
+                defaultState: {
+                    autoEnable: enabled,
+                    action: action,
+                    date: date,
+                    taxonomy: taxonomy,
+                    terms: terms
+                }
+            });
+        }
+
+        var container = document.getElementById("publishpress-future-quick-edit");
+        var root = createRoot(container);
+
+        root.render(React.createElement(QuickEditFutureActionPanel, { id: postId }));
+
+        inlineEditPost.revert = function () {
+            root.unmount();
+
+            // Call the original WP edit function.
+            wpInlineEditRevert.apply(this, arguments);
+        };
+
+        var saveButton = document.querySelector('.inline-edit-save .save');
+        if (saveButton) {
+            saveButton.onclick = function () {
+                setTimeout(function () {
+                    root.unmount();
+                }, delayToUnmountAfterSaving);
+            };
+        }
+    };
+})(window.wp, window.publishpressFutureQuickEdit, inlineEditPost);
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=gutenberg-panel.js.map
+//# sourceMappingURL=quick-edit.js.map

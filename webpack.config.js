@@ -77,4 +77,28 @@ module.exports = [
             ]
         }
     },
+    {
+        entry: glob.sync(
+            "./assets/jsx/quick-edit.jsx",
+        ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "assets", "js"),
+            filename: "quick-edit.js"
+        },
+        resolve: {
+            extensions: ['.jsx', '.js']
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                }
+            ]
+        }
+    }
 ];

@@ -25,7 +25,6 @@ import { isGutenbergEnabled } from '../utils';
             getElementByName('future_action_date').value = store.getDate();
             getElementByName('future_action_terms').value = store.getTerms().join(',');
             getElementByName('future_action_taxonomy').value = store.getTaxonomy();
-            getElementByName('future_action_browser_timezone_offset').value = browserTimezoneOffset;
         }
 
         const data = {
@@ -67,7 +66,7 @@ import { isGutenbergEnabled } from '../utils';
                 action: config.postTypeDefaultConfig.expireType,
                 date: config.defaultDate,
                 taxonomy: config.postTypeDefaultConfig.taxonomy,
-                ters: config.postTypeDefaultConfig.terms,
+                terms: config.postTypeDefaultConfig.terms,
             }
         });
     }

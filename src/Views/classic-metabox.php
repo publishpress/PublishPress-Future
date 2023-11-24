@@ -8,7 +8,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
 <input type="hidden" name="future_action_action" value="<?php echo esc_attr($action); ?>" />
 <input type="hidden" name="future_action_terms" value="<?php echo esc_attr(implode(',', $terms)); ?>" />
 <input type="hidden" name="future_action_taxonomy" value="<?php echo esc_attr($taxonomy); ?>" />
-<input type="hidden" name="future_action_browser_timezone_offset" value="0" />
 
 <input name="future_action_view" value="classic-metabox" type="hidden" />
 <?php
