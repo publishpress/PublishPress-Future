@@ -1,4 +1,4 @@
-import { FutureActionPanel } from './FutureActionPanel';
+import { FutureActionPanel } from './components/FutureActionPanel';
 import { createStore } from './data';
 import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNameAsBool } from './utils';
 
@@ -8,7 +8,7 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
 
     const QuickEditFutureActionPanel = (props) => {
         const { useSelect } = wp.data;
-        const { useEffect } = React;
+        const { useEffect } = wp.element;
 
         const onChangeData = (attribute, value) => {};
 
@@ -67,7 +67,7 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
 
     // We override the function with our own code
     inlineEditPost.edit = function (id) {
-        const { createRoot } = ReactDOM;
+        const { createRoot } = wp.element;
         const { select } = wp.data;
 
         const postId = getPostId(id);

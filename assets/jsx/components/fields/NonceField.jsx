@@ -1,10 +1,9 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-
-import {Fragment} from "react";
-
 const NonceField = function (props) {
+    const { Fragment } = wp.element;
+
     if (! props.name) {
         props.name = '_wpnonce';
     }

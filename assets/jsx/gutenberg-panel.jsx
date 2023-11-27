@@ -1,5 +1,5 @@
-import { createStore } from '../data';
-import { FutureActionPanel } from '../FutureActionPanel';
+import { createStore } from './data';
+import { FutureActionPanel } from './components/FutureActionPanel';
 
 (function (wp, config) {
     const { registerPlugin } = wp.plugins;

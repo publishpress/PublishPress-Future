@@ -1049,7 +1049,7 @@ function postexpirator_quickedit_javascript()
     wp_enqueue_script(
         'postexpirator-quick-edit',
          POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
-         ['react', 'react-dom', 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch'],
+         ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element'],
          POSTEXPIRATOR_VERSION,
          true
     );

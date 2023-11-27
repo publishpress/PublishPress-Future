@@ -149,10 +149,12 @@ class Controller implements InitializableInterface
             wp_enqueue_script(
                 'publishpressfuture-settings-panel',
                 POSTEXPIRATOR_BASEURL . 'assets/js/settings-post-types.js',
-                ['react', 'react-dom'],
+                ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-element', 'wp-hooks', 'wp-api-fetch'],
                 POSTEXPIRATOR_VERSION,
                 true
             );
+
+            wp_enqueue_style('wp-components');
 
             $settingsPostTypesModelFactory = $this->settingsPostTypesModelFactory;
             $settingsModel = $settingsPostTypesModelFactory();
@@ -229,7 +231,6 @@ class Controller implements InitializableInterface
                     ),
                     'nonce' => wp_create_nonce('postexpirator_menu_defaults'),
                     'referrer' => esc_html(remove_query_arg('_wp_http_referer')),
-                    'restUrl' => get_rest_url(),
                 ]
             );
         }
@@ -281,6 +282,23 @@ class Controller implements InitializableInterface
         $factory();
     }
 
+    private function convertTermsToIds($taxonomy, $terms)
+    {
+        if (empty($terms)) {
+            return [];
+        }
+
+        $taxonomiesModelFactory = $this->taxonomiesModelFactory;
+        $taxonomiesModel = $taxonomiesModelFactory();
+
+        $terms = explode(',', $terms);
+        $terms = array_map(function($term) use ($taxonomy, $taxonomiesModel) {
+            return $taxonomiesModel->getTermIdByName($taxonomy, $term);
+        }, $terms);
+
+        return $terms;
+    }
+
     private function saveTabDefaults()
     {
         $settingsPostTypesModelFactory = $this->settingsPostTypesModelFactory;
@@ -328,6 +346,8 @@ class Controller implements InitializableInterface
                         \sanitize_text_field($_POST['expirationdate_emailnotification-' . $postType])
                     );
                 }
+
+                $settings['terms'] = $this->convertTermsToIds($settings['taxonomy'], $settings['terms']);
 
                 $settings['default-expire-type'] = 'custom';
 

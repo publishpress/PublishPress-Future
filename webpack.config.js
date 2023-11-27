@@ -4,7 +4,7 @@ const path = require("path");
 module.exports = [
     {
         entry: glob.sync(
-            "./assets/jsx/gutenberg-panel/*.jsx",
+            "./assets/jsx/gutenberg-panel.jsx",
         ),
         devtool: 'source-map',
         output: {
@@ -28,7 +28,7 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./assets/jsx/settings/*.jsx",
+            "./assets/jsx/settings-post-types.jsx",
         ),
         devtool: 'source-map',
         output: {
@@ -55,7 +55,7 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./assets/jsx/classic-metabox/*.jsx",
+            "./assets/jsx/classic-metabox.jsx",
         ),
         devtool: 'source-map',
         output: {

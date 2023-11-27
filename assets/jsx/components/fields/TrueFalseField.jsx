@@ -2,9 +2,9 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import {Fragment} from "react";
-
 const TrueFalseField = function (props) {
+    const { Fragment } = wp.element;
+
     const onChange = (e) => {
         if (props.onChange) {
             props.onChange(

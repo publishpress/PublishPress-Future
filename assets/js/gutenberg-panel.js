@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./assets/jsx/FutureActionPanel.jsx":
-/*!******************************************!*\
-  !*** ./assets/jsx/FutureActionPanel.jsx ***!
-  \******************************************/
+/***/ "./assets/jsx/components/FutureActionPanel.jsx":
+/*!*****************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanel.jsx ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -17,9 +17,9 @@ exports.FutureActionPanel = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _time = __webpack_require__(/*! ./time */ "./assets/jsx/time.jsx");
+var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
 
-var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
+var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
 
 var _wp$components = wp.components,
     PanelRow = _wp$components.PanelRow,
@@ -28,10 +28,10 @@ var _wp$components = wp.components,
     SelectControl = _wp$components.SelectControl,
     FormTokenField = _wp$components.FormTokenField,
     Spinner = _wp$components.Spinner;
-var Fragment = wp.element.Fragment;
+var _wp$element = wp.element,
+    Fragment = _wp$element.Fragment,
+    useEffect = _wp$element.useEffect;
 var decodeEntities = wp.htmlEntities.decodeEntities;
-var _React = React,
-    useEffect = _React.useEffect;
 var addQueryArgs = wp.url.addQueryArgs;
 var _wp$data = wp.data,
     useSelect = _wp$data.useSelect,
@@ -218,6 +218,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         termsListByNameKeys = Object.keys(termsListByName);
     }
 
+    console.log('terms', termsListByNameKeys);
+
     return React.createElement(
         Fragment,
         null,
@@ -242,7 +244,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     __nextRemoveHelpButton: true,
                     is12Hour: props.is12hours,
                     startOfWeek: props.startOfWeek
-                })
+                }),
+                '``'
             ),
             React.createElement(SelectControl, {
                 label: props.strings.action,
@@ -270,7 +273,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             ) || React.createElement(FormTokenField, {
                 label: taxonomyName,
                 value: selectedTerms,
-                suggestions: Object.keys(termsListByName),
+                suggestions: termsListByNameKeys,
                 onChange: handleTermsChange,
                 maxSuggestions: 10
             }))
@@ -621,16 +624,16 @@ var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function get
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!********************************************************!*\
-  !*** ./assets/jsx/gutenberg-panel/gutenberg-panel.jsx ***!
-  \********************************************************/
+/*!****************************************!*\
+  !*** ./assets/jsx/gutenberg-panel.jsx ***!
+  \****************************************/
 
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _data = __webpack_require__(/*! ../data */ "./assets/jsx/data.jsx");
+var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 
-var _FutureActionPanel = __webpack_require__(/*! ../FutureActionPanel */ "./assets/jsx/FutureActionPanel.jsx");
+var _FutureActionPanel = __webpack_require__(/*! ./components/FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
 
 (function (wp, config) {
     var registerPlugin = wp.plugins.registerPlugin;

@@ -1,6 +1,6 @@
-import { FutureActionPanel } from '../FutureActionPanel';
-import { createStore } from '../data';
-import { isGutenbergEnabled } from '../utils';
+import { FutureActionPanel } from './components/FutureActionPanel';
+import { createStore } from './data';
+import { isGutenbergEnabled } from './utils';
 
 ((wp, config) => {
     if (isGutenbergEnabled()) {
@@ -55,7 +55,7 @@ import { isGutenbergEnabled } from '../utils';
         );
     };
 
-    const { createRoot } = ReactDOM;
+    const { createRoot } = wp.element;
     const { select } = wp.data;
 
     if (!select(storeName)) {

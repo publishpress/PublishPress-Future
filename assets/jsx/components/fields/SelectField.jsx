@@ -2,14 +2,14 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import {Fragment} from "react";
-
 const SelectField = function (props) {
+    const { Fragment } = wp.element;
+
     const optionsList = [];
 
     if (typeof props.options === 'object' && props.options.forEach) {
         props.options.forEach((el) => {
-            optionsList.push(<option value={el.value}>{el.label}</option>);
+            optionsList.push(<option value={el.value} key={el.value}>{el.label}</option>);
         });
     }
 

@@ -32,4 +32,15 @@ class TaxonomiesModel
 
         return $taxonomiesByPostType;
     }
+
+    public function getTermIdByName($taxonomy, $termName)
+    {
+        $term = get_term_by('name', $termName, $taxonomy);
+
+        if (! $term) {
+            return 0;
+        }
+
+        return $term->term_id;
+    }
 }

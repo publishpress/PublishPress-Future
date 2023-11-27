@@ -1,10 +1,9 @@
-import { normalizeUnixTimeToMilliseconds, formatTimestampToUnixTime } from './time';
-import { compact } from './utils';
+import { normalizeUnixTimeToMilliseconds, formatTimestampToUnixTime } from '../time';
+import { compact } from '../utils';
 
 const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner } = wp.components;
-const { Fragment } = wp.element;
+const { Fragment, useEffect } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
-const { useEffect } = React;
 const { addQueryArgs } = wp.url;
 const {
     useSelect,
@@ -175,6 +174,8 @@ export const FutureActionPanel = (props) => {
         termsListByNameKeys = Object.keys(termsListByName);
     }
 
+    console.log('terms', termsListByNameKeys);
+
     return (
         <Fragment>
             <PanelRow>
@@ -193,7 +194,7 @@ export const FutureActionPanel = (props) => {
                             __nextRemoveHelpButton={true}
                             is12Hour={props.is12hours}
                             startOfWeek={props.startOfWeek}
-                        />
+                        />``
                     </PanelRow>
                     <SelectControl
                         label={props.strings.action}
@@ -221,7 +222,7 @@ export const FutureActionPanel = (props) => {
                                         <FormTokenField
                                             label={taxonomyName}
                                             value={selectedTerms}
-                                            suggestions={Object.keys(termsListByName)}
+                                            suggestions={termsListByNameKeys}
                                             onChange={handleTermsChange}
                                             maxSuggestions={10}
                                         />

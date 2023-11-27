@@ -2,10 +2,11 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import {Fragment} from "react";
 import SelectField from "./SelectField";
 
 const TaxonomiesField = function (props) {
+    const { Fragment } = wp.element;
+
     const taxonomiesOptions = [];
 
     props.taxonomies.forEach((el) => {

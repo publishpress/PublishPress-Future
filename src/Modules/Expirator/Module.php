@@ -204,7 +204,7 @@ class Module implements ModuleInterface
         wp_enqueue_script(
             'publishpress-future-classic-metabox',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-metabox.js',
-            ['react', 'react-dom', 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch'],
+            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element'],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );

@@ -2,10 +2,18 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import {Fragment} from "react";
-import Select from  'react-select';
-
 const TokensField = (props) => {
+    const { Fragment, useState, useEffect } = wp.element;
+    const { FormTokenField } = wp.components;
+
+    const [stringValue, setStringValue] = useState('');
+
+    useEffect(() => {
+        if (props.value) {
+            setStringValue(props.value.join(','));
+        }
+    }, [props.value]);
+
     let description;
 
     if (props.description) {
@@ -21,24 +29,27 @@ const TokensField = (props) => {
         if (props.onChange) {
             props.onChange(value);
         }
+
+        if (typeof value === 'object') {
+            setStringValue(value.join(','));
+        } else {
+            setStringValue('');
+        }
     }
 
+    const value = props.value ? props.value : [];
+ 
     return (
         <Fragment>
-            {props.label &&
-                <label className="publishpress-future-token-label">{props.label}</label>
-            }
-
-            <Select
-                options={props.options}
-                isMulti={true}
-                value={props.value}
-                isLoading={props.isLoading}
-                delimiter=","
-                name={props.name}
+            <FormTokenField
+                label={props.label}
+                value={value}
+                suggestions={props.options}
                 onChange={onChange}
+                maxSuggestions={10}
                 className="publishpres-future-token-field"
             />
+            <input type="hidden" name={props.name} value={stringValue} />
 
             {description}
         </Fragment>

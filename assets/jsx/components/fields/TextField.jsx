@@ -2,9 +2,9 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import {Fragment, useState, useEffect} from "react";
-
 const TextField = function (props) {
+    const {Fragment, useState, useEffect} = wp.element;
+
     let description;
 
     if (props.unescapedDescription) {
@@ -23,7 +23,7 @@ const TextField = function (props) {
             props.onChange();
         }
     };
-    
+
     useEffect(() => {
         setTheValue(props.value);
     }, [props.value]);
