@@ -4,39 +4,24 @@
 
 const SelectField = function (props) {
     const { Fragment } = wp.element;
+    const { SelectControl } = wp.components;
 
-    const optionsList = [];
-
-    if (typeof props.options === 'object' && props.options.forEach) {
-        props.options.forEach((el) => {
-            optionsList.push(<option value={el.value} key={el.value}>{el.label}</option>);
-        });
-    }
-
-    if (optionsList.length === 0) {
-        return (<p>{props.noItemFoundMessage ? props.noItemFoundMessage : 'No items found'}</p>)
-    }
-
-    const onChange = (e) => {
-        if (! props.onChange) {
-            return;
-        }
-
-        props.onChange(jQuery(e.target).val());
+    const onChange = (value) => {
+        props.onChange(value);
     };
 
     return (
         <Fragment>
-            <select
+            <SelectControl
+                label={props.label}
                 name={props.name}
                 id={props.name}
                 className={props.className}
-                defaultValue={props.selected}
+                value={props.selected}
                 onChange={onChange}
                 data-data={props.data}
-            >
-                {optionsList}
-            </select>
+                options={props.options}
+            />
 
             {props.children}
 

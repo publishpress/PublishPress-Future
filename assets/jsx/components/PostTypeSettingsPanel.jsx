@@ -156,7 +156,7 @@ const PostTypeSettingsPanel = function (props) {
                     className={'pe-howtoexpire'}
                     options={props.expireTypeList[props.postType]}
                     description={props.text.fieldHowToExpireDescription}
-                    selected={props.settings.howToExpire}
+                    selected={settingHowToExpire}
                     onChange={onChangeHowToExpire}
                 />
 
