@@ -16,7 +16,7 @@ const PostTypesSettingsPanels = function (props) {
                 settings={postTypeSettings}
                 expireTypeList={props.expireTypeList}
                 taxonomiesList={props.taxonomiesList[postType]}
-                key={postType}
+                key={`${postType}-panel`}
             />
         );
     }

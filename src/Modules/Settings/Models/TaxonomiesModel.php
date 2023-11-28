@@ -37,10 +37,45 @@ class TaxonomiesModel
     {
         $term = get_term_by('name', $termName, $taxonomy);
 
-        if (! $term) {
+        if (!$term) {
             return 0;
         }
 
         return $term->term_id;
+    }
+
+    public function createTermAndReturnId($taxonomy, $termName)
+    {
+        $term = wp_insert_term($termName, $taxonomy);
+
+        if (is_wp_error($term)) {
+            return 0;
+        }
+
+        return $term['term_id'];
+    }
+
+    public function normalizeTermsCreatingIfNecessary($taxonomy, $terms)
+    {
+        $newTerms = array_filter($terms, function($item) {
+            return ! is_numeric($item);
+        });
+
+        if (! empty($newTerms)) {
+            $existingTerms = array_values(array_filter($terms, 'is_numeric'));
+
+            $newTerms = array_values(array_map('sanitize_text_field', $newTerms));
+
+            $newTerms = array_map(function($newTerm) use ($taxonomy) {
+                $newTerm = wp_insert_term($newTerm, $taxonomy);
+
+                return $newTerm['term_id'];
+            }, $newTerms);
+
+            $terms = array_merge($existingTerms, $newTerms);
+            $terms = array_map('intval', $terms);
+        }
+
+        return $terms;
     }
 }

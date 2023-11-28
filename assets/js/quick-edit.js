@@ -21,6 +21,8 @@ var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
 
 var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var _wp$components = wp.components,
     PanelRow = _wp$components.PanelRow,
     DateTimePicker = _wp$components.DateTimePicker,
@@ -88,13 +90,27 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         });
     };
 
+    var insertTerm = function insertTerm(term) {
+        termsListByName[term] = { id: term, count: 0, description: "", link: "", name: term, slug: term, taxonomy: taxonomy };
+        termsListById[term] = term;
+        setTermsListByName(termsListByName);
+        setTermsListById(termsListById);
+        setTerms([].concat(_toConsumableArray(terms), [term]));
+    };
+
     var mapTermsListByName = function mapTermsListByName(terms) {
         if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) !== 'object' || terms === null) {
             return {};
         }
 
         return terms.map(function (term) {
-            return termsListByName[term].id;
+            if (termsListByName[term]) {
+                return termsListByName[term].id;
+            }
+
+            insertTerm(term);
+
+            return term;
         });
     };
 
@@ -218,7 +234,10 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         termsListByNameKeys = Object.keys(termsListByName);
     }
 
-    console.log('terms', termsListByNameKeys);
+    console.log('termsListByName', termsListByName);
+    console.log('termsListById', termsListById);
+    console.log('terms', terms);
+    console.log('selectedTerms', selectedTerms);
 
     return React.createElement(
         Fragment,
@@ -306,13 +325,17 @@ var createStore = exports.createStore = function createStore(props) {
         createReduxStore = _wp$data.createReduxStore;
 
 
+    if (props.defaultState.terms && typeof props.defaultState.terms === 'string') {
+        props.defaultState.terms = props.defaultState.terms.split(',').map(function (term) {
+            return parseInt(term);
+        });
+    }
+
     var defaultState = {
         action: props.defaultState.action,
         date: props.defaultState.date ? props.defaultState.date : (0, _time.getCurrentTimeAsTimestamp)(),
         enabled: props.defaultState.autoEnable,
-        terms: props.defaultState.terms ? props.defaultState.terms.split(',').map(function (term) {
-            return parseInt(term);
-        }) : [],
+        terms: props.defaultState.terms ? props.defaultState.terms : [],
         taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,
         termsListByName: null,
         termsListById: null,

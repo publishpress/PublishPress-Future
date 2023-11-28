@@ -175,7 +175,12 @@ class PostTypeDefaultDataModel
 
     public function getTerms(): array
     {
-        $terms = explode(',', $this->getSetting('terms'));
+        $terms = $this->getSetting('terms');
+
+        if (is_string($terms)) {
+            $terms = explode(',', $terms);
+        }
+
         $terms = array_map('intval', $terms);
 
         return $terms;

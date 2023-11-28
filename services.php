@@ -334,7 +334,8 @@ return [
             $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
             $container->get(ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY),
             $container->get(ServicesAbstract::POST_TYPE_SETTINGS_MODEL_FACTORY),
-            $container->get(ServicesAbstract::NOTICES)
+            $container->get(ServicesAbstract::NOTICES),
+            $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY)
         );
     },
 

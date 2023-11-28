@@ -6,11 +6,16 @@ export const createStore = (props) => {
         createReduxStore,
     } = wp.data;
 
+
+    if (props.defaultState.terms && typeof props.defaultState.terms === 'string') {
+        props.defaultState.terms = props.defaultState.terms.split(',').map(term => parseInt(term));
+    }
+
     let defaultState = {
         action: props.defaultState.action,
         date: props.defaultState.date ? props.defaultState.date : getCurrentTimeAsTimestamp(),
         enabled: props.defaultState.autoEnable,
-        terms: props.defaultState.terms ? props.defaultState.terms.split(',').map(term => parseInt(term)) : [],
+        terms: props.defaultState.terms ? props.defaultState.terms : [],
         taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,
         termsListByName: null,
         termsListById: null,

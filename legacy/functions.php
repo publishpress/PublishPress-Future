@@ -478,7 +478,13 @@ function postexpirator_update_post_meta($id)
         ];
 
         if (! empty($opts['category'])) {
-            $opts['category'] = explode(',', preg_replace('/[^0-9,]/', '', $opts['category']));
+            $taxonomiesModelFactory = Container::getInstance()->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY);
+            $taxonomiesModel = $taxonomiesModelFactory();
+
+            $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
+                $opts['categoryTaxonomy'],
+                explode(',', $opts['category'])
+            );
         }
 
         $date = strtotime(sanitize_text_field($_POST['future_action_date']));

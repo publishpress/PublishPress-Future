@@ -140,6 +140,12 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.1.4] - UNRELEASED =
+
+* ADDED: Term fields now support adding a new term by typing a new value (only on settings?);
+* CHANGED: Removed external dependency of the React Select library, using now the internal library;
+* CHANGED: In the Action field on Post Type settings, the taxonomy related actions are only displayed if the post type has any term registered;
+
 = [3.1.3] - 09 Nov, 2023 =
 
 * FIXED: Fix JS error Cannot read properties of undefined (reading ‘length’) on the block editor, #561;

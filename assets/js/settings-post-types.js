@@ -184,6 +184,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     var termOptionsLabels = termOptions.map(function (term) {
         return term.label;
     });
+    console.log('postType', props.postType);
     console.log('termOptionsLabels', termOptionsLabels);
     console.log('selectedTerms', selectedTerms);
 
@@ -229,6 +230,16 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                 onChange: onChangeTaxonomy
             })
         ));
+
+        console.log('settingHowToExpire', settingHowToExpire);
+        console.log('props.taxonomiesList', props.taxonomiesList);
+
+        // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
+        if (props.taxonomiesList.length === 0) {
+            props.expireTypeList[props.postType] = props.expireTypeList[props.postType].filter(function (item) {
+                return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+            });
+        }
 
         settingsRows.push(React.createElement(
             _SettingRow2.default,
@@ -334,7 +345,7 @@ var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
                 settings: postTypeSettings,
                 expireTypeList: props.expireTypeList,
                 taxonomiesList: props.taxonomiesList[postType],
-                key: postType
+                key: postType + "-panel"
             }));
         }
     } catch (err) {

@@ -44,13 +44,28 @@ export const FutureActionPanel = (props) => {
         });
     }
 
+    const insertTerm = (term) => {
+        termsListByName[term] = {id: term, count: 0, description: "", link: "", name: term, slug: term, taxonomy: taxonomy};
+        termsListById[term] = term;
+        setTermsListByName(termsListByName);
+        setTermsListById(termsListById);
+        setTerms([...terms, term]);
+
+    }
+
     const mapTermsListByName = (terms) => {
         if (typeof terms !== 'object' || terms === null) {
             return {};
         }
 
         return terms.map((term) => {
-            return termsListByName[term].id;
+            if (termsListByName[term]) {
+                return termsListByName[term].id;
+            }
+
+            insertTerm(term);
+
+            return term;
         });
     }
 
@@ -173,8 +188,6 @@ export const FutureActionPanel = (props) => {
     if (typeof termsListByName === 'object' && termsListByName !== null) {
         termsListByNameKeys = Object.keys(termsListByName);
     }
-
-    console.log('terms', termsListByNameKeys);
 
     return (
         <Fragment>

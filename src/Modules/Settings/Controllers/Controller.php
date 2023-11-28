@@ -293,7 +293,17 @@ class Controller implements InitializableInterface
 
         $terms = explode(',', $terms);
         $terms = array_map(function($term) use ($taxonomy, $taxonomiesModel) {
-            return $taxonomiesModel->getTermIdByName($taxonomy, $term);
+            $term = \sanitize_text_field($term);
+            $termId = $taxonomiesModel->getTermIdByName($taxonomy, $term);
+
+            if (! $termId) {
+                $termId = $taxonomiesModel->createTermAndReturnId(
+                    $taxonomy,
+                    $term
+                );
+            }
+
+            return $termId;
         }, $terms);
 
         return $terms;

@@ -57,12 +57,18 @@ class ExpirationController implements InitializableInterface
     private $settingsModelFactory;
 
     /**
+     * @var TaxonomiesModel
+     */
+    private $taxonomiesModel;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
      * @param CronInterface $cron
      * @param SchedulerInterface $scheduler
      * @param Closure $expirablePostModelFactory
      * @param Closure $settingsModelFactory
+     * @param Closure $taxonomiesModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
@@ -70,7 +76,8 @@ class ExpirationController implements InitializableInterface
         CronInterface $cron,
         SchedulerInterface $scheduler,
         Closure $expirablePostModelFactory,
-        Closure $settingsModelFactory
+        Closure $settingsModelFactory,
+        Closure $taxonomiesModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
@@ -78,6 +85,7 @@ class ExpirationController implements InitializableInterface
         $this->scheduler = $scheduler;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->settingsModelFactory = $settingsModelFactory;
+        $this->taxonomiesModel = $taxonomiesModelFactory();
     }
 
     public function initialize()
@@ -196,10 +204,15 @@ class ExpirationController implements InitializableInterface
                     'update_callback' => function ($value, $post) {
                         if (isset($value['enabled']) && (bool)$value['enabled']) {
                             $opts = [
-                                'expireType' => $value['action'],
-                                'category' => $value['terms'],
-                                'categoryTaxonomy' => $value['taxonomy'],
+                                'expireType' => sanitize_text_field($value['action']),
+                                'category' => array_map('sanitize_text_field', $value['terms']),
+                                'categoryTaxonomy' => sanitize_text_field($value['taxonomy']),
                             ];
+
+                            $opts['category'] = $this->taxonomiesModel->normalizeTermsCreatingIfNecessary(
+                                $opts['categoryTaxonomy'],
+                                $opts['category']
+                            );
 
                             do_action(
                                 HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,

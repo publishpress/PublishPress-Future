@@ -91,6 +91,7 @@ const PostTypeSettingsPanel = function (props) {
     }, [postTypeTaxonomy]);
 
     const termOptionsLabels = termOptions.map((term) => term.label);
+    console.log('postType', props.postType);
     console.log('termOptionsLabels', termOptionsLabels);
     console.log('selectedTerms', selectedTerms);
 
@@ -137,6 +138,16 @@ const PostTypeSettingsPanel = function (props) {
                 </SelectField>
             </SettingRow>
         );
+
+        console.log('settingHowToExpire', settingHowToExpire);
+        console.log('props.taxonomiesList', props.taxonomiesList);
+
+        // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
+        if (props.taxonomiesList.length === 0) {
+            props.expireTypeList[props.postType] = props.expireTypeList[props.postType].filter((item) => {
+                return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+            });
+        }
 
         settingsRows.push(
             <SettingRow label={props.text.fieldHowToExpire} key={'expirationdate_expiretype-' + props.postType}>
