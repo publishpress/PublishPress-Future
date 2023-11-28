@@ -173,24 +173,14 @@ class Controller implements InitializableInterface
                             'post-expirator'
                         ),
                         'fieldActive' => __('Active', 'post-expirator'),
-                        'fieldActiveTrue' => __('Active', 'post-expirator'),
-                        'fieldActiveFalse' => __('Inactive', 'post-expirator'),
-                        'fieldActiveDescription' => __(
-                            'Select whether the PublishPress Future meta box is active for this post type.',
-                            'post-expirator'
-                        ),
+                        'fieldActiveLabel' => __('Activate PublishPress Future metabox for this post type', 'post-expirator'),
                         'fieldHowToExpire' => __('Action', 'post-expirator'),
                         'fieldHowToExpireDescription' => __(
                             'Select the default action for the post type.',
                             'post-expirator'
                         ),
                         'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
-                        'fieldAutoEnableTrue' => __('Enabled', 'post-expirator'),
-                        'fieldAutoEnableFalse' => __('Disabled', 'post-expirator'),
-                        'fieldAutoEnableDescription' => __(
-                            'Select whether the PublishPress Future is enabled for all new posts.',
-                            'post-expirator'
-                        ),
+                        'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
                         'fieldTaxonomy' => __('Taxonomy (Hierarchical)', 'post-expirator'),
                         'noItemsfound' => __('No taxonomies found', 'post-expirator'),
                         'fieldTaxonomyDescription' => __(

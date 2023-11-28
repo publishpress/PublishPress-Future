@@ -2,9 +2,11 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-const TextField = function (props) {
-    const { Fragment } = wp.element;
-    const { TextControl } = wp.components;
+const CheckboxControl = function (props) {
+    const { Fragment, useState } = wp.element;
+    const WPCheckboxControl = wp.components.CheckboxControl;
+
+    const [checked, setChecked] = useState(props.checked);
 
     let description;
 
@@ -16,6 +18,8 @@ const TextField = function (props) {
     }
 
     const onChange = function (value) {
+        setChecked(value);
+
         if (props.onChange) {
             props.onChange(value);
         }
@@ -23,14 +27,12 @@ const TextField = function (props) {
 
     return (
         <Fragment>
-            <TextControl
-                type="text"
+            <WPCheckboxControl
                 label={props.label}
                 name={props.name}
                 id={props.name}
                 className={props.className}
-                value={props.value}
-                placeholder={props.placeholder}
+                checked={checked}
                 onChange={onChange}
             />
 
@@ -39,4 +41,4 @@ const TextField = function (props) {
     )
 }
 
-export default TextField;
+export default CheckboxControl;

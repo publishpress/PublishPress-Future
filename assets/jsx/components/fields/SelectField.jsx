@@ -6,22 +6,29 @@ const SelectField = function (props) {
     const { Fragment } = wp.element;
     const { SelectControl } = wp.components;
 
+
     const onChange = (value) => {
         props.onChange(value);
     };
 
     return (
         <Fragment>
-            <SelectControl
-                label={props.label}
-                name={props.name}
-                id={props.name}
-                className={props.className}
-                value={props.selected}
-                onChange={onChange}
-                data-data={props.data}
-                options={props.options}
-            />
+            {props.options.length === 0 && (
+                <div>{props.noItemFoundMessage}</div>
+            )}
+
+            {props.options.length > 0 && (
+                <SelectControl
+                    label={props.label}
+                    name={props.name}
+                    id={props.name}
+                    className={props.className}
+                    value={props.selected}
+                    onChange={onChange}
+                    data-data={props.data}
+                    options={props.options}
+                />
+            )}
 
             {props.children}
 

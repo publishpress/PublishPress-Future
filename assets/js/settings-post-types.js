@@ -73,6 +73,10 @@ var _TokensField = __webpack_require__(/*! ./fields/TokensField */ "./assets/jsx
 
 var _TokensField2 = _interopRequireDefault(_TokensField);
 
+var _CheckboxControl = __webpack_require__(/*! ./fields/CheckboxControl */ "./assets/jsx/components/fields/CheckboxControl.jsx");
+
+var _CheckboxControl2 = _interopRequireDefault(_CheckboxControl);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
@@ -111,8 +115,23 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
 
     var _useState11 = useState(props.settings.active),
         _useState12 = _slicedToArray(_useState11, 2),
-        settingActive = _useState12[0],
-        setSettingActive = _useState12[1];
+        isActive = _useState12[0],
+        setIsActive = _useState12[1];
+
+    var _useState13 = useState(props.settings.defaultExpireOffset),
+        _useState14 = _slicedToArray(_useState13, 2),
+        expireOffset = _useState14[0],
+        setExpireOffset = _useState14[1];
+
+    var _useState15 = useState(props.settings.emailNotification),
+        _useState16 = _slicedToArray(_useState15, 2),
+        emailNotification = _useState16[0],
+        setEmailNotification = _useState16[1];
+
+    var _useState17 = useState(props.settings.autoEnabled),
+        _useState18 = _slicedToArray(_useState17, 2),
+        isAutoEnabled = _useState18[0],
+        setIsAutoEnabled = _useState18[1];
 
     var onChangeTaxonomy = function onChangeTaxonomy(value) {
         setPostTypeTaxonomy(value);
@@ -127,7 +146,19 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     };
 
     var onChangeActive = function onChangeActive(value) {
-        setSettingActive(value);
+        setIsActive(value);
+    };
+
+    var onChangeExpireOffset = function onChangeExpireOffset(value) {
+        setExpireOffset(value);
+    };
+
+    var onChangeEmailNotification = function onChangeEmailNotification(value) {
+        setEmailNotification(value);
+    };
+
+    var onChangeAutoEnabled = function onChangeAutoEnabled(value) {
+        setIsAutoEnabled(value);
     };
 
     useEffect(function () {
@@ -154,8 +185,6 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
             setSelectedTerms(settingsTermsOptions);
         };
 
-        console.log('options', termOptions);
-
         if (!postTypeTaxonomy && props.postType === 'post' || postTypeTaxonomy === 'category') {
             setTermsSelectIsLoading(true);
             apiFetch({
@@ -175,7 +204,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                     path: addQueryArgs("wp/v2/" + taxAttributes.rest_base)
                 }).then(updateTermsOptionsState);
             }).catch(function (error) {
-                console.log('Taxonomy terms error', error);
+                console.debug('Taxonomy terms error', error);
                 setTermsSelectIsLoading(false);
             });
         }
@@ -184,37 +213,27 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     var termOptionsLabels = termOptions.map(function (term) {
         return term.label;
     });
-    console.log('postType', props.postType);
-    console.log('termOptionsLabels', termOptionsLabels);
-    console.log('selectedTerms', selectedTerms);
 
     var settingsRows = [React.createElement(
         _SettingRow2.default,
         { label: props.text.fieldActive, key: 'expirationdate_activemeta-' + props.postType },
-        React.createElement(_TrueFalseField2.default, {
+        React.createElement(_CheckboxControl2.default, {
             name: 'expirationdate_activemeta-' + props.postType,
-            trueLabel: props.text.fieldActiveTrue,
-            trueValue: 'active',
-            falseLabel: props.text.fieldActiveFalse,
-            falseValue: 'inactive',
-            description: props.text.fieldActiveDescription,
-            selected: props.settings.active,
+            checked: isActive,
+            label: props.text.fieldActiveLabel,
             onChange: onChangeActive
         })
     )];
 
-    if (settingActive) {
+    if (isActive) {
         settingsRows.push(React.createElement(
             _SettingRow2.default,
             { label: props.text.fieldAutoEnable, key: 'expirationdate_autoenable-' + props.postType },
-            React.createElement(_TrueFalseField2.default, {
+            React.createElement(_CheckboxControl2.default, {
                 name: 'expirationdate_autoenable-' + props.postType,
-                trueLabel: props.text.fieldAutoEnableTrue,
-                trueValue: '1',
-                falseLabel: props.text.fieldAutoEnableFalse,
-                falseValue: '0',
-                description: props.text.fieldAutoEnableDescription,
-                selected: props.settings.autoEnabled
+                checked: isAutoEnabled,
+                label: props.text.fieldAutoEnableLabel,
+                onChange: onChangeAutoEnabled
             })
         ));
 
@@ -231,9 +250,6 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
             })
         ));
 
-        console.log('settingHowToExpire', settingHowToExpire);
-        console.log('props.taxonomiesList', props.taxonomiesList);
-
         // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
         if (props.taxonomiesList.length === 0) {
             props.expireTypeList[props.postType] = props.expireTypeList[props.postType].filter(function (item) {
@@ -249,7 +265,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
                 className: 'pe-howtoexpire',
                 options: props.expireTypeList[props.postType],
                 description: props.text.fieldHowToExpireDescription,
-                selected: props.settings.howToExpire,
+                selected: settingHowToExpire,
                 onChange: onChangeHowToExpire
             }),
             props.taxonomiesList.length > 0 && ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && React.createElement(_TokensField2.default, {
@@ -268,10 +284,11 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
             { label: props.text.fieldDefaultDateTimeOffset, key: 'expired-custom-date-' + props.postType },
             React.createElement(_TextField2.default, {
                 name: 'expired-custom-date-' + props.postType,
-                value: props.settings.defaultExpireOffset,
+                value: expireOffset,
                 placeholder: props.settings.globalDefaultExpireOffset,
                 description: props.text.fieldDefaultDateTimeOffsetDescription,
-                unescapedDescription: true
+                unescapedDescription: true,
+                onChange: onChangeExpireOffset
             })
         ));
 
@@ -281,13 +298,14 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
             React.createElement(_TextField2.default, {
                 name: 'expirationdate_emailnotification-' + props.postType,
                 className: "large-text",
-                value: props.settings.emailNotification,
-                description: props.text.fieldWhoToNotifyDescription
+                value: emailNotification,
+                description: props.text.fieldWhoToNotifyDescription,
+                onChange: onChangeEmailNotification
             })
         ));
     }
 
-    settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, settingActive, useState);
+    settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);
 
     return React.createElement(
         _SettingsFieldset2.default,
@@ -575,6 +593,76 @@ exports["default"] = SubmitButton;
 
 /***/ }),
 
+/***/ "./assets/jsx/components/fields/CheckboxControl.jsx":
+/*!**********************************************************!*\
+  !*** ./assets/jsx/components/fields/CheckboxControl.jsx ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var CheckboxControl = function CheckboxControl(props) {
+    var _wp$element = wp.element,
+        Fragment = _wp$element.Fragment,
+        useState = _wp$element.useState;
+
+    var WPCheckboxControl = wp.components.CheckboxControl;
+
+    var _useState = useState(props.checked),
+        _useState2 = _slicedToArray(_useState, 2),
+        checked = _useState2[0],
+        setChecked = _useState2[1];
+
+    var description = void 0;
+
+    if (props.unescapedDescription) {
+        // If using this option, the HTML has to be escaped before injected into the JS interface.
+        description = React.createElement("p", { className: "description", dangerouslySetInnerHTML: { __html: props.description } });
+    } else {
+        description = React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        );
+    }
+
+    var onChange = function onChange(value) {
+        setChecked(value);
+
+        if (props.onChange) {
+            props.onChange(value);
+        }
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(WPCheckboxControl, {
+            label: props.label,
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            checked: checked,
+            onChange: onChange
+        }),
+        description
+    );
+};
+
+exports["default"] = CheckboxControl;
+
+/***/ }),
+
 /***/ "./assets/jsx/components/fields/NonceField.jsx":
 /*!*****************************************************!*\
   !*** ./assets/jsx/components/fields/NonceField.jsx ***!
@@ -624,64 +712,41 @@ exports["default"] = NonceField;
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
 var SelectField = function SelectField(props) {
     var Fragment = wp.element.Fragment;
+    var SelectControl = wp.components.SelectControl;
 
 
-    var optionsList = [];
-
-    if (_typeof(props.options) === 'object' && props.options.forEach) {
-        props.options.forEach(function (el) {
-            optionsList.push(React.createElement(
-                'option',
-                { value: el.value, key: el.value },
-                el.label
-            ));
-        });
-    }
-
-    if (optionsList.length === 0) {
-        return React.createElement(
-            'p',
-            null,
-            props.noItemFoundMessage ? props.noItemFoundMessage : 'No items found'
-        );
-    }
-
-    var onChange = function onChange(e) {
-        if (!props.onChange) {
-            return;
-        }
-
-        props.onChange(jQuery(e.target).val());
+    var onChange = function onChange(value) {
+        props.onChange(value);
     };
 
     return React.createElement(
         Fragment,
         null,
-        React.createElement(
-            'select',
-            {
-                name: props.name,
-                id: props.name,
-                className: props.className,
-                defaultValue: props.selected,
-                onChange: onChange,
-                'data-data': props.data
-            },
-            optionsList
+        props.options.length === 0 && React.createElement(
+            "div",
+            null,
+            props.noItemFoundMessage
         ),
+        props.options.length > 0 && React.createElement(SelectControl, {
+            label: props.label,
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            value: props.selected,
+            onChange: onChange,
+            "data-data": props.data,
+            options: props.options
+        }),
         props.children,
         React.createElement(
-            'p',
-            { className: 'description' },
+            "p",
+            { className: "description" },
             props.description
         )
     );
@@ -702,18 +767,13 @@ exports["default"] = SelectField;
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
 var TextField = function TextField(props) {
-    var _wp$element = wp.element,
-        Fragment = _wp$element.Fragment,
-        useState = _wp$element.useState,
-        useEffect = _wp$element.useEffect;
+    var Fragment = wp.element.Fragment;
+    var TextControl = wp.components.TextControl;
 
 
     var description = void 0;
@@ -729,32 +789,22 @@ var TextField = function TextField(props) {
         );
     }
 
-    var _useState = useState(props.value),
-        _useState2 = _slicedToArray(_useState, 2),
-        theValue = _useState2[0],
-        setTheValue = _useState2[1];
-
-    var onChange = function onChange(e) {
-        setTheValue(jQuery(e.target).val());
-
+    var onChange = function onChange(value) {
         if (props.onChange) {
-            props.onChange();
+            props.onChange(value);
         }
     };
-
-    useEffect(function () {
-        setTheValue(props.value);
-    }, [props.value]);
 
     return React.createElement(
         Fragment,
         null,
-        React.createElement("input", {
+        React.createElement(TextControl, {
             type: "text",
+            label: props.label,
             name: props.name,
             id: props.name,
             className: props.className,
-            value: theValue,
+            value: props.value,
             placeholder: props.placeholder,
             onChange: onChange
         }),

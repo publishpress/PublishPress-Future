@@ -234,11 +234,6 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         termsListByNameKeys = Object.keys(termsListByName);
     }
 
-    console.log('termsListByName', termsListByName);
-    console.log('termsListById', termsListById);
-    console.log('terms', terms);
-    console.log('selectedTerms', selectedTerms);
-
     return React.createElement(
         Fragment,
         null,

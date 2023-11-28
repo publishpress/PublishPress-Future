@@ -9,6 +9,7 @@ import SettingsTable from "./SettingsTable";
 import SelectField from "./fields/SelectField";
 import TextField from "./fields/TextField";
 import TokensField from "./fields/TokensField";
+import CheckboxControl from "./fields/CheckboxControl";
 
 const PostTypeSettingsPanel = function (props) {
     const { useState, useEffect } = wp.element;
@@ -21,7 +22,10 @@ const PostTypeSettingsPanel = function (props) {
     const [termsSelectIsLoading, setTermsSelectIsLoading] = useState(false);
     const [selectedTerms, setSelectedTerms] = useState([]);
     const [settingHowToExpire, setSettingHowToExpire] = useState(props.settings.howToExpire);
-    const [settingActive, setSettingActive] = useState(props.settings.active);
+    const [isActive, setIsActive] = useState(props.settings.active);
+    const [expireOffset, setExpireOffset] = useState(props.settings.defaultExpireOffset);
+    const [emailNotification, setEmailNotification] = useState(props.settings.emailNotification);
+    const [isAutoEnabled, setIsAutoEnabled] = useState(props.settings.autoEnabled);
 
     const onChangeTaxonomy = function (value) {
         setPostTypeTaxonomy(value);
@@ -36,7 +40,19 @@ const PostTypeSettingsPanel = function (props) {
     }
 
     const onChangeActive = (value) => {
-        setSettingActive(value);
+        setIsActive(value);
+    }
+
+    const onChangeExpireOffset = (value) => {
+        setExpireOffset(value);
+    }
+
+    const onChangeEmailNotification = (value) => {
+        setEmailNotification(value);
+    }
+
+    const onChangeAutoEnabled = (value) => {
+        setIsAutoEnabled(value);
     }
 
     useEffect(() => {
@@ -63,8 +79,6 @@ const PostTypeSettingsPanel = function (props) {
             setSelectedTerms(settingsTermsOptions);
         };
 
-        console.log('options', termOptions);
-
         if ((!postTypeTaxonomy && props.postType === 'post') || postTypeTaxonomy === 'category') {
             setTermsSelectIsLoading(true);
             apiFetch({
@@ -84,43 +98,33 @@ const PostTypeSettingsPanel = function (props) {
                     path: addQueryArgs(`wp/v2/${taxAttributes.rest_base}`),
                 }).then(updateTermsOptionsState);
             }).catch((error) => {
-                console.log('Taxonomy terms error', error);
+                console.debug('Taxonomy terms error', error);
                 setTermsSelectIsLoading(false);
             });
         }
     }, [postTypeTaxonomy]);
 
     const termOptionsLabels = termOptions.map((term) => term.label);
-    console.log('postType', props.postType);
-    console.log('termOptionsLabels', termOptionsLabels);
-    console.log('selectedTerms', selectedTerms);
 
     let settingsRows = [
         <SettingRow label={props.text.fieldActive} key={'expirationdate_activemeta-' + props.postType}>
-            <TrueFalseField
+            <CheckboxControl
                 name={'expirationdate_activemeta-' + props.postType}
-                trueLabel={props.text.fieldActiveTrue}
-                trueValue={'active'}
-                falseLabel={props.text.fieldActiveFalse}
-                falseValue={'inactive'}
-                description={props.text.fieldActiveDescription}
-                selected={props.settings.active}
+                checked={isActive}
+                label={props.text.fieldActiveLabel}
                 onChange={onChangeActive}
             />
         </SettingRow>
     ];
 
-    if (settingActive) {
+    if (isActive) {
         settingsRows.push(
             <SettingRow label={props.text.fieldAutoEnable} key={'expirationdate_autoenable-' + props.postType}>
-                <TrueFalseField
+                <CheckboxControl
                     name={'expirationdate_autoenable-' + props.postType}
-                    trueLabel={props.text.fieldAutoEnableTrue}
-                    trueValue={'1'}
-                    falseLabel={props.text.fieldAutoEnableFalse}
-                    falseValue={'0'}
-                    description={props.text.fieldAutoEnableDescription}
-                    selected={props.settings.autoEnabled}
+                    checked={isAutoEnabled}
+                    label={props.text.fieldAutoEnableLabel}
+                    onChange={onChangeAutoEnabled}
                 />
             </SettingRow>
         );
@@ -138,9 +142,6 @@ const PostTypeSettingsPanel = function (props) {
                 </SelectField>
             </SettingRow>
         );
-
-        console.log('settingHowToExpire', settingHowToExpire);
-        console.log('props.taxonomiesList', props.taxonomiesList);
 
         // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
         if (props.taxonomiesList.length === 0) {
@@ -178,10 +179,11 @@ const PostTypeSettingsPanel = function (props) {
             <SettingRow label={props.text.fieldDefaultDateTimeOffset} key={'expired-custom-date-' + props.postType}>
                 <TextField
                     name={'expired-custom-date-' + props.postType}
-                    value={props.settings.defaultExpireOffset}
+                    value={expireOffset}
                     placeholder={props.settings.globalDefaultExpireOffset}
                     description={props.text.fieldDefaultDateTimeOffsetDescription}
                     unescapedDescription={true}
+                    onChange={onChangeExpireOffset}
                 />
             </SettingRow>
         );
@@ -191,14 +193,15 @@ const PostTypeSettingsPanel = function (props) {
                 <TextField
                     name={'expirationdate_emailnotification-' + props.postType}
                     className="large-text"
-                    value={props.settings.emailNotification}
+                    value={emailNotification}
                     description={props.text.fieldWhoToNotifyDescription}
+                    onChange={onChangeEmailNotification}
                 />
             </SettingRow>
         );
     }
 
-    settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, settingActive, useState);
+    settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);
 
     return (
         <SettingsFieldset legend={props.legend}>
