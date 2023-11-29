@@ -477,7 +477,7 @@ class ExpirablePostModel extends PostModel
     {
         $postType = parent::getPostType();
 
-        if (empty($postType)) {
+        if (empty($postType) && ! is_null($this->actionArgsModel)) {
             $args = $this->actionArgsModel->getArgs();
 
             if (! empty($args['post_type'])) {
@@ -492,7 +492,7 @@ class ExpirablePostModel extends PostModel
     {
         $title = parent::getTitle();
 
-        if (empty($title)) {
+        if (empty($title) && ! is_null($this->actionArgsModel)) {
             $args = $this->actionArgsModel->getArgs();
 
             if (! empty($args['post_title'])) {
@@ -507,7 +507,7 @@ class ExpirablePostModel extends PostModel
     {
         $permalink = parent::getPermalink();
 
-        if (empty($permalink)) {
+        if (empty($permalink) && ! is_null($this->actionArgsModel)) {
             $args = $this->actionArgsModel->getArgs();
 
             if (! empty($args['post_link'])) {
