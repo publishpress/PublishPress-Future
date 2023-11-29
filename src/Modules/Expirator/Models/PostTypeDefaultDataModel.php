@@ -197,6 +197,10 @@ class PostTypeDefaultDataModel
             $terms = explode(',', $terms);
         }
 
+        if (! is_array($terms)) {
+            $terms = [];
+        }
+
         $terms = array_map('intval', $terms);
 
         return $terms;

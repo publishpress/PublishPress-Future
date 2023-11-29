@@ -165,6 +165,7 @@ class SettingsFacade
             'emailnotification' => null,
             'default-expire-type' => null,
             'default-custom-date' => null,
+            'terms' => [],
         ];
 
         $defaults = array_merge(
