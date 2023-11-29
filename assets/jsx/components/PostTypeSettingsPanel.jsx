@@ -110,7 +110,7 @@ const PostTypeSettingsPanel = function (props) {
         <SettingRow label={props.text.fieldActive} key={'expirationdate_activemeta-' + props.postType}>
             <CheckboxControl
                 name={'expirationdate_activemeta-' + props.postType}
-                checked={isActive}
+                checked={isActive || false}
                 label={props.text.fieldActiveLabel}
                 onChange={onChangeActive}
             />
@@ -122,7 +122,7 @@ const PostTypeSettingsPanel = function (props) {
             <SettingRow label={props.text.fieldAutoEnable} key={'expirationdate_autoenable-' + props.postType}>
                 <CheckboxControl
                     name={'expirationdate_autoenable-' + props.postType}
-                    checked={isAutoEnabled}
+                    checked={isAutoEnabled || false}
                     label={props.text.fieldAutoEnableLabel}
                     onChange={onChangeAutoEnabled}
                 />

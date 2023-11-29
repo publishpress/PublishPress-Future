@@ -6,7 +6,7 @@ const CheckboxControl = function (props) {
     const { Fragment, useState } = wp.element;
     const WPCheckboxControl = wp.components.CheckboxControl;
 
-    const [checked, setChecked] = useState(props.checked);
+    const [checked, setChecked] = useState(props.checked || false);
 
     let description;
 
@@ -32,7 +32,7 @@ const CheckboxControl = function (props) {
                 name={props.name}
                 id={props.name}
                 className={props.className}
-                checked={checked}
+                checked={checked || false}
                 onChange={onChange}
             />
 

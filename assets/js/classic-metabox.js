@@ -242,7 +242,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             null,
             React.createElement(CheckboxControl, {
                 label: props.strings.enablePostExpiration,
-                checked: enabled,
+                checked: enabled || false,
                 onChange: handleEnabledChange
             })
         ),

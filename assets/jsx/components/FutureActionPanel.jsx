@@ -194,7 +194,7 @@ export const FutureActionPanel = (props) => {
             <PanelRow>
                 <CheckboxControl
                     label={props.strings.enablePostExpiration}
-                    checked={enabled}
+                    checked={enabled || false}
                     onChange={handleEnabledChange}
                 />
             </PanelRow>

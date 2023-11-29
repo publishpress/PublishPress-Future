@@ -219,7 +219,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
         { label: props.text.fieldActive, key: 'expirationdate_activemeta-' + props.postType },
         React.createElement(_CheckboxControl2.default, {
             name: 'expirationdate_activemeta-' + props.postType,
-            checked: isActive,
+            checked: isActive || false,
             label: props.text.fieldActiveLabel,
             onChange: onChangeActive
         })
@@ -231,7 +231,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
             { label: props.text.fieldAutoEnable, key: 'expirationdate_autoenable-' + props.postType },
             React.createElement(_CheckboxControl2.default, {
                 name: 'expirationdate_autoenable-' + props.postType,
-                checked: isAutoEnabled,
+                checked: isAutoEnabled || false,
                 label: props.text.fieldAutoEnableLabel,
                 onChange: onChangeAutoEnabled
             })
@@ -618,7 +618,7 @@ var CheckboxControl = function CheckboxControl(props) {
 
     var WPCheckboxControl = wp.components.CheckboxControl;
 
-    var _useState = useState(props.checked),
+    var _useState = useState(props.checked || false),
         _useState2 = _slicedToArray(_useState, 2),
         checked = _useState2[0],
         setChecked = _useState2[1];
@@ -652,7 +652,7 @@ var CheckboxControl = function CheckboxControl(props) {
             name: props.name,
             id: props.name,
             className: props.className,
-            checked: checked,
+            checked: checked || false,
             onChange: onChange
         }),
         description
