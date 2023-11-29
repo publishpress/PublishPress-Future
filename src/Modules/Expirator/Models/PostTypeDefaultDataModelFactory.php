@@ -5,6 +5,7 @@
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
@@ -23,13 +24,19 @@ class PostTypeDefaultDataModelFactory
     private $options;
 
     /**
+     * @var HooksFacade
+     */
+    private $hooks;
+
+    /**
      * @param \PublishPress\Future\Modules\Settings\SettingsFacade $settings
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      */
-    public function __construct($settings, $options)
+    public function __construct($settings, $options, HooksFacade $hooks)
     {
         $this->settings = $settings;
         $this->options = $options;
+        $this->hooks = $hooks;
     }
 
     public function create(string $postType)
@@ -37,7 +44,8 @@ class PostTypeDefaultDataModelFactory
         return new PostTypeDefaultDataModel(
             $this->settings,
             $this->options,
-            $postType
+            $postType,
+            $this->hooks
         );
     }
 }

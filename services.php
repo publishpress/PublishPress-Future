@@ -383,7 +383,8 @@ return [
     ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY => static function (ContainerInterface $container) {
         return new PostTypeDefaultDataModelFactory(
             $container->get(ServicesAbstract::SETTINGS),
-            $container->get(ServicesAbstract::OPTIONS)
+            $container->get(ServicesAbstract::OPTIONS),
+            $container->get(ServicesAbstract::HOOKS)
         );
     },
 

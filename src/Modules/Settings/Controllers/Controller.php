@@ -263,7 +263,7 @@ class Controller implements InitializableInterface
             call_user_func([$this, $methodName]);
         }
 
-        $this->hooks->doAction(SettingsHooksAbstract::ACTION_SAVE_TAB . $tab);
+        $this->hooks->doAction(SettingsHooksAbstract::ACTION_SAVE_TAB_PREFIX . $tab);
     }
 
     public function initMigrations()
@@ -379,5 +379,7 @@ class Controller implements InitializableInterface
             }
             // phpcs:enable
         }
+
+        $this->hooks->doAction(CoreAbstractHooks::ACTION_PURGE_PLUGIN_CACHE);
     }
 }

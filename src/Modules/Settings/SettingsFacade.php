@@ -8,6 +8,7 @@ namespace PublishPress\Future\Modules\Settings;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -46,6 +47,13 @@ class SettingsFacade
         $this->hooks = $hooks;
         $this->options = $options;
         $this->defaultData = $defaultData;
+
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_PURGE_PLUGIN_CACHE, [$this, 'purgeCache']);
+    }
+
+    public function purgeCache()
+    {
+        $this->cache = [];
     }
 
     public function deleteAllSettings()
@@ -68,6 +76,8 @@ class SettingsFacade
         foreach ($allOptions as $optionName) {
             $this->options->deleteOption($optionName);
         }
+
+        $this->hooks->doAction(CoreHooksAbstract::ACTION_PURGE_PLUGIN_CACHE);
     }
 
     // We can't use services from the container here because it is called before they are available, on plugin activation.

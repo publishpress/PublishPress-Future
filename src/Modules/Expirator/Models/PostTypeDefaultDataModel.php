@@ -5,7 +5,10 @@
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
+use PublishPress\Future\Core\HooksAbstract;
+use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Debug\HooksAbstract as DebugHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -37,14 +40,27 @@ class PostTypeDefaultDataModel
     private $postType = '';
 
     /**
-     * @param \PublishPress\Future\Modules\Settings\SettingsFacade $settings
-     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
+     * @var HooksFacade
      */
-    public function __construct($settings, $options, string $postType)
+    private $hooks;
+
+    /**
+     * @param \PublishPress\Future\Modules\Settings\SettingsFacade $settings
+     * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options,
+     */
+    public function __construct($settings, $options, string $postType, HooksFacade $hooks)
     {
         $this->settings = $settings;
         $this->options = $options;
         $this->postType = $postType;
+        $this->hooks = $hooks;
+
+        $this->hooks->addAction(HooksAbstract::ACTION_PURGE_PLUGIN_CACHE, [$this, 'purgeCache']);
+    }
+
+    public function purgeCache()
+    {
+        $this->cache = [];
     }
 
     private function getDateTimeOffset()
