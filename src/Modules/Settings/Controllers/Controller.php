@@ -336,6 +336,7 @@ class Controller implements InitializableInterface
                     $settings['terms'] = \sanitize_text_field($_POST['expirationdate_terms-' . $postType]);
                 }
 
+                $settings['activeMetaBox'] = 'inactive';
                 if (isset($_POST['expirationdate_activemeta-' . $postType])) {
                     $settings['activeMetaBox'] = \sanitize_text_field($_POST['expirationdate_activemeta-' . $postType]);
                 }
@@ -347,7 +348,9 @@ class Controller implements InitializableInterface
                     );
                 }
 
-                $settings['terms'] = $this->convertTermsToIds($settings['taxonomy'], $settings['terms']);
+                if (isset($settings['taxonomy']) && isset($settings['terms'])) {
+                    $settings['terms'] = $this->convertTermsToIds($settings['taxonomy'], $settings['terms']);
+                }
 
                 $settings['default-expire-type'] = 'custom';
 
