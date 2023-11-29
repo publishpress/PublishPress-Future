@@ -420,9 +420,9 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
     }
 
     $opts = [
-        'expireType' => $postTypeDefaults['expireType'],
-        'category' => explode(',', $postTypeDefaults['terms']),
-        'categoryTaxonomy' => (string)$postTypeDefaults['taxonomy'],
+        'expireType' => $defaultDataModel->getAction(),
+        'category' => $defaultDataModel->getTerms(),
+        'categoryTaxonomy' => (string)$defaultDataModel->getTaxonomy(),
     ];
 
     do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $defaultExpire['ts'], $opts);
