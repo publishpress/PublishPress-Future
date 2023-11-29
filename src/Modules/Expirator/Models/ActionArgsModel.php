@@ -303,7 +303,13 @@ class ActionArgsModel
      */
     public function getTaxonomyTerms()
     {
-        return isset($this->args['category']) ? $this->args['category'] : [];
+        $terms = isset($this->args['category']) ? $this->args['category'] : [];
+
+        if (! is_array($terms)) {
+            $terms = explode(',', $terms);
+        }
+
+        return $terms;
     }
 
     public function getTaxonomy()
