@@ -57,7 +57,7 @@ function postexpirator_add_column($columns, $postType = 'page')
                 'page'
             ), true)) || (is_array(
                 $defaults
-            ) && $defaults['activeMetaBox'] === 'active')) {
+            ) && in_array((string)$defaults['activeMetaBox'], ['active', '1']))) {
         $columns['expirationdate'] = __('Future Action', 'post-expirator');
     }
 
@@ -327,12 +327,16 @@ function postexpirator_meta_custom()
         $defaults = $settingsFacade->getPostTypeDefaults($type);
 
         // if settings are not configured, show the metabox by default only for posts and pages
-        if ((! isset($defaults['activeMetaBox']) && in_array($type, array(
-                    'post',
-                    'page'
-                ), true)) || (is_array(
-                    $defaults
-                ) && $defaults['activeMetaBox'] === 'active')) {
+        if (
+            (
+                ! isset($defaults['activeMetaBox'])
+                && in_array($type, ['post', 'page'], true)
+            )
+            || (
+                is_array($defaults)
+                && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+            )
+        ) {
             add_meta_box(
                 'expirationdatediv',
                 __('PublishPress Future', 'post-expirator'),

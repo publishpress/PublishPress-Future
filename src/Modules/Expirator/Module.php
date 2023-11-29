@@ -209,6 +209,17 @@ class Module implements ModuleInterface
             return;
         }
 
+        $container = Container::getInstance();
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+        $postType = $currentScreen->post_type;
+
+        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
+
+        if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
+            return;
+        }
+
         wp_enqueue_script(
             'publishpress-future-classic-metabox',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-metabox.js',
@@ -223,14 +234,6 @@ class Module implements ModuleInterface
             ['wp-components'],
             PUBLISHPRESS_FUTURE_VERSION
         );
-
-        $container = Container::getInstance();
-        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
-        $postType = $currentScreen->post_type;
-
-        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
-
 
         $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
         $defaultDataModel = $defaultDataModelFactory->create($postType);

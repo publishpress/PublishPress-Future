@@ -336,7 +336,7 @@ class Controller implements InitializableInterface
                     $settings['terms'] = \sanitize_text_field($_POST['expirationdate_terms-' . $postType]);
                 }
 
-                $settings['activeMetaBox'] = 'inactive';
+                $settings['activeMetaBox'] = '0';
                 if (isset($_POST['expirationdate_activemeta-' . $postType])) {
                     $settings['activeMetaBox'] = \sanitize_text_field($_POST['expirationdate_activemeta-' . $postType]);
                 }

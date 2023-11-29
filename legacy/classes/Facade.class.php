@@ -370,7 +370,7 @@ class PostExpirator_Facade
                     true
                 )
             )
-            || $postTypeDefaultConfig['activeMetaBox'] === 'active'
+            || (in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1']))
         ) {
             wp_enqueue_script(
                 'postexpirator-gutenberg-panel',

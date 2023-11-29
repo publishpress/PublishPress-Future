@@ -44,7 +44,7 @@ class SettingsPostTypesModel
             $settings[$postType] = [
                 'label' => esc_html($postTypeObject->label),
                 'active' => (! isset($defaults['activeMetaBox']) && in_array($postType, array('post', 'page'), true))
-                    || (isset($defaults['activeMetaBox']) && $defaults['activeMetaBox'] !== 'inactive'),
+                    || (isset($defaults['activeMetaBox']) && (! in_array((string)$defaults['activeMetaBox'], ['inactive', '0']))),
                 'howToExpire' => isset($defaults['expireType']) ? $defaults['expireType'] : '',
                 'autoEnabled' => isset($defaults['autoEnable']) && $defaults['autoEnable'] == 1,
                 'taxonomy' => isset($defaults['taxonomy']) ? $defaults['taxonomy'] : false,

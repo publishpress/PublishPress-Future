@@ -182,7 +182,7 @@ class SettingsFacade
 
         // Enable by default for post and page.
         if (is_null($defaults['activeMetaBox'])) {
-            $defaults['activeMetaBox'] = in_array($postType, ['post', 'page'], true) ? 'active' : 'inactive';
+            $defaults['activeMetaBox'] = in_array($postType, ['post', 'page'], true) ? '1' : '0';
         }
 
         if (! isset($this->cache['postTypeDefaults'])) {
