@@ -1,4 +1,12 @@
 export const compact = (array) => {
+    if (!array) {
+        return [];
+    }
+
+    if (! Array.isArray(array) && typeof array === 'object') {
+        array = Object.values(array);
+    }
+
     return array.filter((item) => {
         return item !== null && item !== undefined && item !== '';
     });
