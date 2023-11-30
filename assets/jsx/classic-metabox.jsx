@@ -1,4 +1,4 @@
-import ClassicEditorFutureActionPanel from './components/ClassicEditorFutureActionPanel';
+import FutureActionPanelClassicEditor from './components/FutureActionPanelClassicEditor';
 import { createStore } from './data';
 import { isGutenbergEnabled } from './utils';
 
@@ -29,7 +29,7 @@ import { isGutenbergEnabled } from './utils';
     const root = createRoot(container);
 
     root.render(
-        <ClassicEditorFutureActionPanel
+        <FutureActionPanelClassicEditor
             storeName={storeName}
             postType={config.postType}
             isNewPost={config.isNewPost}

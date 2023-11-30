@@ -1,6 +1,6 @@
 import FutureActionPanel from './FutureActionPanel';
 
-const BlockEditorFutureActionPanel = (props) => {
+const FutureActionPanelBlockEditor = (props) => {
     const { PluginDocumentSettingPanel } = wp.editPost;
     const { useDispatch, select } = wp.data;
 
@@ -63,4 +63,4 @@ const BlockEditorFutureActionPanel = (props) => {
     );
 };
 
-export default BlockEditorFutureActionPanel;
+export default FutureActionPanelBlockEditor;

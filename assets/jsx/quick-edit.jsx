@@ -1,4 +1,4 @@
-import QuickEditFutureActionPanel from './components/QuickEditFutureActionPanel';
+import FutureActionPanelQuickEdit from './components/FutureActionPanelQuickEdit';
 import { createStore } from './data';
 import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
 
@@ -85,7 +85,7 @@ import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
         const root = createRoot(container);
 
         root.render(
-            <QuickEditFutureActionPanel
+            <FutureActionPanelQuickEdit
                 id={postId}
                 storeName={storeName}
                 postType={config.postType}

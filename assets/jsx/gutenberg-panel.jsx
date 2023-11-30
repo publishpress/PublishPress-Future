@@ -1,5 +1,5 @@
 import { createStore } from './data';
-import BlockEditorFutureActionPanel from './components/BlockEditorFutureActionPanel';
+import FutureActionPanelBlockEditor from './components/FutureActionPanelBlockEditor';
 
 (function (wp, config) {
     const { registerPlugin } = wp.plugins;
@@ -18,7 +18,7 @@ import BlockEditorFutureActionPanel from './components/BlockEditorFutureActionPa
 
     const BlockEditorFutureActionPlugin = () => {
         return (
-            <BlockEditorFutureActionPanel
+            <FutureActionPanelBlockEditor
                 postType={wp.data.select('core/editor').getCurrentPostType()}
                 isCleanNewPost={wp.data.select('core/editor').isCleanNewPost()}
                 actionsSelectOptions={config.actionsSelectOptions}

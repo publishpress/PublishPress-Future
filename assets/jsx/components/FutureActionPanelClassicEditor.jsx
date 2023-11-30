@@ -1,6 +1,6 @@
 import FutureActionPanel from "./FutureActionPanel";
 
-const ClassicEditorFutureActionPanel = (props) => {
+const FutureActionPanelClassicEditor = (props) => {
     const { select } = wp.data;
     const browserTimezoneOffset = new Date().getTimezoneOffset();
 
@@ -46,4 +46,4 @@ const ClassicEditorFutureActionPanel = (props) => {
     );
 };
 
-export default ClassicEditorFutureActionPanel;
+export default FutureActionPanelClassicEditor;

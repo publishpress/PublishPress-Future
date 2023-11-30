@@ -297,9 +297,9 @@ exports["default"] = FutureActionPanel;
 
 /***/ }),
 
-/***/ "./assets/jsx/components/QuickEditFutureActionPanel.jsx":
+/***/ "./assets/jsx/components/FutureActionPanelQuickEdit.jsx":
 /*!**************************************************************!*\
-  !*** ./assets/jsx/components/QuickEditFutureActionPanel.jsx ***!
+  !*** ./assets/jsx/components/FutureActionPanelQuickEdit.jsx ***!
   \**************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -317,7 +317,7 @@ var _FutureActionPanel2 = _interopRequireDefault(_FutureActionPanel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var QuickEditFutureActionPanel = function QuickEditFutureActionPanel(props) {
+var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     var useSelect = wp.data.useSelect;
 
 
@@ -371,7 +371,7 @@ var QuickEditFutureActionPanel = function QuickEditFutureActionPanel(props) {
     );
 };
 
-exports["default"] = QuickEditFutureActionPanel;
+exports["default"] = FutureActionPanelQuickEdit;
 
 /***/ }),
 
@@ -736,9 +736,9 @@ var __webpack_exports__ = {};
   \***********************************/
 
 
-var _QuickEditFutureActionPanel = __webpack_require__(/*! ./components/QuickEditFutureActionPanel */ "./assets/jsx/components/QuickEditFutureActionPanel.jsx");
+var _FutureActionPanelQuickEdit = __webpack_require__(/*! ./components/FutureActionPanelQuickEdit */ "./assets/jsx/components/FutureActionPanelQuickEdit.jsx");
 
-var _QuickEditFutureActionPanel2 = _interopRequireDefault(_QuickEditFutureActionPanel);
+var _FutureActionPanelQuickEdit2 = _interopRequireDefault(_FutureActionPanelQuickEdit);
 
 var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 
@@ -831,7 +831,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         var container = document.getElementById("publishpress-future-quick-edit");
         var root = createRoot(container);
 
-        root.render(React.createElement(_QuickEditFutureActionPanel2.default, {
+        root.render(React.createElement(_FutureActionPanelQuickEdit2.default, {
             id: postId,
             storeName: storeName,
             postType: config.postType,

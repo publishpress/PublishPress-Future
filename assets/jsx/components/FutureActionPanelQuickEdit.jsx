@@ -1,6 +1,6 @@
 import FutureActionPanel from './FutureActionPanel';
 
-const QuickEditFutureActionPanel = (props) => {
+const FutureActionPanelQuickEdit = (props) => {
     const { useSelect } = wp.data;
 
     const onChangeData = (attribute, value) => {};
@@ -45,4 +45,4 @@ const QuickEditFutureActionPanel = (props) => {
     );
 };
 
-export default QuickEditFutureActionPanel;
+export default FutureActionPanelQuickEdit;
