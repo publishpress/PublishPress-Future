@@ -207,7 +207,7 @@ export const FutureActionPanel = (props) => {
                             __nextRemoveHelpButton={true}
                             is12Hour={props.is12hours}
                             startOfWeek={props.startOfWeek}
-                        />``
+                        />
                     </PanelRow>
                     <SelectControl
                         label={props.strings.action}
@@ -220,7 +220,7 @@ export const FutureActionPanel = (props) => {
                         String(action).includes('category') && (
                             isFetchingTerms && (
                                 <Fragment>
-                                    {props.strings.loading + ` (${taxonomy})`}
+                                    {`${props.strings.loading} (${taxonomy})`}
                                     <Spinner />
                                 </Fragment>
                             )
