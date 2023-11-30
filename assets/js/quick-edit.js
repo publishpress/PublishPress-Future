@@ -296,6 +296,80 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
 
 /***/ }),
 
+/***/ "./assets/jsx/components/QuickEditFutureActionPanel.jsx":
+/*!**************************************************************!*\
+  !*** ./assets/jsx/components/QuickEditFutureActionPanel.jsx ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _FutureActionPanel = __webpack_require__(/*! ./FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+
+var QuickEditFutureActionPanel = function QuickEditFutureActionPanel(props) {
+    var useSelect = wp.data.useSelect;
+
+
+    var onChangeData = function onChangeData(attribute, value) {};
+
+    var date = useSelect(function (select) {
+        return select(props.storeName).getDate();
+    }, []);
+    var enabled = useSelect(function (select) {
+        return select(props.storeName).getEnabled();
+    }, []);
+    var action = useSelect(function (select) {
+        return select(props.storeName).getAction();
+    }, []);
+    var terms = useSelect(function (select) {
+        return select(props.storeName).getTerms();
+    }, []);
+    var taxonomy = useSelect(function (select) {
+        return select(props.storeName).getTaxonomy();
+    }, []);
+
+    var termsString = terms;
+    if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
+        termsString = terms.join(',');
+    }
+
+    return React.createElement(
+        'div',
+        { className: 'post-expirator-panel' },
+        React.createElement(_FutureActionPanel.FutureActionPanel, {
+            postType: props.postType,
+            isCleanNewPost: props.isNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: enabled,
+            action: action,
+            date: date,
+            terms: terms,
+            taxonomy: taxonomy,
+            onChangeData: onChangeData,
+            is12hours: props.is12hours,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: enabled ? 1 : 0 }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: termsString }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_taxonomy', value: taxonomy }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_view', value: 'quick-edit' }),
+        React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: props.nonce })
+    );
+};
+
+exports["default"] = QuickEditFutureActionPanel;
+
+/***/ }),
+
 /***/ "./assets/jsx/data.jsx":
 /*!*****************************!*\
   !*** ./assets/jsx/data.jsx ***!
@@ -657,72 +731,19 @@ var __webpack_exports__ = {};
   \***********************************/
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _QuickEditFutureActionPanel = __webpack_require__(/*! ./components/QuickEditFutureActionPanel */ "./assets/jsx/components/QuickEditFutureActionPanel.jsx");
 
-var _FutureActionPanel = __webpack_require__(/*! ./components/FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+var _QuickEditFutureActionPanel2 = _interopRequireDefault(_QuickEditFutureActionPanel);
 
 var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 
 var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 (function (wp, config, inlineEditPost) {
     var storeName = 'publishpress-future/future-action';
     var delayToUnmountAfterSaving = 1000;
-
-    var QuickEditFutureActionPanel = function QuickEditFutureActionPanel(props) {
-        var useSelect = wp.data.useSelect;
-        var useEffect = wp.element.useEffect;
-
-
-        var onChangeData = function onChangeData(attribute, value) {};
-
-        var date = useSelect(function (select) {
-            return select(storeName).getDate();
-        }, []);
-        var enabled = useSelect(function (select) {
-            return select(storeName).getEnabled();
-        }, []);
-        var action = useSelect(function (select) {
-            return select(storeName).getAction();
-        }, []);
-        var terms = useSelect(function (select) {
-            return select(storeName).getTerms();
-        }, []);
-        var taxonomy = useSelect(function (select) {
-            return select(storeName).getTaxonomy();
-        }, []);
-
-        var termsString = terms;
-        if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
-            termsString = terms.join(',');
-        }
-
-        return React.createElement(
-            'div',
-            { className: 'post-expirator-panel' },
-            React.createElement(_FutureActionPanel.FutureActionPanel, {
-                postType: config.postType,
-                isCleanNewPost: config.isNewPost,
-                actionsSelectOptions: config.actionsSelectOptions,
-                enabled: enabled,
-                action: action,
-                date: date,
-                terms: terms,
-                taxonomy: taxonomy,
-                onChangeData: onChangeData,
-                is12hours: config.is12hours,
-                startOfWeek: config.startOfWeek,
-                storeName: storeName,
-                strings: config.strings }),
-            React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: enabled ? 1 : 0 }),
-            React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action }),
-            React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date }),
-            React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: termsString }),
-            React.createElement('input', { type: 'hidden', name: 'future_action_taxonomy', value: taxonomy }),
-            React.createElement('input', { type: 'hidden', name: 'future_action_view', value: 'quick-edit' }),
-            React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: config.nonce })
-        );
-    };
 
     // We create a copy of the WP inline edit post function
     var wpInlineEdit = inlineEditPost.edit;
@@ -786,11 +807,6 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
             });
         }
 
-        var container = document.getElementById("publishpress-future-quick-edit");
-        var root = createRoot(container);
-
-        root.render(React.createElement(QuickEditFutureActionPanel, { id: postId }));
-
         inlineEditPost.revert = function () {
             root.unmount();
 
@@ -806,6 +822,21 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
                 }, delayToUnmountAfterSaving);
             };
         }
+
+        var container = document.getElementById("publishpress-future-quick-edit");
+        var root = createRoot(container);
+
+        root.render(React.createElement(_QuickEditFutureActionPanel2.default, {
+            id: postId,
+            storeName: storeName,
+            postType: config.postType,
+            isNewPost: config.isNewPost,
+            actionsSelectOptions: config.actionsSelectOptions,
+            is12hours: config.is12hours,
+            startOfWeek: config.startOfWeek,
+            strings: config.strings,
+            nonce: config.nonce
+        }));
     };
 })(window.wp, window.publishpressFutureQuickEdit, inlineEditPost);
 })();

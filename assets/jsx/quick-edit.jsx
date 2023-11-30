@@ -1,56 +1,10 @@
-import { FutureActionPanel } from './components/FutureActionPanel';
+import QuickEditFutureActionPanel from './components/QuickEditFutureActionPanel';
 import { createStore } from './data';
-import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNameAsBool } from './utils';
+import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
 
 ((wp, config, inlineEditPost) => {
     const storeName = 'publishpress-future/future-action';
     const delayToUnmountAfterSaving = 1000;
-
-    const QuickEditFutureActionPanel = (props) => {
-        const { useSelect } = wp.data;
-        const { useEffect } = wp.element;
-
-        const onChangeData = (attribute, value) => {};
-
-        const date = useSelect((select) => select(storeName).getDate(), []);
-        const enabled = useSelect((select) => select(storeName).getEnabled(), []);
-        const action = useSelect((select) => select(storeName).getAction(), []);
-        const terms = useSelect((select) => select(storeName).getTerms(), []);
-        const taxonomy = useSelect((select) => select(storeName).getTaxonomy(), []);
-
-        let termsString = terms;
-        if (typeof terms === 'object') {
-            termsString = terms.join(',');
-        }
-
-        return (
-            <div className={'post-expirator-panel'}>
-                <FutureActionPanel
-                    postType={config.postType}
-                    isCleanNewPost={config.isNewPost}
-                    actionsSelectOptions={config.actionsSelectOptions}
-                    enabled={enabled}
-                    action={action}
-                    date={date}
-                    terms={terms}
-                    taxonomy={taxonomy}
-                    onChangeData={onChangeData}
-                    is12hours={config.is12hours}
-                    startOfWeek={config.startOfWeek}
-                    storeName={storeName}
-                    strings={config.strings} />
-
-                {/* Quick edit JS code will save only fields with name inside the edit row */}
-                <input type="hidden" name={'future_action_enabled'} value={enabled ? 1 : 0} />
-                <input type="hidden" name={'future_action_action'} value={action} />
-                <input type="hidden" name={'future_action_date'} value={date} />
-                <input type="hidden" name={'future_action_terms'} value={termsString} />
-                <input type="hidden" name={'future_action_taxonomy'} value={taxonomy} />
-                <input type="hidden" name={'future_action_view'} value="quick-edit" />
-                <input type="hidden" name={'_future_action_nonce'} value={config.nonce} />
-            </div>
-        );
-    };
 
     // We create a copy of the WP inline edit post function
     const wpInlineEdit = inlineEditPost.edit;
@@ -111,11 +65,6 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
             });
         }
 
-        const container = document.getElementById("publishpress-future-quick-edit");
-        const root = createRoot(container);
-
-        root.render(<QuickEditFutureActionPanel id={postId} />);
-
         inlineEditPost.revert = function () {
             root.unmount();
 
@@ -130,6 +79,23 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
                     root.unmount();
                 }, delayToUnmountAfterSaving);
             };
-         }
+        }
+
+        const container = document.getElementById("publishpress-future-quick-edit");
+        const root = createRoot(container);
+
+        root.render(
+            <QuickEditFutureActionPanel
+                id={postId}
+                storeName={storeName}
+                postType={config.postType}
+                isNewPost={config.isNewPost}
+                actionsSelectOptions={config.actionsSelectOptions}
+                is12hours={config.is12hours}
+                startOfWeek={config.startOfWeek}
+                strings={config.strings}
+                nonce={config.nonce}
+            />
+        );
     };
 })(window.wp, window.publishpressFutureQuickEdit, inlineEditPost);
