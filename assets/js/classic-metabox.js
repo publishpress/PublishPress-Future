@@ -2,6 +2,77 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/jsx/components/ClassicEditorFutureActionPanel.jsx":
+/*!******************************************************************!*\
+  !*** ./assets/jsx/components/ClassicEditorFutureActionPanel.jsx ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _FutureActionPanel = __webpack_require__(/*! ./FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+
+var _FutureActionPanel2 = _interopRequireDefault(_FutureActionPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ClassicEditorFutureActionPanel = function ClassicEditorFutureActionPanel(props) {
+    var select = wp.data.select;
+
+    var browserTimezoneOffset = new Date().getTimezoneOffset();
+
+    var getElementByName = function getElementByName(name) {
+        return document.getElementsByName(name)[0];
+    };
+
+    var onChangeData = function onChangeData(attribute, value) {
+        var store = select(props.storeName);
+
+        getElementByName('future_action_enabled').value = store.getEnabled() ? 1 : 0;
+        getElementByName('future_action_action').value = store.getAction();
+        getElementByName('future_action_date').value = store.getDate();
+        getElementByName('future_action_terms').value = store.getTerms().join(',');
+        getElementByName('future_action_taxonomy').value = store.getTaxonomy();
+    };
+
+    var data = {
+        enabled: getElementByName('future_action_enabled').value === '1',
+        action: getElementByName('future_action_action').value,
+        date: getElementByName('future_action_date').value,
+        terms: getElementByName('future_action_terms').value.split(',').map(function (term) {
+            return parseInt(term);
+        }),
+        taxonomy: getElementByName('future_action_taxonomy').value
+    };
+
+    return React.createElement(
+        'div',
+        { className: 'post-expirator-panel' },
+        React.createElement(_FutureActionPanel2.default, {
+            postType: props.postType,
+            isCleanNewPost: props.isNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: data.enabled,
+            action: data.action,
+            date: data.date,
+            terms: data.terms,
+            taxonomy: data.taxonomy,
+            onChangeData: onChangeData,
+            is12hours: props.is12hours,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings })
+    );
+};
+
+exports["default"] = ClassicEditorFutureActionPanel;
+
+/***/ }),
+
 /***/ "./assets/jsx/components/FutureActionPanel.jsx":
 /*!*****************************************************!*\
   !*** ./assets/jsx/components/FutureActionPanel.jsx ***!
@@ -658,9 +729,9 @@ var __webpack_exports__ = {};
   \****************************************/
 
 
-var _FutureActionPanel = __webpack_require__(/*! ./components/FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+var _ClassicEditorFutureActionPanel = __webpack_require__(/*! ./components/ClassicEditorFutureActionPanel */ "./assets/jsx/components/ClassicEditorFutureActionPanel.jsx");
 
-var _FutureActionPanel2 = _interopRequireDefault(_FutureActionPanel);
+var _ClassicEditorFutureActionPanel2 = _interopRequireDefault(_ClassicEditorFutureActionPanel);
 
 var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 
@@ -674,55 +745,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     }
 
     var storeName = 'publishpress-future/future-action';
-
-    var ClassicFutureActionPanel = function ClassicFutureActionPanel() {
-        var select = wp.data.select;
-
-        var browserTimezoneOffset = new Date().getTimezoneOffset();
-
-        var getElementByName = function getElementByName(name) {
-            return document.getElementsByName(name)[0];
-        };
-
-        var onChangeData = function onChangeData(attribute, value) {
-            var store = select(storeName);
-
-            getElementByName('future_action_enabled').value = store.getEnabled() ? 1 : 0;
-            getElementByName('future_action_action').value = store.getAction();
-            getElementByName('future_action_date').value = store.getDate();
-            getElementByName('future_action_terms').value = store.getTerms().join(',');
-            getElementByName('future_action_taxonomy').value = store.getTaxonomy();
-        };
-
-        var data = {
-            enabled: getElementByName('future_action_enabled').value === '1',
-            action: getElementByName('future_action_action').value,
-            date: getElementByName('future_action_date').value,
-            terms: getElementByName('future_action_terms').value.split(',').map(function (term) {
-                return parseInt(term);
-            }),
-            taxonomy: getElementByName('future_action_taxonomy').value
-        };
-
-        return React.createElement(
-            'div',
-            { className: 'post-expirator-panel' },
-            React.createElement(_FutureActionPanel2.default, {
-                postType: config.postType,
-                isCleanNewPost: config.isNewPost,
-                actionsSelectOptions: config.actionsSelectOptions,
-                enabled: data.enabled,
-                action: data.action,
-                date: data.date,
-                terms: data.terms,
-                taxonomy: data.taxonomy,
-                onChangeData: onChangeData,
-                is12hours: config.is12hours,
-                startOfWeek: config.startOfWeek,
-                storeName: storeName,
-                strings: config.strings })
-        );
-    };
 
     var createRoot = wp.element.createRoot;
     var select = wp.data.select;
@@ -744,7 +766,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var container = document.getElementById("publishpress-future-classic-metabox");
     var root = createRoot(container);
 
-    root.render(React.createElement(ClassicFutureActionPanel, null));
+    root.render(React.createElement(_ClassicEditorFutureActionPanel2.default, {
+        storeName: storeName,
+        postType: config.postType,
+        isNewPost: config.isNewPost,
+        actionsSelectOptions: config.actionsSelectOptions,
+        is12hours: config.is12hours,
+        startOfWeek: config.startOfWeek,
+        strings: config.strings
+    }));
 })(window.wp, window.publishpressFutureClassicMetabox);
 })();
 
