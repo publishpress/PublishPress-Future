@@ -154,7 +154,7 @@ class ExpirablePostModel extends PostModel
         $this->defaultDataModel = $defaultDataModelFactory->create($this->getPostType());
 
         $this->actionArgsModel = $actionArgsModelFactory();
-        $this->actionArgsModel->loadByPostId($this->postId);
+        $this->actionArgsModel->loadByPostId($this->postId, true);
     }
 
     public function getExpirationDataAsArray()
@@ -315,7 +315,7 @@ class ExpirablePostModel extends PostModel
                 $this->expirationDate = $this->actionArgsModel->getScheduledDate();
             }
 
-            if (empty($this->expirationDate)) {
+            if (empty($this->expirationDate) || $this->expirationDate === '1970-01-01 00:00:00') {
                 $defaultData = $this->defaultDataModel->getActionDateParts();
 
                 if (! empty($defaultData['iso'])) {

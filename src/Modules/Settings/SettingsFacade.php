@@ -5,8 +5,6 @@
 
 namespace PublishPress\Future\Modules\Settings;
 
-use PublishPress\Future\Core\DI\Container;
-use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
