@@ -18,6 +18,11 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
         const terms = useSelect((select) => select(storeName).getTerms(), []);
         const taxonomy = useSelect((select) => select(storeName).getTaxonomy(), []);
 
+        let termsString = terms;
+        if (typeof terms === 'object') {
+            termsString = terms.join(',');
+        }
+
         return (
             <div className={'post-expirator-panel'}>
                 <FutureActionPanel
@@ -39,7 +44,7 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
                 <input type="hidden" name={'future_action_enabled'} value={enabled ? 1 : 0} />
                 <input type="hidden" name={'future_action_action'} value={action} />
                 <input type="hidden" name={'future_action_date'} value={date} />
-                <input type="hidden" name={'future_action_terms'} value={terms.join(',')} />
+                <input type="hidden" name={'future_action_terms'} value={termsString} />
                 <input type="hidden" name={'future_action_taxonomy'} value={taxonomy} />
                 <input type="hidden" name={'future_action_view'} value="quick-edit" />
                 <input type="hidden" name={'_future_action_nonce'} value={config.nonce} />
@@ -65,24 +70,35 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
         return postId;
     }
 
-    // We override the function with our own code
+    /**
+     * We override the function with our own code so we can detect when
+     * the inline edit row is displayed to recreate the React component.
+     */
     inlineEditPost.edit = function (id) {
         const { createRoot } = wp.element;
-        const { select } = wp.data;
-
-        const postId = getPostId(id);
+        const { select, dispatch } = wp.data;
 
         // Call the original WP edit function.
         wpInlineEdit.apply(this, arguments);
 
-        // Initiate our component.
-        if (!select(storeName)) {
-            const enabled = getFieldValueByNameAsBool('enabled', postId);
-            const action = getFieldValueByName('action', postId);
-            const date = getFieldValueByName('date', postId);
-            const terms = getFieldValueByName('terms', postId);
-            const taxonomy = getFieldValueByName('taxonomy', postId);
+        const postId = getPostId(id);
+        const enabled = getFieldValueByNameAsBool('enabled', postId);
+        const action = getFieldValueByName('action', postId);
+        const date = getFieldValueByName('date', postId);
+        const terms = getFieldValueByName('terms', postId);
+        const taxonomy = getFieldValueByName('taxonomy', postId);
 
+        const termsList = terms.split(',');
+        console.log(termsList);
+
+        // if store exists, update the state. Otherwise, create it.
+        if (select(storeName)) {
+            dispatch(storeName).setEnabled(enabled);
+            dispatch(storeName).setAction(action);
+            dispatch(storeName).setDate(date);
+            dispatch(storeName).setTaxonomy(taxonomy);
+            dispatch(storeName).setTerms(termsList);
+        } else {
             createStore({
                 name: storeName,
                 defaultState: {
@@ -90,7 +106,7 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
                     action: action,
                     date: date,
                     taxonomy: taxonomy,
-                    terms: terms,
+                    terms: termsList,
                 }
             });
         }
@@ -107,13 +123,13 @@ import { getFieldValueByName, getFieldValueByNameAsArrayOfInt, getFieldValueByNa
             wpInlineEditRevert.apply(this, arguments);
         };
 
-         const saveButton = document.querySelector('.inline-edit-save .save');
-         if (saveButton) {
-             saveButton.onclick = function() {
-                 setTimeout(() => {
-                     root.unmount();
-                 }, delayToUnmountAfterSaving);
-             };
+        const saveButton = document.querySelector('.inline-edit-save .save');
+        if (saveButton) {
+            saveButton.onclick = function() {
+                setTimeout(() => {
+                    root.unmount();
+                }, delayToUnmountAfterSaving);
+            };
          }
     };
 })(window.wp, window.publishpressFutureQuickEdit, inlineEditPost);

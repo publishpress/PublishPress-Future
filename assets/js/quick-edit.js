@@ -258,8 +258,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     __nextRemoveHelpButton: true,
                     is12Hour: props.is12hours,
                     startOfWeek: props.startOfWeek
-                }),
-                '``'
+                })
             ),
             React.createElement(SelectControl, {
                 label: props.strings.action,
@@ -270,7 +269,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             String(action).includes('category') && (isFetchingTerms && React.createElement(
                 Fragment,
                 null,
-                props.strings.loading + (' (' + taxonomy + ')'),
+                props.strings.loading + ' (' + taxonomy + ')',
                 React.createElement(Spinner, null)
             ) || !taxonomy && React.createElement(
                 'p',
@@ -542,7 +541,18 @@ var normalizeUnixTimeToMilliseconds = exports.normalizeUnixTimeToMilliseconds = 
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var compact = exports.compact = function compact(array) {
+    if (!array) {
+        return [];
+    }
+
+    if (!Array.isArray(array) && (typeof array === 'undefined' ? 'undefined' : _typeof(array)) === 'object') {
+        array = Object.values(array);
+    }
+
     return array.filter(function (item) {
         return item !== null && item !== undefined && item !== '';
     });
@@ -647,6 +657,8 @@ var __webpack_exports__ = {};
   \***********************************/
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _FutureActionPanel = __webpack_require__(/*! ./components/FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
 
 var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
@@ -680,6 +692,11 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
             return select(storeName).getTaxonomy();
         }, []);
 
+        var termsString = terms;
+        if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
+            termsString = terms.join(',');
+        }
+
         return React.createElement(
             'div',
             { className: 'post-expirator-panel' },
@@ -700,7 +717,7 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
             React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: enabled ? 1 : 0 }),
             React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action }),
             React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date }),
-            React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: terms.join(',') }),
+            React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: termsString }),
             React.createElement('input', { type: 'hidden', name: 'future_action_taxonomy', value: taxonomy }),
             React.createElement('input', { type: 'hidden', name: 'future_action_view', value: 'quick-edit' }),
             React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: config.nonce })
@@ -725,25 +742,38 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
         return postId;
     };
 
-    // We override the function with our own code
+    /**
+     * We override the function with our own code so we can detect when
+     * the inline edit row is displayed to recreate the React component.
+     */
     inlineEditPost.edit = function (id) {
         var createRoot = wp.element.createRoot;
-        var select = wp.data.select;
-
-
-        var postId = getPostId(id);
+        var _wp$data = wp.data,
+            select = _wp$data.select,
+            dispatch = _wp$data.dispatch;
 
         // Call the original WP edit function.
+
         wpInlineEdit.apply(this, arguments);
 
-        // Initiate our component.
-        if (!select(storeName)) {
-            var enabled = (0, _utils.getFieldValueByNameAsBool)('enabled', postId);
-            var action = (0, _utils.getFieldValueByName)('action', postId);
-            var date = (0, _utils.getFieldValueByName)('date', postId);
-            var terms = (0, _utils.getFieldValueByName)('terms', postId);
-            var taxonomy = (0, _utils.getFieldValueByName)('taxonomy', postId);
+        var postId = getPostId(id);
+        var enabled = (0, _utils.getFieldValueByNameAsBool)('enabled', postId);
+        var action = (0, _utils.getFieldValueByName)('action', postId);
+        var date = (0, _utils.getFieldValueByName)('date', postId);
+        var terms = (0, _utils.getFieldValueByName)('terms', postId);
+        var taxonomy = (0, _utils.getFieldValueByName)('taxonomy', postId);
 
+        var termsList = terms.split(',');
+        console.log(termsList);
+
+        // if store exists, update the state. Otherwise, create it.
+        if (select(storeName)) {
+            dispatch(storeName).setEnabled(enabled);
+            dispatch(storeName).setAction(action);
+            dispatch(storeName).setDate(date);
+            dispatch(storeName).setTaxonomy(taxonomy);
+            dispatch(storeName).setTerms(termsList);
+        } else {
             (0, _data.createStore)({
                 name: storeName,
                 defaultState: {
@@ -751,7 +781,7 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
                     action: action,
                     date: date,
                     taxonomy: taxonomy,
-                    terms: terms
+                    terms: termsList
                 }
             });
         }

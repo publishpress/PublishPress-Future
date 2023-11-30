@@ -258,8 +258,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     __nextRemoveHelpButton: true,
                     is12Hour: props.is12hours,
                     startOfWeek: props.startOfWeek
-                }),
-                '``'
+                })
             ),
             React.createElement(SelectControl, {
                 label: props.strings.action,
@@ -270,7 +269,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             String(action).includes('category') && (isFetchingTerms && React.createElement(
                 Fragment,
                 null,
-                props.strings.loading + (' (' + taxonomy + ')'),
+                props.strings.loading + ' (' + taxonomy + ')',
                 React.createElement(Spinner, null)
             ) || !taxonomy && React.createElement(
                 'p',
@@ -542,7 +541,18 @@ var normalizeUnixTimeToMilliseconds = exports.normalizeUnixTimeToMilliseconds = 
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var compact = exports.compact = function compact(array) {
+    if (!array) {
+        return [];
+    }
+
+    if (!Array.isArray(array) && (typeof array === 'undefined' ? 'undefined' : _typeof(array)) === 'object') {
+        array = Object.values(array);
+    }
+
     return array.filter(function (item) {
         return item !== null && item !== undefined && item !== '';
     });
