@@ -4,12 +4,12 @@ const path = require("path");
 module.exports = [
     {
         entry: glob.sync(
-            "./assets/jsx/gutenberg-panel.jsx",
+            "./assets/jsx/block-editor.jsx",
         ),
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "assets", "js"),
-            filename: "gutenberg-panel.js"
+            filename: "block-editor.js"
         },
         resolve: {
             extensions: ['.jsx', '.js']
@@ -55,12 +55,12 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./assets/jsx/classic-metabox.jsx",
+            "./assets/jsx/classic-editor.jsx",
         ),
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "assets", "js"),
-            filename: "classic-metabox.js"
+            filename: "classic-editor.js"
         },
         resolve: {
             extensions: ['.jsx', '.js']

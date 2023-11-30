@@ -388,7 +388,7 @@ function postexpirator_meta_box($post)
     }
 
     PostExpirator_Display::getInstance()->render_template(
-        'classic-metabox', [
+        'classic-editor', [
             'post' => $post,
             'enabled' => $data['enabled'],
             'action' => $data['action'],

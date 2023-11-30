@@ -25,7 +25,7 @@ import { isGutenbergEnabled } from './utils';
         });
     }
 
-    const container = document.getElementById("publishpress-future-classic-metabox");
+    const container = document.getElementById("publishpress-future-classic-editor");
     const root = createRoot(container);
 
     root.render(

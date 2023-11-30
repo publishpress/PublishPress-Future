@@ -1986,9 +1986,9 @@ var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function get
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!****************************************!*\
-  !*** ./assets/jsx/classic-metabox.jsx ***!
-  \****************************************/
+/*!***************************************!*\
+  !*** ./assets/jsx/classic-editor.jsx ***!
+  \***************************************/
 
 
 var _components = __webpack_require__(/*! ./components */ "./assets/jsx/components/index.jsx");
@@ -2021,7 +2021,7 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
         });
     }
 
-    var container = document.getElementById("publishpress-future-classic-metabox");
+    var container = document.getElementById("publishpress-future-classic-editor");
     var root = createRoot(container);
 
     root.render(React.createElement(_components.FutureActionPanelClassicEditor, {
@@ -2038,4 +2038,4 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
 
 /******/ })()
 ;
-//# sourceMappingURL=classic-metabox.js.map
+//# sourceMappingURL=classic-editor.js.map

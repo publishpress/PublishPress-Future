@@ -221,15 +221,15 @@ class Module implements ModuleInterface
         }
 
         wp_enqueue_script(
-            'publishpress-future-classic-metabox',
-            POSTEXPIRATOR_BASEURL . 'assets/js/classic-metabox.js',
+            'publishpress-future-classic-editor',
+            POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element'],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );
 
         wp_enqueue_style(
-            'publishpress-future-classic-metabox',
+            'publishpress-future-classic-editor',
             POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
             ['wp-components'],
             PUBLISHPRESS_FUTURE_VERSION
@@ -257,7 +257,7 @@ class Module implements ModuleInterface
         $defaultExpirationDate = $defaultDataModel->getActionDateParts();
 
         wp_localize_script(
-            'publishpress-future-classic-metabox',
+            'publishpress-future-classic-editor',
             'publishpressFutureClassicMetabox',
             [
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,

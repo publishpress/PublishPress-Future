@@ -373,8 +373,8 @@ class PostExpirator_Facade
             || (in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1']))
         ) {
             wp_enqueue_script(
-                'postexpirator-gutenberg-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/gutenberg-panel.js',
+                'postexpirator-block-editor',
+                POSTEXPIRATOR_BASEURL . 'assets/js/block-editor.js',
                 ['wp-edit-post'],
                 POSTEXPIRATOR_VERSION,
                 true
@@ -399,7 +399,7 @@ class PostExpirator_Facade
 
             $defaultExpirationDate = $defaultDataModel->getActionDateParts();
             wp_localize_script(
-                'postexpirator-gutenberg-panel',
+                'postexpirator-block-editor',
                 'postExpiratorPanelConfig',
                 [
                     'postTypeDefaultConfig' => $postTypeDefaultConfig,

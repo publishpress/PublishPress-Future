@@ -1986,9 +1986,9 @@ var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function get
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!****************************************!*\
-  !*** ./assets/jsx/gutenberg-panel.jsx ***!
-  \****************************************/
+/*!*************************************!*\
+  !*** ./assets/jsx/block-editor.jsx ***!
+  \*************************************/
 
 
 var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
@@ -2031,4 +2031,4 @@ var _components = __webpack_require__(/*! ./components */ "./assets/jsx/componen
 
 /******/ })()
 ;
-//# sourceMappingURL=gutenberg-panel.js.map
+//# sourceMappingURL=block-editor.js.map
