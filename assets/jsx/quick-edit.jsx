@@ -1,4 +1,4 @@
-import FutureActionPanelQuickEdit from './components/FutureActionPanelQuickEdit';
+import { FutureActionPanelQuickEdit } from './components';
 import { createStore } from './data';
 import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
 

@@ -1,12 +1,15 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import SettingsSection from "./components/SettingsSection";
-import SettingsForm from "./components/SettingsForm";
-import PostTypesSettingsPanels from "./components/PostTypesSettingsPanels";
-import SubmitButton from "./components/SubmitButton";
-import ButtonsPanel from "./components/ButtonsPanel";
-import NonceField from "./components/fields/NonceField";
+
+import {
+    SettingsForm,
+    SettingsSection,
+    PostTypesSettingsPanels,
+    SubmitButton,
+    ButtonsPanel,
+    NonceControl
+} from "./components";
 
 (function (wp, config) {
     const { StrictMode, createRoot } = wp.element;
@@ -15,7 +18,7 @@ import NonceField from "./components/fields/NonceField";
         return (
             <StrictMode>
                 <SettingsForm>
-                    <NonceField
+                    <NonceControl
                         name="_postExpiratorMenuDefaults_nonce"
                         nonce={config.nonce}
                         referrer={config.referrer}

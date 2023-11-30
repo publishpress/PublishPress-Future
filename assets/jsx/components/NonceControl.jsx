@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-const NonceField = function (props) {
+export const NonceControl = function (props) {
     const { Fragment } = wp.element;
 
     if (! props.name) {
@@ -22,5 +22,3 @@ const NonceField = function (props) {
         </Fragment>
     )
 }
-
-export default NonceField;

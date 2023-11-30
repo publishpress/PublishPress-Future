@@ -2,9 +2,7 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import TrueFalseField from "./fields/TrueFalseField";
-
-const SettingRow = function (props) {
+export const SettingRow = function (props) {
     const { Fragment } = wp.element;
 
     return (
@@ -18,5 +16,3 @@ const SettingRow = function (props) {
         </tr>
     )
 }
-
-export default SettingRow;

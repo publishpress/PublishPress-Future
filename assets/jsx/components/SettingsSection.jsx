@@ -2,7 +2,7 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-const SettingsSection = function (props) {
+export const SettingsSection = function (props) {
     const { Fragment } = wp.element;
     return (
         <Fragment>
@@ -12,5 +12,3 @@ const SettingsSection = function (props) {
         </Fragment>
     )
 }
-
-export default SettingsSection;

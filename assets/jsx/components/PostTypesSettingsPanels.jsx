@@ -2,9 +2,9 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import PostTypeSettingsPanel from "./PostTypeSettingsPanel";
+import { PostTypeSettingsPanel } from "./";
 
-const PostTypesSettingsPanels = function (props) {
+export const PostTypesSettingsPanels = function (props) {
     let panels = [];
 
     for (const [postType, postTypeSettings] of Object.entries(props.settings)) {
@@ -23,5 +23,3 @@ const PostTypesSettingsPanels = function (props) {
 
     return (panels);
 }
-
-export default PostTypesSettingsPanels;

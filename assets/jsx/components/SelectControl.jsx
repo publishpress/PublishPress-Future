@@ -2,7 +2,7 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-const SelectField = function (props) {
+export const SelectControl = function (props) {
     const { Fragment } = wp.element;
     const { SelectControl } = wp.components;
 
@@ -36,5 +36,3 @@ const SelectField = function (props) {
         </Fragment>
     )
 }
-
-export default SelectField;

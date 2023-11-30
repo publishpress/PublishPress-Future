@@ -2,6 +2,99 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/jsx/components/ButtonsPanel.jsx":
+/*!************************************************!*\
+  !*** ./assets/jsx/components/ButtonsPanel.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var ButtonsPanel = exports.ButtonsPanel = function ButtonsPanel(props) {
+    return React.createElement(
+        "div",
+        null,
+        props.children
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/CheckboxControl.jsx":
+/*!***************************************************!*\
+  !*** ./assets/jsx/components/CheckboxControl.jsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var CheckboxControl = exports.CheckboxControl = function CheckboxControl(props) {
+    var _wp$element = wp.element,
+        Fragment = _wp$element.Fragment,
+        useState = _wp$element.useState;
+
+    var WPCheckboxControl = wp.components.CheckboxControl;
+
+    var _useState = useState(props.checked || false),
+        _useState2 = _slicedToArray(_useState, 2),
+        checked = _useState2[0],
+        setChecked = _useState2[1];
+
+    var description = void 0;
+
+    if (props.unescapedDescription) {
+        // If using this option, the HTML has to be escaped before injected into the JS interface.
+        description = React.createElement("p", { className: "description", dangerouslySetInnerHTML: { __html: props.description } });
+    } else {
+        description = React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        );
+    }
+
+    var onChange = function onChange(value) {
+        setChecked(value);
+
+        if (props.onChange) {
+            props.onChange(value);
+        }
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(WPCheckboxControl, {
+            label: props.label,
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            checked: checked || false,
+            onChange: onChange
+        }),
+        description
+    );
+};
+
+/***/ }),
+
 /***/ "./assets/jsx/components/FutureActionPanel.jsx":
 /*!*****************************************************!*\
   !*** ./assets/jsx/components/FutureActionPanel.jsx ***!
@@ -13,6 +106,7 @@
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
+exports.FutureActionPanel = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -37,9 +131,7 @@ var _wp$data = wp.data,
     useDispatch = _wp$data.useDispatch;
 var _wp = wp,
     apiFetch = _wp.apiFetch;
-
-
-var FutureActionPanel = function FutureActionPanel(props) {
+var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(props) {
     var action = useSelect(function (select) {
         return select(props.storeName).getAction();
     }, []);
@@ -293,7 +385,182 @@ var FutureActionPanel = function FutureActionPanel(props) {
     );
 };
 
-exports["default"] = FutureActionPanel;
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanelBlockEditor.jsx":
+/*!****************************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanelBlockEditor.jsx ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanelBlockEditor = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) {
+    var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
+    var _wp$data = wp.data,
+        useDispatch = _wp$data.useDispatch,
+        select = _wp$data.select;
+
+    var _useDispatch = useDispatch('core/editor'),
+        editPost = _useDispatch.editPost;
+
+    var editPostAttribute = function editPostAttribute(newAttribute) {
+        var attribute = {
+            publishpress_future_action: {}
+        };
+
+        // For each property on newAttribute, set the value on attribute
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = Object.entries(newAttribute)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var _ref = _step.value;
+
+                var _ref2 = _slicedToArray(_ref, 2);
+
+                var name = _ref2[0];
+                var value = _ref2[1];
+
+                attribute.publishpress_future_action[name] = value;
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        editPost(attribute);
+    };
+
+    var onChangeData = function onChangeData(attribute, value) {
+        var store = select(props.storeName);
+
+        var newAttribute = {
+            'enabled': store.getEnabled()
+        };
+
+        if (newAttribute.enabled) {
+            newAttribute['action'] = store.getAction();
+            newAttribute['date'] = store.getDate();
+            newAttribute['terms'] = store.getTerms();
+            newAttribute['taxonomy'] = store.getTaxonomy();
+        }
+
+        editPostAttribute(newAttribute);
+    };
+
+    var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+
+    return React.createElement(
+        PluginDocumentSettingPanel,
+        {
+            name: 'publishpress-future-action-panel',
+            title: props.strings.panelTitle,
+            icon: 'calendar',
+            initialOpen: props.postTypeDefaultConfig.autoEnable,
+            className: 'post-expirator-panel' },
+        React.createElement(_.FutureActionPanel, {
+            postType: props.postType,
+            isCleanNewPost: props.isCleanNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: data.enabled,
+            action: data.action,
+            date: data.date,
+            terms: data.terms,
+            taxonomy: data.taxonomy,
+            onChangeData: onChangeData,
+            is12hours: props.is12hours,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanelClassicEditor.jsx":
+/*!******************************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanelClassicEditor.jsx ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanelClassicEditor = undefined;
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = function FutureActionPanelClassicEditor(props) {
+    var select = wp.data.select;
+
+    var browserTimezoneOffset = new Date().getTimezoneOffset();
+
+    var getElementByName = function getElementByName(name) {
+        return document.getElementsByName(name)[0];
+    };
+
+    var onChangeData = function onChangeData(attribute, value) {
+        var store = select(props.storeName);
+
+        getElementByName('future_action_enabled').value = store.getEnabled() ? 1 : 0;
+        getElementByName('future_action_action').value = store.getAction();
+        getElementByName('future_action_date').value = store.getDate();
+        getElementByName('future_action_terms').value = store.getTerms().join(',');
+        getElementByName('future_action_taxonomy').value = store.getTaxonomy();
+    };
+
+    var data = {
+        enabled: getElementByName('future_action_enabled').value === '1',
+        action: getElementByName('future_action_action').value,
+        date: getElementByName('future_action_date').value,
+        terms: getElementByName('future_action_terms').value.split(',').map(function (term) {
+            return parseInt(term);
+        }),
+        taxonomy: getElementByName('future_action_taxonomy').value
+    };
+
+    return React.createElement(
+        'div',
+        { className: 'post-expirator-panel' },
+        React.createElement(_.FutureActionPanel, {
+            postType: props.postType,
+            isCleanNewPost: props.isNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: data.enabled,
+            action: data.action,
+            date: data.date,
+            terms: data.terms,
+            taxonomy: data.taxonomy,
+            onChangeData: onChangeData,
+            is12hours: props.is12hours,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings })
+    );
+};
 
 /***/ }),
 
@@ -308,16 +575,13 @@ exports["default"] = FutureActionPanel;
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
+exports.FutureActionPanelQuickEdit = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _FutureActionPanel = __webpack_require__(/*! ./FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
 
-var _FutureActionPanel2 = _interopRequireDefault(_FutureActionPanel);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
+var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     var useSelect = wp.data.useSelect;
 
 
@@ -347,7 +611,7 @@ var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     return React.createElement(
         'div',
         { className: 'post-expirator-panel' },
-        React.createElement(_FutureActionPanel2.default, {
+        React.createElement(_.FutureActionPanel, {
             postType: props.postType,
             isCleanNewPost: props.isNewPost,
             actionsSelectOptions: props.actionsSelectOptions,
@@ -371,7 +635,998 @@ var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     );
 };
 
-exports["default"] = FutureActionPanelQuickEdit;
+/***/ }),
+
+/***/ "./assets/jsx/components/NonceControl.jsx":
+/*!************************************************!*\
+  !*** ./assets/jsx/components/NonceControl.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+var NonceControl = exports.NonceControl = function NonceControl(props) {
+    var Fragment = wp.element.Fragment;
+
+
+    if (!props.name) {
+        props.name = '_wpnonce';
+    }
+
+    if (!props.referrer) {
+        props.referrer = true;
+    }
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement("input", { type: "hidden", name: props.name, id: props.name, value: props.nonce }),
+        props.referrer && React.createElement("input", { type: "hidden", name: "_wp_http_referer", value: props.referrer })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/PostTypeSettingsPanel.jsx":
+/*!*********************************************************!*\
+  !*** ./assets/jsx/components/PostTypeSettingsPanel.jsx ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.PostTypeSettingsPanel = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
+    var _wp$element = wp.element,
+        useState = _wp$element.useState,
+        useEffect = _wp$element.useEffect;
+    var addQueryArgs = wp.url.addQueryArgs;
+    var applyFilters = wp.hooks.applyFilters;
+    var _wp = wp,
+        apiFetch = _wp.apiFetch;
+
+    var _useState = useState(props.settings.taxonomy),
+        _useState2 = _slicedToArray(_useState, 2),
+        postTypeTaxonomy = _useState2[0],
+        setPostTypeTaxonomy = _useState2[1];
+
+    var _useState3 = useState([]),
+        _useState4 = _slicedToArray(_useState3, 2),
+        termOptions = _useState4[0],
+        setTermOptions = _useState4[1];
+
+    var _useState5 = useState(false),
+        _useState6 = _slicedToArray(_useState5, 2),
+        termsSelectIsLoading = _useState6[0],
+        setTermsSelectIsLoading = _useState6[1];
+
+    var _useState7 = useState([]),
+        _useState8 = _slicedToArray(_useState7, 2),
+        selectedTerms = _useState8[0],
+        setSelectedTerms = _useState8[1];
+
+    var _useState9 = useState(props.settings.howToExpire),
+        _useState10 = _slicedToArray(_useState9, 2),
+        settingHowToExpire = _useState10[0],
+        setSettingHowToExpire = _useState10[1];
+
+    var _useState11 = useState(props.settings.active),
+        _useState12 = _slicedToArray(_useState11, 2),
+        isActive = _useState12[0],
+        setIsActive = _useState12[1];
+
+    var _useState13 = useState(props.settings.defaultExpireOffset),
+        _useState14 = _slicedToArray(_useState13, 2),
+        expireOffset = _useState14[0],
+        setExpireOffset = _useState14[1];
+
+    var _useState15 = useState(props.settings.emailNotification),
+        _useState16 = _slicedToArray(_useState15, 2),
+        emailNotification = _useState16[0],
+        setEmailNotification = _useState16[1];
+
+    var _useState17 = useState(props.settings.autoEnabled),
+        _useState18 = _slicedToArray(_useState17, 2),
+        isAutoEnabled = _useState18[0],
+        setIsAutoEnabled = _useState18[1];
+
+    var onChangeTaxonomy = function onChangeTaxonomy(value) {
+        setPostTypeTaxonomy(value);
+    };
+
+    var onChangeTerms = function onChangeTerms(value) {
+        setSelectedTerms(value);
+    };
+
+    var onChangeHowToExpire = function onChangeHowToExpire(value) {
+        setSettingHowToExpire(value);
+    };
+
+    var onChangeActive = function onChangeActive(value) {
+        setIsActive(value);
+    };
+
+    var onChangeExpireOffset = function onChangeExpireOffset(value) {
+        setExpireOffset(value);
+    };
+
+    var onChangeEmailNotification = function onChangeEmailNotification(value) {
+        setEmailNotification(value);
+    };
+
+    var onChangeAutoEnabled = function onChangeAutoEnabled(value) {
+        setIsAutoEnabled(value);
+    };
+
+    useEffect(function () {
+        var updateTermsOptionsState = function updateTermsOptionsState(list) {
+            var options = [];
+
+            var settingsTermsOptions = null;
+            var option = void 0;
+            list.forEach(function (term) {
+                option = { value: term.id, label: term.name };
+                options.push(option);
+
+                if (postTypeTaxonomy === props.settings.taxonomy && props.settings.terms.includes(term.id)) {
+                    if (settingsTermsOptions === null) {
+                        settingsTermsOptions = [];
+                    }
+
+                    settingsTermsOptions.push(option.label);
+                }
+            });
+
+            setTermOptions(options);
+            setTermsSelectIsLoading(false);
+            setSelectedTerms(settingsTermsOptions);
+        };
+
+        if (!postTypeTaxonomy && props.postType === 'post' || postTypeTaxonomy === 'category') {
+            setTermsSelectIsLoading(true);
+            apiFetch({
+                path: addQueryArgs('wp/v2/categories', { per_page: -1 })
+            }).then(updateTermsOptionsState);
+        } else {
+            if (!postTypeTaxonomy || !props.taxonomiesList) {
+                return;
+            }
+
+            setTermsSelectIsLoading(true);
+            apiFetch({
+                path: addQueryArgs('wp/v2/taxonomies/' + postTypeTaxonomy)
+            }).then(function (taxAttributes) {
+                // fetch all terms
+                apiFetch({
+                    path: addQueryArgs('wp/v2/' + taxAttributes.rest_base)
+                }).then(updateTermsOptionsState);
+            }).catch(function (error) {
+                console.debug('Taxonomy terms error', error);
+                setTermsSelectIsLoading(false);
+            });
+        }
+    }, [postTypeTaxonomy]);
+
+    var termOptionsLabels = termOptions.map(function (term) {
+        return term.label;
+    });
+
+    var settingsRows = [React.createElement(
+        _.SettingRow,
+        { label: props.text.fieldActive, key: 'expirationdate_activemeta-' + props.postType },
+        React.createElement(_.CheckboxControl, {
+            name: 'expirationdate_activemeta-' + props.postType,
+            checked: isActive || false,
+            label: props.text.fieldActiveLabel,
+            onChange: onChangeActive
+        })
+    )];
+
+    if (isActive) {
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldAutoEnable, key: 'expirationdate_autoenable-' + props.postType },
+            React.createElement(_.CheckboxControl, {
+                name: 'expirationdate_autoenable-' + props.postType,
+                checked: isAutoEnabled || false,
+                label: props.text.fieldAutoEnableLabel,
+                onChange: onChangeAutoEnabled
+            })
+        ));
+
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldTaxonomy, key: 'expirationdate_taxonomy-' + props.postType },
+            React.createElement(_.SelectControl, {
+                name: 'expirationdate_taxonomy-' + props.postType,
+                options: props.taxonomiesList,
+                selected: postTypeTaxonomy,
+                noItemFoundMessage: props.text.noItemsfound,
+                data: props.postType,
+                onChange: onChangeTaxonomy
+            })
+        ));
+
+        // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
+        if (props.taxonomiesList.length === 0) {
+            props.expireTypeList[props.postType] = props.expireTypeList[props.postType].filter(function (item) {
+                return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+            });
+        }
+
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldHowToExpire, key: 'expirationdate_expiretype-' + props.postType },
+            React.createElement(_.SelectControl, {
+                name: 'expirationdate_expiretype-' + props.postType,
+                className: 'pe-howtoexpire',
+                options: props.expireTypeList[props.postType],
+                description: props.text.fieldHowToExpireDescription,
+                selected: settingHowToExpire,
+                onChange: onChangeHowToExpire
+            }),
+            props.taxonomiesList.length > 0 && ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && React.createElement(_.TokensControl, {
+                label: props.text.fieldTerm,
+                name: 'expirationdate_terms-' + props.postType,
+                options: termOptionsLabels,
+                value: selectedTerms,
+                isLoading: termsSelectIsLoading,
+                onChange: onChangeTerms,
+                description: props.text.fieldTermDescription
+            })
+        ));
+
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldDefaultDateTimeOffset, key: 'expired-custom-date-' + props.postType },
+            React.createElement(_.TextControl, {
+                name: 'expired-custom-date-' + props.postType,
+                value: expireOffset,
+                placeholder: props.settings.globalDefaultExpireOffset,
+                description: props.text.fieldDefaultDateTimeOffsetDescription,
+                unescapedDescription: true,
+                onChange: onChangeExpireOffset
+            })
+        ));
+
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldWhoToNotify, key: 'expirationdate_emailnotification-' + props.postType },
+            React.createElement(_.TextControl, {
+                name: 'expirationdate_emailnotification-' + props.postType,
+                className: 'large-text',
+                value: emailNotification,
+                description: props.text.fieldWhoToNotifyDescription,
+                onChange: onChangeEmailNotification
+            })
+        ));
+    }
+
+    settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);
+
+    return React.createElement(
+        _.SettingsFieldset,
+        { legend: props.legend },
+        React.createElement(_.SettingsTable, { bodyChildren: settingsRows })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/PostTypesSettingsPanels.jsx":
+/*!***********************************************************!*\
+  !*** ./assets/jsx/components/PostTypesSettingsPanels.jsx ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.PostTypesSettingsPanels = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
+    var panels = [];
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = Object.entries(props.settings)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _ref = _step.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var postType = _ref2[0];
+            var postTypeSettings = _ref2[1];
+
+            panels.push(React.createElement(_.PostTypeSettingsPanel, {
+                legend: postTypeSettings.label,
+                text: props.text,
+                postType: postType,
+                settings: postTypeSettings,
+                expireTypeList: props.expireTypeList,
+                taxonomiesList: props.taxonomiesList[postType],
+                key: postType + "-panel"
+            }));
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+
+    return panels;
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SelectControl.jsx":
+/*!*************************************************!*\
+  !*** ./assets/jsx/components/SelectControl.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SelectControl = exports.SelectControl = function SelectControl(props) {
+    var Fragment = wp.element.Fragment;
+    var SelectControl = wp.components.SelectControl;
+
+
+    var onChange = function onChange(value) {
+        props.onChange(value);
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        props.options.length === 0 && React.createElement(
+            "div",
+            null,
+            props.noItemFoundMessage
+        ),
+        props.options.length > 0 && React.createElement(SelectControl, {
+            label: props.label,
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            value: props.selected,
+            onChange: onChange,
+            "data-data": props.data,
+            options: props.options
+        }),
+        props.children,
+        React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingRow.jsx":
+/*!**********************************************!*\
+  !*** ./assets/jsx/components/SettingRow.jsx ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingRow = exports.SettingRow = function SettingRow(props) {
+    var Fragment = wp.element.Fragment;
+
+
+    return React.createElement(
+        "tr",
+        { valign: "top" },
+        React.createElement(
+            "th",
+            { scope: "row" },
+            React.createElement(
+                "label",
+                { htmlFor: "" },
+                props.label
+            )
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.children
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingsFieldset.jsx":
+/*!****************************************************!*\
+  !*** ./assets/jsx/components/SettingsFieldset.jsx ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsFieldset = exports.SettingsFieldset = function SettingsFieldset(props) {
+    return React.createElement(
+        "fieldset",
+        null,
+        React.createElement(
+            "legend",
+            null,
+            props.legend
+        ),
+        props.children
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingsForm.jsx":
+/*!************************************************!*\
+  !*** ./assets/jsx/components/SettingsForm.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsForm = exports.SettingsForm = function SettingsForm(props) {
+    return React.createElement(
+        "form",
+        { method: "post" },
+        props.children
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingsSection.jsx":
+/*!***************************************************!*\
+  !*** ./assets/jsx/components/SettingsSection.jsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsSection = exports.SettingsSection = function SettingsSection(props) {
+    var Fragment = wp.element.Fragment;
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(
+            "h2",
+            null,
+            props.title
+        ),
+        React.createElement(
+            "p",
+            null,
+            props.description
+        ),
+        props.children
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingsTable.jsx":
+/*!*************************************************!*\
+  !*** ./assets/jsx/components/SettingsTable.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsTable = exports.SettingsTable = function SettingsTable(props) {
+    return React.createElement(
+        "table",
+        { className: "form-table" },
+        React.createElement(
+            "tbody",
+            null,
+            props.bodyChildren
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SubmitButton.jsx":
+/*!************************************************!*\
+  !*** ./assets/jsx/components/SubmitButton.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SubmitButton = exports.SubmitButton = function SubmitButton(props) {
+    return React.createElement("input", {
+        type: "submit",
+        name: props.name,
+        value: props.text,
+        className: "button-primary"
+    });
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/TextControl.jsx":
+/*!***********************************************!*\
+  !*** ./assets/jsx/components/TextControl.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var TextControl = exports.TextControl = function TextControl(props) {
+    var Fragment = wp.element.Fragment;
+    var WPTextControl = wp.components.TextControl.WPTextControl;
+
+
+    var description = void 0;
+
+    if (props.unescapedDescription) {
+        // If using this option, the HTML has to be escaped before injected into the JS interface.
+        description = React.createElement("p", { className: "description", dangerouslySetInnerHTML: { __html: props.description } });
+    } else {
+        description = React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        );
+    }
+
+    var onChange = function onChange(value) {
+        if (props.onChange) {
+            props.onChange(value);
+        }
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(WPTextControl, {
+            type: "text",
+            label: props.label,
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            value: props.value,
+            placeholder: props.placeholder,
+            onChange: onChange
+        }),
+        description
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/TokensControl.jsx":
+/*!*************************************************!*\
+  !*** ./assets/jsx/components/TokensControl.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var TokensControl = exports.TokensControl = function TokensControl(props) {
+    var _wp$element = wp.element,
+        Fragment = _wp$element.Fragment,
+        useState = _wp$element.useState,
+        useEffect = _wp$element.useEffect;
+    var FormTokenField = wp.components.FormTokenField;
+
+    var _useState = useState(''),
+        _useState2 = _slicedToArray(_useState, 2),
+        stringValue = _useState2[0],
+        setStringValue = _useState2[1];
+
+    useEffect(function () {
+        if (props.value) {
+            setStringValue(props.value.join(','));
+        }
+    }, [props.value]);
+
+    var description = void 0;
+
+    if (props.description) {
+        if (props.unescapedDescription) {
+            // If using this option, the HTML has to be escaped before injected into the JS interface.
+            description = React.createElement('p', { className: 'description', dangerouslySetInnerHTML: { __html: props.description } });
+        } else {
+            description = React.createElement(
+                'p',
+                { className: 'description' },
+                props.description
+            );
+        }
+    }
+
+    var onChange = function onChange(value) {
+        if (props.onChange) {
+            props.onChange(value);
+        }
+
+        if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+            setStringValue(value.join(','));
+        } else {
+            setStringValue('');
+        }
+    };
+
+    var value = props.value ? props.value : [];
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(FormTokenField, {
+            label: props.label,
+            value: value,
+            suggestions: props.options,
+            onChange: onChange,
+            maxSuggestions: 10,
+            className: 'publishpres-future-token-field'
+        }),
+        React.createElement('input', { type: 'hidden', name: props.name, value: stringValue }),
+        description
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/TrueFalseControl.jsx":
+/*!****************************************************!*\
+  !*** ./assets/jsx/components/TrueFalseControl.jsx ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var TrueFalseControl = exports.TrueFalseControl = function TrueFalseControl(props) {
+    var Fragment = wp.element.Fragment;
+
+
+    var onChange = function onChange(e) {
+        if (props.onChange) {
+            props.onChange(e.target.value === props.trueValue && jQuery(e.target).is(':checked'));
+            // Check only the true radio... using the field name? or directly the ID
+        }
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement('input', {
+            type: 'radio',
+            name: props.name,
+            id: props.name + '-true',
+            value: props.trueValue,
+            defaultChecked: props.selected,
+            onChange: onChange
+        }),
+        React.createElement(
+            'label',
+            { htmlFor: props.name + '-true' },
+            props.trueLabel
+        ),
+        '\xA0\xA0',
+        React.createElement('input', {
+            type: 'radio',
+            name: props.name,
+            defaultChecked: !props.selected,
+            id: props.name + '-false',
+            value: props.falseValue,
+            onChange: onChange
+        }),
+        React.createElement(
+            'label',
+            {
+                htmlFor: props.name + '-false' },
+            props.falseLabel
+        ),
+        React.createElement(
+            'p',
+            { className: 'description' },
+            props.description
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/index.jsx":
+/*!*****************************************!*\
+  !*** ./assets/jsx/components/index.jsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var _ButtonsPanel = __webpack_require__(/*! ./ButtonsPanel */ "./assets/jsx/components/ButtonsPanel.jsx");
+
+Object.defineProperty(exports, "ButtonsPanel", ({
+  enumerable: true,
+  get: function get() {
+    return _ButtonsPanel.ButtonsPanel;
+  }
+}));
+
+var _FutureActionPanel = __webpack_require__(/*! ./FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+
+Object.defineProperty(exports, "FutureActionPanel", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanel.FutureActionPanel;
+  }
+}));
+
+var _FutureActionPanelBlockEditor = __webpack_require__(/*! ./FutureActionPanelBlockEditor */ "./assets/jsx/components/FutureActionPanelBlockEditor.jsx");
+
+Object.defineProperty(exports, "FutureActionPanelBlockEditor", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanelBlockEditor.FutureActionPanelBlockEditor;
+  }
+}));
+
+var _FutureActionPanelClassicEditor = __webpack_require__(/*! ./FutureActionPanelClassicEditor */ "./assets/jsx/components/FutureActionPanelClassicEditor.jsx");
+
+Object.defineProperty(exports, "FutureActionPanelClassicEditor", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanelClassicEditor.FutureActionPanelClassicEditor;
+  }
+}));
+
+var _FutureActionPanelQuickEdit = __webpack_require__(/*! ./FutureActionPanelQuickEdit */ "./assets/jsx/components/FutureActionPanelQuickEdit.jsx");
+
+Object.defineProperty(exports, "FutureActionPanelQuickEdit", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanelQuickEdit.FutureActionPanelQuickEdit;
+  }
+}));
+
+var _PostTypeSettingsPanel = __webpack_require__(/*! ./PostTypeSettingsPanel */ "./assets/jsx/components/PostTypeSettingsPanel.jsx");
+
+Object.defineProperty(exports, "PostTypeSettingsPanel", ({
+  enumerable: true,
+  get: function get() {
+    return _PostTypeSettingsPanel.PostTypeSettingsPanel;
+  }
+}));
+
+var _PostTypesSettingsPanels = __webpack_require__(/*! ./PostTypesSettingsPanels */ "./assets/jsx/components/PostTypesSettingsPanels.jsx");
+
+Object.defineProperty(exports, "PostTypesSettingsPanels", ({
+  enumerable: true,
+  get: function get() {
+    return _PostTypesSettingsPanels.PostTypesSettingsPanels;
+  }
+}));
+
+var _SettingRow = __webpack_require__(/*! ./SettingRow */ "./assets/jsx/components/SettingRow.jsx");
+
+Object.defineProperty(exports, "SettingRow", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingRow.SettingRow;
+  }
+}));
+
+var _SettingsFieldset = __webpack_require__(/*! ./SettingsFieldset */ "./assets/jsx/components/SettingsFieldset.jsx");
+
+Object.defineProperty(exports, "SettingsFieldset", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingsFieldset.SettingsFieldset;
+  }
+}));
+
+var _SettingsForm = __webpack_require__(/*! ./SettingsForm */ "./assets/jsx/components/SettingsForm.jsx");
+
+Object.defineProperty(exports, "SettingsForm", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingsForm.SettingsForm;
+  }
+}));
+
+var _SettingsSection = __webpack_require__(/*! ./SettingsSection */ "./assets/jsx/components/SettingsSection.jsx");
+
+Object.defineProperty(exports, "SettingsSection", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingsSection.SettingsSection;
+  }
+}));
+
+var _SettingsTable = __webpack_require__(/*! ./SettingsTable */ "./assets/jsx/components/SettingsTable.jsx");
+
+Object.defineProperty(exports, "SettingsTable", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingsTable.SettingsTable;
+  }
+}));
+
+var _SubmitButton = __webpack_require__(/*! ./SubmitButton */ "./assets/jsx/components/SubmitButton.jsx");
+
+Object.defineProperty(exports, "SubmitButton", ({
+  enumerable: true,
+  get: function get() {
+    return _SubmitButton.SubmitButton;
+  }
+}));
+
+var _CheckboxControl = __webpack_require__(/*! ./CheckboxControl */ "./assets/jsx/components/CheckboxControl.jsx");
+
+Object.defineProperty(exports, "CheckboxControl", ({
+  enumerable: true,
+  get: function get() {
+    return _CheckboxControl.CheckboxControl;
+  }
+}));
+
+var _SelectControl = __webpack_require__(/*! ./SelectControl */ "./assets/jsx/components/SelectControl.jsx");
+
+Object.defineProperty(exports, "SelectControl", ({
+  enumerable: true,
+  get: function get() {
+    return _SelectControl.SelectControl;
+  }
+}));
+
+var _TextControl = __webpack_require__(/*! ./TextControl */ "./assets/jsx/components/TextControl.jsx");
+
+Object.defineProperty(exports, "TextControl", ({
+  enumerable: true,
+  get: function get() {
+    return _TextControl.TextControl;
+  }
+}));
+
+var _TokensControl = __webpack_require__(/*! ./TokensControl */ "./assets/jsx/components/TokensControl.jsx");
+
+Object.defineProperty(exports, "TokensControl", ({
+  enumerable: true,
+  get: function get() {
+    return _TokensControl.TokensControl;
+  }
+}));
+
+var _NonceControl = __webpack_require__(/*! ./NonceControl */ "./assets/jsx/components/NonceControl.jsx");
+
+Object.defineProperty(exports, "NonceControl", ({
+  enumerable: true,
+  get: function get() {
+    return _NonceControl.NonceControl;
+  }
+}));
+
+var _TrueFalseControl = __webpack_require__(/*! ./TrueFalseControl */ "./assets/jsx/components/TrueFalseControl.jsx");
+
+Object.defineProperty(exports, "TrueFalseControl", ({
+  enumerable: true,
+  get: function get() {
+    return _TrueFalseControl.TrueFalseControl;
+  }
+}));
 
 /***/ }),
 
@@ -736,15 +1991,11 @@ var __webpack_exports__ = {};
   \***********************************/
 
 
-var _FutureActionPanelQuickEdit = __webpack_require__(/*! ./components/FutureActionPanelQuickEdit */ "./assets/jsx/components/FutureActionPanelQuickEdit.jsx");
-
-var _FutureActionPanelQuickEdit2 = _interopRequireDefault(_FutureActionPanelQuickEdit);
+var _components = __webpack_require__(/*! ./components */ "./assets/jsx/components/index.jsx");
 
 var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 
 var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function (wp, config, inlineEditPost) {
     var storeName = 'publishpress-future/future-action';
@@ -831,7 +2082,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         var container = document.getElementById("publishpress-future-quick-edit");
         var root = createRoot(container);
 
-        root.render(React.createElement(_FutureActionPanelQuickEdit2.default, {
+        root.render(React.createElement(_components.FutureActionPanelQuickEdit, {
             id: postId,
             storeName: storeName,
             postType: config.postType,

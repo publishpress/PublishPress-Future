@@ -2,16 +2,17 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import TrueFalseField from "./fields/TrueFalseField";
-import SettingRow from "./SettingRow";
-import SettingsFieldset from "./SettingsFieldset";
-import SettingsTable from "./SettingsTable";
-import SelectField from "./fields/SelectField";
-import TextField from "./fields/TextField";
-import TokensField from "./fields/TokensField";
-import CheckboxControl from "./fields/CheckboxControl";
+import {
+    SettingRow,
+    SettingsFieldset,
+    SettingsTable,
+    SelectControl,
+    TextControl,
+    TokensControl,
+    CheckboxControl
+} from './';
 
-const PostTypeSettingsPanel = function (props) {
+export const PostTypeSettingsPanel = function (props) {
     const { useState, useEffect } = wp.element;
     const { addQueryArgs } = wp.url;
     const { applyFilters } = wp.hooks;
@@ -131,7 +132,7 @@ const PostTypeSettingsPanel = function (props) {
 
         settingsRows.push(
             <SettingRow label={props.text.fieldTaxonomy} key={'expirationdate_taxonomy-' + props.postType}>
-                <SelectField
+                <SelectControl
                     name={'expirationdate_taxonomy-' + props.postType}
                     options={props.taxonomiesList}
                     selected={postTypeTaxonomy}
@@ -139,7 +140,7 @@ const PostTypeSettingsPanel = function (props) {
                     data={props.postType}
                     onChange={onChangeTaxonomy}
                 >
-                </SelectField>
+                </SelectControl>
             </SettingRow>
         );
 
@@ -152,7 +153,7 @@ const PostTypeSettingsPanel = function (props) {
 
         settingsRows.push(
             <SettingRow label={props.text.fieldHowToExpire} key={'expirationdate_expiretype-' + props.postType}>
-                <SelectField
+                <SelectControl
                     name={'expirationdate_expiretype-' + props.postType}
                     className={'pe-howtoexpire'}
                     options={props.expireTypeList[props.postType]}
@@ -162,7 +163,7 @@ const PostTypeSettingsPanel = function (props) {
                 />
 
                 {(props.taxonomiesList.length > 0 && (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1)) &&
-                    <TokensField
+                    <TokensControl
                         label={props.text.fieldTerm}
                         name={'expirationdate_terms-' + props.postType}
                         options={termOptionsLabels}
@@ -177,7 +178,7 @@ const PostTypeSettingsPanel = function (props) {
 
         settingsRows.push(
             <SettingRow label={props.text.fieldDefaultDateTimeOffset} key={'expired-custom-date-' + props.postType}>
-                <TextField
+                <TextControl
                     name={'expired-custom-date-' + props.postType}
                     value={expireOffset}
                     placeholder={props.settings.globalDefaultExpireOffset}
@@ -190,7 +191,7 @@ const PostTypeSettingsPanel = function (props) {
 
         settingsRows.push(
             <SettingRow label={props.text.fieldWhoToNotify} key={'expirationdate_emailnotification-' + props.postType}>
-                <TextField
+                <TextControl
                     name={'expirationdate_emailnotification-' + props.postType}
                     className="large-text"
                     value={emailNotification}
@@ -209,5 +210,3 @@ const PostTypeSettingsPanel = function (props) {
         </SettingsFieldset>
     );
 }
-
-export default PostTypeSettingsPanel;

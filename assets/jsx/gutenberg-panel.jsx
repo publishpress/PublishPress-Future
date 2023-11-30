@@ -1,5 +1,5 @@
 import { createStore } from './data';
-import FutureActionPanelBlockEditor from './components/FutureActionPanelBlockEditor';
+import { FutureActionPanelBlockEditor } from './components';
 
 (function (wp, config) {
     const { registerPlugin } = wp.plugins;

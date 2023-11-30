@@ -2,7 +2,7 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-const SettingsTable = function (props) {
+export const SettingsTable = function (props) {
     return (
         <table className="form-table">
             <tbody>
@@ -11,5 +11,3 @@ const SettingsTable = function (props) {
         </table>
     )
 }
-
-export default SettingsTable;

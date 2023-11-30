@@ -1,4 +1,4 @@
-import FutureActionPanelClassicEditor from './components/FutureActionPanelClassicEditor';
+import { FutureActionPanelClassicEditor } from './components';
 import { createStore } from './data';
 import { isGutenbergEnabled } from './utils';
 

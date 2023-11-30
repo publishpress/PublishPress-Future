@@ -10,7 +10,7 @@ const {
 } = wp.data;
 const { apiFetch } = wp;
 
-const FutureActionPanel = (props) => {
+export const FutureActionPanel = (props) => {
     const action = useSelect((select) => select(props.storeName).getAction(), []);
     const date = useSelect((select) => select(props.storeName).getDate(), []);
     const enabled = useSelect((select) => select(props.storeName).getEnabled(), []);
@@ -248,5 +248,3 @@ const FutureActionPanel = (props) => {
         </Fragment>
     );
 };
-
-export default FutureActionPanel;

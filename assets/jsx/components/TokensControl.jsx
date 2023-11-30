@@ -2,7 +2,7 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-const TokensField = (props) => {
+export const TokensControl = (props) => {
     const { Fragment, useState, useEffect } = wp.element;
     const { FormTokenField } = wp.components;
 
@@ -55,5 +55,3 @@ const TokensField = (props) => {
         </Fragment>
     )
 }
-
-export default TokensField;

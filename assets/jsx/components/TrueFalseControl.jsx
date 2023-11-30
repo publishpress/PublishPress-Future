@@ -2,7 +2,7 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-const TrueFalseField = function (props) {
+export const TrueFalseControl = function (props) {
     const { Fragment } = wp.element;
 
     const onChange = (e) => {
@@ -42,5 +42,3 @@ const TrueFalseField = function (props) {
         </Fragment>
     )
 }
-
-export default TrueFalseField;

@@ -2,9 +2,9 @@
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
 
-import SelectField from "./SelectField";
+import { SelectControl } from ".";
 
-const TaxonomiesField = function (props) {
+export const TaxonomiesControl = function (props) {
     const { Fragment } = wp.element;
 
     const taxonomiesOptions = [];
@@ -15,7 +15,7 @@ const TaxonomiesField = function (props) {
 
     return (
         <Fragment>
-            <SelectField
+            <SelectControl
                 name={props.name}
                 className={props.className}
                 options={taxonomiesOptions}
@@ -23,5 +23,3 @@ const TaxonomiesField = function (props) {
         </Fragment>
     )
 }
-
-export default TaxonomiesField;
