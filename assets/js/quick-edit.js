@@ -13,11 +13,8 @@
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
-exports.FutureActionPanel = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
 
 var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
 
@@ -40,7 +37,9 @@ var _wp$data = wp.data,
     useDispatch = _wp$data.useDispatch;
 var _wp = wp,
     apiFetch = _wp.apiFetch;
-var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(props) {
+
+
+var FutureActionPanel = function FutureActionPanel(props) {
     var action = useSelect(function (select) {
         return select(props.storeName).getAction();
     }, []);
@@ -294,6 +293,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     );
 };
 
+exports["default"] = FutureActionPanel;
+
 /***/ }),
 
 /***/ "./assets/jsx/components/QuickEditFutureActionPanel.jsx":
@@ -311,6 +312,10 @@ Object.defineProperty(exports, "__esModule", ({
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _FutureActionPanel = __webpack_require__(/*! ./FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+
+var _FutureActionPanel2 = _interopRequireDefault(_FutureActionPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var QuickEditFutureActionPanel = function QuickEditFutureActionPanel(props) {
     var useSelect = wp.data.useSelect;
@@ -342,7 +347,7 @@ var QuickEditFutureActionPanel = function QuickEditFutureActionPanel(props) {
     return React.createElement(
         'div',
         { className: 'post-expirator-panel' },
-        React.createElement(_FutureActionPanel.FutureActionPanel, {
+        React.createElement(_FutureActionPanel2.default, {
             postType: props.postType,
             isCleanNewPost: props.isNewPost,
             actionsSelectOptions: props.actionsSelectOptions,

@@ -1,4 +1,4 @@
-import { FutureActionPanel } from './components/FutureActionPanel';
+import FutureActionPanel from './components/FutureActionPanel';
 import { createStore } from './data';
 import { isGutenbergEnabled } from './utils';
 

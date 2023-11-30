@@ -1,4 +1,4 @@
-import { FutureActionPanel } from './FutureActionPanel';
+import FutureActionPanel from './FutureActionPanel';
 
 const QuickEditFutureActionPanel = (props) => {
     const { useSelect } = wp.data;

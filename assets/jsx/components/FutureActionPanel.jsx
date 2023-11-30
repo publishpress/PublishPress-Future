@@ -1,4 +1,3 @@
-import { normalizeUnixTimeToMilliseconds, formatTimestampToUnixTime } from '../time';
 import { compact } from '../utils';
 
 const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner } = wp.components;
@@ -11,7 +10,7 @@ const {
 } = wp.data;
 const { apiFetch } = wp;
 
-export const FutureActionPanel = (props) => {
+const FutureActionPanel = (props) => {
     const action = useSelect((select) => select(props.storeName).getAction(), []);
     const date = useSelect((select) => select(props.storeName).getDate(), []);
     const enabled = useSelect((select) => select(props.storeName).getEnabled(), []);
@@ -249,3 +248,5 @@ export const FutureActionPanel = (props) => {
         </Fragment>
     );
 };
+
+export default FutureActionPanel;

@@ -2,6 +2,122 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/jsx/components/BlockEditorFutureActionPanel.jsx":
+/*!****************************************************************!*\
+  !*** ./assets/jsx/components/BlockEditorFutureActionPanel.jsx ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _FutureActionPanel = __webpack_require__(/*! ./FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+
+var _FutureActionPanel2 = _interopRequireDefault(_FutureActionPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var BlockEditorFutureActionPanel = function BlockEditorFutureActionPanel(props) {
+    var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
+    var _wp$data = wp.data,
+        useDispatch = _wp$data.useDispatch,
+        select = _wp$data.select;
+
+    var _useDispatch = useDispatch('core/editor'),
+        editPost = _useDispatch.editPost;
+
+    var editPostAttribute = function editPostAttribute(newAttribute) {
+        var attribute = {
+            publishpress_future_action: {}
+        };
+
+        // For each property on newAttribute, set the value on attribute
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = Object.entries(newAttribute)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var _ref = _step.value;
+
+                var _ref2 = _slicedToArray(_ref, 2);
+
+                var name = _ref2[0];
+                var value = _ref2[1];
+
+                attribute.publishpress_future_action[name] = value;
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        editPost(attribute);
+    };
+
+    var onChangeData = function onChangeData(attribute, value) {
+        var store = select(props.storeName);
+
+        var newAttribute = {
+            'enabled': store.getEnabled()
+        };
+
+        if (newAttribute.enabled) {
+            newAttribute['action'] = store.getAction();
+            newAttribute['date'] = store.getDate();
+            newAttribute['terms'] = store.getTerms();
+            newAttribute['taxonomy'] = store.getTaxonomy();
+        }
+
+        editPostAttribute(newAttribute);
+    };
+
+    var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+
+    return React.createElement(
+        PluginDocumentSettingPanel,
+        {
+            name: 'publishpress-future-action-panel',
+            title: props.strings.panelTitle,
+            icon: 'calendar',
+            initialOpen: props.postTypeDefaultConfig.autoEnable,
+            className: 'post-expirator-panel' },
+        React.createElement(_FutureActionPanel2.default, {
+            postType: props.postType,
+            isCleanNewPost: props.isCleanNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: data.enabled,
+            action: data.action,
+            date: data.date,
+            terms: data.terms,
+            taxonomy: data.taxonomy,
+            onChangeData: onChangeData,
+            is12hours: props.is12hours,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings })
+    );
+};
+
+exports["default"] = BlockEditorFutureActionPanel;
+
+/***/ }),
+
 /***/ "./assets/jsx/components/FutureActionPanel.jsx":
 /*!*****************************************************!*\
   !*** ./assets/jsx/components/FutureActionPanel.jsx ***!
@@ -13,11 +129,8 @@
 Object.defineProperty(exports, "__esModule", ({
     value: true
 }));
-exports.FutureActionPanel = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
 
 var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
 
@@ -40,7 +153,9 @@ var _wp$data = wp.data,
     useDispatch = _wp$data.useDispatch;
 var _wp = wp,
     apiFetch = _wp.apiFetch;
-var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(props) {
+
+
+var FutureActionPanel = function FutureActionPanel(props) {
     var action = useSelect(function (select) {
         return select(props.storeName).getAction();
     }, []);
@@ -293,6 +408,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         )
     );
 };
+
+exports["default"] = FutureActionPanel;
 
 /***/ }),
 
@@ -657,11 +774,13 @@ var __webpack_exports__ = {};
   \****************************************/
 
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 
-var _FutureActionPanel = __webpack_require__(/*! ./components/FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+var _BlockEditorFutureActionPanel = __webpack_require__(/*! ./components/BlockEditorFutureActionPanel */ "./assets/jsx/components/BlockEditorFutureActionPanel.jsx");
+
+var _BlockEditorFutureActionPanel2 = _interopRequireDefault(_BlockEditorFutureActionPanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (function (wp, config) {
     var registerPlugin = wp.plugins.registerPlugin;
@@ -679,100 +798,20 @@ var _FutureActionPanel = __webpack_require__(/*! ./components/FutureActionPanel 
         }
     });
 
-    var GutenbergFutureActionPanel = function GutenbergFutureActionPanel() {
-        var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
-        var _wp$data = wp.data,
-            useDispatch = _wp$data.useDispatch,
-            select = _wp$data.select;
-
-        var _useDispatch = useDispatch('core/editor'),
-            editPost = _useDispatch.editPost;
-
-        var editPostAttribute = function editPostAttribute(newAttribute) {
-            var attribute = {
-                publishpress_future_action: {}
-            };
-
-            // For each property on newAttribute, set the value on attribute
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-                for (var _iterator = Object.entries(newAttribute)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var _ref = _step.value;
-
-                    var _ref2 = _slicedToArray(_ref, 2);
-
-                    var name = _ref2[0];
-                    var value = _ref2[1];
-
-                    attribute.publishpress_future_action[name] = value;
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
-            }
-
-            editPost(attribute);
-        };
-
-        var onChangeData = function onChangeData(attribute, value) {
-            var store = select(storeName);
-
-            var newAttribute = {
-                'enabled': store.getEnabled()
-            };
-
-            if (newAttribute.enabled) {
-                newAttribute['action'] = store.getAction();
-                newAttribute['date'] = store.getDate();
-                newAttribute['terms'] = store.getTerms();
-                newAttribute['taxonomy'] = store.getTaxonomy();
-            }
-
-            editPostAttribute(newAttribute);
-        };
-
-        var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
-
-        return React.createElement(
-            PluginDocumentSettingPanel,
-            {
-                name: 'publishpress-future-action-panel',
-                title: config.strings.panelTitle,
-                icon: 'calendar',
-                initialOpen: config.postTypeDefaultConfig.autoEnable,
-                className: 'post-expirator-panel' },
-            React.createElement(_FutureActionPanel.FutureActionPanel, {
-                postType: select('core/editor').getCurrentPostType(),
-                isCleanNewPost: select('core/editor').isCleanNewPost(),
-                actionsSelectOptions: config.actionsSelectOptions,
-                enabled: data.enabled,
-                action: data.action,
-                date: data.date,
-                terms: data.terms,
-                taxonomy: data.taxonomy,
-                onChangeData: onChangeData,
-                is12hours: config.is12hours,
-                startOfWeek: config.startOfWeek,
-                storeName: storeName,
-                strings: config.strings })
-        );
+    var BlockEditorFutureActionPlugin = function BlockEditorFutureActionPlugin() {
+        return React.createElement(_BlockEditorFutureActionPanel2.default, {
+            postType: wp.data.select('core/editor').getCurrentPostType(),
+            isCleanNewPost: wp.data.select('core/editor').isCleanNewPost(),
+            actionsSelectOptions: config.actionsSelectOptions,
+            is12hours: config.is12hours,
+            startOfWeek: config.startOfWeek,
+            storeName: storeName,
+            strings: config.strings,
+            postTypeDefaultConfig: config.postTypeDefaultConfig });
     };
 
     registerPlugin('publishpress-future-action', {
-        render: GutenbergFutureActionPanel
+        render: BlockEditorFutureActionPlugin
     });
 })(window.wp, window.postExpiratorPanelConfig);
 })();
