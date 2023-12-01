@@ -19,4 +19,5 @@ abstract class HooksAbstract
     const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';
     const ACTION_INSERT_POST = 'wp_insert_post';
     const ACTION_PURGE_PLUGIN_CACHE = 'publishpressfuture_purge_plugin_cache';
+    const ACTION_BULK_EDIT_CUSTOM_BOX = 'bulk_edit_custom_box';
 }

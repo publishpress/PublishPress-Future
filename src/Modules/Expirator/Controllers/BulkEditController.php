@@ -5,6 +5,8 @@
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
+use PostExpirator_Display;
+use PostExpirator_Facade;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
@@ -70,9 +72,54 @@ class BulkEditController implements InitializableInterface
     public function initialize()
     {
         $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_BULK_EDIT_CUSTOM_BOX,
+            [$this, 'registerBulkEditCustomBox'],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
             HooksAbstract::ACTION_ADMIN_INIT,
             [$this, 'processBulkEditUpdate']
         );
+    }
+
+    public function registerBulkEditCustomBox($columnName, $postType)
+    {
+        $facade = PostExpirator_Facade::getInstance();
+
+        if (
+            ($columnName !== 'expirationdate')
+            || (! $facade->current_user_can_expire_posts())
+        )
+        {
+            return;
+        }
+
+        // TODO: Use DI here.
+        $container = Container::getInstance();
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+        $defaults = $settingsFacade->getPostTypeDefaults($postType);
+
+        $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
+        $label = '';
+
+        // if settings have not been configured and this is the default post type
+        if (empty($taxonomy) && 'post' === $postType) {
+            $taxonomy = 'category';
+        }
+
+        if (! empty($taxonomy)) {
+            $tax_object = get_taxonomy($taxonomy);
+            $label = $tax_object ? $tax_object->label : '';
+        }
+
+        PostExpirator_Display::getInstance()->render_template('bulk-edit', array(
+            'post_type' => $postType,
+            'taxonomy' => $taxonomy,
+            'tax_label' => $label
+        ));
     }
 
     public function processBulkEditUpdate()

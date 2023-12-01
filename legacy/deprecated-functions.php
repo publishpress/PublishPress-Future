@@ -278,3 +278,30 @@ function postexpirator_expire_post($postId)
         $postId
     );
 }
+
+/**
+ * Called at plugin activation
+ *
+ * @internal
+ *
+ * @access private
+ * @deprecated 2.8.0
+ */
+function postexpirator_activate()
+{
+    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the module Settings');
+}
+
+/**
+ * Called at plugin deactivation
+ *
+ * @internal
+ *
+ * @access private
+ *
+ * @deprecated 2.8.0
+ */
+function expirationdate_deactivate()
+{
+    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPress\Future\Framework\PluginFacade class.');
+}

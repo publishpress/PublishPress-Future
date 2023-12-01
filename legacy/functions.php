@@ -229,52 +229,6 @@ function postexpirator_quickedit($column_name, $post_type)
 add_action('quick_edit_custom_box', 'postexpirator_quickedit', 10, 2);
 
 /**
- * Bulk Edit functionality.
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_bulkedit($column_name, $post_type)
-{
-    if ($column_name !== 'expirationdate') {
-        return;
-    }
-
-    $facade = PostExpirator_Facade::getInstance();
-
-    if (! $facade->current_user_can_expire_posts()) {
-        return;
-    }
-
-    $container = Container::getInstance();
-    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-
-    $defaults = $settingsFacade->getPostTypeDefaults($post_type);
-
-    $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
-    $label = '';
-
-    // if settings have not been configured and this is the default post type
-    if (empty($taxonomy) && 'post' === $post_type) {
-        $taxonomy = 'category';
-    }
-
-    if (! empty($taxonomy)) {
-        $tax_object = get_taxonomy($taxonomy);
-        $label = $tax_object ? $tax_object->label : '';
-    }
-
-    PostExpirator_Display::getInstance()->render_template('bulk-edit', array(
-        'post_type' => $post_type,
-        'taxonomy' => $taxonomy,
-        'tax_label' => $label
-    ));
-}
-
-add_action('bulk_edit_custom_box', 'postexpirator_bulkedit', 10, 2);
-
-/**
  * Returns the post types that are supported.
  *
  * @internal
@@ -816,32 +770,6 @@ function postexpirator_upgrade()
 
 add_action('admin_init', 'postexpirator_upgrade', 99);
 
-/**
- * Called at plugin activation
- *
- * @internal
- *
- * @access private
- * @deprecated 2.8.0
- */
-function postexpirator_activate()
-{
-    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the module Settings');
-}
-
-/**
- * Called at plugin deactivation
- *
- * @internal
- *
- * @access private
- *
- * @deprecated 2.8.0
- */
-function expirationdate_deactivate()
-{
-    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPress\Future\Framework\PluginFacade class.');
-}
 
 /**
  * The walker class for category checklist.
