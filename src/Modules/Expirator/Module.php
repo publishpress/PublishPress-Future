@@ -15,6 +15,7 @@ use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Expirator\Controllers\BulkActionController;
 use PublishPress\Future\Modules\Expirator\Controllers\BulkEditController;
+use PublishPress\Future\Modules\Expirator\Controllers\ClassicEditorController;
 use PublishPress\Future\Modules\Expirator\Controllers\ExpirationController;
 use PublishPress\Future\Modules\Expirator\Controllers\QuickEditController;
 use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController;
@@ -125,10 +126,11 @@ class Module implements ModuleInterface
         $this->taxonomiesModelFactory = $taxonomiesModelFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
-        $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
         $this->controllers['quick_edit'] = $this->factoryQuickEditController();
-        $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
+        $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
         $this->controllers['bulk_action'] = $this->factoryBulkActionController();
+        $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
+        $this->controllers['classic_editor'] = $this->factoryClassicEditorController();
     }
 
 
@@ -197,6 +199,17 @@ class Module implements ModuleInterface
             $this->currentUserModelFactory,
             $this->request,
             $this->noticesFacade
+        );
+    }
+
+    private function factoryClassicEditorController()
+    {
+        return new ClassicEditorController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
         );
     }
 

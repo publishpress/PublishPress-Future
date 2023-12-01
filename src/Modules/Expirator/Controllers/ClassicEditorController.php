@@ -16,7 +16,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-class QuickEditController implements InitializableInterface
+class ClassicEditorController implements InitializableInterface
 {
     /**
      * @var HookableInterface
@@ -67,54 +67,98 @@ class QuickEditController implements InitializableInterface
     public function initialize()
     {
         $this->hooks->addAction(
-            CoreHooksAbstract::ACTION_QUICK_EDIT_CUSTOM_BOX,
-            [$this, 'registerQuickEditCustomBox'],
+            CoreHooksAbstract::ACTION_ADD_META_BOX,
+            [$this, 'registerClassicEditorMetabox'],
             10,
             2
         );
 
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_SAVE_POST,
-            [$this, 'processQuickEditUpdate']
+            [$this, 'processMetaboxUpdate']
         );
     }
 
-    public function registerQuickEditCustomBox($columnName, $postType)
+    public function registerClassicEditorMetabox($columnName, $postType)
     {
         $facade = PostExpirator_Facade::getInstance();
 
-        if (
-            ($columnName !== 'expirationdate')
-            || (! $facade->current_user_can_expire_posts())
-        ) {
+        if (! $facade->current_user_can_expire_posts()) {
             return;
         }
 
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
-        $defaults = $settingsFacade->getPostTypeDefaults($postType);
-        $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
-        $label = '';
+        $post_types = postexpirator_get_post_types();
+        foreach ($post_types as $type) {
+            $defaults = $settingsFacade->getPostTypeDefaults($type);
 
-        // if settings have not been configured and this is the default post type
-        if (empty($taxonomy) && 'post' === $postType) {
-            $taxonomy = 'category';
+            // if settings are not configured, show the metabox by default only for posts and pages
+            if (
+                (
+                    ! isset($defaults['activeMetaBox'])
+                    && in_array($type, ['post', 'page'], true)
+                )
+                || (
+                    is_array($defaults)
+                    && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+                )
+            ) {
+                add_meta_box(
+                    'expirationdatediv',
+                    __('PublishPress Future', 'post-expirator'),
+                    [$this, 'renderClassicEditorMetabox'],
+                    $type,
+                    'side',
+                    'core',
+                    array('__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox())
+                );
+            }
         }
-
-        if (! empty($taxonomy)) {
-            $tax_object = get_taxonomy($taxonomy);
-            $label = $tax_object ? $tax_object->label : '';
-        }
-
-        PostExpirator_Display::getInstance()->render_template('quick-edit', array(
-            'post_type' => $postType,
-            'taxonomy' => $taxonomy,
-            'tax_label' => $label
-        ));
     }
 
-    public function processQuickEditUpdate($postId)
+    public function renderClassicEditorMetabox($post)
+    {
+        $container = Container::getInstance();
+        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+        $postModel = $factory($post->ID);
+
+        $isEnabled = $postModel->isExpirationEnabled();
+
+        $data = [];
+
+        if ('auto-draft' === $post->post_status && ! $isEnabled) {
+            $data = [
+                'enabled' => false,
+                'date' => 0,
+                'action' => '',
+                'terms' => [],
+                'taxonomy' => ''
+            ];
+        } else {
+            $data = [
+                'enabled' => $postModel->isExpirationEnabled(),
+                'date' => $postModel->getExpirationDateString(false),
+                'action' => $postModel->getExpirationType(),
+                'terms' => $postModel->getExpirationCategoryIDs(),
+                'taxonomy' => $postModel->getExpirationTaxonomy()
+            ];
+        }
+
+        PostExpirator_Display::getInstance()->render_template(
+            'classic-editor', [
+                'post' => $post,
+                'enabled' => $data['enabled'],
+                'action' => $data['action'],
+                'date' => $data['date'],
+                'terms' => $data['terms'],
+                'taxonomy' => $data['taxonomy']
+            ]
+        );
+    }
+
+    public function processMetaboxUpdate($postId)
     {
         // Don't run if this is an auto save
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
@@ -127,7 +171,7 @@ class QuickEditController implements InitializableInterface
             return;
         }
 
-        if (empty($_POST['future_action_view']) || $_POST['future_action_view'] !== 'quick-edit') {
+        if (empty($_POST['future_action_view']) || $_POST['future_action_view'] !== 'classic-editor') {
             return;
         }
 
@@ -137,6 +181,12 @@ class QuickEditController implements InitializableInterface
         if (! $currentUserModel->userCanExpirePosts()) {
             return;
         }
+
+        // Don't run if was triggered by block editor. It is processed on the method "ExpirationController::handleRestAPIInit".
+        if (empty($_POST['future_action_view'])) {
+            return;
+        }
+
 
         check_ajax_referer('__future_action', '_future_action_nonce');
 

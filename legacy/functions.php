@@ -6,7 +6,6 @@
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
-use PublishPress\Future\Modules\Debug\HooksAbstract as DebugHooks;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
@@ -212,101 +211,6 @@ function postexpirator_get_post_types()
     return $post_types;
 }
 
-/**
- * Adds hooks to get the meta box added to pages and custom post types
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_meta_custom()
-{
-    $facade = PostExpirator_Facade::getInstance();
-
-    if (! $facade->current_user_can_expire_posts()) {
-        return;
-    }
-
-    $container = Container::getInstance();
-    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-
-    $post_types = postexpirator_get_post_types();
-    foreach ($post_types as $type) {
-        $defaults = $settingsFacade->getPostTypeDefaults($type);
-
-        // if settings are not configured, show the metabox by default only for posts and pages
-        if (
-            (
-                ! isset($defaults['activeMetaBox'])
-                && in_array($type, ['post', 'page'], true)
-            )
-            || (
-                is_array($defaults)
-                && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
-            )
-        ) {
-            add_meta_box(
-                'expirationdatediv',
-                __('PublishPress Future', 'post-expirator'),
-                'postexpirator_meta_box',
-                $type,
-                'side',
-                'core',
-                array('__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox())
-            );
-        }
-    }
-}
-
-add_action('add_meta_boxes', 'postexpirator_meta_custom');
-
-/**
- * Actually adds the meta box
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_meta_box($post)
-{
-    $container = Container::getInstance();
-    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-    $postModel = $factory($post->ID);
-
-    $isEnabled = $postModel->isExpirationEnabled();
-
-    $data = [];
-
-    if ('auto-draft' === $post->post_status && ! $isEnabled) {
-        $data = [
-            'enabled' => false,
-            'date' => 0,
-            'action' => '',
-            'terms' => [],
-            'taxonomy' => ''
-        ];
-    } else {
-        $data = [
-            'enabled' => $postModel->isExpirationEnabled(),
-            'date' => $postModel->getExpirationDateString(false),
-            'action' => $postModel->getExpirationType(),
-            'terms' => $postModel->getExpirationCategoryIDs(),
-            'taxonomy' => $postModel->getExpirationTaxonomy()
-        ];
-    }
-
-    PostExpirator_Display::getInstance()->render_template(
-        'classic-editor', [
-            'post' => $post,
-            'enabled' => $data['enabled'],
-            'action' => $data['action'],
-            'date' => $data['date'],
-            'terms' => $data['terms'],
-            'taxonomy' => $data['taxonomy']
-        ]
-    );
-}
-
 function postexpirator_set_default_meta_for_post($postId, $post, $update)
 {
     if ($update) {
@@ -335,82 +239,6 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
 
     do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $defaultExpire['ts'], $opts);
 }
-
-/**
- * Called when post is saved on classic editor. Stores future action date meta values.
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_update_post_meta($id)
-{
-    // Don't run if this is an auto save
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return;
-    }
-
-    // Don't update data if the function is called for saving revision.
-    $posttype = get_post_type((int)$id);
-    if ($posttype === 'revision') {
-        return;
-    }
-
-    // Do not process Bulk edit here. It is processed on the function "postexpirator_date_save_bulk_edit"
-    if (isset($_GET['future_action_view']) && ($_GET['future_action_view'] === 'bulk-edit' || $_GET['future_action_view'] === 'quick-edit')) {
-        return;
-    }
-
-    $currentUserModelFactory = Container::getInstance()->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY);
-    $currentUserModel = $currentUserModelFactory();
-
-    if (! $currentUserModel->userCanExpirePosts()) {
-        return;
-    }
-
-    // Don't run if was triggered by block editor. It is processed on the method "ExpirationController::handleRestAPIInit".
-    if (empty($_POST['future_action_view'])) {
-        return;
-    }
-
-    if (defined('DOING_AJAX') && DOING_AJAX) {
-        check_ajax_referer('__future_action', '_future_action_nonce');
-    } else {
-        check_admin_referer('__future_action', '_future_action_nonce');
-    }
-
-    // Classic editor, quick edit
-    $shouldSchedule = isset($_POST['future_action_enabled']) && $_POST['future_action_enabled'] === '1';
-
-    if ($shouldSchedule) {
-        $opts = [
-            'expireType' => sanitize_text_field($_POST['future_action_action']),
-            'category' => sanitize_text_field($_POST['future_action_terms']),
-            'categoryTaxonomy' => sanitize_text_field($_POST['future_action_taxonomy']),
-        ];
-
-        if (! empty($opts['category'])) {
-            $taxonomiesModelFactory = Container::getInstance()->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY);
-            $taxonomiesModel = $taxonomiesModelFactory();
-
-            $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
-                $opts['categoryTaxonomy'],
-                explode(',', $opts['category'])
-            );
-        }
-
-        $date = strtotime(sanitize_text_field($_POST['future_action_date']));
-
-        do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $id, $date, $opts);
-
-        return;
-    }
-
-    do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $id);
-}
-
-add_action('save_post', 'postexpirator_update_post_meta');
-
 
 /**
  * Register the shortcode.
