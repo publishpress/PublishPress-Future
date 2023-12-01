@@ -14,10 +14,6 @@ use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPress\Future\Modules\Expirator\Strategies\BulkEditAddOnly;
-use PublishPress\Future\Modules\Expirator\Strategies\BulkEditChangeAdd;
-use PublishPress\Future\Modules\Expirator\Strategies\BulkEditChangeOnly;
-use PublishPress\Future\Modules\Expirator\Strategies\BulkEditRemoveOnly;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
