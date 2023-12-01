@@ -305,3 +305,67 @@ function expirationdate_deactivate()
 {
     _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPress\Future\Framework\PluginFacade class.');
 }
+
+
+/**
+ * Get the HTML for taxonomy.
+ *
+ * @internal
+ *
+ * @access private
+ * @deprecated 3.1.4
+ */
+function _postexpirator_taxonomy($opts)
+{
+    if (empty($opts)) {
+        return false;
+    }
+
+    if (! isset($opts['name'])) {
+        return false;
+    }
+
+    $name = sanitize_text_field($opts['name']);
+
+    if (! isset($id)) {
+        $id = $name;
+    }
+
+    $disabled = false;
+    if (isset($opts['disabled'])) {
+        $disabled = (bool)$opts['disabled'];
+    }
+
+    $onchange = '';
+    if (isset($opts['onchange'])) {
+        $onchange = sanitize_text_field($opts['onchange']);
+    }
+
+    $type = '';
+    if (isset($opts['type'])) {
+        $type = sanitize_text_field($opts['type']);
+    }
+
+    $selected = false;
+    if (isset($opts['selected'])) {
+        $selected = $opts['selected'];
+    }
+
+    $taxonomies = get_object_taxonomies($type, 'object');
+    $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
+
+    if (empty($taxonomies)) {
+        return esc_html__('No taxonomies found', 'post-expirator');
+    }
+
+    $params = [
+        'name' => $name,
+        'id' => $id,
+        'disabled' => $disabled,
+        'taxonomies' => $taxonomies,
+        'selected' => $selected,
+        'onchange' => $onchange
+    ];
+
+    return PostExpirator_Display::getInstance()->get_rendered_template('taxonomy-field', $params);
+}
