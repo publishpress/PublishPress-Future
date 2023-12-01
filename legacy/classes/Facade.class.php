@@ -55,7 +55,6 @@ class PostExpirator_Facade
     private function hooks()
     {
         add_action('enqueue_block_editor_assets', array($this, 'block_editor_assets'));
-        add_action('updated_postmeta', array($this, 'onUpdatePostMeta'), 10, 4);
         add_filter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
         add_action('rest_api_init', [$this, 'register_rest_api']);
     }
@@ -122,47 +121,6 @@ class PostExpirator_Facade
                     false,
                     POSTEXPIRATOR_VERSION
                 );
-                break;
-        }
-    }
-
-    /**
-     * Fires when the post meta is updated (in the gutenberg block).
-     */
-    public function onUpdatePostMeta($meta_id, $post_id, $meta_key, $meta_value)
-    {
-        // allow only through gutenberg
-        if (! PostExpirator_Util::is_gutenberg_active()) {
-            return;
-        }
-
-        // not through bulk edit.
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        if (isset($_POST['post_ids'])) {
-            return;
-        }
-
-        // not through quick edit.
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        if (isset($_POST['expirationdate_quickedit'])) {
-            return;
-        }
-
-        switch ($meta_key) {
-            case PostMetaAbstract::EXPIRATION_STATUS:
-                if (empty($meta_value)) {
-                    do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post_id);
-                }
-
-
-                break;
-            case PostMetaAbstract::EXPIRATION_TIMESTAMP:
-                $container = Container::getInstance();
-                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-                $postModel = $factory($post_id);
-
-                do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post_id, $meta_value, $postModel->getExpirationDataAsArray());
-
                 break;
         }
     }

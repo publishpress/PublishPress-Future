@@ -2122,9 +2122,9 @@ var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function get
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***********************************!*\
-  !*** ./assets/jsx/quick-edit.jsx ***!
-  \***********************************/
+/*!**********************************!*\
+  !*** ./assets/jsx/bulk-edit.jsx ***!
+  \**********************************/
 
 
 var _components = __webpack_require__(/*! ./components */ "./assets/jsx/components/index.jsx");
@@ -2134,11 +2134,11 @@ var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
 
 (function (wp, config, inlineEditPost) {
-    var storeName = 'publishpress-future/future-action-quick-edit';
+    var storeName = 'publishpress-future/future-action-bulk-edit';
     var delayToUnmountAfterSaving = 1000;
 
-    // We create a copy of the WP inline edit post function
-    var wpInlineEdit = inlineEditPost.edit;
+    // We create a copy of the WP inline set bulk function
+    var wpInlineSetBulk = inlineEditPost.setBulk;
     var wpInlineEditRevert = inlineEditPost.revert;
 
     var getPostId = function getPostId(id) {
@@ -2159,7 +2159,7 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
      * We override the function with our own code so we can detect when
      * the inline edit row is displayed to recreate the React component.
      */
-    inlineEditPost.edit = function (id) {
+    inlineEditPost.setBulk = function (id) {
         var createRoot = wp.element.createRoot;
         var _wp$data = wp.data,
             select = _wp$data.select,
@@ -2167,38 +2167,28 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
 
         // Call the original WP edit function.
 
-        wpInlineEdit.apply(this, arguments);
+        wpInlineSetBulk.apply(this, arguments);
 
-        var postId = getPostId(id);
-        var enabled = (0, _utils.getFieldValueByNameAsBool)('enabled', postId);
-        var action = (0, _utils.getFieldValueByName)('action', postId);
-        var date = (0, _utils.getFieldValueByName)('date', postId);
-        var terms = (0, _utils.getFieldValueByName)('terms', postId);
-        var taxonomy = (0, _utils.getFieldValueByName)('taxonomy', postId);
-
-        var termsList = terms.split(',');
-
-        // if store exists, update the state. Otherwise, create it.
         if (select(storeName)) {
-            dispatch(storeName).setEnabled(enabled);
-            dispatch(storeName).setAction(action);
-            dispatch(storeName).setDate(date);
-            dispatch(storeName).setTaxonomy(taxonomy);
-            dispatch(storeName).setTerms(termsList);
+            dispatch(storeName).setAction(config.postTypeDefaultConfig.expireType);
+            dispatch(storeName).setDate(config.postTypeDefaultConfig.defaultDate);
+            dispatch(storeName).setTaxonomy(config.postTypeDefaultConfig.taxonomy);
+            dispatch(storeName).setTerms(config.postTypeDefaultConfig.terms);
+            dispatch(storeName).setChangeAction('no-change');
         } else {
             (0, _data.createStore)({
                 name: storeName,
                 defaultState: {
-                    autoEnable: enabled,
-                    action: action,
-                    date: date,
-                    taxonomy: taxonomy,
-                    terms: termsList
+                    action: config.postTypeDefaultConfig.expireType,
+                    date: config.defaultDate,
+                    taxonomy: config.postTypeDefaultConfig.taxonomy,
+                    terms: config.postTypeDefaultConfig.terms,
+                    changeAction: 'no-change'
                 }
             });
         }
 
-        var saveButton = document.querySelector('.inline-edit-save .save');
+        var saveButton = document.querySelector('#bulk_edit');
         if (saveButton) {
             saveButton.onclick = function () {
                 setTimeout(function () {
@@ -2207,10 +2197,10 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
             };
         }
 
-        var container = document.getElementById("publishpress-future-quick-edit");
+        var container = document.getElementById("publishpress-future-bulk-edit");
         var root = createRoot(container);
 
-        root.render(React.createElement(_components.FutureActionPanelQuickEdit, {
+        root.render(React.createElement(_components.FutureActionPanelBulkEdit, {
             storeName: storeName,
             postType: config.postType,
             isNewPost: config.isNewPost,
@@ -2228,9 +2218,9 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
             wpInlineEditRevert.apply(this, arguments);
         };
     };
-})(window.wp, window.publishpressFutureQuickEdit, inlineEditPost);
+})(window.wp, window.publishpressFutureBulkEdit, inlineEditPost);
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=quick-edit.js.map
+//# sourceMappingURL=bulk-edit.js.map

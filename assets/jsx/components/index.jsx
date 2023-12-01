@@ -3,6 +3,7 @@ export { FutureActionPanel } from "./FutureActionPanel";
 export { FutureActionPanelBlockEditor } from "./FutureActionPanelBlockEditor";
 export { FutureActionPanelClassicEditor } from "./FutureActionPanelClassicEditor";
 export { FutureActionPanelQuickEdit } from "./FutureActionPanelQuickEdit";
+export { FutureActionPanelBulkEdit } from "./FutureActionPanelBulkEdit";
 export { PostTypeSettingsPanel } from "./PostTypeSettingsPanel";
 export { PostTypesSettingsPanels } from "./PostTypesSettingsPanels";
 export { SettingRow } from "./SettingRow";

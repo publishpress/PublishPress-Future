@@ -295,15 +295,21 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     };
 
     useEffect(function () {
-        setEnabled(props.enabled);
+        if (props.autoEnableAndHideCheckbox) {
+            setEnabled(true);
+        } else {
+            setEnabled(props.enabled);
+        }
+
         setAction(props.action);
         setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
-        // We need to get the value directly from the store because the value from the state is not updated yet
+        // We need to get the value directly from the props because the value from the store is not updated yet
         if (props.enabled) {
             if (props.isCleanNewPost) {
+                // Force populate the default values
                 handleEnabledChange(true);
             }
 
@@ -328,7 +334,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     return React.createElement(
         Fragment,
         null,
-        React.createElement(
+        props.autoEnableAndHideCheckbox && React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: 1 }),
+        !props.autoEnableAndHideCheckbox && React.createElement(
             PanelRow,
             null,
             React.createElement(CheckboxControl, {
@@ -493,6 +500,112 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanelBulkEdit.jsx":
+/*!*************************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanelBulkEdit.jsx ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanelBulkEdit = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _ = __webpack_require__(/*! . */ "./assets/jsx/components/index.jsx");
+
+var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
+
+var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function FutureActionPanelBulkEdit(props) {
+    var _wp$data = wp.data,
+        useSelect = _wp$data.useSelect,
+        useDispatch = _wp$data.useDispatch,
+        select = _wp$data.select;
+
+
+    var onChangeData = function onChangeData(attribute, value) {
+        (0, _utils.getElementByName)('future_action_bulk_enabled').value = select(props.storeName).getEnabled() ? 1 : 0;
+        (0, _utils.getElementByName)('future_action_bulk_action').value = select(props.storeName).getAction();
+        (0, _utils.getElementByName)('future_action_bulk_date').value = select(props.storeName).getDate();
+        (0, _utils.getElementByName)('future_action_bulk_terms').value = select(props.storeName).getTerms().join(',');
+        (0, _utils.getElementByName)('future_action_bulk_taxonomy').value = select(props.storeName).getTaxonomy();
+    };
+
+    var date = useSelect(function (select) {
+        return select(props.storeName).getDate();
+    }, []);
+    var enabled = useSelect(function (select) {
+        return select(props.storeName).getEnabled();
+    }, []);
+    var action = useSelect(function (select) {
+        return select(props.storeName).getAction();
+    }, []);
+    var terms = useSelect(function (select) {
+        return select(props.storeName).getTerms();
+    }, []);
+    var taxonomy = useSelect(function (select) {
+        return select(props.storeName).getTaxonomy();
+    }, []);
+    var changeAction = useSelect(function (select) {
+        return select(props.storeName).getChangeAction();
+    }, []);
+
+    var _useDispatch = useDispatch(props.storeName),
+        setChangeAction = _useDispatch.setChangeAction;
+
+    var termsString = terms;
+    if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
+        termsString = terms.join(',');
+    }
+
+    var handleStrategyChange = function handleStrategyChange(value) {
+        setChangeAction(value);
+    };
+
+    var options = [{ value: 'no-change', label: props.strings.noChange }, { value: 'change-add', label: props.strings.changeAdd }, { value: 'add-only', label: props.strings.addOnly }, { value: 'change-only', label: props.strings.changeOnly }, { value: 'remove-only', label: props.strings.removeOnly }];
+
+    var optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
+
+    return React.createElement(
+        'div',
+        { className: 'post-expirator-panel' },
+        React.createElement(_.SelectControl, {
+            label: props.strings.futureActionUpdate,
+            name: 'future_action_bulk_change_action',
+            value: changeAction,
+            options: options,
+            onChange: handleStrategyChange
+        }),
+        optionsToDisplayPanel.includes(changeAction) && React.createElement(_.FutureActionPanel, {
+            autoEnableAndHideCheckbox: true,
+            postType: props.postType,
+            isCleanNewPost: props.isNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: true,
+            action: action,
+            date: date,
+            terms: terms,
+            taxonomy: taxonomy,
+            onChangeData: onChangeData,
+            is12hours: props.is12hours,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_enabled', value: enabled ? 1 : 0 }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_action', value: action }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_date', value: date }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_terms', value: termsString }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_taxonomy', value: taxonomy }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_view', value: 'bulk-edit' }),
+        React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: props.nonce })
     );
 };
 
@@ -1252,8 +1365,8 @@ Object.defineProperty(exports, "__esModule", ({
 
 var TextControl = exports.TextControl = function TextControl(props) {
     var Fragment = wp.element.Fragment;
-    var WPTextControl = wp.components.TextControl.WPTextControl;
 
+    var WPTextControl = wp.components.TextControl;
 
     var description = void 0;
 
@@ -1499,6 +1612,15 @@ Object.defineProperty(exports, "FutureActionPanelQuickEdit", ({
   enumerable: true,
   get: function get() {
     return _FutureActionPanelQuickEdit.FutureActionPanelQuickEdit;
+  }
+}));
+
+var _FutureActionPanelBulkEdit = __webpack_require__(/*! ./FutureActionPanelBulkEdit */ "./assets/jsx/components/FutureActionPanelBulkEdit.jsx");
+
+Object.defineProperty(exports, "FutureActionPanelBulkEdit", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanelBulkEdit.FutureActionPanelBulkEdit;
   }
 }));
 

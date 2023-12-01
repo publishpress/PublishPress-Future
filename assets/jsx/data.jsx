@@ -21,6 +21,7 @@ export const createStore = (props) => {
         termsListById: null,
         taxonomyName: null,
         isFetchingTerms: false,
+        changeAction: 'no-change',
     }
 
     const store = createReduxStore(props.name, {
@@ -65,6 +66,11 @@ export const createStore = (props) => {
                     return {
                         ...state,
                         taxonomyName: action.taxonomyName,
+                    }
+                case 'SET_CHANGE_ACTION':
+                    return {
+                        ...state,
+                        changeAction: action.changeAction,
                     }
             }
 
@@ -124,6 +130,12 @@ export const createStore = (props) => {
                     type: 'SET_IS_FETCHING_TERMS',
                     isFetchingTerms: isFetchingTerms
                 }
+            },
+            setChangeAction(changeAction) {
+                return {
+                    type: 'SET_CHANGE_ACTION',
+                    changeAction: changeAction
+                }
             }
         },
         selectors: {
@@ -153,6 +165,9 @@ export const createStore = (props) => {
             },
             getIsFetchingTerms(state) {
                 return state.isFetchingTerms;
+            },
+            getChangeAction(state) {
+                return state.changeAction;
             }
         }
     });

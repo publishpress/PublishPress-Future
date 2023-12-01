@@ -1047,36 +1047,23 @@ function _postexpirator_taxonomy($opts)
  */
 function postexpirator_quickedit_javascript()
 {
-    // if using code as plugin
     wp_enqueue_script(
-        'postexpirator-edit',
-         POSTEXPIRATOR_BASEURL . '/assets/js/admin-edit.js',
-         ['jquery', 'inline-edit-post'],
+        'postexpirator-quick-edit',
+         POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
+         ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post'],
          POSTEXPIRATOR_VERSION,
          true
     );
 
     wp_enqueue_script(
-        'postexpirator-quick-edit',
-         POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
-         ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element'],
+        'postexpirator-bulk-edit',
+         POSTEXPIRATOR_BASEURL . '/assets/js/bulk-edit.js',
+         ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post'],
          POSTEXPIRATOR_VERSION,
          true
     );
 
     wp_enqueue_style('wp-components');
-
-    global $wp_version;
-
-    wp_localize_script(
-        'postexpirator-edit', 'postexpiratorConfig', array(
-            'wpAfter6' => version_compare($wp_version, '6', '>='),
-            'ajax' => array(
-                'nonce' => wp_create_nonce(POSTEXPIRATOR_SLUG),
-                'bulk_edit' => 'manage_wp_posts_using_bulk_quick_save_bulk_edit',
-            ),
-        )
-    );
 
     $currentScreen = get_current_screen();
     $container = Container::getInstance();
@@ -1109,16 +1096,6 @@ function postexpirator_quickedit_javascript()
     $defaultExpirationDate = $defaultDataModel->getActionDateParts();
     $nonce = wp_create_nonce('__future_action');
 
-
-
-
-    // TODO: Make his dynamic
-    $isNewPostPage = false;
-
-
-
-
-
     wp_localize_script(
         'postexpirator-quick-edit',
         'publishpressFutureQuickEdit',
@@ -1132,7 +1109,7 @@ function postexpirator_quickedit_javascript()
             'taxonomyName' => $taxonomyName,
             'taxonomyTerms' => $taxonomyTerms,
             'postType' => $currentScreen->post_type,
-            'isNewPost' => $isNewPostPage,
+            'isNewPost' => false,
             'nonce' => $nonce,
             'strings' => [
                 'category' => __('Taxonomy', 'post-expirator'),
@@ -1149,123 +1126,43 @@ function postexpirator_quickedit_javascript()
             ]
         ]
     );
+
+    wp_localize_script(
+        'postexpirator-bulk-edit',
+        'publishpressFutureBulkEdit',
+        [
+            'postTypeDefaultConfig' => $postTypeDefaultConfig,
+            'defaultDate' => $defaultExpirationDate['iso'],
+            'is12hours' => get_option('time_format') !== 'H:i',
+            'startOfWeek' => get_option('start_of_week', 0),
+            'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+            'isDebugEnabled' => $debug->isEnabled(),
+            'taxonomyName' => $taxonomyName,
+            'taxonomyTerms' => $taxonomyTerms,
+            'postType' => $currentScreen->post_type,
+            'isNewPost' => false,
+            'nonce' => $nonce,
+            'strings' => [
+                'category' => __('Taxonomy', 'post-expirator'),
+                'panelTitle' => __('PublishPress Future', 'post-expirator'),
+                'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
+                'action' => __('Action', 'post-expirator'),
+                'loading' => __('Loading', 'post-expirator'),
+                // translators: %s is the name of the taxonomy in plural form.
+                'noTermsFound' => sprintf(
+                    __('No %s found.', 'post-expirator'),
+                    strtolower($taxonomyName)
+                ),
+                'futureActionUpdate' => __('Future Action Update', 'post-expirator'),
+                'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
+                'noChange' => __('— No Change —', 'post-expirator'),
+                'changeAdd' => __('Add or update action for posts', 'post-expirator'),
+                'addOnly' => __('Add action if none exists for posts', 'post-expirator'),
+                'changeOnly' => __('Update the existing actions for posts', 'post-expirator'),
+                'removeOnly' => __('Remove action from posts', 'post-expirator'),
+            ]
+        ]
+    );
 }
 
 add_action('admin_print_scripts-edit.php', 'postexpirator_quickedit_javascript');
-
-// TODO: Can we move this to the same function as the quick edit and classic editor?
-function postexpirator_date_save_bulk_edit()
-{
-    // Save Bulk edit data
-    $doAction = isset($_GET['action']) ? sanitize_key($_GET['action']) : '';
-    $facade = PostExpirator_Facade::getInstance();
-
-    if (
-        'edit' !== $doAction
-        || ! isset($_REQUEST['future_action_view'])
-        || $_REQUEST['future_action_view'] !== 'bulk-edit'
-        || ! isset($_REQUEST['expirationdate_status'])
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        || sanitize_key($_REQUEST['expirationdate_status']) === 'no-change'
-        || ! $facade->current_user_can_expire_posts()
-        || ! isset($_REQUEST['post'])
-        || ! isset($_REQUEST['expirationdate_expiretype'])
-    ) {
-        return;
-    }
-
-    check_admin_referer('bulk-posts');
-
-    $status = sanitize_key($_REQUEST['expirationdate_status']);
-    $validStatuses = ['change-only', 'add-only', 'change-add', 'remove-only'];
-
-    if (! in_array($status, $validStatuses)) {
-        return;
-    }
-
-    $postIds = array_map('intval', (array)$_REQUEST['post']);
-
-    if (empty($postIds)) {
-        return;
-    }
-
-    $postType = get_post_type($postIds[0]);
-
-    $container = Container::getInstance();
-    $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL);
-    $defaultDataModel = $defaultDataModelFactory->create($postType);
-
-    $defaults = $defaultDataModel->getActionDateParts();
-
-    $year = $defaults['year'];
-    if (isset($_REQUEST['expirationdate_year'])) {
-        $year = (int)$_REQUEST['expirationdate_year'];
-    }
-
-    $month = $defaults['month'];
-    if (isset($_REQUEST['expirationdate_month'])) {
-        $month = (int)$_REQUEST['expirationdate_month'];
-    }
-
-    $day = $defaults['day'];
-    if (isset($_REQUEST['expirationdate_day'])) {
-        $day = (int)$_REQUEST['expirationdate_day'];
-    }
-
-    $hour = $defaults['hour'];
-    if (isset($_REQUEST['expirationdate_hour'])) {
-        $hour = (int)$_REQUEST['expirationdate_hour'];
-    }
-
-    $minute = $defaults['minute'];
-    if (isset($_REQUEST['expirationdate_minute'])) {
-        $minute = (int)$_REQUEST['expirationdate_minute'];
-    }
-
-    $newExpirationDate = get_gmt_from_date("$year-$month-$day $hour:$minute:0", 'U');
-
-    if (! $newExpirationDate) {
-        return;
-    }
-
-    $expireType = sanitize_key($_REQUEST['expirationdate_expiretype']);
-    $expireTaxonomy = null;
-    if (in_array($expireType, ['category', 'category-add', 'category-remove'], true)) {
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-        $expireTaxonomy = PostExpirator_Util::sanitize_array_of_integers($_REQUEST['expirationdate_category']);
-    }
-
-    $container = Container::getInstance();
-
-    foreach ($postIds as $postId) {
-        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-        $postModel = $factory($postId);
-
-        $postExpirationDate = $postModel->getExpirationDateAsUnixTime();
-
-        if ($status === 'remove-only') {
-            do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
-
-            continue;
-        }
-
-        if ($status === 'change-only' && empty($postExpirationDate)) {
-            continue;
-        }
-
-        if ($status === 'add-only' && ! empty($postExpirationDate)) {
-            continue;
-        }
-
-        $opts = $postModel->getExpirationDataAsArray();
-        $opts['expireType'] = $expireType;
-
-        if (in_array($opts['expireType'], array('category', 'category-add', 'category-remove'), true)) {
-            $opts['category'] = $expireTaxonomy;
-        }
-
-        do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $newExpirationDate, $opts);
-    }
-}
-
-add_action('admin_init', 'postexpirator_date_save_bulk_edit');

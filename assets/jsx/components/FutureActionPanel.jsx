@@ -158,15 +158,21 @@ export const FutureActionPanel = (props) => {
     }
 
     useEffect(() => {
-        setEnabled(props.enabled);
+        if (props.autoEnableAndHideCheckbox)  {
+            setEnabled(true);
+        } else {
+            setEnabled(props.enabled);
+        }
+
         setAction(props.action);
         setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
-        // We need to get the value directly from the store because the value from the state is not updated yet
+        // We need to get the value directly from the props because the value from the store is not updated yet
         if (props.enabled) {
             if (props.isCleanNewPost) {
+                // Force populate the default values
                 handleEnabledChange(true);
             }
 
@@ -190,13 +196,19 @@ export const FutureActionPanel = (props) => {
 
     return (
         <Fragment>
-            <PanelRow>
-                <CheckboxControl
-                    label={props.strings.enablePostExpiration}
-                    checked={enabled || false}
-                    onChange={handleEnabledChange}
-                />
-            </PanelRow>
+            {props.autoEnableAndHideCheckbox && (
+                <input type="hidden" name={'future_action_enabled'} value={1} />
+            )}
+
+            {! props.autoEnableAndHideCheckbox && (
+                <PanelRow>
+                    <CheckboxControl
+                        label={props.strings.enablePostExpiration}
+                        checked={enabled || false}
+                        onChange={handleEnabledChange}
+                    />
+                </PanelRow>
+            )}
             {enabled && (
                 <Fragment>
                     <PanelRow className={'future-action-date-panel'}>

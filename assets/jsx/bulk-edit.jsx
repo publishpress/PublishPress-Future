@@ -1,13 +1,13 @@
-import { FutureActionPanelQuickEdit } from './components';
+import { FutureActionPanelBulkEdit } from './components';
 import { createStore } from './data';
 import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
 
 ((wp, config, inlineEditPost) => {
-    const storeName = 'publishpress-future/future-action-quick-edit';
+    const storeName = 'publishpress-future/future-action-bulk-edit';
     const delayToUnmountAfterSaving = 1000;
 
-    // We create a copy of the WP inline edit post function
-    const wpInlineEdit = inlineEditPost.edit;
+    // We create a copy of the WP inline set bulk function
+    const wpInlineSetBulk = inlineEditPost.setBulk;
     const wpInlineEditRevert = inlineEditPost.revert;
 
     const getPostId = (id) => {
@@ -28,43 +28,33 @@ import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
      * We override the function with our own code so we can detect when
      * the inline edit row is displayed to recreate the React component.
      */
-    inlineEditPost.edit = function (id) {
+    inlineEditPost.setBulk = function (id) {
         const { createRoot } = wp.element;
         const { select, dispatch } = wp.data;
 
         // Call the original WP edit function.
-        wpInlineEdit.apply(this, arguments);
+        wpInlineSetBulk.apply(this, arguments);
 
-        const postId = getPostId(id);
-        const enabled = getFieldValueByNameAsBool('enabled', postId);
-        const action = getFieldValueByName('action', postId);
-        const date = getFieldValueByName('date', postId);
-        const terms = getFieldValueByName('terms', postId);
-        const taxonomy = getFieldValueByName('taxonomy', postId);
-
-        const termsList = terms.split(',');
-
-        // if store exists, update the state. Otherwise, create it.
         if (select(storeName)) {
-            dispatch(storeName).setEnabled(enabled);
-            dispatch(storeName).setAction(action);
-            dispatch(storeName).setDate(date);
-            dispatch(storeName).setTaxonomy(taxonomy);
-            dispatch(storeName).setTerms(termsList);
+            dispatch(storeName).setAction(config.postTypeDefaultConfig.expireType);
+            dispatch(storeName).setDate(config.postTypeDefaultConfig.defaultDate);
+            dispatch(storeName).setTaxonomy(config.postTypeDefaultConfig.taxonomy);
+            dispatch(storeName).setTerms(config.postTypeDefaultConfig.terms);
+            dispatch(storeName).setChangeAction('no-change');
         } else {
             createStore({
                 name: storeName,
                 defaultState: {
-                    autoEnable: enabled,
-                    action: action,
-                    date: date,
-                    taxonomy: taxonomy,
-                    terms: termsList,
+                    action: config.postTypeDefaultConfig.expireType,
+                    date: config.defaultDate,
+                    taxonomy: config.postTypeDefaultConfig.taxonomy,
+                    terms: config.postTypeDefaultConfig.terms,
+                    changeAction: 'no-change',
                 }
             });
         }
 
-        const saveButton = document.querySelector('.inline-edit-save .save');
+        const saveButton = document.querySelector('#bulk_edit');
         if (saveButton) {
             saveButton.onclick = function() {
                 setTimeout(() => {
@@ -73,11 +63,11 @@ import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
             };
         }
 
-        const container = document.getElementById("publishpress-future-quick-edit");
+        const container = document.getElementById("publishpress-future-bulk-edit");
         const root = createRoot(container);
 
         root.render(
-            <FutureActionPanelQuickEdit
+            <FutureActionPanelBulkEdit
                 storeName={storeName}
                 postType={config.postType}
                 isNewPost={config.isNewPost}
@@ -96,4 +86,4 @@ import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
             wpInlineEditRevert.apply(this, arguments);
         };
     };
-})(window.wp, window.publishpressFutureQuickEdit, inlineEditPost);
+})(window.wp, window.publishpressFutureBulkEdit, inlineEditPost);
