@@ -4,7 +4,7 @@
 
 export const TextControl = function (props) {
     const { Fragment } = wp.element;
-    const { WPTextControl } = wp.components.TextControl;
+    const WPTextControl = wp.components.TextControl;
 
     let description;
 
