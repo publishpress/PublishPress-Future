@@ -23,4 +23,5 @@ abstract class HooksAbstract
     const ACTION_QUICK_EDIT_CUSTOM_BOX = 'quick_edit_custom_box';
     const ACTION_SAVE_POST = 'save_post';
     const ACTION_ADD_META_BOX = 'add_meta_boxes';
+    const ACTION_ADMIN_PRINT_SCRIPTS_EDIT = 'admin_print_scripts-edit.php';
 }
