@@ -63,6 +63,26 @@ if (! function_exists('_postExpiratorExpireType')) {
     }
 }
 
+if (! function_exists('_postexpirator_expire_type')) {
+    /**
+     * Get the HTML for expire type.
+     *
+     * @internal
+     *
+     * @access private
+     * @deprecated 3.1.4
+     */
+    function _postexpirator_expire_type($opts)
+    {
+        if (empty($opts)) {
+            return false;
+        }
+
+        PostExpirator_Display::getInstance()->render_template('how-to-expire', array('opts' => $opts));
+    }
+}
+
+
 if (! function_exists('expirationdate_get_blog_url')) {
     /**
      * Get correct URL (HTTP or HTTPS)

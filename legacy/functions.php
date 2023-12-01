@@ -669,19 +669,3 @@ class Walker_PostExpirator_Category_Checklist extends Walker
         $output .= "</li>\n";
     }
 }
-
-/**
- * Get the HTML for expire type.
- *
- * @internal
- *
- * @access private
- */
-function _postexpirator_expire_type($opts)
-{
-    if (empty($opts)) {
-        return false;
-    }
-
-    PostExpirator_Display::getInstance()->render_template('how-to-expire', array('opts' => $opts));
-}
