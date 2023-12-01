@@ -182,52 +182,6 @@ function postexpirator_show_value($column_name)
 add_action('manage_posts_custom_column', 'postexpirator_show_value');
 add_action('manage_pages_custom_column', 'postexpirator_show_value');
 
-
-/**
- * Quick Edit functionality.
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_quickedit($column_name, $post_type)
-{
-    if ($column_name !== 'expirationdate') {
-        return;
-    }
-
-    $facade = PostExpirator_Facade::getInstance();
-
-    if (! $facade->current_user_can_expire_posts()) {
-        return;
-    }
-
-    $container = Container::getInstance();
-    $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-
-    $defaults = $settingsFacade->getPostTypeDefaults($post_type);
-    $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
-    $label = '';
-
-    // if settings have not been configured and this is the default post type
-    if (empty($taxonomy) && 'post' === $post_type) {
-        $taxonomy = 'category';
-    }
-
-    if (! empty($taxonomy)) {
-        $tax_object = get_taxonomy($taxonomy);
-        $label = $tax_object ? $tax_object->label : '';
-    }
-
-    PostExpirator_Display::getInstance()->render_template('quick-edit', array(
-        'post_type' => $post_type,
-        'taxonomy' => $taxonomy,
-        'tax_label' => $label
-    ));
-}
-
-add_action('quick_edit_custom_box', 'postexpirator_quickedit', 10, 2);
-
 /**
  * Returns the post types that are supported.
  *
@@ -403,7 +357,7 @@ function postexpirator_update_post_meta($id)
     }
 
     // Do not process Bulk edit here. It is processed on the function "postexpirator_date_save_bulk_edit"
-    if (isset($_GET['future_action_view']) && $_GET['future_action_view'] === 'bulk-edit') {
+    if (isset($_GET['future_action_view']) && ($_GET['future_action_view'] === 'bulk-edit' || $_GET['future_action_view'] === 'quick-edit')) {
         return;
     }
 

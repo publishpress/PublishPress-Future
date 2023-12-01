@@ -20,4 +20,6 @@ abstract class HooksAbstract
     const ACTION_INSERT_POST = 'wp_insert_post';
     const ACTION_PURGE_PLUGIN_CACHE = 'publishpressfuture_purge_plugin_cache';
     const ACTION_BULK_EDIT_CUSTOM_BOX = 'bulk_edit_custom_box';
+    const ACTION_QUICK_EDIT_CUSTOM_BOX = 'quick_edit_custom_box';
+    const ACTION_SAVE_POST = 'save_post';
 }

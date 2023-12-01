@@ -16,6 +16,7 @@ use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Expirator\Controllers\BulkActionController;
 use PublishPress\Future\Modules\Expirator\Controllers\BulkEditController;
 use PublishPress\Future\Modules\Expirator\Controllers\ExpirationController;
+use PublishPress\Future\Modules\Expirator\Controllers\QuickEditController;
 use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
@@ -125,6 +126,7 @@ class Module implements ModuleInterface
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
+        $this->controllers['quick_edit'] = $this->factoryQuickEditController();
         $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
         $this->controllers['bulk_action'] = $this->factoryBulkActionController();
     }
@@ -158,6 +160,17 @@ class Module implements ModuleInterface
     private function factoryBulkEditController()
     {
         return new BulkEditController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
+        );
+    }
+
+    private function factoryQuickEditController()
+    {
+        return new QuickEditController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
