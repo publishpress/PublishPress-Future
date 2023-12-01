@@ -318,11 +318,6 @@ class_alias(
 );
 
 class_alias(
-    'PublishPress\\Future\\Modules\\Expirator\\Models\\DefaultDataModel',
-    'PublishPressFuture\\Modules\\Expirator\\Models\\DefaultDataModel'
-);
-
-class_alias(
     'PublishPress\\Future\\Modules\\Expirator\\Models\\ExpirablePostModel',
     'PublishPressFuture\\Modules\\Expirator\\Models\\ExpirablePostModel'
 );
