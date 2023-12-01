@@ -142,8 +142,6 @@ class Module implements ModuleInterface
         foreach ($this->controllers as $controller) {
             $controller->initialize();
         }
-
-        $this->hooks->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
     }
 
     private function factoryExpirationController()
@@ -210,106 +208,6 @@ class Module implements ModuleInterface
             $this->sanitization,
             $this->currentUserModelFactory,
             $this->request
-        );
-    }
-
-    public function enqueueScripts()
-    {
-        $currentScreen = get_current_screen();
-
-        if ($currentScreen->base !== 'post') {
-            return;
-        }
-
-        $isNewPostPage = $currentScreen->action === 'add';
-        $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-        if (! $isEditPostPage && ! $isNewPostPage) {
-            return;
-        }
-
-        $currentUserModelFactory = $this->currentUserModelFactory;
-        $currentUserModel = $currentUserModelFactory();
-
-        if (! $currentUserModel->userCanExpirePosts()) {
-            return;
-        }
-
-        $container = Container::getInstance();
-        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
-        $postType = $currentScreen->post_type;
-
-        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
-
-        if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
-            return;
-        }
-
-        wp_enqueue_script(
-            'publishpress-future-classic-editor',
-            POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
-            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element'],
-            PUBLISHPRESS_FUTURE_VERSION,
-            true
-        );
-
-        wp_enqueue_style(
-            'publishpress-future-classic-editor',
-            POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
-            ['wp-components'],
-            PUBLISHPRESS_FUTURE_VERSION
-        );
-
-        $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
-        $defaultDataModel = $defaultDataModelFactory->create($postType);
-
-        $debug = $container->get(ServicesAbstract::DEBUG);
-
-        $taxonomyName= '';
-        if (! empty($postTypeDefaultConfig['taxonomy'])) {
-            $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
-            $taxonomyName = $taxonomy->label;
-        }
-
-        $taxonomyTerms = [];
-        if (! empty($postTypeDefaultConfig['taxonomy'])) {
-            $taxonomyTerms = get_terms([
-                'taxonomy' => $postTypeDefaultConfig['taxonomy'],
-                'hide_empty' => false,
-            ]);
-        }
-
-        $defaultExpirationDate = $defaultDataModel->getActionDateParts();
-
-        wp_localize_script(
-            'publishpress-future-classic-editor',
-            'publishpressFutureClassicMetabox',
-            [
-                'postTypeDefaultConfig' => $postTypeDefaultConfig,
-                'defaultDate' => $defaultExpirationDate['iso'],
-                'is12hours' => get_option('time_format') !== 'H:i',
-                'startOfWeek' => get_option('start_of_week', 0),
-                'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
-                'isDebugEnabled' => $debug->isEnabled(),
-                'taxonomyName' => $taxonomyName,
-                'taxonomyTerms' => $taxonomyTerms,
-                'postType' => $currentScreen->post_type,
-                'isNewPost' => $isNewPostPage,
-                'strings' => [
-                    'category' => __('Taxonomy', 'post-expirator'),
-                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
-                    'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                    'action' => __('Action', 'post-expirator'),
-                    'loading' => __('Loading', 'post-expirator'),
-                    // translators: %s is the name of the taxonomy in plural form.
-                    'noTermsFound' => sprintf(
-                        __('No %s found.', 'post-expirator'),
-                        strtolower($taxonomyName)
-                    ),
-                    'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
-                ]
-            ]
         );
     }
 }

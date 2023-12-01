@@ -79,7 +79,7 @@ class ClassicEditorController implements InitializableInterface
         );
 
         $this->hooks->addAction(
-            CoreHooksAbstract::ACTION_ADMIN_PRINT_SCRIPTS_EDIT,
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
             [$this, 'enqueueScripts']
         );
     }
@@ -227,25 +227,26 @@ class ClassicEditorController implements InitializableInterface
 
     public function enqueueScripts()
     {
-        wp_enqueue_script(
-            'postexpirator-quick-edit',
-             POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
-             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post'],
-             POSTEXPIRATOR_VERSION,
-             true
-        );
-
-        wp_enqueue_script(
-            'postexpirator-bulk-edit',
-             POSTEXPIRATOR_BASEURL . '/assets/js/bulk-edit.js',
-             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post'],
-             POSTEXPIRATOR_VERSION,
-             true
-        );
-
-        wp_enqueue_style('wp-components');
-
         $currentScreen = get_current_screen();
+
+        if ($currentScreen->base !== 'post') {
+            return;
+        }
+
+        $isNewPostPage = $currentScreen->action === 'add';
+        $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+        if (! $isEditPostPage && ! $isNewPostPage) {
+            return;
+        }
+
+        $currentUserModelFactory = $this->currentUserModelFactory;
+        $currentUserModel = $currentUserModelFactory();
+
+        if (! $currentUserModel->userCanExpirePosts()) {
+            return;
+        }
+
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
         $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
@@ -253,6 +254,24 @@ class ClassicEditorController implements InitializableInterface
 
         $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
 
+        if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
+            return;
+        }
+
+        wp_enqueue_script(
+            'publishpress-future-classic-editor',
+            POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
+            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element'],
+            PUBLISHPRESS_FUTURE_VERSION,
+            true
+        );
+
+        wp_enqueue_style(
+            'publishpress-future-classic-editor',
+            POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
+            ['wp-components'],
+            PUBLISHPRESS_FUTURE_VERSION
+        );
 
         $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
         $defaultDataModel = $defaultDataModelFactory->create($postType);
@@ -274,11 +293,10 @@ class ClassicEditorController implements InitializableInterface
         }
 
         $defaultExpirationDate = $defaultDataModel->getActionDateParts();
-        $nonce = wp_create_nonce('__future_action');
 
         wp_localize_script(
-            'postexpirator-quick-edit',
-            'publishpressFutureQuickEdit',
+            'publishpress-future-classic-editor',
+            'publishpressFutureClassicMetabox',
             [
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,
                 'defaultDate' => $defaultExpirationDate['iso'],
@@ -289,8 +307,7 @@ class ClassicEditorController implements InitializableInterface
                 'taxonomyName' => $taxonomyName,
                 'taxonomyTerms' => $taxonomyTerms,
                 'postType' => $currentScreen->post_type,
-                'isNewPost' => false,
-                'nonce' => $nonce,
+                'isNewPost' => $isNewPostPage,
                 'strings' => [
                     'category' => __('Taxonomy', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
@@ -303,43 +320,6 @@ class ClassicEditorController implements InitializableInterface
                         strtolower($taxonomyName)
                     ),
                     'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
-                ]
-            ]
-        );
-
-        wp_localize_script(
-            'postexpirator-bulk-edit',
-            'publishpressFutureBulkEdit',
-            [
-                'postTypeDefaultConfig' => $postTypeDefaultConfig,
-                'defaultDate' => $defaultExpirationDate['iso'],
-                'is12hours' => get_option('time_format') !== 'H:i',
-                'startOfWeek' => get_option('start_of_week', 0),
-                'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
-                'isDebugEnabled' => $debug->isEnabled(),
-                'taxonomyName' => $taxonomyName,
-                'taxonomyTerms' => $taxonomyTerms,
-                'postType' => $currentScreen->post_type,
-                'isNewPost' => false,
-                'nonce' => $nonce,
-                'strings' => [
-                    'category' => __('Taxonomy', 'post-expirator'),
-                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
-                    'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                    'action' => __('Action', 'post-expirator'),
-                    'loading' => __('Loading', 'post-expirator'),
-                    // translators: %s is the name of the taxonomy in plural form.
-                    'noTermsFound' => sprintf(
-                        __('No %s found.', 'post-expirator'),
-                        strtolower($taxonomyName)
-                    ),
-                    'futureActionUpdate' => __('Future Action Update', 'post-expirator'),
-                    'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
-                    'noChange' => __('— No Change —', 'post-expirator'),
-                    'changeAdd' => __('Add or update action for posts', 'post-expirator'),
-                    'addOnly' => __('Add action if none exists for posts', 'post-expirator'),
-                    'changeOnly' => __('Update the existing actions for posts', 'post-expirator'),
-                    'removeOnly' => __('Remove action from posts', 'post-expirator'),
                 ]
             ]
         );
