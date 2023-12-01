@@ -33,18 +33,23 @@ class SettingsPostTypesModel
 
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
-            $terms = isset($defaults['terms']) ? explode(',', $defaults['terms']) : [];
+            $terms = isset($defaults['terms']) ? $defaults['terms'] : [];
             $terms = array_map('intval', $terms);
             $terms = array_filter($terms, function($value) {return (int)$value > 0;});
+            $tersmName = array_map(function($termId) {
+                $term = get_term($termId);
+                return $term->name;
+            }, $terms);
 
             $settings[$postType] = [
                 'label' => esc_html($postTypeObject->label),
                 'active' => (! isset($defaults['activeMetaBox']) && in_array($postType, array('post', 'page'), true))
-                    || (isset($defaults['activeMetaBox']) && $defaults['activeMetaBox'] !== 'inactive'),
+                    || (isset($defaults['activeMetaBox']) && (! in_array((string)$defaults['activeMetaBox'], ['inactive', '0']))),
                 'howToExpire' => isset($defaults['expireType']) ? $defaults['expireType'] : '',
                 'autoEnabled' => isset($defaults['autoEnable']) && $defaults['autoEnable'] == 1,
                 'taxonomy' => isset($defaults['taxonomy']) ? $defaults['taxonomy'] : false,
                 'terms' => $terms,
+                'termsName' => $tersmName,
                 'emailNotification' => isset($defaults['emailnotification']) ? $defaults['emailnotification'] : '',
                 'defaultExpireType' => isset($defaults['default-expire-type']) ? $defaults['default-expire-type'] : '',
                 'defaultExpireOffset' => isset($defaults['default-custom-date']) ? $defaults['default-custom-date'] : '',

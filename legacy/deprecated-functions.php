@@ -63,6 +63,26 @@ if (! function_exists('_postExpiratorExpireType')) {
     }
 }
 
+if (! function_exists('_postexpirator_expire_type')) {
+    /**
+     * Get the HTML for expire type.
+     *
+     * @internal
+     *
+     * @access private
+     * @deprecated 3.1.4
+     */
+    function _postexpirator_expire_type($opts)
+    {
+        if (empty($opts)) {
+            return false;
+        }
+
+        PostExpirator_Display::getInstance()->render_template('how-to-expire', array('opts' => $opts));
+    }
+}
+
+
 if (! function_exists('expirationdate_get_blog_url')) {
     /**
      * Get correct URL (HTTP or HTTPS)
@@ -277,4 +297,95 @@ function postexpirator_expire_post($postId)
         ExpiratorHooks::ACTION_RUN_WORKFLOW,
         $postId
     );
+}
+
+/**
+ * Called at plugin activation
+ *
+ * @internal
+ *
+ * @access private
+ * @deprecated 2.8.0
+ */
+function postexpirator_activate()
+{
+    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the module Settings');
+}
+
+/**
+ * Called at plugin deactivation
+ *
+ * @internal
+ *
+ * @access private
+ *
+ * @deprecated 2.8.0
+ */
+function expirationdate_deactivate()
+{
+    _deprecated_function(__METHOD__, '2.8.0', 'Moved to the PublishPress\Future\Framework\PluginFacade class.');
+}
+
+
+/**
+ * Get the HTML for taxonomy.
+ *
+ * @internal
+ *
+ * @access private
+ * @deprecated 3.1.4
+ */
+function _postexpirator_taxonomy($opts)
+{
+    if (empty($opts)) {
+        return false;
+    }
+
+    if (! isset($opts['name'])) {
+        return false;
+    }
+
+    $name = sanitize_text_field($opts['name']);
+
+    if (! isset($id)) {
+        $id = $name;
+    }
+
+    $disabled = false;
+    if (isset($opts['disabled'])) {
+        $disabled = (bool)$opts['disabled'];
+    }
+
+    $onchange = '';
+    if (isset($opts['onchange'])) {
+        $onchange = sanitize_text_field($opts['onchange']);
+    }
+
+    $type = '';
+    if (isset($opts['type'])) {
+        $type = sanitize_text_field($opts['type']);
+    }
+
+    $selected = false;
+    if (isset($opts['selected'])) {
+        $selected = $opts['selected'];
+    }
+
+    $taxonomies = get_object_taxonomies($type, 'object');
+    $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
+
+    if (empty($taxonomies)) {
+        return esc_html__('No taxonomies found', 'post-expirator');
+    }
+
+    $params = [
+        'name' => $name,
+        'id' => $id,
+        'disabled' => $disabled,
+        'taxonomies' => $taxonomies,
+        'selected' => $selected,
+        'onchange' => $onchange
+    ];
+
+    return PostExpirator_Display::getInstance()->get_rendered_template('taxonomy-field', $params);
 }

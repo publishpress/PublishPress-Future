@@ -5,7 +5,8 @@
 
 namespace PublishPress\Future\Modules\Expirator;
 
-
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
@@ -14,7 +15,9 @@ use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Expirator\Controllers\BulkActionController;
 use PublishPress\Future\Modules\Expirator\Controllers\BulkEditController;
+use PublishPress\Future\Modules\Expirator\Controllers\ClassicEditorController;
 use PublishPress\Future\Modules\Expirator\Controllers\ExpirationController;
+use PublishPress\Future\Modules\Expirator\Controllers\QuickEditController;
 use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
@@ -88,6 +91,11 @@ class Module implements ModuleInterface
      */
     private $noticesFacade;
 
+    /**
+     * @var \Closure
+     */
+    private $taxonomiesModelFactory;
+
     public function __construct(
         $hooks,
         $site,
@@ -100,7 +108,8 @@ class Module implements ModuleInterface
         \Closure $actionArgsModelFactory,
         \Closure $scheduledActionsTableFactory,
         \Closure $settingsModelFactory,
-        NoticeFacade $noticesFacade
+        NoticeFacade $noticesFacade,
+        \Closure $taxonomiesModelFactory
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -114,11 +123,14 @@ class Module implements ModuleInterface
         $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
         $this->settingsModelFactory = $settingsModelFactory;
         $this->noticesFacade = $noticesFacade;
+        $this->taxonomiesModelFactory = $taxonomiesModelFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
+        $this->controllers['quick_edit'] = $this->factoryQuickEditController();
         $this->controllers['bulk_edit'] = $this->factoryBulkEditController();
-        $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
         $this->controllers['bulk_action'] = $this->factoryBulkActionController();
+        $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
+        $this->controllers['classic_editor'] = $this->factoryClassicEditorController();
     }
 
 
@@ -130,8 +142,6 @@ class Module implements ModuleInterface
         foreach ($this->controllers as $controller) {
             $controller->initialize();
         }
-
-        $this->hooks->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
     }
 
     private function factoryExpirationController()
@@ -142,13 +152,25 @@ class Module implements ModuleInterface
             $this->cron,
             $this->scheduler,
             $this->expirablePostModelFactory,
-            $this->settingsModelFactory
+            $this->settingsModelFactory,
+            $this->taxonomiesModelFactory
         );
     }
 
     private function factoryBulkEditController()
     {
         return new BulkEditController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
+        );
+    }
+
+    private function factoryQuickEditController()
+    {
+        return new QuickEditController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
@@ -178,34 +200,14 @@ class Module implements ModuleInterface
         );
     }
 
-    public function enqueueScripts()
+    private function factoryClassicEditorController()
     {
-        $currentScreen = get_current_screen();
-
-        if ($currentScreen->base !== 'post') {
-            return;
-        }
-
-        $isNewPostPage = $currentScreen->action === 'add';
-        $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-        if (! $isEditPostPage && ! $isNewPostPage) {
-            return;
-        }
-
-        $currentUserModelFactory = $this->currentUserModelFactory;
-        $currentUserModel = $currentUserModelFactory();
-
-        if (! $currentUserModel->userCanExpirePosts()) {
-            return;
-        }
-
-        wp_enqueue_script(
-            'publishpress-future-expirator',
-            POSTEXPIRATOR_BASEURL . 'assets/js/expirator-classic-editor.js',
-            ['jquery'],
-            PUBLISHPRESS_FUTURE_VERSION,
-            true
+        return new ClassicEditorController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
         );
     }
 }

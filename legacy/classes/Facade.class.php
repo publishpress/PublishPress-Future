@@ -55,7 +55,6 @@ class PostExpirator_Facade
     private function hooks()
     {
         add_action('enqueue_block_editor_assets', array($this, 'block_editor_assets'));
-        add_action('updated_postmeta', array($this, 'onUpdatePostMeta'), 10, 4);
         add_filter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
         add_action('rest_api_init', [$this, 'register_rest_api']);
     }
@@ -122,47 +121,6 @@ class PostExpirator_Facade
                     false,
                     POSTEXPIRATOR_VERSION
                 );
-                break;
-        }
-    }
-
-    /**
-     * Fires when the post meta is updated (in the gutenberg block).
-     */
-    public function onUpdatePostMeta($meta_id, $post_id, $meta_key, $meta_value)
-    {
-        // allow only through gutenberg
-        if (! PostExpirator_Util::is_gutenberg_active()) {
-            return;
-        }
-
-        // not through bulk edit.
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        if (isset($_POST['post_ids'])) {
-            return;
-        }
-
-        // not through quick edit.
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing
-        if (isset($_POST['expirationdate_quickedit'])) {
-            return;
-        }
-
-        switch ($meta_key) {
-            case PostMetaAbstract::EXPIRATION_STATUS:
-                if (empty($meta_value)) {
-                    do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post_id);
-                }
-
-
-                break;
-            case PostMetaAbstract::EXPIRATION_TIMESTAMP:
-                $container = Container::getInstance();
-                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-                $postModel = $factory($post_id);
-
-                do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post_id, $meta_value, $postModel->getExpirationDataAsArray());
-
                 break;
         }
     }
@@ -354,6 +312,7 @@ class PostExpirator_Facade
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
         $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+        $options = $container->get(ServicesAbstract::OPTIONS);
 
         $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($post->post_type);
 
@@ -369,18 +328,18 @@ class PostExpirator_Facade
                     true
                 )
             )
-            || $postTypeDefaultConfig['activeMetaBox'] === 'active'
+            || (in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1']))
         ) {
             wp_enqueue_script(
-                'postexpirator-gutenberg-panel',
-                POSTEXPIRATOR_BASEURL . 'assets/js/gutenberg-panel.js',
+                'postexpirator-block-editor',
+                POSTEXPIRATOR_BASEURL . 'assets/js/block-editor.js',
                 ['wp-edit-post'],
                 POSTEXPIRATOR_VERSION,
                 true
             );
 
-            $defaultDataModel = $container->get(ServicesAbstract::DEFAULT_DATA_MODEL);
-            $debug = $container->get(ServicesAbstract::DEBUG);
+            $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+            $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
 
             $taxonomyName= '';
             if (! empty($postTypeDefaultConfig['taxonomy'])) {
@@ -396,17 +355,17 @@ class PostExpirator_Facade
                 ]);
             }
 
-            $defaultExpirationDate = $defaultDataModel->getDefaultExpirationDateForPostType($post->post_type);
+            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
             wp_localize_script(
-                'postexpirator-gutenberg-panel',
+                'postexpirator-block-editor',
                 'postExpiratorPanelConfig',
                 [
                     'postTypeDefaultConfig' => $postTypeDefaultConfig,
-                    'defaultDate' => $defaultExpirationDate['ts'],
-                    'is12hours' => get_option('time_format') !== 'H:i',
-                    'startOfWeek' => get_option('start_of_week', 0),
+                    'defaultDate' => $defaultExpirationDate['iso'],
+                    'is12hours' => $options->getOption('time_format') !== 'H:i',
+                    'startOfWeek' => $options->getOption('start_of_week', 0),
                     'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
-                    'isDebugEnabled' => $debug->isEnabled(),
+                    'isDebugEnabled' => $container->get(ServicesAbstract::DEBUG)->isEnabled(),
                     'taxonomyName' => $taxonomyName,
                     'taxonomyTerms' => $taxonomyTerms,
                     'strings' => [

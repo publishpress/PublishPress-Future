@@ -5,9 +5,15 @@
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
+use PostExpirator_Display;
+use PostExpirator_Facade;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -62,35 +68,69 @@ class BulkEditController implements InitializableInterface
     public function initialize()
     {
         $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_BULK_EDIT_CUSTOM_BOX,
+            [$this, 'registerBulkEditCustomBox'],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
             HooksAbstract::ACTION_ADMIN_INIT,
-            [$this, 'onAdminInit']
+            [$this, 'processBulkEditUpdate']
         );
     }
 
-    public function onAdminInit()
+    public function registerBulkEditCustomBox($columnName, $postType)
+    {
+        $facade = PostExpirator_Facade::getInstance();
+
+        if (
+            ($columnName !== 'expirationdate')
+            || (! $facade->current_user_can_expire_posts())
+        )
+        {
+            return;
+        }
+
+        // TODO: Use DI here.
+        $container = Container::getInstance();
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+
+        $defaults = $settingsFacade->getPostTypeDefaults($postType);
+
+        $taxonomy = isset($defaults['taxonomy']) ? $defaults['taxonomy'] : '';
+        $label = '';
+
+        // if settings have not been configured and this is the default post type
+        if (empty($taxonomy) && 'post' === $postType) {
+            $taxonomy = 'category';
+        }
+
+        if (! empty($taxonomy)) {
+            $tax_object = get_taxonomy($taxonomy);
+            $label = $tax_object ? $tax_object->label : '';
+        }
+
+        PostExpirator_Display::getInstance()->render_template('bulk-edit', array(
+            'post_type' => $postType,
+            'taxonomy' => $taxonomy,
+            'tax_label' => $label
+        ));
+    }
+
+    public function processBulkEditUpdate()
     {
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $doAction = isset($_GET['action']) ? $this->sanitization->sanitizeKey($_GET['action']) : '';
-        if ('edit' !== $doAction) {
-            return;
-        }
 
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        if (! isset($_REQUEST['postexpirator_view'])) {
-            return;
-        }
-
-        if ($_REQUEST['postexpirator_view'] !== 'bulk-edit') {
-            return;
-        }
-
-        if (! isset($_REQUEST['expirationdate_status'])) {
-            return;
-        }
-
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-        if ($this->sanitization->sanitizeKey($_REQUEST['expirationdate_status']) === 'no-change') {
+        if (
+            ('edit' !== $doAction)
+            || (! isset($_REQUEST['future_action_bulk_view']))
+            || ($_REQUEST['future_action_bulk_view'] !== 'bulk-edit')
+            || (! isset($_REQUEST['future_action_bulk_change_action']))
+            || ($this->sanitization->sanitizeKey($_REQUEST['future_action_bulk_change_action']) === 'no-change')
+        ) {
             return;
         }
 
@@ -107,13 +147,72 @@ class BulkEditController implements InitializableInterface
         // phpcs:enable
     }
 
+    private function updateScheduleForPostFromBulkEditData(ExpirablePostModel $postModel)
+    {
+        $opts = [
+            'expireType' => $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']),
+            'category' => $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']),
+            'categoryTaxonomy' => $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']),
+        ];
+
+        if (! empty($opts['category'])) {
+            // TODO: Use DI here.
+            $taxonomiesModelFactory = Container::getInstance()->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY);
+            $taxonomiesModel = $taxonomiesModelFactory();
+
+            $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
+                $opts['categoryTaxonomy'],
+                explode(',', $opts['category'])
+            );
+        }
+
+        if (empty($opts['categoryTaxonomy'])) {
+            $opts['category'] = [];
+        }
+
+        $date = strtotime(sanitize_text_field($_REQUEST['future_action_bulk_date']));
+
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
+            $postModel->getPostId(),
+            $date,
+            $opts
+        );
+    }
+
+    private function changeStrategyChangeOnly(ExpirablePostModel $postModel)
+    {
+        if ($postModel->isExpirationEnabled()) {
+            $this->updateScheduleForPostFromBulkEditData($postModel);
+        }
+    }
+
+    private function changeStrategyAddOnly(ExpirablePostModel $postModel)
+    {
+        if (! $postModel->isExpirationEnabled()) {
+            $this->updateScheduleForPostFromBulkEditData($postModel);
+        }
+    }
+
+    private function changeStrategyChangeAdd(ExpirablePostModel $postModel)
+    {
+        $this->updateScheduleForPostFromBulkEditData($postModel);
+    }
+
+    private function changeStrategyRemoveOnly(ExpirablePostModel $postModel)
+    {
+        if ($postModel->isExpirationEnabled()) {
+            $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postModel->getPostId());
+        }
+    }
+
     private function saveBulkEditData()
     {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-        $status = $this->sanitization->sanitizeKey($_REQUEST['expirationdate_status']);
-        $validStatuses = ['change-only', 'add-only', 'change-add', 'remove-only'];
+        $changeStrategy = $this->sanitization->sanitizeKey($_REQUEST['future_action_bulk_change_action']);
+        $validStrategies = ['change-only', 'add-only', 'change-add', 'remove-only'];
 
-        if (! in_array($status, $validStatuses)) {
+        if (! in_array($changeStrategy, $validStrategies)) {
             return;
         }
 
@@ -124,8 +223,31 @@ class BulkEditController implements InitializableInterface
             return;
         }
 
-        // Post model for the first post
         $postModelFactory = $this->expirablePostModelFactory;
-        $postModel = $postModelFactory($postIds[0]);
+
+        foreach ($postIds as $postId) {
+            $postId = (int)$postId;
+
+            $postModel = $postModelFactory($postId);
+
+            if (empty($postModel)) {
+                continue;
+            }
+
+            switch ($changeStrategy) {
+                case 'change-only':
+                    $this->changeStrategyChangeOnly($postModel);
+                    break;
+                case 'add-only':
+                    $this->changeStrategyAddOnly($postModel);
+                    break;
+                case 'change-add':
+                    $this->changeStrategyChangeAdd($postModel);
+                    break;
+                case 'remove-only':
+                    $this->changeStrategyRemoveOnly($postModel);
+                    break;
+            }
+        }
     }
 }

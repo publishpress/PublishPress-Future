@@ -130,18 +130,26 @@ class ActionArgsModel
      * @param int $postId
      * @return bool
      */
-    public function loadByPostId($postId)
+    public function loadByPostId($postId, $filterEnabled = false)
     {
         global $wpdb;
 
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $row = $wpdb->get_row(
-            $wpdb->prepare(
+        if ($filterEnabled) {
+            $sql = $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT * FROM {$this->tableName} WHERE post_id = %d AND enabled = 1 ORDER BY enabled DESC, id DESC LIMIT 1",
+                $postId
+            );
+        } else {
+            $sql = $wpdb->prepare(
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT * FROM {$this->tableName} WHERE post_id = %d ORDER BY enabled DESC, id DESC LIMIT 1",
                 $postId
-            )
-        );
+            );
+        }
+
+        $row = $wpdb->get_row($sql);
 
         if (! empty($row)) {
             $this->setAttributesFromRow($row);
@@ -303,7 +311,18 @@ class ActionArgsModel
      */
     public function getTaxonomyTerms()
     {
-        return isset($this->args['category']) ? $this->args['category'] : [];
+        $terms = isset($this->args['category']) ? $this->args['category'] : [];
+
+        if (! is_array($terms)) {
+            $terms = explode(',', $terms);
+        }
+
+        return $terms;
+    }
+
+    public function getTaxonomy()
+    {
+        return isset($this->args['categoryTaxonomy']) ? $this->args['categoryTaxonomy'] : '';
     }
 
     /**

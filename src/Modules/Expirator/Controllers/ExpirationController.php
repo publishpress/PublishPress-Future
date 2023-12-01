@@ -7,6 +7,8 @@ namespace PublishPress\Future\Modules\Expirator\Controllers;
 
 use Closure;
 use Exception;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
@@ -55,12 +57,18 @@ class ExpirationController implements InitializableInterface
     private $settingsModelFactory;
 
     /**
+     * @var TaxonomiesModel
+     */
+    private $taxonomiesModel;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param SiteFacade $siteFacade
      * @param CronInterface $cron
      * @param SchedulerInterface $scheduler
      * @param Closure $expirablePostModelFactory
      * @param Closure $settingsModelFactory
+     * @param Closure $taxonomiesModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
@@ -68,7 +76,8 @@ class ExpirationController implements InitializableInterface
         CronInterface $cron,
         SchedulerInterface $scheduler,
         Closure $expirablePostModelFactory,
-        Closure $settingsModelFactory
+        Closure $settingsModelFactory,
+        Closure $taxonomiesModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->site = $siteFacade;
@@ -76,6 +85,7 @@ class ExpirationController implements InitializableInterface
         $this->scheduler = $scheduler;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->settingsModelFactory = $settingsModelFactory;
+        $this->taxonomiesModel = $taxonomiesModelFactory();
     }
 
     public function initialize()
@@ -127,7 +137,7 @@ class ExpirationController implements InitializableInterface
 
         $postModel = $postModelFactory($postId);
 
-        if (! ($postModel instanceof ExpirablePostModel)) {
+        if (!($postModel instanceof ExpirablePostModel)) {
             throw new Exception('Invalid post model factory');
         }
 
@@ -156,47 +166,64 @@ class ExpirationController implements InitializableInterface
 
                         $isEnabled = $postModel->isExpirationEnabled();
 
-                        if ('auto-draft' === $post['status'] && ! $isEnabled) {
+                        if ('auto-draft' === $post['status'] && !$isEnabled) {
                             return [
                                 'enabled' => false,
-                                'date' => 0,
+                                'date' => '',
                                 'action' => '',
                                 'terms' => [],
                                 'taxonomy' => '',
-                                'browser_timezone_offset' => 0
                             ];
+                        }
+
+                        $date = $postModel->getExpirationDateString(false);
+                        $action = $postModel->getExpirationType();
+                        $terms = $postModel->getExpirationCategoryIDs();
+                        $taxonomy = $postModel->getExpirationTaxonomy();
+
+                        if (empty($date)) {
+                            $defaultDataModelFactory = Container::getInstance()->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+                            $defaultDataModel = $defaultDataModelFactory->create($post['post_type']);
+
+                            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+                            $date = $defaultExpirationDate['iso'];
+
+                            $action = $defaultDataModel->getDefaultActionForPostType($post['post_type']);
+                            $terms = [];
+                            $taxonomy = '';
                         }
 
                         return [
                             'enabled' => $postModel->isExpirationEnabled(),
-                            'date' => $postModel->getExpirationDateString(false),
-                            'action' => $postModel->getExpirationType(),
-                            'terms' => $postModel->getExpirationCategoryIDs(),
-                            'taxonomy' => $postModel->getExpirationTaxonomy(),
-                            'browser_timezone_offset' => 0
+                            'date' => $date,
+                            'action' => $action,
+                            'terms' => $terms,
+                            'taxonomy' => $taxonomy,
                         ];
                     },
                     'update_callback' => function ($value, $post) {
                         if (isset($value['enabled']) && (bool)$value['enabled']) {
                             $opts = [
-                                'expireType' => $value['action'],
-                                'category' => $value['terms'],
-                                'categoryTaxonomy' => $value['taxonomy'],
+                                'expireType' => sanitize_text_field($value['action']),
+                                'category' => array_map('sanitize_text_field', $value['terms']),
+                                'categoryTaxonomy' => sanitize_text_field($value['taxonomy']),
                             ];
 
-                            $browserTimezoneOffset = (int)$value['browser_timezone_offset'] * MINUTE_IN_SECONDS;
-                            $wpTimezoneOffset = get_option('gmt_offset') * HOUR_IN_SECONDS;
+                            $opts['category'] = $this->taxonomiesModel->normalizeTermsCreatingIfNecessary(
+                                $opts['categoryTaxonomy'],
+                                $opts['category']
+                            );
 
-                            // The user believes he typed the date time in the site's timezone, but the DateTimePicker
-                            // component sends the date time in the user's local timezone. We need to convert the date
-                            // time to the site's timezone and then to UTC.
-                            $gmtActionTime = $value['date'] - $browserTimezoneOffset - $wpTimezoneOffset;
-
-                            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $post->ID, $gmtActionTime, $opts);
+                            do_action(
+                                HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
+                                $post->ID,
+                                strtotime($value['date']),
+                                $opts
+                            );
                             return true;
                         }
 
-                        do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
+                        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
 
                         return true;
                     },

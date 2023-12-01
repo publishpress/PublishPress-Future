@@ -149,10 +149,12 @@ class Controller implements InitializableInterface
             wp_enqueue_script(
                 'publishpressfuture-settings-panel',
                 POSTEXPIRATOR_BASEURL . 'assets/js/settings-post-types.js',
-                ['react', 'react-dom'],
+                ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-element', 'wp-hooks', 'wp-api-fetch'],
                 POSTEXPIRATOR_VERSION,
                 true
             );
+
+            wp_enqueue_style('wp-components');
 
             $settingsPostTypesModelFactory = $this->settingsPostTypesModelFactory;
             $settingsModel = $settingsPostTypesModelFactory();
@@ -171,24 +173,14 @@ class Controller implements InitializableInterface
                             'post-expirator'
                         ),
                         'fieldActive' => __('Active', 'post-expirator'),
-                        'fieldActiveTrue' => __('Active', 'post-expirator'),
-                        'fieldActiveFalse' => __('Inactive', 'post-expirator'),
-                        'fieldActiveDescription' => __(
-                            'Select whether the PublishPress Future meta box is active for this post type.',
-                            'post-expirator'
-                        ),
+                        'fieldActiveLabel' => __('Activate PublishPress Future metabox for this post type', 'post-expirator'),
                         'fieldHowToExpire' => __('Action', 'post-expirator'),
                         'fieldHowToExpireDescription' => __(
                             'Select the default action for the post type.',
                             'post-expirator'
                         ),
                         'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
-                        'fieldAutoEnableTrue' => __('Enabled', 'post-expirator'),
-                        'fieldAutoEnableFalse' => __('Disabled', 'post-expirator'),
-                        'fieldAutoEnableDescription' => __(
-                            'Select whether the PublishPress Future is enabled for all new posts.',
-                            'post-expirator'
-                        ),
+                        'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
                         'fieldTaxonomy' => __('Taxonomy (Hierarchical)', 'post-expirator'),
                         'noItemsfound' => __('No taxonomies found', 'post-expirator'),
                         'fieldTaxonomyDescription' => __(
@@ -229,7 +221,6 @@ class Controller implements InitializableInterface
                     ),
                     'nonce' => wp_create_nonce('postexpirator_menu_defaults'),
                     'referrer' => esc_html(remove_query_arg('_wp_http_referer')),
-                    'restUrl' => get_rest_url(),
                 ]
             );
         }
@@ -272,13 +263,40 @@ class Controller implements InitializableInterface
             call_user_func([$this, $methodName]);
         }
 
-        $this->hooks->doAction(SettingsHooksAbstract::ACTION_SAVE_TAB . $tab);
+        $this->hooks->doAction(SettingsHooksAbstract::ACTION_SAVE_TAB_PREFIX . $tab);
     }
 
     public function initMigrations()
     {
         $factory = $this->migrationsFactory;
         $factory();
+    }
+
+    private function convertTermsToIds($taxonomy, $terms)
+    {
+        if (empty($terms)) {
+            return [];
+        }
+
+        $taxonomiesModelFactory = $this->taxonomiesModelFactory;
+        $taxonomiesModel = $taxonomiesModelFactory();
+
+        $terms = explode(',', $terms);
+        $terms = array_map(function($term) use ($taxonomy, $taxonomiesModel) {
+            $term = \sanitize_text_field($term);
+            $termId = $taxonomiesModel->getTermIdByName($taxonomy, $term);
+
+            if (! $termId) {
+                $termId = $taxonomiesModel->createTermAndReturnId(
+                    $taxonomy,
+                    $term
+                );
+            }
+
+            return $termId;
+        }, $terms);
+
+        return $terms;
     }
 
     private function saveTabDefaults()
@@ -318,6 +336,7 @@ class Controller implements InitializableInterface
                     $settings['terms'] = \sanitize_text_field($_POST['expirationdate_terms-' . $postType]);
                 }
 
+                $settings['activeMetaBox'] = '0';
                 if (isset($_POST['expirationdate_activemeta-' . $postType])) {
                     $settings['activeMetaBox'] = \sanitize_text_field($_POST['expirationdate_activemeta-' . $postType]);
                 }
@@ -327,6 +346,10 @@ class Controller implements InitializableInterface
                     $settings['emailnotification'] = trim(
                         \sanitize_text_field($_POST['expirationdate_emailnotification-' . $postType])
                     );
+                }
+
+                if (isset($settings['taxonomy']) && isset($settings['terms'])) {
+                    $settings['terms'] = $this->convertTermsToIds($settings['taxonomy'], $settings['terms']);
                 }
 
                 $settings['default-expire-type'] = 'custom';
@@ -356,5 +379,7 @@ class Controller implements InitializableInterface
             }
             // phpcs:enable
         }
+
+        $this->hooks->doAction(CoreAbstractHooks::ACTION_PURGE_PLUGIN_CACHE);
     }
 }
