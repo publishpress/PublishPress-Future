@@ -98,7 +98,7 @@ class Plugin implements InitializableInterface
             \PostExpirator_Cli::getInstance();
         }
 
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, 'manageUpgrade', 99);
+        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'manageUpgrade'], 99);
         $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, [$this, 'setDefaultMetaForPost'], 10, 3);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
 
