@@ -10,12 +10,6 @@ use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
-use PublishPress\Future\Modules\Expirator\Controllers\BulkActionController;
-use PublishPress\Future\Modules\Expirator\Controllers\BulkEditController;
-use PublishPress\Future\Modules\Expirator\Controllers\ClassicEditorController;
-use PublishPress\Future\Modules\Expirator\Controllers\ExpirationController;
-use PublishPress\Future\Modules\Expirator\Controllers\QuickEditController;
-use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -128,6 +122,7 @@ class Module implements ModuleInterface
         $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
         $this->controllers['classic_editor'] = $this->factoryClassicEditorController();
         $this->controllers['shortcode'] = $this->factoryShortcodeController();
+        $this->controllers['posts_list'] = $this->factoryPostsListController();
     }
 
 
@@ -143,7 +138,7 @@ class Module implements ModuleInterface
 
     private function factoryExpirationController()
     {
-        return new ExpirationController(
+        return new Controllers\ExpirationController(
             $this->hooks,
             $this->site,
             $this->cron,
@@ -156,7 +151,7 @@ class Module implements ModuleInterface
 
     private function factoryBulkEditController()
     {
-        return new BulkEditController(
+        return new Controllers\BulkEditController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
@@ -167,7 +162,7 @@ class Module implements ModuleInterface
 
     private function factoryQuickEditController()
     {
-        return new QuickEditController(
+        return new Controllers\QuickEditController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
@@ -178,7 +173,7 @@ class Module implements ModuleInterface
 
     private function factoryScheduledActionsController()
     {
-        return new ScheduledActionsController (
+        return new Controllers\ScheduledActionsController (
             $this->hooks,
             $this->actionArgsModelFactory,
             $this->scheduledActionsTableFactory
@@ -187,7 +182,7 @@ class Module implements ModuleInterface
 
     private function factoryBulkActionController()
     {
-        return new BulkActionController(
+        return new Controllers\BulkActionController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
@@ -199,7 +194,7 @@ class Module implements ModuleInterface
 
     private function factoryClassicEditorController()
     {
-        return new ClassicEditorController(
+        return new Controllers\ClassicEditorController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
@@ -211,6 +206,17 @@ class Module implements ModuleInterface
     private function factoryShortcodeController()
     {
         return new Controllers\ShortcodeController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
+        );
+    }
+
+    private function factoryPostsListController()
+    {
+        return new Controllers\PostListController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
