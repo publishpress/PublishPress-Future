@@ -47,31 +47,3 @@ function postexpirator_get_post_types()
     return $post_types;
 }
 
-function postexpirator_set_default_meta_for_post($postId, $post, $update)
-{
-    if ($update) {
-        return;
-    }
-
-    $container = Container::getInstance();
-    $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
-    $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
-
-    if (! $defaultDataModel->isAutoEnabled()) {
-        return;
-    }
-
-    $defaultExpire = $defaultDataModel->getActionDateParts();
-
-    if (empty($defaultExpire['ts'])) {
-        return;
-    }
-
-    $opts = [
-        'expireType' => $defaultDataModel->getAction(),
-        'category' => $defaultDataModel->getTerms(),
-        'categoryTaxonomy' => (string)$defaultDataModel->getTaxonomy(),
-    ];
-
-    do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $defaultExpire['ts'], $opts);
-}

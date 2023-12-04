@@ -99,7 +99,7 @@ class Plugin implements InitializableInterface
         }
 
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, 'manageUpgrade', 99);
-        $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, 'postexpirator_set_default_meta_for_post', 10, 3);
+        $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, [$this, 'setDefaultMetaForPost'], 10, 3);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
 
         $this->notices->init();
@@ -242,5 +242,39 @@ class Plugin implements InitializableInterface
         if ($version !== $currentVersion) {
             update_option('postexpiratorVersion', $currentVersion);
         }
+    }
+
+    public function setDefaultMetaForPost($postId, $post, $update)
+    {
+        if ($update) {
+            return;
+        }
+
+        $container = Container::getInstance();
+        $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+        $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
+
+        if (! $defaultDataModel->isAutoEnabled()) {
+            return;
+        }
+
+        $defaultExpire = $defaultDataModel->getActionDateParts();
+
+        if (empty($defaultExpire['ts'])) {
+            return;
+        }
+
+        $opts = [
+            'expireType' => $defaultDataModel->getAction(),
+            'category' => $defaultDataModel->getTerms(),
+            'categoryTaxonomy' => (string)$defaultDataModel->getTaxonomy(),
+        ];
+
+        $this->hooks->doAction(
+            ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION,
+            $postId,
+            $defaultExpire['ts'],
+            $opts
+        );
     }
 }
