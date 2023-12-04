@@ -10,7 +10,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
-use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
@@ -178,7 +178,12 @@ class Plugin implements InitializableInterface
                         $opts['expireType'] = 'category';
                     }
 
-                    do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $result->post_id, $result->meta_value, $opts);
+                    $this->hooks->doAction(
+                        ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION,
+                        $result->post_id,
+                        $result->meta_value,
+                        $opts
+                    );
                 }
 
                 // update meta key to new format
