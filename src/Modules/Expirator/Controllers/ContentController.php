@@ -68,7 +68,8 @@ class ContentController implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction('the_content', [$this, 'addFooterToContent'], 0);
+        $this->hooks->addFilter(ExpiratorHooks::FILTER_CONTENT_FOOTER, [$this, 'getFooterText'], 10, 2);
+        $this->hooks->addAction(ExpiratorHooks::ACTION_THE_CONTENT, [$this, 'addFooterToContent'], 0);
     }
 
     /**
@@ -103,12 +104,62 @@ class ContentController implements InitializableInterface
             return $content;
         }
 
-        $footerText = postexpirator_get_footer_text();
+        $footerText = $this->hooks->applyFilters(ExpiratorHooks::FILTER_CONTENT_FOOTER, '');
 
         $expirationdateFooterStyle = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
 
         $appendToFooter = '<p style="' . esc_attr($expirationdateFooterStyle) . '">' . esc_html($footerText) . '</p>';
 
         return $content . $appendToFooter;
+    }
+
+    public function getFooterText($content = '', $useDemoText = false)
+    {
+        if ($useDemoText) {
+            $expirationDate = time() + 60 * 60 * 24 * 7;
+        } else {
+            global $post;
+
+            $container = Container::getInstance();
+            $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+            $postModel = $factory($post->ID);
+
+            $expirationDate = $postModel->getExpirationDateAsUnixTime();
+        }
+
+        $dateformat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
+        $timeformat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
+        $expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
+
+
+        $search = [
+            // Deprecated placeholders
+            'EXPIRATIONFULL',
+            'EXPIRATIONDATE',
+            'EXPIRATIONTIME',
+            // New placeholders
+            'ACTIONFULL',
+            'ACTIONDATE',
+            'ACTIONTIME',
+        ];
+
+        $replace = [
+            // Deprecated placeholders
+            PostExpirator_Util::get_wp_date("$dateformat $timeformat", $expirationDate),
+            PostExpirator_Util::get_wp_date($dateformat, $expirationDate),
+            PostExpirator_Util::get_wp_date($timeformat, $expirationDate),
+            // New placeholders
+            PostExpirator_Util::get_wp_date("$dateformat $timeformat", $expirationDate),
+            PostExpirator_Util::get_wp_date($dateformat, $expirationDate),
+            PostExpirator_Util::get_wp_date($timeformat, $expirationDate)
+        ];
+
+        $content .= str_replace(
+            $search,
+            $replace,
+            $expirationdateFooterContents
+        );
+
+        return $content;
     }
 }

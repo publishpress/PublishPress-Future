@@ -37,6 +37,7 @@ abstract class HooksAbstract
     const ACTION_MANAGE_POSTS_CUSTOM_COLUMN = 'manage_posts_custom_column';
     const ACTION_MANAGE_PAGES_CUSTOM_COLUMN = 'manage_pages_custom_column';
     const ACTION_POSTS_ORDER_BY = 'posts_orderby';
+    const ACTION_THE_CONTENT = 'the_content';
     const FILTER_CUSTOM_EXPIRATION_TYPE = 'publishpressfuture_custom_expiration_type';
     const FILTER_LEGACY_TEMPLATE_PARAMS = 'publishpressfuture_legacy_template_params';
     const FILTER_LEGACY_TEMPLATE_FILE = 'publishpressfuture_legacy_template_file';
@@ -52,6 +53,7 @@ abstract class HooksAbstract
     const FILTER_MANAGE_POSTS_COLUMNS = 'manage_posts_columns';
     const FILTER_MANAGE_PAGES_COLUMNS = 'manage_pages_columns';
     const FILTER_POSTS_JOIN = 'posts_join';
+    const FILTER_CONTENT_FOOTER = 'publishpress_future/content_footer';
 
     public static function getActionLegacyMultisiteDelete($blogId)
     {

@@ -95,54 +95,6 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
     do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $defaultExpire['ts'], $opts);
 }
 
-function postexpirator_get_footer_text($useDemoText =  false)
-{
-    if ($useDemoText) {
-        $expirationDate = time() + 60 * 60 * 24 * 7;
-    } else {
-        global $post;
-
-        $container = Container::getInstance();
-        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-        $postModel = $factory($post->ID);
-
-        $expirationDate = $postModel->getExpirationDateAsUnixTime();
-    }
-
-    $dateformat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
-    $timeformat = get_option('expirationdateDefaultTimeFormat', POSTEXPIRATOR_TIMEFORMAT);
-    $expirationdateFooterContents = get_option('expirationdateFooterContents', POSTEXPIRATOR_FOOTERCONTENTS);
-
-
-    $search = [
-        // Deprecated placeholders
-        'EXPIRATIONFULL',
-        'EXPIRATIONDATE',
-        'EXPIRATIONTIME',
-        // New placeholders
-        'ACTIONFULL',
-        'ACTIONDATE',
-        'ACTIONTIME',
-    ];
-
-    $replace = [
-        // Deprecated placeholders
-        PostExpirator_Util::get_wp_date("$dateformat $timeformat", $expirationDate),
-        PostExpirator_Util::get_wp_date($dateformat, $expirationDate),
-        PostExpirator_Util::get_wp_date($timeformat, $expirationDate),
-        // New placeholders
-        PostExpirator_Util::get_wp_date("$dateformat $timeformat", $expirationDate),
-        PostExpirator_Util::get_wp_date($dateformat, $expirationDate),
-        PostExpirator_Util::get_wp_date($timeformat, $expirationDate)
-    ];
-
-    return str_replace(
-        $search,
-        $replace,
-        $expirationdateFooterContents
-    );
-}
-
 /**
  * Add Stylesheet
  *
