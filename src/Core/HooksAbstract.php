@@ -16,7 +16,6 @@ abstract class HooksAbstract
     const ACTION_ACTIVATE_PLUGIN = 'publishpressfuture_activate_plugin';
     const ACTION_DEACTIVATE_PLUGIN = 'publishpressfuture_deactivate_plugin';
     const ACTION_ADMIN_ENQUEUE_SCRIPT= 'admin_enqueue_scripts';
-    const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';
     const ACTION_INSERT_POST = 'wp_insert_post';
     const ACTION_PURGE_PLUGIN_CACHE = 'publishpressfuture_purge_plugin_cache';
     const ACTION_BULK_EDIT_CUSTOM_BOX = 'bulk_edit_custom_box';
@@ -25,4 +24,6 @@ abstract class HooksAbstract
     const ACTION_ADD_META_BOX = 'add_meta_boxes';
     const ACTION_ADMIN_PRINT_SCRIPTS_EDIT = 'admin_print_scripts-edit.php';
     const ACTION_ADMIN_ENQUEUE_SCRIPTS = 'admin_enqueue_scripts';
+    const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';
+    const FILTER_PLUGIN_ACTION_LINKS = 'plugin_action_links';
 }

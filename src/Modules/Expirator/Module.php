@@ -124,6 +124,7 @@ class Module implements ModuleInterface
         $this->controllers['shortcode'] = $this->factoryShortcodeController();
         $this->controllers['posts_list'] = $this->factoryPostsListController();
         $this->controllers['content'] = $this->factoryContentController();
+        $this->controllers['plugins_list'] = $this->factoryPluginsListController();
     }
 
 
@@ -234,6 +235,19 @@ class Module implements ModuleInterface
             $this->sanitization,
             $this->currentUserModelFactory,
             $this->request
+        );
+    }
+
+    private function factoryPluginsListController()
+    {
+        return new Controllers\PluginsListController(
+            $this->hooks,
+            $this->site,
+            $this->cron,
+            $this->scheduler,
+            $this->expirablePostModelFactory,
+            $this->settingsModelFactory,
+            $this->taxonomiesModelFactory
         );
     }
 }

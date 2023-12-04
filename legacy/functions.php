@@ -16,25 +16,6 @@ use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-/**
- * Adds links to the plugin listing screen.
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_plugin_action_links($links, $file)
-{
-    $this_plugin = basename(plugin_dir_url(__FILE__)) . '/post-expirator.php';
-    if ($file === $this_plugin) {
-        $links[] = '<a href="admin.php?page=publishpress-future">' . __('Settings', 'post-expirator') . '</a>';
-    }
-
-    return $links;
-}
-
-add_filter('plugin_action_links', 'postexpirator_plugin_action_links', 10, 2);
-
 
 /**
  * Returns the post types that are supported.
