@@ -5,11 +5,8 @@
 
 namespace PublishPress\Future\Modules\Expirator;
 
-use PublishPress\Future\Core\DI\Container;
-use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
-use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
@@ -20,7 +17,6 @@ use PublishPress\Future\Modules\Expirator\Controllers\ExpirationController;
 use PublishPress\Future\Modules\Expirator\Controllers\QuickEditController;
 use PublishPress\Future\Modules\Expirator\Controllers\ScheduledActionsController;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -131,6 +127,7 @@ class Module implements ModuleInterface
         $this->controllers['bulk_action'] = $this->factoryBulkActionController();
         $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
         $this->controllers['classic_editor'] = $this->factoryClassicEditorController();
+        $this->controllers['shortcode'] = $this->factoryShortcodeController();
     }
 
 
@@ -203,6 +200,17 @@ class Module implements ModuleInterface
     private function factoryClassicEditorController()
     {
         return new ClassicEditorController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
+        );
+    }
+
+    private function factoryShortcodeController()
+    {
+        return new Controllers\ShortcodeController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
