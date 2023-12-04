@@ -76,6 +76,7 @@ class PostListController implements InitializableInterface
         $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
         $this->hooks->addAction(ExpiratorHooks::ACTION_ADMIN_INIT, [$this, 'manageSortableColumns'], 100);
         $this->hooks->addAction(ExpiratorHooks::ACTION_POSTS_ORDER_BY, [$this, 'orderByExpirationDate'], 10, 2);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS, [$this, 'enqueueScripts']);
     }
 
     /**
@@ -195,5 +196,17 @@ class PostListController implements InitializableInterface
         }
 
         return $join;
+    }
+
+    public function enqueueScripts($screenId)
+    {
+        if ('edit.php' === $screenId) {
+            wp_enqueue_style(
+                'postexpirator-edit',
+                POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
+                false,
+                POSTEXPIRATOR_VERSION
+            );
+        }
     }
 }

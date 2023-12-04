@@ -91,41 +91,6 @@ class PostExpirator_Facade
     }
 
     /**
-     * Loads the assets for the particular page.
-     */
-    public static function load_assets($for)
-    {
-        switch ($for) {
-            case 'settings':
-                wp_enqueue_style(
-                    'pe-footer',
-                    POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
-                    false,
-                    POSTEXPIRATOR_VERSION
-                );
-                wp_enqueue_style(
-                    'pe-settings',
-                    POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
-                    ['pe-footer'],
-                    POSTEXPIRATOR_VERSION
-                );
-                wp_enqueue_style(
-                    'pe-jquery-ui',
-                    POSTEXPIRATOR_BASEURL . 'assets/css/lib/jquery-ui/jquery-ui.min.css',
-                    ['pe-settings'],
-                    POSTEXPIRATOR_VERSION
-                );
-                wp_enqueue_style(
-                    'pp-wordpress-banners-style',
-                    POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
-                    false,
-                    POSTEXPIRATOR_VERSION
-                );
-                break;
-        }
-    }
-
-    /**
      * Get the expiry type, categories etc.
      *
      * Keeps in mind the old (classic editor) and new (gutenberg) structure.

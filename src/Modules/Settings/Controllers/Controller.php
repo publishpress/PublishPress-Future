@@ -138,8 +138,37 @@ class Controller implements InitializableInterface
         return $optionsList;
     }
 
-    public function onAdminEnqueueScript()
+    public function onAdminEnqueueScript($screenId)
     {
+        if ($screenId !== 'toplevel_page_publishpress-future') {
+            return;
+        }
+
+        wp_enqueue_style(
+            'pe-footer',
+            POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
+            false,
+            POSTEXPIRATOR_VERSION
+        );
+        wp_enqueue_style(
+            'pe-settings',
+            POSTEXPIRATOR_BASEURL . 'assets/css/settings.css',
+            ['pe-footer'],
+            POSTEXPIRATOR_VERSION
+        );
+        wp_enqueue_style(
+            'pe-jquery-ui',
+            POSTEXPIRATOR_BASEURL . 'assets/css/lib/jquery-ui/jquery-ui.min.css',
+            ['pe-settings'],
+            POSTEXPIRATOR_VERSION
+        );
+        wp_enqueue_style(
+            'pp-wordpress-banners-style',
+            POSTEXPIRATOR_BASEURL . 'assets/vendor/wordpress-banners/css/style.css',
+            false,
+            POSTEXPIRATOR_VERSION
+        );
+
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
         if (
             (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')

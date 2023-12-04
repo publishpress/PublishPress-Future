@@ -96,46 +96,6 @@ function postexpirator_set_default_meta_for_post($postId, $post, $update)
 }
 
 /**
- * Add Stylesheet
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_css($screen_id)
-{
-    switch ($screen_id) {
-        case 'post.php':
-        case 'post-new.php':
-        case 'settings_page_post-expirator':
-        case 'future_page_publishpress-future-scheduled-actions':
-            wp_enqueue_style(
-                'postexpirator-css',
-                POSTEXPIRATOR_BASEURL . 'assets/css/style.css',
-                false,
-                POSTEXPIRATOR_VERSION
-            );
-            wp_enqueue_style(
-                'pe-footer',
-                POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
-                false,
-                POSTEXPIRATOR_VERSION
-            );
-            break;
-        case 'edit.php':
-            wp_enqueue_style(
-                'postexpirator-edit',
-                POSTEXPIRATOR_BASEURL . 'assets/css/edit.css',
-                false,
-                POSTEXPIRATOR_VERSION
-            );
-            break;
-    }
-}
-
-add_action('admin_enqueue_scripts', 'postexpirator_css', 10, 1);
-
-/**
  * PublishPress Future Activation/Upgrade
  *
  * @internal

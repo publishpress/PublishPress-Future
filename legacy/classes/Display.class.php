@@ -88,8 +88,6 @@ class PostExpirator_Display
             wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
         }
 
-        PostExpirator_Facade::load_assets('settings');
-
         $allowed_tabs = array('general', 'display', 'defaults', 'advanced', 'diagnostics', 'viewdebug', );
 
         $allowed_tabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
