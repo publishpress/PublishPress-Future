@@ -427,4 +427,9 @@ class_alias(
     'PublishPressFuture\\Modules\\Debug\\Controllers\\Controller'
 );
 
+class_alias(
+    'PublishPress\Future\Modules\Expirator\Models\PostTypesModel',
+    'PublishPress\Future\Modules\Expirator\Models\PostTypes'
+);
+
 require_once __DIR__ . '/deprecated-functions.php';

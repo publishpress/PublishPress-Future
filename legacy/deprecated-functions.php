@@ -1,6 +1,8 @@
 <?php
 
+use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -388,4 +390,18 @@ function _postexpirator_taxonomy($opts)
     ];
 
     return PostExpirator_Display::getInstance()->get_rendered_template('taxonomy-field', $params);
+}
+
+if (! function_exists('postexpirator_get_post_types')) {
+    /**
+     * @deprecated 3.1.4
+     */
+    function postexpirator_get_post_types(): array
+    {
+        _deprecated_function(__FUNCTION__, '3.1.4', 'Use the PostTypesModel class instead');
+
+        $model = new PostTypesModel(Container::getInstance());
+
+        return $model->getPostTypes();
+    }
 }
