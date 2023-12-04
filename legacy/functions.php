@@ -144,52 +144,6 @@ function postexpirator_get_footer_text($useDemoText =  false)
 }
 
 /**
- * Add the footer.
- *
- * @internal
- *
- * @access private
- */
-function postexpirator_add_footer($text)
-{
-    global $post;
-
-    // Check to see if its enabled
-    $displayFooter = (bool) get_option('expirationdateDisplayFooter');
-
-    // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
-    if (! $displayFooter || empty($post)) {
-        return $text;
-    }
-
-    $container = Container::getInstance();
-    $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-    $postModel = $factory($post->ID);
-
-    $enabled = $postModel->isExpirationEnabled();
-
-    if (empty($enabled)) {
-        return $text;
-    }
-
-    $expirationDate = $postModel->getExpirationDateAsUnixTime();
-    if (! is_numeric($expirationDate)) {
-        return $text;
-    }
-
-    $footerText = postexpirator_get_footer_text();
-
-    $expirationdateFooterStyle = get_option('expirationdateFooterStyle', POSTEXPIRATOR_FOOTERSTYLE);
-
-    $appendToFooter = '<p style="' . esc_attr($expirationdateFooterStyle) . '">' . esc_html($footerText) . '</p>';
-
-    return $text . $appendToFooter;
-}
-
-add_action('the_content', 'postexpirator_add_footer', 0);
-
-
-/**
  * Add Stylesheet
  *
  * @internal

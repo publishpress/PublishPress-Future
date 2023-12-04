@@ -123,6 +123,7 @@ class Module implements ModuleInterface
         $this->controllers['classic_editor'] = $this->factoryClassicEditorController();
         $this->controllers['shortcode'] = $this->factoryShortcodeController();
         $this->controllers['posts_list'] = $this->factoryPostsListController();
+        $this->controllers['content'] = $this->factoryContentController();
     }
 
 
@@ -217,6 +218,17 @@ class Module implements ModuleInterface
     private function factoryPostsListController()
     {
         return new Controllers\PostListController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
+        );
+    }
+
+    private function factoryContentController()
+    {
+        return new Controllers\ContentController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
