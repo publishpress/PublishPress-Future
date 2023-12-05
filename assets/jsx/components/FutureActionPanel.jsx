@@ -211,15 +211,6 @@ export const FutureActionPanel = (props) => {
             )}
             {enabled && (
                 <Fragment>
-                    <PanelRow className={'future-action-date-panel'}>
-                        <DateTimePicker
-                            currentDate={date}
-                            onChange={handleDateChange}
-                            __nextRemoveHelpButton={true}
-                            is12Hour={props.is12hours}
-                            startOfWeek={props.startOfWeek}
-                        />
-                    </PanelRow>
                     <SelectControl
                         label={props.strings.action}
                         value={action}
@@ -255,6 +246,16 @@ export const FutureActionPanel = (props) => {
                             )
                         )
                     }
+
+                    <PanelRow className={'future-action-date-panel'}>
+                        <DateTimePicker
+                            currentDate={date}
+                            onChange={handleDateChange}
+                            __nextRemoveHelpButton={true}
+                            is12Hour={props.is12hours}
+                            startOfWeek={props.startOfWeek}
+                        />
+                    </PanelRow>
                 </Fragment>
             )}
         </Fragment>

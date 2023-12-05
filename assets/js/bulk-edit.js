@@ -347,17 +347,6 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         enabled && React.createElement(
             Fragment,
             null,
-            React.createElement(
-                PanelRow,
-                { className: 'future-action-date-panel' },
-                React.createElement(DateTimePicker, {
-                    currentDate: date,
-                    onChange: handleDateChange,
-                    __nextRemoveHelpButton: true,
-                    is12Hour: props.is12hours,
-                    startOfWeek: props.startOfWeek
-                })
-            ),
             React.createElement(SelectControl, {
                 label: props.strings.action,
                 value: action,
@@ -387,7 +376,18 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 suggestions: termsListByNameKeys,
                 onChange: handleTermsChange,
                 maxSuggestions: 10
-            }))
+            })),
+            React.createElement(
+                PanelRow,
+                { className: 'future-action-date-panel' },
+                React.createElement(DateTimePicker, {
+                    currentDate: date,
+                    onChange: handleDateChange,
+                    __nextRemoveHelpButton: true,
+                    is12Hour: props.is12hours,
+                    startOfWeek: props.startOfWeek
+                })
+            )
         )
     );
 };
