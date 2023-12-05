@@ -75,6 +75,10 @@ class TaxonomiesModel
             $newTerms = array_map(function($newTerm) use ($taxonomy) {
                 $newTerm = wp_insert_term($newTerm, $taxonomy);
 
+                if (is_wp_error($newTerm) && $newTerm->get_error_code() === 'term_exists') {
+                    return $newTerm->get_error_data('term_exists');
+                }
+
                 return $newTerm['term_id'];
             }, $newTerms);
 
