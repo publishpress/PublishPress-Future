@@ -55,6 +55,7 @@ div.pe-qe-fields > div {
 .future-action-help-text {
     color: #a6a6a6;
     font-style: italic;
+    line-height: 20px;
 }
 
 #publishpress-future-bulk-edit,
@@ -62,6 +63,7 @@ div.pe-qe-fields > div {
     max-width: 340px;
     padding: 14px;
     border: 1px solid #ddd;
+    margin-bottom: 20px;
 }
 
 #publishpress-future-bulk-edit label,

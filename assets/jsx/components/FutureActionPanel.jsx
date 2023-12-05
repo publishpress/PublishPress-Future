@@ -165,7 +165,7 @@ export const FutureActionPanel = (props) => {
     }
 
     const getCalendarIsVisibleFromStorage = () => {
-        return localStorage.getItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context) === '1';
+        return localStorage.getItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context);
     }
 
     useEffect(() => {
@@ -179,8 +179,12 @@ export const FutureActionPanel = (props) => {
         setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
-// TODO: FIX the default value coming from the props, if value is not set on storage
-        setCalendarIsVisible(props.calendarIsVisible);
+
+        if (getCalendarIsVisibleFromStorage() === null) {
+            setCalendarIsVisible(props.calendarIsVisible);
+        } else {
+            setCalendarIsVisible(getCalendarIsVisibleFromStorage() === '1');
+        }
 
         // We need to get the value directly from the props because the value from the store is not updated yet
         if (props.enabled) {

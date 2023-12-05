@@ -308,7 +308,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     };
 
     var getCalendarIsVisibleFromStorage = function getCalendarIsVisibleFromStorage() {
-        return localStorage.getItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context) === '1';
+        return localStorage.getItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context);
     };
 
     useEffect(function () {
@@ -323,13 +323,10 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
-        // Initialize the calendarIsVisible, using the default value if it is not set on the localStorage
-        var calendarIsVisibleFromStorage = getCalendarIsVisibleFromStorage();
-        console.log('calendarIsVisibleFromStorage', calendarIsVisibleFromStorage);
-        if (null === calendarIsVisibleFromStorage) {
+        if (getCalendarIsVisibleFromStorage() === null) {
             setCalendarIsVisible(props.calendarIsVisible);
         } else {
-            setCalendarIsVisible(calendarIsVisibleFromStorage);
+            setCalendarIsVisible(getCalendarIsVisibleFromStorage() === '1');
         }
 
         // We need to get the value directly from the props because the value from the store is not updated yet
@@ -344,7 +341,6 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     }, []);
 
     useEffect(function () {
-        console.log('useEffect calendarIsVisible', calendarIsVisible);
         storeCalendarIsVisibleOnStorage(calendarIsVisible);
     }, [calendarIsVisible]);
 
