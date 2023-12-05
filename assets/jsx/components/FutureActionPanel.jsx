@@ -1,7 +1,8 @@
 import { compact } from '../utils';
+import { ToggleArrowButton } from './ToggleArrowButton';
 
 const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner } = wp.components;
-const { Fragment, useEffect } = wp.element;
+const { Fragment, useEffect, useState } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 const { addQueryArgs } = wp.url;
 const {
@@ -20,6 +21,7 @@ export const FutureActionPanel = (props) => {
     const termsListByName = useSelect((select) => select(props.storeName).getTermsListByName(), []);
     const termsListById = useSelect((select) => select(props.storeName).getTermsListById(), []);
     const isFetchingTerms = useSelect((select) => select(props.storeName).getIsFetchingTerms(), []);
+    const calendarIsVisible = useSelect((select) => select(props.storeName).getCalendarIsVisible(), []);
 
     const {
         setAction,
@@ -30,7 +32,8 @@ export const FutureActionPanel = (props) => {
         setTermsListByName,
         setTermsListById,
         setTaxonomyName,
-        setIsFetchingTerms
+        setIsFetchingTerms,
+        setCalendarIsVisible
     } = useDispatch(props.storeName);
 
     const mapTermsListById = (terms) => {
@@ -157,6 +160,14 @@ export const FutureActionPanel = (props) => {
         }
     }
 
+    const storeCalendarIsVisibleOnStorage = (value) => {
+        localStorage.setItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context, value ? '1' : '0');
+    }
+
+    const getCalendarIsVisibleFromStorage = () => {
+        return localStorage.getItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context) === '1';
+    }
+
     useEffect(() => {
         if (props.autoEnableAndHideCheckbox)  {
             setEnabled(true);
@@ -169,6 +180,14 @@ export const FutureActionPanel = (props) => {
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
+        // Initialize the calendarIsVisible, using the default value if it is not set on the localStorage
+        const calendarIsVisibleFromStorage = getCalendarIsVisibleFromStorage();
+        if (null === calendarIsVisibleFromStorage) {
+            setCalendarIsVisible(props.calendarIsVisible);
+        } else {
+            setCalendarIsVisible(calendarIsVisibleFromStorage);
+        }
+
         // We need to get the value directly from the props because the value from the store is not updated yet
         if (props.enabled) {
             if (props.isCleanNewPost) {
@@ -179,6 +198,10 @@ export const FutureActionPanel = (props) => {
             fetchTerms();
         }
     }, []);
+
+    useEffect(() => {
+        storeCalendarIsVisibleOnStorage(calendarIsVisible);
+    }, [calendarIsVisible]);
 
     let selectedTerms = [];
     if (terms && terms.length > 0 && termsListById) {
@@ -194,8 +217,12 @@ export const FutureActionPanel = (props) => {
         termsListByNameKeys = Object.keys(termsListByName);
     }
 
+    const panelClass = calendarIsVisible ? 'future-action-panel' : 'future-action-panel hidden-calendar';
+    const contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
+    const datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
+
     return (
-        <Fragment>
+        <div className={panelClass}>
             {props.autoEnableAndHideCheckbox && (
                 <input type="hidden" name={'future_action_enabled'} value={1} />
             )}
@@ -209,8 +236,9 @@ export const FutureActionPanel = (props) => {
                     />
                 </PanelRow>
             )}
+
             {enabled && (
-                <Fragment>
+                <div className={contentPanelClass}>
                     <SelectControl
                         label={props.strings.action}
                         value={action}
@@ -247,7 +275,14 @@ export const FutureActionPanel = (props) => {
                         )
                     }
 
-                    <PanelRow className={'future-action-date-panel'}>
+                    <ToggleArrowButton
+                        className="future-action-calendar-toggle"
+                        isExpanded={calendarIsVisible}
+                        iconExpanded="arrow-up-alt2"
+                        iconCollapsed="calendar"
+                        onClick={() => setCalendarIsVisible(!calendarIsVisible)} />
+
+                    <PanelRow className={datePanelClass}>
                         <DateTimePicker
                             currentDate={date}
                             onChange={handleDateChange}
@@ -256,8 +291,8 @@ export const FutureActionPanel = (props) => {
                             startOfWeek={props.startOfWeek}
                         />
                     </PanelRow>
-                </Fragment>
+                </div>
             )}
-        </Fragment>
+        </div>
     );
 };

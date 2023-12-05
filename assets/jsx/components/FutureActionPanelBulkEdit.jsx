@@ -54,11 +54,13 @@ export const FutureActionPanelBulkEdit = (props) => {
 
             {optionsToDisplayPanel.includes(changeAction) && (
                 <FutureActionPanel
+                    context={'bulk-edit'}
                     autoEnableAndHideCheckbox={true}
                     postType={props.postType}
                     isCleanNewPost={props.isNewPost}
                     actionsSelectOptions={props.actionsSelectOptions}
                     enabled={true}
+                    calendarIsVisible={false}
                     action={action}
                     date={date}
                     terms={terms}

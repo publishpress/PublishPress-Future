@@ -22,6 +22,7 @@ export const createStore = (props) => {
         taxonomyName: null,
         isFetchingTerms: false,
         changeAction: 'no-change',
+        calendarIsVisible: true,
     }
 
     const store = createReduxStore(props.name, {
@@ -71,6 +72,11 @@ export const createStore = (props) => {
                     return {
                         ...state,
                         changeAction: action.changeAction,
+                    }
+                case 'SET_CALENDAR_IS_VISIBLE':
+                    return {
+                        ...state,
+                        calendarIsVisible: action.calendarIsVisible,
                     }
             }
 
@@ -136,6 +142,12 @@ export const createStore = (props) => {
                     type: 'SET_CHANGE_ACTION',
                     changeAction: changeAction
                 }
+            },
+            setCalendarIsVisible(calendarIsVisible) {
+                return {
+                    type: 'SET_CALENDAR_IS_VISIBLE',
+                    calendarIsVisible: calendarIsVisible
+                }
             }
         },
         selectors: {
@@ -168,6 +180,9 @@ export const createStore = (props) => {
             },
             getChangeAction(state) {
                 return state.changeAction;
+            },
+            getCalendarIsVisible(state) {
+                return state.calendarIsVisible;
             }
         }
     });

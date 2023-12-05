@@ -19,10 +19,12 @@ export const FutureActionPanelQuickEdit = (props) => {
     return (
         <div className={'post-expirator-panel'}>
             <FutureActionPanel
+                context={'quick-edit'}
                 postType={props.postType}
                 isCleanNewPost={props.isNewPost}
                 actionsSelectOptions={props.actionsSelectOptions}
                 enabled={enabled}
+                calendarIsVisible={false}
                 action={action}
                 date={date}
                 terms={terms}

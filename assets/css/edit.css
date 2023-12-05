@@ -59,6 +59,17 @@ div.pe-qe-fields > div {
     border: 1px solid #ddd;
 }
 
+
+#publishpress-future-bulk-edit .future-action-panel-content,
+#publishpress-future-quick-edit .future-action-panel-content {
+    padding-bottom: 0;
+}
+
+#publishpress-future-bulk-edit .future-action-panel-content.hidden-calendar,
+#publishpress-future-quick-edit .future-action-panel-content.hidden-calendar {
+    padding-bottom: 33px;
+}
+
 #publishpress-future-bulk-edit label,
 #publishpress-future-quick-edit label {
     display: inline-block;
@@ -76,4 +87,61 @@ div.pe-qe-fields > div {
 
 #publishpress-future-quick-edit .components-datetime__date {
     padding: 4px;
+}
+
+#publishpress-future-classic-editor .future-action-panel-content,
+#publishpress-future-bulk-edit .future-action-panel-content,
+#publishpress-future-quick-edit .future-action-panel-content,
+#publishpress-future-block-editor .future-action-panel-content {
+    position: relative;
+}
+
+#publishpress-future-classic-editor .components-datetime__date,
+#publishpress-future-bulk-edit .components-datetime__date,
+#publishpress-future-quick-edit .components-datetime__date,
+#publishpress-future-block-editor .components-datetime__date {
+    margin-top: 28px;
+}
+
+.future-action-date-panel.hidden-calendar .components-datetime__date {
+    display: none;
+}
+
+#publishpress-future-classic-editor .future-action-panel-content {
+    padding-bottom: 0;
+}
+
+#publishpress-future-block-editor .future-action-panel-content.hidden-calendar {
+    padding-bottom: 32px;
+}
+
+#publishpress-future-classic-editor .future-action-panel-content.hidden-calendar {
+    padding-bottom: 40px;
+}
+
+#publishpress-future-classic-editor .components-datetime,
+#publishpress-future-bulk-edit .components-datetime,
+#publishpress-future-quick-edit .components-datetime,
+#publishpress-future-block-editor .components-datetime {
+    width: 100%;
+}
+
+.future-action-calendar-toggle {
+    position: absolute;
+    left: calc(50% - 15px);
+    border: 1px solid #cbcbcb !important;
+    background: #f4f4f4 !important;
+    text-align: center;
+}
+
+#publishpress-future-block-editor .future-action-calendar-toggle {
+    top: 208px;
+    width: 30px;
+}
+
+#publishpress-future-classic-editor .future-action-calendar-toggle,
+#publishpress-future-bulk-edit .future-action-calendar-toggle,
+#publishpress-future-quick-edit .future-action-calendar-toggle {
+    top: 212px;
+    width: 30px;
 }

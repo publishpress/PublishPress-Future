@@ -112,6 +112,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
 
+var _ToggleArrowButton = __webpack_require__(/*! ./ToggleArrowButton */ "./assets/jsx/components/ToggleArrowButton.jsx");
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var _wp$components = wp.components,
@@ -123,7 +125,8 @@ var _wp$components = wp.components,
     Spinner = _wp$components.Spinner;
 var _wp$element = wp.element,
     Fragment = _wp$element.Fragment,
-    useEffect = _wp$element.useEffect;
+    useEffect = _wp$element.useEffect,
+    useState = _wp$element.useState;
 var decodeEntities = wp.htmlEntities.decodeEntities;
 var addQueryArgs = wp.url.addQueryArgs;
 var _wp$data = wp.data,
@@ -159,6 +162,9 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var isFetchingTerms = useSelect(function (select) {
         return select(props.storeName).getIsFetchingTerms();
     }, []);
+    var calendarIsVisible = useSelect(function (select) {
+        return select(props.storeName).getCalendarIsVisible();
+    }, []);
 
     var _useDispatch = useDispatch(props.storeName),
         setAction = _useDispatch.setAction,
@@ -169,7 +175,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setTermsListByName = _useDispatch.setTermsListByName,
         setTermsListById = _useDispatch.setTermsListById,
         setTaxonomyName = _useDispatch.setTaxonomyName,
-        setIsFetchingTerms = _useDispatch.setIsFetchingTerms;
+        setIsFetchingTerms = _useDispatch.setIsFetchingTerms,
+        setCalendarIsVisible = _useDispatch.setCalendarIsVisible;
 
     var mapTermsListById = function mapTermsListById(terms) {
         if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) !== 'object' || terms === null) {
@@ -294,6 +301,14 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         }
     };
 
+    var storeCalendarIsVisibleOnStorage = function storeCalendarIsVisibleOnStorage(value) {
+        localStorage.setItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context, value ? '1' : '0');
+    };
+
+    var getCalendarIsVisibleFromStorage = function getCalendarIsVisibleFromStorage() {
+        return localStorage.getItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context) === '1';
+    };
+
     useEffect(function () {
         if (props.autoEnableAndHideCheckbox) {
             setEnabled(true);
@@ -306,6 +321,14 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
 
+        // Initialize the calendarIsVisible, using the default value if it is not set on the localStorage
+        var calendarIsVisibleFromStorage = getCalendarIsVisibleFromStorage();
+        if (null === calendarIsVisibleFromStorage) {
+            setCalendarIsVisible(props.calendarIsVisible);
+        } else {
+            setCalendarIsVisible(calendarIsVisibleFromStorage);
+        }
+
         // We need to get the value directly from the props because the value from the store is not updated yet
         if (props.enabled) {
             if (props.isCleanNewPost) {
@@ -316,6 +339,10 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             fetchTerms();
         }
     }, []);
+
+    useEffect(function () {
+        storeCalendarIsVisibleOnStorage(calendarIsVisible);
+    }, [calendarIsVisible]);
 
     var selectedTerms = [];
     if (terms && terms.length > 0 && termsListById) {
@@ -331,9 +358,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         termsListByNameKeys = Object.keys(termsListByName);
     }
 
+    var panelClass = calendarIsVisible ? 'future-action-panel' : 'future-action-panel hidden-calendar';
+    var contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
+    var datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
+
     return React.createElement(
-        Fragment,
-        null,
+        'div',
+        { className: panelClass },
         props.autoEnableAndHideCheckbox && React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: 1 }),
         !props.autoEnableAndHideCheckbox && React.createElement(
             PanelRow,
@@ -345,8 +376,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             })
         ),
         enabled && React.createElement(
-            Fragment,
-            null,
+            'div',
+            { className: contentPanelClass },
             React.createElement(SelectControl, {
                 label: props.strings.action,
                 value: action,
@@ -377,9 +408,17 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 onChange: handleTermsChange,
                 maxSuggestions: 10
             })),
+            React.createElement(_ToggleArrowButton.ToggleArrowButton, {
+                className: 'future-action-calendar-toggle',
+                isExpanded: calendarIsVisible,
+                iconExpanded: 'arrow-up-alt2',
+                iconCollapsed: 'calendar',
+                onClick: function onClick() {
+                    return setCalendarIsVisible(!calendarIsVisible);
+                } }),
             React.createElement(
                 PanelRow,
-                { className: 'future-action-date-panel' },
+                { className: datePanelClass },
                 React.createElement(DateTimePicker, {
                     currentDate: date,
                     onChange: handleDateChange,
@@ -486,20 +525,26 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
             icon: 'calendar',
             initialOpen: props.postTypeDefaultConfig.autoEnable,
             className: 'post-expirator-panel' },
-        React.createElement(_.FutureActionPanel, {
-            postType: props.postType,
-            isCleanNewPost: props.isCleanNewPost,
-            actionsSelectOptions: props.actionsSelectOptions,
-            enabled: data.enabled,
-            action: data.action,
-            date: data.date,
-            terms: data.terms,
-            taxonomy: data.taxonomy,
-            onChangeData: onChangeData,
-            is12hours: props.is12hours,
-            startOfWeek: props.startOfWeek,
-            storeName: props.storeName,
-            strings: props.strings })
+        React.createElement(
+            'div',
+            { id: 'publishpress-future-block-editor' },
+            React.createElement(_.FutureActionPanel, {
+                context: 'block-editor',
+                postType: props.postType,
+                isCleanNewPost: props.isCleanNewPost,
+                actionsSelectOptions: props.actionsSelectOptions,
+                enabled: data.enabled,
+                calendarIsVisible: true,
+                action: data.action,
+                date: data.date,
+                terms: data.terms,
+                taxonomy: data.taxonomy,
+                onChangeData: onChangeData,
+                is12hours: props.is12hours,
+                startOfWeek: props.startOfWeek,
+                storeName: props.storeName,
+                strings: props.strings })
+        )
     );
 };
 
@@ -585,11 +630,13 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
             onChange: handleStrategyChange
         }),
         optionsToDisplayPanel.includes(changeAction) && React.createElement(_.FutureActionPanel, {
+            context: 'bulk-edit',
             autoEnableAndHideCheckbox: true,
             postType: props.postType,
             isCleanNewPost: props.isNewPost,
             actionsSelectOptions: props.actionsSelectOptions,
             enabled: true,
+            calendarIsVisible: false,
             action: action,
             date: date,
             terms: terms,
@@ -659,10 +706,12 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
         'div',
         { className: 'post-expirator-panel' },
         React.createElement(_.FutureActionPanel, {
+            context: 'classic-editor',
             postType: props.postType,
             isCleanNewPost: props.isNewPost,
             actionsSelectOptions: props.actionsSelectOptions,
             enabled: data.enabled,
+            calendarIsVisible: true,
             action: data.action,
             date: data.date,
             terms: data.terms,
@@ -725,10 +774,12 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
         'div',
         { className: 'post-expirator-panel' },
         React.createElement(_.FutureActionPanel, {
+            context: 'quick-edit',
             postType: props.postType,
             isCleanNewPost: props.isNewPost,
             actionsSelectOptions: props.actionsSelectOptions,
             enabled: enabled,
+            calendarIsVisible: false,
             action: action,
             date: date,
             terms: terms,
@@ -1406,6 +1457,42 @@ var TextControl = exports.TextControl = function TextControl(props) {
 
 /***/ }),
 
+/***/ "./assets/jsx/components/ToggleArrowButton.jsx":
+/*!*****************************************************!*\
+  !*** ./assets/jsx/components/ToggleArrowButton.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+var ToggleArrowButton = exports.ToggleArrowButton = function ToggleArrowButton(props) {
+    var Button = wp.components.Button;
+
+
+    var onClick = function onClick() {
+        if (props.onClick) {
+            props.onClick();
+        }
+    };
+
+    var iconExpanded = props.iconExpanded ? props.iconExpanded : 'arrow-up-alt2';
+    var iconCollapsed = props.iconCollapsed ? props.iconCollapsed : 'arrow-down-alt2';
+
+    var icon = props.isExpanded ? iconExpanded : iconCollapsed;
+
+    return React.createElement(Button, {
+        isSmall: true,
+        icon: icon,
+        onClick: onClick,
+        className: props.className
+    });
+};
+
+/***/ }),
+
 /***/ "./assets/jsx/components/TokensControl.jsx":
 /*!*************************************************!*\
   !*** ./assets/jsx/components/TokensControl.jsx ***!
@@ -1791,7 +1878,8 @@ var createStore = exports.createStore = function createStore(props) {
         termsListById: null,
         taxonomyName: null,
         isFetchingTerms: false,
-        changeAction: 'no-change'
+        changeAction: 'no-change',
+        calendarIsVisible: true
     };
 
     var store = createReduxStore(props.name, {
@@ -1835,6 +1923,10 @@ var createStore = exports.createStore = function createStore(props) {
                 case 'SET_CHANGE_ACTION':
                     return _extends({}, state, {
                         changeAction: action.changeAction
+                    });
+                case 'SET_CALENDAR_IS_VISIBLE':
+                    return _extends({}, state, {
+                        calendarIsVisible: action.calendarIsVisible
                     });
             }
 
@@ -1901,6 +1993,12 @@ var createStore = exports.createStore = function createStore(props) {
                     type: 'SET_CHANGE_ACTION',
                     changeAction: changeAction
                 };
+            },
+            setCalendarIsVisible: function setCalendarIsVisible(calendarIsVisible) {
+                return {
+                    type: 'SET_CALENDAR_IS_VISIBLE',
+                    calendarIsVisible: calendarIsVisible
+                };
             }
         },
         selectors: {
@@ -1933,6 +2031,9 @@ var createStore = exports.createStore = function createStore(props) {
             },
             getChangeAction: function getChangeAction(state) {
                 return state.changeAction;
+            },
+            getCalendarIsVisible: function getCalendarIsVisible(state) {
+                return state.calendarIsVisible;
             }
         }
     });

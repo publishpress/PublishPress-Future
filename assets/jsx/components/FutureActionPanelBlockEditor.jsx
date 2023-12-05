@@ -45,20 +45,24 @@ export const FutureActionPanelBlockEditor = (props) => {
             icon="calendar"
             initialOpen={props.postTypeDefaultConfig.autoEnable}
             className={'post-expirator-panel'}>
-            <FutureActionPanel
-                postType={props.postType}
-                isCleanNewPost={props.isCleanNewPost}
-                actionsSelectOptions={props.actionsSelectOptions}
-                enabled={data.enabled}
-                action={data.action}
-                date={data.date}
-                terms={data.terms}
-                taxonomy={data.taxonomy}
-                onChangeData={onChangeData}
-                is12hours={props.is12hours}
-                startOfWeek={props.startOfWeek}
-                storeName={props.storeName}
-                strings={props.strings} />
+            <div id='publishpress-future-block-editor'>
+                <FutureActionPanel
+                    context={'block-editor'}
+                    postType={props.postType}
+                    isCleanNewPost={props.isCleanNewPost}
+                    actionsSelectOptions={props.actionsSelectOptions}
+                    enabled={data.enabled}
+                    calendarIsVisible={true}
+                    action={data.action}
+                    date={data.date}
+                    terms={data.terms}
+                    taxonomy={data.taxonomy}
+                    onChangeData={onChangeData}
+                    is12hours={props.is12hours}
+                    startOfWeek={props.startOfWeek}
+                    storeName={props.storeName}
+                    strings={props.strings} />
+            </div>
         </PluginDocumentSettingPanel>
     );
 };

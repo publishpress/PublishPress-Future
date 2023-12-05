@@ -29,10 +29,12 @@ export const FutureActionPanelClassicEditor = (props) => {
     return (
         <div className={'post-expirator-panel'}>
             <FutureActionPanel
+                context={'classic-editor'}
                 postType={props.postType}
                 isCleanNewPost={props.isNewPost}
                 actionsSelectOptions={props.actionsSelectOptions}
                 enabled={data.enabled}
+                calendarIsVisible={true}
                 action={data.action}
                 date={data.date}
                 terms={data.terms}
