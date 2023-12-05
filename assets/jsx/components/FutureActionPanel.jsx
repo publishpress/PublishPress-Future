@@ -179,14 +179,8 @@ export const FutureActionPanel = (props) => {
         setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
-
-        // Initialize the calendarIsVisible, using the default value if it is not set on the localStorage
-        const calendarIsVisibleFromStorage = getCalendarIsVisibleFromStorage();
-        if (null === calendarIsVisibleFromStorage) {
-            setCalendarIsVisible(props.calendarIsVisible);
-        } else {
-            setCalendarIsVisible(calendarIsVisibleFromStorage);
-        }
+// TODO: FIX the default value coming from the props, if value is not set on storage
+        setCalendarIsVisible(props.calendarIsVisible);
 
         // We need to get the value directly from the props because the value from the store is not updated yet
         if (props.enabled) {
@@ -220,6 +214,29 @@ export const FutureActionPanel = (props) => {
     const panelClass = calendarIsVisible ? 'future-action-panel' : 'future-action-panel hidden-calendar';
     const contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
     const datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
+
+
+    const replaceCurlyBracketsWithLink = (string, href, target) => {
+        const parts = string.split('{');
+        const result = [];
+
+        result.push(parts.shift());
+
+        for (const part of parts) {
+            const [before, after] = part.split('}');
+
+            result.push(
+                <a href={href} target={target} key={href}>{before}</a>
+            );
+
+            result.push(after);
+        }
+
+        return result;
+    };
+
+
+    const HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
 
     return (
         <div className={panelClass}>
@@ -280,6 +297,8 @@ export const FutureActionPanel = (props) => {
                         isExpanded={calendarIsVisible}
                         iconExpanded="arrow-up-alt2"
                         iconCollapsed="calendar"
+                        titleExpanded={props.strings.hideCalendar}
+                        titleCollapsed={props.strings.showCalendar}
                         onClick={() => setCalendarIsVisible(!calendarIsVisible)} />
 
                     <PanelRow className={datePanelClass}>
@@ -290,7 +309,13 @@ export const FutureActionPanel = (props) => {
                             is12Hour={props.is12hours}
                             startOfWeek={props.startOfWeek}
                         />
+
                     </PanelRow>
+
+                    <div className="future-action-help-text">
+                        <hr />
+                        <span className="dashicons dashicons-info"></span> {HelpText}.
+                    </div>
                 </div>
             )}
         </div>

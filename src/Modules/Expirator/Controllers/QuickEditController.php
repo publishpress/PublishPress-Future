@@ -246,7 +246,11 @@ class QuickEditController implements InitializableInterface
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
+                    'showCalendar' => __('Show Calendar', 'post-expirator'),
+                    'hideCalendar' => __('Hide Calendar', 'post-expirator'),
                     'loading' => __('Loading', 'post-expirator'),
+                    // translators: the text between {{}} is the link to the settings page.
+                    'timezoneSettingsHelp' => __('Timezone settings can be changed on {WordPress General Settings}.', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in plural form.
                     'noTermsFound' => sprintf(
                         __('No %s found.', 'post-expirator'),
@@ -277,7 +281,11 @@ class QuickEditController implements InitializableInterface
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
+                    'showCalendar' => __('Show Calendar', 'post-expirator'),
+                    'hideCalendar' => __('Hide Calendar', 'post-expirator'),
                     'loading' => __('Loading', 'post-expirator'),
+                    // translators: the text between {{}} is the link to the settings page.
+                    'timezoneSettingsHelp' => __('Timezone settings can be changed on {WordPress General Settings}.', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in plural form.
                     'noTermsFound' => sprintf(
                         __('No %s found.', 'post-expirator'),

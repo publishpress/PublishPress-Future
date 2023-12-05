@@ -12,9 +12,12 @@ export const ToggleArrowButton = function (props) {
 
     const icon = props.isExpanded ? iconExpanded : iconCollapsed;
 
+    const title = props.isExpanded ? props.titleExpanded : props.titleCollapsed;
+
     return (
         <Button
             isSmall
+            title={title}
             icon={icon}
             onClick={onClick}
             className={props.className}

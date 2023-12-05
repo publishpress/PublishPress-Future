@@ -108,6 +108,8 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.FutureActionPanel = undefined;
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
@@ -323,6 +325,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
 
         // Initialize the calendarIsVisible, using the default value if it is not set on the localStorage
         var calendarIsVisibleFromStorage = getCalendarIsVisibleFromStorage();
+        console.log('calendarIsVisibleFromStorage', calendarIsVisibleFromStorage);
         if (null === calendarIsVisibleFromStorage) {
             setCalendarIsVisible(props.calendarIsVisible);
         } else {
@@ -341,6 +344,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     }, []);
 
     useEffect(function () {
+        console.log('useEffect calendarIsVisible', calendarIsVisible);
         storeCalendarIsVisibleOnStorage(calendarIsVisible);
     }, [calendarIsVisible]);
 
@@ -361,6 +365,53 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var panelClass = calendarIsVisible ? 'future-action-panel' : 'future-action-panel hidden-calendar';
     var contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
     var datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
+
+    var replaceCurlyBracketsWithLink = function replaceCurlyBracketsWithLink(string, href, target) {
+        var parts = string.split('{');
+        var result = [];
+
+        result.push(parts.shift());
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = parts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var part = _step.value;
+
+                var _part$split = part.split('}'),
+                    _part$split2 = _slicedToArray(_part$split, 2),
+                    before = _part$split2[0],
+                    after = _part$split2[1];
+
+                result.push(React.createElement(
+                    'a',
+                    { href: href, target: target, key: href },
+                    before
+                ));
+
+                result.push(after);
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        return result;
+    };
+
+    var HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
 
     return React.createElement(
         'div',
@@ -413,6 +464,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 isExpanded: calendarIsVisible,
                 iconExpanded: 'arrow-up-alt2',
                 iconCollapsed: 'calendar',
+                titleExpanded: props.strings.hideCalendar,
+                titleCollapsed: props.strings.showCalendar,
                 onClick: function onClick() {
                     return setCalendarIsVisible(!calendarIsVisible);
                 } }),
@@ -426,6 +479,15 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     is12Hour: props.is12hours,
                     startOfWeek: props.startOfWeek
                 })
+            ),
+            React.createElement(
+                'div',
+                { className: 'future-action-help-text' },
+                React.createElement('hr', null),
+                React.createElement('span', { className: 'dashicons dashicons-info' }),
+                ' ',
+                HelpText,
+                '.'
             )
         )
     );
@@ -1483,8 +1545,11 @@ var ToggleArrowButton = exports.ToggleArrowButton = function ToggleArrowButton(p
 
     var icon = props.isExpanded ? iconExpanded : iconCollapsed;
 
+    var title = props.isExpanded ? props.titleExpanded : props.titleCollapsed;
+
     return React.createElement(Button, {
         isSmall: true,
+        title: title,
         icon: icon,
         onClick: onClick,
         className: props.className
