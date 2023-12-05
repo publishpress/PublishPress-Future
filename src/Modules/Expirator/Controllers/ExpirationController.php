@@ -112,10 +112,6 @@ class ExpirationController implements InitializableInterface
             HooksAbstract::ACTION_LEGACY_EXPIRE_POST1,
             [$this, 'onActionRunPostExpiration']
         );
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_REST_API_INIT,
-            [$this, 'handleRestAPIInit']
-        );
     }
 
     public function onActionSchedulePostExpiration($postId, $timestamp, $opts)
@@ -142,97 +138,5 @@ class ExpirationController implements InitializableInterface
         }
 
         $postModel->expire($force);
-    }
-
-    public function handleRestAPIInit()
-    {
-        $factory = $this->settingsModelFactory;
-        $settingsModel = $factory();
-        $settings = $settingsModel->getPostTypesSettings();
-
-        $activePostTypes = array_filter($settings, function ($postTypeSettings) {
-            return $postTypeSettings['active'];
-        });
-        $activePostTypes = array_keys($activePostTypes);
-
-        foreach ($activePostTypes as $postType) {
-            register_rest_field(
-                $postType,
-                'publishpress_future_action',
-                [
-                    'get_callback' => function ($post) {
-                        $postModelFactory = $this->expirablePostModelFactory;
-                        $postModel = $postModelFactory($post['id']);
-
-                        $isEnabled = $postModel->isExpirationEnabled();
-
-                        if ('auto-draft' === $post['status'] && !$isEnabled) {
-                            return [
-                                'enabled' => false,
-                                'date' => '',
-                                'action' => '',
-                                'terms' => [],
-                                'taxonomy' => '',
-                            ];
-                        }
-
-                        $date = $postModel->getExpirationDateString(false);
-                        $action = $postModel->getExpirationType();
-                        $terms = $postModel->getExpirationCategoryIDs();
-                        $taxonomy = $postModel->getExpirationTaxonomy();
-
-                        if (empty($date)) {
-                            $defaultDataModelFactory = Container::getInstance()->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
-                            $defaultDataModel = $defaultDataModelFactory->create($post['post_type']);
-
-                            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
-                            $date = $defaultExpirationDate['iso'];
-
-                            $action = $defaultDataModel->getDefaultActionForPostType($post['post_type']);
-                            $terms = [];
-                            $taxonomy = '';
-                        }
-
-                        return [
-                            'enabled' => $postModel->isExpirationEnabled(),
-                            'date' => $date,
-                            'action' => $action,
-                            'terms' => $terms,
-                            'taxonomy' => $taxonomy,
-                        ];
-                    },
-                    'update_callback' => function ($value, $post) {
-                        if (isset($value['enabled']) && (bool)$value['enabled']) {
-                            $opts = [
-                                'expireType' => sanitize_text_field($value['action']),
-                                'category' => array_map('sanitize_text_field', $value['terms']),
-                                'categoryTaxonomy' => sanitize_text_field($value['taxonomy']),
-                            ];
-
-                            $opts['category'] = $this->taxonomiesModel->normalizeTermsCreatingIfNecessary(
-                                $opts['categoryTaxonomy'],
-                                $opts['category']
-                            );
-
-                            do_action(
-                                HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
-                                $post->ID,
-                                strtotime($value['date']),
-                                $opts
-                            );
-                            return true;
-                        }
-
-                        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $post->ID);
-
-                        return true;
-                    },
-                    'schema' => [
-                        'description' => 'Future action',
-                        'type' => 'object',
-                    ]
-                ]
-            );
-        }
     }
 }

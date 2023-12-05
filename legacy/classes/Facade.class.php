@@ -56,7 +56,6 @@ class PostExpirator_Facade
     {
         add_action('enqueue_block_editor_assets', array($this, 'block_editor_assets'));
         add_filter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
-        add_action('rest_api_init', [$this, 'register_rest_api']);
     }
 
     /**
@@ -114,104 +113,6 @@ class PostExpirator_Facade
             'categoryTaxonomy' => isset($args['categoryTaxonomy']) ? $args['categoryTaxonomy'] : '',
             'enabled' => true,
         );
-    }
-
-    public function register_rest_api()
-    {
-        $apiNamespace = 'publishpress-future/v1';
-
-        register_rest_route( $apiNamespace, '/post-expiration/(?P<postId>\d+)', [
-            'methods' => 'GET',
-            'callback' => [$this, 'api_get_expiration_data'],
-            'permission_callback' => function () {
-                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
-            },
-            'args' => [
-                'postId' => [
-                    'validate_callback' => function ($param, $request, $key) {
-                        return is_numeric($param);
-                    },
-                    'sanitize_callback' => 'absint',
-                    'required' => true,
-                    'type' => 'integer',
-                ],
-            ]
-        ]);
-
-        register_rest_route($apiNamespace, '/post-expiration/(?P<postId>\d+)', [
-            'methods' => 'POST',
-            'callback' => [$this, 'api_save_expiration_data'],
-            'permission_callback' => function () {
-                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
-            },
-            'args' => [
-                'postId' => [
-                    'validate_callback' => function ($param, $request, $key) {
-                        return is_numeric($param);
-                    },
-                    'sanitize_callback' => 'absint',
-                    'required' => true,
-                    'type' => 'integer',
-                ],
-                'enabled' => [
-                    'validate_callback' => function ($param, $request, $key) {
-                        return is_bool($param);
-                    },
-                    'sanitize_callback' => 'sanitize_text_field',
-                    'required' => false,
-                    'type' => 'bool',
-                ],
-                'date' => [
-                    'validate_callback' => function ($param, $request, $key) {
-                        return is_numeric($param);
-                    },
-                    'sanitize_callback' => 'absint',
-                    'required' => true,
-                    'type' => 'integer',
-                ],
-                'action' => [
-                    'validate_callback' => function ($param, $request, $key) {
-                        // Get available future action actions using the service EXPIRATION_ACTIONS_MODEL.
-                        $container = Container::getInstance();
-                        $expirationActionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
-                        $expirationActions = array_keys($expirationActionsModel->getActions());
-
-                        return in_array($param, $expirationActions) || $param === '';
-                    },
-                    'sanitize_callback' => 'sanitize_text_field',
-                    'required' => true,
-                    'type' => 'string',
-                ],
-                'terms' => [
-                    'validate_callback' => function ($param, $request, $key) {
-                        return is_array($param);
-                    },
-                    'sanitize_callback' => function ($param, $request, $key) {
-                        return array_map('absint', $param);
-                    },
-                    'required' => true,
-                    'type' => 'array',
-                ],
-            ]
-        ]);
-
-        register_rest_route( $apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
-            'methods' => 'GET',
-            'callback' => [$this, 'api_get_post_type_taxonomies'],
-            'permission_callback' => function () {
-                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
-            },
-            'args' => [
-                'postType' => [
-                    'validate_callback' => function ($param, $request, $key) {
-                        return sanitize_key($param);
-                    },
-                    'sanitize_callback' => 'sanitize_key',
-                    'required' => true,
-                    'type' => 'string',
-                ],
-            ]
-        ]);
     }
 
     public function api_get_expiration_data(WP_REST_Request $request)
@@ -342,7 +243,7 @@ class PostExpirator_Facade
                         'showCalendar' => __('Show Calendar', 'post-expirator'),
                         'hideCalendar' => __('Hide Calendar', 'post-expirator'),
                         // translators: the text between {} is the link to the settings page.
-                        'timezoneSettingsHelp' => __('Timezone settings can be changed on {WordPress General Settings}.', 'post-expirator'),
+                        'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in plural form.
                         'noTermsFound' => sprintf(
                             __('No %s found.', 'post-expirator'),

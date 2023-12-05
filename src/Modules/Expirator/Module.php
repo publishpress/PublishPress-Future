@@ -125,6 +125,7 @@ class Module implements ModuleInterface
         $this->controllers['posts_list'] = $this->factoryPostsListController();
         $this->controllers['content'] = $this->factoryContentController();
         $this->controllers['plugins_list'] = $this->factoryPluginsListController();
+        $this->controllers['rest_api'] = $this->factoryRestAPIController();
     }
 
 
@@ -248,6 +249,17 @@ class Module implements ModuleInterface
             $this->expirablePostModelFactory,
             $this->settingsModelFactory,
             $this->taxonomiesModelFactory
+        );
+    }
+
+    private function factoryRestAPIController()
+    {
+        return new Controllers\RestAPIController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
         );
     }
 }
