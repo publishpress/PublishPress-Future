@@ -7,6 +7,7 @@ namespace PublishPress\Future\Modules\Settings\Models;
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use PublishPress\Future\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -15,7 +16,10 @@ class SettingsPostTypesModel
 {
     public function getPostTypes()
     {
-        return postexpirator_get_post_types();
+        $container = Container::getInstance();
+        $postTypesModel = new PostTypesModel($container);
+
+        return $postTypesModel->getPostTypes();
     }
 
     public function getPostTypesSettings()

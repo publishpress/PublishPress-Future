@@ -5,6 +5,7 @@
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
+use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
@@ -111,7 +112,10 @@ class ExpirationActionsModel
 
     public function getActionsAsOptionsForAllPostTypes()
     {
-        $postTypes = array_values(postexpirator_get_post_types());
+        $container = Container::getInstance();
+        $postTypesModel = new PostTypesModel($container);
+
+        $postTypes = array_values($postTypesModel->getPostTypes());
 
         $actions = [];
 

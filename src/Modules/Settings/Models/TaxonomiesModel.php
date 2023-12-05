@@ -5,13 +5,19 @@
 
 namespace PublishPress\Future\Modules\Settings\Models;
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class TaxonomiesModel
 {
     private function getPostTypes()
     {
-        return postexpirator_get_post_types();
+        $container = Container::getInstance();
+        $postTypesModel = new PostTypesModel($container);
+
+        return $postTypesModel->getPostTypes();
     }
 
     public function getTaxonomiesByPostType($hierarchical = true)

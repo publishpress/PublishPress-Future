@@ -14,6 +14,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -141,9 +142,12 @@ class PostListController implements InitializableInterface
 
     public function manageSortableColumns()
     {
-        $post_types = postexpirator_get_post_types();
-        foreach ($post_types as $post_type) {
-            add_filter('manage_edit-' . $post_type . '_sortable_columns', [$this, 'sortableColumn']);
+        $container = Container::getInstance();
+        $postTypesModel = new PostTypesModel($container);
+        $postTypes = $postTypesModel->getPostTypes();
+
+        foreach ($postTypes as $postType) {
+            add_filter('manage_edit-' . $postType . '_sortable_columns', [$this, 'sortableColumn']);
         }
     }
 

@@ -13,6 +13,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -95,8 +96,10 @@ class ClassicEditorController implements InitializableInterface
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
-        $post_types = postexpirator_get_post_types();
-        foreach ($post_types as $type) {
+        $postTypesModel = new PostTypesModel($container);
+        $postTypes = $postTypesModel->getPostTypes();
+
+        foreach ($postTypes as $type) {
             $defaults = $settingsFacade->getPostTypeDefaults($type);
 
             // if settings are not configured, show the metabox by default only for posts and pages
