@@ -123,16 +123,37 @@ div.pe-qe-fields > div {
     border: 1px solid #cbcbcb !important;
     background: #f4f4f4 !important;
     text-align: center;
+    width: 30px;
+}
+
+#publishpress-future-block-editor .hidden-calendar .future-action-calendar-toggle {
+    bottom: 74px;
+}
+
+#publishpress-future-classic-editor .hidden-calendar .future-action-calendar-toggle {
+    bottom: 65px;
+}
+
+#publishpress-future-bulk-edit .hidden-calendar .future-action-calendar-toggle {
+    bottom: 67px;
+}
+
+#publishpress-future-quick-edit .hidden-calendar .future-action-calendar-toggle {
+    bottom: 47px;
 }
 
 #publishpress-future-block-editor .future-action-calendar-toggle {
-    top: 208px;
-    width: 30px;
+    bottom: 370px;
 }
 
-#publishpress-future-classic-editor .future-action-calendar-toggle,
-#publishpress-future-bulk-edit .future-action-calendar-toggle,
 #publishpress-future-quick-edit .future-action-calendar-toggle {
-    top: 212px;
-    width: 30px;
+    bottom: 337px;
+}
+
+#publishpress-future-bulk-edit .future-action-calendar-toggle {
+    bottom: 349px;
+}
+
+#publishpress-future-classic-editor .future-action-calendar-toggle {
+    bottom: 347px;
 }
