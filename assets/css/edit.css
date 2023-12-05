@@ -52,17 +52,22 @@ div.pe-qe-fields > div {
     font-weight: bold;
 }
 
+#publishpress-future-bulk-edit,
 #publishpress-future-quick-edit {
     max-width: 340px;
     padding: 14px;
     border: 1px solid #ddd;
 }
 
+#publishpress-future-bulk-edit label,
 #publishpress-future-quick-edit label {
     display: inline-block;
     max-width: 100%;
 }
 
+#publishpress-future-bulk-edit .components-datetime__date,
+#publishpress-future-bulk-edit .components-datetime__time-separator,
+#publishpress-future-bulk-edit .components-form-token-field__input-container,
 #publishpress-future-quick-edit .components-datetime__date,
 #publishpress-future-quick-edit .components-datetime__time-separator,
 #publishpress-future-quick-edit .components-form-token-field__input-container {
