@@ -11,13 +11,15 @@ use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Framework\WordPress\Facade\CronFacade;
+use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class Module implements ModuleInterface
 {
     /**
-     * @var HooksFacade;
+     * @var \PublishPress\Future\Core\HookableInterface;
      */
     private $hooks;
 
@@ -57,7 +59,7 @@ class Module implements ModuleInterface
     private $currentUserModelFactory;
 
     /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\RequestFacade
+     * @var RequestFacade
      */
     private $request;
 
@@ -72,34 +74,23 @@ class Module implements ModuleInterface
     private $scheduledActionsTableFactory;
 
     /**
-     * @var \Closure
-     */
-    private $settingsModelFactory;
-
-    /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\NoticeFacade
+     * @var NoticeFacade
      */
     private $noticesFacade;
 
-    /**
-     * @var \Closure
-     */
-    private $taxonomiesModelFactory;
 
     public function __construct(
-        $hooks,
-        $site,
-        $cron,
-        $scheduler,
-        $expirablePostModelFactory,
-        $sanitization,
-        $currentUserModelFactory,
+        \PublishPress\Future\Core\HookableInterface $hooks,
+        SiteFacade $site,
+        CronFacade $cron,
+        SchedulerInterface $scheduler,
+        \Closure $expirablePostModelFactory,
+        SanitizationFacade $sanitization,
+        \Closure $currentUserModelFactory,
         $request,
         \Closure $actionArgsModelFactory,
         \Closure $scheduledActionsTableFactory,
-        \Closure $settingsModelFactory,
-        NoticeFacade $noticesFacade,
-        \Closure $taxonomiesModelFactory
+        NoticeFacade $noticesFacade
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -111,9 +102,7 @@ class Module implements ModuleInterface
         $this->request = $request;
         $this->actionArgsModelFactory = $actionArgsModelFactory;
         $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
-        $this->settingsModelFactory = $settingsModelFactory;
         $this->noticesFacade = $noticesFacade;
-        $this->taxonomiesModelFactory = $taxonomiesModelFactory;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['quick_edit'] = $this->factoryQuickEditController();
