@@ -148,6 +148,9 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Refactor all the future action panels to use the same React components, fixing the inconsistency between the panels, #572;
 * CHANGED: Removed external dependency of the React Select library, using now the WordPress internal library;
 * CHANGED: In the Action field on Post Type settings, the taxonomy related actions are only displayed if the post type has any term registered;
+* CHANGED: Change the order of fields in the future action panels, moving action and taxonomy at the beginning
+* DEPRECATED: Deprecate the calss `Walker_PostExpirator_Category_Checklist`;
+* DEPRECATED: Deprecate the function `postexpirator_get_post_types`, moving the logic to the model `PostTypesModel`;
 * FIXED: Fix fatal error when clicking on "Post Types" tab in the settings when using PT-Br language, #567;
 * FIXED: Stop hardcoding the DB engine when creating the table for action arguments, #565 [Thanks to @dave-p];
 * FIXED: Simple quotes were not being removed from the future action date offset setting, #566;
@@ -162,7 +165,9 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix PHP warning: Class ...Expirator\Models\DefaultDataModel not found in ...legacy/deprecated.php, #582;
 * FIXED: Update the X/Twitter icon on the footer of admin pages, #583;
 * FIXED: Fix the use of custom taxonomies on the future action panels, #585;
-* DEPRECATED
+* FIXED: Fix call to the method `manageUpgrade on ...Core\Plugin;
+* REMOVED: Internal function `postexpirator_add_footer` was removed, and the footer is now handled in the ContentController class;
+* REMOVED: Internal function `postexpirator_get_footer_text` was removed;
 
 = [3.1.3] - 09 Nov, 2023 =
 
