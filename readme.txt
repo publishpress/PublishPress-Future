@@ -142,9 +142,27 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 = [3.1.4] - UNRELEASED =
 
-* ADDED: Term fields now support adding a new term by typing a new value (only on settings?);
-* CHANGED: Removed external dependency of the React Select library, using now the internal library;
+* ADDED: Taxonomy term field now supports adding a new term by typing a new value;
+* ADDED: Add a button to toggle the calendar on the future action panels. Quick/Bulk edit are collapsed by default, #583;
+* ADDED: Display the taxonomy name in the future action panels instead of showing "Taxonomy", #584;
+* CHANGED: Refactor all the future action panels to use the same React components, fixing the inconsistency between the panels, #572;
+* CHANGED: Removed external dependency of the React Select library, using now the WordPress internal library;
 * CHANGED: In the Action field on Post Type settings, the taxonomy related actions are only displayed if the post type has any term registered;
+* FIXED: Fix fatal error when clicking on "Post Types" tab in the settings when using PT-Br language, #567;
+* FIXED: Stop hardcoding the DB engine when creating the table for action arguments, #565 [Thanks to @dave-p];
+* FIXED: Simple quotes were not being removed from the future action date offset setting, #566;
+* FIXED: Update Spanish, Franch and Italian translations, #551;
+* FIXED: Improved data sanitization on the plugin, #571;
+* FIXED: Fix consistency on data saved on post meta from different editors, quick-edit and bulk-edit. Specially related to the post meta "_expiration-date-options", #573;
+* FIXED: Strange years value in the date selection, #568;
+* FIXED: Fix the action "Remove selected term" for authors role, #550;
+* FIXED: Fix the post type settings page not loading the saved settings after a page refresh triggered by the save button, #576;
+* FIXED: Fix PHP warning: Creation of dynamic property $hooks in NoticeFacade.php, #580;
+* FIXED: Fix call to undefined function ...Expirator\Adapters\as_has_scheduled_action, #574
+* FIXED: Fix PHP warning: Class ...Expirator\Models\DefaultDataModel not found in ...legacy/deprecated.php, #582;
+* FIXED: Update the X/Twitter icon on the footer of admin pages, #583;
+* FIXED: Fix the use of custom taxonomies on the future action panels, #585;
+* DEPRECATED
 
 = [3.1.3] - 09 Nov, 2023 =
 
