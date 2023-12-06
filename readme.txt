@@ -166,7 +166,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Update the X/Twitter icon on the footer of admin pages, #583;
 * FIXED: Fix the use of custom taxonomies on the future action panels, #585;
 * FIXED: Fix call to the method `manageUpgrade on ...Core\Plugin;
-* REMOVED: Internal function `postexpirator_add_footer` was removed, and the footer is now handled in the ContentController class;
+* REMOVED: Internal function `postexpirator_add_footer` was removed, and the footer is now handled in the `ContentController` class;
 * REMOVED: Internal function `postexpirator_get_footer_text` was removed;
 
 = [3.1.3] - 09 Nov, 2023 =
