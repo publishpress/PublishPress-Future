@@ -121,6 +121,7 @@ class Module implements ModuleInterface
         $this->controllers['bulk_action'] = $this->factoryBulkActionController();
         $this->controllers['scheduled_actions'] = $this->factoryScheduledActionsController();
         $this->controllers['classic_editor'] = $this->factoryClassicEditorController();
+        $this->controllers['block_editor'] = $this->factoryBlockController();
         $this->controllers['shortcode'] = $this->factoryShortcodeController();
         $this->controllers['posts_list'] = $this->factoryPostsListController();
         $this->controllers['content'] = $this->factoryContentController();
@@ -255,6 +256,17 @@ class Module implements ModuleInterface
     private function factoryRestAPIController()
     {
         return new Controllers\RestAPIController(
+            $this->hooks,
+            $this->expirablePostModelFactory,
+            $this->sanitization,
+            $this->currentUserModelFactory,
+            $this->request
+        );
+    }
+
+    private function factoryBlockController()
+    {
+        return new Controllers\BlockEditorController(
             $this->hooks,
             $this->expirablePostModelFactory,
             $this->sanitization,
