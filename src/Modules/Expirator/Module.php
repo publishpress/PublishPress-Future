@@ -11,7 +11,7 @@ use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade;
 use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
-use PublishPress\Future\Framework\WordPress\Facade\CronFacade;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -82,7 +82,7 @@ class Module implements ModuleInterface
     public function __construct(
         \PublishPress\Future\Core\HookableInterface $hooks,
         SiteFacade $site,
-        CronFacade $cron,
+        CronInterface $cron,
         SchedulerInterface $scheduler,
         \Closure $expirablePostModelFactory,
         SanitizationFacade $sanitization,
