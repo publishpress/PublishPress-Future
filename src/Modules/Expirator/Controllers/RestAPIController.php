@@ -98,7 +98,7 @@ class RestAPIController implements InitializableInterface
 
         register_rest_route( $apiNamespace, '/post-expiration/(?P<postId>\d+)', [
             'methods' => 'GET',
-            'callback' => [$this, 'api_get_expiration_data'],
+            'callback' => [$this, 'getFutureActionData'],
             'permission_callback' => function () {
                 return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
             },
@@ -116,7 +116,7 @@ class RestAPIController implements InitializableInterface
 
         register_rest_route($apiNamespace, '/post-expiration/(?P<postId>\d+)', [
             'methods' => 'POST',
-            'callback' => [$this, 'api_save_expiration_data'],
+            'callback' => [$this, 'saveFutureActionData'],
             'permission_callback' => function () {
                 return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
             },
@@ -298,5 +298,39 @@ class RestAPIController implements InitializableInterface
         }, $taxonomies);
 
         return rest_ensure_response(['taxonomies' => $taxonomies, 'count' => count($taxonomies)]);
+    }
+
+    public function getFutureActionData(WP_REST_Request $request)
+    {
+        $postId = $request->get_param('postId');
+        $container = Container::getInstance();
+        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+        $expirablePostModel = $factory($postId);
+
+        $data = $expirablePostModel->getExpirationDataAsArray();
+
+        // return the data as a JSON response
+        return rest_ensure_response( $data );
+    }
+
+    public function saveFutureActionData(WP_REST_Request $request)
+    {
+        $postId = absint($request->get_param('postId'));
+
+        $expirationEnabled = (bool)$request->get_param('enabled');
+
+        if ($expirationEnabled) {
+            $opts = [
+                'expireType' => sanitize_key($request->get_param('action')),
+                'category' => array_map('absint', (array)$request->get_param('terms')),
+                'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy'))
+            ];
+
+            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, absint($request->get_param('date')), $opts);
+        } else {
+            do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+        }
+
+        return rest_ensure_response(true);
     }
 }

@@ -115,40 +115,6 @@ class PostExpirator_Facade
         );
     }
 
-    public function api_get_expiration_data(WP_REST_Request $request)
-    {
-        $postId = $request->get_param('postId');
-        $container = Container::getInstance();
-        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-        $expirablePostModel = $factory($postId);
-
-        $data = $expirablePostModel->getExpirationDataAsArray();
-
-        // return the data as a JSON response
-        return rest_ensure_response( $data );
-    }
-
-    public function api_save_expiration_data(WP_REST_Request $request)
-    {
-        $postId = absint($request->get_param('postId'));
-
-        $expirationEnabled = (bool)$request->get_param('enabled');
-
-        if ($expirationEnabled) {
-            $opts = [
-                'expireType' => sanitize_key($request->get_param('action')),
-                'category' => array_map('absint', (array)$request->get_param('terms')),
-                'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy'))
-            ];
-
-            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, absint($request->get_param('date')), $opts);
-        } else {
-            do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
-        }
-
-        return rest_ensure_response(true);
-    }
-
     /**
      * Load the block's backend assets only if the meta box is active for this post type.
      */
