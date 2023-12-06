@@ -245,7 +245,7 @@ class QuickEditController implements InitializableInterface
                 'isNewPost' => false,
                 'nonce' => $nonce,
                 'strings' => [
-                    'category' => __('Taxonomy', 'post-expirator'),
+                    'category' => __('Categories', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
@@ -280,7 +280,7 @@ class QuickEditController implements InitializableInterface
                 'isNewPost' => false,
                 'nonce' => $nonce,
                 'strings' => [
-                    'category' => __('Taxonomy', 'post-expirator'),
+                    'category' => __('Categories', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),

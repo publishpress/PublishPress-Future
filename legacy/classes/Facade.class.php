@@ -186,7 +186,7 @@ class PostExpirator_Facade
                     'taxonomyName' => $taxonomyName,
                     'taxonomyTerms' => $taxonomyTerms,
                     'strings' => [
-                        'category' => __('Taxonomy', 'post-expirator'),
+                        'category' => __('Categories', 'post-expirator'),
                         'panelTitle' => __('PublishPress Future', 'post-expirator'),
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                         'action' => __('Action', 'post-expirator'),

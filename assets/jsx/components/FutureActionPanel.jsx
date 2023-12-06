@@ -259,7 +259,7 @@ export const FutureActionPanel = (props) => {
 
             {enabled && (
                 <Fragment>
-                    <PanelRow className={contentPanelClass}>
+                    <PanelRow className={contentPanelClass + ' future-action-full-width'}>
                         <SelectControl
                             label={props.strings.action}
                             value={action}
@@ -272,15 +272,15 @@ export const FutureActionPanel = (props) => {
                         String(action).includes('category') && (
                             isFetchingTerms && (
                                 <PanelRow>
-                                    <BaseControl label={props.taxonomyName}>
-                                        {`${props.strings.loading} (${props.taxonomyName})`}
+                                    <BaseControl label={taxonomyName}>
+                                        {`${props.strings.loading} (${taxonomyName})`}
                                         <Spinner />
                                     </BaseControl>
                                 </PanelRow>
                             )
                             || (!taxonomy && (
                                 <PanelRow>
-                                    <BaseControl label={props.taxonomyName}>
+                                    <BaseControl label={taxonomyName}>
                                         <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
                                     </BaseControl>
                                 </PanelRow>
@@ -288,16 +288,16 @@ export const FutureActionPanel = (props) => {
                                 || (
                                     termsListByNameKeys.length === 0 && (
                                         <PanelRow>
-                                            <BaseControl label={props.taxonomyName}>
+                                            <BaseControl label={taxonomyName}>
                                                 <i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}
                                             </BaseControl>
                                         </PanelRow>
                                     )
                                     || (
-                                        <PanelRow>
+                                        <PanelRow className="future-action-full-width">
                                             <BaseControl>
                                                 <FormTokenField
-                                                    label={props.taxonomyName}
+                                                    label={taxonomyName}
                                                     value={selectedTerms}
                                                     suggestions={termsListByNameKeys}
                                                     onChange={handleTermsChange}

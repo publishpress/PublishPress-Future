@@ -312,7 +312,7 @@ class ClassicEditorController implements InitializableInterface
                 'postType' => $currentScreen->post_type,
                 'isNewPost' => $isNewPostPage,
                 'strings' => [
-                    'category' => __('Taxonomy', 'post-expirator'),
+                    'category' => __('Category', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
                     'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                     'action' => __('Action', 'post-expirator'),
