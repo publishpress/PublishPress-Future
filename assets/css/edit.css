@@ -72,6 +72,11 @@ div.pe-qe-fields > div {
     max-width: 100%;
 }
 
+.future-action-full-width,
+.future-action-full-width .components-base-control {
+    width: 100%;
+}
+
 #publishpress-future-bulk-edit .components-datetime__date,
 #publishpress-future-bulk-edit .components-datetime__time-separator,
 #publishpress-future-bulk-edit .components-form-token-field__input-container,

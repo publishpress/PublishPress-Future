@@ -429,7 +429,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             null,
             React.createElement(
                 PanelRow,
-                { className: contentPanelClass },
+                { className: contentPanelClass + ' future-action-full-width' },
                 React.createElement(SelectControl, {
                     label: props.strings.action,
                     value: action,
@@ -442,8 +442,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 null,
                 React.createElement(
                     BaseControl,
-                    { label: props.taxonomyName },
-                    props.strings.loading + ' (' + props.taxonomyName + ')',
+                    { label: taxonomyName },
+                    props.strings.loading + ' (' + taxonomyName + ')',
                     React.createElement(Spinner, null)
                 )
             ) || !taxonomy && React.createElement(
@@ -451,7 +451,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 null,
                 React.createElement(
                     BaseControl,
-                    { label: props.taxonomyName },
+                    { label: taxonomyName },
                     React.createElement('i', { className: 'dashicons dashicons-warning' }),
                     ' ',
                     props.strings.noTaxonomyFound
@@ -461,19 +461,19 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 null,
                 React.createElement(
                     BaseControl,
-                    { label: props.taxonomyName },
+                    { label: taxonomyName },
                     React.createElement('i', { className: 'dashicons dashicons-warning' }),
                     ' ',
                     props.strings.noTermsFound
                 )
             ) || React.createElement(
                 PanelRow,
-                null,
+                { className: 'future-action-full-width' },
                 React.createElement(
                     BaseControl,
                     null,
                     React.createElement(FormTokenField, {
-                        label: props.taxonomyName,
+                        label: taxonomyName,
                         value: selectedTerms,
                         suggestions: termsListByNameKeys,
                         onChange: handleTermsChange,
