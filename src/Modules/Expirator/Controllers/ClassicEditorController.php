@@ -203,9 +203,9 @@ class ClassicEditorController implements InitializableInterface
 
         if ($shouldSchedule) {
             $opts = [
-                'expireType' => sanitize_text_field($_POST['future_action_action']),
-                'category' => sanitize_text_field($_POST['future_action_terms']),
-                'categoryTaxonomy' => sanitize_text_field($_POST['future_action_taxonomy']),
+                'expireType' => isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '',
+                'category' => isset($_POST['future_action_terms']) ? sanitize_text_field($_POST['future_action_terms']) : '',
+                'categoryTaxonomy' => isset($_POST['future_action_taxonomy']) ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
             ];
 
             if (! empty($opts['category'])) {
@@ -218,7 +218,8 @@ class ClassicEditorController implements InitializableInterface
                 );
             }
 
-            $date = strtotime(sanitize_text_field($_POST['future_action_date']));
+            $date = isset($_POST['future_action_date']) ? sanitize_text_field($_POST['future_action_date']) : '';
+            $date = strtotime($date);
 
             do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $date, $opts);
 

@@ -120,7 +120,7 @@ class BulkEditController implements InitializableInterface
 
     public function processBulkEditUpdate()
     {
-        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $doAction = isset($_GET['action']) ? $this->sanitization->sanitizeKey($_GET['action']) : '';
 
@@ -144,15 +144,16 @@ class BulkEditController implements InitializableInterface
         $this->request->checkAdminReferer('bulk-posts');
 
         $this->saveBulkEditData();
-        // phpcs:enable
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     }
 
     private function updateScheduleForPostFromBulkEditData(ExpirablePostModel $postModel)
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $opts = [
-            'expireType' => $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']),
-            'category' => $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']),
-            'categoryTaxonomy' => $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']),
+            'expireType' => isset($_REQUEST['future_action_bulk_action']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '',
+            'category' => isset($_REQUEST['future_action_bulk_terms']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']) : '',
+            'categoryTaxonomy' => isset($_REQUEST['future_action_bulk_taxonomy']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']) : '',
         ];
 
         if (! empty($opts['category'])) {
@@ -170,7 +171,8 @@ class BulkEditController implements InitializableInterface
             $opts['category'] = [];
         }
 
-        $date = strtotime(sanitize_text_field($_REQUEST['future_action_bulk_date']));
+        $date = isset($_REQUEST['future_action_bulk_date']) ? sanitize_text_field($_REQUEST['future_action_bulk_date']) : '0';
+        $date = strtotime($date);
 
         $this->hooks->doAction(
             HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
@@ -178,6 +180,7 @@ class BulkEditController implements InitializableInterface
             $date,
             $opts
         );
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
     }
 
     private function changeStrategyChangeOnly(ExpirablePostModel $postModel)

@@ -1,4 +1,3 @@
-
 <?php
 /**
  * The walker class for category checklist.
