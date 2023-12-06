@@ -85,10 +85,10 @@ div.pe-qe-fields > div {
     padding: 4px;
 }
 
-#publishpress-future-classic-editor .future-action-panel-content,
-#publishpress-future-bulk-edit .future-action-panel-content,
-#publishpress-future-quick-edit .future-action-panel-content,
-#publishpress-future-block-editor .future-action-panel-content {
+#publishpress-future-classic-editor,
+#publishpress-future-bulk-edit,
+#publishpress-future-quick-edit,
+#publishpress-future-block-editor {
     position: relative;
 }
 
@@ -103,11 +103,14 @@ div.pe-qe-fields > div {
     display: none;
 }
 
-#publishpress-future-quick-edit .future-action-panel-content.hidden-calendar .future-action-help-text,
-#publishpress-future-bulk-edit .future-action-panel-content.hidden-calendar .future-action-help-text,
-#publishpress-future-block-editor .future-action-panel-content.hidden-calendar .future-action-help-text,
-#publishpress-future-classic-editor .future-action-panel-content.hidden-calendar .future-action-help-text {
-    margin-top: 52px;
+#publishpress-future-block-editor .hidden-calendar .future-action-help-text {
+    margin-top: 22px;
+}
+
+#publishpress-future-bulk-edit .hidden-calendar .future-action-help-text,
+#publishpress-future-classic-editor .hidden-calendar .future-action-help-text,
+#publishpress-future-quick-edit .hidden-calendar .future-action-help-text {
+    margin-top: 32px;
 }
 
 #publishpress-future-classic-editor .components-datetime,
@@ -127,33 +130,33 @@ div.pe-qe-fields > div {
 }
 
 #publishpress-future-block-editor .hidden-calendar .future-action-calendar-toggle {
-    bottom: 74px;
+    bottom: 72px;
 }
 
 #publishpress-future-classic-editor .hidden-calendar .future-action-calendar-toggle {
-    bottom: 65px;
+    bottom: 58px;
 }
 
 #publishpress-future-bulk-edit .hidden-calendar .future-action-calendar-toggle {
-    bottom: 67px;
+    bottom: 74px;
 }
 
 #publishpress-future-quick-edit .hidden-calendar .future-action-calendar-toggle {
-    bottom: 47px;
+    bottom: 54px;
 }
 
 #publishpress-future-block-editor .future-action-calendar-toggle {
-    bottom: 370px;
+    bottom: 377px;
 }
 
 #publishpress-future-quick-edit .future-action-calendar-toggle {
-    bottom: 337px;
+    bottom: 359px;
 }
 
 #publishpress-future-bulk-edit .future-action-calendar-toggle {
-    bottom: 349px;
+    bottom: 370px;
 }
 
 #publishpress-future-classic-editor .future-action-calendar-toggle {
-    bottom: 347px;
+    bottom: 353px;
 }
