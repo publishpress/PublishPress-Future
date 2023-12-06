@@ -37,6 +37,7 @@ import { isGutenbergEnabled } from './utils';
             is12hours={config.is12hours}
             startOfWeek={config.startOfWeek}
             strings={config.strings}
+            taxonomyName={config.taxonomyName}
         />
     );
 })(window.wp, window.publishpressFutureClassicMetabox);

@@ -85,6 +85,7 @@ import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
                 is12hours={config.is12hours}
                 startOfWeek={config.startOfWeek}
                 strings={config.strings}
+                taxonomyName={config.taxonomyName}
                 nonce={config.nonce}
             />
         );

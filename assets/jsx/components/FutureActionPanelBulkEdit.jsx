@@ -65,6 +65,7 @@ export const FutureActionPanelBulkEdit = (props) => {
                     date={date}
                     terms={terms}
                     taxonomy={taxonomy}
+                    taxonomyName={props.taxonomyName}
                     onChangeData={onChangeData}
                     is12hours={props.is12hours}
                     startOfWeek={props.startOfWeek}

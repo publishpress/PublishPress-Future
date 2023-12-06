@@ -1,7 +1,7 @@
 import { compact } from '../utils';
 import { ToggleArrowButton } from './ToggleArrowButton';
 
-const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner } = wp.components;
+const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl, Container } = wp.components;
 const { Fragment, useEffect, useState } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 const { addQueryArgs } = wp.url;
@@ -259,53 +259,69 @@ export const FutureActionPanel = (props) => {
             )}
 
             {enabled && (
-                <div className={contentPanelClass}>
-                    <SelectControl
-                        label={props.strings.action}
-                        value={action}
-                        options={props.actionsSelectOptions}
-                        onChange={handleActionChange}
-                    />
+                <Fragment>
+                    <PanelRow className={contentPanelClass}>
+                        <SelectControl
+                            label={props.strings.action}
+                            value={action}
+                            options={props.actionsSelectOptions}
+                            onChange={handleActionChange}
+                        />
+                    </PanelRow>
 
                     {
                         String(action).includes('category') && (
                             isFetchingTerms && (
-                                <Fragment>
-                                    {`${props.strings.loading} (${taxonomy})`}
-                                    <Spinner />
-                                </Fragment>
+                                <PanelRow>
+                                    <BaseControl label={props.taxonomyName}>
+                                        {`${props.strings.loading} (${props.taxonomyName})`}
+                                        <Spinner />
+                                    </BaseControl>
+                                </PanelRow>
                             )
                             || (!taxonomy && (
-                                <p><i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}</p>
+                                <PanelRow>
+                                    <BaseControl label={props.taxonomyName}>
+                                        <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
+                                    </BaseControl>
+                                </PanelRow>
                             )
                                 || (
                                     termsListByNameKeys.length === 0 && (
-                                        <p><i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}</p>
+                                        <PanelRow>
+                                            <BaseControl label={props.taxonomyName}>
+                                                <i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}
+                                            </BaseControl>
+                                        </PanelRow>
                                     )
                                     || (
-                                        <FormTokenField
-                                            label={taxonomyName}
-                                            value={selectedTerms}
-                                            suggestions={termsListByNameKeys}
-                                            onChange={handleTermsChange}
-                                            maxSuggestions={10}
-                                        />
+                                        <PanelRow>
+                                            <BaseControl>
+                                                <FormTokenField
+                                                    label={props.taxonomyName}
+                                                    value={selectedTerms}
+                                                    suggestions={termsListByNameKeys}
+                                                    onChange={handleTermsChange}
+                                                    maxSuggestions={10}
+                                                />
+                                            </BaseControl>
+                                        </PanelRow>
                                     )
                                 )
                             )
                         )
                     }
 
-                    <ToggleArrowButton
-                        className="future-action-calendar-toggle"
-                        isExpanded={calendarIsVisible}
-                        iconExpanded="arrow-up-alt2"
-                        iconCollapsed="calendar"
-                        titleExpanded={props.strings.hideCalendar}
-                        titleCollapsed={props.strings.showCalendar}
-                        onClick={() => setCalendarIsVisible(!calendarIsVisible)} />
-
                     <PanelRow className={datePanelClass}>
+                        <ToggleArrowButton
+                            className="future-action-calendar-toggle"
+                            isExpanded={calendarIsVisible}
+                            iconExpanded="arrow-up-alt2"
+                            iconCollapsed="calendar"
+                            titleExpanded={props.strings.hideCalendar}
+                            titleCollapsed={props.strings.showCalendar}
+                            onClick={() => setCalendarIsVisible(!calendarIsVisible)} />
+
                         <DateTimePicker
                             currentDate={date}
                             onChange={handleDateChange}
@@ -313,14 +329,16 @@ export const FutureActionPanel = (props) => {
                             is12Hour={props.is12hours}
                             startOfWeek={props.startOfWeek}
                         />
-
                     </PanelRow>
 
-                    <div className="future-action-help-text">
-                        <hr />
-                        <span className="dashicons dashicons-info"></span> {HelpText}.
-                    </div>
-                </div>
+                    <PanelRow>
+                        <div className="future-action-help-text">
+                            <hr />
+
+                            <span className="dashicons dashicons-info"></span> {HelpText}.
+                        </div>
+                    </PanelRow>
+                </Fragment>
             )}
         </div>
     );

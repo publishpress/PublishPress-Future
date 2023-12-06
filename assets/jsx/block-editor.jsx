@@ -26,6 +26,7 @@ import { FutureActionPanelBlockEditor } from './components';
                 startOfWeek={config.startOfWeek}
                 storeName={storeName}
                 strings={config.strings}
+                taxonomyName={config.taxonomyName}
                 postTypeDefaultConfig={config.postTypeDefaultConfig} />
         );
     }

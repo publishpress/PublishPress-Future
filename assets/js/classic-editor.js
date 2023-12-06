@@ -124,7 +124,9 @@ var _wp$components = wp.components,
     CheckboxControl = _wp$components.CheckboxControl,
     SelectControl = _wp$components.SelectControl,
     FormTokenField = _wp$components.FormTokenField,
-    Spinner = _wp$components.Spinner;
+    Spinner = _wp$components.Spinner,
+    BaseControl = _wp$components.BaseControl,
+    Container = _wp$components.Container;
 var _wp$element = wp.element,
     Fragment = _wp$element.Fragment,
     useEffect = _wp$element.useEffect,
@@ -423,51 +425,75 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             })
         ),
         enabled && React.createElement(
-            'div',
-            { className: contentPanelClass },
-            React.createElement(SelectControl, {
-                label: props.strings.action,
-                value: action,
-                options: props.actionsSelectOptions,
-                onChange: handleActionChange
-            }),
+            Fragment,
+            null,
+            React.createElement(
+                PanelRow,
+                { className: contentPanelClass },
+                React.createElement(SelectControl, {
+                    label: props.strings.action,
+                    value: action,
+                    options: props.actionsSelectOptions,
+                    onChange: handleActionChange
+                })
+            ),
             String(action).includes('category') && (isFetchingTerms && React.createElement(
-                Fragment,
+                PanelRow,
                 null,
-                props.strings.loading + ' (' + taxonomy + ')',
-                React.createElement(Spinner, null)
+                React.createElement(
+                    BaseControl,
+                    { label: props.taxonomyName },
+                    props.strings.loading + ' (' + props.taxonomyName + ')',
+                    React.createElement(Spinner, null)
+                )
             ) || !taxonomy && React.createElement(
-                'p',
+                PanelRow,
                 null,
-                React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                ' ',
-                props.strings.noTaxonomyFound
+                React.createElement(
+                    BaseControl,
+                    { label: props.taxonomyName },
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    props.strings.noTaxonomyFound
+                )
             ) || termsListByNameKeys.length === 0 && React.createElement(
-                'p',
+                PanelRow,
                 null,
-                React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                ' ',
-                props.strings.noTermsFound
-            ) || React.createElement(FormTokenField, {
-                label: taxonomyName,
-                value: selectedTerms,
-                suggestions: termsListByNameKeys,
-                onChange: handleTermsChange,
-                maxSuggestions: 10
-            })),
-            React.createElement(_ToggleArrowButton.ToggleArrowButton, {
-                className: 'future-action-calendar-toggle',
-                isExpanded: calendarIsVisible,
-                iconExpanded: 'arrow-up-alt2',
-                iconCollapsed: 'calendar',
-                titleExpanded: props.strings.hideCalendar,
-                titleCollapsed: props.strings.showCalendar,
-                onClick: function onClick() {
-                    return setCalendarIsVisible(!calendarIsVisible);
-                } }),
+                React.createElement(
+                    BaseControl,
+                    { label: props.taxonomyName },
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    props.strings.noTermsFound
+                )
+            ) || React.createElement(
+                PanelRow,
+                null,
+                React.createElement(
+                    BaseControl,
+                    null,
+                    React.createElement(FormTokenField, {
+                        label: props.taxonomyName,
+                        value: selectedTerms,
+                        suggestions: termsListByNameKeys,
+                        onChange: handleTermsChange,
+                        maxSuggestions: 10
+                    })
+                )
+            )),
             React.createElement(
                 PanelRow,
                 { className: datePanelClass },
+                React.createElement(_ToggleArrowButton.ToggleArrowButton, {
+                    className: 'future-action-calendar-toggle',
+                    isExpanded: calendarIsVisible,
+                    iconExpanded: 'arrow-up-alt2',
+                    iconCollapsed: 'calendar',
+                    titleExpanded: props.strings.hideCalendar,
+                    titleCollapsed: props.strings.showCalendar,
+                    onClick: function onClick() {
+                        return setCalendarIsVisible(!calendarIsVisible);
+                    } }),
                 React.createElement(DateTimePicker, {
                     currentDate: date,
                     onChange: handleDateChange,
@@ -477,13 +503,17 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 })
             ),
             React.createElement(
-                'div',
-                { className: 'future-action-help-text' },
-                React.createElement('hr', null),
-                React.createElement('span', { className: 'dashicons dashicons-info' }),
-                ' ',
-                HelpText,
-                '.'
+                PanelRow,
+                null,
+                React.createElement(
+                    'div',
+                    { className: 'future-action-help-text' },
+                    React.createElement('hr', null),
+                    React.createElement('span', { className: 'dashicons dashicons-info' }),
+                    ' ',
+                    HelpText,
+                    '.'
+                )
             )
         )
     );
@@ -597,6 +627,7 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
                 date: data.date,
                 terms: data.terms,
                 taxonomy: data.taxonomy,
+                taxonomyName: props.taxonomyName,
                 onChangeData: onChangeData,
                 is12hours: props.is12hours,
                 startOfWeek: props.startOfWeek,
@@ -699,6 +730,7 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
             date: date,
             terms: terms,
             taxonomy: taxonomy,
+            taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12hours: props.is12hours,
             startOfWeek: props.startOfWeek,
@@ -774,6 +806,7 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
             date: data.date,
             terms: data.terms,
             taxonomy: data.taxonomy,
+            taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12hours: props.is12hours,
             startOfWeek: props.startOfWeek,
@@ -842,6 +875,7 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
             date: date,
             terms: terms,
             taxonomy: taxonomy,
+            taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12hours: props.is12hours,
             startOfWeek: props.startOfWeek,
@@ -2329,7 +2363,8 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
         actionsSelectOptions: config.actionsSelectOptions,
         is12hours: config.is12hours,
         startOfWeek: config.startOfWeek,
-        strings: config.strings
+        strings: config.strings,
+        taxonomyName: config.taxonomyName
     }));
 })(window.wp, window.publishpressFutureClassicMetabox);
 })();

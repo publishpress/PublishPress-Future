@@ -250,6 +250,7 @@ class PostExpirator_Facade
                             strtolower($taxonomyName)
                         ),
                         'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
+                        ''
                     ]
                 ]
             );
