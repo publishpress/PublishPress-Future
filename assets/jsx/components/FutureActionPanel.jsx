@@ -239,7 +239,6 @@ export const FutureActionPanel = (props) => {
         return result;
     };
 
-
     const HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
 
     return (

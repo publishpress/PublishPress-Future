@@ -212,7 +212,10 @@ class QuickEditController implements InitializableInterface
         $taxonomyName= '';
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
             $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
-            $taxonomyName = $taxonomy->label;
+
+            if (! is_wp_error($taxonomy) && ! empty($taxonomy)) {
+                $taxonomyName = $taxonomy->label;
+            }
         }
 
         $taxonomyTerms = [];

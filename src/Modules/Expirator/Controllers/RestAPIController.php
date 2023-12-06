@@ -15,6 +15,8 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
+use WP_REST_Request;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -171,7 +173,7 @@ class RestAPIController implements InitializableInterface
 
         register_rest_route( $apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
             'methods' => 'GET',
-            'callback' => [$this, 'api_get_post_type_taxonomies'],
+            'callback' => [$this, 'getPostTypeTaxonomies'],
             'permission_callback' => function () {
                 return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
             },
@@ -255,7 +257,8 @@ class RestAPIController implements InitializableInterface
                                 'categoryTaxonomy' => sanitize_text_field($value['taxonomy']),
                             ];
 
-                            $opts['category'] = $this->taxonomiesModel->normalizeTermsCreatingIfNecessary(
+                            $taxonomiesModel = new TaxonomiesModel();
+                            $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
                                 $opts['categoryTaxonomy'],
                                 $opts['category']
                             );
@@ -280,5 +283,20 @@ class RestAPIController implements InitializableInterface
                 ]
             );
         }
+    }
+
+    public function getPostTypeTaxonomies(WP_REST_Request $request)
+    {
+        $postType = $request->get_param('postType');
+
+        $taxonomies = get_object_taxonomies($postType, 'objects');
+        $taxonomies = array_map(function ($taxonomy) {
+            return [
+                'name' => $taxonomy->name,
+                'label' => $taxonomy->label,
+            ];
+        }, $taxonomies);
+
+        return rest_ensure_response(['taxonomies' => $taxonomies, 'count' => count($taxonomies)]);
     }
 }

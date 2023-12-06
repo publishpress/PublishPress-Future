@@ -149,21 +149,6 @@ class PostExpirator_Facade
         return rest_ensure_response(true);
     }
 
-    public function api_get_post_type_taxonomies(WP_REST_Request $request)
-    {
-        $postType = $request->get_param('postType');
-
-        $taxonomies = get_object_taxonomies($postType, 'objects');
-        $taxonomies = array_map(function ($taxonomy) {
-            return [
-                'name' => $taxonomy->name,
-                'label' => $taxonomy->label,
-            ];
-        }, $taxonomies);
-
-        return rest_ensure_response(['taxonomies' => $taxonomies, 'count' => count($taxonomies)]);
-    }
-
     /**
      * Load the block's backend assets only if the meta box is active for this post type.
      */
