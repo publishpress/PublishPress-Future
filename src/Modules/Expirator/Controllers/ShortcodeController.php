@@ -5,66 +5,15 @@
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
-use PostExpirator_Display;
-use PostExpirator_Facade;
 use PostExpirator_Util;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
-use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class ShortcodeController implements InitializableInterface
 {
-    /**
-     * @var HookableInterface
-     */
-    private $hooks;
-
-    /**
-     * @var \Closure
-     */
-    private $expirablePostModelFactory;
-
-    /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade
-     */
-    private $sanitization;
-
-    /**
-     * @var \Closure
-     */
-    private $currentUserModelFactory;
-
-    /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\RequestFacade
-     */
-    private $request;
-
-    /**
-     * @param HookableInterface $hooksFacade
-     * @param callable $expirablePostModelFactory
-     * @param \PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade $sanitization
-     * @param \Closure $currentUserModelFactory
-     * @param \PublishPress\Future\Framework\WordPress\Facade\RequestFacade $request
-     */
-    public function __construct(
-        HookableInterface $hooksFacade,
-        $expirablePostModelFactory,
-        $sanitization,
-        $currentUserModelFactory,
-        $request
-    ) {
-        $this->hooks = $hooksFacade;
-        $this->expirablePostModelFactory = $expirablePostModelFactory;
-        $this->sanitization = $sanitization;
-        $this->currentUserModelFactory = $currentUserModelFactory;
-        $this->request = $request;
-    }
-
     public function initialize()
     {
         add_shortcode('futureaction', [$this, 'renderShortcode']);

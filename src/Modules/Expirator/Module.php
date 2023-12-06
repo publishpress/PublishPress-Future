@@ -144,12 +144,8 @@ class Module implements ModuleInterface
     {
         return new Controllers\ExpirationController(
             $this->hooks,
-            $this->site,
-            $this->cron,
             $this->scheduler,
-            $this->expirablePostModelFactory,
-            $this->settingsModelFactory,
-            $this->taxonomiesModelFactory
+            $this->expirablePostModelFactory
         );
     }
 
@@ -166,13 +162,7 @@ class Module implements ModuleInterface
 
     private function factoryQuickEditController()
     {
-        return new Controllers\QuickEditController(
-            $this->hooks,
-            $this->expirablePostModelFactory,
-            $this->sanitization,
-            $this->currentUserModelFactory,
-            $this->request
-        );
+        return new Controllers\QuickEditController($this->hooks);
     }
 
     private function factoryScheduledActionsController()
@@ -189,9 +179,6 @@ class Module implements ModuleInterface
         return new Controllers\BulkActionController(
             $this->hooks,
             $this->expirablePostModelFactory,
-            $this->sanitization,
-            $this->currentUserModelFactory,
-            $this->request,
             $this->noticesFacade
         );
     }
@@ -200,78 +187,40 @@ class Module implements ModuleInterface
     {
         return new Controllers\ClassicEditorController(
             $this->hooks,
-            $this->expirablePostModelFactory,
-            $this->sanitization,
-            $this->currentUserModelFactory,
-            $this->request
+            $this->currentUserModelFactory
         );
     }
 
     private function factoryShortcodeController()
     {
-        return new Controllers\ShortcodeController(
-            $this->hooks,
-            $this->expirablePostModelFactory,
-            $this->sanitization,
-            $this->currentUserModelFactory,
-            $this->request
-        );
+        return new Controllers\ShortcodeController();
     }
 
     private function factoryPostsListController()
     {
-        return new Controllers\PostListController(
-            $this->hooks,
-            $this->expirablePostModelFactory,
-            $this->sanitization,
-            $this->currentUserModelFactory,
-            $this->request
-        );
+        return new Controllers\PostListController($this->hooks);
     }
 
     private function factoryContentController()
     {
-        return new Controllers\ContentController(
-            $this->hooks,
-            $this->expirablePostModelFactory,
-            $this->sanitization,
-            $this->currentUserModelFactory,
-            $this->request
-        );
+        return new Controllers\ContentController($this->hooks);
     }
 
     private function factoryPluginsListController()
     {
-        return new Controllers\PluginsListController(
-            $this->hooks,
-            $this->site,
-            $this->cron,
-            $this->scheduler,
-            $this->expirablePostModelFactory,
-            $this->settingsModelFactory,
-            $this->taxonomiesModelFactory
-        );
+        return new Controllers\PluginsListController($this->hooks);
     }
 
     private function factoryRestAPIController()
     {
         return new Controllers\RestAPIController(
             $this->hooks,
-            $this->expirablePostModelFactory,
-            $this->sanitization,
-            $this->currentUserModelFactory,
-            $this->request
+            $this->expirablePostModelFactory
         );
     }
 
     private function factoryBlockController()
     {
-        return new Controllers\BlockEditorController(
-            $this->hooks,
-            $this->expirablePostModelFactory,
-            $this->sanitization,
-            $this->currentUserModelFactory,
-            $this->request
-        );
+        return new Controllers\BlockEditorController($this->hooks);
     }
 }
