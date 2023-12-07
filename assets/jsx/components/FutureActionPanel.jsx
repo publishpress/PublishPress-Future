@@ -1,5 +1,6 @@
 import { compact } from '../utils';
 import { ToggleArrowButton } from './ToggleArrowButton';
+import { ToggleCalendarDatePicker } from './ToggleCalendarDatePicker';
 
 const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl, Container } = wp.components;
 const { Fragment, useEffect, useState } = wp.element;
@@ -312,21 +313,14 @@ export const FutureActionPanel = (props) => {
                     }
 
                     <PanelRow className={datePanelClass}>
-                        <ToggleArrowButton
-                            className="future-action-calendar-toggle"
-                            isExpanded={calendarIsVisible}
-                            iconExpanded="arrow-up-alt2"
-                            iconCollapsed="calendar"
-                            titleExpanded={props.strings.hideCalendar}
-                            titleCollapsed={props.strings.showCalendar}
-                            onClick={() => setCalendarIsVisible(!calendarIsVisible)} />
-
-                        <DateTimePicker
+                        <ToggleCalendarDatePicker
                             currentDate={date}
-                            onChange={handleDateChange}
-                            __nextRemoveHelpButton={true}
-                            is12Hour={props.is12hours}
+                            onChangeDate={handleDateChange}
+                            onToggleCalendar={() => setCalendarIsVisible(!calendarIsVisible)}
+                            is12Hour={props.is12Hour}
                             startOfWeek={props.startOfWeek}
+                            isExpanded={calendarIsVisible}
+                            strings={props.strings}
                         />
                     </PanelRow>
 
