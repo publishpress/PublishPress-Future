@@ -153,14 +153,6 @@ class QuickEditController implements InitializableInterface
              true
         );
 
-        wp_enqueue_script(
-            'postexpirator-bulk-edit',
-             POSTEXPIRATOR_BASEURL . '/assets/js/bulk-edit.js',
-             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post'],
-             POSTEXPIRATOR_VERSION,
-             true
-        );
-
         wp_enqueue_style('wp-components');
 
         $currentScreen = get_current_screen();
@@ -228,47 +220,6 @@ class QuickEditController implements InitializableInterface
                         strtolower($taxonomyName)
                     ),
                     'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
-                ]
-            ]
-        );
-
-        wp_localize_script(
-            'postexpirator-bulk-edit',
-            'publishpressFutureBulkEdit',
-            [
-                'postTypeDefaultConfig' => $postTypeDefaultConfig,
-                'defaultDate' => $defaultExpirationDate['iso'],
-                'is12hours' => get_option('time_format') !== 'H:i',
-                'startOfWeek' => get_option('start_of_week', 0),
-                'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
-                'isDebugEnabled' => $debug->isEnabled(),
-                'taxonomyName' => $taxonomyName,
-                'taxonomyTerms' => $taxonomyTerms,
-                'postType' => $currentScreen->post_type,
-                'isNewPost' => false,
-                'nonce' => $nonce,
-                'strings' => [
-                    'category' => __('Categories', 'post-expirator'),
-                    'panelTitle' => __('PublishPress Future', 'post-expirator'),
-                    'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
-                    'action' => __('Action', 'post-expirator'),
-                    'showCalendar' => __('Show Calendar', 'post-expirator'),
-                    'hideCalendar' => __('Hide Calendar', 'post-expirator'),
-                    'loading' => __('Loading', 'post-expirator'),
-                    // translators: the text between {{}} is the link to the settings page.
-                    'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
-                    // translators: %s is the name of the taxonomy in plural form.
-                    'noTermsFound' => sprintf(
-                        __('No %s found.', 'post-expirator'),
-                        strtolower($taxonomyName)
-                    ),
-                    'futureActionUpdate' => __('Future Action Update', 'post-expirator'),
-                    'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
-                    'noChange' => __('— No Change —', 'post-expirator'),
-                    'changeAdd' => __('Add or update action for posts', 'post-expirator'),
-                    'addOnly' => __('Add action if none exists for posts', 'post-expirator'),
-                    'changeOnly' => __('Update the existing actions for posts', 'post-expirator'),
-                    'removeOnly' => __('Remove action from posts', 'post-expirator'),
                 ]
             ]
         );
