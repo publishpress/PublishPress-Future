@@ -97,25 +97,8 @@ div.pe-qe-fields > div {
     position: relative;
 }
 
-#publishpress-future-classic-editor .components-datetime__date,
-#publishpress-future-bulk-edit .components-datetime__date,
-#publishpress-future-quick-edit .components-datetime__date,
-#publishpress-future-block-editor .components-datetime__date {
-    margin-top: 28px;
-}
-
 .future-action-date-panel.hidden-calendar .components-datetime__date {
     display: none;
-}
-
-#publishpress-future-block-editor .hidden-calendar .future-action-help-text {
-    margin-top: 22px;
-}
-
-#publishpress-future-bulk-edit .hidden-calendar .future-action-help-text,
-#publishpress-future-classic-editor .hidden-calendar .future-action-help-text,
-#publishpress-future-quick-edit .hidden-calendar .future-action-help-text {
-    margin-top: 32px;
 }
 
 #publishpress-future-classic-editor .components-datetime,
@@ -126,42 +109,9 @@ div.pe-qe-fields > div {
 }
 
 .future-action-calendar-toggle {
-    position: absolute;
-    left: calc(50% - 15px);
+    margin-left: calc(50% - 15px) !important;
     border: 1px solid #cbcbcb !important;
     background: #f4f4f4 !important;
     text-align: center;
     width: 30px;
-}
-
-#publishpress-future-block-editor .hidden-calendar .future-action-calendar-toggle {
-    bottom: 72px;
-}
-
-#publishpress-future-classic-editor .hidden-calendar .future-action-calendar-toggle {
-    bottom: 58px;
-}
-
-#publishpress-future-bulk-edit .hidden-calendar .future-action-calendar-toggle {
-    bottom: 74px;
-}
-
-#publishpress-future-quick-edit .hidden-calendar .future-action-calendar-toggle {
-    bottom: 54px;
-}
-
-#publishpress-future-block-editor .future-action-calendar-toggle {
-    bottom: 377px;
-}
-
-#publishpress-future-quick-edit .future-action-calendar-toggle {
-    bottom: 359px;
-}
-
-#publishpress-future-bulk-edit .future-action-calendar-toggle {
-    bottom: 370px;
-}
-
-#publishpress-future-classic-editor .future-action-calendar-toggle {
-    bottom: 353px;
 }

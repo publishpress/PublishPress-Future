@@ -95,6 +95,44 @@ var CheckboxControl = exports.CheckboxControl = function CheckboxControl(props) 
 
 /***/ }),
 
+/***/ "./assets/jsx/components/DateTimePicker.jsx":
+/*!**************************************************!*\
+  !*** ./assets/jsx/components/DateTimePicker.jsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.DateTimePicker = undefined;
+
+var _time = __webpack_require__(/*! ../time */ "./assets/jsx/time.jsx");
+
+var DateTimePicker = exports.DateTimePicker = function DateTimePicker(_ref) {
+    var currentDate = _ref.currentDate,
+        onChange = _ref.onChange,
+        is12Hour = _ref.is12Hour,
+        startOfWeek = _ref.startOfWeek;
+
+    var WPDateTimePicker = wp.components.DateTimePicker;
+
+    if (typeof currentDate === 'number') {
+        currentDate = (0, _time.normalizeUnixTimeToMilliseconds)(currentDate);
+    }
+
+    return React.createElement(WPDateTimePicker, {
+        currentDate: currentDate,
+        onChange: onChange,
+        __nextRemoveHelpButton: true,
+        is12Hour: is12Hour,
+        startOfWeek: startOfWeek
+    });
+};
+
+/***/ }),
+
 /***/ "./assets/jsx/components/FutureActionPanel.jsx":
 /*!*****************************************************!*\
   !*** ./assets/jsx/components/FutureActionPanel.jsx ***!
@@ -1574,6 +1612,7 @@ var ToggleArrowButton = exports.ToggleArrowButton = function ToggleArrowButton(p
     var title = props.isExpanded ? props.titleExpanded : props.titleCollapsed;
 
     return React.createElement(Button, {
+        ref: props.ref,
         isSmall: true,
         title: title,
         icon: icon,
@@ -1599,6 +1638,8 @@ exports.ToggleCalendarDatePicker = undefined;
 
 var _ToggleArrowButton = __webpack_require__(/*! ./ToggleArrowButton */ "./assets/jsx/components/ToggleArrowButton.jsx");
 
+var _DateTimePicker = __webpack_require__(/*! ./DateTimePicker */ "./assets/jsx/components/DateTimePicker.jsx");
+
 var ToggleCalendarDatePicker = exports.ToggleCalendarDatePicker = function ToggleCalendarDatePicker(_ref) {
     var isExpanded = _ref.isExpanded,
         strings = _ref.strings,
@@ -1607,9 +1648,42 @@ var ToggleCalendarDatePicker = exports.ToggleCalendarDatePicker = function Toggl
         onChangeDate = _ref.onChangeDate,
         is12Hour = _ref.is12Hour,
         startOfWeek = _ref.startOfWeek;
-    var DateTimePicker = wp.components.DateTimePicker;
-    var Fragment = wp.element.Fragment;
+    var _wp$element = wp.element,
+        Fragment = _wp$element.Fragment,
+        useEffect = _wp$element.useEffect;
 
+
+    useEffect(function () {
+        // Get the element with the class "future-action-calendar-toggle" using the selector.
+        var toggleButtonElement = document.querySelector('.future-action-calendar-toggle');
+
+        if (!toggleButtonElement) {
+            return;
+        }
+
+        // Get the next element after toggleButtonElement.
+        var nextElement = toggleButtonElement.nextElementSibling;
+
+        if (!nextElement) {
+            return;
+        }
+
+        // Get the element .components-datetime__time inside nextElement.
+        var timeElement = nextElement.querySelector('.components-datetime__time');
+
+        if (!timeElement) {
+            return;
+        }
+
+        // Get the next element after timeElement.
+        var nextSibling = timeElement.nextSibling;
+
+        if (!nextSibling) {
+            return;
+        }
+
+        nextElement.insertBefore(toggleButtonElement, nextSibling);
+    });
 
     return React.createElement(
         Fragment,
@@ -1622,7 +1696,7 @@ var ToggleCalendarDatePicker = exports.ToggleCalendarDatePicker = function Toggl
             titleExpanded: strings.hideCalendar,
             titleCollapsed: strings.showCalendar,
             onClick: onToggleCalendar }),
-        React.createElement(DateTimePicker, {
+        React.createElement(_DateTimePicker.DateTimePicker, {
             currentDate: currentDate,
             onChange: onChangeDate,
             __nextRemoveHelpButton: true,
@@ -1980,6 +2054,62 @@ Object.defineProperty(exports, "TrueFalseControl", ({
 
 /***/ }),
 
+/***/ "./assets/jsx/time.jsx":
+/*!*****************************!*\
+  !*** ./assets/jsx/time.jsx ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+var getCurrentTimeInSeconds = exports.getCurrentTimeInSeconds = function getCurrentTimeInSeconds() {
+    return normalizeUnixTimeToSeconds(new Date().getTime());
+};
+
+var getCurrentTimeAsTimestamp = exports.getCurrentTimeAsTimestamp = function getCurrentTimeAsTimestamp() {
+    return formatUnixTimeToTimestamp(getCurrentTimeInSeconds());
+};
+
+var formatUnixTimeToTimestamp = exports.formatUnixTimeToTimestamp = function formatUnixTimeToTimestamp(unixTimestamp) {
+    var date = new Date(normalizeUnixTimeToSeconds(unixTimestamp));
+
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    var day = ("0" + date.getDate()).slice(-2);
+    var hours = ("0" + date.getHours()).slice(-2);
+    var minutes = ("0" + date.getMinutes()).slice(-2);
+    var seconds = ("0" + date.getSeconds()).slice(-2);
+
+    return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+};
+
+var formatTimestampToUnixTime = exports.formatTimestampToUnixTime = function formatTimestampToUnixTime(time) {
+    var date = new Date(time);
+
+    return normalizeUnixTimeToSeconds(date.getTime());
+};
+
+var timeIsInSeconds = exports.timeIsInSeconds = function timeIsInSeconds(time) {
+    return parseInt(time).toString().length <= 10;
+};
+
+var normalizeUnixTimeToSeconds = exports.normalizeUnixTimeToSeconds = function normalizeUnixTimeToSeconds(time) {
+    time = parseInt(time);
+
+    return timeIsInSeconds() ? time : time / 1000;
+};
+
+var normalizeUnixTimeToMilliseconds = exports.normalizeUnixTimeToMilliseconds = function normalizeUnixTimeToMilliseconds(time) {
+    time = parseInt(time);
+
+    return timeIsInSeconds() ? time * 1000 : time;
+};
+
+/***/ }),
+
 /***/ "./assets/jsx/utils.jsx":
 /*!******************************!*\
   !*** ./assets/jsx/utils.jsx ***!
@@ -2068,6 +2198,16 @@ var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function get
     }
 
     return field.value === '1' || field.value === 'true';
+};
+
+/**
+ * This function is used to determine if a value is a number, including strings.
+ *
+ * @param {*} value
+ * @returns
+ */
+var isNumber = exports.isNumber = function isNumber(value) {
+    return !isNaN(value);
 };
 
 /***/ })

@@ -12,7 +12,36 @@ export const ToggleCalendarDatePicker = (
         startOfWeek
     }
 ) => {
-    const { Fragment } = wp.element;
+    const { Fragment, useEffect } = wp.element;
+
+    useEffect(() => {
+        // Move the element of the toggle button to between the time and date elements.
+        const toggleButtonElement = document.querySelector('.future-action-calendar-toggle');
+
+        if (! toggleButtonElement) {
+            return;
+        }
+
+        const dateTimeElement = toggleButtonElement.nextElementSibling;
+
+        if (! dateTimeElement) {
+            return;
+        }
+
+        const timeElement = dateTimeElement.querySelector('.components-datetime__time');
+
+        if (! timeElement) {
+            return;
+        }
+
+        const dateElement = timeElement.nextSibling;
+
+        if (! dateElement) {
+            return;
+        }
+
+        dateTimeElement.insertBefore(toggleButtonElement, dateElement)
+    });
 
     return (
         <Fragment>
