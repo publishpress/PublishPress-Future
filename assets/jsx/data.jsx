@@ -1,4 +1,5 @@
-import { getCurrentTimeAsTimestamp } from './time';
+import { formatUnixTimeToTimestamp, getCurrentTimeAsTimestamp, normalizeUnixTimeToSeconds } from './time';
+import { isNumber } from './utils';
 
 export const createStore = (props) => {
     const {
@@ -34,6 +35,22 @@ export const createStore = (props) => {
                         action: action.action,
                     };
                 case 'SET_DATE':
+                    // Make sure the date is a number, if it is a string with only numbers
+                    if (typeof action.date !== 'number' && isNumber(action.date)) {
+                        action.date = parseInt(action.date);
+                    }
+
+                    // If string, convert to unix time
+                    if (typeof action.date === 'string') {
+                        action.date = new Date(action.date).getTime();
+                    }
+
+                    // Make sure the time is always in seconds
+                    action.date = normalizeUnixTimeToSeconds(action.date);
+
+                    // Convert to formated string format, considering it is in the site's timezone
+                    action.date = formatUnixTimeToTimestamp(action.date);
+
                     return {
                         ...state,
                         date: action.date,

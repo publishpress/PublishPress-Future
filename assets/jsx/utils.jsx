@@ -65,3 +65,13 @@ export const getFieldValueByNameAsBool = (name, postId) => {
 
     return field.value === '1' || field.value === 'true';
 }
+
+/**
+ * This function is used to determine if a value is a number, including strings.
+ *
+ * @param {*} value
+ * @returns
+ */
+export const isNumber = (value) => {
+    return !isNaN(value);
+}

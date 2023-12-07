@@ -8,7 +8,7 @@ export const getCurrentTimeAsTimestamp = () => {
 
 export const formatUnixTimeToTimestamp = (unixTimestamp) => {
     const date = new Date(
-        normalizeUnixTimeToMilliseconds(unixTimestamp)
+        normalizeUnixTimeToSeconds(unixTimestamp)
     );
 
     const year = date.getFullYear();
