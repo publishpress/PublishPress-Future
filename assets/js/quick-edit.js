@@ -1,2 +1,2479 @@
-(()=>{"use strict";var e,t,n,a={694:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.ButtonsPanel=function(e){return React.createElement("div",null,e.children)}},561:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0});t.CheckboxControl=function(e){var t,n=wp.element,a=n.Fragment,r=n.useState,o=wp.components.CheckboxControl,i=function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],a=!0,r=!1,o=void 0;try{for(var i,l=e[Symbol.iterator]();!(a=(i=l.next()).done)&&(n.push(i.value),!t||n.length!==t);a=!0);}catch(e){r=!0,o=e}finally{try{!a&&l.return&&l.return()}finally{if(r)throw o}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}(r(e.checked||!1),2),l=i[0],c=i[1];return t=e.unescapedDescription?React.createElement("p",{className:"description",dangerouslySetInnerHTML:{__html:e.description}}):React.createElement("p",{className:"description"},e.description),React.createElement(a,null,React.createElement(o,{label:e.label,name:e.name,id:e.name,className:e.className,checked:l||!1,onChange:function(t){c(t),e.onChange&&e.onChange(t)}}),t)}},409:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.FutureActionPanel=void 0;var a=function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],a=!0,r=!1,o=void 0;try{for(var i,l=e[Symbol.iterator]();!(a=(i=l.next()).done)&&(n.push(i.value),!t||n.length!==t);a=!0);}catch(e){r=!0,o=e}finally{try{!a&&l.return&&l.return()}finally{if(r)throw o}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")},r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},o=n(37),i=n(28),l=wp.components,c=l.PanelRow,u=l.DateTimePicker,s=l.CheckboxControl,m=l.SelectControl,d=l.FormTokenField,p=l.Spinner,f=l.BaseControl,y=(l.Container,wp.element),g=y.Fragment,b=y.useEffect,v=(y.useState,wp.htmlEntities.decodeEntities),h=wp.url.addQueryArgs,E=wp.data,_=E.useSelect,T=E.useDispatch,S=wp.apiFetch;t.FutureActionPanel=function(e){var t=_((function(t){return t(e.storeName).getAction()}),[]),n=_((function(t){return t(e.storeName).getDate()}),[]),l=_((function(t){return t(e.storeName).getEnabled()}),[]),y=_((function(t){return t(e.storeName).getTerms()}),[]),E=_((function(t){return t(e.storeName).getTaxonomy()}),[]),x=_((function(t){return t(e.storeName).getTaxonomyName()}),[]),N=_((function(t){return t(e.storeName).getTermsListByName()}),[]),R=_((function(t){return t(e.storeName).getTermsListById()}),[]),C=_((function(t){return t(e.storeName).getIsFetchingTerms()}),[]),A=_((function(t){return t(e.storeName).getCalendarIsVisible()}),[]),P=T(e.storeName),w=P.setAction,O=P.setDate,k=P.setEnabled,F=P.setTerms,I=P.setTaxonomy,j=P.setTermsListByName,B=P.setTermsListById,L=P.setTaxonomyName,D=P.setIsFetchingTerms,M=P.setCalendarIsVisible,V=function(e){N[e]={id:e,count:0,description:"",link:"",name:e,slug:e,taxonomy:E},R[e]=e,j(N),B(R),F([].concat(function(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}(y),[e]))},H=function(t,n){"function"==typeof e.onChangeData&&e.onChangeData(t,n)},W=function(t){k(t),t&&(w(e.action),O(e.date),F(e.terms),I(e.taxonomy),Q()),H("enabled",t)},Q=function(){var t={},n={};D(!0),!E&&"post"===e.postType||"category"===E?S({path:h("wp/v2/categories",{per_page:-1})}).then((function(a){a.forEach((function(e){t[e.name]=e,n[e.id]=e.name})),j(t),B(n),L(e.strings.category),D(!1)})):S({path:h("publishpress-future/v1/taxonomies/"+e.postType)}).then((function(e){parseInt(e.count)>0&&S({path:h("wp/v2/taxonomies/"+E,{context:"edit",per_page:-1})}).then((function(e){S({path:h("wp/v2/"+e.rest_base,{context:"edit",per_page:-1})}).then((function(a){a.forEach((function(e){t[v(e.name)]=e,n[e.id]=v(e.name)})),j(t),B(n),L(v(e.name)),D(!1)}))}))}))},U=function(){return localStorage.getItem("FUTURE_ACTION_CALENDAR_IS_VISIBLE_"+e.context)};b((function(){e.autoEnableAndHideCheckbox?k(!0):k(e.enabled),w(e.action),O(e.date),F(e.terms),I(e.taxonomy),null===U()?M(e.calendarIsVisible):M("1"===U()),e.enabled&&(e.isCleanNewPost&&W(!0),Q())}),[]),b((function(){var t;t=A,localStorage.setItem("FUTURE_ACTION_CALENDAR_IS_VISIBLE_"+e.context,t?"1":"0")}),[A]);var Y=[];y&&y.length>0&&R&&(Y=(0,o.compact)(function(e){return"object"!==(void 0===e?"undefined":r(e))||null===e?{}:e.map((function(e){return R[e]}))}(y)),"string"==typeof Y&&(Y=[]));var q=[];"object"===(void 0===N?"undefined":r(N))&&null!==N&&(q=Object.keys(N));var z=A?"future-action-panel":"future-action-panel hidden-calendar",G=A?"future-action-panel-content":"future-action-panel-content hidden-calendar",X=A?"future-action-date-panel":"future-action-date-panel hidden-calendar",J=function(e,t,n){var r=e.split("{"),o=[];o.push(r.shift());var i=!0,l=!1,c=void 0;try{for(var u,s=r[Symbol.iterator]();!(i=(u=s.next()).done);i=!0){var m=u.value.split("}"),d=a(m,2),p=d[0],f=d[1];o.push(React.createElement("a",{href:t,target:"_blank",key:t},p)),o.push(f)}}catch(e){l=!0,c=e}finally{try{!i&&s.return&&s.return()}finally{if(l)throw c}}return o}(e.strings.timezoneSettingsHelp,"/wp-admin/options-general.php#timezone_string");return React.createElement("div",{className:z},e.autoEnableAndHideCheckbox&&React.createElement("input",{type:"hidden",name:"future_action_enabled",value:1}),!e.autoEnableAndHideCheckbox&&React.createElement(c,null,React.createElement(s,{label:e.strings.enablePostExpiration,checked:l||!1,onChange:W})),l&&React.createElement(g,null,React.createElement(c,{className:G+" future-action-full-width"},React.createElement(m,{label:e.strings.action,value:t,options:e.actionsSelectOptions,onChange:function(e){w(e),H("action",e)}})),String(t).includes("category")&&(C&&React.createElement(c,null,React.createElement(f,{label:x},e.strings.loading+" ("+x+")",React.createElement(p,null)))||!E&&React.createElement(c,null,React.createElement(f,{label:x},React.createElement("i",{className:"dashicons dashicons-warning"})," ",e.strings.noTaxonomyFound))||0===q.length&&React.createElement(c,null,React.createElement(f,{label:x},React.createElement("i",{className:"dashicons dashicons-warning"})," ",e.strings.noTermsFound))||React.createElement(c,{className:"future-action-full-width"},React.createElement(f,null,React.createElement(d,{label:x,value:Y,suggestions:q,onChange:function(e){e=function(e){return"object"!==(void 0===e?"undefined":r(e))||null===e?{}:e.map((function(e){return N[e]?N[e].id:(V(e),e)}))}(e),F(e),H("terms",e)},maxSuggestions:10})))),React.createElement(c,{className:X},React.createElement(i.ToggleArrowButton,{className:"future-action-calendar-toggle",isExpanded:A,iconExpanded:"arrow-up-alt2",iconCollapsed:"calendar",titleExpanded:e.strings.hideCalendar,titleCollapsed:e.strings.showCalendar,onClick:function(){return M(!A)}}),React.createElement(u,{currentDate:n,onChange:function(e){O(e),H("date",e)},__nextRemoveHelpButton:!0,is12Hour:e.is12hours,startOfWeek:e.startOfWeek})),React.createElement(c,null,React.createElement("div",{className:"future-action-help-text"},React.createElement("hr",null),React.createElement("span",{className:"dashicons dashicons-info"})," ",J,"."))))}},738:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.FutureActionPanelBlockEditor=void 0;var a=function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],a=!0,r=!1,o=void 0;try{for(var i,l=e[Symbol.iterator]();!(a=(i=l.next()).done)&&(n.push(i.value),!t||n.length!==t);a=!0);}catch(e){r=!0,o=e}finally{try{!a&&l.return&&l.return()}finally{if(r)throw o}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")},r=n(352);t.FutureActionPanelBlockEditor=function(e){var t=wp.editPost.PluginDocumentSettingPanel,n=wp.data,o=n.useDispatch,i=n.select,l=o("core/editor").editPost,c=i("core/editor").getEditedPostAttribute("publishpress_future_action");return React.createElement(t,{name:"publishpress-future-action-panel",title:e.strings.panelTitle,icon:"calendar",initialOpen:e.postTypeDefaultConfig.autoEnable,className:"post-expirator-panel"},React.createElement("div",{id:"publishpress-future-block-editor"},React.createElement(r.FutureActionPanel,{context:"block-editor",postType:e.postType,isCleanNewPost:e.isCleanNewPost,actionsSelectOptions:e.actionsSelectOptions,enabled:c.enabled,calendarIsVisible:!0,action:c.action,date:c.date,terms:c.terms,taxonomy:c.taxonomy,taxonomyName:e.taxonomyName,onChangeData:function(t,n){var r=i(e.storeName),o={enabled:r.getEnabled()};o.enabled&&(o.action=r.getAction(),o.date=r.getDate(),o.terms=r.getTerms(),o.taxonomy=r.getTaxonomy()),function(e){var t={publishpress_future_action:{}},n=!0,r=!1,o=void 0;try{for(var i,c=Object.entries(e)[Symbol.iterator]();!(n=(i=c.next()).done);n=!0){var u=i.value,s=a(u,2),m=s[0],d=s[1];t.publishpress_future_action[m]=d}}catch(e){r=!0,o=e}finally{try{!n&&c.return&&c.return()}finally{if(r)throw o}}l(t)}(o)},is12hours:e.is12hours,startOfWeek:e.startOfWeek,storeName:e.storeName,strings:e.strings})))}},27:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.FutureActionPanelBulkEdit=void 0;var a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},r=n(352),o=n(37);t.FutureActionPanelBulkEdit=function(e){var t=wp.data,n=t.useSelect,i=t.useDispatch,l=t.select,c=n((function(t){return t(e.storeName).getDate()}),[]),u=n((function(t){return t(e.storeName).getEnabled()}),[]),s=n((function(t){return t(e.storeName).getAction()}),[]),m=n((function(t){return t(e.storeName).getTerms()}),[]),d=n((function(t){return t(e.storeName).getTaxonomy()}),[]),p=n((function(t){return t(e.storeName).getChangeAction()}),[]),f=i(e.storeName).setChangeAction,y=m;"object"===(void 0===m?"undefined":a(m))&&(y=m.join(","));var g=[{value:"no-change",label:e.strings.noChange},{value:"change-add",label:e.strings.changeAdd},{value:"add-only",label:e.strings.addOnly},{value:"change-only",label:e.strings.changeOnly},{value:"remove-only",label:e.strings.removeOnly}];return React.createElement("div",{className:"post-expirator-panel"},React.createElement(r.SelectControl,{label:e.strings.futureActionUpdate,name:"future_action_bulk_change_action",value:p,options:g,onChange:function(e){f(e)}}),["change-add","add-only","change-only"].includes(p)&&React.createElement(r.FutureActionPanel,{context:"bulk-edit",autoEnableAndHideCheckbox:!0,postType:e.postType,isCleanNewPost:e.isNewPost,actionsSelectOptions:e.actionsSelectOptions,enabled:!0,calendarIsVisible:!1,action:s,date:c,terms:m,taxonomy:d,taxonomyName:e.taxonomyName,onChangeData:function(t,n){(0,o.getElementByName)("future_action_bulk_enabled").value=l(e.storeName).getEnabled()?1:0,(0,o.getElementByName)("future_action_bulk_action").value=l(e.storeName).getAction(),(0,o.getElementByName)("future_action_bulk_date").value=l(e.storeName).getDate(),(0,o.getElementByName)("future_action_bulk_terms").value=l(e.storeName).getTerms().join(","),(0,o.getElementByName)("future_action_bulk_taxonomy").value=l(e.storeName).getTaxonomy()},is12hours:e.is12hours,startOfWeek:e.startOfWeek,storeName:e.storeName,strings:e.strings}),React.createElement("input",{type:"hidden",name:"future_action_bulk_enabled",value:u?1:0}),React.createElement("input",{type:"hidden",name:"future_action_bulk_action",value:s}),React.createElement("input",{type:"hidden",name:"future_action_bulk_date",value:c}),React.createElement("input",{type:"hidden",name:"future_action_bulk_terms",value:y}),React.createElement("input",{type:"hidden",name:"future_action_bulk_taxonomy",value:d}),React.createElement("input",{type:"hidden",name:"future_action_bulk_view",value:"bulk-edit"}),React.createElement("input",{type:"hidden",name:"_future_action_nonce",value:e.nonce}))}},21:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.FutureActionPanelClassicEditor=void 0;var a=n(352);t.FutureActionPanelClassicEditor=function(e){var t=wp.data.select,n=((new Date).getTimezoneOffset(),function(e){return document.getElementsByName(e)[0]}),r={enabled:"1"===n("future_action_enabled").value,action:n("future_action_action").value,date:n("future_action_date").value,terms:n("future_action_terms").value.split(",").map((function(e){return parseInt(e)})),taxonomy:n("future_action_taxonomy").value};return React.createElement("div",{className:"post-expirator-panel"},React.createElement(a.FutureActionPanel,{context:"classic-editor",postType:e.postType,isCleanNewPost:e.isNewPost,actionsSelectOptions:e.actionsSelectOptions,enabled:r.enabled,calendarIsVisible:!0,action:r.action,date:r.date,terms:r.terms,taxonomy:r.taxonomy,taxonomyName:e.taxonomyName,onChangeData:function(a,r){var o=t(e.storeName);n("future_action_enabled").value=o.getEnabled()?1:0,n("future_action_action").value=o.getAction(),n("future_action_date").value=o.getDate(),n("future_action_terms").value=o.getTerms().join(","),n("future_action_taxonomy").value=o.getTaxonomy()},is12hours:e.is12hours,startOfWeek:e.startOfWeek,storeName:e.storeName,strings:e.strings}))}},990:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.FutureActionPanelQuickEdit=void 0;var a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},r=n(352);t.FutureActionPanelQuickEdit=function(e){var t=wp.data.useSelect,n=t((function(t){return t(e.storeName).getDate()}),[]),o=t((function(t){return t(e.storeName).getEnabled()}),[]),i=t((function(t){return t(e.storeName).getAction()}),[]),l=t((function(t){return t(e.storeName).getTerms()}),[]),c=t((function(t){return t(e.storeName).getTaxonomy()}),[]),u=l;return"object"===(void 0===l?"undefined":a(l))&&(u=l.join(",")),React.createElement("div",{className:"post-expirator-panel"},React.createElement(r.FutureActionPanel,{context:"quick-edit",postType:e.postType,isCleanNewPost:e.isNewPost,actionsSelectOptions:e.actionsSelectOptions,enabled:o,calendarIsVisible:!1,action:i,date:n,terms:l,taxonomy:c,taxonomyName:e.taxonomyName,onChangeData:function(e,t){},is12hours:e.is12hours,startOfWeek:e.startOfWeek,storeName:e.storeName,strings:e.strings}),React.createElement("input",{type:"hidden",name:"future_action_enabled",value:o?1:0}),React.createElement("input",{type:"hidden",name:"future_action_action",value:i}),React.createElement("input",{type:"hidden",name:"future_action_date",value:n}),React.createElement("input",{type:"hidden",name:"future_action_terms",value:u}),React.createElement("input",{type:"hidden",name:"future_action_taxonomy",value:c}),React.createElement("input",{type:"hidden",name:"future_action_view",value:"quick-edit"}),React.createElement("input",{type:"hidden",name:"_future_action_nonce",value:e.nonce}))}},549:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.NonceControl=function(e){var t=wp.element.Fragment;return e.name||(e.name="_wpnonce"),e.referrer||(e.referrer=!0),React.createElement(t,null,React.createElement("input",{type:"hidden",name:e.name,id:e.name,value:e.nonce}),e.referrer&&React.createElement("input",{type:"hidden",name:"_wp_http_referer",value:e.referrer}))}},406:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.PostTypeSettingsPanel=void 0;var a=function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],a=!0,r=!1,o=void 0;try{for(var i,l=e[Symbol.iterator]();!(a=(i=l.next()).done)&&(n.push(i.value),!t||n.length!==t);a=!0);}catch(e){r=!0,o=e}finally{try{!a&&l.return&&l.return()}finally{if(r)throw o}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")},r=n(352);t.PostTypeSettingsPanel=function(e){var t=wp.element,n=t.useState,o=t.useEffect,i=wp.url.addQueryArgs,l=wp.hooks.applyFilters,c=wp.apiFetch,u=n(e.settings.taxonomy),s=a(u,2),m=s[0],d=s[1],p=n([]),f=a(p,2),y=f[0],g=f[1],b=n(!1),v=a(b,2),h=v[0],E=v[1],_=n([]),T=a(_,2),S=T[0],x=T[1],N=n(e.settings.howToExpire),R=a(N,2),C=R[0],A=R[1],P=n(e.settings.active),w=a(P,2),O=w[0],k=w[1],F=n(e.settings.defaultExpireOffset),I=a(F,2),j=I[0],B=I[1],L=n(e.settings.emailNotification),D=a(L,2),M=D[0],V=D[1],H=n(e.settings.autoEnabled),W=a(H,2),Q=W[0],U=W[1];o((function(){var t=function(t){var n=[],a=null,r=void 0;t.forEach((function(t){r={value:t.id,label:t.name},n.push(r),m===e.settings.taxonomy&&e.settings.terms.includes(t.id)&&(null===a&&(a=[]),a.push(r.label))})),g(n),E(!1),x(a)};if(!m&&"post"===e.postType||"category"===m)E(!0),c({path:i("wp/v2/categories",{per_page:-1})}).then(t);else{if(!m||!e.taxonomiesList)return;E(!0),c({path:i("wp/v2/taxonomies/"+m)}).then((function(e){c({path:i("wp/v2/"+e.rest_base)}).then(t)})).catch((function(e){console.debug("Taxonomy terms error",e),E(!1)}))}}),[m]);var Y=y.map((function(e){return e.label})),q=[React.createElement(r.SettingRow,{label:e.text.fieldActive,key:"expirationdate_activemeta-"+e.postType},React.createElement(r.CheckboxControl,{name:"expirationdate_activemeta-"+e.postType,checked:O||!1,label:e.text.fieldActiveLabel,onChange:function(e){k(e)}}))];return O&&(q.push(React.createElement(r.SettingRow,{label:e.text.fieldAutoEnable,key:"expirationdate_autoenable-"+e.postType},React.createElement(r.CheckboxControl,{name:"expirationdate_autoenable-"+e.postType,checked:Q||!1,label:e.text.fieldAutoEnableLabel,onChange:function(e){U(e)}}))),q.push(React.createElement(r.SettingRow,{label:e.text.fieldTaxonomy,key:"expirationdate_taxonomy-"+e.postType},React.createElement(r.SelectControl,{name:"expirationdate_taxonomy-"+e.postType,options:e.taxonomiesList,selected:m,noItemFoundMessage:e.text.noItemsfound,data:e.postType,onChange:function(e){d(e)}}))),0===e.taxonomiesList.length&&(e.expireTypeList[e.postType]=e.expireTypeList[e.postType].filter((function(e){return-1===["category","category-add","category-remove"].indexOf(e.value)}))),q.push(React.createElement(r.SettingRow,{label:e.text.fieldHowToExpire,key:"expirationdate_expiretype-"+e.postType},React.createElement(r.SelectControl,{name:"expirationdate_expiretype-"+e.postType,className:"pe-howtoexpire",options:e.expireTypeList[e.postType],description:e.text.fieldHowToExpireDescription,selected:C,onChange:function(e){A(e)}}),e.taxonomiesList.length>0&&["category","category-add","category-remove"].indexOf(C)>-1&&React.createElement(r.TokensControl,{label:e.text.fieldTerm,name:"expirationdate_terms-"+e.postType,options:Y,value:S,isLoading:h,onChange:function(e){x(e)},description:e.text.fieldTermDescription}))),q.push(React.createElement(r.SettingRow,{label:e.text.fieldDefaultDateTimeOffset,key:"expired-custom-date-"+e.postType},React.createElement(r.TextControl,{name:"expired-custom-date-"+e.postType,value:j,placeholder:e.settings.globalDefaultExpireOffset,description:e.text.fieldDefaultDateTimeOffsetDescription,unescapedDescription:!0,onChange:function(e){B(e)}}))),q.push(React.createElement(r.SettingRow,{label:e.text.fieldWhoToNotify,key:"expirationdate_emailnotification-"+e.postType},React.createElement(r.TextControl,{name:"expirationdate_emailnotification-"+e.postType,className:"large-text",value:M,description:e.text.fieldWhoToNotifyDescription,onChange:function(e){V(e)}})))),q=l("expirationdate_settings_posttype",q,e,O,n),React.createElement(r.SettingsFieldset,{legend:e.legend},React.createElement(r.SettingsTable,{bodyChildren:q}))}},438:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.PostTypesSettingsPanels=void 0;var a=function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],a=!0,r=!1,o=void 0;try{for(var i,l=e[Symbol.iterator]();!(a=(i=l.next()).done)&&(n.push(i.value),!t||n.length!==t);a=!0);}catch(e){r=!0,o=e}finally{try{!a&&l.return&&l.return()}finally{if(r)throw o}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")},r=n(352);t.PostTypesSettingsPanels=function(e){var t=[],n=!0,o=!1,i=void 0;try{for(var l,c=Object.entries(e.settings)[Symbol.iterator]();!(n=(l=c.next()).done);n=!0){var u=l.value,s=a(u,2),m=s[0],d=s[1];t.push(React.createElement(r.PostTypeSettingsPanel,{legend:d.label,text:e.text,postType:m,settings:d,expireTypeList:e.expireTypeList,taxonomiesList:e.taxonomiesList[m],key:m+"-panel"}))}}catch(e){o=!0,i=e}finally{try{!n&&c.return&&c.return()}finally{if(o)throw i}}return t}},182:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.SelectControl=function(e){var t=wp.element.Fragment,n=wp.components.SelectControl;return React.createElement(t,null,0===e.options.length&&React.createElement("div",null,e.noItemFoundMessage),e.options.length>0&&React.createElement(n,{label:e.label,name:e.name,id:e.name,className:e.className,value:e.selected,onChange:function(t){e.onChange(t)},"data-data":e.data,options:e.options}),e.children,React.createElement("p",{className:"description"},e.description))}},97:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.SettingRow=function(e){return wp.element.Fragment,React.createElement("tr",{valign:"top"},React.createElement("th",{scope:"row"},React.createElement("label",{htmlFor:""},e.label)),React.createElement("td",null,e.children))}},248:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.SettingsFieldset=function(e){return React.createElement("fieldset",null,React.createElement("legend",null,e.legend),e.children)}},65:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.SettingsForm=function(e){return React.createElement("form",{method:"post"},e.children)}},56:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.SettingsSection=function(e){var t=wp.element.Fragment;return React.createElement(t,null,React.createElement("h2",null,e.title),React.createElement("p",null,e.description),e.children)}},54:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.SettingsTable=function(e){return React.createElement("table",{className:"form-table"},React.createElement("tbody",null,e.bodyChildren))}},998:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.SubmitButton=function(e){return React.createElement("input",{type:"submit",name:e.name,value:e.text,className:"button-primary"})}},236:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.TextControl=function(e){var t,n=wp.element.Fragment,a=wp.components.TextControl;return t=e.unescapedDescription?React.createElement("p",{className:"description",dangerouslySetInnerHTML:{__html:e.description}}):React.createElement("p",{className:"description"},e.description),React.createElement(n,null,React.createElement(a,{type:"text",label:e.label,name:e.name,id:e.name,className:e.className,value:e.value,placeholder:e.placeholder,onChange:function(t){e.onChange&&e.onChange(t)}}),t)}},28:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.ToggleArrowButton=function(e){var t=wp.components.Button,n=e.iconExpanded?e.iconExpanded:"arrow-up-alt2",a=e.iconCollapsed?e.iconCollapsed:"arrow-down-alt2",r=e.isExpanded?n:a,o=e.isExpanded?e.titleExpanded:e.titleCollapsed;return React.createElement(t,{isSmall:!0,title:o,icon:r,onClick:function(){e.onClick&&e.onClick()},className:e.className})}},303:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0});var n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};t.TokensControl=function(e){var t=wp.element,a=t.Fragment,r=t.useState,o=t.useEffect,i=wp.components.FormTokenField,l=function(e,t){if(Array.isArray(e))return e;if(Symbol.iterator in Object(e))return function(e,t){var n=[],a=!0,r=!1,o=void 0;try{for(var i,l=e[Symbol.iterator]();!(a=(i=l.next()).done)&&(n.push(i.value),!t||n.length!==t);a=!0);}catch(e){r=!0,o=e}finally{try{!a&&l.return&&l.return()}finally{if(r)throw o}}return n}(e,t);throw new TypeError("Invalid attempt to destructure non-iterable instance")}(r(""),2),c=l[0],u=l[1];o((function(){e.value&&u(e.value.join(","))}),[e.value]);var s=void 0;e.description&&(s=e.unescapedDescription?React.createElement("p",{className:"description",dangerouslySetInnerHTML:{__html:e.description}}):React.createElement("p",{className:"description"},e.description));var m=e.value?e.value:[];return React.createElement(a,null,React.createElement(i,{label:e.label,value:m,suggestions:e.options,onChange:function(t){e.onChange&&e.onChange(t),"object"===(void 0===t?"undefined":n(t))?u(t.join(",")):u("")},maxSuggestions:10,className:"publishpres-future-token-field"}),React.createElement("input",{type:"hidden",name:e.name,value:c}),s)}},366:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.TrueFalseControl=function(e){var t=wp.element.Fragment,n=function(t){e.onChange&&e.onChange(t.target.value===e.trueValue&&jQuery(t.target).is(":checked"))};return React.createElement(t,null,React.createElement("input",{type:"radio",name:e.name,id:e.name+"-true",value:e.trueValue,defaultChecked:e.selected,onChange:n}),React.createElement("label",{htmlFor:e.name+"-true"},e.trueLabel),"  ",React.createElement("input",{type:"radio",name:e.name,defaultChecked:!e.selected,id:e.name+"-false",value:e.falseValue,onChange:n}),React.createElement("label",{htmlFor:e.name+"-false"},e.falseLabel),React.createElement("p",{className:"description"},e.description))}},352:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0});var a=n(694);Object.defineProperty(t,"ButtonsPanel",{enumerable:!0,get:function(){return a.ButtonsPanel}});var r=n(409);Object.defineProperty(t,"FutureActionPanel",{enumerable:!0,get:function(){return r.FutureActionPanel}});var o=n(738);Object.defineProperty(t,"FutureActionPanelBlockEditor",{enumerable:!0,get:function(){return o.FutureActionPanelBlockEditor}});var i=n(21);Object.defineProperty(t,"FutureActionPanelClassicEditor",{enumerable:!0,get:function(){return i.FutureActionPanelClassicEditor}});var l=n(990);Object.defineProperty(t,"FutureActionPanelQuickEdit",{enumerable:!0,get:function(){return l.FutureActionPanelQuickEdit}});var c=n(27);Object.defineProperty(t,"FutureActionPanelBulkEdit",{enumerable:!0,get:function(){return c.FutureActionPanelBulkEdit}});var u=n(406);Object.defineProperty(t,"PostTypeSettingsPanel",{enumerable:!0,get:function(){return u.PostTypeSettingsPanel}});var s=n(438);Object.defineProperty(t,"PostTypesSettingsPanels",{enumerable:!0,get:function(){return s.PostTypesSettingsPanels}});var m=n(97);Object.defineProperty(t,"SettingRow",{enumerable:!0,get:function(){return m.SettingRow}});var d=n(248);Object.defineProperty(t,"SettingsFieldset",{enumerable:!0,get:function(){return d.SettingsFieldset}});var p=n(65);Object.defineProperty(t,"SettingsForm",{enumerable:!0,get:function(){return p.SettingsForm}});var f=n(56);Object.defineProperty(t,"SettingsSection",{enumerable:!0,get:function(){return f.SettingsSection}});var y=n(54);Object.defineProperty(t,"SettingsTable",{enumerable:!0,get:function(){return y.SettingsTable}});var g=n(998);Object.defineProperty(t,"SubmitButton",{enumerable:!0,get:function(){return g.SubmitButton}});var b=n(561);Object.defineProperty(t,"CheckboxControl",{enumerable:!0,get:function(){return b.CheckboxControl}});var v=n(182);Object.defineProperty(t,"SelectControl",{enumerable:!0,get:function(){return v.SelectControl}});var h=n(236);Object.defineProperty(t,"TextControl",{enumerable:!0,get:function(){return h.TextControl}});var E=n(303);Object.defineProperty(t,"TokensControl",{enumerable:!0,get:function(){return E.TokensControl}});var _=n(549);Object.defineProperty(t,"NonceControl",{enumerable:!0,get:function(){return _.NonceControl}});var T=n(366);Object.defineProperty(t,"TrueFalseControl",{enumerable:!0,get:function(){return T.TrueFalseControl}})},91:(e,t,n)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.createStore=void 0;var a=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var n=arguments[t];for(var a in n)Object.prototype.hasOwnProperty.call(n,a)&&(e[a]=n[a])}return e},r=n(500);t.createStore=function(e){var t=wp.data,n=t.register,o=t.createReduxStore;e.defaultState.terms&&"string"==typeof e.defaultState.terms&&(e.defaultState.terms=e.defaultState.terms.split(",").map((function(e){return parseInt(e)})));var i={action:e.defaultState.action,date:e.defaultState.date?e.defaultState.date:(0,r.getCurrentTimeAsTimestamp)(),enabled:e.defaultState.autoEnable,terms:e.defaultState.terms?e.defaultState.terms:[],taxonomy:e.defaultState.taxonomy?e.defaultState.taxonomy:null,termsListByName:null,termsListById:null,taxonomyName:null,isFetchingTerms:!1,changeAction:"no-change",calendarIsVisible:!0},l=o(e.name,{reducer:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:i,t=arguments[1];switch(t.type){case"SET_ACTION":return a({},e,{action:t.action});case"SET_DATE":return a({},e,{date:t.date});case"SET_ENABLED":return a({},e,{enabled:t.enabled});case"SET_TERMS":return a({},e,{terms:t.terms});case"SET_TAXONOMY":return a({},e,{taxonomy:t.taxonomy});case"SET_TERMS_LIST_BY_NAME":return a({},e,{termsListByName:t.termsListByName});case"SET_TERMS_LIST_BY_ID":return a({},e,{termsListById:t.termsListById});case"SET_TAXONOMY_NAME":return a({},e,{taxonomyName:t.taxonomyName});case"SET_CHANGE_ACTION":return a({},e,{changeAction:t.changeAction});case"SET_CALENDAR_IS_VISIBLE":return a({},e,{calendarIsVisible:t.calendarIsVisible})}return e},actions:{setAction:function(e){return{type:"SET_ACTION",action:e}},setDate:function(e){return{type:"SET_DATE",date:e}},setEnabled:function(e){return{type:"SET_ENABLED",enabled:e}},setTerms:function(e){return{type:"SET_TERMS",terms:e}},setTaxonomy:function(e){return{type:"SET_TAXONOMY",taxonomy:e}},setTermsListByName:function(e){return{type:"SET_TERMS_LIST_BY_NAME",termsListByName:e}},setTermsListById:function(e){return{type:"SET_TERMS_LIST_BY_ID",termsListById:e}},setTaxonomyName:function(e){return{type:"SET_TAXONOMY_NAME",taxonomyName:e}},setIsFetchingTerms:function(e){return{type:"SET_IS_FETCHING_TERMS",isFetchingTerms:e}},setChangeAction:function(e){return{type:"SET_CHANGE_ACTION",changeAction:e}},setCalendarIsVisible:function(e){return{type:"SET_CALENDAR_IS_VISIBLE",calendarIsVisible:e}}},selectors:{getAction:function(e){return e.action},getDate:function(e){return e.date},getEnabled:function(e){return e.enabled},getTerms:function(e){return e.terms},getTaxonomy:function(e){return e.taxonomy},getTermsListByName:function(e){return e.termsListByName},getTermsListById:function(e){return e.termsListById},getTaxonomyName:function(e){return e.taxonomyName},getIsFetchingTerms:function(e){return e.isFetchingTerms},getChangeAction:function(e){return e.changeAction},getCalendarIsVisible:function(e){return e.calendarIsVisible}}});return n(l),l}},500:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0});var n=t.getCurrentTimeInSeconds=function(){return o((new Date).getTime())},a=(t.getCurrentTimeAsTimestamp=function(){return a(n())},t.formatUnixTimeToTimestamp=function(e){var t=new Date(i(e));return t.getFullYear()+"-"+("0"+(t.getMonth()+1)).slice(-2)+"-"+("0"+t.getDate()).slice(-2)+" "+("0"+t.getHours()).slice(-2)+":"+("0"+t.getMinutes()).slice(-2)+":"+("0"+t.getSeconds()).slice(-2)}),r=(t.formatTimestampToUnixTime=function(e){var t=new Date(e);return o(t.getTime())},t.timeIsInSeconds=function(e){return 10===parseInt(e).toString().length}),o=t.normalizeUnixTimeToSeconds=function(e){return e=parseInt(e),r()?e:e/1e3},i=t.normalizeUnixTimeToMilliseconds=function(e){return e=parseInt(e),r()?1e3*e:e}},37:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0});var n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},a=(t.compact=function(e){return e?(Array.isArray(e)||"object"!==(void 0===e?"undefined":n(e))||(e=Object.values(e)),e.filter((function(e){return null!=e&&""!==e}))):[]},t.debugLogFactory=function(e){return function(t){for(var n=arguments.length,a=Array(n>1?n-1:0),r=1;r<n;r++)a[r-1]=arguments[r];var o;console&&e.isDebugEnabled&&(o=console).debug.apply(o,["[Future]",t].concat(a))}},t.isGutenbergEnabled=function(){return document.body.classList.contains("block-editor-page")},t.getElementByName=function(e){return document.getElementsByName(e)[0]},t.getFieldByName=function(e,t){return document.querySelector("#the-list tr#post-"+t+" .column-expirationdate input#future_action_"+e+"-"+t)});t.getFieldValueByName=function(e,t){var n=a(e,t);return n?n.value:null},t.getFieldValueByNameAsArrayOfInt=function(e,t){var n=a(e,t);return n&&n.value?("number"==typeof n.value&&(n.value=n.value.toString()),n.value.split(",").map((function(e){return parseInt(e)}))):[]},t.getFieldValueByNameAsBool=function(e,t){var n=a(e,t);return!!n&&("1"===n.value||"true"===n.value)}}},r={};function o(e){var t=r[e];if(void 0!==t)return t.exports;var n=r[e]={exports:{}};return a[e](n,n.exports,o),n.exports}e=o(352),t=o(91),n=o(37),function(a,r,o){var i="publishpress-future/future-action-quick-edit",l=o.edit,c=o.revert;o.edit=function(u){var s=a.element.createRoot,m=a.data,d=m.select,p=m.dispatch;l.apply(this,arguments);var f=function(e){return"string"==typeof e||"number"==typeof e?e:e.closest("tr").id.split("-")[1]}(u),y=(0,n.getFieldValueByNameAsBool)("enabled",f),g=(0,n.getFieldValueByName)("action",f),b=(0,n.getFieldValueByName)("date",f),v=(0,n.getFieldValueByName)("terms",f),h=(0,n.getFieldValueByName)("taxonomy",f),E=v.split(",");d(i)?(p(i).setEnabled(y),p(i).setAction(g),p(i).setDate(b),p(i).setTaxonomy(h),p(i).setTerms(E)):(0,t.createStore)({name:i,defaultState:{autoEnable:y,action:g,date:b,taxonomy:h,terms:E}});var _=document.querySelector(".inline-edit-save .save");_&&(_.onclick=function(){setTimeout((function(){T.unmount()}),1e3)});var T=s(document.getElementById("publishpress-future-quick-edit"));T.render(React.createElement(e.FutureActionPanelQuickEdit,{storeName:i,postType:r.postType,isNewPost:r.isNewPost,actionsSelectOptions:r.actionsSelectOptions,is12hours:r.is12hours,startOfWeek:r.startOfWeek,strings:r.strings,taxonomyName:r.taxonomyName,nonce:r.nonce})),o.revert=function(){T.unmount(),c.apply(this,arguments)}}}(window.wp,window.publishpressFutureQuickEdit,inlineEditPost)})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./assets/jsx/components/ButtonsPanel.jsx":
+/*!************************************************!*\
+  !*** ./assets/jsx/components/ButtonsPanel.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var ButtonsPanel = exports.ButtonsPanel = function ButtonsPanel(props) {
+    return React.createElement(
+        "div",
+        null,
+        props.children
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/CheckboxControl.jsx":
+/*!***************************************************!*\
+  !*** ./assets/jsx/components/CheckboxControl.jsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var CheckboxControl = exports.CheckboxControl = function CheckboxControl(props) {
+    var _wp$element = wp.element,
+        Fragment = _wp$element.Fragment,
+        useState = _wp$element.useState;
+
+    var WPCheckboxControl = wp.components.CheckboxControl;
+
+    var _useState = useState(props.checked || false),
+        _useState2 = _slicedToArray(_useState, 2),
+        checked = _useState2[0],
+        setChecked = _useState2[1];
+
+    var description = void 0;
+
+    if (props.unescapedDescription) {
+        // If using this option, the HTML has to be escaped before injected into the JS interface.
+        description = React.createElement("p", { className: "description", dangerouslySetInnerHTML: { __html: props.description } });
+    } else {
+        description = React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        );
+    }
+
+    var onChange = function onChange(value) {
+        setChecked(value);
+
+        if (props.onChange) {
+            props.onChange(value);
+        }
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(WPCheckboxControl, {
+            label: props.label,
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            checked: checked || false,
+            onChange: onChange
+        }),
+        description
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanel.jsx":
+/*!*****************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanel.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanel = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
+
+var _ToggleArrowButton = __webpack_require__(/*! ./ToggleArrowButton */ "./assets/jsx/components/ToggleArrowButton.jsx");
+
+var _ToggleCalendarDatePicker = __webpack_require__(/*! ./ToggleCalendarDatePicker */ "./assets/jsx/components/ToggleCalendarDatePicker.jsx");
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var _wp$components = wp.components,
+    PanelRow = _wp$components.PanelRow,
+    DateTimePicker = _wp$components.DateTimePicker,
+    CheckboxControl = _wp$components.CheckboxControl,
+    SelectControl = _wp$components.SelectControl,
+    FormTokenField = _wp$components.FormTokenField,
+    Spinner = _wp$components.Spinner,
+    BaseControl = _wp$components.BaseControl,
+    Container = _wp$components.Container;
+var _wp$element = wp.element,
+    Fragment = _wp$element.Fragment,
+    useEffect = _wp$element.useEffect,
+    useState = _wp$element.useState;
+var decodeEntities = wp.htmlEntities.decodeEntities;
+var addQueryArgs = wp.url.addQueryArgs;
+var _wp$data = wp.data,
+    useSelect = _wp$data.useSelect,
+    useDispatch = _wp$data.useDispatch;
+var _wp = wp,
+    apiFetch = _wp.apiFetch;
+var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(props) {
+    var action = useSelect(function (select) {
+        return select(props.storeName).getAction();
+    }, []);
+    var date = useSelect(function (select) {
+        return select(props.storeName).getDate();
+    }, []);
+    var enabled = useSelect(function (select) {
+        return select(props.storeName).getEnabled();
+    }, []);
+    var terms = useSelect(function (select) {
+        return select(props.storeName).getTerms();
+    }, []);
+    var taxonomy = useSelect(function (select) {
+        return select(props.storeName).getTaxonomy();
+    }, []);
+    var taxonomyName = useSelect(function (select) {
+        return select(props.storeName).getTaxonomyName();
+    }, []);
+    var termsListByName = useSelect(function (select) {
+        return select(props.storeName).getTermsListByName();
+    }, []);
+    var termsListById = useSelect(function (select) {
+        return select(props.storeName).getTermsListById();
+    }, []);
+    var isFetchingTerms = useSelect(function (select) {
+        return select(props.storeName).getIsFetchingTerms();
+    }, []);
+    var calendarIsVisible = useSelect(function (select) {
+        return select(props.storeName).getCalendarIsVisible();
+    }, []);
+
+    var _useDispatch = useDispatch(props.storeName),
+        setAction = _useDispatch.setAction,
+        setDate = _useDispatch.setDate,
+        setEnabled = _useDispatch.setEnabled,
+        setTerms = _useDispatch.setTerms,
+        setTaxonomy = _useDispatch.setTaxonomy,
+        setTermsListByName = _useDispatch.setTermsListByName,
+        setTermsListById = _useDispatch.setTermsListById,
+        setTaxonomyName = _useDispatch.setTaxonomyName,
+        setIsFetchingTerms = _useDispatch.setIsFetchingTerms,
+        setCalendarIsVisible = _useDispatch.setCalendarIsVisible;
+
+    var mapTermsListById = function mapTermsListById(terms) {
+        if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) !== 'object' || terms === null) {
+            return {};
+        }
+
+        return terms.map(function (term) {
+            return termsListById[term];
+        });
+    };
+
+    var insertTerm = function insertTerm(term) {
+        termsListByName[term] = { id: term, count: 0, description: "", link: "", name: term, slug: term, taxonomy: taxonomy };
+        termsListById[term] = term;
+        setTermsListByName(termsListByName);
+        setTermsListById(termsListById);
+        setTerms([].concat(_toConsumableArray(terms), [term]));
+    };
+
+    var mapTermsListByName = function mapTermsListByName(terms) {
+        if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) !== 'object' || terms === null) {
+            return {};
+        }
+
+        return terms.map(function (term) {
+            if (termsListByName[term]) {
+                return termsListByName[term].id;
+            }
+
+            insertTerm(term);
+
+            return term;
+        });
+    };
+
+    var callOnChangeData = function callOnChangeData(attribute, value) {
+        if (typeof props.onChangeData === 'function') {
+            props.onChangeData(attribute, value);
+        }
+    };
+
+    var handleEnabledChange = function handleEnabledChange(isChecked) {
+        setEnabled(isChecked);
+
+        if (isChecked) {
+            setAction(props.action);
+            setDate(props.date);
+            setTerms(props.terms);
+            setTaxonomy(props.taxonomy);
+
+            fetchTerms();
+        }
+
+        callOnChangeData('enabled', isChecked);
+    };
+
+    var handleActionChange = function handleActionChange(value) {
+        setAction(value);
+
+        callOnChangeData('action', value);
+    };
+
+    var handleDateChange = function handleDateChange(value) {
+        setDate(value);
+
+        callOnChangeData('date', value);
+    };
+
+    var handleTermsChange = function handleTermsChange(value) {
+        value = mapTermsListByName(value);
+
+        setTerms(value);
+
+        callOnChangeData('terms', value);
+    };
+
+    var fetchTerms = function fetchTerms() {
+        var termsListByName = {};
+        var termsListById = {};
+
+        setIsFetchingTerms(true);
+
+        if (!taxonomy && props.postType === 'post' || taxonomy === 'category') {
+            apiFetch({
+                path: addQueryArgs('wp/v2/categories', { per_page: -1 })
+            }).then(function (list) {
+                list.forEach(function (cat) {
+                    termsListByName[cat.name] = cat;
+                    termsListById[cat.id] = cat.name;
+                });
+
+                setTermsListByName(termsListByName);
+                setTermsListById(termsListById);
+                setTaxonomyName(props.strings.category);
+                setIsFetchingTerms(false);
+            });
+        } else {
+            apiFetch({
+                path: addQueryArgs('publishpress-future/v1/taxonomies/' + props.postType)
+            }).then(function (response) {
+                if (parseInt(response.count) > 0) {
+                    apiFetch({
+                        path: addQueryArgs('wp/v2/taxonomies/' + taxonomy, { context: 'edit', per_page: -1 })
+                    }).then(function (taxonomyAttributes) {
+                        // fetch all terms
+                        apiFetch({
+                            path: addQueryArgs('wp/v2/' + taxonomyAttributes.rest_base, { context: 'edit', per_page: -1 })
+                        }).then(function (terms) {
+                            terms.forEach(function (term) {
+                                termsListByName[decodeEntities(term.name)] = term;
+                                termsListById[term.id] = decodeEntities(term.name);
+                            });
+
+                            setTermsListByName(termsListByName);
+                            setTermsListById(termsListById);
+                            setTaxonomyName(decodeEntities(taxonomyAttributes.name));
+                            setIsFetchingTerms(false);
+                        });
+                    });
+                }
+            });
+        }
+    };
+
+    var storeCalendarIsVisibleOnStorage = function storeCalendarIsVisibleOnStorage(value) {
+        localStorage.setItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context, value ? '1' : '0');
+    };
+
+    var getCalendarIsVisibleFromStorage = function getCalendarIsVisibleFromStorage() {
+        return localStorage.getItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context);
+    };
+
+    useEffect(function () {
+        if (props.autoEnableAndHideCheckbox) {
+            setEnabled(true);
+        } else {
+            setEnabled(props.enabled);
+        }
+
+        setAction(props.action);
+        setDate(props.date);
+        setTerms(props.terms);
+        setTaxonomy(props.taxonomy);
+
+        if (getCalendarIsVisibleFromStorage() === null) {
+            setCalendarIsVisible(props.calendarIsVisible);
+        } else {
+            setCalendarIsVisible(getCalendarIsVisibleFromStorage() === '1');
+        }
+
+        // We need to get the value directly from the props because the value from the store is not updated yet
+        if (props.enabled) {
+            if (props.isCleanNewPost) {
+                // Force populate the default values
+                handleEnabledChange(true);
+            }
+
+            fetchTerms();
+        }
+    }, []);
+
+    useEffect(function () {
+        storeCalendarIsVisibleOnStorage(calendarIsVisible);
+    }, [calendarIsVisible]);
+
+    var selectedTerms = [];
+    if (terms && terms.length > 0 && termsListById) {
+        selectedTerms = (0, _utils.compact)(mapTermsListById(terms));
+
+        if (typeof selectedTerms === 'string') {
+            selectedTerms = [];
+        }
+    }
+
+    var termsListByNameKeys = [];
+    if ((typeof termsListByName === 'undefined' ? 'undefined' : _typeof(termsListByName)) === 'object' && termsListByName !== null) {
+        termsListByNameKeys = Object.keys(termsListByName);
+    }
+
+    var panelClass = calendarIsVisible ? 'future-action-panel' : 'future-action-panel hidden-calendar';
+    var contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
+    var datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
+
+    var replaceCurlyBracketsWithLink = function replaceCurlyBracketsWithLink(string, href, target) {
+        var parts = string.split('{');
+        var result = [];
+
+        result.push(parts.shift());
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = parts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var part = _step.value;
+
+                var _part$split = part.split('}'),
+                    _part$split2 = _slicedToArray(_part$split, 2),
+                    before = _part$split2[0],
+                    after = _part$split2[1];
+
+                result.push(React.createElement(
+                    'a',
+                    { href: href, target: target, key: href },
+                    before
+                ));
+
+                result.push(after);
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        return result;
+    };
+
+    var HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
+
+    return React.createElement(
+        'div',
+        { className: panelClass },
+        props.autoEnableAndHideCheckbox && React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: 1 }),
+        !props.autoEnableAndHideCheckbox && React.createElement(
+            PanelRow,
+            null,
+            React.createElement(CheckboxControl, {
+                label: props.strings.enablePostExpiration,
+                checked: enabled || false,
+                onChange: handleEnabledChange
+            })
+        ),
+        enabled && React.createElement(
+            Fragment,
+            null,
+            React.createElement(
+                PanelRow,
+                { className: contentPanelClass + ' future-action-full-width' },
+                React.createElement(SelectControl, {
+                    label: props.strings.action,
+                    value: action,
+                    options: props.actionsSelectOptions,
+                    onChange: handleActionChange
+                })
+            ),
+            String(action).includes('category') && (isFetchingTerms && React.createElement(
+                PanelRow,
+                null,
+                React.createElement(
+                    BaseControl,
+                    { label: taxonomyName },
+                    props.strings.loading + ' (' + taxonomyName + ')',
+                    React.createElement(Spinner, null)
+                )
+            ) || !taxonomy && React.createElement(
+                PanelRow,
+                null,
+                React.createElement(
+                    BaseControl,
+                    { label: taxonomyName },
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    props.strings.noTaxonomyFound
+                )
+            ) || termsListByNameKeys.length === 0 && React.createElement(
+                PanelRow,
+                null,
+                React.createElement(
+                    BaseControl,
+                    { label: taxonomyName },
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    props.strings.noTermsFound
+                )
+            ) || React.createElement(
+                PanelRow,
+                { className: 'future-action-full-width' },
+                React.createElement(
+                    BaseControl,
+                    null,
+                    React.createElement(FormTokenField, {
+                        label: taxonomyName,
+                        value: selectedTerms,
+                        suggestions: termsListByNameKeys,
+                        onChange: handleTermsChange,
+                        maxSuggestions: 10
+                    })
+                )
+            )),
+            React.createElement(
+                PanelRow,
+                { className: datePanelClass },
+                React.createElement(_ToggleCalendarDatePicker.ToggleCalendarDatePicker, {
+                    currentDate: date,
+                    onChangeDate: handleDateChange,
+                    onToggleCalendar: function onToggleCalendar() {
+                        return setCalendarIsVisible(!calendarIsVisible);
+                    },
+                    is12Hour: props.is12Hour,
+                    startOfWeek: props.startOfWeek,
+                    isExpanded: calendarIsVisible,
+                    strings: props.strings
+                })
+            ),
+            React.createElement(
+                PanelRow,
+                null,
+                React.createElement(
+                    'div',
+                    { className: 'future-action-help-text' },
+                    React.createElement('hr', null),
+                    React.createElement('span', { className: 'dashicons dashicons-info' }),
+                    ' ',
+                    HelpText,
+                    '.'
+                )
+            )
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanelBlockEditor.jsx":
+/*!****************************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanelBlockEditor.jsx ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanelBlockEditor = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) {
+    var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
+    var _wp$data = wp.data,
+        useDispatch = _wp$data.useDispatch,
+        select = _wp$data.select;
+
+    var _useDispatch = useDispatch('core/editor'),
+        editPost = _useDispatch.editPost;
+
+    var editPostAttribute = function editPostAttribute(newAttribute) {
+        var attribute = {
+            publishpress_future_action: {}
+        };
+
+        // For each property on newAttribute, set the value on attribute
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = Object.entries(newAttribute)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var _ref = _step.value;
+
+                var _ref2 = _slicedToArray(_ref, 2);
+
+                var name = _ref2[0];
+                var value = _ref2[1];
+
+                attribute.publishpress_future_action[name] = value;
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        editPost(attribute);
+    };
+
+    var onChangeData = function onChangeData(attribute, value) {
+        var store = select(props.storeName);
+
+        var newAttribute = {
+            'enabled': store.getEnabled()
+        };
+
+        if (newAttribute.enabled) {
+            newAttribute['action'] = store.getAction();
+            newAttribute['date'] = store.getDate();
+            newAttribute['terms'] = store.getTerms();
+            newAttribute['taxonomy'] = store.getTaxonomy();
+        }
+
+        editPostAttribute(newAttribute);
+    };
+
+    var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+
+    return React.createElement(
+        PluginDocumentSettingPanel,
+        {
+            name: 'publishpress-future-action-panel',
+            title: props.strings.panelTitle,
+            icon: 'calendar',
+            initialOpen: props.postTypeDefaultConfig.autoEnable,
+            className: 'post-expirator-panel' },
+        React.createElement(
+            'div',
+            { id: 'publishpress-future-block-editor' },
+            React.createElement(_.FutureActionPanel, {
+                context: 'block-editor',
+                postType: props.postType,
+                isCleanNewPost: props.isCleanNewPost,
+                actionsSelectOptions: props.actionsSelectOptions,
+                enabled: data.enabled,
+                calendarIsVisible: true,
+                action: data.action,
+                date: data.date,
+                terms: data.terms,
+                taxonomy: data.taxonomy,
+                taxonomyName: props.taxonomyName,
+                onChangeData: onChangeData,
+                is12Hour: props.is12Hour,
+                startOfWeek: props.startOfWeek,
+                storeName: props.storeName,
+                strings: props.strings })
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanelBulkEdit.jsx":
+/*!*************************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanelBulkEdit.jsx ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanelBulkEdit = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _ = __webpack_require__(/*! . */ "./assets/jsx/components/index.jsx");
+
+var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
+
+var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function FutureActionPanelBulkEdit(props) {
+    var _wp$data = wp.data,
+        useSelect = _wp$data.useSelect,
+        useDispatch = _wp$data.useDispatch,
+        select = _wp$data.select;
+
+
+    var onChangeData = function onChangeData(attribute, value) {
+        (0, _utils.getElementByName)('future_action_bulk_enabled').value = select(props.storeName).getEnabled() ? 1 : 0;
+        (0, _utils.getElementByName)('future_action_bulk_action').value = select(props.storeName).getAction();
+        (0, _utils.getElementByName)('future_action_bulk_date').value = select(props.storeName).getDate();
+        (0, _utils.getElementByName)('future_action_bulk_terms').value = select(props.storeName).getTerms().join(',');
+        (0, _utils.getElementByName)('future_action_bulk_taxonomy').value = select(props.storeName).getTaxonomy();
+    };
+
+    var date = useSelect(function (select) {
+        return select(props.storeName).getDate();
+    }, []);
+    var enabled = useSelect(function (select) {
+        return select(props.storeName).getEnabled();
+    }, []);
+    var action = useSelect(function (select) {
+        return select(props.storeName).getAction();
+    }, []);
+    var terms = useSelect(function (select) {
+        return select(props.storeName).getTerms();
+    }, []);
+    var taxonomy = useSelect(function (select) {
+        return select(props.storeName).getTaxonomy();
+    }, []);
+    var changeAction = useSelect(function (select) {
+        return select(props.storeName).getChangeAction();
+    }, []);
+
+    var _useDispatch = useDispatch(props.storeName),
+        setChangeAction = _useDispatch.setChangeAction;
+
+    var termsString = terms;
+    if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
+        termsString = terms.join(',');
+    }
+
+    var handleStrategyChange = function handleStrategyChange(value) {
+        setChangeAction(value);
+    };
+
+    var options = [{ value: 'no-change', label: props.strings.noChange }, { value: 'change-add', label: props.strings.changeAdd }, { value: 'add-only', label: props.strings.addOnly }, { value: 'change-only', label: props.strings.changeOnly }, { value: 'remove-only', label: props.strings.removeOnly }];
+
+    var optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
+
+    return React.createElement(
+        'div',
+        { className: 'post-expirator-panel' },
+        React.createElement(_.SelectControl, {
+            label: props.strings.futureActionUpdate,
+            name: 'future_action_bulk_change_action',
+            value: changeAction,
+            options: options,
+            onChange: handleStrategyChange
+        }),
+        optionsToDisplayPanel.includes(changeAction) && React.createElement(_.FutureActionPanel, {
+            context: 'bulk-edit',
+            autoEnableAndHideCheckbox: true,
+            postType: props.postType,
+            isCleanNewPost: props.isNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: true,
+            calendarIsVisible: false,
+            action: action,
+            date: date,
+            terms: terms,
+            taxonomy: taxonomy,
+            taxonomyName: props.taxonomyName,
+            onChangeData: onChangeData,
+            is12Hour: props.is12Hour,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_enabled', value: enabled ? 1 : 0 }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_action', value: action }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_date', value: date }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_terms', value: termsString }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_taxonomy', value: taxonomy }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_view', value: 'bulk-edit' }),
+        React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: props.nonce })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanelClassicEditor.jsx":
+/*!******************************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanelClassicEditor.jsx ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanelClassicEditor = undefined;
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = function FutureActionPanelClassicEditor(props) {
+    var select = wp.data.select;
+
+    var browserTimezoneOffset = new Date().getTimezoneOffset();
+
+    var getElementByName = function getElementByName(name) {
+        return document.getElementsByName(name)[0];
+    };
+
+    var onChangeData = function onChangeData(attribute, value) {
+        var store = select(props.storeName);
+
+        getElementByName('future_action_enabled').value = store.getEnabled() ? 1 : 0;
+        getElementByName('future_action_action').value = store.getAction();
+        getElementByName('future_action_date').value = store.getDate();
+        getElementByName('future_action_terms').value = store.getTerms().join(',');
+        getElementByName('future_action_taxonomy').value = store.getTaxonomy();
+    };
+
+    var data = {
+        enabled: getElementByName('future_action_enabled').value === '1',
+        action: getElementByName('future_action_action').value,
+        date: getElementByName('future_action_date').value,
+        terms: getElementByName('future_action_terms').value.split(',').map(function (term) {
+            return parseInt(term);
+        }),
+        taxonomy: getElementByName('future_action_taxonomy').value
+    };
+
+    return React.createElement(
+        'div',
+        { className: 'post-expirator-panel' },
+        React.createElement(_.FutureActionPanel, {
+            context: 'classic-editor',
+            postType: props.postType,
+            isCleanNewPost: props.isNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: data.enabled,
+            calendarIsVisible: true,
+            action: data.action,
+            date: data.date,
+            terms: data.terms,
+            taxonomy: data.taxonomy,
+            taxonomyName: props.taxonomyName,
+            onChangeData: onChangeData,
+            is12Hour: props.is12Hour,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanelQuickEdit.jsx":
+/*!**************************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanelQuickEdit.jsx ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanelQuickEdit = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
+    var useSelect = wp.data.useSelect;
+
+
+    var onChangeData = function onChangeData(attribute, value) {};
+
+    var date = useSelect(function (select) {
+        return select(props.storeName).getDate();
+    }, []);
+    var enabled = useSelect(function (select) {
+        return select(props.storeName).getEnabled();
+    }, []);
+    var action = useSelect(function (select) {
+        return select(props.storeName).getAction();
+    }, []);
+    var terms = useSelect(function (select) {
+        return select(props.storeName).getTerms();
+    }, []);
+    var taxonomy = useSelect(function (select) {
+        return select(props.storeName).getTaxonomy();
+    }, []);
+
+    var termsString = terms;
+    if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
+        termsString = terms.join(',');
+    }
+
+    return React.createElement(
+        'div',
+        { className: 'post-expirator-panel' },
+        React.createElement(_.FutureActionPanel, {
+            context: 'quick-edit',
+            postType: props.postType,
+            isCleanNewPost: props.isNewPost,
+            actionsSelectOptions: props.actionsSelectOptions,
+            enabled: enabled,
+            calendarIsVisible: false,
+            action: action,
+            date: date,
+            terms: terms,
+            taxonomy: taxonomy,
+            taxonomyName: props.taxonomyName,
+            onChangeData: onChangeData,
+            is12Hour: props.is12Hour,
+            startOfWeek: props.startOfWeek,
+            storeName: props.storeName,
+            strings: props.strings }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: enabled ? 1 : 0 }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: termsString }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_taxonomy', value: taxonomy }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_view', value: 'quick-edit' }),
+        React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: props.nonce })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/NonceControl.jsx":
+/*!************************************************!*\
+  !*** ./assets/jsx/components/NonceControl.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+var NonceControl = exports.NonceControl = function NonceControl(props) {
+    var Fragment = wp.element.Fragment;
+
+
+    if (!props.name) {
+        props.name = '_wpnonce';
+    }
+
+    if (!props.referrer) {
+        props.referrer = true;
+    }
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement("input", { type: "hidden", name: props.name, id: props.name, value: props.nonce }),
+        props.referrer && React.createElement("input", { type: "hidden", name: "_wp_http_referer", value: props.referrer })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/PostTypeSettingsPanel.jsx":
+/*!*********************************************************!*\
+  !*** ./assets/jsx/components/PostTypeSettingsPanel.jsx ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.PostTypeSettingsPanel = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
+    var _wp$element = wp.element,
+        useState = _wp$element.useState,
+        useEffect = _wp$element.useEffect;
+    var addQueryArgs = wp.url.addQueryArgs;
+    var applyFilters = wp.hooks.applyFilters;
+    var _wp = wp,
+        apiFetch = _wp.apiFetch;
+
+    var _useState = useState(props.settings.taxonomy),
+        _useState2 = _slicedToArray(_useState, 2),
+        postTypeTaxonomy = _useState2[0],
+        setPostTypeTaxonomy = _useState2[1];
+
+    var _useState3 = useState([]),
+        _useState4 = _slicedToArray(_useState3, 2),
+        termOptions = _useState4[0],
+        setTermOptions = _useState4[1];
+
+    var _useState5 = useState(false),
+        _useState6 = _slicedToArray(_useState5, 2),
+        termsSelectIsLoading = _useState6[0],
+        setTermsSelectIsLoading = _useState6[1];
+
+    var _useState7 = useState([]),
+        _useState8 = _slicedToArray(_useState7, 2),
+        selectedTerms = _useState8[0],
+        setSelectedTerms = _useState8[1];
+
+    var _useState9 = useState(props.settings.howToExpire),
+        _useState10 = _slicedToArray(_useState9, 2),
+        settingHowToExpire = _useState10[0],
+        setSettingHowToExpire = _useState10[1];
+
+    var _useState11 = useState(props.settings.active),
+        _useState12 = _slicedToArray(_useState11, 2),
+        isActive = _useState12[0],
+        setIsActive = _useState12[1];
+
+    var _useState13 = useState(props.settings.defaultExpireOffset),
+        _useState14 = _slicedToArray(_useState13, 2),
+        expireOffset = _useState14[0],
+        setExpireOffset = _useState14[1];
+
+    var _useState15 = useState(props.settings.emailNotification),
+        _useState16 = _slicedToArray(_useState15, 2),
+        emailNotification = _useState16[0],
+        setEmailNotification = _useState16[1];
+
+    var _useState17 = useState(props.settings.autoEnabled),
+        _useState18 = _slicedToArray(_useState17, 2),
+        isAutoEnabled = _useState18[0],
+        setIsAutoEnabled = _useState18[1];
+
+    var onChangeTaxonomy = function onChangeTaxonomy(value) {
+        setPostTypeTaxonomy(value);
+    };
+
+    var onChangeTerms = function onChangeTerms(value) {
+        setSelectedTerms(value);
+    };
+
+    var onChangeHowToExpire = function onChangeHowToExpire(value) {
+        setSettingHowToExpire(value);
+    };
+
+    var onChangeActive = function onChangeActive(value) {
+        setIsActive(value);
+    };
+
+    var onChangeExpireOffset = function onChangeExpireOffset(value) {
+        setExpireOffset(value);
+    };
+
+    var onChangeEmailNotification = function onChangeEmailNotification(value) {
+        setEmailNotification(value);
+    };
+
+    var onChangeAutoEnabled = function onChangeAutoEnabled(value) {
+        setIsAutoEnabled(value);
+    };
+
+    useEffect(function () {
+        var updateTermsOptionsState = function updateTermsOptionsState(list) {
+            var options = [];
+
+            var settingsTermsOptions = null;
+            var option = void 0;
+            list.forEach(function (term) {
+                option = { value: term.id, label: term.name };
+                options.push(option);
+
+                if (postTypeTaxonomy === props.settings.taxonomy && props.settings.terms.includes(term.id)) {
+                    if (settingsTermsOptions === null) {
+                        settingsTermsOptions = [];
+                    }
+
+                    settingsTermsOptions.push(option.label);
+                }
+            });
+
+            setTermOptions(options);
+            setTermsSelectIsLoading(false);
+            setSelectedTerms(settingsTermsOptions);
+        };
+
+        if (!postTypeTaxonomy && props.postType === 'post' || postTypeTaxonomy === 'category') {
+            setTermsSelectIsLoading(true);
+            apiFetch({
+                path: addQueryArgs('wp/v2/categories', { per_page: -1 })
+            }).then(updateTermsOptionsState);
+        } else {
+            if (!postTypeTaxonomy || !props.taxonomiesList) {
+                return;
+            }
+
+            setTermsSelectIsLoading(true);
+            apiFetch({
+                path: addQueryArgs('wp/v2/taxonomies/' + postTypeTaxonomy)
+            }).then(function (taxAttributes) {
+                // fetch all terms
+                apiFetch({
+                    path: addQueryArgs('wp/v2/' + taxAttributes.rest_base)
+                }).then(updateTermsOptionsState);
+            }).catch(function (error) {
+                console.debug('Taxonomy terms error', error);
+                setTermsSelectIsLoading(false);
+            });
+        }
+    }, [postTypeTaxonomy]);
+
+    var termOptionsLabels = termOptions.map(function (term) {
+        return term.label;
+    });
+
+    var settingsRows = [React.createElement(
+        _.SettingRow,
+        { label: props.text.fieldActive, key: 'expirationdate_activemeta-' + props.postType },
+        React.createElement(_.CheckboxControl, {
+            name: 'expirationdate_activemeta-' + props.postType,
+            checked: isActive || false,
+            label: props.text.fieldActiveLabel,
+            onChange: onChangeActive
+        })
+    )];
+
+    if (isActive) {
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldAutoEnable, key: 'expirationdate_autoenable-' + props.postType },
+            React.createElement(_.CheckboxControl, {
+                name: 'expirationdate_autoenable-' + props.postType,
+                checked: isAutoEnabled || false,
+                label: props.text.fieldAutoEnableLabel,
+                onChange: onChangeAutoEnabled
+            })
+        ));
+
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldTaxonomy, key: 'expirationdate_taxonomy-' + props.postType },
+            React.createElement(_.SelectControl, {
+                name: 'expirationdate_taxonomy-' + props.postType,
+                options: props.taxonomiesList,
+                selected: postTypeTaxonomy,
+                noItemFoundMessage: props.text.noItemsfound,
+                data: props.postType,
+                onChange: onChangeTaxonomy
+            })
+        ));
+
+        // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
+        if (props.taxonomiesList.length === 0) {
+            props.expireTypeList[props.postType] = props.expireTypeList[props.postType].filter(function (item) {
+                return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+            });
+        }
+
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldHowToExpire, key: 'expirationdate_expiretype-' + props.postType },
+            React.createElement(_.SelectControl, {
+                name: 'expirationdate_expiretype-' + props.postType,
+                className: 'pe-howtoexpire',
+                options: props.expireTypeList[props.postType],
+                description: props.text.fieldHowToExpireDescription,
+                selected: settingHowToExpire,
+                onChange: onChangeHowToExpire
+            }),
+            props.taxonomiesList.length > 0 && ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && React.createElement(_.TokensControl, {
+                label: props.text.fieldTerm,
+                name: 'expirationdate_terms-' + props.postType,
+                options: termOptionsLabels,
+                value: selectedTerms,
+                isLoading: termsSelectIsLoading,
+                onChange: onChangeTerms,
+                description: props.text.fieldTermDescription
+            })
+        ));
+
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldDefaultDateTimeOffset, key: 'expired-custom-date-' + props.postType },
+            React.createElement(_.TextControl, {
+                name: 'expired-custom-date-' + props.postType,
+                value: expireOffset,
+                placeholder: props.settings.globalDefaultExpireOffset,
+                description: props.text.fieldDefaultDateTimeOffsetDescription,
+                unescapedDescription: true,
+                onChange: onChangeExpireOffset
+            })
+        ));
+
+        settingsRows.push(React.createElement(
+            _.SettingRow,
+            { label: props.text.fieldWhoToNotify, key: 'expirationdate_emailnotification-' + props.postType },
+            React.createElement(_.TextControl, {
+                name: 'expirationdate_emailnotification-' + props.postType,
+                className: 'large-text',
+                value: emailNotification,
+                description: props.text.fieldWhoToNotifyDescription,
+                onChange: onChangeEmailNotification
+            })
+        ));
+    }
+
+    settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);
+
+    return React.createElement(
+        _.SettingsFieldset,
+        { legend: props.legend },
+        React.createElement(_.SettingsTable, { bodyChildren: settingsRows })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/PostTypesSettingsPanels.jsx":
+/*!***********************************************************!*\
+  !*** ./assets/jsx/components/PostTypesSettingsPanels.jsx ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.PostTypesSettingsPanels = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
+var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
+    var panels = [];
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = Object.entries(props.settings)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _ref = _step.value;
+
+            var _ref2 = _slicedToArray(_ref, 2);
+
+            var postType = _ref2[0];
+            var postTypeSettings = _ref2[1];
+
+            panels.push(React.createElement(_.PostTypeSettingsPanel, {
+                legend: postTypeSettings.label,
+                text: props.text,
+                postType: postType,
+                settings: postTypeSettings,
+                expireTypeList: props.expireTypeList,
+                taxonomiesList: props.taxonomiesList[postType],
+                key: postType + "-panel"
+            }));
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
+    }
+
+    return panels;
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SelectControl.jsx":
+/*!*************************************************!*\
+  !*** ./assets/jsx/components/SelectControl.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SelectControl = exports.SelectControl = function SelectControl(props) {
+    var Fragment = wp.element.Fragment;
+    var SelectControl = wp.components.SelectControl;
+
+
+    var onChange = function onChange(value) {
+        props.onChange(value);
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        props.options.length === 0 && React.createElement(
+            "div",
+            null,
+            props.noItemFoundMessage
+        ),
+        props.options.length > 0 && React.createElement(SelectControl, {
+            label: props.label,
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            value: props.selected,
+            onChange: onChange,
+            "data-data": props.data,
+            options: props.options
+        }),
+        props.children,
+        React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingRow.jsx":
+/*!**********************************************!*\
+  !*** ./assets/jsx/components/SettingRow.jsx ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingRow = exports.SettingRow = function SettingRow(props) {
+    var Fragment = wp.element.Fragment;
+
+
+    return React.createElement(
+        "tr",
+        { valign: "top" },
+        React.createElement(
+            "th",
+            { scope: "row" },
+            React.createElement(
+                "label",
+                { htmlFor: "" },
+                props.label
+            )
+        ),
+        React.createElement(
+            "td",
+            null,
+            props.children
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingsFieldset.jsx":
+/*!****************************************************!*\
+  !*** ./assets/jsx/components/SettingsFieldset.jsx ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsFieldset = exports.SettingsFieldset = function SettingsFieldset(props) {
+    return React.createElement(
+        "fieldset",
+        null,
+        React.createElement(
+            "legend",
+            null,
+            props.legend
+        ),
+        props.children
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingsForm.jsx":
+/*!************************************************!*\
+  !*** ./assets/jsx/components/SettingsForm.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsForm = exports.SettingsForm = function SettingsForm(props) {
+    return React.createElement(
+        "form",
+        { method: "post" },
+        props.children
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingsSection.jsx":
+/*!***************************************************!*\
+  !*** ./assets/jsx/components/SettingsSection.jsx ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsSection = exports.SettingsSection = function SettingsSection(props) {
+    var Fragment = wp.element.Fragment;
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(
+            "h2",
+            null,
+            props.title
+        ),
+        React.createElement(
+            "p",
+            null,
+            props.description
+        ),
+        props.children
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SettingsTable.jsx":
+/*!*************************************************!*\
+  !*** ./assets/jsx/components/SettingsTable.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsTable = exports.SettingsTable = function SettingsTable(props) {
+    return React.createElement(
+        "table",
+        { className: "form-table" },
+        React.createElement(
+            "tbody",
+            null,
+            props.bodyChildren
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/SubmitButton.jsx":
+/*!************************************************!*\
+  !*** ./assets/jsx/components/SubmitButton.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SubmitButton = exports.SubmitButton = function SubmitButton(props) {
+    return React.createElement("input", {
+        type: "submit",
+        name: props.name,
+        value: props.text,
+        className: "button-primary"
+    });
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/TextControl.jsx":
+/*!***********************************************!*\
+  !*** ./assets/jsx/components/TextControl.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var TextControl = exports.TextControl = function TextControl(props) {
+    var Fragment = wp.element.Fragment;
+
+    var WPTextControl = wp.components.TextControl;
+
+    var description = void 0;
+
+    if (props.unescapedDescription) {
+        // If using this option, the HTML has to be escaped before injected into the JS interface.
+        description = React.createElement("p", { className: "description", dangerouslySetInnerHTML: { __html: props.description } });
+    } else {
+        description = React.createElement(
+            "p",
+            { className: "description" },
+            props.description
+        );
+    }
+
+    var onChange = function onChange(value) {
+        if (props.onChange) {
+            props.onChange(value);
+        }
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(WPTextControl, {
+            type: "text",
+            label: props.label,
+            name: props.name,
+            id: props.name,
+            className: props.className,
+            value: props.value,
+            placeholder: props.placeholder,
+            onChange: onChange
+        }),
+        description
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/ToggleArrowButton.jsx":
+/*!*****************************************************!*\
+  !*** ./assets/jsx/components/ToggleArrowButton.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+var ToggleArrowButton = exports.ToggleArrowButton = function ToggleArrowButton(props) {
+    var Button = wp.components.Button;
+
+
+    var onClick = function onClick() {
+        if (props.onClick) {
+            props.onClick();
+        }
+    };
+
+    var iconExpanded = props.iconExpanded ? props.iconExpanded : 'arrow-up-alt2';
+    var iconCollapsed = props.iconCollapsed ? props.iconCollapsed : 'arrow-down-alt2';
+
+    var icon = props.isExpanded ? iconExpanded : iconCollapsed;
+
+    var title = props.isExpanded ? props.titleExpanded : props.titleCollapsed;
+
+    return React.createElement(Button, {
+        isSmall: true,
+        title: title,
+        icon: icon,
+        onClick: onClick,
+        className: props.className
+    });
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/ToggleCalendarDatePicker.jsx":
+/*!************************************************************!*\
+  !*** ./assets/jsx/components/ToggleCalendarDatePicker.jsx ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.ToggleCalendarDatePicker = undefined;
+
+var _ToggleArrowButton = __webpack_require__(/*! ./ToggleArrowButton */ "./assets/jsx/components/ToggleArrowButton.jsx");
+
+var ToggleCalendarDatePicker = exports.ToggleCalendarDatePicker = function ToggleCalendarDatePicker(_ref) {
+    var isExpanded = _ref.isExpanded,
+        strings = _ref.strings,
+        onToggleCalendar = _ref.onToggleCalendar,
+        currentDate = _ref.currentDate,
+        onChangeDate = _ref.onChangeDate,
+        is12Hour = _ref.is12Hour,
+        startOfWeek = _ref.startOfWeek;
+    var DateTimePicker = wp.components.DateTimePicker;
+    var Fragment = wp.element.Fragment;
+
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(_ToggleArrowButton.ToggleArrowButton, {
+            className: "future-action-calendar-toggle",
+            isExpanded: isExpanded,
+            iconExpanded: "arrow-up-alt2",
+            iconCollapsed: "calendar",
+            titleExpanded: strings.hideCalendar,
+            titleCollapsed: strings.showCalendar,
+            onClick: onToggleCalendar }),
+        React.createElement(DateTimePicker, {
+            currentDate: currentDate,
+            onChange: onChangeDate,
+            __nextRemoveHelpButton: true,
+            is12Hour: is12Hour,
+            startOfWeek: startOfWeek
+        })
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/TokensControl.jsx":
+/*!*************************************************!*\
+  !*** ./assets/jsx/components/TokensControl.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var TokensControl = exports.TokensControl = function TokensControl(props) {
+    var _wp$element = wp.element,
+        Fragment = _wp$element.Fragment,
+        useState = _wp$element.useState,
+        useEffect = _wp$element.useEffect;
+    var FormTokenField = wp.components.FormTokenField;
+
+    var _useState = useState(''),
+        _useState2 = _slicedToArray(_useState, 2),
+        stringValue = _useState2[0],
+        setStringValue = _useState2[1];
+
+    useEffect(function () {
+        if (props.value) {
+            setStringValue(props.value.join(','));
+        }
+    }, [props.value]);
+
+    var description = void 0;
+
+    if (props.description) {
+        if (props.unescapedDescription) {
+            // If using this option, the HTML has to be escaped before injected into the JS interface.
+            description = React.createElement('p', { className: 'description', dangerouslySetInnerHTML: { __html: props.description } });
+        } else {
+            description = React.createElement(
+                'p',
+                { className: 'description' },
+                props.description
+            );
+        }
+    }
+
+    var onChange = function onChange(value) {
+        if (props.onChange) {
+            props.onChange(value);
+        }
+
+        if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+            setStringValue(value.join(','));
+        } else {
+            setStringValue('');
+        }
+    };
+
+    var value = props.value ? props.value : [];
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(FormTokenField, {
+            label: props.label,
+            value: value,
+            suggestions: props.options,
+            onChange: onChange,
+            maxSuggestions: 10,
+            className: 'publishpres-future-token-field'
+        }),
+        React.createElement('input', { type: 'hidden', name: props.name, value: stringValue }),
+        description
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/TrueFalseControl.jsx":
+/*!****************************************************!*\
+  !*** ./assets/jsx/components/TrueFalseControl.jsx ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var TrueFalseControl = exports.TrueFalseControl = function TrueFalseControl(props) {
+    var Fragment = wp.element.Fragment;
+
+
+    var onChange = function onChange(e) {
+        if (props.onChange) {
+            props.onChange(e.target.value === props.trueValue && jQuery(e.target).is(':checked'));
+            // Check only the true radio... using the field name? or directly the ID
+        }
+    };
+
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement('input', {
+            type: 'radio',
+            name: props.name,
+            id: props.name + '-true',
+            value: props.trueValue,
+            defaultChecked: props.selected,
+            onChange: onChange
+        }),
+        React.createElement(
+            'label',
+            { htmlFor: props.name + '-true' },
+            props.trueLabel
+        ),
+        '\xA0\xA0',
+        React.createElement('input', {
+            type: 'radio',
+            name: props.name,
+            defaultChecked: !props.selected,
+            id: props.name + '-false',
+            value: props.falseValue,
+            onChange: onChange
+        }),
+        React.createElement(
+            'label',
+            {
+                htmlFor: props.name + '-false' },
+            props.falseLabel
+        ),
+        React.createElement(
+            'p',
+            { className: 'description' },
+            props.description
+        )
+    );
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/components/index.jsx":
+/*!*****************************************!*\
+  !*** ./assets/jsx/components/index.jsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var _ButtonsPanel = __webpack_require__(/*! ./ButtonsPanel */ "./assets/jsx/components/ButtonsPanel.jsx");
+
+Object.defineProperty(exports, "ButtonsPanel", ({
+  enumerable: true,
+  get: function get() {
+    return _ButtonsPanel.ButtonsPanel;
+  }
+}));
+
+var _FutureActionPanel = __webpack_require__(/*! ./FutureActionPanel */ "./assets/jsx/components/FutureActionPanel.jsx");
+
+Object.defineProperty(exports, "FutureActionPanel", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanel.FutureActionPanel;
+  }
+}));
+
+var _FutureActionPanelBlockEditor = __webpack_require__(/*! ./FutureActionPanelBlockEditor */ "./assets/jsx/components/FutureActionPanelBlockEditor.jsx");
+
+Object.defineProperty(exports, "FutureActionPanelBlockEditor", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanelBlockEditor.FutureActionPanelBlockEditor;
+  }
+}));
+
+var _FutureActionPanelClassicEditor = __webpack_require__(/*! ./FutureActionPanelClassicEditor */ "./assets/jsx/components/FutureActionPanelClassicEditor.jsx");
+
+Object.defineProperty(exports, "FutureActionPanelClassicEditor", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanelClassicEditor.FutureActionPanelClassicEditor;
+  }
+}));
+
+var _FutureActionPanelQuickEdit = __webpack_require__(/*! ./FutureActionPanelQuickEdit */ "./assets/jsx/components/FutureActionPanelQuickEdit.jsx");
+
+Object.defineProperty(exports, "FutureActionPanelQuickEdit", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanelQuickEdit.FutureActionPanelQuickEdit;
+  }
+}));
+
+var _FutureActionPanelBulkEdit = __webpack_require__(/*! ./FutureActionPanelBulkEdit */ "./assets/jsx/components/FutureActionPanelBulkEdit.jsx");
+
+Object.defineProperty(exports, "FutureActionPanelBulkEdit", ({
+  enumerable: true,
+  get: function get() {
+    return _FutureActionPanelBulkEdit.FutureActionPanelBulkEdit;
+  }
+}));
+
+var _PostTypeSettingsPanel = __webpack_require__(/*! ./PostTypeSettingsPanel */ "./assets/jsx/components/PostTypeSettingsPanel.jsx");
+
+Object.defineProperty(exports, "PostTypeSettingsPanel", ({
+  enumerable: true,
+  get: function get() {
+    return _PostTypeSettingsPanel.PostTypeSettingsPanel;
+  }
+}));
+
+var _PostTypesSettingsPanels = __webpack_require__(/*! ./PostTypesSettingsPanels */ "./assets/jsx/components/PostTypesSettingsPanels.jsx");
+
+Object.defineProperty(exports, "PostTypesSettingsPanels", ({
+  enumerable: true,
+  get: function get() {
+    return _PostTypesSettingsPanels.PostTypesSettingsPanels;
+  }
+}));
+
+var _SettingRow = __webpack_require__(/*! ./SettingRow */ "./assets/jsx/components/SettingRow.jsx");
+
+Object.defineProperty(exports, "SettingRow", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingRow.SettingRow;
+  }
+}));
+
+var _SettingsFieldset = __webpack_require__(/*! ./SettingsFieldset */ "./assets/jsx/components/SettingsFieldset.jsx");
+
+Object.defineProperty(exports, "SettingsFieldset", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingsFieldset.SettingsFieldset;
+  }
+}));
+
+var _SettingsForm = __webpack_require__(/*! ./SettingsForm */ "./assets/jsx/components/SettingsForm.jsx");
+
+Object.defineProperty(exports, "SettingsForm", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingsForm.SettingsForm;
+  }
+}));
+
+var _SettingsSection = __webpack_require__(/*! ./SettingsSection */ "./assets/jsx/components/SettingsSection.jsx");
+
+Object.defineProperty(exports, "SettingsSection", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingsSection.SettingsSection;
+  }
+}));
+
+var _SettingsTable = __webpack_require__(/*! ./SettingsTable */ "./assets/jsx/components/SettingsTable.jsx");
+
+Object.defineProperty(exports, "SettingsTable", ({
+  enumerable: true,
+  get: function get() {
+    return _SettingsTable.SettingsTable;
+  }
+}));
+
+var _SubmitButton = __webpack_require__(/*! ./SubmitButton */ "./assets/jsx/components/SubmitButton.jsx");
+
+Object.defineProperty(exports, "SubmitButton", ({
+  enumerable: true,
+  get: function get() {
+    return _SubmitButton.SubmitButton;
+  }
+}));
+
+var _CheckboxControl = __webpack_require__(/*! ./CheckboxControl */ "./assets/jsx/components/CheckboxControl.jsx");
+
+Object.defineProperty(exports, "CheckboxControl", ({
+  enumerable: true,
+  get: function get() {
+    return _CheckboxControl.CheckboxControl;
+  }
+}));
+
+var _SelectControl = __webpack_require__(/*! ./SelectControl */ "./assets/jsx/components/SelectControl.jsx");
+
+Object.defineProperty(exports, "SelectControl", ({
+  enumerable: true,
+  get: function get() {
+    return _SelectControl.SelectControl;
+  }
+}));
+
+var _TextControl = __webpack_require__(/*! ./TextControl */ "./assets/jsx/components/TextControl.jsx");
+
+Object.defineProperty(exports, "TextControl", ({
+  enumerable: true,
+  get: function get() {
+    return _TextControl.TextControl;
+  }
+}));
+
+var _TokensControl = __webpack_require__(/*! ./TokensControl */ "./assets/jsx/components/TokensControl.jsx");
+
+Object.defineProperty(exports, "TokensControl", ({
+  enumerable: true,
+  get: function get() {
+    return _TokensControl.TokensControl;
+  }
+}));
+
+var _NonceControl = __webpack_require__(/*! ./NonceControl */ "./assets/jsx/components/NonceControl.jsx");
+
+Object.defineProperty(exports, "NonceControl", ({
+  enumerable: true,
+  get: function get() {
+    return _NonceControl.NonceControl;
+  }
+}));
+
+var _TrueFalseControl = __webpack_require__(/*! ./TrueFalseControl */ "./assets/jsx/components/TrueFalseControl.jsx");
+
+Object.defineProperty(exports, "TrueFalseControl", ({
+  enumerable: true,
+  get: function get() {
+    return _TrueFalseControl.TrueFalseControl;
+  }
+}));
+
+/***/ }),
+
+/***/ "./assets/jsx/data.jsx":
+/*!*****************************!*\
+  !*** ./assets/jsx/data.jsx ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.createStore = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _time = __webpack_require__(/*! ./time */ "./assets/jsx/time.jsx");
+
+var createStore = exports.createStore = function createStore(props) {
+    var _wp$data = wp.data,
+        register = _wp$data.register,
+        createReduxStore = _wp$data.createReduxStore;
+
+
+    if (props.defaultState.terms && typeof props.defaultState.terms === 'string') {
+        props.defaultState.terms = props.defaultState.terms.split(',').map(function (term) {
+            return parseInt(term);
+        });
+    }
+
+    var defaultState = {
+        action: props.defaultState.action,
+        date: props.defaultState.date ? props.defaultState.date : (0, _time.getCurrentTimeAsTimestamp)(),
+        enabled: props.defaultState.autoEnable,
+        terms: props.defaultState.terms ? props.defaultState.terms : [],
+        taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,
+        termsListByName: null,
+        termsListById: null,
+        taxonomyName: null,
+        isFetchingTerms: false,
+        changeAction: 'no-change',
+        calendarIsVisible: true
+    };
+
+    var store = createReduxStore(props.name, {
+        reducer: function reducer() {
+            var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
+            var action = arguments[1];
+
+            switch (action.type) {
+                case 'SET_ACTION':
+                    return _extends({}, state, {
+                        action: action.action
+                    });
+                case 'SET_DATE':
+                    return _extends({}, state, {
+                        date: action.date
+                    });
+                case 'SET_ENABLED':
+                    return _extends({}, state, {
+                        enabled: action.enabled
+                    });
+                case 'SET_TERMS':
+                    return _extends({}, state, {
+                        terms: action.terms
+                    });
+                case 'SET_TAXONOMY':
+                    return _extends({}, state, {
+                        taxonomy: action.taxonomy
+                    });
+                case 'SET_TERMS_LIST_BY_NAME':
+                    return _extends({}, state, {
+                        termsListByName: action.termsListByName
+                    });
+                case 'SET_TERMS_LIST_BY_ID':
+                    return _extends({}, state, {
+                        termsListById: action.termsListById
+                    });
+                case 'SET_TAXONOMY_NAME':
+                    return _extends({}, state, {
+                        taxonomyName: action.taxonomyName
+                    });
+                case 'SET_CHANGE_ACTION':
+                    return _extends({}, state, {
+                        changeAction: action.changeAction
+                    });
+                case 'SET_CALENDAR_IS_VISIBLE':
+                    return _extends({}, state, {
+                        calendarIsVisible: action.calendarIsVisible
+                    });
+            }
+
+            return state;
+        },
+
+        actions: {
+            setAction: function setAction(action) {
+                return {
+                    type: 'SET_ACTION',
+                    action: action
+                };
+            },
+            setDate: function setDate(date) {
+                return {
+                    type: 'SET_DATE',
+                    date: date
+                };
+            },
+            setEnabled: function setEnabled(enabled) {
+                return {
+                    type: 'SET_ENABLED',
+                    enabled: enabled
+                };
+            },
+            setTerms: function setTerms(terms) {
+                return {
+                    type: 'SET_TERMS',
+                    terms: terms
+                };
+            },
+            setTaxonomy: function setTaxonomy(taxonomy) {
+                return {
+                    type: 'SET_TAXONOMY',
+                    taxonomy: taxonomy
+                };
+            },
+            setTermsListByName: function setTermsListByName(termsListByName) {
+                return {
+                    type: 'SET_TERMS_LIST_BY_NAME',
+                    termsListByName: termsListByName
+                };
+            },
+            setTermsListById: function setTermsListById(termsListById) {
+                return {
+                    type: 'SET_TERMS_LIST_BY_ID',
+                    termsListById: termsListById
+                };
+            },
+            setTaxonomyName: function setTaxonomyName(taxonomyName) {
+                return {
+                    type: 'SET_TAXONOMY_NAME',
+                    taxonomyName: taxonomyName
+                };
+            },
+            setIsFetchingTerms: function setIsFetchingTerms(isFetchingTerms) {
+                return {
+                    type: 'SET_IS_FETCHING_TERMS',
+                    isFetchingTerms: isFetchingTerms
+                };
+            },
+            setChangeAction: function setChangeAction(changeAction) {
+                return {
+                    type: 'SET_CHANGE_ACTION',
+                    changeAction: changeAction
+                };
+            },
+            setCalendarIsVisible: function setCalendarIsVisible(calendarIsVisible) {
+                return {
+                    type: 'SET_CALENDAR_IS_VISIBLE',
+                    calendarIsVisible: calendarIsVisible
+                };
+            }
+        },
+        selectors: {
+            getAction: function getAction(state) {
+                return state.action;
+            },
+            getDate: function getDate(state) {
+                return state.date;
+            },
+            getEnabled: function getEnabled(state) {
+                return state.enabled;
+            },
+            getTerms: function getTerms(state) {
+                return state.terms;
+            },
+            getTaxonomy: function getTaxonomy(state) {
+                return state.taxonomy;
+            },
+            getTermsListByName: function getTermsListByName(state) {
+                return state.termsListByName;
+            },
+            getTermsListById: function getTermsListById(state) {
+                return state.termsListById;
+            },
+            getTaxonomyName: function getTaxonomyName(state) {
+                return state.taxonomyName;
+            },
+            getIsFetchingTerms: function getIsFetchingTerms(state) {
+                return state.isFetchingTerms;
+            },
+            getChangeAction: function getChangeAction(state) {
+                return state.changeAction;
+            },
+            getCalendarIsVisible: function getCalendarIsVisible(state) {
+                return state.calendarIsVisible;
+            }
+        }
+    });
+
+    register(store);
+
+    return store;
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/time.jsx":
+/*!*****************************!*\
+  !*** ./assets/jsx/time.jsx ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+var getCurrentTimeInSeconds = exports.getCurrentTimeInSeconds = function getCurrentTimeInSeconds() {
+    return normalizeUnixTimeToSeconds(new Date().getTime());
+};
+
+var getCurrentTimeAsTimestamp = exports.getCurrentTimeAsTimestamp = function getCurrentTimeAsTimestamp() {
+    return formatUnixTimeToTimestamp(getCurrentTimeInSeconds());
+};
+
+var formatUnixTimeToTimestamp = exports.formatUnixTimeToTimestamp = function formatUnixTimeToTimestamp(unixTimestamp) {
+    var date = new Date(normalizeUnixTimeToMilliseconds(unixTimestamp));
+
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    var day = ("0" + date.getDate()).slice(-2);
+    var hours = ("0" + date.getHours()).slice(-2);
+    var minutes = ("0" + date.getMinutes()).slice(-2);
+    var seconds = ("0" + date.getSeconds()).slice(-2);
+
+    return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+};
+
+var formatTimestampToUnixTime = exports.formatTimestampToUnixTime = function formatTimestampToUnixTime(time) {
+    var date = new Date(time);
+
+    return normalizeUnixTimeToSeconds(date.getTime());
+};
+
+var timeIsInSeconds = exports.timeIsInSeconds = function timeIsInSeconds(time) {
+    return parseInt(time).toString().length === 10;
+};
+
+var normalizeUnixTimeToSeconds = exports.normalizeUnixTimeToSeconds = function normalizeUnixTimeToSeconds(time) {
+    time = parseInt(time);
+
+    return timeIsInSeconds() ? time : time / 1000;
+};
+
+var normalizeUnixTimeToMilliseconds = exports.normalizeUnixTimeToMilliseconds = function normalizeUnixTimeToMilliseconds(time) {
+    time = parseInt(time);
+
+    return timeIsInSeconds() ? time * 1000 : time;
+};
+
+/***/ }),
+
+/***/ "./assets/jsx/utils.jsx":
+/*!******************************!*\
+  !*** ./assets/jsx/utils.jsx ***!
+  \******************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var compact = exports.compact = function compact(array) {
+    if (!array) {
+        return [];
+    }
+
+    if (!Array.isArray(array) && (typeof array === 'undefined' ? 'undefined' : _typeof(array)) === 'object') {
+        array = Object.values(array);
+    }
+
+    return array.filter(function (item) {
+        return item !== null && item !== undefined && item !== '';
+    });
+};
+
+var debugLogFactory = exports.debugLogFactory = function debugLogFactory(config) {
+    return function (description) {
+        for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            message[_key - 1] = arguments[_key];
+        }
+
+        if (console && config.isDebugEnabled) {
+            var _console;
+
+            (_console = console).debug.apply(_console, ['[Future]', description].concat(message));
+        }
+    };
+};
+
+var isGutenbergEnabled = exports.isGutenbergEnabled = function isGutenbergEnabled() {
+    return document.body.classList.contains('block-editor-page');
+};
+
+var getElementByName = exports.getElementByName = function getElementByName(name) {
+    return document.getElementsByName(name)[0];
+};
+
+var getFieldByName = exports.getFieldByName = function getFieldByName(name, postId) {
+    return document.querySelector('#the-list tr#post-' + postId + ' .column-expirationdate input#future_action_' + name + '-' + postId);
+};
+
+var getFieldValueByName = exports.getFieldValueByName = function getFieldValueByName(name, postId) {
+    var field = getFieldByName(name, postId);
+
+    if (!field) {
+        return null;
+    }
+
+    return field.value;
+};
+
+var getFieldValueByNameAsArrayOfInt = exports.getFieldValueByNameAsArrayOfInt = function getFieldValueByNameAsArrayOfInt(name, postId) {
+    var field = getFieldByName(name, postId);
+
+    if (!field || !field.value) {
+        return [];
+    }
+
+    if (typeof field.value === 'number') {
+        field.value = field.value.toString();
+    }
+
+    return field.value.split(',').map(function (term) {
+        return parseInt(term);
+    });
+};
+
+var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function getFieldValueByNameAsBool(name, postId) {
+    var field = getFieldByName(name, postId);
+
+    if (!field) {
+        return false;
+    }
+
+    return field.value === '1' || field.value === 'true';
+};
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!***********************************!*\
+  !*** ./assets/jsx/quick-edit.jsx ***!
+  \***********************************/
+
+
+var _components = __webpack_require__(/*! ./components */ "./assets/jsx/components/index.jsx");
+
+var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
+
+var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
+
+(function (wp, config, inlineEditPost) {
+    var storeName = 'publishpress-future/future-action-quick-edit';
+    var delayToUnmountAfterSaving = 1000;
+
+    // We create a copy of the WP inline edit post function
+    var wpInlineEdit = inlineEditPost.edit;
+    var wpInlineEditRevert = inlineEditPost.revert;
+
+    var getPostId = function getPostId(id) {
+        // If id is a string or a number, return it directly
+        if (typeof id === 'string' || typeof id === 'number') {
+            return id;
+        }
+
+        // Otherwise, assume it's an HTML element and extract the post ID
+        var trElement = id.closest('tr');
+        var trId = trElement.id;
+        var postId = trId.split('-')[1];
+
+        return postId;
+    };
+
+    /**
+     * We override the function with our own code so we can detect when
+     * the inline edit row is displayed to recreate the React component.
+     */
+    inlineEditPost.edit = function (id) {
+        var createRoot = wp.element.createRoot;
+        var _wp$data = wp.data,
+            select = _wp$data.select,
+            dispatch = _wp$data.dispatch;
+
+        // Call the original WP edit function.
+
+        wpInlineEdit.apply(this, arguments);
+
+        var postId = getPostId(id);
+        var enabled = (0, _utils.getFieldValueByNameAsBool)('enabled', postId);
+        var action = (0, _utils.getFieldValueByName)('action', postId);
+        var date = (0, _utils.getFieldValueByName)('date', postId);
+        var terms = (0, _utils.getFieldValueByName)('terms', postId);
+        var taxonomy = (0, _utils.getFieldValueByName)('taxonomy', postId);
+
+        var termsList = terms.split(',');
+
+        // if store exists, update the state. Otherwise, create it.
+        if (select(storeName)) {
+            dispatch(storeName).setEnabled(enabled);
+            dispatch(storeName).setAction(action);
+            dispatch(storeName).setDate(date);
+            dispatch(storeName).setTaxonomy(taxonomy);
+            dispatch(storeName).setTerms(termsList);
+        } else {
+            (0, _data.createStore)({
+                name: storeName,
+                defaultState: {
+                    autoEnable: enabled,
+                    action: action,
+                    date: date,
+                    taxonomy: taxonomy,
+                    terms: termsList
+                }
+            });
+        }
+
+        var saveButton = document.querySelector('.inline-edit-save .save');
+        if (saveButton) {
+            saveButton.onclick = function () {
+                setTimeout(function () {
+                    root.unmount();
+                }, delayToUnmountAfterSaving);
+            };
+        }
+
+        var container = document.getElementById("publishpress-future-quick-edit");
+        var root = createRoot(container);
+
+        root.render(React.createElement(_components.FutureActionPanelQuickEdit, {
+            storeName: storeName,
+            postType: config.postType,
+            isNewPost: config.isNewPost,
+            actionsSelectOptions: config.actionsSelectOptions,
+            is12Hour: config.is12Hour,
+            startOfWeek: config.startOfWeek,
+            strings: config.strings,
+            taxonomyName: config.taxonomyName,
+            nonce: config.nonce
+        }));
+
+        inlineEditPost.revert = function () {
+            root.unmount();
+
+            // Call the original WP revert function.
+            wpInlineEditRevert.apply(this, arguments);
+        };
+    };
+})(window.wp, window.publishpressFutureQuickEdit, inlineEditPost);
+})();
+
+/******/ })()
+;
 //# sourceMappingURL=quick-edit.js.map
