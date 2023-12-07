@@ -1,5 +1,5 @@
-import { normalizeUnixTimeToMilliseconds } from "../time";
-import { ToggleArrowButton } from "./ToggleArrowButton"
+import { ToggleArrowButton } from "./ToggleArrowButton";
+import { DateTimePicker } from "./DateTimePicker";
 
 export const ToggleCalendarDatePicker = (
     {
@@ -12,12 +12,7 @@ export const ToggleCalendarDatePicker = (
         startOfWeek
     }
 ) => {
-    const { DateTimePicker } = wp.components;
     const { Fragment } = wp.element;
-
-    if (typeof currentDate === 'number') {
-        currentDate = normalizeUnixTimeToMilliseconds(currentDate);
-    }
 
     return (
         <Fragment>

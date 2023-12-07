@@ -34,5 +34,4 @@ import { FutureActionPanelBlockEditor } from './components';
     registerPlugin('publishpress-future-action', {
         render: BlockEditorFutureActionPlugin
     });
-
 })(window.wp, window.postExpiratorPanelConfig);
