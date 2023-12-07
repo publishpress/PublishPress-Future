@@ -28,7 +28,7 @@ export const formatTimestampToUnixTime = (time) => {
 }
 
 export const timeIsInSeconds = (time) => {
-    return parseInt(time).toString().length === 10;
+    return parseInt(time).toString().length <= 10;
 }
 
 export const normalizeUnixTimeToSeconds = (time) => {
