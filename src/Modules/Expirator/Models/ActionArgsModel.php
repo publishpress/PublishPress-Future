@@ -362,7 +362,7 @@ class ActionArgsModel
      * @param mixed $value
      * @return ActionsArgsModel
      */
-    public function setArg(string $key, mixed $value)
+    public function setArg(string $key, $value)
     {
         $this->args[$key] = $value;
         return $this;
