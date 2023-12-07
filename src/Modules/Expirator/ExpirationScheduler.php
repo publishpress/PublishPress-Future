@@ -80,11 +80,18 @@ class ExpirationScheduler implements SchedulerInterface
         $this->actionArgsModelFactory = $actionArgsModelFactory;
     }
 
+    private function convertLocalTimeToUtc($timestamp)
+    {
+        return get_gmt_from_date(date('Y-m-d H:i:s', $timestamp), 'U');
+    }
+
     /**
      * @inheritDoc
      */
     public function schedule($postId, $timestamp, $opts)
     {
+        $timestamp = $this->convertLocalTimeToUtc($timestamp);
+
         $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_SCHEDULE, $postId, $timestamp, $opts);
 
         $this->unscheduleIfScheduled($postId, $timestamp);
