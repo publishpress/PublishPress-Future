@@ -22,7 +22,7 @@ import { FutureActionPanelBlockEditor } from './components';
                 postType={wp.data.select('core/editor').getCurrentPostType()}
                 isCleanNewPost={wp.data.select('core/editor').isCleanNewPost()}
                 actionsSelectOptions={config.actionsSelectOptions}
-                is12hours={config.is12hours}
+                is12Hour={config.is12Hour}
                 startOfWeek={config.startOfWeek}
                 storeName={storeName}
                 strings={config.strings}

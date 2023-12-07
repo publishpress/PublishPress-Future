@@ -41,7 +41,7 @@ export const FutureActionPanelClassicEditor = (props) => {
                 taxonomy={data.taxonomy}
                 taxonomyName={props.taxonomyName}
                 onChangeData={onChangeData}
-                is12hours={props.is12hours}
+                is12Hour={props.is12Hour}
                 startOfWeek={props.startOfWeek}
                 storeName={props.storeName}
                 strings={props.strings} />

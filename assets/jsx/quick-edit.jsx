@@ -82,7 +82,7 @@ import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
                 postType={config.postType}
                 isNewPost={config.isNewPost}
                 actionsSelectOptions={config.actionsSelectOptions}
-                is12hours={config.is12hours}
+                is12Hour={config.is12Hour}
                 startOfWeek={config.startOfWeek}
                 strings={config.strings}
                 taxonomyName={config.taxonomyName}

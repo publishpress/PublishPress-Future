@@ -137,7 +137,7 @@ class BulkEditController implements InitializableInterface
             [
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,
                 'defaultDate' => $defaultExpirationDate['iso'],
-                'is12hours' => get_option('time_format') !== 'H:i',
+                'is12Hour' => get_option('time_format') !== 'H:i',
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
                 'isDebugEnabled' => $debug->isEnabled(),
