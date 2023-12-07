@@ -1,6 +1,6 @@
 import { normalizeUnixTimeToMilliseconds } from "../time";
 
-export const DateTimePicker = ({currentDate, onChangeDate, is12Hour, startOfWeek}) => {
+export const DateTimePicker = ({currentDate, onChange, is12Hour, startOfWeek}) => {
     const WPDateTimePicker = wp.components.DateTimePicker;
 
     if (typeof currentDate === 'number') {
@@ -10,7 +10,7 @@ export const DateTimePicker = ({currentDate, onChangeDate, is12Hour, startOfWeek
     return (
         <WPDateTimePicker
             currentDate={currentDate}
-            onChange={onChangeDate}
+            onChange={onChange}
             __nextRemoveHelpButton={true}
             is12Hour={is12Hour}
             startOfWeek={startOfWeek}
