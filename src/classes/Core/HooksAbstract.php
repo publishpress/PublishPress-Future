@@ -33,7 +33,7 @@ abstract class HooksAbstract
 
     const FILTER_SETTINGS_TABS = SettingsHooksAbstractFree::FILTER_SETTINGS_TABS;
 
-    const ACTION_SAVE_LICENSE_TAB = SettingsHooksAbstractFree::ACTION_SAVE_TAB . 'license';
+    const ACTION_SAVE_LICENSE_TAB = SettingsHooksAbstractFree::ACTION_SAVE_TAB_PREFIX . 'license';
 
     const ACTION_SAVE_POST_TYPE_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_POST_TYPE_SETTINGS;
 
