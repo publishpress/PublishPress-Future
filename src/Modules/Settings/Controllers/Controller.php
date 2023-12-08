@@ -193,7 +193,7 @@ class Controller implements InitializableInterface
 
             wp_localize_script(
                 'publishpressfuture-settings-panel',
-                'publishpressFutureConfig',
+                'publishpressFutureSettingsConfig',
                 [
                     'text' => [
                         'settingsSectionTitle' => __('Default Values', 'post-expirator'),

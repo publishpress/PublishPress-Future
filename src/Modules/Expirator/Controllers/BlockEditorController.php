@@ -93,7 +93,7 @@ class BlockEditorController implements InitializableInterface
             $defaultExpirationDate = $defaultDataModel->getActionDateParts();
             wp_localize_script(
                 'postexpirator-block-editor',
-                'postExpiratorPanelConfig',
+                'publishpressFutureBlockEditorConfig',
                 [
                     'postTypeDefaultConfig' => $postTypeDefaultConfig,
                     'defaultDate' => $defaultExpirationDate['iso'],

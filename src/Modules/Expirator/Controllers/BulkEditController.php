@@ -133,7 +133,7 @@ class BulkEditController implements InitializableInterface
 
         wp_localize_script(
             'postexpirator-bulk-edit',
-            'publishpressFutureBulkEdit',
+            'publishpressFutureBulkEditConfig',
             [
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,
                 'defaultDate' => $defaultExpirationDate['iso'],

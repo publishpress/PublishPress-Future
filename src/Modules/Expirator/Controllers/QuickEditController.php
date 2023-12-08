@@ -191,7 +191,7 @@ class QuickEditController implements InitializableInterface
 
         wp_localize_script(
             'postexpirator-quick-edit',
-            'publishpressFutureQuickEdit',
+            'publishpressFutureQuickEditConfig',
             [
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,
                 'defaultDate' => $defaultExpirationDate['iso'],

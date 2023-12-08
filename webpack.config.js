@@ -4,30 +4,6 @@ const path = require("path");
 module.exports = [
     {
         entry: glob.sync(
-            "./assets/jsx/block-editor.jsx",
-        ),
-        devtool: 'source-map',
-        output: {
-            path: path.join(__dirname, "assets", "js"),
-            filename: "block-editor.js"
-        },
-        resolve: {
-            extensions: ['.jsx', '.js']
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
-                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
-                    exclude: [
-                        /(node_modules|bower_components)/,
-                    ]// JavaScript files to be ignored.
-                }
-            ]
-        }
-    },
-    {
-        entry: glob.sync(
             "./assets/jsx/settings-post-types.jsx",
         ),
         devtool: 'source-map',
@@ -51,6 +27,45 @@ module.exports = [
         },
         resolve: {
             extensions: ['.js', '.jsx']
+        },
+        externals: {
+            "@wp/element": "wp.element",
+            "@wp/data": "wp.data",
+            "@wp/plugins": "wp.plugins",
+            "@wp/hooks": "wp.hooks",
+            "@config/settings-post-types": "publishpressFutureSettingsConfig"
+        }
+    },
+    {
+        entry: glob.sync(
+            "./assets/jsx/block-editor.jsx",
+        ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "assets", "js"),
+            filename: "block-editor.js"
+        },
+        resolve: {
+            extensions: ['.jsx', '.js']
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                }
+            ]
+        },
+        externals: {
+            "@wp/element": "wp.element",
+            "@wp/data": "wp.data",
+            "@wp/plugins": "wp.plugins",
+            "@wp/hooks": "wp.hooks",
+            "@window": "window",
+            "@config/block-editor": "publishpressFutureBlockEditorConfig"
         }
     },
     {
@@ -75,6 +90,13 @@ module.exports = [
                     ]// JavaScript files to be ignored.
                 }
             ]
+        },
+        externals: {
+            "@wp/element": "wp.element",
+            "@wp/data": "wp.data",
+            "@wp/plugins": "wp.plugins",
+            "@wp/hooks": "wp.hooks",
+            "@config/classic-editor": "publishpressFutureClassicEditorConfig"
         }
     },
     {
@@ -99,6 +121,14 @@ module.exports = [
                     ]// JavaScript files to be ignored.
                 }
             ]
+        },
+        externals: {
+            "@wp/element": "wp.element",
+            "@wp/data": "wp.data",
+            "@wp/plugins": "wp.plugins",
+            "@wp/hooks": "wp.hooks",
+            "@config/quick-edit": "publishpressFutureQuickEditConfig",
+            "@window": "window",
         }
     },
     {
@@ -123,6 +153,14 @@ module.exports = [
                     ]// JavaScript files to be ignored.
                 }
             ]
+        },
+        externals: {
+            "@wp/element": "wp.element",
+            "@wp/data": "wp.data",
+            "@wp/plugins": "wp.plugins",
+            "@wp/hooks": "wp.hooks",
+            "@config/bulk-edit": "publishpressFutureBulkEditConfig",
+            "@window": "window",
         }
     }
 ];
