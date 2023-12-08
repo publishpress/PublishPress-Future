@@ -15,7 +15,6 @@
 .rsync-filters-pre-build
 .vscode
 /.wordpress-org
-/assets/jsx
 /dev-workspace
 /dist
 /lib/composer.json
