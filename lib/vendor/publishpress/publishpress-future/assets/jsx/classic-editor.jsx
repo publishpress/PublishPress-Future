@@ -1,26 +1,32 @@
 import { FutureActionPanelClassicEditor } from './components';
 import { createStore } from './data';
 import { isGutenbergEnabled } from './utils';
+import { createRoot } from '@wp/element';
+import { select } from '@wp/data';
+import {
+    postType,
+    isNewPost,
+    actionsSelectOptions,
+    is12Hour,
+    startOfWeek,
+    strings,
+    taxonomyName,
+    postTypeDefaultConfig,
+    defaultDate
+} from "@config/classic-editor";
 
-((wp, config) => {
-    if (isGutenbergEnabled()) {
-        return;
-    }
-
+if (! isGutenbergEnabled()) {
     const storeName = 'publishpress-future/future-action';
-
-    const { createRoot } = wp.element;
-    const { select } = wp.data;
 
     if (!select(storeName)) {
         createStore({
             name: storeName,
             defaultState: {
-                autoEnable: config.postTypeDefaultConfig.autoEnable,
-                action: config.postTypeDefaultConfig.expireType,
-                date: config.defaultDate,
-                taxonomy: config.postTypeDefaultConfig.taxonomy,
-                terms: config.postTypeDefaultConfig.terms,
+                autoEnable: postTypeDefaultConfig.autoEnable,
+                action: postTypeDefaultConfig.expireType,
+                date: defaultDate,
+                taxonomy: postTypeDefaultConfig.taxonomy,
+                terms: postTypeDefaultConfig.terms,
             }
         });
     }
@@ -31,13 +37,13 @@ import { isGutenbergEnabled } from './utils';
     root.render(
         <FutureActionPanelClassicEditor
             storeName={storeName}
-            postType={config.postType}
-            isNewPost={config.isNewPost}
-            actionsSelectOptions={config.actionsSelectOptions}
-            is12Hour={config.is12Hour}
-            startOfWeek={config.startOfWeek}
-            strings={config.strings}
-            taxonomyName={config.taxonomyName}
+            postType={postType}
+            isNewPost={isNewPost}
+            actionsSelectOptions={actionsSelectOptions}
+            is12Hour={is12Hour}
+            startOfWeek={startOfWeek}
+            strings={strings}
+            taxonomyName={taxonomyName}
         />
     );
-})(window.wp, window.publishpressFutureClassicMetabox);
+}

@@ -276,7 +276,7 @@ class ClassicEditorController implements InitializableInterface
 
         wp_localize_script(
             'publishpress-future-classic-editor',
-            'publishpressFutureClassicMetabox',
+            'publishpressFutureClassicEditorConfig',
             [
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,
                 'defaultDate' => $defaultExpirationDate['iso'],

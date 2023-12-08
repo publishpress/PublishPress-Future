@@ -11,42 +11,49 @@ import {
     NonceControl
 } from "./components";
 
-(function (wp, config) {
-    const { StrictMode, createRoot } = wp.element;
+import { StrictMode, createRoot } from "@wp/element";
 
-    const SettingsFormPanel = (props) => {
-        return (
-            <StrictMode>
-                <SettingsForm>
-                    <NonceControl
-                        name="_postExpiratorMenuDefaults_nonce"
-                        nonce={config.nonce}
-                        referrer={config.referrer}
+import {
+    nonce,
+    referrer,
+    settings,
+    expireTypeList,
+    taxonomiesList,
+    text
+} from "@config/settings-post-types";
+
+const SettingsFormPanel = (props) => {
+    return (
+        <StrictMode>
+            <SettingsForm>
+                <NonceControl
+                    name="_postExpiratorMenuDefaults_nonce"
+                    nonce={nonce}
+                    referrer={referrer}
+                />
+                <SettingsSection
+                    title={text.settingsSectionTitle}
+                    description={text.settingsSectionDescription}>
+                    <PostTypesSettingsPanels
+                        settings={settings}
+                        text={text}
+                        expireTypeList={expireTypeList}
+                        taxonomiesList={taxonomiesList}
                     />
-                    <SettingsSection
-                        title={config.text.settingsSectionTitle}
-                        description={config.text.settingsSectionDescription}>
-                        <PostTypesSettingsPanels
-                            settings={config.settings}
-                            text={config.text}
-                            expireTypeList={config.expireTypeList}
-                            taxonomiesList={config.taxonomiesList}
-                        />
-                    </SettingsSection>
+                </SettingsSection>
 
-                    <ButtonsPanel>
-                        <SubmitButton
-                            name="expirationdateSaveDefaults"
-                            text={config.text.saveChanges}
-                        />
-                    </ButtonsPanel>
-                </SettingsForm>
-            </StrictMode>
-        )
-    };
+                <ButtonsPanel>
+                    <SubmitButton
+                        name="expirationdateSaveDefaults"
+                        text={text.saveChanges}
+                    />
+                </ButtonsPanel>
+            </SettingsForm>
+        </StrictMode>
+    )
+};
 
-    const container = document.getElementById("publishpress-future-settings-post-types");
-    const root = createRoot(container);
+const container = document.getElementById("publishpress-future-settings-post-types");
+const root = createRoot(container);
 
-    root.render(<SettingsFormPanel />);
-})(window.wp, window.publishpressFutureConfig);
+root.render(<SettingsFormPanel />);

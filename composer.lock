@@ -1264,12 +1264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "df96d7b9396977f11a1edd5c3fab94f7cc96f1a3"
+                "reference": "1e96c512fe495e0f847e28d7aca4b105ddd530f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/df96d7b9396977f11a1edd5c3fab94f7cc96f1a3",
-                "reference": "df96d7b9396977f11a1edd5c3fab94f7cc96f1a3",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/1e96c512fe495e0f847e28d7aca4b105ddd530f2",
+                "reference": "1e96c512fe495e0f847e28d7aca4b105ddd530f2",
                 "shasum": ""
             },
             "require": {
@@ -1319,7 +1319,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-08T14:21:19+00:00"
+            "time": "2023-12-08T15:05:53+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3906,12 +3906,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "9c1f144cc2b65d65765cd821f9bd33d17a9b6644"
+                "reference": "8d05c7897d1c9a72b0e63d5b4493986e6bd1d509"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/9c1f144cc2b65d65765cd821f9bd33d17a9b6644",
-                "reference": "9c1f144cc2b65d65765cd821f9bd33d17a9b6644",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/8d05c7897d1c9a72b0e63d5b4493986e6bd1d509",
+                "reference": "8d05c7897d1c9a72b0e63d5b4493986e6bd1d509",
                 "shasum": ""
             },
             "require": {
@@ -3969,7 +3969,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2023-11-21T11:36:07+00:00"
+            "time": "2023-12-08T16:10:20+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",

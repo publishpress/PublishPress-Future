@@ -1,37 +1,45 @@
 import { createStore } from './data';
 import { FutureActionPanelBlockEditor } from './components';
+import { select } from '@wp/data';
+import { registerPlugin } from '@wp/plugins';
+import {
+    actionsSelectOptions,
+    is12Hour,
+    startOfWeek,
+    strings,
+    taxonomyName,
+    postTypeDefaultConfig,
+    defaultDate
+} from "@config/block-editor";
 
-(function (wp, config) {
-    const { registerPlugin } = wp.plugins;
-    const storeName = 'publishpress-future/future-action';
+const storeName = 'publishpress-future/future-action';
 
-    createStore({
-        name: storeName,
-        defaultState: {
-            autoEnable: config.postTypeDefaultConfig.autoEnable,
-            action: config.postTypeDefaultConfig.expireType,
-            date: config.defaultDate,
-            taxonomy: config.postTypeDefaultConfig.taxonomy,
-            terms: config.postTypeDefaultConfig.terms,
-        }
-    });
-
-    const BlockEditorFutureActionPlugin = () => {
-        return (
-            <FutureActionPanelBlockEditor
-                postType={wp.data.select('core/editor').getCurrentPostType()}
-                isCleanNewPost={wp.data.select('core/editor').isCleanNewPost()}
-                actionsSelectOptions={config.actionsSelectOptions}
-                is12Hour={config.is12Hour}
-                startOfWeek={config.startOfWeek}
-                storeName={storeName}
-                strings={config.strings}
-                taxonomyName={config.taxonomyName}
-                postTypeDefaultConfig={config.postTypeDefaultConfig} />
-        );
+createStore({
+    name: storeName,
+    defaultState: {
+        autoEnable: postTypeDefaultConfig.autoEnable,
+        action: postTypeDefaultConfig.expireType,
+        date: defaultDate,
+        taxonomy: postTypeDefaultConfig.taxonomy,
+        terms: postTypeDefaultConfig.terms,
     }
+});
 
-    registerPlugin('publishpress-future-action', {
-        render: BlockEditorFutureActionPlugin
-    });
-})(window.wp, window.postExpiratorPanelConfig);
+const BlockEditorFutureActionPlugin = () => {
+    return (
+        <FutureActionPanelBlockEditor
+            postType={select('core/editor').getCurrentPostType()}
+            isCleanNewPost={select('core/editor').isCleanNewPost()}
+            actionsSelectOptions={actionsSelectOptions}
+            is12Hour={is12Hour}
+            startOfWeek={startOfWeek}
+            storeName={storeName}
+            strings={strings}
+            taxonomyName={taxonomyName}
+            postTypeDefaultConfig={postTypeDefaultConfig} />
+    );
+}
+
+registerPlugin('publishpress-future-action', {
+    render: BlockEditorFutureActionPlugin
+});
