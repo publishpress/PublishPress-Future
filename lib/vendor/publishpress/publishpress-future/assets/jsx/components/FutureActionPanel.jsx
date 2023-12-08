@@ -1,8 +1,7 @@
 import { compact } from '../utils';
-import { ToggleArrowButton } from './ToggleArrowButton';
 import { ToggleCalendarDatePicker } from './ToggleCalendarDatePicker';
 
-const { PanelRow, DateTimePicker, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl, Container } = wp.components;
+const { PanelRow, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl, Container } = wp.components;
 const { Fragment, useEffect, useState } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 const { addQueryArgs } = wp.url;

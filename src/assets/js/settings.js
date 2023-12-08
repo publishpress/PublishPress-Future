@@ -152,15 +152,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _utils = __webpack_require__(/*! ../utils */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/utils.jsx");
 
-var _ToggleArrowButton = __webpack_require__(/*! ./ToggleArrowButton */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ToggleArrowButton.jsx");
-
 var _ToggleCalendarDatePicker = __webpack_require__(/*! ./ToggleCalendarDatePicker */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ToggleCalendarDatePicker.jsx");
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var _wp$components = wp.components,
     PanelRow = _wp$components.PanelRow,
-    DateTimePicker = _wp$components.DateTimePicker,
     CheckboxControl = _wp$components.CheckboxControl,
     SelectControl = _wp$components.SelectControl,
     FormTokenField = _wp$components.FormTokenField,
