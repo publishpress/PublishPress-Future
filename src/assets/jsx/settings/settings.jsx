@@ -3,80 +3,86 @@
  */
 import { SettingRow } from "@publishpress-free/components";
 import { addFilter } from "@wp/hooks";
+import {
+    settings,
+    customPostStatuses,
+    text
+} from "@config/pro-settings";
+import { CheckboxControl, Button } from "@wp/components";
 
-addFilter(
-    'expirationdate_settings_posttype',
-    'publishpress/publishpress-future-pro',
-    (settingsRows, props, settingActive, useState) => {
-        let defaultEnabledCustomStatuses = [];
-        if (publishpressFutureProSettings.settings.enabledCustomStatuses) {
-            defaultEnabledCustomStatuses = publishpressFutureProSettings.settings.enabledCustomStatuses[props.postType] || [];
-        }
-
-        const [enabledCustomStatuses, setEnabledCustomStatuses] = useState(defaultEnabledCustomStatuses);
-
-        const handleCustomStatusesChange = (event) => {
-            if (jQuery(event.target).is(':checked')) {
-                setEnabledCustomStatuses([
-                    ...enabledCustomStatuses,
-                    event.target.value,
-                ]);
-            } else {
-                setEnabledCustomStatuses(enabledCustomStatuses.filter((status) => status !== event.target.value));
-            }
-        };
-
-        const handleSelectAll = (event) => {
-            event.preventDefault();
-
-            setEnabledCustomStatuses(publishpressFutureProSettings.customPostStatuses.map((postStatus) => postStatus.value));
-        };
-
-        const handleUnselectAll = (event) => {
-            event.preventDefault();
-
-            setEnabledCustomStatuses([]);
-        };
-
-        if (settingActive) {
-            if (publishpressFutureProSettings.customPostStatuses.length === 0) {
-                return settingsRows;
-            }
-
-            const postStatusesCheckboxes = publishpressFutureProSettings.customPostStatuses.map((postStatus) => {
-                const checked = enabledCustomStatuses.includes(postStatus.value);
-                const fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
-
-                return (
-                    <div className="pp-checkbox">
-                        <input
-                            type="checkbox"
-                            name={'expirationdate_custom-statuses-' + props.postType + '[]'}
-                            id={fieldId}
-                            value={postStatus.value}
-                            checked={checked}
-                            onChange={handleCustomStatusesChange}
-                            key={postStatus.value}
-                        />
-                        <label htmlFor={fieldId}>{postStatus.label}</label>
-                    </div>
-                );
-            });
-
-            settingsRows.push(
-                <SettingRow label={publishpressFutureProSettings.text.enableCustomStatuses}>
-                    <div>
-                        <label>{publishpressFutureProSettings.text.enableCustomStatusesDesc}</label>
-                    </div>
-                    <div className={'future_pro_checkbox_selection_control'}>
-                        <a href="#" onClick={handleSelectAll}>{publishpressFutureProSettings.text.selectAll}</a> <a href="#" onClick={handleUnselectAll}>{publishpressFutureProSettings.text.unselectAll}</a>
-                    </div>
-
-                    {postStatusesCheckboxes}
-                </SettingRow>
-            );
-        }
-
-        return settingsRows;
+const addSettings = (settingsRows, props, settingActive, useState) => {
+    let defaultEnabledCustomStatuses = [];
+    if (settings.enabledCustomStatuses) {
+        defaultEnabledCustomStatuses = settings.enabledCustomStatuses[props.postType] || [];
     }
-);
+
+    const [enabledCustomStatuses, setEnabledCustomStatuses] = useState(defaultEnabledCustomStatuses);
+
+    const handleCustomStatusesChange = (postStatus, checked) => {
+        let newEnabledCustomStatuses = [...enabledCustomStatuses];
+
+        if (checked) {
+            newEnabledCustomStatuses.push(postStatus);
+        } else {
+            newEnabledCustomStatuses = newEnabledCustomStatuses.filter((status) => status !== postStatus);
+        }
+
+        // Remove duplicates.
+        newEnabledCustomStatuses = [...new Set(newEnabledCustomStatuses)];
+
+        setEnabledCustomStatuses(newEnabledCustomStatuses);
+    };
+
+    const handleSelectAll = (event) => {
+        event.preventDefault();
+
+        setEnabledCustomStatuses(customPostStatuses.map((postStatus) => postStatus.value));
+    };
+
+    const handleUnselectAll = (event) => {
+        event.preventDefault();
+
+        setEnabledCustomStatuses([]);
+    };
+
+    if (settingActive) {
+        if (customPostStatuses.length === 0) {
+            return settingsRows;
+        }
+
+        const postStatusesCheckboxes = customPostStatuses.map((postStatus) => {
+            const checked = enabledCustomStatuses.includes(postStatus.value);
+            const fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
+
+            return (
+                <CheckboxControl
+                    key={fieldId}
+                    name={'expirationdate_custom-statuses-' + props.postType + '[]'}
+                    id={fieldId}
+                    value={postStatus.value}
+                    label={postStatus.label}
+                    checked={checked || false}
+                    onChange={(checked) => handleCustomStatusesChange(postStatus.value, checked)}
+                    title={postStatus.value}
+                />
+            );
+        });
+
+        settingsRows.push(
+            <SettingRow label={text.enableCustomStatuses} key={'custom-statuses'}>
+                <div>
+                    <label>{text.enableCustomStatusesDesc}</label>
+                </div>
+                <div className={'future_pro_checkbox_selection_control'}>
+                    <Button variant="link" onClick={handleSelectAll}>{text.selectAll}</Button> | <Button variant="link" onClick={handleUnselectAll}>{text.unselectAll}</Button>
+                </div>
+
+                {postStatusesCheckboxes}
+            </SettingRow>
+        );
+    }
+
+    return settingsRows;
+};
+
+addFilter('expirationdate_settings_posttype', 'publishpress/publishpress-future-pro', addSettings);

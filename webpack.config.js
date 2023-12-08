@@ -33,7 +33,9 @@ module.exports = [
             }
         },
         externals: {
-            "@wp/hooks": "wp.hooks"
+            "@wp/hooks": "wp.hooks",
+            "@wp/components": "wp.components",
+            "@config/pro-settings": "publishpressFutureProSettings"
         },
     }
 ];

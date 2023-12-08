@@ -2208,7 +2208,27 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
-/***/ "wp/hooks":
+/***/ "@config/pro-settings":
+/*!************************************************!*\
+  !*** external "publishpressFutureProSettings" ***!
+  \************************************************/
+/***/ ((module) => {
+
+module.exports = publishpressFutureProSettings;
+
+/***/ }),
+
+/***/ "@wp/components":
+/*!********************************!*\
+  !*** external "wp.components" ***!
+  \********************************/
+/***/ ((module) => {
+
+module.exports = wp.components;
+
+/***/ }),
+
+/***/ "@wp/hooks":
 /*!***************************!*\
   !*** external "wp.hooks" ***!
   \***************************/
@@ -2258,16 +2278,20 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           */
 
 
-var _components = __webpack_require__(/*! publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+var _components = __webpack_require__(/*! @publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
 
-var _hooks = __webpack_require__(/*! wp/hooks */ "wp/hooks");
+var _hooks = __webpack_require__(/*! @wp/hooks */ "@wp/hooks");
+
+var _proSettings = __webpack_require__(/*! @config/pro-settings */ "@config/pro-settings");
+
+var _components2 = __webpack_require__(/*! @wp/components */ "@wp/components");
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-(0, _hooks.addFilter)('expirationdate_settings_posttype', 'publishpress/publishpress-future-pro', function (settingsRows, props, settingActive, useState) {
+var addSettings = function addSettings(settingsRows, props, settingActive, useState) {
     var defaultEnabledCustomStatuses = [];
-    if (publishpressFutureProSettings.settings.enabledCustomStatuses) {
-        defaultEnabledCustomStatuses = publishpressFutureProSettings.settings.enabledCustomStatuses[props.postType] || [];
+    if (_proSettings.settings.enabledCustomStatuses) {
+        defaultEnabledCustomStatuses = _proSettings.settings.enabledCustomStatuses[props.postType] || [];
     }
 
     var _useState = useState(defaultEnabledCustomStatuses),
@@ -2275,20 +2299,27 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         enabledCustomStatuses = _useState2[0],
         setEnabledCustomStatuses = _useState2[1];
 
-    var handleCustomStatusesChange = function handleCustomStatusesChange(event) {
-        if (jQuery(event.target).is(':checked')) {
-            setEnabledCustomStatuses([].concat(_toConsumableArray(enabledCustomStatuses), [event.target.value]));
+    var handleCustomStatusesChange = function handleCustomStatusesChange(postStatus, checked) {
+        var newEnabledCustomStatuses = [].concat(_toConsumableArray(enabledCustomStatuses));
+
+        if (checked) {
+            newEnabledCustomStatuses.push(postStatus);
         } else {
-            setEnabledCustomStatuses(enabledCustomStatuses.filter(function (status) {
-                return status !== event.target.value;
-            }));
+            newEnabledCustomStatuses = newEnabledCustomStatuses.filter(function (status) {
+                return status !== postStatus;
+            });
         }
+
+        // Remove duplicates.
+        newEnabledCustomStatuses = [].concat(_toConsumableArray(new Set(newEnabledCustomStatuses)));
+
+        setEnabledCustomStatuses(newEnabledCustomStatuses);
     };
 
     var handleSelectAll = function handleSelectAll(event) {
         event.preventDefault();
 
-        setEnabledCustomStatuses(publishpressFutureProSettings.customPostStatuses.map(function (postStatus) {
+        setEnabledCustomStatuses(_proSettings.customPostStatuses.map(function (postStatus) {
             return postStatus.value;
         }));
     };
@@ -2300,59 +2331,53 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     };
 
     if (settingActive) {
-        if (publishpressFutureProSettings.customPostStatuses.length === 0) {
+        if (_proSettings.customPostStatuses.length === 0) {
             return settingsRows;
         }
 
-        var postStatusesCheckboxes = publishpressFutureProSettings.customPostStatuses.map(function (postStatus) {
+        var postStatusesCheckboxes = _proSettings.customPostStatuses.map(function (postStatus) {
             var checked = enabledCustomStatuses.includes(postStatus.value);
             var fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
 
-            return React.createElement(
-                "div",
-                { className: "pp-checkbox" },
-                React.createElement("input", {
-                    type: "checkbox",
-                    name: 'expirationdate_custom-statuses-' + props.postType + '[]',
-                    id: fieldId,
-                    value: postStatus.value,
-                    checked: checked,
-                    onChange: handleCustomStatusesChange,
-                    key: postStatus.value
-                }),
-                React.createElement(
-                    "label",
-                    { htmlFor: fieldId },
-                    postStatus.label
-                )
-            );
+            return React.createElement(_components2.CheckboxControl, {
+                key: fieldId,
+                name: 'expirationdate_custom-statuses-' + props.postType + '[]',
+                id: fieldId,
+                value: postStatus.value,
+                label: postStatus.label,
+                checked: checked || false,
+                onChange: function onChange(checked) {
+                    return handleCustomStatusesChange(postStatus.value, checked);
+                },
+                title: postStatus.value
+            });
         });
 
         settingsRows.push(React.createElement(
             _components.SettingRow,
-            { label: publishpressFutureProSettings.text.enableCustomStatuses },
+            { label: _proSettings.text.enableCustomStatuses, key: 'custom-statuses' },
             React.createElement(
                 "div",
                 null,
                 React.createElement(
                     "label",
                     null,
-                    publishpressFutureProSettings.text.enableCustomStatusesDesc
+                    _proSettings.text.enableCustomStatusesDesc
                 )
             ),
             React.createElement(
                 "div",
                 { className: 'future_pro_checkbox_selection_control' },
                 React.createElement(
-                    "a",
-                    { href: "#", onClick: handleSelectAll },
-                    publishpressFutureProSettings.text.selectAll
+                    _components2.Button,
+                    { variant: "link", onClick: handleSelectAll },
+                    _proSettings.text.selectAll
                 ),
-                " ",
+                " | ",
                 React.createElement(
-                    "a",
-                    { href: "#", onClick: handleUnselectAll },
-                    publishpressFutureProSettings.text.unselectAll
+                    _components2.Button,
+                    { variant: "link", onClick: handleUnselectAll },
+                    _proSettings.text.unselectAll
                 )
             ),
             postStatusesCheckboxes
@@ -2360,7 +2385,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
 
     return settingsRows;
-});
+};
+
+(0, _hooks.addFilter)('expirationdate_settings_posttype', 'publishpress/publishpress-future-pro', addSettings);
 })();
 
 /******/ })()

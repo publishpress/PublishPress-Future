@@ -168,16 +168,22 @@ class SettingsController implements ModuleInterface
             wp_enqueue_script(
                 'publishpress-future-pro-settings-panel',
                 $this->assetsUrl . '/js/settings.js',
-                ['react', 'react-dom'],
+                ['wp-components', 'wp-url', 'wp-data', 'wp-element'],
                 $this->pluginVersion,
                 true
             );
+
+            wp_enqueue_script('wp-url');
+            wp_enqueue_script('wp-element');
+            wp_enqueue_script('wp-components');
+            wp_enqueue_script('wp-data');
 
             wp_localize_script(
                 'publishpress-future-pro-settings-panel',
                 'publishpressFutureProSettings',
                 [
                     'text' => [
+                        'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                         'enableCustomStatuses' => __('Custom statuses', 'publishpress-future-pro'),
                         'enableCustomStatusesDesc' => __(
                             'Enable custom statuses for the post type:',
@@ -198,9 +204,11 @@ class SettingsController implements ModuleInterface
             wp_enqueue_style(
                 'publishpress-future-settings-style',
                 $this->assetsUrl . '/css/settings.css',
-                [],
+                ['wp-components'],
                 $this->pluginVersion
             );
+
+            wp_enqueue_style('wp-components');
         }
 
         // phpcs:enable WordPress.Security.NonceVerification.Recommended
