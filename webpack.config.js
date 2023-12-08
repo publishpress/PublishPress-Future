@@ -30,6 +30,7 @@ module.exports = [
         },
         externals: {
             "@wp/element": "wp.element",
+            "@wp/components": "wp.components",
             "@wp/data": "wp.data",
             "@wp/plugins": "wp.plugins",
             "@wp/hooks": "wp.hooks",
@@ -61,6 +62,7 @@ module.exports = [
         },
         externals: {
             "@wp/element": "wp.element",
+            "@wp/components": "wp.components",
             "@wp/data": "wp.data",
             "@wp/plugins": "wp.plugins",
             "@wp/hooks": "wp.hooks",
@@ -93,6 +95,7 @@ module.exports = [
         },
         externals: {
             "@wp/element": "wp.element",
+            "@wp/components": "wp.components",
             "@wp/data": "wp.data",
             "@wp/plugins": "wp.plugins",
             "@wp/hooks": "wp.hooks",
@@ -124,6 +127,7 @@ module.exports = [
         },
         externals: {
             "@wp/element": "wp.element",
+            "@wp/components": "wp.components",
             "@wp/data": "wp.data",
             "@wp/plugins": "wp.plugins",
             "@wp/hooks": "wp.hooks",
@@ -156,6 +160,7 @@ module.exports = [
         },
         externals: {
             "@wp/element": "wp.element",
+            "@wp/components": "wp.components",
             "@wp/data": "wp.data",
             "@wp/plugins": "wp.plugins",
             "@wp/hooks": "wp.hooks",
