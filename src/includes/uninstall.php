@@ -9,8 +9,7 @@
 
 namespace PublishPress\FuturePro;
 
-use PublishPress\Future\Core\DI\Container;
-use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Core\HooksAbstract as HooksAbstractFree;
 use PublishPress\FuturePro\Core\HooksAbstract;
 
 defined('ABSPATH') or die('No direct script access allowed.');
@@ -21,6 +20,5 @@ function uninstall()
     do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);
 
     // Deactivate the Free plugin.
-    $container = Container::getInstance();
-    $container->get(ServicesAbstract::PLUGIN)->deactivatePlugin();
+    do_action(HooksAbstractFree::ACTION_DEACTIVATE_PLUGIN);
 }

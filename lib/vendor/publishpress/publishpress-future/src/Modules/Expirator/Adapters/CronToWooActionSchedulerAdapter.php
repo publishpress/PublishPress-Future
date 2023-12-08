@@ -8,6 +8,14 @@ namespace PublishPress\Future\Modules\Expirator\Adapters;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 
+use function as_enqueue_async_action;
+use function as_get_scheduled_actions;
+use function as_has_scheduled_action;
+use function as_next_scheduled_action;
+use function as_schedule_single_action;
+use function as_unschedule_action;
+use function as_unschedule_all_actions;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class CronToWooActionSchedulerAdapter implements CronInterface
