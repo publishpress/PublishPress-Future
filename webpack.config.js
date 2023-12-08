@@ -25,9 +25,12 @@ module.exports = [
         resolve: {
             modules: [
                 "node_modules",
-                path.join(__dirname, "vendor", "publishpress"),
+                path.join(__dirname, "vendor", "publishpress")
             ],
-            extensions: [".js", ".jsx"]
+            extensions: [".js", ".jsx"],
+            alias: {
+                "publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
+            }
         },
         externals: {
             "react": "React",

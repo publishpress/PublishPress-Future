@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import SettingRow from "post-expirator/assets/jsx/settings/components/SettingRow";
+import { SettingRow } from "publishpress-free/components";
 
-wp.hooks.addFilter(
+const { addFilter } = wp.hooks;
+
+addFilter(
     'expirationdate_settings_posttype',
     'publishpress/publishpress-future-pro/debug',
     (settingsRows, props, settingActive, useState) => {
