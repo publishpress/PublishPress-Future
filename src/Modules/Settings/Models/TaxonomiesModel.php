@@ -79,6 +79,11 @@ class TaxonomiesModel
                     return $newTerm->get_error_data('term_exists');
                 }
 
+                if (is_wp_error($newTerm)) {
+                    error_log('PUBLISHPRESS FUTURE: ' . $newTerm->get_error_message());
+                    return 0;
+                }
+
                 return $newTerm['term_id'];
             }, $newTerms);
 
