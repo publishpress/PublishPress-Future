@@ -151,6 +151,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Change the order of fields in the future action panels, moving action and taxonomy at the beginning
 * CHANGED: The method `ExpirationScheduler::schedule` now automatically converts the date to UTC before scheduling the action;
 * CHANGED: The action `publishpressfuture_schedule_expiration` now receives the date in the local site timezone;
+* CHANGED: Update the library woocommerce/action-scheduler from 3.6.4 to 3.7.0;
 * DEPRECATED: Deprecate the calss `Walker_PostExpirator_Category_Checklist`;
 * DEPRECATED: Deprecate the function `postexpirator_get_post_types`, moving the logic to the model `PostTypesModel`;
 * FIXED: Fix fatal error when clicking on "Post Types" tab in the settings when using PT-Br language, #567;
