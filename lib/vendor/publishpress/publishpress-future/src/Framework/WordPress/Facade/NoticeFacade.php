@@ -9,6 +9,11 @@ class NoticeFacade {
 
     private $initialized = false;
 
+    /**
+     * @var HookableInterface
+     */
+    private $hooks;
+
     public function __construct(HookableInterface $hooksFacade)
     {
         $this->hooks = $hooksFacade;

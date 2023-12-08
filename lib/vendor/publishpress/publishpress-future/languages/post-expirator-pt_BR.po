@@ -481,7 +481,7 @@ msgstr ""
 "Defina o deslocamento a ser usado para a data e hora da ação padrão. Para "
 "obter informações sobre formatação, consulte %1$s\n"
 "                                    . Por exemplo, você poderia inserir "
-"%2$s+1 month%3$s ou %4$s+1 week 2 days 4 hours 2 seconds%5$s ou %6$next "
+"%2$s+1 month%3$s ou %4$s+1 week 2 days 4 hours 2 seconds%5$s ou %6$snext "
 "Thursday%7$s. Por favor, use apenas termos em inglês."
 
 #: src/Modules/Settings/Controllers/Controller.php:246

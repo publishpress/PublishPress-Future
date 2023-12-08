@@ -5,9 +5,8 @@
 
 namespace PublishPress\Future\Modules\Settings;
 
-use PublishPress\Future\Core\DI\Container;
-use PublishPress\Future\Core\DI\ServicesAbstract as Services;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -46,6 +45,13 @@ class SettingsFacade
         $this->hooks = $hooks;
         $this->options = $options;
         $this->defaultData = $defaultData;
+
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_PURGE_PLUGIN_CACHE, [$this, 'purgeCache']);
+    }
+
+    public function purgeCache()
+    {
+        $this->cache = [];
     }
 
     public function deleteAllSettings()
@@ -68,6 +74,8 @@ class SettingsFacade
         foreach ($allOptions as $optionName) {
             $this->options->deleteOption($optionName);
         }
+
+        $this->hooks->doAction(CoreHooksAbstract::ACTION_PURGE_PLUGIN_CACHE);
     }
 
     // We can't use services from the container here because it is called before they are available, on plugin activation.
@@ -143,6 +151,10 @@ class SettingsFacade
 
     public function getPostTypeDefaults($postType)
     {
+        if (isset($this->cache['postTypeDefaults']) && isset($this->cache['postTypeDefaults'][$postType])) {
+            return $this->cache['postTypeDefaults'][$postType];
+        }
+
         $defaults = [
             'expireType' => null,
             'autoEnable' => null,
@@ -151,6 +163,7 @@ class SettingsFacade
             'emailnotification' => null,
             'default-expire-type' => null,
             'default-custom-date' => null,
+            'terms' => [],
         ];
 
         $defaults = array_merge(
@@ -176,7 +189,18 @@ class SettingsFacade
             }
         }
 
-        return $defaults;
+        // Enable by default for post and page.
+        if (is_null($defaults['activeMetaBox'])) {
+            $defaults['activeMetaBox'] = in_array($postType, ['post', 'page'], true) ? '1' : '0';
+        }
+
+        if (! isset($this->cache['postTypeDefaults'])) {
+            $this->cache['postTypeDefaults'] = [];
+        }
+
+        $this->cache['postTypeDefaults'][$postType] = $defaults;
+
+        return $this->cache['postTypeDefaults'][$postType];
     }
 
     /**
@@ -200,6 +224,10 @@ class SettingsFacade
     public function getGeneralDateTimeOffset()
     {
         $defaultDateOption = $this->options->getOption('expirationdateDefaultDateCustom');
+
+        $defaultDateOption = html_entity_decode($defaultDateOption, ENT_QUOTES);
+        $defaultDateOption = preg_replace('/["\'`]/', '', $defaultDateOption);
+        $defaultDateOption = trim($defaultDateOption);
 
         if (empty($defaultDateOption)) {
             $defaultDateOption = self::DEFAULT_CUSTOM_DATE;

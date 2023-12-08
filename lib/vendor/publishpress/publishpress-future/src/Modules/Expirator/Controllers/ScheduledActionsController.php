@@ -5,11 +5,10 @@
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
-use ActionScheduler;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -72,6 +71,11 @@ class ScheduledActionsController implements InitializableInterface
         );
         $this->hooks->addFilter('screen_settings', [$this, 'filterScreenSettings'], 10, 2);
         $this->hooks->addFilter('set-screen-option', [$this, 'filterSetScreenOption'], 10);
+
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
+            [$this, 'enqueueScripts']
+        );
     }
 
     public function onAdminMenu()
@@ -211,5 +215,24 @@ class ScheduledActionsController implements InitializableInterface
         }
 
         return $status;
+    }
+
+    function enqueueScripts($screenId)
+    {
+        if ('future_page_publishpress-future-scheduled-actions' === $screenId) {
+            wp_enqueue_style(
+                'postexpirator-css',
+                POSTEXPIRATOR_BASEURL . 'assets/css/style.css',
+                false,
+                POSTEXPIRATOR_VERSION
+            );
+
+            wp_enqueue_style(
+                'pe-footer',
+                POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
+                false,
+                POSTEXPIRATOR_VERSION
+            );
+        }
     }
 }

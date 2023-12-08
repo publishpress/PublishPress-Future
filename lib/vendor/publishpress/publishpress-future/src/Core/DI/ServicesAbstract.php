@@ -56,7 +56,7 @@ abstract class ServicesAbstract
     const CURRENT_USER_MODEL_FACTORY = 'future.free/current-user-model-factory';
     const EXPIRABLE_POST_MODEL_FACTORY = 'future.free/expirable-post-model-factory';
     const EXPIRATION_ACTION_FACTORY = 'future.free/expiration-action-factory';
-    const DEFAULT_DATA_MODEL = 'future.free/default-data-model-factory';
+    const POST_TYPE_DEFAULT_DATA_MODEL_FACTORY = 'future.free/post-type-default-data-model-factory';
     const EXPIRATION_ACTIONS_MODEL = 'future.free/expiration-actions-model';
     const POST_TYPE_SETTINGS_MODEL_FACTORY = 'future.free/post-type-settings-model-factory';
     const TAXONOMIES_MODEL_FACTORY = 'future.free/taxonomies-model-factory';

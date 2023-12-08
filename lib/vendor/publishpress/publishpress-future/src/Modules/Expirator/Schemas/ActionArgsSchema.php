@@ -49,7 +49,7 @@ class ActionArgsSchema
             KEY enabled_post_id (post_id, enabled, id),
             KEY cron_action_id (cron_action_id, id),
             KEY enabled_cron_action_id (cron_action_id, enabled, id)
-        ) ENGINE=InnoDB $charsetCollate;";
+        ) $charsetCollate;";
 
         if (! function_exists('dbDelta')) {
             require_once ABSPATH . 'wp-admin/includes/upgrade.php';

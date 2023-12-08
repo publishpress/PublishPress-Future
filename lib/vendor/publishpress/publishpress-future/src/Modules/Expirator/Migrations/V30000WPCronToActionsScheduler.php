@@ -102,8 +102,6 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
                 'expireType' => $expireType,
                 'category' => $expirationCategories,
                 'categoryTaxonomy' => $expirationTaxonomy,
-                'enabled' => $expirationEnabled,
-                'date' => $eventData['time'],
             ];
 
             do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $eventData['time'], $args);
