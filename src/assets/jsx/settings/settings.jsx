@@ -1,13 +1,12 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import { SettingRow } from "publishpress-free/components";
-
-const { addFilter } = wp.hooks;
+import { SettingRow } from "@publishpress-free/components";
+import { addFilter } from "@wp/hooks";
 
 addFilter(
     'expirationdate_settings_posttype',
-    'publishpress/publishpress-future-pro/debug',
+    'publishpress/publishpress-future-pro',
     (settingsRows, props, settingActive, useState) => {
         let defaultEnabledCustomStatuses = [];
         if (publishpressFutureProSettings.settings.enabledCustomStatuses) {

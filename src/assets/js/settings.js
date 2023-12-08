@@ -2206,6 +2206,16 @@ var isNumber = exports.isNumber = function isNumber(value) {
     return !isNaN(value);
 };
 
+/***/ }),
+
+/***/ "wp/hooks":
+/*!***************************!*\
+  !*** external "wp.hooks" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = wp.hooks;
+
 /***/ })
 
 /******/ 	});
@@ -2250,12 +2260,11 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _components = __webpack_require__(/*! publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
 
+var _hooks = __webpack_require__(/*! wp/hooks */ "wp/hooks");
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var addFilter = wp.hooks.addFilter;
-
-
-addFilter('expirationdate_settings_posttype', 'publishpress/publishpress-future-pro/debug', function (settingsRows, props, settingActive, useState) {
+(0, _hooks.addFilter)('expirationdate_settings_posttype', 'publishpress/publishpress-future-pro', function (settingsRows, props, settingActive, useState) {
     var defaultEnabledCustomStatuses = [];
     if (publishpressFutureProSettings.settings.enabledCustomStatuses) {
         defaultEnabledCustomStatuses = publishpressFutureProSettings.settings.enabledCustomStatuses[props.postType] || [];
@@ -2300,10 +2309,10 @@ addFilter('expirationdate_settings_posttype', 'publishpress/publishpress-future-
             var fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
 
             return React.createElement(
-                'div',
-                { className: 'pp-checkbox' },
-                React.createElement('input', {
-                    type: 'checkbox',
+                "div",
+                { className: "pp-checkbox" },
+                React.createElement("input", {
+                    type: "checkbox",
                     name: 'expirationdate_custom-statuses-' + props.postType + '[]',
                     id: fieldId,
                     value: postStatus.value,
@@ -2312,7 +2321,7 @@ addFilter('expirationdate_settings_posttype', 'publishpress/publishpress-future-
                     key: postStatus.value
                 }),
                 React.createElement(
-                    'label',
+                    "label",
                     { htmlFor: fieldId },
                     postStatus.label
                 )
@@ -2323,26 +2332,26 @@ addFilter('expirationdate_settings_posttype', 'publishpress/publishpress-future-
             _components.SettingRow,
             { label: publishpressFutureProSettings.text.enableCustomStatuses },
             React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'label',
+                    "label",
                     null,
                     publishpressFutureProSettings.text.enableCustomStatusesDesc
                 )
             ),
             React.createElement(
-                'div',
+                "div",
                 { className: 'future_pro_checkbox_selection_control' },
                 React.createElement(
-                    'a',
-                    { href: '#', onClick: handleSelectAll },
+                    "a",
+                    { href: "#", onClick: handleSelectAll },
                     publishpressFutureProSettings.text.selectAll
                 ),
-                ' ',
+                " ",
                 React.createElement(
-                    'a',
-                    { href: '#', onClick: handleUnselectAll },
+                    "a",
+                    { href: "#", onClick: handleUnselectAll },
                     publishpressFutureProSettings.text.unselectAll
                 )
             ),
