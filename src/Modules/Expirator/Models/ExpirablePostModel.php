@@ -365,13 +365,6 @@ class ExpirablePostModel extends PostModel
             );
         }
 
-        // Stores the post title and post type in the action args for using if the post is deleted later.
-        $this->actionArgsModel
-            ->setArg('post_title', $this->getTitle())
-            ->setArg('post_type', $this->getPostType())
-            ->setArg('post_link', $this->getPermalink())
-            ->save();
-
         /*
          * Remove KSES - wp_cron runs as an unauthenticated user, which will by default trigger kses filtering,
          * even if the post was published by a admin user.  It is fairly safe here to remove the filter call since
@@ -480,12 +473,29 @@ class ExpirablePostModel extends PostModel
         if (empty($postType) && ! is_null($this->actionArgsModel)) {
             $args = $this->actionArgsModel->getArgs();
 
+            if (! empty($args['postType'])) {
+                return $args['postType'];
+            }
+
             if (! empty($args['post_type'])) {
-                $postType = $args['post_type'];
+                return $args['post_type'];
             }
         }
 
         return $postType;
+    }
+
+    public function getPostTypeSingularLabel()
+    {
+        $postType = $this->getPostType();
+
+        $postTypeObj = get_post_type_object($postType);
+
+        if (is_object($postTypeObj)) {
+            return $postTypeObj->labels->singular_name;
+        }
+
+        return sprintf('[%s]', $postType);
     }
 
     public function getTitle()
@@ -495,8 +505,12 @@ class ExpirablePostModel extends PostModel
         if (empty($title) && ! is_null($this->actionArgsModel)) {
             $args = $this->actionArgsModel->getArgs();
 
+            if (! empty($args['postTitle'])) {
+                return $args['postTitle'];
+            }
+
             if (! empty($args['post_title'])) {
-                $title = $args['post_title'];
+                return $args['post_title'];
             }
         }
 
@@ -510,14 +524,17 @@ class ExpirablePostModel extends PostModel
         if (empty($permalink) && ! is_null($this->actionArgsModel)) {
             $args = $this->actionArgsModel->getArgs();
 
+            if (! empty($args['postLink'])) {
+                return $args['postLink'];
+            }
+
             if (! empty($args['post_link'])) {
-                $permalink = $args['post_link'];
+                return $args['post_link'];
             }
         }
 
         return $permalink;
     }
-
 
     /**
      * @param \PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface $expirationAction

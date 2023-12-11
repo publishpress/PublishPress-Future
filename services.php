@@ -274,7 +274,8 @@ return [
             $container->get(ServicesAbstract::LOGGER),
             $container->get(ServicesAbstract::DATETIME),
             $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-            $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY)
+            $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
+            $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
         );
     },
 

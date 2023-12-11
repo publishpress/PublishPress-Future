@@ -297,6 +297,11 @@ class ActionArgsModel
         return (array)$this->args;
     }
 
+    public function getArg(string $key): string
+    {
+        return isset($this->args[$key]) ? $this->args[$key] : '';
+    }
+
     public function getAction()
     {
         return isset($this->args['expireType']) ? $this->args['expireType'] : '';
@@ -307,7 +312,13 @@ class ActionArgsModel
      */
     public function getActionLabel()
     {
-        return $this->expirationActionsModel->getLabelForAction($this->getAction());
+        $label = $this->expirationActionsModel->getLabelForAction($this->getAction());
+
+        if (empty($label)) {
+            $label = $this->getArg('actionLabel');
+        }
+
+        return $label;
     }
 
     /**
