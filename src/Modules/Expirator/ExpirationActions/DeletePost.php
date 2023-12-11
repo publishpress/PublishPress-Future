@@ -59,7 +59,7 @@ class DeletePost implements ExpirationActionInterface
      */
     public function execute()
     {
-        $result = $this->postModel->delete();
+        $result = $this->postModel->delete(true);
 
         $this->log['success'] = $result;
 
