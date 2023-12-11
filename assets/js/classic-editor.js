@@ -542,8 +542,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     React.createElement('hr', null),
                     React.createElement('span', { className: 'dashicons dashicons-info' }),
                     ' ',
-                    HelpText,
-                    '.'
+                    HelpText
                 )
             )
         )

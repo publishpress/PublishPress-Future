@@ -542,8 +542,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     React.createElement('hr', null),
                     React.createElement('span', { className: 'dashicons dashicons-info' }),
                     ' ',
-                    HelpText,
-                    '.'
+                    HelpText
                 )
             )
         )
@@ -2555,11 +2554,11 @@ _window.inlineEditPost.edit = function (id) {
 
     // if store exists, update the state. Otherwise, create it.
     if ((0, _data2.select)(storeName)) {
-        dispatch(storeName).setEnabled(enabled);
-        dispatch(storeName).setAction(action);
-        dispatch(storeName).setDate(date);
-        dispatch(storeName).setTaxonomy(taxonomy);
-        dispatch(storeName).setTerms(termsList);
+        (0, _data2.dispatch)(storeName).setEnabled(enabled);
+        (0, _data2.dispatch)(storeName).setAction(action);
+        (0, _data2.dispatch)(storeName).setDate(date);
+        (0, _data2.dispatch)(storeName).setTaxonomy(taxonomy);
+        (0, _data2.dispatch)(storeName).setTerms(termsList);
     } else {
         (0, _data.createStore)({
             name: storeName,
