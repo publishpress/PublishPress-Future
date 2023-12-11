@@ -2,7 +2,7 @@ import { FutureActionPanelQuickEdit } from './components';
 import { createStore } from './data';
 import { getFieldValueByName, getFieldValueByNameAsBool } from './utils';
 import { createRoot } from '@wp/element';
-import { select } from '@wp/data';
+import { select, dispatch } from '@wp/data';
 import { inlineEditPost } from "@window";
 import {
     postType,

@@ -152,6 +152,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: The method `ExpirationScheduler::schedule` now automatically converts the date to UTC before scheduling the action;
 * CHANGED: The action `publishpressfuture_schedule_expiration` now receives the date in the local site timezone;
 * CHANGED: Update the library woocommerce/action-scheduler from 3.6.4 to 3.7.0;
+* CHANGED: Future action data stored in the args column on the table _ppfuture_action_args is now camelCase;
 * DEPRECATED: Deprecate the calss `Walker_PostExpirator_Category_Checklist`;
 * DEPRECATED: Deprecate the function `postexpirator_get_post_types`, moving the logic to the model `PostTypesModel`;
 * FIXED: Fix fatal error when clicking on "Post Types" tab in the settings when using PT-Br language, #567;
@@ -169,6 +170,9 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Update the X/Twitter icon on the footer of admin pages, #583;
 * FIXED: Fix the use of custom taxonomies on the future action panels, #585;
 * FIXED: Fix call to the method `manageUpgrade on ...Core\Plugin;
+* FIXED: Fix action for deleting posts without sending to trash, #593;
+* FIXED: Fix action that sends a port to trash, to trigger the expected actions, #597;
+* FIXED: Fix empty cells on Actions table when Pro plugin is uninstalled and Free is activated, #595;
 * REMOVED: Internal function `postexpirator_add_footer` was removed, and the footer is now handled in the `ContentController` class;
 * REMOVED: Internal function `postexpirator_get_footer_text` was removed;
 

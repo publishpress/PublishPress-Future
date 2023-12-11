@@ -11,6 +11,7 @@ use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 
 use function tad\WPBrowser\vendorDir;
 
@@ -54,6 +55,11 @@ class ExpirationScheduler implements SchedulerInterface
     private $actionArgsModelFactory;
 
     /**
+     * @var ExpirationActionsModel
+     */
+    private $expirationActionsModel;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param CronInterface $cron
      * @param ErrorFacade $errorFacade
@@ -61,6 +67,7 @@ class ExpirationScheduler implements SchedulerInterface
      * @param DateTimeFacade $datetime
      * @param \Closure $postModelFactory
      * @param $actionArgsModelFactory
+     * @param ExpirationActionsModel $expirationActionsModel
      */
     public function __construct(
         $hooksFacade,
@@ -69,7 +76,8 @@ class ExpirationScheduler implements SchedulerInterface
         $logger,
         $datetime,
         $postModelFactory,
-        $actionArgsModelFactory
+        $actionArgsModelFactory,
+        $expirationActionsModel
     ) {
         $this->hooks = $hooksFacade;
         $this->cron = $cron;
@@ -78,6 +86,7 @@ class ExpirationScheduler implements SchedulerInterface
         $this->datetime = $datetime;
         $this->postModelFactory = $postModelFactory;
         $this->actionArgsModelFactory = $actionArgsModelFactory;
+        $this->expirationActionsModel = $expirationActionsModel;
     }
 
     private function convertLocalTimeToUtc($timestamp)
@@ -123,11 +132,19 @@ class ExpirationScheduler implements SchedulerInterface
 
         $factory = $this->actionArgsModelFactory;
 
+        $postModelFactory = $this->postModelFactory;
+        $postModel = $postModelFactory($postId);
+
         unset($opts['enabled']);
         unset($opts['id']);
         $opts['date'] = $timestamp;
         $opts['category'] = isset($opts['category']) ? $opts['category'] : [];
         $opts['categoryTaxonomy'] = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
+        $opts['actionLabel'] = $this->expirationActionsModel->getLabelForAction($opts['expireType']);
+        $opts['postTitle'] = $postModel->getTitle();
+        $opts['postType'] = $postModel->getPostType();
+        $opts['postLink'] = $postModel->getPermalink();
+        $opts['postTypeLabel'] = $postModel->getPostTypeSingularLabel();
 
         $actionArgsModel = $factory();
         $actionArgsModel->setCronActionId($actionId)
@@ -148,10 +165,14 @@ class ExpirationScheduler implements SchedulerInterface
             )
         );
 
+        $this->updateLegacyPostMetaUsedBy3rdPartySoftware($postId, $timestamp, $opts);
+    }
+
+    private function updateLegacyPostMetaUsedBy3rdPartySoftware(int $postId, int $timestamp, array $opts): void
+    {
         $postModelFactory = $this->postModelFactory;
         $postModel = $postModelFactory($postId);
 
-        // Metadata is used by 3rd party plugins.
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, isset($opts['expireType']) ? $opts['expireType'] : '');
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '');

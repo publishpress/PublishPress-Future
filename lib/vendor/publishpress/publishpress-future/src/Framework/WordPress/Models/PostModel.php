@@ -238,9 +238,9 @@ class PostModel
         return wp_set_object_terms($this->getPostId(), $termIDs, $taxonomy, false);
     }
 
-    public function delete()
+    public function delete(bool $force = true): bool
     {
-        return wp_delete_post($this->getPostId()) !== false;
+        return wp_delete_post($this->getPostId(), $force) !== false;
     }
 
     public function stick()

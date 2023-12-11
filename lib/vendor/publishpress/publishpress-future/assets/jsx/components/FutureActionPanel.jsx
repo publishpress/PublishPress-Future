@@ -327,7 +327,7 @@ export const FutureActionPanel = (props) => {
                         <div className="future-action-help-text">
                             <hr />
 
-                            <span className="dashicons dashicons-info"></span> {HelpText}.
+                            <span className="dashicons dashicons-info"></span> {HelpText}
                         </div>
                     </PanelRow>
                 </Fragment>
