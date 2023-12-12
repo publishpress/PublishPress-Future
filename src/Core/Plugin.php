@@ -15,6 +15,7 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
+use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
@@ -234,6 +235,14 @@ class Plugin implements InitializableInterface
                     $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30001RestorePostMeta::HOOK, [], true);
 
                     update_option('pp_future_V30001RestorePostMeta', true);
+                }
+            }
+
+            if (version_compare($version, '3.1.4') === -1) {
+                if (! get_option('pp_future_V30104ArgsColumnLength')) {
+                    $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30104ArgsColumnLength::HOOK, [], true);
+
+                    update_option('pp_future_V30104ArgsColumnLength', true);
                 }
             }
         }

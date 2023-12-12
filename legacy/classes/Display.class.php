@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -210,7 +211,7 @@ class PostExpirator_Display
                 );
                 echo '</p></div>';
             } elseif (isset($_POST['fix-db-schema'])) {
-                ActionArgsSchema::createTableIfNotExists();
+                ActionArgsSchema::fixSchema();
 
                 echo "<div id='message' class='updated fade'><p>";
                 if (ActionArgsSchema::tableExists()) {

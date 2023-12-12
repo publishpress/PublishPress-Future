@@ -11,6 +11,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = PublishPress\Future\Core\DI\Container::getInstance();
 $debug = $container->get(ServicesAbstract::DEBUG);
+
+$isSchemaHealthOk = ActionArgsSchema::checkSchemaHealth();
+$schemaHealthErrors = ActionArgsSchema::getSchemaHealthErrors();
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -38,12 +41,43 @@ $debug = $container->get(ServicesAbstract::DEBUG);
                     <th scope="row"><?php
                         esc_html_e('Database Schema Check', 'post-expirator'); ?></th>
                     <td>
-                        <?php if (ActionArgsSchema::tableExists()) : ?>
+                        <?php if ($isSchemaHealthOk) : ?>
                             <i class="dashicons dashicons-yes pe-status pe-status-enabled"></i> <span><?php
                                 esc_html_e('Passed', 'post-expirator'); ?></span>
                         <?php else : ?>
-                            <i class="dashicons dashicons-no pe-status pe-status-disabled"></i> <span><?php
-                                esc_html_e('Action Arguments table not found', 'post-expirator'); ?></span>
+                            <i class="dashicons dashicons-no pe-status pe-status-disabled"></i>
+                            <span><?php echo esc_html(
+                                            _n(
+                                                'Error found on the database schema:',
+                                                'Errors found on the database schema:',
+                                                count($schemaHealthErrors),
+                                                'post-expirator'
+                                            )
+                                        ); ?>
+                            </span>
+
+                            <ul>
+                            <?php foreach ($schemaHealthErrors as $error) : ?>
+                                <li>
+                                    <?php
+                                    switch ($error) :
+                                        case ActionArgsSchema::HEALTH_ERROR_TABLE_DOES_NOT_EXIST:
+                                            esc_html_e(
+                                                'The table _ppfuture_actions_args does not exist.',
+                                                'post-expirator'
+                                            );
+                                            break;
+                                        case ActionArgsSchema::HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED:
+                                            esc_html_e(
+                                                'The column args length was not updated to 1000.',
+                                                'post-expirator'
+                                            );
+                                            break;
+                                    endswitch
+                                    ?>
+                                </li>
+                            <?php endforeach; ?>
+                            </ul>
 
                             <input type="submit" class="button" name="fix-db-schema" id="fix-db-schema" value="<?php
                             esc_attr_e('Fix Database', 'post-expirator'); ?>"/>

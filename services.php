@@ -52,6 +52,7 @@ use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
+use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use PublishPress\Psr\Container\ContainerInterface;
 
@@ -543,6 +544,9 @@ return [
                     $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                     $container->get(ServicesAbstract::ACTION_SCHEDULER_STORE)
                 ),
+                new V30104ArgsColumnLength(
+                    $container->get(ServicesAbstract::HOOKS)
+                )
             ];
         };
     },

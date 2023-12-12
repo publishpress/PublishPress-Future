@@ -188,7 +188,7 @@ class ActionArgsModel
     /**
      * @return int
      */
-    public function add()
+    public function insert()
     {
         global $wpdb;
 
