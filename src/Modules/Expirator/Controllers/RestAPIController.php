@@ -174,18 +174,6 @@ class RestAPIController implements InitializableInterface
                         $postModelFactory = $this->expirablePostModelFactory;
                         $postModel = $postModelFactory($post['id']);
 
-                        $isEnabled = $postModel->isExpirationEnabled();
-
-                        if ('auto-draft' === $post['status'] && !$isEnabled) {
-                            return [
-                                'enabled' => false,
-                                'date' => '',
-                                'action' => '',
-                                'terms' => [],
-                                'taxonomy' => '',
-                            ];
-                        }
-
                         $date = $postModel->getExpirationDateString(false);
                         $action = $postModel->getExpirationType();
                         $terms = $postModel->getExpirationCategoryIDs();
