@@ -91,7 +91,7 @@ class Plugin implements InitializableInterface
         $this->initialized = true;
 
         $pluginDir = basename($this->basePath);
-        load_plugin_textdomain('post-expirator', null, $pluginDir . '/languages/');
+        load_plugin_textdomain('post-expirator', false, $pluginDir . '/languages/');
 
         \PostExpirator_Reviews::init();
 
