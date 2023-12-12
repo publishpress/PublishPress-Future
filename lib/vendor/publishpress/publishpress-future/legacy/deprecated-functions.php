@@ -278,6 +278,7 @@ function _postexpirator_get_cat_names($cats)
  */
 function postexpirator_register_expiration_meta($id, $log)
 {
+    // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
     $log['expired_on'] = date('Y-m-d H:i:s');
 
     add_post_meta($id, 'expiration_log', wp_json_encode($log));

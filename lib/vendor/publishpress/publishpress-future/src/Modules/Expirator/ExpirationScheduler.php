@@ -91,6 +91,7 @@ class ExpirationScheduler implements SchedulerInterface
 
     private function convertLocalTimeToUtc($timestamp)
     {
+        // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         return get_gmt_from_date(date('Y-m-d H:i:s', $timestamp), 'U');
     }
 
@@ -147,11 +148,11 @@ class ExpirationScheduler implements SchedulerInterface
         $opts['postTypeLabel'] = $postModel->getPostTypeSingularLabel();
 
         $actionArgsModel = $factory();
-        $actionArgsModel->setCronActionId($actionId)
+        $id = $actionArgsModel->setCronActionId($actionId)
             ->setPostId($postId)
             ->setScheduledDateFromUnixTime($timestamp)
             ->setArgs($opts)
-            ->add();
+            ->insert();
 
         $this->logger->debug(
             sprintf(
