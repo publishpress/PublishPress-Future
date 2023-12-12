@@ -91,6 +91,7 @@ class ExpirationScheduler implements SchedulerInterface
 
     private function convertLocalTimeToUtc($timestamp)
     {
+        // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         return get_gmt_from_date(date('Y-m-d H:i:s', $timestamp), 'U');
     }
 

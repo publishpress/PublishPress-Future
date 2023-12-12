@@ -428,6 +428,7 @@ class ActionArgsModel
      */
     public function getScheduledDateAsUnixTime()
     {
+        // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         return date('U', strtotime($this->getScheduledDate()));
     }
 

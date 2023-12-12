@@ -60,6 +60,7 @@ class V30104ArgsColumnLength implements MigrationInterface
 
         $tableName = ActionArgsSchema::getTableName();
 
-        $wpdb->query("ALTER TABLE $tableName MODIFY COLUMN args varchar(1000) NOT NULL");
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $wpdb->query("ALTER TABLE `$tableName` MODIFY COLUMN args varchar(1000) NOT NULL");
     }
 }
