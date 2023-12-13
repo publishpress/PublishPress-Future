@@ -76,12 +76,12 @@ class PluginInitializator implements InitializableInterface
         $basename = basename($this->basePath);
         load_plugin_textdomain(
             'post-expirator',
-            null,
+            false,
             $basename . '/lib/vendor/publishpress/publishpress-future/languages/'
         );
         load_plugin_textdomain(
             'publishpress-future-pro',
-            null,
+            false,
             $basename . '/languages/'
         );
     }
