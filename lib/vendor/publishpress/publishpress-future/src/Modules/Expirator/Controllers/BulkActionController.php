@@ -8,8 +8,7 @@ namespace PublishPress\Future\Modules\Expirator\Controllers;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\PostTypes;
-use PublishPress\Pimple\Psr11\Container;
+use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -32,21 +31,6 @@ class BulkActionController implements InitializableInterface
     private $expirablePostModelFactory;
 
     /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade
-     */
-    private $sanitization;
-
-    /**
-     * @var \Closure
-     */
-    private $currentUserModelFactory;
-
-    /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\RequestFacade
-     */
-    private $request;
-
-    /**
      * @var NoticeFacade
      */
     private $notices;
@@ -54,24 +38,15 @@ class BulkActionController implements InitializableInterface
     /**
      * @param HookableInterface $hooksFacade
      * @param callable $expirablePostModelFactory
-     * @param \PublishPress\Future\Framework\WordPress\Facade\SanitizationFacade $sanitization
-     * @param \Closure $currentUserModelFactory
-     * @param \PublishPress\Future\Framework\WordPress\Facade\RequestFacade $request
      * @param \PublishPress\Future\Framework\WordPress\Facade\NoticeFacade $notices
      */
     public function __construct(
         HookableInterface $hooksFacade,
         $expirablePostModelFactory,
-        $sanitization,
-        $currentUserModelFactory,
-        $request,
         $notices
     ) {
         $this->hooks = $hooksFacade;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
-        $this->sanitization = $sanitization;
-        $this->currentUserModelFactory = $currentUserModelFactory;
-        $this->request = $request;
         $this->notices = $notices;
     }
 
@@ -89,7 +64,7 @@ class BulkActionController implements InitializableInterface
         );
 
         $container = \PublishPress\Future\Core\DI\Container::getInstance();
-        $postTypes = new PostTypes($container);
+        $postTypes = new PostTypesModel($container);
         $activatedPostTypes = $postTypes->getActivatedPostTypes();
 
         foreach ($activatedPostTypes as $postType) {

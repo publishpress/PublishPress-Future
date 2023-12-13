@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -87,8 +88,6 @@ class PostExpirator_Display
         if (!is_admin() || !current_user_can('manage_options')) {
             wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
         }
-
-        PostExpirator_Facade::load_assets('settings');
 
         $allowed_tabs = array('general', 'display', 'defaults', 'advanced', 'diagnostics', 'viewdebug', );
 
@@ -212,7 +211,7 @@ class PostExpirator_Display
                 );
                 echo '</p></div>';
             } elseif (isset($_POST['fix-db-schema'])) {
-                ActionArgsSchema::createTableIfNotExists();
+                ActionArgsSchema::fixSchema();
 
                 echo "<div id='message' class='updated fade'><p>";
                 if (ActionArgsSchema::tableExists()) {
@@ -287,7 +286,12 @@ class PostExpirator_Display
                     isset($_POST['expirationdate_category']) ? PostExpirator_Util::sanitize_array_of_integers($_POST['expirationdate_category']) : []
                 );
                 update_option('expirationdateDefaultDate', 'custom');
-                update_option('expirationdateDefaultDateCustom', sanitize_text_field($_POST['expired-custom-expiration-date']));
+
+                $customExpirationDate = sanitize_text_field($_POST['expired-custom-expiration-date']);
+                $customExpirationDate = html_entity_decode($customExpirationDate, ENT_QUOTES);
+                $customExpirationDate = preg_replace('/["\'`]/', '', $customExpirationDate);
+
+                update_option('expirationdateDefaultDateCustom', trim($customExpirationDate));
                 // phpcs:enable
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
@@ -496,7 +500,7 @@ class PostExpirator_Display
                     </li>
                     <li>
                         <a href="https://twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer">
-                            <span class="dashicons dashicons-twitter"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#777777" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
                         </a>
                     </li>
                     <li>

@@ -67,7 +67,7 @@ class PostStatusToTrash implements ExpirationActionInterface
     {
         $this->oldPostStatus = $this->postModel->getPostStatus();
 
-        $result = $this->postModel->setPostStatus('trash');
+        $result = $this->postModel->delete(false);
 
         $this->log['success'] = $result;
 
