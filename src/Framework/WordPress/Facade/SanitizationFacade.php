@@ -17,4 +17,9 @@ class SanitizationFacade
     {
         return sanitize_key($key);
     }
+
+    public function sanitizeTextField($value)
+    {
+        return sanitize_text_field($value);
+    }
 }

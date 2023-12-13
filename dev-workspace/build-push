@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-# This command requires to be logged in on Docker Hub. Check `docker login --help` for more information.
+# Make sure we are inside dev-workspace subdirectory. If not, enter it.
+if [[ ! "$PWD" =~ dev-workspace$ ]]; then
+    cd dev-workspace
+fi
 
+# This command requires to be logged in on Docker Hub. Check `docker login --help` for more information.
 docker buildx build --platform linux/amd64,linux/arm64 --push -t publishpress/dev-workspace-terminal:future-free-2 ./docker
