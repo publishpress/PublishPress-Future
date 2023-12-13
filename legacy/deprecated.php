@@ -318,11 +318,6 @@ class_alias(
 );
 
 class_alias(
-    'PublishPress\\Future\\Modules\\Expirator\\Models\\DefaultDataModel',
-    'PublishPressFuture\\Modules\\Expirator\\Models\\DefaultDataModel'
-);
-
-class_alias(
     'PublishPress\\Future\\Modules\\Expirator\\Models\\ExpirablePostModel',
     'PublishPressFuture\\Modules\\Expirator\\Models\\ExpirablePostModel'
 );
@@ -430,6 +425,11 @@ class_alias(
 class_alias(
     'PublishPress\\Future\\Modules\\Debug\\Controllers\\Controller',
     'PublishPressFuture\\Modules\\Debug\\Controllers\\Controller'
+);
+
+class_alias(
+    'PublishPress\Future\Modules\Expirator\Models\PostTypesModel',
+    'PublishPress\Future\Modules\Expirator\Models\PostTypes'
 );
 
 require_once __DIR__ . '/deprecated-functions.php';

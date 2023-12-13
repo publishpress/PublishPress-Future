@@ -24,7 +24,6 @@ Gruntfile.js export-ignore
 README-build.md export-ignore
 README.md export-ignore
 RoboFile.php export-ignore
-assets/jsx export-ignore
 bin export-ignore
 builder export-ignore
 builder.yml export-ignore

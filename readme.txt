@@ -6,7 +6,8 @@ Tags: expire posts, update posts, schedule changes, automatic changes,
 Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.4
-Stable tag: 3.1.3
+License: GPLv2 or later
+Stable tag: 3.1.4
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -139,6 +140,43 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 
 == Changelog ==
+
+= [3.1.4] - 13 Dec, 2023 =
+
+* ADDED: Taxonomy term field now supports adding a new term by typing a new value;
+* ADDED: Add a button to toggle the calendar on the future action panels. Quick/Bulk edit are collapsed by default, #583;
+* ADDED: Display the taxonomy name in the future action panels instead of showing "Taxonomy", #584;
+* CHANGED: Refactor all the future action panels to use the same React components, fixing the inconsistency between the panels, #572;
+* CHANGED: Removed external dependency of the React Select library, using now the WordPress internal library;
+* CHANGED: In the Action field on Post Type settings, the taxonomy related actions are only displayed if the post type has any term registered;
+* CHANGED: Change the order of fields in the future action panels, moving action and taxonomy at the beginning
+* CHANGED: The method `ExpirationScheduler::schedule` now automatically converts the date to UTC before scheduling the action;
+* CHANGED: The action `publishpressfuture_schedule_expiration` now receives the date in the local site timezone;
+* CHANGED: Update the library woocommerce/action-scheduler from 3.6.4 to 3.7.0;
+* CHANGED: Future action data stored in the args column on the table _ppfuture_action_args is now camelCase;
+* CHANGED: Change the Database Schema check to verify and display multiple errors at once. The Fix Database should fix them all;
+* DEPRECATED: Deprecate the calss `Walker_PostExpirator_Category_Checklist`;
+* DEPRECATED: Deprecate the function `postexpirator_get_post_types`, moving the logic to the model `PostTypesModel`;
+* FIXED: Fix fatal error when clicking on "Post Types" tab in the settings when using PT-Br language, #567;
+* FIXED: Stop hardcoding the DB engine when creating the table for action arguments, #565 [Thanks to @dave-p];
+* FIXED: Simple quotes were not being removed from the future action date offset setting, #566;
+* FIXED: Update Spanish, Franch and Italian translations, #551;
+* FIXED: Improved data sanitization on the plugin, #571;
+* FIXED: Fix consistency on data saved on post meta from different editors, quick-edit and bulk-edit. Specially related to the post meta "_expiration-date-options", #573;
+* FIXED: Strange years value in the date selection, #568;
+* FIXED: Fix the action "Remove selected term" for authors role, #550;
+* FIXED: Fix the post type settings page not loading the saved settings after a page refresh triggered by the save button, #576;
+* FIXED: Fix PHP warning: Creation of dynamic property $hooks in NoticeFacade.php, #580;
+* FIXED: Fix call to undefined function ...Expirator\Adapters\as_has_scheduled_action, #574
+* FIXED: Fix PHP warning: Class ...Expirator\Models\DefaultDataModel not found in ...legacy/deprecated.php, #582;
+* FIXED: Update the X/Twitter icon on the footer of admin pages, #583;
+* FIXED: Fix the use of custom taxonomies on the future action panels, #585;
+* FIXED: Fix call to the method `manageUpgrade on ...Core\Plugin;
+* FIXED: Fix action for deleting posts without sending to trash, #593;
+* FIXED: Fix action that sends a port to trash, to trigger the expected actions, #597;
+* FIXED: Fix empty cells on Actions table when Pro plugin is uninstalled and Free is activated, #595;
+* REMOVED: Internal function `postexpirator_add_footer` was removed, and the footer is now handled in the `ContentController` class;
+* REMOVED: Internal function `postexpirator_get_footer_text` was removed;
 
 = [3.1.3] - 09 Nov, 2023 =
 
