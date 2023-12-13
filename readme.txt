@@ -141,7 +141,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [3.1.4] - UNRELEASED =
+= [3.1.4] - 13 Dec, 2023 =
 
 * ADDED: Taxonomy term field now supports adding a new term by typing a new value;
 * ADDED: Add a button to toggle the calendar on the future action panels. Quick/Bulk edit are collapsed by default, #583;
