@@ -80,7 +80,7 @@ class TaxonomiesModel
                 }
 
                 if (is_wp_error($newTerm)) {
-                    // WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
                     error_log('PUBLISHPRESS FUTURE: ' . $newTerm->get_error_message());
                     return 0;
                 }
