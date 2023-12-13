@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.1.4-RC.3\n"
+"Project-Id-Version: PublishPress Future 3.1.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-11T21:03:23+00:00\n"
+"POT-Creation-Date: 2023-12-13T14:27:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: post-expirator\n"
@@ -41,87 +41,87 @@ msgstr ""
 msgid "http://publishpress.com"
 msgstr ""
 
-#: legacy/classes/Display.class.php:88
+#: legacy/classes/Display.class.php:89
 msgid "You do not have permission to configure PublishPress Future."
 msgstr ""
 
-#: legacy/classes/Display.class.php:179
+#: legacy/classes/Display.class.php:180
 msgid "Debugging Disabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:184
+#: legacy/classes/Display.class.php:185
 msgid "Debugging Enabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:192
+#: legacy/classes/Display.class.php:193
 msgid "Debugging Table Emptied"
 msgstr ""
 
-#: legacy/classes/Display.class.php:198
+#: legacy/classes/Display.class.php:199
 msgid "The legacy future actions migration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:207
+#: legacy/classes/Display.class.php:208
 msgid "The legacy actions arguments restoration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:217
+#: legacy/classes/Display.class.php:218
 msgid "The database schema was fixed."
 msgstr ""
 
-#: legacy/classes/Display.class.php:222
+#: legacy/classes/Display.class.php:223
 msgid "The database schema could not be fixed. Please, contact the support team."
 msgstr ""
 
-#: legacy/classes/Display.class.php:318
-#: legacy/classes/Display.class.php:379
+#: legacy/classes/Display.class.php:319
+#: legacy/classes/Display.class.php:380
 msgid "Saved Options!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:464
+#: legacy/classes/Display.class.php:465
 msgid "If you like %s, please leave us a %s rating. Thank you!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:479
+#: legacy/classes/Display.class.php:480
 msgid "About PublishPress Future"
 msgstr ""
 
-#: legacy/classes/Display.class.php:481
+#: legacy/classes/Display.class.php:482
 msgid "About"
 msgstr ""
 
-#: legacy/classes/Display.class.php:487
+#: legacy/classes/Display.class.php:488
 msgid "Future Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:489
+#: legacy/classes/Display.class.php:490
 msgid "Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:495
+#: legacy/classes/Display.class.php:496
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: legacy/classes/Display.class.php:497
+#: legacy/classes/Display.class.php:498
 msgid "Contact"
 msgstr ""
 
-#: legacy/deprecated-functions.php:380
+#: legacy/deprecated-functions.php:422
 #: src/Modules/Settings/Controllers/Controller.php:214
 msgid "No taxonomies found"
 msgstr ""
 
-#: services.php:66
+#: services.php:67
 #: src/Modules/Settings/SettingsFacade.php:85
 msgid "l F jS, Y"
 msgstr ""
 
-#: services.php:67
+#: services.php:68
 #: src/Modules/Settings/SettingsFacade.php:86
 msgid "g:ia"
 msgstr ""
 
-#: services.php:68
+#: services.php:69
 #: src/Modules/Settings/SettingsFacade.php:87
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
@@ -423,7 +423,7 @@ msgid "Scheduled date: "
 msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:557
-#: src/Views/menu-diagnostics.php:164
+#: src/Views/menu-diagnostics.php:198
 msgid "Date"
 msgstr ""
 
@@ -648,116 +648,126 @@ msgstr ""
 msgid "Timestamp"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:22
+#: src/Views/menu-diagnostics.php:25
 msgid "Advanced Diagnostics and Tools"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:26
+#: src/Views/menu-diagnostics.php:29
 msgid "WP-Cron Status Check"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:30
-#: src/Views/menu-diagnostics.php:43
+#: src/Views/menu-diagnostics.php:33
+#: src/Views/menu-diagnostics.php:46
 msgid "Passed"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:33
+#: src/Views/menu-diagnostics.php:36
 msgid "WP Cron Disabled"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:39
+#: src/Views/menu-diagnostics.php:42
 msgid "Database Schema Check"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:46
-msgid "Action Arguments table not found"
+#: src/Views/menu-diagnostics.php:50
+msgid "Error found on the database schema:"
+msgid_plural "Errors found on the database schema:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Views/menu-diagnostics.php:65
+msgid "The table _ppfuture_actions_args does not exist."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:49
+#: src/Views/menu-diagnostics.php:71
+msgid "The column args length was not updated to 1000."
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:83
 msgid "Fix Database"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:58
+#: src/Views/menu-diagnostics.php:92
 msgid "Debug Logging"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:62
+#: src/Views/menu-diagnostics.php:96
 #: src/Views/menu-display.php:82
 #: src/Views/menu-general.php:145
 #: src/Views/menu-general.php:170
 msgid "Enabled"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:65
+#: src/Views/menu-diagnostics.php:99
 msgid "Disable Debugging"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:71
+#: src/Views/menu-diagnostics.php:105
 msgid "Purge Debug Log"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:79
+#: src/Views/menu-diagnostics.php:113
 msgid "View Debug Logs"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:82
+#: src/Views/menu-diagnostics.php:116
 #: src/Views/menu-display.php:87
 #: src/Views/menu-general.php:152
 #: src/Views/menu-general.php:178
 msgid "Disabled"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:85
+#: src/Views/menu-diagnostics.php:119
 msgid "Enable Debugging"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:98
+#: src/Views/menu-diagnostics.php:132
 msgid "Migrate Legacy Future Actions"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:102
+#: src/Views/menu-diagnostics.php:136
 msgid "Run Migration"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:105
+#: src/Views/menu-diagnostics.php:139
 msgid "Migrate legacy future actions from WP Cron to the new Action Scheduler. This will run in the background and may take a while."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:115
+#: src/Views/menu-diagnostics.php:149
 msgid "Restore Legacy Action Arguments"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:119
+#: src/Views/menu-diagnostics.php:153
 msgid "Run Data Restoration"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:122
+#: src/Views/menu-diagnostics.php:156
 msgid "Restore legacy action arguments as Post Meta. This is useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:134
+#: src/Views/menu-diagnostics.php:168
 msgid "Legacy Cron Schedule"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:142
+#: src/Views/menu-diagnostics.php:176
 msgid ""
 "\n"
 "                                    No cron events found for the plugin using WP Cron."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:152
+#: src/Views/menu-diagnostics.php:186
 msgid "The below table will show all currently scheduled cron events for the plugin with the next run time."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:167
+#: src/Views/menu-diagnostics.php:201
 msgid "Event"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:170
+#: src/Views/menu-diagnostics.php:204
 msgid "Posts and expiration settings"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:229
+#: src/Views/menu-diagnostics.php:263
 msgid "This is a legacy feature and will be removed in a future version."
 msgstr ""
 
