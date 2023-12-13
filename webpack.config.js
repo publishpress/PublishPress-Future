@@ -25,14 +25,17 @@ module.exports = [
         resolve: {
             modules: [
                 "node_modules",
-                path.join(__dirname, "vendor", "publishpress"),
+                path.join(__dirname, "vendor", "publishpress")
             ],
-            extensions: [".js", ".jsx"]
+            extensions: [".js", ".jsx"],
+            alias: {
+                "@publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
+            }
         },
         externals: {
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "react-select": "ReactSelect"
+            "@wp/hooks": "wp.hooks",
+            "@wp/components": "wp.components",
+            "@config/pro-settings": "publishpressFutureProSettings"
         },
     }
 ];

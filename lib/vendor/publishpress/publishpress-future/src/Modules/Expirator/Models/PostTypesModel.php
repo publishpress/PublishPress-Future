@@ -10,7 +10,7 @@ use PublishPress\Psr\Container\ContainerInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-class PostTypes
+class PostTypesModel
 {
     /**
      * @var \PublishPress\Future\Modules\Settings\SettingsFacade
@@ -33,5 +33,35 @@ class PostTypes
         });
 
         return array_keys($activePostTypes);
+    }
+
+    /**
+     * Returns the post types that are supported.
+     *
+     * @internal
+     *
+     * @access private
+     */
+    public function getPostTypes(): array
+    {
+        $post_types = get_post_types(array('public' => true));
+        $post_types = array_merge(
+            $post_types,
+            get_post_types(array(
+                'public' => false,
+                'show_ui' => true,
+                '_builtin' => false
+            ))
+        );
+
+        // in case some post types should not be supported.
+        $unset_post_types = apply_filters('postexpirator_unset_post_types', array('attachment'));
+        if ($unset_post_types) {
+            foreach ($unset_post_types as $type) {
+                unset($post_types[$type]);
+            }
+        }
+
+        return $post_types;
     }
 }

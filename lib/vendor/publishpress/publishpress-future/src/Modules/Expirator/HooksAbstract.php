@@ -29,10 +29,16 @@ abstract class HooksAbstract
     const ACTION_MIGRATE_WPCRON_EXPIRATIONS = 'publishpress_future/v30000_migrate_wpcron_expirations';
     const ACTION_MIGRATE_CREATE_ACTION_ARGS_SCHEMA = 'publishpress_future/v30000_create_actions_args_schema';
     const ACTION_MIGRATE_RESTORE_POST_META = 'publishpress_future/v30001_restore_post_meta';
+    const ACTION_MIGRATE_ARGS_LENGTH = 'publishpress_future/V30104ArgsColumnLength';
     const ACTION_SCHEDULER_DELETED_ACTION = 'action_scheduler_deleted_action';
     const ACTION_SCHEDULER_CANCELED_ACTION = 'action_scheduler_canceled_action';
     const ACTION_SCHEDULER_AFTER_EXECUTE = 'action_scheduler_after_execute';
     const ACTION_SCHEDULER_FAILED_EXECUTION = 'action_scheduler_failed_execution';
+    const ACTION_SYNC_SCHEDULER_WITH_POST_META = 'admin_action_sync_scheduler_with_post_meta';
+    const ACTION_MANAGE_POSTS_CUSTOM_COLUMN = 'manage_posts_custom_column';
+    const ACTION_MANAGE_PAGES_CUSTOM_COLUMN = 'manage_pages_custom_column';
+    const ACTION_POSTS_ORDER_BY = 'posts_orderby';
+    const ACTION_THE_CONTENT = 'the_content';
     const FILTER_CUSTOM_EXPIRATION_TYPE = 'publishpressfuture_custom_expiration_type';
     const FILTER_LEGACY_TEMPLATE_PARAMS = 'publishpressfuture_legacy_template_params';
     const FILTER_LEGACY_TEMPLATE_FILE = 'publishpressfuture_legacy_template_file';
@@ -44,8 +50,11 @@ abstract class HooksAbstract
     const FILTER_EXPIRATION_ACTIONS = 'publishpressfuture_expiration_actions';
     const FILTER_EXPIRATION_ACTION_FACTORY = 'publishpressfuture_expiration_action_factory';
     const FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK = 'publishpressfuture_action_scheduler_column_hook';
-    const ACTION_SYNC_SCHEDULER_WITH_POST_META = 'admin_action_sync_scheduler_with_post_meta';
     const FILTER_BULK_ACTIONS_POST_EDIT = 'bulk_actions-edit-%s';
+    const FILTER_MANAGE_POSTS_COLUMNS = 'manage_posts_columns';
+    const FILTER_MANAGE_PAGES_COLUMNS = 'manage_pages_columns';
+    const FILTER_POSTS_JOIN = 'posts_join';
+    const FILTER_CONTENT_FOOTER = 'publishpress_future/content_footer';
 
     public static function getActionLegacyMultisiteDelete($blogId)
     {

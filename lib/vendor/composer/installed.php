@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '9840b16ff8f3d82f91428e88566c7d47be472eda',
+        'pretty_version' => 'dev-3.1-branch',
+        'version' => 'dev-3.1-branch',
+        'reference' => '467306e4f0cd4f4809692278d1ea9438dc8a9712',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '9840b16ff8f3d82f91428e88566c7d47be472eda',
+            'pretty_version' => 'dev-3.1-branch',
+            'version' => 'dev-3.1-branch',
+            'reference' => '467306e4f0cd4f4809692278d1ea9438dc8a9712',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'publishpress/publishpress-future' => array(
-            'pretty_version' => '3.1.3',
-            'version' => '3.1.3.0',
-            'reference' => 'b7e84bcc54423562d8d9ceaabbb03501296b49d0',
+            'pretty_version' => '3.1.4',
+            'version' => '3.1.4.0',
+            'reference' => '462cefcaf90b25eca4f3b9469315b9ba643e3355',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../publishpress/publishpress-future',
             'aliases' => array(),
@@ -101,9 +101,9 @@
             'dev_requirement' => false,
         ),
         'woocommerce/action-scheduler' => array(
-            'pretty_version' => '3.6.4',
-            'version' => '3.6.4.0',
-            'reference' => 'e7dafe215be5ef823392204535ee2e241f99a8cb',
+            'pretty_version' => '3.7.0',
+            'version' => '3.7.0.0',
+            'reference' => '7a2046a5e6a15786068bb0298407522f30c694b4',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../woocommerce/action-scheduler',
             'aliases' => array(),

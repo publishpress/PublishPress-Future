@@ -2,22 +2,25 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.1.2\n"
+"Project-Id-Version: PublishPress Future 3.1.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-07T22:29:47+00:00\n"
+"POT-Creation-Date: 2023-12-13T14:27:46+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: post-expirator\n"
 
 #. Plugin Name of the plugin
-#: legacy/classes/Facade.class.php:416
-#: legacy/functions.php:339
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:80
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:108
+#: src/Modules/Expirator/Controllers/BulkEditController.php:151
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:94
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:293
+#: src/Modules/Expirator/Controllers/QuickEditController.php:209
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:84
 #: src/Views/tabs.php:55
 msgid "PublishPress Future"
 msgstr ""
@@ -38,167 +41,225 @@ msgstr ""
 msgid "http://publishpress.com"
 msgstr ""
 
-#: legacy/classes/Display.class.php:88
+#: legacy/classes/Display.class.php:89
 msgid "You do not have permission to configure PublishPress Future."
 msgstr ""
 
-#: legacy/classes/Display.class.php:181
+#: legacy/classes/Display.class.php:180
 msgid "Debugging Disabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:186
+#: legacy/classes/Display.class.php:185
 msgid "Debugging Enabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:194
+#: legacy/classes/Display.class.php:193
 msgid "Debugging Table Emptied"
 msgstr ""
 
-#: legacy/classes/Display.class.php:200
+#: legacy/classes/Display.class.php:199
 msgid "The legacy future actions migration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:209
+#: legacy/classes/Display.class.php:208
 msgid "The legacy actions arguments restoration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:219
+#: legacy/classes/Display.class.php:218
 msgid "The database schema was fixed."
 msgstr ""
 
-#: legacy/classes/Display.class.php:224
+#: legacy/classes/Display.class.php:223
 msgid "The database schema could not be fixed. Please, contact the support team."
 msgstr ""
 
-#: legacy/classes/Display.class.php:315
-#: legacy/classes/Display.class.php:376
+#: legacy/classes/Display.class.php:319
+#: legacy/classes/Display.class.php:380
 msgid "Saved Options!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:461
+#: legacy/classes/Display.class.php:465
 msgid "If you like %s, please leave us a %s rating. Thank you!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:476
+#: legacy/classes/Display.class.php:480
 msgid "About PublishPress Future"
 msgstr ""
 
-#: legacy/classes/Display.class.php:478
+#: legacy/classes/Display.class.php:482
 msgid "About"
 msgstr ""
 
-#: legacy/classes/Display.class.php:484
+#: legacy/classes/Display.class.php:488
 msgid "Future Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:486
+#: legacy/classes/Display.class.php:490
 msgid "Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:492
+#: legacy/classes/Display.class.php:496
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: legacy/classes/Display.class.php:494
+#: legacy/classes/Display.class.php:498
 msgid "Contact"
 msgstr ""
 
-#: legacy/classes/Facade.class.php:415
-msgid "Taxonomy"
-msgstr ""
-
-#: legacy/classes/Facade.class.php:417
-#: src/Views/bulk-edit.php:36
-#: src/Views/classic-metabox.php:11
-#: src/Views/quick-edit.php:16
-msgid "Enable Future Action"
-msgstr ""
-
-#: legacy/classes/Facade.class.php:418
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:44
-#: src/Modules/Settings/Controllers/Controller.php:180
-#: src/Views/bulk-edit.php:129
-#: src/Views/bulk-edit.php:131
-#: src/Views/classic-metabox.php:117
-#: src/Views/quick-edit.php:78
-#: src/Views/quick-edit.php:80
-msgid "Action"
-msgstr ""
-
-#: legacy/classes/Facade.class.php:419
-msgid "Loading"
-msgstr ""
-
-#: legacy/classes/Facade.class.php:422
-msgid "No %s found."
-msgstr ""
-
-#: legacy/classes/Facade.class.php:425
-#: src/Views/classic-metabox.php:140
-msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
-msgstr ""
-
-#: legacy/functions.php:32
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:103
-msgid "Settings"
-msgstr ""
-
-#: legacy/functions.php:62
-#: src/Views/bulk-edit.php:30
-msgid "Future Action"
-msgstr ""
-
-#: legacy/functions.php:1167
-#: src/Modules/Settings/Controllers/Controller.php:193
+#: legacy/deprecated-functions.php:422
+#: src/Modules/Settings/Controllers/Controller.php:214
 msgid "No taxonomies found"
 msgstr ""
 
-#: services.php:69
-#: src/Modules/Settings/SettingsFacade.php:77
+#: services.php:67
+#: src/Modules/Settings/SettingsFacade.php:85
 msgid "l F jS, Y"
 msgstr ""
 
-#: services.php:70
-#: src/Modules/Settings/SettingsFacade.php:78
+#: services.php:68
+#: src/Modules/Settings/SettingsFacade.php:86
 msgid "g:ia"
 msgstr ""
 
-#: services.php:71
-#: src/Modules/Settings/SettingsFacade.php:79
+#: services.php:69
+#: src/Modules/Settings/SettingsFacade.php:87
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BulkActionController.php:107
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:107
+#: src/Modules/Expirator/Controllers/BulkEditController.php:150
+#: src/Modules/Expirator/Controllers/QuickEditController.php:208
+msgid "Categories"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:109
+#: src/Modules/Expirator/Controllers/BulkEditController.php:152
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:294
+#: src/Modules/Expirator/Controllers/QuickEditController.php:210
+msgid "Enable Future Action"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:110
+#: src/Modules/Expirator/Controllers/BulkEditController.php:153
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:295
+#: src/Modules/Expirator/Controllers/QuickEditController.php:211
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:46
+#: src/Modules/Settings/Controllers/Controller.php:206
+msgid "Action"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:111
+#: src/Modules/Expirator/Controllers/BulkEditController.php:156
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:298
+#: src/Modules/Expirator/Controllers/QuickEditController.php:214
+msgid "Loading"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:112
+#: src/Modules/Expirator/Controllers/BulkEditController.php:154
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:296
+#: src/Modules/Expirator/Controllers/QuickEditController.php:212
+msgid "Show Calendar"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:113
+#: src/Modules/Expirator/Controllers/BulkEditController.php:155
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:297
+#: src/Modules/Expirator/Controllers/QuickEditController.php:213
+msgid "Hide Calendar"
+msgstr ""
+
+#. translators: the text between {} is the link to the settings page.
+#. translators: the text between {{}} is the link to the settings page.
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:115
+#: src/Modules/Expirator/Controllers/BulkEditController.php:158
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:300
+#: src/Modules/Expirator/Controllers/QuickEditController.php:216
+msgid "Timezone is controlled by the {WordPress Settings}."
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:118
+#: src/Modules/Expirator/Controllers/BulkEditController.php:161
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:303
+#: src/Modules/Expirator/Controllers/QuickEditController.php:219
+msgid "No %s found."
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BlockEditorController.php:121
+#: src/Modules/Expirator/Controllers/BulkEditController.php:165
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:306
+#: src/Modules/Expirator/Controllers/QuickEditController.php:222
+msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BulkActionController.php:82
 msgid "No posts selected. Unable to sync Future Actions."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BulkActionController.php:112
+#: src/Modules/Expirator/Controllers/BulkActionController.php:87
 msgid "Future Actions successfully synced with Post Metadata."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/BulkActionController.php:118
+#: src/Modules/Expirator/Controllers/BulkActionController.php:93
 msgid "Update Future Actions from Post Metadata"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:81
+#: src/Modules/Expirator/Controllers/BulkEditController.php:164
+msgid "Future Action Update"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BulkEditController.php:166
+msgid "— No Change —"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BulkEditController.php:167
+msgid "Add or update action for posts"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BulkEditController.php:168
+msgid "Add action if none exists for posts"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BulkEditController.php:169
+msgid "Update the existing actions for posts"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/BulkEditController.php:170
+msgid "Remove action from posts"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:292
+msgid "Category"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/PluginsListController.php:39
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:107
+msgid "Settings"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/PostListController.php:66
+msgid "Future Action"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:85
 msgid "Future"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:91
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:92
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:41
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:95
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:96
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:43
 msgid "Future Actions"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:170
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:174
 msgid "Log format"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:177
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:181
 msgid "List"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:186
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:190
 msgid "Popup"
 msgstr ""
 
@@ -289,185 +350,162 @@ msgstr ""
 msgid "Unstick"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:457
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:414
 msgid "Email is disabled"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:461
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:418
 msgid "Email sent"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:461
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:418
 msgid "Email not sent"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:579
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:560
 msgid "%s. %s on %s. The post link is %s"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:596
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:577
 msgid "Future Action Complete \"%s\""
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:599
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:580
 msgid "[%1$s] %2$s"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:51
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:53
 msgid "Run"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:52
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:54
 msgid "Process the action now"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:55
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:57
 msgid "Cancel"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:56
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:58
 msgid "Cancel the action. This will prevent the action from running in the future"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:119
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:121
 msgid "Action Logs"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:379
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:392
 msgid "%s: [%d] %s%s%s"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:400
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:414
 msgid "Terms: %s"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:437
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:514
 msgid "View log"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:448
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:525
 msgid "Action: "
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:454
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:531
 msgid "Status: "
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:460
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:537
 msgid "Arguments: "
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:466
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:543
 msgid "Scheduled date: "
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:480
-#: src/Views/bulk-edit.php:68
-#: src/Views/menu-diagnostics.php:164
-#: src/Views/quick-edit.php:22
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:557
+#: src/Views/menu-diagnostics.php:198
 msgid "Date"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:481
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:558
 #: src/Views/menu-debug-log.php:32
 msgid "Message"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:515
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:592
 msgid "Async"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:168
+#: src/Modules/Settings/Controllers/Controller.php:199
 msgid "Default Values"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:169
+#: src/Modules/Settings/Controllers/Controller.php:200
 msgid "Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:173
-#: src/Modules/Settings/Controllers/Controller.php:174
+#: src/Modules/Settings/Controllers/Controller.php:204
 msgid "Active"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:175
-msgid "Inactive"
+#: src/Modules/Settings/Controllers/Controller.php:205
+msgid "Activate PublishPress Future metabox for this post type"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:176
-msgid "Select whether the PublishPress Future meta box is active for this post type."
-msgstr ""
-
-#: src/Modules/Settings/Controllers/Controller.php:181
+#: src/Modules/Settings/Controllers/Controller.php:207
 msgid "Select the default action for the post type."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:185
+#: src/Modules/Settings/Controllers/Controller.php:211
 msgid "Auto-enable?"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:186
-#: src/Views/menu-diagnostics.php:62
-#: src/Views/menu-display.php:81
-#: src/Views/menu-general.php:145
-#: src/Views/menu-general.php:170
-msgid "Enabled"
+#: src/Modules/Settings/Controllers/Controller.php:212
+msgid "Enabled for all new posts"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:187
-#: src/Views/menu-diagnostics.php:82
-#: src/Views/menu-display.php:86
-#: src/Views/menu-general.php:152
-#: src/Views/menu-general.php:178
-msgid "Disabled"
-msgstr ""
-
-#: src/Modules/Settings/Controllers/Controller.php:188
-msgid "Select whether the PublishPress Future is enabled for all new posts."
-msgstr ""
-
-#: src/Modules/Settings/Controllers/Controller.php:192
+#: src/Modules/Settings/Controllers/Controller.php:213
 msgid "Taxonomy (Hierarchical)"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:194
+#: src/Modules/Settings/Controllers/Controller.php:215
 msgid "Select the hierarchical taxonomy and terms to be used for taxonomy based expiration."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:198
+#: src/Modules/Settings/Controllers/Controller.php:219
 #: src/Views/menu-general.php:189
 msgid "Who to Notify"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:199
+#: src/Modules/Settings/Controllers/Controller.php:220
 msgid "Enter a comma separate list of emails that you would like to be notified when the action runs."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:203
+#: src/Modules/Settings/Controllers/Controller.php:224
 #: src/Views/menu-general.php:101
 msgid "Default Date/Time Offset"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:206
+#: src/Modules/Settings/Controllers/Controller.php:227
 msgid ""
 "Set the offset to use for the default action date and time. For information on formatting, see %1$s\n"
 "                                    . For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s. Please, use only terms in English."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:211
+#: src/Modules/Settings/Controllers/Controller.php:232
 #: src/Views/menu-general.php:115
 msgid "PHP strtotime function"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:222
+#: src/Modules/Settings/Controllers/Controller.php:243
 msgid "Default terms:"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:223
+#: src/Modules/Settings/Controllers/Controller.php:244
 msgid "Save changes"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:296
+#: src/Modules/Settings/Controllers/Controller.php:343
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
@@ -520,78 +558,15 @@ msgstr ""
 msgid "View Knowledge Base"
 msgstr ""
 
-#: src/Views/bulk-edit.php:39
-msgid "No Change"
-msgstr ""
-
-#: src/Views/bulk-edit.php:43
-msgid "Add or update action for %s"
-msgstr ""
-
-#: src/Views/bulk-edit.php:49
-msgid "Add action if none exists for %s"
-msgstr ""
-
-#: src/Views/bulk-edit.php:55
-msgid "Update the existing actions for %s"
-msgstr ""
-
-#: src/Views/bulk-edit.php:60
-msgid "Remove action from %s"
-msgstr ""
-
-#: src/Views/bulk-edit.php:72
-#: src/Views/classic-metabox.php:56
-#: src/Views/quick-edit.php:25
-msgid "Month"
-msgstr ""
-
-#: src/Views/bulk-edit.php:96
-#: src/Views/classic-metabox.php:78
-#: src/Views/quick-edit.php:47
-msgid "Day"
-msgstr ""
-
-#: src/Views/bulk-edit.php:103
-#: src/Views/classic-metabox.php:27
-#: src/Views/quick-edit.php:54
-msgid "Year"
-msgstr ""
-
-#: src/Views/bulk-edit.php:110
-#: src/Views/classic-metabox.php:85
-#: src/Views/quick-edit.php:61
-msgid "Hour"
-msgstr ""
-
-#: src/Views/bulk-edit.php:117
-#: src/Views/classic-metabox.php:110
-#: src/Views/quick-edit.php:67
-msgid "Minute"
-msgstr ""
-
-#: src/Views/bulk-edit.php:148
-#: src/Views/quick-edit.php:100
-msgid "Terms"
-msgstr ""
-
-#: src/Views/classic-metabox.php:18
-msgid "The published date/time will be used as the expiration value"
-msgstr ""
-
-#: src/Views/classic-metabox.php:145
-msgid "More than 1 hierarchical taxonomy detected.  You must assign a default taxonomy on the settings screen."
-msgstr ""
-
-#: src/Views/expire-column.php:37
+#: src/Views/expire-column.php:36
 msgid "%1$s%2$s%3$s on %5$s%4$s%6$s"
 msgstr ""
 
-#: src/Views/expire-column.php:64
+#: src/Views/expire-column.php:63
 msgid "Action could not be scheduled due to a configuration issue. Please attempt to schedule it again."
 msgstr ""
 
-#: src/Views/expire-column.php:69
+#: src/Views/expire-column.php:68
 msgid "No future action"
 msgstr ""
 
@@ -656,7 +631,7 @@ msgid "Toggle between preserving or deleting data after the plugin is deactivate
 msgstr ""
 
 #: src/Views/menu-advanced.php:149
-#: src/Views/menu-display.php:138
+#: src/Views/menu-display.php:139
 #: src/Views/menu-general.php:207
 msgid "Save Changes"
 msgstr ""
@@ -673,155 +648,179 @@ msgstr ""
 msgid "Timestamp"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:22
+#: src/Views/menu-diagnostics.php:25
 msgid "Advanced Diagnostics and Tools"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:26
+#: src/Views/menu-diagnostics.php:29
 msgid "WP-Cron Status Check"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:30
-#: src/Views/menu-diagnostics.php:43
+#: src/Views/menu-diagnostics.php:33
+#: src/Views/menu-diagnostics.php:46
 msgid "Passed"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:33
+#: src/Views/menu-diagnostics.php:36
 msgid "WP Cron Disabled"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:39
+#: src/Views/menu-diagnostics.php:42
 msgid "Database Schema Check"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:46
-msgid "Action Arguments table not found"
-msgstr ""
-
-#: src/Views/menu-diagnostics.php:49
-msgid "Fix Database"
-msgstr ""
-
-#: src/Views/menu-diagnostics.php:58
-msgid "Debug Logging"
-msgstr ""
+#: src/Views/menu-diagnostics.php:50
+msgid "Error found on the database schema:"
+msgid_plural "Errors found on the database schema:"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/Views/menu-diagnostics.php:65
-msgid "Disable Debugging"
+msgid "The table _ppfuture_actions_args does not exist."
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:71
-msgid "Purge Debug Log"
+msgid "The column args length was not updated to 1000."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:79
-msgid "View Debug Logs"
+#: src/Views/menu-diagnostics.php:83
+msgid "Fix Database"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:85
-msgid "Enable Debugging"
+#: src/Views/menu-diagnostics.php:92
+msgid "Debug Logging"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:98
-msgid "Migrate Legacy Future Actions"
+#: src/Views/menu-diagnostics.php:96
+#: src/Views/menu-display.php:82
+#: src/Views/menu-general.php:145
+#: src/Views/menu-general.php:170
+msgid "Enabled"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:102
-msgid "Run Migration"
+#: src/Views/menu-diagnostics.php:99
+msgid "Disable Debugging"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:105
-msgid "Migrate legacy future actions from WP Cron to the new Action Scheduler. This will run in the background and may take a while."
+msgid "Purge Debug Log"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:115
-msgid "Restore Legacy Action Arguments"
+#: src/Views/menu-diagnostics.php:113
+msgid "View Debug Logs"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:116
+#: src/Views/menu-display.php:87
+#: src/Views/menu-general.php:152
+#: src/Views/menu-general.php:178
+msgid "Disabled"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:119
+msgid "Enable Debugging"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:132
+msgid "Migrate Legacy Future Actions"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:136
+msgid "Run Migration"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:139
+msgid "Migrate legacy future actions from WP Cron to the new Action Scheduler. This will run in the background and may take a while."
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:149
+msgid "Restore Legacy Action Arguments"
+msgstr ""
+
+#: src/Views/menu-diagnostics.php:153
 msgid "Run Data Restoration"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:122
+#: src/Views/menu-diagnostics.php:156
 msgid "Restore legacy action arguments as Post Meta. This is useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:134
+#: src/Views/menu-diagnostics.php:168
 msgid "Legacy Cron Schedule"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:142
+#: src/Views/menu-diagnostics.php:176
 msgid ""
 "\n"
 "                                    No cron events found for the plugin using WP Cron."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:152
+#: src/Views/menu-diagnostics.php:186
 msgid "The below table will show all currently scheduled cron events for the plugin with the next run time."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:167
+#: src/Views/menu-diagnostics.php:201
 msgid "Event"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:170
+#: src/Views/menu-diagnostics.php:204
 msgid "Posts and expiration settings"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:229
+#: src/Views/menu-diagnostics.php:263
 msgid "This is a legacy feature and will be removed in a future version."
 msgstr ""
 
-#: src/Views/menu-display.php:34
+#: src/Views/menu-display.php:35
 msgid "Shortcode"
 msgstr ""
 
-#: src/Views/menu-display.php:36
+#: src/Views/menu-display.php:37
 msgid "Valid %s attributes:"
 msgstr ""
 
-#: src/Views/menu-display.php:40
+#: src/Views/menu-display.php:41
 msgid "%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s"
 msgstr ""
 
-#: src/Views/menu-display.php:54
-#: src/Views/menu-display.php:59
+#: src/Views/menu-display.php:55
+#: src/Views/menu-display.php:60
 msgid "%s - format set here will override the value set on the settings page"
 msgstr ""
 
-#: src/Views/menu-display.php:67
+#: src/Views/menu-display.php:68
 msgid "Post Footer Display"
 msgstr ""
 
-#: src/Views/menu-display.php:69
+#: src/Views/menu-display.php:70
 msgid "Enabling this below will display the action date automatically at the end of any post which is set to run an action."
 msgstr ""
 
-#: src/Views/menu-display.php:76
+#: src/Views/menu-display.php:77
 msgid "Show in Post Footer?"
 msgstr ""
 
-#: src/Views/menu-display.php:88
+#: src/Views/menu-display.php:89
 msgid "This will enable or disable displaying the future action date in the post footer."
 msgstr ""
 
-#: src/Views/menu-display.php:96
+#: src/Views/menu-display.php:97
 msgid "Footer Contents"
 msgstr ""
 
-#: src/Views/menu-display.php:101
+#: src/Views/menu-display.php:102
 msgid "Enter the text you would like to appear at the bottom of every post which has an action scheduled.  The following placeholders will be replaced with the future action date in the following format:"
 msgstr ""
 
-#: src/Views/menu-display.php:119
+#: src/Views/menu-display.php:120
 msgid "Footer Style"
 msgstr ""
 
-#: src/Views/menu-display.php:125
+#: src/Views/menu-display.php:126
 msgid "Example: "
 msgstr ""
 
-#: src/Views/menu-display.php:131
+#: src/Views/menu-display.php:132
 msgid "The inline css which will be used to style the footer text."
 msgstr ""
 

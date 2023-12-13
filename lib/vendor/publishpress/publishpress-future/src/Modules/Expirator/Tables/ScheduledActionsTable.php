@@ -11,6 +11,8 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Models\PostTypeModel;
+use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -291,6 +293,11 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
     }
 
+    public function column_action(array $row)
+    {
+        return 't';
+    }
+
     public function column_status(array $row)
     {
         $icons = [
@@ -332,13 +339,20 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
     private function render_expiration_hook_action(array $row)
     {
-        $container = Container::getInstance();
-        $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
+        $actionData = $this->getActionData($row);
+        $actionLabel = $actionData['actionLabel'];
 
-        $argsModel = $argsModelFactory();
-        $argsModel->loadByActionId($row['ID']);
+        if (empty($actionLabel)) {
+            $container = Container::getInstance();
+            $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
 
-        return esc_html($argsModel->getActionLabel());
+            $argsModel = $argsModelFactory();
+            $argsModel->loadByActionId($row['ID']);
+
+            $actionLabel = $argsModel->getActionLabel();
+        }
+
+        return esc_html($actionLabel);
     }
 
     public function column_args(array $row)
@@ -371,16 +385,15 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
     private function render_expiration_hook_args(array $row)
     {
-        $container = Container::getInstance();
-        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-        $postModel = $factory($row['args']['postId']);
+        $actionData = $this->getActionData($row);
 
         $columnHtml = sprintf(
+            // Translator: %1$s: post type label, %2$d: post ID, %3$s: post link tag start, %4$s: post title, %5$s: post link tag end
             esc_html__('%s: [%d] %s%s%s', 'post-expirator'),
-            esc_html($postModel->getPostTypeSingularLabel()),
-            $postModel->getPostId(),
-            '<a href="' . esc_url($postModel->getPostEditLink()) . '">',
-            $postModel->getTitle(),
+            esc_html($actionData['postTypeLabel']),
+            $actionData['postId'],
+            '<a href="' . esc_url($actionData['postLink']) . '">',
+            esc_html($actionData['postTitle']),
             '</a>'
         );
 
@@ -390,6 +403,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             ExpirationActionsAbstract::POST_CATEGORY_ADD
         ];
 
+        $container = Container::getInstance();
         $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
 
         $argsModel = $argsModelFactory();
@@ -403,6 +417,69 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
 
         return $columnHtml;
+    }
+
+    private function getActionData(array $row): array
+    {
+        $container = Container::getInstance();
+        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+        $postModel = $factory($row['args']['postId']);
+
+        $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
+        $argsModel = $argsModelFactory();
+        $argsModel->loadByActionId($row['ID']);
+
+        // Post type
+        $postType = $argsModel->getArg('postType');
+        if (empty($postType)) {
+            $postType = $argsModel->getArg('post_type');
+        }
+        if (empty($postType)) {
+            $postType = $postModel->getPostType();
+        }
+        $postTypeModel = new PostTypeModel();
+        $postTypeModel->load($postType);
+
+        $postTypeLabel = $postType;
+        if (! empty($postTypeModel)) {
+            $postTypeLabel = $postTypeModel->getLabel();
+        }
+
+        // Title
+        $postTitle = $postModel->getTitle();
+        if (empty($postTitle)) {
+            $postTitle = $argsModel->getArg('postTitle');
+        }
+        if (empty($postTitle)) {
+            $postTitle = $argsModel->getArg('post_title');
+        }
+
+        // Post link
+        $postLink = $argsModel->getArg('postLink');
+        if (empty($postLink)) {
+            $postLink = $argsModel->getArg('post_link');
+        }
+        if (empty($postLink)) {
+            $postLink = $postModel->getPostEditLink();
+        }
+
+        // Action label
+        $actionLabel = $argsModel->getActionLabel();
+        if (empty($actionLabel)) {
+            $actionLabel = $argsModel->getArg('actionLabel');
+        }
+        if (empty($actionLabel)) {
+            $actionLabel = $postModel->getExpirationType();
+        }
+
+        return [
+            'postId' => $postModel->getPostId(),
+            'postType' => $postType,
+            'postTypeLabel' => $postTypeLabel,
+            'postTitle' => $postTitle,
+            'postLink' => $postLink,
+            'actionLabel' => $actionLabel,
+        ];
     }
 
     /**

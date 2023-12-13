@@ -223,3 +223,8 @@ span.post-expiration-attributes {
         max-width: 170px;
     }
 }
+
+.publishpres-future-token-field {
+    background: white;
+    border-radius: 4px;
+}
