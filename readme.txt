@@ -144,6 +144,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 = [3.1.5] - UNRELEASED =
 
 * FIXED: Fix array_map(): Argument must be of type array, string given, #606;
+* FIXED: Remove broken and invalid setting to use classic metabox, #604;
 
 = [3.1.4] - 13 Dec, 2023 =
 
