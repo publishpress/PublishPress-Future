@@ -21,7 +21,11 @@ abstract class HooksAbstract
     const ACTION_BULK_EDIT_CUSTOM_BOX = 'bulk_edit_custom_box';
     const ACTION_QUICK_EDIT_CUSTOM_BOX = 'quick_edit_custom_box';
     const ACTION_SAVE_POST = 'save_post';
-    const ACTION_ADD_META_BOX = 'add_meta_boxes';
+    const ACTION_ADD_META_BOXES = 'add_meta_boxes';
+    /**
+     * @deprecated 3.1.5 use ACTION_ADD_META_BOXES instead
+     */
+    const ACTION_ADD_META_BOX = self::ACTION_ADD_META_BOXES;
     const ACTION_ADMIN_PRINT_SCRIPTS_EDIT = 'admin_print_scripts-edit.php';
     const ACTION_ADMIN_ENQUEUE_SCRIPTS = 'admin_enqueue_scripts';
     const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';

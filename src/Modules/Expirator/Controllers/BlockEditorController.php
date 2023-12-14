@@ -40,7 +40,7 @@ class BlockEditorController implements InitializableInterface
     {
         global $post;
 
-        if (! $post || ! PostExpirator_Facade::show_gutenberg_metabox()) {
+        if (! $post) {
             return;
         }
 
@@ -76,7 +76,7 @@ class BlockEditorController implements InitializableInterface
             $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
             $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
 
-            $taxonomyName= '';
+            $taxonomyName = '';
             if (! empty($postTypeDefaultConfig['taxonomy'])) {
                 $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
                 $taxonomyName = $taxonomy->label;
@@ -91,6 +91,7 @@ class BlockEditorController implements InitializableInterface
             }
 
             $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+
             wp_localize_script(
                 'postexpirator-block-editor',
                 'publishpressFutureBlockEditorConfig',
