@@ -91,7 +91,7 @@ This section describes how to install the plugin and get it working.
 * FIXED: Update the ES, IT and FR translations, #609;
 * CHANGED: Limit the version of the library woocommerce/action-scheduler to 3.7.0, until we can set WP 6.2 as the minimum version;
 
-= [3.1.4] - UNRELEASED =
+= [3.1.4] - 13 Dec, 2023 =
 
 * ADDED: Taxonomy term field now supports adding a new term by typing a new value;
 * ADDED: Add a button to toggle the calendar on the future action panels. Quick/Bulk edit are collapsed by default, #583;
