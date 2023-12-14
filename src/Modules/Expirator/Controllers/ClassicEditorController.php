@@ -96,7 +96,7 @@ class ClassicEditorController implements InitializableInterface
                     $type,
                     'side',
                     'core',
-                    array('__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox())
+                    []
                 );
             }
         }

@@ -40,7 +40,7 @@ class BlockEditorController implements InitializableInterface
     {
         global $post;
 
-        if (! $post || ! PostExpirator_Facade::show_gutenberg_metabox()) {
+        if (! $post) {
             return;
         }
 

@@ -92,7 +92,6 @@ class SettingsFacade
             'expirationdateDisplayFooter' => '0',
             'expirationdateDebug' => '0',
             'expirationdateDefaultDate' => 'null',
-            'expirationdateGutenbergSupport' => 1,
         ];
 
         foreach ($defaultValues as $optionName => $defaultValue) {
