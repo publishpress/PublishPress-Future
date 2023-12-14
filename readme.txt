@@ -83,6 +83,14 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.1.5] - 14 Dec, 2023 =
+
+* FIXED: Fix array_map(): Argument must be of type array, string given, #606;
+* FIXED: Remove broken and invalid setting to use classic metabox, #604;
+* FIXED: Prevent a PHP warning in the posts screen if the selected term do not exists anymore, #612;
+* FIXED: Update the ES, IT and FR translations, #609;
+* CHANGED: Limit the version of the library woocommerce/action-scheduler to 3.7.0, until we can set WP 6.2 as the minimum version;
+
 = [3.1.4] - UNRELEASED =
 
 * ADDED: Taxonomy term field now supports adding a new term by typing a new value;
