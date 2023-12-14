@@ -141,6 +141,10 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= UNRELEASED =
+
+* CHANGED: Stick the library woocommerce/action-scheduler on version 3.7.0, so we don't force WP min to 6.2;
+
 = [3.1.5] - 14 Dec, 2023 =
 
 * FIXED: Fix array_map(): Argument must be of type array, string given, #606;
