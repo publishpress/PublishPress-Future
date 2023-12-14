@@ -45,6 +45,11 @@ class SettingsPostTypesModel
             $terms = array_filter($terms, function($value) {return (int)$value > 0;});
             $termsName = array_map(function($termId) {
                 $term = get_term($termId);
+
+                if (! $term instanceof \WP_Term) {
+                    return '';
+                }
+
                 return $term->name;
             }, $terms);
 
