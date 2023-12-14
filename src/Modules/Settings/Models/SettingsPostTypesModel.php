@@ -38,6 +38,9 @@ class SettingsPostTypesModel
             $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
             $terms = isset($defaults['terms']) ? $defaults['terms'] : [];
+            if (is_string($terms)) {
+                $terms = explode(',', $terms);
+            }
             $terms = array_map('intval', $terms);
             $terms = array_filter($terms, function($value) {return (int)$value > 0;});
             $tersmName = array_map(function($termId) {
