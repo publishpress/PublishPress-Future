@@ -350,8 +350,6 @@ class PostExpirator_Display
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateGutenbergSupport', sanitize_text_field($_POST['gutenberg-support']));
-                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateColumnStyle', sanitize_key($_POST['future-action-column-style']));

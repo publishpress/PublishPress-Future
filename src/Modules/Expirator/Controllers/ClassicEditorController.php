@@ -44,7 +44,7 @@ class ClassicEditorController implements InitializableInterface
     public function initialize()
     {
         $this->hooks->addAction(
-            CoreHooksAbstract::ACTION_ADD_META_BOX,
+            CoreHooksAbstract::ACTION_ADD_META_BOXES,
             [$this, 'registerClassicEditorMetabox'],
             10,
             2
@@ -61,44 +61,63 @@ class ClassicEditorController implements InitializableInterface
         );
     }
 
-    public function registerClassicEditorMetabox($columnName, $postType)
+    private function isGutenbergAvailableForThePostType(string $postType)
     {
-        $facade = PostExpirator_Facade::getInstance();
+        return function_exists('use_block_editor_for_post_type') && use_block_editor_for_post_type($postType);
+    }
 
-        if (! $facade->current_user_can_expire_posts()) {
+    private function classicEditorIsRememberedForThePost(\WP_Post $post)
+    {
+        return 'classic-editor' === get_post_meta($post->ID, 'classic-editor-remember', true);
+    }
+
+    private function classicEditorIsActiveForCurrentSession()
+    {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        return isset($_GET['classic-editor']);
+    }
+
+    public function registerClassicEditorMetabox($postType, $post)
+    {
+        $factory = $this->currentUserModelFactory;
+        $currentUserModel = $factory();
+
+        if (! $currentUserModel->userCanExpirePosts()) {
             return;
+        }
+
+        // Only show the metabox if the block editor is not enabled for the post type
+        if ($this->isGutenbergAvailableForThePostType($postType)) {
+            if (! $this->classicEditorIsActiveForCurrentSession() ) {
+                return;
+            }
         }
 
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
-        $postTypesModel = new PostTypesModel($container);
-        $postTypes = $postTypesModel->getPostTypes();
+        $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
-        foreach ($postTypes as $type) {
-            $defaults = $settingsFacade->getPostTypeDefaults($type);
-
-            // if settings are not configured, show the metabox by default only for posts and pages
-            if (
-                (
-                    ! isset($defaults['activeMetaBox'])
-                    && in_array($type, ['post', 'page'], true)
-                )
-                || (
-                    is_array($defaults)
-                    && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
-                )
-            ) {
-                add_meta_box(
-                    'expirationdatediv',
-                    __('PublishPress Future', 'post-expirator'),
-                    [$this, 'renderClassicEditorMetabox'],
-                    $type,
-                    'side',
-                    'core',
-                    array('__back_compat_meta_box' => PostExpirator_Facade::show_gutenberg_metabox())
-                );
-            }
+        // if settings are not configured, show the metabox by default only for posts and pages
+        if (
+            (
+                ! isset($defaults['activeMetaBox'])
+                && in_array($postType, ['post', 'page'], true)
+            )
+            || (
+                is_array($defaults)
+                && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+            )
+        ) {
+            add_meta_box(
+                'expirationdatediv',
+                __('PublishPress Future', 'post-expirator'),
+                [$this, 'renderClassicEditorMetabox'],
+                $postType,
+                'side',
+                'core',
+                []
+            );
         }
     }
 

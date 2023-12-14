@@ -106,14 +106,14 @@ class PostExpirator_Facade
 
     /**
      * Is the (default) Gutenberg-style box enabled in options?
+     *
+     * @deprecated 3.1.5
      */
     public static function show_gutenberg_metabox()
     {
-        $gutenberg = get_option('expirationdateGutenbergSupport', 1);
+        _deprecated_function(__METHOD__, '3.1.5', 'Gutenberg plugin is mandatory now. This will always return true.');
 
-        $facade = PostExpirator_Facade::getInstance();
-
-        return intval($gutenberg) === 1 && $facade->current_user_can_expire_posts();
+        return true;
     }
 
     /**
