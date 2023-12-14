@@ -43,7 +43,7 @@ class SettingsPostTypesModel
             }
             $terms = array_map('intval', $terms);
             $terms = array_filter($terms, function($value) {return (int)$value > 0;});
-            $tersmName = array_map(function($termId) {
+            $termsName = array_map(function($termId) {
                 $term = get_term($termId);
                 return $term->name;
             }, $terms);
@@ -56,7 +56,7 @@ class SettingsPostTypesModel
                 'autoEnabled' => isset($defaults['autoEnable']) && $defaults['autoEnable'] == 1,
                 'taxonomy' => isset($defaults['taxonomy']) ? $defaults['taxonomy'] : false,
                 'terms' => $terms,
-                'termsName' => $tersmName,
+                'termsName' => $termsName,
                 'emailNotification' => isset($defaults['emailnotification']) ? $defaults['emailnotification'] : '',
                 'defaultExpireType' => isset($defaults['default-expire-type']) ? $defaults['default-expire-type'] : '',
                 'defaultExpireOffset' => isset($defaults['default-custom-date']) ? $defaults['default-custom-date'] : '',
