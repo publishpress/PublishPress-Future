@@ -1944,12 +1944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "040f675a5020a62ddc9c46344d9cf26658e2b04e"
+                "reference": "88d3cec355a252c8fb6a338c420960bf1b0d5679"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/040f675a5020a62ddc9c46344d9cf26658e2b04e",
-                "reference": "040f675a5020a62ddc9c46344d9cf26658e2b04e",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/88d3cec355a252c8fb6a338c420960bf1b0d5679",
+                "reference": "88d3cec355a252c8fb6a338c420960bf1b0d5679",
                 "shasum": ""
             },
             "require": {
@@ -2017,7 +2017,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-12-11T21:00:05+00:00"
+            "time": "2023-12-14T14:17:01+00:00"
         },
         {
             "name": "symfony/config",

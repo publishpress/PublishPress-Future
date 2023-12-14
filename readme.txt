@@ -83,6 +83,13 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.1.5] - 14 Dec, 2023 =
+
+* FIXED: Fix array_map(): Argument must be of type array, string given, #606;
+* FIXED: Remove broken and invalid setting to use classic metabox, #604;
+* FIXED: Prevent a PHP warning in the posts screen if the selected term do not exists anymore, #612;
+* FIXED: Update the ES, IT and FR translations, #609;
+
 = [3.1.4] - UNRELEASED =
 
 * ADDED: Taxonomy term field now supports adding a new term by typing a new value;

@@ -7,7 +7,7 @@ Requires at least: 5.5
 Requires PHP: 7.2.5
 Tested up to: 6.4
 License: GPLv2 or later
-Stable tag: 3.1.4
+Stable tag: 3.1.5
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -140,6 +140,13 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 
 == Changelog ==
+
+= [3.1.5] - 14 Dec, 2023 =
+
+* FIXED: Fix array_map(): Argument must be of type array, string given, #606;
+* FIXED: Remove broken and invalid setting to use classic metabox, #604;
+* FIXED: Prevent a PHP warning in the posts screen if the selected term do not exists anymore, #612;
+* FIXED: Update the ES, IT and FR translations, #609;
 
 = [3.1.4] - 13 Dec, 2023 =
 
