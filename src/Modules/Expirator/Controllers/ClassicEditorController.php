@@ -73,6 +73,7 @@ class ClassicEditorController implements InitializableInterface
 
     private function classicEditorIsActiveForCurrentSession()
     {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         return isset($_GET['classic-editor']);
     }
 
