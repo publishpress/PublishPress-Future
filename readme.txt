@@ -145,6 +145,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 * FIXED: Fix array_map(): Argument must be of type array, string given, #606;
 * FIXED: Remove broken and invalid setting to use classic metabox, #604;
+* FIXED: Prevent a PHP warning in the posts screen if the selected term do not exists anymore, #612;
 
 = [3.1.4] - 13 Dec, 2023 =
 
