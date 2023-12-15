@@ -152,6 +152,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix default date for new posts, #623;
 * FIXED: Fix the quick edit form and future action column for pages, #618;
 * FIXED: Fix support for WP before 6.4, #625;
+* ADDED: Add a new setting to select the time format in the date picker component, #626;
 
 = [3.1.5] - 14 Dec, 2023 =
 
