@@ -21,6 +21,7 @@ import {
     taxonomiesList,
     text
 } from "&config/settings-post-types";
+import { render } from "&ReactDOM";
 
 const SettingsFormPanel = (props) => {
     return (
@@ -54,6 +55,9 @@ const SettingsFormPanel = (props) => {
 };
 
 const container = document.getElementById("publishpress-future-settings-post-types");
-const root = createRoot(container);
 
-root.render(<SettingsFormPanel />);
+if (createRoot) {
+    createRoot(container).render(<SettingsFormPanel />);
+} else {
+    render(<SettingsFormPanel />, container);
+}

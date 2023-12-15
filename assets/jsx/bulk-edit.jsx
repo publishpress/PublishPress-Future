@@ -15,6 +15,7 @@ import {
     taxonomyName,
     nonce
 } from "&config/bulk-edit";
+import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-bulk-edit';
 const delayToUnmountAfterSaving = 1000;
@@ -74,21 +75,37 @@ inlineEditPost.setBulk = function (id) {
     }
 
     const container = document.getElementById("publishpress-future-bulk-edit");
-    const root = createRoot(container);
 
-    root.render(
-        <FutureActionPanelBulkEdit
-            storeName={storeName}
-            postType={postType}
-            isNewPost={isNewPost}
-            actionsSelectOptions={actionsSelectOptions}
-            is12Hour={is12Hour}
-            startOfWeek={startOfWeek}
-            strings={strings}
-            taxonomyName={taxonomyName}
-            nonce={nonce}
-        />
-    );
+    if (createRoot) {
+        createRoot(container).render(
+            <FutureActionPanelBulkEdit
+                storeName={storeName}
+                postType={postType}
+                isNewPost={isNewPost}
+                actionsSelectOptions={actionsSelectOptions}
+                is12Hour={is12Hour}
+                startOfWeek={startOfWeek}
+                strings={strings}
+                taxonomyName={taxonomyName}
+                nonce={nonce}
+            />
+        );
+    } else {
+        render(
+            <FutureActionPanelBulkEdit
+                storeName={storeName}
+                postType={postType}
+                isNewPost={isNewPost}
+                actionsSelectOptions={actionsSelectOptions}
+                is12Hour={is12Hour}
+                startOfWeek={startOfWeek}
+                strings={strings}
+                taxonomyName={taxonomyName}
+                nonce={nonce}
+            />,
+            container
+        );
+    }
 
     inlineEditPost.revert = function () {
         root.unmount();

@@ -2210,6 +2210,16 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
+/***/ "&ReactDOM":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = ReactDOM;
+
+/***/ }),
+
 /***/ "&config/settings-post-types":
 /*!***************************************************!*\
   !*** external "publishpressFutureSettingsConfig" ***!
@@ -2321,6 +2331,12 @@ var _wp = __webpack_require__(/*! &wp.element */ "&wp.element");
 
 var _settingsPostTypes = __webpack_require__(/*! &config/settings-post-types */ "&config/settings-post-types");
 
+var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
+
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
 var SettingsFormPanel = function SettingsFormPanel(props) {
     return React.createElement(
         _wp.StrictMode,
@@ -2355,14 +2371,15 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
             )
         )
     );
-}; /*
-    * Copyright (c) 2023. PublishPress, All rights reserved.
-    */
+};
 
 var container = document.getElementById("publishpress-future-settings-post-types");
-var root = (0, _wp.createRoot)(container);
 
-root.render(React.createElement(SettingsFormPanel, null));
+if (_wp.createRoot) {
+    (0, _wp.createRoot)(container).render(React.createElement(SettingsFormPanel, null));
+} else {
+    (0, _ReactDOM.render)(React.createElement(SettingsFormPanel, null), container);
+}
 })();
 
 /******/ })()

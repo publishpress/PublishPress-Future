@@ -2431,6 +2431,16 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
+/***/ "&ReactDOM":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = ReactDOM;
+
+/***/ }),
+
 /***/ "&config/quick-edit":
 /*!****************************************************!*\
   !*** external "publishpressFutureQuickEditConfig" ***!
@@ -2560,6 +2570,8 @@ var _window = __webpack_require__(/*! &window */ "&window");
 
 var _quickEdit = __webpack_require__(/*! &config/quick-edit */ "&config/quick-edit");
 
+var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
+
 var storeName = 'publishpress-future/future-action-quick-edit';
 var delayToUnmountAfterSaving = 1000;
 
@@ -2622,36 +2634,51 @@ _window.inlineEditPost.edit = function (button, id) {
         });
     }
 
-    var saveButton = document.querySelector('.inline-edit-save .save');
-    if (saveButton) {
-        saveButton.onclick = function () {
-            setTimeout(function () {
-                root.unmount();
-            }, delayToUnmountAfterSaving);
-        };
-    }
-
     var container = document.getElementById("publishpress-future-quick-edit");
-    var root = (0, _wp.createRoot)(container);
 
-    root.render(React.createElement(_components.FutureActionPanelQuickEdit, {
-        storeName: storeName,
-        postType: _quickEdit.postType,
-        isNewPost: _quickEdit.isNewPost,
-        actionsSelectOptions: _quickEdit.actionsSelectOptions,
-        is12Hour: _quickEdit.is12Hour,
-        startOfWeek: _quickEdit.startOfWeek,
-        strings: _quickEdit.strings,
-        taxonomyName: _quickEdit.taxonomyName,
-        nonce: _quickEdit.nonce
-    }));
+    if (_wp.createRoot) {
+        var root = (0, _wp.createRoot)(container);
 
-    _window.inlineEditPost.revert = function () {
-        root.unmount();
+        var saveButton = document.querySelector('.inline-edit-save .save');
+        if (saveButton) {
+            saveButton.onclick = function () {
+                setTimeout(function () {
+                    root.unmount();
+                }, delayToUnmountAfterSaving);
+            };
+        }
 
-        // Call the original WP revert function.
-        wpInlineEditRevert.apply(this, arguments);
-    };
+        root.render(React.createElement(_components.FutureActionPanelQuickEdit, {
+            storeName: storeName,
+            postType: _quickEdit.postType,
+            isNewPost: _quickEdit.isNewPost,
+            actionsSelectOptions: _quickEdit.actionsSelectOptions,
+            is12Hour: _quickEdit.is12Hour,
+            startOfWeek: _quickEdit.startOfWeek,
+            strings: _quickEdit.strings,
+            taxonomyName: _quickEdit.taxonomyName,
+            nonce: _quickEdit.nonce
+        }));
+
+        _window.inlineEditPost.revert = function () {
+            root.unmount();
+
+            // Call the original WP revert function.
+            wpInlineEditRevert.apply(this, arguments);
+        };
+    } else {
+        (0, _ReactDOM.render)(React.createElement(_components.FutureActionPanelQuickEdit, {
+            storeName: storeName,
+            postType: _quickEdit.postType,
+            isNewPost: _quickEdit.isNewPost,
+            actionsSelectOptions: _quickEdit.actionsSelectOptions,
+            is12Hour: _quickEdit.is12Hour,
+            startOfWeek: _quickEdit.startOfWeek,
+            strings: _quickEdit.strings,
+            taxonomyName: _quickEdit.taxonomyName,
+            nonce: _quickEdit.nonce
+        }), container);
+    }
 };
 })();
 

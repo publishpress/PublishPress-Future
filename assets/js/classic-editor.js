@@ -2431,6 +2431,16 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
+/***/ "&ReactDOM":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = ReactDOM;
+
+/***/ }),
+
 /***/ "&config/classic-editor":
 /*!********************************************************!*\
   !*** external "publishpressFutureClassicEditorConfig" ***!
@@ -2548,6 +2558,8 @@ var _wp2 = __webpack_require__(/*! &wp.data */ "&wp.data");
 
 var _classicEditor = __webpack_require__(/*! &config/classic-editor */ "&config/classic-editor");
 
+var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
+
 if (!(0, _utils.isGutenbergEnabled)()) {
     var storeName = 'publishpress-future/future-action';
 
@@ -2565,18 +2577,30 @@ if (!(0, _utils.isGutenbergEnabled)()) {
     }
 
     var container = document.getElementById("publishpress-future-classic-editor");
-    var root = (0, _wp.createRoot)(container);
 
-    root.render(React.createElement(_components.FutureActionPanelClassicEditor, {
-        storeName: storeName,
-        postType: _classicEditor.postType,
-        isNewPost: _classicEditor.isNewPost,
-        actionsSelectOptions: _classicEditor.actionsSelectOptions,
-        is12Hour: _classicEditor.is12Hour,
-        startOfWeek: _classicEditor.startOfWeek,
-        strings: _classicEditor.strings,
-        taxonomyName: _classicEditor.taxonomyName
-    }));
+    if (_wp.createRoot) {
+        (0, _wp.createRoot)(container).render(React.createElement(_components.FutureActionPanelClassicEditor, {
+            storeName: storeName,
+            postType: _classicEditor.postType,
+            isNewPost: _classicEditor.isNewPost,
+            actionsSelectOptions: _classicEditor.actionsSelectOptions,
+            is12Hour: _classicEditor.is12Hour,
+            startOfWeek: _classicEditor.startOfWeek,
+            strings: _classicEditor.strings,
+            taxonomyName: _classicEditor.taxonomyName
+        }));
+    } else {
+        (0, _ReactDOM.render)(React.createElement(_components.FutureActionPanelClassicEditor, {
+            storeName: storeName,
+            postType: _classicEditor.postType,
+            isNewPost: _classicEditor.isNewPost,
+            actionsSelectOptions: _classicEditor.actionsSelectOptions,
+            is12Hour: _classicEditor.is12Hour,
+            startOfWeek: _classicEditor.startOfWeek,
+            strings: _classicEditor.strings,
+            taxonomyName: _classicEditor.taxonomyName
+        }), container);
+    }
 }
 })();
 

@@ -2431,6 +2431,16 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
+/***/ "&ReactDOM":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = ReactDOM;
+
+/***/ }),
+
 /***/ "&config/bulk-edit":
 /*!***************************************************!*\
   !*** external "publishpressFutureBulkEditConfig" ***!
@@ -2558,6 +2568,8 @@ var _window = __webpack_require__(/*! &window */ "&window");
 
 var _bulkEdit = __webpack_require__(/*! &config/bulk-edit */ "&config/bulk-edit");
 
+var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
+
 var storeName = 'publishpress-future/future-action-bulk-edit';
 var delayToUnmountAfterSaving = 1000;
 
@@ -2616,19 +2628,32 @@ _window.inlineEditPost.setBulk = function (id) {
     }
 
     var container = document.getElementById("publishpress-future-bulk-edit");
-    var root = (0, _wp.createRoot)(container);
 
-    root.render(React.createElement(_components.FutureActionPanelBulkEdit, {
-        storeName: storeName,
-        postType: _bulkEdit.postType,
-        isNewPost: _bulkEdit.isNewPost,
-        actionsSelectOptions: _bulkEdit.actionsSelectOptions,
-        is12Hour: _bulkEdit.is12Hour,
-        startOfWeek: _bulkEdit.startOfWeek,
-        strings: _bulkEdit.strings,
-        taxonomyName: _bulkEdit.taxonomyName,
-        nonce: _bulkEdit.nonce
-    }));
+    if (_wp.createRoot) {
+        (0, _wp.createRoot)(container).render(React.createElement(_components.FutureActionPanelBulkEdit, {
+            storeName: storeName,
+            postType: _bulkEdit.postType,
+            isNewPost: _bulkEdit.isNewPost,
+            actionsSelectOptions: _bulkEdit.actionsSelectOptions,
+            is12Hour: _bulkEdit.is12Hour,
+            startOfWeek: _bulkEdit.startOfWeek,
+            strings: _bulkEdit.strings,
+            taxonomyName: _bulkEdit.taxonomyName,
+            nonce: _bulkEdit.nonce
+        }));
+    } else {
+        (0, _ReactDOM.render)(React.createElement(_components.FutureActionPanelBulkEdit, {
+            storeName: storeName,
+            postType: _bulkEdit.postType,
+            isNewPost: _bulkEdit.isNewPost,
+            actionsSelectOptions: _bulkEdit.actionsSelectOptions,
+            is12Hour: _bulkEdit.is12Hour,
+            startOfWeek: _bulkEdit.startOfWeek,
+            strings: _bulkEdit.strings,
+            taxonomyName: _bulkEdit.taxonomyName,
+            nonce: _bulkEdit.nonce
+        }), container);
+    }
 
     _window.inlineEditPost.revert = function () {
         root.unmount();

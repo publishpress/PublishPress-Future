@@ -1,6 +1,6 @@
 import { FutureActionPanelQuickEdit } from './components';
 import { createStore } from './data';
-import { getFieldValueByName, getFieldValueByNameAsBool, getActionSettingsFromColumnData } from './utils';
+import { getActionSettingsFromColumnData } from './utils';
 import { createRoot } from '&wp.element';
 import { select, dispatch } from '&wp.data';
 import { inlineEditPost } from "&window";
@@ -14,6 +14,7 @@ import {
     taxonomyName,
     nonce
 } from "&config/quick-edit";
+import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-quick-edit';
 const delayToUnmountAfterSaving = 1000;
@@ -77,36 +78,54 @@ inlineEditPost.edit = function (button, id) {
         });
     }
 
-    const saveButton = document.querySelector('.inline-edit-save .save');
-    if (saveButton) {
-        saveButton.onclick = function() {
-            setTimeout(() => {
-                root.unmount();
-            }, delayToUnmountAfterSaving);
-        };
-    }
-
     const container = document.getElementById("publishpress-future-quick-edit");
-    const root = createRoot(container);
 
-    root.render(
-        <FutureActionPanelQuickEdit
-            storeName={storeName}
-            postType={postType}
-            isNewPost={isNewPost}
-            actionsSelectOptions={actionsSelectOptions}
-            is12Hour={is12Hour}
-            startOfWeek={startOfWeek}
-            strings={strings}
-            taxonomyName={taxonomyName}
-            nonce={nonce}
-        />
-    );
+    if (createRoot) {
+        const root = createRoot(container);
 
-    inlineEditPost.revert = function () {
-        root.unmount();
+        const saveButton = document.querySelector('.inline-edit-save .save');
+        if (saveButton) {
+            saveButton.onclick = function() {
+                setTimeout(() => {
+                    root.unmount();
+                }, delayToUnmountAfterSaving);
+            };
+        }
 
-        // Call the original WP revert function.
-        wpInlineEditRevert.apply(this, arguments);
-    };
+        root.render(
+            <FutureActionPanelQuickEdit
+                storeName={storeName}
+                postType={postType}
+                isNewPost={isNewPost}
+                actionsSelectOptions={actionsSelectOptions}
+                is12Hour={is12Hour}
+                startOfWeek={startOfWeek}
+                strings={strings}
+                taxonomyName={taxonomyName}
+                nonce={nonce}
+            />
+        );
+
+        inlineEditPost.revert = function () {
+            root.unmount();
+
+            // Call the original WP revert function.
+            wpInlineEditRevert.apply(this, arguments);
+        };
+    } else {
+        render(
+            <FutureActionPanelQuickEdit
+                storeName={storeName}
+                postType={postType}
+                isNewPost={isNewPost}
+                actionsSelectOptions={actionsSelectOptions}
+                is12Hour={is12Hour}
+                startOfWeek={startOfWeek}
+                strings={strings}
+                taxonomyName={taxonomyName}
+                nonce={nonce}
+            />,
+            container
+        );
+    }
 };

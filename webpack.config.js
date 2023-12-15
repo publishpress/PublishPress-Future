@@ -29,6 +29,8 @@ module.exports = [
             extensions: ['.js', '.jsx']
         },
         externals: {
+            "&React": "React",
+            "&ReactDOM": "ReactDOM",
             "&wp": "wp",
             "&wp.element": "wp.element",
             "&wp.components": "wp.components",
@@ -63,6 +65,8 @@ module.exports = [
             ]
         },
         externals: {
+            "&React": "React",
+            "&ReactDOM": "ReactDOM",
             "&wp": "wp",
             "&wp.element": "wp.element",
             "&wp.components": "wp.components",
@@ -98,6 +102,8 @@ module.exports = [
             ]
         },
         externals: {
+            "&React": "React",
+            "&ReactDOM": "ReactDOM",
             "&wp": "wp",
             "&wp.element": "wp.element",
             "&wp.components": "wp.components",
@@ -132,6 +138,8 @@ module.exports = [
             ]
         },
         externals: {
+            "&React": "React",
+            "&ReactDOM": "ReactDOM",
             "&wp": "wp",
             "&wp.element": "wp.element",
             "&wp.components": "wp.components",
@@ -167,6 +175,8 @@ module.exports = [
             ]
         },
         externals: {
+            "&React": "React",
+            "&ReactDOM": "ReactDOM",
             "&wp": "wp",
             "&wp.element": "wp.element",
             "&wp.components": "wp.components",
