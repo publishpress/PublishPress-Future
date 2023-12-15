@@ -81,7 +81,7 @@ $container = DIContainer::getInstance();
                                value="12h" <?php
                         echo $timeFormat === '12h' ? 'checked' : ''; ?>/>
                         <label for="future-action-time-format-12h"><?php
-                            esc_html_e('am/pm', 'post-expirator'); ?></label>
+                            esc_html_e('AM/PM', 'post-expirator'); ?></label>
                     </td>
                 </tr>
                 <tr valign="top">
