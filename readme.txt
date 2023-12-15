@@ -141,10 +141,6 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= UNRELEASED =
-
-* CHANGED: Stick the library woocommerce/action-scheduler on version 3.7.0, so we don't force WP min to 6.2;
-
 = [3.1.6] UNRELEASED =
 
 * FIXED: Fix the search of posts in the posts lists, #620;
@@ -153,6 +149,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix the quick edit form and future action column for pages, #618;
 * FIXED: Fix support for WP before 6.4, #625;
 * ADDED: Add a new setting to select the time format in the date picker component, #626;
+* CHANGED: Stick the library woocommerce/action-scheduler on version 3.7.0, so we don't force WP min to 6.2;
 
 = [3.1.5] - 14 Dec, 2023 =
 
