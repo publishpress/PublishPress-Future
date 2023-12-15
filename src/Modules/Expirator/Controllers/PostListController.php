@@ -90,18 +90,13 @@ class PostListController implements InitializableInterface
     {
         global $post;
 
-        // get the attributes that quick edit functionality requires
-        // and save it as a JSON encoded HTML attribute
         $container = Container::getInstance();
-        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-        $postModel = $factory($post->ID);
         $settings = $container->get(ServicesAbstract::SETTINGS);
 
         PostExpirator_Display::getInstance()->render_template('expire-column', [
             'id' => $post->ID,
-            'post_type' => $post->post_type,
-            'attributes' => $postModel->getExpirationDataAsArray(),
-            'column_style' => $settings->getColumnStyle(),
+            'postType' => $post->post_type,
+            'columnStyle' => $settings->getColumnStyle(),
         ]);
     }
 
