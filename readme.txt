@@ -151,6 +151,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix classic meta box when using Classic Editor plugin with the classic editor as default, #624;
 * FIXED: Fix default date for new posts, #623;
 * FIXED: Fix the quick edit form and future action column for pages, #618;
+* FIXED: Fix support for WP before 6.4, #625;
 
 = [3.1.5] - 14 Dec, 2023 =
 

@@ -2635,6 +2635,17 @@ _window.inlineEditPost.edit = function (button, id) {
     }
 
     var container = document.getElementById("publishpress-future-quick-edit");
+    var component = React.createElement(_components.FutureActionPanelQuickEdit, {
+        storeName: storeName,
+        postType: _quickEdit.postType,
+        isNewPost: _quickEdit.isNewPost,
+        actionsSelectOptions: _quickEdit.actionsSelectOptions,
+        is12Hour: _quickEdit.is12Hour,
+        startOfWeek: _quickEdit.startOfWeek,
+        strings: _quickEdit.strings,
+        taxonomyName: _quickEdit.taxonomyName,
+        nonce: _quickEdit.nonce
+    });
 
     if (_wp.createRoot) {
         var root = (0, _wp.createRoot)(container);
@@ -2648,17 +2659,7 @@ _window.inlineEditPost.edit = function (button, id) {
             };
         }
 
-        root.render(React.createElement(_components.FutureActionPanelQuickEdit, {
-            storeName: storeName,
-            postType: _quickEdit.postType,
-            isNewPost: _quickEdit.isNewPost,
-            actionsSelectOptions: _quickEdit.actionsSelectOptions,
-            is12Hour: _quickEdit.is12Hour,
-            startOfWeek: _quickEdit.startOfWeek,
-            strings: _quickEdit.strings,
-            taxonomyName: _quickEdit.taxonomyName,
-            nonce: _quickEdit.nonce
-        }));
+        root.render(component);
 
         _window.inlineEditPost.revert = function () {
             root.unmount();
@@ -2667,17 +2668,7 @@ _window.inlineEditPost.edit = function (button, id) {
             wpInlineEditRevert.apply(this, arguments);
         };
     } else {
-        (0, _ReactDOM.render)(React.createElement(_components.FutureActionPanelQuickEdit, {
-            storeName: storeName,
-            postType: _quickEdit.postType,
-            isNewPost: _quickEdit.isNewPost,
-            actionsSelectOptions: _quickEdit.actionsSelectOptions,
-            is12Hour: _quickEdit.is12Hour,
-            startOfWeek: _quickEdit.startOfWeek,
-            strings: _quickEdit.strings,
-            taxonomyName: _quickEdit.taxonomyName,
-            nonce: _quickEdit.nonce
-        }), container);
+        (0, _ReactDOM.render)(component, container);
     }
 };
 })();

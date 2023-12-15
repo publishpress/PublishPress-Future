@@ -65,52 +65,42 @@ inlineEditPost.setBulk = function (id) {
         });
     }
 
-    const saveButton = document.querySelector('#bulk_edit');
-    if (saveButton) {
-        saveButton.onclick = function() {
-            setTimeout(() => {
-                root.unmount();
-            }, delayToUnmountAfterSaving);
-        };
-    }
-
     const container = document.getElementById("publishpress-future-bulk-edit");
+    const component = (
+        <FutureActionPanelBulkEdit
+            storeName={storeName}
+            postType={postType}
+            isNewPost={isNewPost}
+            actionsSelectOptions={actionsSelectOptions}
+            is12Hour={is12Hour}
+            startOfWeek={startOfWeek}
+            strings={strings}
+            taxonomyName={taxonomyName}
+            nonce={nonce}
+        />
+    );
 
     if (createRoot) {
-        createRoot(container).render(
-            <FutureActionPanelBulkEdit
-                storeName={storeName}
-                postType={postType}
-                isNewPost={isNewPost}
-                actionsSelectOptions={actionsSelectOptions}
-                is12Hour={is12Hour}
-                startOfWeek={startOfWeek}
-                strings={strings}
-                taxonomyName={taxonomyName}
-                nonce={nonce}
-            />
-        );
+        const root = createRoot(container);
+
+        root.render(component);
+
+        const saveButton = document.querySelector('#bulk_edit');
+        if (saveButton) {
+            saveButton.onclick = function() {
+                setTimeout(() => {
+                    root.unmount();
+                }, delayToUnmountAfterSaving);
+            };
+        }
+
+        inlineEditPost.revert = function () {
+            root.unmount();
+
+            // Call the original WP revert function.
+            wpInlineEditRevert.apply(this, arguments);
+        };
     } else {
-        render(
-            <FutureActionPanelBulkEdit
-                storeName={storeName}
-                postType={postType}
-                isNewPost={isNewPost}
-                actionsSelectOptions={actionsSelectOptions}
-                is12Hour={is12Hour}
-                startOfWeek={startOfWeek}
-                strings={strings}
-                taxonomyName={taxonomyName}
-                nonce={nonce}
-            />,
-            container
-        );
+        render(component, container);
     }
-
-    inlineEditPost.revert = function () {
-        root.unmount();
-
-        // Call the original WP revert function.
-        wpInlineEditRevert.apply(this, arguments);
-    };
 };

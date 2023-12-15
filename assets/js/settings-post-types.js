@@ -2374,11 +2374,11 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
 };
 
 var container = document.getElementById("publishpress-future-settings-post-types");
-
+var component = React.createElement(SettingsFormPanel, null);
 if (_wp.createRoot) {
-    (0, _wp.createRoot)(container).render(React.createElement(SettingsFormPanel, null));
+    (0, _wp.createRoot)(container).render(component);
 } else {
-    (0, _ReactDOM.render)(React.createElement(SettingsFormPanel, null), container);
+    (0, _ReactDOM.render)(component, container);
 }
 })();
 

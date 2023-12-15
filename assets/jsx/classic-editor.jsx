@@ -33,33 +33,22 @@ if (! isGutenbergEnabled()) {
     }
 
     const container = document.getElementById("publishpress-future-classic-editor");
+    const component = (
+        <FutureActionPanelClassicEditor
+            storeName={storeName}
+            postType={postType}
+            isNewPost={isNewPost}
+            actionsSelectOptions={actionsSelectOptions}
+            is12Hour={is12Hour}
+            startOfWeek={startOfWeek}
+            strings={strings}
+            taxonomyName={taxonomyName}
+        />
+    );
 
     if (createRoot) {
-        createRoot(container).render(
-            <FutureActionPanelClassicEditor
-                storeName={storeName}
-                postType={postType}
-                isNewPost={isNewPost}
-                actionsSelectOptions={actionsSelectOptions}
-                is12Hour={is12Hour}
-                startOfWeek={startOfWeek}
-                strings={strings}
-                taxonomyName={taxonomyName}
-            />
-        );
+        createRoot(container).render(component);
     } else {
-        render(
-            <FutureActionPanelClassicEditor
-                storeName={storeName}
-                postType={postType}
-                isNewPost={isNewPost}
-                actionsSelectOptions={actionsSelectOptions}
-                is12Hour={is12Hour}
-                startOfWeek={startOfWeek}
-                strings={strings}
-                taxonomyName={taxonomyName}
-            />,
-            container
-        );
+        render(component, container);
     }
 }

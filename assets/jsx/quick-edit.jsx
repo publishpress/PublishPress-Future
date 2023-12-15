@@ -79,6 +79,19 @@ inlineEditPost.edit = function (button, id) {
     }
 
     const container = document.getElementById("publishpress-future-quick-edit");
+    const component = (
+        <FutureActionPanelQuickEdit
+            storeName={storeName}
+            postType={postType}
+            isNewPost={isNewPost}
+            actionsSelectOptions={actionsSelectOptions}
+            is12Hour={is12Hour}
+            startOfWeek={startOfWeek}
+            strings={strings}
+            taxonomyName={taxonomyName}
+            nonce={nonce}
+        />
+    );
 
     if (createRoot) {
         const root = createRoot(container);
@@ -92,19 +105,7 @@ inlineEditPost.edit = function (button, id) {
             };
         }
 
-        root.render(
-            <FutureActionPanelQuickEdit
-                storeName={storeName}
-                postType={postType}
-                isNewPost={isNewPost}
-                actionsSelectOptions={actionsSelectOptions}
-                is12Hour={is12Hour}
-                startOfWeek={startOfWeek}
-                strings={strings}
-                taxonomyName={taxonomyName}
-                nonce={nonce}
-            />
-        );
+        root.render(component);
 
         inlineEditPost.revert = function () {
             root.unmount();
@@ -113,19 +114,6 @@ inlineEditPost.edit = function (button, id) {
             wpInlineEditRevert.apply(this, arguments);
         };
     } else {
-        render(
-            <FutureActionPanelQuickEdit
-                storeName={storeName}
-                postType={postType}
-                isNewPost={isNewPost}
-                actionsSelectOptions={actionsSelectOptions}
-                is12Hour={is12Hour}
-                startOfWeek={startOfWeek}
-                strings={strings}
-                taxonomyName={taxonomyName}
-                nonce={nonce}
-            />,
-            container
-        );
+        render(component, container);
     }
 };
