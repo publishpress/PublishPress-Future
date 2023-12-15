@@ -1,9 +1,9 @@
 import { FutureActionPanelQuickEdit } from './components';
 import { createStore } from './data';
 import { getFieldValueByName, getFieldValueByNameAsBool, getActionSettingsFromColumnData } from './utils';
-import { createRoot } from '@wp/element';
-import { select, dispatch } from '@wp/data';
-import { inlineEditPost } from "@window";
+import { createRoot } from '&wp.element';
+import { select, dispatch } from '&wp.data';
+import { inlineEditPost } from "&window";
 import {
     postType,
     isNewPost,
@@ -13,7 +13,7 @@ import {
     strings,
     taxonomyName,
     nonce
-} from "@config/quick-edit";
+} from "&config/quick-edit";
 
 const storeName = 'publishpress-future/future-action-quick-edit';
 const delayToUnmountAfterSaving = 1000;

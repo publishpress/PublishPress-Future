@@ -3,10 +3,9 @@
  */
 
 import { SelectControl } from ".";
+import { Fragment } from "&wp.element";
 
 export const TaxonomiesControl = function (props) {
-    const { Fragment } = wp.element;
-
     const taxonomiesOptions = [];
 
     props.taxonomies.forEach((el) => {

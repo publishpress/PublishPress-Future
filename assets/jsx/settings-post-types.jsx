@@ -11,7 +11,7 @@ import {
     NonceControl
 } from "./components";
 
-import { StrictMode, createRoot } from "@wp/element";
+import { StrictMode, createRoot } from "&wp.element";
 
 import {
     nonce,
@@ -20,7 +20,7 @@ import {
     expireTypeList,
     taxonomiesList,
     text
-} from "@config/settings-post-types";
+} from "&config/settings-post-types";
 
 const SettingsFormPanel = (props) => {
     return (

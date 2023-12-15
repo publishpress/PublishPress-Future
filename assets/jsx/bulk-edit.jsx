@@ -1,8 +1,8 @@
 import { FutureActionPanelBulkEdit } from './components';
 import { createStore } from './data';
-import { createRoot } from '@wp/element';
-import { select, dispatch } from '@wp/data';
-import { inlineEditPost } from "@window";
+import { createRoot } from '&wp.element';
+import { select, dispatch } from '&wp.data';
+import { inlineEditPost } from "&window";
 import {
     postTypeDefaultConfig,
     defaultDate,
@@ -14,7 +14,7 @@ import {
     strings,
     taxonomyName,
     nonce
-} from "@config/bulk-edit";
+} from "&config/bulk-edit";
 
 const storeName = 'publishpress-future/future-action-bulk-edit';
 const delayToUnmountAfterSaving = 1000;

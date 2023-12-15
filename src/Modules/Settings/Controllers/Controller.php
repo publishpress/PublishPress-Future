@@ -178,7 +178,7 @@ class Controller implements InitializableInterface
             wp_enqueue_script(
                 'publishpressfuture-settings-panel',
                 POSTEXPIRATOR_BASEURL . 'assets/js/settings-post-types.js',
-                ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-element', 'wp-hooks', 'wp-api-fetch'],
+                ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-element', 'wp-hooks', 'wp-api-fetch', 'wp-html-entities'],
                 POSTEXPIRATOR_VERSION,
                 true
             );

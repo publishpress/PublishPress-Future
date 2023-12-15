@@ -1,8 +1,7 @@
 import { FutureActionPanel } from './';
+import { useSelect } from '&wp.data';
 
 export const FutureActionPanelQuickEdit = (props) => {
-    const { useSelect } = wp.data;
-
     const onChangeData = (attribute, value) => {};
 
     const date = useSelect((select) => select(props.storeName).getDate(), []);

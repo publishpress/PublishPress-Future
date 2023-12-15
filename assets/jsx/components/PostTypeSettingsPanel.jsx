@@ -11,13 +11,12 @@ import {
     TokensControl,
     CheckboxControl
 } from './';
+import { useEffect, useState } from '&wp.element';
+import { addQueryArgs } from '&wp.url';
+import { applyFilters } from '&wp.hooks';
+import { apiFetch } from '&wp';
 
 export const PostTypeSettingsPanel = function (props) {
-    const { useState, useEffect } = wp.element;
-    const { addQueryArgs } = wp.url;
-    const { applyFilters } = wp.hooks;
-    const { apiFetch } = wp;
-
     const [postTypeTaxonomy, setPostTypeTaxonomy] = useState(props.settings.taxonomy);
     const [termOptions, setTermOptions] = useState([]);
     const [termsSelectIsLoading, setTermsSelectIsLoading] = useState(false);

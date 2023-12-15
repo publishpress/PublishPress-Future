@@ -148,7 +148,7 @@ class QuickEditController implements InitializableInterface
         wp_enqueue_script(
             'postexpirator-quick-edit',
              POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
-             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post'],
+             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities'],
              POSTEXPIRATOR_VERSION,
              true
         );

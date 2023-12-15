@@ -247,7 +247,7 @@ class ClassicEditorController implements InitializableInterface
         wp_enqueue_script(
             'publishpress-future-classic-editor',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
-            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element'],
+            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'wp-html-entities'],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );
