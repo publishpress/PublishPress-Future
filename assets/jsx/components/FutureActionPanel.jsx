@@ -219,6 +219,13 @@ export const FutureActionPanel = (props) => {
     const contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
     const datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
 
+    let is24hour;
+    if (props.timeFormat === 'inherited') {
+        is24hour = ! props.is12Hour;
+    } else {
+        is24hour = props.timeFormat === '24h';
+    }
+
 
     const replaceCurlyBracketsWithLink = (string, href, target) => {
         const parts = string.split('{');
@@ -316,7 +323,7 @@ export const FutureActionPanel = (props) => {
                             currentDate={date}
                             onChangeDate={handleDateChange}
                             onToggleCalendar={() => setCalendarIsVisible(!calendarIsVisible)}
-                            is12Hour={props.is12Hour}
+                            is12Hour={!is24hour}
                             startOfWeek={props.startOfWeek}
                             isExpanded={calendarIsVisible}
                             strings={props.strings}

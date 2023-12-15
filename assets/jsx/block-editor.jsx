@@ -5,6 +5,7 @@ import { registerPlugin } from '&wp.plugins';
 import {
     actionsSelectOptions,
     is12Hour,
+    timeFormat,
     startOfWeek,
     strings,
     taxonomyName,
@@ -32,6 +33,7 @@ const BlockEditorFutureActionPlugin = () => {
             isCleanNewPost={select('core/editor').isCleanNewPost()}
             actionsSelectOptions={actionsSelectOptions}
             is12Hour={is12Hour}
+            timeFormat={timeFormat}
             startOfWeek={startOfWeek}
             storeName={storeName}
             strings={strings}

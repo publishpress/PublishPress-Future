@@ -397,6 +397,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
     var datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
 
+    var is24hour = void 0;
+    if (props.timeFormat === 'inherited') {
+        is24hour = !props.is12Hour;
+    } else {
+        is24hour = props.timeFormat === '24h';
+    }
+
     var replaceCurlyBracketsWithLink = function replaceCurlyBracketsWithLink(string, href, target) {
         var parts = string.split('{');
         var result = [];
@@ -523,7 +530,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     onToggleCalendar: function onToggleCalendar() {
                         return setCalendarIsVisible(!calendarIsVisible);
                     },
-                    is12Hour: props.is12Hour,
+                    is12Hour: !is24hour,
                     startOfWeek: props.startOfWeek,
                     isExpanded: calendarIsVisible,
                     strings: props.strings
@@ -656,6 +663,7 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
                 taxonomyName: props.taxonomyName,
                 onChangeData: onChangeData,
                 is12Hour: props.is12Hour,
+                timeFormat: props.timeFormat,
                 startOfWeek: props.startOfWeek,
                 storeName: props.storeName,
                 strings: props.strings })
@@ -759,6 +767,7 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings }),
@@ -835,6 +844,7 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings })
@@ -903,6 +913,7 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings }),
@@ -2575,6 +2586,7 @@ var BlockEditorFutureActionPlugin = function BlockEditorFutureActionPlugin() {
         isCleanNewPost: (0, _wp.select)('core/editor').isCleanNewPost(),
         actionsSelectOptions: _blockEditor.actionsSelectOptions,
         is12Hour: _blockEditor.is12Hour,
+        timeFormat: _blockEditor.timeFormat,
         startOfWeek: _blockEditor.startOfWeek,
         storeName: storeName,
         strings: _blockEditor.strings,

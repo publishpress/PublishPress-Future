@@ -397,6 +397,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
     var datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
 
+    var is24hour = void 0;
+    if (props.timeFormat === 'inherited') {
+        is24hour = !props.is12Hour;
+    } else {
+        is24hour = props.timeFormat === '24h';
+    }
+
     var replaceCurlyBracketsWithLink = function replaceCurlyBracketsWithLink(string, href, target) {
         var parts = string.split('{');
         var result = [];
@@ -523,7 +530,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     onToggleCalendar: function onToggleCalendar() {
                         return setCalendarIsVisible(!calendarIsVisible);
                     },
-                    is12Hour: props.is12Hour,
+                    is12Hour: !is24hour,
                     startOfWeek: props.startOfWeek,
                     isExpanded: calendarIsVisible,
                     strings: props.strings
@@ -656,6 +663,7 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
                 taxonomyName: props.taxonomyName,
                 onChangeData: onChangeData,
                 is12Hour: props.is12Hour,
+                timeFormat: props.timeFormat,
                 startOfWeek: props.startOfWeek,
                 storeName: props.storeName,
                 strings: props.strings })
@@ -759,6 +767,7 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings }),
@@ -835,6 +844,7 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings })
@@ -903,6 +913,7 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings }),
@@ -2618,49 +2629,43 @@ _window.inlineEditPost.setBulk = function (id) {
         });
     }
 
-    var saveButton = document.querySelector('#bulk_edit');
-    if (saveButton) {
-        saveButton.onclick = function () {
-            setTimeout(function () {
-                root.unmount();
-            }, delayToUnmountAfterSaving);
-        };
-    }
-
     var container = document.getElementById("publishpress-future-bulk-edit");
+    var component = React.createElement(_components.FutureActionPanelBulkEdit, {
+        storeName: storeName,
+        postType: _bulkEdit.postType,
+        isNewPost: _bulkEdit.isNewPost,
+        actionsSelectOptions: _bulkEdit.actionsSelectOptions,
+        is12Hour: _bulkEdit.is12Hour,
+        timeFormat: _bulkEdit.timeFormat,
+        startOfWeek: _bulkEdit.startOfWeek,
+        strings: _bulkEdit.strings,
+        taxonomyName: _bulkEdit.taxonomyName,
+        nonce: _bulkEdit.nonce
+    });
 
     if (_wp.createRoot) {
-        (0, _wp.createRoot)(container).render(React.createElement(_components.FutureActionPanelBulkEdit, {
-            storeName: storeName,
-            postType: _bulkEdit.postType,
-            isNewPost: _bulkEdit.isNewPost,
-            actionsSelectOptions: _bulkEdit.actionsSelectOptions,
-            is12Hour: _bulkEdit.is12Hour,
-            startOfWeek: _bulkEdit.startOfWeek,
-            strings: _bulkEdit.strings,
-            taxonomyName: _bulkEdit.taxonomyName,
-            nonce: _bulkEdit.nonce
-        }));
+        var root = (0, _wp.createRoot)(container);
+
+        root.render(component);
+
+        var saveButton = document.querySelector('#bulk_edit');
+        if (saveButton) {
+            saveButton.onclick = function () {
+                setTimeout(function () {
+                    root.unmount();
+                }, delayToUnmountAfterSaving);
+            };
+        }
+
+        _window.inlineEditPost.revert = function () {
+            root.unmount();
+
+            // Call the original WP revert function.
+            wpInlineEditRevert.apply(this, arguments);
+        };
     } else {
-        (0, _ReactDOM.render)(React.createElement(_components.FutureActionPanelBulkEdit, {
-            storeName: storeName,
-            postType: _bulkEdit.postType,
-            isNewPost: _bulkEdit.isNewPost,
-            actionsSelectOptions: _bulkEdit.actionsSelectOptions,
-            is12Hour: _bulkEdit.is12Hour,
-            startOfWeek: _bulkEdit.startOfWeek,
-            strings: _bulkEdit.strings,
-            taxonomyName: _bulkEdit.taxonomyName,
-            nonce: _bulkEdit.nonce
-        }), container);
+        (0, _ReactDOM.render)(component, container);
     }
-
-    _window.inlineEditPost.revert = function () {
-        root.unmount();
-
-        // Call the original WP revert function.
-        wpInlineEditRevert.apply(this, arguments);
-    };
 };
 })();
 

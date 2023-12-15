@@ -56,6 +56,35 @@ $container = DIContainer::getInstance();
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><?php
+                        esc_html_e('Time format in the date picker', 'post-expirator'); ?></th>
+                    <td>
+                        <?php
+                        $timeFormat = $container->get(ServicesAbstract::SETTINGS)->getTimeFormatForDatePicker();
+                        ?>
+                        <input type="radio" name="future-action-time-format"
+                               id="future-action-time-format-inherited"
+                               value="inherited" <?php
+                        echo $timeFormat === 'inherited' ? 'checked' : ''; ?>/>
+                        <label for="future-action-time-format-inherited"><?php
+                            esc_html_e('Inherit from Site Settings', 'post-expirator'); ?></label>
+                        &nbsp;&nbsp;
+                        <input type="radio" name="future-action-time-format"
+                               id="future-action-time-format-24h"
+                               value="24h" <?php
+                        echo $timeFormat === '24h' ? 'checked' : ''; ?>/>
+                        <label for="future-action-time-format-24h"><?php
+                            esc_html_e('24 hours', 'post-expirator'); ?></label>
+                        &nbsp;&nbsp;
+                        <input type="radio" name="future-action-time-format"
+                               id="future-action-time-format-12h"
+                               value="12h" <?php
+                        echo $timeFormat === '12h' ? 'checked' : ''; ?>/>
+                        <label for="future-action-time-format-12h"><?php
+                            esc_html_e('am/pm', 'post-expirator'); ?></label>
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row">
                         <?php
                         esc_html_e('Choose Which User Roles Can Use PublishPress Future', 'post-expirator'); ?>

@@ -353,6 +353,8 @@ class PostExpirator_Display
                 update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateColumnStyle', sanitize_key($_POST['future-action-column-style']));
+                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+                update_option('expirationdateTimeFormatForDatePicker', sanitize_key($_POST['future-action-time-format']));
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
                     $_POST['allow-user-roles'] = array();

@@ -287,6 +287,7 @@ class ClassicEditorController implements InitializableInterface
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,
                 'defaultDate' => $defaultExpirationDate['iso'],
                 'is12Hour' => get_option('time_format') !== 'H:i',
+                'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
                 'isDebugEnabled' => $debug->isEnabled(),

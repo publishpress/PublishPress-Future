@@ -9,6 +9,7 @@ import {
     isNewPost,
     actionsSelectOptions,
     is12Hour,
+    timeFormat,
     startOfWeek,
     strings,
     taxonomyName,
@@ -86,6 +87,7 @@ inlineEditPost.edit = function (button, id) {
             isNewPost={isNewPost}
             actionsSelectOptions={actionsSelectOptions}
             is12Hour={is12Hour}
+            timeFormat={timeFormat}
             startOfWeek={startOfWeek}
             strings={strings}
             taxonomyName={taxonomyName}

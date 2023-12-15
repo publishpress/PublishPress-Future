@@ -397,6 +397,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
     var datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
 
+    var is24hour = void 0;
+    if (props.timeFormat === 'inherited') {
+        is24hour = !props.is12Hour;
+    } else {
+        is24hour = props.timeFormat === '24h';
+    }
+
     var replaceCurlyBracketsWithLink = function replaceCurlyBracketsWithLink(string, href, target) {
         var parts = string.split('{');
         var result = [];
@@ -523,7 +530,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     onToggleCalendar: function onToggleCalendar() {
                         return setCalendarIsVisible(!calendarIsVisible);
                     },
-                    is12Hour: props.is12Hour,
+                    is12Hour: !is24hour,
                     startOfWeek: props.startOfWeek,
                     isExpanded: calendarIsVisible,
                     strings: props.strings
@@ -656,6 +663,7 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
                 taxonomyName: props.taxonomyName,
                 onChangeData: onChangeData,
                 is12Hour: props.is12Hour,
+                timeFormat: props.timeFormat,
                 startOfWeek: props.startOfWeek,
                 storeName: props.storeName,
                 strings: props.strings })
@@ -759,6 +767,7 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings }),
@@ -835,6 +844,7 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings })
@@ -903,6 +913,7 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
             taxonomyName: props.taxonomyName,
             onChangeData: onChangeData,
             is12Hour: props.is12Hour,
+            timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
             strings: props.strings }),
@@ -2577,29 +2588,22 @@ if (!(0, _utils.isGutenbergEnabled)()) {
     }
 
     var container = document.getElementById("publishpress-future-classic-editor");
+    var component = React.createElement(_components.FutureActionPanelClassicEditor, {
+        storeName: storeName,
+        postType: _classicEditor.postType,
+        isNewPost: _classicEditor.isNewPost,
+        actionsSelectOptions: _classicEditor.actionsSelectOptions,
+        is12Hour: _classicEditor.is12Hour,
+        timeFormat: _classicEditor.timeFormat,
+        startOfWeek: _classicEditor.startOfWeek,
+        strings: _classicEditor.strings,
+        taxonomyName: _classicEditor.taxonomyName
+    });
 
     if (_wp.createRoot) {
-        (0, _wp.createRoot)(container).render(React.createElement(_components.FutureActionPanelClassicEditor, {
-            storeName: storeName,
-            postType: _classicEditor.postType,
-            isNewPost: _classicEditor.isNewPost,
-            actionsSelectOptions: _classicEditor.actionsSelectOptions,
-            is12Hour: _classicEditor.is12Hour,
-            startOfWeek: _classicEditor.startOfWeek,
-            strings: _classicEditor.strings,
-            taxonomyName: _classicEditor.taxonomyName
-        }));
+        (0, _wp.createRoot)(container).render(component);
     } else {
-        (0, _ReactDOM.render)(React.createElement(_components.FutureActionPanelClassicEditor, {
-            storeName: storeName,
-            postType: _classicEditor.postType,
-            isNewPost: _classicEditor.isNewPost,
-            actionsSelectOptions: _classicEditor.actionsSelectOptions,
-            is12Hour: _classicEditor.is12Hour,
-            startOfWeek: _classicEditor.startOfWeek,
-            strings: _classicEditor.strings,
-            taxonomyName: _classicEditor.taxonomyName
-        }), container);
+        (0, _ReactDOM.render)(component, container);
     }
 }
 })();
