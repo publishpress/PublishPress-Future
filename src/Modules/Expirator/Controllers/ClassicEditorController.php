@@ -14,6 +14,7 @@ use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
+use WP_Post;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -61,9 +62,9 @@ class ClassicEditorController implements InitializableInterface
         );
     }
 
-    private function isGutenbergAvailableForThePostType(string $postType)
+    private function isGutenbergAvailableForThePost(WP_Post $post)
     {
-        return function_exists('use_block_editor_for_post_type') && use_block_editor_for_post_type($postType);
+        return function_exists('use_block_editor_for_post') && use_block_editor_for_post($post);
     }
 
     private function classicEditorIsRememberedForThePost(\WP_Post $post)
@@ -87,7 +88,7 @@ class ClassicEditorController implements InitializableInterface
         }
 
         // Only show the metabox if the block editor is not enabled for the post type
-        if ($this->isGutenbergAvailableForThePostType($postType)) {
+        if ($this->isGutenbergAvailableForThePost($post)) {
             if (! $this->classicEditorIsActiveForCurrentSession() ) {
                 return;
             }
