@@ -128,27 +128,13 @@ class ClassicEditorController implements InitializableInterface
         $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
         $postModel = $factory($post->ID);
 
-        $isEnabled = $postModel->isExpirationEnabled();
-
-        $data = [];
-
-        if ('auto-draft' === $post->post_status && ! $isEnabled) {
-            $data = [
-                'enabled' => false,
-                'date' => 0,
-                'action' => '',
-                'terms' => [],
-                'taxonomy' => ''
-            ];
-        } else {
-            $data = [
-                'enabled' => $postModel->isExpirationEnabled(),
-                'date' => $postModel->getExpirationDateString(false),
-                'action' => $postModel->getExpirationType(),
-                'terms' => $postModel->getExpirationCategoryIDs(),
-                'taxonomy' => $postModel->getExpirationTaxonomy()
-            ];
-        }
+        $data = [
+            'enabled' => $postModel->isExpirationEnabled(),
+            'date' => $postModel->getExpirationDateString(false),
+            'action' => $postModel->getExpirationType(),
+            'terms' => $postModel->getExpirationCategoryIDs(),
+            'taxonomy' => $postModel->getExpirationTaxonomy()
+        ];
 
         PostExpirator_Display::getInstance()->render_template(
             'classic-editor', [
