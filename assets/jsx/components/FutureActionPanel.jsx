@@ -118,46 +118,19 @@ export const FutureActionPanel = (props) => {
 
         setIsFetchingTerms(true);
 
-        if ((!taxonomy && props.postType === 'post') || taxonomy === 'category') {
-            apiFetch({
-                path: addQueryArgs('wp/v2/categories', { per_page: -1 }),
-            }).then((list) => {
-                list.forEach(cat => {
-                    termsListByName[cat.name] = cat;
-                    termsListById[cat.id] = cat.name;
-                });
-
-                setTermsListByName(termsListByName);
-                setTermsListById(termsListById);
-                setTaxonomyName(props.strings.category);
-                setIsFetchingTerms(false);
+        apiFetch({
+            path: addQueryArgs(`publishpress-future/v1/terms/${taxonomy}`),
+        }).then((result) => {
+            result.terms.forEach(term => {
+                termsListByName[decodeEntities(term.name)] = term;
+                termsListById[term.id] = decodeEntities(term.name);
             });
-        } else {
-            apiFetch({
-                path: addQueryArgs(`publishpress-future/v1/taxonomies/` + props.postType),
-            }).then((response) => {
-                if (parseInt(response.count) > 0) {
-                    apiFetch({
-                        path: addQueryArgs(`wp/v2/taxonomies/${taxonomy}`, { context: 'edit', per_page: -1 }),
-                    }).then((taxonomyAttributes) => {
-                        // fetch all terms
-                        apiFetch({
-                            path: addQueryArgs(`wp/v2/${taxonomyAttributes.rest_base}`, { context: 'edit', per_page: -1 }),
-                        }).then((terms) => {
-                            terms.forEach(term => {
-                                termsListByName[decodeEntities(term.name)] = term;
-                                termsListById[term.id] = decodeEntities(term.name);
-                            });
 
-                            setTermsListByName(termsListByName);
-                            setTermsListById(termsListById);
-                            setTaxonomyName(decodeEntities(taxonomyAttributes.name));
-                            setIsFetchingTerms(false);
-                        });
-                    });
-                }
-            });
-        }
+            setTermsListByName(termsListByName);
+            setTermsListById(termsListById);
+            setTaxonomyName(decodeEntities(result.taxonomyName));
+            setIsFetchingTerms(false);
+        });
     }
 
     const storeCalendarIsVisibleOnStorage = (value) => {

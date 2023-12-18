@@ -56,12 +56,20 @@ export const PostTypeSettingsPanel = function (props) {
     }
 
     useEffect(() => {
-        const updateTermsOptionsState = (list) => {
+        if (!postTypeTaxonomy || !props.taxonomiesList) {
+            return;
+        }
+
+        setTermsSelectIsLoading(true);
+        apiFetch({
+            path: addQueryArgs(`publishpress-future/v1/terms/${postTypeTaxonomy}`),
+        }).then((result) => {
             let options = [];
 
             let settingsTermsOptions = null;
             let option;
-            list.forEach(term => {
+            console.log(result.terms);
+            result.terms.forEach(term => {
                 option = { value: term.id, label: term.name };
                 options.push(option);
 
@@ -75,33 +83,9 @@ export const PostTypeSettingsPanel = function (props) {
             });
 
             setTermOptions(options);
-            setTermsSelectIsLoading(false);
             setSelectedTerms(settingsTermsOptions);
-        };
-
-        if ((!postTypeTaxonomy && props.postType === 'post') || postTypeTaxonomy === 'category') {
-            setTermsSelectIsLoading(true);
-            apiFetch({
-                path: addQueryArgs(`wp/v2/categories`, { per_page: -1 }),
-            }).then(updateTermsOptionsState);
-        } else {
-            if (!postTypeTaxonomy || !props.taxonomiesList) {
-                return;
-            }
-
-            setTermsSelectIsLoading(true);
-            apiFetch({
-                path: addQueryArgs(`wp/v2/taxonomies/${postTypeTaxonomy}`),
-            }).then((taxAttributes) => {
-                // fetch all terms
-                apiFetch({
-                    path: addQueryArgs(`wp/v2/${taxAttributes.rest_base}`),
-                }).then(updateTermsOptionsState);
-            }).catch((error) => {
-                console.debug('Taxonomy terms error', error);
-                setTermsSelectIsLoading(false);
-            });
-        }
+            setTermsSelectIsLoading(false);
+        });
     }, [postTypeTaxonomy]);
 
     const termOptionsLabels = termOptions.map((term) => term.label);
