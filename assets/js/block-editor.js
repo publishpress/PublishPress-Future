@@ -296,46 +296,19 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
 
         setIsFetchingTerms(true);
 
-        if (!taxonomy && props.postType === 'post' || taxonomy === 'category') {
-            apiFetch({
-                path: addQueryArgs('wp/v2/categories', { per_page: -1 })
-            }).then(function (list) {
-                list.forEach(function (cat) {
-                    termsListByName[cat.name] = cat;
-                    termsListById[cat.id] = cat.name;
-                });
-
-                setTermsListByName(termsListByName);
-                setTermsListById(termsListById);
-                setTaxonomyName(props.strings.category);
-                setIsFetchingTerms(false);
+        apiFetch({
+            path: addQueryArgs('publishpress-future/v1/terms/' + taxonomy)
+        }).then(function (result) {
+            result.terms.forEach(function (term) {
+                termsListByName[decodeEntities(term.name)] = term;
+                termsListById[term.id] = decodeEntities(term.name);
             });
-        } else {
-            apiFetch({
-                path: addQueryArgs('publishpress-future/v1/taxonomies/' + props.postType)
-            }).then(function (response) {
-                if (parseInt(response.count) > 0) {
-                    apiFetch({
-                        path: addQueryArgs('wp/v2/taxonomies/' + taxonomy, { context: 'edit', per_page: -1 })
-                    }).then(function (taxonomyAttributes) {
-                        // fetch all terms
-                        apiFetch({
-                            path: addQueryArgs('wp/v2/' + taxonomyAttributes.rest_base, { context: 'edit', per_page: -1 })
-                        }).then(function (terms) {
-                            terms.forEach(function (term) {
-                                termsListByName[decodeEntities(term.name)] = term;
-                                termsListById[term.id] = decodeEntities(term.name);
-                            });
 
-                            setTermsListByName(termsListByName);
-                            setTermsListById(termsListById);
-                            setTaxonomyName(decodeEntities(taxonomyAttributes.name));
-                            setIsFetchingTerms(false);
-                        });
-                    });
-                }
-            });
-        }
+            setTermsListByName(termsListByName);
+            setTermsListById(termsListById);
+            setTaxonomyName(decodeEntities(result.taxonomyName));
+            setIsFetchingTerms(false);
+        });
     };
 
     var storeCalendarIsVisibleOnStorage = function storeCalendarIsVisibleOnStorage(value) {
@@ -1067,12 +1040,20 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
     };
 
     (0, _wp.useEffect)(function () {
-        var updateTermsOptionsState = function updateTermsOptionsState(list) {
+        if (!postTypeTaxonomy || !props.taxonomiesList) {
+            return;
+        }
+
+        setTermsSelectIsLoading(true);
+        (0, _wp4.apiFetch)({
+            path: (0, _wp2.addQueryArgs)('publishpress-future/v1/terms/' + postTypeTaxonomy)
+        }).then(function (result) {
             var options = [];
 
             var settingsTermsOptions = null;
             var option = void 0;
-            list.forEach(function (term) {
+            console.log(result.terms);
+            result.terms.forEach(function (term) {
                 option = { value: term.id, label: term.name };
                 options.push(option);
 
@@ -1086,33 +1067,9 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             });
 
             setTermOptions(options);
-            setTermsSelectIsLoading(false);
             setSelectedTerms(settingsTermsOptions);
-        };
-
-        if (!postTypeTaxonomy && props.postType === 'post' || postTypeTaxonomy === 'category') {
-            setTermsSelectIsLoading(true);
-            (0, _wp4.apiFetch)({
-                path: (0, _wp2.addQueryArgs)('wp/v2/categories', { per_page: -1 })
-            }).then(updateTermsOptionsState);
-        } else {
-            if (!postTypeTaxonomy || !props.taxonomiesList) {
-                return;
-            }
-
-            setTermsSelectIsLoading(true);
-            (0, _wp4.apiFetch)({
-                path: (0, _wp2.addQueryArgs)('wp/v2/taxonomies/' + postTypeTaxonomy)
-            }).then(function (taxAttributes) {
-                // fetch all terms
-                (0, _wp4.apiFetch)({
-                    path: (0, _wp2.addQueryArgs)('wp/v2/' + taxAttributes.rest_base)
-                }).then(updateTermsOptionsState);
-            }).catch(function (error) {
-                console.debug('Taxonomy terms error', error);
-                setTermsSelectIsLoading(false);
-            });
-        }
+            setTermsSelectIsLoading(false);
+        });
     }, [postTypeTaxonomy]);
 
     var termOptionsLabels = termOptions.map(function (term) {
