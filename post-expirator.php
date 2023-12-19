@@ -8,7 +8,7 @@
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
- * Requires at least: 5.5
+ * Requires at least: 6.1
  * Requires PHP: 7.2.5
  */
 
@@ -26,7 +26,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 global $wp_version;
 
 $min_php_version = '7.2.5';
-$min_wp_version  = '5.5';
+$min_wp_version  = '6.1';
 
 // If the PHP or WP version is not compatible, terminate the plugin execution.
 $invalid_php_version = version_compare(phpversion(), $min_php_version, '<');
