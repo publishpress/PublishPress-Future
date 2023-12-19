@@ -38,7 +38,7 @@ module.exports = [
             "&wp.plugins": "wp.plugins",
             "&wp.hooks": "wp.hooks",
             "&wp.url": "wp.url",
-            "&config/settings-post-types": "publishpressFutureSettingsConfig"
+            "&config.settings-post-types": "publishpressFutureSettingsConfig"
         }
     },
     {
@@ -75,7 +75,7 @@ module.exports = [
             "&wp.hooks": "wp.hooks",
             "&window": "window",
             "&wp.url": "wp.url",
-            "&config/block-editor": "publishpressFutureBlockEditorConfig"
+            "&config.block-editor": "publishpressFutureBlockEditorConfig"
         }
     },
     {
@@ -111,7 +111,7 @@ module.exports = [
             "&wp.plugins": "wp.plugins",
             "&wp.hooks": "wp.hooks",
             "&wp.url": "wp.url",
-            "&config/classic-editor": "publishpressFutureClassicEditorConfig"
+            "&config.classic-editor": "publishpressFutureClassicEditorConfig"
         }
     },
     {
@@ -146,7 +146,7 @@ module.exports = [
             "&wp.data": "wp.data",
             "&wp.plugins": "wp.plugins",
             "&wp.hooks": "wp.hooks",
-            "&config/quick-edit": "publishpressFutureQuickEditConfig",
+            "&config.quick-edit": "publishpressFutureQuickEditConfig",
             "&window": "window",
             "&wp.url": "wp.url"
         }
@@ -183,7 +183,7 @@ module.exports = [
             "&wp.data": "wp.data",
             "&wp.plugins": "wp.plugins",
             "&wp.hooks": "wp.hooks",
-            "&config/bulk-edit": "publishpressFutureBulkEditConfig",
+            "&config.bulk-edit": "publishpressFutureBulkEditConfig",
             "&window": "window",
             "&wp.url": "wp.url"
         }

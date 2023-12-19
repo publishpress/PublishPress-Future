@@ -15,7 +15,7 @@ import {
     strings,
     taxonomyName,
     nonce
-} from "&config/bulk-edit";
+} from "&config.bulk-edit";
 import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-bulk-edit';

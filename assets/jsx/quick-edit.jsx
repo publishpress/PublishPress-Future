@@ -14,7 +14,7 @@ import {
     strings,
     taxonomyName,
     nonce
-} from "&config/quick-edit";
+} from "&config.quick-edit";
 import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-quick-edit';

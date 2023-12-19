@@ -473,9 +473,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 React.createElement(
                     BaseControl,
                     { label: taxonomyName, className: 'future-action-warning' },
-                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                    ' ',
-                    props.strings.noTaxonomyFound
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                        ' ',
+                        props.strings.noTaxonomyFound
+                    )
                 )
             ) || termsListByNameKeys.length === 0 && React.createElement(
                 PanelRow,
@@ -2421,7 +2425,7 @@ module.exports = ReactDOM;
 
 /***/ }),
 
-/***/ "&config/quick-edit":
+/***/ "&config.quick-edit":
 /*!****************************************************!*\
   !*** external "publishpressFutureQuickEditConfig" ***!
   \****************************************************/
@@ -2548,7 +2552,7 @@ var _wp2 = __webpack_require__(/*! &wp.data */ "&wp.data");
 
 var _window = __webpack_require__(/*! &window */ "&window");
 
-var _quickEdit = __webpack_require__(/*! &config/quick-edit */ "&config/quick-edit");
+var _config = __webpack_require__(/*! &config.quick-edit */ "&config.quick-edit");
 
 var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
 
@@ -2617,15 +2621,15 @@ _window.inlineEditPost.edit = function (button, id) {
     var container = document.getElementById("publishpress-future-quick-edit");
     var component = React.createElement(_components.FutureActionPanelQuickEdit, {
         storeName: storeName,
-        postType: _quickEdit.postType,
-        isNewPost: _quickEdit.isNewPost,
-        actionsSelectOptions: _quickEdit.actionsSelectOptions,
-        is12Hour: _quickEdit.is12Hour,
-        timeFormat: _quickEdit.timeFormat,
-        startOfWeek: _quickEdit.startOfWeek,
-        strings: _quickEdit.strings,
-        taxonomyName: _quickEdit.taxonomyName,
-        nonce: _quickEdit.nonce
+        postType: _config.postType,
+        isNewPost: _config.isNewPost,
+        actionsSelectOptions: _config.actionsSelectOptions,
+        is12Hour: _config.is12Hour,
+        timeFormat: _config.timeFormat,
+        startOfWeek: _config.startOfWeek,
+        strings: _config.strings,
+        taxonomyName: _config.taxonomyName,
+        nonce: _config.nonce
     });
 
     if (_wp.createRoot) {

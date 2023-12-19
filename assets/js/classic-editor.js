@@ -473,9 +473,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 React.createElement(
                     BaseControl,
                     { label: taxonomyName, className: 'future-action-warning' },
-                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                    ' ',
-                    props.strings.noTaxonomyFound
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                        ' ',
+                        props.strings.noTaxonomyFound
+                    )
                 )
             ) || termsListByNameKeys.length === 0 && React.createElement(
                 PanelRow,
@@ -2421,7 +2425,7 @@ module.exports = ReactDOM;
 
 /***/ }),
 
-/***/ "&config/classic-editor":
+/***/ "&config.classic-editor":
 /*!********************************************************!*\
   !*** external "publishpressFutureClassicEditorConfig" ***!
   \********************************************************/
@@ -2536,7 +2540,7 @@ var _wp = __webpack_require__(/*! &wp.element */ "&wp.element");
 
 var _wp2 = __webpack_require__(/*! &wp.data */ "&wp.data");
 
-var _classicEditor = __webpack_require__(/*! &config/classic-editor */ "&config/classic-editor");
+var _config = __webpack_require__(/*! &config.classic-editor */ "&config.classic-editor");
 
 var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
 
@@ -2547,11 +2551,11 @@ if (!(0, _utils.isGutenbergEnabled)()) {
         (0, _data.createStore)({
             name: storeName,
             defaultState: {
-                autoEnable: _classicEditor.postTypeDefaultConfig.autoEnable,
-                action: _classicEditor.postTypeDefaultConfig.expireType,
-                date: _classicEditor.defaultDate,
-                taxonomy: _classicEditor.postTypeDefaultConfig.taxonomy,
-                terms: _classicEditor.postTypeDefaultConfig.terms
+                autoEnable: _config.postTypeDefaultConfig.autoEnable,
+                action: _config.postTypeDefaultConfig.expireType,
+                date: _config.defaultDate,
+                taxonomy: _config.postTypeDefaultConfig.taxonomy,
+                terms: _config.postTypeDefaultConfig.terms
             }
         });
     }
@@ -2559,14 +2563,14 @@ if (!(0, _utils.isGutenbergEnabled)()) {
     var container = document.getElementById("publishpress-future-classic-editor");
     var component = React.createElement(_components.FutureActionPanelClassicEditor, {
         storeName: storeName,
-        postType: _classicEditor.postType,
-        isNewPost: _classicEditor.isNewPost,
-        actionsSelectOptions: _classicEditor.actionsSelectOptions,
-        is12Hour: _classicEditor.is12Hour,
-        timeFormat: _classicEditor.timeFormat,
-        startOfWeek: _classicEditor.startOfWeek,
-        strings: _classicEditor.strings,
-        taxonomyName: _classicEditor.taxonomyName
+        postType: _config.postType,
+        isNewPost: _config.isNewPost,
+        actionsSelectOptions: _config.actionsSelectOptions,
+        is12Hour: _config.is12Hour,
+        timeFormat: _config.timeFormat,
+        startOfWeek: _config.startOfWeek,
+        strings: _config.strings,
+        taxonomyName: _config.taxonomyName
     });
 
     if (_wp.createRoot) {

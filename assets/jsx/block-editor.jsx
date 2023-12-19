@@ -11,7 +11,7 @@ import {
     taxonomyName,
     postTypeDefaultConfig,
     defaultDate
-} from "&config/block-editor";
+} from "&config.block-editor";
 
 const storeName = 'publishpress-future/future-action';
 

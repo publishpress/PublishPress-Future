@@ -473,9 +473,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 React.createElement(
                     BaseControl,
                     { label: taxonomyName, className: 'future-action-warning' },
-                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                    ' ',
-                    props.strings.noTaxonomyFound
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                        ' ',
+                        props.strings.noTaxonomyFound
+                    )
                 )
             ) || termsListByNameKeys.length === 0 && React.createElement(
                 PanelRow,
@@ -2200,7 +2204,7 @@ module.exports = ReactDOM;
 
 /***/ }),
 
-/***/ "&config/settings-post-types":
+/***/ "&config.settings-post-types":
 /*!***************************************************!*\
   !*** external "publishpressFutureSettingsConfig" ***!
   \***************************************************/
@@ -2309,7 +2313,7 @@ var _components = __webpack_require__(/*! ./components */ "./assets/jsx/componen
 
 var _wp = __webpack_require__(/*! &wp.element */ "&wp.element");
 
-var _settingsPostTypes = __webpack_require__(/*! &config/settings-post-types */ "&config/settings-post-types");
+var _config = __webpack_require__(/*! &config.settings-post-types */ "&config.settings-post-types");
 
 var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
 
@@ -2326,19 +2330,19 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
             null,
             React.createElement(_components.NonceControl, {
                 name: "_postExpiratorMenuDefaults_nonce",
-                nonce: _settingsPostTypes.nonce,
-                referrer: _settingsPostTypes.referrer
+                nonce: _config.nonce,
+                referrer: _config.referrer
             }),
             React.createElement(
                 _components.SettingsSection,
                 {
-                    title: _settingsPostTypes.text.settingsSectionTitle,
-                    description: _settingsPostTypes.text.settingsSectionDescription },
+                    title: _config.text.settingsSectionTitle,
+                    description: _config.text.settingsSectionDescription },
                 React.createElement(_components.PostTypesSettingsPanels, {
-                    settings: _settingsPostTypes.settings,
-                    text: _settingsPostTypes.text,
-                    expireTypeList: _settingsPostTypes.expireTypeList,
-                    taxonomiesList: _settingsPostTypes.taxonomiesList
+                    settings: _config.settings,
+                    text: _config.text,
+                    expireTypeList: _config.expireTypeList,
+                    taxonomiesList: _config.taxonomiesList
                 })
             ),
             React.createElement(
@@ -2346,7 +2350,7 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
                 null,
                 React.createElement(_components.SubmitButton, {
                     name: "expirationdateSaveDefaults",
-                    text: _settingsPostTypes.text.saveChanges
+                    text: _config.text.saveChanges
                 })
             )
         )

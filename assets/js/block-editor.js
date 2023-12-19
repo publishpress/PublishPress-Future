@@ -473,9 +473,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 React.createElement(
                     BaseControl,
                     { label: taxonomyName, className: 'future-action-warning' },
-                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                    ' ',
-                    props.strings.noTaxonomyFound
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                        ' ',
+                        props.strings.noTaxonomyFound
+                    )
                 )
             ) || termsListByNameKeys.length === 0 && React.createElement(
                 PanelRow,
@@ -2411,7 +2415,7 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
-/***/ "&config/block-editor":
+/***/ "&config.block-editor":
 /*!******************************************************!*\
   !*** external "publishpressFutureBlockEditorConfig" ***!
   \******************************************************/
@@ -2534,18 +2538,18 @@ var _wp = __webpack_require__(/*! &wp.data */ "&wp.data");
 
 var _wp2 = __webpack_require__(/*! &wp.plugins */ "&wp.plugins");
 
-var _blockEditor = __webpack_require__(/*! &config/block-editor */ "&config/block-editor");
+var _config = __webpack_require__(/*! &config.block-editor */ "&config.block-editor");
 
 var storeName = 'publishpress-future/future-action';
 
 (0, _data.createStore)({
     name: storeName,
     defaultState: {
-        autoEnable: _blockEditor.postTypeDefaultConfig.autoEnable,
-        action: _blockEditor.postTypeDefaultConfig.expireType,
-        date: _blockEditor.defaultDate,
-        taxonomy: _blockEditor.postTypeDefaultConfig.taxonomy,
-        terms: _blockEditor.postTypeDefaultConfig.terms
+        autoEnable: _config.postTypeDefaultConfig.autoEnable,
+        action: _config.postTypeDefaultConfig.expireType,
+        date: _config.defaultDate,
+        taxonomy: _config.postTypeDefaultConfig.taxonomy,
+        terms: _config.postTypeDefaultConfig.terms
     }
 });
 
@@ -2553,14 +2557,14 @@ var BlockEditorFutureActionPlugin = function BlockEditorFutureActionPlugin() {
     return React.createElement(_components.FutureActionPanelBlockEditor, {
         postType: (0, _wp.select)('core/editor').getCurrentPostType(),
         isCleanNewPost: (0, _wp.select)('core/editor').isCleanNewPost(),
-        actionsSelectOptions: _blockEditor.actionsSelectOptions,
-        is12Hour: _blockEditor.is12Hour,
-        timeFormat: _blockEditor.timeFormat,
-        startOfWeek: _blockEditor.startOfWeek,
+        actionsSelectOptions: _config.actionsSelectOptions,
+        is12Hour: _config.is12Hour,
+        timeFormat: _config.timeFormat,
+        startOfWeek: _config.startOfWeek,
         storeName: storeName,
-        strings: _blockEditor.strings,
-        taxonomyName: _blockEditor.taxonomyName,
-        postTypeDefaultConfig: _blockEditor.postTypeDefaultConfig });
+        strings: _config.strings,
+        taxonomyName: _config.taxonomyName,
+        postTypeDefaultConfig: _config.postTypeDefaultConfig });
 };
 
 (0, _wp2.registerPlugin)('publishpress-future-action', {

@@ -14,7 +14,7 @@ import {
     taxonomyName,
     postTypeDefaultConfig,
     defaultDate
-} from "&config/classic-editor";
+} from "&config.classic-editor";
 import { render } from "&ReactDOM";
 
 if (! isGutenbergEnabled()) {

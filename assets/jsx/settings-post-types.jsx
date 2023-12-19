@@ -20,7 +20,7 @@ import {
     expireTypeList,
     taxonomiesList,
     text
-} from "&config/settings-post-types";
+} from "&config.settings-post-types";
 import { render } from "&ReactDOM";
 
 const SettingsFormPanel = (props) => {

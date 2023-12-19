@@ -473,9 +473,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 React.createElement(
                     BaseControl,
                     { label: taxonomyName, className: 'future-action-warning' },
-                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                    ' ',
-                    props.strings.noTaxonomyFound
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                        ' ',
+                        props.strings.noTaxonomyFound
+                    )
                 )
             ) || termsListByNameKeys.length === 0 && React.createElement(
                 PanelRow,
@@ -2421,7 +2425,7 @@ module.exports = ReactDOM;
 
 /***/ }),
 
-/***/ "&config/bulk-edit":
+/***/ "&config.bulk-edit":
 /*!***************************************************!*\
   !*** external "publishpressFutureBulkEditConfig" ***!
   \***************************************************/
@@ -2546,7 +2550,7 @@ var _wp2 = __webpack_require__(/*! &wp.data */ "&wp.data");
 
 var _window = __webpack_require__(/*! &window */ "&window");
 
-var _bulkEdit = __webpack_require__(/*! &config/bulk-edit */ "&config/bulk-edit");
+var _config = __webpack_require__(/*! &config.bulk-edit */ "&config.bulk-edit");
 
 var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
 
@@ -2580,19 +2584,19 @@ _window.inlineEditPost.setBulk = function (id) {
     wpInlineSetBulk.apply(this, arguments);
 
     if ((0, _wp2.select)(storeName)) {
-        (0, _wp2.dispatch)(storeName).setAction(_bulkEdit.postTypeDefaultConfig.expireType);
-        (0, _wp2.dispatch)(storeName).setDate(_bulkEdit.postTypeDefaultConfig.defaultDate);
-        (0, _wp2.dispatch)(storeName).setTaxonomy(_bulkEdit.postTypeDefaultConfig.taxonomy);
-        (0, _wp2.dispatch)(storeName).setTerms(_bulkEdit.postTypeDefaultConfig.terms);
+        (0, _wp2.dispatch)(storeName).setAction(_config.postTypeDefaultConfig.expireType);
+        (0, _wp2.dispatch)(storeName).setDate(_config.postTypeDefaultConfig.defaultDate);
+        (0, _wp2.dispatch)(storeName).setTaxonomy(_config.postTypeDefaultConfig.taxonomy);
+        (0, _wp2.dispatch)(storeName).setTerms(_config.postTypeDefaultConfig.terms);
         (0, _wp2.dispatch)(storeName).setChangeAction('no-change');
     } else {
         (0, _data.createStore)({
             name: storeName,
             defaultState: {
-                action: _bulkEdit.postTypeDefaultConfig.expireType,
-                date: _bulkEdit.defaultDate,
-                taxonomy: _bulkEdit.postTypeDefaultConfig.taxonomy,
-                terms: _bulkEdit.postTypeDefaultConfig.terms,
+                action: _config.postTypeDefaultConfig.expireType,
+                date: _config.defaultDate,
+                taxonomy: _config.postTypeDefaultConfig.taxonomy,
+                terms: _config.postTypeDefaultConfig.terms,
                 changeAction: 'no-change'
             }
         });
@@ -2601,15 +2605,15 @@ _window.inlineEditPost.setBulk = function (id) {
     var container = document.getElementById("publishpress-future-bulk-edit");
     var component = React.createElement(_components.FutureActionPanelBulkEdit, {
         storeName: storeName,
-        postType: _bulkEdit.postType,
-        isNewPost: _bulkEdit.isNewPost,
-        actionsSelectOptions: _bulkEdit.actionsSelectOptions,
-        is12Hour: _bulkEdit.is12Hour,
-        timeFormat: _bulkEdit.timeFormat,
-        startOfWeek: _bulkEdit.startOfWeek,
-        strings: _bulkEdit.strings,
-        taxonomyName: _bulkEdit.taxonomyName,
-        nonce: _bulkEdit.nonce
+        postType: _config.postType,
+        isNewPost: _config.isNewPost,
+        actionsSelectOptions: _config.actionsSelectOptions,
+        is12Hour: _config.is12Hour,
+        timeFormat: _config.timeFormat,
+        startOfWeek: _config.startOfWeek,
+        strings: _config.strings,
+        taxonomyName: _config.taxonomyName,
+        nonce: _config.nonce
     });
 
     if (_wp.createRoot) {
