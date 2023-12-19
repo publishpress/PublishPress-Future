@@ -145,6 +145,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 * ADDED: Add a new setting to select the time format in the date picker component, #626;
 * CHANGED: Stick the library woocommerce/action-scheduler on version 3.7.0, so we don't force WP min to 6.2;
+* CHANGED: Min WP version is now 6.1, #627;
 * FIXED: Fix the search of posts in the posts lists, #620;
 * FIXED: Fix classic meta box when using Classic Editor plugin with the classic editor as default, #624;
 * FIXED: Fix default date for new posts, #623;
