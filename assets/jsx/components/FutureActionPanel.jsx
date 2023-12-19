@@ -219,6 +219,14 @@ export const FutureActionPanel = (props) => {
         return result;
     };
 
+    // Remove items from actions list if related to taxonomies and there is no taxonmoy for the post type
+    let actionsSelectOptions = props.actionsSelectOptions;
+    if (! props.taxonomy) {
+        actionsSelectOptions = props.actionsSelectOptions.filter((item) => {
+            return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+        });
+    }
+
     const HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
 
     return (
@@ -243,7 +251,7 @@ export const FutureActionPanel = (props) => {
                         <SelectControl
                             label={props.strings.action}
                             value={action}
-                            options={props.actionsSelectOptions}
+                            options={actionsSelectOptions}
                             onChange={handleActionChange}
                         />
                     </PanelRow>

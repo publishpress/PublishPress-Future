@@ -279,17 +279,23 @@ class RestAPIController implements InitializableInterface
             'hide_empty' => false
         ]);
 
-        $terms = array_map(function ($term) {
-            return [
-                'id' => $term->term_id,
-                'name' => $term->name,
-                'slug' => $term->slug,
-            ];
-        }, $terms);
+        $response = [];
+        if (is_wp_error($terms)) {
+            $response = ['terms' => [], 'count' => 0, 'taxonomyName' => ''];
+        } else {
+            $terms = array_map(function ($term) {
+                return [
+                    'id' => $term->term_id,
+                    'name' => $term->name,
+                    'slug' => $term->slug,
+                ];
+            }, $terms);
 
-        $taxonomyName = get_taxonomy($taxonomy)->labels->name;
+            $taxonomyName = get_taxonomy($taxonomy)->labels->name;
+            $response = ['terms' => $terms, 'count' => count($terms), 'taxonomyName' => $taxonomyName];
+        }
 
-        return rest_ensure_response(['terms' => $terms, 'count' => count($terms), 'taxonomyName' => $taxonomyName]);
+        return rest_ensure_response($response);
     }
 
     public function getFutureActionData(WP_REST_Request $request)

@@ -422,6 +422,14 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         return result;
     };
 
+    // Remove items from actions list if related to taxonomies and there is no taxonmoy for the post type
+    var actionsSelectOptions = props.actionsSelectOptions;
+    if (!props.taxonomy) {
+        actionsSelectOptions = props.actionsSelectOptions.filter(function (item) {
+            return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+        });
+    }
+
     var HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
 
     return React.createElement(
@@ -446,7 +454,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 React.createElement(SelectControl, {
                     label: props.strings.action,
                     value: action,
-                    options: props.actionsSelectOptions,
+                    options: actionsSelectOptions,
                     onChange: handleActionChange
                 })
             ),
@@ -464,7 +472,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 null,
                 React.createElement(
                     BaseControl,
-                    { label: taxonomyName },
+                    { label: taxonomyName, className: 'future-action-warning' },
                     React.createElement('i', { className: 'dashicons dashicons-warning' }),
                     ' ',
                     props.strings.noTaxonomyFound
@@ -1052,7 +1060,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
 
             var settingsTermsOptions = null;
             var option = void 0;
-            console.log(result.terms);
+
             result.terms.forEach(function (term) {
                 option = { value: term.id, label: term.name };
                 options.push(option);

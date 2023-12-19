@@ -68,7 +68,7 @@ export const PostTypeSettingsPanel = function (props) {
 
             let settingsTermsOptions = null;
             let option;
-            console.log(result.terms);
+
             result.terms.forEach(term => {
                 option = { value: term.id, label: term.name };
                 options.push(option);

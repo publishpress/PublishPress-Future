@@ -211,7 +211,7 @@ class Controller implements InitializableInterface
                         'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
                         'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
                         'fieldTaxonomy' => __('Taxonomy (Hierarchical)', 'post-expirator'),
-                        'noItemsfound' => __('No taxonomies found', 'post-expirator'),
+                        'noItemsfound' => __('No hierarchical taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
                         'fieldTaxonomyDescription' => __(
                             'Select the hierarchical taxonomy and terms to be used for taxonomy based expiration.',
                             'post-expirator'
