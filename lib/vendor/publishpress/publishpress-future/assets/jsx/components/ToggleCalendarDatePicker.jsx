@@ -1,5 +1,6 @@
 import { ToggleArrowButton } from "./ToggleArrowButton";
 import { DateTimePicker } from "./DateTimePicker";
+import { Fragment, useEffect } from "&wp.element";
 
 export const ToggleCalendarDatePicker = (
     {
@@ -12,8 +13,6 @@ export const ToggleCalendarDatePicker = (
         startOfWeek
     }
 ) => {
-    const { Fragment, useEffect } = wp.element;
-
     useEffect(() => {
         // Move the element of the toggle button to between the time and date elements.
         const toggleButtonElement = document.querySelector('.future-action-calendar-toggle');

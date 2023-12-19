@@ -1,11 +1,10 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
+import { Fragment } from "&wp.element";
+import { TextControl as WPTextControl } from "&wp.components";
 
 export const TextControl = function (props) {
-    const { Fragment } = wp.element;
-    const WPTextControl = wp.components.TextControl;
-
     let description;
 
     if (props.unescapedDescription) {

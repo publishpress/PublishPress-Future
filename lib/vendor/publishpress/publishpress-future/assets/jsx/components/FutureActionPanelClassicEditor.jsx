@@ -1,7 +1,7 @@
 import { FutureActionPanel } from "./";
+import { select } from "&wp.data";
 
 export const FutureActionPanelClassicEditor = (props) => {
-    const { select } = wp.data;
     const browserTimezoneOffset = new Date().getTimezoneOffset();
 
     const getElementByName = (name) => {
@@ -42,6 +42,7 @@ export const FutureActionPanelClassicEditor = (props) => {
                 taxonomyName={props.taxonomyName}
                 onChangeData={onChangeData}
                 is12Hour={props.is12Hour}
+                timeFormat={props.timeFormat}
                 startOfWeek={props.startOfWeek}
                 storeName={props.storeName}
                 strings={props.strings} />

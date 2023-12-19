@@ -1,8 +1,7 @@
 import { FutureActionPanel } from './';
+import { useSelect } from '&wp.data';
 
 export const FutureActionPanelQuickEdit = (props) => {
-    const { useSelect } = wp.data;
-
     const onChangeData = (attribute, value) => {};
 
     const date = useSelect((select) => select(props.storeName).getDate(), []);
@@ -32,16 +31,17 @@ export const FutureActionPanelQuickEdit = (props) => {
                 taxonomyName={props.taxonomyName}
                 onChangeData={onChangeData}
                 is12Hour={props.is12Hour}
+                timeFormat={props.timeFormat}
                 startOfWeek={props.startOfWeek}
                 storeName={props.storeName}
                 strings={props.strings} />
 
             {/* Quick edit JS code will save only fields with name inside the edit row */}
             <input type="hidden" name={'future_action_enabled'} value={enabled ? 1 : 0} />
-            <input type="hidden" name={'future_action_action'} value={action} />
-            <input type="hidden" name={'future_action_date'} value={date} />
-            <input type="hidden" name={'future_action_terms'} value={termsString} />
-            <input type="hidden" name={'future_action_taxonomy'} value={taxonomy} />
+            <input type="hidden" name={'future_action_action'} value={action ? action : ''} />
+            <input type="hidden" name={'future_action_date'} value={date ? date : ''} />
+            <input type="hidden" name={'future_action_terms'} value={termsString ? termsString : ''} />
+            <input type="hidden" name={'future_action_taxonomy'} value={taxonomy ? taxonomy : ''} />
             <input type="hidden" name={'future_action_view'} value="quick-edit" />
             <input type="hidden" name={'_future_action_nonce'} value={props.nonce} />
         </div>

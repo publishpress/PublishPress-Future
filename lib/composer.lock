@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d009115dd47ea8b944fdf4cee3ec84d",
+    "content-hash": "ed0783c5280c8a03401c08ffa642ee93",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.1.5",
+            "version": "dev-release-3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "2f5157848211bb983dece4a7c32fa9d8233a5c07"
+                "reference": "a0cd1455bcb64b82ebf096bca510c8ea496b20c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/2f5157848211bb983dece4a7c32fa9d8233a5c07",
-                "reference": "2f5157848211bb983dece4a7c32fa9d8233a5c07",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/a0cd1455bcb64b82ebf096bca510c8ea496b20c8",
+                "reference": "a0cd1455bcb64b82ebf096bca510c8ea496b20c8",
                 "shasum": ""
             },
             "require": {
@@ -464,10 +464,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.5",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/release-3.1.6",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2023-12-14T14:34:58+00:00"
+            "time": "2023-12-19T21:44:41+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -767,7 +767,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "publishpress/publishpress-future": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -11,13 +11,12 @@ import {
     TokensControl,
     CheckboxControl
 } from './';
+import { useEffect, useState } from '&wp.element';
+import { addQueryArgs } from '&wp.url';
+import { applyFilters } from '&wp.hooks';
+import { apiFetch } from '&wp';
 
 export const PostTypeSettingsPanel = function (props) {
-    const { useState, useEffect } = wp.element;
-    const { addQueryArgs } = wp.url;
-    const { applyFilters } = wp.hooks;
-    const { apiFetch } = wp;
-
     const [postTypeTaxonomy, setPostTypeTaxonomy] = useState(props.settings.taxonomy);
     const [termOptions, setTermOptions] = useState([]);
     const [termsSelectIsLoading, setTermsSelectIsLoading] = useState(false);
@@ -57,12 +56,20 @@ export const PostTypeSettingsPanel = function (props) {
     }
 
     useEffect(() => {
-        const updateTermsOptionsState = (list) => {
+        if (!postTypeTaxonomy || !props.taxonomiesList) {
+            return;
+        }
+
+        setTermsSelectIsLoading(true);
+        apiFetch({
+            path: addQueryArgs(`publishpress-future/v1/terms/${postTypeTaxonomy}`),
+        }).then((result) => {
             let options = [];
 
             let settingsTermsOptions = null;
             let option;
-            list.forEach(term => {
+
+            result.terms.forEach(term => {
                 option = { value: term.id, label: term.name };
                 options.push(option);
 
@@ -76,33 +83,9 @@ export const PostTypeSettingsPanel = function (props) {
             });
 
             setTermOptions(options);
-            setTermsSelectIsLoading(false);
             setSelectedTerms(settingsTermsOptions);
-        };
-
-        if ((!postTypeTaxonomy && props.postType === 'post') || postTypeTaxonomy === 'category') {
-            setTermsSelectIsLoading(true);
-            apiFetch({
-                path: addQueryArgs(`wp/v2/categories`, { per_page: -1 }),
-            }).then(updateTermsOptionsState);
-        } else {
-            if (!postTypeTaxonomy || !props.taxonomiesList) {
-                return;
-            }
-
-            setTermsSelectIsLoading(true);
-            apiFetch({
-                path: addQueryArgs(`wp/v2/taxonomies/${postTypeTaxonomy}`),
-            }).then((taxAttributes) => {
-                // fetch all terms
-                apiFetch({
-                    path: addQueryArgs(`wp/v2/${taxAttributes.rest_base}`),
-                }).then(updateTermsOptionsState);
-            }).catch((error) => {
-                console.debug('Taxonomy terms error', error);
-                setTermsSelectIsLoading(false);
-            });
-        }
+            setTermsSelectIsLoading(false);
+        });
     }, [postTypeTaxonomy]);
 
     const termOptionsLabels = termOptions.map((term) => term.label);

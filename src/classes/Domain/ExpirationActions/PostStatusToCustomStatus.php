@@ -48,6 +48,10 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
     {
         $postType = $this->getPostTypeFromPostModel();
 
+        if (empty($postType)) {
+            return '';
+        }
+
         return $postType->name;
     }
 

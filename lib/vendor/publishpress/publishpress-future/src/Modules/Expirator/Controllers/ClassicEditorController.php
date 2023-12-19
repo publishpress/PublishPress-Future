@@ -14,6 +14,7 @@ use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
+use WP_Post;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -61,9 +62,9 @@ class ClassicEditorController implements InitializableInterface
         );
     }
 
-    private function isGutenbergAvailableForThePostType(string $postType)
+    private function isGutenbergAvailableForThePost(WP_Post $post)
     {
-        return function_exists('use_block_editor_for_post_type') && use_block_editor_for_post_type($postType);
+        return function_exists('use_block_editor_for_post') && use_block_editor_for_post($post);
     }
 
     private function classicEditorIsRememberedForThePost(\WP_Post $post)
@@ -87,7 +88,7 @@ class ClassicEditorController implements InitializableInterface
         }
 
         // Only show the metabox if the block editor is not enabled for the post type
-        if ($this->isGutenbergAvailableForThePostType($postType)) {
+        if ($this->isGutenbergAvailableForThePost($post)) {
             if (! $this->classicEditorIsActiveForCurrentSession() ) {
                 return;
             }
@@ -127,27 +128,13 @@ class ClassicEditorController implements InitializableInterface
         $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
         $postModel = $factory($post->ID);
 
-        $isEnabled = $postModel->isExpirationEnabled();
-
-        $data = [];
-
-        if ('auto-draft' === $post->post_status && ! $isEnabled) {
-            $data = [
-                'enabled' => false,
-                'date' => 0,
-                'action' => '',
-                'terms' => [],
-                'taxonomy' => ''
-            ];
-        } else {
-            $data = [
-                'enabled' => $postModel->isExpirationEnabled(),
-                'date' => $postModel->getExpirationDateString(false),
-                'action' => $postModel->getExpirationType(),
-                'terms' => $postModel->getExpirationCategoryIDs(),
-                'taxonomy' => $postModel->getExpirationTaxonomy()
-            ];
-        }
+        $data = [
+            'enabled' => $postModel->isExpirationEnabled(),
+            'date' => $postModel->getExpirationDateString(false),
+            'action' => $postModel->getExpirationType(),
+            'terms' => $postModel->getExpirationCategoryIDs(),
+            'taxonomy' => $postModel->getExpirationTaxonomy()
+        ];
 
         PostExpirator_Display::getInstance()->render_template(
             'classic-editor', [
@@ -260,7 +247,7 @@ class ClassicEditorController implements InitializableInterface
         wp_enqueue_script(
             'publishpress-future-classic-editor',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
-            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element'],
+            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'wp-html-entities'],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );
@@ -300,6 +287,7 @@ class ClassicEditorController implements InitializableInterface
                 'postTypeDefaultConfig' => $postTypeDefaultConfig,
                 'defaultDate' => $defaultExpirationDate['iso'],
                 'is12Hour' => get_option('time_format') !== 'H:i',
+                'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
                 'isDebugEnabled' => $debug->isEnabled(),

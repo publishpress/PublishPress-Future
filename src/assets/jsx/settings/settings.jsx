@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import { SettingRow } from "@publishpress-free/components";
-import { addFilter } from "@wp/hooks";
+import { SettingRow } from "&publishpress-free/components";
+import { addFilter } from "&wp.hooks";
 import {
     settings,
     customPostStatuses,
     text
-} from "@config/pro-settings";
-import { CheckboxControl, Button } from "@wp/components";
+} from "&config.pro-settings";
+import { CheckboxControl, Button } from "&wp.components";
 
 const addSettings = (settingsRows, props, settingActive, useState) => {
     let defaultEnabledCustomStatuses = [];

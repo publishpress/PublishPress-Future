@@ -150,6 +150,24 @@ class RestAPIController implements InitializableInterface
                 ],
             ]
         ]);
+
+        register_rest_route($apiNamespace, '/terms/(?P<taxonomy>[a-z\-_0-9A-Z]+)', [
+            'methods' => 'GET',
+            'callback' => [$this, 'getTaxonomyTerms'],
+            'permission_callback' => function () {
+                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+            },
+            'args' => [
+                'taxonomy' => [
+                    'validate_callback' => function ($param, $request, $key) {
+                        return sanitize_key($param);
+                    },
+                    'sanitize_callback' => 'sanitize_key',
+                    'required' => true,
+                    'type' => 'string',
+                ],
+            ]
+        ]);
     }
 
     private function registerRestField()
@@ -238,6 +256,7 @@ class RestAPIController implements InitializableInterface
     public function getPostTypeTaxonomies(WP_REST_Request $request)
     {
         $postType = $request->get_param('postType');
+        $postType = sanitize_key($postType);
 
         $taxonomies = get_object_taxonomies($postType, 'objects');
         $taxonomies = array_map(function ($taxonomy) {
@@ -248,6 +267,35 @@ class RestAPIController implements InitializableInterface
         }, $taxonomies);
 
         return rest_ensure_response(['taxonomies' => $taxonomies, 'count' => count($taxonomies)]);
+    }
+
+    public function getTaxonomyTerms(WP_REST_Request $request)
+    {
+        $taxonomy = $request->get_param('taxonomy');
+        $taxonomy = sanitize_key($taxonomy);
+
+        $terms = get_terms([
+            'taxonomy' => $taxonomy,
+            'hide_empty' => false
+        ]);
+
+        $response = [];
+        if (is_wp_error($terms)) {
+            $response = ['terms' => [], 'count' => 0, 'taxonomyName' => ''];
+        } else {
+            $terms = array_map(function ($term) {
+                return [
+                    'id' => $term->term_id,
+                    'name' => $term->name,
+                    'slug' => $term->slug,
+                ];
+            }, $terms);
+
+            $taxonomyName = get_taxonomy($taxonomy)->labels->name;
+            $response = ['terms' => $terms, 'count' => count($terms), 'taxonomyName' => $taxonomyName];
+        }
+
+        return rest_ensure_response($response);
     }
 
     public function getFutureActionData(WP_REST_Request $request)

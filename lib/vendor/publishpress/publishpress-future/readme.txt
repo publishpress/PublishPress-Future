@@ -3,7 +3,7 @@ Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire posts, update posts, schedule changes, automatic changes,
-Requires at least: 5.5
+Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.4
 License: GPLv2 or later
@@ -140,6 +140,18 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 
 == Changelog ==
+
+= [3.1.6] UNRELEASED =
+
+* ADDED: Add a new setting to select the time format in the date picker component, #626;
+* CHANGED: Stick the library woocommerce/action-scheduler on version 3.7.0, so we don't force WP min to 6.2;
+* CHANGED: Min WP version is now 6.1, #627;
+* FIXED: Fix support for WP between 6.1 and 6.4, #625;
+* FIXED: Fix the search of posts in the posts lists, #620;
+* FIXED: Fix classic meta box when using Classic Editor plugin with the classic editor as default, #624;
+* FIXED: Fix default date for new posts, #623;
+* FIXED: Fix the quick edit form and future action column for pages, #618;
+* FIXED: Fix support to custom taxonomies that are not showed in the Rest API, #629;
 
 = [3.1.5] - 14 Dec, 2023 =
 

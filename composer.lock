@@ -960,12 +960,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "66ceb05eaa8bf358574143c974b04463911bc700"
+                "reference": "f942b208dc2a0868454d01b29f0c75bbcfc6ed58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/66ceb05eaa8bf358574143c974b04463911bc700",
-                "reference": "66ceb05eaa8bf358574143c974b04463911bc700",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/f942b208dc2a0868454d01b29f0c75bbcfc6ed58",
+                "reference": "f942b208dc2a0868454d01b29f0c75bbcfc6ed58",
                 "shasum": ""
             },
             "require": {
@@ -1008,7 +1008,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pdepend/pdepend/issues",
-                "source": "https://github.com/pdepend/pdepend/tree/2.16.1"
+                "source": "https://github.com/pdepend/pdepend/tree/2.16.2"
             },
             "funding": [
                 {
@@ -1016,7 +1016,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-10T18:38:19+00:00"
+            "time": "2023-12-17T18:09:59+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -1260,12 +1260,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "57cc76bb41632805985d726b721d9c53a92ddfbc"
+                "reference": "16460cdaa3493264e4438eaedd0edca404ce8936"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/57cc76bb41632805985d726b721d9c53a92ddfbc",
-                "reference": "57cc76bb41632805985d726b721d9c53a92ddfbc",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/16460cdaa3493264e4438eaedd0edca404ce8936",
+                "reference": "16460cdaa3493264e4438eaedd0edca404ce8936",
                 "shasum": ""
             },
             "require": {
@@ -1315,7 +1315,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-13T14:23:01+00:00"
+            "time": "2023-12-19T15:33:47+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1944,12 +1944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "88d3cec355a252c8fb6a338c420960bf1b0d5679"
+                "reference": "be32eca544dfb83482aed845102ffbc19ccb6f7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/88d3cec355a252c8fb6a338c420960bf1b0d5679",
-                "reference": "88d3cec355a252c8fb6a338c420960bf1b0d5679",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/be32eca544dfb83482aed845102ffbc19ccb6f7b",
+                "reference": "be32eca544dfb83482aed845102ffbc19ccb6f7b",
                 "shasum": ""
             },
             "require": {
@@ -2017,7 +2017,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-12-14T14:17:01+00:00"
+            "time": "2023-12-18T16:08:19+00:00"
         },
         {
             "name": "symfony/config",

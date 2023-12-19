@@ -60,6 +60,7 @@ export const FutureActionPanelBlockEditor = (props) => {
                     taxonomyName={props.taxonomyName}
                     onChangeData={onChangeData}
                     is12Hour={props.is12Hour}
+                    timeFormat={props.timeFormat}
                     startOfWeek={props.startOfWeek}
                     storeName={props.storeName}
                     strings={props.strings} />
