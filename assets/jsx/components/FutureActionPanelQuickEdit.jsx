@@ -38,10 +38,10 @@ export const FutureActionPanelQuickEdit = (props) => {
 
             {/* Quick edit JS code will save only fields with name inside the edit row */}
             <input type="hidden" name={'future_action_enabled'} value={enabled ? 1 : 0} />
-            <input type="hidden" name={'future_action_action'} value={action} />
-            <input type="hidden" name={'future_action_date'} value={date} />
-            <input type="hidden" name={'future_action_terms'} value={termsString} />
-            <input type="hidden" name={'future_action_taxonomy'} value={taxonomy} />
+            <input type="hidden" name={'future_action_action'} value={action ? action : ''} />
+            <input type="hidden" name={'future_action_date'} value={date ? date : ''} />
+            <input type="hidden" name={'future_action_terms'} value={termsString ? termsString : ''} />
+            <input type="hidden" name={'future_action_taxonomy'} value={taxonomy ? taxonomy : ''} />
             <input type="hidden" name={'future_action_view'} value="quick-edit" />
             <input type="hidden" name={'_future_action_nonce'} value={props.nonce} />
         </div>

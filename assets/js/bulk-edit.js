@@ -891,10 +891,10 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
             storeName: props.storeName,
             strings: props.strings }),
         React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: enabled ? 1 : 0 }),
-        React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action }),
-        React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date }),
-        React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: termsString }),
-        React.createElement('input', { type: 'hidden', name: 'future_action_taxonomy', value: taxonomy }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action ? action : '' }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date ? date : '' }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: termsString ? termsString : '' }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_taxonomy', value: taxonomy ? taxonomy : '' }),
         React.createElement('input', { type: 'hidden', name: 'future_action_view', value: 'quick-edit' }),
         React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: props.nonce })
     );
