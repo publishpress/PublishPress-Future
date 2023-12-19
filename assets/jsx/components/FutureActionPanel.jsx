@@ -260,7 +260,7 @@ export const FutureActionPanel = (props) => {
                             )
                             || (!taxonomy && (
                                 <PanelRow>
-                                    <BaseControl label={taxonomyName}>
+                                    <BaseControl label={taxonomyName} className="future-action-warning">
                                         <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
                                     </BaseControl>
                                 </PanelRow>
