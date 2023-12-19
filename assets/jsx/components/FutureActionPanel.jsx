@@ -269,15 +269,19 @@ export const FutureActionPanel = (props) => {
                             || (!taxonomy && (
                                 <PanelRow>
                                     <BaseControl label={taxonomyName} className="future-action-warning">
-                                        <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
+                                        <div>
+                                            <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
+                                        </div>
                                     </BaseControl>
                                 </PanelRow>
                             )
                                 || (
                                     termsListByNameKeys.length === 0 && (
                                         <PanelRow>
-                                            <BaseControl label={taxonomyName}>
-                                                <i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}
+                                            <BaseControl label={taxonomyName} className="future-action-warning">
+                                                <div>
+                                                    <i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}
+                                                </div>
                                             </BaseControl>
                                         </PanelRow>
                                     )

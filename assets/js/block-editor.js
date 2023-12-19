@@ -482,10 +482,14 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 null,
                 React.createElement(
                     BaseControl,
-                    { label: taxonomyName },
-                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
-                    ' ',
-                    props.strings.noTermsFound
+                    { label: taxonomyName, className: 'future-action-warning' },
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                        ' ',
+                        props.strings.noTermsFound
+                    )
                 )
             ) || React.createElement(
                 PanelRow,

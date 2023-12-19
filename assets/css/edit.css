@@ -118,6 +118,10 @@ div.pe-qe-fields > div {
 
 .post-expirator-panel .future-action-warning {
     line-height: 20px;
-    background: #eeeed1;
+    width: 100%;
+}
+
+.post-expirator-panel .future-action-warning .components-base-control__field > div {
     padding: 14px;
+    background: #dae1f0;
 }
