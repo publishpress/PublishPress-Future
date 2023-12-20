@@ -38,7 +38,7 @@ class PostListController implements InitializableInterface
         $this->hooks->addFilter(ExpiratorHooks::FILTER_MANAGE_PAGES_COLUMNS, [$this, 'addColumns'], 11, 1);
         $this->hooks->addFilter(ExpiratorHooks::FILTER_POSTS_JOIN, [$this, 'joinExpirationDate'], 10, 2);
 
-        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
+        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_PAGES_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
         $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
         $this->hooks->addAction(ExpiratorHooks::ACTION_ADMIN_INIT, [$this, 'manageSortableColumns'], 100);
         $this->hooks->addAction(ExpiratorHooks::ACTION_POSTS_ORDER_BY, [$this, 'orderByExpirationDate'], 10, 2);

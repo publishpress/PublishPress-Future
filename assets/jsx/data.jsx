@@ -1,6 +1,6 @@
 import { formatUnixTimeToTimestamp, getCurrentTimeAsTimestamp, normalizeUnixTimeToSeconds } from './time';
 import { isNumber } from './utils';
-import { register, createReduxStore } from '@wp/data';
+import { register, createReduxStore } from '&wp.data';
 
 export const createStore = (props) => {
     if (props.defaultState.terms && typeof props.defaultState.terms === 'string') {

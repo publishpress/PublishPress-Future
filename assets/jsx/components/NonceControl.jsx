@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-export const NonceControl = function (props) {
-    const { Fragment } = wp.element;
+import { Fragment } from "&wp.element";
 
+export const NonceControl = function (props) {
     if (! props.name) {
         props.name = '_wpnonce';
     }

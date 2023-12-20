@@ -1,10 +1,9 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
+import { Fragment } from "&wp.element";
 
 export const SettingRow = function (props) {
-    const { Fragment } = wp.element;
-
     return (
         <tr valign="top">
             <th scope="row">

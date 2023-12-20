@@ -1,19 +1,21 @@
 import { FutureActionPanelQuickEdit } from './components';
 import { createStore } from './data';
-import { getFieldValueByName, getFieldValueByNameAsBool, getActionSettingsFromColumnData } from './utils';
-import { createRoot } from '@wp/element';
-import { select, dispatch } from '@wp/data';
-import { inlineEditPost } from "@window";
+import { getActionSettingsFromColumnData } from './utils';
+import { createRoot } from '&wp.element';
+import { select, dispatch } from '&wp.data';
+import { inlineEditPost } from "&window";
 import {
     postType,
     isNewPost,
     actionsSelectOptions,
     is12Hour,
+    timeFormat,
     startOfWeek,
     strings,
     taxonomyName,
     nonce
-} from "@config/quick-edit";
+} from "&config.quick-edit";
+import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-quick-edit';
 const delayToUnmountAfterSaving = 1000;
@@ -47,8 +49,6 @@ inlineEditPost.edit = function (button, id) {
     const postId = getPostIdFromButton(button);
     const data = getActionSettingsFromColumnData(postId);
 
-    console.log('data', data);
-
     const enabled = data.enabled;
     const action = data.action;
     const date = data.date;
@@ -79,25 +79,15 @@ inlineEditPost.edit = function (button, id) {
         });
     }
 
-    const saveButton = document.querySelector('.inline-edit-save .save');
-    if (saveButton) {
-        saveButton.onclick = function() {
-            setTimeout(() => {
-                root.unmount();
-            }, delayToUnmountAfterSaving);
-        };
-    }
-
     const container = document.getElementById("publishpress-future-quick-edit");
-    const root = createRoot(container);
-
-    root.render(
+    const component = (
         <FutureActionPanelQuickEdit
             storeName={storeName}
             postType={postType}
             isNewPost={isNewPost}
             actionsSelectOptions={actionsSelectOptions}
             is12Hour={is12Hour}
+            timeFormat={timeFormat}
             startOfWeek={startOfWeek}
             strings={strings}
             taxonomyName={taxonomyName}
@@ -105,10 +95,27 @@ inlineEditPost.edit = function (button, id) {
         />
     );
 
-    inlineEditPost.revert = function () {
-        root.unmount();
+    if (createRoot) {
+        const root = createRoot(container);
 
-        // Call the original WP revert function.
-        wpInlineEditRevert.apply(this, arguments);
-    };
+        const saveButton = document.querySelector('.inline-edit-save .save');
+        if (saveButton) {
+            saveButton.onclick = function() {
+                setTimeout(() => {
+                    root.unmount();
+                }, delayToUnmountAfterSaving);
+            };
+        }
+
+        root.render(component);
+
+        inlineEditPost.revert = function () {
+            root.unmount();
+
+            // Call the original WP revert function.
+            wpInlineEditRevert.apply(this, arguments);
+        };
+    } else {
+        render(component, container);
+    }
 };

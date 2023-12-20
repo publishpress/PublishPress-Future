@@ -3,11 +3,11 @@ Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire posts, update posts, schedule changes, automatic changes,
-Requires at least: 5.5
+Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.4
 License: GPLv2 or later
-Stable tag: 3.1.5
+Stable tag: 3.1.6
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -141,9 +141,19 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= UNRELEASED =
+= [3.1.6] - 20 Dec, 2023 =
 
+* ADDED: Add a new setting to select the time format in the date picker component, #626;
 * CHANGED: Stick the library woocommerce/action-scheduler on version 3.7.0, so we don't force WP min to 6.2;
+* CHANGED: Min WP version is now 6.1, #627;
+* CHANGED: The field to select terms now expands when the user focus on it, not requiring to type a search text, #633;
+* CHANGED: Increase the limit of items displayed i nthe the field to select terms. It shows up to 1000 items now, #633;
+* FIXED: Fix support for WP between 6.1 and 6.4, #625;
+* FIXED: Fix the search of posts in the posts lists, #620;
+* FIXED: Fix classic meta box when using Classic Editor plugin with the classic editor as default, #624;
+* FIXED: Fix default date for new posts, #623;
+* FIXED: Fix the quick edit form and future action column for pages, #618;
+* FIXED: Fix support to custom taxonomies that are not showed in the Rest API, #629;
 
 = [3.1.5] - 14 Dec, 2023 =
 
