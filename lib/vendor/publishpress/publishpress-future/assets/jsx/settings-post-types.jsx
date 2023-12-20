@@ -11,7 +11,7 @@ import {
     NonceControl
 } from "./components";
 
-import { StrictMode, createRoot } from "@wp/element";
+import { StrictMode, createRoot } from "&wp.element";
 
 import {
     nonce,
@@ -20,7 +20,8 @@ import {
     expireTypeList,
     taxonomiesList,
     text
-} from "@config/settings-post-types";
+} from "&config.settings-post-types";
+import { render } from "&ReactDOM";
 
 const SettingsFormPanel = (props) => {
     return (
@@ -54,6 +55,9 @@ const SettingsFormPanel = (props) => {
 };
 
 const container = document.getElementById("publishpress-future-settings-post-types");
-const root = createRoot(container);
-
-root.render(<SettingsFormPanel />);
+const component = (<SettingsFormPanel />);
+if (createRoot) {
+    createRoot(container).render(component);
+} else {
+    render(component, container);
+}

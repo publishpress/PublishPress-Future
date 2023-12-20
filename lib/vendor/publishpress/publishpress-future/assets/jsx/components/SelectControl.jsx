@@ -1,12 +1,10 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
+import { Fragment } from "&wp.element";
+import { SelectControl as WPSelectControl } from "&wp.components";
 
 export const SelectControl = function (props) {
-    const { Fragment } = wp.element;
-    const { SelectControl } = wp.components;
-
-
     const onChange = (value) => {
         props.onChange(value);
     };
@@ -18,7 +16,7 @@ export const SelectControl = function (props) {
             )}
 
             {props.options.length > 0 && (
-                <SelectControl
+                <WPSelectControl
                     label={props.label}
                     name={props.name}
                     id={props.name}

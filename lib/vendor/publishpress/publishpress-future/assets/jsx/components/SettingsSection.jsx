@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
+import { Fragment } from "&wp.element";
 
 export const SettingsSection = function (props) {
-    const { Fragment } = wp.element;
     return (
         <Fragment>
             <h2>{props.title}</h2>

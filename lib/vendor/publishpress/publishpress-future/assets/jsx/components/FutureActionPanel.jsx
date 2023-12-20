@@ -1,8 +1,8 @@
 import { compact } from '../utils';
 import { ToggleCalendarDatePicker } from './ToggleCalendarDatePicker';
 
-const { PanelRow, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl, Container } = wp.components;
-const { Fragment, useEffect, useState } = wp.element;
+const { PanelRow, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl } = wp.components;
+const { Fragment, useEffect } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 const { addQueryArgs } = wp.url;
 const {
@@ -118,46 +118,19 @@ export const FutureActionPanel = (props) => {
 
         setIsFetchingTerms(true);
 
-        if ((!taxonomy && props.postType === 'post') || taxonomy === 'category') {
-            apiFetch({
-                path: addQueryArgs('wp/v2/categories', { per_page: -1 }),
-            }).then((list) => {
-                list.forEach(cat => {
-                    termsListByName[cat.name] = cat;
-                    termsListById[cat.id] = cat.name;
-                });
-
-                setTermsListByName(termsListByName);
-                setTermsListById(termsListById);
-                setTaxonomyName(props.strings.category);
-                setIsFetchingTerms(false);
+        apiFetch({
+            path: addQueryArgs(`publishpress-future/v1/terms/${taxonomy}`),
+        }).then((result) => {
+            result.terms.forEach(term => {
+                termsListByName[decodeEntities(term.name)] = term;
+                termsListById[term.id] = decodeEntities(term.name);
             });
-        } else {
-            apiFetch({
-                path: addQueryArgs(`publishpress-future/v1/taxonomies/` + props.postType),
-            }).then((response) => {
-                if (parseInt(response.count) > 0) {
-                    apiFetch({
-                        path: addQueryArgs(`wp/v2/taxonomies/${taxonomy}`, { context: 'edit', per_page: -1 }),
-                    }).then((taxonomyAttributes) => {
-                        // fetch all terms
-                        apiFetch({
-                            path: addQueryArgs(`wp/v2/${taxonomyAttributes.rest_base}`, { context: 'edit', per_page: -1 }),
-                        }).then((terms) => {
-                            terms.forEach(term => {
-                                termsListByName[decodeEntities(term.name)] = term;
-                                termsListById[term.id] = decodeEntities(term.name);
-                            });
 
-                            setTermsListByName(termsListByName);
-                            setTermsListById(termsListById);
-                            setTaxonomyName(decodeEntities(taxonomyAttributes.name));
-                            setIsFetchingTerms(false);
-                        });
-                    });
-                }
-            });
-        }
+            setTermsListByName(termsListByName);
+            setTermsListById(termsListById);
+            setTaxonomyName(decodeEntities(result.taxonomyName));
+            setIsFetchingTerms(false);
+        });
     }
 
     const storeCalendarIsVisibleOnStorage = (value) => {
@@ -219,6 +192,13 @@ export const FutureActionPanel = (props) => {
     const contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
     const datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
 
+    let is24hour;
+    if (props.timeFormat === 'inherited') {
+        is24hour = ! props.is12Hour;
+    } else {
+        is24hour = props.timeFormat === '24h';
+    }
+
 
     const replaceCurlyBracketsWithLink = (string, href, target) => {
         const parts = string.split('{');
@@ -238,6 +218,14 @@ export const FutureActionPanel = (props) => {
 
         return result;
     };
+
+    // Remove items from actions list if related to taxonomies and there is no taxonmoy for the post type
+    let actionsSelectOptions = props.actionsSelectOptions;
+    if (! props.taxonomy) {
+        actionsSelectOptions = props.actionsSelectOptions.filter((item) => {
+            return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+        });
+    }
 
     const HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
 
@@ -263,7 +251,7 @@ export const FutureActionPanel = (props) => {
                         <SelectControl
                             label={props.strings.action}
                             value={action}
-                            options={props.actionsSelectOptions}
+                            options={actionsSelectOptions}
                             onChange={handleActionChange}
                         />
                     </PanelRow>
@@ -280,16 +268,20 @@ export const FutureActionPanel = (props) => {
                             )
                             || (!taxonomy && (
                                 <PanelRow>
-                                    <BaseControl label={taxonomyName}>
-                                        <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
+                                    <BaseControl label={taxonomyName} className="future-action-warning">
+                                        <div>
+                                            <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
+                                        </div>
                                     </BaseControl>
                                 </PanelRow>
                             )
                                 || (
                                     termsListByNameKeys.length === 0 && (
                                         <PanelRow>
-                                            <BaseControl label={taxonomyName}>
-                                                <i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}
+                                            <BaseControl label={taxonomyName} className="future-action-warning">
+                                                <div>
+                                                    <i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}
+                                                </div>
                                             </BaseControl>
                                         </PanelRow>
                                     )
@@ -301,7 +293,9 @@ export const FutureActionPanel = (props) => {
                                                     value={selectedTerms}
                                                     suggestions={termsListByNameKeys}
                                                     onChange={handleTermsChange}
-                                                    maxSuggestions={10}
+                                                    maxSuggestions={1000}
+                                                    __experimentalExpandOnFocus={true}
+                                                    __experimentalAutoSelectFirstMatch={true}
                                                 />
                                             </BaseControl>
                                         </PanelRow>
@@ -316,7 +310,7 @@ export const FutureActionPanel = (props) => {
                             currentDate={date}
                             onChangeDate={handleDateChange}
                             onToggleCalendar={() => setCalendarIsVisible(!calendarIsVisible)}
-                            is12Hour={props.is12Hour}
+                            is12Hour={!is24hour}
                             startOfWeek={props.startOfWeek}
                             isExpanded={calendarIsVisible}
                             strings={props.strings}

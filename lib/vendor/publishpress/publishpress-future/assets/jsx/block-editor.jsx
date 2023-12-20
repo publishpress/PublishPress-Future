@@ -1,16 +1,17 @@
 import { createStore } from './data';
 import { FutureActionPanelBlockEditor } from './components';
-import { select } from '@wp/data';
-import { registerPlugin } from '@wp/plugins';
+import { select } from '&wp.data';
+import { registerPlugin } from '&wp.plugins';
 import {
     actionsSelectOptions,
     is12Hour,
+    timeFormat,
     startOfWeek,
     strings,
     taxonomyName,
     postTypeDefaultConfig,
     defaultDate
-} from "@config/block-editor";
+} from "&config.block-editor";
 
 const storeName = 'publishpress-future/future-action';
 
@@ -32,6 +33,7 @@ const BlockEditorFutureActionPlugin = () => {
             isCleanNewPost={select('core/editor').isCleanNewPost()}
             actionsSelectOptions={actionsSelectOptions}
             is12Hour={is12Hour}
+            timeFormat={timeFormat}
             startOfWeek={startOfWeek}
             storeName={storeName}
             strings={strings}

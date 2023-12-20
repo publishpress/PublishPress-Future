@@ -92,6 +92,7 @@ class SettingsFacade
             'expirationdateDisplayFooter' => '0',
             'expirationdateDebug' => '0',
             'expirationdateDefaultDate' => 'null',
+            'expirationdateTimeFormatForDatePicker' => 'inherited',
         ];
 
         foreach ($defaultValues as $optionName => $defaultValue) {
@@ -238,5 +239,10 @@ class SettingsFacade
     public function getColumnStyle()
     {
         return $this->options->getOption('expirationdateColumnStyle', 'verbose');
+    }
+
+    public function getTimeFormatForDatePicker()
+    {
+        return $this->options->getOption('expirationdateTimeFormatForDatePicker', 'inherited');
     }
 }
