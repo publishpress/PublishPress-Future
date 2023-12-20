@@ -750,12 +750,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mck89/peast.git",
-                "reference": "982271d99dc0694a3c062e801c8a11cae1645e15"
+                "reference": "d264dba22fafe4b6d8099640cfe71f0b001471dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mck89/peast/zipball/982271d99dc0694a3c062e801c8a11cae1645e15",
-                "reference": "982271d99dc0694a3c062e801c8a11cae1645e15",
+                "url": "https://api.github.com/repos/mck89/peast/zipball/d264dba22fafe4b6d8099640cfe71f0b001471dd",
+                "reference": "d264dba22fafe4b6d8099640cfe71f0b001471dd",
                 "shasum": ""
             },
             "require": {
@@ -792,7 +792,7 @@
                 "issues": "https://github.com/mck89/peast/issues",
                 "source": "https://github.com/mck89/peast/tree/master"
             },
-            "time": "2023-08-16T13:19:50+00:00"
+            "time": "2023-12-20T07:19:37+00:00"
         },
         {
             "name": "mustache/mustache",
@@ -1260,12 +1260,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "16460cdaa3493264e4438eaedd0edca404ce8936"
+                "reference": "26c870cf58b59c4e68d66a92f100098ee213b9fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/16460cdaa3493264e4438eaedd0edca404ce8936",
-                "reference": "16460cdaa3493264e4438eaedd0edca404ce8936",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/26c870cf58b59c4e68d66a92f100098ee213b9fd",
+                "reference": "26c870cf58b59c4e68d66a92f100098ee213b9fd",
                 "shasum": ""
             },
             "require": {
@@ -1315,7 +1315,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-19T15:33:47+00:00"
+            "time": "2023-12-20T14:51:38+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
