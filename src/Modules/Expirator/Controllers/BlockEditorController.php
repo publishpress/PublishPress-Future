@@ -99,6 +99,7 @@ class BlockEditorController implements InitializableInterface
                     'postTypeDefaultConfig' => $postTypeDefaultConfig,
                     'defaultDate' => $defaultExpirationDate['iso'],
                     'is12Hour' => $options->getOption('time_format') !== 'H:i',
+                    'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                     'startOfWeek' => $options->getOption('start_of_week', 0),
                     'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
                     'isDebugEnabled' => $container->get(ServicesAbstract::DEBUG)->isEnabled(),

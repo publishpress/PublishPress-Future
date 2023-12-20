@@ -66,6 +66,19 @@ export const getFieldValueByNameAsBool = (name, postId) => {
     return field.value === '1' || field.value === 'true';
 }
 
+export const getActionSettingsFromColumnData = (postId) => {
+    const columnData = document.querySelector(`#post-expire-column-${postId}`);
+
+    return {
+        enabled: columnData.dataset.actionEnabled === '1',
+        action: columnData.dataset.actionType,
+        date: columnData.dataset.actionDate,
+        dateUnix: columnData.dataset.actionDateUnix,
+        taxonomy: columnData.dataset.actionTaxonomy,
+        terms: columnData.dataset.actionTerms,
+    };
+}
+
 /**
  * This function is used to determine if a value is a number, including strings.
  *

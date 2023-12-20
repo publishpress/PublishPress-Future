@@ -38,7 +38,7 @@ class PostListController implements InitializableInterface
         $this->hooks->addFilter(ExpiratorHooks::FILTER_MANAGE_PAGES_COLUMNS, [$this, 'addColumns'], 11, 1);
         $this->hooks->addFilter(ExpiratorHooks::FILTER_POSTS_JOIN, [$this, 'joinExpirationDate'], 10, 2);
 
-        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
+        $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_PAGES_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
         $this->hooks->addAction(ExpiratorHooks::ACTION_MANAGE_POSTS_CUSTOM_COLUMN, [$this, 'managePostsCustomColumn']);
         $this->hooks->addAction(ExpiratorHooks::ACTION_ADMIN_INIT, [$this, 'manageSortableColumns'], 100);
         $this->hooks->addAction(ExpiratorHooks::ACTION_POSTS_ORDER_BY, [$this, 'orderByExpirationDate'], 10, 2);
@@ -90,18 +90,13 @@ class PostListController implements InitializableInterface
     {
         global $post;
 
-        // get the attributes that quick edit functionality requires
-        // and save it as a JSON encoded HTML attribute
         $container = Container::getInstance();
-        $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-        $postModel = $factory($post->ID);
         $settings = $container->get(ServicesAbstract::SETTINGS);
 
         PostExpirator_Display::getInstance()->render_template('expire-column', [
             'id' => $post->ID,
-            'post_type' => $post->post_type,
-            'attributes' => $postModel->getExpirationDataAsArray(),
-            'column_style' => $settings->getColumnStyle(),
+            'postType' => $post->post_type,
+            'columnStyle' => $settings->getColumnStyle(),
         ]);
     }
 
