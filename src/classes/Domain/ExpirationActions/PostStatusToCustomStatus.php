@@ -36,9 +36,23 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         $this->customStatusesModel = $customStatusesModel;
     }
 
-    private function getPostTypeFromPostModel()
+    private function getCustomStatusLabel()
     {
-        return $this->customStatusesModel->getStatusObject($this->postModel->getExpirationType());
+        $postStatus = $this->getPostStatusFromExpirationType();
+        $postStatusObj = $this->customStatusesModel->getStatusObject($postStatus);
+
+        if (! is_object($postStatusObj) || is_wp_error($postStatusObj)) {
+            return $postStatus;
+        }
+
+        return $postStatusObj->label;
+    }
+
+    private function getPostStatusFromExpirationType()
+    {
+        $expirationType = $this->postModel->getExpirationType();
+
+        return str_replace(CustomStatusesController::ACTION_PREFIX, '', $expirationType);
     }
 
     /**
@@ -46,11 +60,8 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      */
     public function __toString()
     {
-        $postType = $this->getPostTypeFromPostModel();
-
-        return $postType->name;
+        return $this->getDynamicLabel();
     }
-
 
     /**
      * @return string
@@ -74,11 +85,7 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      */
     public function execute()
     {
-        $newPostStatus = str_replace(
-            CustomStatusesController::ACTION_PREFIX,
-            '',
-            $this->postModel->getExpirationType()
-        );
+        $newPostStatus = $this->getPostStatusFromExpirationType();
 
         $customStatuses = $this->customStatusesModel->getCustomStatuses();
 
@@ -108,14 +115,9 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
      */
     public function getDynamicLabel()
     {
-        $expirationType = $this->postModel->getExpirationType();
-        $postStatus = str_replace(CustomStatusesController::ACTION_PREFIX, '', $expirationType);
-
-        $postStatusObject = get_post_status_object($postStatus);
-
         return sprintf(
             __('Change post status to %s', 'publishpress-future-pro'),
-            $postStatusObject->label
+            $this->getCustomStatusLabel()
         );
     }
 }
