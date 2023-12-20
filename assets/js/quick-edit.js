@@ -506,7 +506,9 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                         value: selectedTerms,
                         suggestions: termsListByNameKeys,
                         onChange: handleTermsChange,
-                        maxSuggestions: 10
+                        maxSuggestions: 1000,
+                        __experimentalExpandOnFocus: true,
+                        __experimentalAutoSelectFirstMatch: true
                     })
                 )
             )),

@@ -293,7 +293,9 @@ export const FutureActionPanel = (props) => {
                                                     value={selectedTerms}
                                                     suggestions={termsListByNameKeys}
                                                     onChange={handleTermsChange}
-                                                    maxSuggestions={10}
+                                                    maxSuggestions={1000}
+                                                    __experimentalExpandOnFocus={true}
+                                                    __experimentalAutoSelectFirstMatch={true}
                                                 />
                                             </BaseControl>
                                         </PanelRow>
