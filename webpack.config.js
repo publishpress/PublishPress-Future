@@ -29,13 +29,21 @@ module.exports = [
             ],
             extensions: [".js", ".jsx"],
             alias: {
-                "@publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
+                "&publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
             }
         },
         externals: {
-            "@wp/hooks": "wp.hooks",
-            "@wp/components": "wp.components",
-            "@config/pro-settings": "publishpressFutureProSettings"
+            "&React": "React",
+            "&ReactDOM": "ReactDOM",
+            "&wp": "wp",
+            "&wp.components": "wp.components",
+            "&wp.data": "wp.data",
+            "&wp.plugins": "wp.plugins",
+            "&wp.url": "wp.url",
+            "&wp.hooks": "wp.hooks",
+            "&wp.element": "wp.element",
+            "&config.classic-editor": "publishpressFutureClassicEditorConfig",
+            "&config.pro-settings": "publishpressFutureProSettings"
         },
     }
 ];
