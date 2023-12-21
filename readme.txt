@@ -141,6 +141,11 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.1.7] - UNRELEASED =
+
+* FIXED: Fix compatibility with plugins like "Hide Categories and Products for Woocommerce", making sure terms are not hidden in the taxonomy field, #639;
+* FIXED: Fix the terms select field in the settings page, expanding it on focus, #638;
+
 = [3.1.6] - 20 Dec, 2023 =
 
 * ADDED: Add a new setting to select the time format in the date picker component, #626;
