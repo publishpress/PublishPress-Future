@@ -112,7 +112,7 @@ class ClassicEditorController implements InitializableInterface
         }
 
         // Only show the metabox if the block editor is not enabled for the post type
-        if ($this->isGutenbergAvailableForThePost($post)) {
+        if (! empty($post) && $this->isGutenbergAvailableForThePost($post)) {
             if (! $this->classicEditorIsActiveForCurrentSession() ) {
                 return;
             }
