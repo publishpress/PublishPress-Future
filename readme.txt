@@ -146,6 +146,8 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix compatibility with plugins like "Hide Categories and Products for Woocommerce", making sure terms are not hidden in the taxonomy field, #639;
 * FIXED: Fix the terms select field in the settings page, expanding it on focus, #638;
 * FIXED: Fix the fatal error when hook `add_meta_boxes` didn't receive a `WP_Post` instance as parameter, #640;
+* FIXED: Fix issue with the "NaN" categories in the classic editor, #647;
+* FIXED: Fix issue with accents on the taxonomy field in the settings, #642;
 
 = [3.1.6] - 20 Dec, 2023 =
 
