@@ -83,6 +83,14 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= [3.1.7] - 04 Jan, 2024 =
+
+* FIXED: Fix compatibility with plugins like "Hide Categories and Products for Woocommerce", making sure terms are not hidden in the taxonomy field, #639;
+* FIXED: Fix the terms select field in the settings page, expanding it on focus, #638;
+* FIXED: Fix the fatal error when hook `add_meta_boxes` didn't receive a `WP_Post` instance as parameter, #640;
+* FIXED: Fix issue with the "NaN" categories in the classic editor, #647;
+* FIXED: Fix issue with accents on the taxonomy field in the settings, #642;
+
 = [3.1.6] - 20 Dec, 2023 =
 
 * ADDED: Add a new setting to select the time format in the date picker component, #626;
