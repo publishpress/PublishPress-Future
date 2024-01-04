@@ -154,6 +154,9 @@ export const PostTypeSettingsPanel = function (props) {
                         isLoading={termsSelectIsLoading}
                         onChange={onChangeTerms}
                         description={props.text.fieldTermDescription}
+                        maxSuggestions={1000}
+                        expandOnFocus={true}
+                        autoSelectFirstMatch={true}
                     />
                 }
             </SettingRow>

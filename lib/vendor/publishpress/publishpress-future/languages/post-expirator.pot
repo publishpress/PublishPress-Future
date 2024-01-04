@@ -1,15 +1,15 @@
-# Copyright (C) 2023 PublishPress
+# Copyright (C) 2024 PublishPress
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.1.6\n"
+"Project-Id-Version: PublishPress Future 3.1.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-20T19:39:37+00:00\n"
+"POT-Creation-Date: 2024-01-04T14:18:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: post-expirator\n"
@@ -17,8 +17,8 @@ msgstr ""
 #. Plugin Name of the plugin
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:110
 #: src/Modules/Expirator/Controllers/BulkEditController.php:152
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:115
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:300
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:139
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:324
 #: src/Modules/Expirator/Controllers/QuickEditController.php:210
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:84
 #: src/Views/tabs.php:55
@@ -45,64 +45,64 @@ msgstr ""
 msgid "You do not have permission to configure PublishPress Future."
 msgstr ""
 
-#: legacy/classes/Display.class.php:180
+#: legacy/classes/Display.class.php:177
 msgid "Debugging Disabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:185
+#: legacy/classes/Display.class.php:182
 msgid "Debugging Enabled"
 msgstr ""
 
-#: legacy/classes/Display.class.php:193
+#: legacy/classes/Display.class.php:190
 msgid "Debugging Table Emptied"
 msgstr ""
 
-#: legacy/classes/Display.class.php:199
+#: legacy/classes/Display.class.php:196
 msgid "The legacy future actions migration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:208
+#: legacy/classes/Display.class.php:205
 msgid "The legacy actions arguments restoration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:218
+#: legacy/classes/Display.class.php:215
 msgid "The database schema was fixed."
 msgstr ""
 
-#: legacy/classes/Display.class.php:223
+#: legacy/classes/Display.class.php:220
 msgid "The database schema could not be fixed. Please, contact the support team."
 msgstr ""
 
-#: legacy/classes/Display.class.php:319
-#: legacy/classes/Display.class.php:380
+#: legacy/classes/Display.class.php:313
+#: legacy/classes/Display.class.php:371
 msgid "Saved Options!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:465
+#: legacy/classes/Display.class.php:456
 msgid "If you like %s, please leave us a %s rating. Thank you!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:480
+#: legacy/classes/Display.class.php:471
 msgid "About PublishPress Future"
 msgstr ""
 
-#: legacy/classes/Display.class.php:482
+#: legacy/classes/Display.class.php:473
 msgid "About"
 msgstr ""
 
-#: legacy/classes/Display.class.php:488
+#: legacy/classes/Display.class.php:479
 msgid "Future Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:490
+#: legacy/classes/Display.class.php:481
 msgid "Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:496
+#: legacy/classes/Display.class.php:487
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: legacy/classes/Display.class.php:498
+#: legacy/classes/Display.class.php:489
 msgid "Contact"
 msgstr ""
 
@@ -133,14 +133,14 @@ msgstr ""
 
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:111
 #: src/Modules/Expirator/Controllers/BulkEditController.php:153
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:301
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:325
 #: src/Modules/Expirator/Controllers/QuickEditController.php:211
 msgid "Enable Future Action"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:112
 #: src/Modules/Expirator/Controllers/BulkEditController.php:154
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:302
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:326
 #: src/Modules/Expirator/Controllers/QuickEditController.php:212
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:46
 #: src/Modules/Settings/Controllers/Controller.php:206
@@ -149,21 +149,21 @@ msgstr ""
 
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:113
 #: src/Modules/Expirator/Controllers/BulkEditController.php:157
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:305
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:329
 #: src/Modules/Expirator/Controllers/QuickEditController.php:215
 msgid "Loading"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:114
 #: src/Modules/Expirator/Controllers/BulkEditController.php:155
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:303
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:327
 #: src/Modules/Expirator/Controllers/QuickEditController.php:213
 msgid "Show Calendar"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:115
 #: src/Modules/Expirator/Controllers/BulkEditController.php:156
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:304
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:328
 #: src/Modules/Expirator/Controllers/QuickEditController.php:214
 msgid "Hide Calendar"
 msgstr ""
@@ -172,21 +172,21 @@ msgstr ""
 #. translators: the text between {{}} is the link to the settings page.
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:117
 #: src/Modules/Expirator/Controllers/BulkEditController.php:159
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:307
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:331
 #: src/Modules/Expirator/Controllers/QuickEditController.php:217
 msgid "Timezone is controlled by the {WordPress Settings}."
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:120
 #: src/Modules/Expirator/Controllers/BulkEditController.php:162
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:310
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:334
 #: src/Modules/Expirator/Controllers/QuickEditController.php:220
 msgid "No %s found."
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:123
 #: src/Modules/Expirator/Controllers/BulkEditController.php:166
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:313
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:337
 #: src/Modules/Expirator/Controllers/QuickEditController.php:223
 msgid "You must assign a hierarchical taxonomy to this post type to use this feature."
 msgstr ""
@@ -227,7 +227,7 @@ msgstr ""
 msgid "Remove action from posts"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ClassicEditorController.php:299
+#: src/Modules/Expirator/Controllers/ClassicEditorController.php:323
 msgid "Category"
 msgstr ""
 

@@ -18,12 +18,36 @@ export const FutureActionPanelClassicEditor = (props) => {
         getElementByName('future_action_taxonomy').value = store.getTaxonomy();
     }
 
+    const getTermsFromElementByName = (name) => {
+        const element = getElementByName(name);
+        if (!element) {
+            return [];
+        }
+
+        let terms = element.value.split(',');
+
+        if (terms.length === 1 && terms[0] === '') {
+            terms = [];
+        }
+
+        return terms.map(term => parseInt(term));
+    }
+
+    const getElementValueByName = (name) => {
+        const element = getElementByName(name);
+        if (!element) {
+            return '';
+        }
+
+        return element.value;
+    }
+
     const data = {
-        enabled: getElementByName('future_action_enabled').value === '1',
-        action: getElementByName('future_action_action').value,
-        date: getElementByName('future_action_date').value,
-        terms: getElementByName('future_action_terms').value.split(',').map(term => parseInt(term)),
-        taxonomy: getElementByName('future_action_taxonomy').value,
+        enabled: getElementValueByName('future_action_enabled') === '1',
+        action: getElementValueByName('future_action_action'),
+        date: getElementValueByName('future_action_date'),
+        terms: getTermsFromElementByName('future_action_terms'),
+        taxonomy: getElementValueByName('future_action_taxonomy'),
     };
 
     return (

@@ -45,8 +45,10 @@ export const TokensControl = (props) => {
                 value={value}
                 suggestions={props.options}
                 onChange={onChange}
-                maxSuggestions={10}
+                maxSuggestions={props.maxSuggestions}
                 className="publishpres-future-token-field"
+                __experimentalExpandOnFocus={props.expandOnFocus}
+                __experimentalAutoSelectFirstMatch={props.autoSelectFirstMatch}
             />
             <input type="hidden" name={props.name} value={stringValue} />
 

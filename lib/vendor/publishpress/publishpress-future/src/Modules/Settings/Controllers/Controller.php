@@ -343,8 +343,6 @@ class Controller implements InitializableInterface
                 wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
             }
 
-            $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             foreach ($postTypes as $postType) {
                 $settings = [];
