@@ -282,6 +282,7 @@ class RestAPIController implements InitializableInterface
      */
     public function removeExcludeParamFromTermQuery($params)
     {
+        // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
         $params['exclude'] = [];
 
         return $params;
