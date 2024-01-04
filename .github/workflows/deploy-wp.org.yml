@@ -26,7 +26,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y iproute2
-    
 
       - name: Checkout code
         uses: actions/checkout@v3

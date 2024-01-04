@@ -269,15 +269,43 @@ class RestAPIController implements InitializableInterface
         return rest_ensure_response(['taxonomies' => $taxonomies, 'count' => count($taxonomies)]);
     }
 
+    /**
+     * Some plugins like Hide Categories and Products for Woocommerce
+     * will hide the terms from the get_terms() query.
+     *
+     * This filter will remove the exclude param from the query so the
+     * terms will be returned correctly in the admin.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function removeExcludeParamFromTermQuery($params)
+    {
+        // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
+        $params['exclude'] = [];
+
+        return $params;
+    }
+
+    private function getUnfilteredTerms($taxonomy)
+    {
+        add_filter('get_terms_args', [$this, 'removeExcludeParamFromTermQuery'], 20);
+        $terms = get_terms([
+            'taxonomy' => $taxonomy,
+            'hide_empty' => false,
+        ]);
+        remove_filter('get_terms_args', [$this, 'removeExcludeParamFromTermQuery'], 20);
+
+        return $terms;
+    }
+
     public function getTaxonomyTerms(WP_REST_Request $request)
     {
         $taxonomy = $request->get_param('taxonomy');
         $taxonomy = sanitize_key($taxonomy);
 
-        $terms = get_terms([
-            'taxonomy' => $taxonomy,
-            'hide_empty' => false
-        ]);
+        $terms = $this->getUnfilteredTerms($taxonomy);
 
         $response = [];
         if (is_wp_error($terms)) {

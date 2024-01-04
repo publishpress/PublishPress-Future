@@ -70,6 +70,11 @@
     "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
     "gen:pot": "wp i18n make-pot . languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests, --allow-root",
     "cleanup:gh-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
+    "check": [
+      "@check:lint",
+      "@check:php",
+      "@check:phpcs"
+    ],
     "check:longpath": "longpath .",
     "check:lint": "phplint",
     "check:phpcs": "phpcs",
