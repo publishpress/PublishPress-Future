@@ -139,13 +139,10 @@ class PostExpirator_Display
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
-                // Filter Content
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateDisplayFooter', $_POST['expired-display-footer']);
-                update_option('expirationdateFooterContents', $_POST['expired-footer-contents']);
-                update_option('expirationdateFooterStyle', $_POST['expired-footer-style']);
+                update_option('expirationdateDisplayFooter', (int)$_POST['expired-display-footer']);
+                update_option('expirationdateFooterContents', wp_kses($_POST['expired-footer-contents'], []));
+                update_option('expirationdateFooterStyle', wp_kses($_POST['expired-footer-style'], []));
                 // phpcs:enable
             }
         }
@@ -271,9 +268,6 @@ class PostExpirator_Display
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
-                // Filter Content
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdateDefaultDateFormat', sanitize_text_field($_POST['expired-default-date-format']));
                 update_option('expirationdateDefaultTimeFormat', sanitize_text_field($_POST['expired-default-time-format']));
@@ -346,9 +340,6 @@ class PostExpirator_Display
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
-                // Filter Content
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated

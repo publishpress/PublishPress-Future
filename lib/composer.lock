@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.1.6",
+            "version": "3.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "12b8352482a68690718782f221d75c54be162497"
+                "reference": "c97be45fb068905e536250e7317956d16c9c6c65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/12b8352482a68690718782f221d75c54be162497",
-                "reference": "12b8352482a68690718782f221d75c54be162497",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/c97be45fb068905e536250e7317956d16c9c6c65",
+                "reference": "c97be45fb068905e536250e7317956d16c9c6c65",
                 "shasum": ""
             },
             "require": {
@@ -378,6 +378,11 @@
                 ],
                 "cleanup:gh-workflows": [
                     "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE"
+                ],
+                "check": [
+                    "@check:lint",
+                    "@check:php",
+                    "@check:phpcs"
                 ],
                 "check:longpath": [
                     "longpath ."
@@ -464,10 +469,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.6",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.7",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2023-12-20T19:59:35+00:00"
+            "time": "2024-01-04T14:24:58+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
