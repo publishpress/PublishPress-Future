@@ -22,7 +22,7 @@ jobs:
     name: Check the code
     runs-on: ubuntu-latest
     container:
-      image: publishpress/dev-workspace-terminal:future-free
+      image: publishpress/dev-workspace-terminal:future-free-2
       options: -v ${{ github.workspace }}:/project --workdir="/project"
     steps:
       - name: Checkout code
@@ -41,14 +41,14 @@ jobs:
       - name: Composer install
         run: composer install --no-interaction --no-progress --prefer-dist --ignore-platform-reqs
 
-      - name: Fixes scripts permissions
-        run: chmod +x /project/dev-workspace/docker/scripts/ppbuild
-
       - name: Build the package to a dir
         run: composer build:dir
 
       - name: PHPLint - Check PHP syntax errors
         run: composer check:lint
+
+      - name: PHP - Check PHP compatibility
+        run: composer check:php
 
       - name: PHPCS - Check VIP scan and code standards
         run: composer check:phpcs
