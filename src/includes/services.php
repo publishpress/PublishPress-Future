@@ -7,6 +7,7 @@ use PublishPress\WordPressEDDLicense\Services as EDDServices;
 use PublishPress\WordPressEDDLicense\ServicesConfig as EDDServicesConfig;
 use PublishPress\Future\Core\DI\ContainerInterface;
 use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\FuturePro\Controllers\BaseDateController;
 use PublishPress\FuturePro\Controllers\CustomStatusesController;
 use PublishPress\FuturePro\Controllers\EddIntegrationController;
 use PublishPress\FuturePro\Controllers\SettingsController;
@@ -60,6 +61,7 @@ return [
             ServicesAbstract::CONTROLLER_CUSTOM_STATUSES,
             ServicesAbstract::CONTROLLER_SETTINGS,
             ServicesAbstract::CONTROLLER_EDD_INTEGRATION,
+            ServicesAbstract::CONTROLLER_BASE_DATE,
         ];
 
         $controllers = [];
@@ -118,6 +120,13 @@ return [
             $container->get(ServicesAbstract::MODEL_SETTINGS),
             $container->get(ServicesAbstract::TEMPLATE_PATH),
             $container->get(ServicesAbstract::EDD_CONTAINER)
+        );
+    },
+
+    ServicesAbstract::CONTROLLER_BASE_DATE => static function (ContainerInterface $container) {
+        return new BaseDateController(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::MODEL_SETTINGS)
         );
     },
 

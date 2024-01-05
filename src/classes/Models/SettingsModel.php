@@ -8,6 +8,22 @@ defined('ABSPATH') or die('No direct script access allowed.');
 
 class SettingsModel
 {
+    const OPTION_PRESERVE_DATA = 'expirationdate_preserve_data';
+
+    const OPTION_LICENSE_KEY = 'ppfuturepro_license_key';
+
+    const OPTION_LICENSE_STATUS = 'ppfuturepro_license_status';
+
+    const OPTION_ENABLED_CUSTOM_STATUSES = 'ppfuturepro_enabled_custom_statuses';
+
+    const OPTION_BASE_DATE = 'ppfuturepro_base_date';
+
+    const OPTION_LOG_ENABLED = 'ppfuturepro_log_enabled';
+
+    const BASE_DATE_CURRENT = 'current';
+
+    const BASE_DATE_PUBLISHING = 'publishing';
+
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
@@ -34,6 +50,7 @@ class SettingsModel
             'licenseKey' => $this->getLicenseKey(),
             'licenseStatus' => $this->getLicenseStatus(),
             'enabledCustomStatuses' => $this->getEnabledCustomStatuses(),
+            'baseDate' => $this->getBaseDate(),
         ];
     }
 
@@ -42,7 +59,7 @@ class SettingsModel
      */
     public function getPreserveDataOnDeactivation()
     {
-        return (bool)$this->options->getOption('expirationdate_preserve_data', 1);
+        return (bool)$this->options->getOption(self::OPTION_PRESERVE_DATA, 1);
     }
 
     /**
@@ -50,7 +67,7 @@ class SettingsModel
      */
     public function getLicenseKey()
     {
-        return (string)$this->options->getOption('ppfuturepro_license_key', '');
+        return (string)$this->options->getOption(self::OPTION_LICENSE_KEY, '');
     }
 
     /**
@@ -58,7 +75,7 @@ class SettingsModel
      */
     public function getLicenseStatus()
     {
-        return (string)$this->options->getOption('ppfuturepro_license_status', 'invalid');
+        return (string)$this->options->getOption(self::OPTION_LICENSE_STATUS, 'invalid');
     }
 
     /**
@@ -67,10 +84,10 @@ class SettingsModel
      */
     public function setLicenseKey($value)
     {
-        if (null === $this->options->getOption('ppfuturepro_license_key', null)) {
-            $this->options->addOption('ppfuturepro_license_key', $value);
+        if (null === $this->options->getOption(self::OPTION_LICENSE_KEY, null)) {
+            $this->options->addOption(self::OPTION_LICENSE_KEY, $value);
         } else {
-            $this->options->updateOption('ppfuturepro_license_key', $value);
+            $this->options->updateOption(self::OPTION_LICENSE_KEY, $value);
         }
     }
 
@@ -79,10 +96,10 @@ class SettingsModel
      */
     public function setLicenseStatus($value)
     {
-        if (null === $this->options->getOption('ppfuturepro_license_status', null)) {
-            $this->options->addOption('ppfuturepro_license_status', $value);
+        if (null === $this->options->getOption(self::OPTION_LICENSE_STATUS, null)) {
+            $this->options->addOption(self::OPTION_LICENSE_STATUS, $value);
         } else {
-            $this->options->updateOption('ppfuturepro_license_status', $value);
+            $this->options->updateOption(self::OPTION_LICENSE_STATUS, $value);
         }
     }
 
@@ -93,7 +110,7 @@ class SettingsModel
     {
         $unsetValue = ['__unset__'];
         $enabledCustomStatuses = $this->options->getOption(
-            'ppfuturepro_enabled_custom_statuses',
+            self::OPTION_ENABLED_CUSTOM_STATUSES,
             $unsetValue
         );
 
@@ -126,15 +143,15 @@ class SettingsModel
     {
         if (
             [-1] === $this->options->getOption(
-                'ppfuturepro_enabled_custom_statuses',
+                self::OPTION_ENABLED_CUSTOM_STATUSES,
                 [-1]
             )
         ) {
-            $this->options->addOption('ppfuturepro_enabled_custom_statuses', $statuses);
+            $this->options->addOption(self::OPTION_ENABLED_CUSTOM_STATUSES, $statuses);
             return;
         }
 
-        $this->options->updateOption('ppfuturepro_enabled_custom_statuses', $statuses);
+        $this->options->updateOption(self::OPTION_ENABLED_CUSTOM_STATUSES, $statuses);
     }
 
     /**
@@ -148,11 +165,26 @@ class SettingsModel
         $this->setEnabledCustomStatuses(array_merge($currentPostStatuses, [$postType => $statuses]));
     }
 
+    public function getBaseDate(): string
+    {
+        return $this->options->getOption(self::OPTION_BASE_DATE, self::BASE_DATE_CURRENT);
+    }
+
+    public function setBaseDate(string $value)
+    {
+        if ($value !== self::BASE_DATE_CURRENT && $value !== self::BASE_DATE_PUBLISHING) {
+            throw new \InvalidArgumentException('Invalid base date value');
+        }
+
+        $this->options->updateOption(self::OPTION_BASE_DATE, $value);
+    }
+
     public function deleteAllSettings()
     {
-        $this->options->deleteOption('ppfuturepro_log_enabled');
-        $this->options->deleteOption('ppfuturepro_license_key');
-        $this->options->deleteOption('ppfuturepro_license_status');
-        $this->options->deleteOption('ppfuturepro_enabled_custom_statuses');
+        $this->options->deleteOption(self::OPTION_LOG_ENABLED);
+        $this->options->deleteOption(self::OPTION_LICENSE_KEY);
+        $this->options->deleteOption(self::OPTION_LICENSE_STATUS);
+        $this->options->deleteOption(self::OPTION_ENABLED_CUSTOM_STATUSES);
+        $this->options->deleteOption(self::OPTION_BASE_DATE);
     }
 }

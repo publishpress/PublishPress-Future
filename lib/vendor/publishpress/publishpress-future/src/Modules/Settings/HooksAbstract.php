@@ -19,4 +19,5 @@ abstract class HooksAbstract
     const FILTER_SAVE_DEFAULTS_SETTINGS = 'publishpressfuture_save_defaults_settings';
     const ACTION_SAVE_POST_TYPE_SETTINGS = 'publishpressfuture_saved_post_type_settings';
     const FILTER_SETTINGS_POST_TYPE = 'publishpress_future_settings_post_type';
+    const ACTION_SETTINGS_TAB_ADVANCED_BEFORE = 'publishpress_future/settings_tab_advanced_before';
 }
