@@ -1,27 +1,30 @@
+<?php
+use PublishPress\FuturePro\Models\SettingsModel;
+?>
 <tr valign="top">
-    <th scope="row"><?php
-        esc_html_e('Base Date for Action', 'publishpress-future-pro'); ?></th>
+    <th scope="row">
+        <?php esc_html_e('Action Date Calculation Base', 'publishpress-future-pro'); ?>
+    </th>
     <td>
-        <?php
-        $baseDate = $this->settingsModel->getBaseDate() ?: 'current';
-        ?>
+        <?php $baseDate = $this->settingsModel->getBaseDate() ?: SettingsModel::BASE_DATE_CURRENT; ?>
         <input type="radio" name="future-action-base-date"
-                id="future-action-base-date-current"
-                value="current" <?php
-        echo $baseDate === 'current' ? 'checked' : ''; ?>/>
+               id="future-action-base-date-current"
+               value="current"
+               <?php echo $baseDate === SettingsModel::BASE_DATE_CURRENT ? 'checked' : ''; ?>
+            />
         <label for="future-action-base-date-current"><?php
-            esc_html_e('Current date', 'publishpress-future-pro'); ?></label>
+            esc_html_e('Use Current Date', 'publishpress-future-pro'); ?></label>
         &nbsp;&nbsp;
         <input type="radio" name="future-action-base-date"
                 id="future-action-base-date-publishing"
-                value="publishing" <?php
-        echo $baseDate === 'publishing' ? 'checked' : ''; ?>/>
+                value="publishing"
+                <?php echo $baseDate === SettingsModel::BASE_DATE_PUBLISHING ? 'checked' : ''; ?> />
         <label for="future-action-base-date-publishing"><?php
-            esc_html_e('Publishing date', 'publishpress-future-pro'); ?></label>
-        <p class="description"><?php
-            esc_html_e(
-                '"Current date" will use the current date as the base for calculating the date offset when enabling a future action. "Publishing date" will use the current post\'s publishing date as the base for that',
-                'publishpress-future-pro'
-            ); ?></p>
+            esc_html_e('Use Post\'s Publish Date', 'publishpress-future-pro'); ?></label>
+        <p class="description"><?php esc_html_e('"Use Current Date" - Calculates the future action date based on today\'s date.',
+                'publishpress-future-pro'); ?></p>
+        <p class="description"><?php esc_html_e('"Use Post\'s Publish Date" - Calculates the future action date from the post\'s original publish date.',
+                'publishpress-future-pro'); ?></p>
+
     </td>
 </tr>
