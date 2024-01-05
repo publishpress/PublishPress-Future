@@ -33,7 +33,12 @@ class SettingsFacade
      */
     private $cache = [];
 
+    /**
+     * @deprecated version 3.2.0 Use self::DEFAULT_CUSTOM_DATE_OFFSET instead.
+     */
     const DEFAULT_CUSTOM_DATE = '+1 week';
+
+    const DEFAULT_CUSTOM_DATE_OFFSET = '+1 week';
 
     /**
      * @param HookableInterface $hooks
@@ -223,17 +228,17 @@ class SettingsFacade
 
     public function getGeneralDateTimeOffset()
     {
-        $defaultDateOption = $this->options->getOption('expirationdateDefaultDateCustom');
+        $defaultDateOffsetOption = $this->options->getOption('expirationdateDefaultDateCustom');
 
-        $defaultDateOption = html_entity_decode($defaultDateOption, ENT_QUOTES);
-        $defaultDateOption = preg_replace('/["\'`]/', '', $defaultDateOption);
-        $defaultDateOption = trim($defaultDateOption);
+        $defaultDateOffsetOption = html_entity_decode($defaultDateOffsetOption, ENT_QUOTES);
+        $defaultDateOffsetOption = preg_replace('/["\'`]/', '', $defaultDateOffsetOption);
+        $defaultDateOffsetOption = trim($defaultDateOffsetOption);
 
-        if (empty($defaultDateOption)) {
-            $defaultDateOption = self::DEFAULT_CUSTOM_DATE;
+        if (empty($defaultDateOffsetOption)) {
+            $defaultDateOffsetOption = self::DEFAULT_CUSTOM_DATE_OFFSET;
         }
 
-        return $defaultDateOption;
+        return $defaultDateOffsetOption;
     }
 
     public function getColumnStyle()

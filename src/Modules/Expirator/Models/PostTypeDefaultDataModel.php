@@ -9,6 +9,7 @@ use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Debug\HooksAbstract as DebugHooksAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -63,11 +64,11 @@ class PostTypeDefaultDataModel
         $this->cache = [];
     }
 
-    private function getDateTimeOffset()
+    private function getDateTimeOffset(string $postType)
     {
         $customDateTimeOffset = $this->settings->getGeneralDateTimeOffset();
 
-        $postTypeSettings = $this->settings->getPostTypeDefaults($this->postType);
+        $postTypeSettings = $this->settings->getPostTypeDefaults($postType);
         if (isset($postTypeSettings['default-expire-type'])
             && 'custom' === $postTypeSettings['default-expire-type']
             && ! empty($postTypeSettings['default-custom-date'])
@@ -78,7 +79,7 @@ class PostTypeDefaultDataModel
             $customDateTimeOffset = trim($customDateTimeOffset);
 
             if (empty($customDateTimeOffset)) {
-                $customDateTimeOffset = SettingsFacade::DEFAULT_CUSTOM_DATE;
+                $customDateTimeOffset = SettingsFacade::DEFAULT_CUSTOM_DATE_OFFSET;
             }
         }
 
@@ -107,14 +108,24 @@ class PostTypeDefaultDataModel
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getActionDateParts()
+    public function getActionDateParts(int $postId = null): array
     {
         $dateTimeOffset = $this->getDateTimeOffset($this->postType);
 
-        $calculatedDate = strtotime($dateTimeOffset, (int)gmdate('U'));
+        $baseDate = $this->hooks->applyFilters(
+            ExpiratorHooksAbstract::FILTER_ACTION_BASE_DATE_STRING,
+            gmdate('Y-m-d H:i:s'),
+            $this->postType,
+            $postId
+        );
+
+        if ($baseDate === '0000-00-00 00:00:00') {
+            $baseDate = gmdate('Y-m-d H:i:s');
+        }
+
+        $baseDate = strtotime($baseDate);
+
+        $calculatedDate = strtotime($dateTimeOffset, (int)$baseDate);
 
         if (false === $calculatedDate) {
             throw new \Exception("Invalid date/time offset \"$dateTimeOffset\" for post type \"$this->postType\"");

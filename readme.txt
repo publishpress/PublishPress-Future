@@ -138,8 +138,11 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 [Click here for more details on Elementor post changes](https://publishpress.com/knowledge-base/schedule-changes-elementor/)
 
-
 == Changelog ==
+
+= UNRELEASED =
+
+* CHANGED: Deprecated the constant PublishPress\Future\Modules\Settings\SettingsFacade::DEFAULT_CUSTOM_DATE and replaced it with ::DEFAULT_CUSTOM_DATE_OFFSET;
 
 = [3.1.7] - 04 Jan, 2024 =
 
