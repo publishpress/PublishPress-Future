@@ -22,9 +22,10 @@ use PublishPress\FuturePro\Models\SettingsModel;
         <label for="future-action-base-date-publishing"><?php
             esc_html_e('Use Post\'s Publish Date', 'publishpress-future-pro'); ?></label>
         <p class="description"><?php esc_html_e('"Use Current Date" - Calculates the future action date based on today\'s date.',
-                'publishpress-future-pro'); ?></p>
-        <p class="description"><?php esc_html_e('"Use Post\'s Publish Date" - Calculates the future action date from the post\'s original publish date.',
-                'publishpress-future-pro'); ?></p>
+                'publishpress-future-pro'); ?><br>
+        <?php esc_html_e('"Use Post\'s Publish Date" - Calculates the future action date from the post\'s original publish date.',
+                'publishpress-future-pro'); ?>
+        </p>
 
     </td>
 </tr>
