@@ -33,24 +33,29 @@ jobs:
           detached: true
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - id: image-cache
+      - name: Cache Docker image
+        id: cache-image
         uses: actions/cache@v3
+        env:
+          cache-name: image-cache
         with:
-          path: ~/image-cache
+          path: ~/image-cache-terminal.tar
           # Adjust key to meet your cache time requirements e.g.
           # ${{ hashFiles(*) }} can be useful here to invalidate
           # cache on file changes
           key: image-cache-${{ hashFiles('dev-workspace/docker/Dockerfile') }}
+          restore-keys: |
+            image-cache-
 
-      - if: steps.image-cache.outputs.cache-hit != 'true'
+      - if: steps.cache-image.outputs.cache-hit != 'true'
         name: Pull Docker image
         run: |
           docker pull $DOCKER_IMAGE
           docker save -o ~/image-cache-terminal.tar $DOCKER_IMAGE
 
-      - if: steps.image-cache.outputs.cache-hit == 'true'
+      - if: steps.cache-image.outputs.cache-hit == 'true'
         name: Load Docker image from cache
         run: docker load -i ~/image-cache-terminal.tar
 
