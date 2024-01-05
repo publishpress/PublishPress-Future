@@ -11,7 +11,12 @@ on:
   workflow_call:
 
   workflow_dispatch:
-
+    inputs:
+      debug_enabled_code_check:
+        type: boolean
+        description: 'Enable "tmate" debugging for the code check'
+        required: false
+        default: false
 jobs:
   check:
     name: Check the code
@@ -20,7 +25,15 @@ jobs:
       image: publishpress/dev-workspace-terminal:future-pro-2
       options: -v ${{ github.workspace }}:/project --workdir="/project"
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup tmate session for Debugging, if inputs.debug_enabled_code_check is true
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ inputs.debug_enabled_code_check }}
+        timeout-minutes: 10
+        with:
+          detached: true
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -28,26 +41,14 @@ jobs:
       - name: Composer install
         run: composer install --no-interaction --no-progress --prefer-dist --ignore-platform-reqs
 
-      - name: Fixes scripts permissions
-        run: chmod +x /project/dev-workspace/docker/scripts/ppbuild
-
-      - name: Build to directory
-        run: npm run build:dir
+      - name: Build the package to a dir
+        run: composer build:dir
 
       - name: PHPLint - Check PHP syntax errors
-        run: npm run check:lint
+        run: composer check:lint
+
+      - name: PHP - Check PHP compatibility
+        run: composer check:php
 
       - name: PHPCS - Check VIP scan and code standards
-        run: npm run check:phpcs
-
-      - name: Check PHP 7.2 compatiblity
-        run: npm run phpcompat:7.2
-
-      - name: Check PHP 7.4 compatiblity
-        run: npm run phpcompat:7.4
-
-      - name: Check PHP 8.0 compatiblity
-        run: npm run phpcompat:8.0
-
-      - name: Check PHP 8.1 compatiblity
-        run: npm run phpcompat:8.1
+        run: composer check:phpcs
