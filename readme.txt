@@ -83,6 +83,10 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
+= UNRELEASED =
+
+* ADDED: Add new advanced setting to choose the base date for the future actions: current date or post publishing date #530;
+
 = [3.1.7] - 04 Jan, 2024 =
 
 * FIXED: Fix compatibility with plugins like "Hide Categories and Products for Woocommerce", making sure terms are not hidden in the taxonomy field, #639;
