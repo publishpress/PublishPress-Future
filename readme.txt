@@ -7,7 +7,7 @@ Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.4
 License: GPLv2 or later
-Stable tag: 3.1.6
+Stable tag: 3.1.7
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -138,8 +138,19 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 [Click here for more details on Elementor post changes](https://publishpress.com/knowledge-base/schedule-changes-elementor/)
 
-
 == Changelog ==
+
+= UNRELEASED =
+
+* CHANGED: Deprecated the constant PublishPress\Future\Modules\Settings\SettingsFacade::DEFAULT_CUSTOM_DATE and replaced it with ::DEFAULT_CUSTOM_DATE_OFFSET;
+
+= [3.1.7] - 04 Jan, 2024 =
+
+* FIXED: Fix compatibility with plugins like "Hide Categories and Products for Woocommerce", making sure terms are not hidden in the taxonomy field, #639;
+* FIXED: Fix the terms select field in the settings page, expanding it on focus, #638;
+* FIXED: Fix the fatal error when hook `add_meta_boxes` didn't receive a `WP_Post` instance as parameter, #640;
+* FIXED: Fix issue with the "NaN" categories in the classic editor, #647;
+* FIXED: Fix issue with accents on the taxonomy field in the settings, #642;
 
 = [3.1.6] - 20 Dec, 2023 =
 

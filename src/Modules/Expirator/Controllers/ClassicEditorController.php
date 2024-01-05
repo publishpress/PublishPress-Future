@@ -62,14 +62,38 @@ class ClassicEditorController implements InitializableInterface
         );
     }
 
-    private function isGutenbergAvailableForThePost(WP_Post $post)
+    private function isGutenbergAvailableForThePost($post)
     {
-        return function_exists('use_block_editor_for_post') && use_block_editor_for_post($post);
-    }
+        if (! function_exists('use_block_editor_for_post')) {
+            return false;
+        }
 
-    private function classicEditorIsRememberedForThePost(\WP_Post $post)
-    {
-        return 'classic-editor' === get_post_meta($post->ID, 'classic-editor-remember', true);
+        // Some 3rd party plugins send the post as an object of a different class.
+        // Try to fallback to the WP_Post class looking for the ID.
+        if ((! $post instanceof WP_Post) && is_object($post)) {
+            $id = null;
+            if (isset($post->ID)) {
+                $id = $post->ID;
+            } elseif (isset($post->post_id)) {
+                $id = $post->post_id;
+            } elseif (isset($post->id)) {
+                $id = $post->id;
+            } else {
+                if (method_exists($post, 'get_id')) {
+                    $id = $post->get_id();
+                }
+            }
+
+            if (! is_null($id)) {
+                $post = get_post($id);
+            }
+        }
+
+        if (! $post instanceof WP_Post) {
+            return false;
+        }
+
+        return use_block_editor_for_post($post);
     }
 
     private function classicEditorIsActiveForCurrentSession()
@@ -88,7 +112,7 @@ class ClassicEditorController implements InitializableInterface
         }
 
         // Only show the metabox if the block editor is not enabled for the post type
-        if ($this->isGutenbergAvailableForThePost($post)) {
+        if (! empty($post) && $this->isGutenbergAvailableForThePost($post)) {
             if (! $this->classicEditorIsActiveForCurrentSession() ) {
                 return;
             }

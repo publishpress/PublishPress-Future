@@ -201,7 +201,7 @@ class RestAPIController implements InitializableInterface
                             $defaultDataModelFactory = Container::getInstance()->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
                             $defaultDataModel = $defaultDataModelFactory->create($post['post_type']);
 
-                            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+                            $defaultExpirationDate = $defaultDataModel->getActionDateParts($post['id']);
                             $date = $defaultExpirationDate['iso'];
 
                             $action = $defaultDataModel->getDefaultActionForPostType($post['post_type']);
@@ -282,6 +282,7 @@ class RestAPIController implements InitializableInterface
      */
     public function removeExcludeParamFromTermQuery($params)
     {
+        // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
         $params['exclude'] = [];
 
         return $params;
