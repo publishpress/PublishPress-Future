@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Future 3.1.7\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-future\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-04T14:18:37+00:00\n"
+"POT-Creation-Date: 2024-01-05T21:10:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: post-expirator\n"
@@ -111,17 +111,17 @@ msgid "No taxonomies found"
 msgstr ""
 
 #: services.php:67
-#: src/Modules/Settings/SettingsFacade.php:85
+#: src/Modules/Settings/SettingsFacade.php:90
 msgid "l F jS, Y"
 msgstr ""
 
 #: services.php:68
-#: src/Modules/Settings/SettingsFacade.php:86
+#: src/Modules/Settings/SettingsFacade.php:91
 msgid "g:ia"
 msgstr ""
 
 #: services.php:69
-#: src/Modules/Settings/SettingsFacade.php:87
+#: src/Modules/Settings/SettingsFacade.php:92
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
 
@@ -349,27 +349,27 @@ msgstr ""
 msgid "Unstick"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:414
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:418
 msgid "Email is disabled"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:418
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:422
 msgid "Email sent"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:418
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:422
 msgid "Email not sent"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:560
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:564
 msgid "%s. %s on %s. The post link is %s"
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:577
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:581
 msgid "Future Action Complete \"%s\""
 msgstr ""
 
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:580
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:584
 msgid "[%1$s] %2$s"
 msgstr ""
 
@@ -422,7 +422,7 @@ msgid "Scheduled date: "
 msgstr ""
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:557
-#: src/Views/menu-diagnostics.php:198
+#: src/Views/menu-diagnostics.php:189
 msgid "Date"
 msgstr ""
 
@@ -476,7 +476,7 @@ msgid "Select the hierarchical taxonomy and terms to be used for taxonomy based 
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:219
-#: src/Views/menu-general.php:189
+#: src/Views/menu-general.php:195
 msgid "Who to Notify"
 msgstr ""
 
@@ -573,69 +573,73 @@ msgstr ""
 msgid "No future action"
 msgstr ""
 
-#: src/Views/menu-advanced.php:23
+#: src/Views/menu-advanced.php:24
 msgid "Advanced Options"
 msgstr ""
 
-#: src/Views/menu-advanced.php:25
+#: src/Views/menu-advanced.php:26
 msgid "Please do not update anything here unless you know what it entails. For advanced users only."
 msgstr ""
 
-#: src/Views/menu-advanced.php:33
+#: src/Views/menu-advanced.php:37
 msgid "Future Action Column Style"
 msgstr ""
 
-#: src/Views/menu-advanced.php:43
+#: src/Views/menu-advanced.php:48
 msgid "Detailed"
 msgstr ""
 
 #: src/Views/menu-advanced.php:50
+msgid "Displays all information in the Future Action column."
+msgstr ""
+
+#: src/Views/menu-advanced.php:62
 msgid "Simplified"
 msgstr ""
 
-#: src/Views/menu-advanced.php:52
-msgid "\"Detailed\" will display all information in the Future Action column. \"Simplified\" will display only the icon and date/time."
+#: src/Views/menu-advanced.php:64
+msgid "Displays only the icon and date/time."
 msgstr ""
 
-#: src/Views/menu-advanced.php:60
+#: src/Views/menu-advanced.php:73
 msgid "Time format in the date picker"
 msgstr ""
 
-#: src/Views/menu-advanced.php:70
+#: src/Views/menu-advanced.php:84
 msgid "Inherit from Site Settings"
 msgstr ""
 
-#: src/Views/menu-advanced.php:77
+#: src/Views/menu-advanced.php:92
 msgid "24 hours"
 msgstr ""
 
-#: src/Views/menu-advanced.php:84
+#: src/Views/menu-advanced.php:100
 msgid "AM/PM"
 msgstr ""
 
-#: src/Views/menu-advanced.php:90
+#: src/Views/menu-advanced.php:107
 msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr ""
 
-#: src/Views/menu-advanced.php:121
+#: src/Views/menu-advanced.php:138
 msgid "Preserve Data After Deactivating the Plugin"
 msgstr ""
 
-#: src/Views/menu-advanced.php:130
+#: src/Views/menu-advanced.php:148
 msgid "Preserve data"
 msgstr ""
 
-#: src/Views/menu-advanced.php:139
+#: src/Views/menu-advanced.php:158
 msgid "Delete data"
 msgstr ""
 
-#: src/Views/menu-advanced.php:143
+#: src/Views/menu-advanced.php:163
 msgid "Toggle between preserving or deleting data after the plugin is deactivated."
 msgstr ""
 
-#: src/Views/menu-advanced.php:154
-#: src/Views/menu-display.php:139
-#: src/Views/menu-general.php:207
+#: src/Views/menu-advanced.php:174
+#: src/Views/menu-display.php:141
+#: src/Views/menu-general.php:213
 msgid "Save Changes"
 msgstr ""
 
@@ -695,9 +699,9 @@ msgid "Debug Logging"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:96
-#: src/Views/menu-display.php:82
-#: src/Views/menu-general.php:145
-#: src/Views/menu-general.php:170
+#: src/Views/menu-display.php:83
+#: src/Views/menu-general.php:146
+#: src/Views/menu-general.php:174
 msgid "Enabled"
 msgstr ""
 
@@ -714,9 +718,9 @@ msgid "View Debug Logs"
 msgstr ""
 
 #: src/Views/menu-diagnostics.php:116
-#: src/Views/menu-display.php:87
-#: src/Views/menu-general.php:152
-#: src/Views/menu-general.php:178
+#: src/Views/menu-display.php:89
+#: src/Views/menu-general.php:154
+#: src/Views/menu-general.php:183
 msgid "Disabled"
 msgstr ""
 
@@ -748,29 +752,23 @@ msgstr ""
 msgid "Restore legacy action arguments as Post Meta. This is useful if you have issues with 3rd party plugins that read that data. This will run in the background and may take a while."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:168
+#: src/Views/menu-diagnostics.php:169
 msgid "Legacy Cron Schedule"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:176
-msgid ""
-"\n"
-"                                    No cron events found for the plugin using WP Cron."
-msgstr ""
-
-#: src/Views/menu-diagnostics.php:186
+#: src/Views/menu-diagnostics.php:177
 msgid "The below table will show all currently scheduled cron events for the plugin with the next run time."
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:201
+#: src/Views/menu-diagnostics.php:192
 msgid "Event"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:204
+#: src/Views/menu-diagnostics.php:195
 msgid "Posts and expiration settings"
 msgstr ""
 
-#: src/Views/menu-diagnostics.php:263
+#: src/Views/menu-diagnostics.php:251
 msgid "This is a legacy feature and will be removed in a future version."
 msgstr ""
 
@@ -803,28 +801,28 @@ msgstr ""
 msgid "Show in Post Footer?"
 msgstr ""
 
-#: src/Views/menu-display.php:89
+#: src/Views/menu-display.php:92
 msgid "This will enable or disable displaying the future action date in the post footer."
 msgstr ""
 
-#: src/Views/menu-display.php:97
+#: src/Views/menu-display.php:100
 msgid "Footer Contents"
 msgstr ""
 
-#: src/Views/menu-display.php:102
+#: src/Views/menu-display.php:105
 msgid "Enter the text you would like to appear at the bottom of every post which has an action scheduled.  The following placeholders will be replaced with the future action date in the following format:"
 msgstr ""
 
-#: src/Views/menu-display.php:120
+#: src/Views/menu-display.php:123
 msgid "Footer Style"
 msgstr ""
 
-#: src/Views/menu-display.php:126
-msgid "Example: "
+#: src/Views/menu-display.php:128
+msgid "The inline css which will be used to style the footer text."
 msgstr ""
 
-#: src/Views/menu-display.php:132
-msgid "The inline css which will be used to style the footer text."
+#: src/Views/menu-display.php:131
+msgid "Example: "
 msgstr ""
 
 #: src/Views/menu-general.php:63
@@ -870,19 +868,19 @@ msgstr ""
 msgid "Enable Email Notification?"
 msgstr ""
 
-#: src/Views/menu-general.php:154
+#: src/Views/menu-general.php:157
 msgid "This will enable or disable the send of email notification on future action."
 msgstr ""
 
-#: src/Views/menu-general.php:162
+#: src/Views/menu-general.php:165
 msgid "Include Blog Administrators?"
 msgstr ""
 
-#: src/Views/menu-general.php:180
+#: src/Views/menu-general.php:186
 msgid "This will include all users with the role of \"Administrator\" in the email."
 msgstr ""
 
-#: src/Views/menu-general.php:196
+#: src/Views/menu-general.php:202
 msgid "Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab."
 msgstr ""
 
