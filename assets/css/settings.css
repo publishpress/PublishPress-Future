@@ -229,6 +229,18 @@ span.post-expiration-attributes {
     border-radius: 4px;
 }
 
+.pp-settings-field-row {
+    margin-bottom: 6px;
+}
+
+span.description,
+p.description,
 .form-table td p.description {
     font-size: 13px;
+    margin: 2px 0 5px;
+    color: #8d929a;
+}
+
+.pp-settings-field-row .description.offset {
+    margin-left: 24px;
 }
