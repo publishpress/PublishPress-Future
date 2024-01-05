@@ -48,11 +48,11 @@ jobs:
         name: Pull Docker image
         run: |
           docker pull $DOCKER_IMAGE
-          docker save -o ~/image-cache/terminal.tar $DOCKER_IMAGE
+          docker save -o ~/image-cache-terminal.tar $DOCKER_IMAGE
 
       - if: steps.image-cache.outputs.cache-hit == 'true'
         name: Load Docker image from cache
-        run: docker load -i ~/image-cache/terminal.tar
+        run: docker load -i ~/image-cache-terminal.tar
 
       - name: Run code checks
         run: |
