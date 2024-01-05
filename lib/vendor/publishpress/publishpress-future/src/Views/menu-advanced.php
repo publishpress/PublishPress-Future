@@ -2,6 +2,7 @@
 
 use PublishPress\Future\Core\DI\Container as DIContainer;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -28,6 +29,9 @@ $container = DIContainer::getInstance();
                 ); ?>
             </p>
             <table class="form-table">
+
+                <?php do_action(HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE); ?>
+
                 <tr valign="top">
                     <th scope="row"><?php
                         esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>

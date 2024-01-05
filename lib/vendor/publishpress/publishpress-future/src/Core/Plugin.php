@@ -267,7 +267,7 @@ class Plugin implements InitializableInterface
             return;
         }
 
-        $defaultExpire = $defaultDataModel->getActionDateParts();
+        $defaultExpire = $defaultDataModel->getActionDateParts($postId);
 
         if (empty($defaultExpire['ts'])) {
             return;

@@ -90,7 +90,7 @@ class BlockEditorController implements InitializableInterface
                 ]);
             }
 
-            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+            $defaultExpirationDate = $defaultDataModel->getActionDateParts($post->ID);
 
             wp_localize_script(
                 'postexpirator-block-editor',

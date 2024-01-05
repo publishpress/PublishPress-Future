@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d009115dd47ea8b944fdf4cee3ec84d",
+    "content-hash": "89bbb9aac7aef2af419c30e0a82da80e",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.1.7",
+            "version": "dev-530-base-the-default-on-the-publish-date",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "c97be45fb068905e536250e7317956d16c9c6c65"
+                "reference": "e5b12d848ac3025dd7b57362d70d5b0c588d88b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/c97be45fb068905e536250e7317956d16c9c6c65",
-                "reference": "c97be45fb068905e536250e7317956d16c9c6c65",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/e5b12d848ac3025dd7b57362d70d5b0c588d88b3",
+                "reference": "e5b12d848ac3025dd7b57362d70d5b0c588d88b3",
                 "shasum": ""
             },
             "require": {
@@ -469,10 +469,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.7",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/530-base-the-default-on-the-publish-date",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-01-04T14:24:58+00:00"
+            "time": "2024-01-05T18:20:05+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -772,7 +772,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "publishpress/publishpress-future": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

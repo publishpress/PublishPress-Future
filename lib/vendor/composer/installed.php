@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-3.1-branch',
-        'version' => 'dev-3.1-branch',
-        'reference' => 'e1b6d1f07055ed09584be4a4e7db6be243240eca',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '9c56bca9891cc8098f5fdd75b6d81edd3651ba81',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-3.1-branch',
-            'version' => 'dev-3.1-branch',
-            'reference' => 'e1b6d1f07055ed09584be4a4e7db6be243240eca',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '9c56bca9891cc8098f5fdd75b6d81edd3651ba81',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -56,9 +56,9 @@
             'dev_requirement' => false,
         ),
         'publishpress/publishpress-future' => array(
-            'pretty_version' => '3.1.7',
-            'version' => '3.1.7.0',
-            'reference' => 'c97be45fb068905e536250e7317956d16c9c6c65',
+            'pretty_version' => 'dev-530-base-the-default-on-the-publish-date',
+            'version' => 'dev-530-base-the-default-on-the-publish-date',
+            'reference' => 'e5b12d848ac3025dd7b57362d70d5b0c588d88b3',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../publishpress/publishpress-future',
             'aliases' => array(),
