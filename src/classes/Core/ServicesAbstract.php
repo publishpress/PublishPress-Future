@@ -26,6 +26,7 @@ abstract class ServicesAbstract
     const CONTROLLER_CUSTOM_STATUSES = 'future.pro/controller-custom-statuses';
     const CONTROLLER_SETTINGS = 'future.pro/controller-settings';
     const CONTROLLER_EDD_INTEGRATION = 'future.pro/controller-edd-integration';
+    const CONTROLLER_BASE_DATE = 'future.pro/controller-base-date';
     const MODEL_CUSTOM_STATUSES = 'future.pro/model-custom-statuses';
     const MODEL_SETTINGS = 'future.pro/model-settings';
     const OPTIONS = ServicesAbstractFree::OPTIONS;
