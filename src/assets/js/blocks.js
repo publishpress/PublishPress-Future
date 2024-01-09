@@ -1,13 +1,94 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/assets/jsx/blocks/future-action-date.jsx":
 /*!******************************************************!*\
   !*** ./src/assets/jsx/blocks/future-action-date.jsx ***!
   \******************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, exports) => {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: Unexpected token (24:89)\n\n\u001b[0m \u001b[90m 22 | \u001b[39m            tagName\u001b[33m=\u001b[39m\u001b[32m\"p\"\u001b[39m\n \u001b[90m 23 | \u001b[39m            value\u001b[33m=\u001b[39m{attributes\u001b[33m.\u001b[39mtemplate}\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 24 | \u001b[39m            onChange\u001b[33m=\u001b[39m{(value) \u001b[33m=>\u001b[39m {setAttributes({ template\u001b[33m:\u001b[39m value })\u001b[33m;\u001b[39m console\u001b[33m.\u001b[39mlog(value)\u001b[33m;\u001b[39m)}}\n \u001b[90m    | \u001b[39m                                                                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 25 | \u001b[39m            placeholder\u001b[33m=\u001b[39m\u001b[32m\"Enter the template for the future action date block\"\u001b[39m\n \u001b[90m 26 | \u001b[39m            className\u001b[33m=\u001b[39m\u001b[32m\"future-action-date\"\u001b[39m\n \u001b[90m 27 | \u001b[39m            autocompleters\u001b[33m=\u001b[39m{[\u001b[0m\n");
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+var storeName = 'publishpress-future/future-action';
+
+var BlockEdit = function BlockEdit(props) {
+    var useEffect = wp.element.useEffect;
+    var useSelect = wp.data.useSelect;
+    var attributes = props.attributes,
+        setAttributes = props.setAttributes;
+    var RichText = wp.blockEditor.RichText;
+
+    var _useSelect = useSelect(function (select) {
+        return {
+            date: select(storeName).getDate(),
+            enabled: select(storeName).getEnabled()
+        };
+    }),
+        date = _useSelect.date,
+        enabled = _useSelect.enabled;
+
+    useEffect(function () {
+        setAttributes({ date: date, enabled: enabled });
+    }, [date, enabled]);
+
+    return React.createElement(RichText, {
+        tagName: "p",
+        value: attributes.template,
+        onChange: function onChange(value) {
+            return setAttributes({ template: value });
+        },
+        placeholder: "Enter the template for the future action date block",
+        className: "future-action-date",
+        autocompleters: [{
+            name: 'future-action-date',
+            triggerPrefix: 'ACTION',
+            options: [{
+                value: 'ACTIONTIME',
+                label: 'ACTIONTIME'
+            }, {
+                value: 'ACTIONDATE',
+                label: 'ACTIONDATE'
+            }],
+            getOptionLabel: function getOptionLabel(option) {
+                return option.label;
+            },
+            getOptionKeywords: function getOptionKeywords(option) {
+                return [option.value];
+            },
+            getOptionCompletion: function getOptionCompletion(option) {
+                return option.value;
+            }
+        }]
+    });
+};
+
+var FutureActionDateBlock = exports.FutureActionDateBlock = {
+    title: 'Future Action Date',
+    icon: 'clock',
+    category: 'common',
+    attributes: {
+        enabled: {
+            type: 'boolean',
+            default: false
+        },
+        date: {
+            type: 'string',
+            default: ''
+        },
+        template: {
+            type: 'string',
+            default: 'Post expires at ACTIONTIME on ACTIONDATE'
+        }
+    },
+    edit: BlockEdit,
+    save: function save() {
+        return null;
+    }
+};
 
 /***/ })
 
@@ -39,9 +120,8 @@ throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!***********************************!*\
   !*** ./src/assets/jsx/blocks.jsx ***!
   \***********************************/

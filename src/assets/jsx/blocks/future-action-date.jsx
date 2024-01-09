@@ -21,7 +21,7 @@ const BlockEdit = (props) => {
         <RichText
             tagName="p"
             value={attributes.template}
-            onChange={(value) => {setAttributes({ template: value }); console.log(value);)}}
+            onChange={(value) => setAttributes({ template: value })}
             placeholder="Enter the template for the future action date block"
             className="future-action-date"
             autocompleters={[
@@ -30,14 +30,17 @@ const BlockEdit = (props) => {
                     triggerPrefix: 'ACTION',
                     options: [
                         {
-                            value: 'TIME',
-                            label: 'TIME',
+                            value: 'ACTIONTIME',
+                            label: 'ACTIONTIME',
                         },
                         {
-                            value: 'DATE',
-                            label: 'DATE',
+                            value: 'ACTIONDATE',
+                            label: 'ACTIONDATE',
                         },
                     ],
+                    getOptionLabel: (option) => option.label,
+                    getOptionKeywords: (option) => [option.value],
+                    getOptionCompletion: (option) => option.value,
                 },
             ]}
         />
