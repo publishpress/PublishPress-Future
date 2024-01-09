@@ -18,7 +18,7 @@ abstract class ServicesAbstract
     const PLUGIN_FILE = 'future.pro/plugin-file';
     const BASE_PATH = 'future.pro/base-path';
     const TEMPLATE_PATH = 'future.pro/template-path';
-    const ASSETS_URL = 'future.pro/assets-path';
+    const ASSETS_URL = 'future.pro/assets-url';
     const BASE_URL = 'future.pro/base-url';
     const CONTROLLERS = 'future.pro/controllers';
     const PLUGIN = 'future.pro/plugin';
@@ -27,6 +27,7 @@ abstract class ServicesAbstract
     const CONTROLLER_SETTINGS = 'future.pro/controller-settings';
     const CONTROLLER_EDD_INTEGRATION = 'future.pro/controller-edd-integration';
     const CONTROLLER_BASE_DATE = 'future.pro/controller-base-date';
+    const CONTROLLER_BLOCKS = 'future.pro/controller-blocks';
     const MODEL_CUSTOM_STATUSES = 'future.pro/model-custom-statuses';
     const MODEL_SETTINGS = 'future.pro/model-settings';
     const OPTIONS = ServicesAbstractFree::OPTIONS;

@@ -48,4 +48,6 @@ abstract class HooksAbstract
     const ACTION_DELETE_ALL_SETTINGS = SettingsHooksAbstractFree::ACTION_DELETE_ALL_SETTINGS;
 
     const ACTION_SETTINGS_TAB_ADVANCED_BEFORE = 'publishpress_future/settings_tab_advanced_before';
+
+    const ACTION_ENQUEUE_BLOCK_EDITOR_ASSETS = 'enqueue_block_editor_assets';
 }
