@@ -56,9 +56,6 @@ should_update() {
     fi
 }
 
-# Check if we should update the image
-init_cache_if_not_exists
-
 # If should_update returns 1, it means we should update the image.
 if [[ $(should_update) -eq 1 ]]; then
     ./update
