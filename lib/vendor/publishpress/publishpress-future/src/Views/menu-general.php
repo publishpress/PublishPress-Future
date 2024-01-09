@@ -137,19 +137,22 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     <th scope="row"><?php
                         esc_html_e('Enable Email Notification?', 'post-expirator'); ?></th>
                     <td>
-                        <input type="radio" name="expired-email-notification" id="expired-email-notification-true"
-                               value="1" <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo $expiredemailnotificationenabled; ?>/> <label
-                                for="expired-email-notification-true"><?php
-                            esc_html_e('Enabled', 'post-expirator'); ?></label>
-                        &nbsp;&nbsp;
-                        <input type="radio" name="expired-email-notification" id="expired-email-notification-false"
-                               value="0" <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo $expiredemailnotificationdisabled; ?>/> <label
-                                for="expired-email-notification-false"><?php
-                            esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-email-notification" id="expired-email-notification-true"
+                                value="1" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            echo $expiredemailnotificationenabled; ?>/> <label
+                                    for="expired-email-notification-true"><?php
+                                esc_html_e('Enabled', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-email-notification" id="expired-email-notification-false"
+                                value="0" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            echo $expiredemailnotificationdisabled; ?>/> <label
+                                    for="expired-email-notification-false"><?php
+                                esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        </div>
                         <p class="description"><?php
                             esc_html_e(
                                 'This will enable or disable the send of email notification on future action.',
@@ -161,21 +164,24 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     <th scope="row"><?php
                         esc_html_e('Include Blog Administrators?', 'post-expirator'); ?></th>
                     <td>
-                        <input type="radio" name="expired-email-notification-admins"
-                               id="expired-email-notification-admins-true"
-                               value="1" <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo $expiredemailnotificationadminsenabled; ?>/> <label
-                                for="expired-email-notification-admins-true"><?php
-                            esc_html_e('Enabled', 'post-expirator'); ?></label>
-                        &nbsp;&nbsp;
-                        <input type="radio" name="expired-email-notification-admins"
-                               id="expired-email-notification-admins-false"
-                               value="0" <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo $expiredemailnotificationadminsdisabled; ?>/> <label
-                                for="expired-email-notification-admins-false"><?php
-                            esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-email-notification-admins"
+                                id="expired-email-notification-admins-true"
+                                value="1" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            echo $expiredemailnotificationadminsenabled; ?>/> <label
+                                    for="expired-email-notification-admins-true"><?php
+                                esc_html_e('Enabled', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-email-notification-admins"
+                                id="expired-email-notification-admins-false"
+                                value="0" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            echo $expiredemailnotificationadminsdisabled; ?>/> <label
+                                    for="expired-email-notification-admins-false"><?php
+                                esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        </div>
                         <p class="description"><?php
                             esc_html_e(
                                 'This will include all users with the role of "Administrator" in the email.',

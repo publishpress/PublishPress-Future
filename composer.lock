@@ -1260,12 +1260,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "fa4fedef5e292c411315a195754e3059b19e7058"
+                "reference": "0b350298cb8124650499932d5085e690dbf4d0a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/fa4fedef5e292c411315a195754e3059b19e7058",
-                "reference": "fa4fedef5e292c411315a195754e3059b19e7058",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0b350298cb8124650499932d5085e690dbf4d0a2",
+                "reference": "0b350298cb8124650499932d5085e690dbf4d0a2",
                 "shasum": ""
             },
             "require": {
@@ -1315,7 +1315,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-05T15:43:22+00:00"
+            "time": "2024-01-09T12:20:45+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1944,12 +1944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "5207a3ea9d22f574421d905181da5089b8db1534"
+                "reference": "2ab648b9a420f9f573b73a7c847ff3517fa2a82f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/5207a3ea9d22f574421d905181da5089b8db1534",
-                "reference": "5207a3ea9d22f574421d905181da5089b8db1534",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/2ab648b9a420f9f573b73a7c847ff3517fa2a82f",
+                "reference": "2ab648b9a420f9f573b73a7c847ff3517fa2a82f",
                 "shasum": ""
             },
             "require": {
@@ -2017,7 +2017,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-01-05T17:45:52+00:00"
+            "time": "2024-01-06T09:21:55+00:00"
         },
         {
             "name": "symfony/config",
