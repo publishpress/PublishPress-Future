@@ -23,6 +23,7 @@ var FutureActionDate = exports.FutureActionDate = {
     apiVersion: 3,
     title: 'Future Action Date',
     icon: 'clock',
+    description: 'Displays a message with the date and time of the future action.',
     category: 'text',
     attributes: {
         template: {
@@ -32,12 +33,22 @@ var FutureActionDate = exports.FutureActionDate = {
         alignment: {
             type: 'string',
             default: 'none'
+        },
+        bgColor: {
+            type: 'string',
+            default: 'none'
+        },
+        textColor: {
+            type: 'string',
+            default: '#000000'
         }
     },
     example: {
         attributes: {
             template: 'Post expires at #ACTIONTIME on #ACTIONDATE.',
-            alignment: 'none'
+            alignment: 'none',
+            bgColor: 'none',
+            textColor: '#000000'
         }
     },
     edit: function edit(_ref) {
@@ -49,7 +60,13 @@ var FutureActionDate = exports.FutureActionDate = {
             RichText = _wp$blockEditor.RichText,
             useBlockProps = _wp$blockEditor.useBlockProps,
             BlockControls = _wp$blockEditor.BlockControls,
-            AlignmentToolbar = _wp$blockEditor.AlignmentToolbar;
+            AlignmentToolbar = _wp$blockEditor.AlignmentToolbar,
+            ColorPalette = _wp$blockEditor.ColorPalette,
+            InspectorControls = _wp$blockEditor.InspectorControls;
+        var __ = wp.i18n.__;
+        var _wp$components = wp.components,
+            __experimentalToolsPanel = _wp$components.__experimentalToolsPanel,
+            __experimentalToolsPanelDescription = _wp$components.__experimentalToolsPanelDescription;
 
         var _useSelect = useSelect(function (select) {
             var store = select(storeName);
@@ -70,6 +87,14 @@ var FutureActionDate = exports.FutureActionDate = {
             setAttributes({ alignment: value });
         };
 
+        var onChangeBgColor = function onChangeBgColor(value) {
+            setAttributes({ bgColor: value });
+        };
+
+        var onChangeTextColor = function onChangeTextColor(value) {
+            setAttributes({ textColor: value });
+        };
+
         return React.createElement(
             'div',
             useBlockProps(),
@@ -84,11 +109,54 @@ var FutureActionDate = exports.FutureActionDate = {
                         onChange: onChangeAligmment
                     })
                 ),
+                React.createElement(
+                    InspectorControls,
+                    { key: 'help' },
+                    React.createElement(
+                        __experimentalToolsPanel,
+                        {
+                            label: 'Help'
+                        },
+                        React.createElement(
+                            'div',
+                            { className: 'future-action-tools-panel-help' },
+                            'Type the action block template and use # to use the autocomplete options with the available placeholders.',
+                            React.createElement(
+                                'h2',
+                                null,
+                                'Available placeholders'
+                            ),
+                            React.createElement(
+                                'ul',
+                                null,
+                                React.createElement(
+                                    'li',
+                                    null,
+                                    '#ACTIONDATE'
+                                ),
+                                React.createElement(
+                                    'li',
+                                    null,
+                                    '#ACTIONTIME'
+                                ),
+                                React.createElement(
+                                    'li',
+                                    null,
+                                    '#ACTIONDATETIME'
+                                )
+                            )
+                        )
+                    )
+                ),
                 React.createElement(RichText, {
                     tagName: 'div',
                     value: attributes.template,
                     onChange: onChangeTemplate,
-                    style: { textAlign: attributes.alignment },
+                    style: {
+                        textAlign: attributes.alignment,
+                        backgroundColor: attributes.bgColor,
+                        color: attributes.textColor
+                    },
                     placeholder: 'Future action block template. Type the text and # to see the autocomplete options.',
                     className: 'future-action-block',
                     autocompleters: [{
@@ -119,7 +187,11 @@ var FutureActionDate = exports.FutureActionDate = {
             !isSelected && React.createElement(RichText.Content, {
                 tagName: 'div',
                 value: attributes.template,
-                style: { textAlign: attributes.alignment },
+                style: {
+                    textAlign: attributes.alignment,
+                    backgroundColor: attributes.bgColor,
+                    color: attributes.textColor
+                },
                 className: 'future-action-block'
             })
         );

@@ -65,7 +65,7 @@ class BlocksController implements ModuleInterface
         wp_enqueue_script(
             'future-pro-blocks',
             $this->assetsUrl . '/js/block-editor.js',
-            ['wp-blocks', 'wp-element'],
+            ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-data'],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
         );
 
@@ -93,6 +93,9 @@ class BlocksController implements ModuleInterface
             'timeFormat' => 'g:i a',
             'fullDateFormat' => 'F j, Y g:i a',
             'alignment' => 'left',
+            'bgColor' => 'none',
+            'textColor' => '#000000',
+            'className' => '',
         ]);
 
         if (! $postModel->isExpirationEnabled()) {
@@ -116,7 +119,25 @@ class BlocksController implements ModuleInterface
             $content = str_replace('#ACTIONTIME', gmdate($attr['timeFormat'], $expirationDate), $content);
         }
 
-        $output = '<p style="text-align: ' . esc_attr($attr['alignment']) . '">' . $content . '</p>';
+        $style = '';
+        if ($attr['alignment'] !== 'left') {
+            $style = ' text-align: ' . esc_attr($attr['alignment']) . ';';
+        }
+
+        if ($attr['bgColor'] !== 'none') {
+            $style .= ' background-color: ' . esc_attr($attr['bgColor']) . ';';
+        }
+
+        if ($attr['textColor'] !== '#000000') {
+            $style .= ' color: ' . esc_attr($attr['textColor']) . ';';
+        }
+
+        $classes = 'future-pro-blocks-future-action-date';
+        if (! empty($attr['className'])) {
+            $classes .= ' ' . $attr['className'];
+        }
+
+        $output = '<p classes="' . esc_attr($classes) . '" style="' . esc_attr($style) . '">' . $content . '</p>';
 
         $output .= '<pre>' . print_r($attr, true) . '</pre>';
 

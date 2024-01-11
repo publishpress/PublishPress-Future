@@ -5,3 +5,7 @@
     border-radius: 6px;
     padding: 1px 6px
 }
+
+.future-action-tools-panel-help {
+    grid-column: span 2
+}
