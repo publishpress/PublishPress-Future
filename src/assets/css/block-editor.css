@@ -1,19 +1,7 @@
-.inline-action-date {
-    display: inline-block;
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 100px;
-    text-align: center;
-    font-size: 12px;
+.future-action-date-token {
+    background-color: #efefef;
     color: #999;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.inline-action-date::after {
-    content: 'ACTIONDATE';
-    display: block;
-    clear: both;
+    border: 1px solid silver;
+    border-radius: 6px;
+    padding: 1px 6px
 }

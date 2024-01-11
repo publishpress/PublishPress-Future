@@ -92,6 +92,7 @@ class BlocksController implements ModuleInterface
             'dateFormat' => 'F j, Y',
             'timeFormat' => 'g:i a',
             'fullDateFormat' => 'F j, Y g:i a',
+            'alignment' => 'left',
         ]);
 
         if (! $postModel->isExpirationEnabled()) {
@@ -100,7 +101,7 @@ class BlocksController implements ModuleInterface
 
         $expirationDate = $postModel->getExpirationDateAsUnixTime();
 
-
+        // $content = wp_kses($attr['template'], []);
         $content = $attr['template'];
 
         if (strpos($content, '#ACTIONDATETIME') !== false) {
@@ -115,7 +116,7 @@ class BlocksController implements ModuleInterface
             $content = str_replace('#ACTIONTIME', gmdate($attr['timeFormat'], $expirationDate), $content);
         }
 
-        $output = '<p>' . $content . '</p>';
+        $output = '<p style="text-align: ' . esc_attr($attr['alignment']) . '">' . $content . '</p>';
 
         $output .= '<pre>' . print_r($attr, true) . '</pre>';
 
