@@ -6,7 +6,7 @@ use PublishPress\WordPressEDDLicense\Container as EDDContainer;
 use PublishPress\WordPressEDDLicense\Services as EDDServices;
 use PublishPress\WordPressEDDLicense\ServicesConfig as EDDServicesConfig;
 use PublishPress\Future\Core\DI\ContainerInterface;
-use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Core\DI\ServicesAbstract as FreeServicesAbstract;
 use PublishPress\FuturePro\Controllers\BaseDateController;
 use PublishPress\FuturePro\Controllers\BlocksController;
 use PublishPress\FuturePro\Controllers\CustomStatusesController;
@@ -135,7 +135,8 @@ return [
     ServicesAbstract::CONTROLLER_BLOCKS => static function (ContainerInterface $container) {
         return new BlocksController(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::ASSETS_URL)
+            $container->get(ServicesAbstract::ASSETS_URL),
+            $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
         );
     },
 

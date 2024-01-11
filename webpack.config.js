@@ -48,12 +48,12 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/jsx/blocks.jsx",
+            "./src/assets/jsx/block-editor.jsx",
         ),
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "js"),
-            filename: "blocks.js"
+            filename: "block-editor.js"
         },
         module: {
             rules: [

@@ -27,13 +27,20 @@ class BlocksController implements ModuleInterface
     private $assetsUrl;
 
     /**
+     * @var \Closure
+     */
+    private $postExpirableModuleFactory;
+
+    /**
      * @param \PublishPress\Future\Core\HookableInterface $hooks
      * @param string $assetsUrl
+     * @param \Closure $postExpirableModuleFactory
      */
-    public function __construct(HookableInterface $hooks, string $assetsUrl)
+    public function __construct(HookableInterface $hooks, string $assetsUrl, \Closure $postExpirableModuleFactory)
     {
         $this->hooks = $hooks;
         $this->assetsUrl = $assetsUrl;
+        $this->postExpirableModuleFactory = $postExpirableModuleFactory;
     }
 
 
@@ -57,9 +64,16 @@ class BlocksController implements ModuleInterface
     {
         wp_enqueue_script(
             'future-pro-blocks',
-            $this->assetsUrl . '/js/blocks.js',
+            $this->assetsUrl . '/js/block-editor.js',
             ['wp-blocks', 'wp-element'],
-            true
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
+        );
+
+        wp_enqueue_style(
+            'future-pro-blocks',
+            $this->assetsUrl . '/css/block-editor.css',
+            [],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
         );
     }
 
@@ -67,7 +81,41 @@ class BlocksController implements ModuleInterface
     {
         $postId = get_the_ID();
 
-        $output = '<p>' . $attr['template'] . '</p>';
+        if (empty($postId)) {
+            return '';
+        }
+
+        $postModel = $this->postExpirableModuleFactory->call($this, $postId);
+
+        $attr = wp_parse_args($attr, [
+            'template' => 'Post expires at #ACTIONTIME on #ACTIONDATE.',
+            'dateFormat' => 'F j, Y',
+            'timeFormat' => 'g:i a',
+            'fullDateFormat' => 'F j, Y g:i a',
+        ]);
+
+        if (! $postModel->isExpirationEnabled()) {
+            return '';
+        }
+
+        $expirationDate = $postModel->getExpirationDateAsUnixTime();
+
+
+        $content = $attr['template'];
+
+        if (strpos($content, '#ACTIONDATETIME') !== false) {
+            $content = str_replace('#ACTIONDATETIME', gmdate($attr['fullDateFormat'], $expirationDate), $content);
+        }
+
+        if (strpos($content, '#ACTIONDATE') !== false) {
+            $content = str_replace('#ACTIONDATE', gmdate($attr['dateFormat'], $expirationDate), $content);
+        }
+
+        if (strpos($content, '#ACTIONTIME') !== false) {
+            $content = str_replace('#ACTIONTIME', gmdate($attr['timeFormat'], $expirationDate), $content);
+        }
+
+        $output = '<p>' . $content . '</p>';
 
         $output .= '<pre>' . print_r($attr, true) . '</pre>';
 
