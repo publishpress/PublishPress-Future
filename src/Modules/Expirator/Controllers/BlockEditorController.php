@@ -120,7 +120,7 @@ class BlockEditorController implements InitializableInterface
                             __('No %s found.', 'post-expirator'),
                             strtolower($taxonomyName)
                         ),
-                        'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
+                        'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
                         ''
                     ]
                 ]

@@ -163,7 +163,7 @@ class BulkEditController implements InitializableInterface
                         strtolower($taxonomyName)
                     ),
                     'futureActionUpdate' => __('Future Action Update', 'post-expirator'),
-                    'noTaxonomyFound' => __('You must assign a hierarchical taxonomy to this post type to use this feature.', 'post-expirator'),
+                    'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
                     'noChange' => __('— No Change —', 'post-expirator'),
                     'changeAdd' => __('Add or update action for posts', 'post-expirator'),
                     'addOnly' => __('Add action if none exists for posts', 'post-expirator'),
