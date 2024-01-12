@@ -53,7 +53,7 @@ class BaseDateController implements ModuleInterface
      * @param integer|null $postId
      * @return string
      */
-    public function filterActionBaseDateString(mixed $baseDateString, string $postType, int $postId = null): string
+    public function filterActionBaseDateString($baseDateString, string $postType, int $postId = null): string
     {
         if (
             $this->settingsModel->getBaseDate() !== SettingsModel::BASE_DATE_PUBLISHING
