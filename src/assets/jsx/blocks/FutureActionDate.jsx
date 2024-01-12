@@ -4,14 +4,14 @@ const storeName = 'publishpress-future/future-action';
 
 export const FutureActionDate = {
     apiVersion: 3,
-    title: 'Future Action Date',
+    title: publishpressFutureProBlocks.text.blockTitle,
     icon: 'clock',
-    description: 'Displays a message with the date and time of the future action.',
+    description: publishpressFutureProBlocks.text.blockDescription,
     category: 'text',
     attributes: {
         template: {
             type: 'string',
-            default: 'Post expires at #ACTIONTIME on #ACTIONDATE.',
+            default: publishpressFutureProBlocks.text.defaultTemplate,
         },
         alignment: {
             type: 'string',
@@ -20,7 +20,7 @@ export const FutureActionDate = {
     },
     example: {
         attributes: {
-            template: 'Post expires at #ACTIONTIME on #ACTIONDATE.',
+            template: publishpressFutureProBlocks.text.defaultTemplate,
             alignment: 'none',
         },
     },
@@ -103,9 +103,9 @@ export const FutureActionDate = {
                                     label="Help"
                                     >
                                         <div className="future-action-tools-panel-help">
-                                            Type the text template and use # to see the autocomplete options with the available placeholders.
+                                            {publishpressFutureProBlocks.text.helpPanelText}
 
-                                            <h2>Available placeholders</h2>
+                                            <h2>{publishpressFutureProBlocks.text.availablePlaceholders}</h2>
                                             <ul>
                                                 <li>#ACTIONDATE</li>
                                                 <li>#ACTIONTIME</li>
@@ -121,7 +121,7 @@ export const FutureActionDate = {
                             style={ {
                                 textAlign: attributes.alignment,
                             } }
-                            placeholder="Future action block template. Type the text and # to see the autocomplete options."
+                            placeholder={publishpressFutureProBlocks.text.editorPlaceholder}
                             className="future-action-block"
                             autocompleters={[
                                 {
@@ -130,11 +130,11 @@ export const FutureActionDate = {
                                     options: [
                                         {
                                             value: '#ACTIONTIME',
-                                            label: 'Action time',
+                                            label: publishpressFutureProBlocks.text.actionTimeLabel,
                                         },
                                         {
                                             value: '#ACTIONDATE',
-                                            label: 'Action date',
+                                            label: publishpressFutureProBlocks.text.actionDateLabel,
                                         },
                                     ],
                                     getOptionLabel: (option) => option.label,

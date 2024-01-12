@@ -4,13 +4,7 @@ namespace PublishPress\FuturePro\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
-use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\FuturePro\Core\HooksAbstract;
-use PublishPress\FuturePro\Models\SettingsModel;
-
-use function current_user_can;
-use function wp_die;
-use function wp_verify_nonce;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -31,6 +25,13 @@ class BlocksController implements ModuleInterface
      */
     private $postExpirableModuleFactory;
 
+    private $defaultTemplate;
+
+    private $defaultDateFormat;
+
+    private $defaultTimeFormat;
+
+
     /**
      * @param \PublishPress\Future\Core\HookableInterface $hooks
      * @param string $assetsUrl
@@ -41,6 +42,11 @@ class BlocksController implements ModuleInterface
         $this->hooks = $hooks;
         $this->assetsUrl = $assetsUrl;
         $this->postExpirableModuleFactory = $postExpirableModuleFactory;
+
+        // Translators: Do not translate the #ACTIONDATE, or #ACTIONTIME placeholders.
+        $this->defaultTemplate = __('Post expires at #ACTIONTIME on #ACTIONDATE.', 'publishpress-future-pro');
+        $this->defaultDateFormat = get_option('date_format') ?: __('F j, Y', 'publishpress-future-pro');
+        $this->defaultTimeFormat = get_option('time_format') ?: __('g:i a', 'publishpress-future-pro');
     }
 
 
@@ -69,6 +75,23 @@ class BlocksController implements ModuleInterface
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
         );
 
+        // Localize the script with new data
+        $l10n = [
+            'dateFormat' => $this->defaultDateFormat,
+            'timeFormat' => $this->defaultTimeFormat,
+            'text' => [
+                'defaultTemplate' => $this->defaultTemplate,
+                'blockTitle' => 'Future Action Date',
+                'blockDescription' => __('Displays a message with the date and time of the future action.', 'publishpress-future-pro'),
+                'helpPanelText' => __('Type the text template and use # to see the autocomplete options with the available placeholders.', 'publishpress-future-pro'),
+                'availablePlaceholders' => __('Available placeholders', 'publishpress-future-pro'),
+                'editorPlaceholder' => __('Future action block template. Type the text and # to see the autocomplete options.', 'publishpress-future-pro'),
+                'actionTimeLabel' => __('Action time', 'publishpress-future-pro'),
+                'actionDateLabel' => __('Action date', 'publishpress-future-pro'),
+            ]
+        ];
+        wp_localize_script('future-pro-blocks', 'publishpressFutureProBlocks', $l10n);
+
         wp_enqueue_style(
             'future-pro-blocks',
             $this->assetsUrl . '/css/block-editor.css',
@@ -88,10 +111,9 @@ class BlocksController implements ModuleInterface
         $postModel = $this->postExpirableModuleFactory->call($this, $postId);
 
         $attr = wp_parse_args($attr, [
-            'template' => 'Post expires at #ACTIONTIME on #ACTIONDATE.',
-            'dateFormat' => 'F j, Y',
-            'timeFormat' => 'g:i a',
-            'fullDateFormat' => 'F j, Y g:i a',
+            'template' => $this->defaultTemplate,
+            'dateFormat' => $this->defaultDateFormat,
+            'timeFormat' => $this->defaultTimeFormat,
             'alignment' => 'left',
             'className' => '',
         ]);
@@ -102,12 +124,21 @@ class BlocksController implements ModuleInterface
 
         $expirationDate = $postModel->getExpirationDateAsUnixTime();
 
-        // $content = wp_kses($attr['template'], []);
-        $content = $attr['template'];
-
-        if (strpos($content, '#ACTIONDATETIME') !== false) {
-            $content = str_replace('#ACTIONDATETIME', gmdate($attr['fullDateFormat'], $expirationDate), $content);
-        }
+        $content = wp_kses(
+            $attr['template'],
+            [
+                'br' => [],
+                'strong' => ['class' => [], 'style' => []],
+                'em' => ['class' => [], 'style' => []],
+                'b' => ['class' => [], 'style' => []],
+                'i' => ['class' => [], 'style' => []],
+                'u' => ['class' => [], 'style' => []],
+                'a' => ['href' => [], 'title' => [], 'target' => [], 'rel' => [], 'class' => [], 'style' => []],
+                'span' => ['style' => [], 'class' => []],
+                'p' => ['style' => [], 'class' => []],
+                'div' => ['style' => [], 'class' => []],
+            ]
+        );
 
         if (strpos($content, '#ACTIONDATE') !== false) {
             $content = str_replace('#ACTIONDATE', gmdate($attr['dateFormat'], $expirationDate), $content);
