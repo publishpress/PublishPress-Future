@@ -47,15 +47,17 @@ class PostTypesModel
         $post_types = get_post_types(array('public' => true));
         $post_types = array_merge(
             $post_types,
-            get_post_types(array(
-                'public' => false,
-                'show_ui' => true,
-                '_builtin' => false
-            ))
+            get_post_types(
+                [
+                    'public' => false,
+                    'show_ui' => true,
+                    '_builtin' => true
+                ]
+            )
         );
 
         // in case some post types should not be supported.
-        $unset_post_types = apply_filters('postexpirator_unset_post_types', array('attachment'));
+        $unset_post_types = apply_filters('postexpirator_unset_post_types', ['attachment','wp_navigation']);
         if ($unset_post_types) {
             foreach ($unset_post_types as $type) {
                 unset($post_types[$type]);
