@@ -210,10 +210,10 @@ class Controller implements InitializableInterface
                         ),
                         'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
                         'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
-                        'fieldTaxonomy' => __('Taxonomy (Hierarchical)', 'post-expirator'),
-                        'noItemsfound' => __('No hierarchical taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
+                        'fieldTaxonomy' => __('Taxonomy', 'post-expirator'),
+                        'noItemsfound' => __('No taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
                         'fieldTaxonomyDescription' => __(
-                            'Select the hierarchical taxonomy and terms to be used for taxonomy based expiration.',
+                            'Select the taxonomy and terms to be used for taxonomy based expiration.',
                             'post-expirator'
                         ),
                         'fieldWhoToNotify' => __('Who to Notify', 'post-expirator'),
@@ -246,7 +246,7 @@ class Controller implements InitializableInterface
                     'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(),
                     'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
-                        $taxonomiesModel->getTaxonomiesByPostType()
+                        $taxonomiesModel->getTaxonomiesByPostType(false)
                     ),
                     'nonce' => wp_create_nonce('postexpirator_menu_defaults'),
                     'referrer' => esc_html(remove_query_arg('_wp_http_referer')),

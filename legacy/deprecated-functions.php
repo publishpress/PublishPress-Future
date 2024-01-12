@@ -416,7 +416,6 @@ if (! function_exists('_postexpirator_taxonomy')) {
         }
 
         $taxonomies = get_object_taxonomies($type, 'object');
-        $taxonomies = wp_filter_object_list($taxonomies, array('hierarchical' => true));
 
         if (empty($taxonomies)) {
             return esc_html__('No taxonomies found', 'post-expirator');

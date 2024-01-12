@@ -42,7 +42,6 @@ function registerTaxonomies()
         'tax1',
         ['post', 'page', 'music'],
         [
-            'hierarchical' => true,
             'labels' => [
                 'name' => 'Tax1',
                 'singular_name' => 'tax1',
@@ -55,7 +54,6 @@ function registerTaxonomies()
         'tax2',
         ['post', 'page', 'music'],
         [
-            'hierarchical' => true,
             'labels' => [
                 'name' => 'Tax2',
                 'singular_name' => 'tax2',
@@ -68,7 +66,6 @@ function registerTaxonomies()
         'tax3',
         ['post', 'page', 'music'],
         [
-            'hierarchical' => true,
             'labels' => [
                 'name' => 'Tax3',
                 'singular_name' => 'tax3',
@@ -81,7 +78,6 @@ function registerTaxonomies()
         'tax4',
         ['post', 'page', 'music'],
         [
-            'hierarchical' => true,
             'labels' => [
                 'name' => 'Tax4',
                 'singular_name' => 'tax4',
