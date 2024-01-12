@@ -86,6 +86,7 @@ This section describes how to install the plugin and get it working.
 = UNRELEASED =
 
 * ADDED: Add new advanced setting to choose the base date for the future actions: current date or post publishing date #530;
+* ADDED: New Gutenberg Block for displaying the future action date, #171;
 
 = [3.1.7] - 04 Jan, 2024 =
 

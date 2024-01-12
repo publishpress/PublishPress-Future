@@ -17,21 +17,11 @@ export const FutureActionDate = {
             type: 'string',
             default: 'none',
         },
-        bgColor: {
-            type: 'string',
-            default: 'none'
-        },
-        textColor: {
-            type: 'string',
-            default: '#000000'
-        },
     },
     example: {
         attributes: {
             template: 'Post expires at #ACTIONTIME on #ACTIONDATE.',
             alignment: 'none',
-            bgColor: 'none',
-            textColor: '#000000',
         },
     },
     edit: ({ attributes, setAttributes, isSelected }) => {
@@ -41,13 +31,13 @@ export const FutureActionDate = {
             useBlockProps,
             BlockControls,
             AlignmentToolbar,
-            ColorPalette,
             InspectorControls,
         } = wp.blockEditor;
+        const { insert, insertObject } = wp.richText;
         const { __ } = wp.i18n;
         const {
             __experimentalToolsPanel,
-            __experimentalToolsPanelDescription,
+            ToolbarDropdownMenu,
         } = wp.components;
 
         const { date, enabled } = useSelect((select) => {
@@ -67,14 +57,6 @@ export const FutureActionDate = {
             setAttributes({ alignment: value });
         }
 
-        const onChangeBgColor = (value) => {
-            setAttributes({ bgColor: value });
-        }
-
-        const onChangeTextColor = (value) => {
-            setAttributes({ textColor: value });
-        }
-
         return (
             <div { ...useBlockProps() }>
                 {isSelected &&
@@ -85,6 +67,34 @@ export const FutureActionDate = {
                                     value={attributes.alignment}
                                     onChange={onChangeAligmment}
                                 />
+                                {/* <ToolbarDropdownMenu
+                                    icon={'plus'}
+                                    label={__('Placeholder', 'publishpress-future')}
+                                    controls={[
+                                        {
+                                            icon: 'calendar',
+                                            title: __('Action Date', 'publishpress-future'),
+                                            onClick: () => {
+                                                insertObject(attributes.template, {
+                                                    type: 'text',
+                                                    attributes: {
+                                                        text: '#ACTIONDATE',
+                                                    },
+                                                });
+                                            },
+                                        },
+                                        {
+                                            icon: 'clock',
+                                            title: __('Action Time', 'publishpress-future'),
+                                            onClick: () => {
+                                                insert(
+                                                    attributes.template,
+                                                    '#ACTIONTIME'
+                                                );
+                                            },
+                                        },
+                                    ]}
+                                /> */}
                             </BlockControls>
                         }
                         {
@@ -93,13 +103,12 @@ export const FutureActionDate = {
                                     label="Help"
                                     >
                                         <div className="future-action-tools-panel-help">
-                                            Type the action block template and use # to use the autocomplete options with the available placeholders.
+                                            Type the text template and use # to see the autocomplete options with the available placeholders.
 
                                             <h2>Available placeholders</h2>
                                             <ul>
                                                 <li>#ACTIONDATE</li>
                                                 <li>#ACTIONTIME</li>
-                                                <li>#ACTIONDATETIME</li>
                                             </ul>
                                         </div>
                                 </__experimentalToolsPanel>
@@ -111,8 +120,6 @@ export const FutureActionDate = {
                             onChange={onChangeTemplate}
                             style={ {
                                 textAlign: attributes.alignment,
-                                backgroundColor: attributes.bgColor,
-                                color: attributes.textColor,
                             } }
                             placeholder="Future action block template. Type the text and # to see the autocomplete options."
                             className="future-action-block"
@@ -128,10 +135,6 @@ export const FutureActionDate = {
                                         {
                                             value: '#ACTIONDATE',
                                             label: 'Action date',
-                                        },
-                                        {
-                                            value: '#ACTIONDATETIME',
-                                            label: 'Action date and time',
                                         },
                                     ],
                                     getOptionLabel: (option) => option.label,
@@ -149,8 +152,6 @@ export const FutureActionDate = {
                         value={attributes.template}
                         style={ {
                             textAlign: attributes.alignment,
-                            backgroundColor: attributes.bgColor,
-                            color: attributes.textColor,
                         } }
                         className={'future-action-block'}
                     />
@@ -158,4 +159,5 @@ export const FutureActionDate = {
             </div>
         );
     },
+    save: () => null
 }

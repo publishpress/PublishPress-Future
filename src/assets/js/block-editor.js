@@ -33,22 +33,12 @@ var FutureActionDate = exports.FutureActionDate = {
         alignment: {
             type: 'string',
             default: 'none'
-        },
-        bgColor: {
-            type: 'string',
-            default: 'none'
-        },
-        textColor: {
-            type: 'string',
-            default: '#000000'
         }
     },
     example: {
         attributes: {
             template: 'Post expires at #ACTIONTIME on #ACTIONDATE.',
-            alignment: 'none',
-            bgColor: 'none',
-            textColor: '#000000'
+            alignment: 'none'
         }
     },
     edit: function edit(_ref) {
@@ -61,12 +51,14 @@ var FutureActionDate = exports.FutureActionDate = {
             useBlockProps = _wp$blockEditor.useBlockProps,
             BlockControls = _wp$blockEditor.BlockControls,
             AlignmentToolbar = _wp$blockEditor.AlignmentToolbar,
-            ColorPalette = _wp$blockEditor.ColorPalette,
             InspectorControls = _wp$blockEditor.InspectorControls;
+        var _wp$richText = wp.richText,
+            insert = _wp$richText.insert,
+            insertObject = _wp$richText.insertObject;
         var __ = wp.i18n.__;
         var _wp$components = wp.components,
             __experimentalToolsPanel = _wp$components.__experimentalToolsPanel,
-            __experimentalToolsPanelDescription = _wp$components.__experimentalToolsPanelDescription;
+            ToolbarDropdownMenu = _wp$components.ToolbarDropdownMenu;
 
         var _useSelect = useSelect(function (select) {
             var store = select(storeName);
@@ -85,14 +77,6 @@ var FutureActionDate = exports.FutureActionDate = {
 
         var onChangeAligmment = function onChangeAligmment(value) {
             setAttributes({ alignment: value });
-        };
-
-        var onChangeBgColor = function onChangeBgColor(value) {
-            setAttributes({ bgColor: value });
-        };
-
-        var onChangeTextColor = function onChangeTextColor(value) {
-            setAttributes({ textColor: value });
         };
 
         return React.createElement(
@@ -120,7 +104,7 @@ var FutureActionDate = exports.FutureActionDate = {
                         React.createElement(
                             'div',
                             { className: 'future-action-tools-panel-help' },
-                            'Type the action block template and use # to use the autocomplete options with the available placeholders.',
+                            'Type the text template and use # to see the autocomplete options with the available placeholders.',
                             React.createElement(
                                 'h2',
                                 null,
@@ -138,11 +122,6 @@ var FutureActionDate = exports.FutureActionDate = {
                                     'li',
                                     null,
                                     '#ACTIONTIME'
-                                ),
-                                React.createElement(
-                                    'li',
-                                    null,
-                                    '#ACTIONDATETIME'
                                 )
                             )
                         )
@@ -153,9 +132,7 @@ var FutureActionDate = exports.FutureActionDate = {
                     value: attributes.template,
                     onChange: onChangeTemplate,
                     style: {
-                        textAlign: attributes.alignment,
-                        backgroundColor: attributes.bgColor,
-                        color: attributes.textColor
+                        textAlign: attributes.alignment
                     },
                     placeholder: 'Future action block template. Type the text and # to see the autocomplete options.',
                     className: 'future-action-block',
@@ -168,9 +145,6 @@ var FutureActionDate = exports.FutureActionDate = {
                         }, {
                             value: '#ACTIONDATE',
                             label: 'Action date'
-                        }, {
-                            value: '#ACTIONDATETIME',
-                            label: 'Action date and time'
                         }],
                         getOptionLabel: function getOptionLabel(option) {
                             return option.label;
@@ -188,13 +162,14 @@ var FutureActionDate = exports.FutureActionDate = {
                 tagName: 'div',
                 value: attributes.template,
                 style: {
-                    textAlign: attributes.alignment,
-                    backgroundColor: attributes.bgColor,
-                    color: attributes.textColor
+                    textAlign: attributes.alignment
                 },
                 className: 'future-action-block'
             })
         );
+    },
+    save: function save() {
+        return null;
     }
 };
 
