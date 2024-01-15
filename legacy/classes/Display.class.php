@@ -140,6 +140,8 @@ class PostExpirator_Display
                 exit;
             } else {
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.InputNotValidated
+                update_option('expirationdateDefaultDateFormat', sanitize_text_field($_POST['expired-default-date-format']));
+                update_option('expirationdateDefaultTimeFormat', sanitize_text_field($_POST['expired-default-time-format']));
                 update_option('expirationdateDisplayFooter', (int)$_POST['expired-display-footer']);
                 update_option('expirationdateFooterContents', wp_kses($_POST['expired-footer-contents'], []));
                 update_option('expirationdateFooterStyle', wp_kses($_POST['expired-footer-style'], []));
@@ -269,8 +271,6 @@ class PostExpirator_Display
                 exit;
             } else {
                 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateDefaultDateFormat', sanitize_text_field($_POST['expired-default-date-format']));
-                update_option('expirationdateDefaultTimeFormat', sanitize_text_field($_POST['expired-default-time-format']));
                 update_option('expirationdateEmailNotification', sanitize_text_field($_POST['expired-email-notification']));
                 update_option('expirationdateEmailNotificationAdmins', sanitize_text_field($_POST['expired-email-notification-admins']));
                 update_option('expirationdateEmailNotificationList', trim(sanitize_text_field($_POST['expired-email-notification-list'])));
