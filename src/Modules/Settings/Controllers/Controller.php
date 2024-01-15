@@ -208,6 +208,10 @@ class Controller implements InitializableInterface
                             'Select the default action for the post type.',
                             'post-expirator'
                         ),
+                        'fieldTaxonomyDescription' => __(
+                            'Select the taxonomy to be used for terms on taxonomy based future action.',
+                            'post-expirator'
+                        ),
                         'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
                         'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
                         'fieldTaxonomy' => __('Taxonomy', 'post-expirator'),

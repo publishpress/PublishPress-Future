@@ -146,6 +146,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * ADDED: Add support for future actions on Gutenberg Block Patterns, #200;
 * CHANGED: Deprecate the constant PublishPress\Future\Modules\Settings\SettingsFacade::DEFAULT_CUSTOM_DATE and replaced it with ::DEFAULT_CUSTOM_DATE_OFFSET;
 * CHANGED: Moved the date and time format settings fields to the Display tab, #605;
+* CHANGED: Added description to the taxonomy setting field in the Post Types tab, #641;
 * FIXED: Fix consistency on radion buttons alignment on the settings page;
 * FIXED: Hides the legacy cron event field from Diagnostics and Tools settings tab if no legacy cron event is found;
 
