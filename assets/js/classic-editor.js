@@ -1149,6 +1149,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
                 options: props.taxonomiesList,
                 selected: postTypeTaxonomy,
                 noItemFoundMessage: props.text.noItemsfound,
+                description: props.text.fieldTaxonomyDescription,
                 data: props.postType,
                 onChange: onChangeTaxonomy
             })
