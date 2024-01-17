@@ -11,6 +11,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class PostCategoryRemove implements ExpirationActionInterface
 {
+    use TaxonomyRelatedTrait;
+
     const SERVICE_NAME = 'expiration.actions.post_category_remove';
 
     /**
@@ -102,19 +104,19 @@ class PostCategoryRemove implements ExpirationActionInterface
         return ! $resultIsError;
     }
 
-    /**
-     * @return string
-     */
-    public static function getLabel()
+    public static function getLabel(string $postType = ''): string
     {
-        return __('Remove selected terms', 'post-expirator');
+        $taxonomy = self::getTaxonomyLabel($postType);
+
+        return sprintf(
+            // translators: %s is the taxonomy name (plural)
+            __('Remove selected %s', 'post-expirator'),
+            $taxonomy
+        );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDynamicLabel()
+    public function getDynamicLabel($postType = '')
     {
-        return self::getLabel();
+        return self::getLabel($postType);
     }
 }

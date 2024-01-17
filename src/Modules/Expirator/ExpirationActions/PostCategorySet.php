@@ -2,6 +2,8 @@
 
 namespace PublishPress\Future\Modules\Expirator\ExpirationActions;
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\WordPress\Models\TermsModel;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
@@ -11,6 +13,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class PostCategorySet implements ExpirationActionInterface
 {
+    use TaxonomyRelatedTrait;
+
     const SERVICE_NAME = 'expiration.actions.post_category_set';
 
     /**
@@ -97,19 +101,19 @@ class PostCategorySet implements ExpirationActionInterface
         return ! $resultIsError;
     }
 
-    /**
-     * @return string
-     */
-    public static function getLabel()
+    public static function getLabel(string $postType = ''): string
     {
-        return __('Remove all current terms and add new terms', 'post-expirator');
+        $taxonomy = self::getTaxonomyLabel($postType);
+
+        return sprintf(
+            // translators: %s is the taxonomy name (plural)
+            __('Remove all current %1$s and add new %1$s', 'post-expirator'),
+            $taxonomy
+        );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDynamicLabel()
+    public function getDynamicLabel($postType = '')
     {
-        return self::getLabel();
+        return self::getLabel($postType);
     }
 }

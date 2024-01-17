@@ -60,9 +60,9 @@ class ExpirationActionsModel
                 ExpirationActionsAbstract::DELETE_POST => DeletePost::getLabel(),
                 ExpirationActionsAbstract::STICK_POST => StickPost::getLabel(),
                 ExpirationActionsAbstract::UNSTICK_POST => UnstickPost::getLabel(),
-                ExpirationActionsAbstract::POST_CATEGORY_SET => PostCategorySet::getLabel(),
-                ExpirationActionsAbstract::POST_CATEGORY_ADD => PostCategoryAdd::getLabel(),
-                ExpirationActionsAbstract::POST_CATEGORY_REMOVE => PostCategoryRemove::getLabel(),
+                ExpirationActionsAbstract::POST_CATEGORY_SET => PostCategorySet::getLabel($postType),
+                ExpirationActionsAbstract::POST_CATEGORY_ADD => PostCategoryAdd::getLabel($postType),
+                ExpirationActionsAbstract::POST_CATEGORY_REMOVE => PostCategoryRemove::getLabel($postType),
             ];
 
             $this->actions[$postType] = $this->hooks->applyFilters(
@@ -126,9 +126,9 @@ class ExpirationActionsModel
         return $actions;
     }
 
-    public function getLabelForAction($actionName)
+    public function getLabelForAction($actionName, $postType = '')
     {
-        $actions = $this->getActions();
+        $actions = $this->getActions($postType);
 
         return isset($actions[$actionName]) ? $actions[$actionName] : '';
     }

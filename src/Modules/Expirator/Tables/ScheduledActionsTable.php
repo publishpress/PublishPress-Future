@@ -349,7 +349,22 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $argsModel = $argsModelFactory();
             $argsModel->loadByActionId($row['ID']);
 
-            $actionLabel = $argsModel->getActionLabel();
+            // Post type
+            $postType = $argsModel->getArg('postType');
+            if (empty($postType)) {
+                $postType = $argsModel->getArg('post_type');
+            }
+            if (empty($postType)) {
+                $container = Container::getInstance();
+                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+                $postModel = $factory($row['args']['postId']);
+
+                $postType = $postModel->getPostType();
+            }
+            $postTypeModel = new PostTypeModel();
+            $postTypeModel->load($postType);
+
+            $actionLabel = $argsModel->getActionLabel($postModel->getPostType());
         }
 
         return esc_html($actionLabel);
@@ -464,7 +479,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
 
         // Action label
-        $actionLabel = $argsModel->getActionLabel();
+        $actionLabel = $argsModel->getActionLabel($postType);
         if (empty($actionLabel)) {
             $actionLabel = $argsModel->getArg('actionLabel');
         }

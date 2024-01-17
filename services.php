@@ -461,7 +461,8 @@ return [
                 case ExpirationActionsAbstract::POST_CATEGORY_ADD:
                     return new PostCategoryAdd(
                         $postModel,
-                        $container->get(ServicesAbstract::ERROR)
+                        $container->get(ServicesAbstract::ERROR),
+                        $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY)
                     );
 
                 case ExpirationActionsAbstract::POST_CATEGORY_REMOVE:

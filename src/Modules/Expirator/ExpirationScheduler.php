@@ -141,7 +141,7 @@ class ExpirationScheduler implements SchedulerInterface
         $opts['date'] = $timestamp;
         $opts['category'] = isset($opts['category']) ? $opts['category'] : [];
         $opts['categoryTaxonomy'] = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
-        $opts['actionLabel'] = $this->expirationActionsModel->getLabelForAction($opts['expireType']);
+        $opts['actionLabel'] = $this->expirationActionsModel->getLabelForAction($opts['expireType'], $postModel->getPostType());
         $opts['postTitle'] = $postModel->getTitle();
         $opts['postType'] = $postModel->getPostType();
         $opts['postLink'] = $postModel->getPermalink();
