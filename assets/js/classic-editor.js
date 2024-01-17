@@ -426,11 +426,12 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var actionsSelectOptions = props.actionsSelectOptions;
     if (!props.taxonomy) {
         actionsSelectOptions = props.actionsSelectOptions.filter(function (item) {
-            return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+            return ['category', 'category-add', 'category-remove', 'category-remove-all'].indexOf(item.value) === -1;
         });
     }
 
     var HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
+    var displayTaxonomyField = String(action).includes('category') && action !== 'category-remove-all';
 
     return React.createElement(
         'div',
@@ -458,7 +459,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     onChange: handleActionChange
                 })
             ),
-            String(action).includes('category') && (isFetchingTerms && React.createElement(
+            displayTaxonomyField && (isFetchingTerms && React.createElement(
                 PanelRow,
                 null,
                 React.createElement(

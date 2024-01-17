@@ -10,6 +10,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemove;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemoveAll;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategorySet;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToDraft;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
@@ -63,6 +64,7 @@ class ExpirationActionsModel
                 ExpirationActionsAbstract::POST_CATEGORY_SET => PostCategorySet::getLabel($postType),
                 ExpirationActionsAbstract::POST_CATEGORY_ADD => PostCategoryAdd::getLabel($postType),
                 ExpirationActionsAbstract::POST_CATEGORY_REMOVE => PostCategoryRemove::getLabel($postType),
+                ExpirationActionsAbstract::POST_CATEGORY_REMOVE_ALL => PostCategoryRemoveAll::getLabel($postType),
             ];
 
             $this->actions[$postType] = $this->hooks->applyFilters(
