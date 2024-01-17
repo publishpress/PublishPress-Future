@@ -87,8 +87,8 @@ class PostCategoryRemoveAll implements ExpirationActionInterface
         if (! $resultIsError) {
             $this->log = [
                 'expiration_taxonomy' => $expirationTaxonomy,
-                'original_terms' => $originalTerms,
-                'removed_terms' => $removedTerms,
+                'original_terms' => $termsToRemove,
+                'removed_terms' => $termsToRemove,
                 'updated_terms' => [],
             ];
         } else {
