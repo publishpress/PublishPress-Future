@@ -89,14 +89,14 @@ class PostExpirator_Display
             wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
         }
 
-        $allowed_tabs = array('general', 'display', 'defaults', 'advanced', 'diagnostics', 'viewdebug', );
+        $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', ];
 
         $allowed_tabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
-            $tab = 'general';
+            $tab = 'defaults';
         }
 
         ob_start();
@@ -108,7 +108,7 @@ class PostExpirator_Display
             unset($allowed_tabs['viewdebug']);
         }
 
-        $this->render_template('tabs', array('tabs' => $allowed_tabs, 'html' => $html, 'tab' => $tab));
+        $this->render_template('tabs', ['tabs' => $allowed_tabs, 'html' => $html, 'tab' => $tab]);
 
         $this->publishpress_footer();
     }

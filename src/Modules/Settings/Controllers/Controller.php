@@ -172,7 +172,10 @@ class Controller implements InitializableInterface
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
         if (
             (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
-            && (isset($_GET['tab']) && $_GET['tab'] === 'defaults')
+            && (
+                (! isset($_GET['tab']) || empty($_GET['tab']))
+                || (isset($_GET['tab']) && $_GET['tab'] === 'defaults')
+            )
         ) {
             //phpcs:enable WordPress.Security.NonceVerification.Recommended
             wp_enqueue_script(
@@ -261,14 +264,14 @@ class Controller implements InitializableInterface
 
     private function getCurrentTab()
     {
-        $allowedTabs = array(
-            'general',
+        $allowedTabs = [
             'defaults',
+            'general',
             'display',
             'diagnostics',
             'viewdebug',
             'advanced',
-        );
+        ];
 
         $allowedTabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);
 
@@ -276,7 +279,7 @@ class Controller implements InitializableInterface
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
 
         if (empty($tab) || ! in_array($tab, $allowedTabs, true)) {
-            $tab = 'general';
+            $tab = 'defaults';
         }
 
         return $tab;

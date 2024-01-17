@@ -5,7 +5,7 @@ use \PublishPress\Future\Modules\Settings\HooksAbstract;
 defined('ABSPATH') or die('Direct access not allowed.');
 
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-$current_tab = empty($_GET['tab']) ? 'general' : sanitize_title(wp_unslash($_GET['tab']));
+$current_tab = empty($_GET['tab']) ? 'defaults' : sanitize_title(wp_unslash($_GET['tab']));
 
 $debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
 $baseLink = 'admin.php?page=publishpress-future&tab=';
