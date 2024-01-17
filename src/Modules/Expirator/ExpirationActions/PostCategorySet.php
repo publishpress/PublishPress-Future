@@ -107,7 +107,7 @@ class PostCategorySet implements ExpirationActionInterface
 
         return sprintf(
             // translators: %s is the taxonomy name (plural)
-            __('Remove all current %1$s and add new %1$s', 'post-expirator'),
+            __('Replace all %s', 'post-expirator'),
             $taxonomy
         );
     }

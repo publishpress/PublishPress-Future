@@ -116,7 +116,7 @@ class PostCategoryAdd implements ExpirationActionInterface
 
         return sprintf(
             // translators: %s is the taxonomy label (plural)
-            __('Keep all current %1$s and add new %1$s', 'post-expirator'),
+            __('Add extra %s', 'post-expirator'),
             $taxonomy
         );
     }
