@@ -11,6 +11,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class PostCategoryAdd implements ExpirationActionInterface
 {
+    use TaxonomyRelatedTrait;
+
     const SERVICE_NAME = 'expiration.actions.post_category_add';
 
     /**
@@ -29,13 +31,21 @@ class PostCategoryAdd implements ExpirationActionInterface
     private $log = [];
 
     /**
+     * @var string
+     */
+    private $taxonomy;
+
+    /**
      * @param ExpirablePostModel $postModel
      * @param \PublishPress\Future\Framework\WordPress\Facade\ErrorFacade $errorFacade
+     * @param \PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory $postTypeDefaultDataModelFactory
      */
-    public function __construct($postModel, $errorFacade)
+    public function __construct($postModel, $errorFacade, $postTypeDefaultDataModelFactory)
     {
         $this->postModel = $postModel;
         $this->errorFacade = $errorFacade;
+
+        $this->taxonomy = $postTypeDefaultDataModelFactory->create($postModel->getPostType())->getTaxonomy();
     }
 
     public function __toString()
@@ -100,19 +110,19 @@ class PostCategoryAdd implements ExpirationActionInterface
         return ! $resultIsError;
     }
 
-    /**
-     * @return string
-     */
-    public static function getLabel()
+    public static function getLabel(string $postType = ''): string
     {
-        return __('Keep all current terms and add new terms', 'post-expirator');
+        $taxonomy = self::getTaxonomyLabel($postType);
+
+        return sprintf(
+            // translators: %s is the taxonomy label (plural)
+            __('Add extra %s', 'post-expirator'),
+            $taxonomy
+        );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDynamicLabel()
+    public function getDynamicLabel($postType = '')
     {
-        return self::getLabel();
+        return self::getLabel($postType);
     }
 }

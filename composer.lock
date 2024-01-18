@@ -456,16 +456,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.46.0",
+            "version": "v3.47.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "be6831c9af1740470d2a773119b9273f8ac1c3d2"
+                "reference": "173c60d1eff911c9c54322704623a45561d3241d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/be6831c9af1740470d2a773119b9273f8ac1c3d2",
-                "reference": "be6831c9af1740470d2a773119b9273f8ac1c3d2",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/173c60d1eff911c9c54322704623a45561d3241d",
+                "reference": "173c60d1eff911c9c54322704623a45561d3241d",
                 "shasum": ""
             },
             "require": {
@@ -535,7 +535,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.46.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.47.1"
             },
             "funding": [
                 {
@@ -543,7 +543,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-03T21:38:46+00:00"
+            "time": "2024-01-16T18:54:21+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -1260,12 +1260,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "44f6b0c614630bd83a58f89900348f87db4d7938"
+                "reference": "c183d4e580ea3d0e2e3f2b826eed6b0500d7a657"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/44f6b0c614630bd83a58f89900348f87db4d7938",
-                "reference": "44f6b0c614630bd83a58f89900348f87db4d7938",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c183d4e580ea3d0e2e3f2b826eed6b0500d7a657",
+                "reference": "c183d4e580ea3d0e2e3f2b826eed6b0500d7a657",
                 "shasum": ""
             },
             "require": {
@@ -1315,7 +1315,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-12T18:18:40+00:00"
+            "time": "2024-01-18T13:24:24+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1944,12 +1944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "e419a210e04c3cb28670b3c295f5fc82f0d9d730"
+                "reference": "625975cbabf6534b7ee602608c58e6e1cbafd152"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/e419a210e04c3cb28670b3c295f5fc82f0d9d730",
-                "reference": "e419a210e04c3cb28670b3c295f5fc82f0d9d730",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/625975cbabf6534b7ee602608c58e6e1cbafd152",
+                "reference": "625975cbabf6534b7ee602608c58e6e1cbafd152",
                 "shasum": ""
             },
             "require": {
@@ -2017,7 +2017,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-01-12T15:54:20+00:00"
+            "time": "2024-01-17T20:50:55+00:00"
         },
         {
             "name": "symfony/config",
@@ -3718,12 +3718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/i18n-command.git",
-                "reference": "9cf9b40f6bad64ade8660cc26bf1f28f2d223268"
+                "reference": "b8548b991ede8c8d26ae6caf484a445995039bee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/9cf9b40f6bad64ade8660cc26bf1f28f2d223268",
-                "reference": "9cf9b40f6bad64ade8660cc26bf1f28f2d223268",
+                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/b8548b991ede8c8d26ae6caf484a445995039bee",
+                "reference": "b8548b991ede8c8d26ae6caf484a445995039bee",
                 "shasum": ""
             },
             "require": {
@@ -3777,9 +3777,9 @@
             "homepage": "https://github.com/wp-cli/i18n-command",
             "support": {
                 "issues": "https://github.com/wp-cli/i18n-command/issues",
-                "source": "https://github.com/wp-cli/i18n-command/tree/v2.5.0"
+                "source": "https://github.com/wp-cli/i18n-command/tree/main"
             },
-            "time": "2023-11-16T17:09:37+00:00"
+            "time": "2024-01-16T15:59:29+00:00"
         },
         {
             "name": "wp-cli/mustangostang-spyc",

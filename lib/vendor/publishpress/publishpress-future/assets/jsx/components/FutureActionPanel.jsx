@@ -223,11 +223,12 @@ export const FutureActionPanel = (props) => {
     let actionsSelectOptions = props.actionsSelectOptions;
     if (! props.taxonomy) {
         actionsSelectOptions = props.actionsSelectOptions.filter((item) => {
-            return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+            return ['category', 'category-add', 'category-remove', 'category-remove-all'].indexOf(item.value) === -1;
         });
     }
 
     const HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
+    const displayTaxonomyField = String(action).includes('category') && action !== 'category-remove-all';
 
     return (
         <div className={panelClass}>
@@ -257,7 +258,7 @@ export const FutureActionPanel = (props) => {
                     </PanelRow>
 
                     {
-                        String(action).includes('category') && (
+                        displayTaxonomyField && (
                             isFetchingTerms && (
                                 <PanelRow>
                                     <BaseControl label={taxonomyName}>
