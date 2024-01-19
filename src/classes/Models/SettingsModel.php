@@ -20,6 +20,10 @@ class SettingsModel
 
     const OPTION_LOG_ENABLED = 'ppfuturepro_log_enabled';
 
+    const OPTION_METADATA_MAPPING_STATUS = 'ppfuturepro_metadata_mapping_status';
+
+    const OPTION_METADATA_MAPPING = 'ppfuturepro_metadata_mapping';
+
     const BASE_DATE_CURRENT = 'current';
 
     const BASE_DATE_PUBLISHING = 'publishing';
@@ -51,6 +55,8 @@ class SettingsModel
             'licenseStatus' => $this->getLicenseStatus(),
             'enabledCustomStatuses' => $this->getEnabledCustomStatuses(),
             'baseDate' => $this->getBaseDate(),
+            'metadataMappingStatus' => $this->getMetadataMappingStatus(),
+            'metadataMapping' => $this->getMetadataMapping(),
         ];
     }
 
@@ -186,5 +192,56 @@ class SettingsModel
         $this->options->deleteOption(self::OPTION_LICENSE_STATUS);
         $this->options->deleteOption(self::OPTION_ENABLED_CUSTOM_STATUSES);
         $this->options->deleteOption(self::OPTION_BASE_DATE);
+    }
+
+    public function setMetadataMappingStatus($statuses): void
+    {
+        $statuses = (array)$statuses;
+
+        $newStatuses = [];
+
+        foreach ($statuses as $postType => $status) {
+            $postType = sanitize_key($postType);
+
+            $newStatuses[$postType] = (bool)$status;
+        }
+
+        $this->options->updateOption(self::OPTION_METADATA_MAPPING_STATUS, $statuses);
+    }
+
+    public function getMetadataMappingStatus(): array
+    {
+        $statuses = (array)$this->options->getOption(self::OPTION_METADATA_MAPPING_STATUS, []);
+
+        $statuses = array_map(function ($status) {
+            return (bool)$status;
+        }, $statuses);
+
+        return $statuses;
+    }
+
+    public function setMetadataMapping(array $mapping): void
+    {
+        $newMapping = [];
+
+        foreach ($mapping as $postType => $metaKeys) {
+            $postType = sanitize_key($postType);
+
+            $newMapping[$postType] = [];
+
+            foreach ($metaKeys as $metaKey => $metaValue) {
+                $metaKey = sanitize_key($metaKey);
+                $metaValue = sanitize_key($metaValue);
+
+                $newMapping[$postType][$metaKey] = $metaValue;
+            }
+        }
+
+        $this->options->updateOption(self::OPTION_METADATA_MAPPING, $mapping);
+    }
+
+    public function getMetadataMapping(): array
+    {
+        return (array)$this->options->getOption(self::OPTION_METADATA_MAPPING, []);
     }
 }

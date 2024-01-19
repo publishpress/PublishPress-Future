@@ -37,6 +37,8 @@ abstract class HooksAbstract
 
     const ACTION_SAVE_POST_TYPE_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_POST_TYPE_SETTINGS;
 
+    const ACTION_SAVE_ALL_POST_TYPES_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_ALL_POST_TYPES_SETTINGS;
+
     const ACTION_SAVE_ADVANCED_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_TAB_PREFIX . 'advanced';
 
     const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';

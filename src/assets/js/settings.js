@@ -426,11 +426,12 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var actionsSelectOptions = props.actionsSelectOptions;
     if (!props.taxonomy) {
         actionsSelectOptions = props.actionsSelectOptions.filter(function (item) {
-            return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
+            return ['category', 'category-add', 'category-remove', 'category-remove-all'].indexOf(item.value) === -1;
         });
     }
 
     var HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
+    var displayTaxonomyField = String(action).includes('category') && action !== 'category-remove-all';
 
     return React.createElement(
         'div',
@@ -458,7 +459,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     onChange: handleActionChange
                 })
             ),
-            String(action).includes('category') && (isFetchingTerms && React.createElement(
+            displayTaxonomyField && (isFetchingTerms && React.createElement(
                 PanelRow,
                 null,
                 React.createElement(
@@ -1149,6 +1150,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
                 options: props.taxonomiesList,
                 selected: postTypeTaxonomy,
                 noItemFoundMessage: props.text.noItemsfound,
+                description: props.text.fieldTaxonomyDescription,
                 data: props.postType,
                 onChange: onChangeTaxonomy
             })
@@ -2225,6 +2227,268 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
+/***/ "./src/assets/jsx/settings/custom-statuses.jsx":
+/*!*****************************************************!*\
+  !*** ./src/assets/jsx/settings/custom-statuses.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.addCustomStatusSettings = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
+
+var _components = __webpack_require__(/*! &publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+
+var _config = __webpack_require__(/*! &config.pro-settings */ "&config.pro-settings");
+
+var _wp = __webpack_require__(/*! &wp.components */ "&wp.components");
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var addCustomStatusSettings = exports.addCustomStatusSettings = function addCustomStatusSettings(settingsRows, props, settingActive, useState) {
+    var defaultEnabledCustomStatuses = [];
+    if (_config.settings.enabledCustomStatuses) {
+        defaultEnabledCustomStatuses = _config.settings.enabledCustomStatuses[props.postType] || [];
+    }
+
+    var _useState = useState(defaultEnabledCustomStatuses),
+        _useState2 = _slicedToArray(_useState, 2),
+        enabledCustomStatuses = _useState2[0],
+        setEnabledCustomStatuses = _useState2[1];
+
+    var handleCustomStatusesChange = function handleCustomStatusesChange(postStatus, checked) {
+        var newEnabledCustomStatuses = [].concat(_toConsumableArray(enabledCustomStatuses));
+
+        if (checked) {
+            newEnabledCustomStatuses.push(postStatus);
+        } else {
+            newEnabledCustomStatuses = newEnabledCustomStatuses.filter(function (status) {
+                return status !== postStatus;
+            });
+        }
+
+        // Remove duplicates.
+        newEnabledCustomStatuses = [].concat(_toConsumableArray(new Set(newEnabledCustomStatuses)));
+
+        setEnabledCustomStatuses(newEnabledCustomStatuses);
+    };
+
+    var handleSelectAll = function handleSelectAll(event) {
+        event.preventDefault();
+
+        setEnabledCustomStatuses(_config.customPostStatuses.map(function (postStatus) {
+            return postStatus.value;
+        }));
+    };
+
+    var handleUnselectAll = function handleUnselectAll(event) {
+        event.preventDefault();
+
+        setEnabledCustomStatuses([]);
+    };
+
+    if (settingActive) {
+        if (_config.customPostStatuses.length === 0) {
+            return settingsRows;
+        }
+
+        var postStatusesCheckboxes = _config.customPostStatuses.map(function (postStatus) {
+            var checked = enabledCustomStatuses.includes(postStatus.value);
+            var fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
+
+            return React.createElement(_wp.CheckboxControl, {
+                key: fieldId,
+                name: 'expirationdate_custom-statuses-' + props.postType + '[]',
+                id: fieldId,
+                value: postStatus.value,
+                label: postStatus.label,
+                checked: checked || false,
+                onChange: function onChange(checked) {
+                    return handleCustomStatusesChange(postStatus.value, checked);
+                },
+                title: postStatus.value
+            });
+        });
+
+        settingsRows.push(React.createElement(
+            _components.SettingRow,
+            { label: _config.text.enableCustomStatuses, key: 'custom-statuses' },
+            React.createElement(
+                "div",
+                null,
+                React.createElement(
+                    "label",
+                    null,
+                    _config.text.enableCustomStatusesDesc
+                )
+            ),
+            React.createElement(
+                "div",
+                { className: 'future_pro_checkbox_selection_control' },
+                React.createElement(
+                    _wp.Button,
+                    { variant: "link", onClick: handleSelectAll },
+                    _config.text.selectAll
+                ),
+                " | ",
+                React.createElement(
+                    _wp.Button,
+                    { variant: "link", onClick: handleUnselectAll },
+                    _config.text.unselectAll
+                )
+            ),
+            postStatusesCheckboxes
+        ));
+    }
+
+    return settingsRows;
+};
+
+/***/ }),
+
+/***/ "./src/assets/jsx/settings/metadata-map.jsx":
+/*!**************************************************!*\
+  !*** ./src/assets/jsx/settings/metadata-map.jsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.addMetadataSettings = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
+
+var _components = __webpack_require__(/*! &publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+
+var _config = __webpack_require__(/*! &config.pro-settings */ "&config.pro-settings");
+
+var _wp = __webpack_require__(/*! &wp.components */ "&wp.components");
+
+var addMetadataSettings = exports.addMetadataSettings = function addMetadataSettings(settingsRows, props, settingActive, useState) {
+    var defaultEnabledMetadaMapping = [];
+    if (_config.settings.metadataMappingStatus) {
+        defaultEnabledMetadaMapping = _config.settings.metadataMappingStatus[props.postType] || false;
+    }
+
+    var defaultMetadataMapping = {};
+    if (_config.settings.metadataMapping) {
+        defaultMetadataMapping = _config.settings.metadataMapping[props.postType] || {};
+    }
+
+    var _useState = useState(defaultEnabledMetadaMapping),
+        _useState2 = _slicedToArray(_useState, 2),
+        enableMetadataMapping = _useState2[0],
+        setEnableMetadataMapping = _useState2[1];
+
+    var _useState3 = useState(defaultMetadataMapping),
+        _useState4 = _slicedToArray(_useState3, 2),
+        metadataMapping = _useState4[0],
+        setMetadataMapping = _useState4[1];
+
+    var handleMetadataMapChange = function handleMetadataMapChange(originalMetaKey, mappedMetaKey) {
+        var newMetadataMapping = _extends({}, metadataMapping);
+
+        if (!newMetadataMapping) {
+            newMetadataMapping = {};
+        }
+
+        newMetadataMapping[originalMetaKey] = mappedMetaKey;
+
+        setMetadataMapping(newMetadataMapping);
+    };
+
+    var handleMetadataMapStatusChange = function handleMetadataMapStatusChange(checked) {
+        setEnableMetadataMapping(checked);
+    };
+
+    if (settingActive) {
+        var metadataFields = publishpressFutureProSettings.metadataFields.map(function (field) {
+            return React.createElement(
+                "div",
+                { key: field.originalKey },
+                React.createElement(
+                    "label",
+                    { htmlFor: 'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey },
+                    field.label
+                ),
+                React.createElement("input", {
+                    type: "text",
+                    name: 'expirationdate_metadata_mapping[' + props.postType + '][' + field.originalKey + ']',
+                    id: 'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey,
+                    value: metadataMapping[field.originalKey] ? metadataMapping[field.originalKey] : '',
+                    placeholder: field.originalKey,
+                    onChange: function onChange(e) {
+                        return handleMetadataMapChange(field.originalKey, e.target.value);
+                    }
+                })
+            );
+        });
+
+        settingsRows.push(React.createElement(
+            _components.SettingRow,
+            { label: _config.text.enableMetadataMapping, key: 'metadata_mapping' },
+            React.createElement(
+                "div",
+                null,
+                React.createElement(_wp.CheckboxControl, {
+                    name: 'expirationdate_metadata_mapping_enabled[' + props.postType + ']',
+                    id: 'expirationdate_metadata_mapping_enabled_' + props.postType,
+                    value: '1',
+                    label: _config.text.enableMetadataMappingDesc,
+                    checked: enableMetadataMapping,
+                    onChange: function onChange(checked) {
+                        return handleMetadataMapStatusChange(checked);
+                    }
+                })
+            ),
+            enableMetadataMapping && React.createElement(
+                "div",
+                { className: "expirationdate_metadata_metakeys" },
+                metadataFields
+            )
+        ));
+    }
+
+    return settingsRows;
+};
+
+/***/ }),
+
+/***/ "./src/assets/jsx/settings/settings.jsx":
+/*!**********************************************!*\
+  !*** ./src/assets/jsx/settings/settings.jsx ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+var _customStatuses = __webpack_require__(/*! ./custom-statuses */ "./src/assets/jsx/settings/custom-statuses.jsx");
+
+var _metadataMap = __webpack_require__(/*! ./metadata-map */ "./src/assets/jsx/settings/metadata-map.jsx");
+
+var _wp = __webpack_require__(/*! &wp.hooks */ "&wp.hooks");
+
+(0, _wp.addFilter)('expirationdate_settings_posttype', 'publishpress/publishpress-future-pro', _customStatuses.addCustomStatusSettings);
+(0, _wp.addFilter)('expirationdate_settings_posttype', 'publishpress/publishpress-future-pro', _metadataMap.addMetadataSettings);
+
+/***/ }),
+
 /***/ "&config.pro-settings":
 /*!************************************************!*\
   !*** external "publishpressFutureProSettings" ***!
@@ -2322,131 +2586,14 @@ module.exports = wp.url;
 /******/ 	}
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!**********************************************!*\
-  !*** ./src/assets/jsx/settings/settings.jsx ***!
-  \**********************************************/
-
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
-
-
-var _components = __webpack_require__(/*! &publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
-
-var _wp = __webpack_require__(/*! &wp.hooks */ "&wp.hooks");
-
-var _config = __webpack_require__(/*! &config.pro-settings */ "&config.pro-settings");
-
-var _wp2 = __webpack_require__(/*! &wp.components */ "&wp.components");
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var addSettings = function addSettings(settingsRows, props, settingActive, useState) {
-    var defaultEnabledCustomStatuses = [];
-    if (_config.settings.enabledCustomStatuses) {
-        defaultEnabledCustomStatuses = _config.settings.enabledCustomStatuses[props.postType] || [];
-    }
-
-    var _useState = useState(defaultEnabledCustomStatuses),
-        _useState2 = _slicedToArray(_useState, 2),
-        enabledCustomStatuses = _useState2[0],
-        setEnabledCustomStatuses = _useState2[1];
-
-    var handleCustomStatusesChange = function handleCustomStatusesChange(postStatus, checked) {
-        var newEnabledCustomStatuses = [].concat(_toConsumableArray(enabledCustomStatuses));
-
-        if (checked) {
-            newEnabledCustomStatuses.push(postStatus);
-        } else {
-            newEnabledCustomStatuses = newEnabledCustomStatuses.filter(function (status) {
-                return status !== postStatus;
-            });
-        }
-
-        // Remove duplicates.
-        newEnabledCustomStatuses = [].concat(_toConsumableArray(new Set(newEnabledCustomStatuses)));
-
-        setEnabledCustomStatuses(newEnabledCustomStatuses);
-    };
-
-    var handleSelectAll = function handleSelectAll(event) {
-        event.preventDefault();
-
-        setEnabledCustomStatuses(_config.customPostStatuses.map(function (postStatus) {
-            return postStatus.value;
-        }));
-    };
-
-    var handleUnselectAll = function handleUnselectAll(event) {
-        event.preventDefault();
-
-        setEnabledCustomStatuses([]);
-    };
-
-    if (settingActive) {
-        if (_config.customPostStatuses.length === 0) {
-            return settingsRows;
-        }
-
-        var postStatusesCheckboxes = _config.customPostStatuses.map(function (postStatus) {
-            var checked = enabledCustomStatuses.includes(postStatus.value);
-            var fieldId = 'expirationdate_custom-statuses-' + props.postType + '-' + postStatus.value;
-
-            return React.createElement(_wp2.CheckboxControl, {
-                key: fieldId,
-                name: 'expirationdate_custom-statuses-' + props.postType + '[]',
-                id: fieldId,
-                value: postStatus.value,
-                label: postStatus.label,
-                checked: checked || false,
-                onChange: function onChange(checked) {
-                    return handleCustomStatusesChange(postStatus.value, checked);
-                },
-                title: postStatus.value
-            });
-        });
-
-        settingsRows.push(React.createElement(
-            _components.SettingRow,
-            { label: _config.text.enableCustomStatuses, key: 'custom-statuses' },
-            React.createElement(
-                "div",
-                null,
-                React.createElement(
-                    "label",
-                    null,
-                    _config.text.enableCustomStatusesDesc
-                )
-            ),
-            React.createElement(
-                "div",
-                { className: 'future_pro_checkbox_selection_control' },
-                React.createElement(
-                    _wp2.Button,
-                    { variant: "link", onClick: handleSelectAll },
-                    _config.text.selectAll
-                ),
-                " | ",
-                React.createElement(
-                    _wp2.Button,
-                    { variant: "link", onClick: handleUnselectAll },
-                    _config.text.unselectAll
-                )
-            ),
-            postStatusesCheckboxes
-        ));
-    }
-
-    return settingsRows;
-};
-
-(0, _wp.addFilter)('expirationdate_settings_posttype', 'publishpress/publishpress-future-pro', addSettings);
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	__webpack_require__("./src/assets/jsx/settings/custom-statuses.jsx");
+/******/ 	__webpack_require__("./src/assets/jsx/settings/metadata-map.jsx");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/assets/jsx/settings/settings.jsx");
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=settings.js.map

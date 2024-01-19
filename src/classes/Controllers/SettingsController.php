@@ -4,6 +4,7 @@ namespace PublishPress\FuturePro\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\FuturePro\Core\HooksAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
@@ -123,6 +124,13 @@ class SettingsController implements ModuleInterface
         );
 
         $this->hooks->addAction(
+            HooksAbstract::ACTION_SAVE_ALL_POST_TYPES_SETTINGS,
+            [$this, 'saveAllPostTypesSettings'],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
             HooksAbstract::ACTION_SAVE_ADVANCED_SETTINGS,
             [$this, 'saveAdvancedSettings']
         );
@@ -191,16 +199,53 @@ class SettingsController implements ModuleInterface
                         'enablePostExpiration' => __('Enable Future Action', 'post-expirator'),
                         'enableCustomStatuses' => __('Custom statuses', 'publishpress-future-pro'),
                         'enableCustomStatusesDesc' => __(
-                            'Enable custom statuses for the post type:',
+                            'Enable custom statuses for the post type.',
                             'publishpress-future-pro'
                         ),
                         'enableCustomStatusesTrue' => __('Enabled', 'publishpress-future-pro'),
                         'enableCustomStatusesFalse' => __('Disabled', 'publishpress-future-pro'),
                         'selectAll' => __('Select all', 'publishpress-future-pro'),
                         'unselectAll' => __('Unselect all', 'publishpress-future-pro'),
+                        'enableMetadataMapping' => __('Enable Metadata Mapping', 'publishpress-future-pro'),
+                        'enableMetadataMappingDesc' => __(
+                            'Enable metadata mapping for the post type, allowing to map custom fields to the future action date.',
+                            'publishpress-future-pro'
+                        ),
                     ],
                     'settings' => $this->settingsModel->getSettings(),
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
+                    'metadataFields' => [
+                        [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_STATUS,
+                            'mappedKey' => '',
+                            'label' => 'Status',
+                        ],
+                        [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_TIMESTAMP,
+                            'mappedKey' => '',
+                            'label' => 'Action Date',
+                        ],
+                        [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
+                            'mappedKey' => '',
+                            'label' => 'Options',
+                        ],
+                        [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_TYPE,
+                            'mappedKey' => '',
+                            'label' => 'Action Type',
+                        ],
+                        [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_TERMS,
+                            'mappedKey' => '',
+                            'label' => 'Terms',
+                        ],
+                        [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_TAXONOMY,
+                            'mappedKey' => '',
+                            'label' => 'Taxonomy',
+                        ],
+                    ],
                 ]
             );
         }
@@ -296,7 +341,27 @@ class SettingsController implements ModuleInterface
             isset($_POST['expirationdate_custom-statuses-' . $postType])
                 ? $_POST['expirationdate_custom-statuses-' . $postType] : []
         );
+        // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+    }
 
+    /**
+     * @param array  $settings
+     * @param string $postType
+     */
+    public function saveAllPostTypesSettings($settings, $postType)
+    {
+        // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        $this->settingsModel->setMetadataMappingStatus(
+            isset($_POST['expirationdate_metadata_mapping_enabled'])
+                ? $_POST['expirationdate_metadata_mapping_enabled'] : []
+        );
+
+        $this->settingsModel->setMetadataMapping(
+            isset($_POST['expirationdate_metadata_mapping'])
+                ? $_POST['expirationdate_metadata_mapping'] : []
+        );
         // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
     }
 

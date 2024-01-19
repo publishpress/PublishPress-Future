@@ -23,3 +23,13 @@
 .future_pro_checkbox_selection_control a {
     margin-right: 5px;
 }
+
+.expirationdate_metadata_metakeys label {
+    width: 100px;
+    display: inline-block;
+}
+
+.expirationdate_metadata_metakeys input {
+    width: 300px;
+    display: inline-block;
+}
