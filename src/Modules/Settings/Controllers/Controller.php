@@ -411,6 +411,13 @@ class Controller implements InitializableInterface
                 // Save Settings
                 $settingsModel->updatePostTypesSettings($postType, $settings);
             }
+
+            $this->hooks->doAction(
+                SettingsHooksAbstract::ACTION_SAVE_ALL_POST_TYPES_SETTINGS,
+                $settings,
+                $postTypes
+            );
+
             // phpcs:enable
         }
 
