@@ -2436,7 +2436,12 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
                     onChange: function onChange(e) {
                         return handleMetadataMapChange(field.originalKey, e.target.value);
                     }
-                })
+                }),
+                React.createElement(
+                    _wp.Tooltip,
+                    { text: field.description },
+                    React.createElement("span", { className: "dashicons dashicons-editor-help" })
+                )
             );
         });
 

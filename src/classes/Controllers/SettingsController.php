@@ -220,34 +220,49 @@ class SettingsController implements ModuleInterface
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
                     'metadataFields' => [
                         [
-                            'originalKey' => PostMetaAbstract::EXPIRATION_STATUS,
-                            'mappedKey' => '',
-                            'label' => 'Status',
-                        ],
-                        [
                             'originalKey' => PostMetaAbstract::EXPIRATION_TIMESTAMP,
                             'mappedKey' => '',
-                            'label' => 'Action Date',
+                            'label' => __('Action Date', 'publishpress-future-pro'),
+                            'description' => __(
+                                'The date used for scheduling the action.',
+                                'publishpress-future-pro'
+                            ),
                         ],
                         [
                             'originalKey' => PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
                             'mappedKey' => '',
-                            'label' => 'Options',
+                            'label' => __('Options', 'publishpress-future-pro'),
+                            'description' => __(
+                                'The options used for scheduling the action.',
+                                'publishpress-future-pro'
+                            ),
                         ],
                         [
                             'originalKey' => PostMetaAbstract::EXPIRATION_TYPE,
                             'mappedKey' => '',
-                            'label' => 'Action Type',
-                        ],
-                        [
-                            'originalKey' => PostMetaAbstract::EXPIRATION_TERMS,
-                            'mappedKey' => '',
-                            'label' => 'Terms',
+                            'label' => __('Action Type', 'publishpress-future-pro'),
+                            'description' => __(
+                                'The type of action to be performed.',
+                                'publishpress-future-pro'
+                            ),
                         ],
                         [
                             'originalKey' => PostMetaAbstract::EXPIRATION_TAXONOMY,
                             'mappedKey' => '',
-                            'label' => 'Taxonomy',
+                            'label' => __('Taxonomy Name', 'publishpress-future-pro'),
+                            'description' => __(
+                                'The taxonomy used for scheduling the action.',
+                                'publishpress-future-pro'
+                            ),
+                        ],
+                        [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_TERMS,
+                            'mappedKey' => '',
+                            'label' => __('Taxonomy Terms', 'publishpress-future-pro'),
+                            'description' => __(
+                                'The terms used for scheduling the action.',
+                                'publishpress-future-pro'
+                            ),
                         ],
                     ],
                 ]

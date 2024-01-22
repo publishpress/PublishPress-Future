@@ -7,7 +7,7 @@ import {
     text
 } from "&config.pro-settings";
 
-import { CheckboxControl, Button } from "&wp.components";
+import { CheckboxControl, Tooltip } from "&wp.components";
 
 export const addMetadataSettings = (settingsRows, props, settingActive, useState) => {
     let defaultEnabledMetadaMapping = [];
@@ -54,6 +54,9 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
                         placeholder={field.originalKey}
                         onChange={(e) => handleMetadataMapChange(field.originalKey, e.target.value)}
                         />
+                    <Tooltip text={field.description}>
+                        <span className="dashicons dashicons-editor-help"></span>
+                    </Tooltip>
                 </div>
             );
         });
