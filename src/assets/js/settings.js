@@ -2421,7 +2421,7 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
         var metadataFields = publishpressFutureProSettings.metadataFields.map(function (field) {
             return React.createElement(
                 "div",
-                { key: field.originalKey },
+                { key: field.originalKey, className: "future_pro_metadata_mapping_row" },
                 React.createElement(
                     "label",
                     { htmlFor: 'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey },
@@ -2460,7 +2460,16 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
             enableMetadataMapping && React.createElement(
                 "div",
                 { className: "expirationdate_metadata_metakeys" },
-                metadataFields
+                metadataFields,
+                React.createElement(
+                    "p",
+                    { className: "description" },
+                    React.createElement(
+                        "p",
+                        null,
+                        _config.text.enableMetadataMappingHelp
+                    )
+                )
             )
         ));
     }

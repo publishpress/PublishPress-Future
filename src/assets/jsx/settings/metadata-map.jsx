@@ -42,7 +42,7 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
     if (settingActive) {
         const metadataFields = publishpressFutureProSettings.metadataFields.map((field) => {
             return (
-                <div key={field.originalKey}>
+                <div key={field.originalKey} className="future_pro_metadata_mapping_row">
                     <label htmlFor={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}>
                         {field.label}
                     </label>
@@ -73,6 +73,10 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
                 {enableMetadataMapping &&
                     <div className="expirationdate_metadata_metakeys">
                         {metadataFields}
+
+                        <p className="description">
+                            <p>{text.enableMetadataMappingHelp}</p>
+                        </p>
                     </div>
                 }
             </SettingRow>

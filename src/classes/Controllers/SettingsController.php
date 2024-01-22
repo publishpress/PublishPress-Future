@@ -211,6 +211,10 @@ class SettingsController implements ModuleInterface
                             'Enable metadata mapping for the post type, allowing to map custom fields to the future action date.',
                             'publishpress-future-pro'
                         ),
+                        'enableMetadataMappingHelp' => __(
+                            'For using the default mapping, please leave the fields empty.',
+                            'publishpress-future-pro'
+                        ),
                     ],
                     'settings' => $this->settingsModel->getSettings(),
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
