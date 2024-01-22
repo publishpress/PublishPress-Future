@@ -206,12 +206,12 @@ class SettingsModel
             $newStatuses[$postType] = (bool)$status;
         }
 
-        $this->options->updateOption(self::OPTION_METADATA_MAPPING_STATUS, $statuses);
+        $this->options->updateOption(self::OPTION_METADATA_MAPPING_STATUS, wp_json_encode($statuses));
     }
 
     public function getMetadataMappingStatus(): array
     {
-        $statuses = (array)$this->options->getOption(self::OPTION_METADATA_MAPPING_STATUS, []);
+        $statuses = (array)(json_decode($this->options->getOption(self::OPTION_METADATA_MAPPING_STATUS, '[]')));
 
         $statuses = array_map(function ($status) {
             return (bool)$status;
@@ -237,11 +237,11 @@ class SettingsModel
             }
         }
 
-        $this->options->updateOption(self::OPTION_METADATA_MAPPING, $mapping);
+        $this->options->updateOption(self::OPTION_METADATA_MAPPING, wp_json_encode($mapping));
     }
 
     public function getMetadataMapping(): array
     {
-        return (array)$this->options->getOption(self::OPTION_METADATA_MAPPING, []);
+        return (array)(json_decode($this->options->getOption(self::OPTION_METADATA_MAPPING, '[]')));
     }
 }
