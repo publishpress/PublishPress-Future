@@ -140,7 +140,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= UNRELEASED =
+= [3.2.0] - UNRELEASED =
 
 * ADDED: Add the possibility to use non hierarchical taxonomies, #285;
 * ADDED: Add new future action to remove all taxonomy terms of a post, #652;
