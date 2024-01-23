@@ -153,6 +153,8 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix consistency on radion buttons alignment on the settings page;
 * FIXED: Hides the legacy cron event field from Diagnostics and Tools settings tab if no legacy cron event is found;
 * FIXED: Fix the "Change Status to Trash action" on custom post types, #655;
+* FIXED: Added back support for reusable blocks, #200;
+* FIXED: Updated the language files, #653;
 
 = [3.1.7] - 04 Jan, 2024 =
 
