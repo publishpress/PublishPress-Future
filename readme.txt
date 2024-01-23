@@ -83,7 +83,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= UNRELEASED =
+= [3.2.0] - UNRELEASED =
 
 * ADDED: Add new advanced setting to choose the base date for the future actions: current date or post publishing date #530;
 * ADDED: Add the possibility to use non hierarchical taxonomies, #285;
