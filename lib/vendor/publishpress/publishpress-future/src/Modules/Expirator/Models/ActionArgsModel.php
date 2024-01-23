@@ -310,9 +310,9 @@ class ActionArgsModel
     /**
      * @return string
      */
-    public function getActionLabel()
+    public function getActionLabel($postType = '')
     {
-        $label = $this->expirationActionsModel->getLabelForAction($this->getAction());
+        $label = $this->expirationActionsModel->getLabelForAction($this->getAction(), $postType);
 
         if (empty($label)) {
             $label = $this->getArg('actionLabel');

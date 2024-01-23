@@ -172,7 +172,10 @@ class Controller implements InitializableInterface
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
         if (
             (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
-            && (isset($_GET['tab']) && $_GET['tab'] === 'defaults')
+            && (
+                (! isset($_GET['tab']) || empty($_GET['tab']))
+                || (isset($_GET['tab']) && $_GET['tab'] === 'defaults')
+            )
         ) {
             //phpcs:enable WordPress.Security.NonceVerification.Recommended
             wp_enqueue_script(
@@ -208,12 +211,16 @@ class Controller implements InitializableInterface
                             'Select the default action for the post type.',
                             'post-expirator'
                         ),
+                        'fieldTaxonomyDescription' => __(
+                            'Select the taxonomy to be used for terms on taxonomy based future action.',
+                            'post-expirator'
+                        ),
                         'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
                         'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
-                        'fieldTaxonomy' => __('Taxonomy (Hierarchical)', 'post-expirator'),
-                        'noItemsfound' => __('No hierarchical taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
+                        'fieldTaxonomy' => __('Taxonomy', 'post-expirator'),
+                        'noItemsfound' => __('No taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
                         'fieldTaxonomyDescription' => __(
-                            'Select the hierarchical taxonomy and terms to be used for taxonomy based expiration.',
+                            'Select the taxonomy and terms to be used for taxonomy based expiration.',
                             'post-expirator'
                         ),
                         'fieldWhoToNotify' => __('Who to Notify', 'post-expirator'),
@@ -246,7 +253,7 @@ class Controller implements InitializableInterface
                     'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(),
                     'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
-                        $taxonomiesModel->getTaxonomiesByPostType()
+                        $taxonomiesModel->getTaxonomiesByPostType(false)
                     ),
                     'nonce' => wp_create_nonce('postexpirator_menu_defaults'),
                     'referrer' => esc_html(remove_query_arg('_wp_http_referer')),
@@ -257,14 +264,14 @@ class Controller implements InitializableInterface
 
     private function getCurrentTab()
     {
-        $allowedTabs = array(
-            'general',
+        $allowedTabs = [
             'defaults',
+            'general',
             'display',
             'diagnostics',
             'viewdebug',
             'advanced',
-        );
+        ];
 
         $allowedTabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);
 
@@ -272,7 +279,7 @@ class Controller implements InitializableInterface
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
 
         if (empty($tab) || ! in_array($tab, $allowedTabs, true)) {
-            $tab = 'general';
+            $tab = 'defaults';
         }
 
         return $tab;
@@ -404,6 +411,13 @@ class Controller implements InitializableInterface
                 // Save Settings
                 $settingsModel->updatePostTypesSettings($postType, $settings);
             }
+
+            $this->hooks->doAction(
+                SettingsHooksAbstract::ACTION_SAVE_ALL_POST_TYPES_SETTINGS,
+                $settings,
+                $postTypes
+            );
+
             // phpcs:enable
         }
 
