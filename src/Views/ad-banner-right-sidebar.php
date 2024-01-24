@@ -20,11 +20,11 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 </p>
                 <ul>
                     <li><?php
-                        echo esc_html__('Support for all types of taxonomy', 'post-expirator'); ?></li>
-                    <li><?php
                         echo esc_html__('Set the action date based on the post\'s publishing date', 'post-expirator'); ?></li>
                     <li><?php
                         echo esc_html__('Move posts to custom statuses', 'post-expirator'); ?></li>
+                    <li><?php
+                        echo esc_html__('Fast, professional support', 'post-expirator'); ?></li>
                 </ul>
                 <div class="upgrade-btn">
                     <a href="https://publishpress.com/links/future-sidebar" target="__blank"><?php
