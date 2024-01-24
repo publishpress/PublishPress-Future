@@ -313,7 +313,12 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $iconClass = $icons[$row['status_name']];
         }
 
-        return '<span class="' . esc_attr($iconClass) . '"></span> ' . esc_html($row['status']);
+        $status = $row['status'];
+        if ($row['status_name'] === \ActionScheduler_Store::STATUS_PENDING) {
+            $status = __('Scheduled', 'post-expirator');
+        }
+
+        return '<span class="' . esc_attr($iconClass) . '"></span> ' . esc_html($status);
     }
 
     public function column_hook(array $row)
