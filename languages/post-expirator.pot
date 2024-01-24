@@ -461,7 +461,7 @@ msgid "Active"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:208
-msgid "Activate PublishPress Future metabox for this post type"
+msgid "Activate the PublishPress Future metabox for this post type"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:210
