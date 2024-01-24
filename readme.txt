@@ -94,7 +94,7 @@ This section describes how to install the plugin and get it working.
 * CHANGED: Added description to the taxonomy setting field in the Post Types tab, #641;
 * CHANGED: Moved the Post Types settings tab to the first position, #619;
 * CHANGED: Simplify the name of actions on taxonomy related actions, adding the actual name of the taxonomy, #294;
-* FIXED: Fix consistency on radion buttons alignment on the settings page;
+* FIXED: Fix consistency on radio buttons alignment on the settings page;
 * FIXED: Hides the legacy cron event field from Diagnostics and Tools settings tab if no legacy cron event is found;
 * FIXED: Fix the "Change Status to Trash action" on custom post types, #655;
 * FIXED: Added back support for reusable blocks, #200;
