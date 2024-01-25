@@ -9,6 +9,6 @@ foreach ($taxonomies as $taxonomy) {
 
 echo '</select>';
 echo '<p class="description">' . esc_html__(
-        'Select the taxonomy to be used for "category" based expiration.',
+        'Select the taxonomy to be used for actions.',
         'post-expirator'
     ) . '</p>';
