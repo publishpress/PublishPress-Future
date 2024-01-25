@@ -83,7 +83,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= [3.2.0] - UNRELEASED =
+= [3.2.0] - 25 Jan, 2024 =
 
 * ADDED: Add new advanced setting to choose the base date for the future actions: current date or post publishing date #530;
 * ADDED: Add the possibility to use non hierarchical taxonomies, #285;
@@ -94,11 +94,14 @@ This section describes how to install the plugin and get it working.
 * CHANGED: Added description to the taxonomy setting field in the Post Types tab, #641;
 * CHANGED: Moved the Post Types settings tab to the first position, #619;
 * CHANGED: Simplify the name of actions on taxonomy related actions, adding the actual name of the taxonomy, #294;
+* CHANGED: Change the text on the Status column in the Future Actions list, from "Pending" to "Scheduled", #661;
+* CHANGED: Fixed typos and improved the text in the Post Types settings tab, #659;
 * FIXED: Fix consistency on radio buttons alignment on the settings page;
 * FIXED: Hides the legacy cron event field from Diagnostics and Tools settings tab if no legacy cron event is found;
 * FIXED: Fix the "Change Status to Trash action" on custom post types, #655;
 * FIXED: Added back support for reusable blocks, #200;
 * FIXED: Updated the language files, #653;
+* FIXED: Fix error 404 when activating future action on a post type that has no taxonomy registered, #662;
 
 = [3.1.7] - 04 Jan, 2024 =
 
