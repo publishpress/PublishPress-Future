@@ -123,8 +123,13 @@ class SettingsController implements ModuleInterface
         );
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_DELETE_ALL_SETTINGS,
-            [$this, 'deleteAllSettings']
+            HooksAbstract::ACTION_SAVE_ADVANCED_SETTINGS,
+            [$this, 'saveAdvancedSettings']
+        );
+
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE,
+            [$this, 'settingsTabAdvancedBefore']
         );
     }
 
@@ -298,5 +303,19 @@ class SettingsController implements ModuleInterface
     public function deleteAllSettings()
     {
         $this->settingsModel->deleteAllSettings();
+    }
+
+    public function settingsTabAdvancedBefore()
+    {
+        include $this->templatesPath . '/settings-tab-advanced.html.php';
+    }
+
+    public function saveAdvancedSettings()
+    {
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $baseDate = $_POST['future-action-base-date'] ?? 'current';
+        $baseDate = $baseDate === 'publishing' ? 'publishing' : 'current';
+
+        $this->settingsModel->setBaseDate($baseDate);
     }
 }

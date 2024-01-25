@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d009115dd47ea8b944fdf4cee3ec84d",
+    "content-hash": "a49cb9047cbebd1f3b4ff91cfecf21b3",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.1.7",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "c97be45fb068905e536250e7317956d16c9c6c65"
+                "reference": "59981cfc4d2c02520cb2ab834a73bf33b8e7f5ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/c97be45fb068905e536250e7317956d16c9c6c65",
-                "reference": "c97be45fb068905e536250e7317956d16c9c6c65",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/59981cfc4d2c02520cb2ab834a73bf33b8e7f5ed",
+                "reference": "59981cfc4d2c02520cb2ab834a73bf33b8e7f5ed",
                 "shasum": ""
             },
             "require": {
@@ -380,6 +380,7 @@
                     "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE"
                 ],
                 "check": [
+                    "@build:dir",
                     "@check:lint",
                     "@check:php",
                     "@check:phpcs"
@@ -469,10 +470,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.1.7",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.2.0",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-01-04T14:24:58+00:00"
+            "time": "2024-01-25T19:07:51+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",

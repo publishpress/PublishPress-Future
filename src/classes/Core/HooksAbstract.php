@@ -37,6 +37,8 @@ abstract class HooksAbstract
 
     const ACTION_SAVE_POST_TYPE_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_POST_TYPE_SETTINGS;
 
+    const ACTION_SAVE_ADVANCED_SETTINGS = SettingsHooksAbstractFree::ACTION_SAVE_TAB_PREFIX . 'advanced';
+
     const ACTION_ADMIN_ENQUEUE_SCRIPT = 'admin_enqueue_scripts';
 
     const ACTION = 'publishpress_authors_show_blocks_recommendation_banner';
@@ -44,4 +46,6 @@ abstract class HooksAbstract
     const FILTER_SETTINGS_POST_TYPE = SettingsHooksAbstractFree::FILTER_SETTINGS_POST_TYPE;
 
     const ACTION_DELETE_ALL_SETTINGS = SettingsHooksAbstractFree::ACTION_DELETE_ALL_SETTINGS;
+
+    const ACTION_SETTINGS_TAB_ADVANCED_BEFORE = 'publishpress_future/settings_tab_advanced_before';
 }

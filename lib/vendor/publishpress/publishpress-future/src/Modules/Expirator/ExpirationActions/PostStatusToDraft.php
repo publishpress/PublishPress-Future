@@ -77,7 +77,7 @@ class PostStatusToDraft implements ExpirationActionInterface
     /**
      * @return string
      */
-    public static function getLabel()
+    public static function getLabel(string $postType = ''): string
     {
         $newPostStatus = get_post_status_object('draft');
 
@@ -87,11 +87,8 @@ class PostStatusToDraft implements ExpirationActionInterface
         );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDynamicLabel()
+    public function getDynamicLabel($postType = '')
     {
-        return self::getLabel();
+        return self::getLabel($postType);
     }
 }

@@ -161,25 +161,16 @@ $schemaHealthErrors = ActionArgsSchema::getSchemaHealthErrors();
                     </td>
                 </tr>
 
-                <tr><td colspan="2"><hr></td></tr>
+                <?php if (! empty($cron)) : ?>
+                    <tr><td colspan="2"><hr></td></tr>
 
-                <tr>
-                    <th scope="row"><label for="cron-schedule"><?php
-                            esc_html_e('Legacy Cron Schedule', 'post-expirator'); ?></label></th>
-                    <td>
-                        <?php
-                        $cron = PostExpirator_CronFacade::get_plugin_cron_events();
-
-                        if (empty($cron)) {
-                            ?>
-                            <p><?php
-                                esc_html_e(
-                                    '
-                                    No cron events found for the plugin using WP Cron.',
-                                    'post-expirator'
-                                ); ?></p>
+                    <tr>
+                        <th scope="row"><label for="cron-schedule"><?php
+                                esc_html_e('Legacy Cron Schedule', 'post-expirator'); ?></label></th>
+                        <td>
                             <?php
-                        } else {
+                            $cron = PostExpirator_CronFacade::get_plugin_cron_events();
+
                             ?>
                             <p><?php
                                 // phpcs:disable Generic.Files.LineLength.TooLong
@@ -255,19 +246,17 @@ $schemaHealthErrors = ActionArgsSchema::getSchemaHealthErrors();
                                     </tbody>
                                 </table>
                             </div>
-                            <?php
-                        }
-                        ?>
-                        <p><?php
-                            // phpcs:disable Generic.Files.LineLength.TooLong
-                            esc_html_e(
-                                'This is a legacy feature and will be removed in a future version.',
-                                'post-expirator'
-                            );
-                            // phpcs:enable
-                            ?></p>
-                    </td>
-                </tr>
+                            <p><?php
+                                // phpcs:disable Generic.Files.LineLength.TooLong
+                                esc_html_e(
+                                    'This is a legacy feature and will be removed in a future version.',
+                                    'post-expirator'
+                                );
+                                // phpcs:enable
+                                ?></p>
+                        </td>
+                    </tr>
+                <?php endif; ?>
             </table>
         </form>
     </div>

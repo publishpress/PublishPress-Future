@@ -2,6 +2,7 @@
 
 use PublishPress\Future\Core\DI\Container as DIContainer;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -28,6 +29,9 @@ $container = DIContainer::getInstance();
                 ); ?>
             </p>
             <table class="form-table">
+
+                <?php do_action(HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE); ?>
+
                 <tr valign="top">
                     <th scope="row"><?php
                         esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
@@ -35,24 +39,33 @@ $container = DIContainer::getInstance();
                         <?php
                         $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
                         ?>
-                        <input type="radio" name="future-action-column-style"
-                               id="future-action-column-style-verbose"
-                               value="verbose" <?php
-                        echo $columnStyle === 'verbose' ? 'checked' : ''; ?>/>
-                        <label for="future-action-column-style-verbose"><?php
-                            esc_html_e('Detailed', 'post-expirator'); ?></label>
-                        &nbsp;&nbsp;
-                        <input type="radio" name="future-action-column-style"
-                               id="future-action-column-style-simple"
-                               value="simple" <?php
-                        echo $columnStyle === 'simple' ? 'checked' : ''; ?>/>
-                        <label for="future-action-column-style-simple"><?php
-                            esc_html_e('Simplified', 'post-expirator'); ?></label>
-                        <p class="description"><?php
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-column-style"
+                                id="future-action-column-style-verbose"
+                                value="verbose" <?php
+                            echo $columnStyle === 'verbose' ? 'checked' : ''; ?>/>
+                            <label for="future-action-column-style-verbose"><?php
+                                esc_html_e('Detailed', 'post-expirator'); ?></label>
+                            <p class="description offset"><?php
                             esc_html_e(
-                                '"Detailed" will display all information in the Future Action column. "Simplified" will display only the icon and date/time.',
+                                'Displays all information in the Future Action column.',
                                 'post-expirator'
                             ); ?></p>
+                        </div>
+
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-column-style"
+                                id="future-action-column-style-simple"
+                                value="simple" <?php
+                            echo $columnStyle === 'simple' ? 'checked' : ''; ?>/>
+                            <label for="future-action-column-style-simple"><?php
+                                esc_html_e('Simplified', 'post-expirator'); ?></label>
+                            <p class="description offset"><?php
+                            esc_html_e(
+                                'Displays only the icon and date/time.',
+                                'post-expirator'
+                            ); ?></p>
+                        </div>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -62,26 +75,30 @@ $container = DIContainer::getInstance();
                         <?php
                         $timeFormat = $container->get(ServicesAbstract::SETTINGS)->getTimeFormatForDatePicker();
                         ?>
-                        <input type="radio" name="future-action-time-format"
-                               id="future-action-time-format-inherited"
-                               value="inherited" <?php
-                        echo $timeFormat === 'inherited' ? 'checked' : ''; ?>/>
-                        <label for="future-action-time-format-inherited"><?php
-                            esc_html_e('Inherit from Site Settings', 'post-expirator'); ?></label>
-                        &nbsp;&nbsp;
-                        <input type="radio" name="future-action-time-format"
-                               id="future-action-time-format-24h"
-                               value="24h" <?php
-                        echo $timeFormat === '24h' ? 'checked' : ''; ?>/>
-                        <label for="future-action-time-format-24h"><?php
-                            esc_html_e('24 hours', 'post-expirator'); ?></label>
-                        &nbsp;&nbsp;
-                        <input type="radio" name="future-action-time-format"
-                               id="future-action-time-format-12h"
-                               value="12h" <?php
-                        echo $timeFormat === '12h' ? 'checked' : ''; ?>/>
-                        <label for="future-action-time-format-12h"><?php
-                            esc_html_e('AM/PM', 'post-expirator'); ?></label>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-time-format"
+                                id="future-action-time-format-inherited"
+                                value="inherited" <?php
+                            echo $timeFormat === 'inherited' ? 'checked' : ''; ?>/>
+                            <label for="future-action-time-format-inherited"><?php
+                                esc_html_e('Inherit from Site Settings', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-time-format"
+                                id="future-action-time-format-24h"
+                                value="24h" <?php
+                            echo $timeFormat === '24h' ? 'checked' : ''; ?>/>
+                            <label for="future-action-time-format-24h"><?php
+                                esc_html_e('24 hours', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-time-format"
+                                id="future-action-time-format-12h"
+                                value="12h" <?php
+                            echo $timeFormat === '12h' ? 'checked' : ''; ?>/>
+                            <label for="future-action-time-format-12h"><?php
+                                esc_html_e('AM/PM', 'post-expirator'); ?></label>
+                        </div>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -121,23 +138,26 @@ $container = DIContainer::getInstance();
                         esc_html_e('Preserve Data After Deactivating the Plugin', 'post-expirator'); ?>
                     </th>
                     <td>
-                        <input type="radio" name="expired-preserve-data-deactivating"
-                               id="expired-preserve-data-deactivating-true"
-                               value="1" <?php
-                        echo $preserveData ? ' checked="checked"' : ''; ?>/>
-                        <label for="expired-preserve-data-deactivating-true">
-                            <?php
-                            esc_html_e('Preserve data', 'post-expirator'); ?>
-                        </label>
-                        &nbsp;&nbsp;
-                        <input type="radio" name="expired-preserve-data-deactivating"
-                               id="expired-preserve-data-deactivating-false"
-                               value="0" <?php
-                        echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
-                        <label for="expired-preserve-data-deactivating-false">
-                            <?php
-                            esc_html_e('Delete data', 'post-expirator'); ?>
-                        </label>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-preserve-data-deactivating"
+                                id="expired-preserve-data-deactivating-true"
+                                value="1" <?php
+                            echo $preserveData ? ' checked="checked"' : ''; ?>/>
+                            <label for="expired-preserve-data-deactivating-true">
+                                <?php
+                                esc_html_e('Preserve data', 'post-expirator'); ?>
+                            </label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-preserve-data-deactivating"
+                                id="expired-preserve-data-deactivating-false"
+                                value="0" <?php
+                            echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
+                            <label for="expired-preserve-data-deactivating-false">
+                                <?php
+                                esc_html_e('Delete data', 'post-expirator'); ?>
+                            </label>
+                        </div>
                         <p class="description">
                             <?php
                             esc_html_e(

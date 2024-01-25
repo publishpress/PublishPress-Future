@@ -2,35 +2,40 @@
 # This file is distributed under the same license as the PublishPress Future Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future Pro 3.1.6\n"
+"Project-Id-Version: PublishPress Future Pro 3.2.0-beta.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-04T16:23:31+00:00\n"
+"POT-Creation-Date: 2024-01-25T18:21:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
 
 #. Plugin Name of the plugin
+#: publishpress-future-pro.php
 msgid "PublishPress Future Pro"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: publishpress-future-pro.php
 msgid "http://wordpress.org/extend/plugins/post-expirator/"
 msgstr ""
 
 #. Description of the plugin
+#: publishpress-future-pro.php
 msgid "PublishPress Future allows you to schedule automatic changes to posts, pages and other content types."
 msgstr ""
 
 #. Author of the plugin
+#: publishpress-future-pro.php
 msgid "PublishPress"
 msgstr ""
 
 #. Author URI of the plugin
+#: publishpress-future-pro.php
 msgid "http://publishpress.com"
 msgstr ""
 
@@ -38,31 +43,31 @@ msgstr ""
 msgid "Change status to "
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:187
+#: src/classes/Controllers/SettingsController.php:192
 msgid "Custom statuses"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:188
+#: src/classes/Controllers/SettingsController.php:193
 msgid "Enable custom statuses for the post type:"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:192
+#: src/classes/Controllers/SettingsController.php:197
 msgid "Enabled"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:193
+#: src/classes/Controllers/SettingsController.php:198
 msgid "Disabled"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:194
+#: src/classes/Controllers/SettingsController.php:199
 msgid "Select all"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:195
+#: src/classes/Controllers/SettingsController.php:200
 msgid "Unselect all"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:252
+#: src/classes/Controllers/SettingsController.php:257
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
@@ -72,6 +77,26 @@ msgstr ""
 
 #: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:119
 msgid "Change post status to %s"
+msgstr ""
+
+#: src/templates/settings-tab-advanced.html.php:6
+msgid "Action Date Calculation Base"
+msgstr ""
+
+#: src/templates/settings-tab-advanced.html.php:17
+msgid "Use Current Date"
+msgstr ""
+
+#: src/templates/settings-tab-advanced.html.php:19
+msgid "Calculates the future action date based on today's date."
+msgstr ""
+
+#: src/templates/settings-tab-advanced.html.php:29
+msgid "Use Post's Publish Date"
+msgstr ""
+
+#: src/templates/settings-tab-advanced.html.php:31
+msgid "Calculates the future action date from the post's original publish date."
 msgstr ""
 
 #: src/templates/settings-tab-license.html.php:11

@@ -120,6 +120,7 @@ export const PostTypeSettingsPanel = function (props) {
                     options={props.taxonomiesList}
                     selected={postTypeTaxonomy}
                     noItemFoundMessage={props.text.noItemsfound}
+                    description={props.text.fieldTaxonomyDescription}
                     data={props.postType}
                     onChange={onChangeTaxonomy}
                 >
