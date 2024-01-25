@@ -55,6 +55,7 @@ abstract class HooksAbstract
     const FILTER_MANAGE_PAGES_COLUMNS = 'manage_pages_columns';
     const FILTER_POSTS_JOIN = 'posts_join';
     const FILTER_CONTENT_FOOTER = 'publishpress_future/content_footer';
+    const FILTER_ACTION_BASE_DATE_STRING = 'publishpress_future/action_base_date_string';
 
     public static function getActionLegacyMultisiteDelete($blogId)
     {

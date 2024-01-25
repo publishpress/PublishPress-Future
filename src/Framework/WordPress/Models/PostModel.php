@@ -243,6 +243,11 @@ class PostModel
         return wp_delete_post($this->getPostId(), $force) !== false;
     }
 
+    public function trash()
+    {
+        return wp_trash_post($this->getPostId());
+    }
+
     public function stick()
     {
         stick_post($this->getPostId());

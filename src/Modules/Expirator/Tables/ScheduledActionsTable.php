@@ -45,6 +45,14 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         unset($this->columns['group']);
         $this->columns['hook'] = __('Action', 'post-expirator');
 
+        // Force the title of columns so they are translatable on our text domain.
+        $this->columns['status'] = __('Status', 'post-expirator');
+        $this->columns['args'] = __('Arguments', 'post-expirator');
+        $this->columns['log_entries'] = __('Logs', 'post-expirator');
+        $this->columns['schedule'] = __('Scheduled Date', 'post-expirator');
+        $this->columns['recurrence'] = __('Recurrence', 'post-expirator');
+
+
         $this->hooksFacade->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
 
         $this->row_actions = array(
@@ -68,37 +76,37 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             array(
                 'seconds' => YEAR_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s year', '%s years', 'action-scheduler' ),
+                'names'   => _n_noop( '%s year', '%s years', 'post-expirator' ),
             ),
             array(
                 'seconds' => MONTH_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s month', '%s months', 'action-scheduler' ),
+                'names'   => _n_noop( '%s month', '%s months', 'post-expirator' ),
             ),
             array(
                 'seconds' => WEEK_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s week', '%s weeks', 'action-scheduler' ),
+                'names'   => _n_noop( '%s week', '%s weeks', 'post-expirator' ),
             ),
             array(
                 'seconds' => DAY_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s day', '%s days', 'action-scheduler' ),
+                'names'   => _n_noop( '%s day', '%s days', 'post-expirator' ),
             ),
             array(
                 'seconds' => HOUR_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s hour', '%s hours', 'action-scheduler' ),
+                'names'   => _n_noop( '%s hour', '%s hours', 'post-expirator' ),
             ),
             array(
                 'seconds' => MINUTE_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s minute', '%s minutes', 'action-scheduler' ),
+                'names'   => _n_noop( '%s minute', '%s minutes', 'post-expirator' ),
             ),
             array(
                 'seconds' => 1,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s second', '%s seconds', 'action-scheduler' ),
+                'names'   => _n_noop( '%s second', '%s seconds', 'post-expirator' ),
             ),
         );
 
@@ -261,6 +269,16 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $this->status_counts = array('all' => array_sum($this->status_counts)) + $this->status_counts;
         }
 
+        $status_labels = [
+            'uninitialized' => __('Uninitialized', 'post-expirator'),
+            'pending' => __('Pending', 'post-expirator'),
+            'complete' => __('Complete', 'post-expirator'),
+            'failed' => __('Failed', 'post-expirator'),
+            'canceled' => __('Canceled', 'post-expirator'),
+            'running' => __('Running', 'post-expirator'),
+            'all' => __('All', 'post-expirator'),
+        ];
+
         foreach ($this->status_counts as $status_name => $count) {
             if (0 === $count) {
                 continue;
@@ -281,7 +299,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
                 $status_list_item,
                 esc_attr($status_name),
                 esc_url($status_filter_url),
-                esc_html(ucfirst($status_name)),
+                esc_html(isset($status_labels[$status_name]) ? $status_labels[$status_name] : ucfirst($status_name)),
                 absint($count)
             );
         }
@@ -292,6 +310,10 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             echo '</ul>';
         }
     }
+
+    protected function get_search_box_button_text() {
+		return __( 'Search hook, args and claim ID', 'post-expirator' );
+	}
 
     public function column_action(array $row)
     {
@@ -313,7 +335,16 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $iconClass = $icons[$row['status_name']];
         }
 
-        return '<span class="' . esc_attr($iconClass) . '"></span> ' . esc_html($row['status']);
+        $status = $row['status'];
+        if ($row['status_name'] === \ActionScheduler_Store::STATUS_PENDING) {
+            $status = __('Scheduled', 'post-expirator');
+        }
+
+        if ($row['status_name'] === \ActionScheduler_Store::STATUS_COMPLETE) {
+            $status = __('Completed', 'post-expirator');
+        }
+
+        return '<span class="' . esc_attr($iconClass) . '"></span> ' . esc_html($status);
     }
 
     public function column_hook(array $row)
@@ -349,7 +380,22 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $argsModel = $argsModelFactory();
             $argsModel->loadByActionId($row['ID']);
 
-            $actionLabel = $argsModel->getActionLabel();
+            // Post type
+            $postType = $argsModel->getArg('postType');
+            if (empty($postType)) {
+                $postType = $argsModel->getArg('post_type');
+            }
+            if (empty($postType)) {
+                $container = Container::getInstance();
+                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+                $postModel = $factory($row['args']['postId']);
+
+                $postType = $postModel->getPostType();
+            }
+            $postTypeModel = new PostTypeModel();
+            $postTypeModel->load($postType);
+
+            $actionLabel = $argsModel->getActionLabel($postModel->getPostType());
         }
 
         return esc_html($actionLabel);
@@ -464,7 +510,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
 
         // Action label
-        $actionLabel = $argsModel->getActionLabel();
+        $actionLabel = $argsModel->getActionLabel($postType);
         if (empty($actionLabel)) {
             $actionLabel = $argsModel->getArg('actionLabel');
         }
@@ -605,13 +651,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         if (gmdate('U') > $next_timestamp) {
             /* translators: %s: date interval */
             $schedule_display_string .= sprintf(
-                __(' (%s ago)', 'action-scheduler'),
+                __(' (%s ago)', 'post-expirator'),
                 self::human_interval(gmdate('U') - $next_timestamp)
             );
         } else {
             /* translators: %s: date interval */
             $schedule_display_string .= sprintf(
-                __(' (%s)', 'action-scheduler'),
+                __(' (%s)', 'post-expirator'),
                 self::human_interval($next_timestamp - gmdate('U'))
             );
         }
@@ -635,7 +681,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     private static function human_interval($interval, $periods_to_include = 2)
     {
         if ($interval <= 0) {
-            return __('Now!', 'action-scheduler');
+            return __('Now!', 'post-expirator');
         }
 
         $output = '';
@@ -656,7 +702,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
                         self::$time_periods[$time_period_index]['names'][0],
                         self::$time_periods[$time_period_index]['names'][1],
                         $periods_in_interval,
-                        'action-scheduler'
+                        'post-expirator'
                     ),
                     $periods_in_interval
                 );
@@ -667,4 +713,27 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         return $output;
     }
+
+    /**
+	 * Returns the recurrence of an action or 'Non-repeating'. The output is human readable.
+	 *
+	 * @param ActionScheduler_Action $action
+	 *
+	 * @return string
+	 */
+	protected function get_recurrence( $action ) {
+		$schedule = $action->get_schedule();
+		if ( $schedule->is_recurring() && method_exists( $schedule, 'get_recurrence' ) ) {
+			$recurrence = $schedule->get_recurrence();
+
+			if ( is_numeric( $recurrence ) ) {
+				/* translators: %s: time interval */
+				return sprintf( __( 'Every %s', 'post-expirator' ), self::human_interval( $recurrence ) );
+			} else {
+				return $recurrence;
+			}
+		}
+
+		return __( 'Non-repeating', 'post-expirator' );
+	}
 }

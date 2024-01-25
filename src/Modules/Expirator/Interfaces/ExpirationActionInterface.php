@@ -24,13 +24,10 @@ interface ExpirationActionInterface
      */
     public function __toString();
 
-    /**
-     * @return string
-     */
-    public static function getLabel();
+    public static function getLabel(string $postType = ''): string;
 
     /**
      * @return string
      */
-    public function getDynamicLabel();
+    public function getDynamicLabel($postType = '');
 }

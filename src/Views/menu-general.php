@@ -63,40 +63,6 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                 esc_html_e('Defaults', 'post-expirator'); ?></h3>
             <table class="form-table">
                 <tr valign="top">
-                    <th scope="row"><label for="expired-default-date-format"><?php
-                            esc_html_e('Date Format', 'post-expirator'); ?></label></th>
-                    <td>
-                        <input type="text" name="expired-default-date-format" id="expired-default-date-format" value="<?php
-                        echo esc_attr($expirationdateDefaultDateFormat); ?>" size="25"/> <span class="description">(<?php
-                            echo esc_html(PostExpirator_Util::get_wp_date($expirationdateDefaultDateFormat, time())); ?>)</span>
-                        <p class="description"><?php
-                            echo sprintf(
-                                esc_html__(
-                                    'The default format to use when displaying the action date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
-                                    'post-expirator'
-                                ),
-                                '<a href="https://www.php.net/manual/en/function.date.php" target="_blank">' . esc_html__('PHP Date Function', 'post-expirator') . '</a>'
-                            ); ?></p>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><label for="expired-default-time-format"><?php
-                            esc_html_e('Time Format', 'post-expirator'); ?></label></th>
-                    <td>
-                        <input type="text" name="expired-default-time-format" id="expired-default-time-format" value="<?php
-                        echo esc_attr($expirationdateDefaultTimeFormat); ?>" size="25"/> <span class="description">(<?php
-                            echo esc_html(PostExpirator_Util::get_wp_date($expirationdateDefaultTimeFormat, time())); ?>)</span>
-                        <p class="description"><?php
-                        echo sprintf(
-                            esc_html__(
-                                'The default format to use when displaying the action time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
-                                'post-expirator'
-                            ),
-                            '<a href="https://www.php.net/manual/en/function.date.php" target="_blank">'. esc_html__('PHP Date Function', 'post-expirator') . '</a>'
-
-                        ); ?></td>
-                </tr>
-                <tr valign="top">
                     <th scope="row"><label for="expired-default-expiration-date"><?php
                             esc_html_e('Default Date/Time Offset', 'post-expirator'); ?></label></th>
                     <td>
@@ -137,19 +103,22 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     <th scope="row"><?php
                         esc_html_e('Enable Email Notification?', 'post-expirator'); ?></th>
                     <td>
-                        <input type="radio" name="expired-email-notification" id="expired-email-notification-true"
-                               value="1" <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo $expiredemailnotificationenabled; ?>/> <label
-                                for="expired-email-notification-true"><?php
-                            esc_html_e('Enabled', 'post-expirator'); ?></label>
-                        &nbsp;&nbsp;
-                        <input type="radio" name="expired-email-notification" id="expired-email-notification-false"
-                               value="0" <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo $expiredemailnotificationdisabled; ?>/> <label
-                                for="expired-email-notification-false"><?php
-                            esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-email-notification" id="expired-email-notification-true"
+                                value="1" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            echo $expiredemailnotificationenabled; ?>/> <label
+                                    for="expired-email-notification-true"><?php
+                                esc_html_e('Enabled', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-email-notification" id="expired-email-notification-false"
+                                value="0" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            echo $expiredemailnotificationdisabled; ?>/> <label
+                                    for="expired-email-notification-false"><?php
+                                esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        </div>
                         <p class="description"><?php
                             esc_html_e(
                                 'This will enable or disable the send of email notification on future action.',
@@ -161,21 +130,24 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                     <th scope="row"><?php
                         esc_html_e('Include Blog Administrators?', 'post-expirator'); ?></th>
                     <td>
-                        <input type="radio" name="expired-email-notification-admins"
-                               id="expired-email-notification-admins-true"
-                               value="1" <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo $expiredemailnotificationadminsenabled; ?>/> <label
-                                for="expired-email-notification-admins-true"><?php
-                            esc_html_e('Enabled', 'post-expirator'); ?></label>
-                        &nbsp;&nbsp;
-                        <input type="radio" name="expired-email-notification-admins"
-                               id="expired-email-notification-admins-false"
-                               value="0" <?php
-                        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                        echo $expiredemailnotificationadminsdisabled; ?>/> <label
-                                for="expired-email-notification-admins-false"><?php
-                            esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-email-notification-admins"
+                                id="expired-email-notification-admins-true"
+                                value="1" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            echo $expiredemailnotificationadminsenabled; ?>/> <label
+                                    for="expired-email-notification-admins-true"><?php
+                                esc_html_e('Enabled', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-email-notification-admins"
+                                id="expired-email-notification-admins-false"
+                                value="0" <?php
+                            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                            echo $expiredemailnotificationadminsdisabled; ?>/> <label
+                                    for="expired-email-notification-admins-false"><?php
+                                esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        </div>
                         <p class="description"><?php
                             esc_html_e(
                                 'This will include all users with the role of "Administrator" in the email.',

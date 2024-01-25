@@ -201,7 +201,7 @@ class RestAPIController implements InitializableInterface
                             $defaultDataModelFactory = Container::getInstance()->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
                             $defaultDataModel = $defaultDataModelFactory->create($post['post_type']);
 
-                            $defaultExpirationDate = $defaultDataModel->getActionDateParts();
+                            $defaultExpirationDate = $defaultDataModel->getActionDateParts($post['id']);
                             $date = $defaultExpirationDate['iso'];
 
                             $action = $defaultDataModel->getDefaultActionForPostType($post['post_type']);

@@ -20,9 +20,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 </p>
                 <ul>
                     <li><?php
-                        echo esc_html__('Support for future actions to custom statuses', 'post-expirator'); ?></li>
+                        echo esc_html__('Set the action date based on the post\'s publishing date', 'post-expirator'); ?></li>
                     <li><?php
-                        echo esc_html__('Remove PublishPress ads and branding', 'post-expirator'); ?></li>
+                        echo esc_html__('Move posts to custom statuses', 'post-expirator'); ?></li>
                     <li><?php
                         echo esc_html__('Fast, professional support', 'post-expirator'); ?></li>
                 </ul>

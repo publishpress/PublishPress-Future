@@ -1,4 +1,4 @@
-=== PublishPress Future: Automatically Unpublish WordPress Posts ===
+=== PublishPress Future: Schedule Changes to WordPress Posts ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
@@ -9,7 +9,7 @@ Tested up to: 6.4
 License: GPLv2 or later
 Stable tag: 3.1.7
 
-Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
+PublishPress Future can make scheduled changes to your content. You can unpublish the post, move the post to a new status, update the post categories, and much more.
 
 == Description ==
 
@@ -17,9 +17,9 @@ The PublishPress Future plugin allows you to make automatic changes to posts, pa
 
 Here's an overview of what you can do with PublishPress Future:
 
-* Choose expiry dates for content in any post type.
-* Select expiry dates in the right sidebar when editing posts.
+* Choose unpublish dates for your posts.
 * Modify, remove or completely delete content when the expiry date arrives.
+* Add or remove categories.
 * Modify expiry dates using "Quick Edit" and "Bulk Edit".
 * Receive email notifications when your content expires.
 * Show expiry dates in your content, automatically or with shortcodes.
@@ -138,8 +138,26 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 [Click here for more details on Elementor post changes](https://publishpress.com/knowledge-base/schedule-changes-elementor/)
 
-
 == Changelog ==
+
+= [3.2.0] - UNRELEASED =
+
+* ADDED: Add the possibility to use non hierarchical taxonomies, #285;
+* ADDED: Add new future action to remove all taxonomy terms of a post, #652;
+* ADDED: Add new action hook `publishpressfuture_saved_all_post_types_settings` to allow developers to trigger an action when the Post Types settings are saved;
+* CHANGED: Deprecate the constant PublishPress\Future\Modules\Settings\SettingsFacade::DEFAULT_CUSTOM_DATE and replaced it with ::DEFAULT_CUSTOM_DATE_OFFSET;
+* CHANGED: Moved the date and time format settings fields to the Display tab, #605;
+* CHANGED: Added description to the taxonomy setting field in the Post Types tab, #641;
+* CHANGED: Moved the Post Types settings tab to the first position, #619;
+* CHANGED: Simplify the name of actions on taxonomy related actions, adding the actual name of the taxonomy, #294;
+* CHANGED: Change the text on the Status column in the Future Actions list, from "Pending" to "Scheduled", #661;
+* CHANGED: Fixed typos and improved the text in the Post Types settings tab, #659;
+* FIXED: Fix consistency on radio buttons alignment on the settings page;
+* FIXED: Hides the legacy cron event field from Diagnostics and Tools settings tab if no legacy cron event is found;
+* FIXED: Fix the "Change Status to Trash action" on custom post types, #655;
+* FIXED: Added back support for reusable blocks, #200;
+* FIXED: Updated the language files, #653;
+* FIXED: Fix error 404 when activating future action on a post type that has no taxonomy registered, #662;
 
 = [3.1.7] - 04 Jan, 2024 =
 

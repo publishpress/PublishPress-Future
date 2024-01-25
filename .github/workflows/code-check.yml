@@ -21,13 +21,10 @@ jobs:
   check:
     name: Check the code
     runs-on: ubuntu-latest
-    container:
-      image: publishpress/dev-workspace-terminal:future-free-2
-      options: -v ${{ github.workspace }}:/project --workdir="/project"
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    env:
+      DOCKER_IMAGE: publishpress/dev-workspace-terminal:future-free-2
 
+    steps:
       - name: Setup tmate session for Debugging, if inputs.debug_enabled_code_check is true
         uses: mxschmitt/action-tmate@v3
         if: ${{ inputs.debug_enabled_code_check }}
@@ -35,20 +32,37 @@ jobs:
         with:
           detached: true
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Composer install
-        run: composer install --no-interaction --no-progress --prefer-dist --ignore-platform-reqs
+      - name: Cache Docker image
+        id: cache-image
+        uses: actions/cache@v3
+        env:
+          cache-name: image-cache
+        with:
+          path: ~/image-cache-terminal.tar
+          # Adjust key to meet your cache time requirements e.g.
+          # ${{ hashFiles(*) }} can be useful here to invalidate
+          # cache on file changes
+          key: image-cache-${{ hashFiles('dev-workspace/docker/Dockerfile') }}
+          restore-keys: |
+            image-cache-
 
-      - name: Build the package to a dir
-        run: composer build:dir
+      - if: steps.cache-image.outputs.cache-hit != 'true'
+        name: Pull Docker image
+        run: |
+          docker pull $DOCKER_IMAGE
+          docker save -o ~/image-cache-terminal.tar $DOCKER_IMAGE
 
-      - name: PHPLint - Check PHP syntax errors
-        run: composer check:lint
+      - if: steps.cache-image.outputs.cache-hit == 'true'
+        name: Load Docker image from cache
+        run: docker load -i ~/image-cache-terminal.tar
 
-      - name: PHP - Check PHP compatibility
-        run: composer check:php
-
-      - name: PHPCS - Check VIP scan and code standards
-        run: composer check:phpcs
+      - name: Run code checks
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/project \
+            --workdir="/project" \
+            $DOCKER_IMAGE \
+            bash -c "composer validate && composer install --no-interaction --no-progress --prefer-dist --ignore-platform-reqs && composer check"

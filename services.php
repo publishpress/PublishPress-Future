@@ -26,6 +26,7 @@ use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapt
 use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemove;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemoveAll;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategorySet;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToDraft;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostStatusToPrivate;
@@ -461,7 +462,8 @@ return [
                 case ExpirationActionsAbstract::POST_CATEGORY_ADD:
                     return new PostCategoryAdd(
                         $postModel,
-                        $container->get(ServicesAbstract::ERROR)
+                        $container->get(ServicesAbstract::ERROR),
+                        $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY)
                     );
 
                 case ExpirationActionsAbstract::POST_CATEGORY_REMOVE:
@@ -472,6 +474,12 @@ return [
 
                 case ExpirationActionsAbstract::POST_CATEGORY_SET:
                     return new PostCategorySet(
+                        $postModel,
+                        $container->get(ServicesAbstract::ERROR)
+                    );
+
+                case ExpirationActionsAbstract::POST_CATEGORY_REMOVE_ALL:
+                    return new PostCategoryRemoveAll(
                         $postModel,
                         $container->get(ServicesAbstract::ERROR)
                     );
