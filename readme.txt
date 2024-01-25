@@ -1,4 +1,4 @@
-=== PublishPress Future: Automatically Unpublish WordPress Posts ===
+=== PublishPress Future: Schedule Changes to WordPress Posts ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
@@ -9,7 +9,7 @@ Tested up to: 6.4
 License: GPLv2 or later
 Stable tag: 3.1.7
 
-Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
+PublishPress Future can make scheduled changes to your content. You can unpublish the post, move the post to a new status, update the post categories, and much more.
 
 == Description ==
 
@@ -17,9 +17,9 @@ The PublishPress Future plugin allows you to make automatic changes to posts, pa
 
 Here's an overview of what you can do with PublishPress Future:
 
-* Choose expiry dates for content in any post type.
-* Select expiry dates in the right sidebar when editing posts.
+* Choose unpublish dates for your posts.
 * Modify, remove or completely delete content when the expiry date arrives.
+* Add or remove categories.
 * Modify expiry dates using "Quick Edit" and "Bulk Edit".
 * Receive email notifications when your content expires.
 * Show expiry dates in your content, automatically or with shortcodes.
