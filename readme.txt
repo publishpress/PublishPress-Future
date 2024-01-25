@@ -7,7 +7,7 @@ Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.4
 License: GPLv2 or later
-Stable tag: 3.1.7
+Stable tag: 3.2.0
 
 PublishPress Future can make scheduled changes to your content. You can unpublish the post, move the post to a new status, update the post categories, and much more.
 
@@ -140,7 +140,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [3.2.0] - UNRELEASED =
+= [3.2.0] - 25 Jan, 2024 =
 
 * ADDED: Add the possibility to use non hierarchical taxonomies, #285;
 * ADDED: Add new future action to remove all taxonomy terms of a post, #652;
