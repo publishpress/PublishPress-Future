@@ -157,6 +157,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * FIXED: Fix the "Change Status to Trash action" on custom post types, #655;
 * FIXED: Added back support for reusable blocks, #200;
 * FIXED: Updated the language files, #653;
+* FIXED: Fix error 404 when activating future action on a post type that has no taxonomy registered, #662;
 
 = [3.1.7] - 04 Jan, 2024 =
 
