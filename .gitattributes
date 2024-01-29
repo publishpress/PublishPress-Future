@@ -17,6 +17,8 @@
 .wordpress-org export-ignore
 /composer.lock
 /dev-workspace export-ignore
+/cache export-ignore
+/.cache export-ignore
 /dist export-ignore
 /vendor export-ignore
 /version.txt export-ignore

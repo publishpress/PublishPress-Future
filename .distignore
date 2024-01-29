@@ -16,6 +16,8 @@
 .vscode
 /.wordpress-org
 /dev-workspace
+/cache
+/.cache
 /dist
 /lib/composer.json
 /lib/composer.lock

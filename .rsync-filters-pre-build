@@ -29,6 +29,8 @@
 - codeception.dist.yml
 - cs
 - dev-workspace
+- cache
+- .cache
 - dist
 - jsconfig.json
 - node_modules
