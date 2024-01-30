@@ -116,6 +116,10 @@ export const FutureActionPanel = (props) => {
         let termsListByName = {};
         let termsListById = {};
 
+        if (!taxonomy) {
+            return;
+        }
+
         setIsFetchingTerms(true);
 
         apiFetch({

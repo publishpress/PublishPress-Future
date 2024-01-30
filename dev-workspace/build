@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-# Make sure we are inside dev-workspace subdirectory. If not, enter it.
-if [[ ! "$PWD" =~ dev-workspace$ ]]; then
-    cd dev-workspace
-fi
-
-docker compose -f docker/compose.yaml build

@@ -205,27 +205,23 @@ class Controller implements InitializableInterface
                             'post-expirator'
                         ),
                         'fieldActive' => __('Active', 'post-expirator'),
-                        'fieldActiveLabel' => __('Activate PublishPress Future metabox for this post type', 'post-expirator'),
-                        'fieldHowToExpire' => __('Action', 'post-expirator'),
+                        'fieldActiveLabel' => __('Activate the PublishPress Future metabox for this post type', 'post-expirator'),
+                        'fieldHowToExpire' => __('Default Action', 'post-expirator'),
                         'fieldHowToExpireDescription' => __(
                             'Select the default action for the post type.',
                             'post-expirator'
                         ),
                         'fieldTaxonomyDescription' => __(
-                            'Select the taxonomy to be used for terms on taxonomy based future action.',
+                            'Select the taxonomy to be used for actions.',
                             'post-expirator'
                         ),
-                        'fieldAutoEnable' => __('Auto-enable?', 'post-expirator'),
+                        'fieldAutoEnable' => __('Auto-enable', 'post-expirator'),
                         'fieldAutoEnableLabel' => __('Enabled for all new posts', 'post-expirator'),
                         'fieldTaxonomy' => __('Taxonomy', 'post-expirator'),
                         'noItemsfound' => __('No taxonomies found for this post type. Taxonomy actions will not be available.', 'post-expirator'),
-                        'fieldTaxonomyDescription' => __(
-                            'Select the taxonomy and terms to be used for taxonomy based expiration.',
-                            'post-expirator'
-                        ),
                         'fieldWhoToNotify' => __('Who to Notify', 'post-expirator'),
                         'fieldWhoToNotifyDescription' => __(
-                            'Enter a comma separate list of emails that you would like to be notified when the action runs.',
+                            'Enter a comma separated list of emails that you would like to be notified when the action runs.',
                             'post-expirator'
                         ),
                         'fieldDefaultDateTimeOffset' => __('Default Date/Time Offset', 'post-expirator'),
