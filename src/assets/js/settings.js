@@ -294,6 +294,10 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         var termsListByName = {};
         var termsListById = {};
 
+        if (!taxonomy) {
+            return;
+        }
+
         setIsFetchingTerms(true);
 
         apiFetch({

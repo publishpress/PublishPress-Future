@@ -396,7 +396,7 @@ class SettingsController implements ModuleInterface
 
     public function saveAdvancedSettings()
     {
-        // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
         $baseDate = $_POST['future-action-base-date'] ?? 'current';
         $baseDate = $baseDate === 'publishing' ? 'publishing' : 'current';
 

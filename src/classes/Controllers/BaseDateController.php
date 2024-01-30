@@ -5,8 +5,6 @@ namespace PublishPress\FuturePro\Controllers;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
-use PublishPress\FuturePro\Core\HooksAbstract;
-use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
 
 use function current_user_can;
