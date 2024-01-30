@@ -140,9 +140,6 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
-= [3.3.0] - UNRELEASED =
-
-
 = [3.2.0] - 25 Jan, 2024 =
 
 * ADDED: Add the possibility to use non hierarchical taxonomies, #285;
