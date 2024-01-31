@@ -204,13 +204,21 @@ class SettingsController implements ModuleInterface
                         'unselectAll' => __('Unselect all', 'publishpress-future-pro'),
                         'enableMetadataMapping' => __('Enable Metadata Mapping', 'publishpress-future-pro'),
                         'enableMetadataMappingDesc' => __(
-                            'Enable metadata mapping for the post type, allowing to map custom fields to the future action date.',
+                            'Enable metadata mapping for the post type, allowing to map custom fields to schedule future actions.',
                             'publishpress-future-pro'
                         ),
                         'enableMetadataMappingHelp' => __(
                             'For using the default mapping, please leave the fields empty.',
                             'publishpress-future-pro'
                         ),
+                        'readmoreMetadataMappingHelp' => __(
+                            'Read more about metadata mapping.',
+                            'publishpress-future-pro'
+                        ),
+                        'readmoreMetadataMappingHelpUrl' => 'https://publishpress.com/knowledge-base/metadata-mapping/',
+                        'originalKey' => __('Original Metakey', 'publishpress-future-pro'),
+                        'mappedKey' => __('Mapped Metakey', 'publishpress-future-pro'),
+                        'description' => __('Description', 'publishpress-future-pro'),
                     ],
                     'settings' => $this->settingsModel->getSettings(),
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
@@ -220,16 +228,7 @@ class SettingsController implements ModuleInterface
                             'mappedKey' => '',
                             'label' => __('Action Date', 'publishpress-future-pro'),
                             'description' => __(
-                                'The date used for scheduling the action.',
-                                'publishpress-future-pro'
-                            ),
-                        ],
-                        [
-                            'originalKey' => PostMetaAbstract::EXPIRATION_DATE_OPTIONS,
-                            'mappedKey' => '',
-                            'label' => __('Options', 'publishpress-future-pro'),
-                            'description' => __(
-                                'The options used for scheduling the action.',
+                                "The date used for scheduling the action. The date must be a unix time stamp or in the 'Y-m-d H:i:s' format.",
                                 'publishpress-future-pro'
                             ),
                         ],

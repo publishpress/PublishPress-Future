@@ -42,22 +42,29 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
     if (settingActive) {
         const metadataFields = publishpressFutureProSettings.metadataFields.map((field) => {
             return (
-                <div key={field.originalKey} className="future_pro_metadata_mapping_row">
-                    <label htmlFor={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}>
-                        {field.label}
-                    </label>
-                    <input
-                        type="text"
-                        name={'expirationdate_metadata_mapping[' + props.postType + '][' + field.originalKey + ']'}
-                        id={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}
-                        value={metadataMapping[field.originalKey] ? metadataMapping[field.originalKey] : ''}
-                        placeholder={field.originalKey}
-                        onChange={(e) => handleMetadataMapChange(field.originalKey, e.target.value)}
-                        />
-                    <Tooltip text={field.description}>
-                        <span className="dashicons dashicons-editor-help"></span>
-                    </Tooltip>
-                </div>
+                <tr key={field.originalKey} className="future_pro_metadata_mapping_row">
+                    <td>
+                        <div className="mapping-label-container">
+                            <label htmlFor={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}>
+                                {field.label}
+                            </label>
+                            <Tooltip text={field.description}>
+                                <span className="dashicons dashicons-editor-help"></span>
+                            </Tooltip>
+                        </div>
+                    </td>
+                    <td>{field.originalKey}</td>
+                    <td>
+                        <input
+                            type="text"
+                            name={'expirationdate_metadata_mapping[' + props.postType + '][' + field.originalKey + ']'}
+                            id={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}
+                            value={metadataMapping[field.originalKey] ? metadataMapping[field.originalKey] : ''}
+                            placeholder={field.originalKey}
+                            onChange={(e) => handleMetadataMapChange(field.originalKey, e.target.value)}
+                            />
+                    </td>
+                </tr>
             );
         });
 
@@ -75,10 +82,25 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
                 </div>
                 {enableMetadataMapping &&
                     <div className="expirationdate_metadata_metakeys">
-                        {metadataFields}
+                        <table className="wp-list-table widefat fixed striped table-view-list">
+                            <thead>
+                                <tr>
+                                    <th>{text.description}</th>
+                                    <th>{text.originalKey}</th>
+                                    <th>{text.mappedKey}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {metadataFields}
+                            </tbody>
+                        </table>
 
                         <p className="description">
-                            <p>{text.enableMetadataMappingHelp}</p>
+                            {text.enableMetadataMappingHelp}
+                        </p>
+
+                        <p className="description">
+                            <a href="{text.readmoreMetadataMappingHelpUrl" target="_blank">{text.readmoreMetadataMappingHelp}</a>
                         </p>
                     </div>
                 }

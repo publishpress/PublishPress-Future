@@ -11,6 +11,8 @@ use PublishPress\FuturePro\Controllers\BaseDateController;
 use PublishPress\FuturePro\Controllers\BlocksController;
 use PublishPress\FuturePro\Controllers\CustomStatusesController;
 use PublishPress\FuturePro\Controllers\EddIntegrationController;
+use PublishPress\FuturePro\Controllers\MetadataMappingController;
+use PublishPress\FuturePro\Controllers\setMetadataMappingController;
 use PublishPress\FuturePro\Controllers\SettingsController;
 use PublishPress\FuturePro\Core\HooksAbstract;
 use PublishPress\FuturePro\Core\PluginInitializator;
@@ -64,6 +66,7 @@ return [
             ServicesAbstract::CONTROLLER_EDD_INTEGRATION,
             ServicesAbstract::CONTROLLER_BASE_DATE,
             ServicesAbstract::CONTROLLER_BLOCKS,
+            ServicesAbstract::CONTROLLER_METADATA_MAPPING,
         ];
 
         $controllers = [];
@@ -137,6 +140,13 @@ return [
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::ASSETS_URL),
             $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+        );
+    },
+
+    ServicesAbstract::CONTROLLER_METADATA_MAPPING => static function (ContainerInterface $container) {
+        return new MetadataMappingController(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::MODEL_SETTINGS)
         );
     },
 
