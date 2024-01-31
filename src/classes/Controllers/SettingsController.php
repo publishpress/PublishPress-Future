@@ -169,15 +169,11 @@ class SettingsController implements ModuleInterface
     public function adminEnqueueScript()
     {
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
-        if (
-            ! isset($_GET['page'])
-            || $_GET['page'] !== 'publishpress-future'
-            || ! isset($_GET['tab'])
-        ) {
+        if (isset($_GET['page']) && $_GET['page'] !== 'publishpress-future') {
             return;
         }
 
-        if ($_GET['tab'] === 'defaults') {
+        if (! isset($_GET['tab']) || $_GET['tab'] === 'defaults') {
             wp_enqueue_script(
                 'publishpress-future-pro-settings-panel',
                 $this->assetsUrl . '/js/settings.js',
@@ -269,7 +265,7 @@ class SettingsController implements ModuleInterface
             );
         }
 
-        if (in_array($_GET['tab'], ['license', 'defaults'], true)) {
+        if (! isset($_GET['tab']) || in_array($_GET['tab'], ['license', 'defaults'], true)) {
             wp_enqueue_style(
                 'publishpress-future-settings-style',
                 $this->assetsUrl . '/css/settings.css',
