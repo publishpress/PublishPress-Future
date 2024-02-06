@@ -217,7 +217,7 @@ class SettingsController implements ModuleInterface
                         ),
                         'readmoreMetadataMappingHelpUrl' => 'https://publishpress.com/knowledge-base/metadata-mapping/',
                         'originalKey' => __('Original Metakey', 'publishpress-future-pro'),
-                        'mappedKey' => __('Mapped Metakey', 'publishpress-future-pro'),
+                        'mappedKey' => __('New Metakey', 'publishpress-future-pro'),
                         'description' => __('Description', 'publishpress-future-pro'),
                     ],
                     'settings' => $this->settingsModel->getSettings(),
