@@ -3,7 +3,6 @@
 namespace PublishPress\FuturePro\Domain\ExpirationActions;
 
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
-use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\FuturePro\Controllers\CustomStatusesController;
