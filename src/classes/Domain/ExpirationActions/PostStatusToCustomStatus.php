@@ -105,18 +105,18 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         return $result;
     }
 
-    public static function getLabel()
+    public static function getLabel(string $postType = ''): string
     {
-        return __('Change post status to custom status', 'publishpress-future-pro');
+        return __('Change status to custom status', 'publishpress-future-pro');
     }
 
     /**
      * @inheritDoc
      */
-    public function getDynamicLabel()
+    public function getDynamicLabel($postType = '')
     {
         return sprintf(
-            __('Change post status to %s', 'publishpress-future-pro'),
+            __('Change status to %s', 'publishpress-future-pro'),
             $this->getCustomStatusLabel()
         );
     }
