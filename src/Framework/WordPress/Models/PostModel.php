@@ -227,6 +227,7 @@ class PostModel
                 $term = $term->getName();
             } catch (NonexistentTermException $e) {
                 if ($debugIsEnabled) {
+                    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
                     error_log('Error: Nonexistent term: ' . print_r($term, true) . ' in ' . __METHOD__);
                 }
 
