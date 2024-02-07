@@ -5,7 +5,11 @@
 
 namespace PublishPress\Future\Framework\WordPress\Models;
 
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
+use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException;
+use PublishPress\Future\Modules\Debug\DebugInterface;
 use WP_Post;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -28,10 +32,16 @@ class PostModel
     protected $termModelFactory;
 
     /**
+     * @var DebugInterface
+     */
+    protected $debug;
+
+    /**
      * @param int|\WP_Post $post
      * @param \Closure $termModelFactory
+     * @param DebugInterface $debug
      */
-    public function __construct($post, $termModelFactory)
+    public function __construct($post, $termModelFactory, DebugInterface $debug)
     {
         if (is_object($post)) {
             $this->postInstance = $post;
@@ -43,6 +53,7 @@ class PostModel
         }
 
         $this->termModelFactory = $termModelFactory;
+        $this->debug = $debug;
     }
 
     /**
@@ -208,10 +219,19 @@ class PostModel
 
     public function getTermNames($taxonomy = 'post_tag', $args = [])
     {
+        $debugIsEnabled = $this->debug->isEnabled();
         $terms = $this->getTerms($taxonomy, $args);
 
         foreach ($terms as &$term) {
-            $term = $term->getName();
+            try {
+                $term = $term->getName();
+            } catch (NonexistentTermException $e) {
+                if ($debugIsEnabled) {
+                    error_log('Error: Nonexistent term: ' . print_r($term, true) . ' in ' . __METHOD__);
+                }
+
+                continue;
+            }
         }
 
         return $terms;

@@ -8,6 +8,7 @@ namespace PublishPress\Future\Modules\Expirator\Models;
 use Closure;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPress\Future\Framework\WordPress\Models\PostModel;
+use PublishPress\Future\Modules\Debug\DebugInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
@@ -17,11 +18,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirablePostModel extends PostModel
 {
-    /**
-     * @var \PublishPress\Future\Modules\Debug\Debug
-     */
-    private $debug;
-
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
@@ -113,7 +109,7 @@ class ExpirablePostModel extends PostModel
 
     /**
      * @param int $postId
-     * @param \PublishPress\Future\Modules\Debug\Debug $debug
+     * @param \PublishPress\Future\Modules\Debug\DebugInterface $debug
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      * @param \PublishPress\Future\Framework\WordPress\Facade\HooksFacade $hooks
      * @param \PublishPress\Future\Framework\WordPress\Facade\UsersFacade $users
@@ -127,7 +123,7 @@ class ExpirablePostModel extends PostModel
      */
     public function __construct(
         $postId,
-        $debug,
+        DebugInterface $debug,
         $options,
         $hooks,
         $users,
@@ -139,7 +135,7 @@ class ExpirablePostModel extends PostModel
         $actionArgsModelFactory,
         $defaultDataModelFactory
     ) {
-        parent::__construct($postId, $termModelFactory);
+        parent::__construct($postId, $termModelFactory, $debug);
 
         $this->postId = $postId;
         $this->debug = $debug;
