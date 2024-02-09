@@ -140,6 +140,11 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [UNRELEASED] =
+
+FIXED: Fix language files for ES, IT, FR, #665;
+FIXED: Fix error when a term does not exists, #675;
+
 = [3.2.0] - 25 Jan, 2024 =
 
 * ADDED: Add the possibility to use non hierarchical taxonomies, #285;
