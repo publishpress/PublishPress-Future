@@ -309,12 +309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "0a413fdf9ef7856d8d9bc201dbe7d75a1110d7ba"
+                "reference": "f9cca3220c062365debb68f7f57b44140b2c9d22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/0a413fdf9ef7856d8d9bc201dbe7d75a1110d7ba",
-                "reference": "0a413fdf9ef7856d8d9bc201dbe7d75a1110d7ba",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/f9cca3220c062365debb68f7f57b44140b2c9d22",
+                "reference": "f9cca3220c062365debb68f7f57b44140b2c9d22",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "wp-cli/i18n-command": "^2.2",
                 "wp-coding-standards/wpcs": "^2.3"
             },
-            "time": "2024-01-30T15:50:13+00:00",
+            "time": "2024-02-09T17:57:08+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -359,13 +359,17 @@
             "installation-source": "dist",
             "scripts": {
                 "build": [
-                    "ppbuild build"
+                    "pbuild build"
+                ],
+                "build:up": [
+                    "@build",
+                    "@dbox:up"
                 ],
                 "build:dir": [
-                    "ppbuild build-dir"
+                    "pbuild build-dir"
                 ],
                 "build:clean": [
-                    "ppbuild clean"
+                    "pbuild clean"
                 ],
                 "build:js": [
                     "wp-scripts build --mode production"
@@ -377,7 +381,7 @@
                     "wp-scripts build --mode development --watch"
                 ],
                 "get:version": [
-                    "ppbuild version"
+                    "pbuild version"
                 ],
                 "gen:mo": [
                     "wp i18n make-mo ./languages ./languages --allow-root"
@@ -387,6 +391,18 @@
                 ],
                 "cleanup:gh-workflows": [
                     "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE"
+                ],
+                "dbox:up": [
+                    "pdropbox upload && pdropbox share"
+                ],
+                "dbox:list": [
+                    "pdropbox list"
+                ],
+                "dbox:remove": [
+                    "pdropbox remove"
+                ],
+                "dbox:unlink": [
+                    "pdropbox unlink"
                 ],
                 "check": [
                     "@build:dir",
