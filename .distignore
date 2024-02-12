@@ -19,6 +19,8 @@
 /cache
 /.cache
 /dist
+/tests
+/tests-old
 /lib/composer.json
 /lib/composer.lock
 /lib/vendor/woocommerce/action-scheduler/README.md

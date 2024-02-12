@@ -25,6 +25,11 @@
       "automattic/jetpack-autoloader": true
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/codeception/"
+    }
+  },
   "prefer-stable": true,
   "minimum-stability": "stable",
   "require": {
@@ -32,32 +37,32 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "lucatume/wp-browser": "^3",
-    "codeception/module-asserts": "^1.0",
-    "codeception/module-phpbrowser": "^1.0",
-    "codeception/module-webdriver": "^1.0",
-    "codeception/module-db": "^1.0",
-    "codeception/module-filesystem": "^1.0",
-    "codeception/module-cli": "^1.0",
-    "codeception/util-universalframework": "^1.0",
-    "codeception/module-rest": "^1.3",
-    "codeception/module-sequence": "^2.0",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+    "lucatume/wp-browser": "^4",
+    "codeception/module-asserts": "^3",
+    "codeception/module-phpbrowser": "^3",
+    "codeception/module-webdriver": "^3",
+    "codeception/module-db": "^3",
+    "codeception/module-filesystem": "^3",
+    "codeception/module-cli": "^2",
+    "codeception/util-universalframework": "^1",
+    "codeception/module-rest": "^3",
+    "codeception/module-sequence": "^3",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1",
     "phpcompatibility/php-compatibility": "^9.3",
-    "wp-coding-standards/wpcs": "^2.3",
-    "phpmd/phpmd": "^2.13",
-    "squizlabs/php_codesniffer": "^3.5",
-    "overtrue/phplint": "^2.1",
-    "wp-cli/i18n-command": "^2.2",
-    "friendsofphp/php-cs-fixer": "^3.4",
-    "phpstan/phpstan": "^1.3",
-    "behat/behat": "^3.10",
-    "automattic/vipwpcs": "^2.3",
+    "wp-coding-standards/wpcs": "^3",
+    "phpmd/phpmd": "^2.15",
+    "squizlabs/php_codesniffer": "^3.8",
+    "overtrue/phplint": "^9.1",
+    "wp-cli/i18n-command": "^2.6",
+    "friendsofphp/php-cs-fixer": "^3.49",
+    "phpstan/phpstan": "^1.10",
+    "szepeviktor/phpstan-wordpress": "^1.3",
+    "phpstan/extension-installer": "^1.3",
+    "behat/behat": "^3.14",
+    "automattic/vipwpcs": "^3",
     "publishpress/publishpress-phpcs-standards": "dev-main",
     "ext-pdo": "*",
-    "ext-yaml": "*",
-    "szepeviktor/phpstan-wordpress": "^1.1",
-    "phpstan/extension-installer": "^1.2"
+    "ext-yaml": "*"
   },
   "scripts": {
     "build": "pbuild build",
