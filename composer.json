@@ -111,7 +111,6 @@
     "tests:dev-stop": "./vendor/bin/codecept dev:stop",
     "tests:dev-restart": "./vendor/bin/codecept dev:restart",
     "tests:cd-update": "./vendor/bin/codecept chromedriver:update",
-    "tests:prepare": "ln -s ./ tests/_wordpress/wp-content/plugins/post-expirator",
     "tests:run": "./vendor/bin/codecept run",
     "tests:integration": "./vendor/bin/codecept run Integration",
     "tests:e2e": "./vendor/bin/codecept run EndToEnd",

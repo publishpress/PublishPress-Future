@@ -16,6 +16,30 @@ You can download a built package from [releases page](/releases/) and install it
 
 Please, check our Slab documentation for more information about how to build a package: [How to build a package](https://rambleventures.slab.com/posts/building-plugin-packages-odg3nll2)
 
+## Testing
+
+### Create a symlink for the plugin folder in the test environment
+
+Always use the full path for the source folder.
+
+```bash
+ln -s /Users/andersonmartins/Projects/git/publishpress/publishpress-future/ ./tests/_wordpress/wp-content/plugins/post-expirator
+```
+
+### Start the dev server
+
+```bash
+composer tests:dev-start
+```
+
+### Run the tests
+
+```bash
+composer tests:run
+composer tests:integration
+composer tests:e2e
+```
+
 ## License
 
 License: [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html)
