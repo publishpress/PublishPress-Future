@@ -111,6 +111,7 @@
     "tests:dev-stop": "./vendor/bin/codecept dev:stop",
     "tests:dev-restart": "./vendor/bin/codecept dev:restart",
     "tests:cd-update": "./vendor/bin/codecept chromedriver:update",
+    "tests:import-db": "rm -rf ./tests/_wordpress/data && mkdir ./tests/_wordpress/data && vendor/bin/codecept wp:db:import ./tests/_wordpress ./tests/Support/Data/dump.sql",
     "tests:run": "./vendor/bin/codecept run",
     "tests:integration": "./vendor/bin/codecept run Integration",
     "tests:e2e": "./vendor/bin/codecept run EndToEnd",
