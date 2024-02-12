@@ -316,7 +316,7 @@ INSERT INTO wp_options ('option_id','option_name','option_value','autoload') VAL
 ('30','hack_file','0','yes'),
 ('31','blog_charset','UTF-8','yes'),
 ('32','moderation_keys','','no'),
-('33','active_plugins','a:1:{i:0;s:38:"post-expirator/post-expirator.php";}','yes'),
+('33','active_plugins','a:1:{i:0;s:33:"post-expirator/post-expirator.php";}','yes'),
 ('34','category_base','','yes'),
 ('35','ping_sites','http://rpc.pingomatic.com/','yes'),
 ('36','comment_max_links','2','yes'),
