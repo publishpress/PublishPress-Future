@@ -31,6 +31,7 @@ README.md
 RoboFile.php
 bin
 codeception.dist.yml
+codeception.yml
 composer.json
 composer.lock
 jsconfig.json
