@@ -6,7 +6,7 @@ use Tests\Support\EndToEndTester;
 
 class ActivationCest
 {
-    public function test_it_deactivates_activates_correctly(EndToEndTester $I): void
+    public function testPluginDeactivateActivateCorrectly(EndToEndTester $I): void
     {
         $I->loginAsAdmin();
         $I->amOnPluginsPage();
