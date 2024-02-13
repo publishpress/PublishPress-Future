@@ -359,7 +359,8 @@ return [
             return new PostModel(
                 $postId,
                 $container->get(ServicesAbstract::TERM_MODEL_FACTORY),
-                $container->get(ServicesAbstract::DEBUG)
+                $container->get(ServicesAbstract::DEBUG),
+                $container->get(ServicesAbstract::HOOKS)
             );
         };
     },

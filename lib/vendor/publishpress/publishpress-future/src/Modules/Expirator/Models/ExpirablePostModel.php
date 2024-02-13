@@ -24,11 +24,6 @@ class ExpirablePostModel extends PostModel
     private $options;
 
     /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\HooksFacade
-     */
-    private $hooks;
-
-    /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\UsersFacade
      */
     private $users;
@@ -135,12 +130,11 @@ class ExpirablePostModel extends PostModel
         $actionArgsModelFactory,
         $defaultDataModelFactory
     ) {
-        parent::__construct($postId, $termModelFactory, $debug);
+        parent::__construct($postId, $termModelFactory, $debug, $hooks);
 
         $this->postId = $postId;
         $this->debug = $debug;
         $this->options = $options;
-        $this->hooks = $hooks;
         $this->scheduler = $scheduler;
         $this->users = $users;
         $this->settings = $settings;

@@ -309,12 +309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "f9cca3220c062365debb68f7f57b44140b2c9d22"
+                "reference": "f6efdab95fd576e20d2add36c8937bfb98862817"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/f9cca3220c062365debb68f7f57b44140b2c9d22",
-                "reference": "f9cca3220c062365debb68f7f57b44140b2c9d22",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/f6efdab95fd576e20d2add36c8937bfb98862817",
+                "reference": "f6efdab95fd576e20d2add36c8937bfb98862817",
                 "shasum": ""
             },
             "require": {
@@ -322,34 +322,34 @@
                 "php": ">=7.2.5"
             },
             "require-dev": {
-                "automattic/vipwpcs": "^2.3",
-                "behat/behat": "^3.10",
-                "codeception/module-asserts": "^1.0",
-                "codeception/module-cli": "^1.0",
-                "codeception/module-db": "^1.0",
-                "codeception/module-filesystem": "^1.0",
-                "codeception/module-phpbrowser": "^1.0",
-                "codeception/module-rest": "^1.3",
-                "codeception/module-sequence": "^2.0",
-                "codeception/module-webdriver": "^1.0",
-                "codeception/util-universalframework": "^1.0",
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+                "automattic/vipwpcs": "^3",
+                "behat/behat": "^3.14",
+                "codeception/module-asserts": "^3",
+                "codeception/module-cli": "^2",
+                "codeception/module-db": "^3",
+                "codeception/module-filesystem": "^3",
+                "codeception/module-phpbrowser": "^3",
+                "codeception/module-rest": "^3",
+                "codeception/module-sequence": "^3",
+                "codeception/module-webdriver": "^3",
+                "codeception/util-universalframework": "^1",
+                "dealerdirect/phpcodesniffer-composer-installer": "^1",
                 "ext-pdo": "*",
                 "ext-yaml": "*",
-                "friendsofphp/php-cs-fixer": "^3.4",
-                "lucatume/wp-browser": "^3",
-                "overtrue/phplint": "^2.1",
+                "friendsofphp/php-cs-fixer": "^3.49",
+                "lucatume/wp-browser": "^4",
+                "overtrue/phplint": "^9.1",
                 "phpcompatibility/php-compatibility": "^9.3",
-                "phpmd/phpmd": "^2.13",
-                "phpstan/extension-installer": "^1.2",
-                "phpstan/phpstan": "^1.3",
+                "phpmd/phpmd": "^2.15",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.10",
                 "publishpress/publishpress-phpcs-standards": "dev-main",
-                "squizlabs/php_codesniffer": "^3.5",
-                "szepeviktor/phpstan-wordpress": "^1.1",
-                "wp-cli/i18n-command": "^2.2",
-                "wp-coding-standards/wpcs": "^2.3"
+                "squizlabs/php_codesniffer": "^3.8",
+                "szepeviktor/phpstan-wordpress": "^1.3",
+                "wp-cli/i18n-command": "^2.6",
+                "wp-coding-standards/wpcs": "^3"
             },
-            "time": "2024-02-09T17:57:08+00:00",
+            "time": "2024-02-13T21:06:45+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -357,6 +357,11 @@
                 "plugin-folder": "post-expirator"
             },
             "installation-source": "dist",
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\": "tests/codeception/"
+                }
+            },
             "scripts": {
                 "build": [
                     "pbuild build"
@@ -448,26 +453,29 @@
                 "check:php82": [
                     "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2"
                 ],
-                "tests:start": [
-                    "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} start"
+                "tests:dev-start": [
+                    "./vendor/bin/codecept dev:start"
                 ],
-                "tests:stop": [
-                    "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} stop"
+                "tests:dev-stop": [
+                    "./vendor/bin/codecept dev:stop"
                 ],
-                "tests:brun": [
-                    "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} brun"
+                "tests:dev-restart": [
+                    "./vendor/bin/codecept dev:restart"
+                ],
+                "tests:cd-update": [
+                    "./vendor/bin/codecept chromedriver:update"
+                ],
+                "tests:import-db": [
+                    "rm -rf ./tests/_wordpress/data && mkdir ./tests/_wordpress/data && vendor/bin/codecept wp:db:import ./tests/_wordpress ./tests/Support/Data/dump.sql"
                 ],
                 "tests:run": [
-                    "node /scripts/prompt-tests-php-version.js pptests php{{VERSION}} run"
+                    "./vendor/bin/codecept run"
                 ],
-                "tests:brun80": [
-                    "pptests php8.0 brun"
+                "tests:integration": [
+                    "./vendor/bin/codecept run Integration"
                 ],
-                "tests:run80": [
-                    "pptests php8.0 run"
-                ],
-                "tests:ip": [
-                    "pptests php8.0 ip"
+                "tests:e2e": [
+                    "./vendor/bin/codecept run EndToEnd"
                 ],
                 "pre-autoload-dump": [
                     "composer dumpautoload --working-dir=./lib"
