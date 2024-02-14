@@ -311,4 +311,108 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $this->assertEquals('post', $postModel->getPostType());
     }
+
+    public function testMetadataExistsReturnsTrueWhenUnfilteredMetadataExists(): void
+    {
+        $post = static::factory()->post->create_and_get();
+
+        $metaKey = 'color';
+        $metaValue = 'blue';
+
+        $this->assertInstanceOf(\WP_Post::class, $post);
+
+        add_post_meta($post->ID, $metaKey, $metaValue);
+
+        $postModel = new PostModel(
+            $post->ID,
+            function () {
+                return null;
+            },
+            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
+            new HooksFacade()
+        );
+
+        $this->assertTrue($postModel->metadataExists($metaKey));
+    }
+
+    public function testeMetadataExistsReturnsFalseWhenUnfilteredMetadataDoesNotExist(): void
+    {
+        $post = static::factory()->post->create_and_get();
+
+        $metaKey = 'color';
+
+        $this->assertInstanceOf(\WP_Post::class, $post);
+
+        $postModel = new PostModel(
+            $post->ID,
+            function () {
+                return null;
+            },
+            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
+            new HooksFacade()
+        );
+
+        $this->assertFalse($postModel->metadataExists($metaKey));
+    }
+
+    public function testMetadataExistsReturnsTrueWhenFilteredMetadataExists(): void
+    {
+        $post = static::factory()->post->create_and_get();
+
+        $metaKey = 'color';
+        $filteredMetaKey = 'filtered_color';
+        $metaValue = 'blue';
+
+        $this->assertInstanceOf(\WP_Post::class, $post);
+
+        add_filter(HooksAbstract::FILTER_ACTION_META_KEY, function ($key) use ($filteredMetaKey) {
+            if ($key === 'color') {
+                return $filteredMetaKey;
+            }
+
+            return $key;
+        }, 10);
+
+        add_post_meta($post->ID, $filteredMetaKey, $metaValue);
+
+        $postModel = new PostModel(
+            $post->ID,
+            function () {
+                return null;
+            },
+            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
+            new HooksFacade()
+        );
+
+        $this->assertTrue($postModel->metadataExists($metaKey));
+    }
+
+    public function testMetadataExistsReturnsFalseWhenFilteredMetadataDoesNotExist(): void
+    {
+        $post = static::factory()->post->create_and_get();
+
+        $metaKey = 'color';
+        $filteredMetaKey = 'filtered_color';
+
+        $this->assertInstanceOf(\WP_Post::class, $post);
+
+        add_filter(HooksAbstract::FILTER_ACTION_META_KEY, function ($key) use ($filteredMetaKey) {
+            if ($key === 'color') {
+                return $filteredMetaKey;
+            }
+
+            return $key;
+        }, 10);
+
+        $postModel = new PostModel(
+            $post->ID,
+            function () {
+                return null;
+            },
+            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
+            new HooksFacade()
+        );
+
+        $this->assertFalse($postModel->metadataExists($metaKey));
+    }
 }

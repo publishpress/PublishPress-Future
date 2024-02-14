@@ -181,6 +181,19 @@ class PostModel
         return get_post_meta($postId, $metaKey, $single);
     }
 
+    public function metadataExists($metaKey)
+    {
+        $postId = $this->getPostId();
+
+        $metaKey = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_ACTION_META_KEY,
+            $metaKey,
+            $postId
+        );
+
+        return metadata_exists('post', $postId, $metaKey);
+    }
+
     /**
      * @return bool
      * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
