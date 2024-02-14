@@ -358,7 +358,9 @@ return [
         return function ($postId) use ($container) {
             return new PostModel(
                 $postId,
-                $container->get(ServicesAbstract::TERM_MODEL_FACTORY)
+                $container->get(ServicesAbstract::TERM_MODEL_FACTORY),
+                $container->get(ServicesAbstract::DEBUG),
+                $container->get(ServicesAbstract::HOOKS)
             );
         };
     },

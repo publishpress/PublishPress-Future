@@ -26,6 +26,9 @@ node_modules
 .env.testing
 .phplint-cache
 
+/lib/vendor/publishpress/publishpress-future/tests-old/
+/lib/vendor/publishpress/publishpress-future/codeception.yml
+
 
 *.log
 #bin

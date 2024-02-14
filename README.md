@@ -14,7 +14,7 @@ You can download a built package from [releases page](/releases/) and install it
 
 ## How to build a package?
 
-Please, check the instructions on our [documentation pages](https://publishpress.github.io/docs/deployment/building).
+Please, check our Slab documentation for more information about how to build a package: [How to build a package](https://rambleventures.slab.com/posts/building-plugin-packages-odg3nll2)
 
 ## License
 

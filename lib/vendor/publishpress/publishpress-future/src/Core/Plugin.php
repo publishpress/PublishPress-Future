@@ -10,6 +10,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
+use PublishPress\Future\Framework\WordPress\Facade\NoticeInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
@@ -54,7 +55,7 @@ class Plugin implements InitializableInterface
     private $pluginSlug;
 
     /**
-     * @var NoticeFacade
+     * @var NoticeInterface
      */
     private $notices;
 
@@ -64,7 +65,7 @@ class Plugin implements InitializableInterface
      * @param HookableInterface $hooksFacade
      * @param string $pluginSlug
      * @param string $basePath
-     * @param NoticeFacade $notices
+     * @param NoticeInterface $notices
      */
     public function __construct(
         $modules,
@@ -72,7 +73,7 @@ class Plugin implements InitializableInterface
         HookableInterface $hooksFacade,
         $pluginSlug,
         $basePath,
-        NoticeFacade $notices
+        NoticeInterface $notices
     ) {
         $this->modules = $modules;
         $this->legacyPlugin = $legacyPlugin;
