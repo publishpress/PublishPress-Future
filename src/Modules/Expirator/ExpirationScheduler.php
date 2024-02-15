@@ -11,6 +11,7 @@ use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 
 use function tad\WPBrowser\vendorDir;
@@ -174,12 +175,31 @@ class ExpirationScheduler implements SchedulerInterface
         $postModelFactory = $this->postModelFactory;
         $postModel = $postModelFactory($postId);
 
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, isset($opts['expireType']) ? $opts['expireType'] : '');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, isset($opts['category']) ? $opts['category'] : '');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $timestamp);
+        $data = [
+            'timestamp' => $timestamp,
+            'status' => 'saved',
+            'type' => isset($opts['expireType']) ? $opts['expireType'] : '',
+            'taxonomy' => isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '',
+            'terms' => isset($opts['category']) ? $opts['category'] : '',
+        ];
+
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $data['timestamp']);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, $data['status']);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $data['type']);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $data['taxonomy']);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $data['terms']);
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $opts);
+
+        $postModel->updateMeta(
+            ExpirablePostModel::FLAG_METADATA_HASH,
+            $postModel->getHashForMetadata(
+                $data['timestamp'],
+                $data['status'],
+                $data['type'],
+                $data['taxonomy'],
+                $data['terms']
+            )
+        );
     }
 
     private function unscheduleIfScheduled($postId, $timestamp)
