@@ -242,6 +242,6 @@ class SettingsModel
 
     public function getMetadataMapping(): array
     {
-        return (array)(json_decode($this->options->getOption(self::OPTION_METADATA_MAPPING, '[]')));
+        return (array)(json_decode($this->options->getOption(self::OPTION_METADATA_MAPPING, '[]'), true));
     }
 }

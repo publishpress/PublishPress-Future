@@ -12,7 +12,6 @@ use PublishPress\FuturePro\Controllers\BlocksController;
 use PublishPress\FuturePro\Controllers\CustomStatusesController;
 use PublishPress\FuturePro\Controllers\EddIntegrationController;
 use PublishPress\FuturePro\Controllers\MetadataMappingController;
-use PublishPress\FuturePro\Controllers\setMetadataMappingController;
 use PublishPress\FuturePro\Controllers\SettingsController;
 use PublishPress\FuturePro\Core\HooksAbstract;
 use PublishPress\FuturePro\Core\PluginInitializator;
@@ -146,7 +145,9 @@ return [
     ServicesAbstract::CONTROLLER_METADATA_MAPPING => static function (ContainerInterface $container) {
         return new MetadataMappingController(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::MODEL_SETTINGS)
+            $container->get(ServicesAbstract::MODEL_SETTINGS),
+            $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+            $container->get(FreeServicesAbstract::EXPIRATION_SCHEDULER)
         );
     },
 

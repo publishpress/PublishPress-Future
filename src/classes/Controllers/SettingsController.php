@@ -224,6 +224,15 @@ class SettingsController implements ModuleInterface
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
                     'metadataFields' => [
                         [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_STATUS,
+                            'mappedKey' => '',
+                            'label' => __('Action Status', 'publishpress-future-pro'),
+                            'description' => __(
+                                "The status for the action. Anything different than 'saved' will be considered as not active.",
+                                'publishpress-future-pro'
+                            ),
+                        ],
+                        [
                             'originalKey' => PostMetaAbstract::EXPIRATION_TIMESTAMP,
                             'mappedKey' => '',
                             'label' => __('Action Date', 'publishpress-future-pro'),

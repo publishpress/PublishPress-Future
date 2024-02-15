@@ -2,15 +2,15 @@
 
 namespace PublishPress\FuturePro\Controllers;
 
+use Closure;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\ModuleInterface;
-use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\FuturePro\Models\SettingsModel;
-
-use function current_user_can;
-use function wp_die;
-use function wp_verify_nonce;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -26,26 +26,53 @@ class MetadataMappingController implements ModuleInterface
      */
     private $settingsModel;
 
+    /**
+     * @var Closure
+     */
+    private $postModelFactory;
+
+    /**
+     * @var \PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface
+     */
+    private $scheduler;
+
     public function __construct(
         HookableInterface $hooks,
-        SettingsModel $settingsModel
+        SettingsModel $settingsModel,
+        Closure $postModelFactory,
+        SchedulerInterface $scheduler
     ) {
         $this->hooks = $hooks;
         $this->settingsModel = $settingsModel;
+        $this->postModelFactory = $postModelFactory;
+        $this->scheduler = $scheduler;
     }
-
 
     public function initialize()
     {
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_SAVE_POST,
-            [$this, 'savePost'],
+            [$this, 'processSchedulingFromMetadata'],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_PROCESS_SCHEDULING_FROM_METADATA,
+            [$this, 'processSchedulingFromMetadata'],
+            10,
+            2
+        );
+
+        $this->hooks->addFilter(
+            ExpiratorHooksAbstract::FILTER_ACTION_META_KEY,
+            [$this, 'filterMetaKey'],
             10,
             2
         );
     }
 
-    public function savePost($postId, $post)
+    public function processSchedulingFromMetadata($postId, $post)
     {
         // Check if the post type has metadata mapping enabled.
         $postType = $post->post_type;
@@ -55,12 +82,67 @@ class MetadataMappingController implements ModuleInterface
             return;
         }
 
-        // Get the metadata mapping for the post type.
-        $mapping = $this->settingsModel->getMetadataMapping();
-        if (! array_key_exists($postType, $mapping)) {
+        $postModel = ($this->postModelFactory)($postId);
+
+        $terms = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
+        $timestamp = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+
+        if (empty($timestamp)) {
             return;
         }
 
-        //
+        $metadataHash = $postModel->getHashForMetadata(
+            $timestamp,
+            $postModel->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true),
+            $postModel->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+            $postModel->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true),
+            is_array($terms) ? $terms : []
+        );
+
+        // Check if the flag is set to avoid infinite loops.
+        if ($metadataHash === get_post_meta($postId, ExpirablePostModel::FLAG_METADATA_HASH, true)) {
+            return;
+        }
+
+        $postModel->syncScheduleWithPostMeta();
+
+        // Set the flag to avoid infinite loops.
+        update_post_meta($postId, ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
+    }
+
+    /**
+     * @param string $metaKey
+     * @param int $postId
+     */
+    public function filterMetaKey($metaKey, $postId): string
+    {
+        if (empty($metaKey)) {
+            return $metaKey;
+        }
+
+        $mapping = $this->settingsModel->getMetadataMapping();
+
+        if (empty($mapping)) {
+            return $metaKey;
+        }
+
+        $postType = get_post_type($postId);
+
+        $statusPerPostType = $this->settingsModel->getMetadataMappingStatus();
+        if (! array_key_exists($postType, $statusPerPostType) || $statusPerPostType[$postType] !== true) {
+            return $metaKey;
+        }
+
+        if (empty($postType) || ! array_key_exists($postType, $mapping)) {
+            return $metaKey;
+        }
+
+        $mappedMetaKey = $mapping[$postType][$metaKey] ?? $metaKey;
+
+        if (empty($mappedMetaKey)) {
+            return $metaKey;
+        }
+
+        return $mappedMetaKey;
     }
 }
