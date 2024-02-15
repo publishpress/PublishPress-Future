@@ -197,7 +197,7 @@ class ExpirationScheduler implements SchedulerInterface
                 $data['status'],
                 $data['type'],
                 $data['taxonomy'],
-                $data['terms']
+                is_array($data['terms']) ? $data['terms'] : []
             )
         );
     }
