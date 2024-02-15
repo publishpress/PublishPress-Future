@@ -85,8 +85,10 @@ This section describes how to install the plugin and get it working.
 
 = UNRELEASED =
 
+* ADDED: Add metadata mapping for allowing integrating with 3rd party plugins, #69;
 * ADDED: New Gutenberg Block for displaying the future action date, #171;
 * CHANGED: Minor changes to the layout of some settings pages;
+* CHANGED: Change the default settings tab to "Post Types" instead of "General";
 
 = [3.2.0] - 25 Jan, 2024 =
 
