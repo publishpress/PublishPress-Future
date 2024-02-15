@@ -18,6 +18,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirablePostModel extends PostModel
 {
+    const FLAG_METADATA_HASH = 'pp_future_metadata_hash';
+
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
@@ -737,6 +739,7 @@ class ExpirablePostModel extends PostModel
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TERMS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
+        $this->deleteMeta(self::FLAG_METADATA_HASH);
     }
 
     /**
@@ -771,5 +774,18 @@ class ExpirablePostModel extends PostModel
 
             $this->scheduler->schedule($this->getPostId(), $timestampInPostMeta, $opts);
         }
+    }
+
+    public function getHashForMetadata(string $timestamp, string $status, string $type, string $taxonomy, array $terms): string
+    {
+        $data = [
+            $timestamp,
+            $status,
+            $type,
+            $taxonomy,
+            $terms,
+        ];
+
+        return md5(serialize($data));
     }
 }
