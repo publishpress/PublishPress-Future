@@ -776,16 +776,28 @@ class ExpirablePostModel extends PostModel
         }
     }
 
-    public function getHashForMetadata(string $timestamp, string $status, string $type, string $taxonomy, array $terms): string
+    public function calcMetadataHash(): string
     {
+        $terms = $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
+        $timestamp = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+
+        if (empty($timestamp)) {
+            return;
+        }
+
         $data = [
             $timestamp,
-            $status,
-            $type,
-            $taxonomy,
-            $terms,
+            $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true),
+            $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+            $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true),
+            is_array($terms) ? $terms : []
         ];
 
         return md5(serialize($data));
+    }
+
+    public function getMetadataHash()
+    {
+        $this->getMeta(self::FLAG_METADATA_HASH, true);
     }
 }
