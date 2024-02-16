@@ -73,8 +73,16 @@ class MetadataMappingController implements ModuleInterface
         );
     }
 
-    public function processMetadataDrivenScheduling($postId, $post)
+    public function processMetadataDrivenScheduling($postId, $post = null)
     {
+        if (empty($post)) {
+            $post = get_post($postId);
+        }
+
+        if (empty($post) || ! $post instanceof \WP_Post) {
+            return;
+        }
+
         // Check if the post type has metadata mapping enabled.
         $postType = $post->post_type;
         $statuses = $this->settingsModel->getMetadataMappingStatus();
