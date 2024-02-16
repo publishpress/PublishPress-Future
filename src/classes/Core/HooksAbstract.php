@@ -52,4 +52,6 @@ abstract class HooksAbstract
     const ACTION_SETTINGS_TAB_ADVANCED_BEFORE = 'publishpress_future/settings_tab_advanced_before';
 
     const ACTION_ENQUEUE_BLOCK_EDITOR_ASSETS = 'enqueue_block_editor_assets';
+
+    const ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING = 'publishpressfuturepro_process_metadata_driven_scheduling';
 }

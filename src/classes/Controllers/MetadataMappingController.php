@@ -10,6 +10,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstrac
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
+use PublishPress\FuturePro\Core\HooksAbstract;
 use PublishPress\FuturePro\Models\SettingsModel;
 
 defined('ABSPATH') or die('No direct script access allowed.');
@@ -52,14 +53,14 @@ class MetadataMappingController implements ModuleInterface
     {
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_SAVE_POST,
-            [$this, 'processSchedulingFromMetadata'],
+            [$this, 'processMetadataDrivenScheduling'],
             10,
             2
         );
 
         $this->hooks->addAction(
-            CoreHooksAbstract::ACTION_PROCESS_SCHEDULING_FROM_METADATA,
-            [$this, 'processSchedulingFromMetadata'],
+            HooksAbstract::ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING,
+            [$this, 'processMetadataDrivenScheduling'],
             10,
             2
         );
@@ -72,7 +73,7 @@ class MetadataMappingController implements ModuleInterface
         );
     }
 
-    public function processSchedulingFromMetadata($postId, $post)
+    public function processMetadataDrivenScheduling($postId, $post)
     {
         // Check if the post type has metadata mapping enabled.
         $postType = $post->post_type;
