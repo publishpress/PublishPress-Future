@@ -215,7 +215,7 @@ class SettingsController implements ModuleInterface
                             'Read more about metadata mapping.',
                             'publishpress-future-pro'
                         ),
-                        'readmoreMetadataMappingHelpUrl' => 'https://publishpress.com/knowledge-base/metadata-mapping/',
+                        'readmoreMetadataMappingHelpUrl' => 'https://publishpress.com/knowledge-base/metadata-driven-scheduling-feature-overview/',
                         'originalKey' => __('Original Metakey', 'publishpress-future-pro'),
                         'mappedKey' => __('New Metakey', 'publishpress-future-pro'),
                         'description' => __('Description', 'publishpress-future-pro'),
