@@ -37,6 +37,20 @@ class MetadataMappingController implements ModuleInterface
      */
     private $scheduler;
 
+    /**
+     * This is true when a WP import is running.
+     *
+     * @var bool
+     */
+    private $importIsRunning = false;
+
+    /**
+     * Stores the list of post IDs that were imported during the current import process.
+     *
+     * @var array
+     */
+    private $importedPostIDs = [];
+
     public function __construct(
         HookableInterface $hooks,
         SettingsModel $settingsModel,
@@ -52,8 +66,18 @@ class MetadataMappingController implements ModuleInterface
     public function initialize()
     {
         $this->hooks->addAction(
+            HooksAbstract::ACTION_IMPORT_START,
+            [$this, 'onImportStart']
+        );
+
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_IMPORT_END,
+            [$this, 'onImportEnd']
+        );
+
+        $this->hooks->addAction(
             CoreHooksAbstract::ACTION_SAVE_POST,
-            [$this, 'processMetadataDrivenScheduling'],
+            [$this, 'onSavePost'],
             10,
             2
         );
@@ -71,6 +95,36 @@ class MetadataMappingController implements ModuleInterface
             10,
             2
         );
+    }
+
+    public function onImportStart()
+    {
+        $this->importIsRunning = true;
+        $this->importedPostIDs = [];
+    }
+
+    public function onImportEnd()
+    {
+        $this->importIsRunning = false;
+
+        if (empty($this->importedPostIDs)) {
+            return;
+        }
+
+        foreach ($this->importedPostIDs as $postId) {
+            $this->hooks->doAction(HooksAbstract::ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING, $postId);
+        }
+    }
+
+    public function onSavePost($postId, $post)
+    {
+        if ($this->importIsRunning) {
+            $this->importedPostIDs[] = $postId;
+
+            return;
+        }
+
+        $this->hooks->doAction(HooksAbstract::ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING, $postId, $post);
     }
 
     public function processMetadataDrivenScheduling($postId, $post = null)
@@ -93,30 +147,23 @@ class MetadataMappingController implements ModuleInterface
 
         $postModel = ($this->postModelFactory)($postId);
 
-        $terms = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
         $timestamp = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
 
         if (empty($timestamp)) {
             return;
         }
 
-        $metadataHash = $postModel->getHashForMetadata(
-            $timestamp,
-            $postModel->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true),
-            $postModel->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
-            $postModel->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true),
-            is_array($terms) ? $terms : []
-        );
+        $metadataHash = $postModel->calcMetadataHash();
 
         // Check if the flag is set to avoid infinite loops.
-        if ($metadataHash === get_post_meta($postId, ExpirablePostModel::FLAG_METADATA_HASH, true)) {
+        if ($metadataHash === $postModel->getMeta(ExpirablePostModel::FLAG_METADATA_HASH, true)) {
             return;
         }
 
         $postModel->syncScheduleWithPostMeta();
 
         // Set the flag to avoid infinite loops.
-        update_post_meta($postId, ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
+        $postModel->updateMeta(ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
     }
 
     /**

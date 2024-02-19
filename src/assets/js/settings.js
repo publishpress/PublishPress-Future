@@ -2468,7 +2468,7 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
 
         settingsRows.push(React.createElement(
             _components.SettingRow,
-            { label: _config.text.enableMetadataMapping, key: 'metadata_mapping' },
+            { label: _config.text.enableMetadataDrivenScheduling, key: 'metadata_mapping' },
             React.createElement(
                 "div",
                 null,
@@ -2476,7 +2476,7 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
                     name: 'expirationdate_metadata_mapping_enabled[' + props.postType + ']',
                     id: 'expirationdate_metadata_mapping_enabled_' + props.postType,
                     value: '1',
-                    label: _config.text.enableMetadataMappingDesc,
+                    label: _config.text.enableMetadataDrivenSchedulingDesc,
                     checked: enableMetadataMapping,
                     onChange: function onChange(checked) {
                         return handleMetadataMapStatusChange(checked);
@@ -2486,6 +2486,11 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
             enableMetadataMapping && React.createElement(
                 "div",
                 { className: "expirationdate_metadata_metakeys" },
+                React.createElement(
+                    "h3",
+                    null,
+                    _config.text.metadataMapping
+                ),
                 React.createElement(
                     "table",
                     { className: "wp-list-table widefat fixed striped table-view-list" },

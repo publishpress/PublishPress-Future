@@ -69,19 +69,20 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
         });
 
         settingsRows.push(
-            <SettingRow label={text.enableMetadataMapping} key={'metadata_mapping'}>
+            <SettingRow label={text.enableMetadataDrivenScheduling} key={'metadata_mapping'}>
                 <div>
                     <CheckboxControl
                         name={'expirationdate_metadata_mapping_enabled[' + props.postType + ']'}
                         id={'expirationdate_metadata_mapping_enabled_' + props.postType}
                         value={'1'}
-                        label={text.enableMetadataMappingDesc}
+                        label={text.enableMetadataDrivenSchedulingDesc}
                         checked={enableMetadataMapping}
                         onChange={(checked) => handleMetadataMapStatusChange(checked)}
                         />
                 </div>
                 {enableMetadataMapping &&
                     <div className="expirationdate_metadata_metakeys">
+                        <h3>{text.metadataMapping}</h3>
                         <table className="wp-list-table widefat fixed striped table-view-list">
                             <thead>
                                 <tr>

@@ -202,11 +202,12 @@ class SettingsController implements ModuleInterface
                         'enableCustomStatusesFalse' => __('Disabled', 'publishpress-future-pro'),
                         'selectAll' => __('Select all', 'publishpress-future-pro'),
                         'unselectAll' => __('Unselect all', 'publishpress-future-pro'),
-                        'enableMetadataMapping' => __('Enable Metadata Mapping', 'publishpress-future-pro'),
-                        'enableMetadataMappingDesc' => __(
-                            'Enable metadata mapping for the post type, allowing to map custom fields to schedule future actions.',
+                        'enableMetadataDrivenScheduling' => __('Enable Metadata-driven Scheduling', 'publishpress-future-pro'),
+                        'enableMetadataDrivenSchedulingDesc' => __(
+                            'Enable metadata-driven scheduling for the post type',
                             'publishpress-future-pro'
                         ),
+                        'metadataMapping' => __('Metadata Mapping', 'publishpress-future-pro'),
                         'enableMetadataMappingHelp' => __(
                             'For using the default mapping, please leave the fields empty.',
                             'publishpress-future-pro'
