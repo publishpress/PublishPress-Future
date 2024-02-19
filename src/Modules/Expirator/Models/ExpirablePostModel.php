@@ -782,7 +782,7 @@ class ExpirablePostModel extends PostModel
         $timestamp = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
 
         if (empty($timestamp)) {
-            return;
+            return '';
         }
 
         $data = [
