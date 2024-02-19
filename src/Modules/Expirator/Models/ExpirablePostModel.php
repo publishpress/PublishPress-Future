@@ -742,6 +742,16 @@ class ExpirablePostModel extends PostModel
         $this->deleteMeta(self::FLAG_METADATA_HASH);
     }
 
+    public function forceTimestampToUnixtime($timestamp)
+    {
+        // If timestamp is not in unixtime, convert it.
+        if (! is_numeric($timestamp)) {
+            $timestamp = strtotime($timestamp);
+        }
+
+        return $timestamp;
+    }
+
     /**
      * This method will schedule/unschedule future actions for the post based
      * on the future action data found in the post meta. If no post meta is
@@ -771,6 +781,8 @@ class ExpirablePostModel extends PostModel
                 'category' => $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true),
                 'categoryTaxonomy' => $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true)
             ];
+
+            $timestampInPostMeta = $this->forceTimestampToUnixtime($timestampInPostMeta);
 
             $this->scheduler->schedule($this->getPostId(), $timestampInPostMeta, $opts);
         }
