@@ -172,12 +172,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "cb80cae36a97113b09065bb1d0225d0fc7746540"
+                "reference": "79794a47801fe6aceaedb4e2e3d62c04f8732991"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/cb80cae36a97113b09065bb1d0225d0fc7746540",
-                "reference": "cb80cae36a97113b09065bb1d0225d0fc7746540",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/79794a47801fe6aceaedb4e2e3d62c04f8732991",
+                "reference": "79794a47801fe6aceaedb4e2e3d62c04f8732991",
                 "shasum": ""
             },
             "require": {
@@ -273,7 +273,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Codeception/Codeception/issues",
-                "source": "https://github.com/Codeception/Codeception/tree/5.1.0"
+                "source": "https://github.com/Codeception/Codeception/tree/5.1"
             },
             "funding": [
                 {
@@ -281,7 +281,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-02-04T13:50:11+00:00"
+            "time": "2024-02-17T12:21:40+00:00"
         },
         {
             "name": "codeception/lib-asserts",
@@ -888,22 +888,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/module-webdriver.git",
-                "reference": "59b6fe426dddbe889c23593f8698c52e08bba6e9"
+                "reference": "06fe128460a313e171bfef894882c7c880aef6b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/module-webdriver/zipball/59b6fe426dddbe889c23593f8698c52e08bba6e9",
-                "reference": "59b6fe426dddbe889c23593f8698c52e08bba6e9",
+                "url": "https://api.github.com/repos/Codeception/module-webdriver/zipball/06fe128460a313e171bfef894882c7c880aef6b8",
+                "reference": "06fe128460a313e171bfef894882c7c880aef6b8",
                 "shasum": ""
             },
             "require": {
-                "codeception/codeception": "^5.0.0-RC2",
+                "codeception/codeception": "^5.0.0",
                 "codeception/lib-web": "^1.0.1",
                 "codeception/stub": "^4.0",
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "php": "^8.0",
-                "php-webdriver/webdriver": "^1.8.0",
+                "php-webdriver/webdriver": "^1.14.0",
                 "phpunit/phpunit": "^9.5"
             },
             "suggest": {
@@ -941,7 +941,7 @@
                 "issues": "https://github.com/Codeception/module-webdriver/issues",
                 "source": "https://github.com/Codeception/module-webdriver/tree/3.x"
             },
-            "time": "2023-02-03T21:46:32+00:00"
+            "time": "2024-02-16T13:09:30+00:00"
         },
         {
             "name": "codeception/stub",
@@ -3023,12 +3023,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "11d387c6642b6e4acaf0bd9bf5203b8cca1ec489"
+                "reference": "71ce087b11b12bf1f1b6fff0bf9b911a2fcb494c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/11d387c6642b6e4acaf0bd9bf5203b8cca1ec489",
-                "reference": "11d387c6642b6e4acaf0bd9bf5203b8cca1ec489",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/71ce087b11b12bf1f1b6fff0bf9b911a2fcb494c",
+                "reference": "71ce087b11b12bf1f1b6fff0bf9b911a2fcb494c",
                 "shasum": ""
             },
             "require": {
@@ -3094,7 +3094,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-12-08T16:49:07+00:00"
+            "time": "2024-02-16T03:41:33+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -3102,12 +3102,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "8aca6ebc2b4416bc449d2ba3d58e538e0f3742d4"
+                "reference": "da9836640d177e623aa262475a88d4fc6994f273"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/8aca6ebc2b4416bc449d2ba3d58e538e0f3742d4",
-                "reference": "8aca6ebc2b4416bc449d2ba3d58e538e0f3742d4",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/da9836640d177e623aa262475a88d4fc6994f273",
+                "reference": "da9836640d177e623aa262475a88d4fc6994f273",
                 "shasum": ""
             },
             "require": {
@@ -3183,7 +3183,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-02-05T08:38:08+00:00"
+            "time": "2024-02-17T06:57:59+00:00"
         },
         {
             "name": "phpmd/phpmd",
@@ -3394,12 +3394,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "83797769d556a548259555245df20ea202dafb83"
+                "reference": "43f5db9d8cb108e8840308c172e13086f8f5d3dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/83797769d556a548259555245df20ea202dafb83",
-                "reference": "83797769d556a548259555245df20ea202dafb83",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/43f5db9d8cb108e8840308c172e13086f8f5d3dd",
+                "reference": "43f5db9d8cb108e8840308c172e13086f8f5d3dd",
                 "shasum": ""
             },
             "require": {
@@ -3449,7 +3449,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-15T19:07:51+00:00"
+            "time": "2024-02-19T16:27:29+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5579,12 +5579,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "4bbc82053ee4e8fb79f3e4c950caaf95ba487586"
+                "reference": "68a8a340f83835d66eb00b81e1d50834c1c61fed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/4bbc82053ee4e8fb79f3e4c950caaf95ba487586",
-                "reference": "4bbc82053ee4e8fb79f3e4c950caaf95ba487586",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/68a8a340f83835d66eb00b81e1d50834c1c61fed",
+                "reference": "68a8a340f83835d66eb00b81e1d50834c1c61fed",
                 "shasum": ""
             },
             "require": {
@@ -5652,7 +5652,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-02-15T15:56:20+00:00"
+            "time": "2024-02-18T01:57:31+00:00"
         },
         {
             "name": "symfony/browser-kit",

@@ -175,30 +175,20 @@ class ExpirationScheduler implements SchedulerInterface
         $postModelFactory = $this->postModelFactory;
         $postModel = $postModelFactory($postId);
 
-        $data = [
-            'timestamp' => $timestamp,
-            'status' => 'saved',
-            'type' => isset($opts['expireType']) ? $opts['expireType'] : '',
-            'taxonomy' => isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '',
-            'terms' => isset($opts['category']) ? $opts['category'] : '',
-        ];
+        $type = isset($opts['expireType']) ? $opts['expireType'] : '';
+        $taxonomy = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
+        $terms = isset($opts['category']) ? $opts['category'] : '';
 
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $data['timestamp']);
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, $data['status']);
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $data['type']);
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $data['taxonomy']);
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $data['terms']);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $timestamp);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $type);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $taxonomy);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $terms);
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $opts);
 
         $postModel->updateMeta(
             ExpirablePostModel::FLAG_METADATA_HASH,
-            $postModel->getHashForMetadata(
-                $data['timestamp'],
-                $data['status'],
-                $data['type'],
-                $data['taxonomy'],
-                is_array($data['terms']) ? $data['terms'] : []
-            )
+            $postModel->calcMetadataHash()
         );
     }
 

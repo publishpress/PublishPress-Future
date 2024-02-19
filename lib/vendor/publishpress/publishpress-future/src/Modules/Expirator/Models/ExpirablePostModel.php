@@ -742,6 +742,16 @@ class ExpirablePostModel extends PostModel
         $this->deleteMeta(self::FLAG_METADATA_HASH);
     }
 
+    public function forceTimestampToUnixtime($timestamp)
+    {
+        // If timestamp is not in unixtime, convert it.
+        if (! is_numeric($timestamp)) {
+            $timestamp = strtotime($timestamp);
+        }
+
+        return $timestamp;
+    }
+
     /**
      * This method will schedule/unschedule future actions for the post based
      * on the future action data found in the post meta. If no post meta is
@@ -772,20 +782,34 @@ class ExpirablePostModel extends PostModel
                 'categoryTaxonomy' => $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true)
             ];
 
+            $timestampInPostMeta = $this->forceTimestampToUnixtime($timestampInPostMeta);
+
             $this->scheduler->schedule($this->getPostId(), $timestampInPostMeta, $opts);
         }
     }
 
-    public function getHashForMetadata(string $timestamp, string $status, string $type, string $taxonomy, array $terms): string
+    public function calcMetadataHash(): string
     {
+        $terms = $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
+        $timestamp = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+
+        if (empty($timestamp)) {
+            return '';
+        }
+
         $data = [
             $timestamp,
-            $status,
-            $type,
-            $taxonomy,
-            $terms,
+            $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true),
+            $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+            $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true),
+            is_array($terms) ? $terms : []
         ];
 
         return md5(serialize($data));
+    }
+
+    public function getMetadataHash()
+    {
+        $this->getMeta(self::FLAG_METADATA_HASH, true);
     }
 }

@@ -123,13 +123,7 @@ class V30001RestorePostMeta implements MigrationInterface
 
             $postModel->updateMeta(
                 ExpirablePostModel::FLAG_METADATA_HASH,
-                $postModel->getHashForMetadata(
-                    $expirationData['date'],
-                    'saved',
-                    $expirationData['expireType'],
-                    $expirationData['categoryTaxonomy'],
-                    $expirationData['category']
-                )
+                $postModel->calcMetadataHash()
             );
         }
 
