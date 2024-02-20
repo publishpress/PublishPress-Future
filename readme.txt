@@ -142,8 +142,10 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 = [UNRELEASED] =
 
-FIXED: Fix language files for ES, IT, FR, #665;
-FIXED: Fix error when a term does not exists, #675;
+* ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
+* CHANGED: Deprecated the filter `postexpirator_unset_post_types` in favor of the new filter `publishpressfuture_supported_post_types`, allowing not only remove, but add new post types to the list of supported post types, #677;
+* FIXED: Fix language files for ES, IT, FR, #665;
+* FIXED: Fix error when a term does not exists, #675;
 
 = [3.2.0] - 25 Jan, 2024 =
 
@@ -157,6 +159,7 @@ FIXED: Fix error when a term does not exists, #675;
 * CHANGED: Simplify the name of actions on taxonomy related actions, adding the actual name of the taxonomy, #294;
 * CHANGED: Change the text on the Status column in the Future Actions list, from "Pending" to "Scheduled", #661;
 * CHANGED: Fixed typos and improved the text in the Post Types settings tab, #659;
+* CHANGED: The list of supported post types in the settings page only shows public post types, and non-public that are built-in and show the UI;
 * FIXED: Fix consistency on radio buttons alignment on the settings page;
 * FIXED: Hides the legacy cron event field from Diagnostics and Tools settings tab if no legacy cron event is found;
 * FIXED: Fix the "Change Status to Trash action" on custom post types, #655;

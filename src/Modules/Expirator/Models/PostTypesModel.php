@@ -6,6 +6,7 @@
 namespace PublishPress\Future\Modules\Expirator\Models;
 
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Psr\Container\ContainerInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -44,9 +45,9 @@ class PostTypesModel
      */
     public function getPostTypes(): array
     {
-        $post_types = get_post_types(array('public' => true));
-        $post_types = array_merge(
-            $post_types,
+        $postTypes = get_post_types(array('public' => true));
+        $postTypes = array_merge(
+            $postTypes,
             get_post_types(
                 [
                     'public' => false,
@@ -56,14 +57,20 @@ class PostTypesModel
             )
         );
 
-        // in case some post types should not be supported.
-        $unset_post_types = apply_filters('postexpirator_unset_post_types', ['attachment','wp_navigation']);
-        if ($unset_post_types) {
-            foreach ($unset_post_types as $type) {
-                unset($post_types[$type]);
+        // Allow to customize the list of post types supported by the plugin.
+        $postTypes = apply_filters(HooksAbstract::FILTER_SUPPORTED_POST_TYPES, $postTypes);
+
+        /**
+         * @deprecated 3.3.0
+         */
+        // In case some post types should not be supported.
+        $unsetPostTypes = apply_filters(HooksAbstract::FILTER_UNSET_POST_TYPES_DEPRECATED, ['attachment','wp_navigation']);
+        if ($unsetPostTypes) {
+            foreach ($unsetPostTypes as $type) {
+                unset($postTypes[$type]);
             }
         }
 
-        return $post_types;
+        return $postTypes;
     }
 }
