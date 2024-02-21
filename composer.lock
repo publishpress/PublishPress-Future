@@ -2258,16 +2258,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "4.0.21",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "f42a921aaf5ea7f73888f6aedb361fee7e4d2310"
+                "reference": "4a8301cef69758a36912bfa2691403302dd56522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/f42a921aaf5ea7f73888f6aedb361fee7e4d2310",
-                "reference": "f42a921aaf5ea7f73888f6aedb361fee7e4d2310",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/4a8301cef69758a36912bfa2691403302dd56522",
+                "reference": "4a8301cef69758a36912bfa2691403302dd56522",
                 "shasum": ""
             },
             "require": {
@@ -2297,7 +2297,7 @@
                 "phpstan/extension-installer": "^1.3",
                 "phpstan/phpstan": "*",
                 "phpstan/phpstan-symfony": "^1.3",
-                "rector/rector": "^0.18.12",
+                "rector/rector": "0.19.8",
                 "squizlabs/php_codesniffer": "^3.7",
                 "szepeviktor/phpstan-wordpress": "^1.3"
             },
@@ -2312,7 +2312,7 @@
             "autoload": {
                 "files": [
                     "src/version-4-aliases.php",
-                    "src/Deprecated/deprecated-functions.php",
+                    "src/deprecated-functions.php",
                     "src/functions.php"
                 ],
                 "psr-4": {
@@ -2321,6 +2321,7 @@
                         "src/",
                         "src/Deprecated"
                     ],
+                    "Codeception\\Extension\\": "src/Extension",
                     "lucatume\\WPBrowser\\Opis\\Closure\\": "includes/opis/closure/src"
                 }
             },
@@ -2344,7 +2345,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lucatume/wp-browser/issues",
-                "source": "https://github.com/lucatume/wp-browser/tree/4.0.21"
+                "source": "https://github.com/lucatume/wp-browser/tree/4.1.0"
             },
             "funding": [
                 {
@@ -2352,7 +2353,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-12T20:28:26+00:00"
+            "time": "2024-02-20T10:19:35+00:00"
         },
         {
             "name": "mck89/peast",
@@ -2521,12 +2522,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "ce019e9ad711e31ee87c2c4c72e538b5240970c3"
+                "reference": "af14fdb282aa0e288bfe7eb3b57893484b68dc27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/ce019e9ad711e31ee87c2c4c72e538b5240970c3",
-                "reference": "ce019e9ad711e31ee87c2c4c72e538b5240970c3",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/af14fdb282aa0e288bfe7eb3b57893484b68dc27",
+                "reference": "af14fdb282aa0e288bfe7eb3b57893484b68dc27",
                 "shasum": ""
             },
             "require": {
@@ -2572,7 +2573,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/master"
             },
-            "time": "2024-01-14T09:02:54+00:00"
+            "time": "2024-02-21T20:13:45+00:00"
         },
         {
             "name": "overtrue/phplint",
@@ -3394,12 +3395,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "43f5db9d8cb108e8840308c172e13086f8f5d3dd"
+                "reference": "00e453f658ed707e2123fa1719da2b8b1cee7fad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/43f5db9d8cb108e8840308c172e13086f8f5d3dd",
-                "reference": "43f5db9d8cb108e8840308c172e13086f8f5d3dd",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/00e453f658ed707e2123fa1719da2b8b1cee7fad",
+                "reference": "00e453f658ed707e2123fa1719da2b8b1cee7fad",
                 "shasum": ""
             },
             "require": {
@@ -3449,7 +3450,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-19T16:27:29+00:00"
+            "time": "2024-02-21T21:29:09+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5579,12 +5580,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "68a8a340f83835d66eb00b81e1d50834c1c61fed"
+                "reference": "45c61f55b6ead1a86212c0a75c7a635456a2844e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/68a8a340f83835d66eb00b81e1d50834c1c61fed",
-                "reference": "68a8a340f83835d66eb00b81e1d50834c1c61fed",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/45c61f55b6ead1a86212c0a75c7a635456a2844e",
+                "reference": "45c61f55b6ead1a86212c0a75c7a635456a2844e",
                 "shasum": ""
             },
             "require": {
@@ -5652,7 +5653,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-02-18T01:57:31+00:00"
+            "time": "2024-02-20T17:38:16+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -8185,12 +8186,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "e5164148f83acfea852c60e3c5a7fdcfe5b46803"
+                "reference": "4c68c264b3aa5a987291f36882ad71387c28f997"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/e5164148f83acfea852c60e3c5a7fdcfe5b46803",
-                "reference": "e5164148f83acfea852c60e3c5a7fdcfe5b46803",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/4c68c264b3aa5a987291f36882ad71387c28f997",
+                "reference": "4c68c264b3aa5a987291f36882ad71387c28f997",
                 "shasum": ""
             },
             "require": {
@@ -8248,7 +8249,7 @@
                 "issues": "https://github.com/wp-cli/wp-cli/issues",
                 "source": "https://github.com/wp-cli/wp-cli"
             },
-            "time": "2024-02-10T00:52:42+00:00"
+            "time": "2024-02-20T00:07:27+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
