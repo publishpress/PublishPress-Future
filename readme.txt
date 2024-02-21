@@ -144,6 +144,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 * ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
 * CHANGED: Deprecated the filter `postexpirator_unset_post_types` in favor of the new filter `publishpressfuture_supported_post_types`, allowing not only remove, but add new post types to the list of supported post types, #677;
+* CHANGED: The list of post types in the settings page now also shows the non-public post types that are not built in on WordPress, #677;
 * FIXED: Fix language files for ES, IT, FR, #665;
 * FIXED: Fix error when a term does not exists, #675;
 
