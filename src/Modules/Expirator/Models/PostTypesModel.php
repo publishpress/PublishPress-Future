@@ -51,8 +51,7 @@ class PostTypesModel
             get_post_types(
                 [
                     'public' => false,
-                    'show_ui' => true,
-                    '_builtin' => true
+                    'show_ui' => true
                 ]
             )
         );
