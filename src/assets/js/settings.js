@@ -2384,6 +2384,83 @@ var _config = __webpack_require__(/*! &config.pro-settings */ "&config.pro-setti
 
 var _wp = __webpack_require__(/*! &wp.components */ "&wp.components");
 
+var SectionTitle = function SectionTitle(props) {
+    return React.createElement(
+        "h3",
+        null,
+        props.title
+    );
+};
+
+var MetadataMapTable = function MetadataMapTable(props) {
+    return React.createElement(
+        "table",
+        { className: "wp-list-table widefat fixed striped table-view-list" },
+        React.createElement(
+            "thead",
+            null,
+            React.createElement(
+                "tr",
+                null,
+                props.columns.map(function (column) {
+                    return React.createElement(
+                        "th",
+                        { key: column },
+                        column
+                    );
+                })
+            )
+        ),
+        React.createElement(
+            "tbody",
+            null,
+            props.metadataFields.map(function (field) {
+                return React.createElement(
+                    "tr",
+                    { key: field.originalKey, className: "future_pro_metadata_mapping_row" },
+                    React.createElement(
+                        "td",
+                        null,
+                        React.createElement(
+                            "div",
+                            { className: "mapping-label-container" },
+                            React.createElement(
+                                "label",
+                                { htmlFor: 'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey },
+                                field.label
+                            ),
+                            React.createElement(
+                                _wp.Tooltip,
+                                { text: field.description },
+                                React.createElement("span", { className: "dashicons dashicons-editor-help" })
+                            )
+                        )
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        field.originalKey
+                    ),
+                    React.createElement(
+                        "td",
+                        null,
+                        React.createElement("input", {
+                            type: "text",
+                            name: 'expirationdate_metadata_mapping[' + props.postType + '][' + field.originalKey + ']',
+                            id: 'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey,
+                            value: props.metadataMapping[field.originalKey] ? props.metadataMapping[field.originalKey] : '',
+                            placeholder: field.originalKey,
+                            onChange: function onChange(e) {
+                                return handleMetadataMapChange(field.originalKey, e.target.value);
+                            }
+                        })
+                    )
+                );
+            })
+        )
+    );
+};
+
 var addMetadataSettings = exports.addMetadataSettings = function addMetadataSettings(settingsRows, props, settingActive, useState) {
     var defaultEnabledMetadaMapping = [];
     if (_config.settings.metadataMappingStatus) {
@@ -2486,51 +2563,18 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
             enableMetadataMapping && React.createElement(
                 "div",
                 { className: "expirationdate_metadata_metakeys" },
-                React.createElement(
-                    "h3",
-                    null,
-                    _config.text.metadataMapping
-                ),
-                React.createElement(
-                    "table",
-                    { className: "wp-list-table widefat fixed striped table-view-list" },
-                    React.createElement(
-                        "thead",
-                        null,
-                        React.createElement(
-                            "tr",
-                            null,
-                            React.createElement(
-                                "th",
-                                null,
-                                _config.text.description
-                            ),
-                            React.createElement(
-                                "th",
-                                null,
-                                _config.text.originalKey
-                            ),
-                            React.createElement(
-                                "th",
-                                null,
-                                _config.text.mappedKey
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        "tbody",
-                        null,
-                        metadataFields
-                    )
-                ),
+                React.createElement(SectionTitle, { text: _config.text.metadataMapping }),
+                React.createElement(MetadataMapTable, {
+                    columns: [_config.text.description, _config.text.originalKey, _config.text.mappedKey],
+                    postType: props.postType,
+                    metadataFields: publishpressFutureProSettings.metadataFields,
+                    metadataMapping: metadataMapping
+                }),
                 React.createElement(
                     "p",
                     { className: "description" },
-                    _config.text.enableMetadataMappingHelp
-                ),
-                React.createElement(
-                    "p",
-                    { className: "description" },
+                    _config.text.enableMetadataMappingHelp,
+                    React.createElement("br", null),
                     React.createElement(
                         "a",
                         { href: "{text.readmoreMetadataMappingHelpUrl", target: "_blank" },

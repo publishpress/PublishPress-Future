@@ -9,6 +9,61 @@ import {
 
 import { CheckboxControl, Tooltip } from "&wp.components";
 
+const SectionTitle = (props) => {
+    return (
+        <h3>{props.title}</h3>
+    );
+};
+
+const MetadataMapTable = (props) => {
+    return (
+        <table className="wp-list-table widefat fixed striped table-view-list">
+            <thead>
+                <tr>
+                    {props.columns.map(
+                        (column) => {
+                            return (
+                                <th key={column}>{column}</th>
+                            );
+                        }
+                    )}
+                </tr>
+            </thead>
+            <tbody>
+                {props.metadataFields.map(
+                    (field) => {
+                        return (
+                            <tr key={field.originalKey} className="future_pro_metadata_mapping_row">
+                                <td>
+                                    <div className="mapping-label-container">
+                                        <label htmlFor={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}>
+                                            {field.label}
+                                        </label>
+                                        <Tooltip text={field.description}>
+                                            <span className="dashicons dashicons-editor-help"></span>
+                                        </Tooltip>
+                                    </div>
+                                </td>
+                                <td>{field.originalKey}</td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        name={'expirationdate_metadata_mapping[' + props.postType + '][' + field.originalKey + ']'}
+                                        id={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}
+                                        value={props.metadataMapping[field.originalKey] ? props.metadataMapping[field.originalKey] : ''}
+                                        placeholder={field.originalKey}
+                                        onChange={(e) => handleMetadataMapChange(field.originalKey, e.target.value)}
+                                        />
+                                </td>
+                            </tr>
+                        );
+                    }
+                )}
+            </tbody>
+        </table>
+    );
+};
+
 export const addMetadataSettings = (settingsRows, props, settingActive, useState) => {
     let defaultEnabledMetadaMapping = [];
     if (settings.metadataMappingStatus) {
@@ -82,25 +137,21 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
                 </div>
                 {enableMetadataMapping &&
                     <div className="expirationdate_metadata_metakeys">
-                        <h3>{text.metadataMapping}</h3>
-                        <table className="wp-list-table widefat fixed striped table-view-list">
-                            <thead>
-                                <tr>
-                                    <th>{text.description}</th>
-                                    <th>{text.originalKey}</th>
-                                    <th>{text.mappedKey}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {metadataFields}
-                            </tbody>
-                        </table>
+                        <SectionTitle text={text.metadataMapping} />
+                        <MetadataMapTable
+                            columns={[
+                                text.description,
+                                text.originalKey,
+                                text.mappedKey
+                            ]}
+                            postType={props.postType}
+                            metadataFields={publishpressFutureProSettings.metadataFields}
+                            metadataMapping={metadataMapping}
+                        />
 
                         <p className="description">
                             {text.enableMetadataMappingHelp}
-                        </p>
-
-                        <p className="description">
+                            <br />
                             <a href="{text.readmoreMetadataMappingHelpUrl" target="_blank">{text.readmoreMetadataMappingHelp}</a>
                         </p>
                     </div>
