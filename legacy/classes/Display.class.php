@@ -474,7 +474,7 @@ class PostExpirator_Display
                         </a>
                     </li>
                     <li>
-                        <a href="https://publishpress.com/knowledge-base/introduction-future/" target="_blank"
+                        <a href="https://publishpress.com/knowledge-base/future-introduction/" target="_blank"
                            rel="noopener noreferrer" title="<?php
                         _e('Future Documentation', 'post-expirator'); ?>">
                             <?php
@@ -482,16 +482,11 @@ class PostExpirator_Display
                         </a>
                     </li>
                     <li>
-                        <a href="https://publishpress.com/contact" target="_blank" rel="noopener noreferrer"
+                        <a href="https://publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                            title="<?php
                            _e('Contact the PublishPress team', 'post-expirator'); ?>">
                             <?php
                             _e('Contact', 'post-expirator'); ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#777777" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
                         </a>
                     </li>
                     <li>
