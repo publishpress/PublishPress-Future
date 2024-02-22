@@ -83,7 +83,7 @@ This section describes how to install the plugin and get it working.
 
 == Changelog ==
 
-= UNRELEASED =
+= [UNRELEASED] =
 
 * ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
 * ADDED: Add metadata mapping for allowing integrating with 3rd party plugins, #69;
