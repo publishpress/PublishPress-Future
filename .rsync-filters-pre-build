@@ -41,3 +41,5 @@
 - phpstan.neon
 - lib/vendor/publishpress/publishpress-future/tests-old/
 - lib/vendor/publishpress/publishpress-future/codeception.yml
+- yarn-error.log
+- codeception.yml
