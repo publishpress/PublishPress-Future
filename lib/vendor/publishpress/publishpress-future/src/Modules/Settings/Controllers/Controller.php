@@ -205,7 +205,7 @@ class Controller implements InitializableInterface
                             'post-expirator'
                         ),
                         'fieldActive' => __('Active', 'post-expirator'),
-                        'fieldActiveLabel' => __('Activate the PublishPress Future metabox for this post type', 'post-expirator'),
+                        'fieldActiveLabel' => __('Activate the PublishPress Future actions for this post type', 'post-expirator'),
                         'fieldHowToExpire' => __('Default Action', 'post-expirator'),
                         'fieldHowToExpireDescription' => __(
                             'Select the default action for the post type.',

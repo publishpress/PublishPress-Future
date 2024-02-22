@@ -13,6 +13,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use WP_Post;
 
@@ -122,16 +123,21 @@ class ClassicEditorController implements InitializableInterface
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
         $defaults = $settingsFacade->getPostTypeDefaults($postType);
+        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
 
         // if settings are not configured, show the metabox by default only for posts and pages
         if (
+            $hideMetabox === false
+            &&
             (
-                ! isset($defaults['activeMetaBox'])
-                && in_array($postType, ['post', 'page'], true)
-            )
-            || (
-                is_array($defaults)
-                && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+                (
+                    ! isset($defaults['activeMetaBox'])
+                    && in_array($postType, ['post', 'page'], true)
+                )
+                || (
+                    is_array($defaults)
+                    && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+                )
             )
         ) {
             add_meta_box(

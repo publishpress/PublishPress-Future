@@ -10,6 +10,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -50,10 +51,13 @@ class BlockEditorController implements InitializableInterface
         $options = $container->get(ServicesAbstract::OPTIONS);
 
         $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($post->post_type);
+        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $post->post_type);
 
         // if settings are not configured, show the metabox by default only for posts and pages
         if (
-            (! isset($postTypeDefaultConfig['activeMetaBox'])
+            $hideMetabox === false
+            && (
+                ! isset($postTypeDefaultConfig['activeMetaBox'])
                 && in_array(
                     $post->post_type,
                     [
@@ -62,8 +66,8 @@ class BlockEditorController implements InitializableInterface
                     ],
                     true
                 )
+                || (in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1']))
             )
-            || (in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1']))
         ) {
             wp_enqueue_script(
                 'postexpirator-block-editor',
