@@ -489,11 +489,6 @@ class PostExpirator_Display
                             _e('Contact', 'post-expirator'); ?>
                         </a>
                     </li>
-                    <li>
-                        <a href="https://facebook.com/publishpress" target="_blank" rel="noopener noreferrer">
-                            <span class="dashicons dashicons-facebook"></span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
 
