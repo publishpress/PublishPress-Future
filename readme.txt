@@ -85,10 +85,15 @@ This section describes how to install the plugin and get it working.
 
 = UNRELEASED =
 
+* ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
 * ADDED: Add metadata mapping for allowing integrating with 3rd party plugins, #69;
 * ADDED: New Gutenberg Block for displaying the future action date, #171;
+* CHANGED: Deprecated the filter `postexpirator_unset_post_types` in favor of the new filter `publishpressfuture_supported_post_types`, allowing not only remove, but add new post types to the list of supported post types, #677;
+* CHANGED: The list of post types in the settings page now also shows the non-public post types that are not built in on WordPress, #677;
 * CHANGED: Minor changes to the layout of some settings pages;
 * CHANGED: Change the default settings tab to "Post Types" instead of "General";
+* FIXED: Fix language files for ES, IT, FR, #665;
+* FIXED: Fix error when a term does not exists, #675;
 * FIXED: Fatal error: Delcarations of PostStatusToCustomStatus::getLabel() must be compatible with the interface, #674;
 
 = [3.2.0] - 25 Jan, 2024 =
