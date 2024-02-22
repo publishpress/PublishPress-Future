@@ -766,7 +766,7 @@ class ExpirablePostModel extends PostModel
     {
         $timestampInPostMeta = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
         $scheduledInPostMeta = ! empty($timestampInPostMeta)
-                               && $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true) === 'saved';
+                               && in_array($this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true), ['saved', 1, '1']);
         $scheduled = $this->isExpirationEnabled();
 
         if (! $scheduledInPostMeta && $scheduled) {
