@@ -202,9 +202,13 @@ class SettingsController implements ModuleInterface
                         'enableCustomStatusesFalse' => __('Disabled', 'publishpress-future-pro'),
                         'selectAll' => __('Select all', 'publishpress-future-pro'),
                         'unselectAll' => __('Unselect all', 'publishpress-future-pro'),
-                        'enableMetadataDrivenScheduling' => __('Enable Metadata-driven Scheduling', 'publishpress-future-pro'),
+                        'enableMetadataDrivenScheduling' => __('Enable Metadata Integration', 'publishpress-future-pro'),
                         'enableMetadataDrivenSchedulingDesc' => __(
-                            'Enable metadata-driven scheduling for the post type',
+                            'Enable metadata integration for the post type',
+                            'publishpress-future-pro'
+                        ),
+                        'enableMetadataDrivenSchedulingHelp' => __(
+                            'Checking this option will allow you to use the post metadata to control the scheduling of Future actions in your content.',
                             'publishpress-future-pro'
                         ),
                         'metadataMapping' => __('Metadata Mapping', 'publishpress-future-pro'),
@@ -220,6 +224,12 @@ class SettingsController implements ModuleInterface
                         'originalKey' => __('Original Metakey', 'publishpress-future-pro'),
                         'mappedKey' => __('New Metakey', 'publishpress-future-pro'),
                         'description' => __('Description', 'publishpress-future-pro'),
+                        'hideMetabox' => __('Hide Future metabox for this post type', 'publishpress-future-pro'),
+                        'hideMetaboxHelp' => __(
+                            'Check it to disable the Future metabox if using metadata control plugins (like ACF, Pods, etc.) to prevent data overwrite conflicts.',
+                            'publishpress-future-pro'
+                        ),
+
                     ],
                     'settings' => $this->settingsModel->getSettings(),
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
@@ -385,6 +395,11 @@ class SettingsController implements ModuleInterface
         $this->settingsModel->setMetadataMapping(
             isset($_POST['expirationdate_metadata_mapping'])
                 ? $_POST['expirationdate_metadata_mapping'] : []
+        );
+
+        $this->settingsModel->setMetaboxHideStatus(
+            isset($_POST['expirationdate_hide_metabox'])
+                ? $_POST['expirationdate_hide_metabox'] : []
         );
         // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
     }

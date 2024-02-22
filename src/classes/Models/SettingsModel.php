@@ -22,6 +22,8 @@ class SettingsModel
 
     const OPTION_METADATA_MAPPING_STATUS = 'ppfuturepro_metadata_mapping_status';
 
+    const OPTION_HIDE_METABOX = 'ppfuturepro_hide_metabox';
+
     const OPTION_METADATA_MAPPING = 'ppfuturepro_metadata_mapping';
 
     const BASE_DATE_CURRENT = 'current';
@@ -57,6 +59,7 @@ class SettingsModel
             'baseDate' => $this->getBaseDate(),
             'metadataMappingStatus' => $this->getMetadataMappingStatus(),
             'metadataMapping' => $this->getMetadataMapping(),
+            'metadataHideMetabox' => $this->getMetaboxHideStatus(),
         ];
     }
 
@@ -192,6 +195,9 @@ class SettingsModel
         $this->options->deleteOption(self::OPTION_LICENSE_STATUS);
         $this->options->deleteOption(self::OPTION_ENABLED_CUSTOM_STATUSES);
         $this->options->deleteOption(self::OPTION_BASE_DATE);
+        $this->options->deleteOption(self::OPTION_METADATA_MAPPING_STATUS);
+        $this->options->deleteOption(self::OPTION_HIDE_METABOX);
+        $this->options->deleteOption(self::OPTION_METADATA_MAPPING);
     }
 
     public function setMetadataMappingStatus($statuses): void
@@ -206,12 +212,38 @@ class SettingsModel
             $newStatuses[$postType] = (bool)$status;
         }
 
-        $this->options->updateOption(self::OPTION_METADATA_MAPPING_STATUS, wp_json_encode($statuses));
+        $this->options->updateOption(self::OPTION_METADATA_MAPPING_STATUS, $statuses);
     }
 
     public function getMetadataMappingStatus(): array
     {
-        $statuses = (array)(json_decode($this->options->getOption(self::OPTION_METADATA_MAPPING_STATUS, '[]')));
+        $statuses = (array)$this->options->getOption(self::OPTION_METADATA_MAPPING_STATUS, []);
+
+        $statuses = array_map(function ($status) {
+            return (bool)$status;
+        }, $statuses);
+
+        return $statuses;
+    }
+
+    public function setMetaboxHideStatus($statuses): void
+    {
+        $statuses = (array)$statuses;
+
+        $newStatuses = [];
+
+        foreach ($statuses as $statusPostType => $status) {
+            $statusPostType = sanitize_key($statusPostType);
+
+            $newStatuses[$statusPostType] = (bool)$status;
+        }
+
+        $this->options->updateOption(self::OPTION_HIDE_METABOX, $statuses);
+    }
+
+    public function getMetaboxHideStatus(): array
+    {
+        $statuses = (array)$this->options->getOption(self::OPTION_HIDE_METABOX, []);
 
         $statuses = array_map(function ($status) {
             return (bool)$status;
@@ -237,11 +269,11 @@ class SettingsModel
             }
         }
 
-        $this->options->updateOption(self::OPTION_METADATA_MAPPING, wp_json_encode($mapping));
+        $this->options->updateOption(self::OPTION_METADATA_MAPPING, $mapping);
     }
 
     public function getMetadataMapping(): array
     {
-        return (array)(json_decode($this->options->getOption(self::OPTION_METADATA_MAPPING, '[]'), true));
+        return (array)$this->options->getOption(self::OPTION_METADATA_MAPPING, []);
     }
 }

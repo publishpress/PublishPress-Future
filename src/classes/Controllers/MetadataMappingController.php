@@ -95,6 +95,13 @@ class MetadataMappingController implements ModuleInterface
             10,
             2
         );
+
+        $this->hooks->addFilter(
+            ExpiratorHooksAbstract::FILTER_HIDE_METABOX,
+            [$this, 'filterHideMetabox'],
+            10,
+            2
+        );
     }
 
     public function onImportStart()
@@ -200,5 +207,16 @@ class MetadataMappingController implements ModuleInterface
         }
 
         return $mappedMetaKey;
+    }
+
+    public function filterHideMetabox($hideMetabox, $postType): bool
+    {
+        $statusPerPostType = $this->settingsModel->getMetaboxHideStatus();
+
+        if (array_key_exists($postType, $statusPerPostType)) {
+            return (bool)$statusPerPostType[$postType];
+        }
+
+        return $hideMetabox;
     }
 }

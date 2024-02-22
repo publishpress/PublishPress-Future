@@ -8,10 +8,11 @@ import {
 } from "&config.pro-settings";
 
 import { CheckboxControl, Tooltip } from "&wp.components";
+import { Fragment } from "&wp.element";
 
 const SectionTitle = (props) => {
     return (
-        <h3>{props.title}</h3>
+        <h3>{props.children}</h3>
     );
 };
 
@@ -64,10 +65,33 @@ const MetadataMapTable = (props) => {
     );
 };
 
+const HelpText = (props) => {
+    return (
+        <p className="description">{props.children}</p>
+    );
+};
+
+const FieldRow = (props) => {
+    let className = 'publishpress-settings-field-row';
+
+    if (props.className) {
+        className += ' ' + props.className;
+    }
+
+    return (
+        <div className={className}>{props.children}</div>
+    );
+};
+
 export const addMetadataSettings = (settingsRows, props, settingActive, useState) => {
-    let defaultEnabledMetadaMapping = [];
+    let defaultEnabledMetadaMapping = false;
     if (settings.metadataMappingStatus) {
         defaultEnabledMetadaMapping = settings.metadataMappingStatus[props.postType] || false;
+    }
+
+    let defaultHideMetabox = false;
+    if (settings.metadataHideMetabox) {
+        defaultHideMetabox = settings.metadataHideMetabox[props.postType] || false;
     }
 
     let defaultMetadataMapping = {};
@@ -76,6 +100,7 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
     }
 
     const [enableMetadataMapping, setEnableMetadataMapping] = useState(defaultEnabledMetadaMapping);
+    const [hideMetabox, setHideMetabox] = useState(defaultHideMetabox);
     const [metadataMapping, setMetadataMapping] = useState(defaultMetadataMapping);
 
     const handleMetadataMapChange = (originalMetaKey, mappedMetaKey) => {
@@ -92,6 +117,10 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
 
     const handleMetadataMapStatusChange = (checked) => {
         setEnableMetadataMapping(checked);
+    };
+
+    const handleMetaboxStatusChange = (checked) => {
+        setHideMetabox(checked);
     };
 
     if (settingActive) {
@@ -125,7 +154,7 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
 
         settingsRows.push(
             <SettingRow label={text.enableMetadataDrivenScheduling} key={'metadata_mapping'}>
-                <div>
+                <FieldRow>
                     <CheckboxControl
                         name={'expirationdate_metadata_mapping_enabled[' + props.postType + ']'}
                         id={'expirationdate_metadata_mapping_enabled_' + props.postType}
@@ -134,27 +163,44 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
                         checked={enableMetadataMapping}
                         onChange={(checked) => handleMetadataMapStatusChange(checked)}
                         />
-                </div>
-                {enableMetadataMapping &&
-                    <div className="expirationdate_metadata_metakeys">
-                        <SectionTitle text={text.metadataMapping} />
-                        <MetadataMapTable
-                            columns={[
-                                text.description,
-                                text.originalKey,
-                                text.mappedKey
-                            ]}
-                            postType={props.postType}
-                            metadataFields={publishpressFutureProSettings.metadataFields}
-                            metadataMapping={metadataMapping}
-                        />
+                    <HelpText>{text.enableMetadataDrivenSchedulingHelp}</HelpText>
+                </FieldRow>
 
-                        <p className="description">
-                            {text.enableMetadataMappingHelp}
-                            <br />
-                            <a href="{text.readmoreMetadataMappingHelpUrl" target="_blank">{text.readmoreMetadataMappingHelp}</a>
-                        </p>
-                    </div>
+                {enableMetadataMapping &&
+                    <Fragment>
+                        <FieldRow>
+                            <CheckboxControl
+                                name={'expirationdate_hide_metabox[' + props.postType + ']'}
+                                id={'expirationdate_hide_metabox_' + props.postType}
+                                value={'1'}
+                                label={text.hideMetabox}
+                                checked={hideMetabox}
+                                onChange={(checked) => handleMetaboxStatusChange(checked)}
+                                />
+
+                            <HelpText>{text.hideMetaboxHelp}</HelpText>
+                        </FieldRow>
+
+                        <FieldRow className="expirationdate_metadata_metakeys">
+                            <SectionTitle>{text.metadataMapping}</SectionTitle>
+                            <MetadataMapTable
+                                columns={[
+                                    text.description,
+                                    text.originalKey,
+                                    text.mappedKey
+                                ]}
+                                postType={props.postType}
+                                metadataFields={publishpressFutureProSettings.metadataFields}
+                                metadataMapping={metadataMapping}
+                            />
+
+                            <HelpText>
+                                {text.enableMetadataMappingHelp}
+                                <br />
+                                <a href="{text.readmoreMetadataMappingHelpUrl" target="_blank">{text.readmoreMetadataMappingHelp}</a>
+                            </HelpText>
+                        </FieldRow>
+                    </Fragment>
                 }
             </SettingRow>
         );
