@@ -89,6 +89,7 @@ This section describes how to install the plugin and get it working.
 * ADDED: New Gutenberg Block for displaying the future action date, #171;
 * CHANGED: Minor changes to the layout of some settings pages;
 * CHANGED: Change the default settings tab to "Post Types" instead of "General";
+* FIXED: Fatal error: Delcarations of PostStatusToCustomStatus::getLabel() must be compatible with the interface, #674;
 
 = [3.2.0] - 25 Jan, 2024 =
 
