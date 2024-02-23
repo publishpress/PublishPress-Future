@@ -36,12 +36,12 @@ class PostExpirator_Display
      */
     private function __construct()
     {
-        $this->hooks();
-
         $container = Container::getInstance();
 
         $this->cron = $container->get(ServicesAbstract::CRON);
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
+
+        $this->hooks();
     }
 
     /**
