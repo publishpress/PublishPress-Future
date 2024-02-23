@@ -2371,11 +2371,11 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.addMetadataSettings = undefined;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /*
+                                                                                                                                                                                                                                                                   * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                   */
 
 
 var _components = __webpack_require__(/*! &publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
@@ -2395,6 +2395,18 @@ var SectionTitle = function SectionTitle(props) {
 };
 
 var MetadataMapTable = function MetadataMapTable(props) {
+    var handleMetadataMapChange = function handleMetadataMapChange(originalMetaKey, mappedMetaKey) {
+        var newMetadataMapping = _extends({}, props.metadataMapping);
+
+        if (!newMetadataMapping) {
+            newMetadataMapping = {};
+        }
+
+        newMetadataMapping[originalMetaKey] = mappedMetaKey;
+
+        props.onChangeMetadataMapping(newMetadataMapping);
+    };
+
     return React.createElement(
         "table",
         { className: "wp-list-table widefat fixed striped table-view-list" },
@@ -2516,18 +2528,6 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
         metadataMapping = _useState6[0],
         setMetadataMapping = _useState6[1];
 
-    var handleMetadataMapChange = function handleMetadataMapChange(originalMetaKey, mappedMetaKey) {
-        var newMetadataMapping = _extends({}, metadataMapping);
-
-        if (!newMetadataMapping) {
-            newMetadataMapping = {};
-        }
-
-        newMetadataMapping[originalMetaKey] = mappedMetaKey;
-
-        setMetadataMapping(newMetadataMapping);
-    };
-
     var handleMetadataMapStatusChange = function handleMetadataMapStatusChange(checked) {
         setEnableMetadataMapping(checked);
     };
@@ -2537,50 +2537,6 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
     };
 
     if (settingActive) {
-        var metadataFields = publishpressFutureProSettings.metadataFields.map(function (field) {
-            return React.createElement(
-                "tr",
-                { key: field.originalKey, className: "future_pro_metadata_mapping_row" },
-                React.createElement(
-                    "td",
-                    null,
-                    React.createElement(
-                        "div",
-                        { className: "mapping-label-container" },
-                        React.createElement(
-                            "label",
-                            { htmlFor: 'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey },
-                            field.label
-                        ),
-                        React.createElement(
-                            _wp.Tooltip,
-                            { text: field.description },
-                            React.createElement("span", { className: "dashicons dashicons-editor-help" })
-                        )
-                    )
-                ),
-                React.createElement(
-                    "td",
-                    null,
-                    field.originalKey
-                ),
-                React.createElement(
-                    "td",
-                    null,
-                    React.createElement("input", {
-                        type: "text",
-                        name: 'expirationdate_metadata_mapping[' + props.postType + '][' + field.originalKey + ']',
-                        id: 'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey,
-                        value: metadataMapping[field.originalKey] ? metadataMapping[field.originalKey] : '',
-                        placeholder: field.originalKey,
-                        onChange: function onChange(e) {
-                            return handleMetadataMapChange(field.originalKey, e.target.value);
-                        }
-                    })
-                )
-            );
-        });
-
         settingsRows.push(React.createElement(
             _components.SettingRow,
             { label: _config.text.enableMetadataDrivenScheduling, key: 'metadata_mapping' },
@@ -2637,7 +2593,10 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
                         columns: [_config.text.description, _config.text.originalKey, _config.text.mappedKey],
                         postType: props.postType,
                         metadataFields: publishpressFutureProSettings.metadataFields,
-                        metadataMapping: metadataMapping
+                        metadataMapping: metadataMapping,
+                        onChangeMetadataMapping: function onChangeMetadataMapping(newMetadataMapping) {
+                            return setMetadataMapping(newMetadataMapping);
+                        }
                     }),
                     React.createElement(
                         HelpText,

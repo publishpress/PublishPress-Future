@@ -17,6 +17,18 @@ const SectionTitle = (props) => {
 };
 
 const MetadataMapTable = (props) => {
+    const handleMetadataMapChange = (originalMetaKey, mappedMetaKey) => {
+        let newMetadataMapping = {...props.metadataMapping};
+
+        if (!newMetadataMapping) {
+            newMetadataMapping = {};
+        }
+
+        newMetadataMapping[originalMetaKey] = mappedMetaKey;
+
+        props.onChangeMetadataMapping(newMetadataMapping);
+    }
+
     return (
         <table className="wp-list-table widefat fixed striped table-view-list">
             <thead>
@@ -103,18 +115,6 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
     const [hideMetabox, setHideMetabox] = useState(defaultHideMetabox);
     const [metadataMapping, setMetadataMapping] = useState(defaultMetadataMapping);
 
-    const handleMetadataMapChange = (originalMetaKey, mappedMetaKey) => {
-        let newMetadataMapping = {...metadataMapping};
-
-        if (!newMetadataMapping) {
-            newMetadataMapping = {};
-        }
-
-        newMetadataMapping[originalMetaKey] = mappedMetaKey;
-
-        setMetadataMapping(newMetadataMapping);
-    }
-
     const handleMetadataMapStatusChange = (checked) => {
         setEnableMetadataMapping(checked);
     };
@@ -124,34 +124,6 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
     };
 
     if (settingActive) {
-        const metadataFields = publishpressFutureProSettings.metadataFields.map((field) => {
-            return (
-                <tr key={field.originalKey} className="future_pro_metadata_mapping_row">
-                    <td>
-                        <div className="mapping-label-container">
-                            <label htmlFor={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}>
-                                {field.label}
-                            </label>
-                            <Tooltip text={field.description}>
-                                <span className="dashicons dashicons-editor-help"></span>
-                            </Tooltip>
-                        </div>
-                    </td>
-                    <td>{field.originalKey}</td>
-                    <td>
-                        <input
-                            type="text"
-                            name={'expirationdate_metadata_mapping[' + props.postType + '][' + field.originalKey + ']'}
-                            id={'expirationdate_metadata_mapping_' + props.postType + '_' + field.originalKey}
-                            value={metadataMapping[field.originalKey] ? metadataMapping[field.originalKey] : ''}
-                            placeholder={field.originalKey}
-                            onChange={(e) => handleMetadataMapChange(field.originalKey, e.target.value)}
-                            />
-                    </td>
-                </tr>
-            );
-        });
-
         settingsRows.push(
             <SettingRow label={text.enableMetadataDrivenScheduling} key={'metadata_mapping'}>
                 <FieldRow>
@@ -192,6 +164,7 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
                                 postType={props.postType}
                                 metadataFields={publishpressFutureProSettings.metadataFields}
                                 metadataMapping={metadataMapping}
+                                onChangeMetadataMapping={(newMetadataMapping) => setMetadataMapping(newMetadataMapping)}
                             />
 
                             <HelpText>
