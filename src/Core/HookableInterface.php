@@ -60,4 +60,6 @@ interface HookableInterface
      * @param callable $callback
      */
     public static function registerDeactivationHook($pluginFile, $callback);
+
+    public function ksesRemoveFilters();
 }

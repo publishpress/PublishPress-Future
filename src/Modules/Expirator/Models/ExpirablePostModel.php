@@ -582,7 +582,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string
          */
-        $emailSubject = apply_filters(
+        $emailSubject = $this->hooks->applyFilters(
             HooksAbstract::FILTER_EXPIRED_EMAIL_SUBJECT,
             $emailSubject,
             $this,
@@ -620,7 +620,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string
          */
-        $emailBody = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_BODY, $emailBody, $this, $expirationAction);
+        $emailBody = $this->hooks->applyFilters(HooksAbstract::FILTER_EXPIRED_EMAIL_BODY, $emailBody, $this, $expirationAction);
 
         $emailAddresses = array();
 
@@ -658,7 +658,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return array<string>
          */
-        $emailAddresses = apply_filters(
+        $emailAddresses = $this->hooks->applyFilters(
             HooksAbstract::FILTER_EXPIRED_EMAIL_ADDRESSES,
             $emailAddresses,
             $this,
@@ -674,7 +674,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string|array<string>
          */
-        $emailHeaders = apply_filters(
+        $emailHeaders = $this->hooks->applyFilters(
             HooksAbstract::FILTER_EXPIRED_EMAIL_HEADERS,
             $emailHeaders,
             $this,
@@ -689,7 +689,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string|array<string>
          */
-        $emailAttachments = apply_filters(
+        $emailAttachments = $this->hooks->applyFilters(
             HooksAbstract::FILTER_EXPIRED_EMAIL_ATTACHMENTS,
             $emailAttachments,
             $this,
@@ -784,7 +784,7 @@ class ExpirablePostModel extends PostModel
 
             $timestampInPostMeta = $this->forceTimestampToUnixtime($timestampInPostMeta);
 
-            $this->scheduler->schedule($this->getPostId(), $timestampInPostMeta, $opts);
+            $this->hooks->doAction(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $timestampInPostMeta, $opts);
         }
     }
 

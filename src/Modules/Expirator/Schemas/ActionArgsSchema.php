@@ -3,6 +3,8 @@
 namespace PublishPress\Future\Modules\Expirator\Schemas;
 
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -135,6 +137,7 @@ abstract class ActionArgsSchema
             return;
         }
 
-        do_action(ExpiratorHooksAbstract::ACTION_MIGRATE_ARGS_LENGTH);
+        $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
+        $hooks->doAction(ExpiratorHooksAbstract::ACTION_MIGRATE_ARGS_LENGTH);
     }
 }

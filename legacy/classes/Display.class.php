@@ -7,8 +7,6 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
-use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -29,6 +27,11 @@ class PostExpirator_Display
     private $cron;
 
     /**
+     * @var PublishPress\Future\Core\HookableInterface
+     */
+    private $hooks;
+
+    /**
      * Constructor.
      */
     private function __construct()
@@ -38,6 +41,7 @@ class PostExpirator_Display
         $container = Container::getInstance();
 
         $this->cron = $container->get(ServicesAbstract::CRON);
+        $this->hooks = $container->get(ServicesAbstract::HOOKS);
     }
 
     /**
@@ -45,7 +49,7 @@ class PostExpirator_Display
      */
     private function hooks()
     {
-        add_action('init', [$this, 'init']);
+        $this->hooks->addAction('init', [$this, 'init']);
     }
 
     /**
@@ -77,7 +81,7 @@ class PostExpirator_Display
             $this->$function();
         }
 
-        do_action(SettingsHooksAbstract::ACTION_LOAD_TAB, $tab);
+        $this->hooks->doAction(SettingsHooksAbstract::ACTION_LOAD_TAB, $tab);
     }
 
     /**
@@ -91,7 +95,7 @@ class PostExpirator_Display
 
         $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', ];
 
-        $allowed_tabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
+        $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
@@ -103,7 +107,7 @@ class PostExpirator_Display
         $this->load_tab($tab);
         $html = ob_get_clean();
 
-        $debugIsEnabled = (bool)apply_filters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
+        $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
         if (! $debugIsEnabled) {
             unset($allowed_tabs['viewdebug']);
         }
@@ -116,7 +120,7 @@ class PostExpirator_Display
     private function menu_defaults()
     {
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -150,7 +154,7 @@ class PostExpirator_Display
         }
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -229,7 +233,7 @@ class PostExpirator_Display
         }
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -246,7 +250,7 @@ class PostExpirator_Display
         require_once POSTEXPIRATOR_LEGACYDIR . '/debug.php';
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -316,7 +320,7 @@ class PostExpirator_Display
         }
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -374,7 +378,7 @@ class PostExpirator_Display
         }
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -394,7 +398,7 @@ class PostExpirator_Display
          * @param string $name
          * @return null|array<string,mixed>
          */
-        $params = apply_filters(
+        $params = $this->hooks->applyFilters(
             ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_PARAMS,
             $params,
             $name
@@ -407,7 +411,7 @@ class PostExpirator_Display
          * @param null|array<string,mixed> $params
          * @return null|array<string,mixed>
          */
-        $template = apply_filters(
+        $template = $this->hooks->applyFilters(
             ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_FILE,
             POSTEXPIRATOR_BASEDIR . "/src/Views/{$name}.php",
             $name,

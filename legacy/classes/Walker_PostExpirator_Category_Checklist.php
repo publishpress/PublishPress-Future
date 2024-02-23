@@ -1,4 +1,8 @@
 <?php
+
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+
 /**
  * The walker class for category checklist.
  *
@@ -89,6 +93,9 @@ class Walker_PostExpirator_Category_Checklist extends Walker
         $popular_cats = isset($args['popular_cats']) ? (array)$args['popular_cats'] : [];
         $selected_cats = isset($args['selected_cats']) ? (array)$args['selected_cats'] : [];
 
+        $container = Container::getInstance();
+        $hooks = $container->get(ServicesAbstract::HOOKS);
+
         $name = 'expirationdate_category';
 
         $class = in_array($data_object->term_id, $popular_cats, true) ? ' class="expirator-category"' : '';
@@ -97,7 +104,7 @@ class Walker_PostExpirator_Category_Checklist extends Walker
                 true,
                 false
             ) . disabled(empty($args['disabled']), false, false) . ' ' . $this->disabled . '/> ' . esc_html(
-                apply_filters('the_category', $data_object->name)
+                $hooks->applyFilters('the_category', $data_object->name)
             ) . '</label>';
     }
 

@@ -231,7 +231,7 @@ class RestAPIController implements InitializableInterface
                                 $opts['category']
                             );
 
-                            do_action(
+                            $this->hooks->doAction(
                                 HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
                                 $post->ID,
                                 strtotime($value['date']),
@@ -290,7 +290,7 @@ class RestAPIController implements InitializableInterface
 
     private function getUnfilteredTerms($taxonomy)
     {
-        add_filter('get_terms_args', [$this, 'removeExcludeParamFromTermQuery'], 20);
+        $this->hooks->addFilter('get_terms_args', [$this, 'removeExcludeParamFromTermQuery'], 20);
         $terms = get_terms([
             'taxonomy' => $taxonomy,
             'hide_empty' => false,
@@ -352,9 +352,9 @@ class RestAPIController implements InitializableInterface
                 'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy'))
             ];
 
-            do_action(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, absint($request->get_param('date')), $opts);
+            $this->hooks->doAction(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, absint($request->get_param('date')), $opts);
         } else {
-            do_action(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+            $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
         }
 
         return rest_ensure_response(true);

@@ -2,10 +2,12 @@
 defined('ABSPATH') or die('Direct access not allowed.');
 
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
-use PublishPress\Future\Modules\Settings\HooksAbstract;
-?>
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 
-<?php
+$container = Container::getInstance();
+$hooks = $container->get(ServicesAbstract::HOOKS);
+
 // phpcs:disable WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase
 // phpcs:disable WordPress.PHP.StrictComparisons.LooseComparison
 
@@ -137,7 +139,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                         <div>
                             <label><?php echo esc_html__('Example: ', 'post-expirator'); ?></label>
                             <div style="background: white; padding: 10px; <?php echo esc_attr($expirationdateFooterStyle); ?>"><?php
-                                echo esc_html(apply_filters(ExpiratorHooksAbstract::FILTER_CONTENT_FOOTER, '', true)); ?></div>
+                                echo esc_html($hooks->applyFilters(ExpiratorHooksAbstract::FILTER_CONTENT_FOOTER, '', true)); ?></div>
                         </div>
                     </td>
                 </tr>

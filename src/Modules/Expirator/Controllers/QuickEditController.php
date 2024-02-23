@@ -135,12 +135,12 @@ class QuickEditController implements InitializableInterface
             $date = isset($_POST['future_action_date']) ? sanitize_text_field($_POST['future_action_date']) : '0';
             $date = strtotime($date);
 
-            do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $date, $opts);
+            $this->hooks->doAction(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $date, $opts);
 
             return;
         }
 
-        do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+        $this->hooks->doAction(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
     }
 
     public function enqueueScripts()

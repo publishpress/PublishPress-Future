@@ -7,6 +7,8 @@ namespace PublishPress\Future\Modules\VersionNotices;
 
 
 use PublishPress\Future\Core\Paths;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\WordpressVersionNotices\Module\TopNotice\Module as VersionNoticesModule;
 
@@ -19,9 +21,17 @@ class Module implements ModuleInterface
      */
     private $paths;
 
+    /**
+     * @var \PublishPress\Future\Core\HookableInterface
+     */
+    private $hooks;
+
     public function __construct(Paths $paths)
     {
         $this->paths = $paths->getBaseDirPath();
+
+        $container = Container::getInstance();
+        $this->hooks = $container->get(ServicesAbstract::HOOKS);
     }
 
     protected function checkLibraryVersion()
@@ -77,7 +87,7 @@ class Module implements ModuleInterface
             }
 
             if (current_user_can('install_plugins')) {
-                add_filter(
+                $this->hooks->addFilter(
                     VersionNoticesModule::SETTINGS_FILTER,
                     function ($settings) {
                         $settings['publishpress-future'] = [
@@ -102,7 +112,7 @@ class Module implements ModuleInterface
                     }
                 );
 
-                add_filter(
+                $this->hooks->addFilter(
                     'pp_version_notice_menu_link_settings',
                     function ($settings) {
                         $settings['publishpress-future'] = [

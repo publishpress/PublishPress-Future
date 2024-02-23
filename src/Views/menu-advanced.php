@@ -12,6 +12,7 @@ $preserveData = (bool)get_option('expirationdatePreserveData', true);
 $user_roles = wp_roles()->get_names();
 $plugin_facade = PostExpirator_Facade::getInstance();
 $container = DIContainer::getInstance();
+$hooks = $container->get(ServicesAbstract::HOOKS);
 
 ?>
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -30,7 +31,7 @@ $container = DIContainer::getInstance();
             </p>
             <table class="form-table">
 
-                <?php do_action(HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE); ?>
+                <?php $hooks->doAction(HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE); ?>
 
                 <tr valign="top">
                     <th scope="row"><?php
