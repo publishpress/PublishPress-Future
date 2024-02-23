@@ -147,7 +147,8 @@ return [
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::MODEL_SETTINGS),
             $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-            $container->get(FreeServicesAbstract::EXPIRATION_SCHEDULER)
+            $container->get(FreeServicesAbstract::EXPIRATION_SCHEDULER),
+            $container->get(FreeServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY)
         );
     },
 

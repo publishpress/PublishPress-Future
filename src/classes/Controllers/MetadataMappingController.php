@@ -6,9 +6,11 @@ use Closure;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\FuturePro\Core\HooksAbstract;
 use PublishPress\FuturePro\Models\SettingsModel;
@@ -51,16 +53,23 @@ class MetadataMappingController implements ModuleInterface
      */
     private $importedPostIDs = [];
 
+    /**
+     * @var \PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory
+     */
+    private $defaultDataModelFactory;
+
     public function __construct(
         HookableInterface $hooks,
         SettingsModel $settingsModel,
         Closure $postModelFactory,
-        SchedulerInterface $scheduler
+        SchedulerInterface $scheduler,
+        PostTypeDefaultDataModelFactory $postTypeDefaultDataModelFactory
     ) {
         $this->hooks = $hooks;
         $this->settingsModel = $settingsModel;
         $this->postModelFactory = $postModelFactory;
         $this->scheduler = $scheduler;
+        $this->defaultDataModelFactory = $postTypeDefaultDataModelFactory;
     }
 
     public function initialize()
@@ -134,6 +143,14 @@ class MetadataMappingController implements ModuleInterface
         $this->hooks->doAction(HooksAbstract::ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING, $postId, $post);
     }
 
+    private function getActionDateFromMetadata($postId)
+    {
+        $postModel = ($this->postModelFactory)($postId);
+        $timestamp = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+
+        return $timestamp;
+    }
+
     public function processMetadataDrivenScheduling($postId, $post = null)
     {
         if (empty($post)) {
@@ -160,6 +177,8 @@ class MetadataMappingController implements ModuleInterface
             return;
         }
 
+        $this->garanteeActionDataWithDefaultData($postId);
+
         $metadataHash = $postModel->calcMetadataHash();
 
         // Check if the flag is set to avoid infinite loops.
@@ -171,6 +190,49 @@ class MetadataMappingController implements ModuleInterface
 
         // Set the flag to avoid infinite loops.
         $postModel->updateMeta(ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
+    }
+
+    private function garanteeActionDataWithDefaultData($postId): bool
+    {
+        $postModel = ($this->postModelFactory)($postId);
+        $timestamp = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+
+        if (empty($timestamp)) {
+            return false;
+        }
+
+        $defaultDataModel = $this->defaultDataModelFactory->create($postModel->getPostType());
+
+        $action = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true);
+        if (empty($action)) {
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $defaultDataModel->getAction());
+        }
+
+        $status = $postModel->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true);
+        if (empty($status)) {
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 1);
+        }
+
+        $termRelatedAction = [
+            ExpirationActionsAbstract::POST_CATEGORY_REMOVE,
+            ExpirationActionsAbstract::POST_CATEGORY_ADD,
+            ExpirationActionsAbstract::POST_CATEGORY_REMOVE_ALL,
+            ExpirationActionsAbstract::POST_CATEGORY_SET,
+        ];
+
+        if (in_array($action, $termRelatedAction)) {
+            $taxonomy = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true);
+            if (empty($taxonomy)) {
+                $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $defaultDataModel->getTaxonomy());
+            }
+
+            $terms = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
+            if (empty($terms)) {
+                $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $defaultDataModel->getTerms());
+            }
+        }
+
+        return true;
     }
 
     /**
