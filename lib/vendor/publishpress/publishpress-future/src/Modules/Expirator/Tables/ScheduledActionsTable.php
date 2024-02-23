@@ -21,7 +21,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     /**
      * @var \PublishPress\Future\Core\HookableInterface
      */
-    private $hooksFacade;
+    private $hooks;
 
     /**
      * Array of seconds for common time periods, like week or month, alongside an internationalised string representation, i.e. "Day" or "Days"
@@ -34,11 +34,11 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         \ActionScheduler_Store $store,
         \ActionScheduler_Logger $logger,
         \ActionScheduler_QueueRunner $runner,
-        HookableInterface $hooksFacade
+        HookableInterface $hooks
     ) {
         parent::__construct($store, $logger, $runner);
 
-        $this->hooksFacade = $hooksFacade;
+        $this->hooks = $hooks;
 
         $this->table_header = __('Future Actions', 'post-expirator');
 
@@ -53,7 +53,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         $this->columns['recurrence'] = __('Recurrence', 'post-expirator');
 
 
-        $this->hooksFacade->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
+        $this->hooks->addAction('admin_enqueue_scripts', [$this, 'enqueueScripts']);
 
         $this->row_actions = array(
             'hook' => array(
@@ -238,7 +238,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
          * @param $extra_actions array Array with format action_count_identifier => action count.
          * @since 3.5.0
          */
-        return apply_filters('action_scheduler_extra_action_counts', $extra_actions);
+        return $this->hooks->applyFilters('action_scheduler_extra_action_counts', $extra_actions);
     }
 
     protected function update_status_counts()
@@ -354,7 +354,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $columnHtml .= $this->render_expiration_hook_action($row);
         } else {
             $columnHtml .= esc_html(
-                $this->hooksFacade->applyFilters(
+                $this->hooks->applyFilters(
                     HooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
                     $row['hook'] . " [{$row['ID']}]",
                     $row
@@ -404,7 +404,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     public function column_args(array $row)
     {
         if (empty($row['args'])) {
-            return apply_filters('action_scheduler_list_table_column_args', '', $row);
+            return $this->hooks->applyFilters('action_scheduler_list_table_column_args', '', $row);
         }
 
         $columnHtml = '';
@@ -426,7 +426,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $columnHtml .= '</ul>';
         }
 
-        return apply_filters('action_scheduler_list_table_column_args', $columnHtml, $row);
+        return $this->hooks->applyFilters('action_scheduler_list_table_column_args', $columnHtml, $row);
     }
 
     private function render_expiration_hook_args(array $row)

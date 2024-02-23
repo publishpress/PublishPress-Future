@@ -11,6 +11,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = PublishPress\Future\Core\DI\Container::getInstance();
 $debug = $container->get(ServicesAbstract::DEBUG);
+$hooks = $container->get(ServicesAbstract::HOOKS);
 
 $isSchemaHealthOk = ActionArgsSchema::checkSchemaHealth();
 $schemaHealthErrors = ActionArgsSchema::getSchemaHealthErrors();
@@ -123,7 +124,7 @@ $schemaHealthErrors = ActionArgsSchema::getSchemaHealthErrors();
                         <?php endif; ?>
                     </td>
                 </tr>
-                <?php do_action(HooksAbstract::ACTION_AFTER_DEBUG_LOG_SETTING); ?>
+                <?php $hooks->doAction(HooksAbstract::ACTION_AFTER_DEBUG_LOG_SETTING); ?>
 
                 <tr><td colspan="2"><hr></td></tr>
 

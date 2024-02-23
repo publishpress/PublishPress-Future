@@ -3395,12 +3395,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "35e3cbdb5fe90347ab6ce24d8040dd76fa1b65eb"
+                "reference": "5e3db2aab1a67e54877e713ccc341e440ccabd1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/35e3cbdb5fe90347ab6ce24d8040dd76fa1b65eb",
-                "reference": "35e3cbdb5fe90347ab6ce24d8040dd76fa1b65eb",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/5e3db2aab1a67e54877e713ccc341e440ccabd1f",
+                "reference": "5e3db2aab1a67e54877e713ccc341e440ccabd1f",
                 "shasum": ""
             },
             "require": {
@@ -3450,7 +3450,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-22T13:52:50+00:00"
+            "time": "2024-02-23T15:07:29+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3777,12 +3777,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b59fa6534869a57ccfe0142d08aef3db59cd2680"
+                "reference": "1a156980d78a6666721b7e8e8502fe210b587fcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b59fa6534869a57ccfe0142d08aef3db59cd2680",
-                "reference": "b59fa6534869a57ccfe0142d08aef3db59cd2680",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1a156980d78a6666721b7e8e8502fe210b587fcd",
+                "reference": "1a156980d78a6666721b7e8e8502fe210b587fcd",
                 "shasum": ""
             },
             "require": {
@@ -3856,7 +3856,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.6.17"
             },
             "funding": [
                 {
@@ -3872,7 +3872,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-14T07:00:59+00:00"
+            "time": "2024-02-23T13:14:51+00:00"
         },
         {
             "name": "psr/cache",
@@ -5580,12 +5580,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "45c61f55b6ead1a86212c0a75c7a635456a2844e"
+                "reference": "1d256d13f17933c3fd8fc5738616dff2418ceeaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/45c61f55b6ead1a86212c0a75c7a635456a2844e",
-                "reference": "45c61f55b6ead1a86212c0a75c7a635456a2844e",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/1d256d13f17933c3fd8fc5738616dff2418ceeaf",
+                "reference": "1d256d13f17933c3fd8fc5738616dff2418ceeaf",
                 "shasum": ""
             },
             "require": {
@@ -5653,7 +5653,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-02-20T17:38:16+00:00"
+            "time": "2024-02-23T05:12:34+00:00"
         },
         {
             "name": "symfony/browser-kit",

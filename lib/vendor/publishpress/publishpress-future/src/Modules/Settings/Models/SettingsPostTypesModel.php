@@ -9,11 +9,30 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use PublishPress\Future\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Core\HookableInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class SettingsPostTypesModel
 {
+    /**
+     * @var HookableInterface
+     */
+    private $hooks;
+
+    /**
+     * @var SettingsFacade
+     */
+    private $settings;
+
+    public function __construct()
+    {
+        $container = Container::getInstance();
+
+        $this->hooks = $container->get(ServicesAbstract::HOOKS);
+        $this->settings = $container->get(ServicesAbstract::SETTINGS);
+    }
+
     public function getPostTypes()
     {
         $container = Container::getInstance();
@@ -31,11 +50,7 @@ class SettingsPostTypesModel
         foreach ($postTypes as $postType) {
             $postTypeObject = get_post_type_object($postType);
 
-            // TODO: Use DI here!!
-            $container = Container::getInstance();
-            $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-
-            $defaults = $settingsFacade->getPostTypeDefaults($postType);
+            $defaults = $this->settings->getPostTypeDefaults($postType);
 
             $terms = isset($defaults['terms']) ? $defaults['terms'] : [];
             if (is_string($terms)) {
@@ -65,10 +80,10 @@ class SettingsPostTypesModel
                 'emailNotification' => isset($defaults['emailnotification']) ? $defaults['emailnotification'] : '',
                 'defaultExpireType' => isset($defaults['default-expire-type']) ? $defaults['default-expire-type'] : '',
                 'defaultExpireOffset' => isset($defaults['default-custom-date']) ? $defaults['default-custom-date'] : '',
-                'globalDefaultExpireOffset' => $settingsFacade->getGeneralDateTimeOffset(),
+                'globalDefaultExpireOffset' => $this->settings->getGeneralDateTimeOffset(),
             ];
 
-            $settings = apply_filters(
+            $settings = $this->hooks->applyFilters(
                 HooksAbstract::FILTER_SETTINGS_POST_TYPE,
                 $settings,
                 $postType

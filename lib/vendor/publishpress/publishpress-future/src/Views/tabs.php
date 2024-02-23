@@ -1,13 +1,18 @@
 <?php
 
 use \PublishPress\Future\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+
+$container = Container::getInstance();
+$hooks = $container->get(ServicesAbstract::HOOKS);
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $current_tab = empty($_GET['tab']) ? 'defaults' : sanitize_title(wp_unslash($_GET['tab']));
 
-$debugIsEnabled = apply_filters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
+$debugIsEnabled = $hooks->applyFilters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
 $baseLink = 'admin.php?page=publishpress-future&tab=';
 
 $tabs = [
@@ -46,8 +51,7 @@ if ($debugIsEnabled) {
     ];
 }
 
-$tabs = apply_filters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
-
+$tabs = $hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
 ?>
 
 <div class="wrap">

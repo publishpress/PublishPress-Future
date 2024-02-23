@@ -3,8 +3,6 @@
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
-use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -44,7 +42,10 @@ class PostExpirator_Facade
      */
     private function hooks()
     {
-        add_filter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
+        $container = Container::getInstance();
+        $hooks = $container->get(ServicesAbstract::HOOKS);
+
+        $hooks->addFilter('cme_plugin_capabilities', [$this, 'filter_cme_capabilities'], 20);
     }
 
     /**

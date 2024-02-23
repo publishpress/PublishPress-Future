@@ -23,7 +23,7 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
      */
     private $cronAdapter;
 
-    private $hooksFacade;
+    private $hooks;
 
     /**
      * @var \Closure
@@ -32,18 +32,18 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
 
     /**
      * @param \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface $cronAdapter
-     * @param \PublishPress\Future\Core\HookableInterface $hooksFacade
+     * @param \PublishPress\Future\Core\HookableInterface $hooks
      */
     public function __construct(
         CronInterface $cronAdapter,
-        HookableInterface $hooksFacade,
+        HookableInterface $hooks,
         \Closure $expirablePostModelFactory
     ) {
         $this->cronAdapter = $cronAdapter;
-        $this->hooksFacade = $hooksFacade;
+        $this->hooks = $hooks;
 
-        $this->hooksFacade->addAction(self::HOOK, [$this, 'migrate']);
-        $this->hooksFacade->addAction(
+        $this->hooks->addAction(self::HOOK, [$this, 'migrate']);
+        $this->hooks->addAction(
             ExpiratorHooks::FILTER_ACTION_SCHEDULER_LIST_COLUMN_HOOK,
             [$this, 'formatLogActionColumn'],
             10,
@@ -94,7 +94,6 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
             $postModel = $factory($postId);
 
             $expireType = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true);
-            $expirationEnabled = $postModel->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true) === 'saved';
             $expirationTaxonomy = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true);
             $expirationCategories = (array)$postModel->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
 
@@ -104,7 +103,7 @@ class V30000WPCronToActionsScheduler implements MigrationInterface
                 'categoryTaxonomy' => $expirationTaxonomy,
             ];
 
-            do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $eventData['time'], $args);
+            $this->hooks->doAction(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $eventData['time'], $args);
 
             wp_unschedule_event($eventData['time'], $eventData['hook'], $eventData['args']);
         }
