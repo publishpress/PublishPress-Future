@@ -417,11 +417,15 @@ class ExpirablePostModel extends PostModel
         $this->logOnAction($expirationLog);
 
         $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
-        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
-        $this->deleteExpirationPostMeta();
+        $this->unscheduleAction();
 
         return true;
+    }
+
+    public function unscheduleAction()
+    {
+        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $this->getPostId());
     }
 
     /**
@@ -752,6 +756,14 @@ class ExpirablePostModel extends PostModel
         return $timestamp;
     }
 
+    public function hasActionScheduledInPostMeta()
+    {
+        $timestampInPostMeta = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+
+        return ! empty($timestampInPostMeta)
+            && in_array($this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true), ['saved', 1, '1']);
+    }
+
     /**
      * This method will schedule/unschedule future actions for the post based
      * on the future action data found in the post meta. If no post meta is
@@ -765,12 +777,14 @@ class ExpirablePostModel extends PostModel
     public function syncScheduleWithPostMeta()
     {
         $timestampInPostMeta = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
-        $scheduledInPostMeta = ! empty($timestampInPostMeta)
-                               && in_array($this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true), ['saved', 1, '1']);
-        $scheduled = $this->isExpirationEnabled();
+        $scheduledInPostMeta = $this->hasActionScheduledInPostMeta();
 
+        $scheduled = $this->isExpirationEnabled();
+        $postId = $this->getPostId();
+
+        // FIXME: Should we really unschedule under the following conditional?
         if (! $scheduledInPostMeta && $scheduled) {
-            $this->scheduler->unschedule($this->getPostId());
+            $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
             return;
         }
