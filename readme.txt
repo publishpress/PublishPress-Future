@@ -99,7 +99,8 @@ This section describes how to install the plugin and get it working.
 * CHANGED: Remove the X and Facebook icons from the footer in the admin pages, #667;
 * CHANGED: Updated the URLs on the plugin's footer, #667;
 * CHANGED: Minor change in the description of the setting that controls the activation/deactivation future action for the post type;
-* CAHNGED: The metadata `_expiration-date-status` now can be specified as `1` or `'1'` and not only `'saved'`, #69;
+* CHANGED: The metadata `_expiration-date-status` now can be specified as `1` or `'1'` and not only `'saved'`, #69;
+* CHANGED: The action `publishpress_future/run_workflow` is now depreacated in favor of `publishpressfuture_run_workflow`;
 * CHANGED: When metadata support is enabled, a future action enabled is recognized by the presence of the date metadata field, ignoring the status field, #69;
 * CHANGED: Added support for other date formats in the date metadata field, not only unix timestamp, #69;
 * CHANGED: Minor changes to the layout of some settings pages;
@@ -109,6 +110,8 @@ This section describes how to install the plugin and get it working.
 * FIXED: Fix error when a term does not exists, #675;
 * FIXED: Add new interface for NoticeFacade: NoticeInterface;
 * FIXED: Fatal error: Delcarations of PostStatusToCustomStatus::getLabel() must be compatible with the interface, #674;
+* REMOVED: Remove the legacy action `postExpiratorExpire`. This action will not trigger the future actions anymore;
+* REMOVED: Remove the legacy action `publishpressfuture_expire`. This action will not trigger the future actions anymore;
 
 = [3.2.0] - 25 Jan, 2024 =
 
