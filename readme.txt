@@ -143,17 +143,16 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 = [UNRELEASED] =
 
 * ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
-* ADDED: Add new filter for choosing to hide or not the Future Action in the post editors: publishpressfuture_hide_metabox. Quick/Bulk edit are always displayed if the feature is activated for the post type;
+* ADDED: Add new filter for choosing to hide or not the Future Action in the post editors: publishpressfuture_hide_metabox, #69;
 * ADDED: Add new filter for filtering the post metakeys in the post model: publishpressfuture_action_meta_key, #69;
 * ADDED: Add new method `medataExists` to the `PublishPress\Future\Framework\WordPress\Models\PostModel` class;
 * ADDED: Add support to a hash in the the post meta `pp_future_metadata_hash`, to identify if the future action's post meta has changed or was scheduled by metadata (fully availale only on PRO);
 * CHANGED: Deprecated the filter `postexpirator_unset_post_types` in favor of the new filter `publishpressfuture_supported_post_types`, allowing not only remove, but add new post types to the list of supported post types, #677;
 * CHANGED: The list of post types in the settings page now also shows the non-public post types that are not built in on WordPress, #677;
-* CHANGED: The scheduling datetime now supports any date format supported by `strtotime`, not only unixtime;
-* CHANGED: Remove the X and Facebook icons from the footer in the admin pages;
-* CHANGED: Updated the URLs on the plugin's footer;
+* CHANGED: Remove the X and Facebook icons from the footer in the admin pages, #667;
+* CHANGED: Updated the URLs on the plugin's footer, #667;
 * CHANGED: Minor change in the description of the setting that controls the activation/deactivation future action for the post type;
-* CAHNGED: The metadata `_expiration-date-status` now can be specified as `1` or `'1'` and not only `'saved'`;
+* CAHNGED: The metadata `_expiration-date-status` now can be specified as `1` or `'1'` and not only `'saved'`, #69;
 * FIXED: Fix language files for ES, IT, FR, #665;
 * FIXED: Fix error when a term does not exists, #675;
 * FIXED: Add new interface for NoticeFacade: NoticeInterface;
