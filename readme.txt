@@ -152,7 +152,8 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Remove the X and Facebook icons from the footer in the admin pages, #667;
 * CHANGED: Updated the URLs on the plugin's footer, #667;
 * CHANGED: Minor change in the description of the setting that controls the activation/deactivation future action for the post type;
-* CAHNGED: The metadata `_expiration-date-status` now can be specified as `1` or `'1'` and not only `'saved'`, #69;
+* CHANGED: The metadata `_expiration-date-status` now can be specified as `1` or `'1'` and not only `'saved'`, #69;
+* CHANGED: The action `publishpress_future/run_workflow` is now depreacated in favor of `publishpressfuture_run_workflow`;
 * REMOVED: Remove the legacy action `postExpiratorExpire`. This action will not trigger the future actions anymore;
 * REMOVED: Remove the legacy action `publishpressfuture_expire`. This action will not trigger the future actions anymore;
 * FIXED: Fix language files for ES, IT, FR, #665;

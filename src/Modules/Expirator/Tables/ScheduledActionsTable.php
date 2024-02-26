@@ -347,10 +347,18 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         return '<span class="' . esc_attr($iconClass) . '"></span> ' . esc_html($status);
     }
 
+    private function rowIsAWorkflow(array $row)
+    {
+        return in_array($row['hook'], [HooksAbstract::ACTION_RUN_WORKFLOW, HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW])
+        && isset($row['args']['workflow'])
+        && $row['args']['workflow'] === 'expire';
+    }
+
     public function column_hook(array $row)
     {
         $columnHtml = '<span title="' . esc_attr($row['hook']) . '">';
-        if ($row['hook'] === HooksAbstract::ACTION_RUN_WORKFLOW && isset($row['args']['workflow']) && $row['args']['workflow'] === 'expire') {
+
+        if ($this->rowIsAWorkflow($row)) {
             $columnHtml .= $this->render_expiration_hook_action($row);
         } else {
             $columnHtml .= esc_html(
@@ -408,7 +416,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
 
         $columnHtml = '';
-        if ($row['hook'] === HooksAbstract::ACTION_RUN_WORKFLOW && isset($row['args']['workflow']) && $row['args']['workflow'] === 'expire') {
+        if ($this->rowIsAWorkflow($row)) {
             $columnHtml = $this->render_expiration_hook_args($row);
         } else {
             $columnHtml = '<ul>';

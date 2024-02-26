@@ -23,7 +23,8 @@ abstract class HooksAbstract
     const FILTER_LEGACY_CUSTOM_EXPIRATION_TYPE = 'postexpirator_custom_posttype_expire';
     const ACTION_SCHEDULE_POST_EXPIRATION = 'publishpressfuture_schedule_expiration';
     const ACTION_UNSCHEDULE_POST_EXPIRATION = 'publishpressfuture_unschedule_expiration';
-    const ACTION_RUN_WORKFLOW = 'publishpress_future/run_workflow';
+    const ACTION_RUN_WORKFLOW = 'publishpressfuture_run_workflow';
+    const ACTION_LEGACY_RUN_WORKFLOW = 'publishpress_future/run_workflow';
     const ACTION_POST_EXPIRED = 'publishpressfuture_post_expired';
     const ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS = 'publishpress_future/v30000_replace_footer_placeholders';
     const ACTION_MIGRATE_WPCRON_EXPIRATIONS = 'publishpress_future/v30000_migrate_wpcron_expirations';
