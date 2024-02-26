@@ -56,7 +56,7 @@ abstract class HooksAbstract
     const FILTER_POSTS_JOIN = 'posts_join';
     const FILTER_CONTENT_FOOTER = 'publishpress_future/content_footer';
     const FILTER_ACTION_BASE_DATE_STRING = 'publishpress_future/action_base_date_string';
-    const FILTER_ACTION_META_KEY = 'publishpress_future/action_meta_key';
+    const FILTER_ACTION_META_KEY = 'publishpressfuture_action_meta_key';
     const FILTER_SUPPORTED_POST_TYPES = 'publishpressfuture_supported_post_types';
     const FILTER_UNSET_POST_TYPES_DEPRECATED = 'postexpirator_unset_post_types';
     const FILTER_HIDE_METABOX = 'publishpressfuture_hide_metabox';
