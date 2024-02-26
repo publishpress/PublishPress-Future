@@ -86,12 +86,19 @@ This section describes how to install the plugin and get it working.
 = [UNRELEASED] =
 
 * ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
+* ADDED: Add new filter for choosing to hide or not the Future Action in the post editors: publishpressfuture_hide_metabox. Quick/Bulk edit are always displayed if the feature is activated for the post type;
+* ADDED: Add metadata support for the future action data, allowing to schedule actions based on metadata (support for ACF, Pods, and other plugins), #69;
 * ADDED: Add metadata mapping for allowing integrating with 3rd party plugins, #69;
+* ADDED: Add a setting for hiding the Future Action metabox on the post edit screen and keeping the future actions enabled, #69;
 * ADDED: New Gutenberg Block for displaying the future action date, #171;
+* CHANGED: When metadata support is enabled, a future action enabled is recognized by the presence of the date metadata field, ignoring the status field, #69;
+* CHANGED: Added support for other date formats in the date metadata field, not only unix timestamp, #69;
+* CHANGED: The status field now supports values 1, '1' and 'saved' for backward compatibility, but is now deprecated, #69;
 * CHANGED: Deprecated the filter `postexpirator_unset_post_types` in favor of the new filter `publishpressfuture_supported_post_types`, allowing not only remove, but add new post types to the list of supported post types, #677;
 * CHANGED: The list of post types in the settings page now also shows the non-public post types that are not built in on WordPress, #677;
 * CHANGED: Minor changes to the layout of some settings pages;
 * CHANGED: Change the default settings tab to "Post Types" instead of "General";
+* CHANGED: Change the links and items in the footer on the plugin's admin pages, #667;
 * FIXED: Fix language files for ES, IT, FR, #665;
 * FIXED: Fix error when a term does not exists, #675;
 * FIXED: Fatal error: Delcarations of PostStatusToCustomStatus::getLabel() must be compatible with the interface, #674;
