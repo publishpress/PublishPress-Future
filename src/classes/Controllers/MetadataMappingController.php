@@ -92,7 +92,7 @@ class MetadataMappingController implements ModuleInterface
         );
 
         $this->hooks->addAction(
-            HooksAbstract::ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING,
+            HooksAbstract::ACTION_PROCESS_METADATA,
             [$this, 'processMetadataDrivenScheduling'],
             10,
             2
@@ -128,7 +128,7 @@ class MetadataMappingController implements ModuleInterface
         }
 
         foreach ($this->importedPostIDs as $postId) {
-            $this->hooks->doAction(HooksAbstract::ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING, $postId);
+            $this->hooks->doAction(HooksAbstract::ACTION_PROCESS_METADATA, $postId);
         }
     }
 
@@ -140,7 +140,7 @@ class MetadataMappingController implements ModuleInterface
             return;
         }
 
-        $this->hooks->doAction(HooksAbstract::ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING, $postId, $post);
+        $this->hooks->doAction(HooksAbstract::ACTION_PROCESS_METADATA, $postId, $post);
     }
 
     private function getActionDateFromMetadata($postId)

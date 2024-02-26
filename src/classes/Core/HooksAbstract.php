@@ -53,7 +53,7 @@ abstract class HooksAbstract
 
     const ACTION_ENQUEUE_BLOCK_EDITOR_ASSETS = 'enqueue_block_editor_assets';
 
-    const ACTION_PROCESS_METADATA_DRIVEN_SCHEDULING = 'publishpressfuturepro_process_metadata_driven_scheduling';
+    const ACTION_PROCESS_METADATA = 'publishpressfuturepro_process_metadata';
 
     const ACTION_IMPORT_START = 'import_start';
 
