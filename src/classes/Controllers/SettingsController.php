@@ -213,20 +213,20 @@ class SettingsController implements ModuleInterface
                         ),
                         'metadataMapping' => __('Metadata Mapping', 'publishpress-future-pro'),
                         'enableMetadataMappingHelp' => __(
-                            'For using the default mapping, please leave the fields empty.',
+                            'To use the default mapping, please leave the fields empty.',
                             'publishpress-future-pro'
                         ),
                         'readmoreMetadataMappingHelp' => __(
                             'Read more about metadata mapping.',
                             'publishpress-future-pro'
                         ),
-                        'readmoreMetadataMappingHelpUrl' => 'https://publishpress.com/knowledge-base/metadata-driven-scheduling-feature-overview/',
+                        'readmoreMetadataMappingHelpUrl' => 'https://publishpress.com/knowledge-base/metadata-scheduling/',
                         'originalKey' => __('Original Metakey', 'publishpress-future-pro'),
                         'mappedKey' => __('New Metakey', 'publishpress-future-pro'),
                         'description' => __('Description', 'publishpress-future-pro'),
                         'hideMetabox' => __('Hide Future metabox for this post type', 'publishpress-future-pro'),
                         'hideMetaboxHelp' => __(
-                            'Check it to disable the Future metabox if using metadata control plugins (like ACF, Pods, etc.) to prevent data overwrite conflicts.',
+                            'Checking this option will disable the PublishPress Future metabox. This can prevent conflicts if you\'re using Metadata Scheduling with plugins such as ACF or Pods.',
                             'publishpress-future-pro'
                         ),
 
