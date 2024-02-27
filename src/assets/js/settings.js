@@ -2605,7 +2605,7 @@ var addMetadataSettings = exports.addMetadataSettings = function addMetadataSett
                         React.createElement("br", null),
                         React.createElement(
                             "a",
-                            { href: "{text.readmoreMetadataMappingHelpUrl", target: "_blank" },
+                            { href: _config.text.readmoreMetadataMappingHelpUrl, target: "_blank" },
                             _config.text.readmoreMetadataMappingHelp
                         )
                     )

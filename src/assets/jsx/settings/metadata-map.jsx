@@ -170,7 +170,7 @@ export const addMetadataSettings = (settingsRows, props, settingActive, useState
                             <HelpText>
                                 {text.enableMetadataMappingHelp}
                                 <br />
-                                <a href="{text.readmoreMetadataMappingHelpUrl" target="_blank">{text.readmoreMetadataMappingHelp}</a>
+                                <a href={text.readmoreMetadataMappingHelpUrl} target="_blank">{text.readmoreMetadataMappingHelp}</a>
                             </HelpText>
                         </FieldRow>
                     </Fragment>
