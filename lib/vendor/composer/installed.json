@@ -309,12 +309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "0375ae424752c86aa77d8494c120b0696769f946"
+                "reference": "1f58690e7ca80c6d4debe02d23666eae2f5f5afe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/0375ae424752c86aa77d8494c120b0696769f946",
-                "reference": "0375ae424752c86aa77d8494c120b0696769f946",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/1f58690e7ca80c6d4debe02d23666eae2f5f5afe",
+                "reference": "1f58690e7ca80c6d4debe02d23666eae2f5f5afe",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "wp-cli/i18n-command": "^2.6",
                 "wp-coding-standards/wpcs": "^3"
             },
-            "time": "2024-02-27T20:00:07+00:00",
+            "time": "2024-02-27T20:28:58+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
