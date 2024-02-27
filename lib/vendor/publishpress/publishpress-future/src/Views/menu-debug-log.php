@@ -5,7 +5,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 
 $container = Container::getInstance();
-$hooks = $container->get(ServicesAbstract::HOOKS)
+$hooks = $container->get(ServicesAbstract::HOOKS);
 
 defined('ABSPATH') or die('Direct access not allowed.');
 

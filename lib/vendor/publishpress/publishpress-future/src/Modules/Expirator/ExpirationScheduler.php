@@ -219,6 +219,16 @@ class ExpirationScheduler implements SchedulerInterface
 
         if ($this->postIsScheduled($postId)) {
             $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire']);
+            // Try to clear the legacy actions if the new one was not found
+            if (! $result) {
+                $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire']);
+            }
+            if (! $result) {
+                $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_EXPIRE_POST1, $postId);
+            }
+            if (! $result) {
+                $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_EXPIRE_POST2, $postId);
+            }
 
             $errorFeedback = null;
             if ($this->error->isWpError($result)) {
