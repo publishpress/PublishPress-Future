@@ -202,9 +202,9 @@ class SettingsController implements ModuleInterface
                         'enableCustomStatusesFalse' => __('Disabled', 'publishpress-future-pro'),
                         'selectAll' => __('Select all', 'publishpress-future-pro'),
                         'unselectAll' => __('Unselect all', 'publishpress-future-pro'),
-                        'enableMetadataDrivenScheduling' => __('Enable Metadata Integration', 'publishpress-future-pro'),
+                        'enableMetadataDrivenScheduling' => __('Enable Metadata Scheduling', 'publishpress-future-pro'),
                         'enableMetadataDrivenSchedulingDesc' => __(
-                            'Enable metadata integration for the post type',
+                            'Enable metadata scheduling for the post type',
                             'publishpress-future-pro'
                         ),
                         'enableMetadataDrivenSchedulingHelp' => __(
