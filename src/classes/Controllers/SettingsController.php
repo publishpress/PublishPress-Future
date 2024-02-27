@@ -235,18 +235,9 @@ class SettingsController implements ModuleInterface
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
                     'metadataFields' => [
                         [
-                            'originalKey' => PostMetaAbstract::EXPIRATION_STATUS,
-                            'mappedKey' => '',
-                            'label' => __('Action Status', 'publishpress-future-pro'),
-                            'description' => __(
-                                "The status for the action. Anything different than 'saved' will be considered as not active.",
-                                'publishpress-future-pro'
-                            ),
-                        ],
-                        [
                             'originalKey' => PostMetaAbstract::EXPIRATION_TIMESTAMP,
                             'mappedKey' => '',
-                            'label' => __('Action Date', 'publishpress-future-pro'),
+                            'label' => __('Action Date (Required)', 'publishpress-future-pro'),
                             'description' => __(
                                 "The date used for scheduling the action. The date must be a unix time stamp or in the 'Y-m-d H:i:s' format.",
                                 'publishpress-future-pro'
@@ -258,6 +249,15 @@ class SettingsController implements ModuleInterface
                             'label' => __('Action Type', 'publishpress-future-pro'),
                             'description' => __(
                                 'The type of action to be performed.',
+                                'publishpress-future-pro'
+                            ),
+                        ],
+                        [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_STATUS,
+                            'mappedKey' => '',
+                            'label' => __('Action Status', 'publishpress-future-pro'),
+                            'description' => __(
+                                "The status for the action. Anything different than 'saved' will be considered as not active.",
                                 'publishpress-future-pro'
                             ),
                         ],
