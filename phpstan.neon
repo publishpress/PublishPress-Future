@@ -1,0 +1,7 @@
+parameters:
+    level: 8
+    paths:
+    	- dist/post-expirator
+    excludePaths:
+        - dist/post-expirator/lib
+        - dist/post-expirator/vendor

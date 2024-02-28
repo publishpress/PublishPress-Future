@@ -42,3 +42,4 @@
 - ray.php
 - screenshot-*.png
 - composer.lock
+- phpstan.neon

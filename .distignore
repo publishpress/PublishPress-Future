@@ -46,3 +46,4 @@ tests
 version.txt
 webpack.config.js
 yarn.lock
+phpstan.neon
