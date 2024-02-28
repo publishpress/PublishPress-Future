@@ -19,3 +19,4 @@ ray.php
 /lib/vendor/woocommerce/action-scheduler/changelog.txt
 /cache
 /.cache
+.phplint.cache*
