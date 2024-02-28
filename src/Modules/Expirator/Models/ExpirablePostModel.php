@@ -819,7 +819,7 @@ class ExpirablePostModel extends PostModel
             is_array($terms) ? $terms : []
         ];
 
-        return md5(serialize($data));
+        return md5(maybe_serialize($data));
     }
 
     public function getMetadataHash()
