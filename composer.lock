@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8bafca1efca2693cd3cdfa9082439e9",
+    "content-hash": "ee3d059f929b984b192ac744d6c599c1",
     "packages": [
         {
             "name": "publishpress/publishpress-future",
