@@ -44,3 +44,4 @@
 - composer.lock
 - phpstan.neon
 - codeception.yml
+- CHANGELOG.md
