@@ -13,6 +13,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use WP_Post;
 
@@ -122,16 +123,21 @@ class ClassicEditorController implements InitializableInterface
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
         $defaults = $settingsFacade->getPostTypeDefaults($postType);
+        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
 
         // if settings are not configured, show the metabox by default only for posts and pages
         if (
+            $hideMetabox === false
+            &&
             (
-                ! isset($defaults['activeMetaBox'])
-                && in_array($postType, ['post', 'page'], true)
-            )
-            || (
-                is_array($defaults)
-                && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+                (
+                    ! isset($defaults['activeMetaBox'])
+                    && in_array($postType, ['post', 'page'], true)
+                )
+                || (
+                    is_array($defaults)
+                    && (in_array((string)$defaults['activeMetaBox'], ['active', '1'], true))
+                )
             )
         ) {
             add_meta_box(
@@ -207,32 +213,32 @@ class ClassicEditorController implements InitializableInterface
         // Classic editor, quick edit
         $shouldSchedule = isset($_POST['future_action_enabled']) && $_POST['future_action_enabled'] === '1';
 
-        if ($shouldSchedule) {
-            $opts = [
-                'expireType' => isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '',
-                'category' => isset($_POST['future_action_terms']) ? sanitize_text_field($_POST['future_action_terms']) : '',
-                'categoryTaxonomy' => isset($_POST['future_action_taxonomy']) ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
-            ];
-
-            if (! empty($opts['category'])) {
-                $taxonomiesModelFactory = Container::getInstance()->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY);
-                $taxonomiesModel = $taxonomiesModelFactory();
-
-                $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
-                    $opts['categoryTaxonomy'],
-                    explode(',', $opts['category'])
-                );
-            }
-
-            $date = isset($_POST['future_action_date']) ? sanitize_text_field($_POST['future_action_date']) : '';
-            $date = strtotime($date);
-
-            do_action(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $date, $opts);
+        if (! $shouldSchedule) {
+            $this->hooks->doAction(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
             return;
         }
 
-        do_action(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
+        $opts = [
+            'expireType' => isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '',
+            'category' => isset($_POST['future_action_terms']) ? sanitize_text_field($_POST['future_action_terms']) : '',
+            'categoryTaxonomy' => isset($_POST['future_action_taxonomy']) ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
+        ];
+
+        if (! empty($opts['category'])) {
+            $taxonomiesModelFactory = Container::getInstance()->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY);
+            $taxonomiesModel = $taxonomiesModelFactory();
+
+            $opts['category'] = $taxonomiesModel->normalizeTermsCreatingIfNecessary(
+                $opts['categoryTaxonomy'],
+                explode(',', $opts['category'])
+            );
+        }
+
+        $date = isset($_POST['future_action_date']) ? sanitize_text_field($_POST['future_action_date']) : '';
+        $date = strtotime($date);
+
+        $this->hooks->doAction(ExpiratorHooks::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $date, $opts);
     }
 
     public function enqueueScripts()

@@ -8,6 +8,7 @@ namespace PublishPress\Future\Modules\Expirator\Models;
 use Closure;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPress\Future\Framework\WordPress\Models\PostModel;
+use PublishPress\Future\Modules\Debug\DebugInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
@@ -17,20 +18,12 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirablePostModel extends PostModel
 {
-    /**
-     * @var \PublishPress\Future\Modules\Debug\Debug
-     */
-    private $debug;
+    const FLAG_METADATA_HASH = 'pp_future_metadata_hash';
 
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
      */
     private $options;
-
-    /**
-     * @var \PublishPress\Future\Framework\WordPress\Facade\HooksFacade
-     */
-    private $hooks;
 
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\UsersFacade
@@ -113,7 +106,7 @@ class ExpirablePostModel extends PostModel
 
     /**
      * @param int $postId
-     * @param \PublishPress\Future\Modules\Debug\Debug $debug
+     * @param \PublishPress\Future\Modules\Debug\DebugInterface $debug
      * @param \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade $options
      * @param \PublishPress\Future\Framework\WordPress\Facade\HooksFacade $hooks
      * @param \PublishPress\Future\Framework\WordPress\Facade\UsersFacade $users
@@ -127,7 +120,7 @@ class ExpirablePostModel extends PostModel
      */
     public function __construct(
         $postId,
-        $debug,
+        DebugInterface $debug,
         $options,
         $hooks,
         $users,
@@ -139,12 +132,11 @@ class ExpirablePostModel extends PostModel
         $actionArgsModelFactory,
         $defaultDataModelFactory
     ) {
-        parent::__construct($postId, $termModelFactory);
+        parent::__construct($postId, $termModelFactory, $debug, $hooks);
 
         $this->postId = $postId;
         $this->debug = $debug;
         $this->options = $options;
-        $this->hooks = $hooks;
         $this->scheduler = $scheduler;
         $this->users = $users;
         $this->settings = $settings;
@@ -425,11 +417,15 @@ class ExpirablePostModel extends PostModel
         $this->logOnAction($expirationLog);
 
         $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
-        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
-        $this->deleteExpirationPostMeta();
+        $this->unscheduleAction();
 
         return true;
+    }
+
+    public function unscheduleAction()
+    {
+        $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $this->getPostId());
     }
 
     /**
@@ -590,7 +586,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string
          */
-        $emailSubject = apply_filters(
+        $emailSubject = $this->hooks->applyFilters(
             HooksAbstract::FILTER_EXPIRED_EMAIL_SUBJECT,
             $emailSubject,
             $this,
@@ -628,7 +624,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string
          */
-        $emailBody = apply_filters(HooksAbstract::FILTER_EXPIRED_EMAIL_BODY, $emailBody, $this, $expirationAction);
+        $emailBody = $this->hooks->applyFilters(HooksAbstract::FILTER_EXPIRED_EMAIL_BODY, $emailBody, $this, $expirationAction);
 
         $emailAddresses = array();
 
@@ -666,7 +662,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return array<string>
          */
-        $emailAddresses = apply_filters(
+        $emailAddresses = $this->hooks->applyFilters(
             HooksAbstract::FILTER_EXPIRED_EMAIL_ADDRESSES,
             $emailAddresses,
             $this,
@@ -682,7 +678,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string|array<string>
          */
-        $emailHeaders = apply_filters(
+        $emailHeaders = $this->hooks->applyFilters(
             HooksAbstract::FILTER_EXPIRED_EMAIL_HEADERS,
             $emailHeaders,
             $this,
@@ -697,7 +693,7 @@ class ExpirablePostModel extends PostModel
          * @param ExpirationActionInterface $expirationAction
          * @return string|array<string>
          */
-        $emailAttachments = apply_filters(
+        $emailAttachments = $this->hooks->applyFilters(
             HooksAbstract::FILTER_EXPIRED_EMAIL_ATTACHMENTS,
             $emailAttachments,
             $this,
@@ -747,6 +743,25 @@ class ExpirablePostModel extends PostModel
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TERMS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
+        $this->deleteMeta(self::FLAG_METADATA_HASH);
+    }
+
+    public function forceTimestampToUnixtime($timestamp)
+    {
+        // If timestamp is not in unixtime, convert it.
+        if (! is_numeric($timestamp)) {
+            $timestamp = strtotime($timestamp);
+        }
+
+        return $timestamp;
+    }
+
+    public function hasActionScheduledInPostMeta()
+    {
+        $timestampInPostMeta = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+
+        return ! empty($timestampInPostMeta)
+            && in_array($this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true), ['saved', 1, '1']);
     }
 
     /**
@@ -762,12 +777,14 @@ class ExpirablePostModel extends PostModel
     public function syncScheduleWithPostMeta()
     {
         $timestampInPostMeta = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
-        $scheduledInPostMeta = ! empty($timestampInPostMeta)
-                               && $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true) === 'saved';
-        $scheduled = $this->isExpirationEnabled();
+        $scheduledInPostMeta = $this->hasActionScheduledInPostMeta();
 
+        $scheduled = $this->isExpirationEnabled();
+        $postId = $this->getPostId();
+
+        // FIXME: Should we really unschedule under the following conditional?
         if (! $scheduledInPostMeta && $scheduled) {
-            $this->scheduler->unschedule($this->getPostId());
+            $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
 
             return;
         }
@@ -779,7 +796,34 @@ class ExpirablePostModel extends PostModel
                 'categoryTaxonomy' => $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true)
             ];
 
-            $this->scheduler->schedule($this->getPostId(), $timestampInPostMeta, $opts);
+            $timestampInPostMeta = $this->forceTimestampToUnixtime($timestampInPostMeta);
+
+            $this->hooks->doAction(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, $timestampInPostMeta, $opts);
         }
+    }
+
+    public function calcMetadataHash(): string
+    {
+        $terms = $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true);
+        $timestamp = $this->getMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, true);
+
+        if (empty($timestamp)) {
+            return '';
+        }
+
+        $data = [
+            $timestamp,
+            $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true),
+            $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+            $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true),
+            is_array($terms) ? $terms : []
+        ];
+
+        return md5(maybe_serialize($data));
+    }
+
+    public function getMetadataHash()
+    {
+        $this->getMeta(self::FLAG_METADATA_HASH, true);
     }
 }

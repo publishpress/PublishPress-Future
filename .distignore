@@ -16,7 +16,11 @@
 .vscode
 /.wordpress-org
 /dev-workspace
+/cache
+/.cache
 /dist
+/tests
+/tests-old
 /lib/composer.json
 /lib/composer.lock
 /lib/vendor/woocommerce/action-scheduler/README.md
@@ -27,6 +31,7 @@ README.md
 RoboFile.php
 bin
 codeception.dist.yml
+codeception.yml
 composer.json
 composer.lock
 jsconfig.json
@@ -41,3 +46,4 @@ tests
 version.txt
 webpack.config.js
 yarn.lock
+phpstan.neon

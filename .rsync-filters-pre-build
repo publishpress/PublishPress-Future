@@ -14,6 +14,7 @@
 - .vscode
 - .wordpress-org
 - /tests
+- /tests-old
 - /vendor
 - /version.txt
 - /webpack.config.js
@@ -29,6 +30,8 @@
 - codeception.dist.yml
 - cs
 - dev-workspace
+- cache
+- .cache
 - dist
 - jsconfig.json
 - node_modules
@@ -39,3 +42,4 @@
 - ray.php
 - screenshot-*.png
 - composer.lock
+- phpstan.neon

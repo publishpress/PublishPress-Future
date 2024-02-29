@@ -65,11 +65,7 @@ class ExpirationController implements InitializableInterface
             [$this, 'onActionRunPostExpiration']
         );
         $this->hooks->addAction(
-            HooksAbstract::ACTION_LEGACY_EXPIRE_POST2,
-            [$this, 'onActionRunPostExpiration']
-        );
-        $this->hooks->addAction(
-            HooksAbstract::ACTION_LEGACY_EXPIRE_POST1,
+            HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW,
             [$this, 'onActionRunPostExpiration']
         );
     }

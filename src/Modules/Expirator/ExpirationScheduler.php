@@ -11,6 +11,7 @@ use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 
 use function tad\WPBrowser\vendorDir;
@@ -174,12 +175,21 @@ class ExpirationScheduler implements SchedulerInterface
         $postModelFactory = $this->postModelFactory;
         $postModel = $postModelFactory($postId);
 
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, isset($opts['expireType']) ? $opts['expireType'] : '');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, isset($opts['category']) ? $opts['category'] : '');
+        $type = isset($opts['expireType']) ? $opts['expireType'] : '';
+        $taxonomy = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
+        $terms = isset($opts['category']) ? $opts['category'] : '';
+
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $timestamp);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $type);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $taxonomy);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $terms);
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $opts);
+
+        $postModel->updateMeta(
+            ExpirablePostModel::FLAG_METADATA_HASH,
+            $postModel->calcMetadataHash()
+        );
     }
 
     private function unscheduleIfScheduled($postId, $timestamp)
@@ -209,6 +219,16 @@ class ExpirationScheduler implements SchedulerInterface
 
         if ($this->postIsScheduled($postId)) {
             $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire']);
+            // Try to clear the legacy actions if the new one was not found
+            if (! $result) {
+                $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire']);
+            }
+            if (! $result) {
+                $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_EXPIRE_POST1, $postId);
+            }
+            if (! $result) {
+                $result = $this->cron->clearScheduledAction(HooksAbstract::ACTION_LEGACY_EXPIRE_POST2, $postId);
+            }
 
             $errorFeedback = null;
             if ($this->error->isWpError($result)) {

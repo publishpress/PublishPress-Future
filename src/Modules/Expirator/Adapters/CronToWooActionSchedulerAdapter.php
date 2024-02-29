@@ -8,6 +8,14 @@ namespace PublishPress\Future\Modules\Expirator\Adapters;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 
+use function as_enqueue_async_action;
+use function as_get_scheduled_actions;
+use function as_has_scheduled_action;
+use function as_next_scheduled_action;
+use function as_schedule_single_action;
+use function as_unschedule_action;
+use function as_unschedule_all_actions;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class CronToWooActionSchedulerAdapter implements CronInterface
@@ -54,7 +62,14 @@ class CronToWooActionSchedulerAdapter implements CronInterface
      */
     public function postHasScheduledActions($postId)
     {
-        return as_has_scheduled_action(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
+        $hasScheduledActions = as_has_scheduled_action(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
+
+        if (! $hasScheduledActions) {
+            // Try checking with the legacy hook.
+            $hasScheduledActions = as_has_scheduled_action(HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
+        }
+
+        return $hasScheduledActions;
     }
 
     /**

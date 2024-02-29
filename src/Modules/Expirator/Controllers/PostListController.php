@@ -107,7 +107,7 @@ class PostListController implements InitializableInterface
         $postTypes = $postTypesModel->getPostTypes();
 
         foreach ($postTypes as $postType) {
-            add_filter('manage_edit-' . $postType . '_sortable_columns', [$this, 'sortableColumn']);
+            $this->hooks->addFilter('manage_edit-' . $postType . '_sortable_columns', [$this, 'sortableColumn']);
         }
     }
 

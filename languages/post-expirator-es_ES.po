@@ -6,7 +6,7 @@ msgstr ""
 "WordPress Posts - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "POT-Creation-Date: 2024-01-25T18:01:22+00:00\n"
-"PO-Revision-Date: 2024-01-25 15:06-0300\n"
+"PO-Revision-Date: 2024-01-26 16:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #. Plugin Name of the plugin
 #: src/Modules/Expirator/Controllers/BlockEditorController.php:110
@@ -329,7 +329,7 @@ msgstr "Eliminar %s seleccionados"
 
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemoveAll.php:65
 msgid "The following terms (%s) were removed from the %s: %s."
-msgstr "Los siguientes términos (%s) fueron eliminados del %s: %s."
+msgstr "Los siguientes términos (%s) fueron eliminados de la %s: %s."
 
 #. translators: %s is the taxonomy name (plural)
 #: src/Modules/Expirator/ExpirationActions/PostCategoryRemoveAll.php:107
@@ -430,7 +430,7 @@ msgstr "Registros"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:52
 msgid "Scheduled Date"
-msgstr "Fecha Programada"
+msgstr "Fecha programada"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:53
 msgid "Recurrence"
@@ -516,7 +516,7 @@ msgstr "Pendiente"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:275
 msgid "Complete"
-msgstr "Completado"
+msgstr "Completar"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:276
 msgid "Failed"
@@ -536,7 +536,7 @@ msgstr "Todos"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:315
 msgid "Search hook, args and claim ID"
-msgstr "Buscar hook, args y ID de reclamación"
+msgstr "Buscar gancho, argumentos e ID de reclamación"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:340
 msgid "Scheduled"
@@ -643,7 +643,7 @@ msgstr "Elige la acción de caducidad por defecto para el tipo de contenido."
 #: src/Modules/Settings/Controllers/Controller.php:214
 #: src/Views/taxonomy-field.php:11
 msgid "Select the taxonomy to be used for actions."
-msgstr "Seleccione la taxonomía que se utilizará para las acciones."
+msgstr "Selecciona la taxonomía que se utilizará para las acciones."
 
 #: src/Modules/Settings/Controllers/Controller.php:218
 msgid "Auto-enable"
@@ -741,7 +741,7 @@ msgstr "Mejora la potencia de PublishPress Future con la versión Pro:"
 #: src/Views/ad-banner-right-sidebar.php:23
 msgid "Set the action date based on the post's publishing date"
 msgstr ""
-"Establezca la fecha de la acción en función de la fecha de publicación de la "
+"Establece la fecha de la acción en función de la fecha de publicación de la "
 "entrada"
 
 #: src/Views/ad-banner-right-sidebar.php:25
@@ -813,7 +813,7 @@ msgstr "Detallado"
 
 #: src/Views/menu-advanced.php:50
 msgid "Displays all information in the Future Action column."
-msgstr "Muestra toda la información de la columna Acción Futura."
+msgstr "Muestra toda la información de la columna «Acción de Future»."
 
 #: src/Views/menu-advanced.php:62
 msgid "Simplified"
@@ -821,7 +821,7 @@ msgstr "Simplificado"
 
 #: src/Views/menu-advanced.php:64
 msgid "Displays only the icon and date/time."
-msgstr "Muestra sólo el icono y la fecha/hora."
+msgstr "Muestra solo el icono y la fecha/hora."
 
 #: src/Views/menu-advanced.php:73
 msgid "Time format in the date picker"

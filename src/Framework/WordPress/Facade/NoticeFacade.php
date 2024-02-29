@@ -4,7 +4,8 @@ namespace PublishPress\Future\Framework\WordPress\Facade;
 
 use PublishPress\Future\Core\HookableInterface;
 
-class NoticeFacade {
+class NoticeFacade implements NoticeInterface
+{
     private $notices = [];
 
     private $initialized = false;

@@ -92,6 +92,6 @@ class HooksFacade implements HookableInterface
 
     public function ksesRemoveFilters()
     {
-        kses_remove_filters();
+        \kses_remove_filters();
     }
 }

@@ -5,12 +5,15 @@
 
 namespace PublishPress\Future\Modules\Expirator\Migrations;
 
+use Action_Scheduler\Migration\Scheduler;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPress\Future\Modules\Expirator\ExpirationScheduler;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\MigrationInterface;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
@@ -111,12 +114,17 @@ class V30001RestorePostMeta implements MigrationInterface
                 continue;
             }
 
-            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $expirationData['expireType']);
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $expirationData['date']);
             $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $expirationData['expireType']);
             $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $expirationData['categoryTaxonomy']);
             $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $expirationData['category']);
-            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $expirationData['date']);
             $postModel->updateMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $postModel->getExpirationOptions());
+
+            $postModel->updateMeta(
+                ExpirablePostModel::FLAG_METADATA_HASH,
+                $postModel->calcMetadataHash()
+            );
         }
 
         return $events;

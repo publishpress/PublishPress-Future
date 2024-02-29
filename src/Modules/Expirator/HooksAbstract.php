@@ -23,7 +23,8 @@ abstract class HooksAbstract
     const FILTER_LEGACY_CUSTOM_EXPIRATION_TYPE = 'postexpirator_custom_posttype_expire';
     const ACTION_SCHEDULE_POST_EXPIRATION = 'publishpressfuture_schedule_expiration';
     const ACTION_UNSCHEDULE_POST_EXPIRATION = 'publishpressfuture_unschedule_expiration';
-    const ACTION_RUN_WORKFLOW = 'publishpress_future/run_workflow';
+    const ACTION_RUN_WORKFLOW = 'publishpressfuture_run_workflow';
+    const ACTION_LEGACY_RUN_WORKFLOW = 'publishpress_future/run_workflow';
     const ACTION_POST_EXPIRED = 'publishpressfuture_post_expired';
     const ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS = 'publishpress_future/v30000_replace_footer_placeholders';
     const ACTION_MIGRATE_WPCRON_EXPIRATIONS = 'publishpress_future/v30000_migrate_wpcron_expirations';
@@ -56,6 +57,11 @@ abstract class HooksAbstract
     const FILTER_POSTS_JOIN = 'posts_join';
     const FILTER_CONTENT_FOOTER = 'publishpress_future/content_footer';
     const FILTER_ACTION_BASE_DATE_STRING = 'publishpress_future/action_base_date_string';
+    const FILTER_ACTION_META_KEY = 'publishpressfuture_action_meta_key';
+    const FILTER_SUPPORTED_POST_TYPES = 'publishpressfuture_supported_post_types';
+    const FILTER_UNSET_POST_TYPES_DEPRECATED = 'postexpirator_unset_post_types';
+    const FILTER_HIDE_METABOX = 'publishpressfuture_hide_metabox';
+
 
     public static function getActionLegacyMultisiteDelete($blogId)
     {

@@ -7,8 +7,6 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
-use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -29,15 +27,21 @@ class PostExpirator_Display
     private $cron;
 
     /**
+     * @var PublishPress\Future\Core\HookableInterface
+     */
+    private $hooks;
+
+    /**
      * Constructor.
      */
     private function __construct()
     {
-        $this->hooks();
-
         $container = Container::getInstance();
 
         $this->cron = $container->get(ServicesAbstract::CRON);
+        $this->hooks = $container->get(ServicesAbstract::HOOKS);
+
+        $this->hooks();
     }
 
     /**
@@ -45,7 +49,7 @@ class PostExpirator_Display
      */
     private function hooks()
     {
-        add_action('init', [$this, 'init']);
+        $this->hooks->addAction('init', [$this, 'init']);
     }
 
     /**
@@ -77,7 +81,7 @@ class PostExpirator_Display
             $this->$function();
         }
 
-        do_action(SettingsHooksAbstract::ACTION_LOAD_TAB, $tab);
+        $this->hooks->doAction(SettingsHooksAbstract::ACTION_LOAD_TAB, $tab);
     }
 
     /**
@@ -91,7 +95,7 @@ class PostExpirator_Display
 
         $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', ];
 
-        $allowed_tabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
+        $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
@@ -103,7 +107,7 @@ class PostExpirator_Display
         $this->load_tab($tab);
         $html = ob_get_clean();
 
-        $debugIsEnabled = (bool)apply_filters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
+        $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
         if (! $debugIsEnabled) {
             unset($allowed_tabs['viewdebug']);
         }
@@ -116,7 +120,7 @@ class PostExpirator_Display
     private function menu_defaults()
     {
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -150,7 +154,7 @@ class PostExpirator_Display
         }
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -229,7 +233,7 @@ class PostExpirator_Display
         }
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -246,7 +250,7 @@ class PostExpirator_Display
         require_once POSTEXPIRATOR_LEGACYDIR . '/debug.php';
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -310,13 +314,13 @@ class PostExpirator_Display
                 }
 
                 echo "<div id='message' class='updated fade'><p>";
-                _e('Saved Options!', 'post-expirator');
+                esc_html_e('Saved Options!', 'post-expirator');
                 echo '</p></div>';
             }
         }
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -368,13 +372,13 @@ class PostExpirator_Display
                 }
 
                 echo "<div id='message' class='updated fade'><p>";
-                _e('Saved Options!', 'post-expirator');
+                esc_html_e('Saved Options!', 'post-expirator');
                 echo '</p></div>';
             }
         }
 
         $params = [
-            'showSideBar' => apply_filters(
+            'showSideBar' => $this->hooks->applyFilters(
                 SettingsHooksAbstract::FILTER_SHOW_PRO_BANNER,
                 ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
             ),
@@ -394,7 +398,7 @@ class PostExpirator_Display
          * @param string $name
          * @return null|array<string,mixed>
          */
-        $params = apply_filters(
+        $params = $this->hooks->applyFilters(
             ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_PARAMS,
             $params,
             $name
@@ -407,7 +411,7 @@ class PostExpirator_Display
          * @param null|array<string,mixed> $params
          * @return null|array<string,mixed>
          */
-        $template = apply_filters(
+        $template = $this->hooks->applyFilters(
             ExpiratorHooksAbstract::FILTER_LEGACY_TEMPLATE_FILE,
             POSTEXPIRATOR_BASEDIR . "/src/Views/{$name}.php",
             $name,
@@ -468,35 +472,25 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           _e('About PublishPress Future', 'post-expirator'); ?>">
+                           esc_html_e('About PublishPress Future', 'post-expirator'); ?>">
                             <?php
-                            _e('About', 'post-expirator'); ?>
+                            esc_html_e('About', 'post-expirator'); ?>
                         </a>
                     </li>
                     <li>
-                        <a href="https://publishpress.com/knowledge-base/introduction-future/" target="_blank"
+                        <a href="https://publishpress.com/knowledge-base/future-introduction/" target="_blank"
                            rel="noopener noreferrer" title="<?php
-                        _e('Future Documentation', 'post-expirator'); ?>">
+                        esc_html_e('Future Documentation', 'post-expirator'); ?>">
                             <?php
-                            _e('Documentation', 'post-expirator'); ?>
+                            esc_html_e('Documentation', 'post-expirator'); ?>
                         </a>
                     </li>
                     <li>
-                        <a href="https://publishpress.com/contact" target="_blank" rel="noopener noreferrer"
+                        <a href="https://publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           _e('Contact the PublishPress team', 'post-expirator'); ?>">
+                           esc_html_e('Contact the PublishPress team', 'post-expirator'); ?>">
                             <?php
-                            _e('Contact', 'post-expirator'); ?>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://twitter.com/publishpresscom" target="_blank" rel="noopener noreferrer">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#777777" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://facebook.com/publishpress" target="_blank" rel="noopener noreferrer">
-                            <span class="dashicons dashicons-facebook"></span>
+                            esc_html_e('Contact', 'post-expirator'); ?>
                         </a>
                     </li>
                 </ul>

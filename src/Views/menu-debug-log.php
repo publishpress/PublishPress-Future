@@ -1,6 +1,11 @@
 <?php
 
 use PublishPress\Future\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\DI\ServicesAbstract;
+
+$container = Container::getInstance();
+$hooks = $container->get(ServicesAbstract::HOOKS);
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -9,7 +14,7 @@ print '<p>' . esc_html__(
         'post-expirator'
     ) . '</p>';
 
-$showSideBar = apply_filters(
+$showSideBar = $hooks->applyFilters(
     HooksAbstract::FILTER_SHOW_PRO_BANNER,
     ! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')
 );

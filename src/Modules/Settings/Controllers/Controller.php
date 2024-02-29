@@ -205,7 +205,7 @@ class Controller implements InitializableInterface
                             'post-expirator'
                         ),
                         'fieldActive' => __('Active', 'post-expirator'),
-                        'fieldActiveLabel' => __('Activate the PublishPress Future metabox for this post type', 'post-expirator'),
+                        'fieldActiveLabel' => __('Activate the PublishPress Future actions for this post type', 'post-expirator'),
                         'fieldHowToExpire' => __('Default Action', 'post-expirator'),
                         'fieldHowToExpireDescription' => __(
                             'Select the default action for the post type.',
@@ -269,7 +269,7 @@ class Controller implements InitializableInterface
             'advanced',
         ];
 
-        $allowedTabs = apply_filters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);
+        $allowedTabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowedTabs);
 
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';

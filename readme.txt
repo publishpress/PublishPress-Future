@@ -7,7 +7,7 @@ Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.4
 License: GPLv2 or later
-Stable tag: 3.2.0
+Stable tag: 3.3.0
 
 PublishPress Future can make scheduled changes to your content. You can unpublish the post, move the post to a new status, update the post categories, and much more.
 
@@ -140,6 +140,26 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 == Changelog ==
 
+= [3.3.0] - 28 Fev, 2024 =
+
+* ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
+* ADDED: Add new filter for choosing to hide or not the Future Action in the post editors: publishpressfuture_hide_metabox, #69;
+* ADDED: Add new filter for filtering the post metakeys in the post model: publishpressfuture_action_meta_key, #69;
+* ADDED: Add new method `medataExists` to the `PublishPress\Future\Framework\WordPress\Models\PostModel` class;
+* ADDED: Add support to a hash in the the post meta `pp_future_metadata_hash`, to identify if the future action's post meta has changed or was scheduled by metadata (fully availale only on PRO);
+* CHANGED: Deprecated the filter `postexpirator_unset_post_types` in favor of the new filter `publishpressfuture_supported_post_types`, allowing not only remove, but add new post types to the list of supported post types, #677;
+* CHANGED: The list of post types in the settings page now also shows the non-public post types that are not built in on WordPress, #677;
+* CHANGED: Remove the X and Facebook icons from the footer in the admin pages, #667;
+* CHANGED: Updated the URLs on the plugin's footer, #667;
+* CHANGED: Minor change in the description of the setting that controls the activation/deactivation future action for the post type;
+* CHANGED: The metadata `_expiration-date-status` now can be specified as `1` or `'1'` and not only `'saved'`, #69;
+* CHANGED: The action `publishpress_future/run_workflow` is now depreacated in favor of `publishpressfuture_run_workflow`;
+* FIXED: Fix language files for ES, IT, FR, #665;
+* FIXED: Fix error when a term does not exists, #675;
+* FIXED: Add new interface for NoticeFacade: NoticeInterface;
+* REMOVED: Remove the legacy action `postExpiratorExpire`. This action will not trigger the future actions anymore;
+* REMOVED: Remove the legacy action `publishpressfuture_expire`. This action will not trigger the future actions anymore;
+
 = [3.2.0] - 25 Jan, 2024 =
 
 * ADDED: Add the possibility to use non hierarchical taxonomies, #285;
@@ -152,6 +172,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * CHANGED: Simplify the name of actions on taxonomy related actions, adding the actual name of the taxonomy, #294;
 * CHANGED: Change the text on the Status column in the Future Actions list, from "Pending" to "Scheduled", #661;
 * CHANGED: Fixed typos and improved the text in the Post Types settings tab, #659;
+* CHANGED: The list of supported post types in the settings page only shows public post types, and non-public that are built-in and show the UI;
 * FIXED: Fix consistency on radio buttons alignment on the settings page;
 * FIXED: Hides the legacy cron event field from Diagnostics and Tools settings tab if no legacy cron event is found;
 * FIXED: Fix the "Change Status to Trash action" on custom post types, #655;
