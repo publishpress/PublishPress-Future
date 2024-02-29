@@ -62,7 +62,14 @@ class CronToWooActionSchedulerAdapter implements CronInterface
      */
     public function postHasScheduledActions($postId)
     {
-        return as_has_scheduled_action(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
+        $hasScheduledActions = as_has_scheduled_action(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
+
+        if (! $hasScheduledActions) {
+            // Try checking with the legacy hook.
+            $hasScheduledActions = as_has_scheduled_action(HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
+        }
+
+        return $hasScheduledActions;
     }
 
     /**

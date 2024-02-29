@@ -44,6 +44,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                             echo esc_html(PostExpirator_Util::get_wp_date($expirationdateDefaultDateFormat, time())); ?>)</span>
                         <p class="description"><?php
                             echo sprintf(
+                                // translators: %s is a link to the PHP date function documentation
                                 esc_html__(
                                     'The default format to use when displaying the action date within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
                                     'post-expirator'
@@ -61,6 +62,7 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
                             echo esc_html(PostExpirator_Util::get_wp_date($expirationdateDefaultTimeFormat, time())); ?>)</span>
                         <p class="description"><?php
                         echo sprintf(
+                            // translators: %s is a link to the PHP date function documentation
                             esc_html__(
                                 'The default format to use when displaying the action time within a post using the shortcode or within the footer.  For information on valid formatting options, see: %s.',
                                 'post-expirator'
@@ -150,29 +152,28 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
             <h3><?php
                 esc_html_e('Shortcode', 'post-expirator'); ?></h3>
             <p><?php
+                // translators: %s is the shortcode code wrapped in code tags
                 echo sprintf(esc_html__('Valid %s attributes:', 'post-expirator'), '<code>[futureaction]</code>'); ?></p>
             <ul class="pe-list">
                 <li><p><?php
                         echo sprintf(
+                            // translators: %1$s and %2$s are code tags that wrap the shortcode attribute names
                             esc_html__(
-                                '%1$s - valid options are %2$sfull%3$s (default), %4$sdate%5$s, %6$stime%7$s',
+                                '%1$stype%2$s - valid options are %1$sfull%2$s (default), %1$sdate%2$s, %1$stime%2$s',
                                 'post-expirator'
                             ),
-                            '<code>type</code>',
-                            '<code>',
-                            '</code>',
-                            '<code>',
-                            '</code>',
                             '<code>',
                             '</code>'
                         ); ?></p></li>
                 <li><p><?php
                         echo sprintf(
+                            // translators: %s is a code tag that wraps the shortcode attribute dateformat
                             esc_html__('%s - format set here will override the value set on the settings page', 'post-expirator'),
                             '<code>dateformat</code>'
                         ); ?></p></li>
                 <li><p><?php
                         echo sprintf(
+                            // translators: %s is a code tag that wraps the shortcode attribute timeformat
                             esc_html__('%s - format set here will override the value set on the settings page', 'post-expirator'),
                             '<code>timeformat</code>'
                         ); ?></p></li>

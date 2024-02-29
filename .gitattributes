@@ -35,3 +35,5 @@ screenshot-*.png export-ignore
 tests export-ignore
 webpack.config.js export-ignore
 yarn.lock export-ignore
+phpstan.neon export-ignore
+CHANGELOG.md export-ignore

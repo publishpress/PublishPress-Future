@@ -77,7 +77,7 @@ class Container implements ContainerInterface
     public function get(string $id)
     {
         if ( ! $this->has($id)) {
-            throw new ServiceNotFoundException($id);
+            throw new ServiceNotFoundException(esc_html($id));
         }
 
         if (array_key_exists($id, $this->resolvedEntries)) {

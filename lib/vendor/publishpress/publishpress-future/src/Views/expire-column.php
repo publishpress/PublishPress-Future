@@ -50,6 +50,7 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
                 echo esc_html($formatedDate);
             } else {
                 echo sprintf(
+                    // translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
                     esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
                     '<span class="future-action-action-name">',
                     esc_html($action->getDynamicLabel($postModel->getPostType())),

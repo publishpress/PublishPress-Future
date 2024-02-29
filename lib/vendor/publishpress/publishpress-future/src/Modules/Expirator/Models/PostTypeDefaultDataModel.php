@@ -94,7 +94,7 @@ class PostTypeDefaultDataModel
         $date = explode('-', $date);
 
         if (count($date) < self::EXPECTED_DATE_PARTS) {
-            throw new \Exception('Unexpected date format: ' . $gmDate);
+            throw new \Exception('Unexpected date format: ' . esc_html($gmDate));
         }
 
         return [
@@ -128,7 +128,13 @@ class PostTypeDefaultDataModel
         $calculatedDate = strtotime($dateTimeOffset, (int)$baseDate);
 
         if (false === $calculatedDate) {
-            throw new \Exception("Invalid date/time offset \"$dateTimeOffset\" for post type \"$this->postType\"");
+            throw new \Exception(
+                sprintf(
+                    'Invalid date/time offset "%s" for post type "%s',
+                    esc_html($dateTimeOffset),
+                    esc_html($this->postType)
+                )
+            );
 
             $calculatedDate = time();
         }

@@ -314,7 +314,7 @@ class PostExpirator_Display
                 }
 
                 echo "<div id='message' class='updated fade'><p>";
-                _e('Saved Options!', 'post-expirator');
+                esc_html_e('Saved Options!', 'post-expirator');
                 echo '</p></div>';
             }
         }
@@ -372,7 +372,7 @@ class PostExpirator_Display
                 }
 
                 echo "<div id='message' class='updated fade'><p>";
-                _e('Saved Options!', 'post-expirator');
+                esc_html_e('Saved Options!', 'post-expirator');
                 echo '</p></div>';
             }
         }
@@ -472,25 +472,25 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           _e('About PublishPress Future', 'post-expirator'); ?>">
+                           esc_html_e('About PublishPress Future', 'post-expirator'); ?>">
                             <?php
-                            _e('About', 'post-expirator'); ?>
+                            esc_html_e('About', 'post-expirator'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="https://publishpress.com/knowledge-base/future-introduction/" target="_blank"
                            rel="noopener noreferrer" title="<?php
-                        _e('Future Documentation', 'post-expirator'); ?>">
+                        esc_html_e('Future Documentation', 'post-expirator'); ?>">
                             <?php
-                            _e('Documentation', 'post-expirator'); ?>
+                            esc_html_e('Documentation', 'post-expirator'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="https://publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           _e('Contact the PublishPress team', 'post-expirator'); ?>">
+                           esc_html_e('Contact the PublishPress team', 'post-expirator'); ?>">
                             <?php
-                            _e('Contact', 'post-expirator'); ?>
+                            esc_html_e('Contact', 'post-expirator'); ?>
                         </a>
                     </li>
                 </ul>
