@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the PublishPress Future Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future Pro 3.2.0-beta.3\n"
+"Project-Id-Version: PublishPress Future Pro 3.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-25T18:21:56+00:00\n"
+"POT-Creation-Date: 2024-02-29T19:16:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0-alpha\n"
+"X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
 
 #. Plugin Name of the plugin
@@ -39,44 +39,165 @@ msgstr ""
 msgid "http://publishpress.com"
 msgstr ""
 
+#. Translators: Do not translate the #ACTIONDATE, or #ACTIONTIME placeholders.
+#: src/classes/Controllers/BlocksController.php:47
+msgid "Post expires at #ACTIONTIME on #ACTIONDATE."
+msgstr ""
+
+#: src/classes/Controllers/BlocksController.php:48
+msgid "F j, Y"
+msgstr ""
+
+#: src/classes/Controllers/BlocksController.php:49
+msgid "g:i a"
+msgstr ""
+
+#: src/classes/Controllers/BlocksController.php:85
+msgid "Displays a message with the date and time of the future action."
+msgstr ""
+
+#: src/classes/Controllers/BlocksController.php:86
+msgid "Type the text template and use # to see the autocomplete options with the available placeholders."
+msgstr ""
+
+#: src/classes/Controllers/BlocksController.php:87
+msgid "Available placeholders"
+msgstr ""
+
+#: src/classes/Controllers/BlocksController.php:88
+msgid "Future action block template. Type the text and # to see the autocomplete options."
+msgstr ""
+
+#: src/classes/Controllers/BlocksController.php:89
+msgid "Action time"
+msgstr ""
+
+#: src/classes/Controllers/BlocksController.php:90
+msgid "Action date"
+msgstr ""
+
 #: src/classes/Controllers/CustomStatusesController.php:87
 msgid "Change status to "
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:192
+#: src/classes/Controllers/SettingsController.php:196
 msgid "Custom statuses"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:193
-msgid "Enable custom statuses for the post type:"
+#: src/classes/Controllers/SettingsController.php:197
+msgid "Enable custom statuses for the post type."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:197
+#: src/classes/Controllers/SettingsController.php:201
 msgid "Enabled"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:198
+#: src/classes/Controllers/SettingsController.php:202
 msgid "Disabled"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:199
+#: src/classes/Controllers/SettingsController.php:203
 msgid "Select all"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:200
+#: src/classes/Controllers/SettingsController.php:204
 msgid "Unselect all"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:257
+#: src/classes/Controllers/SettingsController.php:205
+msgid "Enable Metadata Scheduling"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:206
+msgid "Enable metadata scheduling for the post type"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:210
+msgid "Checking this option will allow you to use the post metadata to control the scheduling of Future actions in your content."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:214
+msgid "Metadata Mapping"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:215
+msgid "To use the default mapping, please leave the fields empty."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:219
+msgid "Read more about metadata mapping."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:224
+msgid "Original Metakey"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:225
+msgid "New Metakey"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:226
+msgid "Description"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:227
+msgid "Hide Future metabox for this post type"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:228
+msgid "Checking this option will disable the PublishPress Future metabox. This can prevent conflicts if you're using Metadata Scheduling with plugins such as ACF or Pods."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:240
+msgid "Action Date (Required)"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:241
+msgid "The date used for scheduling the action. The date must be a unix time stamp or in the 'Y-m-d H:i:s' format."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:249
+msgid "Action Type"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:250
+msgid "The type of action to be performed."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:258
+msgid "Action Status"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:259
+msgid "The status for the action. Anything different than 'saved' will be considered as not active."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:267
+msgid "Taxonomy Name"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:268
+msgid "The taxonomy used for scheduling the action."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:276
+msgid "Taxonomy Terms"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:277
+msgid "The terms used for scheduling the action."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:336
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
-#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:110
-msgid "Change post status to custom status"
+#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:109
+msgid "Change status to custom status"
 msgstr ""
 
-#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:119
-msgid "Change post status to %s"
+#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:118
+msgid "Change status to %s"
 msgstr ""
 
 #: src/templates/settings-tab-advanced.html.php:6
