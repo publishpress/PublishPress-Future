@@ -43,3 +43,4 @@
 - screenshot-*.png
 - composer.lock
 - phpstan.neon
+- codeception.yml
