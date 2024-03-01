@@ -72,6 +72,7 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         }
 
         return sprintf(
+            // translators: %s is the new post status
             __('Post status has been successfully changed to "%s".', 'post-expirator'),
             $this->log['new_status']
         );
@@ -115,6 +116,7 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
     public function getDynamicLabel($postType = '')
     {
         return sprintf(
+            // translators: %s is the new post status
             __('Change status to %s', 'publishpress-future-pro'),
             $this->getCustomStatusLabel()
         );
