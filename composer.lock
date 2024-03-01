@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee3d059f929b984b192ac744d6c599c1",
+    "content-hash": "e8bafca1efca2693cd3cdfa9082439e9",
     "packages": [
         {
             "name": "publishpress/publishpress-future",
@@ -3396,12 +3396,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "7d6943daa4e3b247f18f7d8bb860d8f2ca41e3bf"
+                "reference": "39dc97b90645a02cffd858ccb3bb391751deaf2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/7d6943daa4e3b247f18f7d8bb860d8f2ca41e3bf",
-                "reference": "7d6943daa4e3b247f18f7d8bb860d8f2ca41e3bf",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/39dc97b90645a02cffd858ccb3bb391751deaf2b",
+                "reference": "39dc97b90645a02cffd858ccb3bb391751deaf2b",
                 "shasum": ""
             },
             "require": {
@@ -3451,7 +3451,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-27T20:14:47+00:00"
+            "time": "2024-03-01T07:48:43+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5581,12 +5581,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "df26a1f1b1b9ca8b40da982d8a03a69305de57c8"
+                "reference": "36d019c93ab9d82ee4a13a84e8efba730b9b17c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/df26a1f1b1b9ca8b40da982d8a03a69305de57c8",
-                "reference": "df26a1f1b1b9ca8b40da982d8a03a69305de57c8",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/36d019c93ab9d82ee4a13a84e8efba730b9b17c0",
+                "reference": "36d019c93ab9d82ee4a13a84e8efba730b9b17c0",
                 "shasum": ""
             },
             "require": {
@@ -5654,7 +5654,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-02-28T09:36:39+00:00"
+            "time": "2024-03-01T09:52:05+00:00"
         },
         {
             "name": "symfony/browser-kit",

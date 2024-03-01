@@ -442,8 +442,8 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         $actionData = $this->getActionData($row);
 
         $columnHtml = sprintf(
-            // Translator: %1$s: post type label, %2$d: post ID, %3$s: post link tag start, %4$s: post title, %5$s: post link tag end
-            esc_html__('%s: [%d] %s%s%s', 'post-expirator'),
+            // translators: %1$s: post type label, %2$d: post ID, %3$s: post link tag start, %4$s: post title, %5$s: post link tag end
+            esc_html__('%1$s: [%2$d] %3$s%4$s%5$s', 'post-expirator'),
             esc_html($actionData['postTypeLabel']),
             $actionData['postId'],
             '<a href="' . esc_url($actionData['postLink']) . '">',
@@ -465,6 +465,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         if (in_array($argsModel->getAction(), $taxonomyActions)) {
             $columnHtml .= sprintf(
+                // translators: %s is the list of terms
                 '<br />' . esc_html__('Terms: %s', 'post-expirator'),
                 implode(', ', $argsModel->getTaxonomyTermsNames())
             );
@@ -659,12 +660,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         if (gmdate('U') > $next_timestamp) {
             /* translators: %s: date interval */
             $schedule_display_string .= sprintf(
+                // translators: %s is the date interval in human readable format in the past
                 __(' (%s ago)', 'post-expirator'),
                 self::human_interval(gmdate('U') - $next_timestamp)
             );
         } else {
-            /* translators: %s: date interval */
             $schedule_display_string .= sprintf(
+                // translators: %s is the date interval in human readable format in the present or future
                 __(' (%s)', 'post-expirator'),
                 self::human_interval($next_timestamp - gmdate('U'))
             );
@@ -707,7 +709,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
                 }
                 $output .= sprintf(
                     _n(
+                        // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralSingle
                         self::$time_periods[$time_period_index]['names'][0],
+                        // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralPlural
                         self::$time_periods[$time_period_index]['names'][1],
                         $periods_in_interval,
                         'post-expirator'

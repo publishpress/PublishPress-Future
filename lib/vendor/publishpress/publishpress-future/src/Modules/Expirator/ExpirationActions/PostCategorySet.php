@@ -54,6 +54,7 @@ class PostCategorySet implements ExpirationActionInterface
     {
         if (empty($this->log)) {
             return sprintf(
+                // translators: %s is the post type singular label
                 __('No terms were changed on the %s.', 'post-expirator'),
                 strtolower($this->postModel->getPostTypeSingularLabel())
             );
@@ -64,8 +65,9 @@ class PostCategorySet implements ExpirationActionInterface
         $termsModel = new TermsModel();
 
         return sprintf(
+            // translators: 1: taxonomy name, 2: post type singular label, 3: updated terms, 4: original terms
             __(
-                'The following terms (%s) were set to the %s: "%s". The old list of terms on the post was: %s.',
+                'The following terms (%1$s) were set to the %2$s: "%3$s". The old list of terms on the post was: %4$s.',
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],

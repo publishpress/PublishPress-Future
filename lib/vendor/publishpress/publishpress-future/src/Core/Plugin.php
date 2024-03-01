@@ -156,7 +156,7 @@ class Plugin implements InitializableInterface
                 global $wpdb;
 
                 // Schedule Events/Migrate Config
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
                 $results = $wpdb->get_results(
                     $wpdb->prepare(
                         'select post_id, meta_value from ' . $wpdb->postmeta . ' as postmeta, ' . $wpdb->posts . ' as posts where postmeta.post_id = posts.ID AND postmeta.meta_key = %s AND postmeta.meta_value >= %d',
@@ -189,7 +189,7 @@ class Plugin implements InitializableInterface
                 }
 
                 // update meta key to new format
-                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+                // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
                 $wpdb->query(
                     $wpdb->prepare(
                         "UPDATE $wpdb->postmeta SET meta_key = %s WHERE meta_key = %s",
