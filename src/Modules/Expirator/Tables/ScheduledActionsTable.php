@@ -271,7 +271,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         $status_labels = [
             'uninitialized' => __('Uninitialized', 'post-expirator'),
-            'pending' => __('Pending', 'post-expirator'),
+            'pending' => __('Scheduled', 'post-expirator'),
             'complete' => __('Complete', 'post-expirator'),
             'failed' => __('Failed', 'post-expirator'),
             'canceled' => __('Canceled', 'post-expirator'),
