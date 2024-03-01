@@ -557,8 +557,9 @@ class ExpirablePostModel extends PostModel
         $notificationText = rtrim($expirationAction->getNotificationText(), '.');
 
         $emailBody = sprintf(
+            // translators: %1$s: post title placeholder, %2$s: notification text, %3$s: action date placeholder, %4$s: post link placeholder
             __(
-                 '%s. %s on %s. The post link is %s',
+                 '%1$s. %2$s on %3$s. The post link is %4$s',
                 'post-expirator'
             ),
             '##POSTTITLE##',
@@ -574,9 +575,11 @@ class ExpirablePostModel extends PostModel
         }
 
         $emailSubject = sprintf(
+            // translators: %s is the post title
             __('Future Action Complete "%s"', 'post-expirator'),
             $this->getTitle()
         );
+        // translators: 1: is the blog name, 2: the email subject
         $emailSubject = sprintf(__('[%1$s] %2$s', 'post-expirator'), $this->options->getOption('blogname'), $emailSubject);
 
         /**

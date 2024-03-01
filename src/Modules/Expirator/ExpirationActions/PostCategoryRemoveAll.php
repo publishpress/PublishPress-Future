@@ -52,6 +52,7 @@ class PostCategoryRemoveAll implements ExpirationActionInterface
     {
         if (empty($this->log)) {
             return sprintf(
+                // translators: %s is the post type singular label
                 __('No terms were removed from the %s.', 'post-expirator'),
                 strtolower($this->postModel->getPostTypeSingularLabel())
             );
@@ -62,8 +63,9 @@ class PostCategoryRemoveAll implements ExpirationActionInterface
         $termsModel = new TermsModel();
 
         return sprintf(
+            // translators: %1$s is the taxonomy name, %2$s is the post type singular label, %3$s is the list of term names
             __(
-                'The following terms (%s) were removed from the %s: %s.',
+                'The following terms (%1$s) were removed from the %2$s: %3$s.',
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],

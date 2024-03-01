@@ -457,7 +457,8 @@ class PostExpirator_Display
                    rel="noopener noreferrer">
                     <?php
                     printf(
-                        esc_html__('If you like %s, please leave us a %s rating. Thank you!', 'post-expirator'),
+                        // translators: %1$s is the plugin name, %2$s is the star rating markup
+                        esc_html__('If you like %1$s, please leave us a %2$s rating. Thank you!', 'post-expirator'),
                         '<strong>PublishPress Future</strong>',
                         '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
                     );

@@ -91,8 +91,9 @@ class Module implements ModuleInterface
                     VersionNoticesModule::SETTINGS_FILTER,
                     function ($settings) {
                         $settings['publishpress-future'] = [
+                            // translators: %1$s and %2$s are placeholders for the link to by the Pro version
                             'message' => __(
-                                'You\'re using PublishPress Future Free. The Pro version has more features and support. %sUpgrade to Pro%s',
+                                'You\'re using PublishPress Future Free. The Pro version has more features and support. %1$sUpgrade to Pro%2$s',
                                 'post-expirator'
                             ),
                             'link' => 'https://publishpress.com/links/future-banner',

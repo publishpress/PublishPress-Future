@@ -159,6 +159,7 @@ class BulkEditController implements InitializableInterface
                     'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in plural form.
                     'noTermsFound' => sprintf(
+                        // translators: %s is the name of the taxonomy in plural form.
                         __('No %s found.', 'post-expirator'),
                         strtolower($taxonomyName)
                     ),

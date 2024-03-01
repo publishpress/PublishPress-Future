@@ -53,7 +53,8 @@ class PostStatusToPrivate implements ExpirationActionInterface
         $newPostStatus = get_post_status_object('private');
 
         return sprintf(
-            __('Status has been successfully changed from "%s" to "%s".', 'post-expirator'),
+            // translators: 1: old post status, 2: new post status
+            __('Status has been successfully changed from "%1$s" to "%2$s".', 'post-expirator'),
             $oldPostStatus->label,
             $newPostStatus->label
         );
@@ -82,6 +83,7 @@ class PostStatusToPrivate implements ExpirationActionInterface
         $newPostStatus = get_post_status_object('private');
 
         return sprintf(
+            // translators: %s: new post status
             __('Change status to %s', 'post-expirator'),
             $newPostStatus->label
         );
