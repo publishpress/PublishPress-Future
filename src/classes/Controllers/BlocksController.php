@@ -72,7 +72,8 @@ class BlocksController implements ModuleInterface
             'future-pro-blocks',
             $this->assetsUrl . '/js/block-editor.js',
             ['wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-i18n', 'wp-data'],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
         );
 
         // Localize the script with new data
