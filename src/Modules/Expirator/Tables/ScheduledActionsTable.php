@@ -748,4 +748,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
 		return __( 'Non-repeating', 'post-expirator' );
 	}
+
+    /**
+	 * Message to be displayed when there are no items
+	 *
+	 * @since 3.1.0
+	 */
+	public function no_items() {
+        echo esc_html('No Future Actions.', 'post-expirator');
+    }
 }
