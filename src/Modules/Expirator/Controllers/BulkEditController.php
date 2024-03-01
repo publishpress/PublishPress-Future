@@ -170,6 +170,12 @@ class BulkEditController implements InitializableInterface
                     'addOnly' => __('Add action if none exists for posts', 'post-expirator'),
                     'changeOnly' => __('Update the existing actions for posts', 'post-expirator'),
                     'removeOnly' => __('Remove action from posts', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'newTerms' => __('New %s', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'removeTerms' => __('%s to remove', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'addTerms' => __('%s to add', 'post-expirator'),
                 ]
             ]
         );

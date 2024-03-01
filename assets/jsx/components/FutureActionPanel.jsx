@@ -234,6 +234,19 @@ export const FutureActionPanel = (props) => {
     const HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
     const displayTaxonomyField = String(action).includes('category') && action !== 'category-remove-all';
 
+    let termsFieldLabel = taxonomyName;
+    switch (action) {
+        case 'category':
+            termsFieldLabel = props.strings.newTerms.replace('%s', taxonomyName);
+            break;
+        case 'category-remove':
+            termsFieldLabel = props.strings.removeTerms.replace('%s', taxonomyName);
+            break;
+        case 'category-add':
+            termsFieldLabel = props.strings.addTerms.replace('%s', taxonomyName);
+            break;
+    }
+
     return (
         <div className={panelClass}>
             {props.autoEnableAndHideCheckbox && (
@@ -294,7 +307,7 @@ export const FutureActionPanel = (props) => {
                                         <PanelRow className="future-action-full-width">
                                             <BaseControl>
                                                 <FormTokenField
-                                                    label={taxonomyName}
+                                                    label={termsFieldLabel}
                                                     value={selectedTerms}
                                                     suggestions={termsListByNameKeys}
                                                     onChange={handleTermsChange}

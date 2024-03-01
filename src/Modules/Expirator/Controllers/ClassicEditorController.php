@@ -342,6 +342,12 @@ class ClassicEditorController implements InitializableInterface
                         strtolower($taxonomyName)
                     ),
                     'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'newTerms' => __('New %s', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'removeTerms' => __('%s to remove', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'addTerms' => __('%s to add', 'post-expirator'),
                 ]
             ]
         );
