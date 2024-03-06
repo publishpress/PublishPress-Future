@@ -169,12 +169,12 @@ class QuickEditController implements InitializableInterface
 
         $debug = $container->get(ServicesAbstract::DEBUG);
 
-        $taxonomyName= '';
+        $taxonomyPluralName= '';
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
             $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
 
             if (! is_wp_error($taxonomy) && ! empty($taxonomy)) {
-                $taxonomyName = $taxonomy->label;
+                $taxonomyPluralName = $taxonomy->label;
             }
         }
 
@@ -200,7 +200,7 @@ class QuickEditController implements InitializableInterface
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
                 'isDebugEnabled' => $debug->isEnabled(),
-                'taxonomyName' => $taxonomyName,
+                'taxonomyPluralName' => $taxonomyPluralName,
                 'taxonomyTerms' => $taxonomyTerms,
                 'postType' => $currentScreen->post_type,
                 'isNewPost' => false,
@@ -219,7 +219,7 @@ class QuickEditController implements InitializableInterface
                     'noTermsFound' => sprintf(
                         // translators: %s is the name of the taxonomy in plural form.
                         __('No %s found.', 'post-expirator'),
-                        strtolower($taxonomyName)
+                        strtolower($taxonomyPluralName)
                     ),
                     'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in plural form.
@@ -228,6 +228,16 @@ class QuickEditController implements InitializableInterface
                     'removeTerms' => __('%s to remove', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in plural form.
                     'addTerms' => __('%s to add', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in singular form.
+                    'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyPluralName)),
+                    'validationError' => __('Error found', 'post-expirator'),
+                    'errorActionRequired' => __('Select an action', 'post-expirator'),
+                    'errorDateRequired' => __('Select a date', 'post-expirator'),
+                    'errorTermsRequired' => sprintf(
+                        // translators: %s is the name of the taxonomy in singular form.
+                        __('Select one or more %s', 'post-expirator'),
+                        strtolower($taxonomyPluralName)
+                    ),
                 ]
             ]
         );

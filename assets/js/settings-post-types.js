@@ -144,9 +144,9 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.FutureActionPanel = undefined;
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _utils = __webpack_require__(/*! ../utils */ "./assets/jsx/utils.jsx");
 
@@ -163,7 +163,8 @@ var _wp$components = wp.components,
     BaseControl = _wp$components.BaseControl;
 var _wp$element = wp.element,
     Fragment = _wp$element.Fragment,
-    useEffect = _wp$element.useEffect;
+    useEffect = _wp$element.useEffect,
+    useState = _wp$element.useState;
 var decodeEntities = wp.htmlEntities.decodeEntities;
 var addQueryArgs = wp.url.addQueryArgs;
 var _wp$data = wp.data,
@@ -202,6 +203,14 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var calendarIsVisible = useSelect(function (select) {
         return select(props.storeName).getCalendarIsVisible();
     }, []);
+    var hasValidData = useSelect(function (select) {
+        return select(props.storeName).getHasValidData();
+    }, []);
+
+    var _useState = useState(''),
+        _useState2 = _slicedToArray(_useState, 2),
+        validationError = _useState2[0],
+        setValidationError = _useState2[1];
 
     var _useDispatch = useDispatch(props.storeName),
         setAction = _useDispatch.setAction,
@@ -213,7 +222,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setTermsListById = _useDispatch.setTermsListById,
         setTaxonomyName = _useDispatch.setTaxonomyName,
         setIsFetchingTerms = _useDispatch.setIsFetchingTerms,
-        setCalendarIsVisible = _useDispatch.setCalendarIsVisible;
+        setCalendarIsVisible = _useDispatch.setCalendarIsVisible,
+        setHasValidData = _useDispatch.setHasValidData;
 
     var mapTermsListById = function mapTermsListById(terms) {
         if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) !== 'object' || terms === null) {
@@ -450,6 +460,50 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             break;
     }
 
+    var validateData = function validateData() {
+        var valid = true;
+
+        if (!enabled) {
+            setValidationError('');
+            return true;
+        }
+
+        if (!action) {
+            setValidationError(props.strings.errorActionRequired);
+            valid = false;
+        }
+
+        if (!date) {
+            setValidationError(props.strings.errorDateRequired);
+            valid = false;
+        }
+
+        var isTermRequired = ['category', 'category-add', 'category-remove'].includes(action);
+        var noTermIsSelected = terms.length === 0 || terms.length === 1 && (terms[0] === '' || terms[0] === '0');
+
+        if (isTermRequired && noTermIsSelected) {
+            setValidationError(props.strings.errorTermsRequired);
+            valid = false;
+        }
+
+        if (valid) {
+            setValidationError('');
+        }
+
+        return valid;
+    };
+
+    useEffect(function () {
+        if (!enabled) {
+            setHasValidData(true);
+            setValidationError('');
+
+            return;
+        }
+
+        setHasValidData(validateData());
+    }, [action, date, enabled, terms, taxonomy]);
+
     return React.createElement(
         'div',
         { className: panelClass },
@@ -524,6 +578,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                         value: selectedTerms,
                         suggestions: termsListByNameKeys,
                         onChange: handleTermsChange,
+                        placeholder: props.strings.addTermsPlaceholder,
                         maxSuggestions: 1000,
                         __experimentalExpandOnFocus: true,
                         __experimentalAutoSelectFirstMatch: true
@@ -555,6 +610,21 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     React.createElement('span', { className: 'dashicons dashicons-info' }),
                     ' ',
                     HelpText
+                )
+            ),
+            !hasValidData && React.createElement(
+                PanelRow,
+                null,
+                React.createElement(
+                    BaseControl,
+                    { label: props.strings.validationError, className: 'future-action-error' },
+                    React.createElement(
+                        'div',
+                        null,
+                        React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                        ' ',
+                        validationError
+                    )
                 )
             )
         )
@@ -905,6 +975,8 @@ var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
 
 var _wp = __webpack_require__(/*! &wp.data */ "&wp.data");
 
+var _wp2 = __webpack_require__(/*! &wp.element */ "&wp.element");
+
 var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     var onChangeData = function onChangeData(attribute, value) {};
 
@@ -923,11 +995,73 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
     var taxonomy = (0, _wp.useSelect)(function (select) {
         return select(props.storeName).getTaxonomy();
     }, []);
+    var hasValidData = (0, _wp.useSelect)(function (select) {
+        return select(props.storeName).getHasValidData();
+    }, []);
 
     var termsString = terms;
     if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
         termsString = terms.join(',');
     }
+
+    (0, _wp2.useEffect)(function () {
+        var originalUpdate = inlineEditPost.save;
+
+        var overwriteSaveMethod = function overwriteSaveMethod() {
+            inlineEditPost.save = function () {
+                return false;
+            };
+        };
+
+        var restoreOriginalSaveMethod = function restoreOriginalSaveMethod() {
+            inlineEditPost.save = originalUpdate;
+        };
+
+        var callOriginalSaveMethod = function callOriginalSaveMethod(event) {
+            originalUpdate.apply(inlineEditPost, [inlineEditPost.getId(event.target)]);
+        };
+
+        var unmountComponent = function unmountComponent() {
+            setTimeout(props.root.unmount, 1000);
+        };
+
+        var abortSave = function abortSave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            return false;
+        };
+
+        var onClickSave = function onClickSave(event) {
+            var formDataIsValid = (0, _wp.select)(props.storeName).getHasValidData();
+
+            if (!formDataIsValid) {
+                return abortSave(event);
+            }
+
+            callOriginalSaveMethod(event);
+
+            unmountComponent();
+
+            return true;
+        };
+
+        overwriteSaveMethod();
+
+        jQuery('.button-primary.save').on('click', onClickSave);
+
+        return function () {
+            restoreOriginalSaveMethod();
+        };
+    }, []);
+
+    (0, _wp2.useEffect)(function () {
+        if (hasValidData) {
+            jQuery('.button-primary.save').prop('disabled', false);
+        } else {
+            jQuery('.button-primary.save').prop('disabled', true);
+        }
+    }, [hasValidData]);
 
     return React.createElement(
         'div',

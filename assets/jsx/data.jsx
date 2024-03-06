@@ -19,6 +19,7 @@ export const createStore = (props) => {
         isFetchingTerms: false,
         changeAction: 'no-change',
         calendarIsVisible: true,
+        hasValidData: true,
     }
 
     const store = createReduxStore(props.name, {
@@ -90,6 +91,11 @@ export const createStore = (props) => {
                         ...state,
                         calendarIsVisible: action.calendarIsVisible,
                     }
+                case 'SET_HAS_VALID_DATA':
+                    return {
+                        ...state,
+                        hasValidData: action.hasValidData,
+                    }
             }
 
             return state;
@@ -160,6 +166,12 @@ export const createStore = (props) => {
                     type: 'SET_CALENDAR_IS_VISIBLE',
                     calendarIsVisible: calendarIsVisible
                 }
+            },
+            setHasValidData(hasValidData) {
+                return {
+                    type: 'SET_HAS_VALID_DATA',
+                    hasValidData: hasValidData
+                }
             }
         },
         selectors: {
@@ -195,7 +207,10 @@ export const createStore = (props) => {
             },
             getCalendarIsVisible(state) {
                 return state.calendarIsVisible;
-            }
+            },
+            getHasValidData(state) {
+                return state.hasValidData;
+            },
         }
     });
 

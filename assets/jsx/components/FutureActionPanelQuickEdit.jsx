@@ -1,5 +1,6 @@
 import { FutureActionPanel } from './';
-import { useSelect } from '&wp.data';
+import { useSelect, select } from '&wp.data';
+import { useEffect } from '&wp.element';
 
 export const FutureActionPanelQuickEdit = (props) => {
     const onChangeData = (attribute, value) => {};
@@ -9,11 +10,70 @@ export const FutureActionPanelQuickEdit = (props) => {
     const action = useSelect((select) => select(props.storeName).getAction(), []);
     const terms = useSelect((select) => select(props.storeName).getTerms(), []);
     const taxonomy = useSelect((select) => select(props.storeName).getTaxonomy(), []);
+    const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
 
     let termsString = terms;
     if (typeof terms === 'object') {
         termsString = terms.join(',');
     }
+
+    useEffect(() => {
+        const originalUpdate = inlineEditPost.save;
+
+        const overwriteSaveMethod = () => {
+            inlineEditPost.save = () => false;
+        };
+
+        const restoreOriginalSaveMethod = () => {
+            inlineEditPost.save = originalUpdate;
+        }
+
+        const callOriginalSaveMethod = (event) => {
+            originalUpdate.apply(inlineEditPost, [inlineEditPost.getId(event.target)]);
+        }
+
+        const unmountComponent = () => {
+            setTimeout(props.root.unmount, 1000);
+        }
+
+        const abortSave = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            return false;
+        }
+
+        const onClickSave = (event) => {
+            const formDataIsValid = select(props.storeName).getHasValidData();
+
+            if (! formDataIsValid) {
+                return abortSave(event);
+            }
+
+            callOriginalSaveMethod(event);
+
+            unmountComponent();
+
+            return true;
+        }
+
+        overwriteSaveMethod();
+
+        jQuery('.button-primary.save').on('click', onClickSave);
+
+        return () => {
+            restoreOriginalSaveMethod();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (hasValidData) {
+            jQuery('.button-primary.save').prop('disabled', false);
+        } else {
+            jQuery('.button-primary.save').prop('disabled', true);
+        }
+    }, [hasValidData]);
+
 
     return (
         <div className={'post-expirator-panel'}>

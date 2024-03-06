@@ -132,6 +132,8 @@ class BlockEditorController implements InitializableInterface
                         'removeTerms' => __('%s to remove', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in plural form.
                         'addTerms' => __('%s to add', 'post-expirator'),
+                        // translators: %s is the name of the taxonomy in singular form.
+                        'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyName)),
                     ]
                 ]
             );

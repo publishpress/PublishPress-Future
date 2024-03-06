@@ -18,7 +18,6 @@ import {
 import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-quick-edit';
-const delayToUnmountAfterSaving = 1000;
 
 // We create a copy of the WP inline edit post function
 const wpInlineEdit = inlineEditPost.edit;
@@ -79,33 +78,25 @@ inlineEditPost.edit = function (button, id) {
         });
     }
 
-    const container = document.getElementById("publishpress-future-quick-edit");
-    const component = (
-        <FutureActionPanelQuickEdit
-            storeName={storeName}
-            postType={postType}
-            isNewPost={isNewPost}
-            actionsSelectOptions={actionsSelectOptions}
-            is12Hour={is12Hour}
-            timeFormat={timeFormat}
-            startOfWeek={startOfWeek}
-            strings={strings}
-            taxonomyName={taxonomyName}
-            nonce={nonce}
-        />
-    );
-
     if (createRoot) {
+        const container = document.getElementById("publishpress-future-quick-edit");
         const root = createRoot(container);
 
-        const saveButton = document.querySelector('.inline-edit-save .save');
-        if (saveButton) {
-            saveButton.onclick = function() {
-                setTimeout(() => {
-                    root.unmount();
-                }, delayToUnmountAfterSaving);
-            };
-        }
+        const component = (
+            <FutureActionPanelQuickEdit
+                storeName={storeName}
+                postType={postType}
+                isNewPost={isNewPost}
+                actionsSelectOptions={actionsSelectOptions}
+                is12Hour={is12Hour}
+                timeFormat={timeFormat}
+                startOfWeek={startOfWeek}
+                strings={strings}
+                taxonomyName={taxonomyName}
+                nonce={nonce}
+                root={root}
+            />
+        );
 
         root.render(component);
 
