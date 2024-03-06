@@ -200,7 +200,7 @@ class QuickEditController implements InitializableInterface
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
                 'isDebugEnabled' => $debug->isEnabled(),
-                'taxonomyPluralName' => $taxonomyPluralName,
+                'taxonomyName' => $taxonomyPluralName,
                 'taxonomyTerms' => $taxonomyTerms,
                 'postType' => $currentScreen->post_type,
                 'isNewPost' => false,
