@@ -1,6 +1,4 @@
 import { FutureActionPanel } from './';
-import { useSelect } from '&wp.data';
-import { useEffect } from '&wp.element';
 
 export const FutureActionPanelBlockEditor = (props) => {
     const { PluginDocumentSettingPanel } = wp.editPost;
@@ -40,16 +38,15 @@ export const FutureActionPanelBlockEditor = (props) => {
 
     const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
 
-    const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
     const { lockPostSaving, unlockPostSaving } = useDispatch('core/editor');
 
-    useEffect(() => {
-        if (hasValidData) {
-            unlockPostSaving('future-action');
-        } else {
-            lockPostSaving('future-action');
-        }
-    }, [hasValidData]);
+    const onDataIsValid = () => {
+        unlockPostSaving('future-action');
+    }
+
+    const onDataIsInvalid = () => {
+        lockPostSaving('future-action');
+    }
 
     return (
         <PluginDocumentSettingPanel
@@ -76,7 +73,9 @@ export const FutureActionPanelBlockEditor = (props) => {
                     timeFormat={props.timeFormat}
                     startOfWeek={props.startOfWeek}
                     storeName={props.storeName}
-                    strings={props.strings} />
+                    strings={props.strings}
+                    onDataIsValid={onDataIsValid}
+                    onDataIsInvalid={onDataIsInvalid} />
             </div>
         </PluginDocumentSettingPanel>
     );

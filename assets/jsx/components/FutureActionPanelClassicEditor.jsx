@@ -51,15 +51,13 @@ export const FutureActionPanelClassicEditor = (props) => {
         taxonomy: getElementValueByName('future_action_taxonomy'),
     };
 
-    const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
+    const onDataIsValid = () => {
+        jQuery('#publish').prop('disabled', false);
+    }
 
-    useEffect(() => {
-        if (hasValidData) {
-            jQuery('#publish').prop('disabled', false);
-        } else {
-            jQuery('#publish').prop('disabled', true);
-        }
-    }, [hasValidData]);
+    const onDataIsInvalid = () => {
+        jQuery('#publish').prop('disabled', true);
+    }
 
     return (
         <div className={'post-expirator-panel'}>
@@ -80,7 +78,9 @@ export const FutureActionPanelClassicEditor = (props) => {
                 timeFormat={props.timeFormat}
                 startOfWeek={props.startOfWeek}
                 storeName={props.storeName}
-                strings={props.strings} />
+                strings={props.strings}
+                onDataIsValid={onDataIsValid}
+                onDataIsInvalid={onDataIsInvalid} />
         </div>
     );
 };

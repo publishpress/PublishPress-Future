@@ -17,13 +17,13 @@ export const FutureActionPanelQuickEdit = (props) => {
         termsString = terms.join(',');
     }
 
-    useEffect(() => {
-        if (hasValidData) {
-            jQuery('.button-primary.save').prop('disabled', false);
-        } else {
-            jQuery('.button-primary.save').prop('disabled', true);
-        }
-    }, [hasValidData]);
+    const onDataIsValid = () => {
+        jQuery('.button-primary.save').prop('disabled', false);
+    }
+
+    const onDataIsInvalid = () => {
+        jQuery('.button-primary.save').prop('disabled', true);
+    }
 
     return (
         <div className={'post-expirator-panel'}>
@@ -44,7 +44,9 @@ export const FutureActionPanelQuickEdit = (props) => {
                 timeFormat={props.timeFormat}
                 startOfWeek={props.startOfWeek}
                 storeName={props.storeName}
-                strings={props.strings} />
+                strings={props.strings}
+                onDataIsValid={onDataIsValid}
+                onDataIsInvalid={onDataIsInvalid} />
 
             {/* Quick edit JS code will save only fields with name inside the edit row */}
             <input type="hidden" name={'future_action_enabled'} value={enabled ? 1 : 0} />

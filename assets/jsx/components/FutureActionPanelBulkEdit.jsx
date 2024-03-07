@@ -45,6 +45,8 @@ export const FutureActionPanelBulkEdit = (props) => {
     const optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
 
     useEffect(() => {
+        // We are not using onDataIsValid and onDataIsInvalid because we need to enable/disable the button
+        // also based on the changeAction value.
         if (hasValidData || changeAction === 'no-change') {
             jQuery('#bulk_edit').prop('disabled', false);
         } else {

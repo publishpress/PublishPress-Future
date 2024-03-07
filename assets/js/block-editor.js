@@ -366,6 +366,16 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         storeCalendarIsVisibleOnStorage(calendarIsVisible);
     }, [calendarIsVisible]);
 
+    useEffect(function () {
+        if (hasValidData && props.onDataIsValid) {
+            props.onDataIsValid();
+        }
+
+        if (!hasValidData && props.onDataIsInvalid) {
+            props.onDataIsInvalid();
+        }
+    }, [hasValidData]);
+
     var selectedTerms = [];
     if (terms && terms.length > 0 && termsListById) {
         selectedTerms = (0, _utils.compact)(mapTermsListById(terms));
@@ -650,10 +660,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
 
-var _wp = __webpack_require__(/*! &wp.data */ "&wp.data");
-
-var _wp2 = __webpack_require__(/*! &wp.element */ "&wp.element");
-
 var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) {
     var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
     var _wp$data = wp.data,
@@ -721,21 +727,17 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
 
     var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
 
-    var hasValidData = (0, _wp.useSelect)(function (select) {
-        return select(props.storeName).getHasValidData();
-    }, []);
-
     var _useDispatch2 = useDispatch('core/editor'),
         lockPostSaving = _useDispatch2.lockPostSaving,
         unlockPostSaving = _useDispatch2.unlockPostSaving;
 
-    (0, _wp2.useEffect)(function () {
-        if (hasValidData) {
-            unlockPostSaving('future-action');
-        } else {
-            lockPostSaving('future-action');
-        }
-    }, [hasValidData]);
+    var onDataIsValid = function onDataIsValid() {
+        unlockPostSaving('future-action');
+    };
+
+    var onDataIsInvalid = function onDataIsInvalid() {
+        lockPostSaving('future-action');
+    };
 
     return React.createElement(
         PluginDocumentSettingPanel,
@@ -765,7 +767,9 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
                 timeFormat: props.timeFormat,
                 startOfWeek: props.startOfWeek,
                 storeName: props.storeName,
-                strings: props.strings })
+                strings: props.strings,
+                onDataIsValid: onDataIsValid,
+                onDataIsInvalid: onDataIsInvalid })
         )
     );
 };
@@ -964,17 +968,13 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
         taxonomy: getElementValueByName('future_action_taxonomy')
     };
 
-    var hasValidData = (0, _wp.useSelect)(function (select) {
-        return select(props.storeName).getHasValidData();
-    }, []);
+    var onDataIsValid = function onDataIsValid() {
+        jQuery('#publish').prop('disabled', false);
+    };
 
-    (0, _wp2.useEffect)(function () {
-        if (hasValidData) {
-            jQuery('#publish').prop('disabled', false);
-        } else {
-            jQuery('#publish').prop('disabled', true);
-        }
-    }, [hasValidData]);
+    var onDataIsInvalid = function onDataIsInvalid() {
+        jQuery('#publish').prop('disabled', true);
+    };
 
     return React.createElement(
         "div",
@@ -996,7 +996,9 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
             timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
-            strings: props.strings })
+            strings: props.strings,
+            onDataIsValid: onDataIsValid,
+            onDataIsInvalid: onDataIsInvalid })
     );
 };
 
@@ -1050,13 +1052,13 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
         termsString = terms.join(',');
     }
 
-    (0, _wp2.useEffect)(function () {
-        if (hasValidData) {
-            jQuery('.button-primary.save').prop('disabled', false);
-        } else {
-            jQuery('.button-primary.save').prop('disabled', true);
-        }
-    }, [hasValidData]);
+    var onDataIsValid = function onDataIsValid() {
+        jQuery('.button-primary.save').prop('disabled', false);
+    };
+
+    var onDataIsInvalid = function onDataIsInvalid() {
+        jQuery('.button-primary.save').prop('disabled', true);
+    };
 
     return React.createElement(
         'div',
@@ -1078,7 +1080,9 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
             timeFormat: props.timeFormat,
             startOfWeek: props.startOfWeek,
             storeName: props.storeName,
-            strings: props.strings }),
+            strings: props.strings,
+            onDataIsValid: onDataIsValid,
+            onDataIsInvalid: onDataIsInvalid }),
         React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: enabled ? 1 : 0 }),
         React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action ? action : '' }),
         React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date ? date : '' }),

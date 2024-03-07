@@ -182,6 +182,16 @@ export const FutureActionPanel = (props) => {
         storeCalendarIsVisibleOnStorage(calendarIsVisible);
     }, [calendarIsVisible]);
 
+    useEffect(() => {
+        if (hasValidData && props.onDataIsValid) {
+            props.onDataIsValid();
+        }
+
+        if (! hasValidData && props.onDataIsInvalid) {
+            props.onDataIsInvalid();
+        }
+    }, [hasValidData]);
+
     let selectedTerms = [];
     if (terms && terms.length > 0 && termsListById) {
         selectedTerms = compact(mapTermsListById(terms));
