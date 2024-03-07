@@ -17,6 +17,8 @@ export const PostTypesSettingsPanels = function (props) {
                 expireTypeList={props.expireTypeList}
                 taxonomiesList={props.taxonomiesList[postType]}
                 key={`${postType}-panel`}
+                onDataIsValid={props.onDataIsValid}
+                onDataIsInvalid={props.onDataIsInvalid}
             />
         );
     }

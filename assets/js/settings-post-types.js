@@ -850,6 +850,8 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
     var optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
 
     useEffect(function () {
+        // We are not using onDataIsValid and onDataIsInvalid because we need to enable/disable the button
+        // also based on the changeAction value.
         if (hasValidData || changeAction === 'no-change') {
             jQuery('#bulk_edit').prop('disabled', false);
         } else {
@@ -1158,6 +1160,9 @@ var _wp3 = __webpack_require__(/*! &wp.hooks */ "&wp.hooks");
 
 var _wp4 = __webpack_require__(/*! &wp */ "&wp");
 
+var _wp$components = wp.components,
+    PanelRow = _wp$components.PanelRow,
+    BaseControl = _wp$components.BaseControl;
 var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     var _useState = (0, _wp.useState)(props.settings.taxonomy),
         _useState2 = _slicedToArray(_useState, 2),
@@ -1204,6 +1209,21 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
         isAutoEnabled = _useState18[0],
         setIsAutoEnabled = _useState18[1];
 
+    var _useState19 = (0, _wp.useState)(false),
+        _useState20 = _slicedToArray(_useState19, 2),
+        hasValidData = _useState20[0],
+        setHasValidData = _useState20[1];
+
+    var _useState21 = (0, _wp.useState)(''),
+        _useState22 = _slicedToArray(_useState21, 2),
+        validationError = _useState22[0],
+        setValidationError = _useState22[1];
+
+    var _useState23 = (0, _wp.useState)(''),
+        _useState24 = _slicedToArray(_useState23, 2),
+        taxonomyLabel = _useState24[0],
+        setTaxonomyLabel = _useState24[1];
+
     var onChangeTaxonomy = function onChangeTaxonomy(value) {
         setPostTypeTaxonomy(value);
     };
@@ -1230,6 +1250,18 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
 
     var onChangeAutoEnabled = function onChangeAutoEnabled(value) {
         setIsAutoEnabled(value);
+    };
+
+    var validateData = function validateData() {
+        if (!isActive || !postTypeTaxonomy) {
+            setValidationError('');
+            return true;
+        }
+
+        // Add validation rules here...
+
+        setValidationError('');
+        return true;
     };
 
     (0, _wp.useEffect)(function () {
@@ -1264,6 +1296,26 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             setTermsSelectIsLoading(false);
         });
     }, [postTypeTaxonomy]);
+
+    (0, _wp.useEffect)(function () {
+        props.taxonomiesList.forEach(function (taxonomy) {
+            if (taxonomy.value === postTypeTaxonomy) {
+                setTaxonomyLabel(taxonomy.label);
+            }
+        });
+
+        setHasValidData(validateData());
+    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel]);
+
+    (0, _wp.useEffect)(function () {
+        if (hasValidData && props.onDataIsValid) {
+            props.onDataIsValid(props.postType);
+        }
+
+        if (!hasValidData && props.onDataIsInvalid) {
+            props.onDataIsInvalid(props.postType);
+        }
+    }, [hasValidData]);
 
     var termOptionsLabels = termOptions.map(function (term) {
         return term.label;
@@ -1369,7 +1421,22 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
     return React.createElement(
         _.SettingsFieldset,
         { legend: props.legend },
-        React.createElement(_.SettingsTable, { bodyChildren: settingsRows })
+        React.createElement(_.SettingsTable, { bodyChildren: settingsRows }),
+        !hasValidData && React.createElement(
+            PanelRow,
+            null,
+            React.createElement(
+                BaseControl,
+                { label: props.text.validationError, className: 'future-action-error' },
+                React.createElement(
+                    'div',
+                    null,
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    validationError
+                )
+            )
+        )
     );
 };
 
@@ -1417,7 +1484,9 @@ var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTyp
                 settings: postTypeSettings,
                 expireTypeList: props.expireTypeList,
                 taxonomiesList: props.taxonomiesList[postType],
-                key: postType + "-panel"
+                key: postType + "-panel",
+                onDataIsValid: props.onDataIsValid,
+                onDataIsInvalid: props.onDataIsInvalid
             }));
         }
     } catch (err) {
@@ -1675,6 +1744,7 @@ var SubmitButton = exports.SubmitButton = function SubmitButton(props) {
         type: "submit",
         name: props.name,
         value: props.text,
+        disabled: props.disabled,
         className: "button-primary"
     });
 };
@@ -2492,6 +2562,10 @@ var __webpack_exports__ = {};
   \********************************************/
 
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
+
 var _components = __webpack_require__(/*! ./components */ "./assets/jsx/components/index.jsx");
 
 var _wp = __webpack_require__(/*! &wp.element */ "&wp.element");
@@ -2500,11 +2574,63 @@ var _config = __webpack_require__(/*! &config.settings-post-types */ "&config.se
 
 var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
 
-/*
- * Copyright (c) 2023. PublishPress, All rights reserved.
- */
-
 var SettingsFormPanel = function SettingsFormPanel(props) {
+    var _useState = (0, _wp.useState)(false),
+        _useState2 = _slicedToArray(_useState, 2),
+        allValid = _useState2[0],
+        setAllValid = _useState2[1];
+
+    var dataValidationStatuses = {};
+
+    var updateSaveButtonStatus = function updateSaveButtonStatus() {
+        var allValid = true;
+
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = Object.entries(dataValidationStatuses)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var _ref = _step.value;
+
+                var _ref2 = _slicedToArray(_ref, 2);
+
+                var postType = _ref2[0];
+                var isValid = _ref2[1];
+
+                if (!isValid) {
+                    allValid = false;
+                    break;
+                }
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        setAllValid(allValid);
+    };
+
+    var onDataIsValid = function onDataIsValid(postType) {
+        dataValidationStatuses[postType] = true;
+        updateSaveButtonStatus();
+    };
+
+    var onDataIsInvalid = function onDataIsInvalid(postType) {
+        dataValidationStatuses[postType] = false;
+        updateSaveButtonStatus();
+    };
+
     return React.createElement(
         _wp.StrictMode,
         null,
@@ -2525,14 +2651,18 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
                     settings: _config.settings,
                     text: _config.text,
                     expireTypeList: _config.expireTypeList,
-                    taxonomiesList: _config.taxonomiesList
+                    taxonomiesList: _config.taxonomiesList,
+                    onDataIsValid: onDataIsValid,
+                    onDataIsInvalid: onDataIsInvalid
                 })
             ),
             React.createElement(
                 _components.ButtonsPanel,
                 null,
                 React.createElement(_components.SubmitButton, {
+                    id: "expirationdateSaveDefaults",
                     name: "expirationdateSaveDefaults",
+                    disabled: !allValid,
                     text: _config.text.saveChanges
                 })
             )
@@ -2542,11 +2672,8 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
 
 var container = document.getElementById("publishpress-future-settings-post-types");
 var component = React.createElement(SettingsFormPanel, null);
-if (_wp.createRoot) {
-    (0, _wp.createRoot)(container).render(component);
-} else {
-    (0, _ReactDOM.render)(component, container);
-}
+
+(0, _wp.createRoot)(container).render(component);
 })();
 
 /******/ })()

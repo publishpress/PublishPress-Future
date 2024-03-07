@@ -16,6 +16,8 @@ import { addQueryArgs } from '&wp.url';
 import { applyFilters } from '&wp.hooks';
 import { apiFetch } from '&wp';
 
+const { PanelRow, BaseControl } = wp.components;
+
 export const PostTypeSettingsPanel = function (props) {
     const [postTypeTaxonomy, setPostTypeTaxonomy] = useState(props.settings.taxonomy);
     const [termOptions, setTermOptions] = useState([]);
@@ -26,6 +28,9 @@ export const PostTypeSettingsPanel = function (props) {
     const [expireOffset, setExpireOffset] = useState(props.settings.defaultExpireOffset);
     const [emailNotification, setEmailNotification] = useState(props.settings.emailNotification);
     const [isAutoEnabled, setIsAutoEnabled] = useState(props.settings.autoEnabled);
+    const [hasValidData, setHasValidData] = useState(false);
+    const [validationError, setValidationError] = useState('');
+    const [taxonomyLabel, setTaxonomyLabel] = useState('');
 
     const onChangeTaxonomy = function (value) {
         setPostTypeTaxonomy(value);
@@ -53,6 +58,18 @@ export const PostTypeSettingsPanel = function (props) {
 
     const onChangeAutoEnabled = (value) => {
         setIsAutoEnabled(value);
+    }
+
+    const validateData = () => {
+        if (! isActive || ! postTypeTaxonomy) {
+            setValidationError('');
+            return true;
+        }
+
+        // Add validation rules here...
+
+        setValidationError('');
+        return true;
     }
 
     useEffect(() => {
@@ -87,6 +104,26 @@ export const PostTypeSettingsPanel = function (props) {
             setTermsSelectIsLoading(false);
         });
     }, [postTypeTaxonomy]);
+
+    useEffect(() => {
+        props.taxonomiesList.forEach((taxonomy) => {
+            if (taxonomy.value === postTypeTaxonomy) {
+                setTaxonomyLabel(taxonomy.label);
+            }
+        });
+
+        setHasValidData(validateData());
+    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel]);
+
+    useEffect(() => {
+        if (hasValidData && props.onDataIsValid) {
+            props.onDataIsValid(props.postType);
+        }
+
+        if (!hasValidData && props.onDataIsInvalid) {
+            props.onDataIsInvalid(props.postType);
+        }
+    }, [hasValidData]);
 
     const termOptionsLabels = termOptions.map((term) => term.label);
 
@@ -194,6 +231,16 @@ export const PostTypeSettingsPanel = function (props) {
     return (
         <SettingsFieldset legend={props.legend}>
             <SettingsTable bodyChildren={settingsRows} />
+
+            {! hasValidData && (
+                <PanelRow>
+                    <BaseControl label={props.text.validationError} className="future-action-error">
+                        <div>
+                            <i className="dashicons dashicons-warning"></i> {validationError}
+                        </div>
+                    </BaseControl>
+                </PanelRow>
+            )}
         </SettingsFieldset>
     );
 }

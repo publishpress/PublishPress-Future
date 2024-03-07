@@ -850,6 +850,8 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
     var optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
 
     useEffect(function () {
+        // We are not using onDataIsValid and onDataIsInvalid because we need to enable/disable the button
+        // also based on the changeAction value.
         if (hasValidData || changeAction === 'no-change') {
             jQuery('#bulk_edit').prop('disabled', false);
         } else {
@@ -1158,6 +1160,9 @@ var _wp3 = __webpack_require__(/*! &wp.hooks */ "&wp.hooks");
 
 var _wp4 = __webpack_require__(/*! &wp */ "&wp");
 
+var _wp$components = wp.components,
+    PanelRow = _wp$components.PanelRow,
+    BaseControl = _wp$components.BaseControl;
 var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     var _useState = (0, _wp.useState)(props.settings.taxonomy),
         _useState2 = _slicedToArray(_useState, 2),
@@ -1204,6 +1209,21 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
         isAutoEnabled = _useState18[0],
         setIsAutoEnabled = _useState18[1];
 
+    var _useState19 = (0, _wp.useState)(false),
+        _useState20 = _slicedToArray(_useState19, 2),
+        hasValidData = _useState20[0],
+        setHasValidData = _useState20[1];
+
+    var _useState21 = (0, _wp.useState)(''),
+        _useState22 = _slicedToArray(_useState21, 2),
+        validationError = _useState22[0],
+        setValidationError = _useState22[1];
+
+    var _useState23 = (0, _wp.useState)(''),
+        _useState24 = _slicedToArray(_useState23, 2),
+        taxonomyLabel = _useState24[0],
+        setTaxonomyLabel = _useState24[1];
+
     var onChangeTaxonomy = function onChangeTaxonomy(value) {
         setPostTypeTaxonomy(value);
     };
@@ -1230,6 +1250,18 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
 
     var onChangeAutoEnabled = function onChangeAutoEnabled(value) {
         setIsAutoEnabled(value);
+    };
+
+    var validateData = function validateData() {
+        if (!isActive || !postTypeTaxonomy) {
+            setValidationError('');
+            return true;
+        }
+
+        // Add validation rules here...
+
+        setValidationError('');
+        return true;
     };
 
     (0, _wp.useEffect)(function () {
@@ -1264,6 +1296,26 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             setTermsSelectIsLoading(false);
         });
     }, [postTypeTaxonomy]);
+
+    (0, _wp.useEffect)(function () {
+        props.taxonomiesList.forEach(function (taxonomy) {
+            if (taxonomy.value === postTypeTaxonomy) {
+                setTaxonomyLabel(taxonomy.label);
+            }
+        });
+
+        setHasValidData(validateData());
+    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel]);
+
+    (0, _wp.useEffect)(function () {
+        if (hasValidData && props.onDataIsValid) {
+            props.onDataIsValid(props.postType);
+        }
+
+        if (!hasValidData && props.onDataIsInvalid) {
+            props.onDataIsInvalid(props.postType);
+        }
+    }, [hasValidData]);
 
     var termOptionsLabels = termOptions.map(function (term) {
         return term.label;
@@ -1369,7 +1421,22 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
     return React.createElement(
         _.SettingsFieldset,
         { legend: props.legend },
-        React.createElement(_.SettingsTable, { bodyChildren: settingsRows })
+        React.createElement(_.SettingsTable, { bodyChildren: settingsRows }),
+        !hasValidData && React.createElement(
+            PanelRow,
+            null,
+            React.createElement(
+                BaseControl,
+                { label: props.text.validationError, className: 'future-action-error' },
+                React.createElement(
+                    'div',
+                    null,
+                    React.createElement('i', { className: 'dashicons dashicons-warning' }),
+                    ' ',
+                    validationError
+                )
+            )
+        )
     );
 };
 
@@ -1417,7 +1484,9 @@ var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTyp
                 settings: postTypeSettings,
                 expireTypeList: props.expireTypeList,
                 taxonomiesList: props.taxonomiesList[postType],
-                key: postType + "-panel"
+                key: postType + "-panel",
+                onDataIsValid: props.onDataIsValid,
+                onDataIsInvalid: props.onDataIsInvalid
             }));
         }
     } catch (err) {
@@ -1675,6 +1744,7 @@ var SubmitButton = exports.SubmitButton = function SubmitButton(props) {
         type: "submit",
         name: props.name,
         value: props.text,
+        disabled: props.disabled,
         className: "button-primary"
     });
 };
