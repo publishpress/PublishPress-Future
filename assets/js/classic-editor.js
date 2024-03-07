@@ -1164,6 +1164,8 @@ var _wp$components = wp.components,
     PanelRow = _wp$components.PanelRow,
     BaseControl = _wp$components.BaseControl;
 var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
+    var originalExpireTypeList = props.expireTypeList[props.postType];
+
     var _useState = (0, _wp.useState)(props.settings.taxonomy),
         _useState2 = _slicedToArray(_useState, 2),
         postTypeTaxonomy = _useState2[0],
@@ -1224,6 +1226,13 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
         taxonomyLabel = _useState24[0],
         setTaxonomyLabel = _useState24[1];
 
+    var _useState25 = (0, _wp.useState)(originalExpireTypeList),
+        _useState26 = _slicedToArray(_useState25, 2),
+        howToExpireList = _useState26[0],
+        setHowToExpireList = _useState26[1];
+
+    var taxonomyRelatedActions = ['category', 'category-add', 'category-remove', 'category-remove-all'];
+
     var onChangeTaxonomy = function onChangeTaxonomy(value) {
         setPostTypeTaxonomy(value);
     };
@@ -1265,6 +1274,19 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
     };
 
     (0, _wp.useEffect)(function () {
+        // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
+        if (props.taxonomiesList.length === 0) {
+            var newExpireTypeList = [];
+
+            newExpireTypeList = howToExpireList.filter(function (item) {
+                return taxonomyRelatedActions.indexOf(item.value) === -1;
+            });
+
+            setHowToExpireList(newExpireTypeList);
+        }
+    }, []);
+
+    (0, _wp.useEffect)(function () {
         if (!postTypeTaxonomy || !props.taxonomiesList) {
             return;
         }
@@ -1295,17 +1317,41 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             setSelectedTerms(settingsTermsOptions);
             setTermsSelectIsLoading(false);
         });
-    }, [postTypeTaxonomy]);
 
-    (0, _wp.useEffect)(function () {
         props.taxonomiesList.forEach(function (taxonomy) {
             if (taxonomy.value === postTypeTaxonomy) {
                 setTaxonomyLabel(taxonomy.label);
             }
         });
+    }, [postTypeTaxonomy]);
 
+    (0, _wp.useEffect)(function () {
         setHasValidData(validateData());
     }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel]);
+
+    (0, _wp.useEffect)(function () {
+        if (!taxonomyLabel) {
+            return;
+        }
+
+        // Update the list of actions replacing the taxonomy name.
+        var newExpireTypeList = [];
+
+        originalExpireTypeList.forEach(function (expireType) {
+            var label = expireType.label;
+
+            if (taxonomyRelatedActions.indexOf(expireType.value) !== -1) {
+                label = label.replace('%s', taxonomyLabel.toLowerCase());
+            }
+
+            newExpireTypeList.push({
+                value: expireType.value,
+                label: label
+            });
+        });
+
+        setHowToExpireList(newExpireTypeList);
+    }, [taxonomyLabel]);
 
     (0, _wp.useEffect)(function () {
         if (hasValidData && props.onDataIsValid) {
@@ -1358,20 +1404,13 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             })
         ));
 
-        // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
-        if (props.taxonomiesList.length === 0) {
-            props.expireTypeList[props.postType] = props.expireTypeList[props.postType].filter(function (item) {
-                return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
-            });
-        }
-
         settingsRows.push(React.createElement(
             _.SettingRow,
             { label: props.text.fieldHowToExpire, key: 'expirationdate_expiretype-' + props.postType },
             React.createElement(_.SelectControl, {
                 name: 'expirationdate_expiretype-' + props.postType,
                 className: 'pe-howtoexpire',
-                options: props.expireTypeList[props.postType],
+                options: howToExpireList,
                 description: props.text.fieldHowToExpireDescription,
                 selected: settingHowToExpire,
                 onChange: onChangeHowToExpire

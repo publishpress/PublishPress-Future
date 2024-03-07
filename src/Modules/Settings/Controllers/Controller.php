@@ -243,7 +243,7 @@ class Controller implements InitializableInterface
                         'errorTermsRequired' => __('Select one or more %s', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
-                    'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(),
+                    'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),
                     'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
                         $taxonomiesModel->getTaxonomiesByPostType(false)
                     ),
