@@ -80,10 +80,10 @@ class BlockEditorController implements InitializableInterface
             $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
             $defaultDataModel = $defaultDataModelFactory->create($post->post_type);
 
-            $taxonomyName = '';
+            $taxonomyPluralName = '';
             if (! empty($postTypeDefaultConfig['taxonomy'])) {
                 $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
-                $taxonomyName = $taxonomy->label;
+                $taxonomyPluralName = $taxonomy->label;
             }
 
             $taxonomyTerms = [];
@@ -107,7 +107,7 @@ class BlockEditorController implements InitializableInterface
                     'startOfWeek' => $options->getOption('start_of_week', 0),
                     'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
                     'isDebugEnabled' => $container->get(ServicesAbstract::DEBUG)->isEnabled(),
-                    'taxonomyName' => $taxonomyName,
+                    'taxonomyName' => $taxonomyPluralName,
                     'taxonomyTerms' => $taxonomyTerms,
                     'strings' => [
                         'category' => __('Categories', 'post-expirator'),
@@ -123,7 +123,7 @@ class BlockEditorController implements InitializableInterface
                         'noTermsFound' => sprintf(
                             // translators: %s is the name of the taxonomy in plural form.
                             __('No %s found.', 'post-expirator'),
-                            strtolower($taxonomyName)
+                            strtolower($taxonomyPluralName)
                         ),
                         'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in plural form.
@@ -133,7 +133,15 @@ class BlockEditorController implements InitializableInterface
                         // translators: %s is the name of the taxonomy in plural form.
                         'addTerms' => __('%s to add', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in singular form.
-                        'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyName)),
+                        'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyPluralName)),
+                        'validationError' => __('Error found', 'post-expirator'),
+                        'errorActionRequired' => __('Select an action', 'post-expirator'),
+                        'errorDateRequired' => __('Select a date', 'post-expirator'),
+                        'errorTermsRequired' => sprintf(
+                            // translators: %s is the name of the taxonomy in singular form.
+                            __('Select one or more %s', 'post-expirator'),
+                            strtolower($taxonomyPluralName)
+                        ),
                     ]
                 ]
             );

@@ -48,9 +48,5 @@ if (! isGutenbergEnabled()) {
         />
     );
 
-    if (createRoot) {
-        createRoot(container).render(component);
-    } else {
-        render(component, container);
-    }
+    createRoot(container).render(component);
 }

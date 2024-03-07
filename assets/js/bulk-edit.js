@@ -650,6 +650,10 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
 
+var _wp = __webpack_require__(/*! &wp.data */ "&wp.data");
+
+var _wp2 = __webpack_require__(/*! &wp.element */ "&wp.element");
+
 var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) {
     var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
     var _wp$data = wp.data,
@@ -716,6 +720,22 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
     };
 
     var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+
+    var hasValidData = (0, _wp.useSelect)(function (select) {
+        return select(props.storeName).getHasValidData();
+    }, []);
+
+    var _useDispatch2 = useDispatch('core/editor'),
+        lockPostSaving = _useDispatch2.lockPostSaving,
+        unlockPostSaving = _useDispatch2.unlockPostSaving;
+
+    (0, _wp2.useEffect)(function () {
+        if (hasValidData) {
+            unlockPostSaving('future-action');
+        } else {
+            lockPostSaving('future-action');
+        }
+    }, [hasValidData]);
 
     return React.createElement(
         PluginDocumentSettingPanel,
@@ -891,6 +911,8 @@ var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
 
 var _wp = __webpack_require__(/*! &wp.data */ "&wp.data");
 
+var _wp2 = __webpack_require__(/*! &wp.element */ "&wp.element");
+
 var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = function FutureActionPanelClassicEditor(props) {
     var browserTimezoneOffset = new Date().getTimezoneOffset();
 
@@ -941,6 +963,18 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
         terms: getTermsFromElementByName('future_action_terms'),
         taxonomy: getElementValueByName('future_action_taxonomy')
     };
+
+    var hasValidData = (0, _wp.useSelect)(function (select) {
+        return select(props.storeName).getHasValidData();
+    }, []);
+
+    (0, _wp2.useEffect)(function () {
+        if (hasValidData) {
+            jQuery('#publish').prop('disabled', false);
+        } else {
+            jQuery('#publish').prop('disabled', true);
+        }
+    }, [hasValidData]);
 
     return React.createElement(
         "div",
