@@ -776,6 +776,7 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
         useSelect = _wp$data.useSelect,
         useDispatch = _wp$data.useDispatch,
         select = _wp$data.select;
+    var useEffect = wp.element.useEffect;
 
 
     var onChangeData = function onChangeData(attribute, value) {
@@ -804,6 +805,9 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
     var changeAction = useSelect(function (select) {
         return select(props.storeName).getChangeAction();
     }, []);
+    var hasValidData = useSelect(function (select) {
+        return select(props.storeName).getHasValidData();
+    }, []);
 
     var _useDispatch = useDispatch(props.storeName),
         setChangeAction = _useDispatch.setChangeAction;
@@ -820,6 +824,14 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
     var options = [{ value: 'no-change', label: props.strings.noChange }, { value: 'change-add', label: props.strings.changeAdd }, { value: 'add-only', label: props.strings.addOnly }, { value: 'change-only', label: props.strings.changeOnly }, { value: 'remove-only', label: props.strings.removeOnly }];
 
     var optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
+
+    useEffect(function () {
+        if (hasValidData || changeAction === 'no-change') {
+            jQuery('#bulk_edit').prop('disabled', false);
+        } else {
+            jQuery('#bulk_edit').prop('disabled', true);
+        }
+    }, [hasValidData, changeAction]);
 
     return React.createElement(
         'div',
@@ -1003,57 +1015,6 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
     if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
         termsString = terms.join(',');
     }
-
-    (0, _wp2.useEffect)(function () {
-        var originalUpdate = inlineEditPost.save;
-
-        var overwriteSaveMethod = function overwriteSaveMethod() {
-            inlineEditPost.save = function () {
-                return false;
-            };
-        };
-
-        var restoreOriginalSaveMethod = function restoreOriginalSaveMethod() {
-            inlineEditPost.save = originalUpdate;
-        };
-
-        var callOriginalSaveMethod = function callOriginalSaveMethod(event) {
-            originalUpdate.apply(inlineEditPost, [inlineEditPost.getId(event.target)]);
-        };
-
-        var unmountComponent = function unmountComponent() {
-            setTimeout(props.root.unmount, 1000);
-        };
-
-        var abortSave = function abortSave(event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            return false;
-        };
-
-        var onClickSave = function onClickSave(event) {
-            var formDataIsValid = (0, _wp.select)(props.storeName).getHasValidData();
-
-            if (!formDataIsValid) {
-                return abortSave(event);
-            }
-
-            callOriginalSaveMethod(event);
-
-            unmountComponent();
-
-            return true;
-        };
-
-        overwriteSaveMethod();
-
-        jQuery('.button-primary.save').on('click', onClickSave);
-
-        return function () {
-            restoreOriginalSaveMethod();
-        };
-    }, []);
 
     (0, _wp2.useEffect)(function () {
         if (hasValidData) {
@@ -2613,16 +2574,6 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
-/***/ "&ReactDOM":
-/*!***************************!*\
-  !*** external "ReactDOM" ***!
-  \***************************/
-/***/ ((module) => {
-
-module.exports = ReactDOM;
-
-/***/ }),
-
 /***/ "&config.quick-edit":
 /*!****************************************************!*\
   !*** external "publishpressFutureQuickEditConfig" ***!
@@ -2752,9 +2703,8 @@ var _window = __webpack_require__(/*! &window */ "&window");
 
 var _config = __webpack_require__(/*! &config.quick-edit */ "&config.quick-edit");
 
-var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
-
 var storeName = 'publishpress-future/future-action-quick-edit';
+var delayToUnmountAfterSaving = 1000;
 
 // We create a copy of the WP inline edit post function
 var wpInlineEdit = _window.inlineEditPost.edit;
@@ -2815,35 +2765,39 @@ _window.inlineEditPost.edit = function (button, id) {
         });
     }
 
-    if (_wp.createRoot) {
-        var _container = document.getElementById("publishpress-future-quick-edit");
-        var root = (0, _wp.createRoot)(_container);
+    var container = document.getElementById("publishpress-future-quick-edit");
+    var root = (0, _wp.createRoot)(container);
 
-        var _component = React.createElement(_components.FutureActionPanelQuickEdit, {
-            storeName: storeName,
-            postType: _config.postType,
-            isNewPost: _config.isNewPost,
-            actionsSelectOptions: _config.actionsSelectOptions,
-            is12Hour: _config.is12Hour,
-            timeFormat: _config.timeFormat,
-            startOfWeek: _config.startOfWeek,
-            strings: _config.strings,
-            taxonomyName: _config.taxonomyName,
-            nonce: _config.nonce,
-            root: root
-        });
-
-        root.render(_component);
-
-        _window.inlineEditPost.revert = function () {
-            root.unmount();
-
-            // Call the original WP revert function.
-            wpInlineEditRevert.apply(this, arguments);
+    var saveButton = document.querySelector('.inline-edit-save .save');
+    if (saveButton) {
+        saveButton.onclick = function () {
+            setTimeout(function () {
+                root.unmount();
+            }, delayToUnmountAfterSaving);
         };
-    } else {
-        (0, _ReactDOM.render)(component, container);
     }
+
+    var component = React.createElement(_components.FutureActionPanelQuickEdit, {
+        storeName: storeName,
+        postType: _config.postType,
+        isNewPost: _config.isNewPost,
+        actionsSelectOptions: _config.actionsSelectOptions,
+        is12Hour: _config.is12Hour,
+        timeFormat: _config.timeFormat,
+        startOfWeek: _config.startOfWeek,
+        strings: _config.strings,
+        taxonomyName: _config.taxonomyName,
+        nonce: _config.nonce
+    });
+
+    root.render(component);
+
+    _window.inlineEditPost.revert = function () {
+        root.unmount();
+
+        // Call the original WP revert function.
+        wpInlineEditRevert.apply(this, arguments);
+    };
 };
 })();
 

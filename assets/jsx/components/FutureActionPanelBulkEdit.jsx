@@ -3,6 +3,7 @@ import { getElementByName } from '../utils';
 
 export const FutureActionPanelBulkEdit = (props) => {
     const { useSelect, useDispatch, select } = wp.data;
+    const { useEffect } = wp.element;
 
     const onChangeData = (attribute, value) => {
         getElementByName('future_action_bulk_enabled').value = select(props.storeName).getEnabled() ? 1 : 0;
@@ -18,6 +19,7 @@ export const FutureActionPanelBulkEdit = (props) => {
     const terms = useSelect((select) => select(props.storeName).getTerms(), []);
     const taxonomy = useSelect((select) => select(props.storeName).getTaxonomy(), []);
     const changeAction = useSelect((select) => select(props.storeName).getChangeAction(), []);
+    const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
 
     const {
         setChangeAction
@@ -41,6 +43,14 @@ export const FutureActionPanelBulkEdit = (props) => {
     ];
 
     const optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
+
+    useEffect(() => {
+        if (hasValidData || changeAction === 'no-change') {
+            jQuery('#bulk_edit').prop('disabled', false);
+        } else {
+            jQuery('#bulk_edit').prop('disabled', true);
+        }
+    }, [hasValidData, changeAction]);
 
     return (
         <div className={'post-expirator-panel'}>

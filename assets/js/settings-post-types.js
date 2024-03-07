@@ -776,6 +776,7 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
         useSelect = _wp$data.useSelect,
         useDispatch = _wp$data.useDispatch,
         select = _wp$data.select;
+    var useEffect = wp.element.useEffect;
 
 
     var onChangeData = function onChangeData(attribute, value) {
@@ -804,6 +805,9 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
     var changeAction = useSelect(function (select) {
         return select(props.storeName).getChangeAction();
     }, []);
+    var hasValidData = useSelect(function (select) {
+        return select(props.storeName).getHasValidData();
+    }, []);
 
     var _useDispatch = useDispatch(props.storeName),
         setChangeAction = _useDispatch.setChangeAction;
@@ -820,6 +824,14 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
     var options = [{ value: 'no-change', label: props.strings.noChange }, { value: 'change-add', label: props.strings.changeAdd }, { value: 'add-only', label: props.strings.addOnly }, { value: 'change-only', label: props.strings.changeOnly }, { value: 'remove-only', label: props.strings.removeOnly }];
 
     var optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
+
+    useEffect(function () {
+        if (hasValidData || changeAction === 'no-change') {
+            jQuery('#bulk_edit').prop('disabled', false);
+        } else {
+            jQuery('#bulk_edit').prop('disabled', true);
+        }
+    }, [hasValidData, changeAction]);
 
     return React.createElement(
         'div',
@@ -1003,57 +1015,6 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
     if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
         termsString = terms.join(',');
     }
-
-    (0, _wp2.useEffect)(function () {
-        var originalUpdate = inlineEditPost.save;
-
-        var overwriteSaveMethod = function overwriteSaveMethod() {
-            inlineEditPost.save = function () {
-                return false;
-            };
-        };
-
-        var restoreOriginalSaveMethod = function restoreOriginalSaveMethod() {
-            inlineEditPost.save = originalUpdate;
-        };
-
-        var callOriginalSaveMethod = function callOriginalSaveMethod(event) {
-            originalUpdate.apply(inlineEditPost, [inlineEditPost.getId(event.target)]);
-        };
-
-        var unmountComponent = function unmountComponent() {
-            setTimeout(props.root.unmount, 1000);
-        };
-
-        var abortSave = function abortSave(event) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            return false;
-        };
-
-        var onClickSave = function onClickSave(event) {
-            var formDataIsValid = (0, _wp.select)(props.storeName).getHasValidData();
-
-            if (!formDataIsValid) {
-                return abortSave(event);
-            }
-
-            callOriginalSaveMethod(event);
-
-            unmountComponent();
-
-            return true;
-        };
-
-        overwriteSaveMethod();
-
-        jQuery('.button-primary.save').on('click', onClickSave);
-
-        return function () {
-            restoreOriginalSaveMethod();
-        };
-    }, []);
 
     (0, _wp2.useEffect)(function () {
         if (hasValidData) {

@@ -15,9 +15,9 @@ import {
     taxonomyName,
     nonce
 } from "&config.quick-edit";
-import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-quick-edit';
+const delayToUnmountAfterSaving = 1000;
 
 // We create a copy of the WP inline edit post function
 const wpInlineEdit = inlineEditPost.edit;
@@ -78,35 +78,39 @@ inlineEditPost.edit = function (button, id) {
         });
     }
 
-    if (createRoot) {
-        const container = document.getElementById("publishpress-future-quick-edit");
-        const root = createRoot(container);
+    const container = document.getElementById("publishpress-future-quick-edit");
+    const root = createRoot(container);
 
-        const component = (
-            <FutureActionPanelQuickEdit
-                storeName={storeName}
-                postType={postType}
-                isNewPost={isNewPost}
-                actionsSelectOptions={actionsSelectOptions}
-                is12Hour={is12Hour}
-                timeFormat={timeFormat}
-                startOfWeek={startOfWeek}
-                strings={strings}
-                taxonomyName={taxonomyName}
-                nonce={nonce}
-                root={root}
-            />
-        );
-
-        root.render(component);
-
-        inlineEditPost.revert = function () {
-            root.unmount();
-
-            // Call the original WP revert function.
-            wpInlineEditRevert.apply(this, arguments);
+    const saveButton = document.querySelector('.inline-edit-save .save');
+    if (saveButton) {
+        saveButton.onclick = function() {
+            setTimeout(() => {
+                root.unmount();
+            }, delayToUnmountAfterSaving);
         };
-    } else {
-        render(component, container);
     }
+
+    const component = (
+        <FutureActionPanelQuickEdit
+            storeName={storeName}
+            postType={postType}
+            isNewPost={isNewPost}
+            actionsSelectOptions={actionsSelectOptions}
+            is12Hour={is12Hour}
+            timeFormat={timeFormat}
+            startOfWeek={startOfWeek}
+            strings={strings}
+            taxonomyName={taxonomyName}
+            nonce={nonce}
+        />
+    );
+
+    root.render(component);
+
+    inlineEditPost.revert = function () {
+        root.unmount();
+
+        // Call the original WP revert function.
+        wpInlineEditRevert.apply(this, arguments);
+    };
 };
