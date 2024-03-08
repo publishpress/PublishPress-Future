@@ -13,12 +13,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 class PostExpirator_Facade
 {
-
-    /**
-     * @deprecated 2.8.0 Use CapabilitiesAbstract::EXPIRE_POST;
-     */
-    const DEFAULT_CAPABILITY_EXPIRE_POST = CapabilitiesAbstract::EXPIRE_POST;
-
     /**
      * The singleton instance.
      */
