@@ -835,7 +835,6 @@ class ExpirablePostModel extends PostModel
         }
 
         $this->updateMeta(self::FLAG_METADATA_HASH, $hash);
-        $this->removeLegacyMetadataHash();
     }
 
     public function getMetadataHash()
@@ -844,6 +843,7 @@ class ExpirablePostModel extends PostModel
 
         if (empty($hash)) {
             $hash = $this->getMeta(self::LEGACY_FLAG_METADATA_HASH, true);
+            $this->updateMetadataHash($hash);
             $this->removeLegacyMetadataHash();
         }
 
