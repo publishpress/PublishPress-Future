@@ -18,7 +18,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirablePostModel extends PostModel
 {
-    const FLAG_METADATA_HASH = 'pp_future_metadata_hash';
+    const FLAG_METADATA_HASH = '_pp_future_metadata_hash';
+
+    const LEGACY_FLAG_METADATA_HASH = 'pp_future_metadata_hash';
 
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
@@ -747,6 +749,7 @@ class ExpirablePostModel extends PostModel
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
         $this->deleteMeta(self::FLAG_METADATA_HASH);
+        $this->deleteMeta(self::LEGACY_FLAG_METADATA_HASH);
     }
 
     public function forceTimestampToUnixtime($timestamp)
@@ -825,8 +828,30 @@ class ExpirablePostModel extends PostModel
         return md5(maybe_serialize($data));
     }
 
+    public function updateMetadataHash($hash = null)
+    {
+        if (empty($hash)) {
+            $hash = $this->calcMetadataHash();
+        }
+
+        $this->updateMeta(self::FLAG_METADATA_HASH, $hash);
+        $this->removeLegacyMetadataHash();
+    }
+
     public function getMetadataHash()
     {
-        $this->getMeta(self::FLAG_METADATA_HASH, true);
+        $hash = $this->getMeta(self::FLAG_METADATA_HASH, true);
+
+        if (empty($hash)) {
+            $hash = $this->getMeta(self::LEGACY_FLAG_METADATA_HASH, true);
+            $this->removeLegacyMetadataHash();
+        }
+
+        return $hash;
+    }
+
+    private function removeLegacyMetadataHash()
+    {
+        $this->deleteMeta(self::LEGACY_FLAG_METADATA_HASH);
     }
 }
