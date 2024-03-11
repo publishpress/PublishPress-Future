@@ -2,7 +2,7 @@ import { compact } from '../utils';
 import { ToggleCalendarDatePicker } from './ToggleCalendarDatePicker';
 
 const { PanelRow, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl } = wp.components;
-const { Fragment, useEffect } = wp.element;
+const { Fragment, useEffect, useState } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 const { addQueryArgs } = wp.url;
 const {
@@ -22,6 +22,9 @@ export const FutureActionPanel = (props) => {
     const termsListById = useSelect((select) => select(props.storeName).getTermsListById(), []);
     const isFetchingTerms = useSelect((select) => select(props.storeName).getIsFetchingTerms(), []);
     const calendarIsVisible = useSelect((select) => select(props.storeName).getCalendarIsVisible(), []);
+    const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
+
+    const [validationError, setValidationError] = useState('');
 
     const {
         setAction,
@@ -33,7 +36,8 @@ export const FutureActionPanel = (props) => {
         setTermsListById,
         setTaxonomyName,
         setIsFetchingTerms,
-        setCalendarIsVisible
+        setCalendarIsVisible,
+        setHasValidData
     } = useDispatch(props.storeName);
 
     const mapTermsListById = (terms) => {
@@ -178,6 +182,16 @@ export const FutureActionPanel = (props) => {
         storeCalendarIsVisibleOnStorage(calendarIsVisible);
     }, [calendarIsVisible]);
 
+    useEffect(() => {
+        if (hasValidData && props.onDataIsValid) {
+            props.onDataIsValid();
+        }
+
+        if (! hasValidData && props.onDataIsInvalid) {
+            props.onDataIsInvalid();
+        }
+    }, [hasValidData]);
+
     let selectedTerms = [];
     if (terms && terms.length > 0 && termsListById) {
         selectedTerms = compact(mapTermsListById(terms));
@@ -233,6 +247,63 @@ export const FutureActionPanel = (props) => {
 
     const HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
     const displayTaxonomyField = String(action).includes('category') && action !== 'category-remove-all';
+
+    let termsFieldLabel = taxonomyName;
+    switch (action) {
+        case 'category':
+            termsFieldLabel = props.strings.newTerms.replace('%s', taxonomyName);
+            break;
+        case 'category-remove':
+            termsFieldLabel = props.strings.removeTerms.replace('%s', taxonomyName);
+            break;
+        case 'category-add':
+            termsFieldLabel = props.strings.addTerms.replace('%s', taxonomyName);
+            break;
+    }
+
+    const validateData = () => {
+        let valid = true;
+
+        if (! enabled) {
+            setValidationError('');
+            return true;
+        }
+
+        if (! action) {
+            setValidationError(props.strings.errorActionRequired);
+            valid = false;
+        }
+
+        if (! date) {
+            setValidationError(props.strings.errorDateRequired);
+            valid = false;
+        }
+
+        const isTermRequired = ['category', 'category-add', 'category-remove'].includes(action);
+        const noTermIsSelected = terms.length === 0 || (terms.length === 1 && (terms[0] === '' || terms[0] === '0'));
+
+        if (isTermRequired && noTermIsSelected) {
+            setValidationError(props.strings.errorTermsRequired);
+            valid = false;
+        }
+
+        if (valid) {
+            setValidationError('');
+        }
+
+        return valid;
+    }
+
+    useEffect(() => {
+        if (! enabled) {
+            setHasValidData(true);
+            setValidationError('');
+
+            return;
+        }
+
+        setHasValidData(validateData());
+    }, [action, date, enabled, terms, taxonomy]);
 
     return (
         <div className={panelClass}>
@@ -294,10 +365,11 @@ export const FutureActionPanel = (props) => {
                                         <PanelRow className="future-action-full-width">
                                             <BaseControl>
                                                 <FormTokenField
-                                                    label={taxonomyName}
+                                                    label={termsFieldLabel}
                                                     value={selectedTerms}
                                                     suggestions={termsListByNameKeys}
                                                     onChange={handleTermsChange}
+                                                    placeholder={props.strings.addTermsPlaceholder}
                                                     maxSuggestions={1000}
                                                     __experimentalExpandOnFocus={true}
                                                     __experimentalAutoSelectFirstMatch={true}
@@ -329,6 +401,16 @@ export const FutureActionPanel = (props) => {
                             <span className="dashicons dashicons-info"></span> {HelpText}
                         </div>
                     </PanelRow>
+
+                    {! hasValidData && (
+                        <PanelRow>
+                            <BaseControl label={props.strings.validationError} className="future-action-error">
+                                <div>
+                                    <i className="dashicons dashicons-warning"></i> {validationError}
+                                </div>
+                            </BaseControl>
+                        </PanelRow>
+                    )}
                 </Fragment>
             )}
         </div>

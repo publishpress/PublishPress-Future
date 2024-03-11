@@ -125,3 +125,11 @@ div.pe-qe-fields > div {
     padding: 14px;
     background: #dae1f0;
 }
+
+.post-expirator-panel .future-action-error {
+    line-height: 20px;
+    width: 100%;
+    background-color: #b15b5b;
+    color: white;
+    padding: 12px;
+}

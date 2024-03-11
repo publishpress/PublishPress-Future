@@ -1,5 +1,6 @@
 import { FutureActionPanel } from "./";
-import { select } from "&wp.data";
+import { select, useSelect } from "&wp.data";
+import { useEffect } from "&wp.element";
 
 export const FutureActionPanelClassicEditor = (props) => {
     const browserTimezoneOffset = new Date().getTimezoneOffset();
@@ -50,6 +51,14 @@ export const FutureActionPanelClassicEditor = (props) => {
         taxonomy: getElementValueByName('future_action_taxonomy'),
     };
 
+    const onDataIsValid = () => {
+        jQuery('#publish').prop('disabled', false);
+    }
+
+    const onDataIsInvalid = () => {
+        jQuery('#publish').prop('disabled', true);
+    }
+
     return (
         <div className={'post-expirator-panel'}>
             <FutureActionPanel
@@ -69,7 +78,9 @@ export const FutureActionPanelClassicEditor = (props) => {
                 timeFormat={props.timeFormat}
                 startOfWeek={props.startOfWeek}
                 storeName={props.storeName}
-                strings={props.strings} />
+                strings={props.strings}
+                onDataIsValid={onDataIsValid}
+                onDataIsInvalid={onDataIsInvalid} />
         </div>
     );
 };

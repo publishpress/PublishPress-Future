@@ -8,6 +8,7 @@ export const SubmitButton = function (props) {
             type="submit"
             name={props.name}
             value={props.text}
+            disabled={props.disabled}
             className="button-primary"
         />
     )

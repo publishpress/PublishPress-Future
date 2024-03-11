@@ -2,6 +2,7 @@
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
@@ -307,9 +308,9 @@ class PostExpirator_Display
 
                     // TODO: only allow roles that can edit posts. Filter in the form as well, adding a description.
                     if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
-                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                        $role->add_cap(CapabilitiesAbstract::EXPIRE_POST);
                     } else {
-                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                        $role->remove_cap(CapabilitiesAbstract::EXPIRE_POST);
                     }
                 }
 
@@ -365,9 +366,9 @@ class PostExpirator_Display
                     }
 
                     if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
-                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                        $role->add_cap(CapabilitiesAbstract::EXPIRE_POST);
                     } else {
-                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                        $role->remove_cap(CapabilitiesAbstract::EXPIRE_POST);
                     }
                 }
 

@@ -253,3 +253,12 @@ p.description,
     opacity: .5;
   }
 }
+
+.future-action-error {
+    line-height: 20px;
+    width: 100%;
+    background-color: #b15b5b;
+    color: white;
+    padding: 12px;
+    margin-bottom: 12px;
+}

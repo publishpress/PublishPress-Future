@@ -105,13 +105,16 @@ class PostCategorySet implements ExpirationActionInterface
 
     public static function getLabel(string $postType = ''): string
     {
-        $taxonomy = self::getTaxonomyLabel($postType);
+        // translators: %s is the taxonomy name (plural)
+        $label = __('Replace all %s', 'post-expirator');
 
-        return sprintf(
-            // translators: %s is the taxonomy name (plural)
-            __('Replace all %s', 'post-expirator'),
-            $taxonomy
-        );
+        if (! empty($postType)) {
+            $taxonomy = self::getTaxonomyLabel($postType);
+
+            $label = sprintf($label, $taxonomy);
+        }
+
+        return $label;
     }
 
     public function getDynamicLabel($postType = '')

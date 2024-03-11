@@ -271,7 +271,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         $status_labels = [
             'uninitialized' => __('Uninitialized', 'post-expirator'),
-            'pending' => __('Pending', 'post-expirator'),
+            'pending' => __('Scheduled', 'post-expirator'),
             'complete' => __('Complete', 'post-expirator'),
             'failed' => __('Failed', 'post-expirator'),
             'canceled' => __('Canceled', 'post-expirator'),
@@ -748,4 +748,13 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
 		return __( 'Non-repeating', 'post-expirator' );
 	}
+
+    /**
+	 * Message to be displayed when there are no items
+	 *
+	 * @since 3.1.0
+	 */
+	public function no_items() {
+        echo esc_html('No Future Actions.', 'post-expirator');
+    }
 }

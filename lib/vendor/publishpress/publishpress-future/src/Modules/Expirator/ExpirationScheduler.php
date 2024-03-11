@@ -190,6 +190,8 @@ class ExpirationScheduler implements SchedulerInterface
             ExpirablePostModel::FLAG_METADATA_HASH,
             $postModel->calcMetadataHash()
         );
+
+        $postModel->deleteMeta(ExpirablePostModel::LEGACY_FLAG_METADATA_HASH);
     }
 
     private function unscheduleIfScheduled($postId, $timestamp)

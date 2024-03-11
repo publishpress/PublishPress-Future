@@ -38,6 +38,16 @@ export const FutureActionPanelBlockEditor = (props) => {
 
     const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
 
+    const { lockPostSaving, unlockPostSaving } = useDispatch('core/editor');
+
+    const onDataIsValid = () => {
+        unlockPostSaving('future-action');
+    }
+
+    const onDataIsInvalid = () => {
+        lockPostSaving('future-action');
+    }
+
     return (
         <PluginDocumentSettingPanel
             name={'publishpress-future-action-panel'}
@@ -63,7 +73,9 @@ export const FutureActionPanelBlockEditor = (props) => {
                     timeFormat={props.timeFormat}
                     startOfWeek={props.startOfWeek}
                     storeName={props.storeName}
-                    strings={props.strings} />
+                    strings={props.strings}
+                    onDataIsValid={onDataIsValid}
+                    onDataIsInvalid={onDataIsInvalid} />
             </div>
         </PluginDocumentSettingPanel>
     );

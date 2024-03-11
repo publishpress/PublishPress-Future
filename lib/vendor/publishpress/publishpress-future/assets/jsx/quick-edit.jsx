@@ -15,7 +15,6 @@ import {
     taxonomyName,
     nonce
 } from "&config.quick-edit";
-import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-quick-edit';
 const delayToUnmountAfterSaving = 1000;
@@ -80,6 +79,17 @@ inlineEditPost.edit = function (button, id) {
     }
 
     const container = document.getElementById("publishpress-future-quick-edit");
+    const root = createRoot(container);
+
+    const saveButton = document.querySelector('.inline-edit-save .save');
+    if (saveButton) {
+        saveButton.onclick = function() {
+            setTimeout(() => {
+                root.unmount();
+            }, delayToUnmountAfterSaving);
+        };
+    }
+
     const component = (
         <FutureActionPanelQuickEdit
             storeName={storeName}
@@ -95,27 +105,12 @@ inlineEditPost.edit = function (button, id) {
         />
     );
 
-    if (createRoot) {
-        const root = createRoot(container);
+    root.render(component);
 
-        const saveButton = document.querySelector('.inline-edit-save .save');
-        if (saveButton) {
-            saveButton.onclick = function() {
-                setTimeout(() => {
-                    root.unmount();
-                }, delayToUnmountAfterSaving);
-            };
-        }
+    inlineEditPost.revert = function () {
+        root.unmount();
 
-        root.render(component);
-
-        inlineEditPost.revert = function () {
-            root.unmount();
-
-            // Call the original WP revert function.
-            wpInlineEditRevert.apply(this, arguments);
-        };
-    } else {
-        render(component, container);
-    }
+        // Call the original WP revert function.
+        wpInlineEditRevert.apply(this, arguments);
+    };
 };
