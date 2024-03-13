@@ -314,6 +314,7 @@ export const FutureActionPanel = (props) => {
         setHasValidData(validateData());
     }, [action, date, enabled, terms, taxonomy]);
 
+    console.log('action', action);
     console.log('props.statusesSelectOptions', props.statusesSelectOptions);
 
     return (
