@@ -526,9 +526,6 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setHasValidData(validateData());
     }, [action, date, enabled, terms, taxonomy]);
 
-    console.log('action', action);
-    console.log('props.statusesSelectOptions', props.statusesSelectOptions);
-
     return React.createElement(
         'div',
         { className: panelClass },

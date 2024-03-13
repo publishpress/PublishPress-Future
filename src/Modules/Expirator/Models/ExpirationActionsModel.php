@@ -171,7 +171,18 @@ class ExpirationActionsModel
             return $this->statusesAsOptions[$postType];
         }
 
-        $this->statusesAsOptions[$postType] = $this->getStatusesForPostType($postType);
+        $statuses = $this->getStatusesForPostType($postType);
+
+        $this->statusesAsOptions[$postType] = array_map(
+            function ($label, $value) {
+                return [
+                    'label' => $label,
+                    'value' => $value,
+                ];
+            },
+            $statuses,
+            array_keys($statuses)
+        );
 
         return $this->statusesAsOptions[$postType];
     }
