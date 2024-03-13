@@ -62,6 +62,7 @@ abstract class HooksAbstract
     const FILTER_UNSET_POST_TYPES_DEPRECATED = 'postexpirator_unset_post_types';
     const FILTER_HIDE_METABOX = 'publishpressfuture_hide_metabox';
     const FILTER_EXPIRATION_NEW_STATUS = 'publishpressfuture_expiration_new_status';
+    const FILTER_EXPIRATION_STATUSES = 'publishpressfuture_expiration_statuses';
 
 
     public static function getActionLegacyMultisiteDelete($blogId)

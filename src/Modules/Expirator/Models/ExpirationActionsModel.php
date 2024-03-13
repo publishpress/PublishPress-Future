@@ -142,28 +142,36 @@ class ExpirationActionsModel
         return $actions;
     }
 
+    public function getStatusesForPostType($postType)
+    {
+        $statuses = [
+            'draft' => __('Draft'),
+            'private' => __('Private'),
+            'trash' => __('Trash'),
+        ];
+
+        /**
+         * Filter the expiration statuses for a specific post type.
+         * @param array $statuses
+         * @param string $postType
+         * @return array
+         */
+        $statuses = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_EXPIRATION_STATUSES,
+            $statuses,
+            $postType
+        );
+
+        return $statuses;
+    }
+
     public function getStatusesAsOptionsForPostType($postType)
     {
-        if (isset($this->statusesAsOptions[$postType])) {
+        if (isset($this->statusesAsOptions[$postType]) && !empty($this->statusesAsOptions[$postType])) {
             return $this->statusesAsOptions[$postType];
         }
 
-        $statuses = [
-            [
-                'value' => 'draft',
-                'label' => __('Draft'),
-            ],
-            [
-                'value' => 'private',
-                'label' => __('Private'),
-            ],
-            [
-                'value' => 'trash',
-                'label' => __('Trash'),
-            ],
-        ];
-
-        $this->statusesAsOptions[$postType] = $statuses;
+        $this->statusesAsOptions[$postType] = $this->getStatusesForPostType($postType);
 
         return $this->statusesAsOptions[$postType];
     }
