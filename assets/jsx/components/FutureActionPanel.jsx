@@ -288,6 +288,12 @@ export const FutureActionPanel = (props) => {
             valid = false;
         }
 
+        // Check if the date is in the past
+        if (date && new Date(date) < new Date()) {
+            setValidationError(props.strings.errorDateInPast);
+            valid = false;
+        }
+
         const isTermRequired = ['category', 'category-add', 'category-remove'].includes(action);
         const noTermIsSelected = terms.length === 0 || (terms.length === 1 && (terms[0] === '' || terms[0] === '0'));
 

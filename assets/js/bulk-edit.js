@@ -500,6 +500,13 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             valid = false;
         }
 
+        // Check if the date is in the past
+        console.log(date);
+        if (date && new Date(date) < new Date()) {
+            setValidationError(props.strings.errorDateInPast);
+            valid = false;
+        }
+
         var isTermRequired = ['category', 'category-add', 'category-remove'].includes(action);
         var noTermIsSelected = terms.length === 0 || terms.length === 1 && (terms[0] === '' || terms[0] === '0');
 
