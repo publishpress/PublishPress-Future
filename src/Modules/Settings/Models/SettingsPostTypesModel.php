@@ -81,6 +81,7 @@ class SettingsPostTypesModel
                 'defaultExpireType' => isset($defaults['default-expire-type']) ? $defaults['default-expire-type'] : '',
                 'defaultExpireOffset' => isset($defaults['default-custom-date']) ? $defaults['default-custom-date'] : '',
                 'globalDefaultExpireOffset' => $this->settings->getGeneralDateTimeOffset(),
+                'newStatus' => isset($defaults['newStatus']) ? $defaults['newStatus'] : 'draft',
             ];
 
             $settings = $this->hooks->applyFilters(

@@ -12,6 +12,8 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -116,8 +118,27 @@ class QuickEditController implements InitializableInterface
         $shouldSchedule = isset($_POST['future_action_enabled']) && $_POST['future_action_enabled'] === '1';
 
         if ($shouldSchedule) {
+            $expireType = isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '';
+            $newStatus = isset($_POST['future_action_new_status']) ? sanitize_text_field($_POST['future_action_new_status']) : 'draft';
+
+            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'draft';
+            }
+
+            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'private';
+            }
+
+            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'trash';
+            }
+
             $opts = [
-                'expireType' => isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '',
+                'expireType' => $expireType,
+                'newStatus' => $newStatus,
                 'category' => isset($_POST['future_action_terms']) ? sanitize_text_field($_POST['future_action_terms']) : '',
                 'categoryTaxonomy' => isset($_POST['future_action_taxonomy']) ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
             ];
@@ -199,6 +220,7 @@ class QuickEditController implements InitializableInterface
                 'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+                'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
                 'isDebugEnabled' => $debug->isEnabled(),
                 'taxonomyName' => $taxonomyPluralName,
                 'taxonomyTerms' => $taxonomyTerms,
@@ -238,6 +260,7 @@ class QuickEditController implements InitializableInterface
                         __('Select one or more %s', 'post-expirator'),
                         strtolower($taxonomyPluralName)
                     ),
+                    'newStatus' => __('New status', 'post-expirator'),
                 ]
             ]
         );

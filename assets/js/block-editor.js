@@ -206,6 +206,9 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
     var hasValidData = useSelect(function (select) {
         return select(props.storeName).getHasValidData();
     }, []);
+    var newStatus = useSelect(function (select) {
+        return select(props.storeName).getNewStatus();
+    }, []);
 
     var _useState = useState(''),
         _useState2 = _slicedToArray(_useState, 2),
@@ -223,7 +226,8 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setTaxonomyName = _useDispatch.setTaxonomyName,
         setIsFetchingTerms = _useDispatch.setIsFetchingTerms,
         setCalendarIsVisible = _useDispatch.setCalendarIsVisible,
-        setHasValidData = _useDispatch.setHasValidData;
+        setHasValidData = _useDispatch.setHasValidData,
+        setNewStatus = _useDispatch.setNewStatus;
 
     var mapTermsListById = function mapTermsListById(terms) {
         if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) !== 'object' || terms === null) {
@@ -271,6 +275,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         if (isChecked) {
             setAction(props.action);
             setDate(props.date);
+            setNewStatus(props.newStatus);
             setTerms(props.terms);
             setTaxonomy(props.taxonomy);
 
@@ -284,6 +289,12 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setAction(value);
 
         callOnChangeData('action', value);
+    };
+
+    var handleNewStatusChange = function handleNewStatusChange(value) {
+        setNewStatus(value);
+
+        callOnChangeData('newStatus', value);
     };
 
     var handleDateChange = function handleDateChange(value) {
@@ -341,6 +352,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         }
 
         setAction(props.action);
+        setNewStatus(props.newStatus);
         setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
@@ -540,6 +552,16 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                     onChange: handleActionChange
                 })
             ),
+            action === 'change-status' && React.createElement(
+                PanelRow,
+                { className: 'new-status' },
+                React.createElement(SelectControl, {
+                    label: props.strings.newStatus,
+                    options: props.statusesSelectOptions,
+                    value: newStatus,
+                    onChange: handleNewStatusChange
+                })
+            ),
             displayTaxonomyField && (isFetchingTerms && React.createElement(
                 PanelRow,
                 null,
@@ -717,6 +739,7 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
 
         if (newAttribute.enabled) {
             newAttribute['action'] = store.getAction();
+            newAttribute['newStatus'] = store.getNewStatus();
             newAttribute['date'] = store.getDate();
             newAttribute['terms'] = store.getTerms();
             newAttribute['taxonomy'] = store.getTaxonomy();
@@ -755,9 +778,11 @@ var FutureActionPanelBlockEditor = exports.FutureActionPanelBlockEditor = functi
                 postType: props.postType,
                 isCleanNewPost: props.isCleanNewPost,
                 actionsSelectOptions: props.actionsSelectOptions,
+                statusesSelectOptions: props.statusesSelectOptions,
                 enabled: data.enabled,
                 calendarIsVisible: true,
                 action: data.action,
+                newStatus: data.newStatus,
                 date: data.date,
                 terms: data.terms,
                 taxonomy: data.taxonomy,
@@ -806,6 +831,7 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
     var onChangeData = function onChangeData(attribute, value) {
         (0, _utils.getElementByName)('future_action_bulk_enabled').value = select(props.storeName).getEnabled() ? 1 : 0;
         (0, _utils.getElementByName)('future_action_bulk_action').value = select(props.storeName).getAction();
+        (0, _utils.getElementByName)('future_action_bulk_new_status').value = select(props.storeName).getNewStatus();
         (0, _utils.getElementByName)('future_action_bulk_date').value = select(props.storeName).getDate();
         (0, _utils.getElementByName)('future_action_bulk_terms').value = select(props.storeName).getTerms().join(',');
         (0, _utils.getElementByName)('future_action_bulk_taxonomy').value = select(props.storeName).getTaxonomy();
@@ -819,6 +845,9 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
     }, []);
     var action = useSelect(function (select) {
         return select(props.storeName).getAction();
+    }, []);
+    var newStatus = useSelect(function (select) {
+        return select(props.storeName).getNewStatus();
     }, []);
     var terms = useSelect(function (select) {
         return select(props.storeName).getTerms();
@@ -875,9 +904,11 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
             postType: props.postType,
             isCleanNewPost: props.isNewPost,
             actionsSelectOptions: props.actionsSelectOptions,
+            statusesSelectOptions: props.statusesSelectOptions,
             enabled: true,
             calendarIsVisible: false,
             action: action,
+            newStatus: newStatus,
             date: date,
             terms: terms,
             taxonomy: taxonomy,
@@ -890,6 +921,7 @@ var FutureActionPanelBulkEdit = exports.FutureActionPanelBulkEdit = function Fut
             strings: props.strings }),
         React.createElement('input', { type: 'hidden', name: 'future_action_bulk_enabled', value: enabled ? 1 : 0 }),
         React.createElement('input', { type: 'hidden', name: 'future_action_bulk_action', value: action }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_bulk_new_status', value: newStatus }),
         React.createElement('input', { type: 'hidden', name: 'future_action_bulk_date', value: date }),
         React.createElement('input', { type: 'hidden', name: 'future_action_bulk_terms', value: termsString }),
         React.createElement('input', { type: 'hidden', name: 'future_action_bulk_taxonomy', value: taxonomy }),
@@ -931,6 +963,7 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
 
         getElementByName('future_action_enabled').value = store.getEnabled() ? 1 : 0;
         getElementByName('future_action_action').value = store.getAction();
+        getElementByName('future_action_new_status').value = store.getNewStatus();
         getElementByName('future_action_date').value = store.getDate();
         getElementByName('future_action_terms').value = store.getTerms().join(',');
         getElementByName('future_action_taxonomy').value = store.getTaxonomy();
@@ -965,6 +998,7 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
     var data = {
         enabled: getElementValueByName('future_action_enabled') === '1',
         action: getElementValueByName('future_action_action'),
+        newStatus: getElementValueByName('future_action_new_status'),
         date: getElementValueByName('future_action_date'),
         terms: getTermsFromElementByName('future_action_terms'),
         taxonomy: getElementValueByName('future_action_taxonomy')
@@ -986,9 +1020,11 @@ var FutureActionPanelClassicEditor = exports.FutureActionPanelClassicEditor = fu
             postType: props.postType,
             isCleanNewPost: props.isNewPost,
             actionsSelectOptions: props.actionsSelectOptions,
+            statusesSelectOptions: props.statusesSelectOptions,
             enabled: data.enabled,
             calendarIsVisible: true,
             action: data.action,
+            newStatus: data.newStatus,
             date: data.date,
             terms: data.terms,
             taxonomy: data.taxonomy,
@@ -1048,6 +1084,9 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
     var hasValidData = (0, _wp.useSelect)(function (select) {
         return select(props.storeName).getHasValidData();
     }, []);
+    var newStatus = (0, _wp.useSelect)(function (select) {
+        return select(props.storeName).getNewStatus();
+    }, []);
 
     var termsString = terms;
     if ((typeof terms === 'undefined' ? 'undefined' : _typeof(terms)) === 'object') {
@@ -1070,9 +1109,11 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
             postType: props.postType,
             isCleanNewPost: props.isNewPost,
             actionsSelectOptions: props.actionsSelectOptions,
+            statusesSelectOptions: props.statusesSelectOptions,
             enabled: enabled,
             calendarIsVisible: false,
             action: action,
+            newStatus: newStatus,
             date: date,
             terms: terms,
             taxonomy: taxonomy,
@@ -1087,6 +1128,7 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
             onDataIsInvalid: onDataIsInvalid }),
         React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: enabled ? 1 : 0 }),
         React.createElement('input', { type: 'hidden', name: 'future_action_action', value: action ? action : '' }),
+        React.createElement('input', { type: 'hidden', name: 'future_action_new_status', value: newStatus ? newStatus : '' }),
         React.createElement('input', { type: 'hidden', name: 'future_action_date', value: date ? date : '' }),
         React.createElement('input', { type: 'hidden', name: 'future_action_terms', value: termsString ? termsString : '' }),
         React.createElement('input', { type: 'hidden', name: 'future_action_taxonomy', value: taxonomy ? taxonomy : '' }),
@@ -1230,6 +1272,11 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
         _useState26 = _slicedToArray(_useState25, 2),
         howToExpireList = _useState26[0],
         setHowToExpireList = _useState26[1];
+
+    var _useState27 = (0, _wp.useState)(props.settings.newStatus),
+        _useState28 = _slicedToArray(_useState27, 2),
+        newStatus = _useState28[0],
+        setNewStatus = _useState28[1];
 
     var taxonomyRelatedActions = ['category', 'category-add', 'category-remove', 'category-remove-all'];
 
@@ -1415,6 +1462,12 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
                 selected: settingHowToExpire,
                 onChange: onChangeHowToExpire
             }),
+            settingHowToExpire === 'change-status' && React.createElement(_.SelectControl, {
+                name: 'expirationdate_newstatus-' + props.postType,
+                options: props.statusesList,
+                selected: newStatus,
+                onChange: setNewStatus
+            }),
             props.taxonomiesList.length > 0 && ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && React.createElement(_.TokensControl, {
                 label: props.text.fieldTerm,
                 name: 'expirationdate_terms-' + props.postType,
@@ -1523,6 +1576,7 @@ var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTyp
                 settings: postTypeSettings,
                 expireTypeList: props.expireTypeList,
                 taxonomiesList: props.taxonomiesList[postType],
+                statusesList: props.statusesList[postType],
                 key: postType + "-panel",
                 onDataIsValid: props.onDataIsValid,
                 onDataIsInvalid: props.onDataIsInvalid
@@ -2349,6 +2403,7 @@ var createStore = exports.createStore = function createStore(props) {
         enabled: props.defaultState.autoEnable,
         terms: props.defaultState.terms ? props.defaultState.terms : [],
         taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,
+        newStatus: props.defaultState.newStatus ? props.defaultState.newStatus : 'draft',
         termsListByName: null,
         termsListById: null,
         taxonomyName: null,
@@ -2367,6 +2422,10 @@ var createStore = exports.createStore = function createStore(props) {
                 case 'SET_ACTION':
                     return _extends({}, state, {
                         action: action.action
+                    });
+                case 'SET_NEW_STATUS':
+                    return _extends({}, state, {
+                        newStatus: action.newStatus
                     });
                 case 'SET_DATE':
                     // Make sure the date is a number, if it is a string with only numbers
@@ -2434,6 +2493,12 @@ var createStore = exports.createStore = function createStore(props) {
                 return {
                     type: 'SET_ACTION',
                     action: action
+                };
+            },
+            setNewStatus: function setNewStatus(newStatus) {
+                return {
+                    type: 'SET_NEW_STATUS',
+                    newStatus: newStatus
                 };
             },
             setDate: function setDate(date) {
@@ -2506,6 +2571,9 @@ var createStore = exports.createStore = function createStore(props) {
         selectors: {
             getAction: function getAction(state) {
                 return state.action;
+            },
+            getNewStatus: function getNewStatus(state) {
+                return state.newStatus;
             },
             getDate: function getDate(state) {
                 return state.date;
@@ -2705,7 +2773,8 @@ var getActionSettingsFromColumnData = exports.getActionSettingsFromColumnData = 
         date: columnData.dataset.actionDate,
         dateUnix: columnData.dataset.actionDateUnix,
         taxonomy: columnData.dataset.actionTaxonomy,
-        terms: columnData.dataset.actionTerms
+        terms: columnData.dataset.actionTerms,
+        newStatus: columnData.dataset.actionNewStatus
     };
 };
 
@@ -2853,6 +2922,7 @@ var storeName = 'publishpress-future/future-action';
     defaultState: {
         autoEnable: _config.postTypeDefaultConfig.autoEnable,
         action: _config.postTypeDefaultConfig.expireType,
+        newStatus: _config.postTypeDefaultConfig.newStatus,
         date: _config.defaultDate,
         taxonomy: _config.postTypeDefaultConfig.taxonomy,
         terms: _config.postTypeDefaultConfig.terms
@@ -2864,6 +2934,7 @@ var BlockEditorFutureActionPlugin = function BlockEditorFutureActionPlugin() {
         postType: (0, _wp.select)('core/editor').getCurrentPostType(),
         isCleanNewPost: (0, _wp.select)('core/editor').isCleanNewPost(),
         actionsSelectOptions: _config.actionsSelectOptions,
+        statusesSelectOptions: _config.statusesSelectOptions,
         is12Hour: _config.is12Hour,
         timeFormat: _config.timeFormat,
         startOfWeek: _config.startOfWeek,

@@ -10,6 +10,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
 use WP_REST_Request;
@@ -194,6 +195,7 @@ class RestAPIController implements InitializableInterface
 
                         $date = $postModel->getExpirationDateString(false);
                         $action = $postModel->getExpirationType();
+                        $newStatus = $postModel->getExpirationNewStatus();
                         $terms = $postModel->getExpirationCategoryIDs();
                         $taxonomy = $postModel->getExpirationTaxonomy();
 
@@ -204,7 +206,8 @@ class RestAPIController implements InitializableInterface
                             $defaultExpirationDate = $defaultDataModel->getActionDateParts($post['id']);
                             $date = $defaultExpirationDate['iso'];
 
-                            $action = $defaultDataModel->getDefaultActionForPostType($post['post_type']);
+                            $action = $defaultDataModel->getAction();
+                            $newStatus = $defaultDataModel->getNewStatus();
                             $terms = [];
                             $taxonomy = '';
                         }
@@ -213,14 +216,34 @@ class RestAPIController implements InitializableInterface
                             'enabled' => $postModel->isExpirationEnabled(),
                             'date' => $date,
                             'action' => $action,
+                            'newStatus' => $newStatus,
                             'terms' => $terms,
                             'taxonomy' => $taxonomy,
                         ];
                     },
                     'update_callback' => function ($value, $post) {
                         if (isset($value['enabled']) && (bool)$value['enabled']) {
+                            $expireType = sanitize_text_field($value['action']);
+                            $newStatus = sanitize_key($value['newStatus']);
+
+                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                $newStatus = 'draft';
+                            }
+
+                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                $newStatus = 'private';
+                            }
+
+                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                $newStatus = 'trash';
+                            }
+
                             $opts = [
-                                'expireType' => sanitize_text_field($value['action']),
+                                'expireType' => $expireType,
+                                'newStatus' => $newStatus,
                                 'category' => array_map('sanitize_text_field', $value['terms']),
                                 'categoryTaxonomy' => sanitize_text_field($value['taxonomy']),
                             ];

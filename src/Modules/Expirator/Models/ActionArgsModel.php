@@ -5,6 +5,7 @@
 
 namespace PublishPress\Future\Modules\Expirator\Models;
 
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -73,6 +74,23 @@ class ActionArgsModel
             $this->createdAt = $row->created_at;
             $this->enabled = absint($row->enabled) === 1;
             $this->args = json_decode($row->args, true);
+
+            if (isset($this->args['expireType'])) {
+                if ($this->args['expireType'] === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                    $this->args['expireType'] = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                    $this->args['newStatus'] = 'draft';
+                }
+
+                if ($this->args['expireType'] === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                    $this->args['expireType'] = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                    $this->args['newStatus'] = 'private';
+                }
+
+                if ($this->args['expireType'] === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                    $this->args['expireType'] = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                    $this->args['newStatus'] = 'trash';
+                }
+            }
         }
     }
 

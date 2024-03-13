@@ -23,6 +23,7 @@ export const FutureActionPanel = (props) => {
     const isFetchingTerms = useSelect((select) => select(props.storeName).getIsFetchingTerms(), []);
     const calendarIsVisible = useSelect((select) => select(props.storeName).getCalendarIsVisible(), []);
     const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
+    const newStatus = useSelect((select) => select(props.storeName).getNewStatus(), []);
 
     const [validationError, setValidationError] = useState('');
 
@@ -37,7 +38,8 @@ export const FutureActionPanel = (props) => {
         setTaxonomyName,
         setIsFetchingTerms,
         setCalendarIsVisible,
-        setHasValidData
+        setHasValidData,
+        setNewStatus
     } = useDispatch(props.storeName);
 
     const mapTermsListById = (terms) => {
@@ -87,6 +89,7 @@ export const FutureActionPanel = (props) => {
         if (isChecked) {
             setAction(props.action);
             setDate(props.date);
+            setNewStatus(props.newStatus);
             setTerms(props.terms);
             setTaxonomy(props.taxonomy);
 
@@ -100,6 +103,12 @@ export const FutureActionPanel = (props) => {
         setAction(value);
 
         callOnChangeData('action', value);
+    }
+
+    const handleNewStatusChange = (value) => {
+        setNewStatus(value);
+
+        callOnChangeData('newStatus', value);
     }
 
     const handleDateChange = (value) => {
@@ -157,6 +166,7 @@ export const FutureActionPanel = (props) => {
         }
 
         setAction(props.action);
+        setNewStatus(props.newStatus);
         setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
@@ -216,7 +226,6 @@ export const FutureActionPanel = (props) => {
     } else {
         is24hour = props.timeFormat === '24h';
     }
-
 
     const replaceCurlyBracketsWithLink = (string, href, target) => {
         const parts = string.split('{');
@@ -331,6 +340,17 @@ export const FutureActionPanel = (props) => {
                             onChange={handleActionChange}
                         />
                     </PanelRow>
+
+                    {action === 'change-status' &&
+                        <PanelRow className="new-status">
+                            <SelectControl
+                                label={props.strings.newStatus}
+                                options={props.statusesSelectOptions}
+                                value={newStatus}
+                                onChange={handleNewStatusChange}
+                            />
+                        </PanelRow>
+                    }
 
                     {
                         displayTaxonomyField && (

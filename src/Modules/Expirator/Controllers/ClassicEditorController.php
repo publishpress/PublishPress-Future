@@ -12,6 +12,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
@@ -162,6 +163,7 @@ class ClassicEditorController implements InitializableInterface
             'enabled' => $postModel->isExpirationEnabled(),
             'date' => $postModel->getExpirationDateString(false),
             'action' => $postModel->getExpirationType(),
+            'newStatus' => $postModel->getExpirationNewStatus(),
             'terms' => $postModel->getExpirationCategoryIDs(),
             'taxonomy' => $postModel->getExpirationTaxonomy()
         ];
@@ -171,6 +173,7 @@ class ClassicEditorController implements InitializableInterface
                 'post' => $post,
                 'enabled' => $data['enabled'],
                 'action' => $data['action'],
+                'newStatus' => $data['newStatus'],
                 'date' => $data['date'],
                 'terms' => $data['terms'],
                 'taxonomy' => $data['taxonomy']
@@ -219,8 +222,27 @@ class ClassicEditorController implements InitializableInterface
             return;
         }
 
+        $expireType = isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '';
+        $newStatus = isset($_POST['future_action_new_status']) ? sanitize_text_field($_POST['future_action_new_status']) : 'draft';
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'draft';
+        }
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'private';
+        }
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'trash';
+        }
+
         $opts = [
-            'expireType' => isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '',
+            'expireType' => $expireType,
+            'newStatus' => $newStatus,
             'category' => isset($_POST['future_action_terms']) ? sanitize_text_field($_POST['future_action_terms']) : '',
             'categoryTaxonomy' => isset($_POST['future_action_taxonomy']) ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
         ];
@@ -320,6 +342,7 @@ class ClassicEditorController implements InitializableInterface
                 'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+                'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
                 'isDebugEnabled' => $debug->isEnabled(),
                 'taxonomyName' => $taxonomyPluralName,
                 'taxonomyTerms' => $taxonomyTerms,
@@ -358,6 +381,7 @@ class ClassicEditorController implements InitializableInterface
                         __('Select one or more %s', 'post-expirator'),
                         strtolower($taxonomyPluralName)
                     ),
+                    'newStatus' => __('New status', 'post-expirator'),
                 ]
             ]
         );

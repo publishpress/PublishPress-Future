@@ -13,6 +13,7 @@ export const createStore = (props) => {
         enabled: props.defaultState.autoEnable,
         terms: props.defaultState.terms ? props.defaultState.terms : [],
         taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,
+        newStatus: props.defaultState.newStatus ? props.defaultState.newStatus : 'draft',
         termsListByName: null,
         termsListById: null,
         taxonomyName: null,
@@ -29,6 +30,11 @@ export const createStore = (props) => {
                     return {
                         ...state,
                         action: action.action,
+                    };
+                case 'SET_NEW_STATUS':
+                    return {
+                        ...state,
+                        newStatus: action.newStatus,
                     };
                 case 'SET_DATE':
                     // Make sure the date is a number, if it is a string with only numbers
@@ -107,6 +113,12 @@ export const createStore = (props) => {
                     action: action
                 };
             },
+            setNewStatus(newStatus) {
+                return {
+                    type: 'SET_NEW_STATUS',
+                    newStatus: newStatus
+                };
+            },
             setDate(date) {
                 return {
                     type: 'SET_DATE',
@@ -177,6 +189,9 @@ export const createStore = (props) => {
         selectors: {
             getAction(state) {
                 return state.action;
+            },
+            getNewStatus(state) {
+                return state.newStatus;
             },
             getDate(state) {
                 return state.date;

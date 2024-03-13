@@ -34,6 +34,7 @@ export const PostTypeSettingsPanel = function (props) {
     const [validationError, setValidationError] = useState('');
     const [taxonomyLabel, setTaxonomyLabel] = useState('');
     const [howToExpireList, setHowToExpireList] = useState(originalExpireTypeList);
+    const [newStatus, setNewStatus] = useState(props.settings.newStatus);
 
     const taxonomyRelatedActions = [
         'category',
@@ -222,6 +223,15 @@ export const PostTypeSettingsPanel = function (props) {
                     selected={settingHowToExpire}
                     onChange={onChangeHowToExpire}
                 />
+
+                {settingHowToExpire === 'change-status' &&
+                    <SelectControl
+                        name={'expirationdate_newstatus-' + props.postType}
+                        options={props.statusesList}
+                        selected={newStatus}
+                        onChange={setNewStatus}
+                    />
+                }
 
                 {(props.taxonomiesList.length > 0 && (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1)) &&
                     <TokensControl

@@ -7,6 +7,7 @@ namespace PublishPress\Future\Modules\Expirator\Models;
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemove;
@@ -43,6 +44,8 @@ class ExpirationActionsModel
      */
     private $actionsAsOptions = [];
 
+    private $statusesAsOptions = [];
+
     public function __construct(HookableInterface $hooks)
     {
         $this->hooks = $hooks;
@@ -55,9 +58,7 @@ class ExpirationActionsModel
     {
         if (! isset($this->actions[$postType])) {
             $actions = [
-                ExpirationActionsAbstract::POST_STATUS_TO_DRAFT => PostStatusToDraft::getLabel(),
-                ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE => PostStatusToPrivate::getLabel(),
-                ExpirationActionsAbstract::POST_STATUS_TO_TRASH => PostStatusToTrash::getLabel(),
+                ExpirationActionsAbstract::CHANGE_POST_STATUS => ChangePostStatus::getLabel(),
                 ExpirationActionsAbstract::DELETE_POST => DeletePost::getLabel(),
                 ExpirationActionsAbstract::STICK_POST => StickPost::getLabel(),
                 ExpirationActionsAbstract::UNSTICK_POST => UnstickPost::getLabel(),
@@ -141,7 +142,51 @@ class ExpirationActionsModel
         return $actions;
     }
 
-    public function getLabelForAction($actionName, $postType = '')
+    public function getStatusesAsOptionsForPostType($postType)
+    {
+        if (isset($this->statusesAsOptions[$postType])) {
+            return $this->statusesAsOptions[$postType];
+        }
+
+        $statuses = [
+            [
+                'value' => 'draft',
+                'label' => __('Draft'),
+            ],
+            [
+                'value' => 'private',
+                'label' => __('Private'),
+            ],
+            [
+                'value' => 'trash',
+                'label' => __('Trash'),
+            ],
+        ];
+
+        $this->statusesAsOptions[$postType] = $statuses;
+
+        return $this->statusesAsOptions[$postType];
+    }
+
+    public function getStatusesAsOptionsForAllPostTypes()
+    {
+        if (!empty($this->statusesAsOptions)) {
+            return $this->statusesAsOptions;
+        }
+
+        $container = Container::getInstance();
+        $postTypesModel = new PostTypesModel($container);
+
+        $postTypes = array_values($postTypesModel->getPostTypes());
+
+        foreach ($postTypes as $postType) {
+            $this->statusesAsOptions[$postType] = $this->getStatusesAsOptionsForPostType($postType);
+        }
+
+        return $this->statusesAsOptions;
+    }
+
+    public function getLabelForAction($actionName, $postType = "")
     {
         $actions = $this->getActions($postType);
 
