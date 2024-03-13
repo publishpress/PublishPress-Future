@@ -8,6 +8,9 @@ use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+/**
+ * @deprecated 3.3.1 Deprecated in favor of ChangePostStatus
+ */
 class PostStatusToDraft implements ExpirationActionInterface
 {
     const SERVICE_NAME = 'expiration.actions.post_status_to_draft';

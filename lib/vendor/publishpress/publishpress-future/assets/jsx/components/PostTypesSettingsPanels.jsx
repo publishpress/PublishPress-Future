@@ -16,6 +16,7 @@ export const PostTypesSettingsPanels = function (props) {
                 settings={postTypeSettings}
                 expireTypeList={props.expireTypeList}
                 taxonomiesList={props.taxonomiesList[postType]}
+                statusesList={props.statusesList[postType]}
                 key={`${postType}-panel`}
                 onDataIsValid={props.onDataIsValid}
                 onDataIsInvalid={props.onDataIsInvalid}

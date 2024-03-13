@@ -93,6 +93,7 @@ class PostExpirator_Facade
 
         return array(
             'expireType' => isset($args['expireType']) ? $args['expireType'] : '',
+            'newStatus' => isset($args['newStatus']) ? $args['newStatus'] : 'draft',
             'category' => isset($args['category']) ? $args['category'] : [],
             'categoryTaxonomy' => isset($args['categoryTaxonomy']) ? $args['categoryTaxonomy'] : '',
             'enabled' => true,

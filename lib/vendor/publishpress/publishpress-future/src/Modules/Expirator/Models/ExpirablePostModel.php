@@ -9,6 +9,7 @@ use Closure;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPress\Future\Framework\WordPress\Models\PostModel;
 use PublishPress\Future\Modules\Debug\DebugInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
@@ -51,6 +52,11 @@ class ExpirablePostModel extends PostModel
      * @var string
      */
     private $expirationType = '';
+
+    /**
+     * @var string
+     */
+    private $expirationNewStatus = '';
 
     /**
      * @var string[]
@@ -155,6 +161,7 @@ class ExpirablePostModel extends PostModel
     {
         return [
             'expireType' => $this->getExpirationType(),
+            'newStatus' => $this->getExpirationNewStatus(),
             'category' => $this->getExpirationCategoryIDs(),
             'categoryTaxonomy' => $this->getExpirationTaxonomy(),
             'enabled' => $this->isExpirationEnabled(),
@@ -178,6 +185,21 @@ class ExpirablePostModel extends PostModel
                 $this->expirationType = $this->defaultDataModel->getAction();
             }
 
+            if ($this->expirationType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                $this->expirationType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $this->expirationNewStatus = 'draft';
+            }
+
+            if ($this->expirationType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                $this->expirationType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $this->expirationNewStatus = 'private';
+            }
+
+            if ($this->expirationType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                $this->expirationType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $this->expirationNewStatus = 'trash';
+            }
+
             /**
              * @deprecated
              */
@@ -195,6 +217,35 @@ class ExpirablePostModel extends PostModel
         }
 
         return $this->expirationType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExpirationNewStatus()
+    {
+        if (empty($this->expirationNewStatus)) {
+            $postType = $this->getPostType();
+
+            if ($this->getPostStatus() !== 'auto-draft') {
+                $args = $this->actionArgsModel->getArgs();
+                $newStatus = isset($args['newStatus']) ? $args['newStatus'] : '';
+
+                $this->expirationNewStatus = $newStatus;
+            }
+
+            if (empty($this->expirationNewStatus)) {
+                $this->expirationNewStatus = $this->defaultDataModel->getNewStatus();
+            }
+
+            $this->expirationNewStatus = $this->hooks->applyFilters(
+                HooksAbstract::FILTER_EXPIRATION_NEW_STATUS,
+                $this->expirationNewStatus,
+                $postType
+            );
+        }
+
+        return $this->expirationNewStatus;
     }
 
     // FIXME: Rename "category" with "term"
@@ -455,8 +506,11 @@ class ExpirablePostModel extends PostModel
     {
         if (empty($this->expirationActionInstance)) {
             $factory = $this->expirationActionFactory;
+
+            $expirationType = $this->getExpirationType();
+
             $actionInstance = $factory(
-                $this->getExpirationType(),
+                $expirationType,
                 $this
             );
 
@@ -835,7 +889,6 @@ class ExpirablePostModel extends PostModel
         }
 
         $this->updateMeta(self::FLAG_METADATA_HASH, $hash);
-        $this->removeLegacyMetadataHash();
     }
 
     public function getMetadataHash()
@@ -844,6 +897,7 @@ class ExpirablePostModel extends PostModel
 
         if (empty($hash)) {
             $hash = $this->getMeta(self::LEGACY_FLAG_METADATA_HASH, true);
+            $this->updateMetadataHash($hash);
             $this->removeLegacyMetadataHash();
         }
 

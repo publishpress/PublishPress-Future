@@ -2264,16 +2264,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "4.1.2",
+            "version": "4.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "079109ae15bd546b0755e2dce0abb74d4e8005fb"
+                "reference": "d6f566df815bd277b97b791a7f2aa6f94999fab2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/079109ae15bd546b0755e2dce0abb74d4e8005fb",
-                "reference": "079109ae15bd546b0755e2dce0abb74d4e8005fb",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/d6f566df815bd277b97b791a7f2aa6f94999fab2",
+                "reference": "d6f566df815bd277b97b791a7f2aa6f94999fab2",
                 "shasum": ""
             },
             "require": {
@@ -2351,7 +2351,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lucatume/wp-browser/issues",
-                "source": "https://github.com/lucatume/wp-browser/tree/4.1.2"
+                "source": "https://github.com/lucatume/wp-browser/tree/4.1.3"
             },
             "funding": [
                 {
@@ -2359,7 +2359,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-07T08:56:38+00:00"
+            "time": "2024-03-13T10:39:40+00:00"
         },
         {
             "name": "mck89/peast",
@@ -3401,12 +3401,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "6fd5d55d691611de797f706875a2a99c17e8d598"
+                "reference": "08c17c14f6949fd0f688ed1dd05ee7540cc7070a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6fd5d55d691611de797f706875a2a99c17e8d598",
-                "reference": "6fd5d55d691611de797f706875a2a99c17e8d598",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/08c17c14f6949fd0f688ed1dd05ee7540cc7070a",
+                "reference": "08c17c14f6949fd0f688ed1dd05ee7540cc7070a",
                 "shasum": ""
             },
             "require": {
@@ -3456,7 +3456,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-09T14:22:36+00:00"
+            "time": "2024-03-13T12:13:54+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3783,12 +3783,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b2b7a8f2481c651a8bb51b591a05c54a9470374a"
+                "reference": "b27e39a695fdd176fecd7fa692d35c57f9151344"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b2b7a8f2481c651a8bb51b591a05c54a9470374a",
-                "reference": "b2b7a8f2481c651a8bb51b591a05c54a9470374a",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b27e39a695fdd176fecd7fa692d35c57f9151344",
+                "reference": "b27e39a695fdd176fecd7fa692d35c57f9151344",
                 "shasum": ""
             },
             "require": {
@@ -3878,7 +3878,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-11T06:18:19+00:00"
+            "time": "2024-03-12T06:04:11+00:00"
         },
         {
             "name": "psr/cache",
@@ -5342,6 +5342,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2023-03-25T08:11:39+00:00"
         },
         {

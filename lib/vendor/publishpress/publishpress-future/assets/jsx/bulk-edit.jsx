@@ -14,7 +14,8 @@ import {
     startOfWeek,
     strings,
     taxonomyName,
-    nonce
+    nonce,
+    statusesSelectOptions
 } from "&config.bulk-edit";
 
 const storeName = 'publishpress-future/future-action-bulk-edit';
@@ -57,6 +58,7 @@ inlineEditPost.setBulk = function (id) {
             name: storeName,
             defaultState: {
                 action: postTypeDefaultConfig.expireType,
+                newStatus: postTypeDefaultConfig.newStatus,
                 date: defaultDate,
                 taxonomy: postTypeDefaultConfig.taxonomy,
                 terms: postTypeDefaultConfig.terms,
@@ -83,6 +85,7 @@ inlineEditPost.setBulk = function (id) {
             postType={postType}
             isNewPost={isNewPost}
             actionsSelectOptions={actionsSelectOptions}
+            statusesSelectOptions={statusesSelectOptions}
             is12Hour={is12Hour}
             timeFormat={timeFormat}
             startOfWeek={startOfWeek}

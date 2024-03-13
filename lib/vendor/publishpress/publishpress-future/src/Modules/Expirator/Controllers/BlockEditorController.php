@@ -106,6 +106,7 @@ class BlockEditorController implements InitializableInterface
                     'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                     'startOfWeek' => $options->getOption('start_of_week', 0),
                     'actionsSelectOptions' => $actionsModel->getActionsAsOptions($post->post_type),
+                    'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($post->post_type),
                     'isDebugEnabled' => $container->get(ServicesAbstract::DEBUG)->isEnabled(),
                     'taxonomyName' => $taxonomyPluralName,
                     'taxonomyTerms' => $taxonomyTerms,
@@ -142,6 +143,7 @@ class BlockEditorController implements InitializableInterface
                             __('Select one or more %s', 'post-expirator'),
                             strtolower($taxonomyPluralName)
                         ),
+                        'newStatus' => __('New status', 'post-expirator'),
                     ]
                 ]
             );

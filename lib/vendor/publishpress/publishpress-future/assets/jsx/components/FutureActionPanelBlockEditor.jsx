@@ -28,6 +28,7 @@ export const FutureActionPanelBlockEditor = (props) => {
 
         if (newAttribute.enabled) {
             newAttribute['action'] = store.getAction();
+            newAttribute['newStatus'] = store.getNewStatus();
             newAttribute['date'] = store.getDate();
             newAttribute['terms'] = store.getTerms();
             newAttribute['taxonomy'] = store.getTaxonomy();
@@ -61,9 +62,11 @@ export const FutureActionPanelBlockEditor = (props) => {
                     postType={props.postType}
                     isCleanNewPost={props.isCleanNewPost}
                     actionsSelectOptions={props.actionsSelectOptions}
+                    statusesSelectOptions={props.statusesSelectOptions}
                     enabled={data.enabled}
                     calendarIsVisible={true}
                     action={data.action}
+                    newStatus={data.newStatus}
                     date={data.date}
                     terms={data.terms}
                     taxonomy={data.taxonomy}

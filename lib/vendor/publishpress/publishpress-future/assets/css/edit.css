@@ -133,3 +133,7 @@ div.pe-qe-fields > div {
     color: white;
     padding: 12px;
 }
+
+.future-action-panel .new-status .components-base-control {
+    width: 100%;
+}

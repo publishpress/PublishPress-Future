@@ -19,7 +19,8 @@ import {
     settings,
     expireTypeList,
     taxonomiesList,
-    text
+    text,
+    statusesList
 } from "&config.settings-post-types";
 import { render } from "&ReactDOM";
 
@@ -67,6 +68,7 @@ const SettingsFormPanel = (props) => {
                         text={text}
                         expireTypeList={expireTypeList}
                         taxonomiesList={taxonomiesList}
+                        statusesList={statusesList}
                         onDataIsValid={onDataIsValid}
                         onDataIsInvalid={onDataIsInvalid}
                     />

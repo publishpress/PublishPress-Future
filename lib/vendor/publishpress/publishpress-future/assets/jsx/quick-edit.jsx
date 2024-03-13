@@ -13,7 +13,8 @@ import {
     startOfWeek,
     strings,
     taxonomyName,
-    nonce
+    nonce,
+    statusesSelectOptions
 } from "&config.quick-edit";
 
 const storeName = 'publishpress-future/future-action-quick-edit';
@@ -52,6 +53,8 @@ inlineEditPost.edit = function (button, id) {
     const action = data.action;
     const date = data.date;
     const taxonomy = data.taxonomy;
+    const newStatus = data.newStatus;
+
     let terms = data.terms;
 
     if (typeof terms === 'string'){
@@ -65,6 +68,7 @@ inlineEditPost.edit = function (button, id) {
         dispatch(storeName).setDate(date);
         dispatch(storeName).setTaxonomy(taxonomy);
         dispatch(storeName).setTerms(terms);
+        dispatch(storeName).setNewStatus(newStatus);
     } else {
         createStore({
             name: storeName,
@@ -74,6 +78,7 @@ inlineEditPost.edit = function (button, id) {
                 date: date,
                 taxonomy: taxonomy,
                 terms: terms,
+                newStatus: newStatus,
             }
         });
     }
@@ -96,6 +101,7 @@ inlineEditPost.edit = function (button, id) {
             postType={postType}
             isNewPost={isNewPost}
             actionsSelectOptions={actionsSelectOptions}
+            statusesSelectOptions={statusesSelectOptions}
             is12Hour={is12Hour}
             timeFormat={timeFormat}
             startOfWeek={startOfWeek}

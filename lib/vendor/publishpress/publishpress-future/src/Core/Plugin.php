@@ -276,6 +276,7 @@ class Plugin implements InitializableInterface
 
         $opts = [
             'expireType' => $defaultDataModel->getAction(),
+            'newStatus' => $defaultDataModel->getNewStatus(),
             'category' => $defaultDataModel->getTerms(),
             'categoryTaxonomy' => (string)$defaultDataModel->getTaxonomy(),
         ];

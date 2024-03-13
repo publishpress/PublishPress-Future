@@ -244,6 +244,7 @@ class Controller implements InitializableInterface
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),
+                    'statusesList' => $this->actionsModel->getStatusesAsOptionsForAllPostTypes(),
                     'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
                         $taxonomiesModel->getTaxonomiesByPostType(false)
                     ),
@@ -376,6 +377,10 @@ class Controller implements InitializableInterface
 
                 if (isset($settings['taxonomy']) && isset($settings['terms'])) {
                     $settings['terms'] = $this->convertTermsToIds($settings['taxonomy'], $settings['terms']);
+                }
+
+                if (isset($_POST['expirationdate_newstatus-' . $postType])) {
+                    $settings['newStatus'] = \sanitize_key($_POST['expirationdate_newstatus-' . $postType]);
                 }
 
                 $settings['default-expire-type'] = 'custom';

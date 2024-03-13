@@ -463,7 +463,24 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         $argsModel = $argsModelFactory();
         $argsModel->loadByActionId($row['ID']);
 
-        if (in_array($argsModel->getAction(), $taxonomyActions)) {
+        $action = $argsModel->getAction();
+
+        if ($action === ExpirationActionsAbstract::CHANGE_POST_STATUS) {
+            $newStatus = $argsModel->getArg('newStatus');
+            $status = get_post_status_object($newStatus);
+            $statusName = $newStatus;
+            if (is_object($status)) {
+                $statusName = $status->label;
+            }
+
+            $columnHtml .= sprintf(
+                // translators: %s is the new status
+                '<br />' . esc_html__('New Status: %s', 'post-expirator'),
+                esc_html($statusName)
+            );
+        }
+
+        if (in_array($action, $taxonomyActions)) {
             $columnHtml .= sprintf(
                 // translators: %s is the list of terms
                 '<br />' . esc_html__('Terms: %s', 'post-expirator'),

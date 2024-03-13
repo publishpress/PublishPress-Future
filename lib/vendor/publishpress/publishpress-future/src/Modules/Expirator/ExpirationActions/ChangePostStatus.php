@@ -8,12 +8,9 @@ use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-/**
- * @deprecated 3.3.1 Deprecated in favor of ChangePostStatus
- */
-class PostStatusToTrash implements ExpirationActionInterface
+class ChangePostStatus implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.post_status_to_trash';
+    const SERVICE_NAME = 'expiration.actions.change_post_status';
 
     /**
      * @var ExpirablePostModel
@@ -31,6 +28,11 @@ class PostStatusToTrash implements ExpirationActionInterface
     private $oldPostStatus;
 
     /**
+     * @var string
+     */
+    private $newPostStatus;
+
+    /**
      * @param ExpirablePostModel $postModel
      */
     public function __construct($postModel)
@@ -40,7 +42,7 @@ class PostStatusToTrash implements ExpirationActionInterface
 
     public function __toString()
     {
-        return ExpirationActionsAbstract::POST_STATUS_TO_TRASH;
+        return ExpirationActionsAbstract::CHANGE_POST_STATUS;
     }
 
     /**
@@ -53,7 +55,7 @@ class PostStatusToTrash implements ExpirationActionInterface
         }
 
         $oldPostStatus = get_post_status_object($this->oldPostStatus);
-        $newPostStatus = get_post_status_object('trash');
+        $newPostStatus = get_post_status_object($this->postModel->getExpirationNewStatus());
 
         return sprintf(
             // translators: 1: old post status, 2: new post status
@@ -70,8 +72,9 @@ class PostStatusToTrash implements ExpirationActionInterface
     public function execute()
     {
         $this->oldPostStatus = $this->postModel->getPostStatus();
+        $this->newPostStatus = $this->postModel->getExpirationNewStatus();
 
-        $result = $this->postModel->trash();
+        $result = $this->postModel->setPostStatus($this->newPostStatus);
 
         $this->log['success'] = $result;
 
@@ -83,13 +86,7 @@ class PostStatusToTrash implements ExpirationActionInterface
      */
     public static function getLabel(string $postType = ''): string
     {
-        $newPostStatus = get_post_status_object('trash');
-
-        return sprintf(
-            // translators: %s: new post status
-            __('Change status to %s', 'post-expirator'),
-            $newPostStatus->label
-        );
+        return __('Change status', 'post-expirator');
     }
 
     public function getDynamicLabel($postType = '')

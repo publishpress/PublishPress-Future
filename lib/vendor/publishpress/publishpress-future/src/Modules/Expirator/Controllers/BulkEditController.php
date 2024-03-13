@@ -12,6 +12,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
@@ -141,6 +142,7 @@ class BulkEditController implements InitializableInterface
                 'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+                'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
                 'isDebugEnabled' => $debug->isEnabled(),
                 'taxonomyName' => $taxonomyPluralName,
                 'taxonomyTerms' => $taxonomyTerms,
@@ -186,6 +188,7 @@ class BulkEditController implements InitializableInterface
                         __('Select one or more %s', 'post-expirator'),
                         strtolower($taxonomyPluralName)
                     ),
+                    'newStatus' => __('New status', 'post-expirator'),
                 ]
             ]
         );
@@ -261,8 +264,27 @@ class BulkEditController implements InitializableInterface
     private function updateScheduleForPostFromBulkEditData(ExpirablePostModel $postModel)
     {
         // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $expireType = isset($_REQUEST['future_action_bulk_action']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '';
+        $newStatus = isset($_REQUEST['future_action_bulk_new_status']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_new_status']) : 'draft';
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'draft';
+        }
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'private';
+        }
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'trash';
+        }
+
         $opts = [
-            'expireType' => isset($_REQUEST['future_action_bulk_action']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '',
+            'expireType' => $expireType,
+            'newStatus' => $newStatus,
             'category' => isset($_REQUEST['future_action_bulk_terms']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']) : '',
             'categoryTaxonomy' => isset($_REQUEST['future_action_bulk_taxonomy']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']) : '',
         ];
