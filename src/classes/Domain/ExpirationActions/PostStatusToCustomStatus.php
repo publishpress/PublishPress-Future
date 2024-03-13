@@ -12,6 +12,9 @@ use function __;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
+/**
+ * @deprecated 3.3.1 Deprecated in favor of ChangePostStatus
+ */
 class PostStatusToCustomStatus implements ExpirationActionInterface
 {
     /**
