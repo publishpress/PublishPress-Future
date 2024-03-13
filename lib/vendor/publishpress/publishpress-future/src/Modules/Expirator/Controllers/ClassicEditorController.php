@@ -296,6 +296,11 @@ class ClassicEditorController implements InitializableInterface
             return;
         }
 
+        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+        if ($hideMetabox) {
+            return;
+        }
+
         wp_enqueue_script(
             'publishpress-future-classic-editor',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
