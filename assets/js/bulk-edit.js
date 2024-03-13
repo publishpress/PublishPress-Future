@@ -526,6 +526,14 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         setHasValidData(validateData());
     }, [action, date, enabled, terms, taxonomy]);
 
+    // This adds a 'cancel' class to the input when the user clicks on the
+    // field to prevent the form from being submitted. This is a workaround
+    // for the issue on the quick-edit form where the form is submitted when
+    // the user presses the 'Enter' key trying to add a term to the field.
+    var forceIgnoreAutoSubmitOnEnter = function forceIgnoreAutoSubmitOnEnter(e) {
+        jQuery(e.target).addClass('cancel');
+    };
+
     return React.createElement(
         'div',
         { className: panelClass },
@@ -612,6 +620,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                         onChange: handleTermsChange,
                         placeholder: props.strings.addTermsPlaceholder,
                         maxSuggestions: 1000,
+                        onFocus: forceIgnoreAutoSubmitOnEnter,
                         __experimentalExpandOnFocus: true,
                         __experimentalAutoSelectFirstMatch: true
                     })

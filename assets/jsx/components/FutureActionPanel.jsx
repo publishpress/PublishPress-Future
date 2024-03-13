@@ -314,6 +314,14 @@ export const FutureActionPanel = (props) => {
         setHasValidData(validateData());
     }, [action, date, enabled, terms, taxonomy]);
 
+    // This adds a 'cancel' class to the input when the user clicks on the
+    // field to prevent the form from being submitted. This is a workaround
+    // for the issue on the quick-edit form where the form is submitted when
+    // the user presses the 'Enter' key trying to add a term to the field.
+    const forceIgnoreAutoSubmitOnEnter = (e) => {
+        jQuery(e.target).addClass('cancel');
+    }
+
     return (
         <div className={panelClass}>
             {props.autoEnableAndHideCheckbox && (
@@ -391,6 +399,7 @@ export const FutureActionPanel = (props) => {
                                                     onChange={handleTermsChange}
                                                     placeholder={props.strings.addTermsPlaceholder}
                                                     maxSuggestions={1000}
+                                                    onFocus={forceIgnoreAutoSubmitOnEnter}
                                                     __experimentalExpandOnFocus={true}
                                                     __experimentalAutoSelectFirstMatch={true}
                                                 />
