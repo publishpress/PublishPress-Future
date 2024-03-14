@@ -178,10 +178,12 @@ class ExpirationScheduler implements SchedulerInterface
         $type = isset($opts['expireType']) ? $opts['expireType'] : '';
         $taxonomy = isset($opts['categoryTaxonomy']) ? $opts['categoryTaxonomy'] : '';
         $terms = isset($opts['category']) ? $opts['category'] : '';
+        $newStatus = isset($opts['newStatus']) ? $opts['newStatus'] : '';
 
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $timestamp);
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $type);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, $newStatus);
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $taxonomy);
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $terms);
         $postModel->updateMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS, $opts);

@@ -208,6 +208,11 @@ class MetadataMappingController implements ModuleInterface
             $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $defaultDataModel->getAction());
         }
 
+        $newStatus = $postModel->getMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, true);
+        if (empty($newStatus)) {
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, $defaultDataModel->getNewStatus());
+        }
+
         $status = $postModel->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true);
         if (empty($status)) {
             $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 1);

@@ -76,11 +76,11 @@ In PublishPress Future Pro it is possible to schedule changes to your posts base
 
 When you are using an integration, there are five types of data that you can update in PublishPress Future:
 
-* Action Status: This field specifies if the action should be enabled. 
+* Action Status: This field specifies if the action should be enabled.
 * Action Date: This field stores the scheduled date for the action.
 * Action Type: This field stores the type of action that will be executed.
 * Taxonomy Name: The taxonomy name for being used when selecting terms.
-* Taxonomy Terms: A list of term's IDs for being used by the action. 
+* Taxonomy Terms: A list of term's IDs for being used by the action.
 
 [Click here to see how to integrate Future with other plugins](https://publishpress.com/knowledge-base/metadata-scheduling/).
 
@@ -163,6 +163,23 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 [Click here for more details on Elementor post changes](https://publishpress.com/knowledge-base/schedule-changes-elementor/)
 
 == Changelog ==
+
+= [3.3.1] - 14 Mar, 2024 =
+
+* ADDED: Add validation for the date and time offset in the settings page, #683;
+* ADDED: Add form validation to the settings panel;
+* ADDED: Add form validation to the metabox panel;
+* CHANGED: The actions to move posts to another status where grouped in a single action, with a dropdown to select the status, #668;
+* CHANGED: The actions "draft", "private" and "trash" are deprecated in favor of "change-status", #668;
+* CHANGED: The metadata hash key has now a prefix "_" marking it as a private key, #695;
+* CHANGED: Improved the name of some actions;
+* FIXED: Make it impossible to choose dates in the past, #443;
+* FIXED: Enter key submits quick-edit panel when selecting a taxonomy term, #586;
+* FIXED: The name of the taxonomy in the actions field is now updated in the settings panel when the taxonomy is changed, #676;
+* FIXED: Possible to add an action using an empty category setting, #587;
+* FIXED: Fix language files for ES, IT, FR, #685;
+* FIXED: Fix inconsistent text in the filter for "Pending" actions, #673;
+* FIXED: Improve the message when no actions are found: "No Future Actions", #666;
 
 = [3.3.0] - 28 Fev, 2024 =
 

@@ -381,6 +381,7 @@ class ClassicEditorController implements InitializableInterface
                     'validationError' => __('Error found', 'post-expirator'),
                     'errorActionRequired' => __('Select an action', 'post-expirator'),
                     'errorDateRequired' => __('Select a date', 'post-expirator'),
+                    'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),
                     'errorTermsRequired' => sprintf(
                         // translators: %s is the name of the taxonomy in singular form.
                         __('Select one or more %s', 'post-expirator'),

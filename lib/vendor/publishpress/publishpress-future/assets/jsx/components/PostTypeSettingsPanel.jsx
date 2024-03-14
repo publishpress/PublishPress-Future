@@ -18,6 +18,8 @@ import { apiFetch } from '&wp';
 
 const { PanelRow, BaseControl } = wp.components;
 
+var apiRequestController = null;
+
 export const PostTypeSettingsPanel = function (props) {
     const originalExpireTypeList = props.expireTypeList[props.postType];
 
@@ -35,6 +37,7 @@ export const PostTypeSettingsPanel = function (props) {
     const [taxonomyLabel, setTaxonomyLabel] = useState('');
     const [howToExpireList, setHowToExpireList] = useState(originalExpireTypeList);
     const [newStatus, setNewStatus] = useState(props.settings.newStatus);
+    const [hasPendingValidation, setHasPendingValidation] = useState(false);
 
     const taxonomyRelatedActions = [
         'category',
@@ -72,12 +75,34 @@ export const PostTypeSettingsPanel = function (props) {
     }
 
     const validateData = () => {
-        if (! isActive || ! postTypeTaxonomy) {
+        if (! isActive) {
             setValidationError('');
             return true;
         }
 
-        // Add validation rules here...
+        if (expireOffset) {
+            if (apiRequestController) {
+                apiRequestController.abort();
+            }
+
+            apiRequestController = typeof AbortController === 'undefined' ? undefined : new AbortController();
+            const signal = apiRequestController ? apiRequestController.signal : undefined;
+            setHasPendingValidation(true);
+
+            apiFetch({
+                path: addQueryArgs(`publishpress-future/v1/settings/validate-expire-offset`),
+                method: 'POST',
+                data: {
+                    offset: expireOffset
+                },
+                signal: signal
+            }).then((result) => {
+                setHasPendingValidation(false);
+
+                setHasValidData(result.isValid);
+                setValidationError(result.message);
+            });
+        }
 
         setValidationError('');
         return true;
@@ -137,7 +162,7 @@ export const PostTypeSettingsPanel = function (props) {
 
     useEffect(() => {
         setHasValidData(validateData());
-    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel]);
+    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel, expireOffset]);
 
     useEffect(() => {
         if (!taxonomyLabel) {
@@ -172,6 +197,16 @@ export const PostTypeSettingsPanel = function (props) {
             props.onDataIsInvalid(props.postType);
         }
     }, [hasValidData]);
+
+    useEffect(() => {
+        if (hasPendingValidation && props.onValidationStarted) {
+            props.onValidationStarted(props.postType);
+        }
+
+        if (!hasPendingValidation && props.onValidationFinished) {
+            props.onValidationFinished(props.postType);
+        }
+    }, [hasPendingValidation]);
 
     const termOptionsLabels = termOptions.map((term) => term.label);
 
@@ -255,6 +290,7 @@ export const PostTypeSettingsPanel = function (props) {
                 <TextControl
                     name={'expired-custom-date-' + props.postType}
                     value={expireOffset}
+                    loading={hasPendingValidation}
                     placeholder={props.settings.globalDefaultExpireOffset}
                     description={props.text.fieldDefaultDateTimeOffsetDescription}
                     unescapedDescription={true}

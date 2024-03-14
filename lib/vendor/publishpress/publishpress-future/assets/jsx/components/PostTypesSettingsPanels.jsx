@@ -20,6 +20,8 @@ export const PostTypesSettingsPanels = function (props) {
                 key={`${postType}-panel`}
                 onDataIsValid={props.onDataIsValid}
                 onDataIsInvalid={props.onDataIsInvalid}
+                onValidationStarted={props.onValidationStarted}
+                onValidationFinished={props.onValidationFinished}
             />
         );
     }

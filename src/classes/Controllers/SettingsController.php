@@ -253,6 +253,15 @@ class SettingsController implements ModuleInterface
                             ),
                         ],
                         [
+                            'originalKey' => PostMetaAbstract::EXPIRATION_POST_STATUS,
+                            'mappedKey' => '',
+                            'label' => __('New Post Status', 'publishpress-future-pro'),
+                            'description' => __(
+                                'The new post status to be applied to the post.',
+                                'publishpress-future-pro'
+                            ),
+                        ],
+                        [
                             'originalKey' => PostMetaAbstract::EXPIRATION_STATUS,
                             'mappedKey' => '',
                             'label' => __('Action Status', 'publishpress-future-pro'),

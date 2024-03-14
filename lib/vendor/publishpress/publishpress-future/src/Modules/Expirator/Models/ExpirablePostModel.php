@@ -797,6 +797,7 @@ class ExpirablePostModel extends PostModel
     public function deleteExpirationPostMeta()
     {
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TYPE);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_POST_STATUS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_STATUS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TAXONOMY);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TERMS);
@@ -850,8 +851,27 @@ class ExpirablePostModel extends PostModel
         }
 
         if ($scheduledInPostMeta) {
+            $type = $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true);
+            $newStatus = $this->getMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, true);
+
+            if ($type === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                $type = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'draft';
+            }
+
+            if ($type === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                $type = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'private';
+            }
+
+            if ($type === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                $type = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'trash';
+            }
+
             $opts = [
-                'expireType' => $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+                'expireType' => $type,
+                'newStatus' => $newStatus,
                 'category' => $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true),
                 'categoryTaxonomy' => $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true)
             ];
@@ -875,6 +895,7 @@ class ExpirablePostModel extends PostModel
             $timestamp,
             $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true),
             $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+            $this->getMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, true),
             $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true),
             is_array($terms) ? $terms : []
         ];
