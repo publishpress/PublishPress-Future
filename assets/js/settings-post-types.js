@@ -501,7 +501,6 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         }
 
         // Check if the date is in the past
-        console.log(date);
         if (date && new Date(date) < new Date()) {
             setValidationError(props.strings.errorDateInPast);
             valid = false;
@@ -1221,6 +1220,10 @@ var _wp4 = __webpack_require__(/*! &wp */ "&wp");
 var _wp$components = wp.components,
     PanelRow = _wp$components.PanelRow,
     BaseControl = _wp$components.BaseControl;
+
+
+var apiRequestController = null;
+
 var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     var originalExpireTypeList = props.expireTypeList[props.postType];
 
@@ -1294,6 +1297,11 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
         newStatus = _useState28[0],
         setNewStatus = _useState28[1];
 
+    var _useState29 = (0, _wp.useState)(false),
+        _useState30 = _slicedToArray(_useState29, 2),
+        hasPendingValidation = _useState30[0],
+        setHasPendingValidation = _useState30[1];
+
     var taxonomyRelatedActions = ['category', 'category-add', 'category-remove', 'category-remove-all'];
 
     var onChangeTaxonomy = function onChangeTaxonomy(value) {
@@ -1325,12 +1333,34 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
     };
 
     var validateData = function validateData() {
-        if (!isActive || !postTypeTaxonomy) {
+        if (!isActive) {
             setValidationError('');
             return true;
         }
 
-        // Add validation rules here...
+        if (expireOffset) {
+            if (apiRequestController) {
+                apiRequestController.abort();
+            }
+
+            apiRequestController = typeof AbortController === 'undefined' ? undefined : new AbortController();
+            var signal = apiRequestController ? apiRequestController.signal : undefined;
+            setHasPendingValidation(true);
+
+            (0, _wp4.apiFetch)({
+                path: (0, _wp2.addQueryArgs)('publishpress-future/v1/settings/validate-expire-offset'),
+                method: 'POST',
+                data: {
+                    offset: expireOffset
+                },
+                signal: signal
+            }).then(function (result) {
+                setHasPendingValidation(false);
+
+                setHasValidData(result.isValid);
+                setValidationError(result.message);
+            });
+        }
 
         setValidationError('');
         return true;
@@ -1390,7 +1420,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
 
     (0, _wp.useEffect)(function () {
         setHasValidData(validateData());
-    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel]);
+    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel, expireOffset]);
 
     (0, _wp.useEffect)(function () {
         if (!taxonomyLabel) {
@@ -1425,6 +1455,16 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             props.onDataIsInvalid(props.postType);
         }
     }, [hasValidData]);
+
+    (0, _wp.useEffect)(function () {
+        if (hasPendingValidation && props.onValidationStarted) {
+            props.onValidationStarted(props.postType);
+        }
+
+        if (!hasPendingValidation && props.onValidationFinished) {
+            props.onValidationFinished(props.postType);
+        }
+    }, [hasPendingValidation]);
 
     var termOptionsLabels = termOptions.map(function (term) {
         return term.label;
@@ -1504,6 +1544,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             React.createElement(_.TextControl, {
                 name: 'expired-custom-date-' + props.postType,
                 value: expireOffset,
+                loading: hasPendingValidation,
                 placeholder: props.settings.globalDefaultExpireOffset,
                 description: props.text.fieldDefaultDateTimeOffsetDescription,
                 unescapedDescription: true,
@@ -1595,7 +1636,9 @@ var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTyp
                 statusesList: props.statusesList[postType],
                 key: postType + "-panel",
                 onDataIsValid: props.onDataIsValid,
-                onDataIsInvalid: props.onDataIsInvalid
+                onDataIsInvalid: props.onDataIsInvalid,
+                onValidationStarted: props.onValidationStarted,
+                onValidationFinished: props.onValidationFinished
             }));
         }
     } catch (err) {
@@ -1833,6 +1876,33 @@ var SettingsTable = exports.SettingsTable = function SettingsTable(props) {
 
 /***/ }),
 
+/***/ "./assets/jsx/components/Spinner.jsx":
+/*!*******************************************!*\
+  !*** ./assets/jsx/components/Spinner.jsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2024. PublishPress, All rights reserved.
+ */
+var Spinner = exports.Spinner = function Spinner(props) {
+    return React.createElement(
+        "span",
+        { className: "publishpress-future-spinner" },
+        React.createElement("div", null),
+        React.createElement("div", null),
+        React.createElement("div", null),
+        React.createElement("div", null)
+    );
+};
+
+/***/ }),
+
 /***/ "./assets/jsx/components/SubmitButton.jsx":
 /*!************************************************!*\
   !*** ./assets/jsx/components/SubmitButton.jsx ***!
@@ -1877,9 +1947,8 @@ var _wp = __webpack_require__(/*! &wp.element */ "&wp.element");
 
 var _wp2 = __webpack_require__(/*! &wp.components */ "&wp.components");
 
-/*
- * Copyright (c) 2023. PublishPress, All rights reserved.
- */
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
 var TextControl = exports.TextControl = function TextControl(props) {
     var description = void 0;
 
@@ -1903,19 +1972,26 @@ var TextControl = exports.TextControl = function TextControl(props) {
     return React.createElement(
         _wp.Fragment,
         null,
-        React.createElement(_wp2.TextControl, {
-            type: "text",
-            label: props.label,
-            name: props.name,
-            id: props.name,
-            className: props.className,
-            value: props.value,
-            placeholder: props.placeholder,
-            onChange: onChange
-        }),
-        description
+        React.createElement(
+            "div",
+            { className: 'publishpress-future-loading' },
+            React.createElement(_wp2.TextControl, {
+                type: "text",
+                label: props.label,
+                name: props.name,
+                id: props.name,
+                className: props.className,
+                value: props.value,
+                placeholder: props.placeholder,
+                onChange: onChange
+            }),
+            props.loading && React.createElement(_.Spinner, null),
+            description
+        )
     );
-};
+}; /*
+    * Copyright (c) 2023. PublishPress, All rights reserved.
+    */
 
 /***/ }),
 
@@ -2383,6 +2459,15 @@ Object.defineProperty(exports, "TrueFalseControl", ({
   }
 }));
 
+var _Spinner = __webpack_require__(/*! ./Spinner */ "./assets/jsx/components/Spinner.jsx");
+
+Object.defineProperty(exports, "Spinner", ({
+  enumerable: true,
+  get: function get() {
+    return _Spinner.Spinner;
+  }
+}));
+
 /***/ }),
 
 /***/ "./assets/jsx/time.jsx":
@@ -2672,6 +2757,8 @@ var __webpack_exports__ = {};
   \********************************************/
 
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * Copyright (c) 2023. PublishPress, All rights reserved.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           */
@@ -2685,31 +2772,44 @@ var _config = __webpack_require__(/*! &config.settings-post-types */ "&config.se
 var _ReactDOM = __webpack_require__(/*! &ReactDOM */ "&ReactDOM");
 
 var SettingsFormPanel = function SettingsFormPanel(props) {
-    var _useState = (0, _wp.useState)(false),
+    var _useState = (0, _wp.useState)({}),
         _useState2 = _slicedToArray(_useState, 2),
-        allValid = _useState2[0],
-        setAllValid = _useState2[1];
+        formValidationStatusPerPostType = _useState2[0],
+        setFormValidationStatusPerPostType = _useState2[1];
 
-    var dataValidationStatuses = {};
+    var _useState3 = (0, _wp.useState)({}),
+        _useState4 = _slicedToArray(_useState3, 2),
+        pendingValidationPerPostType = _useState4[0],
+        setPendingValidationPerPostType = _useState4[1];
 
-    var updateSaveButtonStatus = function updateSaveButtonStatus() {
-        var allValid = true;
+    var _useState5 = (0, _wp.useState)(true),
+        _useState6 = _slicedToArray(_useState5, 2),
+        allValid = _useState6[0],
+        setAllValid = _useState6[1];
+
+    var _useState7 = (0, _wp.useState)(true),
+        _useState8 = _slicedToArray(_useState7, 2),
+        hasNoPendingValidation = _useState8[0],
+        setHasNoPendingValidation = _useState8[1];
+
+    (0, _wp.useEffect)(function () {
+        var allFormsAreValid = true;
 
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
 
         try {
-            for (var _iterator = Object.entries(dataValidationStatuses)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            for (var _iterator = Object.entries(formValidationStatusPerPostType)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var _ref = _step.value;
 
                 var _ref2 = _slicedToArray(_ref, 2);
 
                 var postType = _ref2[0];
-                var isValid = _ref2[1];
+                var isValidForPostType = _ref2[1];
 
-                if (!isValid) {
-                    allValid = false;
+                if (!isValidForPostType) {
+                    allFormsAreValid = false;
                     break;
                 }
             }
@@ -2728,18 +2828,69 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
             }
         }
 
-        setAllValid(allValid);
-    };
+        setAllValid(allFormsAreValid);
+    }, [formValidationStatusPerPostType]);
+
+    (0, _wp.useEffect)(function () {
+        var hasNoPendingValidation = true;
+
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+            for (var _iterator2 = Object.entries(pendingValidationPerPostType)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                var _ref3 = _step2.value;
+
+                var _ref4 = _slicedToArray(_ref3, 2);
+
+                var postType = _ref4[0];
+                var hasPending = _ref4[1];
+
+                if (hasPending) {
+                    hasNoPendingValidation = false;
+                    break;
+                }
+            }
+        } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                    _iterator2.return();
+                }
+            } finally {
+                if (_didIteratorError2) {
+                    throw _iteratorError2;
+                }
+            }
+        }
+
+        setHasNoPendingValidation(hasNoPendingValidation);
+    }, [pendingValidationPerPostType]);
 
     var onDataIsValid = function onDataIsValid(postType) {
-        dataValidationStatuses[postType] = true;
-        updateSaveButtonStatus();
+        formValidationStatusPerPostType[postType] = true;
+        setFormValidationStatusPerPostType(_extends({}, formValidationStatusPerPostType));
     };
 
     var onDataIsInvalid = function onDataIsInvalid(postType) {
-        dataValidationStatuses[postType] = false;
-        updateSaveButtonStatus();
+        formValidationStatusPerPostType[postType] = false;
+        setFormValidationStatusPerPostType(_extends({}, formValidationStatusPerPostType));
     };
+
+    var onValidationStarted = function onValidationStarted(postType) {
+        pendingValidationPerPostType[postType] = true;
+        setPendingValidationPerPostType(_extends({}, pendingValidationPerPostType));
+    };
+
+    var onValidationFinished = function onValidationFinished(postType) {
+        pendingValidationPerPostType[postType] = false;
+        setPendingValidationPerPostType(_extends({}, pendingValidationPerPostType));
+    };
+
+    var saveButtonText = hasNoPendingValidation ? _config.text.saveChanges : _config.text.saveChangesPendingValidation;
 
     return React.createElement(
         _wp.StrictMode,
@@ -2764,7 +2915,9 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
                     taxonomiesList: _config.taxonomiesList,
                     statusesList: _config.statusesList,
                     onDataIsValid: onDataIsValid,
-                    onDataIsInvalid: onDataIsInvalid
+                    onDataIsInvalid: onDataIsInvalid,
+                    onValidationStarted: onValidationStarted,
+                    onValidationFinished: onValidationFinished
                 })
             ),
             React.createElement(
@@ -2773,8 +2926,8 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
                 React.createElement(_components.SubmitButton, {
                     id: "expirationdateSaveDefaults",
                     name: "expirationdateSaveDefaults",
-                    disabled: !allValid,
-                    text: _config.text.saveChanges
+                    disabled: !allValid || !hasNoPendingValidation,
+                    text: saveButtonText
                 })
             )
         )

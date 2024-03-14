@@ -501,7 +501,6 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         }
 
         // Check if the date is in the past
-        console.log(date);
         if (date && new Date(date) < new Date()) {
             setValidationError(props.strings.errorDateInPast);
             valid = false;
@@ -1221,6 +1220,10 @@ var _wp4 = __webpack_require__(/*! &wp */ "&wp");
 var _wp$components = wp.components,
     PanelRow = _wp$components.PanelRow,
     BaseControl = _wp$components.BaseControl;
+
+
+var apiRequestController = null;
+
 var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     var originalExpireTypeList = props.expireTypeList[props.postType];
 
@@ -1294,6 +1297,11 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
         newStatus = _useState28[0],
         setNewStatus = _useState28[1];
 
+    var _useState29 = (0, _wp.useState)(false),
+        _useState30 = _slicedToArray(_useState29, 2),
+        hasPendingValidation = _useState30[0],
+        setHasPendingValidation = _useState30[1];
+
     var taxonomyRelatedActions = ['category', 'category-add', 'category-remove', 'category-remove-all'];
 
     var onChangeTaxonomy = function onChangeTaxonomy(value) {
@@ -1325,12 +1333,34 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
     };
 
     var validateData = function validateData() {
-        if (!isActive || !postTypeTaxonomy) {
+        if (!isActive) {
             setValidationError('');
             return true;
         }
 
-        // Add validation rules here...
+        if (expireOffset) {
+            if (apiRequestController) {
+                apiRequestController.abort();
+            }
+
+            apiRequestController = typeof AbortController === 'undefined' ? undefined : new AbortController();
+            var signal = apiRequestController ? apiRequestController.signal : undefined;
+            setHasPendingValidation(true);
+
+            (0, _wp4.apiFetch)({
+                path: (0, _wp2.addQueryArgs)('publishpress-future/v1/settings/validate-expire-offset'),
+                method: 'POST',
+                data: {
+                    offset: expireOffset
+                },
+                signal: signal
+            }).then(function (result) {
+                setHasPendingValidation(false);
+
+                setHasValidData(result.isValid);
+                setValidationError(result.message);
+            });
+        }
 
         setValidationError('');
         return true;
@@ -1390,7 +1420,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
 
     (0, _wp.useEffect)(function () {
         setHasValidData(validateData());
-    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel]);
+    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel, expireOffset]);
 
     (0, _wp.useEffect)(function () {
         if (!taxonomyLabel) {
@@ -1425,6 +1455,16 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             props.onDataIsInvalid(props.postType);
         }
     }, [hasValidData]);
+
+    (0, _wp.useEffect)(function () {
+        if (hasPendingValidation && props.onValidationStarted) {
+            props.onValidationStarted(props.postType);
+        }
+
+        if (!hasPendingValidation && props.onValidationFinished) {
+            props.onValidationFinished(props.postType);
+        }
+    }, [hasPendingValidation]);
 
     var termOptionsLabels = termOptions.map(function (term) {
         return term.label;
@@ -1504,6 +1544,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             React.createElement(_.TextControl, {
                 name: 'expired-custom-date-' + props.postType,
                 value: expireOffset,
+                loading: hasPendingValidation,
                 placeholder: props.settings.globalDefaultExpireOffset,
                 description: props.text.fieldDefaultDateTimeOffsetDescription,
                 unescapedDescription: true,
@@ -1595,7 +1636,9 @@ var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTyp
                 statusesList: props.statusesList[postType],
                 key: postType + "-panel",
                 onDataIsValid: props.onDataIsValid,
-                onDataIsInvalid: props.onDataIsInvalid
+                onDataIsInvalid: props.onDataIsInvalid,
+                onValidationStarted: props.onValidationStarted,
+                onValidationFinished: props.onValidationFinished
             }));
         }
     } catch (err) {
@@ -1833,6 +1876,33 @@ var SettingsTable = exports.SettingsTable = function SettingsTable(props) {
 
 /***/ }),
 
+/***/ "./assets/jsx/components/Spinner.jsx":
+/*!*******************************************!*\
+  !*** ./assets/jsx/components/Spinner.jsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+/*
+ * Copyright (c) 2024. PublishPress, All rights reserved.
+ */
+var Spinner = exports.Spinner = function Spinner(props) {
+    return React.createElement(
+        "span",
+        { className: "publishpress-future-spinner" },
+        React.createElement("div", null),
+        React.createElement("div", null),
+        React.createElement("div", null),
+        React.createElement("div", null)
+    );
+};
+
+/***/ }),
+
 /***/ "./assets/jsx/components/SubmitButton.jsx":
 /*!************************************************!*\
   !*** ./assets/jsx/components/SubmitButton.jsx ***!
@@ -1877,9 +1947,8 @@ var _wp = __webpack_require__(/*! &wp.element */ "&wp.element");
 
 var _wp2 = __webpack_require__(/*! &wp.components */ "&wp.components");
 
-/*
- * Copyright (c) 2023. PublishPress, All rights reserved.
- */
+var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
+
 var TextControl = exports.TextControl = function TextControl(props) {
     var description = void 0;
 
@@ -1903,19 +1972,26 @@ var TextControl = exports.TextControl = function TextControl(props) {
     return React.createElement(
         _wp.Fragment,
         null,
-        React.createElement(_wp2.TextControl, {
-            type: "text",
-            label: props.label,
-            name: props.name,
-            id: props.name,
-            className: props.className,
-            value: props.value,
-            placeholder: props.placeholder,
-            onChange: onChange
-        }),
-        description
+        React.createElement(
+            "div",
+            { className: 'publishpress-future-loading' },
+            React.createElement(_wp2.TextControl, {
+                type: "text",
+                label: props.label,
+                name: props.name,
+                id: props.name,
+                className: props.className,
+                value: props.value,
+                placeholder: props.placeholder,
+                onChange: onChange
+            }),
+            props.loading && React.createElement(_.Spinner, null),
+            description
+        )
     );
-};
+}; /*
+    * Copyright (c) 2023. PublishPress, All rights reserved.
+    */
 
 /***/ }),
 
@@ -2380,6 +2456,15 @@ Object.defineProperty(exports, "TrueFalseControl", ({
   enumerable: true,
   get: function get() {
     return _TrueFalseControl.TrueFalseControl;
+  }
+}));
+
+var _Spinner = __webpack_require__(/*! ./Spinner */ "./assets/jsx/components/Spinner.jsx");
+
+Object.defineProperty(exports, "Spinner", ({
+  enumerable: true,
+  get: function get() {
+    return _Spinner.Spinner;
   }
 }));
 

@@ -11,7 +11,7 @@ import {
     NonceControl
 } from "./components";
 
-import { StrictMode, createRoot, useState } from "&wp.element";
+import { StrictMode, createRoot, useState, useEffect } from "&wp.element";
 
 import {
     nonce,
@@ -25,32 +25,58 @@ import {
 import { render } from "&ReactDOM";
 
 const SettingsFormPanel = (props) => {
-    const [allValid, setAllValid] = useState(false);
+    const [formValidationStatusPerPostType, setFormValidationStatusPerPostType] = useState({});
+    const [pendingValidationPerPostType, setPendingValidationPerPostType] = useState({});
+    const [allValid, setAllValid] = useState(true);
+    const [hasNoPendingValidation, setHasNoPendingValidation] = useState(true);
 
-    var dataValidationStatuses = {};
+    useEffect(() => {
+        let allFormsAreValid = true;
 
-    const updateSaveButtonStatus = () => {
-        let allValid = true;
-
-        for (const [postType, isValid] of Object.entries(dataValidationStatuses)) {
-            if (!isValid) {
-                allValid = false;
+        for (const [postType, isValidForPostType] of Object.entries(formValidationStatusPerPostType)) {
+            if (!isValidForPostType) {
+                allFormsAreValid = false;
                 break;
             }
         }
 
-        setAllValid(allValid);
-    }
+        setAllValid(allFormsAreValid);
+    }, [formValidationStatusPerPostType]);
+
+    useEffect(() => {
+        let hasNoPendingValidation = true;
+
+        for (const [postType, hasPending] of Object.entries(pendingValidationPerPostType)) {
+            if (hasPending) {
+                hasNoPendingValidation = false;
+                break;
+            }
+        }
+
+        setHasNoPendingValidation(hasNoPendingValidation);
+    }, [pendingValidationPerPostType]);
 
     const onDataIsValid = (postType) => {
-        dataValidationStatuses[postType] = true;
-        updateSaveButtonStatus();
+        formValidationStatusPerPostType[postType] = true;
+        setFormValidationStatusPerPostType({...formValidationStatusPerPostType});
     }
 
     const onDataIsInvalid = (postType) => {
-        dataValidationStatuses[postType] = false;
-        updateSaveButtonStatus();
+        formValidationStatusPerPostType[postType] = false;
+        setFormValidationStatusPerPostType({...formValidationStatusPerPostType});
     }
+
+    const onValidationStarted = (postType) => {
+        pendingValidationPerPostType[postType] = true;
+        setPendingValidationPerPostType({...pendingValidationPerPostType});
+    }
+
+    const onValidationFinished = (postType) => {
+        pendingValidationPerPostType[postType] = false;
+        setPendingValidationPerPostType({...pendingValidationPerPostType});
+    }
+
+    const saveButtonText = hasNoPendingValidation ? text.saveChanges : text.saveChangesPendingValidation;
 
     return (
         <StrictMode>
@@ -71,6 +97,8 @@ const SettingsFormPanel = (props) => {
                         statusesList={statusesList}
                         onDataIsValid={onDataIsValid}
                         onDataIsInvalid={onDataIsInvalid}
+                        onValidationStarted={onValidationStarted}
+                        onValidationFinished={onValidationFinished}
                     />
                 </SettingsSection>
 
@@ -78,8 +106,8 @@ const SettingsFormPanel = (props) => {
                     <SubmitButton
                         id="expirationdateSaveDefaults"
                         name="expirationdateSaveDefaults"
-                        disabled={!allValid}
-                        text={text.saveChanges}
+                        disabled={!allValid || !hasNoPendingValidation}
+                        text={saveButtonText}
                     />
                 </ButtonsPanel>
             </SettingsForm>

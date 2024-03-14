@@ -5,6 +5,7 @@
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
+use Exception;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
@@ -169,6 +170,36 @@ class RestAPIController implements InitializableInterface
                 ],
             ]
         ]);
+
+        register_rest_route($apiNamespace, '/settings/validate-expire-offset', [
+            'methods' => 'POST',
+            'callback' => [$this, 'validateTextualDatetime'],
+            'permission_callback' => function () {
+                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+            }
+        ]);
+    }
+
+    public function validateTextualDatetime(WP_REST_Request $request)
+    {
+        $isValid = true;
+        $message = '';
+
+        try {
+            $jsonParams = $request->get_json_params('offset');
+            $offset = sanitize_text_field($jsonParams['offset']);
+
+            $time = strtotime($offset);
+
+            if (empty($time)) {
+                throw new Exception(__('Invalid date time offset.', 'post-expirator'));
+            }
+        } catch (Exception $e) {
+            $isValid = false;
+            $message = __('Invalid date time offset.', 'post-expirator');
+        }
+
+        return rest_ensure_response(['isValid' => $isValid, 'message' => $message, ]);
     }
 
     private function registerRestField()

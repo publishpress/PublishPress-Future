@@ -238,6 +238,7 @@ class Controller implements InitializableInterface
                         ),
                         'fieldTerm' => __('Default terms:', 'post-expirator'),
                         'saveChanges' => __('Save changes', 'post-expirator'),
+                        'saveChangesPendingValidation' => __('Wait for the validation...', 'post-expirator'),
                         'validationError' => __('Error found', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in singular form.
                         'errorTermsRequired' => __('Select one or more %s', 'post-expirator'),
