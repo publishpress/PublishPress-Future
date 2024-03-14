@@ -254,13 +254,9 @@ p.description,
   }
 }
 
-.future-action-error {
-    line-height: 20px;
+#publishpress-future-settings-post-types .notice {
+    padding-top: 14px;
     width: 100%;
-    background-color: #b15b5b;
-    color: white;
-    padding: 12px;
-    margin-bottom: 12px;
 }
 
 .future-action-pending input {

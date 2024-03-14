@@ -169,6 +169,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 * ADDED: Add validation for the date and time offset in the settings page, #683;
 * ADDED: Add form validation to the settings panel;
 * ADDED: Add form validation to the metabox panel;
+* ADDED: Add a date preview to the date/time offset setting field;
 * CHANGED: The actions to move posts to another status where grouped in a single action, with a dropdown to select the status, #668;
 * CHANGED: The actions "draft", "private" and "trash" are deprecated in favor of "change-status", #668;
 * CHANGED: The metadata hash key has now a prefix "_" marking it as a private key, #695;

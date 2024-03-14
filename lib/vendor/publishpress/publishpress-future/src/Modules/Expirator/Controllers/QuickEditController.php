@@ -252,13 +252,12 @@ class QuickEditController implements InitializableInterface
                     'addTerms' => __('%s to add', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in singular form.
                     'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyPluralName)),
-                    'validationError' => __('Error found', 'post-expirator'),
                     'errorActionRequired' => __('Select an action', 'post-expirator'),
                     'errorDateRequired' => __('Select a date', 'post-expirator'),
                     'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),
                     'errorTermsRequired' => sprintf(
                         // translators: %s is the name of the taxonomy in singular form.
-                        __('Select one or more %s', 'post-expirator'),
+                        __('Please select one or more %s', 'post-expirator'),
                         strtolower($taxonomyPluralName)
                     ),
                     'newStatus' => __('New status', 'post-expirator'),

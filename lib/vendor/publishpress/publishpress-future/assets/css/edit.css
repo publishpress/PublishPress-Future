@@ -137,3 +137,12 @@ div.pe-qe-fields > div {
 .future-action-panel .new-status .components-base-control {
     width: 100%;
 }
+
+.future-action-panel .notice {
+    padding-top: 14px;
+    width: 100%;
+}
+
+.future-action-panel .notice .dashicons {
+    line-height: 30px;
+}
