@@ -9,4 +9,4 @@ set -a
 source ./.env
 set +a
 
-$BIN_PATH/exec "$@"
+$BIN_PATH/exec build-push "$@"
