@@ -1302,6 +1302,11 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
         hasPendingValidation = _useState30[0],
         setHasPendingValidation = _useState30[1];
 
+    var _useState31 = (0, _wp.useState)(''),
+        _useState32 = _slicedToArray(_useState31, 2),
+        offsetPreview = _useState32[0],
+        setOffsetPreview = _useState32[1];
+
     var taxonomyRelatedActions = ['category', 'category-add', 'category-remove', 'category-remove-all'];
 
     var onChangeTaxonomy = function onChangeTaxonomy(value) {
@@ -1359,6 +1364,12 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
 
                 setHasValidData(result.isValid);
                 setValidationError(result.message);
+
+                if (result.isValid) {
+                    setOffsetPreview(result.preview);
+                } else {
+                    setOffsetPreview('');
+                }
             });
         }
 
@@ -1549,7 +1560,21 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
                 description: props.text.fieldDefaultDateTimeOffsetDescription,
                 unescapedDescription: true,
                 onChange: onChangeExpireOffset
-            })
+            }),
+            offsetPreview && React.createElement(
+                _wp.Fragment,
+                null,
+                React.createElement(
+                    'h4',
+                    null,
+                    props.text.datePreview
+                ),
+                React.createElement(
+                    'code',
+                    null,
+                    offsetPreview
+                )
+            )
         ));
 
         settingsRows.push(React.createElement(

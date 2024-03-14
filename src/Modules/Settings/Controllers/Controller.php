@@ -242,6 +242,7 @@ class Controller implements InitializableInterface
                         'validationError' => __('Error found', 'post-expirator'),
                         // translators: %s is the name of the taxonomy in singular form.
                         'errorTermsRequired' => __('Select one or more %s', 'post-expirator'),
+                        'datePreview' => __('Date Preview', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),

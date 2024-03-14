@@ -11,7 +11,7 @@ import {
     TokensControl,
     CheckboxControl
 } from './';
-import { useEffect, useState } from '&wp.element';
+import { useEffect, useState, Fragment } from '&wp.element';
 import { addQueryArgs } from '&wp.url';
 import { applyFilters } from '&wp.hooks';
 import { apiFetch } from '&wp';
@@ -38,6 +38,7 @@ export const PostTypeSettingsPanel = function (props) {
     const [howToExpireList, setHowToExpireList] = useState(originalExpireTypeList);
     const [newStatus, setNewStatus] = useState(props.settings.newStatus);
     const [hasPendingValidation, setHasPendingValidation] = useState(false);
+    const [offsetPreview, setOffsetPreview] = useState('');
 
     const taxonomyRelatedActions = [
         'category',
@@ -101,6 +102,12 @@ export const PostTypeSettingsPanel = function (props) {
 
                 setHasValidData(result.isValid);
                 setValidationError(result.message);
+
+                if (result.isValid) {
+                    setOffsetPreview(result.preview);
+                } else {
+                    setOffsetPreview('');
+                }
             });
         }
 
@@ -296,6 +303,13 @@ export const PostTypeSettingsPanel = function (props) {
                     unescapedDescription={true}
                     onChange={onChangeExpireOffset}
                 />
+
+                {offsetPreview && (
+                    <Fragment>
+                        <h4>{props.text.datePreview}</h4>
+                        <code>{offsetPreview}</code>
+                    </Fragment>
+                )}
             </SettingRow>
         );
 
