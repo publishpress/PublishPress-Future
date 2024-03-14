@@ -21,9 +21,15 @@ export const TextControl = function (props) {
         }
     };
 
+    let className = props.className ? props.className : '';
+
+    if (props.loading) {
+        className += ' publishpress-future-loading publishpress-future-loading-input';
+    }
+
     return (
         <Fragment>
-            <div className={'publishpress-future-loading'}>
+            <div className={className}>
                 <WPTextControl
                     type="text"
                     label={props.label}

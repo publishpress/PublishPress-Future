@@ -1969,12 +1969,18 @@ var TextControl = exports.TextControl = function TextControl(props) {
         }
     };
 
+    var className = props.className ? props.className : '';
+
+    if (props.loading) {
+        className += ' publishpress-future-loading publishpress-future-loading-input';
+    }
+
     return React.createElement(
         _wp.Fragment,
         null,
         React.createElement(
             "div",
-            { className: 'publishpress-future-loading' },
+            { className: className },
             React.createElement(_wp2.TextControl, {
                 type: "text",
                 label: props.label,

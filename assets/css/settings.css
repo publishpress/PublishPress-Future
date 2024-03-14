@@ -279,20 +279,18 @@ p.description,
 .publishpress-future-spinner {
     display: inline-block;
     position: absolute;
-    width: 20px;
-    height: 20px;
-    top: 8px;
-    right: 2px;
+    width: 80px;
+    height: 80px;
 }
 
 .publishpress-future-spinner div {
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 14px;
-    height: 14px;
-    margin: 0;
-    border: 3px solid #916ba6;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #916ba6;
     border-radius: 50%;
     animation: publishpress-future-spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: #916ba6 transparent transparent transparent;
@@ -318,4 +316,19 @@ p.description,
     100% {
         transform: rotate(360deg);
     }
+}
+
+.publishpress-future-loading-input .publishpress-future-spinner {
+    position: absolute;
+    top: 8px;
+    right: 2px;
+    width: 20px;
+    height: 20px;
+}
+
+.publishpress-future-loading-input .publishpress-future-spinner div {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    border-width: 3px;
 }
