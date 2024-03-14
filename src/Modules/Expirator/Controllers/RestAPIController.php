@@ -196,7 +196,6 @@ class RestAPIController implements InitializableInterface
                 throw new Exception(__('Invalid date time offset.', 'post-expirator'));
             }
 
-            // Get the server time from $time and format it using the date and time format options.
             $preview = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $time);
         } catch (Exception $e) {
             $isValid = false;

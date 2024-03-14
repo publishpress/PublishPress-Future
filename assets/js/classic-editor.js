@@ -664,7 +664,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                 null,
                 React.createElement(
                     BaseControl,
-                    { label: props.strings.validationError, className: 'future-action-error' },
+                    { className: 'notice notice-error' },
                     React.createElement(
                         'div',
                         null,
@@ -1601,7 +1601,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             null,
             React.createElement(
                 BaseControl,
-                { label: props.text.validationError, className: 'future-action-error' },
+                { className: 'notice notice-error' },
                 React.createElement(
                     'div',
                     null,

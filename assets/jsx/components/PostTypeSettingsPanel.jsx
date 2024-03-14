@@ -334,7 +334,7 @@ export const PostTypeSettingsPanel = function (props) {
 
             {! hasValidData && (
                 <PanelRow>
-                    <BaseControl label={props.text.validationError} className="future-action-error">
+                    <BaseControl className="notice notice-error">
                         <div>
                             <i className="dashicons dashicons-warning"></i> {validationError}
                         </div>
