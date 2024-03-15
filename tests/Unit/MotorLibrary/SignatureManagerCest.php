@@ -76,7 +76,6 @@ GQIDAQAB
         $I->assertIsString($signature);
         $I->assertNotEmpty($signature);
 
-        $signature = base64_encode($signature);
         $I->assertEquals('zZF5cVWHWSKnvXlPZYVzQDko3T8Oo0zTkw176sGOmUzjO3tCc8uE3LF4lSR/5LuWvtUlmr1oDlZI7bmjOGKCouxNBCyIcC/cg5Vh3Oxrmj5pUaXU8NIJunhcZJBOPP6BSbC2Q29xScisPkUQKkuNXjgGN/rNytprh4V5VA9RaNT3/vfb4tQDnYrCvDk06bWkG/vM/Ygq9BgWl7AfDck+XCyMBw6hLTv/UiUt9oo049dng0+W26WkJET7nme1IdbAsPC4gE2g7QPazZl7Udu5U5zJFZ52Dh+6A7Ikl+7C4OfTPyysH/hS5McTaRSI2SaFpj/7OHU/2UqYSEDDg+dGSA==', $signature);
     }
 
@@ -87,7 +86,7 @@ GQIDAQAB
         $manager = new SignatureManager();
 
         $data = 'This is a test';
-        $signature = base64_decode('zZF5cVWHWSKnvXlPZYVzQDko3T8Oo0zTkw176sGOmUzjO3tCc8uE3LF4lSR/5LuWvtUlmr1oDlZI7bmjOGKCouxNBCyIcC/cg5Vh3Oxrmj5pUaXU8NIJunhcZJBOPP6BSbC2Q29xScisPkUQKkuNXjgGN/rNytprh4V5VA9RaNT3/vfb4tQDnYrCvDk06bWkG/vM/Ygq9BgWl7AfDck+XCyMBw6hLTv/UiUt9oo049dng0+W26WkJET7nme1IdbAsPC4gE2g7QPazZl7Udu5U5zJFZ52Dh+6A7Ikl+7C4OfTPyysH/hS5McTaRSI2SaFpj/7OHU/2UqYSEDDg+dGSA==');
+        $signature = 'zZF5cVWHWSKnvXlPZYVzQDko3T8Oo0zTkw176sGOmUzjO3tCc8uE3LF4lSR/5LuWvtUlmr1oDlZI7bmjOGKCouxNBCyIcC/cg5Vh3Oxrmj5pUaXU8NIJunhcZJBOPP6BSbC2Q29xScisPkUQKkuNXjgGN/rNytprh4V5VA9RaNT3/vfb4tQDnYrCvDk06bWkG/vM/Ygq9BgWl7AfDck+XCyMBw6hLTv/UiUt9oo049dng0+W26WkJET7nme1IdbAsPC4gE2g7QPazZl7Udu5U5zJFZ52Dh+6A7Ikl+7C4OfTPyysH/hS5McTaRSI2SaFpj/7OHU/2UqYSEDDg+dGSA==';
 
         $result = $manager->verify($data, $signature, self::PUBLIC_KEY);
 

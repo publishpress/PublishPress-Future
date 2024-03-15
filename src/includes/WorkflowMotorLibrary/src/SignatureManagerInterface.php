@@ -12,7 +12,7 @@ interface SignatureManagerInterface
     public function generateKeyPair(): array;
 
     /**
-     * Sign the given data using the given private key. It returns the signature.
+     * Sign the given data using the given private key. It returns the signature encoded as base64.
      *
      * @param string $data
      * @param string $privateKey
@@ -21,7 +21,7 @@ interface SignatureManagerInterface
     public function sign(string $data, string $privateKey): string;
 
     /**
-     * Verify the given signature for the given data using the given public key. It returns true if the signature is
+     * Verify the given signature (base64 encoded) for the given data using the given public key. It returns true if the signature is
      * valid, false otherwise.
      *
      * @param string $data

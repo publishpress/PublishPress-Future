@@ -29,11 +29,11 @@ class SignatureManager implements SignatureManagerInterface
     {
         openssl_sign($data, $signature, $privateKey, self::SIGNATURE_ALGORITHM);
 
-        return $signature;
+        return base64_encode($signature);
     }
 
     public function verify(string $data, string $signature, string $publicKey): bool
     {
-        return openssl_verify($data, $signature, $publicKey, self::SIGNATURE_ALGORITHM);
+        return openssl_verify($data, base64_decode($signature), $publicKey, self::SIGNATURE_ALGORITHM);
     }
 }
