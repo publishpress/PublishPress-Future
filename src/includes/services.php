@@ -171,7 +171,9 @@ return [
     },
 
     ServicesAbstract::MODULE_WORKFLOWS => static function (ContainerInterface $container) {
-        return new Module();
+        return new Module(
+            $container->get(ServicesAbstract::HOOKS)
+        );
     },
 
     /**

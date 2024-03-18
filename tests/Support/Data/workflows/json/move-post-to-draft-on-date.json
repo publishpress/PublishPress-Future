@@ -1,0 +1,147 @@
+{
+    "name": "Move post to draft after 2 weeks it was published",
+    "slug": "move_post_to_draft_after_2_weeks_it_was_published",
+    "guid": "f3e3e3e3-3e3e-3e3e-3e3e-3e3e3e3e3e3e",
+    "dictionary": [
+        {
+            "trigger": true,
+            "name": "post_published",
+            "type": "publish_post",
+            "node": {"x": 0, "y": 0},
+            "params": {
+                "postType": "post",
+                "taxonomy": "category",
+                "terms": [
+                    "expirable"
+                ]
+            },
+            "globals": [
+                {
+                    "name": "post",
+                    "type": "post"
+                }
+            ],
+            "outlets": [
+                "next"
+            ]
+        },
+        {
+            "name": "schedule1",
+            "type": "schedule",
+            "params": {
+                "offset": "+2 weeks",
+                "datetime": {
+                    "type": "var",
+                    "reference": "post.post_date"
+                }
+            },
+            "node": {"x": 0, "y": 0},
+            "outlets": [
+                "next"
+            ]
+        },
+        {
+            "name": "change_post_status1",
+            "type": "change_post_status",
+            "params": {
+                "status": "draft"
+            },
+            "node": {"x": 0, "y": 0},
+            "outlets": [
+                "next"
+            ]
+        },
+        {
+            "name": "conditional1",
+            "type": "if",
+            "node": {"x": 0, "y": 0},
+            "params": {
+                "condition": {
+                    "type": "and",
+                    "left": {
+                        "type": "greater_than",
+                        "left": {
+                            "type": "var",
+                            "reference": "post.post_date"
+                        },
+                        "right": {
+                            "type": "date",
+                            "reference": "2024-04-01 00:00:00"
+                        }
+                    },
+                    "right": {
+                        "type": "equals",
+                        "left": {
+                            "type": "int",
+                            "reference": "1"
+                        },
+                        "right": {
+                            "type": "int",
+                            "reference": "1"
+                        }
+                    }
+                }
+            },
+            "outlets": [
+                "true",
+                "false"
+            ]
+        },
+        {
+            "name": "ray1",
+            "type": "ray",
+            "node": {"x": 0, "y": 0},
+            "params": {
+                "color": "red",
+                "text": "Conditional is false"
+            },
+            "outlets": [
+                "next"
+            ]
+        },
+        {
+            "name": "ray2",
+            "type": "ray",
+            "node": {"x": 0, "y": 0},
+            "params": {
+                "color": "green",
+                "text": "Conditional is true"
+            },
+            "outlets": [
+                "next"
+            ]
+        }
+    ],
+    "flow": [
+        {
+            "name": "post_published",
+            "next": [
+                {
+                    "name": "conditional1",
+                    "true": [
+                        {
+                            "name": "schedule1",
+                            "next": [
+                                {
+                                    "name": "change_post_status1",
+                                    "next": [
+                                        {
+                                            "name": "ray2",
+                                            "next": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "false": [
+                        {
+                            "name": "ray1",
+                            "next": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -63,11 +63,11 @@ class PluginInitializator implements InitializableInterface
 
         $this->initialized = true;
 
-        $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
-
         $this->loadTextDomain();
         $this->initializeModules();
         $this->initializeControllers();
+
+        $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
     }
 
     private function initializeModules()
