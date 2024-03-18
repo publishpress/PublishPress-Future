@@ -58,4 +58,6 @@ abstract class HooksAbstract
     const ACTION_IMPORT_START = 'import_start';
 
     const ACTION_IMPORT_END = 'import_end';
+
+    const FILTER_MODULES_LIST = 'publishpressfuturepro_modules';
 }

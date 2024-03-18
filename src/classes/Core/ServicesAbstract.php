@@ -37,4 +37,6 @@ abstract class ServicesAbstract
     const EDD_ITEM_ID = 'future.pro/edd-item-id';
     const LICENSE_KEY = 'future.pro/license-key';
     const LICENSE_STATUS = 'future.pro/license-status';
+    const MODULES = 'future.pro/modules';
+    const MODULE_WORKFLOWS = 'future.pro/module-workflows';
 }

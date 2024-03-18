@@ -18,6 +18,7 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\Module;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -55,8 +56,24 @@ return [
         return $container->get(ServicesAbstract::BASE_URL) . '/src/assets';
     },
 
+    ServicesAbstract::MODULES => static function (ContainerInterface $container) {
+        $modulesServicesList = [
+            ServicesAbstract::MODULE_WORKFLOWS,
+        ];
+
+        $modules = [];
+        foreach ($modulesServicesList as $service) {
+            $modules[] = $container->get($service);
+        }
+
+        return $container->get(ServicesAbstract::HOOKS)->applyFilters(
+            HooksAbstract::FILTER_MODULES_LIST,
+            $modules
+        );
+    },
+
     /**
-     * @return ModuleInterface[]
+     * @return InitializableInterface[]
      */
     ServicesAbstract::CONTROLLERS => static function (ContainerInterface $container) {
         $controllerServicesList = [
@@ -87,7 +104,8 @@ return [
         return new PluginInitializator(
             $container->get(ServicesAbstract::CONTROLLERS),
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::BASE_PATH)
+            $container->get(ServicesAbstract::BASE_PATH),
+            $container->get(ServicesAbstract::MODULES)
         );
     },
 
@@ -150,6 +168,10 @@ return [
             $container->get(FreeServicesAbstract::EXPIRATION_SCHEDULER),
             $container->get(FreeServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY)
         );
+    },
+
+    ServicesAbstract::MODULE_WORKFLOWS => static function (ContainerInterface $container) {
+        return new Module();
     },
 
     /**
