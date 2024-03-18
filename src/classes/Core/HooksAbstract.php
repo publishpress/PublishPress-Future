@@ -17,7 +17,7 @@ abstract class HooksAbstract
 
     const ACTION_POST_EXPIRED = ExpirationHooksAbstractFree::ACTION_POST_EXPIRED;
 
-    const FILTER_CONTROLLERS_LIST = 'publishpressfuturepro_list_modules';
+    const FILTER_CONTROLLERS_LIST = 'publishpressfuturepro_controllers';
 
     const FILTER_EXPIRATION_ACTION_FACTORY = ExpirationHooksAbstractFree::FILTER_EXPIRATION_ACTION_FACTORY;
 
