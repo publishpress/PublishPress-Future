@@ -62,4 +62,8 @@ abstract class HooksAbstract
     const FILTER_MODULES_LIST = 'publishpressfuturepro_modules';
 
     const ACTION_ADMIN_MENU = 'admin_menu';
+
+    const ACTION_ADD_METABOXES = 'add_meta_boxes';
+
+    const ACTION_SAVE_POST = 'save_post';
 }

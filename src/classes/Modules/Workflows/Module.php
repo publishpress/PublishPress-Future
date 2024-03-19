@@ -8,7 +8,7 @@ use PublishPress\FuturePro\Core\HooksAbstract;
 
 class Module implements InitializableInterface
 {
-    const POST_TYPE_WORKFLOW = 'ppfuture_workflow';
+    public const POST_TYPE_WORKFLOW = 'ppfuture_workflow';
 
     /**
      * @var HookableInterface
@@ -24,6 +24,9 @@ class Module implements InitializableInterface
     {
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
         $this->hooks->addAction(HooksAbstract::ACTION_INIT_PLUGIN, [$this, 'registerPostType']);
+        $this->hooks->addAction(HooksAbstract::ACTION_ADD_METABOXES, [$this, 'postTypeMetaBox']);
+        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScripts']);
+        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'saveWorkflowMetadata']);
     }
 
     public function adminMenu()
@@ -80,5 +83,99 @@ class Module implements InitializableInterface
             'show_in_rest' => true,
             'rest_base' => 'workflows',
         ]);
+    }
+
+    public function postTypeMetaBox($postType)
+    {
+        if (self::POST_TYPE_WORKFLOW !== $postType) {
+            return;
+        }
+
+        add_meta_box(
+            'future_workflow_editor',
+            __('Workflow Editor', 'workflow-editor'),
+            [$this, 'renderMetaBoxView'],
+            self::POST_TYPE_WORKFLOW,
+            'advanced',
+            'high'
+        );
+    }
+
+    public function renderMetaBoxView($post)
+    {
+        require_once __DIR__ . '/Views/Editor.html.php';
+    }
+
+    public function enqueueScripts($hook)
+    {
+        if ('post.php' !== $hook) {
+            return;
+        }
+
+        global $post_type;
+        if (self::POST_TYPE_WORKFLOW !== $post_type) {
+            return;
+        }
+
+        wp_enqueue_style(
+            'future_workflow_admin_ui_kit_style',
+            plugins_url('/src/assets/libs/uikit-3.15.15/css/uikit.css', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
+            false,
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            'all'
+        );
+
+        wp_enqueue_script(
+            'future_workflow_admin_ui_kit',
+            plugins_url('/src/assets/libs/uikit-3.15.15/js/uikit.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
+            false,
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+
+        wp_enqueue_script(
+            'future_workflow_admin_ui_kit_icons',
+            plugins_url('/src/assets/libs/uikit-3.15.15/js/uikit-icons.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
+            ['future_workflow_admin_ui_kit'],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+
+        wp_enqueue_script(
+            'future_workflow_admin_script',
+            plugins_url('/src/assets/js/flow-diagram.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
+            ['future_workflow_admin_ui_kit', 'future_workflow_admin_ui_kit_icons'],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+    }
+
+    public function saveWorkflowMetadata($postId)
+    {
+        if (! isset($_POST['future_workflow_editor_nonce']) || ! wp_verify_nonce(
+            $_POST['future_workflow_editor_nonce'],
+            'future_workflow_editor'
+        )) {
+            return;
+        }
+
+        if (! current_user_can('edit_post', $postId)) {
+            return;
+        }
+
+        remove_action('save_post', [$this, 'saveWorkflowMetadata']);
+
+        $workflowData = sanitize_textarea_field($_POST['future_workflow_data']);
+
+        wp_update_post(
+            [
+                'ID' => $postId,
+                'post_content' => $workflowData
+            ],
+            true,
+            false
+        );
+
+        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'saveWorkflowMetadata']);
     }
 }

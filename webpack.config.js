@@ -76,5 +76,49 @@ module.exports = [
                 "&publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
             }
         }
+    },
+    {
+        entry: glob.sync(
+            "./src/assets/jsx/flow-diagram/index.jsx",
+        ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "src", "assets", "js"),
+            filename: "flow-diagram.js"
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                },
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader", "css-loader", "postcss-loader"],
+                }
+            ]
+        },
+        resolve: {
+            modules: [
+                "node_modules",
+                path.join(__dirname, "vendor", "publishpress")
+            ],
+            extensions: [".js", ".jsx"],
+            alias: {
+                "&publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
+            }
+        },
+        externals: {
+            "&wp": "wp",
+            "&wp.components": "wp.components",
+            "&wp.data": "wp.data",
+            "&wp.plugins": "wp.plugins",
+            "&wp.url": "wp.url",
+            "&wp.hooks": "wp.hooks",
+            "&wp.element": "wp.element"
+        }
     }
 ];
