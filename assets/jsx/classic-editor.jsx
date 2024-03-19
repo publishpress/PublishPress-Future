@@ -13,7 +13,8 @@ import {
     strings,
     taxonomyName,
     postTypeDefaultConfig,
-    defaultDate
+    defaultDate,
+    statusesSelectOptions
 } from "&config.classic-editor";
 import { render } from "&ReactDOM";
 
@@ -26,6 +27,7 @@ if (! isGutenbergEnabled()) {
             defaultState: {
                 autoEnable: postTypeDefaultConfig.autoEnable,
                 action: postTypeDefaultConfig.expireType,
+                newStatus: postTypeDefaultConfig.newStatus,
                 date: defaultDate,
                 taxonomy: postTypeDefaultConfig.taxonomy,
                 terms: postTypeDefaultConfig.terms,
@@ -40,6 +42,7 @@ if (! isGutenbergEnabled()) {
             postType={postType}
             isNewPost={isNewPost}
             actionsSelectOptions={actionsSelectOptions}
+            statusesSelectOptions={statusesSelectOptions}
             is12Hour={is12Hour}
             timeFormat={timeFormat}
             startOfWeek={startOfWeek}
@@ -48,9 +51,5 @@ if (! isGutenbergEnabled()) {
         />
     );
 
-    if (createRoot) {
-        createRoot(container).render(component);
-    } else {
-        render(component, container);
-    }
+    createRoot(container).render(component);
 }

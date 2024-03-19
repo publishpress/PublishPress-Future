@@ -26,6 +26,7 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
     id="post-expire-column-<?php echo esc_attr($id); ?>"
     class="post-expire-col"
     data-id="<?php echo esc_attr($id); ?>"
+    data-action-new-status="<?php echo esc_attr($postModel->getExpirationNewStatus()); ?>"
     data-action-enabled="<?php echo esc_attr($actionEnabled ? '1': '0'); ?>"
     data-action-date="<?php echo esc_attr($actionDate); ?>"
     data-action-date-unix="<?php echo esc_attr($actionDateUnix); ?>"
@@ -71,6 +72,16 @@ $actionTerms = implode(',', $postModel->getExpirationCategoryIDs());
                     if (!empty($actionTerms)) {
                         ?>
                         <div class="future-action-gray">[<?php echo esc_html(implode(', ', $actionTerms)); ?>]</div>
+                        <?php
+                    }
+                }
+
+                if ($actionType === ExpirationActionsAbstract::CHANGE_POST_STATUS) {
+                    $newStatus = $postModel->getExpirationNewStatus();
+                    $newStatus = get_post_status_object($newStatus);
+                    if ($newStatus) {
+                        ?>
+                        <div class="future-action-gray">[<?php echo esc_html($newStatus->label); ?>]</div>
                         <?php
                     }
                 }

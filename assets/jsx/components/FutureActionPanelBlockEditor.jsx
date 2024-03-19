@@ -28,6 +28,7 @@ export const FutureActionPanelBlockEditor = (props) => {
 
         if (newAttribute.enabled) {
             newAttribute['action'] = store.getAction();
+            newAttribute['newStatus'] = store.getNewStatus();
             newAttribute['date'] = store.getDate();
             newAttribute['terms'] = store.getTerms();
             newAttribute['taxonomy'] = store.getTaxonomy();
@@ -37,6 +38,16 @@ export const FutureActionPanelBlockEditor = (props) => {
     }
 
     const data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+
+    const { lockPostSaving, unlockPostSaving } = useDispatch('core/editor');
+
+    const onDataIsValid = () => {
+        unlockPostSaving('future-action');
+    }
+
+    const onDataIsInvalid = () => {
+        lockPostSaving('future-action');
+    }
 
     return (
         <PluginDocumentSettingPanel
@@ -51,9 +62,11 @@ export const FutureActionPanelBlockEditor = (props) => {
                     postType={props.postType}
                     isCleanNewPost={props.isCleanNewPost}
                     actionsSelectOptions={props.actionsSelectOptions}
+                    statusesSelectOptions={props.statusesSelectOptions}
                     enabled={data.enabled}
                     calendarIsVisible={true}
                     action={data.action}
+                    newStatus={data.newStatus}
                     date={data.date}
                     terms={data.terms}
                     taxonomy={data.taxonomy}
@@ -63,7 +76,9 @@ export const FutureActionPanelBlockEditor = (props) => {
                     timeFormat={props.timeFormat}
                     startOfWeek={props.startOfWeek}
                     storeName={props.storeName}
-                    strings={props.strings} />
+                    strings={props.strings}
+                    onDataIsValid={onDataIsValid}
+                    onDataIsInvalid={onDataIsInvalid} />
             </div>
         </PluginDocumentSettingPanel>
     );

@@ -9,6 +9,7 @@ use Closure;
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException;
 use PublishPress\Future\Framework\WordPress\Models\PostModel;
 use PublishPress\Future\Modules\Debug\DebugInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
@@ -18,7 +19,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirablePostModel extends PostModel
 {
-    const FLAG_METADATA_HASH = 'pp_future_metadata_hash';
+    const FLAG_METADATA_HASH = '_pp_future_metadata_hash';
+
+    const LEGACY_FLAG_METADATA_HASH = 'pp_future_metadata_hash';
 
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
@@ -49,6 +52,11 @@ class ExpirablePostModel extends PostModel
      * @var string
      */
     private $expirationType = '';
+
+    /**
+     * @var string
+     */
+    private $expirationNewStatus = '';
 
     /**
      * @var string[]
@@ -153,6 +161,7 @@ class ExpirablePostModel extends PostModel
     {
         return [
             'expireType' => $this->getExpirationType(),
+            'newStatus' => $this->getExpirationNewStatus(),
             'category' => $this->getExpirationCategoryIDs(),
             'categoryTaxonomy' => $this->getExpirationTaxonomy(),
             'enabled' => $this->isExpirationEnabled(),
@@ -176,6 +185,21 @@ class ExpirablePostModel extends PostModel
                 $this->expirationType = $this->defaultDataModel->getAction();
             }
 
+            if ($this->expirationType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                $this->expirationType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $this->expirationNewStatus = 'draft';
+            }
+
+            if ($this->expirationType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                $this->expirationType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $this->expirationNewStatus = 'private';
+            }
+
+            if ($this->expirationType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                $this->expirationType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $this->expirationNewStatus = 'trash';
+            }
+
             /**
              * @deprecated
              */
@@ -193,6 +217,35 @@ class ExpirablePostModel extends PostModel
         }
 
         return $this->expirationType;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExpirationNewStatus()
+    {
+        if (empty($this->expirationNewStatus)) {
+            $postType = $this->getPostType();
+
+            if ($this->getPostStatus() !== 'auto-draft') {
+                $args = $this->actionArgsModel->getArgs();
+                $newStatus = isset($args['newStatus']) ? $args['newStatus'] : '';
+
+                $this->expirationNewStatus = $newStatus;
+            }
+
+            if (empty($this->expirationNewStatus)) {
+                $this->expirationNewStatus = $this->defaultDataModel->getNewStatus();
+            }
+
+            $this->expirationNewStatus = $this->hooks->applyFilters(
+                HooksAbstract::FILTER_EXPIRATION_NEW_STATUS,
+                $this->expirationNewStatus,
+                $postType
+            );
+        }
+
+        return $this->expirationNewStatus;
     }
 
     // FIXME: Rename "category" with "term"
@@ -453,8 +506,11 @@ class ExpirablePostModel extends PostModel
     {
         if (empty($this->expirationActionInstance)) {
             $factory = $this->expirationActionFactory;
+
+            $expirationType = $this->getExpirationType();
+
             $actionInstance = $factory(
-                $this->getExpirationType(),
+                $expirationType,
                 $this
             );
 
@@ -557,8 +613,9 @@ class ExpirablePostModel extends PostModel
         $notificationText = rtrim($expirationAction->getNotificationText(), '.');
 
         $emailBody = sprintf(
+            // translators: %1$s: post title placeholder, %2$s: notification text, %3$s: action date placeholder, %4$s: post link placeholder
             __(
-                 '%s. %s on %s. The post link is %s',
+                 '%1$s. %2$s on %3$s. The post link is %4$s',
                 'post-expirator'
             ),
             '##POSTTITLE##',
@@ -574,9 +631,11 @@ class ExpirablePostModel extends PostModel
         }
 
         $emailSubject = sprintf(
+            // translators: %s is the post title
             __('Future Action Complete "%s"', 'post-expirator'),
             $this->getTitle()
         );
+        // translators: 1: is the blog name, 2: the email subject
         $emailSubject = sprintf(__('[%1$s] %2$s', 'post-expirator'), $this->options->getOption('blogname'), $emailSubject);
 
         /**
@@ -738,12 +797,14 @@ class ExpirablePostModel extends PostModel
     public function deleteExpirationPostMeta()
     {
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TYPE);
+        $this->deleteMeta(PostMetaAbstract::EXPIRATION_POST_STATUS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_STATUS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TAXONOMY);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TERMS);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP);
         $this->deleteMeta(PostMetaAbstract::EXPIRATION_DATE_OPTIONS);
         $this->deleteMeta(self::FLAG_METADATA_HASH);
+        $this->deleteMeta(self::LEGACY_FLAG_METADATA_HASH);
     }
 
     public function forceTimestampToUnixtime($timestamp)
@@ -790,8 +851,27 @@ class ExpirablePostModel extends PostModel
         }
 
         if ($scheduledInPostMeta) {
+            $type = $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true);
+            $newStatus = $this->getMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, true);
+
+            if ($type === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                $type = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'draft';
+            }
+
+            if ($type === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                $type = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'private';
+            }
+
+            if ($type === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                $type = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                $newStatus = 'trash';
+            }
+
             $opts = [
-                'expireType' => $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+                'expireType' => $type,
+                'newStatus' => $newStatus,
                 'category' => $this->getMeta(PostMetaAbstract::EXPIRATION_TERMS, true),
                 'categoryTaxonomy' => $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true)
             ];
@@ -815,6 +895,7 @@ class ExpirablePostModel extends PostModel
             $timestamp,
             $this->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true),
             $this->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true),
+            $this->getMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, true),
             $this->getMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, true),
             is_array($terms) ? $terms : []
         ];
@@ -822,8 +903,30 @@ class ExpirablePostModel extends PostModel
         return md5(maybe_serialize($data));
     }
 
+    public function updateMetadataHash($hash = null)
+    {
+        if (empty($hash)) {
+            $hash = $this->calcMetadataHash();
+        }
+
+        $this->updateMeta(self::FLAG_METADATA_HASH, $hash);
+    }
+
     public function getMetadataHash()
     {
-        $this->getMeta(self::FLAG_METADATA_HASH, true);
+        $hash = $this->getMeta(self::FLAG_METADATA_HASH, true);
+
+        if (empty($hash)) {
+            $hash = $this->getMeta(self::LEGACY_FLAG_METADATA_HASH, true);
+            $this->updateMetadataHash($hash);
+            $this->removeLegacyMetadataHash();
+        }
+
+        return $hash;
+    }
+
+    private function removeLegacyMetadataHash()
+    {
+        $this->deleteMeta(self::LEGACY_FLAG_METADATA_HASH);
     }
 }

@@ -8,6 +8,8 @@ namespace PublishPress\Future\Modules\Settings;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -169,6 +171,7 @@ class SettingsFacade
             'default-expire-type' => null,
             'default-custom-date' => null,
             'terms' => [],
+            'newStatus' => null,
         ];
 
         $defaults = array_merge(
@@ -177,7 +180,28 @@ class SettingsFacade
         );
 
         if (empty($defaults['expireType'])) {
-            $defaults['expireType'] = 'draft';
+            $defaults['expireType'] = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+        }
+
+        if ($defaults['expireType'] === ExpirationActionsAbstract::CHANGE_POST_STATUS) {
+            if (empty($defaults['newStatus'])) {
+                $defaults['newStatus'] = 'draft';
+            }
+        }
+
+        if ($defaults['expireType'] === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+            $defaults['expireType'] = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $defaults['newStatus'] = 'draft';
+        }
+
+        if ($defaults['expireType'] === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+            $defaults['expireType'] = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $defaults['newStatus'] = 'private';
+        }
+
+        if ($defaults['expireType'] === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+            $defaults['expireType'] = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $defaults['newStatus'] = 'trash';
         }
 
         if ($defaults['default-expire-type'] === 'null' || empty($defaults['default-expire-type'])) {

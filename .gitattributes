@@ -41,3 +41,6 @@ ray.php export-ignore
 tests export-ignore
 webpack.config.js export-ignore
 yarn.lock export-ignore
+phpstan.neon export-ignore
+CHANGELOG.md export-ignore
+codeception.yml export-ignore

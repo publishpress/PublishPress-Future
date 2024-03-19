@@ -8,20 +8,29 @@ use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-class DeletePost implements ExpirationActionInterface
+class ChangePostStatus implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.delete_post';
+    const SERVICE_NAME = 'expiration.actions.change_post_status';
 
     /**
      * @var ExpirablePostModel
      */
     private $postModel;
 
-
     /**
      * @var array
      */
     private $log = [];
+
+    /**
+     * @var string
+     */
+    private $oldPostStatus;
+
+    /**
+     * @var string
+     */
+    private $newPostStatus;
 
     /**
      * @param ExpirablePostModel $postModel
@@ -33,7 +42,7 @@ class DeletePost implements ExpirationActionInterface
 
     public function __toString()
     {
-        return ExpirationActionsAbstract::DELETE_POST;
+        return ExpirationActionsAbstract::CHANGE_POST_STATUS;
     }
 
     /**
@@ -42,26 +51,30 @@ class DeletePost implements ExpirationActionInterface
     public function getNotificationText()
     {
         if (empty($this->log) || ! $this->log['success']) {
-            return sprintf(
-                // translators: %s: post type singular label
-                __('%s was not deleted.', 'post-expirator'),
-                $this->postModel->getPostTypeSingularLabel()
-            );
+            return __('Status didn\'t change.', 'post-expirator');
         }
 
+        $oldPostStatus = get_post_status_object($this->oldPostStatus);
+        $newPostStatus = get_post_status_object($this->postModel->getExpirationNewStatus());
+
         return sprintf(
-            // translators: %s: post type singular label
-            __('%s has been successfully deleted.', 'post-expirator'),
-            $this->postModel->getPostTypeSingularLabel()
+            // translators: 1: old post status, 2: new post status
+            __('Status has been successfully changed from "%1$s" to "%2$s".', 'post-expirator'),
+            $oldPostStatus->label,
+            $newPostStatus->label
         );
     }
 
     /**
      * @inheritDoc
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
      */
     public function execute()
     {
-        $result = $this->postModel->delete(true);
+        $this->oldPostStatus = $this->postModel->getPostStatus();
+        $this->newPostStatus = $this->postModel->getExpirationNewStatus();
+
+        $result = $this->postModel->setPostStatus($this->newPostStatus);
 
         $this->log['success'] = $result;
 
@@ -73,7 +86,7 @@ class DeletePost implements ExpirationActionInterface
      */
     public static function getLabel(string $postType = ''): string
     {
-        return __('Delete', 'post-expirator');
+        return __('Change status', 'post-expirator');
     }
 
     public function getDynamicLabel($postType = '')

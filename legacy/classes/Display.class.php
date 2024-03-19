@@ -2,6 +2,7 @@
 
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
@@ -307,9 +308,9 @@ class PostExpirator_Display
 
                     // TODO: only allow roles that can edit posts. Filter in the form as well, adding a description.
                     if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
-                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                        $role->add_cap(CapabilitiesAbstract::EXPIRE_POST);
                     } else {
-                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                        $role->remove_cap(CapabilitiesAbstract::EXPIRE_POST);
                     }
                 }
 
@@ -365,9 +366,9 @@ class PostExpirator_Display
                     }
 
                     if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
-                        $role->add_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                        $role->add_cap(CapabilitiesAbstract::EXPIRE_POST);
                     } else {
-                        $role->remove_cap(PostExpirator_Facade::DEFAULT_CAPABILITY_EXPIRE_POST);
+                        $role->remove_cap(CapabilitiesAbstract::EXPIRE_POST);
                     }
                 }
 
@@ -457,7 +458,8 @@ class PostExpirator_Display
                    rel="noopener noreferrer">
                     <?php
                     printf(
-                        esc_html__('If you like %s, please leave us a %s rating. Thank you!', 'post-expirator'),
+                        // translators: %1$s is the plugin name, %2$s is the star rating markup
+                        esc_html__('If you like %1$s, please leave us a %2$s rating. Thank you!', 'post-expirator'),
                         '<strong>PublishPress Future</strong>',
                         '<span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span><span class="dashicons dashicons-star-filled"></span>'
                     );
@@ -472,7 +474,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           esc_html_e('About PublishPress Future', 'post-expirator'); ?>">
+                           esc_attr_e('About PublishPress Future', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('About', 'post-expirator'); ?>
                         </a>
@@ -480,7 +482,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/knowledge-base/future-introduction/" target="_blank"
                            rel="noopener noreferrer" title="<?php
-                        esc_html_e('Future Documentation', 'post-expirator'); ?>">
+                        esc_attr_e('Future Documentation', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('Documentation', 'post-expirator'); ?>
                         </a>
@@ -488,7 +490,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           esc_html_e('Contact the PublishPress team', 'post-expirator'); ?>">
+                           esc_attr_e('Contact the PublishPress team', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('Contact', 'post-expirator'); ?>
                         </a>
