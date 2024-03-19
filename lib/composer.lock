@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f26e2c0fc02019c1910fbf1569bb1e4e",
+    "content-hash": "eb5bf366421b84daac02d6c9a8bb1d6d",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,7 +298,7 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-main",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
@@ -342,7 +342,6 @@
                 "wp-cli/i18n-command": "^2.6",
                 "wp-coding-standards/wpcs": "^3"
             },
-            "default-branch": true,
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -798,9 +797,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "publishpress/publishpress-future": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

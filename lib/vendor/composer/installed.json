@@ -304,8 +304,8 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-main",
-            "version_normalized": "dev-main",
+            "version": "3.3.1",
+            "version_normalized": "3.3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
@@ -350,7 +350,6 @@
                 "wp-coding-standards/wpcs": "^3"
             },
             "time": "2024-03-19T15:49:58+00:00",
-            "default-branch": true,
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",

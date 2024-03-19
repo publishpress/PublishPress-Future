@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'df41656cea05d432af829174e1131ae392484482',
+        'reference' => 'e0cb7ecda7468f4c3fa36cfa94132d8843c959f9',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'df41656cea05d432af829174e1131ae392484482',
+            'reference' => 'e0cb7ecda7468f4c3fa36cfa94132d8843c959f9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -56,14 +56,12 @@
             'dev_requirement' => false,
         ),
         'publishpress/publishpress-future' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
+            'pretty_version' => '3.3.1',
+            'version' => '3.3.1.0',
             'reference' => '497b29d55ed725d43e94fd77927b087c2c8733cc',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../publishpress/publishpress-future',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
+            'aliases' => array(),
             'dev_requirement' => false,
         ),
         'publishpress/wordpress-banners' => array(
