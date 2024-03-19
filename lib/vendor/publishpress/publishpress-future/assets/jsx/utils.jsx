@@ -76,6 +76,7 @@ export const getActionSettingsFromColumnData = (postId) => {
         dateUnix: columnData.dataset.actionDateUnix,
         taxonomy: columnData.dataset.actionTaxonomy,
         terms: columnData.dataset.actionTerms,
+        newStatus: columnData.dataset.actionNewStatus,
     };
 }
 

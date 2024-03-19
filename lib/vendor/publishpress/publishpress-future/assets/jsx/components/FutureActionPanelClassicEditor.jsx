@@ -1,5 +1,6 @@
 import { FutureActionPanel } from "./";
-import { select } from "&wp.data";
+import { select, useSelect } from "&wp.data";
+import { useEffect } from "&wp.element";
 
 export const FutureActionPanelClassicEditor = (props) => {
     const browserTimezoneOffset = new Date().getTimezoneOffset();
@@ -13,6 +14,7 @@ export const FutureActionPanelClassicEditor = (props) => {
 
         getElementByName('future_action_enabled').value = store.getEnabled() ? 1 : 0;
         getElementByName('future_action_action').value = store.getAction();
+        getElementByName('future_action_new_status').value = store.getNewStatus();
         getElementByName('future_action_date').value = store.getDate();
         getElementByName('future_action_terms').value = store.getTerms().join(',');
         getElementByName('future_action_taxonomy').value = store.getTaxonomy();
@@ -45,10 +47,19 @@ export const FutureActionPanelClassicEditor = (props) => {
     const data = {
         enabled: getElementValueByName('future_action_enabled') === '1',
         action: getElementValueByName('future_action_action'),
+        newStatus: getElementValueByName('future_action_new_status'),
         date: getElementValueByName('future_action_date'),
         terms: getTermsFromElementByName('future_action_terms'),
         taxonomy: getElementValueByName('future_action_taxonomy'),
     };
+
+    const onDataIsValid = () => {
+        jQuery('#publish').prop('disabled', false);
+    }
+
+    const onDataIsInvalid = () => {
+        jQuery('#publish').prop('disabled', true);
+    }
 
     return (
         <div className={'post-expirator-panel'}>
@@ -57,9 +68,11 @@ export const FutureActionPanelClassicEditor = (props) => {
                 postType={props.postType}
                 isCleanNewPost={props.isNewPost}
                 actionsSelectOptions={props.actionsSelectOptions}
+                statusesSelectOptions={props.statusesSelectOptions}
                 enabled={data.enabled}
                 calendarIsVisible={true}
                 action={data.action}
+                newStatus={data.newStatus}
                 date={data.date}
                 terms={data.terms}
                 taxonomy={data.taxonomy}
@@ -69,7 +82,9 @@ export const FutureActionPanelClassicEditor = (props) => {
                 timeFormat={props.timeFormat}
                 startOfWeek={props.startOfWeek}
                 storeName={props.storeName}
-                strings={props.strings} />
+                strings={props.strings}
+                onDataIsValid={onDataIsValid}
+                onDataIsInvalid={onDataIsInvalid} />
         </div>
     );
 };

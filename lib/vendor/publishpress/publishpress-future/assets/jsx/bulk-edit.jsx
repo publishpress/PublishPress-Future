@@ -14,9 +14,9 @@ import {
     startOfWeek,
     strings,
     taxonomyName,
-    nonce
+    nonce,
+    statusesSelectOptions
 } from "&config.bulk-edit";
-import { render } from "&ReactDOM";
 
 const storeName = 'publishpress-future/future-action-bulk-edit';
 const delayToUnmountAfterSaving = 1000;
@@ -58,6 +58,7 @@ inlineEditPost.setBulk = function (id) {
             name: storeName,
             defaultState: {
                 action: postTypeDefaultConfig.expireType,
+                newStatus: postTypeDefaultConfig.newStatus,
                 date: defaultDate,
                 taxonomy: postTypeDefaultConfig.taxonomy,
                 terms: postTypeDefaultConfig.terms,
@@ -67,12 +68,24 @@ inlineEditPost.setBulk = function (id) {
     }
 
     const container = document.getElementById("publishpress-future-bulk-edit");
+    const root = createRoot(container);
+
+    const saveButton = document.querySelector('#bulk_edit');
+    if (saveButton) {
+        saveButton.onclick = function() {
+            setTimeout(() => {
+                root.unmount();
+            }, delayToUnmountAfterSaving);
+        };
+    }
+
     const component = (
         <FutureActionPanelBulkEdit
             storeName={storeName}
             postType={postType}
             isNewPost={isNewPost}
             actionsSelectOptions={actionsSelectOptions}
+            statusesSelectOptions={statusesSelectOptions}
             is12Hour={is12Hour}
             timeFormat={timeFormat}
             startOfWeek={startOfWeek}
@@ -82,27 +95,12 @@ inlineEditPost.setBulk = function (id) {
         />
     );
 
-    if (createRoot) {
-        const root = createRoot(container);
+    root.render(component);
 
-        root.render(component);
+    inlineEditPost.revert = function () {
+        root.unmount();
 
-        const saveButton = document.querySelector('#bulk_edit');
-        if (saveButton) {
-            saveButton.onclick = function() {
-                setTimeout(() => {
-                    root.unmount();
-                }, delayToUnmountAfterSaving);
-            };
-        }
-
-        inlineEditPost.revert = function () {
-            root.unmount();
-
-            // Call the original WP revert function.
-            wpInlineEditRevert.apply(this, arguments);
-        };
-    } else {
-        render(component, container);
-    }
+        // Call the original WP revert function.
+        wpInlineEditRevert.apply(this, arguments);
+    };
 };

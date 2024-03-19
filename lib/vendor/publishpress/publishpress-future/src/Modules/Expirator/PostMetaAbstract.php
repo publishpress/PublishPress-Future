@@ -14,6 +14,8 @@ abstract class PostMetaAbstract
 
     const EXPIRATION_TYPE = '_expiration-date-type';
 
+    const EXPIRATION_POST_STATUS = '_expiration-date-post-status';
+
     const EXPIRATION_TERMS = '_expiration-date-categories';
 
     const EXPIRATION_TAXONOMY = '_expiration-date-taxonomy';

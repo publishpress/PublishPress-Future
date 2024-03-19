@@ -37,7 +37,7 @@ abstract class ActionArgsSchema
         $tableName = self::getTableName();
 
         global $wpdb;
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
         $table = $wpdb->get_var("SHOW TABLES LIKE '$tableName'");
 
         return $table === $tableName;
@@ -50,7 +50,7 @@ abstract class ActionArgsSchema
         $tableName = self::getTableName();
         $dbName = DB_NAME;
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
         $columnLength = (int)$wpdb->get_var("SELECT CHARACTER_MAXIMUM_LENGTH FROM information_schema.`COLUMNS` WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName' AND COLUMN_NAME = 'args'");
 
         return $columnLength === 1000;
@@ -125,7 +125,7 @@ abstract class ActionArgsSchema
 
         global $wpdb;
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
         $wpdb->query("DROP TABLE " . self::getTableName());
     }
 

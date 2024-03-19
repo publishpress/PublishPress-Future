@@ -13,12 +13,14 @@ export const createStore = (props) => {
         enabled: props.defaultState.autoEnable,
         terms: props.defaultState.terms ? props.defaultState.terms : [],
         taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,
+        newStatus: props.defaultState.newStatus ? props.defaultState.newStatus : 'draft',
         termsListByName: null,
         termsListById: null,
         taxonomyName: null,
         isFetchingTerms: false,
         changeAction: 'no-change',
         calendarIsVisible: true,
+        hasValidData: true,
     }
 
     const store = createReduxStore(props.name, {
@@ -28,6 +30,11 @@ export const createStore = (props) => {
                     return {
                         ...state,
                         action: action.action,
+                    };
+                case 'SET_NEW_STATUS':
+                    return {
+                        ...state,
+                        newStatus: action.newStatus,
                     };
                 case 'SET_DATE':
                     // Make sure the date is a number, if it is a string with only numbers
@@ -90,6 +97,11 @@ export const createStore = (props) => {
                         ...state,
                         calendarIsVisible: action.calendarIsVisible,
                     }
+                case 'SET_HAS_VALID_DATA':
+                    return {
+                        ...state,
+                        hasValidData: action.hasValidData,
+                    }
             }
 
             return state;
@@ -99,6 +111,12 @@ export const createStore = (props) => {
                 return {
                     type: 'SET_ACTION',
                     action: action
+                };
+            },
+            setNewStatus(newStatus) {
+                return {
+                    type: 'SET_NEW_STATUS',
+                    newStatus: newStatus
                 };
             },
             setDate(date) {
@@ -160,11 +178,20 @@ export const createStore = (props) => {
                     type: 'SET_CALENDAR_IS_VISIBLE',
                     calendarIsVisible: calendarIsVisible
                 }
+            },
+            setHasValidData(hasValidData) {
+                return {
+                    type: 'SET_HAS_VALID_DATA',
+                    hasValidData: hasValidData
+                }
             }
         },
         selectors: {
             getAction(state) {
                 return state.action;
+            },
+            getNewStatus(state) {
+                return state.newStatus;
             },
             getDate(state) {
                 return state.date;
@@ -195,7 +222,10 @@ export const createStore = (props) => {
             },
             getCalendarIsVisible(state) {
                 return state.calendarIsVisible;
-            }
+            },
+            getHasValidData(state) {
+                return state.hasValidData;
+            },
         }
     });
 

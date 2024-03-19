@@ -12,6 +12,9 @@ use function __;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
+/**
+ * @deprecated 3.3.1 Deprecated in favor of ChangePostStatus
+ */
 class PostStatusToCustomStatus implements ExpirationActionInterface
 {
     /**
@@ -72,6 +75,7 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
         }
 
         return sprintf(
+            // translators: %s is the new post status
             __('Post status has been successfully changed to "%s".', 'post-expirator'),
             $this->log['new_status']
         );
@@ -115,6 +119,7 @@ class PostStatusToCustomStatus implements ExpirationActionInterface
     public function getDynamicLabel($postType = '')
     {
         return sprintf(
+            // translators: %s is the new post status
             __('Change status to %s', 'publishpress-future-pro'),
             $this->getCustomStatusLabel()
         );

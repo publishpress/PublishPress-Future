@@ -13,12 +13,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 class PostExpirator_Facade
 {
-
-    /**
-     * @deprecated 2.8.0 Use CapabilitiesAbstract::EXPIRE_POST;
-     */
-    const DEFAULT_CAPABILITY_EXPIRE_POST = CapabilitiesAbstract::EXPIRE_POST;
-
     /**
      * The singleton instance.
      */
@@ -99,6 +93,7 @@ class PostExpirator_Facade
 
         return array(
             'expireType' => isset($args['expireType']) ? $args['expireType'] : '',
+            'newStatus' => isset($args['newStatus']) ? $args['newStatus'] : 'draft',
             'category' => isset($args['category']) ? $args['category'] : [],
             'categoryTaxonomy' => isset($args['categoryTaxonomy']) ? $args['categoryTaxonomy'] : '',
             'enabled' => true,

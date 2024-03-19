@@ -2,7 +2,7 @@ import { compact } from '../utils';
 import { ToggleCalendarDatePicker } from './ToggleCalendarDatePicker';
 
 const { PanelRow, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl } = wp.components;
-const { Fragment, useEffect } = wp.element;
+const { Fragment, useEffect, useState } = wp.element;
 const { decodeEntities } = wp.htmlEntities;
 const { addQueryArgs } = wp.url;
 const {
@@ -22,6 +22,10 @@ export const FutureActionPanel = (props) => {
     const termsListById = useSelect((select) => select(props.storeName).getTermsListById(), []);
     const isFetchingTerms = useSelect((select) => select(props.storeName).getIsFetchingTerms(), []);
     const calendarIsVisible = useSelect((select) => select(props.storeName).getCalendarIsVisible(), []);
+    const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
+    const newStatus = useSelect((select) => select(props.storeName).getNewStatus(), []);
+
+    const [validationError, setValidationError] = useState('');
 
     const {
         setAction,
@@ -33,7 +37,9 @@ export const FutureActionPanel = (props) => {
         setTermsListById,
         setTaxonomyName,
         setIsFetchingTerms,
-        setCalendarIsVisible
+        setCalendarIsVisible,
+        setHasValidData,
+        setNewStatus
     } = useDispatch(props.storeName);
 
     const mapTermsListById = (terms) => {
@@ -83,6 +89,7 @@ export const FutureActionPanel = (props) => {
         if (isChecked) {
             setAction(props.action);
             setDate(props.date);
+            setNewStatus(props.newStatus);
             setTerms(props.terms);
             setTaxonomy(props.taxonomy);
 
@@ -96,6 +103,12 @@ export const FutureActionPanel = (props) => {
         setAction(value);
 
         callOnChangeData('action', value);
+    }
+
+    const handleNewStatusChange = (value) => {
+        setNewStatus(value);
+
+        callOnChangeData('newStatus', value);
     }
 
     const handleDateChange = (value) => {
@@ -153,6 +166,7 @@ export const FutureActionPanel = (props) => {
         }
 
         setAction(props.action);
+        setNewStatus(props.newStatus);
         setDate(props.date);
         setTerms(props.terms);
         setTaxonomy(props.taxonomy);
@@ -178,6 +192,16 @@ export const FutureActionPanel = (props) => {
         storeCalendarIsVisibleOnStorage(calendarIsVisible);
     }, [calendarIsVisible]);
 
+    useEffect(() => {
+        if (hasValidData && props.onDataIsValid) {
+            props.onDataIsValid();
+        }
+
+        if (! hasValidData && props.onDataIsInvalid) {
+            props.onDataIsInvalid();
+        }
+    }, [hasValidData]);
+
     let selectedTerms = [];
     if (terms && terms.length > 0 && termsListById) {
         selectedTerms = compact(mapTermsListById(terms));
@@ -202,7 +226,6 @@ export const FutureActionPanel = (props) => {
     } else {
         is24hour = props.timeFormat === '24h';
     }
-
 
     const replaceCurlyBracketsWithLink = (string, href, target) => {
         const parts = string.split('{');
@@ -234,6 +257,77 @@ export const FutureActionPanel = (props) => {
     const HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
     const displayTaxonomyField = String(action).includes('category') && action !== 'category-remove-all';
 
+    let termsFieldLabel = taxonomyName;
+    switch (action) {
+        case 'category':
+            termsFieldLabel = props.strings.newTerms.replace('%s', taxonomyName);
+            break;
+        case 'category-remove':
+            termsFieldLabel = props.strings.removeTerms.replace('%s', taxonomyName);
+            break;
+        case 'category-add':
+            termsFieldLabel = props.strings.addTerms.replace('%s', taxonomyName);
+            break;
+    }
+
+    const validateData = () => {
+        let valid = true;
+
+        if (! enabled) {
+            setValidationError('');
+            return true;
+        }
+
+        if (! action) {
+            setValidationError(props.strings.errorActionRequired);
+            valid = false;
+        }
+
+        if (! date) {
+            setValidationError(props.strings.errorDateRequired);
+            valid = false;
+        }
+
+        // Check if the date is in the past
+        if (date && new Date(date) < new Date()) {
+            setValidationError(props.strings.errorDateInPast);
+            valid = false;
+        }
+
+        const isTermRequired = ['category', 'category-add', 'category-remove'].includes(action);
+        const noTermIsSelected = terms.length === 0 || (terms.length === 1 && (terms[0] === '' || terms[0] === '0'));
+
+        if (isTermRequired && noTermIsSelected) {
+            setValidationError(props.strings.errorTermsRequired);
+            valid = false;
+        }
+
+        if (valid) {
+            setValidationError('');
+        }
+
+        return valid;
+    }
+
+    useEffect(() => {
+        if (! enabled) {
+            setHasValidData(true);
+            setValidationError('');
+
+            return;
+        }
+
+        setHasValidData(validateData());
+    }, [action, date, enabled, terms, taxonomy]);
+
+    // This adds a 'cancel' class to the input when the user clicks on the
+    // field to prevent the form from being submitted. This is a workaround
+    // for the issue on the quick-edit form where the form is submitted when
+    // the user presses the 'Enter' key trying to add a term to the field.
+    const forceIgnoreAutoSubmitOnEnter = (e) => {
+        jQuery(e.target).addClass('cancel');
+    }
+
     return (
         <div className={panelClass}>
             {props.autoEnableAndHideCheckbox && (
@@ -260,6 +354,17 @@ export const FutureActionPanel = (props) => {
                             onChange={handleActionChange}
                         />
                     </PanelRow>
+
+                    {action === 'change-status' &&
+                        <PanelRow className="new-status">
+                            <SelectControl
+                                label={props.strings.newStatus}
+                                options={props.statusesSelectOptions}
+                                value={newStatus}
+                                onChange={handleNewStatusChange}
+                            />
+                        </PanelRow>
+                    }
 
                     {
                         displayTaxonomyField && (
@@ -294,11 +399,13 @@ export const FutureActionPanel = (props) => {
                                         <PanelRow className="future-action-full-width">
                                             <BaseControl>
                                                 <FormTokenField
-                                                    label={taxonomyName}
+                                                    label={termsFieldLabel}
                                                     value={selectedTerms}
                                                     suggestions={termsListByNameKeys}
                                                     onChange={handleTermsChange}
+                                                    placeholder={props.strings.addTermsPlaceholder}
                                                     maxSuggestions={1000}
+                                                    onFocus={forceIgnoreAutoSubmitOnEnter}
                                                     __experimentalExpandOnFocus={true}
                                                     __experimentalAutoSelectFirstMatch={true}
                                                 />
@@ -329,6 +436,14 @@ export const FutureActionPanel = (props) => {
                             <span className="dashicons dashicons-info"></span> {HelpText}
                         </div>
                     </PanelRow>
+
+                    {! hasValidData && (
+                        <PanelRow>
+                            <BaseControl className="notice notice-error">
+                                <div>{validationError}</div>
+                            </BaseControl>
+                        </PanelRow>
+                    )}
                 </Fragment>
             )}
         </div>

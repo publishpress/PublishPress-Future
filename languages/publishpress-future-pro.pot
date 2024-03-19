@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future Pro 3.3.0\n"
+"Project-Id-Version: PublishPress Future Pro 3.3.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-02-29T19:16:43+00:00\n"
+"POT-Creation-Date: 2024-03-19T17:42:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -52,32 +52,28 @@ msgstr ""
 msgid "g:i a"
 msgstr ""
 
-#: src/classes/Controllers/BlocksController.php:85
+#: src/classes/Controllers/BlocksController.php:86
 msgid "Displays a message with the date and time of the future action."
 msgstr ""
 
-#: src/classes/Controllers/BlocksController.php:86
+#: src/classes/Controllers/BlocksController.php:87
 msgid "Type the text template and use # to see the autocomplete options with the available placeholders."
 msgstr ""
 
-#: src/classes/Controllers/BlocksController.php:87
+#: src/classes/Controllers/BlocksController.php:88
 msgid "Available placeholders"
 msgstr ""
 
-#: src/classes/Controllers/BlocksController.php:88
+#: src/classes/Controllers/BlocksController.php:89
 msgid "Future action block template. Type the text and # to see the autocomplete options."
 msgstr ""
 
-#: src/classes/Controllers/BlocksController.php:89
+#: src/classes/Controllers/BlocksController.php:90
 msgid "Action time"
 msgstr ""
 
-#: src/classes/Controllers/BlocksController.php:90
+#: src/classes/Controllers/BlocksController.php:91
 msgid "Action date"
-msgstr ""
-
-#: src/classes/Controllers/CustomStatusesController.php:87
-msgid "Change status to "
 msgstr ""
 
 #: src/classes/Controllers/SettingsController.php:196
@@ -165,38 +161,47 @@ msgid "The type of action to be performed."
 msgstr ""
 
 #: src/classes/Controllers/SettingsController.php:258
-msgid "Action Status"
+msgid "New Post Status"
 msgstr ""
 
 #: src/classes/Controllers/SettingsController.php:259
-msgid "The status for the action. Anything different than 'saved' will be considered as not active."
+msgid "The new post status to be applied to the post."
 msgstr ""
 
 #: src/classes/Controllers/SettingsController.php:267
-msgid "Taxonomy Name"
+msgid "Action Status"
 msgstr ""
 
 #: src/classes/Controllers/SettingsController.php:268
-msgid "The taxonomy used for scheduling the action."
+msgid "The status for the action. Anything different than 'saved' will be considered as not active."
 msgstr ""
 
 #: src/classes/Controllers/SettingsController.php:276
-msgid "Taxonomy Terms"
+msgid "Taxonomy Name"
 msgstr ""
 
 #: src/classes/Controllers/SettingsController.php:277
+msgid "The taxonomy used for scheduling the action."
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:285
+msgid "Taxonomy Terms"
+msgstr ""
+
+#: src/classes/Controllers/SettingsController.php:286
 msgid "The terms used for scheduling the action."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:336
+#: src/classes/Controllers/SettingsController.php:345
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
-#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:109
+#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:113
 msgid "Change status to custom status"
 msgstr ""
 
-#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:118
+#. translators: %s is the new post status
+#: src/classes/Domain/ExpirationActions/PostStatusToCustomStatus.php:123
 msgid "Change status to %s"
 msgstr ""
 

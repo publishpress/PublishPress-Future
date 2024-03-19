@@ -182,14 +182,14 @@ class MetadataMappingController implements ModuleInterface
         $metadataHash = $postModel->calcMetadataHash();
 
         // Check if the flag is set to avoid infinite loops.
-        if ($metadataHash === $postModel->getMeta(ExpirablePostModel::FLAG_METADATA_HASH, true)) {
+        if ($metadataHash === $postModel->getMetadataHash()) {
             return;
         }
 
         $postModel->syncScheduleWithPostMeta();
 
         // Set the flag to avoid infinite loops.
-        $postModel->updateMeta(ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
+        $postModel->updateMetadataHash($metadataHash);
     }
 
     private function garanteeActionDataWithDefaultData($postId): bool
@@ -206,6 +206,11 @@ class MetadataMappingController implements ModuleInterface
         $action = $postModel->getMeta(PostMetaAbstract::EXPIRATION_TYPE, true);
         if (empty($action)) {
             $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, $defaultDataModel->getAction());
+        }
+
+        $newStatus = $postModel->getMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, true);
+        if (empty($newStatus)) {
+            $postModel->updateMeta(PostMetaAbstract::EXPIRATION_POST_STATUS, $defaultDataModel->getNewStatus());
         }
 
         $status = $postModel->getMeta(PostMetaAbstract::EXPIRATION_STATUS, true);
