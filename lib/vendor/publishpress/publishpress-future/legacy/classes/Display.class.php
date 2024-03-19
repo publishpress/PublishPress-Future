@@ -474,7 +474,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           esc_html_e('About PublishPress Future', 'post-expirator'); ?>">
+                           esc_attr_e('About PublishPress Future', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('About', 'post-expirator'); ?>
                         </a>
@@ -482,7 +482,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/knowledge-base/future-introduction/" target="_blank"
                            rel="noopener noreferrer" title="<?php
-                        esc_html_e('Future Documentation', 'post-expirator'); ?>">
+                        esc_attr_e('Future Documentation', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('Documentation', 'post-expirator'); ?>
                         </a>
@@ -490,7 +490,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           esc_html_e('Contact the PublishPress team', 'post-expirator'); ?>">
+                           esc_attr_e('Contact the PublishPress team', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('Contact', 'post-expirator'); ?>
                         </a>
