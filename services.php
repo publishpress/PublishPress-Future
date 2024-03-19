@@ -1,6 +1,6 @@
 <?php
 
-defined('ABSPATH') or die('Direct access not allowed.');
+defined("ABSPATH") or die("Direct access not allowed.");
 
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HooksAbstract;
@@ -23,6 +23,7 @@ use PublishPress\Future\Framework\WordPress\Models\TermModel;
 use PublishPress\Future\Framework\WordPress\Models\UserModel;
 use PublishPress\Future\Modules\Debug\Module as ModuleDebug;
 use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryRemove;
@@ -62,21 +63,24 @@ return [
 
     ServicesAbstract::PLUGIN_SLUG => 'post-expirator',
 
-    ServicesAbstract::PLUGIN_NAME => 'PublishPress Future',
+    ServicesAbstract::PLUGIN_NAME => "PublishPress Future",
 
     ServicesAbstract::DEFAULT_DATA => [
-        ServicesAbstract::DEFAULT_DATE_FORMAT => __('l F jS, Y', 'post-expirator'),
-        ServicesAbstract::DEFAULT_TIME_FORMAT => __('g:ia', 'post-expirator'),
-        ServicesAbstract::DEFAULT_FOOTER_CONTENT => __(
-            'Post expires at EXPIRATIONTIME on ACTIONDATE',
-            'post-expirator'
+        ServicesAbstract::DEFAULT_DATE_FORMAT => __(
+            "l F jS, Y",
+            "post-expirator"
         ),
-        ServicesAbstract::DEFAULT_FOOTER_STYLE => 'font-style: italic;',
-        ServicesAbstract::DEFAULT_FOOTER_DISPLAY => '0',
-        ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION => '0',
-        ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION_ADMINS => '0',
-        ServicesAbstract::DEFAULT_DEBUG => '0',
-        ServicesAbstract::DEFAULT_EXPIRATION_DATE => 'null',
+        ServicesAbstract::DEFAULT_TIME_FORMAT => __("g:ia", "post-expirator"),
+        ServicesAbstract::DEFAULT_FOOTER_CONTENT => __(
+            "Post expires at EXPIRATIONTIME on ACTIONDATE",
+            "post-expirator"
+        ),
+        ServicesAbstract::DEFAULT_FOOTER_STYLE => "font-style: italic;",
+        ServicesAbstract::DEFAULT_FOOTER_DISPLAY => "0",
+        ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION => "0",
+        ServicesAbstract::DEFAULT_EMAIL_NOTIFICATION_ADMINS => "0",
+        ServicesAbstract::DEFAULT_DEBUG => "0",
+        ServicesAbstract::DEFAULT_EXPIRATION_DATE => "null",
     ],
 
     ServicesAbstract::BASE_PATH => __DIR__,
@@ -443,6 +447,9 @@ return [
     ServicesAbstract::EXPIRATION_ACTION_FACTORY => static function (ContainerInterface $container) {
         return function ($actionName, $postModel) use ($container) {
             switch ($actionName) {
+                case ExpirationActionsAbstract::CHANGE_POST_STATUS:
+                    return new ChangePostStatus($postModel);
+
                 case ExpirationActionsAbstract::POST_STATUS_TO_DRAFT:
                     return new PostStatusToDraft($postModel);
 

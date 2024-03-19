@@ -226,28 +226,26 @@ class Controller implements InitializableInterface
                         ),
                         'fieldDefaultDateTimeOffset' => __('Default Date/Time Offset', 'post-expirator'),
                         'fieldDefaultDateTimeOffsetDescription' => sprintf(
-                            // translator: Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
+                            // translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
                             esc_html__(
                                 'Set the offset to use for the default action date and time. For information on formatting, see %1$s
-                                    . For example, you could enter %2$s+1 month%3$s or %4$s+1 week 2 days 4 hours 2 seconds%5$s or %6$snext Thursday%7$s. Please, use only terms in English.',
+                                . For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English.',
                                 'post-expirator'
                             ),
-                            '<a href="https://www.php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__(
-                                'PHP strtotime function',
-                                'post-expirator'
-                            ) . '</a>',
-                            '<code>',
-                            '</code>',
-                            '<code>',
-                            '</code>',
+                            '<a href="https://www.php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__('PHP strtotime function', 'post-expirator') . '</a>',
                             '<code>',
                             '</code>'
                         ),
                         'fieldTerm' => __('Default terms:', 'post-expirator'),
                         'saveChanges' => __('Save changes', 'post-expirator'),
+                        'saveChangesPendingValidation' => __('Wait for the validation...', 'post-expirator'),
+                        // translators: %s is the name of the taxonomy in singular form.
+                        'errorTermsRequired' => __('Please select one or more %s', 'post-expirator'),
+                        'datePreview' => __('Date Preview', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
-                    'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(),
+                    'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),
+                    'statusesList' => $this->actionsModel->getStatusesAsOptionsForAllPostTypes(),
                     'taxonomiesList' => $this->convertPostTypesListIntoOptionsList(
                         $taxonomiesModel->getTaxonomiesByPostType(false)
                     ),
@@ -380,6 +378,10 @@ class Controller implements InitializableInterface
 
                 if (isset($settings['taxonomy']) && isset($settings['terms'])) {
                     $settings['terms'] = $this->convertTermsToIds($settings['taxonomy'], $settings['terms']);
+                }
+
+                if (isset($_POST['expirationdate_newstatus-' . $postType])) {
+                    $settings['newStatus'] = \sanitize_key($_POST['expirationdate_newstatus-' . $postType]);
                 }
 
                 $settings['default-expire-type'] = 'custom';

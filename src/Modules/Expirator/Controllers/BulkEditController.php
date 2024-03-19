@@ -12,6 +12,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
@@ -111,12 +112,12 @@ class BulkEditController implements InitializableInterface
 
         $debug = $container->get(ServicesAbstract::DEBUG);
 
-        $taxonomyName= '';
+        $taxonomyPluralName = '';
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
             $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
 
             if (! is_wp_error($taxonomy) && ! empty($taxonomy)) {
-                $taxonomyName = $taxonomy->label;
+                $taxonomyPluralName = $taxonomy->label;
             }
         }
 
@@ -141,8 +142,9 @@ class BulkEditController implements InitializableInterface
                 'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+                'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
                 'isDebugEnabled' => $debug->isEnabled(),
-                'taxonomyName' => $taxonomyName,
+                'taxonomyName' => $taxonomyPluralName,
                 'taxonomyTerms' => $taxonomyTerms,
                 'postType' => $currentScreen->post_type,
                 'isNewPost' => false,
@@ -159,8 +161,9 @@ class BulkEditController implements InitializableInterface
                     'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in plural form.
                     'noTermsFound' => sprintf(
+                        // translators: %s is the name of the taxonomy in plural form.
                         __('No %s found.', 'post-expirator'),
-                        strtolower($taxonomyName)
+                        strtolower($taxonomyPluralName)
                     ),
                     'futureActionUpdate' => __('Future Action Update', 'post-expirator'),
                     'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
@@ -169,6 +172,23 @@ class BulkEditController implements InitializableInterface
                     'addOnly' => __('Add action if none exists for posts', 'post-expirator'),
                     'changeOnly' => __('Update the existing actions for posts', 'post-expirator'),
                     'removeOnly' => __('Remove action from posts', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'newTerms' => __('New %s', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'removeTerms' => __('%s to remove', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'addTerms' => __('%s to add', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in singular form.
+                    'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyPluralName)),
+                    'errorActionRequired' => __('Select an action', 'post-expirator'),
+                    'errorDateRequired' => __('Select a date', 'post-expirator'),
+                    'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),
+                    'errorTermsRequired' => sprintf(
+                        // translators: %s is the name of the taxonomy in singular form.
+                        __('Please select one or more %s', 'post-expirator'),
+                        strtolower($taxonomyPluralName)
+                    ),
+                    'newStatus' => __('New status', 'post-expirator'),
                 ]
             ]
         );
@@ -244,8 +264,27 @@ class BulkEditController implements InitializableInterface
     private function updateScheduleForPostFromBulkEditData(ExpirablePostModel $postModel)
     {
         // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $expireType = isset($_REQUEST['future_action_bulk_action']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '';
+        $newStatus = isset($_REQUEST['future_action_bulk_new_status']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_new_status']) : 'draft';
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'draft';
+        }
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'private';
+        }
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'trash';
+        }
+
         $opts = [
-            'expireType' => isset($_REQUEST['future_action_bulk_action']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_action']) : '',
+            'expireType' => $expireType,
+            'newStatus' => $newStatus,
             'category' => isset($_REQUEST['future_action_bulk_terms']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_terms']) : '',
             'categoryTaxonomy' => isset($_REQUEST['future_action_bulk_taxonomy']) ? $this->sanitization->sanitizeTextField($_REQUEST['future_action_bulk_taxonomy']) : '',
         ];

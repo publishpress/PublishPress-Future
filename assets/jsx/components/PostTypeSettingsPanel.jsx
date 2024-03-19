@@ -11,12 +11,18 @@ import {
     TokensControl,
     CheckboxControl
 } from './';
-import { useEffect, useState } from '&wp.element';
+import { useEffect, useState, Fragment } from '&wp.element';
 import { addQueryArgs } from '&wp.url';
 import { applyFilters } from '&wp.hooks';
 import { apiFetch } from '&wp';
 
+const { PanelRow, BaseControl } = wp.components;
+
+var apiRequestController = null;
+
 export const PostTypeSettingsPanel = function (props) {
+    const originalExpireTypeList = props.expireTypeList[props.postType];
+
     const [postTypeTaxonomy, setPostTypeTaxonomy] = useState(props.settings.taxonomy);
     const [termOptions, setTermOptions] = useState([]);
     const [termsSelectIsLoading, setTermsSelectIsLoading] = useState(false);
@@ -26,6 +32,20 @@ export const PostTypeSettingsPanel = function (props) {
     const [expireOffset, setExpireOffset] = useState(props.settings.defaultExpireOffset);
     const [emailNotification, setEmailNotification] = useState(props.settings.emailNotification);
     const [isAutoEnabled, setIsAutoEnabled] = useState(props.settings.autoEnabled);
+    const [hasValidData, setHasValidData] = useState(false);
+    const [validationError, setValidationError] = useState('');
+    const [taxonomyLabel, setTaxonomyLabel] = useState('');
+    const [howToExpireList, setHowToExpireList] = useState(originalExpireTypeList);
+    const [newStatus, setNewStatus] = useState(props.settings.newStatus);
+    const [hasPendingValidation, setHasPendingValidation] = useState(false);
+    const [offsetPreview, setOffsetPreview] = useState('');
+
+    const taxonomyRelatedActions = [
+        'category',
+        'category-add',
+        'category-remove',
+        'category-remove-all'
+    ];
 
     const onChangeTaxonomy = function (value) {
         setPostTypeTaxonomy(value);
@@ -54,6 +74,59 @@ export const PostTypeSettingsPanel = function (props) {
     const onChangeAutoEnabled = (value) => {
         setIsAutoEnabled(value);
     }
+
+    const validateData = () => {
+        if (! isActive) {
+            setValidationError('');
+            return true;
+        }
+
+        if (expireOffset) {
+            if (apiRequestController) {
+                apiRequestController.abort();
+            }
+
+            apiRequestController = typeof AbortController === 'undefined' ? undefined : new AbortController();
+            const signal = apiRequestController ? apiRequestController.signal : undefined;
+            setHasPendingValidation(true);
+
+            apiFetch({
+                path: addQueryArgs(`publishpress-future/v1/settings/validate-expire-offset`),
+                method: 'POST',
+                data: {
+                    offset: expireOffset
+                },
+                signal: signal
+            }).then((result) => {
+                setHasPendingValidation(false);
+
+                setHasValidData(result.isValid);
+                setValidationError(result.message);
+
+                if (result.isValid) {
+                    setOffsetPreview(result.preview);
+                } else {
+                    setOffsetPreview('');
+                }
+            });
+        }
+
+        setValidationError('');
+        return true;
+    }
+
+    useEffect(() => {
+        // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
+        if (props.taxonomiesList.length === 0) {
+            let newExpireTypeList = [];
+
+            newExpireTypeList = howToExpireList.filter((item) => {
+                return taxonomyRelatedActions.indexOf(item.value) === -1;
+            });
+
+            setHowToExpireList(newExpireTypeList);
+        }
+    }, []);
 
     useEffect(() => {
         if (!postTypeTaxonomy || !props.taxonomiesList) {
@@ -86,7 +159,61 @@ export const PostTypeSettingsPanel = function (props) {
             setSelectedTerms(settingsTermsOptions);
             setTermsSelectIsLoading(false);
         });
+
+        props.taxonomiesList.forEach((taxonomy) => {
+            if (taxonomy.value === postTypeTaxonomy) {
+                setTaxonomyLabel(taxonomy.label);
+            }
+        });
     }, [postTypeTaxonomy]);
+
+    useEffect(() => {
+        setHasValidData(validateData());
+    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel, expireOffset]);
+
+    useEffect(() => {
+        if (!taxonomyLabel) {
+            return;
+        }
+
+        // Update the list of actions replacing the taxonomy name.
+        let newExpireTypeList = [];
+
+        originalExpireTypeList.forEach((expireType) => {
+            let label = expireType.label;
+
+            if (taxonomyRelatedActions.indexOf(expireType.value) !== -1) {
+                label = label.replace('%s', taxonomyLabel.toLowerCase());
+            }
+
+            newExpireTypeList.push({
+                value: expireType.value,
+                label: label
+            });
+        });
+
+        setHowToExpireList(newExpireTypeList);
+    }, [taxonomyLabel]);
+
+    useEffect(() => {
+        if (hasValidData && props.onDataIsValid) {
+            props.onDataIsValid(props.postType);
+        }
+
+        if (!hasValidData && props.onDataIsInvalid) {
+            props.onDataIsInvalid(props.postType);
+        }
+    }, [hasValidData]);
+
+    useEffect(() => {
+        if (hasPendingValidation && props.onValidationStarted) {
+            props.onValidationStarted(props.postType);
+        }
+
+        if (!hasPendingValidation && props.onValidationFinished) {
+            props.onValidationFinished(props.postType);
+        }
+    }, [hasPendingValidation]);
 
     const termOptionsLabels = termOptions.map((term) => term.label);
 
@@ -128,23 +255,25 @@ export const PostTypeSettingsPanel = function (props) {
             </SettingRow>
         );
 
-        // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
-        if (props.taxonomiesList.length === 0) {
-            props.expireTypeList[props.postType] = props.expireTypeList[props.postType].filter((item) => {
-                return ['category', 'category-add', 'category-remove'].indexOf(item.value) === -1;
-            });
-        }
-
         settingsRows.push(
             <SettingRow label={props.text.fieldHowToExpire} key={'expirationdate_expiretype-' + props.postType}>
                 <SelectControl
                     name={'expirationdate_expiretype-' + props.postType}
                     className={'pe-howtoexpire'}
-                    options={props.expireTypeList[props.postType]}
+                    options={howToExpireList}
                     description={props.text.fieldHowToExpireDescription}
                     selected={settingHowToExpire}
                     onChange={onChangeHowToExpire}
                 />
+
+                {settingHowToExpire === 'change-status' &&
+                    <SelectControl
+                        name={'expirationdate_newstatus-' + props.postType}
+                        options={props.statusesList}
+                        selected={newStatus}
+                        onChange={setNewStatus}
+                    />
+                }
 
                 {(props.taxonomiesList.length > 0 && (['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1)) &&
                     <TokensControl
@@ -168,11 +297,19 @@ export const PostTypeSettingsPanel = function (props) {
                 <TextControl
                     name={'expired-custom-date-' + props.postType}
                     value={expireOffset}
+                    loading={hasPendingValidation}
                     placeholder={props.settings.globalDefaultExpireOffset}
                     description={props.text.fieldDefaultDateTimeOffsetDescription}
                     unescapedDescription={true}
                     onChange={onChangeExpireOffset}
                 />
+
+                {offsetPreview && (
+                    <Fragment>
+                        <h4>{props.text.datePreview}</h4>
+                        <code>{offsetPreview}</code>
+                    </Fragment>
+                )}
             </SettingRow>
         );
 
@@ -194,6 +331,14 @@ export const PostTypeSettingsPanel = function (props) {
     return (
         <SettingsFieldset legend={props.legend}>
             <SettingsTable bodyChildren={settingsRows} />
+
+            {! hasValidData && (
+                <PanelRow>
+                    <BaseControl className="notice notice-error">
+                        <div>{validationError}</div>
+                    </BaseControl>
+                </PanelRow>
+            )}
         </SettingsFieldset>
     );
 }

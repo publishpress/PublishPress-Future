@@ -5,11 +5,13 @@
 
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
+use Exception;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
 use WP_REST_Request;
@@ -168,6 +170,39 @@ class RestAPIController implements InitializableInterface
                 ],
             ]
         ]);
+
+        register_rest_route($apiNamespace, '/settings/validate-expire-offset', [
+            'methods' => 'POST',
+            'callback' => [$this, 'validateTextualDatetime'],
+            'permission_callback' => function () {
+                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+            }
+        ]);
+    }
+
+    public function validateTextualDatetime(WP_REST_Request $request)
+    {
+        $isValid = true;
+        $message = '';
+        $preview = '';
+
+        try {
+            $jsonParams = $request->get_json_params('offset');
+            $offset = sanitize_text_field($jsonParams['offset']);
+
+            $time = strtotime($offset);
+
+            if (empty($time)) {
+                throw new Exception(__('Invalid date time offset.', 'post-expirator'));
+            }
+
+            $preview = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $time);
+        } catch (Exception $e) {
+            $isValid = false;
+            $message = __('Invalid date time offset.', 'post-expirator');
+        }
+
+        return rest_ensure_response(['isValid' => $isValid, 'message' => $message, 'preview' => $preview]);
     }
 
     private function registerRestField()
@@ -194,6 +229,7 @@ class RestAPIController implements InitializableInterface
 
                         $date = $postModel->getExpirationDateString(false);
                         $action = $postModel->getExpirationType();
+                        $newStatus = $postModel->getExpirationNewStatus();
                         $terms = $postModel->getExpirationCategoryIDs();
                         $taxonomy = $postModel->getExpirationTaxonomy();
 
@@ -204,7 +240,8 @@ class RestAPIController implements InitializableInterface
                             $defaultExpirationDate = $defaultDataModel->getActionDateParts($post['id']);
                             $date = $defaultExpirationDate['iso'];
 
-                            $action = $defaultDataModel->getDefaultActionForPostType($post['post_type']);
+                            $action = $defaultDataModel->getAction();
+                            $newStatus = $defaultDataModel->getNewStatus();
                             $terms = [];
                             $taxonomy = '';
                         }
@@ -213,14 +250,34 @@ class RestAPIController implements InitializableInterface
                             'enabled' => $postModel->isExpirationEnabled(),
                             'date' => $date,
                             'action' => $action,
+                            'newStatus' => $newStatus,
                             'terms' => $terms,
                             'taxonomy' => $taxonomy,
                         ];
                     },
                     'update_callback' => function ($value, $post) {
                         if (isset($value['enabled']) && (bool)$value['enabled']) {
+                            $expireType = sanitize_text_field($value['action']);
+                            $newStatus = sanitize_key($value['newStatus']);
+
+                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                $newStatus = 'draft';
+                            }
+
+                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                $newStatus = 'private';
+                            }
+
+                            if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+                                $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+                                $newStatus = 'trash';
+                            }
+
                             $opts = [
-                                'expireType' => sanitize_text_field($value['action']),
+                                'expireType' => $expireType,
+                                'newStatus' => $newStatus,
                                 'category' => array_map('sanitize_text_field', $value['terms']),
                                 'categoryTaxonomy' => sanitize_text_field($value['taxonomy']),
                             ];

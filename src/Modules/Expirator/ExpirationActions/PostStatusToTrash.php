@@ -8,6 +8,9 @@ use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+/**
+ * @deprecated 3.3.1 Deprecated in favor of ChangePostStatus
+ */
 class PostStatusToTrash implements ExpirationActionInterface
 {
     const SERVICE_NAME = 'expiration.actions.post_status_to_trash';
@@ -53,7 +56,8 @@ class PostStatusToTrash implements ExpirationActionInterface
         $newPostStatus = get_post_status_object('trash');
 
         return sprintf(
-            __('Status has been successfully changed from "%s" to "%s".', 'post-expirator'),
+            // translators: 1: old post status, 2: new post status
+            __('Status has been successfully changed from "%1$s" to "%2$s".', 'post-expirator'),
             $oldPostStatus->label,
             $newPostStatus->label
         );
@@ -82,6 +86,7 @@ class PostStatusToTrash implements ExpirationActionInterface
         $newPostStatus = get_post_status_object('trash');
 
         return sprintf(
+            // translators: %s: new post status
             __('Change status to %s', 'post-expirator'),
             $newPostStatus->label
         );

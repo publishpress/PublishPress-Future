@@ -1,5 +1,6 @@
 import { FutureActionPanel } from './';
-import { useSelect } from '&wp.data';
+import { useSelect, select } from '&wp.data';
+import { useEffect } from '&wp.element';
 
 export const FutureActionPanelQuickEdit = (props) => {
     const onChangeData = (attribute, value) => {};
@@ -9,10 +10,20 @@ export const FutureActionPanelQuickEdit = (props) => {
     const action = useSelect((select) => select(props.storeName).getAction(), []);
     const terms = useSelect((select) => select(props.storeName).getTerms(), []);
     const taxonomy = useSelect((select) => select(props.storeName).getTaxonomy(), []);
+    const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
+    const newStatus = useSelect((select) => select(props.storeName).getNewStatus(), []);
 
     let termsString = terms;
     if (typeof terms === 'object') {
         termsString = terms.join(',');
+    }
+
+    const onDataIsValid = () => {
+        jQuery('.button-primary.save').prop('disabled', false);
+    }
+
+    const onDataIsInvalid = () => {
+        jQuery('.button-primary.save').prop('disabled', true);
     }
 
     return (
@@ -22,9 +33,11 @@ export const FutureActionPanelQuickEdit = (props) => {
                 postType={props.postType}
                 isCleanNewPost={props.isNewPost}
                 actionsSelectOptions={props.actionsSelectOptions}
+                statusesSelectOptions={props.statusesSelectOptions}
                 enabled={enabled}
                 calendarIsVisible={false}
                 action={action}
+                newStatus={newStatus}
                 date={date}
                 terms={terms}
                 taxonomy={taxonomy}
@@ -34,11 +47,14 @@ export const FutureActionPanelQuickEdit = (props) => {
                 timeFormat={props.timeFormat}
                 startOfWeek={props.startOfWeek}
                 storeName={props.storeName}
-                strings={props.strings} />
+                strings={props.strings}
+                onDataIsValid={onDataIsValid}
+                onDataIsInvalid={onDataIsInvalid} />
 
             {/* Quick edit JS code will save only fields with name inside the edit row */}
             <input type="hidden" name={'future_action_enabled'} value={enabled ? 1 : 0} />
             <input type="hidden" name={'future_action_action'} value={action ? action : ''} />
+            <input type="hidden" name={'future_action_new_status'} value={newStatus ? newStatus : ''} />
             <input type="hidden" name={'future_action_date'} value={date ? date : ''} />
             <input type="hidden" name={'future_action_terms'} value={termsString ? termsString : ''} />
             <input type="hidden" name={'future_action_taxonomy'} value={taxonomy ? taxonomy : ''} />

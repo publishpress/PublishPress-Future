@@ -12,6 +12,7 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
@@ -162,6 +163,7 @@ class ClassicEditorController implements InitializableInterface
             'enabled' => $postModel->isExpirationEnabled(),
             'date' => $postModel->getExpirationDateString(false),
             'action' => $postModel->getExpirationType(),
+            'newStatus' => $postModel->getExpirationNewStatus(),
             'terms' => $postModel->getExpirationCategoryIDs(),
             'taxonomy' => $postModel->getExpirationTaxonomy()
         ];
@@ -171,6 +173,7 @@ class ClassicEditorController implements InitializableInterface
                 'post' => $post,
                 'enabled' => $data['enabled'],
                 'action' => $data['action'],
+                'newStatus' => $data['newStatus'],
                 'date' => $data['date'],
                 'terms' => $data['terms'],
                 'taxonomy' => $data['taxonomy']
@@ -219,8 +222,27 @@ class ClassicEditorController implements InitializableInterface
             return;
         }
 
+        $expireType = isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '';
+        $newStatus = isset($_POST['future_action_new_status']) ? sanitize_text_field($_POST['future_action_new_status']) : 'draft';
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'draft';
+        }
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_PRIVATE) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'private';
+        }
+
+        if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_TRASH) {
+            $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $newStatus = 'trash';
+        }
+
         $opts = [
-            'expireType' => isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '',
+            'expireType' => $expireType,
+            'newStatus' => $newStatus,
             'category' => isset($_POST['future_action_terms']) ? sanitize_text_field($_POST['future_action_terms']) : '',
             'categoryTaxonomy' => isset($_POST['future_action_taxonomy']) ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
         ];
@@ -274,6 +296,11 @@ class ClassicEditorController implements InitializableInterface
             return;
         }
 
+        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+        if ($hideMetabox) {
+            return;
+        }
+
         wp_enqueue_script(
             'publishpress-future-classic-editor',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
@@ -294,10 +321,10 @@ class ClassicEditorController implements InitializableInterface
 
         $debug = $container->get(ServicesAbstract::DEBUG);
 
-        $taxonomyName= '';
+        $taxonomyPluralName= '';
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
             $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
-            $taxonomyName = $taxonomy->label;
+            $taxonomyPluralName = $taxonomy->label;
         }
 
         $taxonomyTerms = [];
@@ -320,8 +347,9 @@ class ClassicEditorController implements InitializableInterface
                 'timeFormat' => $settingsFacade->getTimeFormatForDatePicker(),
                 'startOfWeek' => get_option('start_of_week', 0),
                 'actionsSelectOptions' => $actionsModel->getActionsAsOptions($postType),
+                'statusesSelectOptions' => $actionsModel->getStatusesAsOptionsForPostType($postType),
                 'isDebugEnabled' => $debug->isEnabled(),
-                'taxonomyName' => $taxonomyName,
+                'taxonomyName' => $taxonomyPluralName,
                 'taxonomyTerms' => $taxonomyTerms,
                 'postType' => $currentScreen->post_type,
                 'isNewPost' => $isNewPostPage,
@@ -337,10 +365,28 @@ class ClassicEditorController implements InitializableInterface
                     'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in plural form.
                     'noTermsFound' => sprintf(
+                        // translators: %s is the name of the taxonomy in plural form.
                         __('No %s found.', 'post-expirator'),
-                        strtolower($taxonomyName)
+                        strtolower($taxonomyPluralName)
                     ),
                     'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'newTerms' => __('New %s', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'removeTerms' => __('%s to remove', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in plural form.
+                    'addTerms' => __('%s to add', 'post-expirator'),
+                    // translators: %s is the name of the taxonomy in singular form.
+                    'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyPluralName)),
+                    'errorActionRequired' => __('Select an action', 'post-expirator'),
+                    'errorDateRequired' => __('Select a date', 'post-expirator'),
+                    'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),
+                    'errorTermsRequired' => sprintf(
+                        // translators: %s is the name of the taxonomy in singular form.
+                        __('Please select one or more %s', 'post-expirator'),
+                        strtolower($taxonomyPluralName)
+                    ),
+                    'newStatus' => __('New status', 'post-expirator'),
                 ]
             ]
         );
