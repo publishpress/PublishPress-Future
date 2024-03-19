@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed14cc3ee0f24bedf914836d3bffea61",
+    "content-hash": "eb5bf366421b84daac02d6c9a8bb1d6d",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "ec1e216abc9e66452497ad8ef51b262e7059043c"
+                "reference": "497b29d55ed725d43e94fd77927b087c2c8733cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/ec1e216abc9e66452497ad8ef51b262e7059043c",
-                "reference": "ec1e216abc9e66452497ad8ef51b262e7059043c",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/497b29d55ed725d43e94fd77927b087c2c8733cc",
+                "reference": "497b29d55ed725d43e94fd77927b087c2c8733cc",
                 "shasum": ""
             },
             "require": {
@@ -494,10 +494,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.3.0",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.3.1",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-02-29T15:29:32+00:00"
+            "time": "2024-03-19T15:49:58+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",

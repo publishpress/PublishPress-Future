@@ -78,9 +78,9 @@ class NoticeFacade implements NoticeInterface
             $notice = $this->notices[sanitize_key($_GET['notice'])];
 
             ?>
-            <div class="notice notice-<?php esc_attr_e($notice['type']); ?> <?php echo $notice['dismiss'] ? 'is-dismissible' : ''; ?>">
+            <div class="notice notice-<?php echo esc_attr($notice['type']); ?> <?php echo $notice['dismiss'] ? 'is-dismissible' : ''; ?>">
                 <p>
-                    <?php esc_html_e($notice['message'], 'post-expirator'); ?>
+                    <?php echo esc_html($notice['message']); ?>
                 </p>
             </div>
             <?php

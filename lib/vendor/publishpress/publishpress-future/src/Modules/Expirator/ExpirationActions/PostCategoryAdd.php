@@ -60,6 +60,7 @@ class PostCategoryAdd implements ExpirationActionInterface
     {
         if (empty($this->log)) {
             return sprintf(
+                // translators: %s is the post type singular label
                 __('No terms were added to the %s.', 'post-expirator'),
                 strtolower($this->postModel->getPostTypeSingularLabel())
             );
@@ -70,8 +71,9 @@ class PostCategoryAdd implements ExpirationActionInterface
         $termsModel = new TermsModel();
 
         return sprintf(
+            // translators: %1$s is the taxonomy label, %2$s is the post type singular label, %3$s is the list of terms added, %4$s is the list of terms on the post
             __(
-                'The following terms (%s) were added to the %s: "%s". The full list of terms on the post is: %s.',
+                'The following terms (%1$s) were added to the %2$s: "%3$s". The full list of terms on the post is: %4$s.',
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],
@@ -112,13 +114,16 @@ class PostCategoryAdd implements ExpirationActionInterface
 
     public static function getLabel(string $postType = ''): string
     {
-        $taxonomy = self::getTaxonomyLabel($postType);
+        // translators: %s is the taxonomy name (plural)
+        $label = __('Add extra %s', 'post-expirator');
 
-        return sprintf(
-            // translators: %s is the taxonomy label (plural)
-            __('Add extra %s', 'post-expirator'),
-            $taxonomy
-        );
+        if (! empty($postType)) {
+            $taxonomy = self::getTaxonomyLabel($postType);
+
+            $label = sprintf($label, $taxonomy);
+        }
+
+        return $label;
     }
 
     public function getDynamicLabel($postType = '')

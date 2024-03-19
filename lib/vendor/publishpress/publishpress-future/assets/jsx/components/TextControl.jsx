@@ -3,6 +3,7 @@
  */
 import { Fragment } from "&wp.element";
 import { TextControl as WPTextControl } from "&wp.components";
+import { Spinner } from "./";
 
 export const TextControl = function (props) {
     let description;
@@ -20,20 +21,30 @@ export const TextControl = function (props) {
         }
     };
 
+    let className = props.className ? props.className : '';
+
+    if (props.loading) {
+        className += ' publishpress-future-loading publishpress-future-loading-input';
+    }
+
     return (
         <Fragment>
-            <WPTextControl
-                type="text"
-                label={props.label}
-                name={props.name}
-                id={props.name}
-                className={props.className}
-                value={props.value}
-                placeholder={props.placeholder}
-                onChange={onChange}
-            />
+            <div className={className}>
+                <WPTextControl
+                    type="text"
+                    label={props.label}
+                    name={props.name}
+                    id={props.name}
+                    className={props.className}
+                    value={props.value}
+                    placeholder={props.placeholder}
+                    onChange={onChange}
+                />
 
-            {description}
+                {props.loading && <Spinner/>}
+
+                {description}
+            </div>
         </Fragment>
     )
 }

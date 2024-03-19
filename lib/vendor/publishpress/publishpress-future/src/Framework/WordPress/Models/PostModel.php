@@ -101,9 +101,11 @@ class PostModel
     /**
      * @param string $metaKey
      * @param mixed $metaValue
+     * @param bool $unique
+     *
      * @return false|int
      */
-    public function addMeta($metaKey, $metaValue = null)
+    public function addMeta($metaKey, $metaValue = null, $unique = true)
     {
         $metaKey = $this->hooks->applyFilters(
             HooksAbstract::FILTER_ACTION_META_KEY,
@@ -111,7 +113,7 @@ class PostModel
             $this->getPostId()
         );
 
-        return add_post_meta($this->getPostId(), $metaKey, $metaValue);
+        return add_post_meta($this->getPostId(), $metaKey, $metaValue, $unique);
     }
 
     /**

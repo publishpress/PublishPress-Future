@@ -18,7 +18,7 @@ if (
     ! is_file($pluginPath)
     || ! is_readable($pluginPath)
 ) {
-    throw new Exception('Free plugin is not readable on ' . $pluginPath);
+    throw new Exception('Free plugin is not readable on ' . esc_html($pluginPath));
 }
 
 include_once $pluginPath;

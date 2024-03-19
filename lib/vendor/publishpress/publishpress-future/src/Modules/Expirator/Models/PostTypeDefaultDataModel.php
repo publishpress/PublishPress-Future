@@ -9,6 +9,7 @@ use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\OptionsFacade;
 use PublishPress\Future\Modules\Debug\HooksAbstract as DebugHooksAbstract;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 
@@ -18,7 +19,9 @@ class PostTypeDefaultDataModel
 {
     const EXPECTED_DATE_PARTS = 5;
 
-    const DEFAULT_ACTION = 'draft';
+    const DEFAULT_ACTION = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+
+    const DEFAULT_NEW_STATUS = 'draft';
 
     /**
      * @var \PublishPress\Future\Modules\Settings\SettingsFacade
@@ -199,6 +202,13 @@ class PostTypeDefaultDataModel
         $action = $this->getSetting('expireType');
 
         return empty($action) ? self::DEFAULT_ACTION : $action;
+    }
+
+    public function getNewStatus(): string
+    {
+        $newStatus = $this->getSetting('newStatus');
+
+        return empty($newStatus) ? self::DEFAULT_NEW_STATUS : $newStatus;
     }
 
     public function getTaxonomy(): string

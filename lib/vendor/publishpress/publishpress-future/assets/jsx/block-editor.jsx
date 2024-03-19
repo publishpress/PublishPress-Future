@@ -10,7 +10,8 @@ import {
     strings,
     taxonomyName,
     postTypeDefaultConfig,
-    defaultDate
+    defaultDate,
+    statusesSelectOptions
 } from "&config.block-editor";
 
 const storeName = 'publishpress-future/future-action';
@@ -20,6 +21,7 @@ createStore({
     defaultState: {
         autoEnable: postTypeDefaultConfig.autoEnable,
         action: postTypeDefaultConfig.expireType,
+        newStatus: postTypeDefaultConfig.newStatus,
         date: defaultDate,
         taxonomy: postTypeDefaultConfig.taxonomy,
         terms: postTypeDefaultConfig.terms,
@@ -32,6 +34,7 @@ const BlockEditorFutureActionPlugin = () => {
             postType={select('core/editor').getCurrentPostType()}
             isCleanNewPost={select('core/editor').isCleanNewPost()}
             actionsSelectOptions={actionsSelectOptions}
+            statusesSelectOptions={statusesSelectOptions}
             is12Hour={is12Hour}
             timeFormat={timeFormat}
             startOfWeek={startOfWeek}

@@ -42,12 +42,14 @@ class StickPost implements ExpirationActionInterface
     {
         if (empty($this->log) || ! $this->log['success']) {
             return sprintf(
+                // translators: %s: post type singular label
                 __('%s didn\'t change.', 'post-expirator'),
                 $this->postModel->getPostTypeSingularLabel()
             );
         }
 
         return sprintf(
+            // translators: %s: post type singular label
             __('%s has been added to stickies list.', 'post-expirator'),
             $this->postModel->getPostTypeSingularLabel()
         );

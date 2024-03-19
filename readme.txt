@@ -7,7 +7,7 @@ Requires at least: 6.1
 Requires PHP: 7.2.5
 License: GPLv2 or later
 Tested up to: 6.4
-Stable tag: 3.3.0
+Stable tag: 3.3.1
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -86,6 +86,28 @@ This section describes how to install the plugin and get it working.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 A full changelog is available in the plugin's GitHub repository.
+
+= [3.3.1] - 19 Mar, 2024 =
+
+* ADDED: Add validation for the date and time offset in the settings page, #683;
+* ADDED: Add form validation to the settings panel;
+* ADDED: Add form validation to the metabox panel;
+* ADDED: Add a date preview to the date/time offset setting field;
+* ADDED: Add translation comments strings with arguments;
+* CHANGED: The actions to move posts to another status where grouped in a single action, with a dropdown to select the status, #668;
+* CHANGED: The actions "draft", "private" and "trash" are deprecated in favor of "change-status", #668;
+* CHANGED: The metadata hash key has now a prefix "_" marking it as a private key, #695;
+* CHANGED: Improved the name of some actions;
+* CHANGED: Change the label of the field to select terms when "Replace all terms" is selected, #664;
+* CHANGED: Block editor script now loads in the footer;
+* FIXED: Make it impossible to choose dates in the past, #443;
+* FIXED: Enter key submits quick-edit panel when selecting a taxonomy term, #586;
+* FIXED: The name of the taxonomy in the actions field is now updated in the settings panel when the taxonomy is changed, #676;
+* FIXED: Possible to add an action using an empty category setting, #587;
+* FIXED: Fix language files for ES, IT, FR, #685;
+* FIXED: Fix inconsistent text in the filter for "Pending" actions, #673;
+* FIXED: Improve the message when no actions are found: "No Future Actions", #666;
+* FIXED: Escape string in a exception message;
 
 = [3.3.0] - 29 Feb, 2024 =
 

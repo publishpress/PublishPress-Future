@@ -9,8 +9,8 @@ namespace PublishPress\FuturePro\Controllers;
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
-use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Modules\Settings\HooksAbstract;
 use PublishPress\FuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
@@ -48,66 +48,36 @@ class CustomStatusesController implements ModuleInterface
     public function initialize()
     {
         $this->hooks->addFilter(
-            ExpirationHooksAbstract::FILTER_EXPIRATION_ACTIONS,
-            [$this, 'filterExpirationActions'],
+            ExpirationHooksAbstract::FILTER_EXPIRATION_STATUSES,
+            [$this, 'filterExpirationStatuses'],
             10,
             2
-        );
-
-        $this->hooks->addFilter(
-            ExpirationHooksAbstract::FILTER_EXPIRATION_ACTION_FACTORY,
-            [$this, 'filterExpirationActionFactory'],
-            10,
-            3
         );
     }
 
     /**
-     * @param string[] $actions
+     * @param string[] $statuses
      * @param string $postType
      * @return string[]
      */
-    public function filterExpirationActions($actions, $postType = '')
+    public function filterExpirationStatuses($statuses, $postType = '')
     {
-        $customStatuses = $this->modelCustomStatuses->getCustomStatusesAsOptions();
+        $customStatuses = $this->modelCustomStatuses->getCustomStatuses();
 
         if (empty($postType)) {
-            $selectedCustomStatuses = array_map(function ($item) {
-                return $item['value'];
-            }, $customStatuses);
+            $selectedCustomStatuses = array_keys($customStatuses);
         } else {
             $selectedCustomStatuses = $this->settingsModel->getEnabledCustomStatusesForPostType($postType);
         }
 
-        foreach ($customStatuses as $customStatus) {
-            if (! empty($postType) && ! in_array($customStatus['value'], $selectedCustomStatuses)) {
+        foreach ($customStatuses as $customStatus => $customStatusObj) {
+            if (! empty($postType) && ! in_array($customStatus, $selectedCustomStatuses)) {
                 continue;
             }
 
-            $actions[self::ACTION_PREFIX . $customStatus['value']] = esc_html__(
-                'Change status to ',
-                'publishpress-future-pro'
-            ) . $customStatus['label'];
+            $statuses[$customStatus] = $customStatusObj->label;
         }
 
-        return $actions;
-    }
-
-    /**
-     * @param $action
-     * @param string $actionName
-     * @param \PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel $postModel
-     * @return \PublishPress\FuturePro\Domain\ExpirationActions\PostStatusToCustomStatus
-     */
-    public function filterExpirationActionFactory(
-        $action,
-        $actionName,
-        ExpirablePostModel $postModel
-    ) {
-        if (preg_match('/^' . self::ACTION_PREFIX . '/', $actionName)) {
-            return new PostStatusToCustomStatus($this->modelCustomStatuses, $postModel);
-        }
-
-        return $action;
+        return $statuses;
     }
 }
