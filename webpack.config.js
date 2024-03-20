@@ -33,8 +33,8 @@ module.exports = [
             }
         },
         externals: {
-            "&React": "React",
-            "&ReactDOM": "ReactDOM",
+            'react': 'React',
+            'react-dom': 'ReactDOM',
             "&wp": "wp",
             "&wp.components": "wp.components",
             "&wp.data": "wp.data",
@@ -75,6 +75,10 @@ module.exports = [
             alias: {
                 "&publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
             }
+        },
+        externals: {
+            'react': 'React',
+            'react-dom': 'ReactDOM'
         }
     },
     {
@@ -108,8 +112,8 @@ module.exports = [
             ],
             extensions: [".js", ".jsx"]
         },
-        "externals": {
-            react: 'React',
+        externals: {
+            'react': 'React',
             'react-dom': 'ReactDOM'
         }
     }
