@@ -79,12 +79,12 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/jsx/flow-diagram/index.jsx",
+            "./src/assets/jsx/workflow-editor/editor.jsx",
         ),
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "js"),
-            filename: "flow-diagram.js"
+            filename: "workflow-editor.js"
         },
         module: {
             rules: [
@@ -106,19 +106,11 @@ module.exports = [
                 "node_modules",
                 path.join(__dirname, "vendor", "publishpress")
             ],
-            extensions: [".js", ".jsx"],
-            alias: {
-                "&publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
-            }
+            extensions: [".js", ".jsx"]
         },
-        externals: {
-            "&wp": "wp",
-            "&wp.components": "wp.components",
-            "&wp.data": "wp.data",
-            "&wp.plugins": "wp.plugins",
-            "&wp.url": "wp.url",
-            "&wp.hooks": "wp.hooks",
-            "&wp.element": "wp.element"
+        "externals": {
+            react: 'React',
+            'react-dom': 'ReactDOM'
         }
     }
 ];

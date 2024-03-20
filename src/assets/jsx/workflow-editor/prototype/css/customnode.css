@@ -1,0 +1,62 @@
+.pwe-step-node {
+    border: 1px solid #c2c2c2;
+    padding: 3px;
+}
+
+.pwe-step-node .pwe-icon {
+    padding: 0 5px 0 10px;
+    align-self: center;
+    text-align: center;
+    width: 10px;
+}
+
+.pwe-trigger-node .pwe-node-title-bar {
+    width: 100%;
+}
+
+.pwe-step-node .pwe-node-title {
+    padding: 5px 10px 5px 3px;
+    align-self: start;
+}
+
+.pwe-step-node .pwe-node-title .pwe-label {
+    font-size: 9px;
+}
+
+.pwe-step-node .pwe-node-metadata {
+    position: absolute;
+    top: 35px;
+    font-size: 9px;
+    color: #adadad;
+    padding-left: 10px;
+    width: 130px;
+    max-width: 120px;
+    overflow: hidden;
+}
+
+.pwe-node-edit-button {
+    position: absolute;
+    background: silver;
+    color: #282828;
+    padding: 3px;
+    border-radius: 100%;
+    font-size: 8px;
+    width: 12px;
+    height: 12px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid white;
+    top: -12px;
+    right: -10px;
+    cursor: pointer;
+}
+
+.pwe-node-edit-button:hover {
+    background-color: #9a9a9a;
+    color: #111111;
+}
+
+.pwe-node-edit-button:active {
+    background-color: #8c8c8c;
+    color: #030303;
+}

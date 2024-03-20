@@ -103,7 +103,7 @@ class Module implements InitializableInterface
 
     public function renderMetaBoxView($post)
     {
-        require_once __DIR__ . '/Views/Editor.html.php';
+        require_once __DIR__ . '/Views/editor.html.php';
     }
 
     public function enqueueScripts($hook)
@@ -141,10 +141,22 @@ class Module implements InitializableInterface
             true
         );
 
+        wp_enqueue_script('wp-url');
+        wp_enqueue_script('wp-element');
+        wp_enqueue_script('wp-components');
+        wp_enqueue_script('wp-data');
+
         wp_enqueue_script(
             'future_workflow_admin_script',
-            plugins_url('/src/assets/js/flow-diagram.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
-            ['future_workflow_admin_ui_kit', 'future_workflow_admin_ui_kit_icons'],
+            plugins_url('/src/assets/js/workflow-editor.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
+            [
+                'future_workflow_admin_ui_kit',
+                'future_workflow_admin_ui_kit_icons',
+                'wp-element',
+                'wp-components',
+                'wp-url',
+                'wp-data',
+            ],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true
         );

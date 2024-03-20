@@ -1,0 +1,21 @@
+.pwe-ray-color {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+}
+
+.pwe-ray-color.green {
+    background-color: #0cb60c;
+}
+
+.pwe-ray-color.blue {
+    background-color: blue;
+}
+
+.pwe-ray-color.gray {
+    background-color: gray;
+}
+
+.pwe-ray-color.red {
+    background-color: red;
+}
