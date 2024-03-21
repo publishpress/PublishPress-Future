@@ -6065,6 +6065,95 @@ function FullscreenModeClose(_ref) {
 
 /***/ }),
 
+/***/ "./src/assets/jsx/workflow-editor/components/LayoutContent.jsx":
+/*!*********************************************************************!*\
+  !*** ./src/assets/jsx/workflow-editor/components/LayoutContent.jsx ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LayoutContent: () => (/* binding */ LayoutContent)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/assets/jsx/workflow-editor/store.jsx");
+/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
+
+
+
+var LayoutContent = function LayoutContent(props) {
+  var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(function (select) {
+      return {
+        nodes: select(_store__WEBPACK_IMPORTED_MODULE_1__.store).getNodes(),
+        edges: select(_store__WEBPACK_IMPORTED_MODULE_1__.store).getEdges()
+      };
+    }),
+    nodes = _useSelect.nodes,
+    edges = _useSelect.edges;
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_2__.ReactFlowProvider, null, /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_2__.ReactFlow, {
+    nodes: nodes,
+    edges: edges
+  })));
+};
+
+/***/ }),
+
+/***/ "./src/assets/jsx/workflow-editor/components/LayoutFooter.jsx":
+/*!********************************************************************!*\
+  !*** ./src/assets/jsx/workflow-editor/components/LayoutFooter.jsx ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LayoutFooter: () => (/* binding */ LayoutFooter)
+/* harmony export */ });
+var LayoutFooter = function LayoutFooter(props) {
+  return /*#__PURE__*/React.createElement("div", null, "PublishPress Future Workflow Editor");
+};
+
+/***/ }),
+
+/***/ "./src/assets/jsx/workflow-editor/components/LayoutHeader.jsx":
+/*!********************************************************************!*\
+  !*** ./src/assets/jsx/workflow-editor/components/LayoutHeader.jsx ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LayoutHeader: () => (/* binding */ LayoutHeader)
+/* harmony export */ });
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/assets/jsx/workflow-editor/store.jsx");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "./src/assets/jsx/workflow-editor/constants.jsx");
+/* harmony import */ var _FullscreenModeClose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FullscreenModeClose */ "./src/assets/jsx/workflow-editor/components/FullscreenModeClose.jsx");
+
+
+
+
+var LayoutHeader = function LayoutHeader() {
+  var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(function (select) {
+      return {
+        isFullscreenActive: select(_store__WEBPACK_IMPORTED_MODULE_1__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_2__.FEATURE_FULLSCREEN_MODE),
+        hasReducedUI: select(_store__WEBPACK_IMPORTED_MODULE_1__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_2__.FEATURE_REDUCED_UI)
+      };
+    }),
+    isFullscreenActive = _useSelect.isFullscreenActive,
+    hasReducedUI = _useSelect.hasReducedUI;
+  var headerClasses = 'edit-workflow-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
+  return /*#__PURE__*/React.createElement("div", {
+    className: headerClasses
+  }, isFullscreenActive && /*#__PURE__*/React.createElement(_FullscreenModeClose__WEBPACK_IMPORTED_MODULE_3__.FullscreenModeClose, null), /*#__PURE__*/React.createElement("h2", null, "Workflow Editor"));
+};
+
+/***/ }),
+
 /***/ "./src/assets/jsx/workflow-editor/components/Sidebar.jsx":
 /*!***************************************************************!*\
   !*** ./src/assets/jsx/workflow-editor/components/Sidebar.jsx ***!
@@ -6101,41 +6190,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   WorkflowEditorInterface: () => (/* binding */ WorkflowEditorInterface)
 /* harmony export */ });
 /* harmony import */ var _wordpress_interface__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/interface */ "./node_modules/@wordpress/interface/build-module/index.js");
-/* harmony import */ var _FullscreenModeClose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FullscreenModeClose */ "./src/assets/jsx/workflow-editor/components/FullscreenModeClose.jsx");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./src/assets/jsx/workflow-editor/store.jsx");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants */ "./src/assets/jsx/workflow-editor/constants.jsx");
-/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
-
-
+/* harmony import */ var _LayoutContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LayoutContent */ "./src/assets/jsx/workflow-editor/components/LayoutContent.jsx");
+/* harmony import */ var _LayoutFooter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LayoutFooter */ "./src/assets/jsx/workflow-editor/components/LayoutFooter.jsx");
+/* harmony import */ var _LayoutHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LayoutHeader */ "./src/assets/jsx/workflow-editor/components/LayoutHeader.jsx");
 
 
 
 
 function WorkflowEditorInterface(props) {
-  var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(function (select) {
-      return {
-        isFullscreenActive: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_4__.FEATURE_FULLSCREEN_MODE),
-        hasReducedUI: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_4__.FEATURE_REDUCED_UI),
-        nodes: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getNodes(),
-        edges: select(_store__WEBPACK_IMPORTED_MODULE_3__.store).getEdges()
-      };
-    }),
-    isFullscreenActive = _useSelect.isFullscreenActive,
-    hasReducedUI = _useSelect.hasReducedUI,
-    nodes = _useSelect.nodes,
-    edges = _useSelect.edges;
-  var headerClasses = 'edit-workflow-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
   return /*#__PURE__*/React.createElement(_wordpress_interface__WEBPACK_IMPORTED_MODULE_0__.InterfaceSkeleton, {
-    header: /*#__PURE__*/React.createElement("div", {
-      className: headerClasses
-    }, isFullscreenActive && /*#__PURE__*/React.createElement(_FullscreenModeClose__WEBPACK_IMPORTED_MODULE_1__.FullscreenModeClose, null), /*#__PURE__*/React.createElement("h2", null, "Workflow Editor")),
-    content: /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_5__.ReactFlowProvider, null, /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_5__.ReactFlow, {
-      nodes: nodes,
-      edges: edges
-    }))),
-    footer: /*#__PURE__*/React.createElement("div", null, "Footer")
+    header: /*#__PURE__*/React.createElement(_LayoutHeader__WEBPACK_IMPORTED_MODULE_3__.LayoutHeader, null),
+    content: /*#__PURE__*/React.createElement(_LayoutContent__WEBPACK_IMPORTED_MODULE_1__.LayoutContent, null),
+    footer: /*#__PURE__*/React.createElement(_LayoutFooter__WEBPACK_IMPORTED_MODULE_2__.LayoutFooter, null)
   });
 }
 
@@ -6196,13 +6262,22 @@ function WorkflowEditorLayout() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Sidebar: () => (/* reexport safe */ _Sidebar__WEBPACK_IMPORTED_MODULE_0__.Sidebar),
-/* harmony export */   WorkflowEditorInterface: () => (/* reexport safe */ _WorkflowEditorInterface__WEBPACK_IMPORTED_MODULE_1__.WorkflowEditorInterface),
-/* harmony export */   WorkflowEditorLayout: () => (/* reexport safe */ _WorkflowEditorLayout__WEBPACK_IMPORTED_MODULE_2__.WorkflowEditorLayout)
+/* harmony export */   LayoutContent: () => (/* reexport safe */ _LayoutContent__WEBPACK_IMPORTED_MODULE_0__.LayoutContent),
+/* harmony export */   LayoutFooter: () => (/* reexport safe */ _LayoutFooter__WEBPACK_IMPORTED_MODULE_1__.LayoutFooter),
+/* harmony export */   LayoutHeader: () => (/* reexport safe */ _LayoutHeader__WEBPACK_IMPORTED_MODULE_2__.LayoutHeader),
+/* harmony export */   Sidebar: () => (/* reexport safe */ _Sidebar__WEBPACK_IMPORTED_MODULE_3__.Sidebar),
+/* harmony export */   WorkflowEditorInterface: () => (/* reexport safe */ _WorkflowEditorInterface__WEBPACK_IMPORTED_MODULE_4__.WorkflowEditorInterface),
+/* harmony export */   WorkflowEditorLayout: () => (/* reexport safe */ _WorkflowEditorLayout__WEBPACK_IMPORTED_MODULE_5__.WorkflowEditorLayout)
 /* harmony export */ });
-/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Sidebar */ "./src/assets/jsx/workflow-editor/components/Sidebar.jsx");
-/* harmony import */ var _WorkflowEditorInterface__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WorkflowEditorInterface */ "./src/assets/jsx/workflow-editor/components/WorkflowEditorInterface.jsx");
-/* harmony import */ var _WorkflowEditorLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./WorkflowEditorLayout */ "./src/assets/jsx/workflow-editor/components/WorkflowEditorLayout.jsx");
+/* harmony import */ var _LayoutContent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LayoutContent */ "./src/assets/jsx/workflow-editor/components/LayoutContent.jsx");
+/* harmony import */ var _LayoutFooter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LayoutFooter */ "./src/assets/jsx/workflow-editor/components/LayoutFooter.jsx");
+/* harmony import */ var _LayoutHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LayoutHeader */ "./src/assets/jsx/workflow-editor/components/LayoutHeader.jsx");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Sidebar */ "./src/assets/jsx/workflow-editor/components/Sidebar.jsx");
+/* harmony import */ var _WorkflowEditorInterface__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./WorkflowEditorInterface */ "./src/assets/jsx/workflow-editor/components/WorkflowEditorInterface.jsx");
+/* harmony import */ var _WorkflowEditorLayout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./WorkflowEditorLayout */ "./src/assets/jsx/workflow-editor/components/WorkflowEditorLayout.jsx");
+
+
+
 
 
 
@@ -6410,454 +6485,512 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_inherited_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! -!../../../../../node_modules/css-loader/dist/cjs.js!./inherited.css */ "./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/inherited.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_tooltip_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! -!../../../../../node_modules/css-loader/dist/cjs.js!./tooltip.css */ "./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/tooltip.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_custom_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! -!../../../../../node_modules/css-loader/dist/cjs.js!./custom.css */ "./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/custom.css");
+// Imports
+
+
+
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_inherited_css__WEBPACK_IMPORTED_MODULE_2__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_tooltip_css__WEBPACK_IMPORTED_MODULE_3__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_custom_css__WEBPACK_IMPORTED_MODULE_4__["default"]);
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `
+`, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/custom.css":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/custom.css ***!
+  \*********************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `#wpfooter {
+    display: none !important;
+}
+
+.react-flow {
+    height: 100vh !important;
+    width: 100% !important;
+}
+`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/custom.css"],"names":[],"mappings":"AAAA;IACI,wBAAwB;AAC5B;;AAEA;IACI,wBAAwB;IACxB,sBAAsB;AAC1B","sourcesContent":["#wpfooter {\n    display: none !important;\n}\n\n.react-flow {\n    height: 100vh !important;\n    width: 100% !important;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/inherited.css":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/inherited.css ***!
+  \************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `:root {
-  --wp-admin-theme-color: #007cba;
-  --wp-admin-theme-color--rgb: 0, 124, 186;
-  --wp-admin-theme-color-darker-10: #006ba1;
-  --wp-admin-theme-color-darker-10--rgb: 0, 107, 161;
-  --wp-admin-theme-color-darker-20: #005a87;
-  --wp-admin-theme-color-darker-20--rgb: 0, 90, 135;
-  --wp-admin-border-width-focus: 2px;
-  --wp-block-synced-color: #7a00df;
-  --wp-block-synced-color--rgb: 122, 0, 223;
+    --wp-admin-theme-color: #007cba;
+    --wp-admin-theme-color--rgb: 0, 124, 186;
+    --wp-admin-theme-color-darker-10: #006ba1;
+    --wp-admin-theme-color-darker-10--rgb: 0, 107, 161;
+    --wp-admin-theme-color-darker-20: #005a87;
+    --wp-admin-theme-color-darker-20--rgb: 0, 90, 135;
+    --wp-admin-border-width-focus: 2px;
+    --wp-block-synced-color: #7a00df;
+    --wp-block-synced-color--rgb: 122, 0, 223;
 }
 
 @media (min-resolution:192dpi) {
-  :root {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    :root {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
-
-/* CUSTOM */
-#wpfooter {
-  display: none !important;
-}
-
-.react-flow {
-  height: 100vh !important;
-  width: 100% !important;
-}
-
-/* END CUSTOM */
-
-
 
 .components-panel__header.interface-complementary-area-header__small {
-  background: #fff;
-  padding-right: 4px;
+    background: #fff;
+    padding-right: 4px;
 }
 
 .components-panel__header.interface-complementary-area-header__small .interface-complementary-area-header__small-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
 }
 
 @media (min-width:782px) {
-  .components-panel__header.interface-complementary-area-header__small {
-    display: none;
-  }
+    .components-panel__header.interface-complementary-area-header__small {
+        display: none;
+    }
 }
 
 .interface-complementary-area-header {
-  background: #fff;
-  padding-right: 4px;
+    background: #fff;
+    padding-right: 4px;
 }
 
 .interface-complementary-area-header .components-button.has-icon {
-  display: none;
-  margin-left: auto;
+    display: none;
+    margin-left: auto;
 }
 
 .interface-complementary-area-header .components-button.has-icon~.components-button {
-  margin-left: 0;
+    margin-left: 0;
 }
 
 @media (min-width:782px) {
-  .interface-complementary-area-header .components-button.has-icon {
-    display: flex;
-  }
+    .interface-complementary-area-header .components-button.has-icon {
+        display: flex;
+    }
 
-  .components-panel__header+.interface-complementary-area-header {
-    margin-top: 0;
-  }
+    .components-panel__header+.interface-complementary-area-header {
+        margin-top: 0;
+    }
 }
 
 .interface-complementary-area {
-  background: #fff;
-  color: #1e1e1e;
+    background: #fff;
+    color: #1e1e1e;
 }
 
 @media (min-width:600px) {
-  .interface-complementary-area {
-    -webkit-overflow-scrolling: touch;
-  }
+    .interface-complementary-area {
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 @media (min-width:782px) {
-  .interface-complementary-area {
-    width: 280px;
-  }
+    .interface-complementary-area {
+        width: 280px;
+    }
 }
 
 .interface-complementary-area .components-panel {
-  border: none;
-  position: relative;
-  z-index: 0;
+    border: none;
+    position: relative;
+    z-index: 0;
 }
 
 .interface-complementary-area .components-panel__header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .interface-complementary-area .components-panel__header.edit-workflow-sidebar__panel-tabs {
-  top: 48px;
+    top: 48px;
 }
 
 @media (min-width:782px) {
-  .interface-complementary-area .components-panel__header.edit-workflow-sidebar__panel-tabs {
-    top: 0;
-  }
+    .interface-complementary-area .components-panel__header.edit-workflow-sidebar__panel-tabs {
+        top: 0;
+    }
 }
 
 .interface-complementary-area p:not(.components-base-control__help) {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .interface-complementary-area h2 {
-  color: #1e1e1e;
-  font-size: 13px;
-  margin-bottom: 1.5em;
+    color: #1e1e1e;
+    font-size: 13px;
+    margin-bottom: 1.5em;
 }
 
 .interface-complementary-area h3 {
-  color: #1e1e1e;
-  font-size: 11px;
-  font-weight: 500;
-  margin-bottom: 1.5em;
-  text-transform: uppercase;
+    color: #1e1e1e;
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 1.5em;
+    text-transform: uppercase;
 }
 
 .interface-complementary-area hr {
-  border-bottom: 1px solid #f0f0f0;
-  border-top: none;
-  margin: 1.5em 0;
+    border-bottom: 1px solid #f0f0f0;
+    border-top: none;
+    margin: 1.5em 0;
 }
 
 .interface-complementary-area div.components-toolbar,
 .interface-complementary-area div.components-toolbar-group {
-  box-shadow: none;
-  margin-bottom: 1.5em;
+    box-shadow: none;
+    margin-bottom: 1.5em;
 }
 
 .interface-complementary-area div.components-toolbar-group:last-child,
 .interface-complementary-area div.components-toolbar:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .interface-complementary-area .workflow-editor-skip-to-selected-block:focus {
-  bottom: 10px;
-  left: auto;
-  right: 10px;
-  top: auto;
+    bottom: 10px;
+    left: auto;
+    right: 10px;
+    top: auto;
 }
 
 @media (min-width:782px) {
-  body.js.is-fullscreen-mode {
-    height: calc(100% + 32px);
-    margin-top: -32px;
-  }
+    body.js.is-fullscreen-mode {
+        height: calc(100% + 32px);
+        margin-top: -32px;
+    }
 
-  body.js.is-fullscreen-mode #adminmenumain,
-  body.js.is-fullscreen-mode #wpadminbar {
-    display: none;
-  }
+    body.js.is-fullscreen-mode #adminmenumain,
+    body.js.is-fullscreen-mode #wpadminbar {
+        display: none;
+    }
 
-  body.js.is-fullscreen-mode #wpcontent,
-  body.js.is-fullscreen-mode #wpfooter {
-    margin-left: 0;
-  }
+    body.js.is-fullscreen-mode #wpcontent,
+    body.js.is-fullscreen-mode #wpfooter {
+        margin-left: 0;
+    }
 }
 
 html.interface-interface-skeleton__html-container {
-  position: fixed;
-  width: 100%;
+    position: fixed;
+    width: 100%;
 }
 
 @media (min-width:782px) {
-  html.interface-interface-skeleton__html-container {
-    position: static;
-    width: auto;
-  }
+    html.interface-interface-skeleton__html-container {
+        position: static;
+        width: auto;
+    }
 }
 
 .interface-interface-skeleton {
-  bottom: 0;
-  display: flex;
-  flex-direction: row;
-  height: auto;
-  max-height: 100%;
-  position: fixed;
-  right: 0;
-  top: 46px;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    max-height: 100%;
+    position: fixed;
+    right: 0;
+    top: 46px;
 }
 
 @media (min-width:783px) {
-  .interface-interface-skeleton {
-    top: 32px;
-  }
+    .interface-interface-skeleton {
+        top: 32px;
+    }
 
-  .is-fullscreen-mode .interface-interface-skeleton {
-    top: 0;
-  }
+    .is-fullscreen-mode .interface-interface-skeleton {
+        top: 0;
+    }
 }
 
 .interface-interface-skeleton__editor {
-  display: flex;
-  flex: 0 1 100%;
-  flex-direction: column;
-  overflow: hidden;
+    display: flex;
+    flex: 0 1 100%;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .interface-interface-skeleton {
-  left: 0;
+    left: 0;
 }
 
 @media (min-width:783px) {
-  .interface-interface-skeleton {
-    left: 160px;
-  }
+    .interface-interface-skeleton {
+        left: 160px;
+    }
 }
 
 @media (min-width:783px) {
-  .auto-fold .interface-interface-skeleton {
-    left: 36px;
-  }
+    .auto-fold .interface-interface-skeleton {
+        left: 36px;
+    }
 }
 
 @media (min-width:961px) {
-  .auto-fold .interface-interface-skeleton {
-    left: 160px;
-  }
+    .auto-fold .interface-interface-skeleton {
+        left: 160px;
+    }
 }
 
 .folded .interface-interface-skeleton {
-  left: 0;
+    left: 0;
 }
 
 @media (min-width:783px) {
-  .folded .interface-interface-skeleton {
-    left: 36px;
-  }
+    .folded .interface-interface-skeleton {
+        left: 36px;
+    }
 }
 
 body.is-fullscreen-mode .interface-interface-skeleton {
-  left: 0 !important;
+    left: 0 !important;
 }
 
 .interface-interface-skeleton__body {
-  display: flex;
-  flex-grow: 1;
-  overflow: auto;
-  overscroll-behavior-y: none;
+    display: flex;
+    flex-grow: 1;
+    overflow: auto;
+    overscroll-behavior-y: none;
 }
 
 @media (min-width:782px) {
-  .has-footer .interface-interface-skeleton__body {
-    padding-bottom: 25px;
-  }
+    .has-footer .interface-interface-skeleton__body {
+        padding-bottom: 25px;
+    }
 }
 
 .interface-interface-skeleton__content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  overflow: auto;
-  z-index: 20;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
+    z-index: 20;
 }
 
 @media (min-width:782px) {
-  .interface-interface-skeleton__content {
-    z-index: auto;
-  }
+    .interface-interface-skeleton__content {
+        z-index: auto;
+    }
 }
 
 .interface-interface-skeleton__secondary-sidebar,
 .interface-interface-skeleton__sidebar {
-  background: #fff;
-  bottom: 0;
-  color: #1e1e1e;
-  flex-shrink: 0;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 100000;
+    background: #fff;
+    bottom: 0;
+    color: #1e1e1e;
+    flex-shrink: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100000;
 }
 
 @media (min-width:782px) {
 
-  .interface-interface-skeleton__secondary-sidebar,
-  .interface-interface-skeleton__sidebar {
-    position: relative !important;
-    width: auto;
-  }
+    .interface-interface-skeleton__secondary-sidebar,
+    .interface-interface-skeleton__sidebar {
+        position: relative !important;
+        width: auto;
+    }
 
-  .is-sidebar-opened .interface-interface-skeleton__secondary-sidebar,
-  .is-sidebar-opened .interface-interface-skeleton__sidebar {
-    z-index: 90;
-  }
+    .is-sidebar-opened .interface-interface-skeleton__secondary-sidebar,
+    .is-sidebar-opened .interface-interface-skeleton__sidebar {
+        z-index: 90;
+    }
 }
 
 .interface-interface-skeleton__sidebar {
-  overflow: auto;
+    overflow: auto;
 }
 
 @media (min-width:782px) {
-  .interface-interface-skeleton__sidebar {
-    border-left: 1px solid #e0e0e0;
-  }
+    .interface-interface-skeleton__sidebar {
+        border-left: 1px solid #e0e0e0;
+    }
 
-  .interface-interface-skeleton__secondary-sidebar {
-    border-right: 1px solid #e0e0e0;
-  }
+    .interface-interface-skeleton__secondary-sidebar {
+        border-right: 1px solid #e0e0e0;
+    }
 }
 
 .interface-interface-skeleton__header {
-  border-bottom: 1px solid #e0e0e0;
-  color: #1e1e1e;
-  flex-shrink: 0;
-  height: auto;
-  z-index: 30;
+    border-bottom: 1px solid #e0e0e0;
+    color: #1e1e1e;
+    flex-shrink: 0;
+    height: auto;
+    z-index: 30;
 }
 
 .interface-interface-skeleton__footer {
-  background-color: #fff;
-  border-top: 1px solid #e0e0e0;
-  bottom: 0;
-  color: #1e1e1e;
-  display: none;
-  flex-shrink: 0;
-  height: auto;
-  left: 0;
-  position: absolute;
-  width: 100%;
-  z-index: 90;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    bottom: 0;
+    color: #1e1e1e;
+    display: none;
+    flex-shrink: 0;
+    height: auto;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 90;
 }
 
 @media (min-width:782px) {
-  .interface-interface-skeleton__footer {
-    display: flex;
-  }
+    .interface-interface-skeleton__footer {
+        display: flex;
+    }
 }
 
 .interface-interface-skeleton__footer .workflow-editor-block-breadcrumb {
-  align-items: center;
-  background: #fff;
-  display: flex;
-  font-size: 13px;
-  height: 24px;
-  padding: 0 18px;
-  z-index: 30;
+    align-items: center;
+    background: #fff;
+    display: flex;
+    font-size: 13px;
+    height: 24px;
+    padding: 0 18px;
+    z-index: 30;
 }
 
 .interface-interface-skeleton__actions {
-  background: #fff;
-  bottom: auto;
-  color: #1e1e1e;
-  left: auto;
-  position: fixed !important;
-  right: 0;
-  top: -9999em;
-  width: 100vw;
-  z-index: 100000;
+    background: #fff;
+    bottom: auto;
+    color: #1e1e1e;
+    left: auto;
+    position: fixed !important;
+    right: 0;
+    top: -9999em;
+    width: 100vw;
+    z-index: 100000;
 }
 
 @media (min-width:782px) {
-  .interface-interface-skeleton__actions {
-    width: 280px;
-  }
+    .interface-interface-skeleton__actions {
+        width: 280px;
+    }
 }
 
 .interface-interface-skeleton__actions:focus,
 .interface-interface-skeleton__actions:focus-within {
-  bottom: 0;
-  top: auto;
+    bottom: 0;
+    top: auto;
 }
 
 .is-entity-save-view-open .interface-interface-skeleton__actions:focus,
 .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {
-  top: 46px;
+    top: 46px;
 }
 
 @media (min-width:782px) {
 
-  .is-entity-save-view-open .interface-interface-skeleton__actions:focus,
-  .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {
-    border-left: 1px solid #ddd;
-    top: 32px;
-  }
+    .is-entity-save-view-open .interface-interface-skeleton__actions:focus,
+    .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {
+        border-left: 1px solid #ddd;
+        top: 32px;
+    }
 
-  .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus,
-  .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {
-    top: 0;
-  }
+    .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus,
+    .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {
+        top: 0;
+    }
 }
 
 .interface-more-menu-dropdown {
-  margin-left: -4px;
+    margin-left: -4px;
 }
 
 .interface-more-menu-dropdown .components-button {
-  padding: 0 2px;
-  width: auto;
+    padding: 0 2px;
+    width: auto;
 }
 
 @media (min-width:600px) {
-  .interface-more-menu-dropdown {
-    margin-left: 0;
-  }
+    .interface-more-menu-dropdown {
+        margin-left: 0;
+    }
 
-  .interface-more-menu-dropdown .components-button {
-    padding: 0 4px;
-  }
+    .interface-more-menu-dropdown .components-button {
+        padding: 0 4px;
+    }
 }
 
 .interface-more-menu-dropdown__content .components-popover__content {
-  min-width: 280px;
+    min-width: 280px;
 }
 
 @media (min-width:480px) {
-  .interface-more-menu-dropdown__content .components-popover__content {
-    max-width: 480px;
-  }
+    .interface-more-menu-dropdown__content .components-popover__content {
+        max-width: 480px;
+    }
 }
 
 .interface-more-menu-dropdown__content .components-popover__content .components-dropdown-menu__menu {
-  padding: 0;
+    padding: 0;
 }
 
 .components-popover.interface-more-menu-dropdown__content {
-  z-index: 99998;
+    z-index: 99998;
 }
 
 .interface-pinned-items {
-  display: flex;
-  gap: 4px;
-  margin-right: -4px;
+    display: flex;
+    gap: 4px;
+    margin-right: -4px;
 }
 
 .interface-pinned-items .components-button {
-  display: none;
-  margin: 0;
+    display: none;
+    margin: 0;
 }
 
 .interface-pinned-items .components-button[aria-controls="edit-workflow:block"],
@@ -6865,231 +6998,231 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 .interface-pinned-items .components-button[aria-controls="edit-site:block-inspector"],
 .interface-pinned-items .components-button[aria-controls="edit-site:global-styles"],
 .interface-pinned-items .components-button[aria-controls="edit-site:template"] {
-  display: flex;
+    display: flex;
 }
 
 .interface-pinned-items .components-button svg {
-  max-height: 24px;
-  max-width: 24px;
+    max-height: 24px;
+    max-width: 24px;
 }
 
 @media (min-width:600px) {
-  .interface-pinned-items .components-button {
-    display: flex;
-  }
+    .interface-pinned-items .components-button {
+        display: flex;
+    }
 
-  .interface-preferences-modal {
-    height: calc(100% - 120px);
-    width: calc(100% - 32px);
-  }
+    .interface-preferences-modal {
+        height: calc(100% - 120px);
+        width: calc(100% - 32px);
+    }
 }
 
 @media (min-width:782px) {
-  .interface-preferences-modal {
-    width: 750px;
-  }
+    .interface-preferences-modal {
+        width: 750px;
+    }
 }
 
 @media (min-width:960px) {
-  .interface-preferences-modal {
-    height: 70%;
-  }
+    .interface-preferences-modal {
+        height: 70%;
+    }
 }
 
 @media (max-width:781px) {
-  .interface-preferences-modal .components-modal__content {
-    padding: 0;
-  }
+    .interface-preferences-modal .components-modal__content {
+        padding: 0;
+    }
 }
 
 .interface-preferences__tabs .components-tab-panel__tabs {
-  left: 16px;
-  position: absolute;
-  top: 84px;
-  width: 160px;
+    left: 16px;
+    position: absolute;
+    top: 84px;
+    width: 160px;
 }
 
 .interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item {
-  border-radius: 2px;
-  font-weight: 400;
+    border-radius: 2px;
+    font-weight: 400;
 }
 
 .interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item.is-active {
-  background: #f0f0f0;
-  box-shadow: none;
-  font-weight: 500;
+    background: #f0f0f0;
+    box-shadow: none;
+    font-weight: 500;
 }
 
 .interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item.is-active:after {
-  content: none;
+    content: none;
 }
 
 .interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item:focus:not(:disabled) {
-  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
+    box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+    outline: 2px solid transparent;
 }
 
 .interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item:focus-visible:before {
-  content: none;
+    content: none;
 }
 
 .interface-preferences__tabs .components-tab-panel__tab-content {
-  margin-left: 160px;
-  padding-left: 24px;
+    margin-left: 160px;
+    padding-left: 24px;
 }
 
 @media (max-width:781px) {
-  .interface-preferences__provider {
-    height: 100%;
-  }
+    .interface-preferences__provider {
+        height: 100%;
+    }
 }
 
 .interface-preferences-modal__section {
-  margin: 0 0 2.5rem;
+    margin: 0 0 2.5rem;
 }
 
 .interface-preferences-modal__section:last-child {
-  margin: 0;
+    margin: 0;
 }
 
 .interface-preferences-modal__section-legend {
-  margin-bottom: 8px;
+    margin-bottom: 8px;
 }
 
 .interface-preferences-modal__section-title {
-  font-size: .9rem;
-  font-weight: 600;
-  margin-top: 0;
+    font-size: .9rem;
+    font-weight: 600;
+    margin-top: 0;
 }
 
 .interface-preferences-modal__section-description {
-  color: #757575;
-  font-size: 12px;
-  font-style: normal;
-  margin: -8px 0 8px;
+    color: #757575;
+    font-size: 12px;
+    font-style: normal;
+    margin: -8px 0 8px;
 }
 
 .interface-preferences-modal__option+.interface-preferences-modal__option {
-  margin-top: 16px;
+    margin-top: 16px;
 }
 
 .interface-preferences-modal__option .components-base-control__help {
-  margin-left: 48px;
-  margin-top: 0;
+    margin-left: 48px;
+    margin-top: 0;
 }
 
 .edit-workflow-header {
-  align-items: center;
-  background: #fff;
-  display: flex;
-  flex-wrap: wrap;
-  height: 60px;
-  max-width: 100vw;
+    align-items: center;
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    height: 60px;
+    max-width: 100vw;
 }
 
 @media (min-width:280px) {
-  .edit-workflow-header {
-    flex-wrap: nowrap;
-  }
+    .edit-workflow-header {
+        flex-wrap: nowrap;
+    }
 }
 
 .edit-workflow-header>.edit-workflow-header__settings {
-  order: 1;
+    order: 1;
 }
 
 @supports (position:sticky) {
-  .edit-workflow-header>.edit-workflow-header__settings {
-    order: 0;
-  }
+    .edit-workflow-header>.edit-workflow-header__settings {
+        order: 0;
+    }
 }
 
 .edit-workflow-header__toolbar {
-  display: flex;
-  flex-grow: 1;
+    display: flex;
+    flex-grow: 1;
 }
 
 .edit-workflow-header__toolbar .table-of-contents {
-  display: none;
+    display: none;
 }
 
 @media (min-width:600px) {
-  .edit-workflow-header__toolbar .table-of-contents {
-    display: block;
-  }
+    .edit-workflow-header__toolbar .table-of-contents {
+        display: block;
+    }
 }
 
 .edit-workflow-header__center {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
 }
 
 .edit-workflow-header__settings {
-  align-items: center;
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding-right: 4px;
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding-right: 4px;
 }
 
 @media (min-width:600px) {
-  .edit-workflow-header__settings {
-    gap: 8px;
-    padding-right: 10px;
-  }
+    .edit-workflow-header__settings {
+        gap: 8px;
+        padding-right: 10px;
+    }
 }
 
 .edit-workflow-header-preview__grouping-external {
-  display: flex;
-  padding-bottom: 0;
-  position: relative;
+    display: flex;
+    padding-bottom: 0;
+    position: relative;
 }
 
 .edit-workflow-header-preview__button-external {
-  display: flex;
-  justify-content: flex-start;
-  margin-right: auto;
-  padding-left: 8px;
-  width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-right: auto;
+    padding-left: 8px;
+    width: 100%;
 }
 
 .edit-workflow-header-preview__button-external svg {
-  margin-left: auto;
+    margin-left: auto;
 }
 
 .edit-workflow-post-preview-dropdown .components-popover__content {
-  padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 .edit-workflow-header__dropdown .components-button.has-icon,
 .show-icon-labels .edit-workflow-header .components-button.has-icon,
 .show-icon-labels.interface-pinned-items .components-button.has-icon {
-  width: auto;
+    width: auto;
 }
 
 .edit-workflow-header__dropdown .components-button.has-icon svg,
 .show-icon-labels .edit-workflow-header .components-button.has-icon svg,
 .show-icon-labels.interface-pinned-items .components-button.has-icon svg {
-  display: none;
+    display: none;
 }
 
 .edit-workflow-header__dropdown .components-button.has-icon:after,
 .show-icon-labels .edit-workflow-header .components-button.has-icon:after,
 .show-icon-labels.interface-pinned-items .components-button.has-icon:after {
-  content: attr(aria-label);
+    content: attr(aria-label);
 }
 
 .edit-workflow-header__dropdown .components-button.has-icon[aria-disabled=true],
 .show-icon-labels .edit-workflow-header .components-button.has-icon[aria-disabled=true],
 .show-icon-labels.interface-pinned-items .components-button.has-icon[aria-disabled=true] {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .edit-workflow-header__dropdown .is-tertiary:active,
 .show-icon-labels .edit-workflow-header .is-tertiary:active,
 .show-icon-labels.interface-pinned-items .is-tertiary:active {
-  background-color: transparent;
-  box-shadow: 0 0 0 1.5px var(--wp-admin-theme-color);
+    background-color: transparent;
+    box-shadow: 0 0 0 1.5px var(--wp-admin-theme-color);
 }
 
 .edit-workflow-header__dropdown .components-button.has-icon.button-toggle svg,
@@ -7098,7 +7231,7 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 .show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon svg,
 .show-icon-labels.interface-pinned-items .components-button.has-icon.button-toggle svg,
 .show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon svg {
-  display: block;
+    display: block;
 }
 
 .edit-workflow-header__dropdown .components-button.has-icon.button-toggle:after,
@@ -7107,19 +7240,19 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 .show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon:after,
 .show-icon-labels.interface-pinned-items .components-button.has-icon.button-toggle:after,
 .show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon:after {
-  content: none;
+    content: none;
 }
 
 .edit-workflow-header__dropdown .edit-workflow-fullscreen-mode-close.has-icon,
 .show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon,
 .show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon {
-  width: 60px;
+    width: 60px;
 }
 
 .edit-workflow-header__dropdown .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon,
 .show-icon-labels .edit-workflow-header .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon,
 .show-icon-labels.interface-pinned-items .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon {
-  display: block;
+    display: block;
 }
 
 .edit-workflow-header__dropdown .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,
@@ -7128,21 +7261,21 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 .show-icon-labels .edit-workflow-header .interface-pinned-items .components-button,
 .show-icon-labels.interface-pinned-items .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,
 .show-icon-labels.interface-pinned-items .interface-pinned-items .components-button {
-  padding-left: 8px;
-  padding-right: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
 }
 
 @media (min-width:600px) {
 
-  .edit-workflow-header__dropdown .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,
-  .edit-workflow-header__dropdown .interface-pinned-items .components-button,
-  .show-icon-labels .edit-workflow-header .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,
-  .show-icon-labels .edit-workflow-header .interface-pinned-items .components-button,
-  .show-icon-labels.interface-pinned-items .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,
-  .show-icon-labels.interface-pinned-items .interface-pinned-items .components-button {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
+    .edit-workflow-header__dropdown .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,
+    .edit-workflow-header__dropdown .interface-pinned-items .components-button,
+    .show-icon-labels .edit-workflow-header .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,
+    .show-icon-labels .edit-workflow-header .interface-pinned-items .components-button,
+    .show-icon-labels.interface-pinned-items .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,
+    .show-icon-labels.interface-pinned-items .interface-pinned-items .components-button {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
 }
 
 .edit-workflow-header__dropdown .editor-post-save-draft.editor-post-save-draft:after,
@@ -7151,7 +7284,7 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 .show-icon-labels .edit-workflow-header .editor-post-saved-state.editor-post-saved-state:after,
 .show-icon-labels.interface-pinned-items .editor-post-save-draft.editor-post-save-draft:after,
 .show-icon-labels.interface-pinned-items .editor-post-saved-state.editor-post-saved-state:after {
-  content: none;
+    content: none;
 }
 
 .edit-workflow-header__dropdown .components-button.workflow-editor-list-view,
@@ -7159,801 +7292,801 @@ body.is-fullscreen-mode .interface-interface-skeleton {
 .edit-workflow-header__dropdown .components-button.editor-history__undo,
 .edit-workflow-header__dropdown .components-menu-item__button.components-menu-item__button,
 .edit-workflow-header__dropdown .table-of-contents .components-button {
-  justify-content: flex-start;
-  margin: 0;
-  padding: 6px 6px 6px 40px;
-  text-align: left;
-  width: 14.625rem;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 6px 6px 6px 40px;
+    text-align: left;
+    width: 14.625rem;
 }
 
 .show-icon-labels.interface-pinned-items {
-  border-bottom: 1px solid #ccc;
-  display: block;
-  margin: 0 -12px;
-  padding: 6px 12px 12px;
+    border-bottom: 1px solid #ccc;
+    display: block;
+    margin: 0 -12px;
+    padding: 6px 12px 12px;
 }
 
 .show-icon-labels.interface-pinned-items>.components-button.has-icon {
-  justify-content: flex-start;
-  margin: 0;
-  padding: 6px 6px 6px 8px;
-  width: 14.625rem;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 6px 6px 6px 8px;
+    width: 14.625rem;
 }
 
 .show-icon-labels.interface-pinned-items>.components-button.has-icon[aria-expanded=true] svg {
-  display: block;
-  max-width: 24px;
+    display: block;
+    max-width: 24px;
 }
 
 .show-icon-labels.interface-pinned-items>.components-button.has-icon[aria-expanded=false] {
-  padding-left: 40px;
+    padding-left: 40px;
 }
 
 .show-icon-labels.interface-pinned-items>.components-button.has-icon svg {
-  margin-right: 8px;
+    margin-right: 8px;
 }
 
 .is-distraction-free .interface-interface-skeleton__header {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 .is-distraction-free .edit-workflow-header {
-  -webkit-backdrop-filter: blur(20px) !important;
-  backdrop-filter: blur(20px) !important;
-  background-color: hsla(0, 0%, 100%, .9);
-  border-bottom: 1px solid #e0e0e0;
-  position: absolute;
-  width: 100%;
+    -webkit-backdrop-filter: blur(20px) !important;
+    backdrop-filter: blur(20px) !important;
+    background-color: hsla(0, 0%, 100%, .9);
+    border-bottom: 1px solid #e0e0e0;
+    position: absolute;
+    width: 100%;
 }
 
 .is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.editor-post-preview {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 .is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.workflow-editor-post-preview__dropdown,
 .is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.interface-pinned-items,
 .is-distraction-free .edit-workflow-header>.edit-workflow-header__toolbar .edit-workflow-header-toolbar__document-overview-toggle,
 .is-distraction-free .edit-workflow-header>.edit-workflow-header__toolbar .edit-workflow-header-toolbar__inserter-toggle {
-  display: none;
+    display: none;
 }
 
 .is-distraction-free .interface-interface-skeleton__header:focus-within {
-  opacity: 1 !important;
+    opacity: 1 !important;
 }
 
 .is-distraction-free .interface-interface-skeleton__header:focus-within div {
-  transform: translateX(0) translateZ(0) !important;
+    transform: translateX(0) translateZ(0) !important;
 }
 
 .is-distraction-free .components-editor-notices__dismissible {
-  position: absolute;
-  z-index: 35;
+    position: absolute;
+    z-index: 35;
 }
 
 .edit-workflow-fullscreen-mode-close.components-button {
-  display: none;
+    display: none;
 }
 
 @media (min-width:782px) {
-  .edit-workflow-fullscreen-mode-close.components-button {
-    align-items: center;
-    align-self: stretch;
-    background: #1e1e1e;
-    border: none;
-    border-radius: 0;
-    color: #fff;
-    display: flex;
-    height: 61px;
-    margin-bottom: -1px;
-    position: relative;
-    width: 60px;
-  }
+    .edit-workflow-fullscreen-mode-close.components-button {
+        align-items: center;
+        align-self: stretch;
+        background: #1e1e1e;
+        border: none;
+        border-radius: 0;
+        color: #fff;
+        display: flex;
+        height: 61px;
+        margin-bottom: -1px;
+        position: relative;
+        width: 60px;
+    }
 
-  .edit-workflow-fullscreen-mode-close.components-button:active {
-    color: #fff;
-  }
+    .edit-workflow-fullscreen-mode-close.components-button:active {
+        color: #fff;
+    }
 
-  .edit-workflow-fullscreen-mode-close.components-button:focus {
-    box-shadow: none;
-  }
+    .edit-workflow-fullscreen-mode-close.components-button:focus {
+        box-shadow: none;
+    }
 
-  .edit-workflow-fullscreen-mode-close.components-button:before {
-    border-radius: 4px;
-    bottom: 10px;
-    box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) #1e1e1e;
-    content: "";
-    display: block;
-    left: 9px;
-    position: absolute;
-    right: 9px;
-    top: 9px;
-    transition: box-shadow .1s ease;
-  }
+    .edit-workflow-fullscreen-mode-close.components-button:before {
+        border-radius: 4px;
+        bottom: 10px;
+        box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) #1e1e1e;
+        content: "";
+        display: block;
+        left: 9px;
+        position: absolute;
+        right: 9px;
+        top: 9px;
+        transition: box-shadow .1s ease;
+    }
 }
 
 @media (min-width:782px) and (prefers-reduced-motion:reduce) {
-  .edit-workflow-fullscreen-mode-close.components-button:before {
-    transition-delay: 0s;
-    transition-duration: 0s;
-  }
+    .edit-workflow-fullscreen-mode-close.components-button:before {
+        transition-delay: 0s;
+        transition-duration: 0s;
+    }
 }
 
 @media (min-width:782px) {
-  .edit-workflow-fullscreen-mode-close.components-button:hover:before {
-    box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) #757575;
-  }
+    .edit-workflow-fullscreen-mode-close.components-button:hover:before {
+        box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) #757575;
+    }
 
-  .edit-workflow-fullscreen-mode-close.components-button.has-icon:hover:before {
-    box-shadow: none;
-  }
+    .edit-workflow-fullscreen-mode-close.components-button.has-icon:hover:before {
+        box-shadow: none;
+    }
 
-  .edit-workflow-fullscreen-mode-close.components-button:focus:before {
-    box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) hsla(0, 0%, 100%, .1), inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  }
+    .edit-workflow-fullscreen-mode-close.components-button:focus:before {
+        box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) hsla(0, 0%, 100%, .1), inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+    }
 }
 
 .edit-workflow-fullscreen-mode-close.components-button .edit-workflow-fullscreen-mode-close_site-icon {
-  border-radius: 2px;
-  height: 36px;
-  margin-top: -1px;
-  object-fit: cover;
-  width: 36px;
+    border-radius: 2px;
+    height: 36px;
+    margin-top: -1px;
+    object-fit: cover;
+    width: 36px;
 }
 
 .edit-workflow-fullscreen-mode-close svg {
-  height: 36px;
-  width: 36px;
-  margin-left: 12px;
+    height: 36px;
+    width: 36px;
+    margin-left: 12px;
 }
 
 .edit-workflow-header-toolbar {
-  align-items: center;
-  border: none;
-  display: inline-flex;
+    align-items: center;
+    border: none;
+    display: inline-flex;
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button {
-  display: none;
+    display: none;
 }
 
 @media (min-width:600px) {
-  .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button {
-    display: inline-flex;
-  }
+    .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button {
+        display: inline-flex;
+    }
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle {
-  display: inline-flex;
+    display: inline-flex;
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle svg {
-  transition: transform .2s cubic-bezier(.165, .84, .44, 1);
+    transition: transform .2s cubic-bezier(.165, .84, .44, 1);
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle svg {
-    transition-delay: 0s;
-    transition-duration: 0s;
-  }
+    .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle svg {
+        transition-delay: 0s;
+        transition-duration: 0s;
+    }
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.is-pressed svg {
-  transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .edit-workflow-header-toolbar .workflow-editor-list-view {
-  display: none;
+    display: none;
 }
 
 @media (min-width:600px) {
-  .edit-workflow-header-toolbar .workflow-editor-list-view {
-    display: flex;
-  }
+    .edit-workflow-header-toolbar .workflow-editor-list-view {
+        display: flex;
+    }
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon,
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon {
-  height: 36px;
-  min-width: 36px;
-  padding: 6px;
+    height: 36px;
+    min-width: 36px;
+    padding: 6px;
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon.is-pressed,
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon.is-pressed {
-  background: #1e1e1e;
+    background: #1e1e1e;
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon:focus:not(:disabled),
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon:focus:not(:disabled) {
-  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color), inset 0 0 0 1px #fff;
-  outline: 1px solid transparent;
+    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color), inset 0 0 0 1px #fff;
+    outline: 1px solid transparent;
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon:before,
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon:before {
-  display: none;
+    display: none;
 }
 
 @media (min-width:600px) {
 
-  .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-button,
-  .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {
-    transition: opacity .1s linear;
-  }
+    .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-button,
+    .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {
+        transition: opacity .1s linear;
+    }
 }
 
 @media (min-width:600px) and (prefers-reduced-motion:reduce) {
 
-  .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-button,
-  .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {
-    transition-delay: 0s;
-    transition-duration: 0s;
-  }
+    .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-button,
+    .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {
+        transition-delay: 0s;
+        transition-duration: 0s;
+    }
 }
 
 @media (min-width:600px) {
 
-  .edit-workflow-header.has-reduced-ui:not(:hover) .edit-workflow-header-toolbar__left>*+.components-button,
-  .edit-workflow-header.has-reduced-ui:not(:hover) .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {
-    opacity: 0;
-  }
+    .edit-workflow-header.has-reduced-ui:not(:hover) .edit-workflow-header-toolbar__left>*+.components-button,
+    .edit-workflow-header.has-reduced-ui:not(:hover) .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {
+        opacity: 0;
+    }
 }
 
 .edit-workflow-header-toolbar__left {
-  align-items: center;
-  display: inline-flex;
-  margin-right: 8px;
-  padding-left: 8px;
+    align-items: center;
+    display: inline-flex;
+    margin-right: 8px;
+    padding-left: 8px;
 }
 
 @media (min-width:600px) {
-  .edit-workflow-header-toolbar__left {
-    padding-left: 24px;
-  }
+    .edit-workflow-header-toolbar__left {
+        padding-left: 24px;
+    }
 }
 
 @media (min-width:1280px) {
-  .edit-workflow-header-toolbar__left {
-    padding-right: 8px;
-  }
+    .edit-workflow-header-toolbar__left {
+        padding-right: 8px;
+    }
 }
 
 .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.has-icon {
-  height: 32px;
-  margin-right: 8px;
-  min-width: 32px;
-  padding: 0;
-  width: 32px;
+    height: 32px;
+    margin-right: 8px;
+    min-width: 32px;
+    padding: 0;
+    width: 32px;
 }
 
 .show-icon-labels .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.has-icon {
-  height: 36px;
-  padding: 0 8px;
-  width: auto;
+    height: 36px;
+    padding: 0 8px;
+    width: auto;
 }
 
 .show-icon-labels .edit-workflow-header-toolbar__left>*+* {
-  margin-left: 8px;
+    margin-left: 8px;
 }
 
 .edit-workflow-document-actions {
-  align-items: center;
-  background: #f0f0f0;
-  border-radius: 4px;
-  display: flex;
-  gap: 8px;
-  height: 36px;
-  justify-content: space-between;
-  min-width: 0;
-  width: min(100%, 450px);
+    align-items: center;
+    background: #f0f0f0;
+    border-radius: 4px;
+    display: flex;
+    gap: 8px;
+    height: 36px;
+    justify-content: space-between;
+    min-width: 0;
+    width: min(100%, 450px);
 }
 
 .edit-workflow-document-actions .components-button:hover {
-  background: #e0e0e0;
-  color: var(--wp-block-synced-color);
+    background: #e0e0e0;
+    color: var(--wp-block-synced-color);
 }
 
 .edit-workflow-document-actions__command,
 .edit-workflow-document-actions__title {
-  color: var(--wp-block-synced-color);
-  flex-grow: 1;
-  overflow: hidden;
+    color: var(--wp-block-synced-color);
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .edit-workflow-document-actions__title:hover {
-  color: var(--wp-block-synced-color);
+    color: var(--wp-block-synced-color);
 }
 
 .edit-workflow-document-actions__title .workflow-editor-block-icon {
-  flex-shrink: 0;
+    flex-shrink: 0;
 }
 
 .edit-workflow-document-actions__title h1 {
-  color: var(--wp-block-synced-color);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    color: var(--wp-block-synced-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .edit-workflow-document-actions__shortcut {
-  color: #2f2f2f;
+    color: #2f2f2f;
 }
 
 .edit-workflow-document-actions__back.components-button.has-icon.has-text {
-  color: #757575;
-  flex-shrink: 0;
-  gap: 0;
-  min-width: 36px;
+    color: #757575;
+    flex-shrink: 0;
+    gap: 0;
+    min-width: 36px;
 }
 
 .edit-workflow-document-actions__back.components-button.has-icon.has-text:hover {
-  color: currentColor;
+    color: currentColor;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__section {
-  margin: 0 0 2rem;
+    margin: 0 0 2rem;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__section-title {
-  font-size: .9rem;
-  font-weight: 600;
+    font-size: .9rem;
+    font-weight: 600;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut {
-  align-items: baseline;
-  border-top: 1px solid #ddd;
-  display: flex;
-  margin-bottom: 0;
-  padding: .6rem 0;
+    align-items: baseline;
+    border-top: 1px solid #ddd;
+    display: flex;
+    margin-bottom: 0;
+    padding: .6rem 0;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut:last-child {
-  border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut:empty {
-  display: none;
+    display: none;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut-term {
-  font-weight: 600;
-  margin: 0 0 0 1rem;
-  text-align: right;
+    font-weight: 600;
+    margin: 0 0 0 1rem;
+    text-align: right;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut-description {
-  flex: 1;
-  flex-basis: auto;
-  margin: 0;
+    flex: 1;
+    flex-basis: auto;
+    margin: 0;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination {
-  background: none;
-  display: block;
-  margin: 0;
-  padding: 0;
+    background: none;
+    display: block;
+    margin: 0;
+    padding: 0;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination+.edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut-key {
-  border-radius: 8%;
-  margin: 0 .2rem;
-  padding: .25rem .5rem;
+    border-radius: 8%;
+    margin: 0 .2rem;
+    padding: .25rem .5rem;
 }
 
 .edit-workflow-keyboard-shortcut-help-modal__shortcut-key:last-child {
-  margin: 0 0 0 .2rem;
+    margin: 0 0 0 .2rem;
 }
 
 .edit-workflow-layout__metaboxes {
-  clear: both;
-  flex-shrink: 0;
+    clear: both;
+    flex-shrink: 0;
 }
 
 .edit-workflow-layout .components-editor-notices__snackbar {
-  bottom: 40px;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: fixed;
-  right: 0;
+    bottom: 40px;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: fixed;
+    right: 0;
 }
 
 .is-distraction-free .components-editor-notices__snackbar {
-  bottom: 20px;
+    bottom: 20px;
 }
 
 .edit-workflow-layout .components-editor-notices__snackbar {
-  left: 0;
+    left: 0;
 }
 
 @media (min-width:783px) {
-  .edit-workflow-layout .components-editor-notices__snackbar {
-    left: 160px;
-  }
+    .edit-workflow-layout .components-editor-notices__snackbar {
+        left: 160px;
+    }
 }
 
 @media (min-width:783px) {
-  .auto-fold .edit-workflow-layout .components-editor-notices__snackbar {
-    left: 36px;
-  }
+    .auto-fold .edit-workflow-layout .components-editor-notices__snackbar {
+        left: 36px;
+    }
 }
 
 @media (min-width:961px) {
-  .auto-fold .edit-workflow-layout .components-editor-notices__snackbar {
-    left: 160px;
-  }
+    .auto-fold .edit-workflow-layout .components-editor-notices__snackbar {
+        left: 160px;
+    }
 }
 
 .folded .edit-workflow-layout .components-editor-notices__snackbar {
-  left: 0;
+    left: 0;
 }
 
 @media (min-width:783px) {
-  .folded .edit-workflow-layout .components-editor-notices__snackbar {
-    left: 36px;
-  }
+    .folded .edit-workflow-layout .components-editor-notices__snackbar {
+        left: 36px;
+    }
 }
 
 body.is-fullscreen-mode .edit-workflow-layout .components-editor-notices__snackbar {
-  left: 0 !important;
+    left: 0 !important;
 }
 
 .edit-workflow-layout .editor-post-publish-panel {
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  position: fixed;
-  right: 0;
-  top: 46px;
-  z-index: 100001;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 46px;
+    z-index: 100001;
 }
 
 @media (min-width:782px) {
-  .edit-workflow-layout .editor-post-publish-panel {
-    animation: edit-workflow-post-publish-panel__slide-in-animation .1s forwards;
-    border-left: 1px solid #ddd;
-    left: auto;
-    top: 32px;
-    transform: translateX(100%);
-    width: 281px;
-    z-index: 99998;
-  }
+    .edit-workflow-layout .editor-post-publish-panel {
+        animation: edit-workflow-post-publish-panel__slide-in-animation .1s forwards;
+        border-left: 1px solid #ddd;
+        left: auto;
+        top: 32px;
+        transform: translateX(100%);
+        width: 281px;
+        z-index: 99998;
+    }
 }
 
 @media (min-width:782px) and (prefers-reduced-motion:reduce) {
-  .edit-workflow-layout .editor-post-publish-panel {
-    animation-delay: 0s;
-    animation-duration: 1ms;
-  }
+    .edit-workflow-layout .editor-post-publish-panel {
+        animation-delay: 0s;
+        animation-duration: 1ms;
+    }
 }
 
 @media (min-width:782px) {
-  body.is-fullscreen-mode .edit-workflow-layout .editor-post-publish-panel {
-    top: 0;
-  }
+    body.is-fullscreen-mode .edit-workflow-layout .editor-post-publish-panel {
+        top: 0;
+    }
 
-  [role=region]:focus .edit-workflow-layout .editor-post-publish-panel {
-    transform: translateX(0);
-  }
+    [role=region]:focus .edit-workflow-layout .editor-post-publish-panel {
+        transform: translateX(0);
+    }
 }
 
 @keyframes edit-workflow-post-publish-panel__slide-in-animation {
-  to {
-    transform: translateX(0);
-  }
+    to {
+        transform: translateX(0);
+    }
 }
 
 .edit-workflow-layout .editor-post-publish-panel__header-publish-button {
-  justify-content: center;
+    justify-content: center;
 }
 
 .edit-workflow-layout__toggle-entities-saved-states-panel,
 .edit-workflow-layout__toggle-publish-panel,
 .edit-workflow-layout__toggle-sidebar-panel {
-  background-color: #fff;
-  border: 1px dotted #ddd;
-  bottom: auto;
-  box-sizing: border-box;
-  display: flex;
-  height: auto !important;
-  justify-content: center;
-  left: auto;
-  padding: 24px;
-  position: fixed !important;
-  right: 0;
-  top: -9999em;
-  width: 280px;
-  z-index: 100000;
+    background-color: #fff;
+    border: 1px dotted #ddd;
+    bottom: auto;
+    box-sizing: border-box;
+    display: flex;
+    height: auto !important;
+    justify-content: center;
+    left: auto;
+    padding: 24px;
+    position: fixed !important;
+    right: 0;
+    top: -9999em;
+    width: 280px;
+    z-index: 100000;
 }
 
 .interface-interface-skeleton__sidebar:focus .edit-workflow-layout__toggle-sidebar-panel,
 .interface-interface-skeleton__sidebar:focus-within .edit-workflow-layout__toggle-sidebar-panel {
-  bottom: 0;
-  top: auto;
+    bottom: 0;
+    top: auto;
 }
 
 .interface-interface-skeleton__actions:focus .edit-workflow-layout__toggle-entities-saved-states-panel,
 .interface-interface-skeleton__actions:focus .edit-workflow-layout__toggle-publish-panel,
 .interface-interface-skeleton__actions:focus-within .edit-workflow-layout__toggle-entities-saved-states-panel,
 .interface-interface-skeleton__actions:focus-within .edit-workflow-layout__toggle-publish-panel {
-  bottom: 0;
-  top: auto;
+    bottom: 0;
+    top: auto;
 }
 
 .edit-workflow-layout .entities-saved-states__panel-header {
-  height: 61px;
+    height: 61px;
 }
 
 @media (min-width:782px) {
-  .edit-workflow-layout.has-fixed-toolbar .interface-interface-skeleton__header:not(:focus-within) {
-    z-index: 19;
-  }
+    .edit-workflow-layout.has-fixed-toolbar .interface-interface-skeleton__header:not(:focus-within) {
+        z-index: 19;
+    }
 }
 
 .edit-workflow-block-manager__no-results {
-  font-style: italic;
-  padding: 24px 0;
-  text-align: center;
+    font-style: italic;
+    padding: 24px 0;
+    text-align: center;
 }
 
 .edit-workflow-block-manager__search {
-  margin: 16px 0;
+    margin: 16px 0;
 }
 
 .edit-workflow-block-manager__disabled-blocks-count {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-width: 1px 0;
-  box-shadow: -32px 0 0 0 #fff, 32px 0 0 0 #fff;
-  padding: 8px;
-  position: sticky;
-  text-align: center;
-  top: -1px;
-  z-index: 2;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-width: 1px 0;
+    box-shadow: -32px 0 0 0 #fff, 32px 0 0 0 #fff;
+    padding: 8px;
+    position: sticky;
+    text-align: center;
+    top: -1px;
+    z-index: 2;
 }
 
 .edit-workflow-block-manager__disabled-blocks-count~.edit-workflow-block-manager__results .edit-workflow-block-manager__category-title {
-  top: 35px;
+    top: 35px;
 }
 
 .edit-workflow-block-manager__disabled-blocks-count .is-link {
-  margin-left: 12px;
+    margin-left: 12px;
 }
 
 .edit-workflow-block-manager__category {
-  margin: 0 0 24px;
+    margin: 0 0 24px;
 }
 
 .edit-workflow-block-manager__category-title {
-  background-color: #fff;
-  padding: 16px 0;
-  position: sticky;
-  top: -4px;
-  z-index: 1;
+    background-color: #fff;
+    padding: 16px 0;
+    position: sticky;
+    top: -4px;
+    z-index: 1;
 }
 
 .edit-workflow-block-manager__category-title .components-checkbox-control__label {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .edit-workflow-block-manager__checklist {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .edit-workflow-block-manager__category-title,
 .edit-workflow-block-manager__checklist-item {
-  border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 .edit-workflow-block-manager__checklist-item {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0;
-  padding: 8px 0 8px 16px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0;
+    padding: 8px 0 8px 16px;
 }
 
 .components-modal__content .edit-workflow-block-manager__checklist-item.components-checkbox-control__input-container {
-  margin: 0 8px;
+    margin: 0 8px;
 }
 
 .edit-workflow-block-manager__checklist-item .workflow-editor-block-icon {
-  fill: #1e1e1e;
-  margin-right: 10px;
+    fill: #1e1e1e;
+    margin-right: 10px;
 }
 
 .edit-workflow-block-manager__results {
-  border-top: 1px solid #ddd;
+    border-top: 1px solid #ddd;
 }
 
 .edit-workflow-block-manager__disabled-blocks-count+.edit-workflow-block-manager__results {
-  border-top-width: 0;
+    border-top-width: 0;
 }
 
 .edit-workflow-meta-boxes-area {
-  position: relative;
+    position: relative;
 }
 
 .edit-workflow-meta-boxes-area .inside,
 .edit-workflow-meta-boxes-area__container {
-  box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 .edit-workflow-meta-boxes-area input,
 .edit-workflow-meta-boxes-area textarea {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .edit-workflow-meta-boxes-area .postbox-header {
-  border-bottom: 0;
-  border-top: 1px solid #ddd;
+    border-bottom: 0;
+    border-top: 1px solid #ddd;
 }
 
 .edit-workflow-meta-boxes-area #poststuff {
-  margin: 0 auto;
-  min-width: auto;
-  padding-top: 0;
+    margin: 0 auto;
+    min-width: auto;
+    padding-top: 0;
 }
 
 .edit-workflow-meta-boxes-area #poststuff .stuffbox>h3,
 .edit-workflow-meta-boxes-area #poststuff h2.hndle,
 .edit-workflow-meta-boxes-area #poststuff h3.hndle {
-  box-sizing: border-box;
-  color: inherit;
-  font-weight: 600;
-  outline: none;
-  padding: 0 24px;
-  position: relative;
-  width: 100%;
+    box-sizing: border-box;
+    color: inherit;
+    font-weight: 600;
+    outline: none;
+    padding: 0 24px;
+    position: relative;
+    width: 100%;
 }
 
 .edit-workflow-meta-boxes-area .postbox {
-  border: 0;
-  color: inherit;
-  margin-bottom: 0;
+    border: 0;
+    color: inherit;
+    margin-bottom: 0;
 }
 
 .edit-workflow-meta-boxes-area .postbox>.inside {
-  color: inherit;
-  margin: 0;
-  padding: 0 24px 24px;
+    color: inherit;
+    margin: 0;
+    padding: 0 24px 24px;
 }
 
 .edit-workflow-meta-boxes-area .postbox .handlediv {
-  height: 44px;
-  width: 44px;
+    height: 44px;
+    width: 44px;
 }
 
 .edit-workflow-meta-boxes-area.is-loading:before {
-  background: transparent;
-  bottom: 0;
-  content: "";
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
+    background: transparent;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
 }
 
 .edit-workflow-meta-boxes-area .components-spinner {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  z-index: 5;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 5;
 }
 
 .edit-workflow-meta-boxes-area .is-hidden {
-  display: none;
+    display: none;
 }
 
 .edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox] {
-  border: 1px solid #757575;
+    border: 1px solid #757575;
 }
 
 .edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox]:checked {
-  background: #fff;
-  border-color: #757575;
+    background: #fff;
+    border-color: #757575;
 }
 
 .edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox]:before {
-  margin: -3px -4px;
+    margin: -3px -4px;
 }
 
 .edit-workflow-meta-boxes-area__clear {
-  clear: both;
+    clear: both;
 }
 
 .edit-workflow-editor__document-overview-panel,
 .edit-workflow-editor__inserter-panel {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 @media (min-width:782px) {
-  .edit-workflow-editor__document-overview-panel {
-    width: 350px;
-  }
+    .edit-workflow-editor__document-overview-panel {
+        width: 350px;
+    }
 }
 
 .edit-workflow-editor__document-overview-panel .edit-workflow-editor__document-overview-panel__close-button {
-  background: #fff;
-  position: absolute;
-  right: 8px;
-  top: 6px;
-  z-index: 1;
+    background: #fff;
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    z-index: 1;
 }
 
 .edit-workflow-editor__document-overview-panel .components-tab-panel__tabs {
-  border-bottom: 1px solid #ddd;
-  box-sizing: border-box;
-  display: flex;
-  padding-right: 56px;
-  width: 100%;
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    display: flex;
+    padding-right: 56px;
+    width: 100%;
 }
 
 .edit-workflow-editor__document-overview-panel .components-tab-panel__tabs .edit-workflow-sidebar__panel-tab {
-  margin-bottom: -1px;
-  width: 50%;
+    margin-bottom: -1px;
+    width: 50%;
 }
 
 .edit-workflow-editor__document-overview-panel .components-tab-panel__tab-content {
-  height: calc(100% - 47px);
+    height: calc(100% - 47px);
 }
 
 .edit-workflow-editor__inserter-panel-header {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 8px;
-  padding-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 8px;
+    padding-top: 8px;
 }
 
 .edit-workflow-editor__inserter-panel-content {
-  height: calc(100% - 44px);
+    height: calc(100% - 44px);
 }
 
 @media (min-width:782px) {
-  .edit-workflow-editor__inserter-panel-content {
-    height: 100%;
-  }
+    .edit-workflow-editor__inserter-panel-content {
+        height: 100%;
+    }
 }
 
 .edit-workflow-editor__list-view-container>.document-outline,
 .edit-workflow-editor__list-view-empty-headings,
 .edit-workflow-editor__list-view-panel-content {
-  height: 100%;
-  overflow: auto;
-  padding: 8px 6px;
-  scrollbar-color: transparent transparent;
-  scrollbar-gutter: stable both-edges;
-  scrollbar-gutter: auto;
-  scrollbar-width: thin;
-  will-change: transform;
+    height: 100%;
+    overflow: auto;
+    padding: 8px 6px;
+    scrollbar-color: transparent transparent;
+    scrollbar-gutter: stable both-edges;
+    scrollbar-gutter: auto;
+    scrollbar-width: thin;
+    will-change: transform;
 }
 
 .edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar,
 .edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar,
 .edit-workflow-editor__list-view-panel-content::-webkit-scrollbar {
-  height: 12px;
-  width: 12px;
+    height: 12px;
+    width: 12px;
 }
 
 .edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar-track,
 .edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar-track,
 .edit-workflow-editor__list-view-panel-content::-webkit-scrollbar-track {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 .edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar-thumb,
 .edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar-thumb,
 .edit-workflow-editor__list-view-panel-content::-webkit-scrollbar-thumb {
-  background-clip: padding-box;
-  background-color: transparent;
-  border: 3px solid transparent;
-  border-radius: 8px;
+    background-clip: padding-box;
+    background-color: transparent;
+    border: 3px solid transparent;
+    border-radius: 8px;
 }
 
 .edit-workflow-editor__list-view-container>.document-outline:focus-within::-webkit-scrollbar-thumb,
@@ -7965,7 +8098,7 @@ body.is-fullscreen-mode .edit-workflow-layout .components-editor-notices__snackb
 .edit-workflow-editor__list-view-panel-content:focus-within::-webkit-scrollbar-thumb,
 .edit-workflow-editor__list-view-panel-content:focus::-webkit-scrollbar-thumb,
 .edit-workflow-editor__list-view-panel-content:hover::-webkit-scrollbar-thumb {
-  background-color: #949494;
+    background-color: #949494;
 }
 
 .edit-workflow-editor__list-view-container>.document-outline:focus,
@@ -7977,643 +8110,643 @@ body.is-fullscreen-mode .edit-workflow-layout .components-editor-notices__snackb
 .edit-workflow-editor__list-view-panel-content:focus,
 .edit-workflow-editor__list-view-panel-content:focus-within,
 .edit-workflow-editor__list-view-panel-content:hover {
-  scrollbar-color: #949494 transparent;
+    scrollbar-color: #949494 transparent;
 }
 
 @media (hover:none) {
 
-  .edit-workflow-editor__list-view-container>.document-outline,
-  .edit-workflow-editor__list-view-empty-headings,
-  .edit-workflow-editor__list-view-panel-content {
-    scrollbar-color: #949494 transparent;
-  }
+    .edit-workflow-editor__list-view-container>.document-outline,
+    .edit-workflow-editor__list-view-empty-headings,
+    .edit-workflow-editor__list-view-panel-content {
+        scrollbar-color: #949494 transparent;
+    }
 }
 
 .edit-workflow-editor__list-view-empty-headings {
-  color: #757575;
-  text-align: center;
+    color: #757575;
+    text-align: center;
 }
 
 .edit-workflow-editor__list-view-empty-headings>svg {
-  margin-top: 28px;
+    margin-top: 28px;
 }
 
 .edit-workflow-editor__list-view-empty-headings>p {
-  padding-left: 32px;
-  padding-right: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
 }
 
 .edit-workflow-editor__list-view-overview {
-  border-bottom: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
 }
 
 .edit-workflow-editor__list-view-overview>div>span:first-child {
-  display: inline-block;
-  width: 90px;
+    display: inline-block;
+    width: 90px;
 }
 
 .edit-workflow-editor__list-view-overview>div>span {
-  color: #757575;
-  font-size: 12px;
-  line-height: 1.4;
+    color: #757575;
+    font-size: 12px;
+    line-height: 1.4;
 }
 
 .edit-workflow-editor__list-view-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .edit-workflow-editor__document-overview-panel__tab-panel {
-  height: 100%;
+    height: 100%;
 }
 
 .components-panel__header.edit-workflow-sidebar__panel-tabs {
-  border-top: 0;
-  justify-content: flex-start;
-  margin-top: 0;
-  padding-left: 0;
-  padding-right: 16px;
+    border-top: 0;
+    justify-content: flex-start;
+    margin-top: 0;
+    padding-left: 0;
+    padding-right: 16px;
 }
 
 .components-panel__header.edit-workflow-sidebar__panel-tabs ul {
-  display: flex;
+    display: flex;
 }
 
 .components-panel__header.edit-workflow-sidebar__panel-tabs li {
-  margin: 0;
+    margin: 0;
 }
 
 .components-panel__header.edit-workflow-sidebar__panel-tabs .components-button.has-icon {
-  display: none;
-  height: 24px;
-  margin: 0 0 0 auto;
-  min-width: 24px;
-  padding: 0;
+    display: none;
+    height: 24px;
+    margin: 0 0 0 auto;
+    min-width: 24px;
+    padding: 0;
 }
 
 @media (min-width:782px) {
-  .components-panel__header.edit-workflow-sidebar__panel-tabs .components-button.has-icon {
-    display: flex;
-  }
+    .components-panel__header.edit-workflow-sidebar__panel-tabs .components-button.has-icon {
+        display: flex;
+    }
 }
 
 .components-panel__body.is-opened.edit-workflow-last-revision__panel {
-  height: 48px;
-  padding: 0;
+    height: 48px;
+    padding: 0;
 }
 
 .editor-post-last-revision__title.components-button {
-  padding: 16px;
+    padding: 16px;
 }
 
 .edit-workflow-post-author,
 .edit-workflow-post-format {
-  align-items: stretch;
-  display: flex;
-  flex-direction: column;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
 }
 
 .edit-workflow-post-schedule {
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: relative;
-  width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
 }
 
 .edit-workflow-post-schedule span {
-  display: block;
-  flex-shrink: 0;
-  padding: 6px 0;
-  width: 45%;
+    display: block;
+    flex-shrink: 0;
+    padding: 6px 0;
+    width: 45%;
 }
 
 .components-button.edit-workflow-post-schedule__toggle {
-  height: auto;
-  text-align: left;
-  white-space: normal;
+    height: auto;
+    text-align: left;
+    white-space: normal;
 }
 
 .components-button.edit-workflow-post-schedule__toggle span {
-  width: 0;
+    width: 0;
 }
 
 .edit-workflow-post-schedule__dialog .workflow-editor-publish-date-time-picker {
-  margin: 8px;
+    margin: 8px;
 }
 
 .edit-workflow-post-slug {
-  align-items: stretch;
-  display: flex;
-  flex-direction: column;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
 }
 
 .edit-workflow-post-status .edit-workflow-post-publish-dropdown__switch-to-draft {
-  margin-top: 15px;
-  text-align: center;
-  width: 100%;
+    margin-top: 15px;
+    text-align: center;
+    width: 100%;
 }
 
 .edit-workflow-post-template {
-  justify-content: flex-start;
-  width: 100%;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .edit-workflow-post-template span {
-  display: block;
-  padding: 6px 0;
-  width: 45%;
+    display: block;
+    padding: 6px 0;
+    width: 45%;
 }
 
 .edit-workflow-post-template__dropdown {
-  max-width: 55%;
+    max-width: 55%;
 }
 
 .components-button.edit-workflow-post-template__toggle {
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .edit-workflow-post-template__dialog {
-  z-index: 99999;
+    z-index: 99999;
 }
 
 .edit-workflow-post-template__form {
-  margin: 8px;
-  min-width: 248px;
+    margin: 8px;
+    min-width: 248px;
 }
 
 @media (min-width:782px) {
-  .edit-workflow-post-template__create-form {
-    width: 320px;
-  }
+    .edit-workflow-post-template__create-form {
+        width: 320px;
+    }
 }
 
 .edit-workflow-post-url {
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .edit-workflow-post-url span {
-  display: block;
-  flex-shrink: 0;
-  padding: 6px 0;
-  width: 45%;
+    display: block;
+    flex-shrink: 0;
+    padding: 6px 0;
+    width: 45%;
 }
 
 .components-button.edit-workflow-post-url__toggle {
-  height: auto;
-  text-align: left;
-  white-space: normal;
-  word-break: break-word;
+    height: auto;
+    text-align: left;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .edit-workflow-post-url__dialog .editor-post-url {
-  margin: 8px;
-  min-width: 248px;
+    margin: 8px;
+    min-width: 248px;
 }
 
 .edit-workflow-post-visibility {
-  justify-content: flex-start;
-  width: 100%;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .edit-workflow-post-visibility span {
-  display: block;
-  padding: 6px 0;
-  width: 45%;
+    display: block;
+    padding: 6px 0;
+    width: 45%;
 }
 
 .edit-workflow-post-visibility__dialog .editor-post-visibility {
-  margin: 8px;
-  min-width: 248px;
+    margin: 8px;
+    min-width: 248px;
 }
 
 .components-button.edit-workflow-sidebar__panel-tab {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  cursor: pointer;
-  font-weight: 500;
-  height: 48px;
-  margin-left: 0;
-  padding: 3px 16px;
-  position: relative;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+    font-weight: 500;
+    height: 48px;
+    margin-left: 0;
+    padding: 3px 16px;
+    position: relative;
 }
 
 .components-button.edit-workflow-sidebar__panel-tab:focus:not(:disabled) {
-  box-shadow: none;
-  outline: none;
-  position: relative;
+    box-shadow: none;
+    outline: none;
+    position: relative;
 }
 
 .components-button.edit-workflow-sidebar__panel-tab:after {
-  background: var(--wp-admin-theme-color);
-  border-radius: 0;
-  bottom: 0;
-  content: "";
-  height: calc(var(--wp-admin-border-width-focus)*0);
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  transition: all .1s linear;
+    background: var(--wp-admin-theme-color);
+    border-radius: 0;
+    bottom: 0;
+    content: "";
+    height: calc(var(--wp-admin-border-width-focus)*0);
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    transition: all .1s linear;
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .components-button.edit-workflow-sidebar__panel-tab:after {
-    transition-delay: 0s;
-    transition-duration: 0s;
-  }
+    .components-button.edit-workflow-sidebar__panel-tab:after {
+        transition-delay: 0s;
+        transition-duration: 0s;
+    }
 }
 
 .components-button.edit-workflow-sidebar__panel-tab.is-active:after {
-  height: calc(var(--wp-admin-border-width-focus)*1);
-  outline: 2px solid transparent;
-  outline-offset: -1px;
+    height: calc(var(--wp-admin-border-width-focus)*1);
+    outline: 2px solid transparent;
+    outline-offset: -1px;
 }
 
 .components-button.edit-workflow-sidebar__panel-tab:before {
-  border-radius: 2px;
-  bottom: 12px;
-  box-shadow: 0 0 0 0 transparent;
-  content: "";
-  left: 12px;
-  pointer-events: none;
-  position: absolute;
-  right: 12px;
-  top: 12px;
-  transition: all .1s linear;
+    border-radius: 2px;
+    bottom: 12px;
+    box-shadow: 0 0 0 0 transparent;
+    content: "";
+    left: 12px;
+    pointer-events: none;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    transition: all .1s linear;
 }
 
 @media (prefers-reduced-motion:reduce) {
-  .components-button.edit-workflow-sidebar__panel-tab:before {
-    transition-delay: 0s;
-    transition-duration: 0s;
-  }
+    .components-button.edit-workflow-sidebar__panel-tab:before {
+        transition-delay: 0s;
+        transition-duration: 0s;
+    }
 }
 
 .components-button.edit-workflow-sidebar__panel-tab:focus-visible:before {
-  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-  outline: 2px solid transparent;
+    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+    outline: 2px solid transparent;
 }
 
 h2.edit-workflow-template-summary__title {
-  font-weight: 500;
-  line-height: 24px;
-  margin: 0 0 4px;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 0 0 4px;
 }
 
 .edit-workflow-text-editor {
-  background-color: #fff;
-  flex-grow: 1;
-  position: relative;
-  width: 100%;
+    background-color: #fff;
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
 }
 
 .edit-workflow-text-editor .editor-post-title {
-  border: 1px solid #949494;
-  font-family: Menlo, Consolas, monaco, monospace;
-  font-size: 2.5em;
-  font-weight: 400;
-  line-height: 1.4;
-  max-width: none;
-  padding: 16px;
+    border: 1px solid #949494;
+    font-family: Menlo, Consolas, monaco, monospace;
+    font-size: 2.5em;
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: none;
+    padding: 16px;
 }
 
 @media (min-width:600px) {
-  .edit-workflow-text-editor .editor-post-title {
-    padding: 24px;
-  }
+    .edit-workflow-text-editor .editor-post-title {
+        padding: 24px;
+    }
 }
 
 .edit-workflow-text-editor .editor-post-title:focus {
-  border-color: var(--wp-admin-theme-color);
-  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+    border-color: var(--wp-admin-theme-color);
+    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
 }
 
 .edit-workflow-text-editor__body {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1080px;
-  padding: 0 12px 12px;
-  width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1080px;
+    padding: 0 12px 12px;
+    width: 100%;
 }
 
 @media (min-width:960px) {
-  .edit-workflow-text-editor__body {
-    padding: 0 24px 24px;
-  }
+    .edit-workflow-text-editor__body {
+        padding: 0 24px 24px;
+    }
 }
 
 .edit-workflow-text-editor__toolbar {
-  background: hsla(0, 0%, 100%, .8);
-  display: flex;
-  left: 0;
-  padding: 4px 12px;
-  position: sticky;
-  right: 0;
-  top: 0;
-  z-index: 1;
+    background: hsla(0, 0%, 100%, .8);
+    display: flex;
+    left: 0;
+    padding: 4px 12px;
+    position: sticky;
+    right: 0;
+    top: 0;
+    z-index: 1;
 }
 
 @media (min-width:600px) {
-  .edit-workflow-text-editor__toolbar {
-    padding: 12px;
-  }
+    .edit-workflow-text-editor__toolbar {
+        padding: 12px;
+    }
 }
 
 @media (min-width:960px) {
-  .edit-workflow-text-editor__toolbar {
-    padding: 12px 24px;
-  }
+    .edit-workflow-text-editor__toolbar {
+        padding: 12px 24px;
+    }
 }
 
 .edit-workflow-text-editor__toolbar h2 {
-  color: #1e1e1e;
-  font-size: 13px;
-  line-height: 36px;
-  margin: 0 auto 0 0;
+    color: #1e1e1e;
+    font-size: 13px;
+    line-height: 36px;
+    margin: 0 auto 0 0;
 }
 
 .edit-workflow-text-editor__toolbar .components-button svg {
-  order: 1;
+    order: 1;
 }
 
 .components-button svg {
-  fill: currentColor;
-  outline: none;
+    fill: currentColor;
+    outline: none;
 }
 
 .edit-workflow-visual-editor {
-  background-color: #1e1e1e;
-  display: flex;
-  flex: 1 0 auto;
-  flex-flow: column;
-  position: relative;
+    background-color: #1e1e1e;
+    display: flex;
+    flex: 1 0 auto;
+    flex-flow: column;
+    position: relative;
 }
 
 .edit-workflow-visual-editor:not(.has-inline-canvas) {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .edit-workflow-visual-editor .components-button {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-  font-size: 13px;
-  padding: 6px 12px;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    font-size: 13px;
+    padding: 6px 12px;
 }
 
 .edit-workflow-visual-editor .components-button.has-icon,
 .edit-workflow-visual-editor .components-button.is-tertiary {
-  padding: 6px;
+    padding: 6px;
 }
 
 .edit-workflow-visual-editor__post-title-wrapper {
-  margin-bottom: var(--wp--style--block-gap);
-  margin-top: 4rem;
+    margin-bottom: var(--wp--style--block-gap);
+    margin-top: 4rem;
 }
 
 .edit-workflow-visual-editor__post-title-wrapper .editor-post-title {
-  margin-left: auto;
-  margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .edit-workflow-visual-editor__content-area {
-  box-sizing: border-box;
-  display: flex;
-  flex-grow: 1;
-  height: 100%;
-  position: relative;
-  width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+    position: relative;
+    width: 100%;
 }
 
 .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-  left: 0;
+    left: 0;
 }
 
 @media (min-width:783px) {
-  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    left: 160px;
-  }
+    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        left: 160px;
+    }
 }
 
 @media (min-width:783px) {
-  .auto-fold .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    left: 36px;
-  }
+    .auto-fold .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        left: 36px;
+    }
 }
 
 @media (min-width:961px) {
-  .auto-fold .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    left: 160px;
-  }
+    .auto-fold .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        left: 160px;
+    }
 }
 
 .folded .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-  left: 0;
+    left: 0;
 }
 
 @media (min-width:783px) {
-  .folded .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    left: 36px;
-  }
+    .folded .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        left: 36px;
+    }
 }
 
 body.is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-  left: 0 !important;
+    left: 0 !important;
 }
 
 .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-  display: block;
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 31;
+    display: block;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 31;
 }
 
 @media (min-width:782px) {
-  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    align-items: center;
-    border-bottom: none;
-    display: flex;
-    height: 60px;
-    margin-left: 180px;
-    min-height: auto;
-    position: fixed;
-    top: 32px;
-    width: calc(100% - 180px);
-  }
+    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        align-items: center;
+        border-bottom: none;
+        display: flex;
+        height: 60px;
+        margin-left: 180px;
+        min-height: auto;
+        position: fixed;
+        top: 32px;
+        width: calc(100% - 180px);
+    }
 
-  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed.is-collapsed,
-  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed:empty {
-    width: auto;
-  }
+    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed.is-collapsed,
+    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed:empty {
+        width: auto;
+    }
 
-  .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    margin-left: 240px;
-    top: 0;
-  }
+    .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        margin-left: 240px;
+        top: 0;
+    }
 
-  .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed.is-collapsed,
-  .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed:empty {
-    width: auto;
-  }
+    .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed.is-collapsed,
+    .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed:empty {
+        width: auto;
+    }
 
-  .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    margin-left: 80px;
-    width: calc(100% - 140px);
-  }
+    .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        margin-left: 80px;
+        width: calc(100% - 140px);
+    }
 
-  .is-fullscreen-mode .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    margin-left: 144px;
-  }
+    .is-fullscreen-mode .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        margin-left: 144px;
+    }
 }
 
 @media (min-width:960px) {
 
-  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed,
-  .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    width: auto;
-  }
+    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed,
+    .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        width: auto;
+    }
 
-  .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
-    width: calc(100% - 536px);
-  }
+    .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {
+        width: calc(100% - 536px);
+    }
 }
 
 .edit-workflow-welcome-guide,
 .edit-template-welcome-guide {
-  width: 312px;
+    width: 312px;
 }
 
 .edit-workflow-welcome-guide__image,
 .edit-template-welcome-guide__image {
-  background: #00a0d2;
-  margin: 0 0 16px;
+    background: #00a0d2;
+    margin: 0 0 16px;
 }
 
 .edit-workflow-welcome-guide__image>img,
 .edit-template-welcome-guide__image>img {
-  display: block;
-  max-width: 100%;
-  object-fit: cover;
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
 }
 
 .edit-workflow-welcome-guide__heading,
 .edit-template-welcome-guide__heading {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-  font-size: 24px;
-  line-height: 1.4;
-  margin: 16px 0;
-  padding: 0 32px;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
+    font-size: 24px;
+    line-height: 1.4;
+    margin: 16px 0;
+    padding: 0 32px;
 }
 
 .edit-workflow-welcome-guide__text,
 .edit-template-welcome-guide__text {
-  font-size: 13px;
-  line-height: 1.4;
-  margin: 0 0 24px;
-  padding: 0 32px;
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 0 0 24px;
+    padding: 0 32px;
 }
 
 .edit-workflow-welcome-guide__inserter-icon,
 .edit-template-welcome-guide__inserter-icon {
-  margin: 0 4px;
-  vertical-align: text-top;
+    margin: 0 4px;
+    vertical-align: text-top;
 }
 
 .edit-template-welcome-guide .components-button svg {
-  fill: #fff;
+    fill: #fff;
 }
 
 .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {
-  column-count: 2;
-  column-gap: 24px;
+    column-count: 2;
+    column-gap: 24px;
 }
 
 @media (min-width:782px) {
-  .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {
-    column-count: 3;
-  }
+    .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {
+        column-count: 3;
+    }
 }
 
 @media (min-width:1280px) {
-  .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {
-    column-count: 4;
-  }
+    .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {
+        column-count: 4;
+    }
 }
 
 .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item {
-  break-inside: avoid-column;
-  margin-bottom: 24px;
+    break-inside: avoid-column;
+    margin-bottom: 24px;
 }
 
 .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item .workflow-editor-block-preview__container {
-  min-height: 100px;
+    min-height: 100px;
 }
 
 .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item .workflow-editor-block-preview__content {
-  width: 100%;
+    width: 100%;
 }
 
 @keyframes edit-workflow__fade-in-animation {
-  0% {
-    opacity: 0;
-  }
+    0% {
+        opacity: 0;
+    }
 
-  to {
-    opacity: 1;
-  }
+    to {
+        opacity: 1;
+    }
 }
 
 body.js.workflow-editor-page {
-  background: #fff;
+    background: #fff;
 }
 
 body.js.workflow-editor-page #wpcontent {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 body.js.workflow-editor-page #wpbody-content {
-  padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 body.js.workflow-editor-page #wpbody-content>div:not(.workflow-editor):not(#screen-meta),
 body.js.workflow-editor-page #wpfooter {
-  display: none;
+    display: none;
 }
 
 body.js.workflow-editor-page .a11y-speak-region {
-  left: -1px;
-  top: -1px;
+    left: -1px;
+    top: -1px;
 }
 
 body.js.workflow-editor-page ul#adminmenu a.wp-has-current-submenu:after,
 body.js.workflow-editor-page ul#adminmenu>li.current>a.current:after {
-  border-right-color: #fff;
+    border-right-color: #fff;
 }
 
 body.js.workflow-editor-page .media-frame select.attachment-filters:last-of-type {
-  max-width: 100%;
-  width: auto;
+    max-width: 100%;
+    width: auto;
 }
 
 .workflow-editor-page #wpwrap {
-  overflow-y: auto;
+    overflow-y: auto;
 }
 
 @media (min-width:782px) {
-  .workflow-editor-page #wpwrap {
-    overflow-y: initial;
-  }
+    .workflow-editor-page #wpwrap {
+        overflow-y: initial;
+    }
 }
 
 .components-modal__frame,
@@ -8623,7 +8756,7 @@ body.js.workflow-editor-page .media-frame select.attachment-filters:last-of-type
 .edit-workflow-sidebar,
 .edit-workflow-text-editor,
 .editor-post-publish-panel {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .components-modal__frame *,
@@ -8647,197 +8780,215 @@ body.js.workflow-editor-page .media-frame select.attachment-filters:last-of-type
 .editor-post-publish-panel *,
 .editor-post-publish-panel :after,
 .editor-post-publish-panel :before {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 @media (min-width:600px) {
-  .workflow-editor__container {
-    bottom: 0;
-    left: 0;
-    min-height: calc(100vh - 46px);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+    .workflow-editor__container {
+        bottom: 0;
+        left: 0;
+        min-height: calc(100vh - 46px);
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 }
 
 @media (min-width:782px) {
-  .workflow-editor__container {
-    min-height: calc(100vh - 32px);
-  }
+    .workflow-editor__container {
+        min-height: calc(100vh - 32px);
+    }
 
-  body.is-fullscreen-mode .workflow-editor__container {
-    min-height: 100vh;
-  }
+    body.is-fullscreen-mode .workflow-editor__container {
+        min-height: 100vh;
+    }
 }
 
 .workflow-editor__container img {
-  height: auto;
-  max-width: 100%;
+    height: auto;
+    max-width: 100%;
 }
 
 body.admin-color-light {
-  --wp-admin-theme-color: #0085ba;
-  --wp-admin-theme-color--rgb: 0, 133, 186;
-  --wp-admin-theme-color-darker-10: #0073a1;
-  --wp-admin-theme-color-darker-10--rgb: 0, 115, 161;
-  --wp-admin-theme-color-darker-20: #006187;
-  --wp-admin-theme-color-darker-20--rgb: 0, 97, 135;
-  --wp-admin-border-width-focus: 2px;
+    --wp-admin-theme-color: #0085ba;
+    --wp-admin-theme-color--rgb: 0, 133, 186;
+    --wp-admin-theme-color-darker-10: #0073a1;
+    --wp-admin-theme-color-darker-10--rgb: 0, 115, 161;
+    --wp-admin-theme-color-darker-20: #006187;
+    --wp-admin-theme-color-darker-20--rgb: 0, 97, 135;
+    --wp-admin-border-width-focus: 2px;
 }
 
 @media (min-resolution:192dpi) {
-  body.admin-color-light {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    body.admin-color-light {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
 
 body.admin-color-modern {
-  --wp-admin-theme-color: #3858e9;
-  --wp-admin-theme-color--rgb: 56, 88, 233;
-  --wp-admin-theme-color-darker-10: #2145e6;
-  --wp-admin-theme-color-darker-10--rgb: 33, 69, 230;
-  --wp-admin-theme-color-darker-20: #183ad6;
-  --wp-admin-theme-color-darker-20--rgb: 24, 58, 214;
-  --wp-admin-border-width-focus: 2px;
+    --wp-admin-theme-color: #3858e9;
+    --wp-admin-theme-color--rgb: 56, 88, 233;
+    --wp-admin-theme-color-darker-10: #2145e6;
+    --wp-admin-theme-color-darker-10--rgb: 33, 69, 230;
+    --wp-admin-theme-color-darker-20: #183ad6;
+    --wp-admin-theme-color-darker-20--rgb: 24, 58, 214;
+    --wp-admin-border-width-focus: 2px;
 }
 
 @media (min-resolution:192dpi) {
-  body.admin-color-modern {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    body.admin-color-modern {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
 
 body.admin-color-blue {
-  --wp-admin-theme-color: #096484;
-  --wp-admin-theme-color--rgb: 9, 100, 132;
-  --wp-admin-theme-color-darker-10: #07526c;
-  --wp-admin-theme-color-darker-10--rgb: 7, 82, 108;
-  --wp-admin-theme-color-darker-20: #064054;
-  --wp-admin-theme-color-darker-20--rgb: 6, 64, 84;
-  --wp-admin-border-width-focus: 2px;
+    --wp-admin-theme-color: #096484;
+    --wp-admin-theme-color--rgb: 9, 100, 132;
+    --wp-admin-theme-color-darker-10: #07526c;
+    --wp-admin-theme-color-darker-10--rgb: 7, 82, 108;
+    --wp-admin-theme-color-darker-20: #064054;
+    --wp-admin-theme-color-darker-20--rgb: 6, 64, 84;
+    --wp-admin-border-width-focus: 2px;
 }
 
 @media (min-resolution:192dpi) {
-  body.admin-color-blue {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    body.admin-color-blue {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
 
 body.admin-color-coffee {
-  --wp-admin-theme-color: #46403c;
-  --wp-admin-theme-color--rgb: 70, 64, 60;
-  --wp-admin-theme-color-darker-10: #383330;
-  --wp-admin-theme-color-darker-10--rgb: 56, 51, 48;
-  --wp-admin-theme-color-darker-20: #2b2724;
-  --wp-admin-theme-color-darker-20--rgb: 43, 39, 36;
-  --wp-admin-border-width-focus: 2px;
+    --wp-admin-theme-color: #46403c;
+    --wp-admin-theme-color--rgb: 70, 64, 60;
+    --wp-admin-theme-color-darker-10: #383330;
+    --wp-admin-theme-color-darker-10--rgb: 56, 51, 48;
+    --wp-admin-theme-color-darker-20: #2b2724;
+    --wp-admin-theme-color-darker-20--rgb: 43, 39, 36;
+    --wp-admin-border-width-focus: 2px;
 }
 
 @media (min-resolution:192dpi) {
-  body.admin-color-coffee {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    body.admin-color-coffee {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
 
 body.admin-color-ectoplasm {
-  --wp-admin-theme-color: #523f6d;
-  --wp-admin-theme-color--rgb: 82, 63, 109;
-  --wp-admin-theme-color-darker-10: #46365d;
-  --wp-admin-theme-color-darker-10--rgb: 70, 54, 93;
-  --wp-admin-theme-color-darker-20: #3a2c4d;
-  --wp-admin-theme-color-darker-20--rgb: 58, 44, 77;
-  --wp-admin-border-width-focus: 2px;
+    --wp-admin-theme-color: #523f6d;
+    --wp-admin-theme-color--rgb: 82, 63, 109;
+    --wp-admin-theme-color-darker-10: #46365d;
+    --wp-admin-theme-color-darker-10--rgb: 70, 54, 93;
+    --wp-admin-theme-color-darker-20: #3a2c4d;
+    --wp-admin-theme-color-darker-20--rgb: 58, 44, 77;
+    --wp-admin-border-width-focus: 2px;
 }
 
 @media (min-resolution:192dpi) {
-  body.admin-color-ectoplasm {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    body.admin-color-ectoplasm {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
 
 body.admin-color-midnight {
-  --wp-admin-theme-color: #e14d43;
-  --wp-admin-theme-color--rgb: 225, 77, 67;
-  --wp-admin-theme-color-darker-10: #dd382d;
-  --wp-admin-theme-color-darker-10--rgb: 221, 56, 45;
-  --wp-admin-theme-color-darker-20: #d02c21;
-  --wp-admin-theme-color-darker-20--rgb: 208, 44, 33;
-  --wp-admin-border-width-focus: 2px;
+    --wp-admin-theme-color: #e14d43;
+    --wp-admin-theme-color--rgb: 225, 77, 67;
+    --wp-admin-theme-color-darker-10: #dd382d;
+    --wp-admin-theme-color-darker-10--rgb: 221, 56, 45;
+    --wp-admin-theme-color-darker-20: #d02c21;
+    --wp-admin-theme-color-darker-20--rgb: 208, 44, 33;
+    --wp-admin-border-width-focus: 2px;
 }
 
 @media (min-resolution:192dpi) {
-  body.admin-color-midnight {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    body.admin-color-midnight {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
 
 body.admin-color-ocean {
-  --wp-admin-theme-color: #627c83;
-  --wp-admin-theme-color--rgb: 98, 124, 131;
-  --wp-admin-theme-color-darker-10: #576e74;
-  --wp-admin-theme-color-darker-10--rgb: 87, 110, 116;
-  --wp-admin-theme-color-darker-20: #4c6066;
-  --wp-admin-theme-color-darker-20--rgb: 76, 96, 102;
-  --wp-admin-border-width-focus: 2px;
+    --wp-admin-theme-color: #627c83;
+    --wp-admin-theme-color--rgb: 98, 124, 131;
+    --wp-admin-theme-color-darker-10: #576e74;
+    --wp-admin-theme-color-darker-10--rgb: 87, 110, 116;
+    --wp-admin-theme-color-darker-20: #4c6066;
+    --wp-admin-theme-color-darker-20--rgb: 76, 96, 102;
+    --wp-admin-border-width-focus: 2px;
 }
 
 @media (min-resolution:192dpi) {
-  body.admin-color-ocean {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    body.admin-color-ocean {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
 
 body.admin-color-sunrise {
-  --wp-admin-theme-color: #dd823b;
-  --wp-admin-theme-color--rgb: 221, 130, 59;
-  --wp-admin-theme-color-darker-10: #d97426;
-  --wp-admin-theme-color-darker-10--rgb: 217, 116, 38;
-  --wp-admin-theme-color-darker-20: #c36922;
-  --wp-admin-theme-color-darker-20--rgb: 195, 105, 34;
-  --wp-admin-border-width-focus: 2px;
+    --wp-admin-theme-color: #dd823b;
+    --wp-admin-theme-color--rgb: 221, 130, 59;
+    --wp-admin-theme-color-darker-10: #d97426;
+    --wp-admin-theme-color-darker-10--rgb: 217, 116, 38;
+    --wp-admin-theme-color-darker-20: #c36922;
+    --wp-admin-theme-color-darker-20--rgb: 195, 105, 34;
+    --wp-admin-border-width-focus: 2px;
 }
 
 @media (min-resolution:192dpi) {
-  body.admin-color-sunrise {
-    --wp-admin-border-width-focus: 1.5px;
-  }
+    body.admin-color-sunrise {
+        --wp-admin-border-width-focus: 1.5px;
+    }
 }
 
 .interface-interface-skeleton__sidebar {
-  border-left: none;
+    border-left: none;
 }
 
 @media (min-width:782px) {
-  .is-sidebar-opened .interface-interface-skeleton__sidebar {
-    border-left: 1px solid #e0e0e0;
-    overflow: hidden scroll;
-  }
+    .is-sidebar-opened .interface-interface-skeleton__sidebar {
+        border-left: 1px solid #e0e0e0;
+        overflow: hidden scroll;
+    }
+}
+`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/inherited.css"],"names":[],"mappings":"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","sourcesContent":[":root {\n    --wp-admin-theme-color: #007cba;\n    --wp-admin-theme-color--rgb: 0, 124, 186;\n    --wp-admin-theme-color-darker-10: #006ba1;\n    --wp-admin-theme-color-darker-10--rgb: 0, 107, 161;\n    --wp-admin-theme-color-darker-20: #005a87;\n    --wp-admin-theme-color-darker-20--rgb: 0, 90, 135;\n    --wp-admin-border-width-focus: 2px;\n    --wp-block-synced-color: #7a00df;\n    --wp-block-synced-color--rgb: 122, 0, 223;\n}\n\n@media (min-resolution:192dpi) {\n    :root {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\n.components-panel__header.interface-complementary-area-header__small {\n    background: #fff;\n    padding-right: 4px;\n}\n\n.components-panel__header.interface-complementary-area-header__small .interface-complementary-area-header__small-title {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    width: 100%;\n}\n\n@media (min-width:782px) {\n    .components-panel__header.interface-complementary-area-header__small {\n        display: none;\n    }\n}\n\n.interface-complementary-area-header {\n    background: #fff;\n    padding-right: 4px;\n}\n\n.interface-complementary-area-header .components-button.has-icon {\n    display: none;\n    margin-left: auto;\n}\n\n.interface-complementary-area-header .components-button.has-icon~.components-button {\n    margin-left: 0;\n}\n\n@media (min-width:782px) {\n    .interface-complementary-area-header .components-button.has-icon {\n        display: flex;\n    }\n\n    .components-panel__header+.interface-complementary-area-header {\n        margin-top: 0;\n    }\n}\n\n.interface-complementary-area {\n    background: #fff;\n    color: #1e1e1e;\n}\n\n@media (min-width:600px) {\n    .interface-complementary-area {\n        -webkit-overflow-scrolling: touch;\n    }\n}\n\n@media (min-width:782px) {\n    .interface-complementary-area {\n        width: 280px;\n    }\n}\n\n.interface-complementary-area .components-panel {\n    border: none;\n    position: relative;\n    z-index: 0;\n}\n\n.interface-complementary-area .components-panel__header {\n    position: sticky;\n    top: 0;\n    z-index: 1;\n}\n\n.interface-complementary-area .components-panel__header.edit-workflow-sidebar__panel-tabs {\n    top: 48px;\n}\n\n@media (min-width:782px) {\n    .interface-complementary-area .components-panel__header.edit-workflow-sidebar__panel-tabs {\n        top: 0;\n    }\n}\n\n.interface-complementary-area p:not(.components-base-control__help) {\n    margin-top: 0;\n}\n\n.interface-complementary-area h2 {\n    color: #1e1e1e;\n    font-size: 13px;\n    margin-bottom: 1.5em;\n}\n\n.interface-complementary-area h3 {\n    color: #1e1e1e;\n    font-size: 11px;\n    font-weight: 500;\n    margin-bottom: 1.5em;\n    text-transform: uppercase;\n}\n\n.interface-complementary-area hr {\n    border-bottom: 1px solid #f0f0f0;\n    border-top: none;\n    margin: 1.5em 0;\n}\n\n.interface-complementary-area div.components-toolbar,\n.interface-complementary-area div.components-toolbar-group {\n    box-shadow: none;\n    margin-bottom: 1.5em;\n}\n\n.interface-complementary-area div.components-toolbar-group:last-child,\n.interface-complementary-area div.components-toolbar:last-child {\n    margin-bottom: 0;\n}\n\n.interface-complementary-area .workflow-editor-skip-to-selected-block:focus {\n    bottom: 10px;\n    left: auto;\n    right: 10px;\n    top: auto;\n}\n\n@media (min-width:782px) {\n    body.js.is-fullscreen-mode {\n        height: calc(100% + 32px);\n        margin-top: -32px;\n    }\n\n    body.js.is-fullscreen-mode #adminmenumain,\n    body.js.is-fullscreen-mode #wpadminbar {\n        display: none;\n    }\n\n    body.js.is-fullscreen-mode #wpcontent,\n    body.js.is-fullscreen-mode #wpfooter {\n        margin-left: 0;\n    }\n}\n\nhtml.interface-interface-skeleton__html-container {\n    position: fixed;\n    width: 100%;\n}\n\n@media (min-width:782px) {\n    html.interface-interface-skeleton__html-container {\n        position: static;\n        width: auto;\n    }\n}\n\n.interface-interface-skeleton {\n    bottom: 0;\n    display: flex;\n    flex-direction: row;\n    height: auto;\n    max-height: 100%;\n    position: fixed;\n    right: 0;\n    top: 46px;\n}\n\n@media (min-width:783px) {\n    .interface-interface-skeleton {\n        top: 32px;\n    }\n\n    .is-fullscreen-mode .interface-interface-skeleton {\n        top: 0;\n    }\n}\n\n.interface-interface-skeleton__editor {\n    display: flex;\n    flex: 0 1 100%;\n    flex-direction: column;\n    overflow: hidden;\n}\n\n.interface-interface-skeleton {\n    left: 0;\n}\n\n@media (min-width:783px) {\n    .interface-interface-skeleton {\n        left: 160px;\n    }\n}\n\n@media (min-width:783px) {\n    .auto-fold .interface-interface-skeleton {\n        left: 36px;\n    }\n}\n\n@media (min-width:961px) {\n    .auto-fold .interface-interface-skeleton {\n        left: 160px;\n    }\n}\n\n.folded .interface-interface-skeleton {\n    left: 0;\n}\n\n@media (min-width:783px) {\n    .folded .interface-interface-skeleton {\n        left: 36px;\n    }\n}\n\nbody.is-fullscreen-mode .interface-interface-skeleton {\n    left: 0 !important;\n}\n\n.interface-interface-skeleton__body {\n    display: flex;\n    flex-grow: 1;\n    overflow: auto;\n    overscroll-behavior-y: none;\n}\n\n@media (min-width:782px) {\n    .has-footer .interface-interface-skeleton__body {\n        padding-bottom: 25px;\n    }\n}\n\n.interface-interface-skeleton__content {\n    display: flex;\n    flex-direction: column;\n    flex-grow: 1;\n    overflow: auto;\n    z-index: 20;\n}\n\n@media (min-width:782px) {\n    .interface-interface-skeleton__content {\n        z-index: auto;\n    }\n}\n\n.interface-interface-skeleton__secondary-sidebar,\n.interface-interface-skeleton__sidebar {\n    background: #fff;\n    bottom: 0;\n    color: #1e1e1e;\n    flex-shrink: 0;\n    left: 0;\n    position: absolute;\n    right: 0;\n    top: 0;\n    z-index: 100000;\n}\n\n@media (min-width:782px) {\n\n    .interface-interface-skeleton__secondary-sidebar,\n    .interface-interface-skeleton__sidebar {\n        position: relative !important;\n        width: auto;\n    }\n\n    .is-sidebar-opened .interface-interface-skeleton__secondary-sidebar,\n    .is-sidebar-opened .interface-interface-skeleton__sidebar {\n        z-index: 90;\n    }\n}\n\n.interface-interface-skeleton__sidebar {\n    overflow: auto;\n}\n\n@media (min-width:782px) {\n    .interface-interface-skeleton__sidebar {\n        border-left: 1px solid #e0e0e0;\n    }\n\n    .interface-interface-skeleton__secondary-sidebar {\n        border-right: 1px solid #e0e0e0;\n    }\n}\n\n.interface-interface-skeleton__header {\n    border-bottom: 1px solid #e0e0e0;\n    color: #1e1e1e;\n    flex-shrink: 0;\n    height: auto;\n    z-index: 30;\n}\n\n.interface-interface-skeleton__footer {\n    background-color: #fff;\n    border-top: 1px solid #e0e0e0;\n    bottom: 0;\n    color: #1e1e1e;\n    display: none;\n    flex-shrink: 0;\n    height: auto;\n    left: 0;\n    position: absolute;\n    width: 100%;\n    z-index: 90;\n}\n\n@media (min-width:782px) {\n    .interface-interface-skeleton__footer {\n        display: flex;\n    }\n}\n\n.interface-interface-skeleton__footer .workflow-editor-block-breadcrumb {\n    align-items: center;\n    background: #fff;\n    display: flex;\n    font-size: 13px;\n    height: 24px;\n    padding: 0 18px;\n    z-index: 30;\n}\n\n.interface-interface-skeleton__actions {\n    background: #fff;\n    bottom: auto;\n    color: #1e1e1e;\n    left: auto;\n    position: fixed !important;\n    right: 0;\n    top: -9999em;\n    width: 100vw;\n    z-index: 100000;\n}\n\n@media (min-width:782px) {\n    .interface-interface-skeleton__actions {\n        width: 280px;\n    }\n}\n\n.interface-interface-skeleton__actions:focus,\n.interface-interface-skeleton__actions:focus-within {\n    bottom: 0;\n    top: auto;\n}\n\n.is-entity-save-view-open .interface-interface-skeleton__actions:focus,\n.is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {\n    top: 46px;\n}\n\n@media (min-width:782px) {\n\n    .is-entity-save-view-open .interface-interface-skeleton__actions:focus,\n    .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {\n        border-left: 1px solid #ddd;\n        top: 32px;\n    }\n\n    .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus,\n    .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {\n        top: 0;\n    }\n}\n\n.interface-more-menu-dropdown {\n    margin-left: -4px;\n}\n\n.interface-more-menu-dropdown .components-button {\n    padding: 0 2px;\n    width: auto;\n}\n\n@media (min-width:600px) {\n    .interface-more-menu-dropdown {\n        margin-left: 0;\n    }\n\n    .interface-more-menu-dropdown .components-button {\n        padding: 0 4px;\n    }\n}\n\n.interface-more-menu-dropdown__content .components-popover__content {\n    min-width: 280px;\n}\n\n@media (min-width:480px) {\n    .interface-more-menu-dropdown__content .components-popover__content {\n        max-width: 480px;\n    }\n}\n\n.interface-more-menu-dropdown__content .components-popover__content .components-dropdown-menu__menu {\n    padding: 0;\n}\n\n.components-popover.interface-more-menu-dropdown__content {\n    z-index: 99998;\n}\n\n.interface-pinned-items {\n    display: flex;\n    gap: 4px;\n    margin-right: -4px;\n}\n\n.interface-pinned-items .components-button {\n    display: none;\n    margin: 0;\n}\n\n.interface-pinned-items .components-button[aria-controls=\"edit-workflow:block\"],\n.interface-pinned-items .components-button[aria-controls=\"edit-workflow:document\"],\n.interface-pinned-items .components-button[aria-controls=\"edit-site:block-inspector\"],\n.interface-pinned-items .components-button[aria-controls=\"edit-site:global-styles\"],\n.interface-pinned-items .components-button[aria-controls=\"edit-site:template\"] {\n    display: flex;\n}\n\n.interface-pinned-items .components-button svg {\n    max-height: 24px;\n    max-width: 24px;\n}\n\n@media (min-width:600px) {\n    .interface-pinned-items .components-button {\n        display: flex;\n    }\n\n    .interface-preferences-modal {\n        height: calc(100% - 120px);\n        width: calc(100% - 32px);\n    }\n}\n\n@media (min-width:782px) {\n    .interface-preferences-modal {\n        width: 750px;\n    }\n}\n\n@media (min-width:960px) {\n    .interface-preferences-modal {\n        height: 70%;\n    }\n}\n\n@media (max-width:781px) {\n    .interface-preferences-modal .components-modal__content {\n        padding: 0;\n    }\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs {\n    left: 16px;\n    position: absolute;\n    top: 84px;\n    width: 160px;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item {\n    border-radius: 2px;\n    font-weight: 400;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item.is-active {\n    background: #f0f0f0;\n    box-shadow: none;\n    font-weight: 500;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item.is-active:after {\n    content: none;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item:focus:not(:disabled) {\n    box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);\n    outline: 2px solid transparent;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item:focus-visible:before {\n    content: none;\n}\n\n.interface-preferences__tabs .components-tab-panel__tab-content {\n    margin-left: 160px;\n    padding-left: 24px;\n}\n\n@media (max-width:781px) {\n    .interface-preferences__provider {\n        height: 100%;\n    }\n}\n\n.interface-preferences-modal__section {\n    margin: 0 0 2.5rem;\n}\n\n.interface-preferences-modal__section:last-child {\n    margin: 0;\n}\n\n.interface-preferences-modal__section-legend {\n    margin-bottom: 8px;\n}\n\n.interface-preferences-modal__section-title {\n    font-size: .9rem;\n    font-weight: 600;\n    margin-top: 0;\n}\n\n.interface-preferences-modal__section-description {\n    color: #757575;\n    font-size: 12px;\n    font-style: normal;\n    margin: -8px 0 8px;\n}\n\n.interface-preferences-modal__option+.interface-preferences-modal__option {\n    margin-top: 16px;\n}\n\n.interface-preferences-modal__option .components-base-control__help {\n    margin-left: 48px;\n    margin-top: 0;\n}\n\n.edit-workflow-header {\n    align-items: center;\n    background: #fff;\n    display: flex;\n    flex-wrap: wrap;\n    height: 60px;\n    max-width: 100vw;\n}\n\n@media (min-width:280px) {\n    .edit-workflow-header {\n        flex-wrap: nowrap;\n    }\n}\n\n.edit-workflow-header>.edit-workflow-header__settings {\n    order: 1;\n}\n\n@supports (position:sticky) {\n    .edit-workflow-header>.edit-workflow-header__settings {\n        order: 0;\n    }\n}\n\n.edit-workflow-header__toolbar {\n    display: flex;\n    flex-grow: 1;\n}\n\n.edit-workflow-header__toolbar .table-of-contents {\n    display: none;\n}\n\n@media (min-width:600px) {\n    .edit-workflow-header__toolbar .table-of-contents {\n        display: block;\n    }\n}\n\n.edit-workflow-header__center {\n    display: flex;\n    flex-grow: 1;\n    justify-content: center;\n}\n\n.edit-workflow-header__settings {\n    align-items: center;\n    display: inline-flex;\n    flex-wrap: wrap;\n    gap: 4px;\n    padding-right: 4px;\n}\n\n@media (min-width:600px) {\n    .edit-workflow-header__settings {\n        gap: 8px;\n        padding-right: 10px;\n    }\n}\n\n.edit-workflow-header-preview__grouping-external {\n    display: flex;\n    padding-bottom: 0;\n    position: relative;\n}\n\n.edit-workflow-header-preview__button-external {\n    display: flex;\n    justify-content: flex-start;\n    margin-right: auto;\n    padding-left: 8px;\n    width: 100%;\n}\n\n.edit-workflow-header-preview__button-external svg {\n    margin-left: auto;\n}\n\n.edit-workflow-post-preview-dropdown .components-popover__content {\n    padding-bottom: 0;\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon,\n.show-icon-labels .edit-workflow-header .components-button.has-icon,\n.show-icon-labels.interface-pinned-items .components-button.has-icon {\n    width: auto;\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon svg,\n.show-icon-labels .edit-workflow-header .components-button.has-icon svg,\n.show-icon-labels.interface-pinned-items .components-button.has-icon svg {\n    display: none;\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon:after,\n.show-icon-labels .edit-workflow-header .components-button.has-icon:after,\n.show-icon-labels.interface-pinned-items .components-button.has-icon:after {\n    content: attr(aria-label);\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon[aria-disabled=true],\n.show-icon-labels .edit-workflow-header .components-button.has-icon[aria-disabled=true],\n.show-icon-labels.interface-pinned-items .components-button.has-icon[aria-disabled=true] {\n    background-color: transparent;\n}\n\n.edit-workflow-header__dropdown .is-tertiary:active,\n.show-icon-labels .edit-workflow-header .is-tertiary:active,\n.show-icon-labels.interface-pinned-items .is-tertiary:active {\n    background-color: transparent;\n    box-shadow: 0 0 0 1.5px var(--wp-admin-theme-color);\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon.button-toggle svg,\n.edit-workflow-header__dropdown .edit-workflow-fullscreen-mode-close.has-icon svg,\n.show-icon-labels .edit-workflow-header .components-button.has-icon.button-toggle svg,\n.show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon svg,\n.show-icon-labels.interface-pinned-items .components-button.has-icon.button-toggle svg,\n.show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon svg {\n    display: block;\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon.button-toggle:after,\n.edit-workflow-header__dropdown .edit-workflow-fullscreen-mode-close.has-icon:after,\n.show-icon-labels .edit-workflow-header .components-button.has-icon.button-toggle:after,\n.show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon:after,\n.show-icon-labels.interface-pinned-items .components-button.has-icon.button-toggle:after,\n.show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon:after {\n    content: none;\n}\n\n.edit-workflow-header__dropdown .edit-workflow-fullscreen-mode-close.has-icon,\n.show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon,\n.show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon {\n    width: 60px;\n}\n\n.edit-workflow-header__dropdown .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon,\n.show-icon-labels .edit-workflow-header .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon,\n.show-icon-labels.interface-pinned-items .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon {\n    display: block;\n}\n\n.edit-workflow-header__dropdown .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n.edit-workflow-header__dropdown .interface-pinned-items .components-button,\n.show-icon-labels .edit-workflow-header .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n.show-icon-labels .edit-workflow-header .interface-pinned-items .components-button,\n.show-icon-labels.interface-pinned-items .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n.show-icon-labels.interface-pinned-items .interface-pinned-items .components-button {\n    padding-left: 8px;\n    padding-right: 8px;\n}\n\n@media (min-width:600px) {\n\n    .edit-workflow-header__dropdown .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n    .edit-workflow-header__dropdown .interface-pinned-items .components-button,\n    .show-icon-labels .edit-workflow-header .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n    .show-icon-labels .edit-workflow-header .interface-pinned-items .components-button,\n    .show-icon-labels.interface-pinned-items .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n    .show-icon-labels.interface-pinned-items .interface-pinned-items .components-button {\n        padding-left: 12px;\n        padding-right: 12px;\n    }\n}\n\n.edit-workflow-header__dropdown .editor-post-save-draft.editor-post-save-draft:after,\n.edit-workflow-header__dropdown .editor-post-saved-state.editor-post-saved-state:after,\n.show-icon-labels .edit-workflow-header .editor-post-save-draft.editor-post-save-draft:after,\n.show-icon-labels .edit-workflow-header .editor-post-saved-state.editor-post-saved-state:after,\n.show-icon-labels.interface-pinned-items .editor-post-save-draft.editor-post-save-draft:after,\n.show-icon-labels.interface-pinned-items .editor-post-saved-state.editor-post-saved-state:after {\n    content: none;\n}\n\n.edit-workflow-header__dropdown .components-button.workflow-editor-list-view,\n.edit-workflow-header__dropdown .components-button.editor-history__redo,\n.edit-workflow-header__dropdown .components-button.editor-history__undo,\n.edit-workflow-header__dropdown .components-menu-item__button.components-menu-item__button,\n.edit-workflow-header__dropdown .table-of-contents .components-button {\n    justify-content: flex-start;\n    margin: 0;\n    padding: 6px 6px 6px 40px;\n    text-align: left;\n    width: 14.625rem;\n}\n\n.show-icon-labels.interface-pinned-items {\n    border-bottom: 1px solid #ccc;\n    display: block;\n    margin: 0 -12px;\n    padding: 6px 12px 12px;\n}\n\n.show-icon-labels.interface-pinned-items>.components-button.has-icon {\n    justify-content: flex-start;\n    margin: 0;\n    padding: 6px 6px 6px 8px;\n    width: 14.625rem;\n}\n\n.show-icon-labels.interface-pinned-items>.components-button.has-icon[aria-expanded=true] svg {\n    display: block;\n    max-width: 24px;\n}\n\n.show-icon-labels.interface-pinned-items>.components-button.has-icon[aria-expanded=false] {\n    padding-left: 40px;\n}\n\n.show-icon-labels.interface-pinned-items>.components-button.has-icon svg {\n    margin-right: 8px;\n}\n\n.is-distraction-free .interface-interface-skeleton__header {\n    border-bottom: none;\n}\n\n.is-distraction-free .edit-workflow-header {\n    -webkit-backdrop-filter: blur(20px) !important;\n    backdrop-filter: blur(20px) !important;\n    background-color: hsla(0, 0%, 100%, .9);\n    border-bottom: 1px solid #e0e0e0;\n    position: absolute;\n    width: 100%;\n}\n\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.editor-post-preview {\n    visibility: hidden;\n}\n\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.workflow-editor-post-preview__dropdown,\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.interface-pinned-items,\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__toolbar .edit-workflow-header-toolbar__document-overview-toggle,\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__toolbar .edit-workflow-header-toolbar__inserter-toggle {\n    display: none;\n}\n\n.is-distraction-free .interface-interface-skeleton__header:focus-within {\n    opacity: 1 !important;\n}\n\n.is-distraction-free .interface-interface-skeleton__header:focus-within div {\n    transform: translateX(0) translateZ(0) !important;\n}\n\n.is-distraction-free .components-editor-notices__dismissible {\n    position: absolute;\n    z-index: 35;\n}\n\n.edit-workflow-fullscreen-mode-close.components-button {\n    display: none;\n}\n\n@media (min-width:782px) {\n    .edit-workflow-fullscreen-mode-close.components-button {\n        align-items: center;\n        align-self: stretch;\n        background: #1e1e1e;\n        border: none;\n        border-radius: 0;\n        color: #fff;\n        display: flex;\n        height: 61px;\n        margin-bottom: -1px;\n        position: relative;\n        width: 60px;\n    }\n\n    .edit-workflow-fullscreen-mode-close.components-button:active {\n        color: #fff;\n    }\n\n    .edit-workflow-fullscreen-mode-close.components-button:focus {\n        box-shadow: none;\n    }\n\n    .edit-workflow-fullscreen-mode-close.components-button:before {\n        border-radius: 4px;\n        bottom: 10px;\n        box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) #1e1e1e;\n        content: \"\";\n        display: block;\n        left: 9px;\n        position: absolute;\n        right: 9px;\n        top: 9px;\n        transition: box-shadow .1s ease;\n    }\n}\n\n@media (min-width:782px) and (prefers-reduced-motion:reduce) {\n    .edit-workflow-fullscreen-mode-close.components-button:before {\n        transition-delay: 0s;\n        transition-duration: 0s;\n    }\n}\n\n@media (min-width:782px) {\n    .edit-workflow-fullscreen-mode-close.components-button:hover:before {\n        box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) #757575;\n    }\n\n    .edit-workflow-fullscreen-mode-close.components-button.has-icon:hover:before {\n        box-shadow: none;\n    }\n\n    .edit-workflow-fullscreen-mode-close.components-button:focus:before {\n        box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) hsla(0, 0%, 100%, .1), inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);\n    }\n}\n\n.edit-workflow-fullscreen-mode-close.components-button .edit-workflow-fullscreen-mode-close_site-icon {\n    border-radius: 2px;\n    height: 36px;\n    margin-top: -1px;\n    object-fit: cover;\n    width: 36px;\n}\n\n.edit-workflow-fullscreen-mode-close svg {\n    height: 36px;\n    width: 36px;\n    margin-left: 12px;\n}\n\n.edit-workflow-header-toolbar {\n    align-items: center;\n    border: none;\n    display: inline-flex;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button {\n    display: none;\n}\n\n@media (min-width:600px) {\n    .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button {\n        display: inline-flex;\n    }\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle {\n    display: inline-flex;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle svg {\n    transition: transform .2s cubic-bezier(.165, .84, .44, 1);\n}\n\n@media (prefers-reduced-motion:reduce) {\n    .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle svg {\n        transition-delay: 0s;\n        transition-duration: 0s;\n    }\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.is-pressed svg {\n    transform: rotate(45deg);\n}\n\n.edit-workflow-header-toolbar .workflow-editor-list-view {\n    display: none;\n}\n\n@media (min-width:600px) {\n    .edit-workflow-header-toolbar .workflow-editor-list-view {\n        display: flex;\n    }\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon,\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon {\n    height: 36px;\n    min-width: 36px;\n    padding: 6px;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon.is-pressed,\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon.is-pressed {\n    background: #1e1e1e;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon:focus:not(:disabled),\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon:focus:not(:disabled) {\n    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color), inset 0 0 0 1px #fff;\n    outline: 1px solid transparent;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon:before,\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon:before {\n    display: none;\n}\n\n@media (min-width:600px) {\n\n    .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-button,\n    .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {\n        transition: opacity .1s linear;\n    }\n}\n\n@media (min-width:600px) and (prefers-reduced-motion:reduce) {\n\n    .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-button,\n    .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {\n        transition-delay: 0s;\n        transition-duration: 0s;\n    }\n}\n\n@media (min-width:600px) {\n\n    .edit-workflow-header.has-reduced-ui:not(:hover) .edit-workflow-header-toolbar__left>*+.components-button,\n    .edit-workflow-header.has-reduced-ui:not(:hover) .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {\n        opacity: 0;\n    }\n}\n\n.edit-workflow-header-toolbar__left {\n    align-items: center;\n    display: inline-flex;\n    margin-right: 8px;\n    padding-left: 8px;\n}\n\n@media (min-width:600px) {\n    .edit-workflow-header-toolbar__left {\n        padding-left: 24px;\n    }\n}\n\n@media (min-width:1280px) {\n    .edit-workflow-header-toolbar__left {\n        padding-right: 8px;\n    }\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.has-icon {\n    height: 32px;\n    margin-right: 8px;\n    min-width: 32px;\n    padding: 0;\n    width: 32px;\n}\n\n.show-icon-labels .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.has-icon {\n    height: 36px;\n    padding: 0 8px;\n    width: auto;\n}\n\n.show-icon-labels .edit-workflow-header-toolbar__left>*+* {\n    margin-left: 8px;\n}\n\n.edit-workflow-document-actions {\n    align-items: center;\n    background: #f0f0f0;\n    border-radius: 4px;\n    display: flex;\n    gap: 8px;\n    height: 36px;\n    justify-content: space-between;\n    min-width: 0;\n    width: min(100%, 450px);\n}\n\n.edit-workflow-document-actions .components-button:hover {\n    background: #e0e0e0;\n    color: var(--wp-block-synced-color);\n}\n\n.edit-workflow-document-actions__command,\n.edit-workflow-document-actions__title {\n    color: var(--wp-block-synced-color);\n    flex-grow: 1;\n    overflow: hidden;\n}\n\n.edit-workflow-document-actions__title:hover {\n    color: var(--wp-block-synced-color);\n}\n\n.edit-workflow-document-actions__title .workflow-editor-block-icon {\n    flex-shrink: 0;\n}\n\n.edit-workflow-document-actions__title h1 {\n    color: var(--wp-block-synced-color);\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.edit-workflow-document-actions__shortcut {\n    color: #2f2f2f;\n}\n\n.edit-workflow-document-actions__back.components-button.has-icon.has-text {\n    color: #757575;\n    flex-shrink: 0;\n    gap: 0;\n    min-width: 36px;\n}\n\n.edit-workflow-document-actions__back.components-button.has-icon.has-text:hover {\n    color: currentColor;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__section {\n    margin: 0 0 2rem;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__section-title {\n    font-size: .9rem;\n    font-weight: 600;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut {\n    align-items: baseline;\n    border-top: 1px solid #ddd;\n    display: flex;\n    margin-bottom: 0;\n    padding: .6rem 0;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut:last-child {\n    border-bottom: 1px solid #ddd;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut:empty {\n    display: none;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-term {\n    font-weight: 600;\n    margin: 0 0 0 1rem;\n    text-align: right;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-description {\n    flex: 1;\n    flex-basis: auto;\n    margin: 0;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination {\n    background: none;\n    display: block;\n    margin: 0;\n    padding: 0;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination+.edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination {\n    margin-top: 10px;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-key {\n    border-radius: 8%;\n    margin: 0 .2rem;\n    padding: .25rem .5rem;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-key:last-child {\n    margin: 0 0 0 .2rem;\n}\n\n.edit-workflow-layout__metaboxes {\n    clear: both;\n    flex-shrink: 0;\n}\n\n.edit-workflow-layout .components-editor-notices__snackbar {\n    bottom: 40px;\n    padding-left: 16px;\n    padding-right: 16px;\n    position: fixed;\n    right: 0;\n}\n\n.is-distraction-free .components-editor-notices__snackbar {\n    bottom: 20px;\n}\n\n.edit-workflow-layout .components-editor-notices__snackbar {\n    left: 0;\n}\n\n@media (min-width:783px) {\n    .edit-workflow-layout .components-editor-notices__snackbar {\n        left: 160px;\n    }\n}\n\n@media (min-width:783px) {\n    .auto-fold .edit-workflow-layout .components-editor-notices__snackbar {\n        left: 36px;\n    }\n}\n\n@media (min-width:961px) {\n    .auto-fold .edit-workflow-layout .components-editor-notices__snackbar {\n        left: 160px;\n    }\n}\n\n.folded .edit-workflow-layout .components-editor-notices__snackbar {\n    left: 0;\n}\n\n@media (min-width:783px) {\n    .folded .edit-workflow-layout .components-editor-notices__snackbar {\n        left: 36px;\n    }\n}\n\nbody.is-fullscreen-mode .edit-workflow-layout .components-editor-notices__snackbar {\n    left: 0 !important;\n}\n\n.edit-workflow-layout .editor-post-publish-panel {\n    bottom: 0;\n    left: 0;\n    overflow: auto;\n    position: fixed;\n    right: 0;\n    top: 46px;\n    z-index: 100001;\n}\n\n@media (min-width:782px) {\n    .edit-workflow-layout .editor-post-publish-panel {\n        animation: edit-workflow-post-publish-panel__slide-in-animation .1s forwards;\n        border-left: 1px solid #ddd;\n        left: auto;\n        top: 32px;\n        transform: translateX(100%);\n        width: 281px;\n        z-index: 99998;\n    }\n}\n\n@media (min-width:782px) and (prefers-reduced-motion:reduce) {\n    .edit-workflow-layout .editor-post-publish-panel {\n        animation-delay: 0s;\n        animation-duration: 1ms;\n    }\n}\n\n@media (min-width:782px) {\n    body.is-fullscreen-mode .edit-workflow-layout .editor-post-publish-panel {\n        top: 0;\n    }\n\n    [role=region]:focus .edit-workflow-layout .editor-post-publish-panel {\n        transform: translateX(0);\n    }\n}\n\n@keyframes edit-workflow-post-publish-panel__slide-in-animation {\n    to {\n        transform: translateX(0);\n    }\n}\n\n.edit-workflow-layout .editor-post-publish-panel__header-publish-button {\n    justify-content: center;\n}\n\n.edit-workflow-layout__toggle-entities-saved-states-panel,\n.edit-workflow-layout__toggle-publish-panel,\n.edit-workflow-layout__toggle-sidebar-panel {\n    background-color: #fff;\n    border: 1px dotted #ddd;\n    bottom: auto;\n    box-sizing: border-box;\n    display: flex;\n    height: auto !important;\n    justify-content: center;\n    left: auto;\n    padding: 24px;\n    position: fixed !important;\n    right: 0;\n    top: -9999em;\n    width: 280px;\n    z-index: 100000;\n}\n\n.interface-interface-skeleton__sidebar:focus .edit-workflow-layout__toggle-sidebar-panel,\n.interface-interface-skeleton__sidebar:focus-within .edit-workflow-layout__toggle-sidebar-panel {\n    bottom: 0;\n    top: auto;\n}\n\n.interface-interface-skeleton__actions:focus .edit-workflow-layout__toggle-entities-saved-states-panel,\n.interface-interface-skeleton__actions:focus .edit-workflow-layout__toggle-publish-panel,\n.interface-interface-skeleton__actions:focus-within .edit-workflow-layout__toggle-entities-saved-states-panel,\n.interface-interface-skeleton__actions:focus-within .edit-workflow-layout__toggle-publish-panel {\n    bottom: 0;\n    top: auto;\n}\n\n.edit-workflow-layout .entities-saved-states__panel-header {\n    height: 61px;\n}\n\n@media (min-width:782px) {\n    .edit-workflow-layout.has-fixed-toolbar .interface-interface-skeleton__header:not(:focus-within) {\n        z-index: 19;\n    }\n}\n\n.edit-workflow-block-manager__no-results {\n    font-style: italic;\n    padding: 24px 0;\n    text-align: center;\n}\n\n.edit-workflow-block-manager__search {\n    margin: 16px 0;\n}\n\n.edit-workflow-block-manager__disabled-blocks-count {\n    background-color: #fff;\n    border: 1px solid #ddd;\n    border-width: 1px 0;\n    box-shadow: -32px 0 0 0 #fff, 32px 0 0 0 #fff;\n    padding: 8px;\n    position: sticky;\n    text-align: center;\n    top: -1px;\n    z-index: 2;\n}\n\n.edit-workflow-block-manager__disabled-blocks-count~.edit-workflow-block-manager__results .edit-workflow-block-manager__category-title {\n    top: 35px;\n}\n\n.edit-workflow-block-manager__disabled-blocks-count .is-link {\n    margin-left: 12px;\n}\n\n.edit-workflow-block-manager__category {\n    margin: 0 0 24px;\n}\n\n.edit-workflow-block-manager__category-title {\n    background-color: #fff;\n    padding: 16px 0;\n    position: sticky;\n    top: -4px;\n    z-index: 1;\n}\n\n.edit-workflow-block-manager__category-title .components-checkbox-control__label {\n    font-weight: 600;\n}\n\n.edit-workflow-block-manager__checklist {\n    margin-top: 0;\n}\n\n.edit-workflow-block-manager__category-title,\n.edit-workflow-block-manager__checklist-item {\n    border-bottom: 1px solid #ddd;\n}\n\n.edit-workflow-block-manager__checklist-item {\n    align-items: center;\n    display: flex;\n    justify-content: space-between;\n    margin-bottom: 0;\n    padding: 8px 0 8px 16px;\n}\n\n.components-modal__content .edit-workflow-block-manager__checklist-item.components-checkbox-control__input-container {\n    margin: 0 8px;\n}\n\n.edit-workflow-block-manager__checklist-item .workflow-editor-block-icon {\n    fill: #1e1e1e;\n    margin-right: 10px;\n}\n\n.edit-workflow-block-manager__results {\n    border-top: 1px solid #ddd;\n}\n\n.edit-workflow-block-manager__disabled-blocks-count+.edit-workflow-block-manager__results {\n    border-top-width: 0;\n}\n\n.edit-workflow-meta-boxes-area {\n    position: relative;\n}\n\n.edit-workflow-meta-boxes-area .inside,\n.edit-workflow-meta-boxes-area__container {\n    box-sizing: content-box;\n}\n\n.edit-workflow-meta-boxes-area input,\n.edit-workflow-meta-boxes-area textarea {\n    box-sizing: border-box;\n}\n\n.edit-workflow-meta-boxes-area .postbox-header {\n    border-bottom: 0;\n    border-top: 1px solid #ddd;\n}\n\n.edit-workflow-meta-boxes-area #poststuff {\n    margin: 0 auto;\n    min-width: auto;\n    padding-top: 0;\n}\n\n.edit-workflow-meta-boxes-area #poststuff .stuffbox>h3,\n.edit-workflow-meta-boxes-area #poststuff h2.hndle,\n.edit-workflow-meta-boxes-area #poststuff h3.hndle {\n    box-sizing: border-box;\n    color: inherit;\n    font-weight: 600;\n    outline: none;\n    padding: 0 24px;\n    position: relative;\n    width: 100%;\n}\n\n.edit-workflow-meta-boxes-area .postbox {\n    border: 0;\n    color: inherit;\n    margin-bottom: 0;\n}\n\n.edit-workflow-meta-boxes-area .postbox>.inside {\n    color: inherit;\n    margin: 0;\n    padding: 0 24px 24px;\n}\n\n.edit-workflow-meta-boxes-area .postbox .handlediv {\n    height: 44px;\n    width: 44px;\n}\n\n.edit-workflow-meta-boxes-area.is-loading:before {\n    background: transparent;\n    bottom: 0;\n    content: \"\";\n    left: 0;\n    position: absolute;\n    right: 0;\n    top: 0;\n    z-index: 1;\n}\n\n.edit-workflow-meta-boxes-area .components-spinner {\n    position: absolute;\n    right: 20px;\n    top: 10px;\n    z-index: 5;\n}\n\n.edit-workflow-meta-boxes-area .is-hidden {\n    display: none;\n}\n\n.edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox] {\n    border: 1px solid #757575;\n}\n\n.edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox]:checked {\n    background: #fff;\n    border-color: #757575;\n}\n\n.edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox]:before {\n    margin: -3px -4px;\n}\n\n.edit-workflow-meta-boxes-area__clear {\n    clear: both;\n}\n\n.edit-workflow-editor__document-overview-panel,\n.edit-workflow-editor__inserter-panel {\n    display: flex;\n    flex-direction: column;\n    height: 100%;\n}\n\n@media (min-width:782px) {\n    .edit-workflow-editor__document-overview-panel {\n        width: 350px;\n    }\n}\n\n.edit-workflow-editor__document-overview-panel .edit-workflow-editor__document-overview-panel__close-button {\n    background: #fff;\n    position: absolute;\n    right: 8px;\n    top: 6px;\n    z-index: 1;\n}\n\n.edit-workflow-editor__document-overview-panel .components-tab-panel__tabs {\n    border-bottom: 1px solid #ddd;\n    box-sizing: border-box;\n    display: flex;\n    padding-right: 56px;\n    width: 100%;\n}\n\n.edit-workflow-editor__document-overview-panel .components-tab-panel__tabs .edit-workflow-sidebar__panel-tab {\n    margin-bottom: -1px;\n    width: 50%;\n}\n\n.edit-workflow-editor__document-overview-panel .components-tab-panel__tab-content {\n    height: calc(100% - 47px);\n}\n\n.edit-workflow-editor__inserter-panel-header {\n    display: flex;\n    justify-content: flex-end;\n    padding-right: 8px;\n    padding-top: 8px;\n}\n\n.edit-workflow-editor__inserter-panel-content {\n    height: calc(100% - 44px);\n}\n\n@media (min-width:782px) {\n    .edit-workflow-editor__inserter-panel-content {\n        height: 100%;\n    }\n}\n\n.edit-workflow-editor__list-view-container>.document-outline,\n.edit-workflow-editor__list-view-empty-headings,\n.edit-workflow-editor__list-view-panel-content {\n    height: 100%;\n    overflow: auto;\n    padding: 8px 6px;\n    scrollbar-color: transparent transparent;\n    scrollbar-gutter: stable both-edges;\n    scrollbar-gutter: auto;\n    scrollbar-width: thin;\n    will-change: transform;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar,\n.edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar,\n.edit-workflow-editor__list-view-panel-content::-webkit-scrollbar {\n    height: 12px;\n    width: 12px;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar-track,\n.edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar-track,\n.edit-workflow-editor__list-view-panel-content::-webkit-scrollbar-track {\n    background-color: transparent;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-panel-content::-webkit-scrollbar-thumb {\n    background-clip: padding-box;\n    background-color: transparent;\n    border: 3px solid transparent;\n    border-radius: 8px;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline:focus-within::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-container>.document-outline:focus::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-container>.document-outline:hover::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-empty-headings:focus-within::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-empty-headings:focus::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-empty-headings:hover::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-panel-content:focus-within::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-panel-content:focus::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-panel-content:hover::-webkit-scrollbar-thumb {\n    background-color: #949494;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline:focus,\n.edit-workflow-editor__list-view-container>.document-outline:focus-within,\n.edit-workflow-editor__list-view-container>.document-outline:hover,\n.edit-workflow-editor__list-view-empty-headings:focus,\n.edit-workflow-editor__list-view-empty-headings:focus-within,\n.edit-workflow-editor__list-view-empty-headings:hover,\n.edit-workflow-editor__list-view-panel-content:focus,\n.edit-workflow-editor__list-view-panel-content:focus-within,\n.edit-workflow-editor__list-view-panel-content:hover {\n    scrollbar-color: #949494 transparent;\n}\n\n@media (hover:none) {\n\n    .edit-workflow-editor__list-view-container>.document-outline,\n    .edit-workflow-editor__list-view-empty-headings,\n    .edit-workflow-editor__list-view-panel-content {\n        scrollbar-color: #949494 transparent;\n    }\n}\n\n.edit-workflow-editor__list-view-empty-headings {\n    color: #757575;\n    text-align: center;\n}\n\n.edit-workflow-editor__list-view-empty-headings>svg {\n    margin-top: 28px;\n}\n\n.edit-workflow-editor__list-view-empty-headings>p {\n    padding-left: 32px;\n    padding-right: 32px;\n}\n\n.edit-workflow-editor__list-view-overview {\n    border-bottom: 1px solid #ddd;\n    display: flex;\n    flex-direction: column;\n    gap: 8px;\n    padding: 16px;\n}\n\n.edit-workflow-editor__list-view-overview>div>span:first-child {\n    display: inline-block;\n    width: 90px;\n}\n\n.edit-workflow-editor__list-view-overview>div>span {\n    color: #757575;\n    font-size: 12px;\n    line-height: 1.4;\n}\n\n.edit-workflow-editor__list-view-container {\n    display: flex;\n    flex-direction: column;\n    height: 100%;\n}\n\n.edit-workflow-editor__document-overview-panel__tab-panel {\n    height: 100%;\n}\n\n.components-panel__header.edit-workflow-sidebar__panel-tabs {\n    border-top: 0;\n    justify-content: flex-start;\n    margin-top: 0;\n    padding-left: 0;\n    padding-right: 16px;\n}\n\n.components-panel__header.edit-workflow-sidebar__panel-tabs ul {\n    display: flex;\n}\n\n.components-panel__header.edit-workflow-sidebar__panel-tabs li {\n    margin: 0;\n}\n\n.components-panel__header.edit-workflow-sidebar__panel-tabs .components-button.has-icon {\n    display: none;\n    height: 24px;\n    margin: 0 0 0 auto;\n    min-width: 24px;\n    padding: 0;\n}\n\n@media (min-width:782px) {\n    .components-panel__header.edit-workflow-sidebar__panel-tabs .components-button.has-icon {\n        display: flex;\n    }\n}\n\n.components-panel__body.is-opened.edit-workflow-last-revision__panel {\n    height: 48px;\n    padding: 0;\n}\n\n.editor-post-last-revision__title.components-button {\n    padding: 16px;\n}\n\n.edit-workflow-post-author,\n.edit-workflow-post-format {\n    align-items: stretch;\n    display: flex;\n    flex-direction: column;\n}\n\n.edit-workflow-post-schedule {\n    align-items: flex-start;\n    justify-content: flex-start;\n    position: relative;\n    width: 100%;\n}\n\n.edit-workflow-post-schedule span {\n    display: block;\n    flex-shrink: 0;\n    padding: 6px 0;\n    width: 45%;\n}\n\n.components-button.edit-workflow-post-schedule__toggle {\n    height: auto;\n    text-align: left;\n    white-space: normal;\n}\n\n.components-button.edit-workflow-post-schedule__toggle span {\n    width: 0;\n}\n\n.edit-workflow-post-schedule__dialog .workflow-editor-publish-date-time-picker {\n    margin: 8px;\n}\n\n.edit-workflow-post-slug {\n    align-items: stretch;\n    display: flex;\n    flex-direction: column;\n}\n\n.edit-workflow-post-status .edit-workflow-post-publish-dropdown__switch-to-draft {\n    margin-top: 15px;\n    text-align: center;\n    width: 100%;\n}\n\n.edit-workflow-post-template {\n    justify-content: flex-start;\n    width: 100%;\n}\n\n.edit-workflow-post-template span {\n    display: block;\n    padding: 6px 0;\n    width: 45%;\n}\n\n.edit-workflow-post-template__dropdown {\n    max-width: 55%;\n}\n\n.components-button.edit-workflow-post-template__toggle {\n    display: inline-block;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    width: 100%;\n}\n\n.edit-workflow-post-template__dialog {\n    z-index: 99999;\n}\n\n.edit-workflow-post-template__form {\n    margin: 8px;\n    min-width: 248px;\n}\n\n@media (min-width:782px) {\n    .edit-workflow-post-template__create-form {\n        width: 320px;\n    }\n}\n\n.edit-workflow-post-url {\n    align-items: flex-start;\n    justify-content: flex-start;\n    width: 100%;\n}\n\n.edit-workflow-post-url span {\n    display: block;\n    flex-shrink: 0;\n    padding: 6px 0;\n    width: 45%;\n}\n\n.components-button.edit-workflow-post-url__toggle {\n    height: auto;\n    text-align: left;\n    white-space: normal;\n    word-break: break-word;\n}\n\n.edit-workflow-post-url__dialog .editor-post-url {\n    margin: 8px;\n    min-width: 248px;\n}\n\n.edit-workflow-post-visibility {\n    justify-content: flex-start;\n    width: 100%;\n}\n\n.edit-workflow-post-visibility span {\n    display: block;\n    padding: 6px 0;\n    width: 45%;\n}\n\n.edit-workflow-post-visibility__dialog .editor-post-visibility {\n    margin: 8px;\n    min-width: 248px;\n}\n\n.components-button.edit-workflow-sidebar__panel-tab {\n    background: transparent;\n    border: none;\n    border-radius: 0;\n    box-shadow: none;\n    cursor: pointer;\n    font-weight: 500;\n    height: 48px;\n    margin-left: 0;\n    padding: 3px 16px;\n    position: relative;\n}\n\n.components-button.edit-workflow-sidebar__panel-tab:focus:not(:disabled) {\n    box-shadow: none;\n    outline: none;\n    position: relative;\n}\n\n.components-button.edit-workflow-sidebar__panel-tab:after {\n    background: var(--wp-admin-theme-color);\n    border-radius: 0;\n    bottom: 0;\n    content: \"\";\n    height: calc(var(--wp-admin-border-width-focus)*0);\n    left: 0;\n    pointer-events: none;\n    position: absolute;\n    right: 0;\n    transition: all .1s linear;\n}\n\n@media (prefers-reduced-motion:reduce) {\n    .components-button.edit-workflow-sidebar__panel-tab:after {\n        transition-delay: 0s;\n        transition-duration: 0s;\n    }\n}\n\n.components-button.edit-workflow-sidebar__panel-tab.is-active:after {\n    height: calc(var(--wp-admin-border-width-focus)*1);\n    outline: 2px solid transparent;\n    outline-offset: -1px;\n}\n\n.components-button.edit-workflow-sidebar__panel-tab:before {\n    border-radius: 2px;\n    bottom: 12px;\n    box-shadow: 0 0 0 0 transparent;\n    content: \"\";\n    left: 12px;\n    pointer-events: none;\n    position: absolute;\n    right: 12px;\n    top: 12px;\n    transition: all .1s linear;\n}\n\n@media (prefers-reduced-motion:reduce) {\n    .components-button.edit-workflow-sidebar__panel-tab:before {\n        transition-delay: 0s;\n        transition-duration: 0s;\n    }\n}\n\n.components-button.edit-workflow-sidebar__panel-tab:focus-visible:before {\n    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);\n    outline: 2px solid transparent;\n}\n\nh2.edit-workflow-template-summary__title {\n    font-weight: 500;\n    line-height: 24px;\n    margin: 0 0 4px;\n}\n\n.edit-workflow-text-editor {\n    background-color: #fff;\n    flex-grow: 1;\n    position: relative;\n    width: 100%;\n}\n\n.edit-workflow-text-editor .editor-post-title {\n    border: 1px solid #949494;\n    font-family: Menlo, Consolas, monaco, monospace;\n    font-size: 2.5em;\n    font-weight: 400;\n    line-height: 1.4;\n    max-width: none;\n    padding: 16px;\n}\n\n@media (min-width:600px) {\n    .edit-workflow-text-editor .editor-post-title {\n        padding: 24px;\n    }\n}\n\n.edit-workflow-text-editor .editor-post-title:focus {\n    border-color: var(--wp-admin-theme-color);\n    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);\n}\n\n.edit-workflow-text-editor__body {\n    margin-left: auto;\n    margin-right: auto;\n    max-width: 1080px;\n    padding: 0 12px 12px;\n    width: 100%;\n}\n\n@media (min-width:960px) {\n    .edit-workflow-text-editor__body {\n        padding: 0 24px 24px;\n    }\n}\n\n.edit-workflow-text-editor__toolbar {\n    background: hsla(0, 0%, 100%, .8);\n    display: flex;\n    left: 0;\n    padding: 4px 12px;\n    position: sticky;\n    right: 0;\n    top: 0;\n    z-index: 1;\n}\n\n@media (min-width:600px) {\n    .edit-workflow-text-editor__toolbar {\n        padding: 12px;\n    }\n}\n\n@media (min-width:960px) {\n    .edit-workflow-text-editor__toolbar {\n        padding: 12px 24px;\n    }\n}\n\n.edit-workflow-text-editor__toolbar h2 {\n    color: #1e1e1e;\n    font-size: 13px;\n    line-height: 36px;\n    margin: 0 auto 0 0;\n}\n\n.edit-workflow-text-editor__toolbar .components-button svg {\n    order: 1;\n}\n\n.components-button svg {\n    fill: currentColor;\n    outline: none;\n}\n\n.edit-workflow-visual-editor {\n    background-color: #1e1e1e;\n    display: flex;\n    flex: 1 0 auto;\n    flex-flow: column;\n    position: relative;\n}\n\n.edit-workflow-visual-editor:not(.has-inline-canvas) {\n    overflow: hidden;\n}\n\n.edit-workflow-visual-editor .components-button {\n    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;\n    font-size: 13px;\n    padding: 6px 12px;\n}\n\n.edit-workflow-visual-editor .components-button.has-icon,\n.edit-workflow-visual-editor .components-button.is-tertiary {\n    padding: 6px;\n}\n\n.edit-workflow-visual-editor__post-title-wrapper {\n    margin-bottom: var(--wp--style--block-gap);\n    margin-top: 4rem;\n}\n\n.edit-workflow-visual-editor__post-title-wrapper .editor-post-title {\n    margin-left: auto;\n    margin-right: auto;\n}\n\n.edit-workflow-visual-editor__content-area {\n    box-sizing: border-box;\n    display: flex;\n    flex-grow: 1;\n    height: 100%;\n    position: relative;\n    width: 100%;\n}\n\n.edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    left: 0;\n}\n\n@media (min-width:783px) {\n    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        left: 160px;\n    }\n}\n\n@media (min-width:783px) {\n    .auto-fold .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        left: 36px;\n    }\n}\n\n@media (min-width:961px) {\n    .auto-fold .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        left: 160px;\n    }\n}\n\n.folded .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    left: 0;\n}\n\n@media (min-width:783px) {\n    .folded .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        left: 36px;\n    }\n}\n\nbody.is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    left: 0 !important;\n}\n\n.edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    display: block;\n    position: sticky;\n    top: 0;\n    width: 100%;\n    z-index: 31;\n}\n\n@media (min-width:782px) {\n    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        align-items: center;\n        border-bottom: none;\n        display: flex;\n        height: 60px;\n        margin-left: 180px;\n        min-height: auto;\n        position: fixed;\n        top: 32px;\n        width: calc(100% - 180px);\n    }\n\n    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed.is-collapsed,\n    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed:empty {\n        width: auto;\n    }\n\n    .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        margin-left: 240px;\n        top: 0;\n    }\n\n    .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed.is-collapsed,\n    .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed:empty {\n        width: auto;\n    }\n\n    .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        margin-left: 80px;\n        width: calc(100% - 140px);\n    }\n\n    .is-fullscreen-mode .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        margin-left: 144px;\n    }\n}\n\n@media (min-width:960px) {\n\n    .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed,\n    .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        width: auto;\n    }\n\n    .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n        width: calc(100% - 536px);\n    }\n}\n\n.edit-workflow-welcome-guide,\n.edit-template-welcome-guide {\n    width: 312px;\n}\n\n.edit-workflow-welcome-guide__image,\n.edit-template-welcome-guide__image {\n    background: #00a0d2;\n    margin: 0 0 16px;\n}\n\n.edit-workflow-welcome-guide__image>img,\n.edit-template-welcome-guide__image>img {\n    display: block;\n    max-width: 100%;\n    object-fit: cover;\n}\n\n.edit-workflow-welcome-guide__heading,\n.edit-template-welcome-guide__heading {\n    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;\n    font-size: 24px;\n    line-height: 1.4;\n    margin: 16px 0;\n    padding: 0 32px;\n}\n\n.edit-workflow-welcome-guide__text,\n.edit-template-welcome-guide__text {\n    font-size: 13px;\n    line-height: 1.4;\n    margin: 0 0 24px;\n    padding: 0 32px;\n}\n\n.edit-workflow-welcome-guide__inserter-icon,\n.edit-template-welcome-guide__inserter-icon {\n    margin: 0 4px;\n    vertical-align: text-top;\n}\n\n.edit-template-welcome-guide .components-button svg {\n    fill: #fff;\n}\n\n.edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {\n    column-count: 2;\n    column-gap: 24px;\n}\n\n@media (min-width:782px) {\n    .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {\n        column-count: 3;\n    }\n}\n\n@media (min-width:1280px) {\n    .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {\n        column-count: 4;\n    }\n}\n\n.edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item {\n    break-inside: avoid-column;\n    margin-bottom: 24px;\n}\n\n.edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item .workflow-editor-block-preview__container {\n    min-height: 100px;\n}\n\n.edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item .workflow-editor-block-preview__content {\n    width: 100%;\n}\n\n@keyframes edit-workflow__fade-in-animation {\n    0% {\n        opacity: 0;\n    }\n\n    to {\n        opacity: 1;\n    }\n}\n\nbody.js.workflow-editor-page {\n    background: #fff;\n}\n\nbody.js.workflow-editor-page #wpcontent {\n    padding-left: 0;\n}\n\nbody.js.workflow-editor-page #wpbody-content {\n    padding-bottom: 0;\n}\n\nbody.js.workflow-editor-page #wpbody-content>div:not(.workflow-editor):not(#screen-meta),\nbody.js.workflow-editor-page #wpfooter {\n    display: none;\n}\n\nbody.js.workflow-editor-page .a11y-speak-region {\n    left: -1px;\n    top: -1px;\n}\n\nbody.js.workflow-editor-page ul#adminmenu a.wp-has-current-submenu:after,\nbody.js.workflow-editor-page ul#adminmenu>li.current>a.current:after {\n    border-right-color: #fff;\n}\n\nbody.js.workflow-editor-page .media-frame select.attachment-filters:last-of-type {\n    max-width: 100%;\n    width: auto;\n}\n\n.workflow-editor-page #wpwrap {\n    overflow-y: auto;\n}\n\n@media (min-width:782px) {\n    .workflow-editor-page #wpwrap {\n        overflow-y: initial;\n    }\n}\n\n.components-modal__frame,\n.components-popover,\n.edit-workflow-editor__inserter-panel,\n.edit-workflow-header,\n.edit-workflow-sidebar,\n.edit-workflow-text-editor,\n.editor-post-publish-panel {\n    box-sizing: border-box;\n}\n\n.components-modal__frame *,\n.components-modal__frame :after,\n.components-modal__frame :before,\n.components-popover *,\n.components-popover :after,\n.components-popover :before,\n.edit-workflow-editor__inserter-panel *,\n.edit-workflow-editor__inserter-panel :after,\n.edit-workflow-editor__inserter-panel :before,\n.edit-workflow-header *,\n.edit-workflow-header :after,\n.edit-workflow-header :before,\n.edit-workflow-sidebar *,\n.edit-workflow-sidebar :after,\n.edit-workflow-sidebar :before,\n.edit-workflow-text-editor *,\n.edit-workflow-text-editor :after,\n.edit-workflow-text-editor :before,\n.editor-post-publish-panel *,\n.editor-post-publish-panel :after,\n.editor-post-publish-panel :before {\n    box-sizing: inherit;\n}\n\n@media (min-width:600px) {\n    .workflow-editor__container {\n        bottom: 0;\n        left: 0;\n        min-height: calc(100vh - 46px);\n        position: absolute;\n        right: 0;\n        top: 0;\n    }\n}\n\n@media (min-width:782px) {\n    .workflow-editor__container {\n        min-height: calc(100vh - 32px);\n    }\n\n    body.is-fullscreen-mode .workflow-editor__container {\n        min-height: 100vh;\n    }\n}\n\n.workflow-editor__container img {\n    height: auto;\n    max-width: 100%;\n}\n\nbody.admin-color-light {\n    --wp-admin-theme-color: #0085ba;\n    --wp-admin-theme-color--rgb: 0, 133, 186;\n    --wp-admin-theme-color-darker-10: #0073a1;\n    --wp-admin-theme-color-darker-10--rgb: 0, 115, 161;\n    --wp-admin-theme-color-darker-20: #006187;\n    --wp-admin-theme-color-darker-20--rgb: 0, 97, 135;\n    --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n    body.admin-color-light {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\nbody.admin-color-modern {\n    --wp-admin-theme-color: #3858e9;\n    --wp-admin-theme-color--rgb: 56, 88, 233;\n    --wp-admin-theme-color-darker-10: #2145e6;\n    --wp-admin-theme-color-darker-10--rgb: 33, 69, 230;\n    --wp-admin-theme-color-darker-20: #183ad6;\n    --wp-admin-theme-color-darker-20--rgb: 24, 58, 214;\n    --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n    body.admin-color-modern {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\nbody.admin-color-blue {\n    --wp-admin-theme-color: #096484;\n    --wp-admin-theme-color--rgb: 9, 100, 132;\n    --wp-admin-theme-color-darker-10: #07526c;\n    --wp-admin-theme-color-darker-10--rgb: 7, 82, 108;\n    --wp-admin-theme-color-darker-20: #064054;\n    --wp-admin-theme-color-darker-20--rgb: 6, 64, 84;\n    --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n    body.admin-color-blue {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\nbody.admin-color-coffee {\n    --wp-admin-theme-color: #46403c;\n    --wp-admin-theme-color--rgb: 70, 64, 60;\n    --wp-admin-theme-color-darker-10: #383330;\n    --wp-admin-theme-color-darker-10--rgb: 56, 51, 48;\n    --wp-admin-theme-color-darker-20: #2b2724;\n    --wp-admin-theme-color-darker-20--rgb: 43, 39, 36;\n    --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n    body.admin-color-coffee {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\nbody.admin-color-ectoplasm {\n    --wp-admin-theme-color: #523f6d;\n    --wp-admin-theme-color--rgb: 82, 63, 109;\n    --wp-admin-theme-color-darker-10: #46365d;\n    --wp-admin-theme-color-darker-10--rgb: 70, 54, 93;\n    --wp-admin-theme-color-darker-20: #3a2c4d;\n    --wp-admin-theme-color-darker-20--rgb: 58, 44, 77;\n    --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n    body.admin-color-ectoplasm {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\nbody.admin-color-midnight {\n    --wp-admin-theme-color: #e14d43;\n    --wp-admin-theme-color--rgb: 225, 77, 67;\n    --wp-admin-theme-color-darker-10: #dd382d;\n    --wp-admin-theme-color-darker-10--rgb: 221, 56, 45;\n    --wp-admin-theme-color-darker-20: #d02c21;\n    --wp-admin-theme-color-darker-20--rgb: 208, 44, 33;\n    --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n    body.admin-color-midnight {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\nbody.admin-color-ocean {\n    --wp-admin-theme-color: #627c83;\n    --wp-admin-theme-color--rgb: 98, 124, 131;\n    --wp-admin-theme-color-darker-10: #576e74;\n    --wp-admin-theme-color-darker-10--rgb: 87, 110, 116;\n    --wp-admin-theme-color-darker-20: #4c6066;\n    --wp-admin-theme-color-darker-20--rgb: 76, 96, 102;\n    --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n    body.admin-color-ocean {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\nbody.admin-color-sunrise {\n    --wp-admin-theme-color: #dd823b;\n    --wp-admin-theme-color--rgb: 221, 130, 59;\n    --wp-admin-theme-color-darker-10: #d97426;\n    --wp-admin-theme-color-darker-10--rgb: 217, 116, 38;\n    --wp-admin-theme-color-darker-20: #c36922;\n    --wp-admin-theme-color-darker-20--rgb: 195, 105, 34;\n    --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n    body.admin-color-sunrise {\n        --wp-admin-border-width-focus: 1.5px;\n    }\n}\n\n.interface-interface-skeleton__sidebar {\n    border-left: none;\n}\n\n@media (min-width:782px) {\n    .is-sidebar-opened .interface-interface-skeleton__sidebar {\n        border-left: 1px solid #e0e0e0;\n        overflow: hidden scroll;\n    }\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/tooltip.css":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/assets/jsx/workflow-editor/css/tooltip.css ***!
+  \**********************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.components-tooltip {
+    background: #000;
+    border-radius: 2px;
+    color: #f0f0f0;
+    font-size: 12px;
+    line-height: 1.4;
+    padding: 4px 8px;
+    text-align: center;
+    z-index: 1000002;
 }
 
-
-
-
-
-
-/* #################################################################### */
-/* TOOL TIP */
-
-.components-tooltip{
-  background:#000;
-  border-radius:2px;
-  color:#f0f0f0;
-  font-size:12px;
-  line-height:1.4;
-  padding:4px 8px;
-  text-align:center;
-  z-index:1000002;
+.components-tooltip__shortcut {
+    margin-left: 8px;
 }
-
-.components-tooltip__shortcut{
-  margin-left:8px;
-}
-`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/editor.css"],"names":[],"mappings":"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","sourcesContent":[":root {\n  --wp-admin-theme-color: #007cba;\n  --wp-admin-theme-color--rgb: 0, 124, 186;\n  --wp-admin-theme-color-darker-10: #006ba1;\n  --wp-admin-theme-color-darker-10--rgb: 0, 107, 161;\n  --wp-admin-theme-color-darker-20: #005a87;\n  --wp-admin-theme-color-darker-20--rgb: 0, 90, 135;\n  --wp-admin-border-width-focus: 2px;\n  --wp-block-synced-color: #7a00df;\n  --wp-block-synced-color--rgb: 122, 0, 223;\n}\n\n@media (min-resolution:192dpi) {\n  :root {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\n/* CUSTOM */\n#wpfooter {\n  display: none !important;\n}\n\n.react-flow {\n  height: 100vh !important;\n  width: 100% !important;\n}\n\n/* END CUSTOM */\n\n\n\n.components-panel__header.interface-complementary-area-header__small {\n  background: #fff;\n  padding-right: 4px;\n}\n\n.components-panel__header.interface-complementary-area-header__small .interface-complementary-area-header__small-title {\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  width: 100%;\n}\n\n@media (min-width:782px) {\n  .components-panel__header.interface-complementary-area-header__small {\n    display: none;\n  }\n}\n\n.interface-complementary-area-header {\n  background: #fff;\n  padding-right: 4px;\n}\n\n.interface-complementary-area-header .components-button.has-icon {\n  display: none;\n  margin-left: auto;\n}\n\n.interface-complementary-area-header .components-button.has-icon~.components-button {\n  margin-left: 0;\n}\n\n@media (min-width:782px) {\n  .interface-complementary-area-header .components-button.has-icon {\n    display: flex;\n  }\n\n  .components-panel__header+.interface-complementary-area-header {\n    margin-top: 0;\n  }\n}\n\n.interface-complementary-area {\n  background: #fff;\n  color: #1e1e1e;\n}\n\n@media (min-width:600px) {\n  .interface-complementary-area {\n    -webkit-overflow-scrolling: touch;\n  }\n}\n\n@media (min-width:782px) {\n  .interface-complementary-area {\n    width: 280px;\n  }\n}\n\n.interface-complementary-area .components-panel {\n  border: none;\n  position: relative;\n  z-index: 0;\n}\n\n.interface-complementary-area .components-panel__header {\n  position: sticky;\n  top: 0;\n  z-index: 1;\n}\n\n.interface-complementary-area .components-panel__header.edit-workflow-sidebar__panel-tabs {\n  top: 48px;\n}\n\n@media (min-width:782px) {\n  .interface-complementary-area .components-panel__header.edit-workflow-sidebar__panel-tabs {\n    top: 0;\n  }\n}\n\n.interface-complementary-area p:not(.components-base-control__help) {\n  margin-top: 0;\n}\n\n.interface-complementary-area h2 {\n  color: #1e1e1e;\n  font-size: 13px;\n  margin-bottom: 1.5em;\n}\n\n.interface-complementary-area h3 {\n  color: #1e1e1e;\n  font-size: 11px;\n  font-weight: 500;\n  margin-bottom: 1.5em;\n  text-transform: uppercase;\n}\n\n.interface-complementary-area hr {\n  border-bottom: 1px solid #f0f0f0;\n  border-top: none;\n  margin: 1.5em 0;\n}\n\n.interface-complementary-area div.components-toolbar,\n.interface-complementary-area div.components-toolbar-group {\n  box-shadow: none;\n  margin-bottom: 1.5em;\n}\n\n.interface-complementary-area div.components-toolbar-group:last-child,\n.interface-complementary-area div.components-toolbar:last-child {\n  margin-bottom: 0;\n}\n\n.interface-complementary-area .workflow-editor-skip-to-selected-block:focus {\n  bottom: 10px;\n  left: auto;\n  right: 10px;\n  top: auto;\n}\n\n@media (min-width:782px) {\n  body.js.is-fullscreen-mode {\n    height: calc(100% + 32px);\n    margin-top: -32px;\n  }\n\n  body.js.is-fullscreen-mode #adminmenumain,\n  body.js.is-fullscreen-mode #wpadminbar {\n    display: none;\n  }\n\n  body.js.is-fullscreen-mode #wpcontent,\n  body.js.is-fullscreen-mode #wpfooter {\n    margin-left: 0;\n  }\n}\n\nhtml.interface-interface-skeleton__html-container {\n  position: fixed;\n  width: 100%;\n}\n\n@media (min-width:782px) {\n  html.interface-interface-skeleton__html-container {\n    position: static;\n    width: auto;\n  }\n}\n\n.interface-interface-skeleton {\n  bottom: 0;\n  display: flex;\n  flex-direction: row;\n  height: auto;\n  max-height: 100%;\n  position: fixed;\n  right: 0;\n  top: 46px;\n}\n\n@media (min-width:783px) {\n  .interface-interface-skeleton {\n    top: 32px;\n  }\n\n  .is-fullscreen-mode .interface-interface-skeleton {\n    top: 0;\n  }\n}\n\n.interface-interface-skeleton__editor {\n  display: flex;\n  flex: 0 1 100%;\n  flex-direction: column;\n  overflow: hidden;\n}\n\n.interface-interface-skeleton {\n  left: 0;\n}\n\n@media (min-width:783px) {\n  .interface-interface-skeleton {\n    left: 160px;\n  }\n}\n\n@media (min-width:783px) {\n  .auto-fold .interface-interface-skeleton {\n    left: 36px;\n  }\n}\n\n@media (min-width:961px) {\n  .auto-fold .interface-interface-skeleton {\n    left: 160px;\n  }\n}\n\n.folded .interface-interface-skeleton {\n  left: 0;\n}\n\n@media (min-width:783px) {\n  .folded .interface-interface-skeleton {\n    left: 36px;\n  }\n}\n\nbody.is-fullscreen-mode .interface-interface-skeleton {\n  left: 0 !important;\n}\n\n.interface-interface-skeleton__body {\n  display: flex;\n  flex-grow: 1;\n  overflow: auto;\n  overscroll-behavior-y: none;\n}\n\n@media (min-width:782px) {\n  .has-footer .interface-interface-skeleton__body {\n    padding-bottom: 25px;\n  }\n}\n\n.interface-interface-skeleton__content {\n  display: flex;\n  flex-direction: column;\n  flex-grow: 1;\n  overflow: auto;\n  z-index: 20;\n}\n\n@media (min-width:782px) {\n  .interface-interface-skeleton__content {\n    z-index: auto;\n  }\n}\n\n.interface-interface-skeleton__secondary-sidebar,\n.interface-interface-skeleton__sidebar {\n  background: #fff;\n  bottom: 0;\n  color: #1e1e1e;\n  flex-shrink: 0;\n  left: 0;\n  position: absolute;\n  right: 0;\n  top: 0;\n  z-index: 100000;\n}\n\n@media (min-width:782px) {\n\n  .interface-interface-skeleton__secondary-sidebar,\n  .interface-interface-skeleton__sidebar {\n    position: relative !important;\n    width: auto;\n  }\n\n  .is-sidebar-opened .interface-interface-skeleton__secondary-sidebar,\n  .is-sidebar-opened .interface-interface-skeleton__sidebar {\n    z-index: 90;\n  }\n}\n\n.interface-interface-skeleton__sidebar {\n  overflow: auto;\n}\n\n@media (min-width:782px) {\n  .interface-interface-skeleton__sidebar {\n    border-left: 1px solid #e0e0e0;\n  }\n\n  .interface-interface-skeleton__secondary-sidebar {\n    border-right: 1px solid #e0e0e0;\n  }\n}\n\n.interface-interface-skeleton__header {\n  border-bottom: 1px solid #e0e0e0;\n  color: #1e1e1e;\n  flex-shrink: 0;\n  height: auto;\n  z-index: 30;\n}\n\n.interface-interface-skeleton__footer {\n  background-color: #fff;\n  border-top: 1px solid #e0e0e0;\n  bottom: 0;\n  color: #1e1e1e;\n  display: none;\n  flex-shrink: 0;\n  height: auto;\n  left: 0;\n  position: absolute;\n  width: 100%;\n  z-index: 90;\n}\n\n@media (min-width:782px) {\n  .interface-interface-skeleton__footer {\n    display: flex;\n  }\n}\n\n.interface-interface-skeleton__footer .workflow-editor-block-breadcrumb {\n  align-items: center;\n  background: #fff;\n  display: flex;\n  font-size: 13px;\n  height: 24px;\n  padding: 0 18px;\n  z-index: 30;\n}\n\n.interface-interface-skeleton__actions {\n  background: #fff;\n  bottom: auto;\n  color: #1e1e1e;\n  left: auto;\n  position: fixed !important;\n  right: 0;\n  top: -9999em;\n  width: 100vw;\n  z-index: 100000;\n}\n\n@media (min-width:782px) {\n  .interface-interface-skeleton__actions {\n    width: 280px;\n  }\n}\n\n.interface-interface-skeleton__actions:focus,\n.interface-interface-skeleton__actions:focus-within {\n  bottom: 0;\n  top: auto;\n}\n\n.is-entity-save-view-open .interface-interface-skeleton__actions:focus,\n.is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {\n  top: 46px;\n}\n\n@media (min-width:782px) {\n\n  .is-entity-save-view-open .interface-interface-skeleton__actions:focus,\n  .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {\n    border-left: 1px solid #ddd;\n    top: 32px;\n  }\n\n  .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus,\n  .is-fullscreen-mode .is-entity-save-view-open .interface-interface-skeleton__actions:focus-within {\n    top: 0;\n  }\n}\n\n.interface-more-menu-dropdown {\n  margin-left: -4px;\n}\n\n.interface-more-menu-dropdown .components-button {\n  padding: 0 2px;\n  width: auto;\n}\n\n@media (min-width:600px) {\n  .interface-more-menu-dropdown {\n    margin-left: 0;\n  }\n\n  .interface-more-menu-dropdown .components-button {\n    padding: 0 4px;\n  }\n}\n\n.interface-more-menu-dropdown__content .components-popover__content {\n  min-width: 280px;\n}\n\n@media (min-width:480px) {\n  .interface-more-menu-dropdown__content .components-popover__content {\n    max-width: 480px;\n  }\n}\n\n.interface-more-menu-dropdown__content .components-popover__content .components-dropdown-menu__menu {\n  padding: 0;\n}\n\n.components-popover.interface-more-menu-dropdown__content {\n  z-index: 99998;\n}\n\n.interface-pinned-items {\n  display: flex;\n  gap: 4px;\n  margin-right: -4px;\n}\n\n.interface-pinned-items .components-button {\n  display: none;\n  margin: 0;\n}\n\n.interface-pinned-items .components-button[aria-controls=\"edit-workflow:block\"],\n.interface-pinned-items .components-button[aria-controls=\"edit-workflow:document\"],\n.interface-pinned-items .components-button[aria-controls=\"edit-site:block-inspector\"],\n.interface-pinned-items .components-button[aria-controls=\"edit-site:global-styles\"],\n.interface-pinned-items .components-button[aria-controls=\"edit-site:template\"] {\n  display: flex;\n}\n\n.interface-pinned-items .components-button svg {\n  max-height: 24px;\n  max-width: 24px;\n}\n\n@media (min-width:600px) {\n  .interface-pinned-items .components-button {\n    display: flex;\n  }\n\n  .interface-preferences-modal {\n    height: calc(100% - 120px);\n    width: calc(100% - 32px);\n  }\n}\n\n@media (min-width:782px) {\n  .interface-preferences-modal {\n    width: 750px;\n  }\n}\n\n@media (min-width:960px) {\n  .interface-preferences-modal {\n    height: 70%;\n  }\n}\n\n@media (max-width:781px) {\n  .interface-preferences-modal .components-modal__content {\n    padding: 0;\n  }\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs {\n  left: 16px;\n  position: absolute;\n  top: 84px;\n  width: 160px;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item {\n  border-radius: 2px;\n  font-weight: 400;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item.is-active {\n  background: #f0f0f0;\n  box-shadow: none;\n  font-weight: 500;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item.is-active:after {\n  content: none;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item:focus:not(:disabled) {\n  box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);\n  outline: 2px solid transparent;\n}\n\n.interface-preferences__tabs .components-tab-panel__tabs .components-tab-panel__tabs-item:focus-visible:before {\n  content: none;\n}\n\n.interface-preferences__tabs .components-tab-panel__tab-content {\n  margin-left: 160px;\n  padding-left: 24px;\n}\n\n@media (max-width:781px) {\n  .interface-preferences__provider {\n    height: 100%;\n  }\n}\n\n.interface-preferences-modal__section {\n  margin: 0 0 2.5rem;\n}\n\n.interface-preferences-modal__section:last-child {\n  margin: 0;\n}\n\n.interface-preferences-modal__section-legend {\n  margin-bottom: 8px;\n}\n\n.interface-preferences-modal__section-title {\n  font-size: .9rem;\n  font-weight: 600;\n  margin-top: 0;\n}\n\n.interface-preferences-modal__section-description {\n  color: #757575;\n  font-size: 12px;\n  font-style: normal;\n  margin: -8px 0 8px;\n}\n\n.interface-preferences-modal__option+.interface-preferences-modal__option {\n  margin-top: 16px;\n}\n\n.interface-preferences-modal__option .components-base-control__help {\n  margin-left: 48px;\n  margin-top: 0;\n}\n\n.edit-workflow-header {\n  align-items: center;\n  background: #fff;\n  display: flex;\n  flex-wrap: wrap;\n  height: 60px;\n  max-width: 100vw;\n}\n\n@media (min-width:280px) {\n  .edit-workflow-header {\n    flex-wrap: nowrap;\n  }\n}\n\n.edit-workflow-header>.edit-workflow-header__settings {\n  order: 1;\n}\n\n@supports (position:sticky) {\n  .edit-workflow-header>.edit-workflow-header__settings {\n    order: 0;\n  }\n}\n\n.edit-workflow-header__toolbar {\n  display: flex;\n  flex-grow: 1;\n}\n\n.edit-workflow-header__toolbar .table-of-contents {\n  display: none;\n}\n\n@media (min-width:600px) {\n  .edit-workflow-header__toolbar .table-of-contents {\n    display: block;\n  }\n}\n\n.edit-workflow-header__center {\n  display: flex;\n  flex-grow: 1;\n  justify-content: center;\n}\n\n.edit-workflow-header__settings {\n  align-items: center;\n  display: inline-flex;\n  flex-wrap: wrap;\n  gap: 4px;\n  padding-right: 4px;\n}\n\n@media (min-width:600px) {\n  .edit-workflow-header__settings {\n    gap: 8px;\n    padding-right: 10px;\n  }\n}\n\n.edit-workflow-header-preview__grouping-external {\n  display: flex;\n  padding-bottom: 0;\n  position: relative;\n}\n\n.edit-workflow-header-preview__button-external {\n  display: flex;\n  justify-content: flex-start;\n  margin-right: auto;\n  padding-left: 8px;\n  width: 100%;\n}\n\n.edit-workflow-header-preview__button-external svg {\n  margin-left: auto;\n}\n\n.edit-workflow-post-preview-dropdown .components-popover__content {\n  padding-bottom: 0;\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon,\n.show-icon-labels .edit-workflow-header .components-button.has-icon,\n.show-icon-labels.interface-pinned-items .components-button.has-icon {\n  width: auto;\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon svg,\n.show-icon-labels .edit-workflow-header .components-button.has-icon svg,\n.show-icon-labels.interface-pinned-items .components-button.has-icon svg {\n  display: none;\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon:after,\n.show-icon-labels .edit-workflow-header .components-button.has-icon:after,\n.show-icon-labels.interface-pinned-items .components-button.has-icon:after {\n  content: attr(aria-label);\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon[aria-disabled=true],\n.show-icon-labels .edit-workflow-header .components-button.has-icon[aria-disabled=true],\n.show-icon-labels.interface-pinned-items .components-button.has-icon[aria-disabled=true] {\n  background-color: transparent;\n}\n\n.edit-workflow-header__dropdown .is-tertiary:active,\n.show-icon-labels .edit-workflow-header .is-tertiary:active,\n.show-icon-labels.interface-pinned-items .is-tertiary:active {\n  background-color: transparent;\n  box-shadow: 0 0 0 1.5px var(--wp-admin-theme-color);\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon.button-toggle svg,\n.edit-workflow-header__dropdown .edit-workflow-fullscreen-mode-close.has-icon svg,\n.show-icon-labels .edit-workflow-header .components-button.has-icon.button-toggle svg,\n.show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon svg,\n.show-icon-labels.interface-pinned-items .components-button.has-icon.button-toggle svg,\n.show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon svg {\n  display: block;\n}\n\n.edit-workflow-header__dropdown .components-button.has-icon.button-toggle:after,\n.edit-workflow-header__dropdown .edit-workflow-fullscreen-mode-close.has-icon:after,\n.show-icon-labels .edit-workflow-header .components-button.has-icon.button-toggle:after,\n.show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon:after,\n.show-icon-labels.interface-pinned-items .components-button.has-icon.button-toggle:after,\n.show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon:after {\n  content: none;\n}\n\n.edit-workflow-header__dropdown .edit-workflow-fullscreen-mode-close.has-icon,\n.show-icon-labels .edit-workflow-header .edit-workflow-fullscreen-mode-close.has-icon,\n.show-icon-labels.interface-pinned-items .edit-workflow-fullscreen-mode-close.has-icon {\n  width: 60px;\n}\n\n.edit-workflow-header__dropdown .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon,\n.show-icon-labels .edit-workflow-header .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon,\n.show-icon-labels.interface-pinned-items .components-menu-items-choice .components-menu-items__item-icon.components-menu-items__item-icon {\n  display: block;\n}\n\n.edit-workflow-header__dropdown .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n.edit-workflow-header__dropdown .interface-pinned-items .components-button,\n.show-icon-labels .edit-workflow-header .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n.show-icon-labels .edit-workflow-header .interface-pinned-items .components-button,\n.show-icon-labels.interface-pinned-items .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n.show-icon-labels.interface-pinned-items .interface-pinned-items .components-button {\n  padding-left: 8px;\n  padding-right: 8px;\n}\n\n@media (min-width:600px) {\n\n  .edit-workflow-header__dropdown .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n  .edit-workflow-header__dropdown .interface-pinned-items .components-button,\n  .show-icon-labels .edit-workflow-header .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n  .show-icon-labels .edit-workflow-header .interface-pinned-items .components-button,\n  .show-icon-labels.interface-pinned-items .edit-workflow-header-toolbar__inserter-toggle.edit-workflow-header-toolbar__inserter-toggle,\n  .show-icon-labels.interface-pinned-items .interface-pinned-items .components-button {\n    padding-left: 12px;\n    padding-right: 12px;\n  }\n}\n\n.edit-workflow-header__dropdown .editor-post-save-draft.editor-post-save-draft:after,\n.edit-workflow-header__dropdown .editor-post-saved-state.editor-post-saved-state:after,\n.show-icon-labels .edit-workflow-header .editor-post-save-draft.editor-post-save-draft:after,\n.show-icon-labels .edit-workflow-header .editor-post-saved-state.editor-post-saved-state:after,\n.show-icon-labels.interface-pinned-items .editor-post-save-draft.editor-post-save-draft:after,\n.show-icon-labels.interface-pinned-items .editor-post-saved-state.editor-post-saved-state:after {\n  content: none;\n}\n\n.edit-workflow-header__dropdown .components-button.workflow-editor-list-view,\n.edit-workflow-header__dropdown .components-button.editor-history__redo,\n.edit-workflow-header__dropdown .components-button.editor-history__undo,\n.edit-workflow-header__dropdown .components-menu-item__button.components-menu-item__button,\n.edit-workflow-header__dropdown .table-of-contents .components-button {\n  justify-content: flex-start;\n  margin: 0;\n  padding: 6px 6px 6px 40px;\n  text-align: left;\n  width: 14.625rem;\n}\n\n.show-icon-labels.interface-pinned-items {\n  border-bottom: 1px solid #ccc;\n  display: block;\n  margin: 0 -12px;\n  padding: 6px 12px 12px;\n}\n\n.show-icon-labels.interface-pinned-items>.components-button.has-icon {\n  justify-content: flex-start;\n  margin: 0;\n  padding: 6px 6px 6px 8px;\n  width: 14.625rem;\n}\n\n.show-icon-labels.interface-pinned-items>.components-button.has-icon[aria-expanded=true] svg {\n  display: block;\n  max-width: 24px;\n}\n\n.show-icon-labels.interface-pinned-items>.components-button.has-icon[aria-expanded=false] {\n  padding-left: 40px;\n}\n\n.show-icon-labels.interface-pinned-items>.components-button.has-icon svg {\n  margin-right: 8px;\n}\n\n.is-distraction-free .interface-interface-skeleton__header {\n  border-bottom: none;\n}\n\n.is-distraction-free .edit-workflow-header {\n  -webkit-backdrop-filter: blur(20px) !important;\n  backdrop-filter: blur(20px) !important;\n  background-color: hsla(0, 0%, 100%, .9);\n  border-bottom: 1px solid #e0e0e0;\n  position: absolute;\n  width: 100%;\n}\n\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.editor-post-preview {\n  visibility: hidden;\n}\n\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.workflow-editor-post-preview__dropdown,\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__settings>.interface-pinned-items,\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__toolbar .edit-workflow-header-toolbar__document-overview-toggle,\n.is-distraction-free .edit-workflow-header>.edit-workflow-header__toolbar .edit-workflow-header-toolbar__inserter-toggle {\n  display: none;\n}\n\n.is-distraction-free .interface-interface-skeleton__header:focus-within {\n  opacity: 1 !important;\n}\n\n.is-distraction-free .interface-interface-skeleton__header:focus-within div {\n  transform: translateX(0) translateZ(0) !important;\n}\n\n.is-distraction-free .components-editor-notices__dismissible {\n  position: absolute;\n  z-index: 35;\n}\n\n.edit-workflow-fullscreen-mode-close.components-button {\n  display: none;\n}\n\n@media (min-width:782px) {\n  .edit-workflow-fullscreen-mode-close.components-button {\n    align-items: center;\n    align-self: stretch;\n    background: #1e1e1e;\n    border: none;\n    border-radius: 0;\n    color: #fff;\n    display: flex;\n    height: 61px;\n    margin-bottom: -1px;\n    position: relative;\n    width: 60px;\n  }\n\n  .edit-workflow-fullscreen-mode-close.components-button:active {\n    color: #fff;\n  }\n\n  .edit-workflow-fullscreen-mode-close.components-button:focus {\n    box-shadow: none;\n  }\n\n  .edit-workflow-fullscreen-mode-close.components-button:before {\n    border-radius: 4px;\n    bottom: 10px;\n    box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) #1e1e1e;\n    content: \"\";\n    display: block;\n    left: 9px;\n    position: absolute;\n    right: 9px;\n    top: 9px;\n    transition: box-shadow .1s ease;\n  }\n}\n\n@media (min-width:782px) and (prefers-reduced-motion:reduce) {\n  .edit-workflow-fullscreen-mode-close.components-button:before {\n    transition-delay: 0s;\n    transition-duration: 0s;\n  }\n}\n\n@media (min-width:782px) {\n  .edit-workflow-fullscreen-mode-close.components-button:hover:before {\n    box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) #757575;\n  }\n\n  .edit-workflow-fullscreen-mode-close.components-button.has-icon:hover:before {\n    box-shadow: none;\n  }\n\n  .edit-workflow-fullscreen-mode-close.components-button:focus:before {\n    box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) hsla(0, 0%, 100%, .1), inset 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);\n  }\n}\n\n.edit-workflow-fullscreen-mode-close.components-button .edit-workflow-fullscreen-mode-close_site-icon {\n  border-radius: 2px;\n  height: 36px;\n  margin-top: -1px;\n  object-fit: cover;\n  width: 36px;\n}\n\n.edit-workflow-fullscreen-mode-close svg {\n  height: 36px;\n  width: 36px;\n  margin-left: 12px;\n}\n\n.edit-workflow-header-toolbar {\n  align-items: center;\n  border: none;\n  display: inline-flex;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button {\n  display: none;\n}\n\n@media (min-width:600px) {\n  .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button {\n    display: inline-flex;\n  }\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle {\n  display: inline-flex;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle svg {\n  transition: transform .2s cubic-bezier(.165, .84, .44, 1);\n}\n\n@media (prefers-reduced-motion:reduce) {\n  .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle svg {\n    transition-delay: 0s;\n    transition-duration: 0s;\n  }\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.is-pressed svg {\n  transform: rotate(45deg);\n}\n\n.edit-workflow-header-toolbar .workflow-editor-list-view {\n  display: none;\n}\n\n@media (min-width:600px) {\n  .edit-workflow-header-toolbar .workflow-editor-list-view {\n    display: flex;\n  }\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon,\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon {\n  height: 36px;\n  min-width: 36px;\n  padding: 6px;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon.is-pressed,\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon.is-pressed {\n  background: #1e1e1e;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon:focus:not(:disabled),\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon:focus:not(:disabled) {\n  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color), inset 0 0 0 1px #fff;\n  outline: 1px solid transparent;\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-button.has-icon:before,\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.components-dropdown>.components-button.has-icon:before {\n  display: none;\n}\n\n@media (min-width:600px) {\n\n  .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-button,\n  .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {\n    transition: opacity .1s linear;\n  }\n}\n\n@media (min-width:600px) and (prefers-reduced-motion:reduce) {\n\n  .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-button,\n  .edit-workflow-header.has-reduced-ui .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {\n    transition-delay: 0s;\n    transition-duration: 0s;\n  }\n}\n\n@media (min-width:600px) {\n\n  .edit-workflow-header.has-reduced-ui:not(:hover) .edit-workflow-header-toolbar__left>*+.components-button,\n  .edit-workflow-header.has-reduced-ui:not(:hover) .edit-workflow-header-toolbar__left>*+.components-dropdown>[aria-expanded=false] {\n    opacity: 0;\n  }\n}\n\n.edit-workflow-header-toolbar__left {\n  align-items: center;\n  display: inline-flex;\n  margin-right: 8px;\n  padding-left: 8px;\n}\n\n@media (min-width:600px) {\n  .edit-workflow-header-toolbar__left {\n    padding-left: 24px;\n  }\n}\n\n@media (min-width:1280px) {\n  .edit-workflow-header-toolbar__left {\n    padding-right: 8px;\n  }\n}\n\n.edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.has-icon {\n  height: 32px;\n  margin-right: 8px;\n  min-width: 32px;\n  padding: 0;\n  width: 32px;\n}\n\n.show-icon-labels .edit-workflow-header-toolbar .edit-workflow-header-toolbar__left>.edit-workflow-header-toolbar__inserter-toggle.has-icon {\n  height: 36px;\n  padding: 0 8px;\n  width: auto;\n}\n\n.show-icon-labels .edit-workflow-header-toolbar__left>*+* {\n  margin-left: 8px;\n}\n\n.edit-workflow-document-actions {\n  align-items: center;\n  background: #f0f0f0;\n  border-radius: 4px;\n  display: flex;\n  gap: 8px;\n  height: 36px;\n  justify-content: space-between;\n  min-width: 0;\n  width: min(100%, 450px);\n}\n\n.edit-workflow-document-actions .components-button:hover {\n  background: #e0e0e0;\n  color: var(--wp-block-synced-color);\n}\n\n.edit-workflow-document-actions__command,\n.edit-workflow-document-actions__title {\n  color: var(--wp-block-synced-color);\n  flex-grow: 1;\n  overflow: hidden;\n}\n\n.edit-workflow-document-actions__title:hover {\n  color: var(--wp-block-synced-color);\n}\n\n.edit-workflow-document-actions__title .workflow-editor-block-icon {\n  flex-shrink: 0;\n}\n\n.edit-workflow-document-actions__title h1 {\n  color: var(--wp-block-synced-color);\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n\n.edit-workflow-document-actions__shortcut {\n  color: #2f2f2f;\n}\n\n.edit-workflow-document-actions__back.components-button.has-icon.has-text {\n  color: #757575;\n  flex-shrink: 0;\n  gap: 0;\n  min-width: 36px;\n}\n\n.edit-workflow-document-actions__back.components-button.has-icon.has-text:hover {\n  color: currentColor;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__section {\n  margin: 0 0 2rem;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__section-title {\n  font-size: .9rem;\n  font-weight: 600;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut {\n  align-items: baseline;\n  border-top: 1px solid #ddd;\n  display: flex;\n  margin-bottom: 0;\n  padding: .6rem 0;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut:last-child {\n  border-bottom: 1px solid #ddd;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut:empty {\n  display: none;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-term {\n  font-weight: 600;\n  margin: 0 0 0 1rem;\n  text-align: right;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-description {\n  flex: 1;\n  flex-basis: auto;\n  margin: 0;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination {\n  background: none;\n  display: block;\n  margin: 0;\n  padding: 0;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination+.edit-workflow-keyboard-shortcut-help-modal__shortcut-key-combination {\n  margin-top: 10px;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-key {\n  border-radius: 8%;\n  margin: 0 .2rem;\n  padding: .25rem .5rem;\n}\n\n.edit-workflow-keyboard-shortcut-help-modal__shortcut-key:last-child {\n  margin: 0 0 0 .2rem;\n}\n\n.edit-workflow-layout__metaboxes {\n  clear: both;\n  flex-shrink: 0;\n}\n\n.edit-workflow-layout .components-editor-notices__snackbar {\n  bottom: 40px;\n  padding-left: 16px;\n  padding-right: 16px;\n  position: fixed;\n  right: 0;\n}\n\n.is-distraction-free .components-editor-notices__snackbar {\n  bottom: 20px;\n}\n\n.edit-workflow-layout .components-editor-notices__snackbar {\n  left: 0;\n}\n\n@media (min-width:783px) {\n  .edit-workflow-layout .components-editor-notices__snackbar {\n    left: 160px;\n  }\n}\n\n@media (min-width:783px) {\n  .auto-fold .edit-workflow-layout .components-editor-notices__snackbar {\n    left: 36px;\n  }\n}\n\n@media (min-width:961px) {\n  .auto-fold .edit-workflow-layout .components-editor-notices__snackbar {\n    left: 160px;\n  }\n}\n\n.folded .edit-workflow-layout .components-editor-notices__snackbar {\n  left: 0;\n}\n\n@media (min-width:783px) {\n  .folded .edit-workflow-layout .components-editor-notices__snackbar {\n    left: 36px;\n  }\n}\n\nbody.is-fullscreen-mode .edit-workflow-layout .components-editor-notices__snackbar {\n  left: 0 !important;\n}\n\n.edit-workflow-layout .editor-post-publish-panel {\n  bottom: 0;\n  left: 0;\n  overflow: auto;\n  position: fixed;\n  right: 0;\n  top: 46px;\n  z-index: 100001;\n}\n\n@media (min-width:782px) {\n  .edit-workflow-layout .editor-post-publish-panel {\n    animation: edit-workflow-post-publish-panel__slide-in-animation .1s forwards;\n    border-left: 1px solid #ddd;\n    left: auto;\n    top: 32px;\n    transform: translateX(100%);\n    width: 281px;\n    z-index: 99998;\n  }\n}\n\n@media (min-width:782px) and (prefers-reduced-motion:reduce) {\n  .edit-workflow-layout .editor-post-publish-panel {\n    animation-delay: 0s;\n    animation-duration: 1ms;\n  }\n}\n\n@media (min-width:782px) {\n  body.is-fullscreen-mode .edit-workflow-layout .editor-post-publish-panel {\n    top: 0;\n  }\n\n  [role=region]:focus .edit-workflow-layout .editor-post-publish-panel {\n    transform: translateX(0);\n  }\n}\n\n@keyframes edit-workflow-post-publish-panel__slide-in-animation {\n  to {\n    transform: translateX(0);\n  }\n}\n\n.edit-workflow-layout .editor-post-publish-panel__header-publish-button {\n  justify-content: center;\n}\n\n.edit-workflow-layout__toggle-entities-saved-states-panel,\n.edit-workflow-layout__toggle-publish-panel,\n.edit-workflow-layout__toggle-sidebar-panel {\n  background-color: #fff;\n  border: 1px dotted #ddd;\n  bottom: auto;\n  box-sizing: border-box;\n  display: flex;\n  height: auto !important;\n  justify-content: center;\n  left: auto;\n  padding: 24px;\n  position: fixed !important;\n  right: 0;\n  top: -9999em;\n  width: 280px;\n  z-index: 100000;\n}\n\n.interface-interface-skeleton__sidebar:focus .edit-workflow-layout__toggle-sidebar-panel,\n.interface-interface-skeleton__sidebar:focus-within .edit-workflow-layout__toggle-sidebar-panel {\n  bottom: 0;\n  top: auto;\n}\n\n.interface-interface-skeleton__actions:focus .edit-workflow-layout__toggle-entities-saved-states-panel,\n.interface-interface-skeleton__actions:focus .edit-workflow-layout__toggle-publish-panel,\n.interface-interface-skeleton__actions:focus-within .edit-workflow-layout__toggle-entities-saved-states-panel,\n.interface-interface-skeleton__actions:focus-within .edit-workflow-layout__toggle-publish-panel {\n  bottom: 0;\n  top: auto;\n}\n\n.edit-workflow-layout .entities-saved-states__panel-header {\n  height: 61px;\n}\n\n@media (min-width:782px) {\n  .edit-workflow-layout.has-fixed-toolbar .interface-interface-skeleton__header:not(:focus-within) {\n    z-index: 19;\n  }\n}\n\n.edit-workflow-block-manager__no-results {\n  font-style: italic;\n  padding: 24px 0;\n  text-align: center;\n}\n\n.edit-workflow-block-manager__search {\n  margin: 16px 0;\n}\n\n.edit-workflow-block-manager__disabled-blocks-count {\n  background-color: #fff;\n  border: 1px solid #ddd;\n  border-width: 1px 0;\n  box-shadow: -32px 0 0 0 #fff, 32px 0 0 0 #fff;\n  padding: 8px;\n  position: sticky;\n  text-align: center;\n  top: -1px;\n  z-index: 2;\n}\n\n.edit-workflow-block-manager__disabled-blocks-count~.edit-workflow-block-manager__results .edit-workflow-block-manager__category-title {\n  top: 35px;\n}\n\n.edit-workflow-block-manager__disabled-blocks-count .is-link {\n  margin-left: 12px;\n}\n\n.edit-workflow-block-manager__category {\n  margin: 0 0 24px;\n}\n\n.edit-workflow-block-manager__category-title {\n  background-color: #fff;\n  padding: 16px 0;\n  position: sticky;\n  top: -4px;\n  z-index: 1;\n}\n\n.edit-workflow-block-manager__category-title .components-checkbox-control__label {\n  font-weight: 600;\n}\n\n.edit-workflow-block-manager__checklist {\n  margin-top: 0;\n}\n\n.edit-workflow-block-manager__category-title,\n.edit-workflow-block-manager__checklist-item {\n  border-bottom: 1px solid #ddd;\n}\n\n.edit-workflow-block-manager__checklist-item {\n  align-items: center;\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 0;\n  padding: 8px 0 8px 16px;\n}\n\n.components-modal__content .edit-workflow-block-manager__checklist-item.components-checkbox-control__input-container {\n  margin: 0 8px;\n}\n\n.edit-workflow-block-manager__checklist-item .workflow-editor-block-icon {\n  fill: #1e1e1e;\n  margin-right: 10px;\n}\n\n.edit-workflow-block-manager__results {\n  border-top: 1px solid #ddd;\n}\n\n.edit-workflow-block-manager__disabled-blocks-count+.edit-workflow-block-manager__results {\n  border-top-width: 0;\n}\n\n.edit-workflow-meta-boxes-area {\n  position: relative;\n}\n\n.edit-workflow-meta-boxes-area .inside,\n.edit-workflow-meta-boxes-area__container {\n  box-sizing: content-box;\n}\n\n.edit-workflow-meta-boxes-area input,\n.edit-workflow-meta-boxes-area textarea {\n  box-sizing: border-box;\n}\n\n.edit-workflow-meta-boxes-area .postbox-header {\n  border-bottom: 0;\n  border-top: 1px solid #ddd;\n}\n\n.edit-workflow-meta-boxes-area #poststuff {\n  margin: 0 auto;\n  min-width: auto;\n  padding-top: 0;\n}\n\n.edit-workflow-meta-boxes-area #poststuff .stuffbox>h3,\n.edit-workflow-meta-boxes-area #poststuff h2.hndle,\n.edit-workflow-meta-boxes-area #poststuff h3.hndle {\n  box-sizing: border-box;\n  color: inherit;\n  font-weight: 600;\n  outline: none;\n  padding: 0 24px;\n  position: relative;\n  width: 100%;\n}\n\n.edit-workflow-meta-boxes-area .postbox {\n  border: 0;\n  color: inherit;\n  margin-bottom: 0;\n}\n\n.edit-workflow-meta-boxes-area .postbox>.inside {\n  color: inherit;\n  margin: 0;\n  padding: 0 24px 24px;\n}\n\n.edit-workflow-meta-boxes-area .postbox .handlediv {\n  height: 44px;\n  width: 44px;\n}\n\n.edit-workflow-meta-boxes-area.is-loading:before {\n  background: transparent;\n  bottom: 0;\n  content: \"\";\n  left: 0;\n  position: absolute;\n  right: 0;\n  top: 0;\n  z-index: 1;\n}\n\n.edit-workflow-meta-boxes-area .components-spinner {\n  position: absolute;\n  right: 20px;\n  top: 10px;\n  z-index: 5;\n}\n\n.edit-workflow-meta-boxes-area .is-hidden {\n  display: none;\n}\n\n.edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox] {\n  border: 1px solid #757575;\n}\n\n.edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox]:checked {\n  background: #fff;\n  border-color: #757575;\n}\n\n.edit-workflow-meta-boxes-area .metabox-location-side .postbox input[type=checkbox]:before {\n  margin: -3px -4px;\n}\n\n.edit-workflow-meta-boxes-area__clear {\n  clear: both;\n}\n\n.edit-workflow-editor__document-overview-panel,\n.edit-workflow-editor__inserter-panel {\n  display: flex;\n  flex-direction: column;\n  height: 100%;\n}\n\n@media (min-width:782px) {\n  .edit-workflow-editor__document-overview-panel {\n    width: 350px;\n  }\n}\n\n.edit-workflow-editor__document-overview-panel .edit-workflow-editor__document-overview-panel__close-button {\n  background: #fff;\n  position: absolute;\n  right: 8px;\n  top: 6px;\n  z-index: 1;\n}\n\n.edit-workflow-editor__document-overview-panel .components-tab-panel__tabs {\n  border-bottom: 1px solid #ddd;\n  box-sizing: border-box;\n  display: flex;\n  padding-right: 56px;\n  width: 100%;\n}\n\n.edit-workflow-editor__document-overview-panel .components-tab-panel__tabs .edit-workflow-sidebar__panel-tab {\n  margin-bottom: -1px;\n  width: 50%;\n}\n\n.edit-workflow-editor__document-overview-panel .components-tab-panel__tab-content {\n  height: calc(100% - 47px);\n}\n\n.edit-workflow-editor__inserter-panel-header {\n  display: flex;\n  justify-content: flex-end;\n  padding-right: 8px;\n  padding-top: 8px;\n}\n\n.edit-workflow-editor__inserter-panel-content {\n  height: calc(100% - 44px);\n}\n\n@media (min-width:782px) {\n  .edit-workflow-editor__inserter-panel-content {\n    height: 100%;\n  }\n}\n\n.edit-workflow-editor__list-view-container>.document-outline,\n.edit-workflow-editor__list-view-empty-headings,\n.edit-workflow-editor__list-view-panel-content {\n  height: 100%;\n  overflow: auto;\n  padding: 8px 6px;\n  scrollbar-color: transparent transparent;\n  scrollbar-gutter: stable both-edges;\n  scrollbar-gutter: auto;\n  scrollbar-width: thin;\n  will-change: transform;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar,\n.edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar,\n.edit-workflow-editor__list-view-panel-content::-webkit-scrollbar {\n  height: 12px;\n  width: 12px;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar-track,\n.edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar-track,\n.edit-workflow-editor__list-view-panel-content::-webkit-scrollbar-track {\n  background-color: transparent;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-empty-headings::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-panel-content::-webkit-scrollbar-thumb {\n  background-clip: padding-box;\n  background-color: transparent;\n  border: 3px solid transparent;\n  border-radius: 8px;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline:focus-within::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-container>.document-outline:focus::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-container>.document-outline:hover::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-empty-headings:focus-within::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-empty-headings:focus::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-empty-headings:hover::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-panel-content:focus-within::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-panel-content:focus::-webkit-scrollbar-thumb,\n.edit-workflow-editor__list-view-panel-content:hover::-webkit-scrollbar-thumb {\n  background-color: #949494;\n}\n\n.edit-workflow-editor__list-view-container>.document-outline:focus,\n.edit-workflow-editor__list-view-container>.document-outline:focus-within,\n.edit-workflow-editor__list-view-container>.document-outline:hover,\n.edit-workflow-editor__list-view-empty-headings:focus,\n.edit-workflow-editor__list-view-empty-headings:focus-within,\n.edit-workflow-editor__list-view-empty-headings:hover,\n.edit-workflow-editor__list-view-panel-content:focus,\n.edit-workflow-editor__list-view-panel-content:focus-within,\n.edit-workflow-editor__list-view-panel-content:hover {\n  scrollbar-color: #949494 transparent;\n}\n\n@media (hover:none) {\n\n  .edit-workflow-editor__list-view-container>.document-outline,\n  .edit-workflow-editor__list-view-empty-headings,\n  .edit-workflow-editor__list-view-panel-content {\n    scrollbar-color: #949494 transparent;\n  }\n}\n\n.edit-workflow-editor__list-view-empty-headings {\n  color: #757575;\n  text-align: center;\n}\n\n.edit-workflow-editor__list-view-empty-headings>svg {\n  margin-top: 28px;\n}\n\n.edit-workflow-editor__list-view-empty-headings>p {\n  padding-left: 32px;\n  padding-right: 32px;\n}\n\n.edit-workflow-editor__list-view-overview {\n  border-bottom: 1px solid #ddd;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  padding: 16px;\n}\n\n.edit-workflow-editor__list-view-overview>div>span:first-child {\n  display: inline-block;\n  width: 90px;\n}\n\n.edit-workflow-editor__list-view-overview>div>span {\n  color: #757575;\n  font-size: 12px;\n  line-height: 1.4;\n}\n\n.edit-workflow-editor__list-view-container {\n  display: flex;\n  flex-direction: column;\n  height: 100%;\n}\n\n.edit-workflow-editor__document-overview-panel__tab-panel {\n  height: 100%;\n}\n\n.components-panel__header.edit-workflow-sidebar__panel-tabs {\n  border-top: 0;\n  justify-content: flex-start;\n  margin-top: 0;\n  padding-left: 0;\n  padding-right: 16px;\n}\n\n.components-panel__header.edit-workflow-sidebar__panel-tabs ul {\n  display: flex;\n}\n\n.components-panel__header.edit-workflow-sidebar__panel-tabs li {\n  margin: 0;\n}\n\n.components-panel__header.edit-workflow-sidebar__panel-tabs .components-button.has-icon {\n  display: none;\n  height: 24px;\n  margin: 0 0 0 auto;\n  min-width: 24px;\n  padding: 0;\n}\n\n@media (min-width:782px) {\n  .components-panel__header.edit-workflow-sidebar__panel-tabs .components-button.has-icon {\n    display: flex;\n  }\n}\n\n.components-panel__body.is-opened.edit-workflow-last-revision__panel {\n  height: 48px;\n  padding: 0;\n}\n\n.editor-post-last-revision__title.components-button {\n  padding: 16px;\n}\n\n.edit-workflow-post-author,\n.edit-workflow-post-format {\n  align-items: stretch;\n  display: flex;\n  flex-direction: column;\n}\n\n.edit-workflow-post-schedule {\n  align-items: flex-start;\n  justify-content: flex-start;\n  position: relative;\n  width: 100%;\n}\n\n.edit-workflow-post-schedule span {\n  display: block;\n  flex-shrink: 0;\n  padding: 6px 0;\n  width: 45%;\n}\n\n.components-button.edit-workflow-post-schedule__toggle {\n  height: auto;\n  text-align: left;\n  white-space: normal;\n}\n\n.components-button.edit-workflow-post-schedule__toggle span {\n  width: 0;\n}\n\n.edit-workflow-post-schedule__dialog .workflow-editor-publish-date-time-picker {\n  margin: 8px;\n}\n\n.edit-workflow-post-slug {\n  align-items: stretch;\n  display: flex;\n  flex-direction: column;\n}\n\n.edit-workflow-post-status .edit-workflow-post-publish-dropdown__switch-to-draft {\n  margin-top: 15px;\n  text-align: center;\n  width: 100%;\n}\n\n.edit-workflow-post-template {\n  justify-content: flex-start;\n  width: 100%;\n}\n\n.edit-workflow-post-template span {\n  display: block;\n  padding: 6px 0;\n  width: 45%;\n}\n\n.edit-workflow-post-template__dropdown {\n  max-width: 55%;\n}\n\n.components-button.edit-workflow-post-template__toggle {\n  display: inline-block;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  width: 100%;\n}\n\n.edit-workflow-post-template__dialog {\n  z-index: 99999;\n}\n\n.edit-workflow-post-template__form {\n  margin: 8px;\n  min-width: 248px;\n}\n\n@media (min-width:782px) {\n  .edit-workflow-post-template__create-form {\n    width: 320px;\n  }\n}\n\n.edit-workflow-post-url {\n  align-items: flex-start;\n  justify-content: flex-start;\n  width: 100%;\n}\n\n.edit-workflow-post-url span {\n  display: block;\n  flex-shrink: 0;\n  padding: 6px 0;\n  width: 45%;\n}\n\n.components-button.edit-workflow-post-url__toggle {\n  height: auto;\n  text-align: left;\n  white-space: normal;\n  word-break: break-word;\n}\n\n.edit-workflow-post-url__dialog .editor-post-url {\n  margin: 8px;\n  min-width: 248px;\n}\n\n.edit-workflow-post-visibility {\n  justify-content: flex-start;\n  width: 100%;\n}\n\n.edit-workflow-post-visibility span {\n  display: block;\n  padding: 6px 0;\n  width: 45%;\n}\n\n.edit-workflow-post-visibility__dialog .editor-post-visibility {\n  margin: 8px;\n  min-width: 248px;\n}\n\n.components-button.edit-workflow-sidebar__panel-tab {\n  background: transparent;\n  border: none;\n  border-radius: 0;\n  box-shadow: none;\n  cursor: pointer;\n  font-weight: 500;\n  height: 48px;\n  margin-left: 0;\n  padding: 3px 16px;\n  position: relative;\n}\n\n.components-button.edit-workflow-sidebar__panel-tab:focus:not(:disabled) {\n  box-shadow: none;\n  outline: none;\n  position: relative;\n}\n\n.components-button.edit-workflow-sidebar__panel-tab:after {\n  background: var(--wp-admin-theme-color);\n  border-radius: 0;\n  bottom: 0;\n  content: \"\";\n  height: calc(var(--wp-admin-border-width-focus)*0);\n  left: 0;\n  pointer-events: none;\n  position: absolute;\n  right: 0;\n  transition: all .1s linear;\n}\n\n@media (prefers-reduced-motion:reduce) {\n  .components-button.edit-workflow-sidebar__panel-tab:after {\n    transition-delay: 0s;\n    transition-duration: 0s;\n  }\n}\n\n.components-button.edit-workflow-sidebar__panel-tab.is-active:after {\n  height: calc(var(--wp-admin-border-width-focus)*1);\n  outline: 2px solid transparent;\n  outline-offset: -1px;\n}\n\n.components-button.edit-workflow-sidebar__panel-tab:before {\n  border-radius: 2px;\n  bottom: 12px;\n  box-shadow: 0 0 0 0 transparent;\n  content: \"\";\n  left: 12px;\n  pointer-events: none;\n  position: absolute;\n  right: 12px;\n  top: 12px;\n  transition: all .1s linear;\n}\n\n@media (prefers-reduced-motion:reduce) {\n  .components-button.edit-workflow-sidebar__panel-tab:before {\n    transition-delay: 0s;\n    transition-duration: 0s;\n  }\n}\n\n.components-button.edit-workflow-sidebar__panel-tab:focus-visible:before {\n  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);\n  outline: 2px solid transparent;\n}\n\nh2.edit-workflow-template-summary__title {\n  font-weight: 500;\n  line-height: 24px;\n  margin: 0 0 4px;\n}\n\n.edit-workflow-text-editor {\n  background-color: #fff;\n  flex-grow: 1;\n  position: relative;\n  width: 100%;\n}\n\n.edit-workflow-text-editor .editor-post-title {\n  border: 1px solid #949494;\n  font-family: Menlo, Consolas, monaco, monospace;\n  font-size: 2.5em;\n  font-weight: 400;\n  line-height: 1.4;\n  max-width: none;\n  padding: 16px;\n}\n\n@media (min-width:600px) {\n  .edit-workflow-text-editor .editor-post-title {\n    padding: 24px;\n  }\n}\n\n.edit-workflow-text-editor .editor-post-title:focus {\n  border-color: var(--wp-admin-theme-color);\n  box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);\n}\n\n.edit-workflow-text-editor__body {\n  margin-left: auto;\n  margin-right: auto;\n  max-width: 1080px;\n  padding: 0 12px 12px;\n  width: 100%;\n}\n\n@media (min-width:960px) {\n  .edit-workflow-text-editor__body {\n    padding: 0 24px 24px;\n  }\n}\n\n.edit-workflow-text-editor__toolbar {\n  background: hsla(0, 0%, 100%, .8);\n  display: flex;\n  left: 0;\n  padding: 4px 12px;\n  position: sticky;\n  right: 0;\n  top: 0;\n  z-index: 1;\n}\n\n@media (min-width:600px) {\n  .edit-workflow-text-editor__toolbar {\n    padding: 12px;\n  }\n}\n\n@media (min-width:960px) {\n  .edit-workflow-text-editor__toolbar {\n    padding: 12px 24px;\n  }\n}\n\n.edit-workflow-text-editor__toolbar h2 {\n  color: #1e1e1e;\n  font-size: 13px;\n  line-height: 36px;\n  margin: 0 auto 0 0;\n}\n\n.edit-workflow-text-editor__toolbar .components-button svg {\n  order: 1;\n}\n\n.components-button svg {\n  fill: currentColor;\n  outline: none;\n}\n\n.edit-workflow-visual-editor {\n  background-color: #1e1e1e;\n  display: flex;\n  flex: 1 0 auto;\n  flex-flow: column;\n  position: relative;\n}\n\n.edit-workflow-visual-editor:not(.has-inline-canvas) {\n  overflow: hidden;\n}\n\n.edit-workflow-visual-editor .components-button {\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;\n  font-size: 13px;\n  padding: 6px 12px;\n}\n\n.edit-workflow-visual-editor .components-button.has-icon,\n.edit-workflow-visual-editor .components-button.is-tertiary {\n  padding: 6px;\n}\n\n.edit-workflow-visual-editor__post-title-wrapper {\n  margin-bottom: var(--wp--style--block-gap);\n  margin-top: 4rem;\n}\n\n.edit-workflow-visual-editor__post-title-wrapper .editor-post-title {\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.edit-workflow-visual-editor__content-area {\n  box-sizing: border-box;\n  display: flex;\n  flex-grow: 1;\n  height: 100%;\n  position: relative;\n  width: 100%;\n}\n\n.edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n  left: 0;\n}\n\n@media (min-width:783px) {\n  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    left: 160px;\n  }\n}\n\n@media (min-width:783px) {\n  .auto-fold .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    left: 36px;\n  }\n}\n\n@media (min-width:961px) {\n  .auto-fold .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    left: 160px;\n  }\n}\n\n.folded .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n  left: 0;\n}\n\n@media (min-width:783px) {\n  .folded .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    left: 36px;\n  }\n}\n\nbody.is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n  left: 0 !important;\n}\n\n.edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n  display: block;\n  position: sticky;\n  top: 0;\n  width: 100%;\n  z-index: 31;\n}\n\n@media (min-width:782px) {\n  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    align-items: center;\n    border-bottom: none;\n    display: flex;\n    height: 60px;\n    margin-left: 180px;\n    min-height: auto;\n    position: fixed;\n    top: 32px;\n    width: calc(100% - 180px);\n  }\n\n  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed.is-collapsed,\n  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed:empty {\n    width: auto;\n  }\n\n  .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    margin-left: 240px;\n    top: 0;\n  }\n\n  .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed.is-collapsed,\n  .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed:empty {\n    width: auto;\n  }\n\n  .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    margin-left: 80px;\n    width: calc(100% - 140px);\n  }\n\n  .is-fullscreen-mode .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    margin-left: 144px;\n  }\n}\n\n@media (min-width:960px) {\n\n  .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed,\n  .show-icon-labels .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    width: auto;\n  }\n\n  .is-fullscreen-mode .edit-workflow-visual-editor .workflow-editor-block-contextual-toolbar.is-fixed {\n    width: calc(100% - 536px);\n  }\n}\n\n.edit-workflow-welcome-guide,\n.edit-template-welcome-guide {\n  width: 312px;\n}\n\n.edit-workflow-welcome-guide__image,\n.edit-template-welcome-guide__image {\n  background: #00a0d2;\n  margin: 0 0 16px;\n}\n\n.edit-workflow-welcome-guide__image>img,\n.edit-template-welcome-guide__image>img {\n  display: block;\n  max-width: 100%;\n  object-fit: cover;\n}\n\n.edit-workflow-welcome-guide__heading,\n.edit-template-welcome-guide__heading {\n  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;\n  font-size: 24px;\n  line-height: 1.4;\n  margin: 16px 0;\n  padding: 0 32px;\n}\n\n.edit-workflow-welcome-guide__text,\n.edit-template-welcome-guide__text {\n  font-size: 13px;\n  line-height: 1.4;\n  margin: 0 0 24px;\n  padding: 0 32px;\n}\n\n.edit-workflow-welcome-guide__inserter-icon,\n.edit-template-welcome-guide__inserter-icon {\n  margin: 0 4px;\n  vertical-align: text-top;\n}\n\n.edit-template-welcome-guide .components-button svg {\n  fill: #fff;\n}\n\n.edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {\n  column-count: 2;\n  column-gap: 24px;\n}\n\n@media (min-width:782px) {\n  .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {\n    column-count: 3;\n  }\n}\n\n@media (min-width:1280px) {\n  .edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list {\n    column-count: 4;\n  }\n}\n\n.edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item {\n  break-inside: avoid-column;\n  margin-bottom: 24px;\n}\n\n.edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item .workflow-editor-block-preview__container {\n  min-height: 100px;\n}\n\n.edit-workflow-start-page-options__modal-content .workflow-editor-block-patterns-list .workflow-editor-block-patterns-list__list-item .workflow-editor-block-preview__content {\n  width: 100%;\n}\n\n@keyframes edit-workflow__fade-in-animation {\n  0% {\n    opacity: 0;\n  }\n\n  to {\n    opacity: 1;\n  }\n}\n\nbody.js.workflow-editor-page {\n  background: #fff;\n}\n\nbody.js.workflow-editor-page #wpcontent {\n  padding-left: 0;\n}\n\nbody.js.workflow-editor-page #wpbody-content {\n  padding-bottom: 0;\n}\n\nbody.js.workflow-editor-page #wpbody-content>div:not(.workflow-editor):not(#screen-meta),\nbody.js.workflow-editor-page #wpfooter {\n  display: none;\n}\n\nbody.js.workflow-editor-page .a11y-speak-region {\n  left: -1px;\n  top: -1px;\n}\n\nbody.js.workflow-editor-page ul#adminmenu a.wp-has-current-submenu:after,\nbody.js.workflow-editor-page ul#adminmenu>li.current>a.current:after {\n  border-right-color: #fff;\n}\n\nbody.js.workflow-editor-page .media-frame select.attachment-filters:last-of-type {\n  max-width: 100%;\n  width: auto;\n}\n\n.workflow-editor-page #wpwrap {\n  overflow-y: auto;\n}\n\n@media (min-width:782px) {\n  .workflow-editor-page #wpwrap {\n    overflow-y: initial;\n  }\n}\n\n.components-modal__frame,\n.components-popover,\n.edit-workflow-editor__inserter-panel,\n.edit-workflow-header,\n.edit-workflow-sidebar,\n.edit-workflow-text-editor,\n.editor-post-publish-panel {\n  box-sizing: border-box;\n}\n\n.components-modal__frame *,\n.components-modal__frame :after,\n.components-modal__frame :before,\n.components-popover *,\n.components-popover :after,\n.components-popover :before,\n.edit-workflow-editor__inserter-panel *,\n.edit-workflow-editor__inserter-panel :after,\n.edit-workflow-editor__inserter-panel :before,\n.edit-workflow-header *,\n.edit-workflow-header :after,\n.edit-workflow-header :before,\n.edit-workflow-sidebar *,\n.edit-workflow-sidebar :after,\n.edit-workflow-sidebar :before,\n.edit-workflow-text-editor *,\n.edit-workflow-text-editor :after,\n.edit-workflow-text-editor :before,\n.editor-post-publish-panel *,\n.editor-post-publish-panel :after,\n.editor-post-publish-panel :before {\n  box-sizing: inherit;\n}\n\n@media (min-width:600px) {\n  .workflow-editor__container {\n    bottom: 0;\n    left: 0;\n    min-height: calc(100vh - 46px);\n    position: absolute;\n    right: 0;\n    top: 0;\n  }\n}\n\n@media (min-width:782px) {\n  .workflow-editor__container {\n    min-height: calc(100vh - 32px);\n  }\n\n  body.is-fullscreen-mode .workflow-editor__container {\n    min-height: 100vh;\n  }\n}\n\n.workflow-editor__container img {\n  height: auto;\n  max-width: 100%;\n}\n\nbody.admin-color-light {\n  --wp-admin-theme-color: #0085ba;\n  --wp-admin-theme-color--rgb: 0, 133, 186;\n  --wp-admin-theme-color-darker-10: #0073a1;\n  --wp-admin-theme-color-darker-10--rgb: 0, 115, 161;\n  --wp-admin-theme-color-darker-20: #006187;\n  --wp-admin-theme-color-darker-20--rgb: 0, 97, 135;\n  --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n  body.admin-color-light {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\nbody.admin-color-modern {\n  --wp-admin-theme-color: #3858e9;\n  --wp-admin-theme-color--rgb: 56, 88, 233;\n  --wp-admin-theme-color-darker-10: #2145e6;\n  --wp-admin-theme-color-darker-10--rgb: 33, 69, 230;\n  --wp-admin-theme-color-darker-20: #183ad6;\n  --wp-admin-theme-color-darker-20--rgb: 24, 58, 214;\n  --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n  body.admin-color-modern {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\nbody.admin-color-blue {\n  --wp-admin-theme-color: #096484;\n  --wp-admin-theme-color--rgb: 9, 100, 132;\n  --wp-admin-theme-color-darker-10: #07526c;\n  --wp-admin-theme-color-darker-10--rgb: 7, 82, 108;\n  --wp-admin-theme-color-darker-20: #064054;\n  --wp-admin-theme-color-darker-20--rgb: 6, 64, 84;\n  --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n  body.admin-color-blue {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\nbody.admin-color-coffee {\n  --wp-admin-theme-color: #46403c;\n  --wp-admin-theme-color--rgb: 70, 64, 60;\n  --wp-admin-theme-color-darker-10: #383330;\n  --wp-admin-theme-color-darker-10--rgb: 56, 51, 48;\n  --wp-admin-theme-color-darker-20: #2b2724;\n  --wp-admin-theme-color-darker-20--rgb: 43, 39, 36;\n  --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n  body.admin-color-coffee {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\nbody.admin-color-ectoplasm {\n  --wp-admin-theme-color: #523f6d;\n  --wp-admin-theme-color--rgb: 82, 63, 109;\n  --wp-admin-theme-color-darker-10: #46365d;\n  --wp-admin-theme-color-darker-10--rgb: 70, 54, 93;\n  --wp-admin-theme-color-darker-20: #3a2c4d;\n  --wp-admin-theme-color-darker-20--rgb: 58, 44, 77;\n  --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n  body.admin-color-ectoplasm {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\nbody.admin-color-midnight {\n  --wp-admin-theme-color: #e14d43;\n  --wp-admin-theme-color--rgb: 225, 77, 67;\n  --wp-admin-theme-color-darker-10: #dd382d;\n  --wp-admin-theme-color-darker-10--rgb: 221, 56, 45;\n  --wp-admin-theme-color-darker-20: #d02c21;\n  --wp-admin-theme-color-darker-20--rgb: 208, 44, 33;\n  --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n  body.admin-color-midnight {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\nbody.admin-color-ocean {\n  --wp-admin-theme-color: #627c83;\n  --wp-admin-theme-color--rgb: 98, 124, 131;\n  --wp-admin-theme-color-darker-10: #576e74;\n  --wp-admin-theme-color-darker-10--rgb: 87, 110, 116;\n  --wp-admin-theme-color-darker-20: #4c6066;\n  --wp-admin-theme-color-darker-20--rgb: 76, 96, 102;\n  --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n  body.admin-color-ocean {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\nbody.admin-color-sunrise {\n  --wp-admin-theme-color: #dd823b;\n  --wp-admin-theme-color--rgb: 221, 130, 59;\n  --wp-admin-theme-color-darker-10: #d97426;\n  --wp-admin-theme-color-darker-10--rgb: 217, 116, 38;\n  --wp-admin-theme-color-darker-20: #c36922;\n  --wp-admin-theme-color-darker-20--rgb: 195, 105, 34;\n  --wp-admin-border-width-focus: 2px;\n}\n\n@media (min-resolution:192dpi) {\n  body.admin-color-sunrise {\n    --wp-admin-border-width-focus: 1.5px;\n  }\n}\n\n.interface-interface-skeleton__sidebar {\n  border-left: none;\n}\n\n@media (min-width:782px) {\n  .is-sidebar-opened .interface-interface-skeleton__sidebar {\n    border-left: 1px solid #e0e0e0;\n    overflow: hidden scroll;\n  }\n}\n\n\n\n\n\n\n/* #################################################################### */\n/* TOOL TIP */\n\n.components-tooltip{\n  background:#000;\n  border-radius:2px;\n  color:#f0f0f0;\n  font-size:12px;\n  line-height:1.4;\n  padding:4px 8px;\n  text-align:center;\n  z-index:1000002;\n}\n\n.components-tooltip__shortcut{\n  margin-left:8px;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/tooltip.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,kBAAkB;IAClB,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;AACpB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":[".components-tooltip {\n    background: #000;\n    border-radius: 2px;\n    color: #f0f0f0;\n    font-size: 12px;\n    line-height: 1.4;\n    padding: 4px 8px;\n    text-align: center;\n    z-index: 1000002;\n}\n\n.components-tooltip__shortcut {\n    margin-left: 8px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

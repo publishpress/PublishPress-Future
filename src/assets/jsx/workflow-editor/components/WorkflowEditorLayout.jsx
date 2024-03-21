@@ -28,9 +28,7 @@ export function WorkflowEditorLayout() {
         <>
             <FullscreenMode isActive={isFullscreenActive} />
 
-            <WorkflowEditorInterface>
-
-            </WorkflowEditorInterface>
+            <WorkflowEditorInterface />
         </>
     );
 }
