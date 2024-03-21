@@ -4,6 +4,8 @@ import { FEATURE_FULLSCREEN_MODE, POST_TYPE, STORE_NAME } from './constants';
 export const storeConfig = {
     activeFeatures: [FEATURE_FULLSCREEN_MODE],
     postType: POST_TYPE,
+    nodes: [],
+    edges: [],
 }
 
 export const store = createReduxStore(STORE_NAME, {
@@ -36,6 +38,18 @@ export const store = createReduxStore(STORE_NAME, {
                     ...state,
                     postType: action.payload,
                 };
+
+            case 'SET_NODES':
+                return {
+                    ...state,
+                    nodes: action.payload,
+                };
+
+            case 'SET_EDGES':
+                return {
+                    ...state,
+                    edges: action.payload,
+                };
         }
 
         return state;
@@ -58,6 +72,18 @@ export const store = createReduxStore(STORE_NAME, {
                 type: 'SET_POST_TYPE',
                 payload: postType
             };
+        },
+        setNodes(nodes) {
+            return {
+                type: 'SET_NODES',
+                payload: nodes
+            };
+        },
+        setEdges(edges) {
+            return {
+                type: 'SET_EDGES',
+                payload: edges
+            };
         }
     },
     selectors: {
@@ -69,6 +95,12 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getPostType(state) {
             return state.postType;
+        },
+        getNodes(state) {
+            return state.nodes;
+        },
+        getEdges(state) {
+            return state.edges;
         }
     }
 });

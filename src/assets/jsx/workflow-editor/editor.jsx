@@ -3,6 +3,8 @@ import {
     HTML_ELEMENT_ID,
 } from "./constants";
 import { createRoot } from "@wordpress/element";
+import { dispatch } from "@wordpress/data";
+import { store } from "./store";
 
 import "./css/editor.css";
 
@@ -26,11 +28,9 @@ const edges = [
     { id: 'e1-2', source: '1', target: '2' }
 ];
 
-const layout = <WorkflowEditorLayout
-    nodes={nodes}
-    edges={edges}
-/>;
+dispatch(store).setNodes(nodes);
+dispatch(store).setEdges(edges);
 
-createRoot(
-    document.getElementById(HTML_ELEMENT_ID)
-).render(layout);
+const layout = <WorkflowEditorLayout />;
+
+createRoot(document.getElementById(HTML_ELEMENT_ID)).render(layout);

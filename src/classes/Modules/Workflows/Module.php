@@ -35,7 +35,7 @@ class Module implements InitializableInterface
                 $postId = (int) $_GET['post'];
 
                 // Redirect to our custom page
-                wp_redirect(admin_url('admin.php?page=my_custom_post_type_editor&workflow=' . $postId));
+                wp_redirect(admin_url('admin.php?page=future_workflow_editor&workflow=' . $postId));
                 exit;
             }
         });
@@ -54,7 +54,7 @@ class Module implements InitializableInterface
             'My Custom Post Type Editor',
             'My Custom Post Type',
             'edit_posts',
-            'my_custom_post_type_editor',
+            'future_workflow_editor',
             [$this, 'renderEditorPage']
         );
     }
@@ -119,7 +119,7 @@ class Module implements InitializableInterface
 
     public function enqueueScripts($hook)
     {
-        if ('admin_page_my_custom_post_type_editor' !== $hook) {
+        if ('admin_page_future_workflow_editor' !== $hook) {
             return;
         }
 
