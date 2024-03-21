@@ -1,0 +1,8 @@
+#wpfooter {
+    display: none !important;
+}
+
+.react-flow {
+    height: 100vh !important;
+    width: 100% !important;
+}
