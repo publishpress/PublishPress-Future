@@ -24,9 +24,21 @@ class Module implements InitializableInterface
     {
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
         $this->hooks->addAction(HooksAbstract::ACTION_INIT_PLUGIN, [$this, 'registerPostType']);
-        $this->hooks->addAction(HooksAbstract::ACTION_ADD_METABOXES, [$this, 'postTypeMetaBox']);
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScripts']);
         $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'saveWorkflowMetadata']);
+
+        add_action('load-post.php', function() {
+            global $typenow, $pagenow;
+
+            // Check if we're editing a post of the 'my_custom_post_type' type
+            if ($typenow === self::POST_TYPE_WORKFLOW && $pagenow === 'post.php') {
+                $postId = (int) $_GET['post'];
+
+                // Redirect to our custom page
+                wp_redirect(admin_url('admin.php?page=my_custom_post_type_editor&workflow=' . $postId));
+                exit;
+            }
+        });
     }
 
     public function adminMenu()
@@ -36,6 +48,15 @@ class Module implements InitializableInterface
         $indexAllWorkflows = array_search('edit.php?post_type=ppfuture_workflow', array_column($submenu['publishpress-future'], 2));
 
         $submenu['publishpress-future'][$indexAllWorkflows][0] = __('Workflows', 'publishpress-future-pro');
+
+        add_submenu_page(
+            'edit.php?post_type=' . self::POST_TYPE_WORKFLOW,
+            'My Custom Post Type Editor',
+            'My Custom Post Type',
+            'edit_posts',
+            'my_custom_post_type_editor',
+            [$this, 'renderEditorPage']
+        );
     }
 
     public function registerPostType()
@@ -85,36 +106,26 @@ class Module implements InitializableInterface
         ]);
     }
 
-    public function postTypeMetaBox($postType)
+    public function renderEditorPage()
     {
-        if (self::POST_TYPE_WORKFLOW !== $postType) {
+        $workflowId = isset($_GET['workflow']) ? (int) $_GET['workflow'] : 0;
+
+        if (empty($workflowId)) {
             return;
         }
 
-        add_meta_box(
-            'future_workflow_editor',
-            __('Workflow Editor', 'workflow-editor'),
-            [$this, 'renderMetaBoxView'],
-            self::POST_TYPE_WORKFLOW,
-            'advanced',
-            'high'
-        );
-    }
-
-    public function renderMetaBoxView($post)
-    {
         require_once __DIR__ . '/Views/editor.html.php';
     }
 
     public function enqueueScripts($hook)
     {
-        if ('post.php' !== $hook) {
+        if ('admin_page_my_custom_post_type_editor' !== $hook) {
             return;
         }
 
         global $post_type;
-        if (self::POST_TYPE_WORKFLOW !== $post_type) {
-            return;
+        if (empty($post_type)) {
+            $post_type = self::POST_TYPE_WORKFLOW;
         }
 
         wp_enqueue_style(

@@ -114,7 +114,10 @@ module.exports = [
         },
         externals: {
             'react': 'React',
-            'react-dom': 'ReactDOM'
+            'react-dom': 'ReactDOM',
+            '@wordpress/data': 'wp.data',
+            '@wordpress/element': 'wp.element',
+            '@wordpress/components': 'wp.components',
         }
     }
 ];
