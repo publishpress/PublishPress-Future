@@ -18,6 +18,10 @@ export const FlowEditor = (props) => {
         hideAttribution: false,
     }
 
+    const editorStyle = {
+        backgroundColor: "#ffffff",
+    }
+
     return (
         <ReactFlow
             defaultNodes={nodes}
@@ -25,6 +29,7 @@ export const FlowEditor = (props) => {
             fitView
             proOptions={proOptions}
             nodesDraggable={true}
+            style={editorStyle}
         >
             <Background variant="dots" />
             <Controls />
