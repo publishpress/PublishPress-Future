@@ -1,9 +1,15 @@
 import { register, createReduxStore } from '@wordpress/data';
-import { FEATURE_FULLSCREEN_MODE, POST_TYPE, STORE_NAME } from './constants';
+import {
+    FEATURE_FULLSCREEN_MODE,
+    POST_TYPE,
+    STORE_NAME
+} from './constants';
+import { shortcutsMap } from './shortcuts';
 
 export const storeConfig = {
     activeFeatures: [FEATURE_FULLSCREEN_MODE],
     postType: POST_TYPE,
+    shortcuts: shortcutsMap,
     nodes: [],
     edges: [],
 }
@@ -37,6 +43,23 @@ export const store = createReduxStore(STORE_NAME, {
                 return {
                     ...state,
                     postType: action.payload,
+                };
+
+            case 'SET_SHORTCUTS':
+                return {
+                    ...state,
+                    shortcuts: action.payload,
+                };
+
+            case 'SET_SHORTCUT':
+                const { actionToExecute, keysCombination } = action.payload;
+
+                return {
+                    ...state,
+                    shortcuts: {
+                        ...state.shortcuts,
+                        [actionToExecute]: keysCombination,
+                    }
                 };
 
             case 'SET_NODES':
@@ -73,6 +96,18 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: postType
             };
         },
+        setShortcuts(shortcuts) {
+            return {
+                type: 'SET_SHORTCUTS',
+                payload: shortcuts
+            };
+        },
+        setShortcut(actionToExecute, keysCombination) {
+            return {
+                type: 'SET_SHORTCUT',
+                payload: { actionToExecute, keysCombination }
+            };
+        },
         setNodes(nodes) {
             return {
                 type: 'SET_NODES',
@@ -95,6 +130,12 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getPostType(state) {
             return state.postType;
+        },
+        getShortcuts(state) {
+            return state.shortcuts;
+        },
+        getShortcut(state, actionToExecute) {
+            return state.shortcuts[actionToExecute];
         },
         getNodes(state) {
             return state.nodes;
