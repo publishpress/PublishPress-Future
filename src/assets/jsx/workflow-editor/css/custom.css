@@ -3,6 +3,10 @@
 }
 
 .react-flow {
-    height: calc(100vh - 80px) !important;
+    height: calc(100vh - 112px) !important;
     width: 100% !important;
+}
+
+.is-fullscreen-mode .react-flow {
+    height: calc(100vh - 80px) !important;
 }
