@@ -25,7 +25,7 @@ export const nodes = [
     },
     {
         id: '4',
-        data: { label: 'React Flow Pro!' },
+        data: { label: 'PublishPress Future Pro!' },
         position: { x: 100, y: 200 },
         style: nodeStyle,
     },
