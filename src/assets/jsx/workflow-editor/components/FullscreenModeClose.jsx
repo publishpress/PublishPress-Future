@@ -33,7 +33,7 @@ export function FullscreenModeClose({ showTooltip }) {
     return (
         <motion.div whileHover="expand">
             <Button
-                className="edit-workflow-fullscreen-mode-close"
+                className="edit-post-fullscreen-mode-close"
                 href={
                     addQueryArgs('edit.php', {
                         post_type: POST_TYPE,

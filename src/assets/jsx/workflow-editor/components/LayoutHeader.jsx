@@ -14,7 +14,7 @@ export const LayoutHeader = () => {
         }
     });
 
-    const headerClasses = 'edit-workflow-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
+    const headerClasses = 'edit-post-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
 
     return (
         <div className={headerClasses}>

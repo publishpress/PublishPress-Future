@@ -128,29 +128,8 @@ class Module implements InitializableInterface
             $post_type = self::POST_TYPE_WORKFLOW;
         }
 
-        wp_enqueue_style(
-            'future_workflow_admin_ui_kit_style',
-            plugins_url('/src/assets/libs/uikit-3.15.15/css/uikit.css', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
-            false,
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
-            'all'
-        );
-
-        wp_enqueue_script(
-            'future_workflow_admin_ui_kit',
-            plugins_url('/src/assets/libs/uikit-3.15.15/js/uikit.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
-            false,
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
-            true
-        );
-
-        wp_enqueue_script(
-            'future_workflow_admin_ui_kit_icons',
-            plugins_url('/src/assets/libs/uikit-3.15.15/js/uikit-icons.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
-            ['future_workflow_admin_ui_kit'],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
-            true
-        );
+        wp_enqueue_style('wp-components');
+        wp_enqueue_style('wp-edit-post');
 
         wp_enqueue_script('wp-url');
         wp_enqueue_script('wp-element');
@@ -161,8 +140,6 @@ class Module implements InitializableInterface
             'future_workflow_admin_script',
             plugins_url('/src/assets/js/workflow-editor.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
             [
-                'future_workflow_admin_ui_kit',
-                'future_workflow_admin_ui_kit_icons',
                 'wp-element',
                 'wp-components',
                 'wp-url',
