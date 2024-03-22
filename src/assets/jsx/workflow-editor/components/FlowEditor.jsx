@@ -1,6 +1,6 @@
 import { useSelect } from "@wordpress/data";
 import { store } from "../store";
-import ReactFlow, { ReactFlowProvider, Background, Controls } from "reactflow";
+import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
 
 export const FlowEditor = (props) => {
     const {
@@ -31,6 +31,7 @@ export const FlowEditor = (props) => {
             nodesDraggable={true}
             style={editorStyle}
         >
+            <MiniMap pannable zoomable />
             <Background variant="dots" />
             <Controls />
         </ReactFlow>
