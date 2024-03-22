@@ -17,3 +17,5 @@ export function addBodyClasses(classNames) {
 export function removeBodyClasses(classNames) {
     classNames.forEach(className => removeBodyClass(className));
 }
+
+export const classnames = (...args) => args.filter(Boolean).join(' ');

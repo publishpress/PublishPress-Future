@@ -10,3 +10,8 @@
 .is-fullscreen-mode .react-flow {
     height: calc(100vh - 80px) !important;
 }
+
+.components-menu-items__item-icon.has-icon-right {
+    width: 24px !important;
+    height: 24px !important;
+}

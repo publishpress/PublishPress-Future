@@ -2,6 +2,7 @@ import { useSelect } from '@wordpress/data';
 import { store } from '../store';
 import { FEATURE_FULLSCREEN_MODE, FEATURE_REDUCED_UI } from '../constants';
 import { FullscreenModeClose } from './FullscreenModeClose';
+import { MoreMenu } from './MoreMenu';
 import { Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -30,6 +31,7 @@ export const LayoutHeader = () => {
             <div className="edit-post-header__settings">
                 <Button variant='link'>{__('Save Draft')}</Button>
                 <Button variant='primary'>{__('Publish')}</Button>
+                <MoreMenu />
             </div>
         </div>
     );
