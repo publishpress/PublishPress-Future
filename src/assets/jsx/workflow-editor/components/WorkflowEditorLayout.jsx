@@ -4,7 +4,6 @@ import { useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
 import { addBodyClasses, removeBodyClasses } from "../utils";
 import { store } from "../store";
-import { KeyboardShortcuts } from "./KeyboardShortcodes";
 
 export function WorkflowEditorLayout() {
     const {
@@ -28,7 +27,6 @@ export function WorkflowEditorLayout() {
     return (
         <>
             <FullscreenMode isActive={isFullscreenActive} />
-            <KeyboardShortcuts />
 
             <WorkflowEditorInterface />
         </>
