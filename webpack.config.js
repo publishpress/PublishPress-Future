@@ -118,6 +118,7 @@ module.exports = [
             '@wordpress/data': 'wp.data',
             '@wordpress/element': 'wp.element',
             '@wordpress/components': 'wp.components',
+            '@wordpress/i18n': 'wp.i18n',
         }
     }
 ];
