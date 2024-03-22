@@ -1,6 +1,6 @@
 import { useSelect } from "@wordpress/data";
 import { store } from "../store";
-import ReactFlow, { ReactFlowProvider, Background } from "reactflow";
+import ReactFlow, { ReactFlowProvider, Background, Controls } from "reactflow";
 
 export const LayoutContent = (props) => {
     const {
@@ -28,7 +28,8 @@ export const LayoutContent = (props) => {
                     proOptions={proOptions}
                     nodesDraggable={true}
                 >
-                    <Background />
+                    <Background variant="dots" />
+                    <Controls />
                 </ReactFlow>
             </ReactFlowProvider>
         </div>
