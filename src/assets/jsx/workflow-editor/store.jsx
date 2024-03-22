@@ -38,6 +38,21 @@ export const store = createReduxStore(STORE_NAME, {
                     ...state,
                     activeFeatures: activeFeatures,
                 };
+            case 'ENABLE_FEATURE':
+                const featureToEnable = action.payload;
+
+                return {
+                    ...state,
+                    activeFeatures: [...state.activeFeatures, featureToEnable],
+                };
+
+            case 'DISABLE_FEATURE':
+                const featureToDisable = action.payload;
+
+                return {
+                    ...state,
+                    activeFeatures: state.activeFeatures.filter(f => f !== featureToDisable),
+                };
 
             case 'SET_POST_TYPE':
                 return {
@@ -87,6 +102,18 @@ export const store = createReduxStore(STORE_NAME, {
         toggleFeature(feature) {
             return {
                 type: 'TOGGLE_FEATURE',
+                payload: feature
+            };
+        },
+        disableFeature(feature) {
+            return {
+                type: 'DISABLE_FEATURE',
+                payload: feature
+            };
+        },
+        enableFeature(feature) {
+            return {
+                type: 'ENABLE_FEATURE',
                 payload: feature
             };
         },
