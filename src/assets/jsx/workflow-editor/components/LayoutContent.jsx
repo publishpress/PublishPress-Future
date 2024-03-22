@@ -1,7 +1,6 @@
 import { useSelect } from "@wordpress/data";
 import { store } from "../store";
 import ReactFlow, { ReactFlowProvider, Background, Controls } from "reactflow";
-import { KeyboardShortcuts } from "./KeyboardShortcodes";
 
 export const LayoutContent = (props) => {
     const {
@@ -20,21 +19,15 @@ export const LayoutContent = (props) => {
     }
 
     return (
-        <div>
-            <ReactFlowProvider>
-                <KeyboardShortcuts />
-
-                <ReactFlow
-                    defaultNodes={nodes}
-                    defaultEdges={edges}
-                    fitView
-                    proOptions={proOptions}
-                    nodesDraggable={true}
-                >
-                    <Background variant="dots" />
-                    <Controls />
-                </ReactFlow>
-            </ReactFlowProvider>
-        </div>
+        <ReactFlow
+            defaultNodes={nodes}
+            defaultEdges={edges}
+            fitView
+            proOptions={proOptions}
+            nodesDraggable={true}
+        >
+            <Background variant="dots" />
+            <Controls />
+        </ReactFlow>
     );
 }

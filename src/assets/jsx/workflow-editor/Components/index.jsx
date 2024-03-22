@@ -1,5 +1,5 @@
 import { FullscreenModeClose } from "./FullscreenModeClose";
-import { KeyboardShortcuts } from "./KeyboardShortcodes";
+import { KeyboardShortcuts } from "./KeyboardShortcuts";
 import { LayoutContent } from "./LayoutContent";
 import { LayoutFooter } from "./LayoutFooter";
 import { LayoutHeader } from "./LayoutHeader";
