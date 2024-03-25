@@ -1,6 +1,7 @@
 import { register, createReduxStore } from '@wordpress/data';
 import {
     FEATURE_FULLSCREEN_MODE,
+    FEATURE_INSERTER,
     POST_TYPE,
     STORE_NAME
 } from './constants';

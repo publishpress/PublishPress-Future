@@ -3108,6 +3108,14 @@
     "@babel/runtime" "^7.16.0"
     "@wordpress/hooks" "^3.53.0"
 
+"@wordpress/deprecated@^3.54.0":
+  version "3.54.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/deprecated/-/deprecated-3.54.0.tgz#337c27e4e1911371f6ed3e3852dd2ea1fe983ec2"
+  integrity sha512-UxCtkbyuxXJ+vB9kQFMBYGrRpA+VLzE7Ghm58sSHKzSuRnxDBZULvtr8i4pK3YHUcXBkkqL7MdOyzQePXV9QGw==
+  dependencies:
+    "@babel/runtime" "^7.16.0"
+    "@wordpress/hooks" "^3.54.0"
+
 "@wordpress/dom-ready@^3.53.0":
   version "3.53.0"
   resolved "https://registry.yarnpkg.com/@wordpress/dom-ready/-/dom-ready-3.53.0.tgz#0d6b02b72cb3bc8be4adf704607d7d50d85226cb"
@@ -3129,6 +3137,14 @@
   dependencies:
     "@babel/runtime" "^7.16.0"
     "@wordpress/deprecated" "^3.53.0"
+
+"@wordpress/dom@^3.54.0":
+  version "3.54.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/dom/-/dom-3.54.0.tgz#6f109840547340597e66954e7c927c9622ee5b70"
+  integrity sha512-iCj+i6m05H5vtDgjz3mdq/IR5jnKlQ6kzTmZhw06FSriYBCtlEgXwmeQCioc41A39PIBumvbEyPcBXoAnyFQng==
+  dependencies:
+    "@babel/runtime" "^7.16.0"
+    "@wordpress/deprecated" "^3.54.0"
 
 "@wordpress/e2e-test-utils-playwright@^0.21.0":
   version "0.21.0"
