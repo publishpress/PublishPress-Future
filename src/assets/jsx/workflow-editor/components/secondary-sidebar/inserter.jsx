@@ -49,7 +49,7 @@ export function InserterSidebar() {
             <div className="edit-post-editor__inserter-panel-content">
                 <InserterLibrary
                     showMostUsedNodes={showMostUsedNodes}
-                    showInserterHelpPanel
+                    showInserterHelpPanel={true}
                     shouldFocusBlock={isMobileViewport}
                 />
             </div>
