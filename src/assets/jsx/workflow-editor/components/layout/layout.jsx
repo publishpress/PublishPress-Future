@@ -1,11 +1,11 @@
 import { FullscreenMode } from "@wordpress/interface";
-import { WorkflowEditorInterface } from "./WorkflowEditorInterface";
+import { WorkflowEditorInterface } from "./interface";
 import { useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
-import { addBodyClasses, removeBodyClasses } from "../utils";
-import { store } from "../store";
+import { addBodyClasses, removeBodyClasses } from "../../utils";
+import { store } from "../../store";
 import { ReactFlowProvider } from "reactflow";
-import { KeyboardShortcuts } from "./KeyboardShortcuts";
+import { KeyboardShortcuts } from "../keyboard-shortcuts";
 
 export function WorkflowEditorLayout() {
     const {

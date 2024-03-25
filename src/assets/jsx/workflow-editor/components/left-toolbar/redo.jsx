@@ -11,7 +11,7 @@ import { forwardRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { store } from '../store';
+import { store } from '../../store';
 
 function Component(props, ref) {
     const hasRedo = useSelect(

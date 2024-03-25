@@ -10,7 +10,7 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies
  */
-import { store } from '../store';
+import { store } from '../../store';
 
 export const MoreMenuFeatureToggle = ({
     scope,

@@ -1,4 +1,4 @@
-import { WorkflowEditorLayout } from "./components";
+import { WorkflowEditorLayout } from "./components/workflow-editor/layout";
 import {
     HTML_ELEMENT_ID,
 } from "./constants";

@@ -2,7 +2,7 @@ import { MenuGroup } from '@wordpress/components';
 import { __, _x } from '@wordpress/i18n';
 import { useViewportMatch } from '@wordpress/compose';
 import { displayShortcut } from '@wordpress/keycodes';
-import { MoreMenuFeatureToggle } from './MoreMenuFeatureToggle';
+import { MoreMenuFeatureToggle } from './menu-feature-toggle';
 
 export const MoreMenuItemsView = () => {
 	const isLargeViewport = useViewportMatch( 'medium' );

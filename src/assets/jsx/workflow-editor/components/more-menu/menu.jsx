@@ -3,12 +3,12 @@
  */
 import { __ } from '@wordpress/i18n';
 // import { MenuGroup } from '@wordpress/components';
-import { MoreMenuDropdown } from './MoreMenuDropdown';
+import { MoreMenuDropdown } from './menu-dropdown';
 import { useViewportMatch } from '@wordpress/compose';
 
 // import PreferencesMenuItem from '../preferences-menu-item';
 // import ToolsMoreMenuGroup from '../tools-more-menu-group';
-import { MoreMenuItemsView } from './MoreMenuItemsView';
+import { MoreMenuItemsView } from './menu-items-view';
 
 const POPOVER_PROPS = {
     className: 'edit-post-more-menu__content',

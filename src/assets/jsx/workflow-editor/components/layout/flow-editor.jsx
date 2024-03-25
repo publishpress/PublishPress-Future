@@ -1,5 +1,5 @@
 import { useSelect } from "@wordpress/data";
-import { store } from "../store";
+import { store } from "../../store";
 import ReactFlow, { Background, Controls, MiniMap } from "reactflow";
 
 export const FlowEditor = (props) => {

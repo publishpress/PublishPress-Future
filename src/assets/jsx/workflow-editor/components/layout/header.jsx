@@ -4,13 +4,13 @@ import { useViewportMatch } from '@wordpress/compose';
 import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback } from '@wordpress/element';
 import { plus } from '@wordpress/icons';
-import { store } from '../store';
-import { FEATURE_FULLSCREEN_MODE, FEATURE_REDUCED_UI, FEATURE_INSERTER } from '../constants';
-import { FullscreenModeClose } from './FullscreenModeClose';
-import { MoreMenu } from './MoreMenu';
-import { NavigableToolbar } from './NavigableToolbar';
-import { EditorHistoryUndo } from './EditorHistoryUndo';
-import { EditorHistoryRedo } from './EditorHistoryRedo';
+import { store } from '../../store';
+import { FEATURE_FULLSCREEN_MODE, FEATURE_REDUCED_UI, FEATURE_INSERTER } from '../../constants';
+import { FullscreenModeClose } from '../fullscree-mode-close';
+import { MoreMenu } from '../more-menu/menu';
+import { NavigableToolbar } from '../left-toolbar/toolbar';
+import { EditorHistoryUndo } from '../left-toolbar/undo';
+import { EditorHistoryRedo } from '../left-toolbar/redo';
 
 const preventDefault = (event) => {
     event.preventDefault();
