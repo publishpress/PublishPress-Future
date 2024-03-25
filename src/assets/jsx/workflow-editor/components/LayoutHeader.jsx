@@ -1,5 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Button, ToolbarItem } from '@wordpress/components';
+import { useViewportMatch } from '@wordpress/compose';
 import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback } from '@wordpress/element';
 import { plus } from '@wordpress/icons';
@@ -8,6 +9,8 @@ import { FEATURE_FULLSCREEN_MODE, FEATURE_REDUCED_UI, FEATURE_INSERTER } from '.
 import { FullscreenModeClose } from './FullscreenModeClose';
 import { MoreMenu } from './MoreMenu';
 import { NavigableToolbar } from './NavigableToolbar';
+import { EditorHistoryUndo } from './EditorHistoryUndo';
+import { EditorHistoryRedo } from './EditorHistoryRedo';
 
 const preventDefault = (event) => {
     event.preventDefault();
@@ -31,6 +34,8 @@ export const LayoutHeader = () => {
     const { enableFeature, disableFeature } = useDispatch(store);
 
     const headerClasses = 'edit-post-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
+
+    const isWideViewport = useViewportMatch('wide');
 
     const inserterButton = useRef();
 
@@ -79,6 +84,21 @@ export const LayoutHeader = () => {
                             {showIconLabels &&
                                 (!isInserterOpened ? __('Add') : __('Close'))}
                         </ToolbarItem>
+
+                        {(isWideViewport || !showIconLabels) && (
+                            <>
+                                <ToolbarItem
+                                    as={EditorHistoryUndo}
+                                    showTooltip={!showIconLabels}
+                                    variant={showIconLabels ? 'tertiary' : undefined}
+                                />
+                                <ToolbarItem
+                                    as={EditorHistoryRedo}
+                                    showTooltip={!showIconLabels}
+                                    variant={showIconLabels ? 'tertiary' : undefined}
+                                />
+                            </>
+                        )}
                     </div>
                 </NavigableToolbar>
             </div>

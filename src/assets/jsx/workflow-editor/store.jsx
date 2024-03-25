@@ -13,6 +13,8 @@ export const storeConfig = {
     shortcuts: shortcutsMap,
     nodes: [],
     edges: [],
+    editorUndo: [],
+    editorRedo: [],
 }
 
 export const store = createReduxStore(STORE_NAME, {
@@ -89,6 +91,19 @@ export const store = createReduxStore(STORE_NAME, {
                     ...state,
                     edges: action.payload,
                 };
+
+            case 'UNDO':
+                // TODO: Implement undo
+                return {
+                    ...state
+                };
+
+            case 'REDO':
+                // TODO: Implement redo
+                return {
+                    ...state
+                };
+
         }
 
         return state;
@@ -147,6 +162,16 @@ export const store = createReduxStore(STORE_NAME, {
                 type: 'SET_EDGES',
                 payload: edges
             };
+        },
+        undo() {
+            return {
+                type: 'UNDO'
+            };
+        },
+        redo() {
+            return {
+                type: 'REDO'
+            };
         }
     },
     selectors: {
@@ -170,6 +195,12 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getEdges(state) {
             return state.edges;
+        },
+        hasEditorUndo(state) {
+            return state.editorUndo.length > 0;
+        },
+        hasEditorRedo(state) {
+            return state.editorRedo.length > 0;
         }
     }
 });
