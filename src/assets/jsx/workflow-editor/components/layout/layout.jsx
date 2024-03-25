@@ -6,14 +6,23 @@ import { addBodyClasses, removeBodyClasses } from "../../utils";
 import { store } from "../../store";
 import { ReactFlowProvider } from "reactflow";
 import { KeyboardShortcuts } from "../keyboard-shortcuts";
+import { FEATURE_FULLSCREEN_MODE, FEATURE_INSERTER } from "../../constants";
+import { InserterSidebar } from "../secondary-sidebar/inserter";
+import { classnames } from "../../utils";
 
 export function WorkflowEditorLayout() {
     const {
-        isFullscreenActive
+        isFullscreenActive,
+        isInserterOpened,
     } = useSelect((select) => {
         return {
-            isFullscreenActive: select(store).isFeatureActive('fullscreenMode')
+            isFullscreenActive: select(store).isFeatureActive(FEATURE_FULLSCREEN_MODE),
+            isInserterOpened: select(store).isFeatureActive(FEATURE_INSERTER),
         }
+    });
+
+    const className = classnames('edit-post-layout', {
+        'is-inserter-opened': isInserterOpened,
     });
 
     useEffect(() => {
@@ -26,12 +35,23 @@ export function WorkflowEditorLayout() {
         }
     }, []);
 
+    const secondarySidebar = () => {
+        if (isInserterOpened) {
+            return <InserterSidebar />;
+        }
+
+        return null;
+    };
+
     return (
         <ReactFlowProvider>
             <FullscreenMode isActive={isFullscreenActive} />
             <KeyboardShortcuts />
 
-            <WorkflowEditorInterface />
+            <WorkflowEditorInterface
+                className={className}
+                secondarySidebar={secondarySidebar}
+            />
         </ReactFlowProvider>
     );
 }

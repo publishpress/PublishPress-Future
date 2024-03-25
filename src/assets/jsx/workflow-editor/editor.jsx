@@ -1,4 +1,4 @@
-import { WorkflowEditorLayout } from "./components/workflow-editor/layout";
+import { WorkflowEditorLayout } from "./components/layout/layout";
 import {
     HTML_ELEMENT_ID,
 } from "./constants";
@@ -7,7 +7,7 @@ import { dispatch } from "@wordpress/data";
 import { store } from "./store";
 import { nodes, edges } from "./demoData";
 
-import "./css/editor.css";
+import "./css/index.css";
 import 'reactflow/dist/style.css';
 
 dispatch(store).setNodes(nodes);

@@ -44,9 +44,10 @@ export const LayoutHeader = () => {
             // Focusing the inserter button closes the inserter popover
             inserterButton.current.focus();
             disableFeature(FEATURE_INSERTER);
-        } else {
-            enableFeature(FEATURE_INSERTER);
+            return;
         }
+
+        enableFeature(FEATURE_INSERTER);
     }, [isInserterOpened, enableFeature]);
 
     /* translators: accessibility text for the editor toolbar */
