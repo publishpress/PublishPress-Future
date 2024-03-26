@@ -1,6 +1,7 @@
 import { register, createReduxStore } from '@wordpress/data';
 import {
     FEATURE_FULLSCREEN_MODE,
+    INSERTER_TAB_TRIGGERS,
     POST_TYPE,
     STORE_NAME
 } from './constants';
@@ -14,6 +15,7 @@ export const storeConfig = {
     edges: [],
     editorUndo: [],
     editorRedo: [],
+    currentInserterTab: INSERTER_TAB_TRIGGERS,
 }
 
 export const store = createReduxStore(STORE_NAME, {
@@ -91,6 +93,12 @@ export const store = createReduxStore(STORE_NAME, {
                     edges: action.payload,
                 };
 
+            case 'SET_CURRENT_INSERTER_TAB':
+                return {
+                    ...state,
+                    currentInserterTab: action.payload,
+                };
+
             case 'UNDO':
                 // TODO: Implement undo
                 return {
@@ -162,6 +170,12 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: edges
             };
         },
+        setCurrentInserterTab(tab) {
+            return {
+                type: 'SET_CURRENT_INSERTER_TAB',
+                payload: tab
+            };
+        },
         undo() {
             return {
                 type: 'UNDO'
@@ -194,6 +208,9 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getEdges(state) {
             return state.edges;
+        },
+        getCurrentInserterTab(state) {
+            return state.currentInserterTab;
         },
         hasEditorUndo(state) {
             return state.editorUndo.length > 0;

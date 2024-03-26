@@ -3,8 +3,11 @@ import { __ } from "@wordpress/i18n";
 import { VisuallyHidden, SearchControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { Tips } from './tips';
-import { NodeTypesTab } from './node-types-tab';
+import { NodesTab } from './nodes-tab';
 import InserterTabs from './tabs';
+import { INSERTER_TAB_ACTIONS, INSERTER_TAB_TRIGGERS } from '../../constants';
+import { store } from '../../store';
+import { useDispatch } from '@wordpress/data';
 
 export function InserterMenu({
     onSelect,
@@ -18,8 +21,13 @@ export function InserterMenu({
     );
 
     const [hoveredItem, setHoveredItem] = useState(null);
-    const hasReusableBlocks = false;
 
+    const { currentInserterTab } = useSelect((select) => {
+        return {
+            currentInserterTab: select(store).getCurrentInserterTab(),
+        };
+    }, []);
+    const { setCurrentInserterTab } = useDispatch(store);
 
     const onInsert = useCallback(
         (blocks, meta, shouldForceFocusBlock) => {
@@ -39,7 +47,8 @@ export function InserterMenu({
         () => (
             <>
                 <div className="block-editor-inserter__block-list">
-                    <NodeTypesTab
+                    <NodesTab
+                        type={INSERTER_TAB_TRIGGERS}
                         onInsert={onInsert}
                         onHover={onHover}
                         showMostUsedBlocks={showMostUsedBlocks}
@@ -68,7 +77,8 @@ export function InserterMenu({
         () => (
             <>
                 <div className="block-editor-inserter__block-list">
-                    <NodeTypesTab
+                    <NodesTab
+                        type={INSERTER_TAB_ACTIONS}
                         onInsert={onInsert}
                         onHover={onHover}
                         showMostUsedBlocks={showMostUsedBlocks}
@@ -96,18 +106,22 @@ export function InserterMenu({
 
     const getCurrentTab = useCallback(
         (tab) => {
-            if (tab.name === 'triggers') {
+            if (tab.name === INSERTER_TAB_TRIGGERS) {
                 return triggersTab;
             }
 
-            if (tab.name === 'actions') {
+            if (tab.name === INSERTER_TAB_ACTIONS) {
                 return actionsTab;
             }
-
-            // return reusableBlocksTab;
-
         },
-        [triggersTab]
+        [triggersTab, actionsTab]
+    );
+
+    const onSelectTab = useCallback(
+        (tab) => {
+            setCurrentInserterTab(tab);
+        },
+        [setCurrentInserterTab]
     );
 
     return (
@@ -143,7 +157,10 @@ export function InserterMenu({
                     */ }
 
                     { ! filterValue && (
-						<InserterTabs>
+						<InserterTabs
+                            onSelect={onSelectTab}
+                            initialTabName={currentInserterTab}
+                        >
 							{ getCurrentTab }
 						</InserterTabs>
 					) }

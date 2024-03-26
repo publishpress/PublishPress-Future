@@ -4,14 +4,15 @@
 import { useMemo } from '@wordpress/element';
 import { TabPanel } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { INSERTER_TAB_ACTIONS, INSERTER_TAB_TRIGGERS } from '../../constants';
 
 const triggersTab = {
-    name: 'triggers',
+    name: INSERTER_TAB_TRIGGERS,
     /* translators: Blocks tab title in the block inserter. */
     title: __('Triggers'),
 };
 const actionsTabs = {
-    name: 'actions',
+    name: INSERTER_TAB_ACTIONS,
     /* translators: Patterns tab title in the block inserter. */
     title: __('Actions'),
 };
@@ -19,6 +20,7 @@ const actionsTabs = {
 function InserterTabs({
     children,
     onSelect,
+    initialTabName = INSERTER_TAB_TRIGGERS,
 }) {
     const tabs = useMemo(() => {
         const tempTabs = [triggersTab, actionsTabs];
@@ -34,6 +36,7 @@ function InserterTabs({
             className="block-editor-inserter__tabs"
             tabs={tabs}
             onSelect={onSelect}
+            initialTabName={initialTabName}
         >
             {children}
         </TabPanel>

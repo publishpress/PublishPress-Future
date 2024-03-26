@@ -6,3 +6,6 @@ export const FEATURE_FULLSCREEN_MODE = 'fullscreenMode';
 export const FEATURE_REDUCED_UI = 'reducedUI';
 export const FEATURE_INSERTER = 'inserter';
 export const FEATURE_MOST_USED_NODES = 'mostUsedNodes';
+
+export const INSERTER_TAB_TRIGGERS = 'triggers';
+export const INSERTER_TAB_ACTIONS = 'actions';
