@@ -3,6 +3,8 @@ import { __ } from "@wordpress/i18n";
 import { VisuallyHidden, SearchControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { Tips } from './tips';
+import { NodeTypesTab } from './node-types-tab';
+import InserterTabs from './tabs';
 
 export function InserterMenu({
     onSelect,
@@ -33,16 +35,15 @@ export function InserterMenu({
         [setHoveredItem]
     );
 
-    const blocksTab = useMemo(
+    const triggersTab = useMemo(
         () => (
             <>
                 <div className="block-editor-inserter__block-list">
-                    {/* <BlockTypesTab
-                        rootClientId={destinationRootClientId}
+                    <NodeTypesTab
                         onInsert={onInsert}
                         onHover={onHover}
                         showMostUsedBlocks={showMostUsedBlocks}
-                    /> */}
+                    />
                 </div>
                 {showInserterHelpPanel && (
                     <div className="block-editor-inserter__tips">
@@ -63,16 +64,50 @@ export function InserterMenu({
         ]
     );
 
+    const actionsTab = useMemo(
+        () => (
+            <>
+                <div className="block-editor-inserter__block-list">
+                    <NodeTypesTab
+                        onInsert={onInsert}
+                        onHover={onHover}
+                        showMostUsedBlocks={showMostUsedBlocks}
+                    />
+                </div>
+                {showInserterHelpPanel && (
+                    <div className="block-editor-inserter__tips">
+                        <VisuallyHidden as="h2">
+                            {__('A tip for using the block editor')}
+                        </VisuallyHidden>
+                        <Tips />
+                    </div>
+                )}
+            </>
+        ),
+        [
+            onInsert,
+            onHover,
+            filterValue,
+            showMostUsedBlocks,
+            showInserterHelpPanel,
+        ]
+    );
+
+
     const getCurrentTab = useCallback(
         (tab) => {
-            if (tab.name === 'blocks') {
-                return blocksTab;
+            if (tab.name === 'triggers') {
+                return triggersTab;
+            }
+
+            if (tab.name === 'actions') {
+                return actionsTab;
             }
 
             // return reusableBlocksTab;
 
         },
-        [blocksTab]
+        [triggersTab]
     );
 
     return (
@@ -105,18 +140,13 @@ export function InserterMenu({
 							shouldFocusBlock={ shouldFocusBlock }
 						/>
 					) }
-					{ ! filterValue && ( showPatterns || hasReusableBlocks ) && (
-						<InserterTabs
-							showPatterns={ showPatterns }
-							showReusableBlocks={ hasReusableBlocks }
-						>
+                    */ }
+
+                    { ! filterValue && (
+						<InserterTabs>
 							{ getCurrentTab }
 						</InserterTabs>
 					) }
-                    */}
-					{ ! filterValue &&
-						! hasReusableBlocks &&
-						blocksTab }
                 </div>
             </div>
             {showInserterHelpPanel && hoveredItem && (
