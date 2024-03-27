@@ -16,6 +16,8 @@ export const storeConfig = {
     editorUndo: [],
     editorRedo: [],
     currentInserterTab: INSERTER_TAB_TRIGGERS,
+    triggerNodes: [],
+    actionNodes: [],
 }
 
 export const store = createReduxStore(STORE_NAME, {
@@ -99,6 +101,18 @@ export const store = createReduxStore(STORE_NAME, {
                     currentInserterTab: action.payload,
                 };
 
+            case 'SET_TRIGGER_NODES':
+                return {
+                    ...state,
+                    triggerNodes: action.payload,
+                };
+
+            case 'SET_ACTION_NODES':
+                return {
+                    ...state,
+                    actionNodes: action.payload,
+                };
+
             case 'UNDO':
                 // TODO: Implement undo
                 return {
@@ -176,6 +190,18 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: tab
             };
         },
+        setTriggerNodes(nodes) {
+            return {
+                type: 'SET_TRIGGER_NODES',
+                payload: nodes
+            };
+        },
+        setActionNodes(nodes) {
+            return {
+                type: 'SET_ACTION_NODES',
+                payload: nodes
+            };
+        },
         undo() {
             return {
                 type: 'UNDO'
@@ -211,6 +237,12 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getCurrentInserterTab(state) {
             return state.currentInserterTab;
+        },
+        getTriggerNodes(state) {
+            return state.triggerNodes;
+        },
+        getActionNodes(state) {
+            return state.actionNodes;
         },
         hasEditorUndo(state) {
             return state.editorUndo.length > 0;

@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from '@wordpress/element';
 import { __ } from "@wordpress/i18n";
 import { VisuallyHidden, SearchControl } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useSelect, select } from '@wordpress/data';
 import { Tips } from './tips';
 import { NodesTab } from './nodes-tab';
 import InserterTabs from './tabs';
@@ -43,27 +43,38 @@ export function InserterMenu({
         [setHoveredItem]
     );
 
+    // TODO: get categories from store
+    const categories = [
+
+    ];
+
     const triggersTab = useMemo(
-        () => (
-            <>
-                <div className="block-editor-inserter__block-list">
-                    <NodesTab
-                        type={INSERTER_TAB_TRIGGERS}
-                        onInsert={onInsert}
-                        onHover={onHover}
-                        showMostUsedBlocks={showMostUsedBlocks}
-                    />
-                </div>
-                {showInserterHelpPanel && (
-                    <div className="block-editor-inserter__tips">
-                        <VisuallyHidden as="h2">
-                            {__('A tip for using the block editor')}
-                        </VisuallyHidden>
-                        <Tips />
+        () => {
+            const items = select(store).getTriggerNodes();
+
+            return (
+                <>
+                    <div className="block-editor-inserter__block-list">
+                        <NodesTab
+                            type={INSERTER_TAB_TRIGGERS}
+                            onInsert={onInsert}
+                            onHover={onHover}
+                            showMostUsedBlocks={showMostUsedBlocks}
+                            items={items}
+                            categories={categories}
+                        />
                     </div>
-                )}
-            </>
-        ),
+                    {showInserterHelpPanel && (
+                        <div className="block-editor-inserter__tips">
+                            <VisuallyHidden as="h2">
+                                {__('A tip for using the block editor')}
+                            </VisuallyHidden>
+                            <Tips />
+                        </div>
+                    )}
+                </>
+            );
+        },
         [
             onInsert,
             onHover,
@@ -74,26 +85,32 @@ export function InserterMenu({
     );
 
     const actionsTab = useMemo(
-        () => (
-            <>
-                <div className="block-editor-inserter__block-list">
-                    <NodesTab
-                        type={INSERTER_TAB_ACTIONS}
-                        onInsert={onInsert}
-                        onHover={onHover}
-                        showMostUsedBlocks={showMostUsedBlocks}
-                    />
-                </div>
-                {showInserterHelpPanel && (
-                    <div className="block-editor-inserter__tips">
-                        <VisuallyHidden as="h2">
-                            {__('A tip for using the block editor')}
-                        </VisuallyHidden>
-                        <Tips />
+        () => {
+            const items = select(store).getActionNodes();
+
+            return (
+                <>
+                    <div className="block-editor-inserter__block-list">
+                        <NodesTab
+                            type={INSERTER_TAB_ACTIONS}
+                            onInsert={onInsert}
+                            onHover={onHover}
+                            showMostUsedBlocks={showMostUsedBlocks}
+                            items={items}
+                            categories={categories}
+                        />
                     </div>
-                )}
-            </>
-        ),
+                    {showInserterHelpPanel && (
+                        <div className="block-editor-inserter__tips">
+                            <VisuallyHidden as="h2">
+                                {__('A tip for using the block editor')}
+                            </VisuallyHidden>
+                            <Tips />
+                        </div>
+                    )}
+                </>
+            );
+        },
         [
             onInsert,
             onHover,

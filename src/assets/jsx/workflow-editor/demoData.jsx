@@ -83,3 +83,39 @@ export const edges = [
         },
     },
 ];
+
+export const triggerNodes = [
+    {
+        id: '1',
+        name: 'core/trigger-1',
+        label: 'Trigger 1',
+        category: {
+            slug: 'core',
+            title: 'Core',
+            icon: 'wordpress',
+        },
+        frecency: 1,
+    },
+    {
+        id: '2',
+        name: 'core/trigger-2',
+        label: 'Trigger 2',
+        category: {
+            slug: 'core',
+            title: 'Core',
+            icon: 'wordpress',
+        },
+        frecency: 3,
+    },
+    {
+        id: '3',
+        name: 'core/trigger-3',
+        label: 'Trigger 3',
+        category: {
+            slug: 'core',
+            title: 'Core',
+            icon: 'wordpress',
+        },
+        frecency: 1,
+    },
+];
