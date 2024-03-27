@@ -12,7 +12,7 @@ import { useDispatch } from '@wordpress/data';
 export function InserterMenu({
     onSelect,
     showInserterHelpPanel,
-    showMostUsedBlocks,
+    showMostUsedNodes,
     __experimentalFilterValue = '',
     shouldFocusBlock = true,
 }) {
@@ -43,14 +43,14 @@ export function InserterMenu({
         [setHoveredItem]
     );
 
-    // TODO: get categories from store
-    const categories = [
-
-    ];
-
     const triggersTab = useMemo(
         () => {
             const items = select(store).getTriggerNodes();
+            const categories = select(store).getTriggerCategories();
+
+            console.log('showMostUsedNodes', showMostUsedNodes);
+            console.log('items', items);
+            console.log('categories', categories);
 
             return (
                 <>
@@ -59,7 +59,7 @@ export function InserterMenu({
                             type={INSERTER_TAB_TRIGGERS}
                             onInsert={onInsert}
                             onHover={onHover}
-                            showMostUsedBlocks={showMostUsedBlocks}
+                            showMostUsedNodes={showMostUsedNodes}
                             items={items}
                             categories={categories}
                         />
@@ -79,7 +79,7 @@ export function InserterMenu({
             onInsert,
             onHover,
             filterValue,
-            showMostUsedBlocks,
+            showMostUsedNodes,
             showInserterHelpPanel,
         ]
     );
@@ -87,6 +87,7 @@ export function InserterMenu({
     const actionsTab = useMemo(
         () => {
             const items = select(store).getActionNodes();
+            const categories = [];
 
             return (
                 <>
@@ -95,7 +96,7 @@ export function InserterMenu({
                             type={INSERTER_TAB_ACTIONS}
                             onInsert={onInsert}
                             onHover={onHover}
-                            showMostUsedBlocks={showMostUsedBlocks}
+                            showMostUsedNodes={showMostUsedNodes}
                             items={items}
                             categories={categories}
                         />
@@ -115,7 +116,7 @@ export function InserterMenu({
             onInsert,
             onHover,
             filterValue,
-            showMostUsedBlocks,
+            showMostUsedNodes,
             showInserterHelpPanel,
         ]
     );

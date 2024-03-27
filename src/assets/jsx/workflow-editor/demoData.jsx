@@ -84,38 +84,58 @@ export const edges = [
     },
 ];
 
+export const triggerCategories = [
+    {
+        slug: 'core',
+        title: 'Core',
+        icon: 'wordpress',
+    },
+];
+
 export const triggerNodes = [
     {
         id: '1',
         name: 'core/trigger-1',
-        label: 'Trigger 1',
-        category: {
-            slug: 'core',
-            title: 'Core',
-            icon: 'wordpress',
-        },
+        title: 'Trigger 1',
+        initialAttributes: {},
+        category: 'core',
+        disabled: false,
+        isDisabled: false,
         frecency: 1,
+        icon: {
+            src: 'wordpress',
+            background: '#ffffff',
+            foreground: '#676767',
+        },
     },
     {
         id: '2',
         name: 'core/trigger-2',
-        label: 'Trigger 2',
-        category: {
-            slug: 'core',
-            title: 'Core',
-            icon: 'wordpress',
-        },
+        title: 'Trigger 2',
+        initialAttributes: {},
+        category: 'core',
+        disabled: false,
+        isDisabled: false,
         frecency: 3,
+        icon: {
+            src: 'wordpress',
+            background: '#ffffff',
+            foreground: '#676767',
+        },
     },
     {
         id: '3',
         name: 'core/trigger-3',
-        label: 'Trigger 3',
-        category: {
-            slug: 'core',
-            title: 'Core',
-            icon: 'wordpress',
-        },
+        title: 'Trigger 3',
+        initialAttributes: {},
+        category: 'core',
+        disabled: false,
+        isDisabled: false,
         frecency: 1,
+        icon: {
+            src: 'wordpress',
+            background: '#ffffff',
+            foreground: '#676767',
+        },
     },
 ];

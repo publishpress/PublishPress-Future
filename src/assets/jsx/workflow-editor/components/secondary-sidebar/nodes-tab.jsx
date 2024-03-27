@@ -11,6 +11,7 @@ import { useMemo, useEffect } from '@wordpress/element';
 import { useAsyncList } from '@wordpress/compose';
 
 import NodeTypesList from './node-types-list';
+import InserterPanel from './panel';
 
 /**
  * Internal dependencies
@@ -22,7 +23,7 @@ export const NodesTab = ({
     categories,
     onInsert,
     onSelect,
-    showMostUsedBlocks
+    showMostUsedNodes
 }) => {
     const MAX_SUGGESTED_ITEMS = 6;
 
@@ -71,10 +72,12 @@ export const NodesTab = ({
     const currentlyRenderedCategories = useAsyncList(categories);
     // const didRenderAllCategories = categories.length === currentlyRenderedCategories.length;
 
+    console.log('showMostUsedNodes', showMostUsedNodes);
+
     return (
         <InserterListbox>
             <div>
-                {showMostUsedBlocks && !!suggestedItems.length && (
+                {showMostUsedNodes && suggestedItems.length > 0 && (
                     <InserterPanel title={_x('Most used', 'blocks')}>
                         <NodeTypesList
                             items={suggestedItems}

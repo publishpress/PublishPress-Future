@@ -25,6 +25,7 @@ function NodeTypesList( {
 	label,
 	isDraggable = true,
 } ) {
+	console.log('NodeTypesList.items', items);
 	return (
 		<InserterListboxGroup
 			className="block-editor-block-types-list"

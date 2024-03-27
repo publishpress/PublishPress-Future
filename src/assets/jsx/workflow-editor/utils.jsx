@@ -1,3 +1,5 @@
+import { applyFilters } from '@wordpress/hooks';
+
 export function addBodyClass(className) {
     if (document.body.classList.contains(className)) return;
 
@@ -35,7 +37,7 @@ export function getNodeMenuDefaultClassName(blockName) {
         blockName.replace(/\//, '-').replace(/^core-/, '');
 
     return applyFilters(
-        'blocks.getBlockMenuDefaultClassName',
+        'future-pro.getNodeMenuDefaultClassName',
         className,
         blockName
     );

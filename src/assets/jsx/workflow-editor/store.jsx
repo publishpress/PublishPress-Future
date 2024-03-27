@@ -16,6 +16,7 @@ export const storeConfig = {
     editorUndo: [],
     editorRedo: [],
     currentInserterTab: INSERTER_TAB_TRIGGERS,
+    triggerCategories: [],
     triggerNodes: [],
     actionNodes: [],
 }
@@ -100,6 +101,13 @@ export const store = createReduxStore(STORE_NAME, {
                     ...state,
                     currentInserterTab: action.payload,
                 };
+
+            case 'SET_TRIGGER_CATEGORIES':
+                return {
+                    ...state,
+                    triggerCategories: action.payload,
+                };
+
 
             case 'SET_TRIGGER_NODES':
                 return {
@@ -190,6 +198,12 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: tab
             };
         },
+        setTriggerCategories(categories) {
+            return {
+                type: 'SET_TRIGGER_CATEGORIES',
+                payload: categories
+            };
+        },
         setTriggerNodes(nodes) {
             return {
                 type: 'SET_TRIGGER_NODES',
@@ -237,6 +251,9 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getCurrentInserterTab(state) {
             return state.currentInserterTab;
+        },
+        getTriggerCategories(state) {
+            return state.triggerCategories;
         },
         getTriggerNodes(state) {
             return state.triggerNodes;

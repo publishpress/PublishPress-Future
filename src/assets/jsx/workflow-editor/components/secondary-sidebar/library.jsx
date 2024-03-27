@@ -11,7 +11,7 @@ import { InserterMenu } from './menu';
 export function InserterLibrary({
     isAppender,
     showInserterHelpPanel,
-    showMostUsedBlocks = false,
+    showMostUsedNodes = true,
     onSelect = noop,
     shouldFocusBlock = false,
 }) {
@@ -20,7 +20,7 @@ export function InserterLibrary({
             onSelect={onSelect}
             isAppender={isAppender}
             showInserterHelpPanel={showInserterHelpPanel}
-            showMostUsedBlocks={showMostUsedBlocks}
+            showMostUsedNodes={showMostUsedNodes}
             shouldFocusBlock={shouldFocusBlock}
         />
     );
