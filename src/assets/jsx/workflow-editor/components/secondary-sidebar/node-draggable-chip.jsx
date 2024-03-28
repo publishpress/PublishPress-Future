@@ -10,7 +10,7 @@ import { dragHandle } from '@wordpress/icons';
  */
 import NodeIcon from './node-icon';
 
-export default function NodeDraggableChip( { count, icon } ) {
+export default function NodeDraggableChip({ node, icon }) {
 	return (
 		<div className="block-editor-block-draggable-chip-wrapper">
 			<div className="block-editor-block-draggable-chip">
@@ -19,18 +19,18 @@ export default function NodeDraggableChip( { count, icon } ) {
 					className="block-editor-block-draggable-chip__content"
 				>
 					<FlexItem>
-						{ icon ? (
-							<NodeIcon icon={ icon } />
+						{icon ? (
+							<NodeIcon icon={icon} />
 						) : (
 							sprintf(
 								/* translators: %d: Number of blocks. */
-								_n( '%d block', '%d blocks', count ),
+								_n('%d block', '%d blocks', count),
 								count
 							)
-						) }
+						)}
 					</FlexItem>
 					<FlexItem>
-						<NodeIcon icon={ dragHandle } />
+						{node.title}
 					</FlexItem>
 				</Flex>
 			</div>

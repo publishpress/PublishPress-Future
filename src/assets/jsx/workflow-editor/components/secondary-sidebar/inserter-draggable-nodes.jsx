@@ -7,27 +7,27 @@ import { Draggable } from '@wordpress/components';
  */
 import NodeDraggableChip from './node-draggable-chip';
 
-const InserterDraggableNodes = ( { isEnabled, nodes, icon, children } ) => {
+const InserterDraggableNodes = ({ isEnabled, node: node, icon, children }) => {
 	const transferData = {
-		type: 'inserter',
-		nodes,
+		type: 'node',
+		node: node,
 	};
 
 	return (
 		<Draggable
-			__experimentalTransferDataType="nodes"
-			transferData={ transferData }
+			__experimentalTransferDataType="node"
+			transferData={transferData}
 			__experimentalDragComponent={
-				<NodeDraggableChip count={ nodes.length } icon={ icon } />
+				<NodeDraggableChip node={node} icon={icon} />
 			}
 		>
-			{ ( { onDraggableStart, onDraggableEnd } ) => {
-				return children( {
+			{({ onDraggableStart, onDraggableEnd }) => {
+				return children({
 					draggable: isEnabled,
 					onDragStart: isEnabled ? onDraggableStart : undefined,
 					onDragEnd: isEnabled ? onDraggableEnd : undefined,
-				} );
-			} }
+				});
+			}}
 		</Draggable>
 	);
 };

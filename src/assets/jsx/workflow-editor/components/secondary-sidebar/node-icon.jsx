@@ -37,8 +37,6 @@ export default function NodeIcon( { icon, showColors = false, className } ) {
 		};
 	}
 
-	console.log(icon);
-
 	const renderedIcon = <Icon icon={ icon && icon.src ? icon.src : icon } />;
 	const style = showColors
 		? {

@@ -49,20 +49,14 @@ function InserterListItem({
             color: item.icon.foreground,
         }
         : {};
-    const nodes = useMemo(() => {
-        return [
-            // createBlock(
-            // 	item.name,
-            // 	item.initialAttributes,
-            // 	createBlocksFromInnerBlocksTemplate( item.innerBlocks )
-            // ),
-        ];
-    }, [item.name, item.initialAttributes, item.initialAttributes]);
+    const node = useMemo(() => {
+        return item;
+    }, [item.id, item.title, item.icon, item.disabled]);
 
     return (
         <InserterDraggableNodes
             isEnabled={isDraggable && !item.disabled}
-            nodes={nodes}
+            node={node}
             icon={item.icon}
         >
             {({ draggable, onDragStart, onDragEnd }) => (
