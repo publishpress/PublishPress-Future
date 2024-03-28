@@ -115,6 +115,12 @@ export const store = createReduxStore(STORE_NAME, {
                     triggerNodes: action.payload,
                 };
 
+            case 'SET_ACTION_CATEGORIES':
+                return {
+                    ...state,
+                    actionCategories: action.payload,
+                };
+
             case 'SET_ACTION_NODES':
                 return {
                     ...state,
@@ -210,6 +216,12 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: nodes
             };
         },
+        setActionCategories(categories) {
+            return {
+                type: 'SET_ACTION_CATEGORIES',
+                payload: categories
+            };
+        },
         setActionNodes(nodes) {
             return {
                 type: 'SET_ACTION_NODES',
@@ -257,6 +269,9 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getTriggerNodes(state) {
             return state.triggerNodes;
+        },
+        getActionCategories(state) {
+            return state.actionCategories;
         },
         getActionNodes(state) {
             return state.actionNodes;

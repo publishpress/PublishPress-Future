@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { Icon } from '@wordpress/components';
+// import NodeIcon from './node-icon';
 
 function InserterPanel({ title, icon, children }) {
     return (
@@ -10,7 +10,7 @@ function InserterPanel({ title, icon, children }) {
                 <h2 className="block-editor-inserter__panel-title">
                     {title}
                 </h2>
-                <Icon icon={icon} />
+                {/* <NodeIcon icon={icon} /> */}
             </div>
             <div className="block-editor-inserter__panel-content">
                 {children}

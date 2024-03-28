@@ -48,10 +48,6 @@ export function InserterMenu({
             const items = select(store).getTriggerNodes();
             const categories = select(store).getTriggerCategories();
 
-            console.log('showMostUsedNodes', showMostUsedNodes);
-            console.log('items', items);
-            console.log('categories', categories);
-
             return (
                 <>
                     <div className="block-editor-inserter__block-list">
@@ -87,7 +83,7 @@ export function InserterMenu({
     const actionsTab = useMemo(
         () => {
             const items = select(store).getActionNodes();
-            const categories = [];
+            const categories = select(store).getActionCategories();
 
             return (
                 <>

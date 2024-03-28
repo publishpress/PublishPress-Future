@@ -72,8 +72,6 @@ export const NodesTab = ({
     const currentlyRenderedCategories = useAsyncList(categories);
     // const didRenderAllCategories = categories.length === currentlyRenderedCategories.length;
 
-    console.log('showMostUsedNodes', showMostUsedNodes);
-
     return (
         <InserterListbox>
             <div>

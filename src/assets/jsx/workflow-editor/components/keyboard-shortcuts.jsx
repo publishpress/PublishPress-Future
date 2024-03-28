@@ -1,19 +1,31 @@
 import { KeyboardShortcuts as WPKeyboardShortcuts } from "@wordpress/components";
 import { store } from "../store";
-import { dispatch, useSelect } from "@wordpress/data";
-import { FEATURE_FULLSCREEN_MODE } from "../constants";
+import { useDispatch, useSelect } from "@wordpress/data";
+import { FEATURE_FULLSCREEN_MODE, FEATURE_INSERTER } from "../constants";
 import { useReactFlow } from "reactflow";
 import {
     SHORTCUT_ACTION_TOGGLE_FULLSCREEN,
-    SHORTCUT_ACTION_FIT_VIEW
+    SHORTCUT_ACTION_FIT_VIEW,
+    SHORTCUT_ACTION_TOGGLE_INSERTER,
 } from "../shortcuts";
 
 export const KeyboardShortcuts = () => {
+    const {
+        toggleFeature,
+    } = useDispatch(store);
+
     const toggleFullscreenMode = () => {
-        dispatch(store).toggleFeature(FEATURE_FULLSCREEN_MODE);
+        toggleFeature(FEATURE_FULLSCREEN_MODE);
+    }
+
+    const toggleInserter = () => {
+        toggleFeature(FEATURE_INSERTER);
     }
 
     const reactflow = useReactFlow();
+    const fitView = () => {
+        reactflow.fitView();
+    }
 
     const shortcutsMap = useSelect((select) => {
         return select(store).getShortcuts();
@@ -26,7 +38,11 @@ export const KeyboardShortcuts = () => {
                 break;
 
             case SHORTCUT_ACTION_FIT_VIEW:
-                reactflow.fitView();
+                fitView();
+                break;
+
+            case SHORTCUT_ACTION_TOGGLE_INSERTER:
+                toggleInserter();
                 break;
         }
     };

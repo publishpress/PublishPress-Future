@@ -7,10 +7,6 @@
     "lasttranslator": "PublishPress Future Translate Team"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
-    "@fortawesome/free-regular-svg-icons": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@wordpress/a11y": "^3.54.0",
     "@wordpress/api-fetch": "^6.32.0",
     "@wordpress/components": "^23.9.0",
@@ -24,6 +20,7 @@
     "html-to-image": "^1.11.11",
     "path-browserify": "^1.0.1",
     "postcss-loader": "^7",
+    "react-icons": "^5.0.1",
     "reactflow": "^11.10.4",
     "uuid": "^9.0.0"
   },
