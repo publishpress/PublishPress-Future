@@ -137,12 +137,12 @@ export const FlowEditor = (props) => {
         event.dataTransfer.dropEffect = "move";
     }, []);
 
-    const createNodeAfterDrop = useCallback((data) => {
+    const createNodeAfterDrop = useCallback(({item, position}) => {
         const newNode = {
             id: getId(),
-            type: data.type,
-            position: data.position,
-            data: { label: `${data.type} node` },
+            type: 'default',
+            position: position,
+            data: { label: item.title},
             style: nodeStyle,
         };
 
@@ -153,15 +153,16 @@ export const FlowEditor = (props) => {
     const onDrop = useCallback((event) => {
         event.preventDefault();
 
-        const type = 'default';
-
         const position = reactFlowInstance.screenToFlowPosition({
             x: event.clientX,
             y: event.clientY,
         });
 
+        const dataTransferItem = event.dataTransfer.getData('application/future-workflow-editor-node');
+        const item = JSON.parse(dataTransferItem);
+
         createNodeAfterDrop({
-            type: type,
+            item: item,
             position: position,
         })
     }, [reactFlowInstance, nodes]);

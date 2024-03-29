@@ -50,6 +50,9 @@ function InserterListItem({
                     draggable={draggable}
                     onDragStart={(event) => {
                         isDragging.current = true;
+
+                        event.dataTransfer.setData('application/future-workflow-editor-node', JSON.stringify(item));
+
                         if (onDragStart) {
                             onHover(null);
                             onDragStart(event);
