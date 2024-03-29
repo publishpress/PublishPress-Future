@@ -8,9 +8,11 @@ import ReactFlow, {
     applyEdgeChanges,
     updateEdge,
     addEdge,
+    useReactFlow,
 } from "reactflow";
-import { useCallback } from "@wordpress/element";
+import { useCallback, useRef } from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
+import { nodeStyle } from "../../demo-data/nodes";
 
 export const FlowEditor = (props) => {
     const {
@@ -27,6 +29,9 @@ export const FlowEditor = (props) => {
         setNodes,
         setEdges,
     } = useDispatch(store);
+
+    const reactFlowWrapperRef = useRef(null);
+    const reactFlowInstance = useReactFlow();
 
     const proOptions = {
         // TODO: Change this to true after we start supporting the pro version of ReactFlow.
@@ -72,23 +77,62 @@ export const FlowEditor = (props) => {
         [edges]
     );
 
+    const getId = () => `node_${+new Date()}`;
+
+    const onDragOver = useCallback((event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+    }, []);
+
+    const createNodeAfterDrop = useCallback((data) => {
+        const newNode = {
+            id: getId(),
+            type: data.type,
+            position: data.position,
+            data: { label: `${data.type} node` },
+            style: nodeStyle,
+        };
+
+        setNodes(nodes.concat(newNode));
+    }, [nodes]);
+
+
+    const onDrop = useCallback((event) => {
+        event.preventDefault();
+
+        const type = 'default';
+
+        const position = reactFlowInstance.screenToFlowPosition({
+            x: event.clientX,
+            y: event.clientY,
+        });
+
+        createNodeAfterDrop({
+            type: type,
+            position: position,
+        })
+    }, [reactFlowInstance, nodes]);
 
     return (
-        <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onEdgeUpdate={onEdgeUpdate}
-            onConnect={onConnect}
-            nodesDraggable={true}
-            proOptions={proOptions}
-            fitView
-            style={editorStyle}
-        >
-            <MiniMap pannable zoomable />
-            <Background variant="dots" />
-            <Controls />
-        </ReactFlow>
+        <div className="reactflow-wrapper" ref={reactFlowWrapperRef}>
+            <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onEdgeUpdate={onEdgeUpdate}
+                onConnect={onConnect}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+                nodesDraggable={true}
+                proOptions={proOptions}
+                fitView
+                style={editorStyle}
+            >
+                <MiniMap pannable zoomable />
+                <Background variant="dots" />
+                <Controls />
+            </ReactFlow>
+        </div>
     );
 }

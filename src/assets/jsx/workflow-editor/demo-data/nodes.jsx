@@ -1,7 +1,4 @@
-const nodeStyle = {
-    color: '#0041d0',
-    borderColor: '#0041d0',
-};
+import { nodeStyle } from '../default-nodes-props';
 
 export const nodes = [
     {
