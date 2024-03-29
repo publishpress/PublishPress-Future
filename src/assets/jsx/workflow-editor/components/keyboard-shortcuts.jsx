@@ -74,6 +74,8 @@ export const KeyboardShortcuts = () => {
     return (
         <WPKeyboardShortcuts
             shortcuts={remapShortcuts(shortcutsMap)}
+            // TODO: Is this a problem for mod+z for example? If so, create a new component for not global binded shortcuts
+            bindGlobal={true}
         />
     );
 };
