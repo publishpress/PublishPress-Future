@@ -12,7 +12,7 @@ import ReactFlow, {
 } from "reactflow";
 import { useCallback, useRef } from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
-import { nodeStyle } from "../../demo-data/nodes";
+import { nodeStyle } from '../../default-nodes-props';
 
 export const FlowEditor = (props) => {
     const {
