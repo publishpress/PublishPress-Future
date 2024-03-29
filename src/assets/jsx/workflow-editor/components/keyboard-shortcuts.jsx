@@ -7,31 +7,41 @@ import {
     SHORTCUT_ACTION_TOGGLE_FULLSCREEN,
     SHORTCUT_ACTION_FIT_VIEW,
     SHORTCUT_ACTION_TOGGLE_INSERTER,
+    SHORTCUT_ACTION_AUTO_LAYOUT,
+    shortcutsMap,
 } from "../shortcuts";
+import { useCallback } from "react";
 
 export const KeyboardShortcuts = () => {
     const {
         toggleFeature,
     } = useDispatch(store);
 
-    const toggleFullscreenMode = () => {
+    const toggleFullscreenMode = useCallback(() => {
         toggleFeature(FEATURE_FULLSCREEN_MODE);
-    }
+    }, []);
 
-    const toggleInserter = () => {
+    const toggleInserter = useCallback(() => {
         toggleFeature(FEATURE_INSERTER);
-    }
+    }, []);
 
     const reactflow = useReactFlow();
-    const fitView = () => {
+    const fitView = useCallback(() => {
         reactflow.fitView();
-    }
+    }, [reactflow]);
 
-    const shortcutsMap = useSelect((select) => {
-        return select(store).getShortcuts();
-    });
 
-    const executeAction = (action) => {
+    const autoLayout = useCallback(() => {
+        const customEvent = new CustomEvent('future_workflow_editor_auto_layout', {
+            detail: {
+                direction: 'DOWN',
+            },
+        });
+
+        document.dispatchEvent(customEvent);
+    }, []);
+
+    const executeAction = useCallback((action) => {
         switch (action) {
             case SHORTCUT_ACTION_TOGGLE_FULLSCREEN:
                 toggleFullscreenMode();
@@ -44,10 +54,14 @@ export const KeyboardShortcuts = () => {
             case SHORTCUT_ACTION_TOGGLE_INSERTER:
                 toggleInserter();
                 break;
-        }
-    };
 
-    const remapShortcuts = (shortcuts) => {
+            case SHORTCUT_ACTION_AUTO_LAYOUT:
+                autoLayout();
+                break;
+        }
+    }, []);
+
+    const remapShortcuts = useCallback((shortcuts) => {
         let remapedShortcuts = {};
 
         for (const [action, keysCombination] of Object.entries(shortcuts)) {
@@ -55,13 +69,11 @@ export const KeyboardShortcuts = () => {
         }
 
         return remapedShortcuts;
-    };
-
-    const remapedShortcuts = remapShortcuts(shortcutsMap);
+    }, [shortcutsMap, executeAction]);
 
     return (
         <WPKeyboardShortcuts
-            shortcuts={remapedShortcuts}
+            shortcuts={remapShortcuts(shortcutsMap)}
         />
     );
 };
