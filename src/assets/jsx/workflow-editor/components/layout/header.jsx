@@ -3,7 +3,7 @@ import { Button, ToolbarItem } from '@wordpress/components';
 import { useViewportMatch } from '@wordpress/compose';
 import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback } from '@wordpress/element';
-import { plus } from '@wordpress/icons';
+import { plus, layout } from '@wordpress/icons';
 import { store } from '../../store';
 import { FEATURE_FULLSCREEN_MODE, FEATURE_REDUCED_UI, FEATURE_INSERTER } from '../../constants';
 import { FullscreenModeClose } from '../fullscree-mode-close';
@@ -11,6 +11,7 @@ import { MoreMenu } from '../more-menu/menu';
 import { NavigableToolbar } from '../left-toolbar/toolbar';
 import { EditorHistoryUndo } from '../left-toolbar/undo';
 import { EditorHistoryRedo } from '../left-toolbar/redo';
+import { displayShortcut } from '@wordpress/keycodes';
 
 const preventDefault = (event) => {
     event.preventDefault();
@@ -53,6 +54,18 @@ export const LayoutHeader = () => {
     /* translators: accessibility text for the editor toolbar */
     const toolbarAriaLabel = __('Document tools');
 
+    const autoLayout = useCallback((event) => {
+        event.preventDefault();
+
+        const customEvent = new CustomEvent('future_workflow_editor_auto_layout', {
+            detail: {
+                direction: 'RIGHT',
+            },
+        });
+
+        document.dispatchEvent(customEvent);
+    }, []);
+
     return (
         <div className={headerClasses}>
             {isFullscreenActive &&
@@ -84,6 +97,26 @@ export const LayoutHeader = () => {
                         >
                             {showIconLabels &&
                                 (!isInserterOpened ? __('Add') : __('Close'))}
+                        </ToolbarItem>
+
+                        <ToolbarItem
+                            as={Button}
+                            className="edit-post-header-toolbar__autolayout-down"
+                            variant="secondary"
+                            onMouseDown={preventDefault}
+                            onClick={autoLayout}
+                            icon={layout}
+                            shortcut={displayShortcut.secondary('l')}
+                            /* translators: button label text should, if possible, be under 16
+                    characters. */
+                            label={__(
+                                'Auto Layout',
+                            )}
+                            showTooltip={!showIconLabels}
+                        >
+                            {showIconLabels &&
+                                __('Auto Layout')
+                            }
                         </ToolbarItem>
 
                         {(isWideViewport || !showIconLabels) && (
