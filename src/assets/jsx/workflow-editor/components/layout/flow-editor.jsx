@@ -10,6 +10,7 @@ import ReactFlow, {
     addEdge,
 } from "reactflow";
 import { useCallback } from "@wordpress/element";
+import { defaultEdgeProps } from "../../default-edges-props";
 
 export const FlowEditor = (props) => {
     const {
@@ -36,15 +37,41 @@ export const FlowEditor = (props) => {
         backgroundColor: "#ffffff",
     }
 
-    const onNodesChange = (changes) => {
-        // TODO: Try to use the changes for handling the undo/redo state.
-        setNodes(applyNodeChanges(changes, nodes))
-    }
+    const onNodesChange = useCallback(
+        (changes) => {
+            // TODO: Try to use the changes for handling the undo/redo state.
+            setNodes(applyNodeChanges(changes, nodes))
+        },
+        [nodes]
+    );
 
-    const onEdgesChange = (changes) => {
-        // TODO: Try to use the changes for handling the undo/redo state.
-        setEdges(applyEdgeChanges(changes, oldEdges))
-    };
+    const onEdgesChange = useCallback(
+        (changes) => {
+            // TODO: Try to use the changes for handling the undo/redo state.
+            setEdges(applyEdgeChanges(changes, edges))
+        },
+        [edges]
+    );
+
+    const onEdgeUpdate = useCallback(
+        (oldEdge, newConnection) => {
+            setEdges(updateEdge(oldEdge, newConnection, edges))
+        },
+        [edges]
+    );
+
+    const onConnect = useCallback(
+        (params) => {
+            params = {
+                ...params,
+                ...defaultEdgeProps,
+            };
+
+            setEdges(addEdge(params, edges))
+        },
+        [edges]
+    );
+
 
     return (
         <ReactFlow
@@ -52,6 +79,8 @@ export const FlowEditor = (props) => {
             edges={edges}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
+            onEdgeUpdate={onEdgeUpdate}
+            onConnect={onConnect}
             nodesDraggable={true}
             proOptions={proOptions}
             fitView
