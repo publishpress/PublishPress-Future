@@ -32,6 +32,7 @@ export const triggerCategories = [
 export const triggerNodes = [
     {
         id: '1',
+        type: 'trigger',
         name: 'core/scheduling',
         title: 'Scheduled date & time',
         initialAttributes: {},
@@ -47,6 +48,7 @@ export const triggerNodes = [
     },
     {
         id: '2',
+        type: 'trigger',
         name: 'core/save-post',
         title: 'Post is saved',
         initialAttributes: {},
@@ -62,6 +64,7 @@ export const triggerNodes = [
     },
     {
         id: '5',
+        type: 'trigger',
         name: 'core/publish-post',
         title: 'Post is published',
         initialAttributes: {},
@@ -77,6 +80,7 @@ export const triggerNodes = [
     },
     {
         id: '3',
+        type: 'trigger',
         name: 'core/create-user',
         title: 'User is created',
         initialAttributes: {},
@@ -92,6 +96,7 @@ export const triggerNodes = [
     },
     {
         id: '4',
+        type: 'trigger',
         name: 'woocommerce/order-created',
         title: 'Order is created',
         initialAttributes: {},

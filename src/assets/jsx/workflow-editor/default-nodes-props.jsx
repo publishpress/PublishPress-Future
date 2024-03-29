@@ -1,4 +1,12 @@
 export const nodeStyle = {
-    color: '#0041d0',
-    borderColor: '#0041d0',
+    trigger: {
+        color: '#ffffff',
+        borderColor: '#d06800',
+        backgroundColor: '#d06800',
+    },
+    action: {
+        color: '#ffffff',
+        borderColor: '#2fb596',
+        backgroundColor: '#2fb596',
+    },
 };

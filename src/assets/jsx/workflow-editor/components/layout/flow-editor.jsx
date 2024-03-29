@@ -138,12 +138,14 @@ export const FlowEditor = (props) => {
     }, []);
 
     const createNodeAfterDrop = useCallback(({item, position}) => {
+        const type = item.type === 'trigger' ? 'input' : 'default';
+
         const newNode = {
             id: getId(),
-            type: 'default',
+            type: type,
             position: position,
             data: { label: item.title},
-            style: nodeStyle,
+            style: nodeStyle[item.type],
         };
 
         setNodes(nodes.concat(newNode));
@@ -218,7 +220,14 @@ export const FlowEditor = (props) => {
                 fitView
                 style={editorStyle}
             >
-                <MiniMap pannable zoomable />
+                <MiniMap
+                    pannable
+                    zoomable
+                    nodeColor={(node) => {
+                        if (node.type === 'input') return nodeStyle['trigger'].backgroundColor;
+                        if (node.type === 'default') return nodeStyle['action'].backgroundColor;
+                    }}
+                />
                 <Background variant="dots" />
                 <Controls />
             </ReactFlow>

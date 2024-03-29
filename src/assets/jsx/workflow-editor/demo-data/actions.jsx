@@ -14,6 +14,7 @@ export const actionCategories = [
 export const actionNodes = [
     {
         id: '1',
+        type: 'action',
         name: 'core/update-post',
         title: 'Update post',
         initialAttributes: {},
@@ -29,6 +30,7 @@ export const actionNodes = [
     },
     {
         id: '2',
+        type: 'action',
         name: 'core/delete-post',
         title: 'Delete post',
         initialAttributes: {},
@@ -44,6 +46,7 @@ export const actionNodes = [
     },
     {
         id: '3',
+        type: 'action',
         name: 'core/change-user-role',
         title: 'Change user role',
         initialAttributes: {},
