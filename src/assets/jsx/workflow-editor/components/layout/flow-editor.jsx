@@ -9,6 +9,7 @@ import ReactFlow, {
     updateEdge,
     addEdge,
     useReactFlow,
+    useOnSelectionChange,
 } from "reactflow";
 import { useCallback, useRef, useLayoutEffect, useEffect } from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
@@ -81,6 +82,8 @@ export const FlowEditor = (props) => {
     const {
         setNodes,
         setEdges,
+        setSelectedNodes,
+        setSelectedEdges,
     } = useDispatch(store);
 
     const reactFlowWrapperRef = useRef(null);
@@ -186,6 +189,13 @@ export const FlowEditor = (props) => {
         },
         [nodes, edges]
     );
+
+    useOnSelectionChange({
+        onChange: ({nodes, edges}) => {
+            setSelectedNodes(nodes.map((node) => node.id));
+            setSelectedEdges(edges.map((edge) => edge.id));
+        }
+    })
 
     // Calculate the initial layout on mount.
     useLayoutEffect(() => {

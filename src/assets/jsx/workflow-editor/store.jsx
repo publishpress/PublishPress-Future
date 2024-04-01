@@ -17,6 +17,8 @@ export const storeConfig = {
     triggerCategories: [],
     triggerNodes: [],
     actionNodes: [],
+    selectedNodes: [],
+    selectedEdges: [],
 }
 
 export const store = createReduxStore(STORE_NAME, {
@@ -108,6 +110,18 @@ export const store = createReduxStore(STORE_NAME, {
                     actionNodes: action.payload,
                 };
 
+            case 'SET_SELECTED_NODES':
+                return {
+                    ...state,
+                    selectedNodes: action.payload,
+                };
+
+            case 'SET_SELECTED_EDGES':
+                return {
+                    ...state,
+                    selectedEdges: action.payload,
+                };
+
             case 'UNDO':
                 // TODO: Implement undo
                 return {
@@ -197,6 +211,18 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: nodes
             };
         },
+        setSelectedNodes(nodes) {
+            return {
+                type: 'SET_SELECTED_NODES',
+                payload: nodes
+            };
+        },
+        setSelectedEdges(edges) {
+            return {
+                type: 'SET_SELECTED_EDGES',
+                payload: edges
+            };
+        },
         undo() {
             return {
                 type: 'UNDO'
@@ -224,6 +250,12 @@ export const store = createReduxStore(STORE_NAME, {
         getEdges(state) {
             return state.edges;
         },
+        getNodeById(state, id) {
+            return state.nodes.find(node => node.id === id);
+        },
+        getEdgeById(state, id) {
+            return state.edges.find(edge => edge.id === id);
+        },
         getCurrentInserterTab(state) {
             return state.currentInserterTab;
         },
@@ -238,6 +270,12 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getActionNodes(state) {
             return state.actionNodes;
+        },
+        getSelectedNodes(state) {
+            return state.selectedNodes;
+        },
+        getSelectedEdges(state) {
+            return state.selectedEdges;
         },
         hasEditorUndo(state) {
             return state.editorUndo.length > 0;
