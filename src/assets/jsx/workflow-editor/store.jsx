@@ -277,6 +277,12 @@ export const store = createReduxStore(STORE_NAME, {
         getSelectedEdges(state) {
             return state.selectedEdges;
         },
+        hasSelectedNodes(state) {
+            return state.selectedNodes.length > 0;
+        },
+        hasSelectedEdges(state) {
+            return state.selectedEdges.length > 0;
+        },
         hasEditorUndo(state) {
             return state.editorUndo.length > 0;
         },
