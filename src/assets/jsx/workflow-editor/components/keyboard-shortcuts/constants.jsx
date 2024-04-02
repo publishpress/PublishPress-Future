@@ -1,0 +1,5 @@
+export const SHORTCUT_TOGGLE_FULLSCREEN = 'publishpress-future/workflow-editor/toggle-fullscreen';
+export const SHORTCUT_FIT_VIEW = 'publishpress-future/workflow-editor/fit-view';
+export const SHORTCUT_TOGGLE_INSERTER = 'publishpress-future/workflow-editor/toggle-inserter';
+export const SHORTCUT_AUTO_LAYOUT = 'publishpress-future/workflow-editor/auto-layout';
+export const SHORTCUT_TOGGLE_SIDEBAR = 'publishpress-future/workflow-editor/toggle-sidebar';

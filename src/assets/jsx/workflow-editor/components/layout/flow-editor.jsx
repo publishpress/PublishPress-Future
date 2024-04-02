@@ -15,6 +15,11 @@ import { useCallback, useRef, useLayoutEffect, useEffect } from "@wordpress/elem
 import { defaultEdgeProps } from "../../default-edges-props";
 import { nodeStyle } from '../../default-nodes-props';
 import ELK from "elkjs";
+import {
+    CUSTOM_EVENT_AUTO_LAYOUT,
+    AUTO_LAYOUT_DEFAULT_DIRECTION,
+    AUTO_LAYOUT_RIGHT_DIRECTION,
+} from "../../constants";
 
 
 
@@ -32,7 +37,7 @@ const elkOptions = {
 };
 
 const getLayoutedElements = (nodes, edges, options = {}) => {
-    const isHorizontal = options?.['elk.direction'] === 'RIGHT';
+    const isHorizontal = options?.['elk.direction'] === AUTO_LAYOUT_RIGHT_DIRECTION;
     const graph = {
         id: 'root',
         layoutOptions: options,
@@ -199,18 +204,20 @@ export const FlowEditor = (props) => {
 
     // Calculate the initial layout on mount.
     useLayoutEffect(() => {
-        onLayout({ direction: 'DOWN' });
+        onLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
     }, []);
 
     useEffect(() => {
-        const handleAutoLayout = () => {
-            onLayout({ direction: 'DOWN' });
+        const handleAutoLayout = (event) => {
+            const direction = event.detail?.direction || AUTO_LAYOUT_DEFAULT_DIRECTION;
+
+            onLayout({ direction: direction });
         };
 
-        document.addEventListener('future_workflow_editor_auto_layout', handleAutoLayout);
+        document.addEventListener(CUSTOM_EVENT_AUTO_LAYOUT, handleAutoLayout);
 
         return () => {
-            document.removeEventListener('future_workflow_editor_auto_layout', handleAutoLayout);
+            document.removeEventListener(CUSTOM_EVENT_AUTO_LAYOUT, handleAutoLayout);
         };
     }, [onLayout]);
 

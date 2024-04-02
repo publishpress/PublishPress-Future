@@ -5,7 +5,13 @@ import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback } from '@wordpress/element';
 import { plus, layout } from '@wordpress/icons';
 import { store } from '../../store';
-import { FEATURE_FULLSCREEN_MODE, FEATURE_REDUCED_UI, FEATURE_INSERTER } from '../../constants';
+import {
+    FEATURE_FULLSCREEN_MODE,
+    FEATURE_REDUCED_UI,
+    FEATURE_INSERTER,
+    CUSTOM_EVENT_AUTO_LAYOUT,
+    AUTO_LAYOUT_RIGHT_DIRECTION
+} from '../../constants';
 import { FullscreenModeClose } from '../fullscree-mode-close';
 import { MoreMenu } from '../more-menu/menu';
 import { NavigableToolbar } from '../left-toolbar/toolbar';
@@ -57,9 +63,9 @@ export const LayoutHeader = () => {
     const autoLayout = useCallback((event) => {
         event.preventDefault();
 
-        const customEvent = new CustomEvent('future_workflow_editor_auto_layout', {
+        const customEvent = new CustomEvent(CUSTOM_EVENT_AUTO_LAYOUT, {
             detail: {
-                direction: 'RIGHT',
+                direction: AUTO_LAYOUT_RIGHT_DIRECTION,
             },
         });
 
