@@ -1,4 +1,4 @@
-import { classnames } from "../../utils";
+import classnames from 'classnames';
 import { InterfaceSkeleton, ComplementaryArea } from "@wordpress/interface";
 import { LayoutContent } from "./content";
 import { LayoutFooter } from "./footer";
@@ -34,7 +34,7 @@ export function WorkflowEditorInterface({ className, secondarySidebar }) {
         openGeneralSidebar
     } = useDispatch(store);
 
-    const interfaceClassNames = classnames('edit-workflow-layout', className, {
+    const interfaceClassNames = classnames(className, {
         'is-sidebar-opened': sidebarIsOpened,
         'has-fixed-toolbar': hasFixedToolbar,
         'has-metaboxes': hasActiveMetaboxes,

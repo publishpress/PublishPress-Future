@@ -18,6 +18,7 @@
     "@wordpress/keyboard-shortcuts": "^4.31.0",
     "@wordpress/keycodes": "^3.54.0",
     "@wordpress/url": "^3.36.0",
+    "classnames": "^2.5.1",
     "elkjs": "^0.9.2",
     "html-to-image": "^1.11.11",
     "path-browserify": "^1.0.1",
