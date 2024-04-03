@@ -21,8 +21,10 @@ export function WorkflowEditorInterface({ className, secondarySidebar }) {
         showIconLabels,
         hasSelectedNodes
     } = useSelect((select) => {
+        const activeComplementaryArea = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
+
         return {
-            sidebarIsOpened: select(store).hasActiveSideBar(),
+            sidebarIsOpened: activeComplementaryArea !== null && activeComplementaryArea !== 'null/undefined',
             hasFixedToolbar: false,
             hasActiveMetaboxes: false,
             showIconLabels: select(store).isFeatureActive(FEATURE_SHOW_ICON_LABELS),

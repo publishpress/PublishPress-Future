@@ -135,7 +135,13 @@ export const store = createReduxStore(STORE_NAME, {
                     selectedEdges: action.payload,
                 };
 
-            case 'SET_ACTIVE_SIDEBAR_NAME':
+            case 'CLOSE_GENERAL_SIDEBAR':
+                return {
+                    ...state,
+                    activeSidebarName: null,
+                }
+
+            case 'OPEN_GENERAL_SIDEBAR':
                 return {
                     ...state,
                     activeSidebarName: action.payload,
@@ -252,7 +258,7 @@ export const store = createReduxStore(STORE_NAME, {
             dispatch('core/interface').disableComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
 
             return {
-                type: 'SET_ACTIVE_SIDEBAR_NAME',
+                type: 'CLOSE_GENERAL_SIDEBAR',
                 payload: null
             };
         },
@@ -260,7 +266,7 @@ export const store = createReduxStore(STORE_NAME, {
             dispatch('core/interface').enableComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR, sidebar);
 
             return {
-                type: 'SET_ACTIVE_SIDEBAR_NAME',
+                type: 'OPEN_GENERAL_SIDEBAR',
                 payload: sidebar
             };
         },
@@ -329,16 +335,6 @@ export const store = createReduxStore(STORE_NAME, {
         },
         hasSelectedEdges(state) {
             return state.selectedEdges.length > 0;
-        },
-        getActiveSidebarName(state) {
-            const activeComplementaryArea = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
-
-            return activeComplementaryArea;
-        },
-        hasActiveSideBar(state) {
-            const activeComplementaryArea = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
-
-            return activeComplementaryArea !== 'null/undefined' && activeComplementaryArea != null;
         },
         getWorkflowName(state) {
             return state.workflowName;

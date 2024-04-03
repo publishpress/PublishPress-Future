@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { TabPanel } from '@wordpress/components';
+import { TabPanel } from '../../components/tab-panel';
 import { __, _x, sprintf } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 
@@ -17,9 +17,6 @@ import {
 export const SettingsHeader = ({ sidebarName }) => {
     const { openGeneralSidebar } = useDispatch(store);
 
-    const openDocumentSettings = () => openGeneralSidebar(SIDEBAR_WORKFLOW);
-    const openNodeSettings = () => openGeneralSidebar(SIDEBAR_NODE_EDGE);
-
     const { documentLabel } = useSelect((select) => {
         return {
             // translators: Default label for the Workflow sidebar tab, not selected.
@@ -27,39 +24,23 @@ export const SettingsHeader = ({ sidebarName }) => {
         };
     }, []);
 
-    const [documentAriaLabel, documentActiveClass] =
-        sidebarName === SIDEBAR_WORKFLOW
-            ? // translators: ARIA label for the Document sidebar tab, selected. %s: Document label.
-            [sprintf(__('%s (selected)'), documentLabel), 'is-active']
-            : [documentLabel, ''];
-
-    const [nodeAriaLabel, nodeActiveClass] =
-        sidebarName === SIDEBAR_NODE_EDGE
-            ? // translators: ARIA label for the Node Settings Sidebar tab, selected.
-            [__('Node (selected)'), 'is-active']
-            : // translators: ARIA label for the Node Settings Sidebar tab, not selected.
-            [__('Node'), ''];
-
     /* Use a list so screen readers will announce how many tabs there are. */
     return (
         <TabPanel
-            tabs={ [
+            tabs={[
                 {
-                    name: 'workflow',
+                    name: SIDEBAR_WORKFLOW,
                     title: documentLabel,
                 },
                 {
-                    name: 'node-edge',
-                    title: __( 'Element' ),
+                    name: SIDEBAR_NODE_EDGE,
+                    title: __('Element'),
                 },
-            ] }
-            onSelect={ ( tabName ) => {
-                if ( tabName === 'workflow' ) {
-                    openDocumentSettings();
-                } else {
-                    openNodeSettings();
-                }
+            ]}
+            onSelect={(tabName) => {
+                openGeneralSidebar(tabName);
             }}
+            initialTabName={sidebarName}
         >
             {
                 () => null

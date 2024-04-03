@@ -11,15 +11,16 @@ import ReactFlow, {
     useReactFlow,
     useOnSelectionChange,
 } from "reactflow";
-import { useCallback, useRef, useLayoutEffect, useEffect } from "@wordpress/element";
+import { useCallback, useRef, useLayoutEffect, useEffect, Platform } from "@wordpress/element";
 import { defaultEdgeProps } from "../default-edges-props";
 import { nodeStyle } from '../default-nodes-props';
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
+import { SLOT_SCOPE_WORKFLOW_EDITOR } from "../constants";
 
 import {
     AUTO_LAYOUT_DEFAULT_DIRECTION,
 } from "./auto-layout/constants";
-import { SIDEBAR_NODE_EDGE } from "../components/settings-sidebar/constants";
+import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from "../components/settings-sidebar/constants";
 
 
 export const FlowEditor = (props) => {
@@ -28,12 +29,18 @@ export const FlowEditor = (props) => {
         edges,
         selectedNodes,
         selectedEdges,
+        hasActiveSideBar,
+        activeComplementaryArea,
     } = useSelect((select) => {
+        const activeComplementaryArea = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
+
         return {
             nodes: select(store).getNodes(),
             edges: select(store).getEdges(),
             selectedNodes: select(store).getSelectedNodes(),
             selectedEdges: select(store).getSelectedEdges(),
+            activeComplementaryArea: activeComplementaryArea,
+            hasActiveSideBar: activeComplementaryArea !== null && activeComplementaryArea !== 'null/undefined',
         }
     });
 
@@ -152,7 +159,15 @@ export const FlowEditor = (props) => {
             setSelectedNodes(nodes.map((node) => node.id));
             setSelectedEdges(edges.map((edge) => edge.id));
 
-            if (nodes.length === 0 || edges.length === 0) {
+            if (! hasActiveSideBar) {
+                return;
+            }
+
+            if (nodes.length === 0 && edges.length === 0) {
+                openGeneralSidebar(SIDEBAR_WORKFLOW);
+            }
+
+            if (nodes.length > 0 || edges.length > 0) {
                 openGeneralSidebar(SIDEBAR_NODE_EDGE);
             }
         }
@@ -170,6 +185,26 @@ export const FlowEditor = (props) => {
     useLayoutEffect(() => {
         onAutoLayout();
     }, []);
+
+    useEffect(() => {
+        const sidebarIsActiveByDefault = Platform.select({
+            web: true,
+            native: false,
+        });
+
+        if (sidebarIsActiveByDefault) {
+            openGeneralSidebar(SIDEBAR_WORKFLOW);
+        }
+    }, []);
+
+    // Fix the behavior when the sidebar is closed and opened again, making sure a sidebar is loaded.
+    useEffect(() => {
+        if (activeComplementaryArea === 'null/undefined') {
+            const sidebar = selectedNodes.length > 0 || selectedEdges.length > 0 ? SIDEBAR_NODE_EDGE : SIDEBAR_WORKFLOW;
+
+            openGeneralSidebar(sidebar);
+        }
+    }, [activeComplementaryArea, selectedEdges, selectedNodes]);
 
     return (
         <div className="reactflow-wrapper" ref={reactFlowWrapperRef}>

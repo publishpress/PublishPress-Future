@@ -7,6 +7,7 @@ import { SHORTCUT_TOGGLE_SIDEBAR } from '../keyboard-shortcuts/constants';
 import { PluginSidebarEditPost } from './plugin-sidebar';
 import { SettingsHeader } from './settings-header';
 import { __ } from '@wordpress/i18n';
+import { SLOT_SCOPE_WORKFLOW_EDITOR } from '../../constants';
 
 const SIDEBAR_ACTIVE_BY_DEFAULT = Platform.select({
     web: true,
@@ -16,7 +17,7 @@ const SIDEBAR_ACTIVE_BY_DEFAULT = Platform.select({
 export const SettingsSidebar = () => {
     const { sidebarName, keyboardShortcut } = useSelect((select) => {
         const shortcut = select(keyboardShortcutStore).getShortcutRepresentation(SHORTCUT_TOGGLE_SIDEBAR);
-        const sidebarName = select(store).getActiveSidebarName();
+        const sidebarName = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
 
         return {
             sidebarName: sidebarName,
