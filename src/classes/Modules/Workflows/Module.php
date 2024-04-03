@@ -34,6 +34,10 @@ class Module implements InitializableInterface
             if ($typenow === self::POST_TYPE_WORKFLOW && $pagenow === 'post.php') {
                 $postId = (int) $_GET['post'];
 
+                if (empty($postId)) {
+                    return;
+                }
+
                 // Redirect to our custom page
                 wp_redirect(admin_url('admin.php?page=future_workflow_editor&workflow=' . $postId));
                 exit;
