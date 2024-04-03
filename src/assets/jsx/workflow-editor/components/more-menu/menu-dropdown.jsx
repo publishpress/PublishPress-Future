@@ -1,7 +1,7 @@
 import { DropdownMenu } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { moreVertical } from '@wordpress/icons';
-import { classnames } from '../../utils';
+import classnames from 'classnames';
 
 
 export const MoreMenuDropdown = ( {

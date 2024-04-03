@@ -20,8 +20,6 @@ export function removeBodyClasses(classNames) {
     classNames.forEach(className => removeBodyClass(className));
 }
 
-export const classnames = (...args) => args.filter(Boolean).join(' ');
-
 /**
  * Returns the block's default menu item classname from its name.
  *
