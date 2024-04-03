@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { Button } from '@wordpress/components';
+import { TabPanel } from '@wordpress/components';
 import { __, _x, sprintf } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 
@@ -17,8 +17,7 @@ import {
 export const SettingsHeader = ({ sidebarName }) => {
     const { openGeneralSidebar } = useDispatch(store);
 
-    const openDocumentSettings = () =>
-        openGeneralSidebar(SIDEBAR_WORKFLOW);
+    const openDocumentSettings = () => openGeneralSidebar(SIDEBAR_WORKFLOW);
     const openNodeSettings = () => openGeneralSidebar(SIDEBAR_NODE_EDGE);
 
     const { documentLabel } = useSelect((select) => {
@@ -43,32 +42,29 @@ export const SettingsHeader = ({ sidebarName }) => {
 
     /* Use a list so screen readers will announce how many tabs there are. */
     return (
-        <ul>
-            <li>
-                <Button
-                    onClick={openDocumentSettings}
-                    className={`edit-post-sidebar__panel-tab ${documentActiveClass}`}
-                    aria-label={documentAriaLabel}
-                    data-label={documentLabel}
-                >
-                    {documentLabel}
-                </Button>
-            </li>
-            <li>
-                <Button
-                    onClick={openNodeSettings}
-                    className={`edit-post-sidebar__panel-tab ${nodeActiveClass}`}
-                    aria-label={nodeAriaLabel}
-                    // translators: Data label for the Node Settings Sidebar tab.
-                    data-label={__('Node')}
-                >
-                    {
-                        // translators: Text label for the Node Settings Sidebar tab.
-                        __('Node')
-                    }
-                </Button>
-            </li>
-        </ul>
+        <TabPanel
+            tabs={ [
+                {
+                    name: 'workflow',
+                    title: documentLabel,
+                },
+                {
+                    name: 'node-edge',
+                    title: __( 'Element' ),
+                },
+            ] }
+            onSelect={ ( tabName ) => {
+                if ( tabName === 'workflow' ) {
+                    openDocumentSettings();
+                } else {
+                    openNodeSettings();
+                }
+            }}
+        >
+            {
+                () => null
+            }
+        </TabPanel>
     );
 };
 

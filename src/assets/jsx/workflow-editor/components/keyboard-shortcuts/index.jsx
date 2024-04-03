@@ -24,9 +24,9 @@ import { useReactFlow } from 'reactflow';
 
 export const KeyboardShortcuts = () => {
     const { registerShortcut } = useDispatch(shortcutStore);
+
     const {
         toggleFeature,
-        setActiveSidebarName
     } = useDispatch(editorStore);
 
     useEffect(() => {
@@ -106,7 +106,7 @@ export const KeyboardShortcuts = () => {
     });
 
     useShortcut(SHORTCUT_TOGGLE_SIDEBAR, () => {
-        setActiveSidebarName(null);
+
     });
 
     return null;

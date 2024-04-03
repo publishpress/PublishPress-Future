@@ -4,7 +4,6 @@ import { cog } from '@wordpress/icons';
 import { store } from '../../store';
 import { store as keyboardShortcutStore } from '@wordpress/keyboard-shortcuts';
 import { SHORTCUT_TOGGLE_SIDEBAR } from '../keyboard-shortcuts/constants';
-import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from './constants';
 import { PluginSidebarEditPost } from './plugin-sidebar';
 import { SettingsHeader } from './settings-header';
 import { __ } from '@wordpress/i18n';

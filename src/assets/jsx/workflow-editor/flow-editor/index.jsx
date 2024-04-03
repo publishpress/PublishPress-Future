@@ -19,16 +19,21 @@ import { useLayoutedElements, AutoLayout } from "./auto-layout";
 import {
     AUTO_LAYOUT_DEFAULT_DIRECTION,
 } from "./auto-layout/constants";
+import { SIDEBAR_NODE_EDGE } from "../components/settings-sidebar/constants";
 
 
 export const FlowEditor = (props) => {
     const {
         nodes,
         edges,
+        selectedNodes,
+        selectedEdges,
     } = useSelect((select) => {
         return {
             nodes: select(store).getNodes(),
             edges: select(store).getEdges(),
+            selectedNodes: select(store).getSelectedNodes(),
+            selectedEdges: select(store).getSelectedEdges(),
         }
     });
 
@@ -37,6 +42,7 @@ export const FlowEditor = (props) => {
         setEdges,
         setSelectedNodes,
         setSelectedEdges,
+        openGeneralSidebar,
     } = useDispatch(store);
 
     const reactFlowWrapperRef = useRef(null);
@@ -145,8 +151,16 @@ export const FlowEditor = (props) => {
         onChange: ({ nodes, edges }) => {
             setSelectedNodes(nodes.map((node) => node.id));
             setSelectedEdges(edges.map((edge) => edge.id));
+
+            if (nodes.length === 0 || edges.length === 0) {
+                openGeneralSidebar(SIDEBAR_NODE_EDGE);
+            }
         }
     })
+
+    useEffect(() => {
+
+    }, [selectedNodes, selectedEdges]);
 
     const onAutoLayout = useCallback(() => {
         applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });

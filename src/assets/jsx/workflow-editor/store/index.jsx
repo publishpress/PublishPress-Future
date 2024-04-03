@@ -1,8 +1,8 @@
 /*
  * WordPress dependencies
  */
-import { register, createReduxStore } from '@wordpress/data';
-
+import { register, createReduxStore, controls, select } from '@wordpress/data';
+import { store as interfaceStore } from '@wordpress/interface';
 /*
  * Internal dependencies
  */
@@ -10,6 +10,7 @@ import {
     FEATURE_FULLSCREEN_MODE,
     INSERTER_TAB_TRIGGERS,
     POST_TYPE,
+    SLOT_SCOPE_WORKFLOW_EDITOR,
 } from '../constants';
 import {
     STORE_NAME,
@@ -247,13 +248,26 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: edges
             };
         },
-        setActiveSidebarName(sidebar) {
+        closeGeneralSidebar() {
+            controls.dispatch(
+                interfaceStore,
+                'disableComplementaryArea',
+                SLOT_SCOPE_WORKFLOW_EDITOR
+            );
+
             return {
                 type: 'SET_ACTIVE_SIDEBAR_NAME',
-                payload: sidebar
+                payload: null
             };
         },
         openGeneralSidebar(sidebar) {
+            controls.dispatch(
+                interfaceStore,
+                'enableComplementaryArea',
+                SLOT_SCOPE_WORKFLOW_EDITOR,
+                sidebar
+            );
+
             return {
                 type: 'SET_ACTIVE_SIDEBAR_NAME',
                 payload: sidebar
@@ -329,7 +343,9 @@ export const store = createReduxStore(STORE_NAME, {
             return state.activeSidebarName;
         },
         hasActiveSideBar(state) {
-            return state.activeSidebarName !== null;
+            const activeComplementaryArea = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
+
+            return activeComplementaryArea !== 'null/undefined' && activeComplementaryArea != null;
         },
         getWorkflowName(state) {
             return state.workflowName;

@@ -27,7 +27,7 @@ class Module implements InitializableInterface
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScripts']);
         $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'saveWorkflowMetadata']);
 
-        add_action('load-post.php', function() {
+        add_action('load-post.php', function () {
             global $typenow, $pagenow;
 
             // Check if we're editing a post of the 'my_custom_post_type' type
@@ -151,6 +151,14 @@ class Module implements InitializableInterface
             ],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true
+        );
+
+        wp_localize_script(
+            'future_workflow_admin_script',
+            'futureWorkflowEditor',
+            [
+                'isWP65OrLater' => version_compare(get_bloginfo('version'), '6.5', '>='),
+            ]
         );
     }
 

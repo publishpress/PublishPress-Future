@@ -24,6 +24,7 @@ import { EditorHistoryUndo } from '../left-toolbar/undo';
 import { EditorHistoryRedo } from '../left-toolbar/redo';
 import { displayShortcut } from '@wordpress/keycodes';
 import { useAutoLayout } from '../../flow-editor/auto-layout';
+import { isWP65OrLater } from 'future-workflow-editor';
 
 const preventDefault = (event) => {
     event.preventDefault();
@@ -76,6 +77,8 @@ export const LayoutHeader = () => {
         });
     });
 
+    const toolbarLeftClassName = isWP65OrLater ? 'editor-document-tools__left' : 'edit-post-header-toolbar__left';
+
     return (
         <div className={headerClasses}>
             {isFullscreenActive &&
@@ -87,7 +90,7 @@ export const LayoutHeader = () => {
                     className="edit-post-header-toolbar"
                     aria-label={toolbarAriaLabel}
                 >
-                    <div className="edit-post-header-toolbar__left">
+                    <div className={toolbarLeftClassName}>
                         <ToolbarItem
                             ref={inserterButton}
                             as={Button}
