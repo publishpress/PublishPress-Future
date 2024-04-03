@@ -112,7 +112,6 @@ export const LayoutHeader = () => {
                         <ToolbarItem
                             as={Button}
                             className="edit-post-header-toolbar__autolayout-down"
-                            variant="secondary"
                             onMouseDown={preventDefault}
                             onClick={onAutoLayoutClick}
                             icon={layout}
