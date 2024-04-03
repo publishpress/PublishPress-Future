@@ -78,7 +78,8 @@ module.exports = [
         },
         externals: {
             'react': 'React',
-            'react-dom': 'ReactDOM'
+            'react-dom': 'ReactDOM',
+            '@wordpress/blocks': 'wp.blocks',
         }
     },
     {
@@ -118,8 +119,7 @@ module.exports = [
             '@wordpress/data': 'wp.data',
             '@wordpress/element': 'wp.element',
             '@wordpress/components': 'wp.components',
-            '@wordpress/i18n': 'wp.i18n',
-            '@wordpress/blocks': 'wp.blocks',
+            '@wordpress/i18n': 'wp.i18n'
         }
     }
 ];
