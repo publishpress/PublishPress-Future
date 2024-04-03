@@ -137,6 +137,16 @@ var FutureActionDate = {
 
 module.exports = React;
 
+/***/ }),
+
+/***/ "@wordpress/blocks":
+/*!****************************!*\
+  !*** external "wp.blocks" ***!
+  \****************************/
+/***/ ((module) => {
+
+module.exports = wp.blocks;
+
 /***/ })
 
 /******/ 	});
@@ -215,9 +225,11 @@ var __webpack_exports__ = {};
   \*****************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_FutureActionDate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./blocks/FutureActionDate */ "./src/assets/jsx/blocks/FutureActionDate.jsx");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
 
-var registerBlockType = wp.blocks.registerBlockType;
-registerBlockType('publishpress-future-pro/future-action-date', _blocks_FutureActionDate__WEBPACK_IMPORTED_MODULE_0__.FutureActionDate);
+
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)('publishpress-future-pro/future-action-date', _blocks_FutureActionDate__WEBPACK_IMPORTED_MODULE_0__.FutureActionDate);
 })();
 
 /******/ })()
