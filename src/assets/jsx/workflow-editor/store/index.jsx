@@ -1,10 +1,20 @@
+/*
+ * WordPress dependencies
+ */
 import { register, createReduxStore } from '@wordpress/data';
+
+/*
+ * Internal dependencies
+ */
 import {
     FEATURE_FULLSCREEN_MODE,
     INSERTER_TAB_TRIGGERS,
     POST_TYPE,
-    STORE_NAME
+} from '../constants';
+import {
+    STORE_NAME,
 } from './constants';
+
 
 export const storeConfig = {
     activeFeatures: [FEATURE_FULLSCREEN_MODE],
@@ -19,6 +29,8 @@ export const storeConfig = {
     actionNodes: [],
     selectedNodes: [],
     selectedEdges: [],
+    activeSidebarName: null,
+    workflowName: '',
 }
 
 export const store = createReduxStore(STORE_NAME, {
@@ -122,6 +134,18 @@ export const store = createReduxStore(STORE_NAME, {
                     selectedEdges: action.payload,
                 };
 
+            case 'SET_ACTIVE_SIDEBAR_NAME':
+                return {
+                    ...state,
+                    activeSidebarName: action.payload,
+                };
+
+            case 'SET_WORKFLOW_NAME':
+                return {
+                    ...state,
+                    workflowName: action.payload,
+                };
+
             case 'UNDO':
                 // TODO: Implement undo
                 return {
@@ -223,6 +247,24 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: edges
             };
         },
+        setActiveSidebarName(sidebar) {
+            return {
+                type: 'SET_ACTIVE_SIDEBAR_NAME',
+                payload: sidebar
+            };
+        },
+        openGeneralSidebar(sidebar) {
+            return {
+                type: 'SET_ACTIVE_SIDEBAR_NAME',
+                payload: sidebar
+            };
+        },
+        setWorkflowName(name) {
+            return {
+                type: 'SET_WORKFLOW_NAME',
+                payload: name
+            };
+        },
         undo() {
             return {
                 type: 'UNDO'
@@ -283,6 +325,15 @@ export const store = createReduxStore(STORE_NAME, {
         hasSelectedEdges(state) {
             return state.selectedEdges.length > 0;
         },
+        getActiveSidebarName(state) {
+            return state.activeSidebarName;
+        },
+        hasActiveSideBar(state) {
+            return state.activeSidebarName !== null;
+        },
+        getWorkflowName(state) {
+            return state.workflowName;
+        },
         hasEditorUndo(state) {
             return state.editorUndo.length > 0;
         },
@@ -293,3 +344,5 @@ export const store = createReduxStore(STORE_NAME, {
 });
 
 register(store);
+
+export default store;

@@ -5,11 +5,13 @@ import {
 import { store as editorStore } from '../../store';
 import { useEffect } from '@wordpress/element';
 import {
-    CUSTOM_EVENT_AUTO_LAYOUT,
     FEATURE_FULLSCREEN_MODE,
     FEATURE_INSERTER,
-    AUTO_LAYOUT_RIGHT_DIRECTION
 } from "../../constants";
+import {
+    CUSTOM_EVENT_AUTO_LAYOUT,
+    AUTO_LAYOUT_DIRECTION_DOWN,
+} from '../../flow-editor/auto-layout/constants'
 import { useDispatch } from '@wordpress/data';
 import {
     SHORTCUT_TOGGLE_FULLSCREEN,
@@ -96,7 +98,7 @@ export const KeyboardShortcuts = () => {
     useShortcut(SHORTCUT_AUTO_LAYOUT, () => {
         const customEvent = new CustomEvent(CUSTOM_EVENT_AUTO_LAYOUT, {
             detail: {
-                direction: AUTO_LAYOUT_RIGHT_DIRECTION,
+                direction: AUTO_LAYOUT_DIRECTION_DOWN,
             },
         });
 

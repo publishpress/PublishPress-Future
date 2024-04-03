@@ -9,6 +9,8 @@ import { KeyboardShortcuts } from "../keyboard-shortcuts";
 import { FEATURE_FULLSCREEN_MODE, FEATURE_INSERTER } from "../../constants";
 import { InserterSidebar } from "../secondary-sidebar/inserter";
 import { classnames } from "../../utils";
+import { SlotFillProvider } from "@wordpress/components";
+import { SettingsSidebar } from "../settings-sidebar/settings-sidebar";
 
 export function WorkflowEditorLayout() {
     const {
@@ -44,14 +46,17 @@ export function WorkflowEditorLayout() {
     };
 
     return (
-        <ReactFlowProvider>
-            <FullscreenMode isActive={isFullscreenActive} />
-            <KeyboardShortcuts />
+        <SlotFillProvider>
+            <ReactFlowProvider>
+                <FullscreenMode isActive={isFullscreenActive} />
+                <KeyboardShortcuts />
+                <SettingsSidebar />
 
-            <WorkflowEditorInterface
-                className={className}
-                secondarySidebar={secondarySidebar}
-            />
-        </ReactFlowProvider>
+                <WorkflowEditorInterface
+                    className={className}
+                    secondarySidebar={secondarySidebar}
+                />
+            </ReactFlowProvider>
+        </SlotFillProvider>
     );
 }

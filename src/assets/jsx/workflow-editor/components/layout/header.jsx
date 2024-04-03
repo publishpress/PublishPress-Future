@@ -1,5 +1,6 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Button, ToolbarItem } from '@wordpress/components';
+import { PinnedItems } from '@wordpress/interface';
 import { useViewportMatch } from '@wordpress/compose';
 import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback } from '@wordpress/element';
@@ -7,17 +8,22 @@ import { plus, layout } from '@wordpress/icons';
 import { store } from '../../store';
 import {
     FEATURE_FULLSCREEN_MODE,
+    FEATURE_SHOW_ICON_LABELS,
     FEATURE_REDUCED_UI,
     FEATURE_INSERTER,
-    CUSTOM_EVENT_AUTO_LAYOUT,
-    AUTO_LAYOUT_RIGHT_DIRECTION
+    SLOT_SCOPE_WORKFLOW_EDITOR
 } from '../../constants';
+import {
+    CUSTOM_EVENT_AUTO_LAYOUT,
+    AUTO_LAYOUT_DIRECTION_DOWN
+} from '../../flow-editor/auto-layout/constants';
 import { FullscreenModeClose } from '../fullscree-mode-close';
 import { MoreMenu } from '../more-menu/menu';
 import { NavigableToolbar } from '../left-toolbar/toolbar';
 import { EditorHistoryUndo } from '../left-toolbar/undo';
 import { EditorHistoryRedo } from '../left-toolbar/redo';
 import { displayShortcut } from '@wordpress/keycodes';
+import { useAutoLayout } from '../../flow-editor/auto-layout';
 
 const preventDefault = (event) => {
     event.preventDefault();
@@ -34,7 +40,7 @@ export const LayoutHeader = () => {
             isFullscreenActive: select(store).isFeatureActive(FEATURE_FULLSCREEN_MODE),
             hasReducedUI: select(store).isFeatureActive(FEATURE_REDUCED_UI),
             isInserterOpened: select(store).isFeatureActive(FEATURE_INSERTER),
-            showIconLabels: select(store).isFeatureActive(FEATURE_REDUCED_UI),
+            showIconLabels: select(store).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
         }
     });
 
@@ -60,17 +66,15 @@ export const LayoutHeader = () => {
     /* translators: accessibility text for the editor toolbar */
     const toolbarAriaLabel = __('Document tools');
 
-    const autoLayout = useCallback((event) => {
+    const applyAutoLayout = useAutoLayout();
+
+    const onAutoLayoutClick = useCallback((event) => {
         event.preventDefault();
 
-        const customEvent = new CustomEvent(CUSTOM_EVENT_AUTO_LAYOUT, {
-            detail: {
-                direction: AUTO_LAYOUT_RIGHT_DIRECTION,
-            },
+        applyAutoLayout({
+            direction: AUTO_LAYOUT_DIRECTION_DOWN,
         });
-
-        document.dispatchEvent(customEvent);
-    }, []);
+    });
 
     return (
         <div className={headerClasses}>
@@ -110,7 +114,7 @@ export const LayoutHeader = () => {
                             className="edit-post-header-toolbar__autolayout-down"
                             variant="secondary"
                             onMouseDown={preventDefault}
-                            onClick={autoLayout}
+                            onClick={onAutoLayoutClick}
                             icon={layout}
                             shortcut={displayShortcut.secondary('l')}
                             /* translators: button label text should, if possible, be under 16
@@ -145,6 +149,7 @@ export const LayoutHeader = () => {
             <div className="edit-post-header__settings">
                 <Button variant='link'>{__('Save Draft')}</Button>
                 <Button variant='primary'>{__('Publish')}</Button>
+                <PinnedItems.Slot scope={SLOT_SCOPE_WORKFLOW_EDITOR} />
                 <MoreMenu />
             </div>
         </div>

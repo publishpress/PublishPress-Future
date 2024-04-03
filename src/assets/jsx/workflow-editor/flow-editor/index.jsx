@@ -1,5 +1,5 @@
 import { useSelect, useDispatch } from "@wordpress/data";
-import { store } from "../../store";
+import { store } from "../store";
 import ReactFlow, {
     Background,
     Controls,
@@ -12,65 +12,13 @@ import ReactFlow, {
     useOnSelectionChange,
 } from "reactflow";
 import { useCallback, useRef, useLayoutEffect, useEffect } from "@wordpress/element";
-import { defaultEdgeProps } from "../../default-edges-props";
-import { nodeStyle } from '../../default-nodes-props';
-import ELK from "elkjs";
+import { defaultEdgeProps } from "../default-edges-props";
+import { nodeStyle } from '../default-nodes-props';
+import { useLayoutedElements, AutoLayout } from "./auto-layout";
+
 import {
-    CUSTOM_EVENT_AUTO_LAYOUT,
     AUTO_LAYOUT_DEFAULT_DIRECTION,
-    AUTO_LAYOUT_RIGHT_DIRECTION,
-} from "../../constants";
-
-
-
-const elk = new ELK();
-
-// Elk has a *huge* amount of options to configure. To see everything you can
-// tweak check out:
-//
-// - https://www.eclipse.org/elk/reference/algorithms.html
-// - https://www.eclipse.org/elk/reference/options.html
-const elkOptions = {
-    'elk.algorithm': 'layered',
-    'elk.layered.spacing.nodeNodeBetweenLayers': '100',
-    'elk.spacing.nodeNode': '80',
-};
-
-const getLayoutedElements = (nodes, edges, options = {}) => {
-    const isHorizontal = options?.['elk.direction'] === AUTO_LAYOUT_RIGHT_DIRECTION;
-    const graph = {
-        id: 'root',
-        layoutOptions: options,
-        children: nodes.map((node) => ({
-            ...node,
-            // Adjust the target and source handle positions based on the layout
-            // direction.
-            targetPosition: isHorizontal ? 'left' : 'top',
-            sourcePosition: isHorizontal ? 'right' : 'bottom',
-
-            // Hardcode a width and height for elk to use when layouting.
-            width: 150,
-            height: 50,
-        })),
-        edges: edges,
-    };
-
-    return elk
-        .layout(graph)
-        .then((layoutedGraph) => ({
-            nodes: layoutedGraph.children.map((node) => ({
-                ...node,
-                // React Flow expects a position property on the node instead of `x`
-                // and `y` fields.
-                position: { x: node.x, y: node.y },
-            })),
-
-            edges: layoutedGraph.edges,
-        }))
-        .catch(console.error);
-};
-
-
+} from "./auto-layout/constants";
 
 
 export const FlowEditor = (props) => {
@@ -145,14 +93,14 @@ export const FlowEditor = (props) => {
         event.dataTransfer.dropEffect = "move";
     }, []);
 
-    const createNodeAfterDrop = useCallback(({item, position}) => {
+    const createNodeAfterDrop = useCallback(({ item, position }) => {
         const type = item.type === 'trigger' ? 'input' : 'default';
 
         const newNode = {
             id: getId(),
             type: type,
             position: position,
-            data: { label: item.title},
+            data: { label: item.title },
             style: nodeStyle[item.type],
         };
 
@@ -181,48 +129,37 @@ export const FlowEditor = (props) => {
         reactFlowInstance.fitView();
     }, [reactFlowInstance]);
 
-    const onLayout = useCallback(
-        ({ direction }) => {
-            const opts = { 'elk.direction': direction, ...elkOptions };
-
-            getLayoutedElements(nodes, edges, opts).then(({ nodes: layoutedNodes, edges: layoutedEdges }) => {
+    const applyLayout = useLayoutedElements(
+        {
+            nodes,
+            edges,
+            onLayout: (layoutedNodes, layoutedEdges) => {
                 setNodes(layoutedNodes);
                 setEdges(layoutedEdges);
-
-                window.requestAnimationFrame(() => fitView());
-            });
-        },
-        [nodes, edges]
+            },
+            onAnimationFrame: fitView,
+        }
     );
 
     useOnSelectionChange({
-        onChange: ({nodes, edges}) => {
+        onChange: ({ nodes, edges }) => {
             setSelectedNodes(nodes.map((node) => node.id));
             setSelectedEdges(edges.map((edge) => edge.id));
         }
     })
 
+    const onAutoLayout = useCallback(() => {
+        applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
+    }, [applyLayout]);
+
     // Calculate the initial layout on mount.
     useLayoutEffect(() => {
-        onLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
+        onAutoLayout();
     }, []);
-
-    useEffect(() => {
-        const handleAutoLayout = (event) => {
-            const direction = event.detail?.direction || AUTO_LAYOUT_DEFAULT_DIRECTION;
-
-            onLayout({ direction: direction });
-        };
-
-        document.addEventListener(CUSTOM_EVENT_AUTO_LAYOUT, handleAutoLayout);
-
-        return () => {
-            document.removeEventListener(CUSTOM_EVENT_AUTO_LAYOUT, handleAutoLayout);
-        };
-    }, [onLayout]);
 
     return (
         <div className="reactflow-wrapper" ref={reactFlowWrapperRef}>
+            <AutoLayout onLayout={onAutoLayout}/>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -251,3 +188,5 @@ export const FlowEditor = (props) => {
         </div>
     );
 }
+
+export default FlowEditor;

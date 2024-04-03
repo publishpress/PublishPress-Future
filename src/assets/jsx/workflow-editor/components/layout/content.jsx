@@ -1,4 +1,4 @@
-import { FlowEditor } from "./flow-editor";
+import { FlowEditor } from "../../flow-editor";
 
 export const LayoutContent = (props) => {
     return (

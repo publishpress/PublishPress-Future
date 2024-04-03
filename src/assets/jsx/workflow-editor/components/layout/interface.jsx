@@ -1,21 +1,83 @@
-import { InterfaceSkeleton } from "@wordpress/interface";
+import { classnames } from "../../utils";
+import { InterfaceSkeleton, ComplementaryArea } from "@wordpress/interface";
 import { LayoutContent } from "./content";
 import { LayoutFooter } from "./footer";
 import { LayoutHeader } from "./header";
+import { useSelect, useDispatch } from "@wordpress/data";
+import { Button } from "@wordpress/components";
+import { useViewportMatch } from "@wordpress/compose";
+import { store } from "../../store";
+import { __ } from "@wordpress/i18n";
+import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from "../settings-sidebar/constants";
+import { SLOT_SCOPE_WORKFLOW_EDITOR, FEATURE_SHOW_ICON_LABELS } from "../../constants";
 
 export function WorkflowEditorInterface({ className, secondarySidebar }) {
+    const isMobileViewport = useViewportMatch('medium', '<');
 
+    const {
+        sidebarIsOpened,
+        hasFixedToolbar,
+        hasActiveMetaboxes,
+        showIconLabels,
+        hasSelectedNodes
+    } = useSelect((select) => {
+        return {
+            sidebarIsOpened: select(store).hasActiveSideBar(),
+            hasFixedToolbar: false,
+            hasActiveMetaboxes: false,
+            showIconLabels: select(store).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
+            hasSelectedNodes: select(store).hasSelectedNodes(),
+        }
+    });
+
+    const {
+        openGeneralSidebar
+    } = useDispatch(store);
+
+    const interfaceClassNames = classnames('edit-workflow-layout', className, {
+        'is-sidebar-opened': sidebarIsOpened,
+        'has-fixed-toolbar': hasFixedToolbar,
+        'has-metaboxes': hasActiveMetaboxes,
+        'show-icon-labels': showIconLabels,
+    });
+
+    const openSidebarPanel = () => {
+        openGeneralSidebar(
+            hasSelectedNodes ? SIDEBAR_NODE_EDGE : SIDEBAR_WORKFLOW
+        );
+    }
 
     return (
         <InterfaceSkeleton
-            className={className}
+            className={interfaceClassNames}
             header={<LayoutHeader />}
-            secondarySidebar={ secondarySidebar() }
+            secondarySidebar={secondarySidebar()}
             notices={null}
             content={<LayoutContent />}
             footer={<LayoutFooter />}
             actions={null}
             shortcuts={null}
+            sidebar={
+                (!isMobileViewport || sidebarIsOpened) && (
+                    <>
+                        {!isMobileViewport && !sidebarIsOpened && (
+                            <div className="edit-post-layout__toggle-sidebar-panel">
+                                <Button
+                                    variant="secondary"
+                                    className="edit-post-layout__toggle-sidebar-panel-button"
+                                    onClick={openSidebarPanel}
+                                    aria-expanded={false}
+                                >
+                                    {hasSelectedNodes
+                                        ? __('Open node settings', 'publishpress-future-pro')
+                                        : __('Open workflow settings', 'publishpress-future-pro')}
+                                </Button>
+                            </div>
+                        )}
+                        <ComplementaryArea.Slot scope={SLOT_SCOPE_WORKFLOW_EDITOR} />
+                    </>
+                )
+            }
         >
         </InterfaceSkeleton>
     );
