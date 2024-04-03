@@ -16,9 +16,10 @@ const SIDEBAR_ACTIVE_BY_DEFAULT = Platform.select({
 export const SettingsSidebar = () => {
     const { sidebarName, keyboardShortcut } = useSelect((select) => {
         const shortcut = select(keyboardShortcutStore).getShortcutRepresentation(SHORTCUT_TOGGLE_SIDEBAR);
+        const sidebarName = select(store).getActiveSidebarName();
 
         return {
-            sidebarName: select(store).getActiveSidebarName(),
+            sidebarName: sidebarName,
             keyboardShortcut: shortcut,
         };
     });
