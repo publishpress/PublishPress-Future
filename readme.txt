@@ -3,7 +3,7 @@ Contributors: publishpress, kevinB, stevejburge, andergmartins, rozroz
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
-Requires at least: 6.3
+Requires at least: 6.5
 Requires PHP: 7.2.5
 License: GPLv2 or later
 Tested up to: 6.5
