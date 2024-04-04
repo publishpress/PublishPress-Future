@@ -6,7 +6,7 @@ import { Tips } from './tips';
 import { NodesTab } from './nodes-tab';
 import InserterTabs from './tabs';
 import { INSERTER_TAB_ACTIONS, INSERTER_TAB_TRIGGERS } from '../../constants';
-import { store as editorStore } from '../../editor-store';
+import { store as editorStore } from '../editor-store';
 import { useDispatch } from '@wordpress/data';
 
 export function InserterMenu({

@@ -1,11 +1,11 @@
 import {
     FEATURE_FULLSCREEN_MODE,
     FEATURE_MOST_USED_NODES,
-} from "./constants";
+} from "../constants";
 import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
 import { store as editorStore } from "./editor-store";
-import { nodes, edges, triggerNodes, triggerCategories, actionCategories, actionNodes } from "./demo-data";
+import { nodes, edges, triggerNodes, triggerCategories, actionCategories, actionNodes } from "../demo-data";
 
 export function WorkflowData() {
     const {

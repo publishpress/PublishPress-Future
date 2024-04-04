@@ -13,15 +13,15 @@ import ReactFlow, {
     useOnSelectionChange,
 } from "reactflow";
 import { useCallback, useRef, useLayoutEffect, useEffect, Platform } from "@wordpress/element";
-import { defaultEdgeProps } from "../default-edges-props";
-import { nodeStyle } from '../default-nodes-props';
+import { defaultEdgeProps } from "../../default-edges-props";
+import { nodeStyle } from '../../default-nodes-props';
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
-import { SLOT_SCOPE_WORKFLOW_EDITOR } from "../constants";
+import { SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
 
 import {
     AUTO_LAYOUT_DEFAULT_DIRECTION,
 } from "./auto-layout/constants";
-import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from "../components/settings-sidebar/constants";
+import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from "../settings-sidebar/constants";
 
 const GRID_SIZE = 15;
 

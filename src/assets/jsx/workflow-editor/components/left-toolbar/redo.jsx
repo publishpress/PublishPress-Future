@@ -11,7 +11,7 @@ import { forwardRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { store as workflowStore } from '../../workflow-store';
+import { store as workflowStore } from '../workflow-store';
 
 function Component(props, ref) {
     const hasRedo = useSelect(

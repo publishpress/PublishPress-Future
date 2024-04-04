@@ -6,7 +6,7 @@ import { store as interfaceStore } from '@wordpress/interface';
 /*
  * Internal dependencies
  */
-import { POST_TYPE } from '../constants';
+import { POST_TYPE } from '../../constants';
 import { STORE_NAME } from './constants';
 
 

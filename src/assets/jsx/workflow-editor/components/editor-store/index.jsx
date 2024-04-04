@@ -10,7 +10,7 @@ import {
     FEATURE_FULLSCREEN_MODE,
     INSERTER_TAB_TRIGGERS,
     SLOT_SCOPE_WORKFLOW_EDITOR,
-} from '../constants';
+} from '../../constants';
 import { STORE_NAME } from './constants';
 
 

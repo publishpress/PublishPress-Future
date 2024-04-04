@@ -12,7 +12,7 @@ import {
 /**
  * Internal dependencies
  */
-import { store as editorStore } from '../../editor-store';
+import { store as editorStore } from '../editor-store';
 import { FEATURE_MOST_USED_NODES, FEATURE_INSERTER } from '../../constants';
 import { InserterLibrary } from './library';
 

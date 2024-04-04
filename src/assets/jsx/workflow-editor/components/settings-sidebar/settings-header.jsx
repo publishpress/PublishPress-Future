@@ -8,7 +8,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 /**
  * Internal dependencies
 */
-import { store as editorStore } from '../../editor-store';
+import { store as editorStore } from '../editor-store';
 import {
     SIDEBAR_NODE_EDGE,
     SIDEBAR_WORKFLOW

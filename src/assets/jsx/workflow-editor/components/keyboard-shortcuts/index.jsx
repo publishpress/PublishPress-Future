@@ -2,7 +2,7 @@ import {
     useShortcut,
     store as shortcutStore,
 } from '@wordpress/keyboard-shortcuts';
-import { store as editorStore } from '../../editor-store';
+import { store as editorStore } from '../editor-store';
 import { useEffect } from '@wordpress/element';
 import {
     FEATURE_FULLSCREEN_MODE,
@@ -11,7 +11,7 @@ import {
 import {
     CUSTOM_EVENT_AUTO_LAYOUT,
     AUTO_LAYOUT_DIRECTION_DOWN,
-} from '../../flow-editor/auto-layout/constants'
+} from '../flow-editor/auto-layout/constants'
 import { useDispatch } from '@wordpress/data';
 import {
     SHORTCUT_TOGGLE_FULLSCREEN,

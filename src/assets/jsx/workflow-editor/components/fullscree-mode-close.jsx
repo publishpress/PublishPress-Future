@@ -7,8 +7,8 @@ import {
 import { __ } from "@wordpress/i18n";
 import { addQueryArgs } from '@wordpress/url';
 import { wordpress } from '@wordpress/icons';
-import { store as workflowStore } from '../workflow-store';
-import { store as editorStore } from '../editor-store';
+import { store as workflowStore } from './workflow-store';
+import { store as editorStore } from './editor-store';
 import { POST_TYPE } from '../constants';
 
 export function FullscreenModeClose({ showTooltip }) {

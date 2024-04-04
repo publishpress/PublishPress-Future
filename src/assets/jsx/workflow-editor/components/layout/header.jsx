@@ -5,7 +5,7 @@ import { useViewportMatch } from '@wordpress/compose';
 import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback } from '@wordpress/element';
 import { plus, layout } from '@wordpress/icons';
-import { store as editorStore } from '../../editor-store';
+import { store as editorStore } from '../editor-store';
 import {
     FEATURE_FULLSCREEN_MODE,
     FEATURE_SHOW_ICON_LABELS,
@@ -16,14 +16,14 @@ import {
 import {
     CUSTOM_EVENT_AUTO_LAYOUT,
     AUTO_LAYOUT_DIRECTION_DOWN
-} from '../../flow-editor/auto-layout/constants';
+} from '../flow-editor/auto-layout/constants';
 import { FullscreenModeClose } from '../fullscree-mode-close';
 import { MoreMenu } from '../more-menu/menu';
 import { NavigableToolbar } from '../left-toolbar/toolbar';
 import { EditorHistoryUndo } from '../left-toolbar/undo';
 import { EditorHistoryRedo } from '../left-toolbar/redo';
 import { displayShortcut } from '@wordpress/keycodes';
-import { useAutoLayout } from '../../flow-editor/auto-layout';
+import { useAutoLayout } from '../flow-editor/auto-layout';
 import { isWP65OrLater } from 'future-workflow-editor';
 
 const preventDefault = (event) => {
