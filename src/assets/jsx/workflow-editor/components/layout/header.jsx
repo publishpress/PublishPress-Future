@@ -62,7 +62,7 @@ export const LayoutHeader = () => {
         }
 
         enableFeature(FEATURE_INSERTER);
-    }, [isInserterOpened, enableFeature]);
+    }, [isInserterOpened, enableFeature, disableFeature]);
 
     /* translators: accessibility text for the editor toolbar */
     const toolbarAriaLabel = __('Document tools');
