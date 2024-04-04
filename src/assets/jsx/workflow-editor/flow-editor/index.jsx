@@ -22,6 +22,7 @@ import {
 } from "./auto-layout/constants";
 import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from "../components/settings-sidebar/constants";
 
+const GRID_SIZE = 15;
 
 export const FlowEditor = (props) => {
     const {
@@ -222,6 +223,8 @@ export const FlowEditor = (props) => {
                 proOptions={proOptions}
                 fitView
                 style={editorStyle}
+                snapToGrid={true}
+                snapGrid={[GRID_SIZE, GRID_SIZE]}
             >
                 <MiniMap
                     pannable
@@ -231,7 +234,10 @@ export const FlowEditor = (props) => {
                         if (node.type === 'default') return nodeStyle['action'].backgroundColor;
                     }}
                 />
-                <Background variant="dots" />
+                <Background
+                    variant="dots"
+                    gap={GRID_SIZE}
+                />
                 <Controls />
             </ReactFlow>
         </div>
