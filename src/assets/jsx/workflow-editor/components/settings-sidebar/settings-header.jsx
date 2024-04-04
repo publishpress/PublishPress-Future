@@ -8,14 +8,14 @@ import { useDispatch, useSelect } from '@wordpress/data';
 /**
  * Internal dependencies
 */
-import { store } from '../../store';
+import { store as editorStore } from '../../editor-store';
 import {
     SIDEBAR_NODE_EDGE,
     SIDEBAR_WORKFLOW
 } from './constants';
 
 export const SettingsHeader = ({ sidebarName }) => {
-    const { openGeneralSidebar } = useDispatch(store);
+    const { openGeneralSidebar } = useDispatch(editorStore);
 
     const { documentLabel } = useSelect((select) => {
         return {

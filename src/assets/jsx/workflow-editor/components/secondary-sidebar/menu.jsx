@@ -6,7 +6,7 @@ import { Tips } from './tips';
 import { NodesTab } from './nodes-tab';
 import InserterTabs from './tabs';
 import { INSERTER_TAB_ACTIONS, INSERTER_TAB_TRIGGERS } from '../../constants';
-import { store } from '../../store';
+import { store as editorStore } from '../../editor-store';
 import { useDispatch } from '@wordpress/data';
 
 export function InserterMenu({
@@ -24,10 +24,10 @@ export function InserterMenu({
 
     const { currentInserterTab } = useSelect((select) => {
         return {
-            currentInserterTab: select(store).getCurrentInserterTab(),
+            currentInserterTab: select(editorStore).getCurrentInserterTab(),
         };
     }, []);
-    const { setCurrentInserterTab } = useDispatch(store);
+    const { setCurrentInserterTab } = useDispatch(editorStore);
 
     const onInsert = useCallback(
         (blocks, meta, shouldForceFocusBlock) => {
@@ -45,8 +45,8 @@ export function InserterMenu({
 
     const triggersTab = useMemo(
         () => {
-            const items = select(store).getTriggerNodes();
-            const categories = select(store).getTriggerCategories();
+            const items = select(editorStore).getTriggerNodes();
+            const categories = select(editorStore).getTriggerCategories();
 
             return (
                 <>
@@ -82,8 +82,8 @@ export function InserterMenu({
 
     const actionsTab = useMemo(
         () => {
-            const items = select(store).getActionNodes();
-            const categories = select(store).getActionCategories();
+            const items = select(editorStore).getActionNodes();
+            const categories = select(editorStore).getActionCategories();
 
             return (
                 <>

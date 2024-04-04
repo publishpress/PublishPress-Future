@@ -9,7 +9,8 @@ import { store as keyboardShortcutsStore } from '@wordpress/keyboard-shortcuts';
 /**
  * Internal dependencies
  */
-import { store as workflowStore } from '../../store';
+import { store as workflowStore } from '../../workflow-store';
+import { store as editorStore } from '../../editor-store';
 import { SHORTCUT_TOGGLE_SIDEBAR } from '../keyboard-shortcuts/constants';
 import { FEATURE_SHOW_ICON_LABELS, SLOT_SCOPE_WORKFLOW_EDITOR } from '../../constants';
 
@@ -20,7 +21,7 @@ export function PluginSidebarEditPost({ className, ...props }) {
 			shortcut: select(
 				keyboardShortcutsStore
 			).getShortcutRepresentation(SHORTCUT_TOGGLE_SIDEBAR),
-			showIconLabels: select(workflowStore).isFeatureActive(
+			showIconLabels: select(editorStore).isFeatureActive(
 				FEATURE_SHOW_ICON_LABELS
 			),
 		};

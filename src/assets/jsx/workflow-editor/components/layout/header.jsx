@@ -5,7 +5,7 @@ import { useViewportMatch } from '@wordpress/compose';
 import { __, _x } from '@wordpress/i18n';
 import { useRef, useCallback } from '@wordpress/element';
 import { plus, layout } from '@wordpress/icons';
-import { store } from '../../store';
+import { store as editorStore } from '../../editor-store';
 import {
     FEATURE_FULLSCREEN_MODE,
     FEATURE_SHOW_ICON_LABELS,
@@ -38,14 +38,14 @@ export const LayoutHeader = () => {
         showIconLabels,
     } = useSelect((select) => {
         return {
-            isFullscreenActive: select(store).isFeatureActive(FEATURE_FULLSCREEN_MODE),
-            hasReducedUI: select(store).isFeatureActive(FEATURE_REDUCED_UI),
-            isInserterOpened: select(store).isFeatureActive(FEATURE_INSERTER),
-            showIconLabels: select(store).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
+            isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
+            hasReducedUI: select(editorStore).isFeatureActive(FEATURE_REDUCED_UI),
+            isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
+            showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
         }
     });
 
-    const { enableFeature, disableFeature } = useDispatch(store);
+    const { enableFeature, disableFeature } = useDispatch(editorStore);
 
     const headerClasses = 'edit-post-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
 

@@ -1,13 +1,16 @@
 import { Platform } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { cog } from '@wordpress/icons';
-import { store } from '../../store';
 import { store as keyboardShortcutStore } from '@wordpress/keyboard-shortcuts';
 import { SHORTCUT_TOGGLE_SIDEBAR } from '../keyboard-shortcuts/constants';
 import { PluginSidebarEditPost } from './plugin-sidebar';
 import { SettingsHeader } from './settings-header';
 import { __ } from '@wordpress/i18n';
 import { SLOT_SCOPE_WORKFLOW_EDITOR } from '../../constants';
+import { SIDEBAR_WORKFLOW, SIDEBAR_NODE_EDGE } from './constants';
+import { WorkflowStatus } from '../workflow-status';
+import { NodeInspector } from '../node-inspector';
+
 
 const SIDEBAR_ACTIVE_BY_DEFAULT = Platform.select({
     web: true,
@@ -37,23 +40,12 @@ export const SettingsSidebar = () => {
             icon={cog}
             isActiveByDefault={SIDEBAR_ACTIVE_BY_DEFAULT}
         >
-            {/* { sidebarName === SIDEBAR_WORKFLOW && (
-				<>
-                    <PostStatus />
-					<Template />
-					<PluginDocumentSettingPanel.Slot />
-					<LastRevision />
-					<PostLink />
-					<PostTaxonomies />
-					<FeaturedImage />
-					<PostExcerpt />
-					<DiscussionPanel />
-					<PageAttributes />
-					<MetaBoxes location="side" />
-				</>
-			) }
-			{ sidebarName === SIDEBAR_NODE_EDGE && <BlockInspector /> } */}
-            <div>Sidebar: {sidebarName}</div>
+            {sidebarName === SIDEBAR_WORKFLOW && (
+                <>
+                    <WorkflowStatus />
+                </>
+            )}
+            {sidebarName === SIDEBAR_NODE_EDGE && <NodeInspector />}
         </PluginSidebarEditPost>
     );
 }

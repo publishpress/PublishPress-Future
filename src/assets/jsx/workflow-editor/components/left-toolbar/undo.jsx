@@ -11,15 +11,15 @@ import { forwardRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { store } from '../../store';
+import { store as workflowStore } from '../../workflow-store';
 
 function Component(props, ref) {
     const hasUndo = useSelect(
-        (select) => select(store).hasEditorUndo(),
+        (select) => select(workflowStore).hasUndo(),
         []
     );
 
-    const { undo } = useDispatch(store);
+    const { undo } = useDispatch(workflowStore);
 
     return (
         <Button

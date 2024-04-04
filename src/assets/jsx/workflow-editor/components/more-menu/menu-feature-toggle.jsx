@@ -10,7 +10,7 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies
  */
-import { store } from '../../store';
+import { store as editorStore } from '../../editor-store';
 
 export const MoreMenuFeatureToggle = ({
     scope,
@@ -23,10 +23,10 @@ export const MoreMenuFeatureToggle = ({
 }) => {
     const isActive = useSelect(
         (select) =>
-            select(store).isFeatureActive(feature),
+            select(editorStore).isFeatureActive(feature),
         [feature]
     );
-    const { toggleFeature } = useDispatch(store);
+    const { toggleFeature } = useDispatch(editorStore);
     const speakMessage = () => {
         if (isActive) {
             speak(messageDeactivated || __('Feature deactivated'));

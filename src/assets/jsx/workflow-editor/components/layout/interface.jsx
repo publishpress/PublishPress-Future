@@ -6,7 +6,8 @@ import { LayoutHeader } from "./header";
 import { useSelect, useDispatch } from "@wordpress/data";
 import { Button } from "@wordpress/components";
 import { useViewportMatch } from "@wordpress/compose";
-import { store } from "../../store";
+import { store as workflowStore } from "../../workflow-store";
+import { store as editorStore } from "../../editor-store";
 import { __ } from "@wordpress/i18n";
 import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from "../settings-sidebar/constants";
 import { SLOT_SCOPE_WORKFLOW_EDITOR, FEATURE_SHOW_ICON_LABELS } from "../../constants";
@@ -27,14 +28,14 @@ export function WorkflowEditorInterface({ className, secondarySidebar }) {
             sidebarIsOpened: activeComplementaryArea !== null && activeComplementaryArea !== 'null/undefined',
             hasFixedToolbar: false,
             hasActiveMetaboxes: false,
-            showIconLabels: select(store).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
-            hasSelectedNodes: select(store).hasSelectedNodes(),
+            showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
+            hasSelectedNodes: select(workflowStore).hasSelectedNodes(),
         }
     });
 
     const {
         openGeneralSidebar
-    } = useDispatch(store);
+    } = useDispatch(editorStore);
 
     const interfaceClassNames = classnames(className, {
         'is-sidebar-opened': sidebarIsOpened,

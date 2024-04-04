@@ -3,7 +3,7 @@ import { WorkflowEditorInterface } from "./interface";
 import { useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
 import { addBodyClasses, removeBodyClasses } from "../../utils";
-import { store } from "../../store";
+import { store as editorStore } from "../../editor-store";
 import { ReactFlowProvider } from "reactflow";
 import { KeyboardShortcuts } from "../keyboard-shortcuts";
 import { FEATURE_FULLSCREEN_MODE, FEATURE_INSERTER } from "../../constants";
@@ -18,8 +18,8 @@ export function WorkflowEditorLayout() {
         isInserterOpened,
     } = useSelect((select) => {
         return {
-            isFullscreenActive: select(store).isFeatureActive(FEATURE_FULLSCREEN_MODE),
-            isInserterOpened: select(store).isFeatureActive(FEATURE_INSERTER),
+            isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
+            isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
         }
     });
 

@@ -1,5 +1,6 @@
 import { useSelect, useDispatch } from "@wordpress/data";
-import { store } from "../store";
+import { store as workflowStore } from "../workflow-store";
+import { store as editorStore } from "../editor-store";
 import ReactFlow, {
     Background,
     Controls,
@@ -36,10 +37,10 @@ export const FlowEditor = (props) => {
         const activeComplementaryArea = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
 
         return {
-            nodes: select(store).getNodes(),
-            edges: select(store).getEdges(),
-            selectedNodes: select(store).getSelectedNodes(),
-            selectedEdges: select(store).getSelectedEdges(),
+            nodes: select(workflowStore).getNodes(),
+            edges: select(workflowStore).getEdges(),
+            selectedNodes: select(workflowStore).getSelectedNodes(),
+            selectedEdges: select(workflowStore).getSelectedEdges(),
             activeComplementaryArea: activeComplementaryArea,
             hasActiveSideBar: activeComplementaryArea !== null && activeComplementaryArea !== 'null/undefined',
         }
@@ -50,8 +51,11 @@ export const FlowEditor = (props) => {
         setEdges,
         setSelectedNodes,
         setSelectedEdges,
+    } = useDispatch(workflowStore);
+
+    const {
         openGeneralSidebar,
-    } = useDispatch(store);
+    } = useDispatch(editorStore);
 
     const reactFlowWrapperRef = useRef(null);
     const reactFlowInstance = useReactFlow();

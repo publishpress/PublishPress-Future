@@ -2,36 +2,26 @@
  * WordPress dependencies
  */
 import { register, createReduxStore, dispatch, select } from '@wordpress/data';
-import { store as interfaceStore } from '@wordpress/interface';
+
 /*
  * Internal dependencies
  */
 import {
     FEATURE_FULLSCREEN_MODE,
     INSERTER_TAB_TRIGGERS,
-    POST_TYPE,
     SLOT_SCOPE_WORKFLOW_EDITOR,
 } from '../constants';
-import {
-    STORE_NAME,
-} from './constants';
+import { STORE_NAME } from './constants';
 
 
 export const storeConfig = {
     activeFeatures: [FEATURE_FULLSCREEN_MODE],
-    postType: POST_TYPE,
-    nodes: [],
-    edges: [],
-    editorUndo: [],
-    editorRedo: [],
     currentInserterTab: INSERTER_TAB_TRIGGERS,
     triggerCategories: [],
     triggerNodes: [],
+    actionCategories: [],
     actionNodes: [],
-    selectedNodes: [],
-    selectedEdges: [],
     activeSidebarName: null,
-    workflowName: '',
 }
 
 export const store = createReduxStore(STORE_NAME, {
@@ -74,24 +64,6 @@ export const store = createReduxStore(STORE_NAME, {
                     activeFeatures: state.activeFeatures.filter(f => f !== featureToDisable),
                 };
 
-            case 'SET_POST_TYPE':
-                return {
-                    ...state,
-                    postType: action.payload,
-                };
-
-            case 'SET_NODES':
-                return {
-                    ...state,
-                    nodes: action.payload,
-                };
-
-            case 'SET_EDGES':
-                return {
-                    ...state,
-                    edges: action.payload,
-                };
-
             case 'SET_CURRENT_INSERTER_TAB':
                 return {
                     ...state,
@@ -123,18 +95,6 @@ export const store = createReduxStore(STORE_NAME, {
                     actionNodes: action.payload,
                 };
 
-            case 'SET_SELECTED_NODES':
-                return {
-                    ...state,
-                    selectedNodes: action.payload,
-                };
-
-            case 'SET_SELECTED_EDGES':
-                return {
-                    ...state,
-                    selectedEdges: action.payload,
-                };
-
             case 'CLOSE_GENERAL_SIDEBAR':
                 return {
                     ...state,
@@ -146,25 +106,6 @@ export const store = createReduxStore(STORE_NAME, {
                     ...state,
                     activeSidebarName: action.payload,
                 };
-
-            case 'SET_WORKFLOW_NAME':
-                return {
-                    ...state,
-                    workflowName: action.payload,
-                };
-
-            case 'UNDO':
-                // TODO: Implement undo
-                return {
-                    ...state
-                };
-
-            case 'REDO':
-                // TODO: Implement redo
-                return {
-                    ...state
-                };
-
         }
 
         return state;
@@ -192,24 +133,6 @@ export const store = createReduxStore(STORE_NAME, {
             return {
                 type: 'ENABLE_FEATURE',
                 payload: feature
-            };
-        },
-        setPostType(postType) {
-            return {
-                type: 'SET_POST_TYPE',
-                payload: postType
-            };
-        },
-        setNodes(nodes) {
-            return {
-                type: 'SET_NODES',
-                payload: nodes
-            };
-        },
-        setEdges(edges) {
-            return {
-                type: 'SET_EDGES',
-                payload: edges
             };
         },
         setCurrentInserterTab(tab) {
@@ -242,18 +165,6 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: nodes
             };
         },
-        setSelectedNodes(nodes) {
-            return {
-                type: 'SET_SELECTED_NODES',
-                payload: nodes
-            };
-        },
-        setSelectedEdges(edges) {
-            return {
-                type: 'SET_SELECTED_EDGES',
-                payload: edges
-            };
-        },
         closeGeneralSidebar() {
             dispatch('core/interface').disableComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
 
@@ -270,22 +181,6 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: sidebar
             };
         },
-        setWorkflowName(name) {
-            return {
-                type: 'SET_WORKFLOW_NAME',
-                payload: name
-            };
-        },
-        undo() {
-            return {
-                type: 'UNDO'
-            };
-        },
-        redo() {
-            return {
-                type: 'REDO'
-            };
-        }
     },
     selectors: {
         getActiveFeatures(state) {
@@ -293,21 +188,6 @@ export const store = createReduxStore(STORE_NAME, {
         },
         isFeatureActive(state, feature) {
             return state.activeFeatures.includes(feature);
-        },
-        getPostType(state) {
-            return state.postType;
-        },
-        getNodes(state) {
-            return state.nodes;
-        },
-        getEdges(state) {
-            return state.edges;
-        },
-        getNodeById(state, id) {
-            return state.nodes.find(node => node.id === id);
-        },
-        getEdgeById(state, id) {
-            return state.edges.find(edge => edge.id === id);
         },
         getCurrentInserterTab(state) {
             return state.currentInserterTab;
@@ -324,27 +204,6 @@ export const store = createReduxStore(STORE_NAME, {
         getActionNodes(state) {
             return state.actionNodes;
         },
-        getSelectedNodes(state) {
-            return state.selectedNodes;
-        },
-        getSelectedEdges(state) {
-            return state.selectedEdges;
-        },
-        hasSelectedNodes(state) {
-            return state.selectedNodes.length > 0;
-        },
-        hasSelectedEdges(state) {
-            return state.selectedEdges.length > 0;
-        },
-        getWorkflowName(state) {
-            return state.workflowName;
-        },
-        hasEditorUndo(state) {
-            return state.editorUndo.length > 0;
-        },
-        hasEditorRedo(state) {
-            return state.editorRedo.length > 0;
-        }
     }
 });
 

@@ -12,18 +12,18 @@ import {
 /**
  * Internal dependencies
  */
-import { store } from '../../store';
+import { store as editorStore } from '../../editor-store';
 import { FEATURE_MOST_USED_NODES, FEATURE_INSERTER } from '../../constants';
 import { InserterLibrary } from './library';
 
 export function InserterSidebar() {
     const { showMostUsedNodes } = useSelect((select) => {
         return {
-            showMostUsedNodes: select(store).isFeatureActive(FEATURE_MOST_USED_NODES),
+            showMostUsedNodes: select(editorStore).isFeatureActive(FEATURE_MOST_USED_NODES),
         };
     }, []);
 
-    const { disableFeature } = useDispatch(store);
+    const { disableFeature } = useDispatch(editorStore);
 
     const closeInserter = () => {
         disableFeature(FEATURE_INSERTER);
