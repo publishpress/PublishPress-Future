@@ -59,7 +59,6 @@ export function WorkflowEditorInterface({ className, secondarySidebar }) {
             content={<LayoutContent />}
             footer={<LayoutFooter />}
             actions={null}
-            shortcuts={null}
             sidebar={
                 (!isMobileViewport || sidebarIsOpened) && (
                     <>
