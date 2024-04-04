@@ -99,6 +99,7 @@ export const LayoutHeader = () => {
                             isPressed={isInserterOpened}
                             onMouseDown={preventDefault}
                             onClick={openInserter}
+                            shortcut={displayShortcut.secondary('i')}
                             icon={plus}
                             /* translators: button label text should, if possible, be under 16
                     characters. */
