@@ -30,3 +30,14 @@
 .react-flow__node-group.selectable:focus-visible {
     box-shadow: 0 0 0 2px #1a192b;
 }
+
+.edit-post-editor__inserter-panel-header {
+    display: flex;
+	justify-content: flex-end;
+}
+
+@media (min-width: 600px) {
+    .edit-post-editor__inserter-panel-header {
+        display: none;
+    }
+}
