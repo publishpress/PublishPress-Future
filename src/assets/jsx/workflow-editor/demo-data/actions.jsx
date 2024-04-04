@@ -25,7 +25,7 @@ export const actionNodes = [
         icon: {
             src: 'document',
             background: '#ffffff',
-            foreground: '#676767',
+            foreground: '#1e1e1e',
         },
     },
     {
@@ -41,7 +41,7 @@ export const actionNodes = [
         icon: {
             src: 'document',
             background: '#ffffff',
-            foreground: '#676767',
+            foreground: '#1e1e1e',
         },
     },
     {
@@ -57,7 +57,7 @@ export const actionNodes = [
         icon: {
             src: 'users',
             background: '#ffffff',
-            foreground: '#676767',
+            foreground: '#1e1e1e',
         },
     },
 ];

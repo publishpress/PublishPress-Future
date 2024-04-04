@@ -43,7 +43,7 @@ export const triggerNodes = [
         icon: {
             src: 'calendar',
             background: '#ffffff',
-            foreground: '#676767',
+            foreground: '#1e1e1e',
         },
     },
     {
@@ -59,7 +59,7 @@ export const triggerNodes = [
         icon: {
             src: 'document',
             background: '#ffffff',
-            foreground: '#676767',
+            foreground: '#1e1e1e',
         },
     },
     {
@@ -75,7 +75,7 @@ export const triggerNodes = [
         icon: {
             src: 'document',
             background: '#ffffff',
-            foreground: '#676767',
+            foreground: '#1e1e1e',
         },
     },
     {
@@ -91,7 +91,7 @@ export const triggerNodes = [
         icon: {
             src: 'users',
             background: '#ffffff',
-            foreground: '#676767',
+            foreground: '#1e1e1e',
         },
     },
     {
@@ -107,7 +107,7 @@ export const triggerNodes = [
         icon: {
             src: 'woo',
             background: '#ffffff',
-            foreground: '#676767',
+            foreground: '#1e1e1e',
         },
     }
 ];
