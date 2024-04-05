@@ -17,7 +17,7 @@ function chunk( array, size ) {
 	return chunks;
 }
 
-function NodeTypesList( {
+export function NodeTypesList( {
 	items = [],
 	onSelect,
 	onHover = () => {},
