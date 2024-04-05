@@ -121,10 +121,10 @@ export const InserterSearchResults = ({
                 </InserterPanel>
             )}
 
-            {!!hasItems &&
+            {/* {!!hasItems &&
                 (
                     <div className="block-editor-inserter__quick-inserter-separator" />
-                )}
+                )} */}
         </InserterListbox>
     );
 }
