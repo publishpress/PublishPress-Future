@@ -1,17 +1,17 @@
 export const nodeStyle = {
     trigger: {
         color: '#ffffff',
-        borderColor: '#d06800',
-        backgroundColor: '#d06800',
+        borderColor: '#19647E',
+        backgroundColor: '#19647E',
     },
     action: {
         color: '#ffffff',
-        borderColor: '#2fb596',
-        backgroundColor: '#2fb596',
+        borderColor: '#28AFB0',
+        backgroundColor: '#28AFB0',
     },
     flow: {
-        color: '#ffffff',
-        borderColor: '#91cdf0',
-        backgroundColor: '#91cdf0',
+        color: '#1F271B',
+        borderColor: '#F4D35E',
+        backgroundColor: '#F4D35E',
     },
 };
