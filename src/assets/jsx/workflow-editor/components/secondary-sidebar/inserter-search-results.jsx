@@ -93,7 +93,7 @@ export const InserterSearchResults = ({
             count
         );
         debouncedSpeak(resultsFoundMessage);
-    }, [filterValue, debouncedSpeak]);
+    }, [filterValue, debouncedSpeak, filteredNodeTypes]);
 
     const currentShownNodeTypes = useAsyncList(filteredNodeTypes, {
         step: INITIAL_INSERTER_RESULTS,
