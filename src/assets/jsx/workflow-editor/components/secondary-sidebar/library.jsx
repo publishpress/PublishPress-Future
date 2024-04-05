@@ -13,7 +13,7 @@ export function InserterLibrary({
     showInserterHelpPanel,
     showMostUsedNodes = true,
     onSelect = noop,
-    shouldFocusBlock = false,
+    shouldFocusNode = false,
 }) {
     return (
         <InserterMenu
@@ -21,7 +21,7 @@ export function InserterLibrary({
             isAppender={isAppender}
             showInserterHelpPanel={showInserterHelpPanel}
             showMostUsedNodes={showMostUsedNodes}
-            shouldFocusBlock={shouldFocusBlock}
+            shouldFocusNode={shouldFocusNode}
         />
     );
 }

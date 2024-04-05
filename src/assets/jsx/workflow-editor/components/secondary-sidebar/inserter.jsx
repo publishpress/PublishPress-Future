@@ -50,7 +50,7 @@ export function InserterSidebar() {
                 <InserterLibrary
                     showMostUsedNodes={showMostUsedNodes}
                     showInserterHelpPanel={true}
-                    shouldFocusBlock={isMobileViewport}
+                    shouldFocusNode={isMobileViewport}
                 />
             </div>
         </div>

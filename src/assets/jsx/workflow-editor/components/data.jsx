@@ -1,6 +1,5 @@
 import {
     FEATURE_FULLSCREEN_MODE,
-    FEATURE_MOST_USED_NODES,
 } from "../constants";
 import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
@@ -32,7 +31,7 @@ export function WorkflowData() {
         setFlowNodes,
     } = useDispatch(editorStore);
 
-    setActiveFeatures([FEATURE_FULLSCREEN_MODE, FEATURE_MOST_USED_NODES]);
+    setActiveFeatures([FEATURE_FULLSCREEN_MODE]);
     setNodes(nodes);
     setEdges(edges);
     setTriggerCategories(triggerCategories);

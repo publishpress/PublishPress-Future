@@ -12,13 +12,14 @@ import {
 } from '../../constants';
 import { store as editorStore } from '../editor-store';
 import { useDispatch } from '@wordpress/data';
+import InserterSearchResults from './inserter-search-results';
 
 export function InserterMenu({
     onSelect,
     showInserterHelpPanel,
     showMostUsedNodes,
     __experimentalFilterValue = '',
-    shouldFocusBlock = true,
+    shouldFocusNode = true,
 }) {
     const [filterValue, setFilterValue] = useState(
         __experimentalFilterValue
@@ -198,22 +199,13 @@ export function InserterMenu({
                         label={__('Search for blocks and patterns')}
                         placeholder={__('Search')}
                     />
-                    {/* { !! filterValue && (
-						<InserterSearchResults
-							filterValue={ filterValue }
-							onSelect={ onSelect }
-							onHover={ onHover }
-							rootClientId={ rootClientId }
-							clientId={ clientId }
-							isAppender={ isAppender }
-							__experimentalInsertionIndex={
-								__experimentalInsertionIndex
-							}
-							showBlockDirectory
-							shouldFocusBlock={ shouldFocusBlock }
-						/>
-					) }
-                    */ }
+                    {!!filterValue && (
+                        <InserterSearchResults
+                            filterValue={filterValue}
+                            onSelect={onSelect}
+                            onHover={onHover}
+                        />
+                    )}
 
                     {!filterValue && (
                         <InserterTabs
@@ -225,9 +217,9 @@ export function InserterMenu({
                     )}
                 </div>
             </div>
-            {showInserterHelpPanel && hoveredItem && (
+            {/* {showInserterHelpPanel && hoveredItem && (
                 <InserterPreviewPanel item={hoveredItem} />
-            )}
+            )} */}
         </div>
     );
 }

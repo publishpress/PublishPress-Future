@@ -12,7 +12,7 @@ export { default as InserterListboxGroup } from './group';
 export { default as InserterListboxRow } from './row';
 export { default as InserterListboxItem } from './item';
 
-function InserterListbox({ children }) {
+export function InserterListbox({ children }) {
 	const compositeState = useCompositeState({
 		shift: true,
 		wrap: 'horizontal',

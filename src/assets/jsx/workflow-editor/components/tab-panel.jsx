@@ -15,16 +15,16 @@ import { useInstanceId } from '@wordpress/compose';
  */
 import { NavigableMenu, Button } from '@wordpress/components';
 
-const TabButton = ( { tabId, onClick, children, selected, ...rest } ) => (
+const TabButton = ({ tabId, onClick, children, selected, ...rest }) => (
 	<Button
 		role="tab"
-		tabIndex={ selected ? null : -1 }
-		aria-selected={ selected }
-		id={ tabId }
-		onClick={ onClick }
-		{ ...rest }
+		tabIndex={selected ? null : -1}
+		aria-selected={selected}
+		id={tabId}
+		onClick={onClick}
+		{...rest}
 	>
-		{ children }
+		{children}
 	</Button>
 );
 
@@ -34,7 +34,7 @@ const TabButton = ( { tabId, onClick, children, selected, ...rest } ) => (
  * correctly when the initialTabName was set to a tab that was not the first tab.
  */
 
-export function TabPanel( {
+export function TabPanel({
 	className,
 	children,
 	tabs,
@@ -42,79 +42,79 @@ export function TabPanel( {
 	orientation = 'horizontal',
 	activeClass = 'is-active',
 	onSelect = noop,
-} ) {
-	const instanceId = useInstanceId( TabPanel, 'tab-panel' );
-	const [ selected, setSelected ] = useState( null );
+}) {
+	const instanceId = useInstanceId(TabPanel, 'tab-panel');
+	const [selected, setSelected] = useState(null);
 
-	const handleClick = ( tabKey ) => {
-		setSelected( tabKey );
-		onSelect( tabKey );
+	const handleClick = (tabKey) => {
+		setSelected(tabKey);
+		onSelect(tabKey);
 	};
 
-	const onNavigate = ( childIndex, child ) => {
+	const onNavigate = (childIndex, child) => {
 		child.click();
 	};
-	const selectedTab = find( tabs, { name: selected } );
-	const selectedId = `${ instanceId }-${ selectedTab?.name ?? 'none' }`;
+	const selectedTab = find(tabs, { name: selected });
+	const selectedId = `${instanceId}-${selectedTab?.name ?? 'none'}`;
 
-	useEffect( () => {
-		const newSelectedTab = find( tabs, { name: selected } );
+	useEffect(() => {
+		const newSelectedTab = find(tabs, { name: selected });
 
-		if ( ! newSelectedTab ) {
+		if (!newSelectedTab) {
 			setSelected(
-				initialTabName || ( tabs.length > 0 ? tabs[ 0 ].name : null )
+				initialTabName || (tabs.length > 0 ? tabs[0].name : null)
 			);
 		}
-	}, [ tabs ] );
+	}, [tabs]);
 
 	// Fix the initialTabName not working when set to a tab that is not the first tab.
-	useEffect( () => {
-		if ( initialTabName ) {
-			setSelected( initialTabName );
+	useEffect(() => {
+		if (initialTabName) {
+			setSelected(initialTabName);
 			return;
 		}
 
-		setSelected( tabs[ 0 ].name );
-	}, [ initialTabName ] );
+		setSelected(tabs[0].name);
+	}, [initialTabName]);
 
 	return (
-		<div className={ className }>
+		<div className={className}>
 			<NavigableMenu
 				role="tablist"
-				orientation={ orientation }
-				onNavigate={ onNavigate }
+				orientation={orientation}
+				onNavigate={onNavigate}
 				className="components-tab-panel__tabs"
 			>
-				{ tabs.map( ( tab ) => (
+				{tabs.map((tab) => (
 					<TabButton
-						className={ classnames(
+						className={classnames(
 							'components-tab-panel__tabs-item',
 							tab.className,
 							{
-								[ activeClass ]: tab.name === selected,
+								[activeClass]: tab.name === selected,
 							}
-						) }
-						tabId={ `${ instanceId }-${ tab.name }` }
-						aria-controls={ `${ instanceId }-${ tab.name }-view` }
-						selected={ tab.name === selected }
-						key={ tab.name }
-						onClick={ partial( handleClick, tab.name ) }
+						)}
+						tabId={`${instanceId}-${tab.name}`}
+						aria-controls={`${instanceId}-${tab.name}-view`}
+						selected={tab.name === selected}
+						key={tab.name}
+						onClick={partial(handleClick, tab.name)}
 					>
-						{ tab.title }
+						{tab.title}
 					</TabButton>
-				) ) }
+				))}
 			</NavigableMenu>
-			{ selectedTab && (
+			{selectedTab && (
 				<div
-					key={ selectedId }
-					aria-labelledby={ selectedId }
+					key={selectedId}
+					aria-labelledby={selectedId}
 					role="tabpanel"
-					id={ `${ selectedId }-view` }
+					id={`${selectedId}-view`}
 					className="components-tab-panel__tab-content"
 				>
-					{ children( selectedTab ) }
+					{children(selectedTab)}
 				</div>
-			) }
+			)}
 		</div>
 	);
 }
