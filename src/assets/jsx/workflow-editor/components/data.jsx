@@ -5,7 +5,16 @@ import {
 import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
 import { store as editorStore } from "./editor-store";
-import { nodes, edges, triggerNodes, triggerCategories, actionCategories, actionNodes } from "../demo-data";
+import {
+    nodes,
+    edges,
+    triggerNodes,
+    triggerCategories,
+    actionCategories,
+    actionNodes,
+    flowCategories,
+    flowNodes,
+} from "../demo-data";
 
 export function WorkflowData() {
     const {
@@ -19,6 +28,8 @@ export function WorkflowData() {
         setTriggerCategories,
         setActionCategories,
         setActionNodes,
+        setFlowCategories,
+        setFlowNodes,
     } = useDispatch(editorStore);
 
     setActiveFeatures([FEATURE_FULLSCREEN_MODE, FEATURE_MOST_USED_NODES]);
@@ -28,6 +39,8 @@ export function WorkflowData() {
     setTriggerNodes(triggerNodes);
     setActionCategories(actionCategories);
     setActionNodes(actionNodes);
+    setFlowCategories(flowCategories);
+    setFlowNodes(flowNodes);
 
     return null;
 }

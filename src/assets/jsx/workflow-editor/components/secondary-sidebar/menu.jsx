@@ -5,7 +5,11 @@ import { useSelect, select } from '@wordpress/data';
 import { Tips } from './tips';
 import { NodesTab } from './nodes-tab';
 import InserterTabs from './tabs';
-import { INSERTER_TAB_ACTIONS, INSERTER_TAB_TRIGGERS } from '../../constants';
+import {
+    INSERTER_TAB_ACTIONS,
+    INSERTER_TAB_TRIGGERS,
+    INSERTER_TAB_FLOW
+} from '../../constants';
 import { store as editorStore } from '../editor-store';
 import { useDispatch } from '@wordpress/data';
 
@@ -117,6 +121,43 @@ export function InserterMenu({
         ]
     );
 
+    const flowControlsTab = useMemo(
+        () => {
+            const items = select(editorStore).getFlowNodes();
+            const categories = select(editorStore).getFlowCategories();
+
+            return (
+                <>
+                    <div className="block-editor-inserter__block-list">
+                        <NodesTab
+                            type={INSERTER_TAB_FLOW}
+                            onInsert={onInsert}
+                            onHover={onHover}
+                            showMostUsedNodes={showMostUsedNodes}
+                            items={items}
+                            categories={categories}
+                        />
+                    </div>
+                    {showInserterHelpPanel && (
+                        <div className="block-editor-inserter__tips">
+                            <VisuallyHidden as="h2">
+                                {__('A tip for using the block editor')}
+                            </VisuallyHidden>
+                            <Tips />
+                        </div>
+                    )}
+                </>
+            );
+        },
+        [
+            onInsert,
+            onHover,
+            filterValue,
+            showMostUsedNodes,
+            showInserterHelpPanel,
+        ]
+    );
+
 
     const getCurrentTab = useCallback(
         (tab) => {
@@ -126,6 +167,10 @@ export function InserterMenu({
 
             if (tab.name === INSERTER_TAB_ACTIONS) {
                 return actionsTab;
+            }
+
+            if (tab.name === INSERTER_TAB_FLOW) {
+                return flowControlsTab;
             }
         },
         [triggersTab, actionsTab]
@@ -170,14 +215,14 @@ export function InserterMenu({
 					) }
                     */ }
 
-                    { ! filterValue && (
-						<InserterTabs
+                    {!filterValue && (
+                        <InserterTabs
                             onSelect={onSelectTab}
                             initialTabName={currentInserterTab}
                         >
-							{ getCurrentTab }
-						</InserterTabs>
-					) }
+                            {getCurrentTab}
+                        </InserterTabs>
+                    )}
                 </div>
             </div>
             {showInserterHelpPanel && hoveredItem && (

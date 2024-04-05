@@ -9,4 +9,9 @@ export const nodeStyle = {
         borderColor: '#2fb596',
         backgroundColor: '#2fb596',
     },
+    flow: {
+        color: '#ffffff',
+        borderColor: '#91cdf0',
+        backgroundColor: '#91cdf0',
+    },
 };

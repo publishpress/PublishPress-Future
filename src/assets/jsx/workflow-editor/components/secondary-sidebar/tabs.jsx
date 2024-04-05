@@ -4,7 +4,15 @@
 import { useMemo } from '@wordpress/element';
 import { TabPanel } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { INSERTER_TAB_ACTIONS, INSERTER_TAB_TRIGGERS } from '../../constants';
+
+/**
+ * Internal dependencies
+ */
+import {
+    INSERTER_TAB_ACTIONS,
+    INSERTER_TAB_FLOW,
+    INSERTER_TAB_TRIGGERS
+} from '../../constants';
 
 const triggersTab = {
     name: INSERTER_TAB_TRIGGERS,
@@ -16,6 +24,11 @@ const actionsTabs = {
     /* translators: Patterns tab title in the block inserter. */
     title: __('Actions'),
 };
+const flowTabs = {
+    name: INSERTER_TAB_FLOW,
+    /* translators: Patterns tab title in the block inserter. */
+    title: __('Flow'),
+};
 
 function InserterTabs({
     children,
@@ -23,12 +36,13 @@ function InserterTabs({
     initialTabName = INSERTER_TAB_TRIGGERS,
 }) {
     const tabs = useMemo(() => {
-        const tempTabs = [triggersTab, actionsTabs];
+        const tempTabs = [triggersTab, actionsTabs, flowTabs];
 
         return tempTabs;
     }, [
         triggersTab,
         actionsTabs,
+        flowTabs,
     ]);
 
     return (

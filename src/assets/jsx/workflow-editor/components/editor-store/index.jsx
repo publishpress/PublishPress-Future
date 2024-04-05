@@ -21,6 +21,8 @@ export const storeConfig = {
     triggerNodes: [],
     actionCategories: [],
     actionNodes: [],
+    flowCategories: [],
+    flowNodes: [],
     activeSidebarName: null,
 }
 
@@ -95,6 +97,18 @@ export const store = createReduxStore(STORE_NAME, {
                     actionNodes: action.payload,
                 };
 
+            case 'SET_FLOW_CATEGORIES':
+                return {
+                    ...state,
+                    flowCategories: action.payload,
+                };
+
+            case 'SET_FLOW_NODES':
+                return {
+                    ...state,
+                    flowNodes: action.payload,
+                };
+
             case 'CLOSE_GENERAL_SIDEBAR':
                 return {
                     ...state,
@@ -165,6 +179,18 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: nodes
             };
         },
+        setFlowCategories(categories) {
+            return {
+                type: 'SET_FLOW_CATEGORIES',
+                payload: categories
+            };
+        },
+        setFlowNodes(nodes) {
+            return {
+                type: 'SET_FLOW_NODES',
+                payload: nodes
+            };
+        },
         closeGeneralSidebar() {
             dispatch('core/interface').disableComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
 
@@ -203,6 +229,12 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getActionNodes(state) {
             return state.actionNodes;
+        },
+        getFlowCategories(state) {
+            return state.flowCategories;
+        },
+        getFlowNodes(state) {
+            return state.flowNodes;
         },
     }
 });
