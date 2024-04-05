@@ -31,24 +31,21 @@ function NodeTypesList( {
 			aria-label={ label }
 		>
 			{ chunk( items, 3 ).map( ( row, i ) => (
-				<>
-					<div>{i + label}</div>
-					<InserterListboxRow key={ i }>
-						{ row.map( ( item, j ) => (
-							<InserterListItem
-								key={ item.id + i + j }
-								item={ item }
-								className={ getNodeMenuDefaultClassName(
-									item.id
-								) }
-								onSelect={ onSelect }
-								onHover={ onHover }
-								isDraggable={ isDraggable }
-								isFirst={ i === 0 && j === 0 }
-							/>
-						) ) }
-					</InserterListboxRow>
-				</>
+				<InserterListboxRow key={ i }>
+					{ row.map( ( item, j ) => (
+						<InserterListItem
+							key={ item.id + i + j }
+							item={ item }
+							className={ getNodeMenuDefaultClassName(
+								item.id
+							) }
+							onSelect={ onSelect }
+							onHover={ onHover }
+							isDraggable={ isDraggable }
+							isFirst={ i === 0 && j === 0 }
+						/>
+					) ) }
+				</InserterListboxRow>
 			) ) }
 			{ children }
 		</InserterListboxGroup>
