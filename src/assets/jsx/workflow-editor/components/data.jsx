@@ -14,11 +14,13 @@ import {
     flowCategories,
     flowNodes,
 } from "../demo-data";
+import { workflowId } from 'future-workflow-editor';
 
 export function WorkflowData() {
     const {
         setNodes,
         setEdges,
+        setupEditor,
     } = useDispatch(workflowStore);
 
     const {
@@ -31,9 +33,11 @@ export function WorkflowData() {
         setFlowNodes,
     } = useDispatch(editorStore);
 
-    setActiveFeatures([FEATURE_FULLSCREEN_MODE]);
+    setupEditor(workflowId);
     setNodes(nodes);
     setEdges(edges);
+
+    setActiveFeatures([FEATURE_FULLSCREEN_MODE]);
     setTriggerCategories(triggerCategories);
     setTriggerNodes(triggerNodes);
     setActionCategories(actionCategories);

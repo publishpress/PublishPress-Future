@@ -11,6 +11,7 @@
     "@wordpress/api-fetch": "^6.32.0",
     "@wordpress/components": "^23.9.0",
     "@wordpress/compose": "^6.31.0",
+    "@wordpress/data-controls": "^3.24.0",
     "@wordpress/dom": "^3.54.0",
     "@wordpress/hooks": "^3.35.0",
     "@wordpress/icons": "^9.45.0",

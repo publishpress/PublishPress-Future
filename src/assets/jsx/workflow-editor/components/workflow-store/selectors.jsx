@@ -1,0 +1,63 @@
+import { createRegistrySelector } from '@wordpress/data';
+
+export const getPostType = (state) => {
+    return state.postType;
+};
+
+export const getNodes = (state) => {
+    return state.nodes;
+};
+
+export const getEdges = (state) => {
+    return state.edges;
+};
+
+export const getNodeById = (state, id) => {
+    return state.nodes.find(node => node.id === id);
+};
+
+export const getEdgeById = (state, id) => {
+    return state.edges.find(edge => edge.id === id);
+};
+
+export const getSelectedNodes = (state) => {
+    return state.selectedNodes;
+};
+
+export const getSelectedEdges = (state) => {
+    return state.selectedEdges;
+};
+
+// export const hasSelectedNodes = createRegistrySelector( (select) => (state) => {
+//     console.log(select, state);
+//     return state.selectedNodes.length > 0;
+// });
+export const hasSelectedNodes = (state) => {
+    return state.selectedNodes.length > 0;
+};
+
+export const hasSelectedEdges = (state) => {
+    return state.selectedEdges.length > 0;
+};
+
+export const getWorkflow = (state) => {
+    return state.workflow;
+};
+
+export const getEditedWorkflowAttributes = (state) => {
+    return state.editedWorkflowAttributes;
+};
+
+export const getEditedWorkflowAttribute = (state, key) => {
+    const attributes = state.editedWorkflowAttributes;
+
+    if (!attributes.hasOwnProperty(key)) {
+        return state.workflow[key];
+    }
+
+    return state.editedWorkflowAttributes[key];
+};
+
+export const getIsLoadingWorkflow = (state) => {
+    return state.isLoadingWorkflow;
+}

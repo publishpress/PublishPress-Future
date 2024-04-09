@@ -15,7 +15,8 @@ import { store as workflowStore } from '../workflow-store';
 
 function Component(props, ref) {
     const hasUndo = useSelect(
-        (select) => select(workflowStore).hasUndo(),
+        // (select) => select(workflowStore).hasUndo(),
+        (select) => false,
         []
     );
 

@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
 
 class Module implements InitializableInterface
 {
@@ -15,9 +16,15 @@ class Module implements InitializableInterface
      */
     private $hooks;
 
-    public function __construct(HookableInterface $hooksFacade)
+    /**
+     * @var RestApiManagerInterface
+     */
+    private $restApiManager;
+
+    public function __construct(HookableInterface $hooksFacade, RestApiManagerInterface $restApiManager)
     {
         $this->hooks = $hooksFacade;
+        $this->restApiManager = $restApiManager;
     }
 
     public function initialize()
@@ -25,31 +32,35 @@ class Module implements InitializableInterface
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
         $this->hooks->addAction(HooksAbstract::ACTION_INIT_PLUGIN, [$this, 'registerPostType']);
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScripts']);
-        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'saveWorkflowMetadata']);
+        $this->hooks->addAction(HooksAbstract::ACTION_REST_API_INIT, [$this->restApiManager, 'register']);
+        $this->hooks->addAction(HooksAbstract::ACTION_LOAD_POST_PHP, [$this, 'redirectToWorkflowEditor']);
+    }
 
-        add_action('load-post.php', function () {
-            global $typenow, $pagenow;
+    public function redirectToWorkflowEditor()
+    {
+        global $typenow, $pagenow;
 
-            // Check if we're editing a post of the 'my_custom_post_type' type
-            if ($typenow === self::POST_TYPE_WORKFLOW && $pagenow === 'post.php') {
-                $postId = (int) $_GET['post'];
+        if ($typenow === self::POST_TYPE_WORKFLOW && $pagenow === 'post.php') {
+            $postId = (int) $_GET['post'];
 
-                if (empty($postId)) {
-                    return;
-                }
-
-                // Redirect to our custom page
-                wp_redirect(admin_url('admin.php?page=future_workflow_editor&workflow=' . $postId));
-                exit;
+            if (empty($postId)) {
+                return;
             }
-        });
+
+            // Redirect to our custom page
+            wp_redirect(admin_url('admin.php?page=future_workflow_editor&workflow=' . $postId));
+            exit;
+        }
     }
 
     public function adminMenu()
     {
         global $submenu;
 
-        $indexAllWorkflows = array_search('edit.php?post_type=ppfuture_workflow', array_column($submenu['publishpress-future'], 2));
+        $indexAllWorkflows = array_search(
+            'edit.php?post_type=ppfuture_workflow',
+            array_column($submenu['publishpress-future'], 2)
+        );
 
         $submenu['publishpress-future'][$indexAllWorkflows][0] = __('Workflows', 'publishpress-future-pro');
 
@@ -148,6 +159,7 @@ class Module implements InitializableInterface
                 'wp-components',
                 'wp-url',
                 'wp-data',
+                'wp-api-fetch',
             ],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true
@@ -158,36 +170,9 @@ class Module implements InitializableInterface
             'futureWorkflowEditor',
             [
                 'isWP65OrLater' => version_compare(get_bloginfo('version'), '6.5', '>='),
+                'apiUrl' => rest_url('publishpress-future/v1'),
+                'workflowId' => isset($_GET['workflow']) ? (int) $_GET['workflow'] : 0,
             ]
         );
-    }
-
-    public function saveWorkflowMetadata($postId)
-    {
-        if (! isset($_POST['future_workflow_editor_nonce']) || ! wp_verify_nonce(
-            $_POST['future_workflow_editor_nonce'],
-            'future_workflow_editor'
-        )) {
-            return;
-        }
-
-        if (! current_user_can('edit_post', $postId)) {
-            return;
-        }
-
-        remove_action('save_post', [$this, 'saveWorkflowMetadata']);
-
-        $workflowData = sanitize_textarea_field($_POST['future_workflow_data']);
-
-        wp_update_post(
-            [
-                'ID' => $postId,
-                'post_content' => $workflowData
-            ],
-            true,
-            false
-        );
-
-        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'saveWorkflowMetadata']);
     }
 }

@@ -172,7 +172,8 @@ return [
 
     ServicesAbstract::MODULE_WORKFLOWS => static function (ContainerInterface $container) {
         return new Module(
-            $container->get(ServicesAbstract::HOOKS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::WORKFLOWS_REST_API_MANAGER)
         );
     },
 
@@ -214,5 +215,9 @@ return [
         $eddContainer->register($services);
 
         return $eddContainer;
+    },
+
+    ServicesAbstract::WORKFLOWS_REST_API_MANAGER => static function (ContainerInterface $container) {
+        return new \PublishPress\FuturePro\Modules\Workflows\Rest\RestApiManager();
     },
 ];

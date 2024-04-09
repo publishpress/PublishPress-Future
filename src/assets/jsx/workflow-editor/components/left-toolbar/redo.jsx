@@ -15,7 +15,8 @@ import { store as workflowStore } from '../workflow-store';
 
 function Component(props, ref) {
     const hasRedo = useSelect(
-        (select) => select(workflowStore).hasRedo(),
+        // (select) => select(workflowStore).hasRedo(),
+        (select) => false,
         []
     );
 

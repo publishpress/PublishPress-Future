@@ -17,7 +17,7 @@ import { FEATURE_SHOW_ICON_LABELS, SLOT_SCOPE_WORKFLOW_EDITOR } from '../../cons
 export function PluginSidebarEditPost({ className, ...props }) {
 	const { workflowName, shortcut, showIconLabels } = useSelect((select) => {
 		return {
-			workflowName: select(workflowStore).getWorkflowName(),
+			workflowName: select(workflowStore).getEditedWorkflowAttribute('name'),
 			shortcut: select(
 				keyboardShortcutsStore
 			).getShortcutRepresentation(SHORTCUT_TOGGLE_SIDEBAR),
