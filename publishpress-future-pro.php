@@ -28,7 +28,7 @@ if (defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
 global $wp_version;
 
 $min_php_version = '7.2.5';
-$min_wp_version  = '6.1';
+$min_wp_version  = '6.5';
 
 // If the PHP or WP version is not compatible, terminate the plugin execution.
 $invalid_php_version = version_compare(phpversion(), $min_php_version, '<');
