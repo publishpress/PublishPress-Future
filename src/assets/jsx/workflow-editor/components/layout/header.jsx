@@ -110,7 +110,7 @@ export const LayoutHeader = () => {
 
             <div className="edit-post-header__toolbar">
                 <NavigableToolbar
-                    className="edit-post-header-toolbar"
+                    className="edit-post-header-toolbar editor-document-tools"
                     aria-label={toolbarAriaLabel}
                 >
                     <div className={toolbarLeftClassName}>

@@ -152,6 +152,7 @@ class Module implements InitializableInterface
 
         wp_enqueue_style('wp-components');
         wp_enqueue_style('wp-edit-post');
+        wp_enqueue_style('wp-editor');
 
         wp_enqueue_script('wp-url');
         wp_enqueue_script('wp-element');
