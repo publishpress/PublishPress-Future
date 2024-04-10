@@ -174,7 +174,7 @@ export const LayoutHeader = () => {
             </div>
             <div className="edit-post-header__settings">
                 <Button
-                    variant='link'
+                    variant='tertiary'
                     onClick={onSaveDraft}
                     disabled={isLoadingWorkflow || !isWorkflowDirty}
                 >
