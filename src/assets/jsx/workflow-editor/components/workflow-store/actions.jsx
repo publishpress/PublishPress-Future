@@ -3,7 +3,7 @@ import { apiFetch } from '@wordpress/data-controls';
 import { STORE_NAME } from './name';
 import { apiUrl, nonce } from 'future-workflow-editor';
 
-const editableAttributes = ['name', 'description', 'flow'];
+const editableAttributes = ['title', 'description', 'flow'];
 
 export function* setupEditor(workflowId) {
     yield {type: 'LOAD_WORKFLOW_START'};
@@ -80,7 +80,7 @@ export const setSelectedEdges = (edges) => {
 
 export const setEditedWorkflowAttribute = (key, value) => {
     if (!editableAttributes.includes(key)) {
-        throw new Error(`Invalid key: ${key}`);
+        throw new Error(`The workflow attribute "${key}" is not editable.`);
     }
 
     return {

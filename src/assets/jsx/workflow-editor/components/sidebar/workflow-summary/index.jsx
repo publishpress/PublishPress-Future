@@ -7,10 +7,12 @@ export const WorkflowSummary = () => {
     const {
         workflowTitle,
         workflowDescription,
+        isLoadingWorkflow,
     } = useSelect((select) => {
         return {
             workflowTitle: select(workflowStore).getEditedWorkflowAttribute('title'),
             workflowDescription: select(workflowStore).getEditedWorkflowAttribute('description'),
+            isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
         }
     });
 
@@ -18,8 +20,8 @@ export const WorkflowSummary = () => {
         setEditedWorkflowAttribute,
     } = useDispatch(workflowStore);
 
-    const onChangeName = (name) => {
-        setEditedWorkflowAttribute('name', name);
+    const onChangeTitle = (title) => {
+        setEditedWorkflowAttribute('title', title);
     }
 
     const onChangeDescription = (description) => {
@@ -31,17 +33,20 @@ export const WorkflowSummary = () => {
             className='edit-post-post-status'
             title={__('Summary')}
             initialOpen={true}
+            disabled={isLoadingWorkflow}
         >
             <TextControl
                 label={__('Title')}
                 value={workflowTitle}
-                onChange={onChangeName}
+                onChange={onChangeTitle}
+                disabled={isLoadingWorkflow}
             />
 
             <TextareaControl
                 label={__('Description')}
                 value={workflowDescription}
                 onChange={onChangeDescription}
+                disabled={isLoadingWorkflow}
             />
         </PanelBody>
     );
