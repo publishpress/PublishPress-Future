@@ -58,6 +58,10 @@ export const getEditedWorkflowAttribute = (state, key) => {
     return state.editedWorkflowAttributes[key];
 };
 
-export const getIsLoadingWorkflow = (state) => {
+export const isLoadingWorkflow = (state) => {
     return state.isLoadingWorkflow;
+}
+
+export const isCreatingWorkflow = (state) => {
+    return state.isCreatingWorkflow;
 }

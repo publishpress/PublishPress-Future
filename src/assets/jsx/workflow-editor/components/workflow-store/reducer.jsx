@@ -3,16 +3,16 @@ import { POST_TYPE } from '../../constants';
 export const DEFAULT_STATE = {
     postType: POST_TYPE,
     isLoadingWorkflow: false,
+    isCreatingWorkflow: false,
     // isSavingWorkflow: false,
     // isEditedWorkflowDirty: false,
     // isEditedWorkflowEmpty: true,
-    // isEditedWorkflowNew: true,
     // isEditedWorkflowSaveable: false,
     // isDeletingWorkflow: false,
     // isCurrentWorkflowPublished: false,
     workflow: {
         id: 0,
-        name: '',
+        title: '',
         description: '',
         flow: '',
     },
@@ -24,7 +24,6 @@ export const DEFAULT_STATE = {
 }
 
 const loadWorkflowStart = (state, action) => {
-    console.log('loadWorkflowStart');
     return {
         ...state,
         isLoadingWorkflow: true,
@@ -32,7 +31,6 @@ const loadWorkflowStart = (state, action) => {
 }
 
 const loadWorkflowSuccess = (state, action) => {
-    console.log('loadWorkflowSuccess', action);
     const { payload } = action;
 
     return {
@@ -44,12 +42,42 @@ const loadWorkflowSuccess = (state, action) => {
 }
 
 const loadWorkflowFailure = (state, action) => {
-    console.log('loadWorkflowFailure');
     return {
         ...state,
         isLoadingWorkflow: false,
     };
 }
+
+const createWorkflowStart = (state, action) => {
+    return {
+        ...state,
+        isCreatingWorkflow: true,
+        isLoadingWorkflow: true,
+    };
+}
+
+const createWorkflowSuccess = (state, action) => {
+    const { payload } = action;
+
+    return {
+        ...state,
+        isCreatingWorkflow: false,
+        isLoadingWorkflow: false,
+        workflow: payload,
+        editedWorkflowAttributes: {},
+    };
+}
+
+const createWorkflowFailure = (state, action) => {
+    return {
+        ...state,
+        isCreatingWorkflow: false,
+        isLoadingWorkflow: false,
+    };
+}
+
+
+
 
 const setEditedWorkflowAttribute = (state, action) => {
     const { key, value } = action.payload;
@@ -110,6 +138,12 @@ const setSelectedEdges = (state, action) => {
 
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
+        case 'CREATE_WORKFLOW_START':
+            return createWorkflowStart(state, action);
+        case 'CREATE_WORKFLOW_SUCCESS':
+            return createWorkflowSuccess(state, action);
+        case 'CREATE_WORKFLOW_FAILURE':
+            return createWorkflowFailure(state, action);
         case 'LOAD_WORKFLOW_START':
             return loadWorkflowStart(state, action);
         case 'LOAD_WORKFLOW_SUCCESS':

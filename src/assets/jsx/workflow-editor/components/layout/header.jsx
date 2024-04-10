@@ -45,7 +45,7 @@ export const LayoutHeader = () => {
             hasReducedUI: select(editorStore).isFeatureActive(FEATURE_REDUCED_UI),
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
-            isLoadingWorkflow: select(workflowStore).getIsLoadingWorkflow(),
+            isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
         }
     });
 
@@ -80,10 +80,6 @@ export const LayoutHeader = () => {
             direction: AUTO_LAYOUT_DIRECTION_DOWN,
         });
     });
-
-    useEffect(() => {
-        console.log('isLoadingWorkflow', isLoadingWorkflow);
-    }, [isLoadingWorkflow]);
 
     const toolbarLeftClassName = isWP65OrLater ? 'editor-document-tools__left' : 'edit-post-header-toolbar__left';
 

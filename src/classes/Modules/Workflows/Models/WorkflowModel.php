@@ -2,9 +2,10 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
-use Exception;
 use PublishPress\FuturePro\Modules\Workflows\Module;
+use Exception;
 use WP_Post;
+use WP_Query;
 
 class WorkflowModel
 {
@@ -37,14 +38,19 @@ class WorkflowModel
         $this->flow = [];
     }
 
-    public function getName(): string
+    public function getId(): int
+    {
+        return $this->post->ID;
+    }
+
+    public function getTitle(): string
     {
         return $this->post->post_title;
     }
 
-    public function setName(string $name)
+    public function setTitle(string $title)
     {
-        $this->post->post_title = $name;
+        $this->post->post_title = $title;
     }
 
     public function getDescription(): string
@@ -52,10 +58,15 @@ class WorkflowModel
         return $this->post->post_content;
     }
 
+    public function getPostStatus(): string
+    {
+        return $this->post->post_status;
+    }
+
     public function setDescription(string $description)
     {
         $this->post->post_content = $description;
-    } 
+    }
 
     public function save()
     {
@@ -78,5 +89,43 @@ class WorkflowModel
     public function setFlow(string $flow)
     {
         $this->flow = $flow;
+    }
+
+    public function createNew($reuseAutoDraft = true): int
+    {
+        $this->reset();
+
+        $id = 0;
+
+        if ($reuseAutoDraft) {
+            // Get the first auto-draft workflow created by the user in the current session
+            $query = new WP_Query([
+                'post_type' => Module::POST_TYPE_WORKFLOW,
+                'post_status' => 'auto-draft',
+                'author' => get_current_user_id(),
+                'posts_per_page' => 1,
+            ]);
+
+            if ($query->have_posts()) {
+                $query->the_post();
+
+                $id = get_the_ID();
+            }
+        }
+
+        if (empty($id)) {
+            $this->post = [
+                'post_title' => __('New Workflow', 'publishpress-future-pro'),
+                'post_status' => 'auto-draft',
+                'post_type' => Module::POST_TYPE_WORKFLOW,
+            ];
+
+            $id = wp_insert_post($this->post);
+
+        }
+
+        $this->load($id);
+
+        return $id;
     }
 }

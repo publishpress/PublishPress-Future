@@ -12,8 +12,6 @@ import * as selectors from './selectors';
 import * as actions from './actions';
 import { default as controls} from './controls';
 
-console.log('controls', controls);
-
 export const store = createReduxStore(
     STORE_NAME,
     {

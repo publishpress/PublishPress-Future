@@ -34,23 +34,34 @@ class Module implements InitializableInterface
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScripts']);
         $this->hooks->addAction(HooksAbstract::ACTION_REST_API_INIT, [$this->restApiManager, 'register']);
         $this->hooks->addAction(HooksAbstract::ACTION_LOAD_POST_PHP, [$this, 'redirectToWorkflowEditor']);
+        $this->hooks->addAction(HooksAbstract::ACTION_LOAD_POST_NEW_PHP, [$this, 'redirectToWorkflowEditor']);
     }
 
     public function redirectToWorkflowEditor()
     {
         global $typenow, $pagenow;
 
-        if ($typenow === self::POST_TYPE_WORKFLOW && $pagenow === 'post.php') {
+        if ($typenow !== self::POST_TYPE_WORKFLOW)
+        {
+            return;
+        }
+
+        $url = admin_url('admin.php?page=future_workflow_editor');
+
+        if ($pagenow === 'post.php') {
             $postId = (int) $_GET['post'];
 
             if (empty($postId)) {
                 return;
             }
 
-            // Redirect to our custom page
-            wp_redirect(admin_url('admin.php?page=future_workflow_editor&workflow=' . $postId));
-            exit;
+            $url = add_query_arg('workflow', $postId, $url);
+        } elseif ($pagenow !== 'post-new.php') {
+            return;
         }
+
+        wp_redirect($url);
+        exit;
     }
 
     public function adminMenu()
@@ -125,10 +136,6 @@ class Module implements InitializableInterface
     {
         $workflowId = isset($_GET['workflow']) ? (int) $_GET['workflow'] : 0;
 
-        if (empty($workflowId)) {
-            return;
-        }
-
         require_once __DIR__ . '/Views/editor.html.php';
     }
 
@@ -172,6 +179,7 @@ class Module implements InitializableInterface
                 'isWP65OrLater' => version_compare(get_bloginfo('version'), '6.5', '>='),
                 'apiUrl' => rest_url('publishpress-future/v1'),
                 'workflowId' => isset($_GET['workflow']) ? (int) $_GET['workflow'] : 0,
+                'nonce' => wp_create_nonce('wp_rest'),
             ]
         );
     }

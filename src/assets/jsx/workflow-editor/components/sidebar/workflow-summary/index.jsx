@@ -5,11 +5,11 @@ import { useSelect, useDispatch } from '@wordpress/data';
 
 export const WorkflowSummary = () => {
     const {
-        workflowName,
+        workflowTitle,
         workflowDescription,
     } = useSelect((select) => {
         return {
-            workflowName: select(workflowStore).getEditedWorkflowAttribute('name'),
+            workflowTitle: select(workflowStore).getEditedWorkflowAttribute('title'),
             workflowDescription: select(workflowStore).getEditedWorkflowAttribute('description'),
         }
     });
@@ -34,7 +34,7 @@ export const WorkflowSummary = () => {
         >
             <TextControl
                 label={__('Title')}
-                value={workflowName}
+                value={workflowTitle}
                 onChange={onChangeName}
             />
 

@@ -15,9 +15,9 @@ import { SHORTCUT_TOGGLE_SIDEBAR } from '../keyboard-shortcuts/constants';
 import { FEATURE_SHOW_ICON_LABELS, SLOT_SCOPE_WORKFLOW_EDITOR } from '../../constants';
 
 export function PluginSidebarEditPost({ className, ...props }) {
-	const { workflowName, shortcut, showIconLabels } = useSelect((select) => {
+	const { workflowTitle, shortcut, showIconLabels } = useSelect((select) => {
 		return {
-			workflowName: select(workflowStore).getEditedWorkflowAttribute('name'),
+			workflowTitle: select(workflowStore).getEditedWorkflowAttribute('title'),
 			shortcut: select(
 				keyboardShortcutsStore
 			).getShortcutRepresentation(SHORTCUT_TOGGLE_SIDEBAR),
@@ -31,7 +31,7 @@ export function PluginSidebarEditPost({ className, ...props }) {
 		<ComplementaryArea
 			panelClassName={className}
 			className="edit-post-sidebar"
-			smallScreenTitle={workflowName || __('(no name)')}
+			smallScreenTitle={workflowTitle || __('(no name)')}
 			scope={SLOT_SCOPE_WORKFLOW_EDITOR}
 			toggleShortcut={shortcut}
 			showIconLabels={showIconLabels}
