@@ -75,12 +75,14 @@ export const FlowEditor = (props) => {
     }
 
     const updateFlowInEditedWorkflow = useCallback(() => {
-        setEditedWorkflowAttribute('flow', reactFlowInstance.toObject());
+        // We need to delay the update of the flow to avoid missing the changes.
+        setTimeout(
+            () => {
+                setEditedWorkflowAttribute('flow', reactFlowInstance.toObject());
+            },
+            400
+        );
     }, [reactFlowInstance]);
-
-    const onInit = useCallback(() => {
-        // updateFlowInEditedWorkflow();
-    }, []);
 
     useOnViewportChange({
         onEnd: () => {
@@ -194,7 +196,11 @@ export const FlowEditor = (props) => {
                 setNodes(layoutedNodes);
                 setEdges(layoutedEdges);
             },
-            onAnimationFrame: fitView,
+            onAnimationFrame: () => {
+                fitView();
+
+                updateFlowInEditedWorkflow();
+            },
         }
     );
 
@@ -266,7 +272,6 @@ export const FlowEditor = (props) => {
                 snapGrid={[GRID_SIZE, GRID_SIZE]}
                 onNodesDelete={onNodesDelete}
                 onEdgesDelete={onEdgesDelete}
-                onInit={onInit}
             >
                 <MiniMap
                     pannable
