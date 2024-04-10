@@ -39,6 +39,7 @@ export const LayoutHeader = () => {
         hasReducedUI,
         showIconLabels,
         isLoadingWorkflow,
+        isWorkflowDirty,
     } = useSelect((select) => {
         return {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
@@ -46,10 +47,18 @@ export const LayoutHeader = () => {
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
+            isWorkflowDirty: select(workflowStore).isWorkflowDirty(),
         }
     });
 
-    const { enableFeature, disableFeature } = useDispatch(editorStore);
+    const {
+        enableFeature,
+        disableFeature
+    } = useDispatch(editorStore);
+
+    const {
+        saveAsDraft,
+    } = useDispatch(workflowStore);
 
     const headerClasses = 'edit-post-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
 
@@ -84,7 +93,7 @@ export const LayoutHeader = () => {
     const toolbarLeftClassName = isWP65OrLater ? 'editor-document-tools__left' : 'edit-post-header-toolbar__left';
 
     const onSaveDraft = () => {
-        // Save draft
+        saveAsDraft();
     }
 
     const onPublish = () => {
@@ -139,7 +148,7 @@ export const LayoutHeader = () => {
                             /* translators: button label text should, if possible, be under 16 characters. */
                             label={__('Auto Layout', 'publishpress-future-pro')}
                             showTooltip={!showIconLabels}
-                            disabled={!!isLoadingWorkflow}
+                            disabled={isLoadingWorkflow}
                         >
                             {showIconLabels &&
                                 __('Auto Layout')
@@ -152,13 +161,13 @@ export const LayoutHeader = () => {
                                     as={EditorHistoryUndo}
                                     showTooltip={!showIconLabels}
                                     variant={showIconLabels ? 'tertiary' : undefined}
-                                    disabled={!!isLoadingWorkflow}
+                                    disabled={isLoadingWorkflow}
                                 />
                                 <ToolbarItem
                                     as={EditorHistoryRedo}
                                     showTooltip={!showIconLabels}
                                     variant={showIconLabels ? 'tertiary' : undefined}
-                                    disabled={!!isLoadingWorkflow}
+                                    disabled={isLoadingWorkflow}
                                 />
                             </>
                         )}
@@ -169,14 +178,14 @@ export const LayoutHeader = () => {
                 <Button
                     variant='link'
                     onClick={onSaveDraft}
-                    disabled={!!isLoadingWorkflow}
+                    disabled={isLoadingWorkflow || !isWorkflowDirty}
                 >
                     {__('Save Draft')}
                 </Button>
                 <Button
                     variant='primary'
                     onClick={onPublish}
-                    disabled={!!isLoadingWorkflow}
+                    disabled={isLoadingWorkflow || !isWorkflowDirty}
                 >
                     {__('Publish')}
                 </Button>

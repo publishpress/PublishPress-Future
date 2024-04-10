@@ -1,9 +1,9 @@
-import { controls } from '@wordpress/data';
+import { dispatch, select } from '@wordpress/data';
 import { apiFetch } from '@wordpress/data-controls';
 import { STORE_NAME } from './name';
 import { apiUrl, nonce } from 'future-workflow-editor';
 
-const editableAttributes = ['title', 'description', 'flow'];
+const editableAttributes = ['title', 'description', 'flow', 'status'];
 
 export function* setupEditor(workflowId) {
     yield {type: 'LOAD_WORKFLOW_START'};
@@ -23,6 +23,7 @@ export function* setupEditor(workflowId) {
 
             yield {type: 'CREATE_WORKFLOW_SUCCESS', payload: workflow};
         } catch (error) {
+            // TODO: Show error message
             yield {type: 'CREATE_WORKFLOW_FAILURE'};
         }
     }
@@ -38,10 +39,43 @@ export function* setupEditor(workflowId) {
 
             yield {type: 'LOAD_WORKFLOW_SUCCESS', payload: workflow};
         } catch (error) {
+            // TODO: Show error message
             yield {type: 'LOAD_WORKFLOW_FAILURE'};
         }
     }
 };
+
+export function* saveAsDraft() {
+    yield {type: 'SAVE_AS_DRAFT_START'};
+
+    try {
+        const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
+
+        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
+
+        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
+        const newWorkflow = yield apiFetch({
+            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            method: 'PUT',
+            headers: {
+                'X-WP-Nonce': nonce,
+            },
+            body: JSON.stringify(editedWorkflow),
+        });
+
+        // Add the workflow id to the url, keeping current state in the history
+        if (wasNewWorkflow) {
+            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${newWorkflow.id}`);
+        }
+
+        yield {type: 'SAVE_AS_DRAFT_SUCCESS', payload: newWorkflow};
+    } catch (error) {
+        // TODO: Show error message
+        yield {type: 'SAVE_AS_DRAFT_FAILURE'};
+        console.log('error', error);
+    }
+}
 
 export const setPostType = (postType) => {
     return {

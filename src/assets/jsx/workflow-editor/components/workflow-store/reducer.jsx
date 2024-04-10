@@ -4,8 +4,8 @@ export const DEFAULT_STATE = {
     postType: POST_TYPE,
     isLoadingWorkflow: false,
     isCreatingWorkflow: false,
-    // isSavingWorkflow: false,
-    // isEditedWorkflowDirty: false,
+    isSavingWorkflow: false,
+    isNewWorkflow: true,
     // isEditedWorkflowEmpty: true,
     // isEditedWorkflowSaveable: false,
     // isDeletingWorkflow: false,
@@ -15,6 +15,7 @@ export const DEFAULT_STATE = {
         title: '',
         description: '',
         flow: '',
+        status: 'auto-draft',
     },
     editedWorkflowAttributes: {},
     nodes: [],
@@ -38,6 +39,7 @@ const loadWorkflowSuccess = (state, action) => {
         isLoadingWorkflow: false,
         workflow: payload,
         editedWorkflowAttributes: {},
+        isNewWorkflow: payload.status === 'auto-draft',
     };
 }
 
@@ -65,6 +67,7 @@ const createWorkflowSuccess = (state, action) => {
         isLoadingWorkflow: false,
         workflow: payload,
         editedWorkflowAttributes: {},
+        isNewWorkflow: payload.status === 'auto-draft',
     };
 }
 
@@ -76,7 +79,31 @@ const createWorkflowFailure = (state, action) => {
     };
 }
 
+const saveAsDraftStart = (state, action) => {
+    return {
+        ...state,
+        isSavingWorkflow: true,
+    };
+}
 
+const saveAsDraftSuccess = (state, action) => {
+    const { payload } = action;
+
+    return {
+        ...state,
+        isSavingWorkflow: false,
+        workflow: payload,
+        editedWorkflowAttributes: {},
+        isNewWorkflow: payload.status === 'auto-draft',
+    };
+}
+
+const saveAsDraftFailure = (state, action) => {
+    return {
+        ...state,
+        isSavingWorkflow: false,
+    };
+}
 
 
 const setEditedWorkflowAttribute = (state, action) => {
@@ -150,10 +177,14 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return loadWorkflowSuccess(state, action);
         case 'LOAD_WORKFLOW_FAILURE':
             return loadWorkflowFailure(state, action);
+        case 'SAVE_AS_DRAFT_START':
+            return saveAsDraftStart(state, action);
+        case 'SAVE_AS_DRAFT_SUCCESS':
+            return saveAsDraftSuccess(state, action);
+        case 'SAVE_AS_DRAFT_FAILURE':
+            return saveAsDraftFailure(state, action);
         case 'SET_EDITED_WORKFLOW_ATTRIBUTE':
             return setEditedWorkflowAttribute(state, action);
-        // case 'SAVE_AS_DRAFT':
-        //     return saveAsDraft(state, action);
         case 'SET_POST_TYPE':
             return setPostType(state, action);
         case 'SET_NODES':

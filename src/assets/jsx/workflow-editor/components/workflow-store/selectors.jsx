@@ -40,6 +40,10 @@ export const hasSelectedEdges = (state) => {
     return state.selectedEdges.length > 0;
 };
 
+export const getWorkflowStatus = (state) => {
+    return state.workflow.status;
+}
+
 export const getWorkflow = (state) => {
     return state.workflow;
 };
@@ -59,9 +63,28 @@ export const getEditedWorkflowAttribute = (state, key) => {
 };
 
 export const isLoadingWorkflow = (state) => {
-    return state.isLoadingWorkflow;
+    return !! state.isLoadingWorkflow;
 }
 
 export const isCreatingWorkflow = (state) => {
-    return state.isCreatingWorkflow;
+    return !! state.isCreatingWorkflow;
+}
+
+export const getEditedWorkflow = (state) => {
+    return {
+        ...state.workflow,
+        ...state.editedWorkflowAttributes,
+    };
+}
+
+export const isWorkflowDirty = (state) => {
+    return Object.keys(state.editedWorkflowAttributes).length > 0;
+}
+
+export const isWorkflowFlowEmpty = (state) => {
+    return state.workflow.flow.trim() === '';
+}
+
+export const isNewWorkflow = (state) => {
+    return !! state.isNewWorkflow;
 }

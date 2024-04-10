@@ -50,7 +50,7 @@ class WorkflowModel
 
     public function setTitle(string $title)
     {
-        $this->post->post_title = $title;
+        $this->post->post_title = sanitize_text_field($title);
     }
 
     public function getDescription(): string
@@ -58,14 +58,19 @@ class WorkflowModel
         return $this->post->post_content;
     }
 
-    public function getPostStatus(): string
+    public function setDescription(string $description)
+    {
+        $this->post->post_content = $description;
+    }
+
+    public function getStatus(): string
     {
         return $this->post->post_status;
     }
 
-    public function setDescription(string $description)
+    public function setStatus(string $status)
     {
-        $this->post->post_content = $description;
+        $this->post->post_status = sanitize_key($status);
     }
 
     public function save()

@@ -13,8 +13,15 @@ class RestApiV1 implements RestApiManagerInterface
 
     const BASE_PATH = RestApiManager::API_BASE . '/v1';
 
+    const PERMISSION_READ = 'edit_posts';
+
+    const PERMISSION_CREATE = 'edit_posts';
+
+    const PERMISSION_UPDATE = 'edit_posts';
+
     public function register()
     {
+        // Read a single workflow
         register_rest_route(
             self::BASE_PATH,
             '/workflows/(?P<id>\d+)',
@@ -34,6 +41,7 @@ class RestApiV1 implements RestApiManagerInterface
             ]
         );
 
+        // Create a new workflow
         register_rest_route(
             self::BASE_PATH,
             '/workflows',
@@ -41,6 +49,26 @@ class RestApiV1 implements RestApiManagerInterface
                 'methods' => WP_REST_Server::CREATABLE,
                 'callback' => [$this, 'createWorkflow'],
                 'permission_callback' => [$this, 'createWorkflowPermissions'],
+                'show_in_index' => false,
+                'show_in_rest' => true,
+            ]
+        );
+
+        // Update a workflow
+        register_rest_route(
+            self::BASE_PATH,
+            '/workflows/(?P<id>\d+)',
+            [
+                'methods' => WP_REST_Server::EDITABLE,
+                'callback' => [$this, 'updateWorkflow'],
+                'permission_callback' => [$this, 'updateWorkflowPermissions'],
+                'args' => [
+                    'id' => [
+                        'description' => __('The ID of the workflow', 'publishpress-future-pro'),
+                        'type' => 'integer',
+                        'required' => true
+                    ]
+                ],
                 'show_in_index' => false,
                 'show_in_rest' => true,
             ]
@@ -63,11 +91,11 @@ class RestApiV1 implements RestApiManagerInterface
         }
 
         return rest_ensure_response([
-            'id' => $id,
+            'id' => $workflowModel->getId(),
             'title' => $workflowModel->getTitle(),
             'description' => $workflowModel->getDescription(),
             'flow' => $workflowModel->getFlow(),
-            'postStatus' => $workflowModel->getPostStatus(),
+            'status' => $workflowModel->getStatus(),
         ]);
     }
 
@@ -81,18 +109,53 @@ class RestApiV1 implements RestApiManagerInterface
             'title' => $workflowModel->getTitle(),
             'description' => $workflowModel->getDescription(),
             'flow' => $workflowModel->getFlow(),
-            'postStatus' => $workflowModel->getPostStatus(),
+            'status' => $workflowModel->getStatus(),
         ]);
 
     }
 
+    public function updateWorkflow($request)
+    {
+        $id = (int) $request['id'];
+
+        $workflowModel = new WorkflowModel();
+        $workflowExists = $workflowModel->load($id);
+
+        if (! $workflowExists) {
+            return new WP_Error(
+                self::ERROR_WORKFLOW_NOT_FOUND,
+                __('Workflow not found', 'publishpress-future-pro'),
+                ['status' => 404]
+            );
+        }
+
+        $workflowModel->setTitle($request['title']);
+        $workflowModel->setDescription($request['description']);
+        $workflowModel->setFlow($request['flow']);
+        $workflowModel->setStatus($request['status']);
+        $workflowModel->save();
+
+        return rest_ensure_response([
+            'id' => $workflowModel->getId(),
+            'title' => $workflowModel->getTitle(),
+            'description' => $workflowModel->getDescription(),
+            'flow' => $workflowModel->getFlow(),
+            'status' => $workflowModel->getStatus(),
+        ]);
+    }
+
     public function getWorkflowPermissions($request)
     {
-        return current_user_can('edit_posts');
+        return current_user_can(self::PERMISSION_READ);
     }
 
     public function createWorkflowPermissions($request)
     {
-        return current_user_can('edit_posts');
+        return current_user_can(self::PERMISSION_CREATE);
+    }
+
+    public function updateWorkflowPermissions($request)
+    {
+        return current_user_can(self::PERMISSION_UPDATE);
     }
 }
