@@ -178,7 +178,7 @@ export const LayoutHeader = () => {
                     onClick={onSaveDraft}
                     disabled={isLoadingWorkflow || !isWorkflowDirty}
                 >
-                    {__('Save Draft')}
+                    {__('Save draft')}
                 </Button>
                 <Button
                     variant='primary'
