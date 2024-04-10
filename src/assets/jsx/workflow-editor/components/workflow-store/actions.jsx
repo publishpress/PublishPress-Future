@@ -77,6 +77,13 @@ export function* saveAsDraft() {
     }
 }
 
+export const setFlow = (flow) => {
+    return {
+        type: 'SET_FLOW',
+        payload: flow,
+    };
+};
+
 export const setPostType = (postType) => {
     return {
         type: 'SET_POST_TYPE',
@@ -97,6 +104,13 @@ export const setEdges = (edges) => {
         payload: edges,
     };
 };
+
+export const setInitialViewport = (viewport) => {
+    return {
+        type: 'SET_INITIAL_VIEWPORT',
+        payload: viewport,
+    };
+}
 
 export const setSelectedNodes = (nodes) => {
     return {

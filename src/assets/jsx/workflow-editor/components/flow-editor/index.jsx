@@ -11,6 +11,7 @@ import ReactFlow, {
     addEdge,
     useReactFlow,
     useOnSelectionChange,
+    useOnViewportChange,
 } from "reactflow";
 import { useCallback, useRef, useLayoutEffect, useEffect, Platform } from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
@@ -33,6 +34,7 @@ export const FlowEditor = (props) => {
         selectedEdges,
         hasActiveSideBar,
         activeComplementaryArea,
+        initialViewport,
     } = useSelect((select) => {
         const activeComplementaryArea = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
 
@@ -43,6 +45,7 @@ export const FlowEditor = (props) => {
             selectedEdges: select(workflowStore).getSelectedEdges(),
             activeComplementaryArea: activeComplementaryArea,
             hasActiveSideBar: activeComplementaryArea !== null && activeComplementaryArea !== 'null/undefined',
+            initialViewport: select(workflowStore).getInitialViewport(),
         }
     });
 
@@ -51,6 +54,7 @@ export const FlowEditor = (props) => {
         setEdges,
         setSelectedNodes,
         setSelectedEdges,
+        setEditedWorkflowAttribute,
     } = useDispatch(workflowStore);
 
     const {
@@ -59,6 +63,7 @@ export const FlowEditor = (props) => {
 
     const reactFlowWrapperRef = useRef(null);
     const reactFlowInstance = useReactFlow();
+    const { setViewport } = useReactFlow();
 
     const proOptions = {
         // TODO: Change this to true after we start supporting the pro version of ReactFlow.
@@ -69,10 +74,31 @@ export const FlowEditor = (props) => {
         backgroundColor: "#ffffff",
     }
 
+    const updateFlowInEditedWorkflow = useCallback(() => {
+        setEditedWorkflowAttribute('flow', reactFlowInstance.toObject());
+    }, [reactFlowInstance]);
+
+    const onInit = useCallback(() => {
+        // updateFlowInEditedWorkflow();
+    }, []);
+
+    useOnViewportChange({
+        onEnd: () => {
+            updateFlowInEditedWorkflow();
+        },
+    });
+
+    useEffect(() => {
+        if (initialViewport) {
+            setViewport(initialViewport);
+        }
+    }, [initialViewport]);
+
     const onNodesChange = useCallback(
         (changes) => {
             // TODO: Try to use the changes for handling the undo/redo state.
-            setNodes(applyNodeChanges(changes, nodes))
+            setNodes(applyNodeChanges(changes, nodes));
+            updateFlowInEditedWorkflow();
         },
         [nodes]
     );
@@ -81,6 +107,7 @@ export const FlowEditor = (props) => {
         (changes) => {
             // TODO: Try to use the changes for handling the undo/redo state.
             setEdges(applyEdgeChanges(changes, edges))
+            updateFlowInEditedWorkflow();
         },
         [edges]
     );
@@ -88,6 +115,7 @@ export const FlowEditor = (props) => {
     const onEdgeUpdate = useCallback(
         (oldEdge, newConnection) => {
             setEdges(updateEdge(oldEdge, newConnection, edges))
+            updateFlowInEditedWorkflow();
         },
         [edges]
     );
@@ -100,6 +128,7 @@ export const FlowEditor = (props) => {
             };
 
             setEdges(addEdge(params, edges))
+            updateFlowInEditedWorkflow();
         },
         [edges]
     );
@@ -123,6 +152,8 @@ export const FlowEditor = (props) => {
         };
 
         setNodes(nodes.concat(newNode));
+
+        updateFlowInEditedWorkflow();
     }, [nodes]);
 
 
@@ -142,6 +173,14 @@ export const FlowEditor = (props) => {
             position: position,
         })
     }, [reactFlowInstance, nodes]);
+
+    const onNodesDelete = useCallback(() => {
+        updateFlowInEditedWorkflow();
+    });
+
+    const onEdgesDelete = useCallback(() => {
+        updateFlowInEditedWorkflow();
+    });
 
     const fitView = useCallback(() => {
         reactFlowInstance.fitView();
@@ -177,10 +216,6 @@ export const FlowEditor = (props) => {
             }
         }
     })
-
-    useEffect(() => {
-
-    }, [selectedNodes, selectedEdges]);
 
     const onAutoLayout = useCallback(() => {
         applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
@@ -229,6 +264,9 @@ export const FlowEditor = (props) => {
                 style={editorStyle}
                 snapToGrid={true}
                 snapGrid={[GRID_SIZE, GRID_SIZE]}
+                onNodesDelete={onNodesDelete}
+                onEdgesDelete={onEdgesDelete}
+                onInit={onInit}
             >
                 <MiniMap
                     pannable

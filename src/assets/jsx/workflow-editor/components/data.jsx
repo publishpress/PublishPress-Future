@@ -5,8 +5,6 @@ import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
 import { store as editorStore } from "./editor-store";
 import {
-    nodes,
-    edges,
     triggerNodes,
     triggerCategories,
     actionCategories,
@@ -18,8 +16,6 @@ import { workflowId } from 'future-workflow-editor';
 
 export function WorkflowData() {
     const {
-        setNodes,
-        setEdges,
         setupEditor,
     } = useDispatch(workflowStore);
 
@@ -34,8 +30,6 @@ export function WorkflowData() {
     } = useDispatch(editorStore);
 
     setupEditor(workflowId);
-    setNodes(nodes);
-    setEdges(edges);
 
     setActiveFeatures([FEATURE_FULLSCREEN_MODE]);
     setTriggerCategories(triggerCategories);

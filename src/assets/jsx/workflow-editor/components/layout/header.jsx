@@ -15,7 +15,6 @@ import {
     SLOT_SCOPE_WORKFLOW_EDITOR
 } from '../../constants';
 import {
-    CUSTOM_EVENT_AUTO_LAYOUT,
     AUTO_LAYOUT_DIRECTION_DOWN
 } from '../flow-editor/auto-layout/constants';
 import { FullscreenModeClose } from '../fullscree-mode-close';
@@ -26,7 +25,6 @@ import { EditorHistoryRedo } from '../left-toolbar/redo';
 import { displayShortcut } from '@wordpress/keycodes';
 import { useAutoLayout } from '../flow-editor/auto-layout';
 import { isWP65OrLater } from 'future-workflow-editor';
-import { useEffect } from 'react';
 
 const preventDefault = (event) => {
     event.preventDefault();
@@ -92,17 +90,17 @@ export const LayoutHeader = () => {
 
     const toolbarLeftClassName = isWP65OrLater ? 'editor-document-tools__left' : 'edit-post-header-toolbar__left';
 
-    const onSaveDraft = () => {
+    const onSaveDraft = useCallback(() => {
         saveAsDraft();
-    }
+    })
 
-    const onPublish = () => {
+    const onPublish = useCallback(() => {
         // Publish
-    }
+    })
 
-    const onUpdate = () => {
+    const onUpdate = useCallback(() => {
         // Update
-    }
+    })
 
     return (
         <div className={headerClasses}>

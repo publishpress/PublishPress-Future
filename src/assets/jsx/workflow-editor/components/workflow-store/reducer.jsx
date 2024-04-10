@@ -20,6 +20,11 @@ export const DEFAULT_STATE = {
     editedWorkflowAttributes: {},
     nodes: [],
     edges: [],
+    initialViewport: {
+        x: 0,
+        y: 0,
+        zoom: 2,
+    },
     selectedNodes: [],
     selectedEdges: [],
 }
@@ -34,12 +39,19 @@ const loadWorkflowStart = (state, action) => {
 const loadWorkflowSuccess = (state, action) => {
     const { payload } = action;
 
+    const nodes = payload.flow?.nodes || [];
+    const edges = payload.flow?.edges || [];
+    const viewport = payload.flow?.viewport || DEFAULT_STATE.viewport;
+
     return {
         ...state,
         isLoadingWorkflow: false,
         workflow: payload,
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
+        nodes: nodes,
+        edges: edges,
+        initialViewport: viewport,
     };
 }
 
@@ -145,6 +157,15 @@ const setEdges = (state, action) => {
     };
 }
 
+const setInitialViewport = (state, action) => {
+    const { payload } = action;
+
+    return {
+        ...state,
+        viewport: payload,
+    };
+}
+
 const setSelectedNodes = (state, action) => {
     const { payload } = action;
 
@@ -191,6 +212,8 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return setNodes(state, action);
         case 'SET_EDGES':
             return setEdges(state, action);
+        case 'SET_INITIAL_VIEWPORT':
+            return setInitialViewport(state, action);
         case 'SET_SELECTED_NODES':
             return setSelectedNodes(state, action);
         case 'SET_SELECTED_EDGES':

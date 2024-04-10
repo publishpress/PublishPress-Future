@@ -4,6 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
 use PublishPress\FuturePro\Modules\Workflows\Module;
 use Exception;
+use PhpParser\Node\Expr\Cast\Object_;
 use WP_Post;
 use WP_Query;
 
@@ -76,22 +77,29 @@ class WorkflowModel
     public function save()
     {
         wp_update_post($this->post);
+
+        update_post_meta($this->post->ID, self::META_KEY_FLOW, json_encode($this->flow));
     }
 
-    public function getFlow(): string
+    public function getFlow(): array
     {
         if (empty($this->flow)) {
             try {
                 $this->flow = get_post_meta($this->post->ID, self::META_KEY_FLOW, true);
+                $this->flow = json_decode($this->flow, true);
+
+                if (! is_array($this->flow)) {
+                    $this->flow = [];
+                }
             } catch (Exception $e) {
-                $this->flow = '';
+                $this->flow = [];
             }
         }
 
         return $this->flow;
     }
 
-    public function setFlow(string $flow)
+    public function setFlow(array $flow)
     {
         $this->flow = $flow;
     }

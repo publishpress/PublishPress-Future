@@ -1,4 +1,4 @@
-import { createRegistrySelector } from '@wordpress/data';
+// import { createRegistrySelector } from '@wordpress/data';
 
 export const getPostType = (state) => {
     return state.postType;
@@ -87,4 +87,8 @@ export const isWorkflowFlowEmpty = (state) => {
 
 export const isNewWorkflow = (state) => {
     return !! state.isNewWorkflow;
+}
+
+export const getInitialViewport = (state) => {
+    return state.initialViewport;
 }
