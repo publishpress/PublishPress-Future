@@ -19,7 +19,7 @@ import { Button } from '@wordpress/components';
 
 import { store as workflowStore } from '../workflow-store';
 
-export function WorkflowSaveButton( {
+export function WorkflowSaveDraftButton( {
 	forceIsDirty,
 	forceIsSaving,
 	showIconLabels = false,
@@ -38,7 +38,7 @@ export function WorkflowSaveButton( {
 		( select ) => {
 			const {
 				isNewWorkflow,
-				isCurrentPostPublished,
+				isCurrentWorkflowPublished,
 				isEditedWorkflowDirty,
 				isSavingWorkflow,
 				isEditedWorkflowSaveable,
@@ -49,7 +49,7 @@ export function WorkflowSaveButton( {
 				isAutosaving: isAutosavingWorkflow(),
 				isDirty: forceIsDirty || isEditedWorkflowDirty(),
 				isNew: isNewWorkflow(),
-				isPublished: isCurrentPostPublished(),
+				isPublished: isCurrentWorkflowPublished(),
 				isSaving: forceIsSaving || isSavingWorkflow(),
 				isSaveable: isEditedWorkflowSaveable(),
 			};
@@ -131,4 +131,4 @@ export function WorkflowSaveButton( {
 	);
 }
 
-export default WorkflowSaveButton;
+export default WorkflowSaveDraftButton;

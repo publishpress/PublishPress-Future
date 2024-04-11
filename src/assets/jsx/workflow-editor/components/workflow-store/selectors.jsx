@@ -124,6 +124,6 @@ export const isEditedWorkflowSaveable = (state) => {
         && String(title).trim() !== '';
 }
 
-export const isCurrentPostPublished = (state) => {
+export const isCurrentWorkflowPublished = (state) => {
     return state.isCurrentWorkflowPublished;
 }

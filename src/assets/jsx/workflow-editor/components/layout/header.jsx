@@ -24,8 +24,9 @@ import { EditorHistoryUndo } from '../left-toolbar/undo';
 import { EditorHistoryRedo } from '../left-toolbar/redo';
 import { displayShortcut } from '@wordpress/keycodes';
 import { useAutoLayout } from '../flow-editor/auto-layout';
-import { WorkflowSaveButton } from '../workflow-save-button';
+import { WorkflowSaveDraftButton } from '../workflow-save-draft-button';
 import { isWP65OrLater } from 'future-workflow-editor';
+import WorkflowPublishButton from '../workflow-publish-button';
 
 const preventDefault = (event) => {
     event.preventDefault();
@@ -174,14 +175,8 @@ export const LayoutHeader = () => {
                 </NavigableToolbar>
             </div>
             <div className="edit-post-header__settings">
-                <WorkflowSaveButton />
-                <Button
-                    variant='primary'
-                    onClick={onPublish}
-                    disabled={isLoadingWorkflow || !isEditedWorkflowDirty}
-                >
-                    {__('Publish')}
-                </Button>
+                <WorkflowSaveDraftButton />
+                <WorkflowPublishButton />
 
                 <PinnedItems.Slot scope={SLOT_SCOPE_WORKFLOW_EDITOR} />
 

@@ -77,23 +77,89 @@ export function* saveAsDraft() {
     }
 }
 
-export function* switchToDraft() {
-    yield {type: 'SWITCH_TO_DRAFT_START'};
+export function* saveAsCurrentStatus() {
+    yield {type: 'SAVE_AS_CURRENT_STATUS_START'};
 
     try {
+        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${editedWorkflow.id}`,
             method: 'PUT',
             headers: {
                 'X-WP-Nonce': nonce,
             },
-            body: JSON.stringify({status: 'draft'}),
+            body: JSON.stringify(editedWorkflow),
         });
+
+        yield {type: 'SAVE_AS_CURRENT_STATUS_SUCCESS', payload: newWorkflow};
+    } catch (error) {
+        yield {type: 'SAVE_AS_CURRENT_STATUS_FAILURE'};
+        console.log('error', error);
+    }
+}
+
+export function* publishWorkflow() {
+    yield {type: 'PUBLISH_WORKFLOW_START'};
+
+    try {
+        const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
+
+        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'publish');
+
+        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
+        const newWorkflow = yield apiFetch({
+            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            method: 'PUT',
+            headers: {
+                'X-WP-Nonce': nonce,
+            },
+            body: JSON.stringify(editedWorkflow),
+        });
+
+        // Add the workflow id to the url, keeping current state in the history
+        if (wasNewWorkflow) {
+            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${newWorkflow.id}`);
+        }
+
+        yield {type: 'PUBLISH_WORKFLOW_SUCCESS', payload: newWorkflow};
+    } catch (error) {
+        // TODO: Show error message
+        yield {type: 'PUBLISH_WORKFLOW_FAILURE'};
+        console.log('error', error);
+    }
+}
+
+export function* switchToDraft() {
+    yield {type: 'SWITCH_TO_DRAFT_START'};
+
+    try {
+        const wasNewWorkflow = yield select(STORE_NAME).isNewWorkflow();
+
+        yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
+
+        const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
+        const newWorkflow = yield apiFetch({
+            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            method: 'PUT',
+            headers: {
+                'X-WP-Nonce': nonce,
+            },
+            body: JSON.stringify(editedWorkflow),
+        });
+
+        // Add the workflow id to the url, keeping current state in the history
+        if (wasNewWorkflow) {
+            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${newWorkflow.id}`);
+        }
 
         yield {type: 'SWITCH_TO_DRAFT_SUCCESS', payload: newWorkflow};
     } catch (error) {
         // TODO: Show error message
         yield {type: 'SWITCH_TO_DRAFT_FAILURE'};
+        console.log('error', error);
     }
 }
 

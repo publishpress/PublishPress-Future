@@ -52,7 +52,7 @@ const loadWorkflowSuccess = (state, action) => {
         nodes: nodes,
         edges: edges,
         initialViewport: viewport,
-        isEditedWorkflowEmpty: String(payload.flow).trim() === '',
+        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
         isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
@@ -82,7 +82,7 @@ const createWorkflowSuccess = (state, action) => {
         workflow: payload,
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
-        isEditedWorkflowEmpty: String(payload.flow).trim() === '',
+        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
         isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
@@ -111,7 +111,7 @@ const saveAsDraftSuccess = (state, action) => {
         workflow: payload,
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
-        isEditedWorkflowEmpty: String(payload.flow).trim() === '',
+        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
         isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
@@ -143,7 +143,7 @@ const switchToDraftSuccess = (state, action) => {
         isSavingWorkflow: false,
         workflow: newWorkflow,
         isNewWorkflow: false,
-        isEditedWorkflowEmpty: String(newWorkflow.flow).trim() === '',
+        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
         isCurrentWorkflowPublished: newWorkflow.status === 'publish',
     };
 }
@@ -155,17 +155,72 @@ const switchToDraftFailure = (state, action) => {
     };
 }
 
+const saveAsCurrentStatusStart = (state, action) => {
+    return {
+        ...state,
+        isSavingWorkflow: true,
+    };
+}
+
+const saveAsCurrentStatusSuccess = (state, action) => {
+    const { payload } = action;
+
+    const newWorkflow = {
+        ...state.workflow,
+        status: payload.status,
+    };
+
+    return {
+        ...state,
+        isSavingWorkflow: false,
+        workflow: newWorkflow,
+        isNewWorkflow: false,
+        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
+        isCurrentWorkflowPublished: newWorkflow.status === 'publish',
+    };
+}
+
+const saveAsCurrentStatusFailure = (state, action) => {
+    return {
+        ...state,
+        isSavingWorkflow: false,
+    };
+}
+
+const publishWorkflowStart = (state, action) => {
+    return {
+        ...state,
+        isSavingWorkflow: true,
+    };
+}
+
+const publishWorkflowSuccess = (state, action) => {
+    const { payload } = action;
+
+    const newWorkflow = {
+        ...state.workflow,
+        status: payload.status,
+    };
+
+    return {
+        ...state,
+        isSavingWorkflow: false,
+        workflow: newWorkflow,
+        isNewWorkflow: false,
+        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
+        isCurrentWorkflowPublished: newWorkflow.status === 'publish',
+    };
+}
+
+const publishWorkflowFailure = (state, action) => {
+    return {
+        ...state,
+        isSavingWorkflow: false,
+    };
+}
+
 const setEditedWorkflowAttribute = (state, action) => {
     const { key, value } = action.payload;
-
-    let isEmptyWorkflow;
-    if (key === 'flow') {
-        isEmptyWorkflow = String(value).trim() === '';
-    } else if (state.editedWorkflowAttributes.hasOwnProperty('flow')) {
-        isEmptyWorkflow = String(state.editedWorkflowAttributes.flow).trim() === '';
-    } else {
-        isEmptyWorkflow = String(state.workflow.flow).trim() === '';
-    }
 
     return {
         ...state,
@@ -173,7 +228,7 @@ const setEditedWorkflowAttribute = (state, action) => {
             ...state.editedWorkflowAttributes,
             [key]: value,
         },
-        isEditedWorkflowEmpty: isEmptyWorkflow
+        isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
     };
 }
 
@@ -278,6 +333,18 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return switchToDraftSuccess(state, action);
         case 'SWITCH_TO_DRAFT_FAILURE':
             return switchToDraftFailure(state, action);
+        case 'SAVE_AS_CURRENT_STATUS_START':
+            return saveAsCurrentStatusStart(state, action);
+        case 'SAVE_AS_CURRENT_STATUS_SUCCESS':
+            return saveAsCurrentStatusSuccess(state, action);
+        case 'SAVE_AS_CURRENT_STATUS_FAILURE':
+            return saveAsCurrentStatusFailure(state, action);
+        case 'PUBLISH_WORKFLOW_START':
+            return publishWorkflowStart(state, action);
+        case 'PUBLISH_WORKFLOW_SUCCESS':
+            return publishWorkflowSuccess(state, action);
+        case 'PUBLISH_WORKFLOW_FAILURE':
+            return publishWorkflowFailure(state, action);
         case 'SET_EDITED_WORKFLOW_ATTRIBUTE':
             return setEditedWorkflowAttribute(state, action);
         case 'SET_POST_TYPE':
