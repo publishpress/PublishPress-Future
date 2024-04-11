@@ -92,3 +92,15 @@ export const isNewWorkflow = (state) => {
 export const getInitialViewport = (state) => {
     return state.initialViewport;
 }
+
+export const isSavingWorkflow = (state) => {
+    return !! state.isSavingWorkflow;
+}
+
+export const isPublishedWorkflow = (state) => {
+    return state.workflow.status === 'publish';
+}
+
+export const isDeletingWorkflow = (state) => {
+    return !! state.isDeletingWorkflow;
+}

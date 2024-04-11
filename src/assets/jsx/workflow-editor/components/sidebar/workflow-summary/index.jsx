@@ -1,8 +1,11 @@
-import { PanelBody, TextControl, TextareaControl } from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl, TextareaControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as workflowStore } from '../../workflow-store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
+import { __experimentalHStack as HStack } from '@wordpress/components';
+import { WorkflowSwitchToDraftButton } from '../../workflow-switch-to-draft-button';
+import { WorkflowDeleteButton } from '../../workflow-delete-button';
 
 export const WorkflowSummary = () => {
     const {
@@ -36,19 +39,29 @@ export const WorkflowSummary = () => {
             initialOpen={true}
             disabled={isLoadingWorkflow}
         >
-            <TextControl
-                label={__('Title')}
-                value={workflowTitle}
-                onChange={onChangeTitle}
-                disabled={isLoadingWorkflow}
-            />
+            <HStack className="editor-post-title__panel">
+                <TextControl
+                    label={__('Title')}
+                    value={workflowTitle}
+                    onChange={onChangeTitle}
+                    disabled={isLoadingWorkflow}
+                />
+            </HStack>
 
-            <TextareaControl
-                label={__('Description')}
-                value={workflowDescription}
-                onChange={onChangeDescription}
-                disabled={isLoadingWorkflow}
-            />
+            <HStack className="editor-post-description__panel">
+                <TextareaControl
+                    label={__('Description')}
+                    value={workflowDescription}
+                    onChange={onChangeDescription}
+                    disabled={isLoadingWorkflow}
+                />
+            </HStack>
+
+            <HStack className="editor-post-status__panel">
+                <WorkflowSwitchToDraftButton />
+                <WorkflowDeleteButton />
+            </HStack>
+
         </PanelBody>
     );
 };

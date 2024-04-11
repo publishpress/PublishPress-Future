@@ -19,6 +19,8 @@ class RestApiV1 implements RestApiManagerInterface
 
     const PERMISSION_UPDATE = 'edit_posts';
 
+    const PERMISSION_DELETE = 'edit_posts';
+
     public function register()
     {
         // Read a single workflow
@@ -62,6 +64,26 @@ class RestApiV1 implements RestApiManagerInterface
                 'methods' => WP_REST_Server::EDITABLE,
                 'callback' => [$this, 'updateWorkflow'],
                 'permission_callback' => [$this, 'updateWorkflowPermissions'],
+                'args' => [
+                    'id' => [
+                        'description' => __('The ID of the workflow', 'publishpress-future-pro'),
+                        'type' => 'integer',
+                        'required' => true
+                    ]
+                ],
+                'show_in_index' => false,
+                'show_in_rest' => true,
+            ]
+        );
+
+        // Delete a workflow
+        register_rest_route(
+            self::BASE_PATH,
+            '/workflows/(?P<id>\d+)',
+            [
+                'methods' => WP_REST_Server::DELETABLE,
+                'callback' => [$this, 'deleteWorkflow'],
+                'permission_callback' => [$this, 'deleteWorkflowPermissions'],
                 'args' => [
                     'id' => [
                         'description' => __('The ID of the workflow', 'publishpress-future-pro'),
@@ -129,10 +151,22 @@ class RestApiV1 implements RestApiManagerInterface
             );
         }
 
-        $workflowModel->setTitle($request['title']);
-        $workflowModel->setDescription($request['description']);
-        $workflowModel->setFlow($request['flow']);
-        $workflowModel->setStatus($request['status']);
+        if (isset($request['title'])) {
+            $workflowModel->setTitle($request['title']);
+        }
+
+        if (isset($request['description'])) {
+            $workflowModel->setDescription($request['description']);
+        }
+
+        if (isset($request['flow'])) {
+            $workflowModel->setFlow($request['flow']);
+        }
+
+        if (isset($request['status'])) {
+            $workflowModel->setStatus($request['status']);
+        }
+
         $workflowModel->save();
 
         return rest_ensure_response([
@@ -142,6 +176,26 @@ class RestApiV1 implements RestApiManagerInterface
             'flow' => $workflowModel->getFlow(),
             'status' => $workflowModel->getStatus(),
         ]);
+    }
+
+    public function deleteWorkflow($request)
+    {
+        $id = (int) $request['id'];
+
+        $workflowModel = new WorkflowModel();
+        $workflowExists = $workflowModel->load($id);
+
+        if (! $workflowExists) {
+            return new WP_Error(
+                self::ERROR_WORKFLOW_NOT_FOUND,
+                __('Workflow not found', 'publishpress-future-pro'),
+                ['status' => 404]
+            );
+        }
+
+        $workflowModel->delete();
+
+        return rest_ensure_response(true);
     }
 
     public function getWorkflowPermissions($request)
@@ -157,5 +211,10 @@ class RestApiV1 implements RestApiManagerInterface
     public function updateWorkflowPermissions($request)
     {
         return current_user_can(self::PERMISSION_UPDATE);
+    }
+
+    public function deleteWorkflowPermissions($request)
+    {
+        return current_user_can(self::PERMISSION_DELETE);
     }
 }

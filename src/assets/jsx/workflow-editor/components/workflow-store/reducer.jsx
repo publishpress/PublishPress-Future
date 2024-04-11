@@ -6,9 +6,9 @@ export const DEFAULT_STATE = {
     isCreatingWorkflow: false,
     isSavingWorkflow: false,
     isNewWorkflow: true,
+    isDeletingWorkflow: false,
     // isEditedWorkflowEmpty: true,
     // isEditedWorkflowSaveable: false,
-    // isDeletingWorkflow: false,
     // isCurrentWorkflowPublished: false,
     workflow: {
         id: 0,
@@ -117,6 +117,36 @@ const saveAsDraftFailure = (state, action) => {
     };
 }
 
+const switchToDraftStart = (state, action) => {
+    return {
+        ...state,
+        isSavingWorkflow: true,
+    };
+}
+
+const switchToDraftSuccess = (state, action) => {
+    const { payload } = action;
+
+    const newWorkflow = {
+        ...state.workflow,
+        status: payload.status,
+    };
+
+    return {
+        ...state,
+        isSavingWorkflow: false,
+        workflow: newWorkflow,
+        isNewWorkflow: false,
+    };
+}
+
+const switchToDraftFailure = (state, action) => {
+    return {
+        ...state,
+        isSavingWorkflow: false,
+    };
+}
+
 
 const setEditedWorkflowAttribute = (state, action) => {
     const { key, value } = action.payload;
@@ -184,6 +214,27 @@ const setSelectedEdges = (state, action) => {
     };
 }
 
+const deleteWorkflowStart = (state, action) => {
+    return {
+        ...state,
+        isDeletingWorkflow: true,
+    };
+}
+
+const deleteWorkflowSuccess = (state, action) => {
+    return {
+        ...state,
+        isDeletingWorkflow: false,
+    };
+}
+
+const deleteWorkflowFailure = (state, action) => {
+    return {
+        ...state,
+        isDeletingWorkflow: false,
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -204,6 +255,12 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return saveAsDraftSuccess(state, action);
         case 'SAVE_AS_DRAFT_FAILURE':
             return saveAsDraftFailure(state, action);
+        case 'SWITCH_TO_DRAFT_START':
+            return switchToDraftStart(state, action);
+        case 'SWITCH_TO_DRAFT_SUCCESS':
+            return switchToDraftSuccess(state, action);
+        case 'SWITCH_TO_DRAFT_FAILURE':
+            return switchToDraftFailure(state, action);
         case 'SET_EDITED_WORKFLOW_ATTRIBUTE':
             return setEditedWorkflowAttribute(state, action);
         case 'SET_POST_TYPE':
@@ -218,6 +275,12 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return setSelectedNodes(state, action);
         case 'SET_SELECTED_EDGES':
             return setSelectedEdges(state, action);
+        case 'DELETE_WORKFLOW_START':
+            return deleteWorkflowStart(state, action);
+        case 'DELETE_WORKFLOW_SUCCESS':
+            return deleteWorkflowSuccess(state, action);
+        case 'DELETE_WORKFLOW_FAILURE':
+            return deleteWorkflowFailure(state, action);
     }
 
     return state;

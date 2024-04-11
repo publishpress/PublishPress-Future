@@ -81,6 +81,13 @@ class WorkflowModel
         update_post_meta($this->post->ID, self::META_KEY_FLOW, json_encode($this->flow));
     }
 
+    public function delete()
+    {
+        wp_delete_post($this->post->ID);
+
+        $this->reset();
+    }
+
     public function getFlow(): array
     {
         if (empty($this->flow)) {

@@ -30,3 +30,22 @@
 .react-flow__node-group.selectable:focus-visible {
     box-shadow: 0 0 0 2px #1a192b;
 }
+
+.edit-post-post-status .components-base-control {
+    flex: auto;
+}
+
+.editor-post-title__panel,
+.editor-post-description__panel {
+    padding-top: 8px;
+}
+
+.editor-post-status__panel {
+    margin-top: 16px;
+    gap: 16px !important;
+}
+
+.editor-post-status__panel button {
+    flex-grow: 1;
+    justify-content: center;
+}

@@ -77,6 +77,26 @@ export function* saveAsDraft() {
     }
 }
 
+export function* switchToDraft() {
+    yield {type: 'SWITCH_TO_DRAFT_START'};
+
+    try {
+        const newWorkflow = yield apiFetch({
+            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            method: 'PUT',
+            headers: {
+                'X-WP-Nonce': nonce,
+            },
+            body: JSON.stringify({status: 'draft'}),
+        });
+
+        yield {type: 'SWITCH_TO_DRAFT_SUCCESS', payload: newWorkflow};
+    } catch (error) {
+        // TODO: Show error message
+        yield {type: 'SWITCH_TO_DRAFT_FAILURE'};
+    }
+}
+
 export const setFlow = (flow) => {
     return {
         type: 'SET_FLOW',
@@ -136,3 +156,28 @@ export const setEditedWorkflowAttribute = (key, value) => {
         payload: { key, value },
     };
 };
+
+export function* deleteWorkflow () {
+    yield {type: 'DELETE_WORKFLOW_START'};
+
+    const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
+    try {
+        const newWorkflow = yield apiFetch({
+            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            method: 'DELETE',
+            headers: {
+                'X-WP-Nonce': nonce,
+            },
+        });
+
+        yield {type: 'DELETE_WORKFLOW_SUCCESS', payload: newWorkflow};
+
+        // Redirect to the workflow list
+        window.location.href = `edit.php?post_type=ppfuture_workflow`;
+    } catch (error) {
+        // TODO: Show error message
+        yield {type: 'DELETE_WORKFLOW_FAILURE'};
+        console.log('error', error);
+    }
+}
