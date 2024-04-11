@@ -127,3 +127,15 @@ export const isEditedWorkflowSaveable = (state) => {
 export const isCurrentWorkflowPublished = (state) => {
     return state.isCurrentWorkflowPublished;
 }
+
+export const getSelectedElementsCount = (state) => {
+    return state.selectedNodes.length + state.selectedEdges.length;
+}
+
+export const getSelectedNodesCount = (state) => {
+    return state.selectedNodes.length;
+}
+
+export const getSelectedEdgesCount = (state) => {
+    return state.selectedEdges.length;
+}

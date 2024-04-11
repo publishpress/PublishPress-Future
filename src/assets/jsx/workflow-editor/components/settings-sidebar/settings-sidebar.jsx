@@ -46,7 +46,11 @@ export const SettingsSidebar = () => {
                     <WorkflowSummary />
                 </>
             )}
-            {sidebarName === SIDEBAR_NODE_EDGE && <NodeInspector />}
+            {sidebarName === SIDEBAR_NODE_EDGE && (
+                <>
+                  <NodeInspector />
+                </>
+            )}
         </PluginSidebarEditPost>
     );
 }

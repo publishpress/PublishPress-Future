@@ -1,9 +1,8 @@
-import { PanelBody, PanelRow, TextControl, TextareaControl } from '@wordpress/components';
+import { PanelBody, TextControl, TextareaControl, __experimentalHStack as HStack } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as workflowStore } from '../../workflow-store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
-import { __experimentalHStack as HStack } from '@wordpress/components';
 import { WorkflowSwitchToDraftButton } from '../../workflow-switch-to-draft-button';
 import { WorkflowDeleteButton } from '../../workflow-delete-button';
 
