@@ -24,6 +24,7 @@ import { EditorHistoryUndo } from '../left-toolbar/undo';
 import { EditorHistoryRedo } from '../left-toolbar/redo';
 import { displayShortcut } from '@wordpress/keycodes';
 import { useAutoLayout } from '../flow-editor/auto-layout';
+import { WorkflowSaveButton } from '../workflow-save-button';
 import { isWP65OrLater } from 'future-workflow-editor';
 
 const preventDefault = (event) => {
@@ -37,7 +38,7 @@ export const LayoutHeader = () => {
         hasReducedUI,
         showIconLabels,
         isLoadingWorkflow,
-        isWorkflowDirty,
+        isEditedWorkflowDirty,
     } = useSelect((select) => {
         return {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
@@ -45,7 +46,7 @@ export const LayoutHeader = () => {
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
             showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
-            isWorkflowDirty: select(workflowStore).isWorkflowDirty(),
+            isEditedWorkflowDirty: select(workflowStore).isEditedWorkflowDirty(),
         }
     });
 
@@ -173,17 +174,11 @@ export const LayoutHeader = () => {
                 </NavigableToolbar>
             </div>
             <div className="edit-post-header__settings">
-                <Button
-                    variant='tertiary'
-                    onClick={onSaveDraft}
-                    disabled={isLoadingWorkflow || !isWorkflowDirty}
-                >
-                    {__('Save draft')}
-                </Button>
+                <WorkflowSaveButton />
                 <Button
                     variant='primary'
                     onClick={onPublish}
-                    disabled={isLoadingWorkflow || !isWorkflowDirty}
+                    disabled={isLoadingWorkflow || !isEditedWorkflowDirty}
                 >
                     {__('Publish')}
                 </Button>

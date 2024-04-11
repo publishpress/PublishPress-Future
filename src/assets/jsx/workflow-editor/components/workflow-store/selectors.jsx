@@ -77,7 +77,7 @@ export const getEditedWorkflow = (state) => {
     };
 }
 
-export const isWorkflowDirty = (state) => {
+export const isEditedWorkflowDirty = (state) => {
     return Object.keys(state.editedWorkflowAttributes).length > 0;
 }
 
@@ -103,4 +103,27 @@ export const isPublishedWorkflow = (state) => {
 
 export const isDeletingWorkflow = (state) => {
     return !! state.isDeletingWorkflow;
+}
+
+export const isAutosavingWorkflow = (state) => {
+    return !! state.isAutosavingWorkflow;
+}
+
+export const isEditedWorkflowSaveable = (state) => {
+    let title;
+
+    if (state.editedWorkflowAttributes.hasOwnProperty('title')) {
+        title = state.editedWorkflowAttributes.title;
+    } else {
+        title = state.workflow.title;
+    }
+
+    return Object.keys(state.editedWorkflowAttributes).length > 0
+        && !state.isSavingWorkflow
+        && !state.isAutosavingWorkflow
+        && String(title).trim() !== '';
+}
+
+export const isCurrentPostPublished = (state) => {
+    return state.isCurrentWorkflowPublished;
 }

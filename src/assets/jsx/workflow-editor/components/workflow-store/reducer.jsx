@@ -7,9 +7,9 @@ export const DEFAULT_STATE = {
     isSavingWorkflow: false,
     isNewWorkflow: true,
     isDeletingWorkflow: false,
-    // isEditedWorkflowEmpty: true,
-    // isEditedWorkflowSaveable: false,
-    // isCurrentWorkflowPublished: false,
+    isAutosavingWorkflow: false,
+    isEditedWorkflowEmpty: true,
+    isCurrentWorkflowPublished: false,
     workflow: {
         id: 0,
         title: '',
@@ -52,6 +52,8 @@ const loadWorkflowSuccess = (state, action) => {
         nodes: nodes,
         edges: edges,
         initialViewport: viewport,
+        isEditedWorkflowEmpty: String(payload.flow).trim() === '',
+        isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
 
@@ -80,6 +82,8 @@ const createWorkflowSuccess = (state, action) => {
         workflow: payload,
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
+        isEditedWorkflowEmpty: String(payload.flow).trim() === '',
+        isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
 
@@ -107,6 +111,8 @@ const saveAsDraftSuccess = (state, action) => {
         workflow: payload,
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
+        isEditedWorkflowEmpty: String(payload.flow).trim() === '',
+        isCurrentWorkflowPublished: payload.status === 'publish',
     };
 }
 
@@ -137,6 +143,8 @@ const switchToDraftSuccess = (state, action) => {
         isSavingWorkflow: false,
         workflow: newWorkflow,
         isNewWorkflow: false,
+        isEditedWorkflowEmpty: String(newWorkflow.flow).trim() === '',
+        isCurrentWorkflowPublished: newWorkflow.status === 'publish',
     };
 }
 
@@ -147,9 +155,17 @@ const switchToDraftFailure = (state, action) => {
     };
 }
 
-
 const setEditedWorkflowAttribute = (state, action) => {
     const { key, value } = action.payload;
+
+    let isEmptyWorkflow;
+    if (key === 'flow') {
+        isEmptyWorkflow = String(value).trim() === '';
+    } else if (state.editedWorkflowAttributes.hasOwnProperty('flow')) {
+        isEmptyWorkflow = String(state.editedWorkflowAttributes.flow).trim() === '';
+    } else {
+        isEmptyWorkflow = String(state.workflow.flow).trim() === '';
+    }
 
     return {
         ...state,
@@ -157,6 +173,7 @@ const setEditedWorkflowAttribute = (state, action) => {
             ...state.editedWorkflowAttributes,
             [key]: value,
         },
+        isEditedWorkflowEmpty: isEmptyWorkflow
     };
 }
 
