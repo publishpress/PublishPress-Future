@@ -57,20 +57,32 @@ export const NodeInspector = () => {
         );
     }
 
-    const nodeTypeLabels = {
-        'action': __('Action', 'publishpress-future-pro'),
-        'trigger': __('Trigger', 'publishpress-future-pro'),
-        'condition': __('Condition', 'publishpress-future-pro'),
+    const NodeInspectorCard = ({node}) => {
+        const nodeTypeLabels = {
+            'action': __('Action', 'publishpress-future-pro'),
+            'trigger': __('Trigger', 'publishpress-future-pro'),
+            'condition': __('Condition', 'publishpress-future-pro'),
+        }
+
+        const nodeTypeDescriptions = {
+            'action': __('An action is a task that can be executed by the workflow.', 'publishpress-future-pro'),
+            'trigger': __('A trigger is an event that starts the workflow.', 'publishpress-future-pro'),
+            'condition': __('A condition is a rule that must be met for the workflow to continue.', 'publishpress-future-pro'),
+        }
+
+        const nodeTypeLabel = node ? nodeTypeLabels[node.data.type] : __('Node', 'publishpress-future-pro');
+        const nodeTypeDescription = node ? nodeTypeDescriptions[node.data.type] : __('A node is a basic element of the workflow.', 'publishpress-future-pro');
+        const nodeIcon = <GrObjectGroup />;
+
+        return (
+            <InspectorCard
+                title={nodeTypeLabel}
+                description={nodeTypeDescription}
+                icon={nodeIcon}
+            />
+        );
     }
 
-    const nodeTypeDescriptions = {
-        'action': __('An action is a task that can be executed by the workflow.', 'publishpress-future-pro'),
-        'trigger': __('A trigger is an event that starts the workflow.', 'publishpress-future-pro'),
-        'condition': __('A condition is a rule that must be met for the workflow to continue.', 'publishpress-future-pro'),
-    }
-
-    const nodeTypeLabel = selectedNode ? nodeTypeLabels[selectedNode.data.type] : '';
-    const nodeTypeDescription = selectedNode ? nodeTypeDescriptions[selectedNode.data.type] : '';
 
     return (
         <HStack className="editor-element-inspector__panel">
@@ -104,11 +116,7 @@ export const NodeInspector = () => {
 
             {onlyNodesSelected && selectedElementsCount === 1 && (
                 <>
-                    <InspectorCard
-                        title={nodeTypeLabel}
-                        description={nodeTypeDescription}
-                        icon={<GrObjectGroup />}
-                    />
+                    <NodeInspectorCard node={selectedNode} />
                     <div className='components-tools-panel'></div>
                 </>
             )}
