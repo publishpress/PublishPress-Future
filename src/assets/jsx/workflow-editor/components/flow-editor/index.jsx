@@ -149,7 +149,7 @@ export const FlowEditor = (props) => {
             id: getId(),
             type: type,
             position: position,
-            data: { label: item.title, type: item.type},
+            data: { label: item.label, type: item.type},
             style: nodeStyle[item.type],
         };
 

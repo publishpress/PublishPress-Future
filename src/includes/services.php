@@ -18,7 +18,9 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
+use PublishPress\FuturePro\Modules\Workflows\Rest\RestApiManager;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -173,7 +175,8 @@ return [
     ServicesAbstract::MODULE_WORKFLOWS => static function (ContainerInterface $container) {
         return new Module(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::WORKFLOWS_REST_API_MANAGER)
+            $container->get(ServicesAbstract::WORKFLOWS_REST_API_MANAGER),
+            $container->get(ServicesAbstract::NODE_TYPES_MODEL)
         );
     },
 
@@ -218,6 +221,12 @@ return [
     },
 
     ServicesAbstract::WORKFLOWS_REST_API_MANAGER => static function (ContainerInterface $container) {
-        return new \PublishPress\FuturePro\Modules\Workflows\Rest\RestApiManager();
+        return new RestApiManager();
+    },
+
+    ServicesAbstract::NODE_TYPES_MODEL => static function (ContainerInterface $container) {
+        return new NodeTypesModel(
+            $container->get(ServicesAbstract::HOOKS)
+        );
     },
 ];

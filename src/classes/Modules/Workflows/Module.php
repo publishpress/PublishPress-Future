@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
 
 class Module implements InitializableInterface
@@ -21,10 +22,13 @@ class Module implements InitializableInterface
      */
     private $restApiManager;
 
-    public function __construct(HookableInterface $hooksFacade, RestApiManagerInterface $restApiManager)
+    private $nodeTypesModel;
+
+    public function __construct(HookableInterface $hooksFacade, RestApiManagerInterface $restApiManager, NodeTypesModelInterface $nodeTypesModel)
     {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
+        $this->nodeTypesModel = $nodeTypesModel;
     }
 
     public function initialize()
@@ -181,6 +185,12 @@ class Module implements InitializableInterface
                 'apiUrl' => rest_url('publishpress-future/v1'),
                 'workflowId' => isset($_GET['workflow']) ? (int) $_GET['workflow'] : 0,
                 'nonce' => wp_create_nonce('wp_rest'),
+                'nodeTypeCategories' => $this->nodeTypesModel->getCategories(),
+                'nodeTypes' => [
+                    'triggers'=> $this->nodeTypesModel->getTriggers(),
+                    'actions' => $this->nodeTypesModel->getActions(),
+                    'flows' => $this->nodeTypesModel->getFlows(),
+                ],
             ]
         );
     }

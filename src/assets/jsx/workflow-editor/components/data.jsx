@@ -4,15 +4,7 @@ import {
 import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
 import { store as editorStore } from "./editor-store";
-import {
-    triggerNodes,
-    triggerCategories,
-    actionCategories,
-    actionNodes,
-    flowCategories,
-    flowNodes,
-} from "../demo-data";
-import { workflowId } from 'future-workflow-editor';
+import { workflowId, nodeTypeCategories, nodeTypes } from 'future-workflow-editor';
 
 export function WorkflowData() {
     const {
@@ -32,12 +24,12 @@ export function WorkflowData() {
     setupEditor(workflowId);
 
     setActiveFeatures([FEATURE_FULLSCREEN_MODE]);
-    setTriggerCategories(triggerCategories);
-    setTriggerNodes(triggerNodes);
-    setActionCategories(actionCategories);
-    setActionNodes(actionNodes);
-    setFlowCategories(flowCategories);
-    setFlowNodes(flowNodes);
+    setTriggerCategories(nodeTypeCategories);
+    setTriggerNodes(nodeTypes.triggers);
+    setActionCategories(nodeTypeCategories);
+    setActionNodes(nodeTypes.actions);
+    setFlowCategories(nodeTypeCategories);
+    setFlowNodes(nodeTypes.flows);
 
     return null;
 }

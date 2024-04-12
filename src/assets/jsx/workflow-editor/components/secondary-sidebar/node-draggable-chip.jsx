@@ -30,7 +30,7 @@ export default function NodeDraggableChip({ node, icon }) {
 						)}
 					</FlexItem>
 					<FlexItem>
-						{node.title}
+						{node.label}
 					</FlexItem>
 				</Flex>
 			</div>

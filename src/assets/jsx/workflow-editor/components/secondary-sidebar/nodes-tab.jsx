@@ -87,21 +87,21 @@ export const NodesTab = ({
                 )}
 
                 {map(currentlyRenderedCategories, (category) => {
-                    const categoryItems = itemsPerCategory[category.slug];
+                    const categoryItems = itemsPerCategory[category.name];
                     if (!categoryItems || !categoryItems.length) {
                         return null;
                     }
                     return (
                         <InserterPanel
-                            key={category.slug}
-                            title={category.title}
+                            key={category.name}
+                            title={category.label}
                             icon={category.icon}
                         >
                             <NodeTypesList
                                 items={categoryItems}
                                 onSelect={onSelectItem}
                                 onHover={onHover}
-                                label={category.title}
+                                label={category.label}
                             />
                         </InserterPanel>
                     );

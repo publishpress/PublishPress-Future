@@ -3,12 +3,12 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
 use PublishPress\FuturePro\Modules\Workflows\Module;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use Exception;
-use PhpParser\Node\Expr\Cast\Object_;
 use WP_Post;
 use WP_Query;
 
-class WorkflowModel
+class WorkflowModel implements WorkflowModelInterface
 {
     const META_KEY_DICTIONARY = '_workflow_dictionary';
 

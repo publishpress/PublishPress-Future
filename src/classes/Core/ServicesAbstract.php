@@ -40,4 +40,5 @@ abstract class ServicesAbstract
     const MODULES = 'future.pro/modules';
     const MODULE_WORKFLOWS = 'future.pro/module-workflows';
     const WORKFLOWS_REST_API_MANAGER = 'future.pro/workflows-rest-api-manager';
+    const NODE_TYPES_MODEL = 'future.pro/node-types-model';
 }

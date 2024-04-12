@@ -5,7 +5,7 @@ import { deburr, differenceWith, find, words } from 'lodash';
 
 // Default search helpers
 const defaultGetName = (item) => item.name || '';
-const defaultGetTitle = (item) => item.title;
+const defaultGetTitle = (item) => item.label;
 const defaultGetDescription = (item) => item.description || '';
 const defaultGetKeywords = (item) => item.keywords || [];
 const defaultGetCategory = (item) => item.category;
@@ -66,9 +66,9 @@ export const searchNodeItems = (
 
 	const config = {
 		getCategory: (item) =>
-			find(categories, { slug: item.category })?.title,
+			find(categories, { name: item.category })?.label,
 		getName: (item) => item.name,
-		getTitle: (item) => item.title,
+		getTitle: (item) => item.label,
 		getDescription: (item) => item.description,
 		getKeywords: (item) => item.keywords || [],
 	};

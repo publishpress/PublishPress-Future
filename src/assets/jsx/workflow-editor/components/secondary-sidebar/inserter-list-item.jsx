@@ -36,7 +36,7 @@ function InserterListItem({
         : {};
     const node = useMemo(() => {
         return item;
-    }, [item.id, item.title, item.icon, item.disabled]);
+    }, [item.id, item.label, item.icon, item.disabled]);
 
     return (
         <InserterDraggableNodes
@@ -114,7 +114,7 @@ function InserterListItem({
                             <NodeIcon icon={item.icon} showColors />
                         </span>
                         <span className="block-editor-block-types-list__item-title">
-                            {item.title}
+                            {item.label}
                         </span>
                     </InserterListboxItem>
                 </div>
