@@ -1,0 +1,11 @@
+.react-flow__node-defaultTrigger {
+    background-color: blueviolet;
+}
+
+.react-flow__node-defaultAction {
+    background-color: blue;
+}
+
+.react-flow__node-flowIfElse {
+    background-color: green;
+}

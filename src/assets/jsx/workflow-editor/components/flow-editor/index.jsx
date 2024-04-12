@@ -15,9 +15,11 @@ import ReactFlow, {
 } from "reactflow";
 import { useCallback, useRef, useLayoutEffect, useEffect, Platform } from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
-import { nodeStyle } from '../../default-nodes-props';
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
 import { SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
+import DefaultTriggerNode from "../node-types/default-trigger";
+import DefaultActionNode from "../node-types/default-action";
+import FlowIfElseNode from "../node-types/flow-if-else";
 
 import {
     AUTO_LAYOUT_DEFAULT_DIRECTION,
@@ -73,6 +75,12 @@ export const FlowEditor = (props) => {
     const editorStyle = {
         backgroundColor: "#ffffff",
     }
+
+    const nodeTypes = {
+        defaultTrigger: DefaultTriggerNode,
+        defaultAction: DefaultActionNode,
+        flowIfElse: FlowIfElseNode,
+    };
 
     const updateFlowInEditedWorkflow = useCallback(() => {
         // We need to delay the update of the flow to avoid missing the changes.
@@ -143,14 +151,14 @@ export const FlowEditor = (props) => {
     }, []);
 
     const createNodeAfterDrop = useCallback(({ item, position }) => {
-        const type = item.type === 'trigger' ? 'input' : 'default';
-
         const newNode = {
             id: getId(),
-            type: type,
+            type: item.type,
             position: position,
-            data: { label: item.label, type: item.type},
-            style: nodeStyle[item.type],
+            data: {
+                label: item.label,
+                type: item.type
+            },
         };
 
         setNodes(nodes.concat(newNode));
@@ -270,6 +278,7 @@ export const FlowEditor = (props) => {
                 style={editorStyle}
                 snapToGrid={true}
                 snapGrid={[GRID_SIZE, GRID_SIZE]}
+                nodeTypes={nodeTypes}
                 onNodesDelete={onNodesDelete}
                 onEdgesDelete={onEdgesDelete}
             >
@@ -277,8 +286,9 @@ export const FlowEditor = (props) => {
                     pannable
                     zoomable
                     nodeColor={(node) => {
-                        if (node.type === 'input') return nodeStyle['trigger'].backgroundColor;
-                        if (node.type === 'default') return nodeStyle['action'].backgroundColor;
+                        if (node.type === 'defaultTrigger') return '#FFCC00';
+                        if (node.type === 'defaultAction') return '#FFCC30';
+                        if (node.type === 'flowIfElse') return '#FFCC60';
                     }}
                 />
                 <Background

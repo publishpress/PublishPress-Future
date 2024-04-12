@@ -58,6 +58,7 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         return [
             [
+                'type' => 'defaultTrigger',
                 'name' => 'core/save-post',
                 'label' => __('Post is saved', 'publishpress-future-pro'),
                 'category' => 'post',
@@ -75,6 +76,7 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         return [
             [
+                'type' => 'defaultAction',
                 'name' => 'core/update-post',
                 'label' => __('Update Post', 'publishpress-future-pro'),
                 'category' => 'post',
@@ -86,6 +88,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                 ],
             ],
             [
+                'type' => 'defaultAction',
                 'name' => 'core/delete-post',
                 'label' => __('Delete Post', 'publishpress-future-pro'),
                 'category' => 'post',
@@ -103,6 +106,7 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         return [
             [
+                'type' => 'flowIfElse',
                 'name' => 'core/if-else',
                 'label' => __('If/Else', 'publishpress-future-pro'),
                 'category' => 'conditional',
