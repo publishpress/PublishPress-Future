@@ -1,10 +1,10 @@
-import { applyFilters } from '@wordpress/hooks';
+import { applyFilters } from "@wordpress/hooks";
 
 export function addBodyClass(className) {
     if (document.body.classList.contains(className)) return;
 
     document.body.classList.add(className);
-};
+}
 
 export function removeBodyClass(className) {
     if (!document.body.classList.contains(className)) return;
@@ -13,11 +13,11 @@ export function removeBodyClass(className) {
 }
 
 export function addBodyClasses(classNames) {
-    classNames.forEach(className => addBodyClass(className));
+    classNames.forEach((className) => addBodyClass(className));
 }
 
 export function removeBodyClasses(classNames) {
-    classNames.forEach(className => removeBodyClass(className));
+    classNames.forEach((className) => removeBodyClass(className));
 }
 
 /**
@@ -31,13 +31,13 @@ export function getNodeMenuDefaultClassName(blockName) {
     // Generated HTML classes for blocks follow the `editor-block-list-item-{name}` nomenclature.
     // Blocks provided by WordPress drop the prefixes 'core/' or 'core-' (historically used in 'core-embed/').
     const className =
-        'editor-block-list-item-' +
-        blockName.replace(/\//, '-').replace(/^core-/, '');
+        "editor-block-list-item-" +
+        blockName.replace(/\//, "-").replace(/^core-/, "");
 
     return applyFilters(
-        'future-pro.getNodeMenuDefaultClassName',
+        "future-pro.getNodeMenuDefaultClassName",
         className,
-        blockName
+        blockName,
     );
 }
 
@@ -52,7 +52,6 @@ export function isAppleOS(_window = window) {
     const { platform } = _window.navigator;
 
     return (
-        platform.indexOf('Mac') !== -1 ||
-        ['iPad', 'iPhone'].includes(platform)
+        platform.indexOf("Mac") !== -1 || ["iPad", "iPhone"].includes(platform)
     );
 }
