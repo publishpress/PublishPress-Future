@@ -5,7 +5,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreUpdatePost implements NodeTypeInterface {
+class CoreUpdatePost implements NodeTypeInterface
+{
     public function getType(): string
     {
         return NodeTypesModel::NODE_TYPE_ACTION;
@@ -13,17 +14,17 @@ class CoreUpdatePost implements NodeTypeInterface {
 
     public function getName(): string
     {
-        return 'core/update-post';
+        return "core/update-post";
     }
 
     public function getLabel(): string
     {
-        return __('Update Post', 'publishpress-future-pro');
+        return __("Update Post", "publishpress-future-pro");
     }
 
     public function getIcon(): string
     {
-        return 'document';
+        return "document";
     }
 
     public function getFrecency(): int
@@ -33,6 +34,6 @@ class CoreUpdatePost implements NodeTypeInterface {
 
     public function getCategory(): string
     {
-        return 'post';
+        return "post";
     }
 }
