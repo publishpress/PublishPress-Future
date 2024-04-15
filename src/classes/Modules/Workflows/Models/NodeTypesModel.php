@@ -120,7 +120,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         ];
     }
 
-    private function normalizeNodes(array $nodes, string $type): array
+    private function applyDefaultParams(array $nodes, string $type): array
     {
         $normalized = [];
 
@@ -154,7 +154,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             return $this->triggers;
         }
 
-        $this->triggers = $this->normalizeNodes(
+        $this->triggers = $this->applyDefaultParams(
             $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_TRIGGERS, $this->getDefaultTriggers()),
             self::NODE_TYPE_TRIGGER
         );
@@ -168,7 +168,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             return $this->actions;
         }
 
-        $this->actions = $this->normalizeNodes(
+        $this->actions = $this->applyDefaultParams(
             $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_ACTIONS, $this->getDefaultActions()),
             self::NODE_TYPE_ACTION
         );
@@ -182,7 +182,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             return $this->flows;
         }
 
-        $this->flows = $this->normalizeNodes(
+        $this->flows = $this->applyDefaultParams(
             $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_FLOWS, $this->getDefaultFlows()),
             self::NODE_TYPE_FLOW
         );
