@@ -1,25 +1,24 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
-use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreUpdatePost implements NodeTypeInterface
+class IfElse implements NodeTypeInterface
 {
     public function getType(): string
     {
-        return "genericAction";
+        return "flowIfElse";
     }
 
     public function getName(): string
     {
-        return "core/update-post";
+        return "core/if-else";
     }
 
     public function getLabel(): string
     {
-        return __("Update Post", "publishpress-future-pro");
+        return __("If / Else", "publishpress-future-pro");
     }
 
     public function getIcon(): string

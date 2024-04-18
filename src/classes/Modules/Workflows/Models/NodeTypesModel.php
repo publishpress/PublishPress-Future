@@ -4,16 +4,23 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreDeletePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUpdatePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\IfElse;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
-
 
 class NodeTypesModel implements NodeTypesModelInterface
 {
-    const NODE_TYPE_ACTION = 'action';
+    public const NODE_TYPE_ACTION = "action";
 
-    const NODE_TYPE_TRIGGER = 'trigger';
+    public const NODE_TYPE_TRIGGER = "trigger";
 
-    const NODE_TYPE_FLOW = 'flow';
+    public const NODE_TYPE_FLOW = "flow";
+
+    public const DEFAULT_ICON_BACKGROUND = "#ffffff";
+
+    public const DEFAULT_ICON_FOREGROUND = "#1e1e1e";
 
     private $hooks;
 
@@ -34,90 +41,64 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         return [
             [
-                'name' => 'post',
-                'label' => __('Post', 'publishpress-future-pro'),
-                'icon' => [
-                    'src' => 'document',
-                    'background' => '#ffffff',
-                    'foreground' => '#1e1e1e',
+                "name" => "post",
+                "label" => __("Post", "publishpress-future-pro"),
+                "icon" => [
+                    "src" => "document",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
             ],
             [
-                'name' => 'conditional',
-                'label' => __('Conditional', 'publishpress-future-pro'),
-                'icon' => [
-                    'src' => 'document',
-                    'background' => '#ffffff',
-                    'foreground' => '#1e1e1e',
+                "name" => "conditional",
+                "label" => __("Conditional", "publishpress-future-pro"),
+                "icon" => [
+                    "src" => "document",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
             ],
         ];
+    }
+
+    private function convertInstancesToArray($instances): array
+    {
+        return array_map(function ($instance) {
+            return [
+                "type" => $instance->getType(),
+                "name" => $instance->getName(),
+                "label" => $instance->getLabel(),
+                "category" => $instance->getCategory(),
+                "frecency" => $instance->getFrecency(),
+                "icon" => [
+                    "src" => $instance->getIcon(),
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
+                "settingsSchema" => $instance->getSettingsSchema(),
+            ];
+        }, $instances);
     }
 
     private function getDefaultTriggers()
     {
-        return [
-            [
-                'type' => 'defaultTrigger',
-                'name' => 'core/save-post',
-                'label' => __('Post is saved', 'publishpress-future-pro'),
-                'category' => 'post',
-                'frecency' => 1,
-                'icon' => [
-                    'src' => 'document',
-                    'background' => '#ffffff',
-                    'foreground' => '#1e1e1e',
-                ],
-            ],
-        ];
+        $triggersInstances = [new CoreOnSavePost()];
+
+        return $this->convertInstancesToArray($triggersInstances);
     }
 
     private function getDefaultActions()
     {
-        return [
-            [
-                'type' => 'defaultAction',
-                'name' => 'core/update-post',
-                'label' => __('Update Post', 'publishpress-future-pro'),
-                'category' => 'post',
-                'frecency' => 1,
-                'icon' => [
-                    'src' => 'document',
-                    'background' => '#ffffff',
-                    'foreground' => '#1e1e1e',
-                ],
-            ],
-            [
-                'type' => 'defaultAction',
-                'name' => 'core/delete-post',
-                'label' => __('Delete Post', 'publishpress-future-pro'),
-                'category' => 'post',
-                'frecency' => 1,
-                'icon' => [
-                    'src' => 'document',
-                    'background' => '#ffffff',
-                    'foreground' => '#1e1e1e',
-                ],
-            ],
-        ];
+        $actionsInstances = [new CoreDeletePost(), new CoreUpdatePost()];
+
+        return $this->convertInstancesToArray($actionsInstances);
     }
 
     private function getDefaultFlows()
     {
-        return [
-            [
-                'type' => 'flowIfElse',
-                'name' => 'core/if-else',
-                'label' => __('If/Else', 'publishpress-future-pro'),
-                'category' => 'conditional',
-                'frecency' => 1,
-                'icon' => [
-                    'src' => 'document',
-                    'background' => '#ffffff',
-                    'foreground' => '#1e1e1e',
-                ],
-            ]
-        ];
+        $flowsInstances = [new IfElse()];
+
+        return $this->convertInstancesToArray($flowsInstances);
     }
 
     private function applyDefaultParams(array $nodes, string $type): array
@@ -125,20 +106,22 @@ class NodeTypesModel implements NodeTypesModelInterface
         $normalized = [];
 
         $defaultNodeAttributes = [
-            'id' => '',
-            'type' => $type,
-            'name' => '',
-            'label' => '',
-            'initiatlAttributes' => [],
-            'category' => '',
-            'disabled' => false,
-            'isDisabled' => false,
-            'frecency' => 1,
-            'icon' => [
-                'src' => 'document',
-                'background' => '#ffffff',
-                'foreground' => '#1e1e1e',
+            "id" => "",
+            "type" => $type,
+            "name" => "",
+            "label" => "",
+            "initiatlAttributes" => [],
+            "category" => "",
+            "disabled" => false,
+            "isDisabled" => false,
+            "frecency" => 1,
+            "icon" => [
+                "src" => "document",
+                "background" => "#ffffff",
+                "foreground" => "#1e1e1e",
             ],
+            "version" => "1",
+            "settingsSchema" => [],
         ];
 
         foreach ($nodes as $index => $node) {
@@ -155,7 +138,10 @@ class NodeTypesModel implements NodeTypesModelInterface
         }
 
         $this->triggers = $this->applyDefaultParams(
-            $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_TRIGGERS, $this->getDefaultTriggers()),
+            $this->hooks->applyFilters(
+                HooksAbstract::FILTER_WORKFLOW_TRIGGERS,
+                $this->getDefaultTriggers()
+            ),
             self::NODE_TYPE_TRIGGER
         );
 
@@ -169,7 +155,10 @@ class NodeTypesModel implements NodeTypesModelInterface
         }
 
         $this->actions = $this->applyDefaultParams(
-            $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_ACTIONS, $this->getDefaultActions()),
+            $this->hooks->applyFilters(
+                HooksAbstract::FILTER_WORKFLOW_ACTIONS,
+                $this->getDefaultActions()
+            ),
             self::NODE_TYPE_ACTION
         );
 
@@ -183,7 +172,10 @@ class NodeTypesModel implements NodeTypesModelInterface
         }
 
         $this->flows = $this->applyDefaultParams(
-            $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_FLOWS, $this->getDefaultFlows()),
+            $this->hooks->applyFilters(
+                HooksAbstract::FILTER_WORKFLOW_FLOWS,
+                $this->getDefaultFlows()
+            ),
             self::NODE_TYPE_FLOW
         );
 
@@ -196,7 +188,10 @@ class NodeTypesModel implements NodeTypesModelInterface
             return $this->categories;
         }
 
-        $this->categories = $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_NODE_CATEGORIES, $this->getDefaultCategories());
+        $this->categories = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_WORKFLOW_NODE_CATEGORIES,
+            $this->getDefaultCategories()
+        );
 
         return $this->categories;
     }

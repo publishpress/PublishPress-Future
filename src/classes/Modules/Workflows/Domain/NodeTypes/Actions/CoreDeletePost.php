@@ -9,7 +9,7 @@ class CoreDeletePost implements NodeTypeInterface
 {
     public function getType(): string
     {
-        return NodeTypesModel::NODE_TYPE_ACTION;
+        return "genericAction";
     }
 
     public function getName(): string
@@ -35,5 +35,23 @@ class CoreDeletePost implements NodeTypeInterface
     public function getCategory(): string
     {
         return "post";
+    }
+
+    public function getSettingsSchema(): array
+    {
+        return [
+            "type" => "object",
+            "properties" => [
+                "delete_trash" => [
+                    "type" => "boolean",
+                    "default" => true,
+                    "label" => __("Delete to trash", "publishpress-future-pro"),
+                    "description" => __(
+                        "Delete the post to trash instead of permanently deleting it.",
+                        "publishpress-future-pro"
+                    ),
+                ],
+            ],
+        ];
     }
 }

@@ -1,11 +1,30 @@
-.react-flow__node-defaultTrigger {
-    background-color: blueviolet;
+.react-flow__node {
+    padding: 10px;
+    border-radius: 5px;
+    color: #171717;
+    font-size: 12px;
+    min-width: 140px;
+    box-sizing: border-box;
+    border: 1px solid transparent;
 }
 
-.react-flow__node-defaultAction {
-    background-color: blue;
+.react-flow__node-label {
+    text-align: center;
+    width: 100%;
+}
+
+.react-flow__node-genericTrigger {
+    background-color: #6d6a75;
+}
+
+.react-flow__node-genericAction {
+    background-color: #43c5ce;
 }
 
 .react-flow__node-flowIfElse {
-    background-color: green;
+    background-color: #d6eb6d;
+}
+
+.react-flow__node.selected {
+    border: 1px solid #2d2a15;
 }

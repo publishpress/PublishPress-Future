@@ -13,18 +13,25 @@ import ReactFlow, {
     useOnSelectionChange,
     useOnViewportChange,
 } from "reactflow";
-import { useCallback, useRef, useLayoutEffect, useEffect, Platform } from "@wordpress/element";
+import {
+    useCallback,
+    useRef,
+    useLayoutEffect,
+    useEffect,
+    Platform,
+} from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
 import { SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
-import DefaultTriggerNode from "../node-types/default-trigger";
-import DefaultActionNode from "../node-types/default-action";
+import GenericTriggerNode from "../node-types/generic-trigger";
+import GenericActionNode from "../node-types/generic-action";
 import FlowIfElseNode from "../node-types/flow-if-else";
 
+import { AUTO_LAYOUT_DEFAULT_DIRECTION } from "./auto-layout/constants";
 import {
-    AUTO_LAYOUT_DEFAULT_DIRECTION,
-} from "./auto-layout/constants";
-import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from "../settings-sidebar/constants";
+    SIDEBAR_NODE_EDGE,
+    SIDEBAR_WORKFLOW,
+} from "../settings-sidebar/constants";
 
 const GRID_SIZE = 15;
 
@@ -38,7 +45,9 @@ export const FlowEditor = (props) => {
         activeComplementaryArea,
         initialViewport,
     } = useSelect((select) => {
-        const activeComplementaryArea = select('core/interface').getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
+        const activeComplementaryArea = select(
+            "core/interface",
+        ).getActiveComplementaryArea(SLOT_SCOPE_WORKFLOW_EDITOR);
 
         return {
             nodes: select(workflowStore).getNodes(),
@@ -46,9 +55,11 @@ export const FlowEditor = (props) => {
             selectedNodes: select(workflowStore).getSelectedNodes(),
             selectedEdges: select(workflowStore).getSelectedEdges(),
             activeComplementaryArea: activeComplementaryArea,
-            hasActiveSideBar: activeComplementaryArea !== null && activeComplementaryArea !== 'null/undefined',
+            hasActiveSideBar:
+                activeComplementaryArea !== null &&
+                activeComplementaryArea !== "null/undefined",
             initialViewport: select(workflowStore).getInitialViewport(),
-        }
+        };
     });
 
     const {
@@ -59,9 +70,7 @@ export const FlowEditor = (props) => {
         setEditedWorkflowAttribute,
     } = useDispatch(workflowStore);
 
-    const {
-        openGeneralSidebar,
-    } = useDispatch(editorStore);
+    const { openGeneralSidebar } = useDispatch(editorStore);
 
     const reactFlowWrapperRef = useRef(null);
     const reactFlowInstance = useReactFlow();
@@ -70,26 +79,23 @@ export const FlowEditor = (props) => {
     const proOptions = {
         // TODO: Change this to true after we start supporting the pro version of ReactFlow.
         hideAttribution: false,
-    }
+    };
 
     const editorStyle = {
         backgroundColor: "#ffffff",
-    }
+    };
 
     const nodeTypes = {
-        defaultTrigger: DefaultTriggerNode,
-        defaultAction: DefaultActionNode,
+        genericTrigger: GenericTriggerNode,
+        genericAction: GenericActionNode,
         flowIfElse: FlowIfElseNode,
     };
 
     const updateFlowInEditedWorkflow = useCallback(() => {
         // We need to delay the update of the flow to avoid missing the changes.
-        setTimeout(
-            () => {
-                setEditedWorkflowAttribute('flow', reactFlowInstance.toObject());
-            },
-            400
-        );
+        setTimeout(() => {
+            setEditedWorkflowAttribute("flow", reactFlowInstance.toObject());
+        }, 400);
     }, [reactFlowInstance]);
 
     useOnViewportChange({
@@ -110,24 +116,24 @@ export const FlowEditor = (props) => {
             setNodes(applyNodeChanges(changes, nodes));
             updateFlowInEditedWorkflow();
         },
-        [nodes]
+        [nodes],
     );
 
     const onEdgesChange = useCallback(
         (changes) => {
             // TODO: Try to use the changes for handling the undo/redo state.
-            setEdges(applyEdgeChanges(changes, edges))
+            setEdges(applyEdgeChanges(changes, edges));
             updateFlowInEditedWorkflow();
         },
-        [edges]
+        [edges],
     );
 
     const onEdgeUpdate = useCallback(
         (oldEdge, newConnection) => {
-            setEdges(updateEdge(oldEdge, newConnection, edges))
+            setEdges(updateEdge(oldEdge, newConnection, edges));
             updateFlowInEditedWorkflow();
         },
-        [edges]
+        [edges],
     );
 
     const onConnect = useCallback(
@@ -137,10 +143,10 @@ export const FlowEditor = (props) => {
                 ...defaultEdgeProps,
             };
 
-            setEdges(addEdge(params, edges))
+            setEdges(addEdge(params, edges));
             updateFlowInEditedWorkflow();
         },
-        [edges]
+        [edges],
     );
 
     const getId = () => `node_${+new Date()}`;
@@ -150,39 +156,49 @@ export const FlowEditor = (props) => {
         event.dataTransfer.dropEffect = "move";
     }, []);
 
-    const createNodeAfterDrop = useCallback(({ item, position }) => {
-        const newNode = {
-            id: getId(),
-            type: item.type,
-            position: position,
-            data: {
-                label: item.label,
-                type: item.type
-            },
-        };
+    const createNodeAfterDrop = useCallback(
+        ({ item, position }) => {
+            const newNode = {
+                id: getId(),
+                type: item.type,
+                position: position,
+                data: {
+                    label: item.label,
+                    type: item.type,
+                    settingsSchema: item.settingsSchema,
+                    category: item.category,
+                    version: item.version,
+                },
+            };
 
-        setNodes(nodes.concat(newNode));
+            setNodes(nodes.concat(newNode));
 
-        updateFlowInEditedWorkflow();
-    }, [nodes]);
+            updateFlowInEditedWorkflow();
+        },
+        [nodes],
+    );
 
+    const onDrop = useCallback(
+        (event) => {
+            event.preventDefault();
 
-    const onDrop = useCallback((event) => {
-        event.preventDefault();
+            const position = reactFlowInstance.screenToFlowPosition({
+                x: event.clientX,
+                y: event.clientY,
+            });
 
-        const position = reactFlowInstance.screenToFlowPosition({
-            x: event.clientX,
-            y: event.clientY,
-        });
+            const dataTransferItem = event.dataTransfer.getData(
+                "application/future-workflow-editor-node",
+            );
+            const item = JSON.parse(dataTransferItem);
 
-        const dataTransferItem = event.dataTransfer.getData('application/future-workflow-editor-node');
-        const item = JSON.parse(dataTransferItem);
-
-        createNodeAfterDrop({
-            item: item,
-            position: position,
-        })
-    }, [reactFlowInstance, nodes]);
+            createNodeAfterDrop({
+                item: item,
+                position: position,
+            });
+        },
+        [reactFlowInstance, nodes],
+    );
 
     const onNodesDelete = useCallback(() => {
         updateFlowInEditedWorkflow();
@@ -196,28 +212,26 @@ export const FlowEditor = (props) => {
         reactFlowInstance.fitView();
     }, [reactFlowInstance]);
 
-    const applyLayout = useLayoutedElements(
-        {
-            nodes,
-            edges,
-            onLayout: (layoutedNodes, layoutedEdges) => {
-                setNodes(layoutedNodes);
-                setEdges(layoutedEdges);
-            },
-            onAnimationFrame: () => {
-                fitView();
+    const applyLayout = useLayoutedElements({
+        nodes,
+        edges,
+        onLayout: (layoutedNodes, layoutedEdges) => {
+            setNodes(layoutedNodes);
+            setEdges(layoutedEdges);
+        },
+        onAnimationFrame: () => {
+            fitView();
 
-                updateFlowInEditedWorkflow();
-            },
-        }
-    );
+            updateFlowInEditedWorkflow();
+        },
+    });
 
     useOnSelectionChange({
         onChange: ({ nodes, edges }) => {
             setSelectedNodes(nodes.map((node) => node.id));
             setSelectedEdges(edges.map((edge) => edge.id));
 
-            if (! hasActiveSideBar) {
+            if (!hasActiveSideBar) {
                 return;
             }
 
@@ -228,8 +242,8 @@ export const FlowEditor = (props) => {
             if (nodes.length > 0 || edges.length > 0) {
                 openGeneralSidebar(SIDEBAR_NODE_EDGE);
             }
-        }
-    })
+        },
+    });
 
     const onAutoLayout = useCallback(() => {
         applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
@@ -253,8 +267,11 @@ export const FlowEditor = (props) => {
 
     // Fix the behavior when the sidebar is closed and opened again, making sure a sidebar is loaded.
     useEffect(() => {
-        if (activeComplementaryArea === 'null/undefined') {
-            const sidebar = selectedNodes.length > 0 || selectedEdges.length > 0 ? SIDEBAR_NODE_EDGE : SIDEBAR_WORKFLOW;
+        if (activeComplementaryArea === "null/undefined") {
+            const sidebar =
+                selectedNodes.length > 0 || selectedEdges.length > 0
+                    ? SIDEBAR_NODE_EDGE
+                    : SIDEBAR_WORKFLOW;
 
             openGeneralSidebar(sidebar);
         }
@@ -262,7 +279,7 @@ export const FlowEditor = (props) => {
 
     return (
         <div className="reactflow-wrapper" ref={reactFlowWrapperRef}>
-            <AutoLayout onLayout={onAutoLayout}/>
+            <AutoLayout onLayout={onAutoLayout} />
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -286,19 +303,16 @@ export const FlowEditor = (props) => {
                     pannable
                     zoomable
                     nodeColor={(node) => {
-                        if (node.type === 'defaultTrigger') return '#FFCC00';
-                        if (node.type === 'defaultAction') return '#FFCC30';
-                        if (node.type === 'flowIfElse') return '#FFCC60';
+                        if (node.type === "genericTrigger") return "#FFCC00";
+                        if (node.type === "genericAction") return "#FFCC30";
+                        if (node.type === "flowIfElse") return "#FFCC60";
                     }}
                 />
-                <Background
-                    variant="dots"
-                    gap={GRID_SIZE}
-                />
+                <Background variant="dots" gap={GRID_SIZE} />
                 <Controls />
             </ReactFlow>
         </div>
     );
-}
+};
 
 export default FlowEditor;

@@ -4,15 +4,28 @@ import { memo } from '@wordpress/element';
 export const FlowIfElseNode = memo(({ data, isConnectable }) => {
     return (
         <>
-            <div>
-                Custom Color Picker Node: <strong>{data.color}</strong>
+            <Handle
+                type="target"
+                position={Position.Top}
+                id="socket-input"
+                style={{ left: '50%', background: '#000' }}
+                isConnectable={isConnectable}
+            />
+            <div className='react-flow__node-label'>
+                {data.label}
             </div>
-            <input className="nodrag" type="color" onChange={data.onChange} defaultValue={data.color} />
             <Handle
                 type="source"
                 position={Position.Bottom}
-                id="a"
-                style={{ left: '50%', background: '#555' }}
+                id="socket-true"
+                style={{ left: '40%', background: 'blue' }}
+                isConnectable={isConnectable}
+            />
+            <Handle
+                type="source"
+                position={Position.Bottom}
+                id="socket-false"
+                style={{ left: '60%', background: 'red' }}
                 isConnectable={isConnectable}
             />
         </>

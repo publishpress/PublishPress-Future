@@ -2,8 +2,8 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
-
-interface NodeTypeInterface {
+interface NodeTypeInterface
+{
     public function getType(): string;
 
     public function getName(): string;
@@ -15,4 +15,6 @@ interface NodeTypeInterface {
     public function getFrecency(): int;
 
     public function getCategory(): string;
+
+    public function getSettingsSchema(): array;
 }
