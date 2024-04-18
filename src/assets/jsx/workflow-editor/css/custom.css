@@ -30,3 +30,7 @@
 .react-flow__node-group.selectable:focus-visible {
     box-shadow: 0 0 0 2px #1a192b;
 }
+
+.react-flow {
+    background-color: #e1e1e1 !important;
+}
