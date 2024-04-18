@@ -8,7 +8,7 @@ import { dragHandle } from '@wordpress/icons';
 /**
  * Internal dependencies
  */
-import NodeIcon from './node-icon';
+import NodeIcon from '../node-icon';
 
 export default function NodeDraggableChip({ node, icon }) {
 	return (

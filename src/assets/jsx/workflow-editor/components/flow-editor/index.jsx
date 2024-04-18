@@ -163,10 +163,12 @@ export const FlowEditor = (props) => {
                 type: item.type,
                 position: position,
                 data: {
-                    label: item.label,
                     type: item.type,
+                    label: item.label,
+                    description: item.description,
                     settingsSchema: item.settingsSchema,
                     category: item.category,
+                    icon: item.icon,
                     version: item.version,
                 },
             };

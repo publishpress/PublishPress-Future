@@ -44,7 +44,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                 "name" => "post",
                 "label" => __("Post", "publishpress-future-pro"),
                 "icon" => [
-                    "src" => "document",
+                    "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
@@ -53,7 +53,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                 "name" => "conditional",
                 "label" => __("Conditional", "publishpress-future-pro"),
                 "icon" => [
-                    "src" => "document",
+                    "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
@@ -68,6 +68,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                 "type" => $instance->getType(),
                 "name" => $instance->getName(),
                 "label" => $instance->getLabel(),
+                "description" => $instance->getDescription(),
                 "category" => $instance->getCategory(),
                 "frecency" => $instance->getFrecency(),
                 "icon" => [
@@ -110,13 +111,14 @@ class NodeTypesModel implements NodeTypesModelInterface
             "type" => $type,
             "name" => "",
             "label" => "",
+            "description" => "",
             "initiatlAttributes" => [],
             "category" => "",
             "disabled" => false,
             "isDisabled" => false,
             "frecency" => 1,
             "icon" => [
-                "src" => "document",
+                "src" => "media-document",
                 "background" => "#ffffff",
                 "foreground" => "#1e1e1e",
             ],

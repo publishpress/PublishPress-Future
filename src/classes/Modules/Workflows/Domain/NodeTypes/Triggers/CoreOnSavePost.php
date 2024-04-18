@@ -3,7 +3,6 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
-use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreOnSavePost implements NodeTypeInterface
 {
@@ -22,9 +21,14 @@ class CoreOnSavePost implements NodeTypeInterface
         return __("Post is saved", "publishpress-future-pro");
     }
 
+    public function getDescription(): string
+    {
+        return __("This trigger is fired when a post is saved.", "publishpress-future-pro");
+    }
+
     public function getIcon(): string
     {
-        return "document";
+        return "media-document";
     }
 
     public function getFrecency(): int

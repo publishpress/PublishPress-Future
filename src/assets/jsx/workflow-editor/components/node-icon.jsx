@@ -12,47 +12,51 @@ import { SiWoo } from 'react-icons/si';
 import { FaUser } from 'react-icons/fa';
 import { HiMiniDocumentText } from 'react-icons/hi2';
 
-export default function NodeIcon( { icon, showColors = false, className } ) {
-	if ( icon?.src === 'block-default' ) {
+export function NodeIcon({ icon, showColors = false, className }) {
+	const iconSrc = icon?.src || icon;
+
+	if (iconSrc === 'block-default') {
 		icon = {
 			src: blockDefault,
 		};
 	}
 
-	if ( icon?.src === 'document' ) {
+	if (iconSrc === 'document' || iconSrc === 'media-document') {
 		icon = {
 			src: HiMiniDocumentText,
 		};
 	}
 
-	if ( icon?.src === 'users' ) {
+	if (iconSrc === 'users') {
 		icon = {
 			src: FaUser,
 		};
 	}
 
-	if ( icon?.src === 'woo' ) {
+	if (iconSrc === 'woo') {
 		icon = {
 			src: SiWoo,
 		};
 	}
 
-	const renderedIcon = <Icon icon={ icon && icon.src ? icon.src : icon } />;
+	const renderedIcon = <Icon icon={icon && icon.src ? icon.src : icon} />;
 	const style = showColors
 		? {
-				backgroundColor: icon && icon.background,
-				color: icon && icon.foreground,
-		  }
+			backgroundColor: icon && icon.background,
+			color: icon && icon.foreground,
+		}
 		: {};
 
 	return (
 		<span
-			style={ style }
-			className={ classnames( 'block-editor-block-icon', className, {
+			style={style}
+			className={classnames('block-editor-block-icon', className, {
 				'has-colors': showColors,
-			} ) }
+			})}
 		>
-			{ renderedIcon }
+			{renderedIcon}
 		</span>
 	);
 }
+
+export default NodeIcon;

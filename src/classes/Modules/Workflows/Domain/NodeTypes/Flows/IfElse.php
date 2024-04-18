@@ -21,9 +21,14 @@ class IfElse implements NodeTypeInterface
         return __("If / Else", "publishpress-future-pro");
     }
 
+    public function getDescription(): string
+    {
+        return __("This flow allows you to create a conditional branch.", "publishpress-future-pro");
+    }
+
     public function getIcon(): string
     {
-        return "document";
+        return "media-document";
     }
 
     public function getFrecency(): int

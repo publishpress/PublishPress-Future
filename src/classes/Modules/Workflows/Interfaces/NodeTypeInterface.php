@@ -10,6 +10,8 @@ interface NodeTypeInterface
 
     public function getLabel(): string;
 
+    public function getDescription(): string;
+
     public function getIcon(): string;
 
     public function getFrecency(): int;

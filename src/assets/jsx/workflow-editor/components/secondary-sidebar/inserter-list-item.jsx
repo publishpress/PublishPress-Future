@@ -13,7 +13,7 @@ import { ENTER } from '@wordpress/keycodes';
 /**
  * Internal dependencies
  */
-import NodeIcon from './node-icon';
+import NodeIcon from '../node-icon';
 import { InserterListboxItem } from './inserter-listbox';
 import InserterDraggableNodes from './inserter-draggable-nodes';
 import { isAppleOS } from '../../utils';

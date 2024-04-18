@@ -22,9 +22,14 @@ class CoreUpdatePost implements NodeTypeInterface
         return __("Update Post", "publishpress-future-pro");
     }
 
+    public function getDescription(): string
+    {
+        return __("This action updates a post.", "publishpress-future-pro");
+    }
+
     public function getIcon(): string
     {
-        return "document";
+        return "media-document";
     }
 
     public function getFrecency(): int

@@ -1,49 +1,26 @@
 import { __ } from "@wordpress/i18n";
-import { GrObjectGroup } from "react-icons/gr";
 
 import InspectorCard from "../inspector-card";
+import NodeIcon from "../node-icon";
+import { useEffect } from "@wordpress/element";
 
 export const NodeInspectorCard = ({ node }) => {
-    const nodeTypeLabels = {
-        genericAction: __("Action", "publishpress-future-pro"),
-        genericTrigger: __("Trigger", "publishpress-future-pro"),
-        flowIfElse: __("If/Else", "publishpress-future-pro"),
-    };
+    const nodeIcon = node?.data?.icon || "media-document";
+    const nodeLabel = node?.data?.label || __("Node", "publishpress-future-pro");
+    const nodeDescription = node?.data?.description || __("No description", "publishpress-future-pro");
 
-    const nodeTypeDescriptions = {
-        genericAction: __(
-            "An action is a task that can be executed by the workflow.",
-            "publishpress-future-pro",
-        ),
-        genericTrigger: __(
-            "A trigger is an event that starts the workflow.",
-            "publishpress-future-pro",
-        ),
-        flowIfElse: __(
-            "An If/Else node is a conditional node that can branch the workflow based on a condition.",
-            "publishpress-future-pro",
-        ),
-    };
+    const Icon = <NodeIcon icon={nodeIcon} />;
 
-    const nodeTypeLabel = node
-        ? nodeTypeLabels[node.data.type]
-        : __("Node", "publishpress-future-pro");
-
-    const nodeTypeDescription = node
-        ? nodeTypeDescriptions[node.data.type]
-        : __(
-              "A node is a basic element of the workflow.",
-              "publishpress-future-pro",
-          );
-    const nodeIcon = <GrObjectGroup />;
-
-    console.log(node);
+    // Debugging
+    useEffect(() => {
+        console.log(node);
+    }, [node])
 
     return (
         <InspectorCard
-            title={nodeTypeLabel}
-            description={nodeTypeDescription}
-            icon={nodeIcon}
+            title={nodeLabel}
+            description={nodeDescription}
+            icon={Icon}
         />
     );
 };
