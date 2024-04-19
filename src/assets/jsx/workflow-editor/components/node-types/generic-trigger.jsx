@@ -8,8 +8,8 @@ export const GenericTriggerNode = memo(({ data, isConnectable }) => {
             <Handle
                 type="source"
                 position={Position.Bottom}
-                id="a"
-                style={{ left: "50%", background: "#555" }}
+                id="socket-output"
+                style={{ left: "50%" }}
                 isConnectable={isConnectable}
             />
         </>

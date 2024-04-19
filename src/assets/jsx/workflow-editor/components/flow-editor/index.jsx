@@ -33,7 +33,7 @@ import {
     SIDEBAR_WORKFLOW,
 } from "../settings-sidebar/constants";
 
-const GRID_SIZE = 15;
+const GRID_SIZE = 10;
 
 export const FlowEditor = (props) => {
     const {

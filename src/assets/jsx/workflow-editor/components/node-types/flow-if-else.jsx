@@ -8,7 +8,7 @@ export const FlowIfElseNode = memo(({ data, isConnectable }) => {
                 type="target"
                 position={Position.Top}
                 id="socket-input"
-                style={{ left: '50%', background: '#000' }}
+                style={{ left: '50%' }}
                 isConnectable={isConnectable}
             />
             <div className='react-flow__node-label'>
@@ -18,14 +18,14 @@ export const FlowIfElseNode = memo(({ data, isConnectable }) => {
                 type="source"
                 position={Position.Bottom}
                 id="socket-true"
-                style={{ left: '40%', background: 'blue' }}
+                style={{ left: '40%' }}
                 isConnectable={isConnectable}
             />
             <Handle
                 type="source"
                 position={Position.Bottom}
                 id="socket-false"
-                style={{ left: '60%', background: 'red' }}
+                style={{ left: '60%' }}
                 isConnectable={isConnectable}
             />
         </>
