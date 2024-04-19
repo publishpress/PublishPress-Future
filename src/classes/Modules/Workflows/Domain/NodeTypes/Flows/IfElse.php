@@ -18,7 +18,7 @@ class IfElse implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("If / Else", "publishpress-future-pro");
+        return __("Condition", "publishpress-future-pro");
     }
 
     public function getDescription(): string
@@ -38,7 +38,7 @@ class IfElse implements NodeTypeInterface
 
     public function getCategory(): string
     {
-        return "post";
+        return "conditional";
     }
 
     public function getSettingsSchema(): array
