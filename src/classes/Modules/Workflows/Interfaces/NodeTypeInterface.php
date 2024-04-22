@@ -19,4 +19,6 @@ interface NodeTypeInterface
     public function getCategory(): string;
 
     public function getSettingsSchema(): array;
+
+    public function getOutputSchema(): array;
 }

@@ -44,19 +44,11 @@ class CoreDeletePost implements NodeTypeInterface
 
     public function getSettingsSchema(): array
     {
-        return [
-            "type" => "object",
-            "properties" => [
-                "delete_trash" => [
-                    "type" => "boolean",
-                    "default" => true,
-                    "label" => __("Delete to trash", "publishpress-future-pro"),
-                    "description" => __(
-                        "Delete the post to trash instead of permanently deleting it.",
-                        "publishpress-future-pro"
-                    ),
-                ],
-            ],
-        ];
+        return [];
+    }
+
+    public function getOutputSchema(): array
+    {
+        return [];
     }
 }

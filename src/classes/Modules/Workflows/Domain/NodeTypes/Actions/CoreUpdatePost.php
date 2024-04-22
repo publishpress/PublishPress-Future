@@ -46,4 +46,9 @@ class CoreUpdatePost implements NodeTypeInterface
     {
         return [];
     }
+
+    public function getOutputSchema(): array
+    {
+        return [];
+    }
 }

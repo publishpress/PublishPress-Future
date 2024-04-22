@@ -247,3 +247,10 @@ export function* deleteWorkflow () {
         console.log('error', error);
     }
 }
+
+export function setNodeSettings (nodeId, settings) {
+    return {
+        type: 'SET_NODE_SETTINGS',
+        payload: { nodeId, settings },
+    };
+}

@@ -45,13 +45,37 @@ class CoreOnSavePost implements NodeTypeInterface
     {
         return [
             [
-                "type" => "post_query",
-                "label" => __("Post query", "publishpress-future-pro"),
-                "description" => __(
-                    "Define the posts that will trigger this action.",
-                    "publishpress-future-pro"
-                ),
+                "label" => __("Post Query", "publishpress-future-pro"),
+                "fields" => [
+                    [
+                        "name" => "post_query",
+                        "type" => "post_query",
+                        "label" => __("Post query", "publishpress-future-pro"),
+                        "description" => __(
+                            "The query defines the posts that will trigger this action.",
+                            "publishpress-future-pro"
+                        ),
+                    ],
+                ]
+            ]
+        ];
+    }
+
+    public function getOutputSchema(): array
+    {
+        return [
+            [
+                'name' => 'post',
+                'type' => 'post',
+                'title' => __("New Post", "publishpress-future-pro"),
+                'description' => __("The post that was saved, with the new properties.", "publishpress-future-pro"),
             ],
+            [
+                'name' => 'old_post',
+                'type' => 'post',
+                'title' => __("Old Post", "publishpress-future-pro"),
+                'description' => __("The post that was saved, with the old properties.", "publishpress-future-pro"),
+            ]
         ];
     }
 }
@@ -60,10 +84,11 @@ class CoreOnSavePost implements NodeTypeInterface
 QUERY:
 
 * post id (one or more)
-* post status (one or more)
 * post type (one or more - search, or allow custom typed values)
+* post status (one or more)
 * post author (one or more)
 * post author role (one or more)
+* post author capability (one or more)
 * post taxonomy (one or more, taxonomy and terms)
 * post title (equals, contains, starts with, ends with)
 * post content (equals, contains, starts with, ends with)
@@ -73,6 +98,12 @@ QUERY:
 * post parent
 * post slug (equals, contains, starts with, ends with)
 * meta data (key, value, compare)
+* user meta data (key, value, compare)
+* user role (one or more)
+* user capability (one or more)
+* user email (equals, contains, starts with, ends with)
+* user login (equals, contains, starts with, ends with)
+* user nicename (equals, contains, starts with, ends with)
 */
 
 /*

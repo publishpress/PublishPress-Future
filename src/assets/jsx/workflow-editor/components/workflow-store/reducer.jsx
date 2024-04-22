@@ -307,6 +307,29 @@ const deleteWorkflowFailure = (state, action) => {
     };
 }
 
+const setNodeSettings = (state, action) => {
+    const { payload } = action;
+
+    // Update the settings of the node with the given ID
+    const updatedNodes = state.nodes.map(node => {
+        if (node.id === payload.nodeId) {
+            return {
+                ...node,
+                data: {
+                    ...node.data,
+                    settings: payload.settings
+                }
+            };
+        }
+        return node;
+    });
+
+    return {
+        ...state,
+        nodes: updatedNodes
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -365,6 +388,8 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return deleteWorkflowSuccess(state, action);
         case 'DELETE_WORKFLOW_FAILURE':
             return deleteWorkflowFailure(state, action);
+        case 'SET_NODE_SETTINGS':
+            return setNodeSettings(state, action);
     }
 
     return state;

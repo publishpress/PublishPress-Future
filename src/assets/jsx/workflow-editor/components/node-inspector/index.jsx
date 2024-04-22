@@ -8,6 +8,8 @@ import { sprintf } from "@wordpress/i18n";
 import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
 import InspectorWarning from "../inspector-warning";
+import NodeSettingsPanel from "./node-settings-panel";
+import { __experimentalVStack as VStack } from "@wordpress/components";
 
 export const NodeInspector = () => {
     const {
@@ -42,8 +44,10 @@ export const NodeInspector = () => {
     const onlyEdgesSelected =
         selectedNodes.length === 0 && selectedEdges.length > 0;
 
+    const nodeHasSettings = selectedNode?.data?.settingsSchema?.length > 0;
+
     return (
-        <HStack className="editor-element-inspector__panel">
+        <VStack className="editor-element-inspector__panel">
             {selectedElementsCount === 0 && (
                 <InspectorWarning>
                     {__("No element selected.", "publishpress-future-pro")}
@@ -91,7 +95,10 @@ export const NodeInspector = () => {
 
             {onlyNodesSelected && selectedElementsCount === 1 && (
                 <>
-                    <NodeInspectorCard node={selectedNode} />
+                    <NodeInspectorCard selectedNode={selectedNode} />
+                    {nodeHasSettings && (
+                        <NodeSettingsPanel selectedNode={selectedNode} />
+                    )}
                     <div className="components-tools-panel"></div>
                 </>
             )}
@@ -109,7 +116,7 @@ export const NodeInspector = () => {
                     <div className="components-tools-panel"></div>
                 </>
             )}
-        </HStack>
+        </VStack>
     );
 };
 

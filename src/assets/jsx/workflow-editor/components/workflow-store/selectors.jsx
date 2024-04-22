@@ -28,10 +28,6 @@ export const getSelectedEdges = (state) => {
     return state.selectedEdges;
 };
 
-// export const hasSelectedNodes = createRegistrySelector( (select) => (state) => {
-//     console.log(select, state);
-//     return state.selectedNodes.length > 0;
-// });
 export const hasSelectedNodes = (state) => {
     return state.selectedNodes.length > 0;
 };

@@ -45,4 +45,9 @@ class IfElse implements NodeTypeInterface
     {
         return [];
     }
+
+    public function getOutputSchema(): array
+    {
+        return [];
+    }
 }
