@@ -1,6 +1,6 @@
-import { FormTokenField } from "@wordpress/components";
+import { FormTokenField, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { useState, useEffect } from "@wordpress/element";
+import { useState } from "@wordpress/element";
 import { InlineMultiSelect } from "../inline-multi-select";
 
 export function PostQueryField({ field, settings, onChange }) {
@@ -74,6 +74,23 @@ export function PostQueryField({ field, settings, onChange }) {
                     const newSettings = {
                         ...fieldSettings,
                         postStatus: selectedValues,
+                    };
+
+                    setFieldSettings(newSettings);
+
+                    if (onChange) {
+                        onChange(field.name, newSettings);
+                    }
+                }}
+            />
+
+            <ToggleControl
+                label="Only new posts"
+                checked={fieldSettings['newPost'] || false}
+                onChange={(value) => {
+                    const newSettings = {
+                        ...fieldSettings,
+                        newPost: value,
                     };
 
                     setFieldSettings(newSettings);
