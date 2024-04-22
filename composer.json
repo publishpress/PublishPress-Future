@@ -16,7 +16,8 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "phpstan/extension-installer": true
-    }
+    },
+    "process-timeout": 0
   },
   "repositories": [
     {
