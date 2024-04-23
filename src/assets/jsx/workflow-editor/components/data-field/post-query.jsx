@@ -4,7 +4,7 @@ import { useState } from "@wordpress/element";
 import { InlineMultiSelect } from "../inline-multi-select";
 import BaseField from "./base-field";
 
-export function PostQueryField({ field, settings, onChange }) {
+export function PostQuery({ field, settings, onChange }) {
     const postTypes = [
         { label: "Post", value: "post" },
         { label: "Page", value: "page" },
@@ -103,7 +103,7 @@ export function PostQueryField({ field, settings, onChange }) {
     );
 }
 
-export default PostQueryField;
+export default PostQuery;
 
 
 /*

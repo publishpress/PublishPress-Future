@@ -1,5 +1,5 @@
 import { PanelBody } from "@wordpress/components";
-import PostQueryField from "../data-field/post-query";
+import PostQuery from "../data-field/post-query";
 import { __, sprintf } from "@wordpress/i18n";
 import { store as workflowStore } from "../workflow-store";
 import { useDispatch } from "@wordpress/data";
@@ -38,7 +38,7 @@ export const NodeSettingsPanel = ({ selectedNode }) => {
         switch (field.type) {
             case "post_query":
                 return (
-                    <PostQueryField field={field} settings={fieldSettings} onChange={onChangeSetting} />
+                    <PostQuery field={field} settings={fieldSettings} onChange={onChangeSetting} />
                 );
             case "date_offset":
                 return (
