@@ -28,8 +28,8 @@
 }
 
 .react-flow__node-genericTrigger {
-    background-color: #fff;
-    border: 2px solid #7e798b;
+    background-color: #B594B6;
+    border: 2px solid #B594B6;
 }
 
 .react-flow__node-genericTrigger .react-flow__handle {
@@ -38,8 +38,8 @@
 }
 
 .react-flow__node-genericAction {
-    background-color: #fff;
-    border: 2px solid #43c5ce;
+    background-color: #5BC0EB;
+    border: 2px solid #5BC0EB;
 }
 
 .react-flow__node-genericAction .react-flow__handle {
@@ -48,8 +48,8 @@
 }
 
 .react-flow__node-flowIfElse {
-    background-color: #fff;
-    border: 2px solid #d6eb6d;
+    background-color: #F7D08A;
+    border: 2px solid #F7D08A;
 }
 
 .react-flow__node-flowIfElse .react-flow__handle {

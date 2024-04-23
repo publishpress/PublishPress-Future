@@ -325,7 +325,7 @@ export const FlowEditor = (props) => {
                         if (node.type === "flowIfElse") return "#FFCC60";
                     }}
                 />
-                <Background variant="dots" gap={GRID_SIZE} />
+                <Background variant="dots" color="#ccc" gap={GRID_SIZE} />
                 <Controls />
             </ReactFlow>
         </div>
