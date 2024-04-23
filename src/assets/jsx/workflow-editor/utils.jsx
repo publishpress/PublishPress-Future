@@ -71,6 +71,8 @@ export function getNodeIncomers(node) {
         };
     });
 
+    if (!node) return [];
+
     return getIncomers(node, nodes, edges);
 }
 

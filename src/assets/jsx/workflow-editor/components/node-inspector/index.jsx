@@ -116,15 +116,11 @@ export const NodeInspector = () => {
                     )}
 
                     {selectedNodeHasIncomers && selectedNodeHasInput && (
-                        <VStack>
-                            <HStack>
-                                {nodeIncomers.map((incomer) => (
-                                    <div key={incomer.id}>
-                                        <NodeInputPanel inputSchema={incomer.data.outputSchema} />
-                                    </div>
-                                ))}
-                            </HStack>
-                        </VStack>
+                        <>
+                            {nodeIncomers.map((incomer) => (
+                                <NodeInputPanel key={incomer.id} inputSchema={incomer.data.outputSchema} />
+                            ))}
+                        </>
                     )}
 
                     {nodeHasSettings && (
