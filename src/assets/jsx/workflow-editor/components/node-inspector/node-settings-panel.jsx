@@ -1,9 +1,10 @@
 import { PanelBody } from "@wordpress/components";
-import PostQueryField from "../data-field/post-query-field";
+import PostQueryField from "../data-field/post-query";
 import { __, sprintf } from "@wordpress/i18n";
 import { store as workflowStore } from "../workflow-store";
 import { useDispatch } from "@wordpress/data";
-import { useEffect } from "@wordpress/element";
+import DateOffset from "../data-field/date-offset";
+import Recurrence from "../data-field/recurrence";
 
 export const NodeSettingsPanel = ({ selectedNode }) => {
     const settingsSchema = selectedNode?.data?.settingsSchema || {};
@@ -38,6 +39,14 @@ export const NodeSettingsPanel = ({ selectedNode }) => {
             case "post_query":
                 return (
                     <PostQueryField field={field} settings={fieldSettings} onChange={onChangeSetting} />
+                );
+            case "date_offset":
+                return (
+                    <DateOffset field={field} settings={fieldSettings} onChange={onChangeSetting} />
+                );
+            case "recurrence":
+                return (
+                    <Recurrence field={field} settings={fieldSettings} onChange={onChangeSetting} />
                 );
             default:
                 return (

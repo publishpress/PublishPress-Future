@@ -2,6 +2,7 @@ import { FormTokenField, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useState } from "@wordpress/element";
 import { InlineMultiSelect } from "../inline-multi-select";
+import BaseField from "./base-field";
 
 export function PostQueryField({ field, settings, onChange }) {
     const postTypes = [
@@ -19,10 +20,12 @@ export function PostQueryField({ field, settings, onChange }) {
 
     const [fieldSettings, setFieldSettings] = useState(settings);
 
-    return (
-        <>
-            {field.description && <div className="settings-field-description">{field.description}</div>}
+    const convertListOfLabelsToValues = (list, labels) => {
+        return list.filter((item) => labels.includes(item.label)).map((item) => item.value);
+    }
 
+    return (
+        <BaseField description={field.description}>
             <InlineMultiSelect
                 label={__('Post Type', 'publishpress-future-pro')}
                 value={fieldSettings['postType'] || []}
@@ -96,7 +99,7 @@ export function PostQueryField({ field, settings, onChange }) {
                     }
                 }}
             />
-        </>
+        </BaseField>
     );
 }
 

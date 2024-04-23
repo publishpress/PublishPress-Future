@@ -18,6 +18,7 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\CronSchedulesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 use PublishPress\FuturePro\Modules\Workflows\Rest\RestApiManager;
@@ -176,7 +177,8 @@ return [
         return new Module(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::WORKFLOWS_REST_API_MANAGER),
-            $container->get(ServicesAbstract::NODE_TYPES_MODEL)
+            $container->get(ServicesAbstract::NODE_TYPES_MODEL),
+            $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL)
         );
     },
 
@@ -228,5 +230,9 @@ return [
         return new NodeTypesModel(
             $container->get(ServicesAbstract::HOOKS)
         );
+    },
+
+    ServicesAbstract::CRON_SCHEDULES_MODEL => static function (ContainerInterface $container) {
+        return new CronSchedulesModel();
     },
 ];

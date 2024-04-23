@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
 
@@ -24,11 +25,21 @@ class Module implements InitializableInterface
 
     private $nodeTypesModel;
 
-    public function __construct(HookableInterface $hooksFacade, RestApiManagerInterface $restApiManager, NodeTypesModelInterface $nodeTypesModel)
-    {
+    /**
+     * @var CronSchedulesModelInterface
+     */
+    private $cronSchedulesModel;
+
+    public function __construct(
+        HookableInterface $hooksFacade,
+        RestApiManagerInterface $restApiManager,
+        NodeTypesModelInterface $nodeTypesModel,
+        CronSchedulesModelInterface $cronSchedulesModel
+    ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
         $this->nodeTypesModel = $nodeTypesModel;
+        $this->cronSchedulesModel = $cronSchedulesModel;
     }
 
     public function initialize()
@@ -191,6 +202,7 @@ class Module implements InitializableInterface
                     'actions' => $this->nodeTypesModel->getActions(),
                     'flows' => $this->nodeTypesModel->getFlows(),
                 ],
+                'cronSchedules' => $this->cronSchedulesModel->getCronSchedulesAsOptions(),
             ]
         );
     }
