@@ -19,6 +19,8 @@ class NodeTypesModel implements NodeTypesModelInterface
 
     public const NODE_TYPE_FLOW = "flow";
 
+    public const NODE_VERSION = "1";
+
     public const DEFAULT_ICON_BACKGROUND = "#ffffff";
 
     public const DEFAULT_ICON_FOREGROUND = "#1e1e1e";
@@ -93,21 +95,29 @@ class NodeTypesModel implements NodeTypesModelInterface
 
     private function getDefaultTriggers()
     {
-        $triggersInstances = [new CoreOnSavePost()];
+        $triggersInstances = [
+            new CoreOnSavePost(),
+        ];
 
         return $this->convertInstancesToArray($triggersInstances);
     }
 
     private function getDefaultActions()
     {
-        $actionsInstances = [new CoreDeletePost(), new CoreUpdatePost()];
+        $actionsInstances = [
+            new CoreDeletePost(),
+            new CoreUpdatePost(),
+        ];
 
         return $this->convertInstancesToArray($actionsInstances);
     }
 
     private function getDefaultFlows()
     {
-        $flowsInstances = [new IfElse(), new CoreSchedule()];
+        $flowsInstances = [
+            new IfElse(),
+            new CoreSchedule(),
+        ];
 
         return $this->convertInstancesToArray($flowsInstances);
     }
@@ -132,7 +142,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                 "background" => "#ffffff",
                 "foreground" => "#1e1e1e",
             ],
-            "version" => "1",
+            "version" => self::NODE_VERSION,
             "settingsSchema" => [],
         ];
 

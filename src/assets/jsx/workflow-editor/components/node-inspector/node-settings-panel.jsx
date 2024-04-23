@@ -16,7 +16,7 @@ const DynamicField = ({ type, name, label, value, onChange }) => {
         //     );
         case "date_offset":
             return (
-                <DateOffset name={name} label={label} value={value} onChange={onChange} />
+                <DateOffset name={name} label={label} defaultValue={value} onChange={onChange} />
             );
         // case "recurrence":
         //     return (
