@@ -3,78 +3,77 @@ import PostQuery from "../data-field/post-query";
 import { __, sprintf } from "@wordpress/i18n";
 import { store as workflowStore } from "../workflow-store";
 import { useDispatch } from "@wordpress/data";
-import DateOffset from "../data-field/date-offset";
 import Recurrence from "../data-field/recurrence";
+import { TextControl } from "@wordpress/components";
+import { useState, useCallback, useMemo } from "@wordpress/element";
+import { DateOffset } from "../data-field/date-offset";
 
-export const NodeSettingsPanel = ({ selectedNode }) => {
-    const settingsSchema = selectedNode?.data?.settingsSchema || {};
+const DynamicField = ({ type, name, label, value, onChange }) => {
+    switch (type) {
+        // case "post_query":
+        //     return (
+        //         <PostQuery field={field} node={selectedNode} />
+        //     );
+        case "date_offset":
+            return (
+                <DateOffset name={name} label={label} value={value} onChange={onChange} />
+            );
+        // case "recurrence":
+        //     return (
+        //         <Recurrence field={field} node={selectedNode} />
+        //     );
+    }
 
+    return (
+        <i>{sprintf(__('Field type %s is not implemented', 'publihspress-future-pro'), name)}</i>
+    );
+}
+
+export const NodeSettingsPanel = ({ node }) => {
     const {
-        setNodeSettings
+        updateNode
     } = useDispatch(workflowStore);
 
-    const onChangeSetting = (key, value) => {
-        if (! selectedNode.data?.settings) {
-            selectedNode.data.settings = {};
+    const onChangeSetting = (fieldName, value) => {
+        if (! node.data?.settings) {
+            node.data.settings = {};
         }
 
-        if (JSON.stringify(selectedNode.data.settings[key]) === JSON.stringify(value)) {
-            return;
+        node.data.settings = {
+            ...node.data.settings,
+            [fieldName]: value
         }
 
-        selectedNode.data.settings[key] = value;
-        setNodeSettings(selectedNode.id, selectedNode.data.settings);
+        updateNode(node);
     };
 
-    let nodeSettings = selectedNode.data?.settings;
+    let nodeSettings = node.data?.settings;
 
     if (!nodeSettings) {
         nodeSettings = {};
     }
+    const settingsSchema = node?.data?.settingsSchema || {};
 
-    const Field = ({ field }) => {
-        const fieldSettings = nodeSettings[field.name] || {};
-
-        switch (field.type) {
-            case "post_query":
-                return (
-                    <PostQuery field={field} settings={fieldSettings} onChange={onChangeSetting} />
-                );
-            case "date_offset":
-                return (
-                    <DateOffset field={field} settings={fieldSettings} onChange={onChangeSetting} />
-                );
-            case "recurrence":
-                return (
-                    <Recurrence field={field} settings={fieldSettings} onChange={onChangeSetting} />
-                );
-            default:
-                return (
-                    <i>{sprintf(__('%s not implemented', 'publihspress-future-pro'), field.name)}</i>
-                );
-        }
-    }
-
-    const panels = settingsSchema.map((setting) => {
-        return (
-            <PanelBody title={setting.label} key={setting.label}>
-                {setting.fields.map((field) => {
-                    return (
-                        <Field key={field.name} field={field} />
-                    );
-                })}
-            </PanelBody>
-        );
-    });
-
-    // https://www.wpbrain.com/documentation/condition-builder/
-    // Instead of adding a conditional filter to each trigger,
-    // we can use the if/else node for that. The trigger output
-    // the post/user, etc... and the if/else node will allow to
-    // use that as an input variable.
-    // Add an option to the trigger to set the post as global var?
-    // Add a list of global vars (internally, at least) to the workflow: Current user, current date
-    // Declare node's output vars somewhere
+    const panels = useMemo(() => {
+        return settingsSchema.map((settingPanel) => {
+            return (
+                <PanelBody title={settingPanel.label} key={settingPanel.label}>
+                    {settingPanel.fields.map((field) => {
+                        return (
+                            <DynamicField
+                                key={settingPanel.label + '-' + field.name}
+                                type={field.type}
+                                name={field.name}
+                                label={field.label}
+                                value={nodeSettings?.[field.name]}
+                                onChange={onChangeSetting}
+                            />
+                        );
+                    })}
+                </PanelBody>
+            );
+        });
+    }, [settingsSchema, nodeSettings]);
 
     return (
         <>

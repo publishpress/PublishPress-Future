@@ -46,12 +46,12 @@ class CoreSchedule implements NodeTypeInterface
         return [
             [
                 "label" => __("Schedule", "publishpress-future-pro"),
+                "description" => __("The scheduled time for this action.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "schedule",
                         "type" => "date_offset",
                         "label" => __("Date offset", "publishpress-future-pro"),
-                        "description" => __("The scheduled time for this action.", "publishpress-future-pro"),
                     ],
                 ],
             ],

@@ -22,7 +22,7 @@ export function Recurrence({ field, settings, onChange }) {
                 value={fieldSettings.recurrence || "off"}
                 onChange={(value) => {
                     const newSettings = {
-                        ...settings,
+                        ...fieldSettings,
                         recurrence: value,
                     };
 
@@ -45,7 +45,7 @@ export function Recurrence({ field, settings, onChange }) {
                     value={fieldSettings.repeatUntil || "forever"}
                     onChange={(value) => {
                         const newSettings = {
-                            ...settings,
+                            ...fieldSettings,
                             repeatUntil: value,
                         };
 
@@ -63,7 +63,7 @@ export function Recurrence({ field, settings, onChange }) {
                     currentDate={fieldSettings.untilDate}
                     onChange={(date) => {
                         const newSettings = {
-                            ...settings,
+                            ...fieldSettings,
                             untilDate: date,
                         };
 
@@ -83,7 +83,7 @@ export function Recurrence({ field, settings, onChange }) {
                         value={fieldSettings.times || 5}
                         onChange={(value) => {
                             const newSettings = {
-                                ...settings,
+                                ...fieldSettings,
                                 times: value,
                             };
 

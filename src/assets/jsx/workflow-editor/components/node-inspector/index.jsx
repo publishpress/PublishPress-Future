@@ -95,9 +95,9 @@ export const NodeInspector = () => {
 
             {onlyNodesSelected && selectedElementsCount === 1 && (
                 <>
-                    <NodeInspectorCard selectedNode={selectedNode} />
+                    <NodeInspectorCard node={selectedNode} />
                     {nodeHasSettings && (
-                        <NodeSettingsPanel selectedNode={selectedNode} />
+                        <NodeSettingsPanel node={selectedNode} />
                     )}
                     <div className="components-tools-panel"></div>
                 </>

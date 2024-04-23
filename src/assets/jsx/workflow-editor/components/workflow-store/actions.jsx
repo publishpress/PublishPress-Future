@@ -248,9 +248,9 @@ export function* deleteWorkflow () {
     }
 }
 
-export function setNodeSettings (nodeId, settings) {
+export function updateNode(node) {
     return {
-        type: 'SET_NODE_SETTINGS',
-        payload: { nodeId, settings },
+        type: 'UPDATE_NODE',
+        payload: node,
     };
 }
