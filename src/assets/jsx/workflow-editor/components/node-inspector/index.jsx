@@ -11,6 +11,11 @@ import InspectorWarning from "../inspector-warning";
 import NodeSettingsPanel from "./node-settings-panel";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 import NodeOutputPanel from "./node-output-panel";
+import {
+    getIncomers,
+    getOutgoers,
+} from "reactflow";
+import NodeInputPanel from "./node-input-panel";
 
 export const NodeInspector = () => {
     const {
@@ -19,7 +24,11 @@ export const NodeInspector = () => {
         selectedElementsCount,
         selectedNode,
         selectedEdge,
+        nodes,
+        edges,
     } = useSelect((select) => {
+        const nodes = select(workflowStore).getNodes();
+        const edges = select(workflowStore).getEdges();
         const selectedNodes = select(workflowStore).getSelectedNodes();
         const selectedEdges = select(workflowStore).getSelectedEdges();
         const getNodeById = select(workflowStore).getNodeById;
@@ -31,6 +40,8 @@ export const NodeInspector = () => {
             selectedEdges.length === 1 ? getEdgeById(selectedEdges[0]) : null;
 
         return {
+            nodes,
+            edges,
             selectedNodes,
             selectedEdges,
             selectedElementsCount:
@@ -47,6 +58,10 @@ export const NodeInspector = () => {
 
     const nodeHasSettings = selectedNode?.data?.settingsSchema?.length > 0;
     const nodeHasOutput = selectedNode?.data?.outputSchema?.length > 0;
+    const incomers = getIncomers(selectedNode, nodes, edges);
+    const outgoers = getOutgoers(selectedNode, nodes, edges);
+    const nodeHasIncomers = incomers?.length > 0;
+    const nodeHasInput = nodeHasIncomers && incomers.filter((incomer) => incomer.data?.outputSchema?.length > 0)?.length > 0;
 
     return (
         <>
@@ -98,12 +113,27 @@ export const NodeInspector = () => {
             {onlyNodesSelected && selectedElementsCount === 1 && (
                 <>
                     <NodeInspectorCard node={selectedNode} />
+
                     {nodeHasOutput && (
                         <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
                     )}
+
+                    {nodeHasIncomers && nodeHasInput && (
+                        <VStack>
+                            <HStack>
+                                {incomers.map((incomer) => (
+                                    <div key={incomer.id}>
+                                        <NodeInputPanel inputSchema={incomer.data.outputSchema} />
+                                    </div>
+                                ))}
+                            </HStack>
+                        </VStack>
+                    )}
+
                     {nodeHasSettings && (
                         <NodeSettingsPanel node={selectedNode} />
                     )}
+
                     <div className="components-tools-panel"></div>
                 </>
             )}
