@@ -44,38 +44,41 @@ export function DateOffset({ name, label, defaultValue, onChange }) {
                 />
             )}
 
-            <TextControl
-                label={__("Offset", "publishpress-future-pro")}
-                value={defaultValue?.offset || ""}
-                onChange={(value) => onChangeSetting({ settingName: "offset", value })}
-            />
+            {defaultValue.baseDate !== "specific" && (
+                <>
+                    <TextControl
+                        label={__("Offset", "publishpress-future-pro")}
+                        value={defaultValue?.offset || ""}
+                        onChange={(value) => onChangeSetting({ settingName: "offset", value })}
+                    />
+                    <Button variant="link" onClick={toggleHelp}>
+                        {__("Click for more information")}
+                        {isHelpVisible && (
+                            <Popover>
+                                <div className="settings-field-help-popover">
+                                    <Button variant="tertiary" icon={'no-alt'} onClick={hideHelp}>
+                                    </Button>
 
-            <Button variant="link" onClick={toggleHelp}>
-                {__("Click for more information")}
-                {isHelpVisible && (
-                    <Popover>
-                        <div className="settings-field-help-popover">
-                            <Button variant="tertiary" icon={'no-alt'} onClick={hideHelp}>
-                            </Button>
+                                    <div dangerouslySetInnerHTML={{
+                                        __html: sprintf(
+                                            __("For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only terms in English.", "publishpress-future-pro"),
+                                            "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>",
+                                            "</a>",
+                                            "<code>",
+                                            "</code>",
+                                            "<code>",
+                                            "</code>",
+                                            "<code>",
+                                            "</code>",
+                                        )
+                                    }} />
+                                </div>
+                            </Popover>
+                        )}
+                    </Button>
+                </>
+            )}
 
-                            <div dangerouslySetInnerHTML={{
-                                __html: sprintf(
-                                    __("For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only terms in English.", "publishpress-future-pro"),
-                                    "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>",
-                                    "</a>",
-                                    "<code>",
-                                    "</code>",
-                                    "<code>",
-                                    "</code>",
-                                    "<code>",
-                                    "</code>",
-                                )
-                            }} />
-                        </div>
-                    </Popover>
-                )}
-
-            </Button>
         </>
     );
 }
