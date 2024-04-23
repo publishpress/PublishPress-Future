@@ -4,7 +4,7 @@ import { useState } from "@wordpress/element";
 import { InlineMultiSelect } from "../inline-multi-select";
 import BaseField from "./base-field";
 
-export function PostQuery({ field, settings, onChange }) {
+export function PostQuery({ name, label, defaultValue, onChange }) {
     const postTypes = [
         { label: "Post", value: "post" },
         { label: "Page", value: "page" },
@@ -18,88 +18,47 @@ export function PostQuery({ field, settings, onChange }) {
         { label: "Trash", value: "trash" },
     ];
 
-    const [fieldSettings, setFieldSettings] = useState(settings);
+    const onChangeSetting = ({ settingName, value }) => {
+        const newValue = { ...defaultValue };
+        newValue[settingName] = value;
 
-    const convertListOfLabelsToValues = (list, labels) => {
-        return list.filter((item) => labels.includes(item.label)).map((item) => item.value);
+        if (onChange) {
+            onChange(name, newValue);
+        }
     }
 
     return (
-        <BaseField description={field.description}>
+        <>
             <InlineMultiSelect
                 label={__('Post Type', 'publishpress-future-pro')}
-                value={fieldSettings['postType'] || []}
+                value={defaultValue?.postType || []}
                 suggestions={postTypes}
                 expandOnFocus={true}
                 autoSelectFirstMatch={true}
-                onChange={(selectedValues) => {
-                    const newSettings = {
-                        ...fieldSettings,
-                        postType: selectedValues,
-                    };
-
-                    setFieldSettings(newSettings);
-
-                    if (onChange) {
-                        onChange(field.name, newSettings);
-                    }
-                }}
+                onChange={(value) => onChangeSetting({ settingName: "postType", value })}
             />
 
             <FormTokenField
                 label="Post ID"
-                value={fieldSettings['postId'] || []}
-                onChange={(value) => {
-                    const newSettings = {
-                        ...fieldSettings,
-                        postId: value,
-                    };
-
-                    setFieldSettings(newSettings);
-
-                    if (onChange) {
-                        onChange(field.name, newSettings);
-                    }
-                }}
+                value={defaultValue?.postId || []}
+                onChange={(value) => onChangeSetting({ settingName: "postId", value })}
             />
 
             <InlineMultiSelect
                 label={__('Post Status', 'publishpress-future-pro')}
-                value={fieldSettings['postStatus'] || []}
+                value={defaultValue?.postStatus || []}
                 suggestions={postStatuses}
                 expandOnFocus={true}
                 autoSelectFirstMatch={true}
-                onChange={(selectedValues) => {
-                    const newSettings = {
-                        ...fieldSettings,
-                        postStatus: selectedValues,
-                    };
-
-                    setFieldSettings(newSettings);
-
-                    if (onChange) {
-                        onChange(field.name, newSettings);
-                    }
-                }}
+                onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
             />
 
             <ToggleControl
                 label="Only new posts"
-                checked={fieldSettings['newPost'] || false}
-                onChange={(value) => {
-                    const newSettings = {
-                        ...fieldSettings,
-                        newPost: value,
-                    };
-
-                    setFieldSettings(newSettings);
-
-                    if (onChange) {
-                        onChange(field.name, newSettings);
-                    }
-                }}
+                checked={defaultValue?.onlyNewPosts || false}
+                onChange={(value) => onChangeSetting({ settingName: "onlyNewPosts", value })}
             />
-        </BaseField>
+        </>
     );
 }
 

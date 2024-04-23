@@ -46,6 +46,7 @@ class CoreOnSavePost implements NodeTypeInterface
         return [
             [
                 "label" => __("Post Query", "publishpress-future-pro"),
+                "description" => __("The query defines the posts that will trigger this action.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "post_query",

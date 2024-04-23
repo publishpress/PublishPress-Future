@@ -4,37 +4,33 @@ import { SelectControl, CheckboxControl, __experimentalNumberControl as NumberCo
 import { useState } from "@wordpress/element";
 import { DatePicker } from "@wordpress/components";
 
-export function Recurrence({ field, settings, onChange }) {
+export function Recurrence({ name, label, defaultValue, onChange }) {
     const cronSchedulesOptions = [
         { label: __("Non-repeating", "publishpress-future-pro"), value: "off" },
         ...futureWorkflowEditor.cronSchedules
     ];
 
-    const [fieldSettings, setFieldSettings] = useState(settings);
+    const onChangeSetting = ({ settingName, value }) => {
+        const newValue = { ...defaultValue };
+        newValue[settingName] = value;
 
-    const recurrenceIsEnabled = fieldSettings.recurrence !== "off" && fieldSettings.recurrence !== undefined;
+        if (onChange) {
+            onChange(name, newValue);
+        }
+    }
+
+    const recurrenceIsEnabled = defaultValue?.recurrence !== "off" && defaultValue?.recurrence !== undefined;
 
     return (
-        <BaseField description={field.description}>
+        <>
             <SelectControl
                 label={__("Repeating", "publishpress-future-pro")}
                 options={cronSchedulesOptions}
-                value={fieldSettings.recurrence || "off"}
-                onChange={(value) => {
-                    const newSettings = {
-                        ...fieldSettings,
-                        recurrence: value,
-                    };
-
-                    setFieldSettings(newSettings);
-
-                    if (onChange) {
-                        onChange(field.name, newSettings);
-                    }
-                }}
+                value={defaultValue?.recurrence || "off"}
+                onChange={(value) => onChangeSetting({ settingName: "recurrence", value })}
             />
 
-            {(fieldSettings.recurrence !== "off" && fieldSettings.recurrence !== undefined) && (
+            {(defaultValue?.recurrence !== "off" && defaultValue?.recurrence !== undefined) && (
                 <SelectControl
                     label={__("Repeat until", "publishpress-future-pro")}
                     options={[
@@ -42,61 +38,28 @@ export function Recurrence({ field, settings, onChange }) {
                         { label: __("Until specific date", "publishpress-future-pro"), value: "until" },
                         { label: __("For a number of times", "publishpress-future-pro"), value: "times" },
                     ]}
-                    value={fieldSettings.repeatUntil || "forever"}
-                    onChange={(value) => {
-                        const newSettings = {
-                            ...fieldSettings,
-                            repeatUntil: value,
-                        };
-
-                        setFieldSettings(newSettings);
-
-                        if (onChange) {
-                            onChange(field.name, newSettings);
-                        }
-                    }}
+                    value={defaultValue?.repeatUntil || "forever"}
+                    onChange={(value) => onChangeSetting({ settingName: "repeatUntil", value })}
                 />
             )}
 
-            {(recurrenceIsEnabled && fieldSettings.repeatUntil === "until") && (
+            {(recurrenceIsEnabled && defaultValue?.repeatUntil === "until") && (
                 <DatePicker
-                    currentDate={fieldSettings.untilDate}
-                    onChange={(date) => {
-                        const newSettings = {
-                            ...fieldSettings,
-                            untilDate: date,
-                        };
-
-                        setFieldSettings(newSettings);
-
-                        if (onChange) {
-                            onChange(field.name, newSettings);
-                        }
-                    }}
+                    currentDate={defaultValue?.repeatUntilDate}
+                    onChange={(value) => onChangeSetting({ settingName: "repeatUntilDate", value })}
                 />
             )}
 
-            {(recurrenceIsEnabled && fieldSettings.repeatUntil === "times") && (
+            {(recurrenceIsEnabled && defaultValue?.repeatUntil === "times") && (
                 <BaseField>
                     <NumberControl
                         label={__("Repeat for", "publishpress-future-pro")}
-                        value={fieldSettings.times || 5}
-                        onChange={(value) => {
-                            const newSettings = {
-                                ...fieldSettings,
-                                times: value,
-                            };
-
-                            setFieldSettings(newSettings);
-
-                            if (onChange) {
-                                onChange(field.name, newSettings);
-                            }
-                        }}
+                        value={defaultValue?.times || 5}
+                        onChange={(value) => onChangeSetting({ settingName: "repeatTimes", value })}
                     />
                 </BaseField>
             )}
-        </BaseField>
+        </>
     );
 }
 
