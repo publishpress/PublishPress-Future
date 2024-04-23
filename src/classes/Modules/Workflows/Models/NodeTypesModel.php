@@ -6,6 +6,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreDeletePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUpdatePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\IfElse;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
@@ -58,6 +59,15 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
             ],
+            [
+                "name" => "async",
+                "label" => __("Asynchronous", "publishpress-future-pro"),
+                "icon" => [
+                    "src" => "media-document",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
+            ],
         ];
     }
 
@@ -97,7 +107,7 @@ class NodeTypesModel implements NodeTypesModelInterface
 
     private function getDefaultFlows()
     {
-        $flowsInstances = [new IfElse()];
+        $flowsInstances = [new IfElse(), new CoreSchedule()];
 
         return $this->convertInstancesToArray($flowsInstances);
     }
