@@ -172,6 +172,7 @@ export const FlowEditor = (props) => {
                     category: item.category,
                     icon: item.icon,
                     version: item.version,
+                    outputSchema: item.outputSchema,
                 },
             };
 

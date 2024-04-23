@@ -89,6 +89,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
                 "settingsSchema" => $instance->getSettingsSchema(),
+                "outputSchema" => $instance->getOutputSchema(),
             ];
         }, $instances);
     }
@@ -144,6 +145,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             ],
             "version" => self::NODE_VERSION,
             "settingsSchema" => [],
+            "outputSchema" => [],
         ];
 
         foreach ($nodes as $index => $node) {

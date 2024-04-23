@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 export const InspectorCard = ({ title, description, icon }) => {
     return (
         <div className="workflow-editor-inspector-card">

@@ -1,6 +1,6 @@
 export function Post() {
     return {
-        type: "post",
+        name: "post",
         label: "Post",
         propertiesSchema: {
             title: {

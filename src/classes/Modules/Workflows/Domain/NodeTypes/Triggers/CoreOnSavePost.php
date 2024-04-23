@@ -68,13 +68,13 @@ class CoreOnSavePost implements NodeTypeInterface
             [
                 'name' => 'post',
                 'type' => 'post',
-                'title' => __("New Post", "publishpress-future-pro"),
+                'label' => __("New Post", "publishpress-future-pro"),
                 'description' => __("The post that was saved, with the new properties.", "publishpress-future-pro"),
             ],
             [
                 'name' => 'old_post',
                 'type' => 'post',
-                'title' => __("Old Post", "publishpress-future-pro"),
+                'label' => __("Old Post", "publishpress-future-pro"),
                 'description' => __("The post that was saved, with the old properties.", "publishpress-future-pro"),
             ]
         ];
