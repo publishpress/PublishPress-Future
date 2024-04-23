@@ -11,11 +11,8 @@ import InspectorWarning from "../inspector-warning";
 import NodeSettingsPanel from "./node-settings-panel";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 import NodeOutputPanel from "./node-output-panel";
-import {
-    getIncomers,
-    getOutgoers,
-} from "reactflow";
 import NodeInputPanel from "./node-input-panel";
+import { nodeHasIncomers, nodeHasInput, getNodeIncomers } from "../../utils";
 
 export const NodeInspector = () => {
     const {
@@ -58,10 +55,10 @@ export const NodeInspector = () => {
 
     const nodeHasSettings = selectedNode?.data?.settingsSchema?.length > 0;
     const nodeHasOutput = selectedNode?.data?.outputSchema?.length > 0;
-    const incomers = getIncomers(selectedNode, nodes, edges);
-    const outgoers = getOutgoers(selectedNode, nodes, edges);
-    const nodeHasIncomers = incomers?.length > 0;
-    const nodeHasInput = nodeHasIncomers && incomers.filter((incomer) => incomer.data?.outputSchema?.length > 0)?.length > 0;
+
+    const nodeIncomers = getNodeIncomers(selectedNode);
+    const selectedNodeHasIncomers = nodeHasIncomers(selectedNode);
+    const selectedNodeHasInput = nodeHasInput(selectedNode);
 
     return (
         <>
@@ -118,10 +115,10 @@ export const NodeInspector = () => {
                         <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
                     )}
 
-                    {nodeHasIncomers && nodeHasInput && (
+                    {selectedNodeHasIncomers && selectedNodeHasInput && (
                         <VStack>
                             <HStack>
-                                {incomers.map((incomer) => (
+                                {nodeIncomers.map((incomer) => (
                                     <div key={incomer.id}>
                                         <NodeInputPanel inputSchema={incomer.data.outputSchema} />
                                     </div>

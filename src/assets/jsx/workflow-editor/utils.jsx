@@ -55,3 +55,36 @@ export function isAppleOS(_window = window) {
         platform.indexOf("Mac") !== -1 || ["iPad", "iPhone"].includes(platform)
     );
 }
+
+import { useSelect } from "@wordpress/data";
+import { store as workflowStore } from "./components/workflow-store";
+import { getIncomers } from "reactflow";
+
+export function getNodeIncomers(node) {
+    const {
+        nodes,
+        edges,
+    } = useSelect((select) => {
+        return {
+            nodes: select(workflowStore).getNodes(),
+            edges: select(workflowStore).getEdges(),
+        };
+    });
+
+    return getIncomers(node, nodes, edges);
+}
+
+export function nodeHasIncomers(node) {
+    const incomers = getNodeIncomers(node);
+    const nodeHasIncomers = incomers?.length > 0;
+
+    return nodeHasIncomers;
+}
+
+export function nodeHasInput(node) {
+    const incomers = getNodeIncomers(node);
+    const nodeHasIncomers = incomers?.length > 0;
+    const nodeHasInput = nodeHasIncomers && incomers.filter((incomer) => incomer.data?.outputSchema?.length > 0)?.length > 0;
+
+    return nodeHasInput;
+}
