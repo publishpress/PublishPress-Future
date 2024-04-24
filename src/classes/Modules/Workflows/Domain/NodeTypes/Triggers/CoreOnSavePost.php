@@ -3,9 +3,15 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
+use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreOnSavePost implements NodeTypeInterface
 {
+    public function getElementarType(): string
+    {
+        return NodeTypesModel::NODE_TYPE_TRIGGER;
+    }
+
     public function getType(): string
     {
         return "genericTrigger";

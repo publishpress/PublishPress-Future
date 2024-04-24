@@ -4,10 +4,12 @@ namespace PublishPress\FuturePro\Modules\Workflows;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPress\FuturePro\Core\HooksAbstract;
+use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
+use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class Module implements InitializableInterface
 {
@@ -30,26 +32,38 @@ class Module implements InitializableInterface
      */
     private $cronSchedulesModel;
 
+    /**
+     * @var WorkflowEngineInterface
+     */
+    private $workflowEngine;
+
     public function __construct(
         HookableInterface $hooksFacade,
         RestApiManagerInterface $restApiManager,
         NodeTypesModelInterface $nodeTypesModel,
-        CronSchedulesModelInterface $cronSchedulesModel
+        CronSchedulesModelInterface $cronSchedulesModel,
+        WorkflowEngineInterface $workflowEngine
     ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->cronSchedulesModel = $cronSchedulesModel;
+        $this->workflowEngine = $workflowEngine;
     }
 
     public function initialize()
     {
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
-        $this->hooks->addAction(HooksAbstract::ACTION_INIT_PLUGIN, [$this, 'registerPostType']);
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScripts']);
-        $this->hooks->addAction(HooksAbstract::ACTION_REST_API_INIT, [$this->restApiManager, 'register']);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOAD_POST_PHP, [$this, 'redirectToWorkflowEditor']);
-        $this->hooks->addAction(HooksAbstract::ACTION_LOAD_POST_NEW_PHP, [$this, 'redirectToWorkflowEditor']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_INIT_PLUGIN, [$this, 'registerPostType']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScripts']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_REST_API_INIT, [$this->restApiManager, 'register']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_PHP, [$this, 'redirectToWorkflowEditor']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_NEW_PHP, [$this, 'redirectToWorkflowEditor']);
+
+        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_columns', [$this, 'addCustomColumn']);
+        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderCustomColumn'], 10, 2);
+
+        $this->workflowEngine->start();
     }
 
     public function redirectToWorkflowEditor()
@@ -152,6 +166,38 @@ class Module implements InitializableInterface
         $workflowId = isset($_GET['workflow']) ? (int) $_GET['workflow'] : 0;
 
         require_once __DIR__ . '/Views/editor.html.php';
+    }
+
+    public function addCustomColumn($columns)
+    {
+        $columns['workflow_triggers'] = __('Triggers', 'publishpress-future-pro');
+
+        // Move the date column to the end
+        $date = $columns['date'];
+        unset($columns['date']);
+        $columns['date'] = $date;
+
+        return $columns;
+    }
+
+    public function renderCustomColumn($column, $postId)
+    {
+        if ('workflow_triggers' !== $column) {
+            return;
+        }
+
+        $workflowFlow = get_post_meta($postId, '_workflow_flow', true);
+        $workflowFlow = json_decode($workflowFlow, true);
+
+        $triggers = [];
+
+        foreach ($workflowFlow['nodes'] as $node) {
+            if (NodeTypesModel::NODE_TYPE_TRIGGER === $node['data']['elementarType']) {
+                $triggers[] = $node['data']['label'];
+            }
+        }
+
+        echo implode(', ', $triggers);
     }
 
     public function enqueueScripts($hook)

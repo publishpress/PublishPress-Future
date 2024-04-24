@@ -88,6 +88,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         return array_map(function ($instance) {
             return [
                 "type" => $instance->getType(),
+                "elementarType" => $instance->getElementarType(),
                 "name" => $instance->getName(),
                 "label" => $instance->getLabel(),
                 "description" => $instance->getDescription(),
@@ -141,6 +142,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         $defaultNodeAttributes = [
             "id" => "",
             "type" => $type,
+            "elementarType" => "",
             "name" => "",
             "label" => "",
             "description" => "",

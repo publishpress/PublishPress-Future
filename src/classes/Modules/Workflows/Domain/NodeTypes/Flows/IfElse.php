@@ -3,9 +3,15 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
+use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class IfElse implements NodeTypeInterface
 {
+    public function getElementarType(): string
+    {
+        return NodeTypesModel::NODE_TYPE_FLOW;
+    }
+
     public function getType(): string
     {
         return "flowIfElse";

@@ -4,6 +4,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
 interface NodeTypeInterface
 {
+    public function getElementarType(): string;
+
     public function getType(): string;
 
     public function getName(): string;

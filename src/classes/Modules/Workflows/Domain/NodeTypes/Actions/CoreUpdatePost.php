@@ -7,6 +7,11 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreUpdatePost implements NodeTypeInterface
 {
+    public function getElementarType(): string
+    {
+        return NodeTypesModel::NODE_TYPE_ACTION;
+    }
+
     public function getType(): string
     {
         return "genericAction";

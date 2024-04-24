@@ -42,4 +42,5 @@ abstract class ServicesAbstract
     const WORKFLOWS_REST_API_MANAGER = 'future.pro/workflows-rest-api-manager';
     const NODE_TYPES_MODEL = 'future.pro/node-types-model';
     const CRON_SCHEDULES_MODEL = 'future.pro/cron-schedules-model';
+    const WORKFLOW_ENGINE = 'future.pro/workflow-engine';
 }
