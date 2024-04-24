@@ -169,6 +169,13 @@ class Module implements InitializableInterface
         wp_enqueue_style('wp-edit-post');
         wp_enqueue_style('wp-editor');
 
+        wp_enqueue_style(
+            'future_workflow_admin_style',
+            plugins_url('/src/assets/css/workflow-editor.css', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
+            ['wp-components', 'wp-edit-post', 'wp-editor'],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
+        );
+
         wp_enqueue_script('wp-url');
         wp_enqueue_script('wp-element');
         wp_enqueue_script('wp-components');
