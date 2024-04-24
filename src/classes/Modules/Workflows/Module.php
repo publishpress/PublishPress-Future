@@ -210,12 +210,12 @@ class Module implements InitializableInterface
         }
 
         $screenshot = get_the_post_thumbnail_url($postId, 'thumbnail');
-        $screenshotFull = get_the_post_thumbnail_url($postId, 'full');
 
         if (empty($screenshot)) {
             echo __('No screenshot', 'publishpress-future-pro');
         } else {
-            require_once __DIR__ . '/Views/preview-column.html.php';
+            $screenshotFull = get_the_post_thumbnail_url($postId, 'full');
+            require __DIR__ . '/Views/preview-column.html.php';
         }
     }
 
