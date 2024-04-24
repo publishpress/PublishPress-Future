@@ -8,6 +8,7 @@ import { useMemo } from "@wordpress/element";
 import { DateOffset } from "../data-fields/date-offset";
 import BaseField from "../data-fields/base-field";
 import { getNodeInputs, getNodeInputVariablesByType } from "../../utils";
+import DebugData from "../data-fields/debug-data";
 
 const DynamicField = (props) => {
     switch (props.type) {
@@ -22,6 +23,10 @@ const DynamicField = (props) => {
         case "recurrence":
             return (
                 <Recurrence {...props} />
+            );
+        case "debug_data":
+            return (
+                <DebugData {...props} />
             );
     }
 

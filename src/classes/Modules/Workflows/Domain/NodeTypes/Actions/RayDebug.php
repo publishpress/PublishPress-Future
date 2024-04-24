@@ -44,7 +44,19 @@ class RayDebug implements NodeTypeInterface
 
     public function getSettingsSchema(): array
     {
-        return [];
+        return [
+            [
+                "label" => __("Debug output", "publishpress-future-pro"),
+                "description" => __("The data to be sent to Ray.", "publishpress-future-pro"),
+                "fields" => [
+                    [
+                        "name" => "data",
+                        "type" => "debug_data",
+                        "label" => __("Data", "publishpress-future-pro"),
+                    ],
+                ],
+            ]
+        ];
     }
 
     public function getOutputSchema(): array
