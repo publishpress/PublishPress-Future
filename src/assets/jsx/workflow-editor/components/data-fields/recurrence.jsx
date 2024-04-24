@@ -2,7 +2,8 @@ import { __ } from "@wordpress/i18n";
 import BaseField from "./base-field";
 import {
     SelectControl,
-    __experimentalNumberControl as NumberControl
+    __experimentalNumberControl as NumberControl,
+    __experimentalVStack as VStack,
 } from "@wordpress/components";
 import { DatePicker } from "@wordpress/components";
 
@@ -25,42 +26,44 @@ export function Recurrence({ name, label, defaultValue, onChange }) {
 
     return (
         <>
-            <SelectControl
-                label={__("Repeating", "publishpress-future-pro")}
-                options={cronSchedulesOptions}
-                value={defaultValue?.recurrence || "off"}
-                onChange={(value) => onChangeSetting({ settingName: "recurrence", value })}
-            />
-
-            {(defaultValue?.recurrence !== "off" && defaultValue?.recurrence !== undefined) && (
+            <VStack>
                 <SelectControl
-                    label={__("Repeat until", "publishpress-future-pro")}
-                    options={[
-                        { label: __("Forever", "publishpress-future-pro"), value: "forever" },
-                        { label: __("Until specific date", "publishpress-future-pro"), value: "until" },
-                        { label: __("For a number of times", "publishpress-future-pro"), value: "times" },
-                    ]}
-                    value={defaultValue?.repeatUntil || "forever"}
-                    onChange={(value) => onChangeSetting({ settingName: "repeatUntil", value })}
+                    label={__("Repeating", "publishpress-future-pro")}
+                    options={cronSchedulesOptions}
+                    value={defaultValue?.recurrence || "off"}
+                    onChange={(value) => onChangeSetting({ settingName: "recurrence", value })}
                 />
-            )}
 
-            {(recurrenceIsEnabled && defaultValue?.repeatUntil === "until") && (
-                <DatePicker
-                    currentDate={defaultValue?.repeatUntilDate}
-                    onChange={(value) => onChangeSetting({ settingName: "repeatUntilDate", value })}
-                />
-            )}
-
-            {(recurrenceIsEnabled && defaultValue?.repeatUntil === "times") && (
-                <BaseField>
-                    <NumberControl
-                        label={__("Repeat for", "publishpress-future-pro")}
-                        value={defaultValue?.times || 5}
-                        onChange={(value) => onChangeSetting({ settingName: "repeatTimes", value })}
+                {(defaultValue?.recurrence !== "off" && defaultValue?.recurrence !== undefined) && (
+                    <SelectControl
+                        label={__("Repeat until", "publishpress-future-pro")}
+                        options={[
+                            { label: __("Forever", "publishpress-future-pro"), value: "forever" },
+                            { label: __("Until specific date", "publishpress-future-pro"), value: "until" },
+                            { label: __("For a number of times", "publishpress-future-pro"), value: "times" },
+                        ]}
+                        value={defaultValue?.repeatUntil || "forever"}
+                        onChange={(value) => onChangeSetting({ settingName: "repeatUntil", value })}
                     />
-                </BaseField>
-            )}
+                )}
+
+                {(recurrenceIsEnabled && defaultValue?.repeatUntil === "until") && (
+                    <DatePicker
+                        currentDate={defaultValue?.repeatUntilDate}
+                        onChange={(value) => onChangeSetting({ settingName: "repeatUntilDate", value })}
+                    />
+                )}
+
+                {(recurrenceIsEnabled && defaultValue?.repeatUntil === "times") && (
+                    <BaseField>
+                        <NumberControl
+                            label={__("Repeat for", "publishpress-future-pro")}
+                            value={defaultValue?.times || 5}
+                            onChange={(value) => onChangeSetting({ settingName: "repeatTimes", value })}
+                        />
+                    </BaseField>
+                )}
+            </VStack>
         </>
     );
 }

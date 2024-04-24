@@ -3,6 +3,7 @@ import { __ } from "@wordpress/i18n";
 import { useState } from "@wordpress/element";
 import { InlineMultiSelect } from "../inline-multi-select";
 import BaseField from "./base-field";
+import { __experimentalVStack as VStack } from "@wordpress/components";
 
 export function PostQuery({ name, label, defaultValue, onChange }) {
     const postTypes = [
@@ -29,35 +30,37 @@ export function PostQuery({ name, label, defaultValue, onChange }) {
 
     return (
         <>
-            <InlineMultiSelect
-                label={__('Post Type', 'publishpress-future-pro')}
-                value={defaultValue?.postType || []}
-                suggestions={postTypes}
-                expandOnFocus={true}
-                autoSelectFirstMatch={true}
-                onChange={(value) => onChangeSetting({ settingName: "postType", value })}
-            />
+            <VStack>
+                <InlineMultiSelect
+                    label={__('Post Type', 'publishpress-future-pro')}
+                    value={defaultValue?.postType || []}
+                    suggestions={postTypes}
+                    expandOnFocus={true}
+                    autoSelectFirstMatch={true}
+                    onChange={(value) => onChangeSetting({ settingName: "postType", value })}
+                />
 
-            <FormTokenField
-                label="Post ID"
-                value={defaultValue?.postId || []}
-                onChange={(value) => onChangeSetting({ settingName: "postId", value })}
-            />
+                <FormTokenField
+                    label="Post ID"
+                    value={defaultValue?.postId || []}
+                    onChange={(value) => onChangeSetting({ settingName: "postId", value })}
+                />
 
-            <InlineMultiSelect
-                label={__('Post Status', 'publishpress-future-pro')}
-                value={defaultValue?.postStatus || []}
-                suggestions={postStatuses}
-                expandOnFocus={true}
-                autoSelectFirstMatch={true}
-                onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
-            />
+                <InlineMultiSelect
+                    label={__('Post Status', 'publishpress-future-pro')}
+                    value={defaultValue?.postStatus || []}
+                    suggestions={postStatuses}
+                    expandOnFocus={true}
+                    autoSelectFirstMatch={true}
+                    onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
+                />
 
-            <ToggleControl
-                label="Only new posts"
-                checked={defaultValue?.onlyNewPosts || false}
-                onChange={(value) => onChangeSetting({ settingName: "onlyNewPosts", value })}
-            />
+                <ToggleControl
+                    label="Only new posts"
+                    checked={defaultValue?.onlyNewPosts || false}
+                    onChange={(value) => onChangeSetting({ settingName: "onlyNewPosts", value })}
+                />
+            </VStack>
         </>
     );
 }
