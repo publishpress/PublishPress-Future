@@ -91,6 +91,10 @@ class Module implements InitializableInterface
             return;
         }
 
+        if (isset($_GET['action']) && 'trash' === $_GET['action']) {
+            return;
+        }
+
         wp_redirect($url);
         exit;
     }
