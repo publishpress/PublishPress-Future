@@ -6,6 +6,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreDeletePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUpdatePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\IfElse;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
@@ -70,6 +71,15 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
             ],
+            [
+                "name" => "debug",
+                "label" => __("Debug", "publishpress-future-pro"),
+                "icon" => [
+                    "src" => "fa6-fabug",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
+            ]
         ];
     }
 
@@ -108,6 +118,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         $actionsInstances = [
             new CoreDeletePost(),
             new CoreUpdatePost(),
+            new RayDebug(),
         ];
 
         return $this->convertInstancesToArray($actionsInstances);
