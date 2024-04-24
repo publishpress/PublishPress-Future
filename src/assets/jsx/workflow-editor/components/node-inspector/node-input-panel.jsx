@@ -9,7 +9,7 @@ export const NodeInputPanel = ({ inputSchema = []}) => {
                 <ul>
                     {inputSchema.map((schemaItem, index) => (
                         <li key={index}>
-                            <strong>{schemaItem.label}</strong>
+                            <code>{schemaItem.label}</code>
                         </li>
                     ))}
                 </ul>

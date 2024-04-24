@@ -55,3 +55,12 @@
     top: 10px;
     right: 10px;
 }
+
+.workflow-editor-inspector-card__input-schema code,
+.workflow-editor-inspector-card__output-schema code {
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: #ffe4c4;
+    color: #515151;
+}

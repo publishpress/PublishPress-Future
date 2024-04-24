@@ -9,7 +9,7 @@ export const NodeOutputPanel = ({ outputSchema }) => {
                 <ul>
                     {outputSchema.map((schemaItem, index) => (
                         <li key={index}>
-                            <strong>{schemaItem.label}</strong>
+                            <code>{schemaItem.label}</code>
                         </li>
                     ))}
                 </ul>
