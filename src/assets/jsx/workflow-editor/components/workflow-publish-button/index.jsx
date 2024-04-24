@@ -32,6 +32,7 @@ export function WorkflowPublishButton({
 		isPublished,
 		isSaveable,
 		isSaving,
+		takeScreenshot,
 	} = useSelect(
 		(select) => {
 			const {
@@ -41,6 +42,7 @@ export function WorkflowPublishButton({
 				isSavingWorkflow,
 				isEditedWorkflowSaveable,
 				isAutosavingWorkflow,
+				takeScreenshot,
 			} = select(workflowStore);
 
 			return {
@@ -50,6 +52,7 @@ export function WorkflowPublishButton({
 				isPublished: isCurrentWorkflowPublished(),
 				isSaving: isSavingWorkflow(),
 				isSaveable: isEditedWorkflowSaveable(),
+				takeScreenshot,
 			};
 		},
 		[]
@@ -101,11 +104,13 @@ export function WorkflowPublishButton({
 			return;
 		}
 
-		if (isPublished) {
-			saveAsCurrentStatus();
-		} else {
-			publishWorkflow();
-		}
+		takeScreenshot().then((dataUrl) => {
+			if (isPublished) {
+				saveAsCurrentStatus({screenshot: dataUrl});
+			} else {
+				publishWorkflow({screenshot: dataUrl});
+			}
+		});
 	}
 
 	// Use common Button instance for all saved states so that focus is not

@@ -60,8 +60,9 @@ class Module implements InitializableInterface
         $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_PHP, [$this, 'redirectToWorkflowEditor']);
         $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_NEW_PHP, [$this, 'redirectToWorkflowEditor']);
 
-        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_columns', [$this, 'addCustomColumn']);
-        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderCustomColumn'], 10, 2);
+        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_columns', [$this, 'addCustomColumns']);
+        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderTriggersColumn'], 10, 2);
+        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderScreenshotColumn'], 10, 2);
 
         $this->workflowEngine->start();
     }
@@ -168,9 +169,10 @@ class Module implements InitializableInterface
         require_once __DIR__ . '/Views/editor.html.php';
     }
 
-    public function addCustomColumn($columns)
+    public function addCustomColumns($columns)
     {
         $columns['workflow_triggers'] = __('Triggers', 'publishpress-future-pro');
+        $columns['screenshot'] = __('Screenshot', 'publishpress-future-pro');
 
         // Move the date column to the end
         $date = $columns['date'];
@@ -180,7 +182,7 @@ class Module implements InitializableInterface
         return $columns;
     }
 
-    public function renderCustomColumn($column, $postId)
+    public function renderTriggersColumn($column, $postId)
     {
         if ('workflow_triggers' !== $column) {
             return;
@@ -198,6 +200,21 @@ class Module implements InitializableInterface
         }
 
         echo implode(', ', $triggers);
+    }
+
+    public function renderScreenshotColumn($column, $postId)
+    {
+        if ('screenshot' !== $column) {
+            return;
+        }
+
+        $screenshot = get_the_post_thumbnail_url($postId, 'thumbnail');
+
+        if (empty($screenshot)) {
+            echo __('No screenshot', 'publishpress-future-pro');
+        } else {
+            echo '<img src="' . esc_url($screenshot) . '" alt="' . __('Screenshot', 'publishpress-future-pro') . '" style="max-width: 100px; height: auto;">';
+        }
     }
 
     public function enqueueScripts($hook)

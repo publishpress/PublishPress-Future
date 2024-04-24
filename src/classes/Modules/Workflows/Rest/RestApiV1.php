@@ -133,7 +133,6 @@ class RestApiV1 implements RestApiManagerInterface
             'flow' => $workflowModel->getFlow(),
             'status' => $workflowModel->getStatus(),
         ]);
-
     }
 
     public function updateWorkflow($request)
@@ -165,6 +164,10 @@ class RestApiV1 implements RestApiManagerInterface
 
         if (isset($request['status'])) {
             $workflowModel->setStatus($request['status']);
+        }
+
+        if (isset($request['screenshot'])) {
+            $workflowModel->setScreenshot($request['screenshot']);
         }
 
         $workflowModel->save();

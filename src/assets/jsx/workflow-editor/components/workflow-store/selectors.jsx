@@ -1,4 +1,5 @@
 // import { createRegistrySelector } from '@wordpress/data';
+import { toPng } from 'html-to-image';
 
 export const getPostType = (state) => {
     return state.postType;
@@ -142,4 +143,33 @@ export const getDataTypes = (state) => {
 
 export const getDataTypeByName = (state, name) => {
     return state.dataTypes.find(dataType => dataType.name === name);
+}
+
+export function takeScreenshot() {
+    return new Promise((resolve, reject) => {
+        try {
+            toPng(document.querySelector('.react-flow'), {
+                filter: (node) => {
+                    // We don't want to add the minimap and the controls to the image
+                    if (
+                        node?.classList?.contains('react-flow__minimap') ||
+                        node?.classList?.contains('react-flow__controls') ||
+                        node?.classList?.contains('pwe-node-edit-button')
+                    ) {
+                        return false;
+                    }
+
+                    return true;
+                },
+            })
+                .then((dataUrl) => {
+                    resolve(dataUrl); // Resolve with the image dataUrl
+                })
+                .catch((error) => {
+                    reject(error); // Reject with the error
+                });
+        } catch (error) {
+            reject(error); // Reject with the error
+        }
+    });
 }

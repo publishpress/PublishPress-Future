@@ -40,6 +40,7 @@ export const LayoutHeader = () => {
         showIconLabels,
         isLoadingWorkflow,
         isEditedWorkflowDirty,
+        takeScreenshot,
     } = useSelect((select) => {
         return {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
@@ -48,6 +49,7 @@ export const LayoutHeader = () => {
             showIconLabels: select(editorStore).isFeatureActive(FEATURE_SHOW_ICON_LABELS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
             isEditedWorkflowDirty: select(workflowStore).isEditedWorkflowDirty(),
+            takeScreenshot: select(workflowStore).takeScreenshot,
         }
     });
 
@@ -55,10 +57,6 @@ export const LayoutHeader = () => {
         enableFeature,
         disableFeature
     } = useDispatch(editorStore);
-
-    const {
-        saveAsDraft,
-    } = useDispatch(workflowStore);
 
     const headerClasses = 'edit-post-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
 
@@ -91,18 +89,6 @@ export const LayoutHeader = () => {
     });
 
     const toolbarLeftClassName = isWP65OrLater ? 'editor-document-tools__left' : 'edit-post-header-toolbar__left';
-
-    const onSaveDraft = useCallback(() => {
-        saveAsDraft();
-    })
-
-    const onPublish = useCallback(() => {
-        // Publish
-    })
-
-    const onUpdate = useCallback(() => {
-        // Update
-    })
 
     return (
         <div className={headerClasses}>

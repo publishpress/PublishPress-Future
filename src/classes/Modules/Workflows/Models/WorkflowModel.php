@@ -10,9 +10,9 @@ use WP_Query;
 
 class WorkflowModel implements WorkflowModelInterface
 {
-    const META_KEY_DICTIONARY = '_workflow_dictionary';
+    public const META_KEY_DICTIONARY = '_workflow_dictionary';
 
-    const META_KEY_FLOW = '_workflow_flow';
+    public const META_KEY_FLOW = '_workflow_flow';
 
     private $post;
 
@@ -147,5 +147,36 @@ class WorkflowModel implements WorkflowModelInterface
         $this->load($id);
 
         return $id;
+    }
+
+    public function setScreenshot(string $baseUrl)
+    {
+        // Delete existing screenshot files
+        $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
+        if ($existingScreenshotId) {
+            wp_delete_attachment($existingScreenshotId, true);
+        }
+
+        $image_data = file_get_contents($baseUrl);
+        if ($image_data !== false) {
+            $imageFileName = 'workflow-screenshot-' . $this->post->ID . '.png';
+
+            $upload = wp_upload_bits($imageFileName, null, $image_data);
+            if ($upload['error'] === false) {
+                $attachment = array(
+                    'post_mime_type' => $upload['type'],
+                    'post_title' => basename($upload['file']),
+                    'post_content' => '',
+                    'post_status' => 'inherit'
+                );
+                $attach_id = wp_insert_attachment($attachment, $upload['file']);
+                if (!is_wp_error($attach_id)) {
+                    require_once(ABSPATH . 'wp-admin/includes/image.php');
+                    $attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
+                    wp_update_attachment_metadata($attach_id, $attach_data);
+                    set_post_thumbnail($this->post->ID, $attach_id);
+                }
+            }
+        }
     }
 }

@@ -8,11 +8,13 @@ import { store as workflowStore } from '../workflow-store';
 export function WorkflowSwitchToDraftButton() {
     const {
         isSavingWorkflow,
-        isPublishedWorkflow
+        isPublishedWorkflow,
+        takeScreenshot,
     } = useSelect((select) => {
         return {
             isSavingWorkflow: select(workflowStore).isSavingWorkflow(),
             isPublishedWorkflow: select(workflowStore).isPublishedWorkflow(),
+            takeScreenshot: select(workflowStore).takeScreenshot,
         };
     });
 
@@ -38,7 +40,9 @@ export function WorkflowSwitchToDraftButton() {
         }
 
         if (window.confirm(alertMessage)) {
-            switchToDraft();
+            takeScreenshot().then((dataUrl) => {
+                switchToDraft({ screenshot: dataUrl });
+            });
         }
     };
 

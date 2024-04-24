@@ -29,5 +29,7 @@ interface WorkflowModelInterface
 
     public function setFlow(array $flow);
 
+    public function setScreenshot(string $baseUrl);
+
     public function createNew($reuseAutoDraft = true): int;
 }

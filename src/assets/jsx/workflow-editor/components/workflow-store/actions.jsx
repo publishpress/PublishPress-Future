@@ -2,6 +2,7 @@ import { dispatch, select } from '@wordpress/data';
 import { apiFetch } from '@wordpress/data-controls';
 import { STORE_NAME } from './name';
 import { apiUrl, nonce } from 'future-workflow-editor';
+import { toPng } from 'html-to-image';
 
 const editableAttributes = ['title', 'description', 'flow', 'status'];
 
@@ -45,7 +46,7 @@ export function* setupEditor(workflowId) {
     }
 };
 
-export function* saveAsDraft() {
+export function* saveAsDraft({ screenshot }) {
     yield {type: 'SAVE_AS_DRAFT_START'};
 
     try {
@@ -54,6 +55,10 @@ export function* saveAsDraft() {
         yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
 
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
+        if (screenshot) {
+            editedWorkflow.screenshot = screenshot;
+        }
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${editedWorkflow.id}`,
@@ -77,11 +82,15 @@ export function* saveAsDraft() {
     }
 }
 
-export function* saveAsCurrentStatus() {
+export function* saveAsCurrentStatus({ screenshot }) {
     yield {type: 'SAVE_AS_CURRENT_STATUS_START'};
 
     try {
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+
+        if (screenshot) {
+            editedWorkflow.screenshot = screenshot;
+        }
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${editedWorkflow.id}`,
@@ -99,7 +108,7 @@ export function* saveAsCurrentStatus() {
     }
 }
 
-export function* publishWorkflow() {
+export function* publishWorkflow({ screenshot }) {
     yield {type: 'PUBLISH_WORKFLOW_START'};
 
     try {
@@ -108,6 +117,9 @@ export function* publishWorkflow() {
         yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'publish');
 
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+        if (screenshot) {
+            editedWorkflow.screenshot = screenshot;
+        }
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${editedWorkflow.id}`,
@@ -131,7 +143,7 @@ export function* publishWorkflow() {
     }
 }
 
-export function* switchToDraft() {
+export function* switchToDraft({ screenshot }) {
     yield {type: 'SWITCH_TO_DRAFT_START'};
 
     try {
@@ -140,6 +152,9 @@ export function* switchToDraft() {
         yield dispatch(STORE_NAME).setEditedWorkflowAttribute('status', 'draft');
 
         const editedWorkflow = yield select(STORE_NAME).getEditedWorkflow();
+        if (screenshot) {
+            editedWorkflow.screenshot = screenshot;
+        }
 
         const newWorkflow = yield apiFetch({
             path: `${apiUrl}/workflows/${editedWorkflow.id}`,
