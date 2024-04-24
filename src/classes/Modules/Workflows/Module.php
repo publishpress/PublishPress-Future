@@ -55,14 +55,15 @@ class Module implements InitializableInterface
     {
         $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
         $this->hooks->addAction(CoreHooksAbstract::ACTION_INIT_PLUGIN, [$this, 'registerPostType']);
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScripts']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScriptsEditor']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScriptsList']);
         $this->hooks->addAction(CoreHooksAbstract::ACTION_REST_API_INIT, [$this->restApiManager, 'register']);
         $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_PHP, [$this, 'redirectToWorkflowEditor']);
         $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_NEW_PHP, [$this, 'redirectToWorkflowEditor']);
 
         $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_columns', [$this, 'addCustomColumns']);
         $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderTriggersColumn'], 10, 2);
-        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderScreenshotColumn'], 10, 2);
+        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderPreviewColumn'], 10, 2);
 
         $this->workflowEngine->start();
     }
@@ -172,7 +173,7 @@ class Module implements InitializableInterface
     public function addCustomColumns($columns)
     {
         $columns['workflow_triggers'] = __('Triggers', 'publishpress-future-pro');
-        $columns['screenshot'] = __('Screenshot', 'publishpress-future-pro');
+        $columns['workflow_preview'] = __('Preview', 'publishpress-future-pro');
 
         // Move the date column to the end
         $date = $columns['date'];
@@ -202,22 +203,46 @@ class Module implements InitializableInterface
         echo implode(', ', $triggers);
     }
 
-    public function renderScreenshotColumn($column, $postId)
+    public function renderPreviewColumn($column, $postId)
     {
-        if ('screenshot' !== $column) {
+        if ('workflow_preview' !== $column) {
             return;
         }
 
         $screenshot = get_the_post_thumbnail_url($postId, 'thumbnail');
+        $screenshotFull = get_the_post_thumbnail_url($postId, 'full');
 
         if (empty($screenshot)) {
             echo __('No screenshot', 'publishpress-future-pro');
         } else {
-            echo '<img src="' . esc_url($screenshot) . '" alt="' . __('Screenshot', 'publishpress-future-pro') . '" style="max-width: 100px; height: auto;">';
+            require_once __DIR__ . '/Views/preview-column.html.php';
         }
     }
 
-    public function enqueueScripts($hook)
+    public function enqueueScriptsList($hook)
+    {
+        if ('edit.php' !== $hook) {
+            return;
+        }
+
+        global $post_type;
+        if (self::POST_TYPE_WORKFLOW !== $post_type) {
+            return;
+        }
+
+        wp_enqueue_style('wp-jquery-ui-dialog');
+        wp_enqueue_script('jquery-ui-dialog');
+
+        wp_enqueue_script(
+            'future_workflow_list_script',
+            plugins_url('/src/assets/js/workflow-list.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
+            ['jquery', 'jquery-ui-dialog'],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+    }
+
+    public function enqueueScriptsEditor($hook)
     {
         if ('admin_page_future_workflow_editor' !== $hook) {
             return;

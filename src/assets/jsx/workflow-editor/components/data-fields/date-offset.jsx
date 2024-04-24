@@ -39,6 +39,10 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     const toggleHelp = () => setIsHelpVisible((state) => !state);
     const hideHelp = () => setIsHelpVisible(false);
 
+    if (!defaultValue) {
+        defaultValue = {};
+    }
+
     if (defaultValue?.avoidDuplicated === undefined) {
         defaultValue.avoidDuplicated = true;
     }
