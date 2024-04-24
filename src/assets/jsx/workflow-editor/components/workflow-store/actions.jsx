@@ -254,3 +254,17 @@ export function updateNode(node) {
         payload: node,
     };
 }
+
+export function setDataTypes(dataTypes) {
+    return {
+        type: 'SET_DATA_TYPES',
+        payload: dataTypes,
+    };
+}
+
+export function addDataType(dataType) {
+    return {
+        type: 'ADD_DATA_TYPE',
+        payload: dataType,
+    };
+}

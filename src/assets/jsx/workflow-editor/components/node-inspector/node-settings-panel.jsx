@@ -1,13 +1,13 @@
 import { PanelBody } from "@wordpress/components";
-import PostQuery from "../data-field/post-query";
+import PostQuery from "../data-fields/post-query";
 import { __, sprintf } from "@wordpress/i18n";
 import { store as workflowStore } from "../workflow-store";
 import { useDispatch } from "@wordpress/data";
-import Recurrence from "../data-field/recurrence";
-import { TextControl } from "@wordpress/components";
-import { useState, useCallback, useMemo } from "@wordpress/element";
-import { DateOffset } from "../data-field/date-offset";
-import BaseField from "../data-field/base-field";
+import Recurrence from "../data-fields/recurrence";
+import { useMemo } from "@wordpress/element";
+import { DateOffset } from "../data-fields/date-offset";
+import BaseField from "../data-fields/base-field";
+import { getNodeInputs, getNodeInputVariablesByType } from "../../utils";
 
 const DynamicField = (props) => {
     switch (props.type) {
@@ -55,6 +55,8 @@ export const NodeSettingsPanel = ({ node }) => {
     }
     const settingsSchema = node?.data?.settingsSchema || {};
 
+    const nodeInputVariables = getNodeInputVariablesByType(node, ['string', 'date']);
+
     const panels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {
             return (
@@ -70,6 +72,7 @@ export const NodeSettingsPanel = ({ node }) => {
                                     label={field.label}
                                     defaultValue={nodeSettings?.[field.name]}
                                     onChange={onChangeSetting}
+                                    variables={nodeInputVariables}
                                 />
                             );
                         })}

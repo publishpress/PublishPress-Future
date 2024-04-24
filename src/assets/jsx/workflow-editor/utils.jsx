@@ -90,3 +90,65 @@ export function nodeHasInput(node) {
 
     return nodeHasInput;
 }
+
+export function getNodeInputs(node) {
+    const incomers = getNodeIncomers(node);
+    const nodeHasIncomers = incomers?.length > 0;
+
+    const {
+        getDataTypeByName,
+    } = useSelect((select) => {
+        return {
+            getDataTypeByName: select(workflowStore).getDataTypeByName,
+        };
+    });
+
+    if (!nodeHasIncomers) {
+        return [];
+    }
+
+    let nodeInputs = [];
+
+    incomers.forEach((incomer) => {
+        if (!incomer.data?.outputSchema?.length) {
+            return;
+        }
+
+        incomer.data.outputSchema.forEach((schemaItem) => {
+            const dataType = getDataTypeByName(schemaItem.type);
+
+            nodeInputs.push({
+                name: schemaItem.name,
+                type: schemaItem.type,
+                label: schemaItem.label,
+                description: schemaItem.description,
+                dataType: dataType,
+            });
+        });
+    });
+
+    return nodeInputs;
+}
+
+export function getNodeInputVariablesByType(node, types) {
+    const nodeInputs = getNodeInputs(node);
+
+    let variables = nodeInputs.filter((input) => types.includes(input.type));
+
+    // Take object variables from the input schema
+    const objectVariables = nodeInputs.filter((input) => input.dataType.type === 'object');
+
+    objectVariables.forEach((objectVariable) => {
+        objectVariable.dataType.propertiesSchema.forEach((property) => {
+            if (types.includes(property.type)) {
+                variables.push({
+                    name: objectVariable.name + '.' + property.name,
+                    type: property.type,
+                    label: objectVariable.label + ' ' + property.label,
+                });
+            }
+        });
+    });
+
+    return variables;
+}

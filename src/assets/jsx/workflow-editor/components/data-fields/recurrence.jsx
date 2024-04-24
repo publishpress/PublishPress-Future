@@ -1,7 +1,9 @@
 import { __ } from "@wordpress/i18n";
 import BaseField from "./base-field";
-import { SelectControl, CheckboxControl, __experimentalNumberControl as NumberControl } from "@wordpress/components";
-import { useState } from "@wordpress/element";
+import {
+    SelectControl,
+    __experimentalNumberControl as NumberControl
+} from "@wordpress/components";
 import { DatePicker } from "@wordpress/components";
 
 export function Recurrence({ name, label, defaultValue, onChange }) {

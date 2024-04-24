@@ -5,13 +5,23 @@ import { TextControl, Tooltip } from "@wordpress/components";
 import { Dashicon, Popover, Button } from "@wordpress/components";
 import { useState } from "@wordpress/element";
 
-export function DateOffset({ name, label, defaultValue, onChange }) {
+export function DateOffset({ name, label, defaultValue, onChange, variables = [] }) {
 
-    const baseDateOptions = [
-        { label: __("Input post", "publishpress-future-pro"), value: "input" },
+    let baseDateOptions = [
         { label: __("Event date", "publishpress-future-pro"), value: "event" },
         { label: __("Specific date", "publishpress-future-pro"), value: "specific" },
     ];
+
+    if (variables.length > 0) {
+        variables.forEach((variable) => {
+            baseDateOptions.push({
+                label: variable.label,
+                value: variable.name,
+            });
+        });
+    }
+
+
     const defaultBaseDate = "event";
 
     const onChangeSetting = ({ settingName, value }) => {
@@ -26,7 +36,6 @@ export function DateOffset({ name, label, defaultValue, onChange }) {
     const [isHelpVisible, setIsHelpVisible] = useState(false);
     const toggleHelp = () => setIsHelpVisible((state) => !state);
     const hideHelp = () => setIsHelpVisible(false);
-
 
     return (
         <>

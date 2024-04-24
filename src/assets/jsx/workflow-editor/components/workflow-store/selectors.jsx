@@ -135,3 +135,11 @@ export const getSelectedNodesCount = (state) => {
 export const getSelectedEdgesCount = (state) => {
     return state.selectedEdges.length;
 }
+
+export const getDataTypes = (state) => {
+    return state.dataTypes;
+}
+
+export const getDataTypeByName = (state, name) => {
+    return state.dataTypes.find(dataType => dataType.name === name);
+}

@@ -27,6 +27,7 @@ export const DEFAULT_STATE = {
     },
     selectedNodes: [],
     selectedEdges: [],
+    dataTypes: [],
 }
 
 const loadWorkflowStart = (state, action) => {
@@ -327,6 +328,27 @@ const updateNode = (state, action) => {
     };
 }
 
+const setDataTypes = (state, action) => {
+    const { payload } = action;
+
+    return {
+        ...state,
+        dataTypes: payload,
+    };
+}
+
+const addDataType = (state, action) => {
+    const { payload } = action.payload;
+
+    return {
+        ...state,
+        dataTypes: [
+            ...state.dataTypes,
+            payload,
+        ],
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -387,6 +409,10 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return deleteWorkflowFailure(state, action);
         case 'UPDATE_NODE':
             return updateNode(state, action);
+        case 'SET_DATA_TYPES':
+            return setDataTypes(state, action);
+        case 'ADD_DATA_TYPE':
+            return addDataType(state, action);
     }
 
     return state;
