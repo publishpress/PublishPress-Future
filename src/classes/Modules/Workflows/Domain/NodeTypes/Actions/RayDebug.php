@@ -7,6 +7,8 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class RayDebug implements NodeTypeInterface
 {
+    const NODE_NAME = "action/ray.debug";
+
     public function getElementarType(): string
     {
         return NodeTypesModel::NODE_TYPE_ACTION;
@@ -19,7 +21,7 @@ class RayDebug implements NodeTypeInterface
 
     public function getName(): string
     {
-        return "ray/debug";
+        return self::NODE_NAME;
     }
 
     public function getLabel(): string

@@ -7,6 +7,8 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class IfElse implements NodeTypeInterface
 {
+    const NODE_NAME = "flow/core.if-else";
+
     public function getElementarType(): string
     {
         return NodeTypesModel::NODE_TYPE_FLOW;
@@ -19,7 +21,7 @@ class IfElse implements NodeTypeInterface
 
     public function getName(): string
     {
-        return "core/if-else";
+        return self::NODE_NAME;
     }
 
     public function getLabel(): string

@@ -7,6 +7,8 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreDeletePost implements NodeTypeInterface
 {
+    const NODE_NAME = "action/core.delete-post";
+
     public function getElementarType(): string
     {
         return NodeTypesModel::NODE_TYPE_ACTION;
@@ -19,7 +21,7 @@ class CoreDeletePost implements NodeTypeInterface
 
     public function getName(): string
     {
-        return "core/delete-post";
+        return self::NODE_NAME;
     }
 
     public function getLabel(): string

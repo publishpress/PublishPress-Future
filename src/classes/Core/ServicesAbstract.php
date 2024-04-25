@@ -43,4 +43,5 @@ abstract class ServicesAbstract
     const NODE_TYPES_MODEL = 'future.pro/node-types-model';
     const CRON_SCHEDULES_MODEL = 'future.pro/cron-schedules-model';
     const WORKFLOW_ENGINE = 'future.pro/workflow-engine';
+    const NODE_MAPPER = 'future.pro/node-mapper';
 }

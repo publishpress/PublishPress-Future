@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Node;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
@@ -49,6 +50,8 @@ class Module implements InitializableInterface
         $this->nodeTypesModel = $nodeTypesModel;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->workflowEngine = $workflowEngine;
+
+        $this->workflowEngine->start();
     }
 
     public function initialize()
@@ -64,8 +67,6 @@ class Module implements InitializableInterface
         $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_columns', [$this, 'addCustomColumns']);
         $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderTriggersColumn'], 10, 2);
         $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderPreviewColumn'], 10, 2);
-
-        $this->workflowEngine->start();
     }
 
     public function redirectToWorkflowEditor()
@@ -297,9 +298,24 @@ class Module implements InitializableInterface
                 'nonce' => wp_create_nonce('wp_rest'),
                 'nodeTypeCategories' => $this->nodeTypesModel->getCategories(),
                 'nodeTypes' => [
-                    'triggers'=> $this->nodeTypesModel->getTriggers(),
-                    'actions' => $this->nodeTypesModel->getActions(),
-                    'flows' => $this->nodeTypesModel->getFlows(),
+                    'triggers'=> array_values(
+                        $this->nodeTypesModel->convertInstancesToArray(
+                            $this->nodeTypesModel->getTriggers(),
+                            NodeTypesModel::NODE_TYPE_TRIGGER
+                        )
+                    ),
+                    'actions' => array_values(
+                        $this->nodeTypesModel->convertInstancesToArray(
+                            $this->nodeTypesModel->getActions(),
+                            NodeTypesModel::NODE_TYPE_ACTION
+                        )
+                    ),
+                    'flows' => array_values(
+                        $this->nodeTypesModel->convertInstancesToArray(
+                            $this->nodeTypesModel->getFlows(),
+                            NodeTypesModel::NODE_TYPE_FLOW
+                        )
+                    ),
                 ],
                 'cronSchedules' => $this->cronSchedulesModel->getCronSchedulesAsOptions(),
             ]

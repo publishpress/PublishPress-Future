@@ -9,6 +9,8 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUpdate
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\IfElse;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 
@@ -54,6 +56,15 @@ class NodeTypesModel implements NodeTypesModelInterface
                 ],
             ],
             [
+                "name" => "site",
+                "label" => __("Site", "publishpress-future-pro"),
+                "icon" => [
+                    "src" => "media-document",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
+            ],
+            [
                 "name" => "conditional",
                 "label" => __("Conditional", "publishpress-future-pro"),
                 "icon" => [
@@ -83,59 +94,68 @@ class NodeTypesModel implements NodeTypesModelInterface
         ];
     }
 
-    private function convertInstancesToArray($instances): array
+    public function convertInstancesToArray($instances, $type): array
     {
-        return array_map(function ($instance) {
-            return [
-                "type" => $instance->getType(),
-                "elementarType" => $instance->getElementarType(),
-                "name" => $instance->getName(),
-                "label" => $instance->getLabel(),
-                "description" => $instance->getDescription(),
-                "category" => $instance->getCategory(),
-                "frecency" => $instance->getFrecency(),
-                "icon" => [
-                    "src" => $instance->getIcon(),
-                    "background" => self::DEFAULT_ICON_BACKGROUND,
-                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+        $instancesCopy = $instances;
+
+        foreach ($instancesCopy as &$instance) {
+            $instance = $this->applyDefaultParams(
+                [
+                    "type" => $instance->getType(),
+                    "elementarType" => $instance->getElementarType(),
+                    "name" => $instance->getName(),
+                    "label" => $instance->getLabel(),
+                    "description" => $instance->getDescription(),
+                    "category" => $instance->getCategory(),
+                    "frecency" => $instance->getFrecency(),
+                    "icon" => [
+                        "src" => $instance->getIcon(),
+                        "background" => self::DEFAULT_ICON_BACKGROUND,
+                        "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                    ],
+                    "settingsSchema" => $instance->getSettingsSchema(),
+                    "outputSchema" => $instance->getOutputSchema(),
                 ],
-                "settingsSchema" => $instance->getSettingsSchema(),
-                "outputSchema" => $instance->getOutputSchema(),
-            ];
-        }, $instances);
+                $type
+            );
+        }
+
+        return $instancesCopy;
     }
 
     private function getDefaultTriggers()
     {
         $triggersInstances = [
-            new CoreOnSavePost(),
+            CoreOnSavePost::NODE_NAME => new CoreOnSavePost(),
+            CoreOnInit::NODE_NAME => new CoreOnInit(),
+            CoreOnAdminInit::NODE_NAME => new CoreOnAdminInit(),
         ];
 
-        return $this->convertInstancesToArray($triggersInstances);
+        return $triggersInstances;
     }
 
     private function getDefaultActions()
     {
         $actionsInstances = [
-            new CoreDeletePost(),
-            new CoreUpdatePost(),
-            new RayDebug(),
+            CoreDeletePost::NODE_NAME => new CoreDeletePost(),
+            CoreUpdatePost::NODE_NAME => new CoreUpdatePost(),
+            RayDebug::NODE_NAME => new RayDebug(),
         ];
 
-        return $this->convertInstancesToArray($actionsInstances);
+        return $actionsInstances;
     }
 
     private function getDefaultFlows()
     {
         $flowsInstances = [
-            new IfElse(),
-            new CoreSchedule(),
+            IfElse::NODE_NAME => new IfElse(),
+            CoreSchedule::NODE_NAME => new CoreSchedule(),
         ];
 
-        return $this->convertInstancesToArray($flowsInstances);
+        return $flowsInstances;
     }
 
-    private function applyDefaultParams(array $nodes, string $type): array
+    private function applyDefaultParams(array $node, string $type): array
     {
         $normalized = [];
 
@@ -161,11 +181,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             "outputSchema" => [],
         ];
 
-        foreach ($nodes as $index => $node) {
-            $normalized[] = array_merge($defaultNodeAttributes, $node);
-        }
-
-        return $normalized;
+        return array_merge($defaultNodeAttributes, $node);
     }
 
     public function getTriggers(): array
@@ -174,12 +190,9 @@ class NodeTypesModel implements NodeTypesModelInterface
             return $this->triggers;
         }
 
-        $this->triggers = $this->applyDefaultParams(
-            $this->hooks->applyFilters(
-                HooksAbstract::FILTER_WORKFLOW_TRIGGERS,
-                $this->getDefaultTriggers()
-            ),
-            self::NODE_TYPE_TRIGGER
+        $this->triggers = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_WORKFLOW_TRIGGERS,
+            $this->getDefaultTriggers()
         );
 
         return $this->triggers;
@@ -191,12 +204,9 @@ class NodeTypesModel implements NodeTypesModelInterface
             return $this->actions;
         }
 
-        $this->actions = $this->applyDefaultParams(
-            $this->hooks->applyFilters(
-                HooksAbstract::FILTER_WORKFLOW_ACTIONS,
-                $this->getDefaultActions()
-            ),
-            self::NODE_TYPE_ACTION
+        $this->actions = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_WORKFLOW_ACTIONS,
+            $this->getDefaultActions()
         );
 
         return $this->actions;
@@ -208,12 +218,9 @@ class NodeTypesModel implements NodeTypesModelInterface
             return $this->flows;
         }
 
-        $this->flows = $this->applyDefaultParams(
-            $this->hooks->applyFilters(
-                HooksAbstract::FILTER_WORKFLOW_FLOWS,
-                $this->getDefaultFlows()
-            ),
-            self::NODE_TYPE_FLOW
+        $this->flows = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_WORKFLOW_FLOWS,
+            $this->getDefaultFlows()
         );
 
         return $this->flows;

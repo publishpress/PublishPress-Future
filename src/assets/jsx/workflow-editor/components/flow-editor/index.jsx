@@ -165,6 +165,7 @@ export const FlowEditor = (props) => {
                 type: item.type,
                 position: position,
                 data: {
+                    name: item.name,
                     elementarType: item.elementarType,
                     label: item.label,
                     description: item.description,

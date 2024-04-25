@@ -7,6 +7,8 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreSchedule implements NodeTypeInterface
 {
+    const NODE_NAME = "flow/core.schedule";
+
     public function getElementarType(): string
     {
         return NodeTypesModel::NODE_TYPE_FLOW;
@@ -19,7 +21,7 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getName(): string
     {
-        return "core/schedule";
+        return self::NODE_NAME;
     }
 
     public function getLabel(): string

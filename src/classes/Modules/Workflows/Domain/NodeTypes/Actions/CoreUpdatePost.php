@@ -7,6 +7,8 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreUpdatePost implements NodeTypeInterface
 {
+    const NODE_NAME = "action/core.update-post";
+
     public function getElementarType(): string
     {
         return NodeTypesModel::NODE_TYPE_ACTION;
@@ -19,7 +21,7 @@ class CoreUpdatePost implements NodeTypeInterface
 
     public function getName(): string
     {
-        return "core/update-post";
+        return self::NODE_NAME;
     }
 
     public function getLabel(): string

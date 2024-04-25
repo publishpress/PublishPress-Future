@@ -32,4 +32,8 @@ interface WorkflowModelInterface
     public function setScreenshot(string $baseUrl);
 
     public function createNew($reuseAutoDraft = true): int;
+
+    public function getTriggerNodes(): array;
+
+    public function getARTFromFlow(): array;
 }

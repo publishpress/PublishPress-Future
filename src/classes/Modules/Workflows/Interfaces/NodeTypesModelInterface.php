@@ -11,5 +11,7 @@ interface NodeTypesModelInterface
 
     public function getFlows(): array;
 
+    public function convertInstancesToArray($instances, $type): array;
+
     public function getCategories(): array;
 }
