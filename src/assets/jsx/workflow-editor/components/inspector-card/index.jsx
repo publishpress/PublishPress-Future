@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-export const InspectorCard = ({ title, description, icon }) => {
+export const InspectorCard = ({ title, description, icon, id }) => {
     return (
         <div className="workflow-editor-inspector-card">
             <span className="workflow-editor-inspector-icon has-colors">
@@ -13,6 +13,12 @@ export const InspectorCard = ({ title, description, icon }) => {
                 <div className="workflow-editor-inspector-card__description">
                     {description}
                 </div>
+                {id && (
+                    <>
+                        <br />
+                        <div>ID: <code>{id}</code></div>
+                    </>
+                )}
             </div>
         </div>
     );

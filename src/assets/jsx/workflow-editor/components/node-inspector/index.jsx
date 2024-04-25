@@ -140,6 +140,7 @@ export const NodeInspector = () => {
                             "publishpress-future-pro",
                         )}
                         icon={<FaLinesLeaning />}
+                        id={selectedEdge.id}
                     />
                     <div className="components-tools-panel"></div>
                 </>

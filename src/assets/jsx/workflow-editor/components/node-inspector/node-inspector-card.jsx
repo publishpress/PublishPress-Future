@@ -14,6 +14,7 @@ export const NodeInspectorCard = ({ node }) => {
         <InspectorCard
             title={nodeLabel}
             description={nodeDescription}
+            id={node.id}
             icon={Icon}
         />
     );
