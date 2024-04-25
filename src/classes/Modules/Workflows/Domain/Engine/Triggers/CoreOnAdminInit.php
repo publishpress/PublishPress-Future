@@ -21,23 +21,32 @@ class CoreOnAdminInit implements WorkflowTriggerInterface
      */
     private $node;
 
+    /**
+     * @var string
+     */
+    private $hookName;
+
+    /**
+     * @var array
+     */
+    private $routineTree;
+
     public function __construct(HookableInterface $hooks)
     {
         $this->hooks = $hooks;
     }
 
-    public function setup(array $node)
+    public function setup(array $node, string $hookName, array $routineTree = [])
     {
         $this->node = $node;
+        $this->routineTree = $routineTree;
+        $this->hookName = $hookName;
 
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'triggerCallback'], 10);
     }
 
     public function triggerCallback()
     {
-        $args = func_get_args();
-        $this->hooks->doAction(HooksAbstract::ACTION_TRIGGER_FIRED, self::NODE_NAME, $this->node, $args);
-
-        ray('CoreOnAdminInit');
+        $this->hooks->doAction($this->hookName, $this->node, $this->routineTree, []);
     }
 }

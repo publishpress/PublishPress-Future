@@ -61,12 +61,14 @@ class WorkflowEngine implements WorkflowEngineInterface
 
             $routineTree = $workflow->getRoutineTree($nodeTypes);
 
-            $currentTrigger = null;
+            $triggerRunner = null;
             foreach ($triggerNodes as $triggerNode) {
                 $triggerName = $triggerNode['data']['name'];
-                $currentTrigger = $this->nodeMapper->mapNodeToInstance($triggerName);
+                $triggerId = $triggerNode['id'];
 
-                if (is_null($currentTrigger)) {
+                $triggerRunner = $this->nodeMapper->mapNodeToInstance($triggerName);
+
+                if (is_null($triggerRunner)) {
                     if (defined('WP_DEBUG') && WP_DEBUG) {
                         error_log("[PublishPress Future Pro] Trigger not found: $triggerName");
                     }
@@ -74,14 +76,22 @@ class WorkflowEngine implements WorkflowEngineInterface
                     continue;
                 }
 
-                $currentTrigger->setup($triggerNode);
-                // $this->hooks->addAction(HooksAbstract::ACTION_RUN_NODE . $node['id'], self::NODE_NAME, $this->node, $args);
+                // Ignore if there is no routine tree for this trigger
+                if (! isset($routineTree[$triggerId])) {
+                    continue;
+                }
+
+                // Setup the trigger
+                $hookName = HooksAbstract::ACTION_TRIGGER_FIRED . $triggerId;
+                $triggerRunner->setup($triggerNode, $hookName, $routineTree[$triggerId]);
+
+                $this->hooks->addAction($hookName, [$this, 'runRoutine'], 10, 3);
             }
         }
     }
 
-    public function runNode($trigger, $node, $args)
+    public function runRoutine(array $triggerNode, array $routineTree, array $args = [])
     {
-
+        ray($triggerNode, $routineTree, $args)->green();
     }
 }

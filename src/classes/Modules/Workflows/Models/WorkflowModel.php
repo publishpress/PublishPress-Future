@@ -230,15 +230,12 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         $workflowTriggers = $this->getTriggerNodes();
-        ray($edges)->gray();
 
         // Build the abstract routine tree for each trigger node
         $routineTree = [];
         foreach ($workflowTriggers as $triggerNode) {
             $routineTree[$triggerNode['id']] = $this->getNodesTree($edges, $nodesById, $triggerNode['id'], $nodeTypes);
         }
-
-        ray($routineTree)->blue();
 
         return $routineTree;
     }

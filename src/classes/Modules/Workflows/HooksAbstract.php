@@ -12,6 +12,6 @@ abstract class HooksAbstract {
     const ACTION_SAVE_POST = 'save_post';
     const ACTION_INIT = 'init';
     const ACTION_ADMIN_INIT = 'admin_init';
-    const ACTION_TRIGGER_FIRED = 'publishpressfuturepro_workflow_trigger_fired';
+    const ACTION_TRIGGER_FIRED = 'publishpressfuturepro_workflow_trigger_fired_';
     const FILTER_WORKFLOW_ENGINE_MAP_TRIGGER = 'publishpressfuturepro_workflow_engine_map_trigger';
 }
