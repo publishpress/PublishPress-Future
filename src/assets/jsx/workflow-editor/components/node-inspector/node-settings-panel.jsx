@@ -1,39 +1,11 @@
 import { PanelBody } from "@wordpress/components";
-import PostQuery from "../data-fields/post-query";
-import { __, sprintf } from "@wordpress/i18n";
+import { __ } from "@wordpress/i18n";
 import { store as workflowStore } from "../workflow-store";
 import { useDispatch } from "@wordpress/data";
-import Recurrence from "../data-fields/recurrence";
 import { useMemo } from "@wordpress/element";
-import { DateOffset } from "../data-fields/date-offset";
 import BaseField from "../data-fields/base-field";
-import { getNodeInputs, getNodeInputVariablesByType } from "../../utils";
-import DebugData from "../data-fields/debug-data";
-
-const DynamicField = (props) => {
-    switch (props.type) {
-        case "post_query":
-            return (
-                <PostQuery {...props} />
-            );
-        case "date_offset":
-            return (
-                <DateOffset {...props} />
-            );
-        case "recurrence":
-            return (
-                <Recurrence {...props} />
-            );
-        case "debug_data":
-            return (
-                <DebugData {...props} />
-            );
-    }
-
-    return (
-        <i>{sprintf(__('Field type %s is not implemented', 'publihspress-future-pro'), props.name)}</i>
-    );
-}
+import { getNodeInputVariablesByType } from "../../utils";
+import MappedField from "./mapped-field";
 
 export const NodeSettingsPanel = ({ node }) => {
     const {
@@ -69,7 +41,7 @@ export const NodeSettingsPanel = ({ node }) => {
                     <BaseField description={settingPanel?.description}>
                         {settingPanel.fields.map((field) => {
                             return (
-                                <DynamicField
+                                <MappedField
                                     key={settingPanel.label + '-' + field.name}
                                     type={field.type}
                                     name={field.name}
