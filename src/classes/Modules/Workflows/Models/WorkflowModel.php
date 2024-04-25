@@ -214,7 +214,7 @@ class WorkflowModel implements WorkflowModelInterface
         return $abstractFlow['edges'] ?? [];
     }
 
-    public function getRoutineTree(): array {
+    public function getRoutineTree(array $nodeTypes): array {
         $abstractFlow = $this->getFlow();
 
         if (empty($abstractFlow))  {
@@ -222,13 +222,20 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         $edges = $abstractFlow['edges'] ?? [];
+        $nodes = $abstractFlow['nodes'] ?? [];
+
+        $nodesById = [];
+        foreach ($nodes as $node) {
+            $nodesById[$node['id']] = $node;
+        }
+
         $workflowTriggers = $this->getTriggerNodes();
         ray($edges)->gray();
 
         // Build the abstract routine tree for each trigger node
         $routineTree = [];
         foreach ($workflowTriggers as $triggerNode) {
-            $routineTree[$triggerNode['id']] = $this->getNodesTree($edges, $triggerNode['id']);
+            $routineTree[$triggerNode['id']] = $this->getNodesTree($edges, $nodesById, $triggerNode['id'], $nodeTypes);
         }
 
         ray($routineTree)->blue();
@@ -236,15 +243,31 @@ class WorkflowModel implements WorkflowModelInterface
         return $routineTree;
     }
 
-    public function getNodesTree($edges, $sourceNode) {
-        $tree = [];
+    private function getNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null) {
+        $node = $nodes[$sourceNodeId];
+        $elementarType = $node['data']['elementarType'];
+        $nodeName = $node['data']['name'];
+        $nodeTypeInstance = $nodeTypes[$elementarType][$nodeName];
+        $socketSchema = $nodeTypeInstance->getSocketSchema();
 
-        foreach ($edges as $edge) {
-            if ($edge['source'] === $sourceNode) {
-                $tree[] = [
-                    'id' => $edge['target'],
-                    'children' => $this->getNodesTree($edges, $edge['target'])
-                ];
+        $tree = [
+            'nodeId' => $sourceNodeId,
+            'elementarType' => $elementarType,
+            'next' => [],
+        ];
+
+        if ($edgeId) {
+            $tree['id'] = $edgeId;
+        }
+
+        foreach ($socketSchema['source'] as $socket) {
+            foreach ($edges as $edge) {
+                if ($edge['source'] === $sourceNodeId && $edge['sourceHandle'] === $socket['id']) {
+                    if (! isset($tree['next'][$socket['id']])) {
+                        $tree['next'][$socket['id']] = [];
+                    }
+                    $tree['next'][$socket['id']][] = $this->getNodesTree($edges, $nodes, $edge['target'], $nodeTypes, $edge['id']);
+                }
             }
         }
 

@@ -35,5 +35,7 @@ interface WorkflowModelInterface
 
     public function getTriggerNodes(): array;
 
-    public function getARTFromFlow(): array;
+    public function getEdges(): array;
+
+    public function getRoutineTree(array $nodeTypes): array;
 }
