@@ -17,7 +17,7 @@ class CoreOnSavePost implements NodeTypeInterface
 
     public function getType(): string
     {
-        return "genericTrigger";
+        return "generic";
     }
 
     public function getName(): string
@@ -41,6 +41,11 @@ class CoreOnSavePost implements NodeTypeInterface
     }
 
     public function getFrecency(): int
+    {
+        return 1;
+    }
+
+    public function getVersion(): int
     {
         return 1;
     }
@@ -85,6 +90,24 @@ class CoreOnSavePost implements NodeTypeInterface
                 'type' => 'post',
                 'label' => __("Old Post", "publishpress-future-pro"),
                 'description' => __("The post that was saved, with the old properties.", "publishpress-future-pro"),
+            ]
+        ];
+    }
+
+    public function getCSSClass(): string
+    {
+        return "react-flow__node-genericTrigger";
+    }
+
+    public function getSocketSchema(): array
+    {
+        return [
+            "target" => [],
+            "source" => [
+                [
+                    "id" => "output",
+                    "left" => "50%",
+                ]
             ]
         ];
     }

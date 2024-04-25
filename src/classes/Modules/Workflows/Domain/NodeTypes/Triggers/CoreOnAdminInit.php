@@ -17,7 +17,7 @@ class CoreOnAdminInit implements NodeTypeInterface
 
     public function getType(): string
     {
-        return "genericTrigger";
+        return "generic";
     }
 
     public function getName(): string
@@ -45,6 +45,11 @@ class CoreOnAdminInit implements NodeTypeInterface
         return 1;
     }
 
+    public function getVersion(): int
+    {
+        return 1;
+    }
+
     public function getCategory(): string
     {
         return "site";
@@ -58,5 +63,23 @@ class CoreOnAdminInit implements NodeTypeInterface
     public function getOutputSchema(): array
     {
         return [];
+    }
+
+    public function getCSSClass(): string
+    {
+        return "react-flow__node-genericTrigger";
+    }
+
+    public function getSocketSchema(): array
+    {
+        return [
+            "target" => [],
+            "source" => [
+                [
+                    "id" => "output",
+                    "left" => "50%",
+                ]
+            ]
+        ];
     }
 }

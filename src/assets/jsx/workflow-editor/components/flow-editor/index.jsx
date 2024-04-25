@@ -25,9 +25,7 @@ import {
 import { defaultEdgeProps } from "../../default-edges-props";
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
 import { SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
-import GenericTriggerNode from "../node-types/generic-trigger";
-import GenericActionNode from "../node-types/generic-action";
-import FlowIfElseNode from "../node-types/flow-if-else";
+import GenericNode from "../node-types/generic";
 
 import { AUTO_LAYOUT_DEFAULT_DIRECTION } from "./auto-layout/constants";
 import {
@@ -88,9 +86,7 @@ export const FlowEditor = (props) => {
     };
 
     const nodeTypes = {
-        genericTrigger: GenericTriggerNode,
-        genericAction: GenericActionNode,
-        flowIfElse: FlowIfElseNode,
+        generic: GenericNode,
     };
 
     const updateFlowInEditedWorkflow = useCallback(() => {
@@ -174,6 +170,8 @@ export const FlowEditor = (props) => {
                     icon: item.icon,
                     version: item.version,
                     outputSchema: item.outputSchema,
+                    className: item.className,
+                    socketSchema: item.socketSchema,
                 },
             };
 
@@ -322,9 +320,7 @@ export const FlowEditor = (props) => {
                     pannable
                     zoomable
                     nodeColor={(node) => {
-                        if (node.type === "genericTrigger") return "#FFCC00";
-                        if (node.type === "genericAction") return "#FFCC30";
-                        if (node.type === "flowIfElse") return "#FFCC60";
+                        if (node.type === "generic") return "#FFCC00";
                     }}
                 />
                 <Background variant="dots" color="#ccc" gap={GRID_SIZE} />

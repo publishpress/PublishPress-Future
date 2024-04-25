@@ -16,7 +16,7 @@ class IfElse implements NodeTypeInterface
 
     public function getType(): string
     {
-        return "flowIfElse";
+        return "generic";
     }
 
     public function getName(): string
@@ -44,6 +44,11 @@ class IfElse implements NodeTypeInterface
         return 1;
     }
 
+    public function getVersion(): int
+    {
+        return 1;
+    }
+
     public function getCategory(): string
     {
         return "conditional";
@@ -57,5 +62,32 @@ class IfElse implements NodeTypeInterface
     public function getOutputSchema(): array
     {
         return [];
+    }
+
+    public function getCSSClass(): string
+    {
+        return "react-flow__node-genericFlow";
+    }
+
+    public function getSocketSchema(): array
+    {
+        return [
+            "target" => [
+                [
+                    "id" => "input",
+                    "left" => "50%",
+                ]
+            ],
+            "source" => [
+                [
+                    "id" => "true",
+                    "left" => "40%",
+                ],
+                [
+                    "id" => "false",
+                    "left" => "60%",
+                ]
+            ]
+        ];
     }
 }

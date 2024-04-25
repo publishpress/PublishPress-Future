@@ -16,7 +16,7 @@ class CoreUpdatePost implements NodeTypeInterface
 
     public function getType(): string
     {
-        return "genericAction";
+        return "generic";
     }
 
     public function getName(): string
@@ -44,6 +44,11 @@ class CoreUpdatePost implements NodeTypeInterface
         return 1;
     }
 
+    public function getVersion(): int
+    {
+        return 1;
+    }
+
     public function getCategory(): string
     {
         return "post";
@@ -57,5 +62,28 @@ class CoreUpdatePost implements NodeTypeInterface
     public function getOutputSchema(): array
     {
         return [];
+    }
+
+    public function getCSSClass(): string
+    {
+        return "react-flow__node-genericAction";
+    }
+
+    public function getSocketSchema(): array
+    {
+        return [
+            "target" => [
+                [
+                    "id" => "input",
+                    "left" => "50%",
+                ]
+            ],
+            "source" => [
+                [
+                    "id" => "output",
+                    "left" => "50%",
+                ]
+            ]
+        ];
     }
 }

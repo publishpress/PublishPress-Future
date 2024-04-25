@@ -114,7 +114,10 @@ class NodeTypesModel implements NodeTypesModelInterface
                         "foreground" => self::DEFAULT_ICON_FOREGROUND,
                     ],
                     "settingsSchema" => $instance->getSettingsSchema(),
+                    "className" => $instance->getCSSClass(),
+                    "version" => $instance->getVersion(),
                     "outputSchema" => $instance->getOutputSchema(),
+                    "socketSchema" => $instance->getSocketSchema(),
                 ],
                 $type
             );
@@ -179,6 +182,8 @@ class NodeTypesModel implements NodeTypesModelInterface
             "version" => self::NODE_VERSION,
             "settingsSchema" => [],
             "outputSchema" => [],
+            "className" => "react-flow__node-genericNode",
+            "socketSchema" => [],
         ];
 
         return array_merge($defaultNodeAttributes, $node);

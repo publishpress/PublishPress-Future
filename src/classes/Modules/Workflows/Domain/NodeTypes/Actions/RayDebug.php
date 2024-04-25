@@ -16,7 +16,7 @@ class RayDebug implements NodeTypeInterface
 
     public function getType(): string
     {
-        return "genericAction";
+        return "generic";
     }
 
     public function getName(): string
@@ -44,6 +44,11 @@ class RayDebug implements NodeTypeInterface
         return 1;
     }
 
+    public function getVersion(): int
+    {
+        return 1;
+    }
+
     public function getCategory(): string
     {
         return "debug";
@@ -61,6 +66,11 @@ class RayDebug implements NodeTypeInterface
                         "type" => "debug_data",
                         "label" => __("Data", "publishpress-future-pro"),
                     ],
+                    [
+                        "name" => "color",
+                        "type" => "ray_color",
+                        "label" => __("Color", "publishpress-future-pro"),
+                    ]
                 ],
             ]
         ];
@@ -69,5 +79,28 @@ class RayDebug implements NodeTypeInterface
     public function getOutputSchema(): array
     {
         return [];
+    }
+
+    public function getCSSClass(): string
+    {
+        return "react-flow__node-genericAction";
+    }
+
+    public function getSocketSchema(): array
+    {
+        return [
+            "target" => [
+                [
+                    "id" => "input",
+                    "left" => "50%",
+                ]
+            ],
+            "source" => [
+                [
+                    "id" => "output",
+                    "left" => "50%",
+                ]
+            ]
+        ];
     }
 }

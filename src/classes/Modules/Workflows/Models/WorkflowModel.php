@@ -179,117 +179,7 @@ class WorkflowModel implements WorkflowModelInterface
             }
         }
     }
-    /**
-     *
-     * $flow = [
-    'nodes' => [
-        0 => [
-            'id' => 'node_1713970801125',
-            'type' => 'genericTrigger',
-            'position' => [
-                'x' => 12,
-                'y' => 12,
-            ],
-            'data' => [
-                'elementarType' => 'trigger',
-                'label' => 'Post is saved',
-                'description' => 'This trigger is fired when a post is saved.',
-                'settingsSchema' => [
-                    0 => [...],,
-                ],
-                'category' => 'post',
-                'icon' => [
-                    'src' => 'media-document',
-                    'background' => '#ffffff',
-                    'foreground' => '#1e1e1e',
-                ],
-                'version' => '1',
-                'outputSchema' => [
-                    0 => [...],,
-                    1 => [...],,
-                ],
-                'settings' => [
-                    'post_query' => [...],,
-                ],
-            ],
-            'width' => 150,
-            'height' => 50,
-            'selected' => false,
-            'dragging' => false,
-            'positionAbsolute' => [
-                'x' => 12,
-                'y' => 12,
-            ],
-            'targetPosition' => 'top',
-            'sourcePosition' => 'bottom',
-            '$H' => 284,
-            'x' => 12,
-            'y' => 12,
-        ],
-        1 => [
-            'id' => 'node_1713970807794',
-            'type' => 'genericAction',
-            'position' => [
-                'x' => 12,
-                'y' => 122,
-            ],
-            'data' => [
-                'elementarType' => 'action',
-                'label' => 'Ray - Debug',
-                'description' => 'This action sends the flow data to Ray.',
-                'settingsSchema' => [
-                    0 => [...],,
-                ],
-                'category' => 'debug',
-                'icon' => [
-                    'src' => 'fa6-fabug',
-                    'background' => '#ffffff',
-                    'foreground' => '#1e1e1e',
-                ],
-                'version' => '1',
-                'outputSchema' => [],,
-            ],
-            'width' => 150,
-            'height' => 50,
-            'selected' => false,
-            'positionAbsolute' => [
-                'x' => 12,
-                'y' => 122,
-            ],
-            'dragging' => false,
-            'targetPosition' => 'top',
-            'sourcePosition' => 'bottom',
-            '$H' => 286,
-            'x' => 12,
-            'y' => 122,
-        ],
-    ],
-    'edges' => [
-        0 => [
-            'source' => 'node_1713970801125',
-            'sourceHandle' => 'socket-output',
-            'target' => 'node_1713970807794',
-            'targetHandle' => 'socket-input',
-            'animated' => false,
-            'markerEnd' => [
-                'type' => 'arrowclosed',
-            ],
-            'style' => [
-                'strokeWidth' => 2,
-            ],
-            'id' => 'reactflow__edge-node_1713970801125socket-output-node_1713970807794socket-input',
-        ],
-    ],
-    'viewport' => [
-        'x' => 340.5,
-        'y' => 412.5,
-        'zoom' => 2,
-    ],
-]
-     *
-     *
-     *
-     */
+
     public function getTriggerNodes(): array
     {
         $abstractFlow = $this->getFlow();
@@ -313,45 +203,51 @@ class WorkflowModel implements WorkflowModelInterface
         return $triggers;
     }
 
-    public function getARTFromFlow(): array
+    public function getEdges(): array
     {
         $abstractFlow = $this->getFlow();
-        ray($abstractFlow);
 
-        // The abstract routine tree
-        $art = [];
+        if (empty($abstractFlow))  {
+            return [];
+        }
+
+        return $abstractFlow['edges'] ?? [];
+    }
+
+    public function getRoutineTree(): array {
+        $abstractFlow = $this->getFlow();
 
         if (empty($abstractFlow))  {
             return [];
         }
 
         $edges = $abstractFlow['edges'] ?? [];
-
         $workflowTriggers = $this->getTriggerNodes();
-
-        // Build the dictionary of nodes, by node ID
-        $nodesDictionary = [];
-        foreach ($abstractFlow['nodes'] as $node) {
-            $nodesDictionary[$node['id']] = $node;
-        }
+        ray($edges)->gray();
 
         // Build the abstract routine tree for each trigger node
+        $routineTree = [];
         foreach ($workflowTriggers as $triggerNode) {
-            $subRoutine = [];
-            foreach ($edges as $edge) {
-                $source = $edge['source'];
-                $target = $edge['target'];
-
-                if ($source === $triggerNode['id']) {
-                    $subRoutine[] = $target;
-                }
-            }
-
-            $art[$triggerNode['id']] = $subRoutine;
+            $routineTree[$triggerNode['id']] = $this->getNodesTree($edges, $triggerNode['id']);
         }
 
-        rd($art);
+        ray($routineTree)->blue();
 
-        return $art;
+        return $routineTree;
+    }
+
+    public function getNodesTree($edges, $sourceNode) {
+        $tree = [];
+
+        foreach ($edges as $edge) {
+            if ($edge['source'] === $sourceNode) {
+                $tree[] = [
+                    'id' => $edge['target'],
+                    'children' => $this->getNodesTree($edges, $edge['target'])
+                ];
+            }
+        }
+
+        return $tree;
     }
 }

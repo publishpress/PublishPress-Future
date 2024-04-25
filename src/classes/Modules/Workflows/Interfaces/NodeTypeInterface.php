@@ -18,9 +18,13 @@ interface NodeTypeInterface
 
     public function getFrecency(): int;
 
+    public function getVersion(): int;
+
     public function getCategory(): string;
 
     public function getSettingsSchema(): array;
 
     public function getOutputSchema(): array;
+
+    public function getCSSClass(): string;
 }
