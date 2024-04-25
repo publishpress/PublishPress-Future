@@ -46,12 +46,20 @@ class WorkflowEngine implements WorkflowEngineInterface
         $workflowsModel = new WorkflowsModel();
         $workflows = $workflowsModel->getPublishedWorkflowsIds();
 
+        $nodeTypes = [
+            "action" => $this->nodeTypesModel->getActions(),
+            "trigger" => $this->nodeTypesModel->getTriggers(),
+            "flow" => $this->nodeTypesModel->getFlows(),
+        ];
+
         // Setup the workflow triggers
         foreach ($workflows as $workflowId) {
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
 
             $triggerNodes = $workflow->getTriggerNodes();
+
+            $routineTree = $workflow->getRoutineTree($nodeTypes);
 
             $currentTrigger = null;
             foreach ($triggerNodes as $triggerNode) {
@@ -67,7 +75,13 @@ class WorkflowEngine implements WorkflowEngineInterface
                 }
 
                 $currentTrigger->setup($triggerNode);
+                // $this->hooks->addAction(HooksAbstract::ACTION_RUN_NODE . $node['id'], self::NODE_NAME, $this->node, $args);
             }
         }
+    }
+
+    public function runNode($trigger, $node, $args)
+    {
+
     }
 }
