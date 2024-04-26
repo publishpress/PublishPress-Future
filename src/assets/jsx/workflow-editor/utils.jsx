@@ -144,7 +144,7 @@ export function getNodeInputVariablesByType(node, types) {
                 variables.push({
                     name: objectVariable.name + '.' + property.name,
                     type: property.type,
-                    label: objectVariable.label + ' ' + property.label,
+                    label: objectVariable.label + ' -> ' + property.label,
                 });
             }
         });

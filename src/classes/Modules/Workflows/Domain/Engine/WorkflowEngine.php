@@ -89,7 +89,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
     }
 
-    public function executeNodeRoutine($step)
+    public function executeNodeRoutine($step, $input)
     {
         $node = $step['node'];
         $nodeName = $node['data']['name'];
@@ -104,6 +104,6 @@ class WorkflowEngine implements WorkflowEngineInterface
             return;
         }
 
-        $nodeRunner->setup($step);
+        $nodeRunner->setup($step, $input);
     }
 }

@@ -80,15 +80,21 @@ class CoreOnPostUpdated implements NodeTypeInterface
     {
         return [
             [
-                'name' => 'post_before',
+                'name' => 'postId',
+                'type' => 'integer',
+                'label' => __("Post ID", "publishpress-future-pro"),
+                'description' => __("The post ID of the updated post.", "publishpress-future-pro"),
+            ],
+            [
+                'name' => 'postBefore',
                 'type' => 'post',
-                'label' => __("Post before", "publishpress-future-pro"),
+                'label' => __("Post Before", "publishpress-future-pro"),
                 'description' => __("The post that was saved, with the old properties.", "publishpress-future-pro"),
             ],
             [
-                'name' => 'post_after',
+                'name' => 'postAfter',
                 'type' => 'post',
-                'label' => __("Post after", "publishpress-future-pro"),
+                'label' => __("Post After", "publishpress-future-pro"),
                 'description' => __("The post that was saved, with the new properties.", "publishpress-future-pro"),
             ]
         ];

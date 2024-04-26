@@ -66,9 +66,15 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             return false;
         }
 
+        $output = [
+            'postId' => $postId,
+            'post' => $post,
+            'update' => $update,
+        ];
+
         // Execute the next nodes
         foreach ($nextSteps as $nextStep) {
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $this->node);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $output);
         }
     }
 

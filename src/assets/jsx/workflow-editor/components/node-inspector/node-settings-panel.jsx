@@ -32,7 +32,16 @@ export const NodeSettingsPanel = ({ node }) => {
     }
     const settingsSchema = node?.data?.settingsSchema || {};
 
-    const nodeInputVariables = getNodeInputVariablesByType(node, ['string', 'date']);
+    const nodeInputVariables = getNodeInputVariablesByType(
+        node,
+        [
+            'string',
+            'date',
+            'integer',
+            'post',
+            'boolean',
+        ]
+    );
 
     const panels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {

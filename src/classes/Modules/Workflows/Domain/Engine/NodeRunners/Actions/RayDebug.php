@@ -2,6 +2,7 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
+use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug as NodeTypeRayDebug;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
@@ -21,13 +22,41 @@ class RayDebug implements NodeRunnerInterface
         $this->hooks = $hooks;
     }
 
-    public function setup(array $step)
+    public function setup(array $step, array $input = []): void
     {
         $node = $step['node'];
         $nextSteps = $step['next']['output'];
         $nodeSettings = $node['data']['settings'];
 
-        $rayMessage = ray('Hello world!');
+        // What to output?
+        try {
+            $dataToOutput = explode('.', $nodeSettings['data']['dataToOutput']);
+            $messageToSend = null;
+
+            $messageToSend = $input;
+
+            if (count($dataToOutput) > 1 && $dataToOutput[0] !== 'all-input') {
+                foreach ($dataToOutput as $key) {
+                    if (is_array($messageToSend) && isset($messageToSend[$key])) {
+                        $messageToSend = $messageToSend[$key];
+                    } else {
+                        if (is_object($messageToSend) && isset($messageToSend->{$key})) {
+                            $messageToSend = $messageToSend->{$key};
+                        } else {
+                            throw new Exception('Invalid data key: ' . $key . ' for data: ' . $input);
+                        }
+                    }
+                }
+            } else {
+                if (count($dataToOutput) === 1) {
+                    $messageToSend = $input[$dataToOutput[0]];
+                }
+            }
+        } catch (\Exception $e) {
+            $messageToSend = 'Error: ' . $e->getMessage();
+        }
+
+        $rayMessage = ray($messageToSend);
 
         if (isset($nodeSettings['label'])) {
             $rayMessage->label($nodeSettings['label']);
@@ -61,7 +90,7 @@ class RayDebug implements NodeRunnerInterface
             /**
              * @var array $nextStep
              */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $input);
         }
     }
 }

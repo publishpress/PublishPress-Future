@@ -61,12 +61,18 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             return false;
         }
 
+        $output = [
+            'postId' => $postId,
+            'postBefore' => $postBefore,
+            'postAfter' => $postAfter,
+        ];
+
         // Execute the next nodes
         foreach ($nextSteps as $nextStep) {
             /**
              * @var array $nextStep
              */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $output);
         }
     }
 
