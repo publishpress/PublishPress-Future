@@ -21,31 +21,20 @@ export function RayColor({ name, label, defaultValue, onChange, variables = [] }
 
     const defaultColor = "default";
 
-    const onChangeSetting = ({ settingName, value }) => {
-        const newValue = { ...defaultValue };
-        newValue[settingName] = value;
-
+    const onChangeSetting = ({ value }) => {
         if (onChange) {
-            onChange(name, newValue);
+            onChange(name, value);
         }
-    }
-
-    if (!defaultValue) {
-        defaultValue = {};
-    }
-
-    if (defaultValue?.color === undefined) {
-        defaultValue.color = defaultColor;
     }
 
     return (
         <>
             <VStack>
                 <SelectControl
-                    label={__("Color", "publishpress-future-pro")}
+                    label={label}
                     options={colorOptions}
-                    value={defaultValue?.color || defaultColor}
-                    onChange={(value) => onChangeSetting({ settingName: "color", value })}
+                    value={defaultValue || defaultColor}
+                    onChange={(value) => onChangeSetting({ value })}
                 />
             </VStack>
         </>
