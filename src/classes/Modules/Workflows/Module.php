@@ -14,7 +14,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class Module implements InitializableInterface
 {
-    public const POST_TYPE_WORKFLOW = 'ppfuture_workflow';
+    public const POST_TYPE_WORKFLOW = "ppfuture_workflow";
 
     /**
      * @var HookableInterface
@@ -56,48 +56,81 @@ class Module implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_INIT_PLUGIN, [$this, 'registerPostType']);
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScriptsEditor']);
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT, [$this, 'enqueueScriptsList']);
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_REST_API_INIT, [$this->restApiManager, 'register']);
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_PHP, [$this, 'redirectToWorkflowEditor']);
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_NEW_PHP, [$this, 'redirectToWorkflowEditor']);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_MENU, [
+            $this,
+            "adminMenu",
+        ]);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_INIT_PLUGIN, [
+            $this,
+            "registerPostType",
+        ]);
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            [$this, "enqueueScriptsEditor"]
+        );
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            [$this, "enqueueScriptsList"]
+        );
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_REST_API_INIT, [
+            $this->restApiManager,
+            "register",
+        ]);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_PHP, [
+            $this,
+            "redirectToWorkflowEditor",
+        ]);
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_LOAD_POST_NEW_PHP, [
+            $this,
+            "redirectToWorkflowEditor",
+        ]);
 
-        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_columns', [$this, 'addCustomColumns']);
-        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderTriggersColumn'], 10, 2);
-        $this->hooks->addAction('manage_' . self::POST_TYPE_WORKFLOW . '_posts_custom_column', [$this, 'renderPreviewColumn'], 10, 2);
+        $this->hooks->addAction(
+            "manage_" . self::POST_TYPE_WORKFLOW . "_posts_columns",
+            [$this, "addCustomColumns"]
+        );
+        $this->hooks->addAction(
+            "manage_" . self::POST_TYPE_WORKFLOW . "_posts_custom_column",
+            [$this, "renderTriggersColumn"],
+            10,
+            2
+        );
+        $this->hooks->addAction(
+            "manage_" . self::POST_TYPE_WORKFLOW . "_posts_custom_column",
+            [$this, "renderPreviewColumn"],
+            10,
+            2
+        );
     }
 
     public function redirectToWorkflowEditor()
     {
         global $typenow, $pagenow;
 
-        if ($typenow !== self::POST_TYPE_WORKFLOW)
-        {
+        if ($typenow !== self::POST_TYPE_WORKFLOW) {
             return;
         }
 
-        $url = admin_url('admin.php?page=future_workflow_editor');
+        $url = admin_url("admin.php?page=future_workflow_editor");
 
-        if ($pagenow === 'post.php') {
-            $postId = (int) $_GET['post'];
+        if ($pagenow === "post.php") {
+            $postId = (int) $_GET["post"];
 
             if (empty($postId)) {
                 return;
             }
 
-            $url = add_query_arg('workflow', $postId, $url);
-        } elseif ($pagenow !== 'post-new.php') {
+            $url = add_query_arg("workflow", $postId, $url);
+        } elseif ($pagenow !== "post-new.php") {
             return;
         }
 
-        if (isset($_GET['action']) && 'trash' === $_GET['action']) {
+        if (isset($_GET["action"]) && "trash" === $_GET["action"]) {
             return;
         }
 
         wp_redirect($url);
-        exit;
+        exit();
     }
 
     public function adminMenu()
@@ -105,128 +138,182 @@ class Module implements InitializableInterface
         global $submenu;
 
         $indexAllWorkflows = array_search(
-            'edit.php?post_type=ppfuture_workflow',
-            array_column($submenu['publishpress-future'], 2)
+            "edit.php?post_type=ppfuture_workflow",
+            array_column($submenu["publishpress-future"], 2)
         );
 
-        $submenu['publishpress-future'][$indexAllWorkflows][0] = __('Workflows', 'publishpress-future-pro');
+        $submenu["publishpress-future"][$indexAllWorkflows][0] = __(
+            "Workflows",
+            "publishpress-future-pro"
+        );
 
         add_submenu_page(
-            'edit.php?post_type=' . self::POST_TYPE_WORKFLOW,
-            'My Custom Post Type Editor',
-            'My Custom Post Type',
-            'edit_posts',
-            'future_workflow_editor',
-            [$this, 'renderEditorPage']
+            "edit.php?post_type=" . self::POST_TYPE_WORKFLOW,
+            "My Custom Post Type Editor",
+            "My Custom Post Type",
+            "edit_posts",
+            "future_workflow_editor",
+            [$this, "renderEditorPage"]
         );
     }
 
     public function registerPostType()
     {
         register_post_type(self::POST_TYPE_WORKFLOW, [
-            'labels' => [
-                'name' => __('Workflows', 'publishpress-future-pro'),
-                'singular_name' => __('Workflow', 'publishpress-future-pro'),
-                'add_new' => __('Add New', 'publishpress-future-pro'),
-                'add_new_item' => __('Add New Workflow', 'publishpress-future-pro'),
-                'edit_item' => __('Edit Workflow', 'publishpress-future-pro'),
-                'new_item' => __('New Workflow', 'publishpress-future-pro'),
-                'view_item' => __('View Workflow', 'publishpress-future-pro'),
-                'search_items' => __('Search Workflows', 'publishpress-future-pro'),
-                'not_found' => __('No Workflows found', 'publishpress-future-pro'),
-                'not_found_in_trash' => __('No Workflows found in Trash', 'publishpress-future-pro'),
-                'parent_item_colon' => __('Parent Workflow:', 'publishpress-future-pro'),
-                'all_items' => __('All Workflows', 'publishpress-future-pro'),
-                'archives' => __('Workflow Archives', 'publishpress-future-pro'),
-                'insert_into_item' => __('Insert into workflow', 'publishpress-future-pro'),
-                'uploaded_to_this_item' => __('Uploaded to this workflow', 'publishpress-future-pro'),
-                'filter_items_list' => __('Filter workflows list', 'publishpress-future-pro'),
-                'items_list_navigation' => __('Workflows list navigation', 'publishpress-future-pro'),
-                'items_list' => __('Workflows list', 'publishpress-future-pro'),
-                'item_published' => __('Workflow published.', 'publishpress-future-pro'),
-                'item_published_privately' => __('Workflow published privately.', 'publishpress-future-pro'),
-                'item_reverted_to_draft' => __('Workflow reverted to draft.', 'publishpress-future-pro'),
-                'item_scheduled' => __('Workflow scheduled.', 'publishpress-future-pro'),
-                'item_updated' => __('Workflow updated.', 'publishpress-future-pro'),
+            "labels" => [
+                "name" => __("Workflows", "publishpress-future-pro"),
+                "singular_name" => __("Workflow", "publishpress-future-pro"),
+                "add_new" => __("Add New", "publishpress-future-pro"),
+                "add_new_item" => __(
+                    "Add New Workflow",
+                    "publishpress-future-pro"
+                ),
+                "edit_item" => __("Edit Workflow", "publishpress-future-pro"),
+                "new_item" => __("New Workflow", "publishpress-future-pro"),
+                "view_item" => __("View Workflow", "publishpress-future-pro"),
+                "search_items" => __(
+                    "Search Workflows",
+                    "publishpress-future-pro"
+                ),
+                "not_found" => __(
+                    "No Workflows found",
+                    "publishpress-future-pro"
+                ),
+                "not_found_in_trash" => __(
+                    "No Workflows found in Trash",
+                    "publishpress-future-pro"
+                ),
+                "parent_item_colon" => __(
+                    "Parent Workflow:",
+                    "publishpress-future-pro"
+                ),
+                "all_items" => __("All Workflows", "publishpress-future-pro"),
+                "archives" => __(
+                    "Workflow Archives",
+                    "publishpress-future-pro"
+                ),
+                "insert_into_item" => __(
+                    "Insert into workflow",
+                    "publishpress-future-pro"
+                ),
+                "uploaded_to_this_item" => __(
+                    "Uploaded to this workflow",
+                    "publishpress-future-pro"
+                ),
+                "filter_items_list" => __(
+                    "Filter workflows list",
+                    "publishpress-future-pro"
+                ),
+                "items_list_navigation" => __(
+                    "Workflows list navigation",
+                    "publishpress-future-pro"
+                ),
+                "items_list" => __("Workflows list", "publishpress-future-pro"),
+                "item_published" => __(
+                    "Workflow published.",
+                    "publishpress-future-pro"
+                ),
+                "item_published_privately" => __(
+                    "Workflow published privately.",
+                    "publishpress-future-pro"
+                ),
+                "item_reverted_to_draft" => __(
+                    "Workflow reverted to draft.",
+                    "publishpress-future-pro"
+                ),
+                "item_scheduled" => __(
+                    "Workflow scheduled.",
+                    "publishpress-future-pro"
+                ),
+                "item_updated" => __(
+                    "Workflow updated.",
+                    "publishpress-future-pro"
+                ),
             ],
-            'public' => false,
-            'show_ui' => true,
-            'show_in_menu' => 'publishpress-future',
-            'show_in_nav_menus' => false,
-            'show_in_admin_bar' => true,
-            'menu_position' => 20,
-            'menu_icon' => 'dashicons-randomize',
-            'hierarchical' => false,
-            'supports' => ['title'],
-            'has_archive' => false,
-            'rewrite' => false,
-            'query_var' => false,
-            'can_export' => true,
-            'delete_with_user' => false,
-            'show_in_rest' => true,
-            'rest_base' => 'workflows',
+            "public" => false,
+            "show_ui" => true,
+            "show_in_menu" => "publishpress-future",
+            "show_in_nav_menus" => false,
+            "show_in_admin_bar" => true,
+            "menu_position" => 20,
+            "menu_icon" => "dashicons-randomize",
+            "hierarchical" => false,
+            "supports" => ["title"],
+            "has_archive" => false,
+            "rewrite" => false,
+            "query_var" => false,
+            "can_export" => true,
+            "delete_with_user" => false,
+            "show_in_rest" => true,
+            "rest_base" => "workflows",
         ]);
     }
 
     public function renderEditorPage()
     {
-        $workflowId = isset($_GET['workflow']) ? (int) $_GET['workflow'] : 0;
+        $workflowId = isset($_GET["workflow"]) ? (int) $_GET["workflow"] : 0;
 
-        require_once __DIR__ . '/Views/editor.html.php';
+        require_once __DIR__ . "/Views/editor.html.php";
     }
 
     public function addCustomColumns($columns)
     {
-        $columns['workflow_triggers'] = __('Triggers', 'publishpress-future-pro');
-        $columns['workflow_preview'] = __('Preview', 'publishpress-future-pro');
+        $columns["workflow_triggers"] = __(
+            "Triggers",
+            "publishpress-future-pro"
+        );
+        $columns["workflow_preview"] = __("Preview", "publishpress-future-pro");
 
         // Move the date column to the end
-        $date = $columns['date'];
-        unset($columns['date']);
-        $columns['date'] = $date;
+        $date = $columns["date"];
+        unset($columns["date"]);
+        $columns["date"] = $date;
 
         return $columns;
     }
 
     public function renderTriggersColumn($column, $postId)
     {
-        if ('workflow_triggers' !== $column) {
+        if ("workflow_triggers" !== $column) {
             return;
         }
 
-        $workflowFlow = get_post_meta($postId, '_workflow_flow', true);
+        $workflowFlow = get_post_meta($postId, "_workflow_flow", true);
         $workflowFlow = json_decode($workflowFlow, true);
 
         $triggers = [];
 
-        foreach ($workflowFlow['nodes'] as $node) {
-            if (NodeTypesModel::NODE_TYPE_TRIGGER === $node['data']['elementarType']) {
-                $triggers[] = $node['data']['label'];
+        foreach ($workflowFlow["nodes"] as $node) {
+            if (
+                NodeTypesModel::NODE_TYPE_TRIGGER ===
+                $node["data"]["elementarType"]
+            ) {
+                $triggers[] = $node["data"]["label"];
             }
         }
 
-        echo implode(', ', $triggers);
+        echo implode(", ", $triggers);
     }
 
     public function renderPreviewColumn($column, $postId)
     {
-        if ('workflow_preview' !== $column) {
+        if ("workflow_preview" !== $column) {
             return;
         }
 
-        $screenshot = get_the_post_thumbnail_url($postId, 'thumbnail');
+        $screenshot = get_the_post_thumbnail_url($postId, "thumbnail");
 
         if (empty($screenshot)) {
-            echo __('No screenshot', 'publishpress-future-pro');
+            echo __("No screenshot", "publishpress-future-pro");
         } else {
-            $screenshotFull = get_the_post_thumbnail_url($postId, 'full');
-            require __DIR__ . '/Views/preview-column.html.php';
+            $screenshotFull = get_the_post_thumbnail_url($postId, "full");
+            require __DIR__ . "/Views/preview-column.html.php";
         }
     }
 
     public function enqueueScriptsList($hook)
     {
-        if ('edit.php' !== $hook) {
+        if ("edit.php" !== $hook) {
             return;
         }
 
@@ -235,13 +322,16 @@ class Module implements InitializableInterface
             return;
         }
 
-        wp_enqueue_style('wp-jquery-ui-dialog');
-        wp_enqueue_script('jquery-ui-dialog');
+        wp_enqueue_style("wp-jquery-ui-dialog");
+        wp_enqueue_script("jquery-ui-dialog");
 
         wp_enqueue_script(
-            'future_workflow_list_script',
-            plugins_url('/src/assets/js/workflow-list.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
-            ['jquery', 'jquery-ui-dialog'],
+            "future_workflow_list_script",
+            plugins_url(
+                "/src/assets/js/workflow-list.js",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
+            ["jquery", "jquery-ui-dialog"],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true
         );
@@ -249,7 +339,7 @@ class Module implements InitializableInterface
 
     public function enqueueScriptsEditor($hook)
     {
-        if ('admin_page_future_workflow_editor' !== $hook) {
+        if ("admin_page_future_workflow_editor" !== $hook) {
             return;
         }
 
@@ -258,66 +348,79 @@ class Module implements InitializableInterface
             $post_type = self::POST_TYPE_WORKFLOW;
         }
 
-        wp_enqueue_style('wp-components');
-        wp_enqueue_style('wp-edit-post');
-        wp_enqueue_style('wp-editor');
+        wp_enqueue_style("wp-components");
+        wp_enqueue_style("wp-edit-post");
+        wp_enqueue_style("wp-editor");
 
         wp_enqueue_style(
-            'future_workflow_admin_style',
-            plugins_url('/src/assets/css/workflow-editor.css', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
-            ['wp-components', 'wp-edit-post', 'wp-editor'],
+            "future_workflow_admin_style",
+            plugins_url(
+                "/src/assets/css/workflow-editor.css",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
+            ["wp-components", "wp-edit-post", "wp-editor"],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
         );
 
-        wp_enqueue_script('wp-url');
-        wp_enqueue_script('wp-element');
-        wp_enqueue_script('wp-components');
-        wp_enqueue_script('wp-data');
+        wp_enqueue_script("wp-url");
+        wp_enqueue_script("wp-element");
+        wp_enqueue_script("wp-components");
+        wp_enqueue_script("wp-data");
 
         wp_enqueue_script(
-            'future_workflow_admin_script',
-            plugins_url('/src/assets/js/workflow-editor.js', PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE),
+            "future_workflow_admin_script",
+            plugins_url(
+                "/src/assets/js/workflow-editor.js",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
             [
-                'wp-element',
-                'wp-components',
-                'wp-url',
-                'wp-data',
-                'wp-api-fetch',
+                "wp-element",
+                "wp-components",
+                "wp-url",
+                "wp-data",
+                "wp-api-fetch",
             ],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true
         );
 
         wp_localize_script(
-            'future_workflow_admin_script',
-            'futureWorkflowEditor',
+            "future_workflow_admin_script",
+            "futureWorkflowEditor",
             [
-                'isWP65OrLater' => version_compare(get_bloginfo('version'), '6.5', '>='),
-                'apiUrl' => rest_url('publishpress-future/v1'),
-                'workflowId' => isset($_GET['workflow']) ? (int) $_GET['workflow'] : 0,
-                'nonce' => wp_create_nonce('wp_rest'),
-                'nodeTypeCategories' => $this->nodeTypesModel->getCategories(),
-                'nodeTypes' => [
-                    'triggers'=> array_values(
+                "isWP65OrLater" => version_compare(
+                    get_bloginfo("version"),
+                    "6.5",
+                    ">="
+                ),
+                "apiUrl" => rest_url("publishpress-future/v1"),
+                "workflowId" => isset($_GET["workflow"])
+                    ? (int) $_GET["workflow"]
+                    : 0,
+                "nonce" => wp_create_nonce("wp_rest"),
+                "nodeTypeCategories" => $this->nodeTypesModel->getCategories(),
+                "currentUserId" => get_current_user_id(),
+                "nodeTypes" => [
+                    "triggers" => array_values(
                         $this->nodeTypesModel->convertInstancesToArray(
                             $this->nodeTypesModel->getTriggers(),
                             NodeTypesModel::NODE_TYPE_TRIGGER
                         )
                     ),
-                    'actions' => array_values(
+                    "actions" => array_values(
                         $this->nodeTypesModel->convertInstancesToArray(
                             $this->nodeTypesModel->getActions(),
                             NodeTypesModel::NODE_TYPE_ACTION
                         )
                     ),
-                    'flows' => array_values(
+                    "flows" => array_values(
                         $this->nodeTypesModel->convertInstancesToArray(
                             $this->nodeTypesModel->getFlows(),
                             NodeTypesModel::NODE_TYPE_FLOW
                         )
                     ),
                 ],
-                'cronSchedules' => $this->cronSchedulesModel->getCronSchedulesAsOptions(),
+                "cronSchedules" => $this->cronSchedulesModel->getCronSchedulesAsOptions(),
             ]
         );
     }

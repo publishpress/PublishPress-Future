@@ -21,6 +21,16 @@ export const MoreMenuItemsView = () => {
 				messageDeactivated={ __( 'Fullscreen mode deactivated' ) }
 				shortcut={ displayShortcut.secondary( 'f' ) }
 			/>
+
+			<MoreMenuFeatureToggle
+				scope="core/edit-post"
+				feature="developerMode"
+				label={ __( 'Developer mode' ) }
+				info={ __( 'Work in developer mode' ) }
+				messageActivated={ __( 'Developer mode activated' ) }
+				messageDeactivated={ __( 'Developer mode deactivated' ) }
+				shortcut={ displayShortcut.secondary( 'd' ) }
+			/>
 		</MenuGroup>
 	);
 }

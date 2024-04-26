@@ -9,7 +9,6 @@ import { WorkflowData } from "./components/data";
 import "./css/index.css";
 import 'reactflow/dist/style.css';
 
-
 createRoot(document.getElementById(HTML_ELEMENT_ID)).render(
     <StrictMode>
         <WorkflowData />

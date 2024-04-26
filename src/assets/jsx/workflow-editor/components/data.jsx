@@ -1,6 +1,3 @@
-import {
-    FEATURE_FULLSCREEN_MODE,
-} from "../constants";
 import { useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "./workflow-store";
 import { store as editorStore } from "./editor-store";
@@ -20,7 +17,6 @@ export function WorkflowData() {
     } = useDispatch(workflowStore);
 
     const {
-        setActiveFeatures,
         setTriggerNodes,
         setTriggerCategories,
         setActionCategories,
@@ -31,7 +27,6 @@ export function WorkflowData() {
 
     setupEditor(workflowId);
 
-    setActiveFeatures([FEATURE_FULLSCREEN_MODE]);
     setTriggerCategories(nodeTypeCategories);
     setTriggerNodes(nodeTypes.triggers);
     setActionCategories(nodeTypeCategories);
