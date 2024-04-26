@@ -1,6 +1,17 @@
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
+import { useSelect } from "@wordpress/data";
+import { store as editorStore } from "../editor-store";
+import { FEATURE_DEVELOPER_MODE } from "../../constants";
 
 export const InspectorCard = ({ title, description, icon, id }) => {
+    const { isDeveloperModeEnabled } = useSelect((select) => {
+        return {
+            isDeveloperModeEnabled: select(editorStore).isFeatureActive(
+                FEATURE_DEVELOPER_MODE,
+            ),
+        };
+    });
+
     return (
         <div className="workflow-editor-inspector-card">
             <span className="workflow-editor-inspector-icon has-colors">
@@ -13,10 +24,12 @@ export const InspectorCard = ({ title, description, icon, id }) => {
                 <div className="workflow-editor-inspector-card__description">
                     {description}
                 </div>
-                {id && (
+                {isDeveloperModeEnabled && id && (
                     <>
                         <br />
-                        <div>ID: <code>{id}</code></div>
+                        <div>
+                            ID: <code>{id}</code>
+                        </div>
                     </>
                 )}
             </div>

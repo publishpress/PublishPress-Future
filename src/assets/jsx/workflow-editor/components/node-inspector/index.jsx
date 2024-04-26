@@ -1,5 +1,6 @@
 import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
+import { store as editorStore } from "../editor-store";
 import { __ } from "@wordpress/i18n";
 import { __experimentalHStack as HStack } from "@wordpress/components";
 import { GrObjectGroup } from "react-icons/gr";
@@ -13,6 +14,7 @@ import { __experimentalVStack as VStack } from "@wordpress/components";
 import NodeOutputPanel from "./node-output-panel";
 import NodeInputPanel from "./node-input-panel";
 import { nodeHasIncomers, nodeHasInput, getNodeIncomers } from "../../utils";
+import { FEATURE_DEVELOPER_MODE } from "../../constants";
 
 export const NodeInspector = () => {
     const {
@@ -45,6 +47,16 @@ export const NodeInspector = () => {
                 select(workflowStore).getSelectedElementsCount(),
             selectedNode,
             selectedEdge,
+        };
+    });
+
+    const {
+        isDeveloperModeEnabled,
+    } = useSelect((select) => {
+        return {
+            isDeveloperModeEnabled: select(editorStore).isFeatureActive(
+                FEATURE_DEVELOPER_MODE,
+            ),
         };
     });
 
@@ -111,11 +123,11 @@ export const NodeInspector = () => {
                 <>
                     <NodeInspectorCard node={selectedNode} />
 
-                    {nodeHasOutput && (
+                    {isDeveloperModeEnabled && nodeHasOutput && (
                         <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
                     )}
 
-                    {selectedNodeHasIncomers && selectedNodeHasInput && (
+                    {isDeveloperModeEnabled && selectedNodeHasIncomers && selectedNodeHasInput && (
                         <>
                             {nodeIncomers.map((incomer) => (
                                 <NodeInputPanel key={incomer.id} inputSchema={incomer.data.outputSchema} />
