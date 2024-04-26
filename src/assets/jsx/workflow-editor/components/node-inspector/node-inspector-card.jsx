@@ -7,6 +7,7 @@ export const NodeInspectorCard = ({ node }) => {
     const nodeIcon = node?.data?.icon || "media-document";
     const nodeLabel = node?.data?.label || __("Node", "publishpress-future-pro");
     const nodeDescription = node?.data?.description || __("No description", "publishpress-future-pro");
+    const nodeId = node?.id;
 
     const Icon = <NodeIcon icon={nodeIcon} />;
 
@@ -14,7 +15,7 @@ export const NodeInspectorCard = ({ node }) => {
         <InspectorCard
             title={nodeLabel}
             description={nodeDescription}
-            id={node.id}
+            id={nodeId}
             icon={Icon}
         />
     );
