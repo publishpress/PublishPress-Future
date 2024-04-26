@@ -12,8 +12,6 @@ import ReactFlow, {
     useReactFlow,
     useOnSelectionChange,
     useOnViewportChange,
-    getIncomers,
-    getOutgoers,
 } from "reactflow";
 import {
     useCallback,
@@ -230,9 +228,6 @@ export const FlowEditor = (props) => {
         },
     });
 
-    const allNodes = nodes;
-    const allEdges = edges;
-
     useOnSelectionChange({
         onChange: ({ nodes, edges }) => {
             setSelectedNodes(nodes.map((node) => node.id));
@@ -249,16 +244,6 @@ export const FlowEditor = (props) => {
             if (nodes.length > 0 || edges.length > 0) {
                 openGeneralSidebar(SIDEBAR_NODE_EDGE);
             }
-
-
-            if (nodes.length === 1) {
-                const incomers = getIncomers(nodes[0], allNodes, allEdges);
-                console.log(incomers);
-
-                const outgoers = getOutgoers(nodes[0], allNodes, allEdges);
-                console.log(outgoers);
-            }
-
         },
     });
 
