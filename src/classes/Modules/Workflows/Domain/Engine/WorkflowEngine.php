@@ -4,7 +4,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeMapperInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerMapperInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
@@ -23,20 +24,21 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $nodeTypesModel;
 
     /**
-     * @var NodeMapperInterface
+     * @var NodeRunnerMapperInterface
      */
-    private $nodeMapper;
+    private $nodeRunnerMapper;
 
     public function __construct(
         HookableInterface $hooks,
         NodeTypesModelInterface $nodeTypesModel,
-        NodeMapperInterface $nodeMapper
+        NodeRunnerMapperInterface $nodeRunnerMapper
     ) {
         $this->hooks = $hooks;
         $this->nodeTypesModel = $nodeTypesModel;
-        $this->nodeMapper = $nodeMapper;
+        $this->nodeRunnerMapper = $nodeRunnerMapper;
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
+        $this->hooks->addAction(HooksAbstract::ACTION_EXECUTE_NODE, [$this, 'executeNodeRoutine'], 10, 2);
     }
 
     public function start()
@@ -66,7 +68,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 $triggerName = $triggerNode['data']['name'];
                 $triggerId = $triggerNode['id'];
 
-                $triggerRunner = $this->nodeMapper->mapNodeToInstance($triggerName);
+                $triggerRunner = $this->nodeRunnerMapper->mapNodeToRunner($triggerName);
 
                 if (is_null($triggerRunner)) {
                     if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -82,16 +84,26 @@ class WorkflowEngine implements WorkflowEngineInterface
                 }
 
                 // Setup the trigger
-                $hookName = HooksAbstract::ACTION_TRIGGER_FIRED . $triggerId;
-                $triggerRunner->setup($triggerNode, $hookName, $routineTree[$triggerId]);
-
-                $this->hooks->addAction($hookName, [$this, 'runRoutine'], 10, 3);
+                $triggerRunner->setup($triggerNode, $routineTree[$triggerId]);
             }
         }
     }
 
-    public function runRoutine(array $triggerNode, array $routineTree, array $args = [])
+    public function executeNodeRoutine($step)
     {
-        ray($triggerNode, $routineTree, $args)->green();
+        $node = $step['node'];
+        $nodeName = $node['data']['name'];
+
+        $nodeRunner = $this->nodeRunnerMapper->mapNodeToRunner($nodeName);
+
+        if (is_null($nodeRunner)) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("[PublishPress Future Pro] Node runner not found: {$nodeName}");
+            }
+
+            return;
+        }
+
+        $nodeRunner->setup($step);
     }
 }

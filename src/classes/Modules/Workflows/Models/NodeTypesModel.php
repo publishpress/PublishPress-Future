@@ -11,6 +11,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\IfElse;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 
@@ -130,6 +131,7 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         $triggersInstances = [
             CoreOnSavePost::NODE_NAME => new CoreOnSavePost(),
+            CoreOnPostUpdated::NODE_NAME => new CoreOnPostUpdated(),
             CoreOnInit::NODE_NAME => new CoreOnInit(),
             CoreOnAdminInit::NODE_NAME => new CoreOnAdminInit(),
         ];

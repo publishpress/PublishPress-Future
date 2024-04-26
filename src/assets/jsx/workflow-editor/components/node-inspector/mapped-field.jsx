@@ -4,6 +4,7 @@ import Recurrence from "../data-fields/recurrence";
 import { DateOffset } from "../data-fields/date-offset";
 import DebugData from "../data-fields/debug-data";
 import RayColor from "../data-fields/ray-color";
+import Text from "../data-fields/text";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -27,10 +28,14 @@ export const MappedField = (props) => {
             return (
                 <RayColor {...props} />
             );
+        case "text":
+            return (
+                <Text {...props} />
+            );
     }
 
     return (
-        <i>{sprintf(__('Field type %s is not implemented', 'publihspress-future-pro'), props.name)}</i>
+        <i>{sprintf(__('Field type %s is not implemented', 'publihspress-future-pro'), props.type)}</i>
     );
 }
 

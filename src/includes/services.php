@@ -18,7 +18,7 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeMapper;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnersMapper;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowEngine;
 use PublishPress\FuturePro\Modules\Workflows\Models\CronSchedulesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
@@ -243,12 +243,12 @@ return [
         return new WorkflowEngine(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::NODE_TYPES_MODEL),
-            $container->get(ServicesAbstract::NODE_MAPPER)
+            $container->get(ServicesAbstract::NODE_RUNNER_MAPPER)
         );
     },
 
-    ServicesAbstract::NODE_MAPPER => static function (ContainerInterface $container) {
-        return new NodeMapper(
+    ServicesAbstract::NODE_RUNNER_MAPPER => static function (ContainerInterface $container) {
+        return new NodeRunnersMapper(
             $container->get(ServicesAbstract::HOOKS)
         );
     },

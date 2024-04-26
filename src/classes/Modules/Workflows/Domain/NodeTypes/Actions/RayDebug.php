@@ -67,6 +67,11 @@ class RayDebug implements NodeTypeInterface
                         "label" => __("Data", "publishpress-future-pro"),
                     ],
                     [
+                        "name" => "label",
+                        "type" => "text",
+                        "label" => __("Label", "publishpress-future-pro"),
+                    ],
+                    [
                         "name" => "color",
                         "type" => "ray_color",
                         "label" => __("Color", "publishpress-future-pro"),

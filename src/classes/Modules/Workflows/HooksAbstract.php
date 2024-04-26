@@ -10,8 +10,10 @@ abstract class HooksAbstract {
     const ACTION_WORKFLOW_ENGINE_LOAD = 'publishpressfuturepro_workflow_engine_load';
     const ACTION_WORKFLOW_ENGINE_START = 'publishpressfuturepro_workflow_engine_start';
     const ACTION_SAVE_POST = 'save_post';
+    const ACTION_POST_UPDATED = 'post_updated';
     const ACTION_INIT = 'init';
     const ACTION_ADMIN_INIT = 'admin_init';
     const ACTION_TRIGGER_FIRED = 'publishpressfuturepro_workflow_trigger_fired_';
     const FILTER_WORKFLOW_ENGINE_MAP_TRIGGER = 'publishpressfuturepro_workflow_engine_map_trigger';
+    const ACTION_EXECUTE_NODE = 'publishpressfuturepro_workflow_execute_node';
 }

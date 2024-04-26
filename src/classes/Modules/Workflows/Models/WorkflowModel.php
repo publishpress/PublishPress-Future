@@ -234,28 +234,26 @@ class WorkflowModel implements WorkflowModelInterface
         // Build the abstract routine tree for each trigger node
         $routineTree = [];
         foreach ($workflowTriggers as $triggerNode) {
-            $routineTree[$triggerNode['id']] = $this->getNodesTree($edges, $nodesById, $triggerNode['id'], $nodeTypes);
+            $routineTree[$triggerNode['id']] = $this->getRoutineNodesTree($edges, $nodesById, $triggerNode['id'], $nodeTypes);
         }
 
         return $routineTree;
     }
 
-    private function getNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null) {
+    private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null) {
         $node = $nodes[$sourceNodeId];
         $elementarType = $node['data']['elementarType'];
         $nodeName = $node['data']['name'];
         $nodeTypeInstance = $nodeTypes[$elementarType][$nodeName];
         $socketSchema = $nodeTypeInstance->getSocketSchema();
 
-        $tree = [
-            'nodeId' => $sourceNodeId,
-            'elementarType' => $elementarType,
-            'next' => [],
-        ];
+        $tree = ['node' => $node,];
 
         if ($edgeId) {
-            $tree['id'] = $edgeId;
+            $tree['edgeId'] = $edgeId;
         }
+
+        $tree['next'] = [];
 
         foreach ($socketSchema['source'] as $socket) {
             foreach ($edges as $edge) {
@@ -263,7 +261,7 @@ class WorkflowModel implements WorkflowModelInterface
                     if (! isset($tree['next'][$socket['id']])) {
                         $tree['next'][$socket['id']] = [];
                     }
-                    $tree['next'][$socket['id']][] = $this->getNodesTree($edges, $nodes, $edge['target'], $nodeTypes, $edge['id']);
+                    $tree['next'][$socket['id']][] = $this->getRoutineNodesTree($edges, $nodes, $edge['target'], $nodeTypes, $edge['id']);
                 }
             }
         }

@@ -9,6 +9,7 @@ export function PostQuery({ name, label, defaultValue, onChange }) {
     const postTypes = [
         { label: "Post", value: "post" },
         { label: "Page", value: "page" },
+        { label: "Revision", value: "revision" },
     ];
 
     const postStatuses = [
@@ -53,12 +54,6 @@ export function PostQuery({ name, label, defaultValue, onChange }) {
                     expandOnFocus={true}
                     autoSelectFirstMatch={true}
                     onChange={(value) => onChangeSetting({ settingName: "postStatus", value })}
-                />
-
-                <ToggleControl
-                    label="Only new posts"
-                    checked={defaultValue?.onlyNewPosts || false}
-                    onChange={(value) => onChangeSetting({ settingName: "onlyNewPosts", value })}
                 />
             </VStack>
         </>
