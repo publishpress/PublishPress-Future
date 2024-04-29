@@ -143,7 +143,7 @@ export const NodeInspector = () => {
                 </>
             )}
 
-            {onlyEdgesSelected && selectedElementsCount === 1 && (
+            {onlyEdgesSelected && selectedElementsCount === 1 && selectedEdge && (
                 <>
                     <InspectorCard
                         title={__("Edge", "publishpress-future-pro")}
