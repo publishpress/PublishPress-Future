@@ -123,16 +123,16 @@ export const NodeInspector = () => {
                 <>
                     <NodeInspectorCard node={selectedNode} />
 
-                    {isDeveloperModeEnabled && nodeHasOutput && (
-                        <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
-                    )}
-
                     {isDeveloperModeEnabled && selectedNodeHasIncomers && selectedNodeHasInput && (
                         <>
                             {nodeIncomers.map((incomer) => (
                                 <NodeInputPanel key={incomer.id} inputSchema={incomer.data.outputSchema} />
                             ))}
                         </>
+                    )}
+
+                    {isDeveloperModeEnabled && nodeHasOutput && (
+                        <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
                     )}
 
                     {nodeHasSettings && (
