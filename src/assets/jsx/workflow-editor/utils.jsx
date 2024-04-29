@@ -130,7 +130,7 @@ export function getNodeInputs(node) {
     return nodeInputs;
 }
 
-export function getNodeInputVariablesByType(node, types) {
+export function getNodeInputVariables(node, types = []) {
     const nodeInputs = getNodeInputs(node);
 
     let variables = nodeInputs.filter((input) => types.includes(input.type));
@@ -140,13 +140,15 @@ export function getNodeInputVariablesByType(node, types) {
 
     objectVariables.forEach((objectVariable) => {
         objectVariable.dataType.propertiesSchema.forEach((property) => {
-            if (types.includes(property.type)) {
-                variables.push({
-                    name: objectVariable.name + '.' + property.name,
-                    type: property.type,
-                    label: objectVariable.label + ' -> ' + property.label,
-                });
+            if (types.length > 0 && ! types.includes(property.type)) {
+                return;
             }
+
+            variables.push({
+                name: objectVariable.name + '.' + property.name,
+                type: property.type,
+                label: objectVariable.label + ' -> ' + property.label,
+            });
         });
     });
 

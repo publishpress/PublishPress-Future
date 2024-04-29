@@ -4,7 +4,7 @@ import { store as workflowStore } from "../workflow-store";
 import { useDispatch } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";
 import BaseField from "../data-fields/base-field";
-import { getNodeInputVariablesByType } from "../../utils";
+import { getNodeInputVariables } from "../../utils";
 import MappedField from "./mapped-field";
 
 export const NodeSettingsPanel = ({ node }) => {
@@ -32,16 +32,7 @@ export const NodeSettingsPanel = ({ node }) => {
     }
     const settingsSchema = node?.data?.settingsSchema || {};
 
-    const nodeInputVariables = getNodeInputVariablesByType(
-        node,
-        [
-            'string',
-            'date',
-            'integer',
-            'post',
-            'boolean',
-        ]
-    );
+    const nodeInputVariables = getNodeInputVariables(node);
 
     const panels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {
