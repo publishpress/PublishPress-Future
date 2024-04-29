@@ -42,5 +42,17 @@ class CoreOnAdminInit implements NodeTriggerRunnerInterface
     public function triggerCallback()
     {
         // Get next nodes in the routine tree
+        $nextSteps = $this->routineTree['next']['output'];
+
+        if (empty($nextSteps)) {
+            return false;
+        }
+
+        $output = [];
+
+        // Execute the next nodes
+        foreach ($nextSteps as $nextStep) {
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $output);
+        }
     }
 }

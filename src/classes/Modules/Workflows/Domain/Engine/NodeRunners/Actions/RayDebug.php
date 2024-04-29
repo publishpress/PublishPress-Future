@@ -25,13 +25,21 @@ class RayDebug implements NodeRunnerInterface
     public function setup(array $step, array $input = []): void
     {
         $node = $step['node'];
-        $nextSteps = $step['next']['output'];
-        $nodeSettings = $node['data']['settings'];
+        $nextSteps = [];
+        if (isset($step['next']['output'])) {
+            $nextSteps = $step['next']['output'];
+        }
+        $nodeSettings = [];
+        if (isset($node['data']['settings'])) {
+            $nodeSettings = $node['data']['settings'];
+        }
 
         // What to output?
         try {
-            $dataToOutput = explode('.', $nodeSettings['data']['dataToOutput']);
-            $messageToSend = null;
+            $dataToOutput = [];
+            if (isset($nodeSettings['data']['dataToOutput'])) {
+                $dataToOutput = explode('.', $nodeSettings['data']['dataToOutput']);
+            }
 
             $messageToSend = $input;
 

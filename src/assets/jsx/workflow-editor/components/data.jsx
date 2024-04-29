@@ -8,6 +8,7 @@ import {
     DateData,
     IntegerData,
     StringData,
+    InputData,
 } from "./data-types";
 
 export function WorkflowData() {
@@ -40,6 +41,7 @@ export function WorkflowData() {
         DateData(),
         IntegerData(),
         StringData(),
+        InputData(),
     ]
     setDataTypes(dataTypes);
 

@@ -56,20 +56,13 @@ export function isAppleOS(_window = window) {
     );
 }
 
-import { useSelect } from "@wordpress/data";
+import { select } from "@wordpress/data";
 import { store as workflowStore } from "./components/workflow-store";
 import { getIncomers } from "reactflow";
 
 export function getNodeIncomers(node) {
-    const {
-        nodes,
-        edges,
-    } = useSelect((select) => {
-        return {
-            nodes: select(workflowStore).getNodes(),
-            edges: select(workflowStore).getEdges(),
-        };
-    });
+    const nodes = select(workflowStore).getNodes();
+    const edges = select(workflowStore).getEdges();
 
     if (!node) return [];
 
@@ -95,13 +88,7 @@ export function getNodeInputs(node) {
     const incomers = getNodeIncomers(node);
     const nodeHasIncomers = incomers?.length > 0;
 
-    const {
-        getDataTypeByName,
-    } = useSelect((select) => {
-        return {
-            getDataTypeByName: select(workflowStore).getDataTypeByName,
-        };
-    });
+    const getDataTypeByName = select(workflowStore).getDataTypeByName;
 
     if (!nodeHasIncomers) {
         return [];
@@ -117,13 +104,20 @@ export function getNodeInputs(node) {
         incomer.data.outputSchema.forEach((schemaItem) => {
             const dataType = getDataTypeByName(schemaItem.type);
 
-            nodeInputs.push({
-                name: schemaItem.name,
-                type: schemaItem.type,
-                label: schemaItem.label,
-                description: schemaItem.description,
-                dataType: dataType,
-            });
+            // If input, look for the previous node inputs to bypass as this node's input
+            if (schemaItem.type === 'input') {
+                const previousNodeInputs = getNodeInputs(incomer);
+
+                nodeInputs = nodeInputs.concat(previousNodeInputs);
+            } else {
+                nodeInputs.push({
+                    name: schemaItem.name,
+                    type: schemaItem.type,
+                    label: schemaItem.label,
+                    description: schemaItem.description,
+                    dataType: dataType,
+                });
+            }
         });
     });
 
@@ -138,19 +132,21 @@ export function getNodeInputVariables(node, types = []) {
     // Take object variables from the input schema
     const objectVariables = nodeInputs.filter((input) => input.dataType.type === 'object');
 
-    objectVariables.forEach((objectVariable) => {
-        objectVariable.dataType.propertiesSchema.forEach((property) => {
-            if (types.length > 0 && ! types.includes(property.type)) {
-                return;
-            }
+    if (objectVariables && objectVariables.forEach) {
+        objectVariables.forEach((objectVariable) => {
+            objectVariable.dataType.propertiesSchema.forEach((property) => {
+                if (types.length > 0 && ! types.includes(property.type)) {
+                    return;
+                }
 
-            variables.push({
-                name: objectVariable.name + '.' + property.name,
-                type: property.type,
-                label: objectVariable.label + ' -> ' + property.label,
+                variables.push({
+                    name: objectVariable.name + '.' + property.name,
+                    type: property.type,
+                    label: objectVariable.label + ' -> ' + property.label,
+                });
             });
         });
-    });
+    }
 
     return variables;
 }

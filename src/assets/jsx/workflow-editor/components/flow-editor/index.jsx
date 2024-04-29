@@ -19,6 +19,7 @@ import {
     useLayoutEffect,
     useEffect,
     Platform,
+    useMemo,
 } from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
@@ -83,9 +84,9 @@ export const FlowEditor = (props) => {
         backgroundColor: "#ffffff",
     };
 
-    const nodeTypes = {
+    const nodeTypes = useMemo(() => ({
         generic: GenericNode,
-    };
+    }), []);
 
     const updateFlowInEditedWorkflow = useCallback(() => {
         // We need to delay the update of the flow to avoid missing the changes.
