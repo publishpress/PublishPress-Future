@@ -107,14 +107,14 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function addExpirationAction(array $actions): array
     {
-        $actions['future-pro-workflow'] = __("Trigger Workflow", "publishpress-future-pro");
+        $actions['trigger-workflow'] = __("Trigger Workflow", "publishpress-future-pro");
 
         return $actions;
     }
 
     public function createExpirationAction($action, $actionName, $postModel, $container)
     {
-        if ($actionName === 'future-pro-workflow') {
+        if ($actionName === 'trigger-workflow') {
             $action = new TriggerWorkflow($this->hooks, $postModel);
         }
 

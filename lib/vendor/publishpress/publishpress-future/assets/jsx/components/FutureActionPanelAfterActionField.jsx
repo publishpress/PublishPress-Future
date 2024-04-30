@@ -6,8 +6,8 @@ export const FutureActionPanelAfterActionField = ({ children }) => (
     </Fill>
 );
 
-const FutureActionPanelAfterActionFieldSlot = () => (
-    <Slot name="FutureActionPanelAfterActionField" />
+const FutureActionPanelAfterActionFieldSlot = (props) => (
+    <Slot name="FutureActionPanelAfterActionField" {...props} />
 );
 
 FutureActionPanelAfterActionField.Slot = FutureActionPanelAfterActionFieldSlot;
