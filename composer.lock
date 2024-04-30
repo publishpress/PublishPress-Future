@@ -3402,12 +3402,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "515382a64b78265d8b69b361cac7e911a11db945"
+                "reference": "c544797969d0aa13270bf57c532eb2425ba16e09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/515382a64b78265d8b69b361cac7e911a11db945",
-                "reference": "515382a64b78265d8b69b361cac7e911a11db945",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c544797969d0aa13270bf57c532eb2425ba16e09",
+                "reference": "c544797969d0aa13270bf57c532eb2425ba16e09",
                 "shasum": ""
             },
             "require": {
@@ -3453,7 +3453,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-29T12:23:58+00:00"
+            "time": "2024-04-30T07:36:56+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3780,12 +3780,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "546a3866b72c397ffab3bc9c9eddf09584cea825"
+                "reference": "bbcbb0823b0e06be56e6b180faa0df1f3b3e2733"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/546a3866b72c397ffab3bc9c9eddf09584cea825",
-                "reference": "546a3866b72c397ffab3bc9c9eddf09584cea825",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bbcbb0823b0e06be56e6b180faa0df1f3b3e2733",
+                "reference": "bbcbb0823b0e06be56e6b180faa0df1f3b3e2733",
                 "shasum": ""
             },
             "require": {
@@ -3875,7 +3875,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-27T11:52:45+00:00"
+            "time": "2024-04-30T05:22:06+00:00"
         },
         {
             "name": "psr/cache",
