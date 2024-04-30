@@ -120,16 +120,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_vendor_publishpress_publishpress_future_assets_jsx_components_FutureActionPanelAfterActionField__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelAfterActionField */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelAfterActionField.jsx");
 
 var LegacyActionFields = function LegacyActionFields() {
-  console.log('Its finally rendering!');
-
-  // Fill
-  return /*#__PURE__*/React.createElement(_lib_vendor_publishpress_publishpress_future_assets_jsx_components_FutureActionPanelAfterActionField__WEBPACK_IMPORTED_MODULE_0__.FutureActionPanelAfterActionField, null, /*#__PURE__*/React.createElement("h1", null, "Finally!"));
+  return /*#__PURE__*/React.createElement(_lib_vendor_publishpress_publishpress_future_assets_jsx_components_FutureActionPanelAfterActionField__WEBPACK_IMPORTED_MODULE_0__.FutureActionPanelAfterActionField, null, /*#__PURE__*/React.createElement("h1", null, "Finally!s"));
 };
 wp.plugins.registerPlugin('legacy-action-plugin', {
   render: LegacyActionFields,
   scope: 'publishpress-future'
 });
-console.log('Plugin registered!', 'Why is this not being rendered?');
 })();
 
 /******/ })()
