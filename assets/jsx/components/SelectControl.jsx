@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import { Fragment } from "&wp.element";
-import { SelectControl as WPSelectControl } from "&wp.components";
+import { Fragment } from "@wordpress/element";
+import { SelectControl as WPSelectControl } from "@wordpress/components";
 
 export const SelectControl = function (props) {
     const onChange = (value) => {

@@ -29,15 +29,15 @@ module.exports = [
             extensions: ['.js', '.jsx']
         },
         externals: {
-            "&React": "React",
-            "&ReactDOM": "ReactDOM",
+            "react": "React",
+            "react-dom": "ReactDOM",
             "&wp": "wp",
-            "&wp.element": "wp.element",
-            "&wp.components": "wp.components",
-            "&wp.data": "wp.data",
-            "&wp.plugins": "wp.plugins",
-            "&wp.hooks": "wp.hooks",
-            "&wp.url": "wp.url",
+            "@wordpress/element": "wp.element",
+            "@wordpress/components": "wp.components",
+            "@wordpress/data": "wp.data",
+            "@wordpress/plugins": "wp.plugins",
+            "@wordpress/hooks": "wp.hooks",
+            "@wordpress/url": "wp.url",
             "&config.settings-post-types": "publishpressFutureSettingsConfig"
         }
     },
@@ -65,16 +65,16 @@ module.exports = [
             ]
         },
         externals: {
-            "&React": "React",
-            "&ReactDOM": "ReactDOM",
+            "react": "React",
+            "react-dom": "ReactDOM",
             "&wp": "wp",
-            "&wp.element": "wp.element",
-            "&wp.components": "wp.components",
-            "&wp.data": "wp.data",
-            "&wp.plugins": "wp.plugins",
-            "&wp.hooks": "wp.hooks",
+            "@wordpress/element": "wp.element",
+            "@wordpress/components": "wp.components",
+            "@wordpress/data": "wp.data",
+            "@wordpress/plugins": "wp.plugins",
+            "@wordpress/hooks": "wp.hooks",
             "&window": "window",
-            "&wp.url": "wp.url",
+            "@wordpress/url": "wp.url",
             "&config.block-editor": "publishpressFutureBlockEditorConfig"
         }
     },
@@ -102,15 +102,15 @@ module.exports = [
             ]
         },
         externals: {
-            "&React": "React",
-            "&ReactDOM": "ReactDOM",
+            "react": "React",
+            "react-dom": "ReactDOM",
             "&wp": "wp",
-            "&wp.element": "wp.element",
-            "&wp.components": "wp.components",
-            "&wp.data": "wp.data",
-            "&wp.plugins": "wp.plugins",
-            "&wp.hooks": "wp.hooks",
-            "&wp.url": "wp.url",
+            "@wordpress/element": "wp.element",
+            "@wordpress/components": "wp.components",
+            "@wordpress/data": "wp.data",
+            "@wordpress/plugins": "wp.plugins",
+            "@wordpress/hooks": "wp.hooks",
+            "@wordpress/url": "wp.url",
             "&config.classic-editor": "publishpressFutureClassicEditorConfig"
         }
     },
@@ -138,17 +138,17 @@ module.exports = [
             ]
         },
         externals: {
-            "&React": "React",
-            "&ReactDOM": "ReactDOM",
+            "react": "React",
+            "react-dom": "ReactDOM",
             "&wp": "wp",
-            "&wp.element": "wp.element",
-            "&wp.components": "wp.components",
-            "&wp.data": "wp.data",
-            "&wp.plugins": "wp.plugins",
-            "&wp.hooks": "wp.hooks",
+            "@wordpress/element": "wp.element",
+            "@wordpress/components": "wp.components",
+            "@wordpress/data": "wp.data",
+            "@wordpress/plugins": "wp.plugins",
+            "@wordpress/hooks": "wp.hooks",
             "&config.quick-edit": "publishpressFutureQuickEditConfig",
             "&window": "window",
-            "&wp.url": "wp.url"
+            "@wordpress/url": "wp.url"
         }
     },
     {
@@ -175,17 +175,17 @@ module.exports = [
             ]
         },
         externals: {
-            "&React": "React",
-            "&ReactDOM": "ReactDOM",
+            "react": "React",
+            "react-dom": "ReactDOM",
             "&wp": "wp",
-            "&wp.element": "wp.element",
-            "&wp.components": "wp.components",
-            "&wp.data": "wp.data",
-            "&wp.plugins": "wp.plugins",
-            "&wp.hooks": "wp.hooks",
+            "@wordpress/element": "wp.element",
+            "@wordpress/components": "wp.components",
+            "@wordpress/data": "wp.data",
+            '@wordpress/plugins': 'wp.plugins',
+            "@wordpress/hooks": "wp.hooks",
             "&config.bulk-edit": "publishpressFutureBulkEditConfig",
             "&window": "window",
-            "&wp.url": "wp.url"
+            "@wordpress/url": "wp.url"
         }
     }
 ];

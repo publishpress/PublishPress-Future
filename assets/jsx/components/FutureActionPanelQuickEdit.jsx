@@ -1,6 +1,6 @@
 import { FutureActionPanel } from './';
-import { useSelect, select } from '&wp.data';
-import { useEffect } from '&wp.element';
+import { useSelect, select } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 
 export const FutureActionPanelQuickEdit = (props) => {
     const onChangeData = (attribute, value) => {};
