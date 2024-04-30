@@ -1,6 +1,6 @@
 import { FutureActionPanel } from "./";
-import { select, useSelect } from "&wp.data";
-import { useEffect } from "&wp.element";
+import { select, useSelect } from "@wordpress/data";
+import { useEffect } from "@wordpress/element";
 
 export const FutureActionPanelClassicEditor = (props) => {
     const browserTimezoneOffset = new Date().getTimezoneOffset();

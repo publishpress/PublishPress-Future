@@ -120,6 +120,49 @@ module.exports = [
             '@wordpress/element': 'wp.element',
             '@wordpress/components': 'wp.components',
             '@wordpress/i18n': 'wp.i18n',
+            '@wordpress/plugins': 'wp.plugins',
+            'future-workflow-editor': 'futureWorkflowEditor',
+        }
+    },
+    {
+        entry: glob.sync(
+            "./src/assets/jsx/legacy-action/index.jsx",
+        ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "src", "assets", "js"),
+            filename: "legacy-action.js"
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                },
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader", "css-loader", "postcss-loader"],
+                }
+            ]
+        },
+        resolve: {
+            modules: [
+                "node_modules",
+                path.join(__dirname, "vendor", "publishpress")
+            ],
+            extensions: [".js", ".jsx"]
+        },
+        externals: {
+            'react': 'React',
+            'react-dom': 'ReactDOM',
+            '@wordpress/data': 'wp.data',
+            '@wordpress/element': 'wp.element',
+            '@wordpress/components': 'wp.components',
+            '@wordpress/i18n': 'wp.i18n',
+            '@wordpress/plugins': 'wp.plugins',
             'future-workflow-editor': 'futureWorkflowEditor',
         }
     }

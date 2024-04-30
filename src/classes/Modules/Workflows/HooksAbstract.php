@@ -16,4 +16,5 @@ abstract class HooksAbstract {
     const ACTION_TRIGGER_FIRED = 'publishpressfuturepro_workflow_trigger_fired_';
     const FILTER_WORKFLOW_ENGINE_MAP_TRIGGER = 'publishpressfuturepro_workflow_engine_map_trigger';
     const ACTION_EXECUTE_NODE = 'publishpressfuturepro_workflow_execute_node';
+    const ACTION_LEGACY_ACTION = 'publishpressfuturepro_legacy_action';
 }

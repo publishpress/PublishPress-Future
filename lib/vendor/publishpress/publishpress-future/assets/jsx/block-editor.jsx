@@ -1,7 +1,7 @@
 import { createStore } from './data';
 import { FutureActionPanelBlockEditor } from './components';
-import { select } from '&wp.data';
-import { registerPlugin } from '&wp.plugins';
+import { select } from '@wordpress/data';
+import { registerPlugin } from '@wordpress/plugins';
 import {
     actionsSelectOptions,
     is12Hour,

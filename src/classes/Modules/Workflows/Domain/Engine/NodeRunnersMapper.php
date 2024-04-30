@@ -8,6 +8,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerMapperInterface;
 
@@ -39,17 +40,20 @@ class NodeRunnersMapper implements NodeRunnerMapperInterface
             case CoreOnAdminInit::NODE_NAME:
                 return new CoreOnAdminInit($this->hooks);
 
-            case RayDebug::NODE_NAME:
-                return new RayDebug($this->hooks);
+            case FutureLegacyAction::NODE_NAME:
+                return new FutureLegacyAction($this->hooks);
+
 
             // Flows
             // case IfElse::NODE_NAME:
-            //     return null;
+                //     return null;
 
             // case CoreSchedule::NODE_NAME:
-            //     return null;
+                //     return null;
 
             // Actions
+            case RayDebug::NODE_NAME:
+                return new RayDebug($this->hooks);
             // case CoreDeletePost::NODE_NAME:
             //     return null;
 

@@ -1,8 +1,8 @@
 import { FutureActionPanelQuickEdit } from './components';
 import { createStore } from './data';
 import { getActionSettingsFromColumnData } from './utils';
-import { createRoot } from '&wp.element';
-import { select, dispatch } from '&wp.data';
+import { createRoot } from '@wordpress/element';
+import { select, dispatch } from '@wordpress/data';
 import { inlineEditPost } from "&window";
 import {
     postType,

@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import { Fragment, useState, useEffect } from "&wp.element";
-import { FormTokenField } from "&wp.components";
+import { Fragment, useState, useEffect } from "@wordpress/element";
+import { FormTokenField } from "@wordpress/components";
 
 export const TokensControl = (props) => {
     const [stringValue, setStringValue] = useState('');

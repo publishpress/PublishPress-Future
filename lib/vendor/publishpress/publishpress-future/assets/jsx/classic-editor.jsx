@@ -1,8 +1,8 @@
 import { FutureActionPanelClassicEditor } from './components';
 import { createStore } from './data';
 import { isGutenbergEnabled } from './utils';
-import { createRoot } from '&wp.element';
-import { select } from '&wp.data';
+import { createRoot } from '@wordpress/element';
+import { select } from '@wordpress/data';
 import {
     postType,
     isNewPost,
@@ -16,7 +16,7 @@ import {
     defaultDate,
     statusesSelectOptions
 } from "&config.classic-editor";
-import { render } from "&ReactDOM";
+import { render } from "react-dom";
 
 if (! isGutenbergEnabled()) {
     const storeName = 'publishpress-future/future-action';

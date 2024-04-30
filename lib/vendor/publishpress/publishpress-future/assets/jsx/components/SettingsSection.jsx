@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import { Fragment } from "&wp.element";
+import { Fragment } from "@wordpress/element";
 
 export const SettingsSection = function (props) {
     return (

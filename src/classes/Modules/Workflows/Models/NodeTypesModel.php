@@ -13,6 +13,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdm
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 
 class NodeTypesModel implements NodeTypesModelInterface
@@ -50,6 +51,15 @@ class NodeTypesModel implements NodeTypesModelInterface
             [
                 "name" => "post",
                 "label" => __("Post", "publishpress-future-pro"),
+                "icon" => [
+                    "src" => "media-document",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
+            ],
+            [
+                "name" => "future",
+                "label" => __("PublishPress Future", "publishpress-future-pro"),
                 "icon" => [
                     "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -134,6 +144,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreOnPostUpdated::NODE_NAME => new CoreOnPostUpdated(),
             CoreOnInit::NODE_NAME => new CoreOnInit(),
             CoreOnAdminInit::NODE_NAME => new CoreOnAdminInit(),
+            FutureLegacyAction::NODE_NAME => new FutureLegacyAction($this->hooks),
         ];
 
         return $triggersInstances;

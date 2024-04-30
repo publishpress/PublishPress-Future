@@ -11,7 +11,7 @@ import {
     NonceControl
 } from "./components";
 
-import { StrictMode, createRoot, useState, useEffect } from "&wp.element";
+import { StrictMode, createRoot, useState, useEffect } from "@wordpress/element";
 
 import {
     nonce,
@@ -22,7 +22,7 @@ import {
     text,
     statusesList
 } from "&config.settings-post-types";
-import { render } from "&ReactDOM";
+import { render } from "react-dom";
 
 const SettingsFormPanel = (props) => {
     const [formValidationStatusPerPostType, setFormValidationStatusPerPostType] = useState({});

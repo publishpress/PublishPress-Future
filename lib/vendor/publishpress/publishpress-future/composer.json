@@ -23,7 +23,8 @@
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "phpstan/extension-installer": true,
       "automattic/jetpack-autoloader": true
-    }
+    },
+    "process-timeout": 0
   },
   "autoload-dev": {
     "psr-4": {

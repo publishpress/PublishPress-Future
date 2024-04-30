@@ -72,6 +72,10 @@ class Module implements InitializableInterface
             CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
             [$this, "enqueueScriptsList"]
         );
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            [$this, "enqueueScriptsLegacyAction"]
+        );
         $this->hooks->addAction(CoreHooksAbstract::ACTION_REST_API_INIT, [
             $this->restApiManager,
             "register",
@@ -332,6 +336,32 @@ class Module implements InitializableInterface
                 PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
             ),
             ["jquery", "jquery-ui-dialog"],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+    }
+
+    public function enqueueScriptsLegacyAction($hook)
+    {
+        wp_enqueue_style("wp-components");
+
+        wp_enqueue_script("wp-components");
+        wp_enqueue_script("wp-plugins");
+        wp_enqueue_script("wp-element");
+        wp_enqueue_script("wp-data");
+
+        wp_enqueue_script(
+            "future_workflow_legacy_action_script",
+            plugins_url(
+                "/src/assets/js/legacy-action.js",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
+            [
+                "wp-plugins",
+                "wp-components",
+                "wp-element",
+                "wp-data",
+            ],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true
         );
