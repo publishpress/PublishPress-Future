@@ -359,7 +359,7 @@ export const FutureActionPanel = (props) => {
                             />
                         </PanelRow>
 
-                        <FutureActionPanelAfterActionField.Slot />
+                        <FutureActionPanelAfterActionField.Slot fillProps={{ storeName: props.storeName }} />
 
                         {action === 'change-status' &&
                             <PanelRow className="new-status">

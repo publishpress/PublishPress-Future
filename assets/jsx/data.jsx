@@ -21,6 +21,7 @@ export const createStore = (props) => {
         changeAction: 'no-change',
         calendarIsVisible: true,
         hasValidData: true,
+        extraData: props.defaultState.extraData ? props.defaultState.extraData : {},
     }
 
     const store = createReduxStore(props.name, {
@@ -101,6 +102,25 @@ export const createStore = (props) => {
                     return {
                         ...state,
                         hasValidData: action.hasValidData,
+                    }
+
+                case 'SET_EXTRA_DATA':
+                    return {
+                        ...state,
+                        extraData: {
+                            ...action.extraData,
+                        }
+                    }
+
+                case 'SET_EXTRA_DATA_BY_NAME':
+                    const extraData = {
+                        ...state.extraData,
+                        [action.name]: action.value
+                    };
+
+                    return {
+                        ...state,
+                        extraData: {...extraData}
                     }
             }
 
@@ -184,6 +204,19 @@ export const createStore = (props) => {
                     type: 'SET_HAS_VALID_DATA',
                     hasValidData: hasValidData
                 }
+            },
+            setExtraData(extraData) {
+                return {
+                    type: 'SET_EXTRA_DATA',
+                    extraData: extraData
+                }
+            },
+            setExtraDataByName(name, value) {
+                return {
+                    type: 'SET_EXTRA_DATA_BY_NAME',
+                    name: name,
+                    value: value
+                }
             }
         },
         selectors: {
@@ -226,6 +259,12 @@ export const createStore = (props) => {
             getHasValidData(state) {
                 return state.hasValidData;
             },
+            getExtraData(state) {
+                return state.extraData;
+            },
+            getExtraDataByName(state, name) {
+                return state.extraData[name] || null;
+            }
         }
     });
 

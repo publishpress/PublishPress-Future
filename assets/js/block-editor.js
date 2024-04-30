@@ -575,7 +575,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
                         onChange: handleActionChange
                     })
                 ),
-                React.createElement(_FutureActionPanelAfterActionField.FutureActionPanelAfterActionField.Slot, null),
+                React.createElement(_FutureActionPanelAfterActionField.FutureActionPanelAfterActionField.Slot, { fillProps: { storeName: props.storeName } }),
                 action === 'change-status' && React.createElement(
                     PanelRow,
                     { className: 'new-status' },
@@ -703,6 +703,8 @@ Object.defineProperty(exports, "__esModule", ({
 }));
 exports.FutureActionPanelAfterActionField = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _components = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 
 var FutureActionPanelAfterActionField = exports.FutureActionPanelAfterActionField = function FutureActionPanelAfterActionField(_ref) {
@@ -714,8 +716,8 @@ var FutureActionPanelAfterActionField = exports.FutureActionPanelAfterActionFiel
     );
 };
 
-var FutureActionPanelAfterActionFieldSlot = function FutureActionPanelAfterActionFieldSlot() {
-    return React.createElement(_components.Slot, { name: "FutureActionPanelAfterActionField" });
+var FutureActionPanelAfterActionFieldSlot = function FutureActionPanelAfterActionFieldSlot(props) {
+    return React.createElement(_components.Slot, _extends({ name: "FutureActionPanelAfterActionField" }, props));
 };
 
 FutureActionPanelAfterActionField.Slot = FutureActionPanelAfterActionFieldSlot;
@@ -2564,6 +2566,8 @@ var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
 
 var _data = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var createStore = exports.createStore = function createStore(props) {
     if (props.defaultState.terms && typeof props.defaultState.terms === 'string') {
         props.defaultState.terms = props.defaultState.terms.split(',').map(function (term) {
@@ -2584,7 +2588,8 @@ var createStore = exports.createStore = function createStore(props) {
         isFetchingTerms: false,
         changeAction: 'no-change',
         calendarIsVisible: true,
-        hasValidData: true
+        hasValidData: true,
+        extraData: props.defaultState.extraData ? props.defaultState.extraData : {}
     };
 
     var store = (0, _data.createReduxStore)(props.name, {
@@ -2656,6 +2661,18 @@ var createStore = exports.createStore = function createStore(props) {
                 case 'SET_HAS_VALID_DATA':
                     return _extends({}, state, {
                         hasValidData: action.hasValidData
+                    });
+
+                case 'SET_EXTRA_DATA':
+                    return _extends({}, state, {
+                        extraData: _extends({}, action.extraData)
+                    });
+
+                case 'SET_EXTRA_DATA_BY_NAME':
+                    var extraData = _extends({}, state.extraData, _defineProperty({}, action.name, action.value));
+
+                    return _extends({}, state, {
+                        extraData: _extends({}, extraData)
                     });
             }
 
@@ -2740,6 +2757,19 @@ var createStore = exports.createStore = function createStore(props) {
                     type: 'SET_HAS_VALID_DATA',
                     hasValidData: hasValidData
                 };
+            },
+            setExtraData: function setExtraData(extraData) {
+                return {
+                    type: 'SET_EXTRA_DATA',
+                    extraData: extraData
+                };
+            },
+            setExtraDataByName: function setExtraDataByName(name, value) {
+                return {
+                    type: 'SET_EXTRA_DATA_BY_NAME',
+                    name: name,
+                    value: value
+                };
             }
         },
         selectors: {
@@ -2781,6 +2811,12 @@ var createStore = exports.createStore = function createStore(props) {
             },
             getHasValidData: function getHasValidData(state) {
                 return state.hasValidData;
+            },
+            getExtraData: function getExtraData(state) {
+                return state.extraData;
+            },
+            getExtraDataByName: function getExtraDataByName(state, name) {
+                return state.extraData[name] || null;
             }
         }
     });
