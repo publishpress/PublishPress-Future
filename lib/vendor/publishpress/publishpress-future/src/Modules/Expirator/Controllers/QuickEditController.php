@@ -114,6 +114,8 @@ class QuickEditController implements InitializableInterface
 
         check_ajax_referer('__future_action', '_future_action_nonce');
 
+
+
         // Classic editor, quick edit
         $shouldSchedule = isset($_POST['future_action_enabled']) && $_POST['future_action_enabled'] === '1';
 

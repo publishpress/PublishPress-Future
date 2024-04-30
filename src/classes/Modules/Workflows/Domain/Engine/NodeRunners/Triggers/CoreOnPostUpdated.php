@@ -31,7 +31,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
         $this->hooks = $hooks;
     }
 
-    public function setup(array $node, array $routineTree = [])
+    public function setup(int $workflowId, array $node, array $routineTree = [])
     {
         $this->node = $node;
         $this->routineTree = $routineTree;

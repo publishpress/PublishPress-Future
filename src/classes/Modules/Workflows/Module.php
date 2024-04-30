@@ -4,13 +4,17 @@ namespace PublishPress\FuturePro\Modules\Workflows;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Node;
+use PublishPress\FuturePro\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
 class Module implements InitializableInterface
 {
@@ -88,7 +92,6 @@ class Module implements InitializableInterface
             $this,
             "redirectToWorkflowEditor",
         ]);
-
         $this->hooks->addAction(
             "manage_" . self::POST_TYPE_WORKFLOW . "_posts_columns",
             [$this, "addCustomColumns"]
@@ -104,6 +107,16 @@ class Module implements InitializableInterface
             [$this, "renderPreviewColumn"],
             10,
             2
+        );
+        $this->hooks->addFilter(
+            HooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS,
+            [$this, "preparePostExpirationOpts"],
+            10,
+            2
+        );
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_SAVE_POST,
+            [$this, "onSaveWorkflow"]
         );
     }
 
@@ -365,6 +378,17 @@ class Module implements InitializableInterface
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true
         );
+
+        $workflowsModel = new WorkflowsModel();
+        $workflows = $workflowsModel->getPublishedWorkflowsWithLegacyTriggerAsOptions();
+
+        wp_localize_script(
+            "future_workflow_legacy_action_script",
+            "futureWorkflows",
+            [
+                "workflows" => $workflows,
+            ]
+        );
     }
 
     public function enqueueScriptsEditor($hook)
@@ -453,5 +477,48 @@ class Module implements InitializableInterface
                 "cronSchedules" => $this->cronSchedulesModel->getCronSchedulesAsOptions(),
             ]
         );
+    }
+
+    public function onSaveWorkflow($postId)
+    {
+        if (self::POST_TYPE_WORKFLOW !== get_post_type($postId)) {
+            return;
+        }
+
+        $workflowFlow = isset($_POST["workflow_flow"])
+            ? json_decode(stripslashes($_POST["workflow_flow"]), true)
+            : [];
+
+        update_post_meta($postId, "_workflow_flow", json_encode($workflowFlow));
+    }
+
+    public function preparePostExpirationOpts($opts, $postId)
+    {
+        $validViews = [
+            'quick-edit',
+            'bulk-edit',
+        ];
+
+        if (!isset($_REQUEST['future_action_view']) || ! in_array($_REQUEST['future_action_view'], $validViews)) {
+            return $opts;
+        }
+
+        if (!isset($_REQUEST['future_action_action']) || TriggerWorkflow::ACTION_NAME !== $_REQUEST['future_action_action']) {
+            return $opts;
+        }
+
+        $workflowId = isset($_REQUEST['future_action_pro_workflow']) ? (int) $_REQUEST['future_action_pro_workflow'] : 0;
+
+        if (empty($workflowId)) {
+            return $opts;
+        }
+
+        $opts['workflowId'] = $workflowId;
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($workflowId);
+
+        $opts['workflowTitle'] = $workflowModel->getTitle();
+
+        return $opts;
     }
 }

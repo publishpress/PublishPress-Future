@@ -27,6 +27,11 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
     private $routineTree;
 
     /**
+     * @var int
+     */
+    private $workflowId;
+
+    /**
      * @var array
      */
     private $eventArgs;
@@ -36,18 +41,26 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
         $this->hooks = $hooks;
     }
 
-    public function setup(array $node, array $routineTree = [])
+    public function setup(int $workflowId, array $node, array $routineTree = [])
     {
         $this->node = $node;
         $this->routineTree = $routineTree;
+        $this->workflowId = $workflowId;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_LEGACY_ACTION, [$this, 'triggerCallback'], 10, 2);
+        $this->hooks->addAction(HooksAbstract::ACTION_LEGACY_ACTION, [$this, 'triggerCallback'], 10, 3);
     }
 
-    public function triggerCallback($postId, $post)
+    public function triggerCallback($postId, $post, $args = [])
     {
+        // Check if it came from the correct workflow
+        if (! isset($args['workflowId']) || $this->workflowId !== $args['workflowId']) {
+            return false;
+        }
+
         // Get next nodes in the routine tree
         $nextSteps = $this->routineTree['next']['output'];
+
+        ray($args)->label('triggerCallback');
 
         if (empty($nextSteps)) {
             return false;

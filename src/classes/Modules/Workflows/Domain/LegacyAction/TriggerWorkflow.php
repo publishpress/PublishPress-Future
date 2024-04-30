@@ -1,12 +1,15 @@
 <?php
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\LegacyAction;
 
+use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 
 class TriggerWorkflow implements ExpirationActionInterface
 {
+    const ACTION_NAME = 'trigger-workflow';
+
     /**
      * @var HookableInterface
      */
@@ -19,10 +22,13 @@ class TriggerWorkflow implements ExpirationActionInterface
 
     private $postModel;
 
-    public function __construct(HookableInterface $hooks, $postModel)
+    private $container;
+
+    public function __construct(HookableInterface $hooks, $postModel, $container)
     {
         $this->hooks = $hooks;
         $this->postModel = $postModel;
+        $this->container = $container;
     }
 
     public function execute()
@@ -30,9 +36,15 @@ class TriggerWorkflow implements ExpirationActionInterface
         $postId = $this->postModel->getPostId();
         $post = get_post($postId);
 
-        ray($postId, $post)->blue()->label('TriggerWorkflow');
+        $actionsArgsModelFactory = $this->container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
+        $actionsArgsModel = $actionsArgsModelFactory();
+        $actionsArgsModel->loadByPostId($postId, true);
 
-        $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_ACTION, $postId, $post);
+        $args = $actionsArgsModel->getArgs();
+
+        if (isset($args['expireType']) && $args['expireType'] === self::ACTION_NAME) {
+            $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_ACTION, $postId, $post, $args);
+        }
     }
 
     /**

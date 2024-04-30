@@ -151,14 +151,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var Fields = function Fields(_ref) {
   var storeName = _ref.storeName;
-  var workflowsOptions = [{
-    label: 'Workflow 1',
-    value: 'workflow-1'
-  }, {
-    label: 'Workflow 2',
-    value: 'workflow-2'
-  }];
-  var defaultWorkflow = workflowsOptions[0].value;
+  var workflowsOptions = futureWorkflows.workflows;
+  var defaultWorkflow = workflowsOptions.length > 0 ? workflowsOptions[0].value : 0;
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(function (select) {
       return {
         action: select(storeName).getAction(),
@@ -172,14 +166,20 @@ var Fields = function Fields(_ref) {
   var handleActionChange = function handleActionChange(value) {
     setExtraDataByName('workflow', value);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, action === 'trigger-workflow' && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, workflowsOptions.length > 0 && action === 'trigger-workflow' && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
     className: "future-action-panel-content future-action-full-width"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Workflow to trigger', 'publishpress-future-pro'),
     value: workflow,
     options: workflowsOptions,
     onChange: handleActionChange
-  })));
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: "future_action_pro_workflow",
+    value: workflow
+  })), workflowsOptions.length === 0 && action === 'trigger-workflow' && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
+    className: "future-action-panel-content future-action-full-width"
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No workflows available.', 'publishpress-future-pro'))));
 };
 var LegacyActionFields = function LegacyActionFields() {
   return /*#__PURE__*/React.createElement(_lib_vendor_publishpress_publishpress_future_assets_jsx_components_FutureActionPanelAfterActionField__WEBPACK_IMPORTED_MODULE_3__.FutureActionPanelAfterActionField, null, function (_ref2) {

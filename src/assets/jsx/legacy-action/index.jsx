@@ -5,18 +5,9 @@ import { useSelect, dispatch } from '@wordpress/data';
 import { FutureActionPanelAfterActionField } from '../../../../lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelAfterActionField';
 
 const Fields = ({ storeName }) => {
-    const workflowsOptions = [
-        {
-            label: 'Workflow 1',
-            value: 'workflow-1',
-        },
-        {
-            label: 'Workflow 2',
-            value: 'workflow-2',
-        },
-    ];
+    const workflowsOptions = futureWorkflows.workflows;
 
-    const defaultWorkflow = workflowsOptions[0].value;
+    const defaultWorkflow = workflowsOptions.length > 0 ? workflowsOptions[0].value : 0;
 
     const {
         action,
@@ -38,7 +29,7 @@ const Fields = ({ storeName }) => {
 
     return (
         <>
-            {action === 'trigger-workflow' &&
+            {workflowsOptions.length > 0 && action === 'trigger-workflow' &&
                 <PanelRow className='future-action-panel-content future-action-full-width'>
                     <SelectControl
                         label={__('Workflow to trigger', 'publishpress-future-pro')}
@@ -46,6 +37,13 @@ const Fields = ({ storeName }) => {
                         options={workflowsOptions}
                         onChange={handleActionChange}
                     />
+                    <input type='hidden' name='future_action_pro_workflow' value={workflow} />
+                </PanelRow>
+            }
+
+            { workflowsOptions.length === 0 && action === 'trigger-workflow' &&
+                <PanelRow className='future-action-panel-content future-action-full-width'>
+                    <p>{__('No workflows available.', 'publishpress-future-pro')}</p>
                 </PanelRow>
             }
         </>

@@ -47,7 +47,7 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger is fired when a future post action is executed.", "publishpress-future-pro");
+        return __("This trigger is fired when a future action is configured to execute this workflow.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -107,15 +107,15 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function addExpirationAction(array $actions): array
     {
-        $actions['trigger-workflow'] = __("Trigger Workflow", "publishpress-future-pro");
+        $actions[TriggerWorkflow::ACTION_NAME] = TriggerWorkflow::getLabel();
 
         return $actions;
     }
 
     public function createExpirationAction($action, $actionName, $postModel, $container)
     {
-        if ($actionName === 'trigger-workflow') {
-            $action = new TriggerWorkflow($this->hooks, $postModel);
+        if ($actionName === TriggerWorkflow::ACTION_NAME) {
+            $action = new TriggerWorkflow($this->hooks, $postModel, $container);
         }
 
         return $action;

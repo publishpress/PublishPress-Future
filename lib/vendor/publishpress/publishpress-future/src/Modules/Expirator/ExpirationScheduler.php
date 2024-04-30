@@ -148,6 +148,8 @@ class ExpirationScheduler implements SchedulerInterface
         $opts['postLink'] = $postModel->getPermalink();
         $opts['postTypeLabel'] = $postModel->getPostTypeSingularLabel();
 
+        $opts = $this->hooks->applyFilters(HooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS, $opts, $postId);
+
         $actionArgsModel = $factory();
         $id = $actionArgsModel->setCronActionId($actionId)
             ->setPostId($postId)

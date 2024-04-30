@@ -5,18 +5,21 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use Exception;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use WP_Post;
 use WP_Query;
 
 class WorkflowModel implements WorkflowModelInterface
 {
-    public const META_KEY_DICTIONARY = '_workflow_dictionary';
-
     public const META_KEY_FLOW = '_workflow_flow';
+
+    public const META_KEY_HAS_LEGACY_TRIGGER = '_workflow_has_legacy_trigger';
 
     private $post;
 
     private $flow = [];
+
+    private $hasLegacyActionTrigger = null;
 
     public function load(int $id): bool
     {
@@ -74,11 +77,24 @@ class WorkflowModel implements WorkflowModelInterface
         $this->post->post_status = sanitize_key($status);
     }
 
+    private function updateLegacyActionMetadata()
+    {
+        $this->hasLegacyActionTrigger = $this->checkHasLegacyActionTriggerInTheFlow();
+
+        if ($this->hasLegacyActionTrigger) {
+            update_post_meta($this->post->ID, self::META_KEY_HAS_LEGACY_TRIGGER, '1');
+        } else {
+            delete_post_meta($this->post->ID, self::META_KEY_HAS_LEGACY_TRIGGER);
+        }
+    }
+
     public function save()
     {
         wp_update_post($this->post);
 
         update_post_meta($this->post->ID, self::META_KEY_FLOW, json_encode($this->flow));
+
+        $this->updateLegacyActionMetadata();
     }
 
     public function delete()
@@ -141,7 +157,6 @@ class WorkflowModel implements WorkflowModelInterface
             ];
 
             $id = wp_insert_post($this->post);
-
         }
 
         $this->load($id);
@@ -184,7 +199,7 @@ class WorkflowModel implements WorkflowModelInterface
     {
         $abstractFlow = $this->getFlow();
 
-        if (empty($abstractFlow))  {
+        if (empty($abstractFlow)) {
             return [];
         }
 
@@ -207,17 +222,18 @@ class WorkflowModel implements WorkflowModelInterface
     {
         $abstractFlow = $this->getFlow();
 
-        if (empty($abstractFlow))  {
+        if (empty($abstractFlow)) {
             return [];
         }
 
         return $abstractFlow['edges'] ?? [];
     }
 
-    public function getRoutineTree(array $nodeTypes): array {
+    public function getRoutineTree(array $nodeTypes): array
+    {
         $abstractFlow = $this->getFlow();
 
-        if (empty($abstractFlow))  {
+        if (empty($abstractFlow)) {
             return [];
         }
 
@@ -240,7 +256,8 @@ class WorkflowModel implements WorkflowModelInterface
         return $routineTree;
     }
 
-    private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null) {
+    private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null)
+    {
         $node = $nodes[$sourceNodeId];
         $elementarType = $node['data']['elementarType'];
         $nodeName = $node['data']['name'];
@@ -267,5 +284,30 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         return $tree;
+    }
+
+    private function checkHasLegacyActionTriggerInTheFlow(): bool
+    {
+        $workflowTriggers = $this->getTriggerNodes();
+
+        foreach ($workflowTriggers as $triggerNode) {
+            if (
+                $triggerNode['data']['elementarType'] === NodeTypesModel::NODE_TYPE_TRIGGER
+                && $triggerNode['data']['name'] === FutureLegacyAction::NODE_NAME
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasLegacyActionTrigger(): bool
+    {
+        if (is_null($this->hasLegacyActionTrigger)) {
+            $this->updateLegacyActionMetadata();
+        }
+
+        return get_post_meta($this->post->ID, self::META_KEY_HAS_LEGACY_TRIGGER, true) === '1';
     }
 }

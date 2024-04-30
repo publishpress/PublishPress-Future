@@ -84,7 +84,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 }
 
                 // Setup the trigger
-                $triggerRunner->setup($triggerNode, $routineTree[$triggerId]);
+                $triggerRunner->setup($workflowId, $triggerNode, $routineTree[$triggerId]);
             }
         }
     }
