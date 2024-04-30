@@ -546,8 +546,6 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
         jQuery(e.target).addClass('cancel');
     };
 
-    console.log('FutureActionPanel.jsx');
-
     return React.createElement(
         _components.SlotFillProvider,
         null,

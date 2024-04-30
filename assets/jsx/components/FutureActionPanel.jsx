@@ -331,8 +331,6 @@ export const FutureActionPanel = (props) => {
         jQuery(e.target).addClass('cancel');
     }
 
-    console.log('FutureActionPanel.jsx');
-
     return (
         <SlotFillProvider>
             <div className={panelClass}>
