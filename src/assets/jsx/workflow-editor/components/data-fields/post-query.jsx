@@ -7,14 +7,7 @@ import { __experimentalVStack as VStack } from "@wordpress/components";
 
 export function PostQuery({ name, label, defaultValue, onChange }) {
     const postTypes = futureWorkflowEditor.postTypes;
-
-    const postStatuses = [
-        { label: "Published", value: "publish" },
-        { label: "Draft", value: "draft" },
-        { label: "Pending", value: "pending" },
-        { label: "Private", value: "private" },
-        { label: "Trash", value: "trash" },
-    ];
+    const postStatuses = futureWorkflowEditor.postStatuses;
 
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };

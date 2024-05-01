@@ -16,15 +16,8 @@ class PostTypesModel implements PostTypesModelInterface
         $postTypes = $this->getPostTypes();
 
         $options = [];
-        $keys = [];
 
         foreach ($postTypes as $postType) {
-            if (in_array($postType->name, $keys)) {
-                continue;
-            }
-
-            $keys[] = $postType->name;
-
             $options[] = [
                 'label' => $postType->label,
                 'value' => $postType->name,
