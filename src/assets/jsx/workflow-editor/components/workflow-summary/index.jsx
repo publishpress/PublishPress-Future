@@ -1,10 +1,10 @@
 import { PanelBody, TextControl, TextareaControl, __experimentalHStack as HStack } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { store as workflowStore } from '../../workflow-store';
+import { store as workflowStore } from '../workflow-store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
-import { WorkflowSwitchToDraftButton } from '../../workflow-switch-to-draft-button';
-import { WorkflowDeleteButton } from '../../workflow-delete-button';
+import { WorkflowSwitchToDraftButton } from '../workflow-switch-to-draft-button';
+import { WorkflowDeleteButton } from '../workflow-delete-button';
 
 export const WorkflowSummary = () => {
     const {

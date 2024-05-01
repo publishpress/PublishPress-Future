@@ -8,7 +8,7 @@ import { SettingsHeader } from './settings-header';
 import { __ } from '@wordpress/i18n';
 import { SLOT_SCOPE_WORKFLOW_EDITOR } from '../../constants';
 import { SIDEBAR_WORKFLOW, SIDEBAR_NODE_EDGE } from './constants';
-import { WorkflowSummary } from '../sidebar/workflow-summary';
+import { WorkflowSummary } from '../workflow-summary';
 import { NodeInspector } from '../node-inspector';
 
 
