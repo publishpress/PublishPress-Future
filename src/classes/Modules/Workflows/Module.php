@@ -174,8 +174,8 @@ class Module implements InitializableInterface
     {
         register_post_type(self::POST_TYPE_WORKFLOW, [
             "labels" => [
-                "name" => __("Workflows", "publishpress-future-pro"),
-                "singular_name" => __("Workflow", "publishpress-future-pro"),
+                "name" => __("Future Workflows", "publishpress-future-pro"),
+                "singular_name" => __("Future Workflow", "publishpress-future-pro"),
                 "add_new" => __("Add New", "publishpress-future-pro"),
                 "add_new_item" => __(
                     "Add New Workflow",
@@ -221,7 +221,7 @@ class Module implements InitializableInterface
                     "Workflows list navigation",
                     "publishpress-future-pro"
                 ),
-                "items_list" => __("Workflows list", "publishpress-future-pro"),
+                "items_list" => __("Future Workflows list", "publishpress-future-pro"),
                 "item_published" => __(
                     "Workflow published.",
                     "publishpress-future-pro"
