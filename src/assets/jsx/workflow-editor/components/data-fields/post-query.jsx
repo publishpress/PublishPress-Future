@@ -6,11 +6,7 @@ import BaseField from "./base-field";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
 export function PostQuery({ name, label, defaultValue, onChange }) {
-    const postTypes = [
-        { label: "Post", value: "post" },
-        { label: "Page", value: "page" },
-        { label: "Revision", value: "revision" },
-    ];
+    const postTypes = futureWorkflowEditor.postTypes;
 
     const postStatuses = [
         { label: "Published", value: "publish" },
