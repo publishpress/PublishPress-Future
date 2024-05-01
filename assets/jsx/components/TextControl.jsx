@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import { Fragment } from "&wp.element";
-import { TextControl as WPTextControl } from "&wp.components";
+import { Fragment } from "@wordpress/element";
+import { TextControl as WPTextControl } from "@wordpress/components";
 import { Spinner } from "./";
 
 export const TextControl = function (props) {

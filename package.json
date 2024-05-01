@@ -17,7 +17,6 @@
   "dependencies": {
     "@preact/signals-react": "^1.2.2",
     "@wordpress/api-fetch": "^6.22.0",
-    "@wordpress/components": "^23.2.0",
     "@wordpress/hooks": "^3.27.0",
     "@wordpress/url": "^3.28.0",
     "react-select": "^5.7.0"

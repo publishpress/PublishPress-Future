@@ -1,4 +1,4 @@
-import { Button } from '&wp.components';
+import { Button } from '@wordpress/components';
 
 export const ToggleArrowButton = function (props) {
     const onClick = function () {

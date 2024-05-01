@@ -1,6 +1,6 @@
 import { ToggleArrowButton } from "./ToggleArrowButton";
 import { DateTimePicker } from "./DateTimePicker";
-import { Fragment, useEffect } from "&wp.element";
+import { Fragment, useEffect } from "@wordpress/element";
 
 export const ToggleCalendarDatePicker = (
     {
