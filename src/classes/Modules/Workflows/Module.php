@@ -114,10 +114,6 @@ class Module implements InitializableInterface
             10,
             2
         );
-        $this->hooks->addAction(
-            CoreHooksAbstract::ACTION_SAVE_POST,
-            [$this, "onSaveWorkflow"]
-        );
     }
 
     public function redirectToWorkflowEditor()
@@ -482,19 +478,6 @@ class Module implements InitializableInterface
                 "cronSchedules" => $this->cronSchedulesModel->getCronSchedulesAsOptions(),
             ]
         );
-    }
-
-    public function onSaveWorkflow($postId)
-    {
-        if (self::POST_TYPE_WORKFLOW !== get_post_type($postId)) {
-            return;
-        }
-
-        $workflowFlow = isset($_POST["workflow_flow"])
-            ? json_decode(stripslashes($_POST["workflow_flow"]), true)
-            : [];
-
-        update_post_meta($postId, "_workflow_flow", json_encode($workflowFlow));
     }
 
     public function preparePostExpirationOpts($opts, $postId)
