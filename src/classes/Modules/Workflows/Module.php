@@ -300,6 +300,11 @@ class Module implements InitializableInterface
 
         $triggers = [];
 
+        if (empty($workflowFlow) || !isset($workflowFlow["nodes"])) {
+            echo __("—", "publishpress-future-pro");
+            return;
+        }
+
         foreach ($workflowFlow["nodes"] as $node) {
             if (
                 NodeTypesModel::NODE_TYPE_TRIGGER ===
