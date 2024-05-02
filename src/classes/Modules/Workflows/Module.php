@@ -423,6 +423,7 @@ class Module implements InitializableInterface
         wp_enqueue_script("wp-element");
         wp_enqueue_script("wp-components");
         wp_enqueue_script("wp-data");
+        wp_enqueue_script("wp-plugins");
 
         wp_enqueue_script(
             "future_workflow_admin_script",
@@ -436,6 +437,7 @@ class Module implements InitializableInterface
                 "wp-url",
                 "wp-data",
                 "wp-api-fetch",
+                "wp-plugins",
             ],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true

@@ -7,7 +7,7 @@ import {
     customPostStatuses,
     text
 } from "&config.pro-settings";
-import { CheckboxControl, Button } from "&wp.components";
+import { CheckboxControl, Button } from "@wordpress/components";
 
 export const addCustomStatusSettings = (settingsRows, props, settingActive, useState) => {
     let defaultEnabledCustomStatuses = [];
