@@ -9,7 +9,9 @@ import {
     IntegerData,
     StringData,
     InputData,
-    WorkflowData as WorkflowDataType
+    WorkflowData as WorkflowDataType,
+    UserData,
+    SiteData
 } from "./data-types";
 
 export function WorkflowData() {
@@ -44,6 +46,8 @@ export function WorkflowData() {
         StringData(),
         InputData(),
         WorkflowDataType(),
+        UserData(),
+        SiteData(),
     ]
     setDataTypes(dataTypes);
 

@@ -60,7 +60,23 @@ const loadWorkflowSuccess = (state, action) => {
         }
     });
 
-    console.log('state', state);
+    state = setGlobalVariable(state, {
+        payload: {
+            name: 'user',
+            label: 'User',
+            type: 'user',
+            runtimeOnly: true,
+        }
+    });
+
+    state = setGlobalVariable(state, {
+        payload: {
+            name: 'site',
+            label: 'Site',
+            type: 'site',
+            runtimeOnly: true,
+        }
+    });
 
     return {
         ...state,

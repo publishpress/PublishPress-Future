@@ -93,16 +93,40 @@ class WorkflowEngine implements WorkflowEngineInterface
 
     private function getGlobalVariables($workflow)
     {
-        return [
-            'workflow' => [
-                'id' => $workflow->getId(),
-                'title' => $workflow->getTitle(),
-                'description' => $workflow->getDescription(),
-                'modified_at' => $workflow->getModifiedAt(),
-            ],
-            'user' => [],
-            'site' => [],
+        $globals = [];
+
+        $globals['workflow'] = [
+            'id' => $workflow->getId(),
+            'title' => $workflow->getTitle(),
+            'description' => $workflow->getDescription(),
+            'modified_at' => $workflow->getModifiedAt(),
         ];
+
+
+        $userData = [];
+        $currentUser = wp_get_current_user();
+        if ($currentUser->exists()) {
+            $userData = [
+                'id' => $currentUser->ID,
+                'user_email' => $currentUser->user_email,
+                'user_login' => $currentUser->user_login,
+                'display_name' => $currentUser->display_name,
+                'roles' => $currentUser->roles,
+                'caps' => $currentUser->caps,
+                'user_registered' => $currentUser->user_registered,
+            ];
+        }
+        $globals['user'] = $userData;
+
+        $globals['site'] = [
+            'url' => get_site_url(),
+            'home_url' => get_home_url(),
+            'admin_email' => get_option('admin_email'),
+            'name' => get_option('blogname'),
+            'description' => get_option('blogdescription'),
+        ];
+
+        return $globals;
     }
 
     public function executeNodeRoutine($step, $input, $globalVariables)
