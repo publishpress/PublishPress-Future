@@ -1,0 +1,31 @@
+export function WorkflowData() {
+    return {
+        name: "workflow",
+        label: "Future Workflow",
+        type: "object",
+        propertiesSchema: [
+            {
+                name: "id",
+                type: "integer",
+                label: "ID",
+            },
+            {
+                name: "title",
+                type: "string",
+                label: "Title",
+            },
+            {
+                name: "description",
+                type: "string",
+                label: "Description",
+            },
+            {
+                name: "modified_at",
+                type: "date",
+                label: "Modified At",
+            },
+        ],
+    };
+}
+
+export default WorkflowData;

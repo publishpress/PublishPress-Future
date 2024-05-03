@@ -1,4 +1,10 @@
 import { applyFilters } from "@wordpress/hooks";
+import { select } from "@wordpress/data";
+import { store as workflowStore } from "./components/workflow-store";
+import { getIncomers } from "reactflow";
+
+const VARIABLE_SOURCE_NODE_INPUT = 'node-input';
+const VARIABLE_SOURCE_GLOBAL = 'global';
 
 export function addBodyClass(className) {
     if (document.body.classList.contains(className)) return;
@@ -55,10 +61,6 @@ export function isAppleOS(_window = window) {
         platform.indexOf("Mac") !== -1 || ["iPad", "iPhone"].includes(platform)
     );
 }
-
-import { select } from "@wordpress/data";
-import { store as workflowStore } from "./components/workflow-store";
-import { getIncomers } from "reactflow";
 
 export function getNodeIncomers(node) {
     const nodes = select(workflowStore).getNodes();
@@ -127,26 +129,41 @@ export function getNodeInputs(node) {
 export function getNodeInputVariables(node, types = []) {
     const nodeInputs = getNodeInputs(node);
 
-    let variables = nodeInputs.filter((input) => types.includes(input.type));
+    let variables = [];
 
-    // Take object variables from the input schema
-    const objectVariables = nodeInputs.filter((input) => input.dataType.type === 'object');
-
-    if (objectVariables && objectVariables.forEach) {
-        objectVariables.forEach((objectVariable) => {
-            objectVariable.dataType.propertiesSchema.forEach((property) => {
-                if (types.length > 0 && ! types.includes(property.type)) {
-                    return;
-                }
-
-                variables.push({
-                    name: objectVariable.name + '.' + property.name,
-                    type: property.type,
-                    label: objectVariable.label + ' -> ' + property.label,
-                });
-            });
-        });
+    if (types.length) {
+        variables = nodeInputs.filter((input) => types.includes(input.type));
+    } else {
+        variables = nodeInputs;
     }
 
+    variables = variables.map((variable) => {
+        return {
+            name: variable.name,
+            type: variable.type,
+            label: variable.label,
+            source: VARIABLE_SOURCE_NODE_INPUT,
+        };
+    });
+
     return variables;
+}
+
+export function getGlobalVariablesExpanded(globalVariables) {
+    const globalVariablesExpanded = [];
+
+    const getDataTypeByName = select(workflowStore).getDataTypeByName;
+
+    Object.keys(globalVariables).forEach((variableName) => {
+        const variable = globalVariables[variableName];
+
+        globalVariablesExpanded.push({
+            name: variableName,
+            type: variable.type,
+            label: variable.label,
+            source: VARIABLE_SOURCE_GLOBAL,
+        });
+    });
+
+    return globalVariablesExpanded;
 }

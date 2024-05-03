@@ -173,3 +173,11 @@ export function takeScreenshot() {
         }
     });
 }
+
+export function getGlobalVariables(state) {
+    return state.globalVariables;
+}
+
+export function getGlobalVariable(state, name) {
+    return state.globalVariables.find(variable => variable.name === name);
+}

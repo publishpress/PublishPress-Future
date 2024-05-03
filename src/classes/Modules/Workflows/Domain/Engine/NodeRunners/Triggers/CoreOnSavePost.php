@@ -31,15 +31,21 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
      */
     private $eventArgs;
 
+    /**
+     * @var array
+     */
+    private $globalVariables;
+
     public function __construct(HookableInterface $hooks)
     {
         $this->hooks = $hooks;
     }
 
-    public function setup(int $workflowId, array $node, array $routineTree = [])
+    public function setup(int $workflowId, array $node, array $routineTree = [], array $globalVariables = []): void
     {
         $this->node = $node;
         $this->routineTree = $routineTree;
+        $this->globalVariables = $globalVariables;
 
         $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 10, 3);
     }
@@ -74,7 +80,7 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
 
         // Execute the next nodes
         foreach ($nextSteps as $nextStep) {
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $output);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $output, $this->globalVariables);
         }
     }
 

@@ -38,7 +38,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         $this->nodeRunnerMapper = $nodeRunnerMapper;
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
-        $this->hooks->addAction(HooksAbstract::ACTION_EXECUTE_NODE, [$this, 'executeNodeRoutine'], 10, 2);
+        $this->hooks->addAction(HooksAbstract::ACTION_EXECUTE_NODE, [$this, 'executeNodeRoutine'], 10, 3);
     }
 
     public function start()
@@ -58,6 +58,17 @@ class WorkflowEngine implements WorkflowEngineInterface
         foreach ($workflows as $workflowId) {
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
+
+            $globalVariables = [
+                'workflow' => [
+                    'id' => $workflowId,
+                    'title' => $workflow->getTitle(),
+                    'description' => $workflow->getDescription(),
+                    'modified_at' => $workflow->getModifiedAt(),
+                ],
+                'user' => [],
+                'site' => [],
+            ];
 
             $triggerNodes = $workflow->getTriggerNodes();
 
@@ -84,12 +95,12 @@ class WorkflowEngine implements WorkflowEngineInterface
                 }
 
                 // Setup the trigger
-                $triggerRunner->setup($workflowId, $triggerNode, $routineTree[$triggerId]);
+                $triggerRunner->setup($workflowId, $triggerNode, $routineTree[$triggerId], $globalVariables);
             }
         }
     }
 
-    public function executeNodeRoutine($step, $input)
+    public function executeNodeRoutine($step, $input, $globalVariables)
     {
         $node = $step['node'];
         $nodeName = $node['data']['name'];
@@ -104,6 +115,6 @@ class WorkflowEngine implements WorkflowEngineInterface
             return;
         }
 
-        $nodeRunner->setup($step, $input);
+        $nodeRunner->setup($step, $input, $globalVariables);
     }
 }

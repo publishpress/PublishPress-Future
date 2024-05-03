@@ -283,3 +283,10 @@ export function addDataType(dataType) {
         payload: dataType,
     };
 }
+
+export function setGlobalVariable(globalVariable) {
+    return {
+        type: 'SET_GLOBAL_VARIABLE',
+        payload: globalVariable,
+    };
+}

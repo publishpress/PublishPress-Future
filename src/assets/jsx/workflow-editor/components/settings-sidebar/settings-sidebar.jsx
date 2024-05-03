@@ -10,6 +10,7 @@ import { SLOT_SCOPE_WORKFLOW_EDITOR } from '../../constants';
 import { SIDEBAR_WORKFLOW, SIDEBAR_NODE_EDGE } from './constants';
 import { WorkflowSummary } from '../workflow-summary';
 import { NodeInspector } from '../node-inspector';
+import WorkflowGlobalVariables from '../workflow-global-variables';
 
 
 const SIDEBAR_ACTIVE_BY_DEFAULT = Platform.select({
@@ -44,6 +45,7 @@ export const SettingsSidebar = () => {
             {sidebarName === SIDEBAR_WORKFLOW && (
                 <>
                     <WorkflowSummary />
+                    <WorkflowGlobalVariables />
                 </>
             )}
             {sidebarName === SIDEBAR_NODE_EDGE && (

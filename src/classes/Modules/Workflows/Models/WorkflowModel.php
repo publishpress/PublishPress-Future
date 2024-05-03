@@ -88,6 +88,11 @@ class WorkflowModel implements WorkflowModelInterface
         }
     }
 
+    public function getModifiedAt(): string
+    {
+        return $this->post->post_modified;
+    }
+
     public function save()
     {
         wp_update_post($this->post);

@@ -22,7 +22,7 @@ class RayDebug implements NodeRunnerInterface
         $this->hooks = $hooks;
     }
 
-    public function setup(array $step, array $input = []): void
+    public function setup(array $step, array $input = [], array $globalVariables = []): void
     {
         $node = $step['node'];
         $nextSteps = [];
@@ -41,30 +41,47 @@ class RayDebug implements NodeRunnerInterface
                 $dataToOutput = explode('.', $nodeSettings['data']['dataToOutput']);
             }
 
-            $messageToSend = $input;
+            $dataSource = null;
+            if (isset($dataToOutput[0]) && $dataToOutput[0] === 'all-input') {
+                $dataSource = 'input';
+            } else if (isset($input[$dataToOutput[0]])) {
+                $dataSource = 'input';
+            } else if (isset($globalVariables[$dataToOutput[0]])) {
+                $dataSource = 'global';
+            }
+
+            if (! $dataSource) {
+                throw new Exception('Invalid data key: ' . $dataToOutput[0] . ' for data: ' . $input);
+            }
+
+            $sourceVariable = $dataSource === 'input' ? $input : $globalVariables;
+
+            $rayMessage = $sourceVariable;
 
             if (count($dataToOutput) > 1 && $dataToOutput[0] !== 'all-input') {
-                foreach ($dataToOutput as $key) {
-                    if (is_array($messageToSend) && isset($messageToSend[$key])) {
-                        $messageToSend = $messageToSend[$key];
+                foreach ($dataToOutput as $variablePart) {
+                    if (is_array($rayMessage) && isset($rayMessage[$variablePart])) {
+                        $rayMessage = $rayMessage[$variablePart];
                     } else {
-                        if (is_object($messageToSend) && isset($messageToSend->{$key})) {
-                            $messageToSend = $messageToSend->{$key};
+                        if (is_object($rayMessage) && isset($rayMessage->{$variablePart})) {
+                            $rayMessage = $rayMessage->{$variablePart};
                         } else {
-                            throw new Exception('Invalid data key: ' . $key . ' for data: ' . $input);
+                            throw new Exception('Invalid data key: ' . $variablePart . ' for data: ' . $sourceVariable);
                         }
                     }
                 }
             } else {
-                if (count($dataToOutput) === 1) {
-                    $messageToSend = $input[$dataToOutput[0]];
+                if (count($dataToOutput) === 1 && $dataToOutput[0] === 'all-input') {
+                    $rayMessage = $input;
+                } else if (count($dataToOutput) === 1) {
+                    $rayMessage = $sourceVariable[$dataToOutput[0]];
                 }
             }
         } catch (\Exception $e) {
-            $messageToSend = 'Error: ' . $e->getMessage();
+            $rayMessage = 'Error: ' . $e->getMessage();
         }
 
-        $rayMessage = ray($messageToSend);
+        $rayMessage = ray($rayMessage);
 
         if (isset($nodeSettings['label'])) {
             $rayMessage->label($nodeSettings['label']);

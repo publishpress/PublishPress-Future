@@ -64,3 +64,33 @@
     background: #ffe4c4;
     color: #515151;
 }
+
+.workflow-editor-global-variables-description {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.workflow-editor-global-variables-label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: calc(8px);
+    padding: 0px;
+}
+.workflow-editor-global-var-list {
+    margin: 0;
+    padding: 5px;
+    border: 1px solid var(--wp-components-color-gray-600, #949494);
+}
+
+.workflow-editor-global-var-list ul {
+    list-style: disc;
+    margin-left: 30px;
+}
+
+.workflow-editor-global-var-list ul li {
+    margin-bottom: 0;
+}

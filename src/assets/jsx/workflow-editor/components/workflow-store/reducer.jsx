@@ -28,6 +28,7 @@ export const DEFAULT_STATE = {
     selectedNodes: [],
     selectedEdges: [],
     dataTypes: [],
+    globalVariables: [],
 }
 
 const loadWorkflowStart = (state, action) => {
@@ -43,6 +44,23 @@ const loadWorkflowSuccess = (state, action) => {
     const nodes = payload.flow?.nodes || [];
     const edges = payload.flow?.edges || [];
     const viewport = payload.flow?.viewport || DEFAULT_STATE.viewport;
+
+    state = setGlobalVariable(state, {
+        payload: {
+            name: 'workflow',
+            label: 'Future Workflow',
+            type: 'workflow',
+            value: {
+                id: payload.id,
+                title: payload.title,
+                description: payload.description,
+                modified: payload.modified,
+            },
+            runtimeOnly: false,
+        }
+    });
+
+    console.log('state', state);
 
     return {
         ...state,
@@ -349,6 +367,27 @@ const addDataType = (state, action) => {
     };
 }
 
+const setGlobalVariable = (state, action) => {
+    const { name, label, type, value, runtimeOnly } = action.payload;
+
+    const globalVariables = {
+        ...state.globalVariables
+    };
+
+    globalVariables[name] = {
+        name,
+        type,
+        value,
+        label,
+        runtimeOnly,
+    };
+
+    return {
+        ...state,
+        globalVariables,
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -413,6 +452,8 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return setDataTypes(state, action);
         case 'ADD_DATA_TYPE':
             return addDataType(state, action);
+        case 'SET_GLOBAL_VARIABLE':
+            return setGlobalVariable(state, action);
     }
 
     return state;

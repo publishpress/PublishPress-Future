@@ -1,13 +1,23 @@
 import { PanelBody } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { store as workflowStore } from "../workflow-store";
-import { useDispatch } from "@wordpress/data";
+import { useDispatch, useSelect } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";
 import BaseField from "../data-fields/base-field";
-import { getNodeInputVariables } from "../../utils";
+import { getNodeInputVariables, getGlobalVariablesExpanded } from "../../utils";
 import MappedField from "./mapped-field";
 
 export const NodeSettingsPanel = ({ node }) => {
+    const {
+        globalVariables,
+        getDataTypeByName,
+    } = useSelect((select) => {
+        return {
+            globalVariables: select(workflowStore).getGlobalVariables(),
+            getDataTypeByName: select(workflowStore).getDataTypeByName,
+        }
+    });
+
     const {
         updateNode
     } = useDispatch(workflowStore);
@@ -33,6 +43,34 @@ export const NodeSettingsPanel = ({ node }) => {
     const settingsSchema = node?.data?.settingsSchema || {};
 
     const nodeInputVariables = getNodeInputVariables(node);
+    const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
+
+    let allVariables;
+    nodeInputVariables.concat(globalVariablesToList).forEach((variable) => {
+        if (!allVariables) {
+            allVariables = [];
+        }
+
+        const dataType = getDataTypeByName(variable.type);
+
+        const variableToAdd = {
+            id: variable.name,
+            name: variable.label,
+            children: []
+        };
+
+        if (dataType.type === 'object') {
+            variableToAdd.children = dataType.propertiesSchema.map((property) => {
+                return {
+                    id: variable.name + '.' + property.name,
+                    name: variable.label + '->' + property.label,
+                };
+            });
+        }
+
+        allVariables.push(variableToAdd);
+    });
+
 
     const panels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {
@@ -49,7 +87,7 @@ export const NodeSettingsPanel = ({ node }) => {
                                     label={field.label}
                                     defaultValue={nodeSettings?.[field.name]}
                                     onChange={onChangeSetting}
-                                    variables={nodeInputVariables}
+                                    variables={allVariables}
                                 />
                             );
                         })}

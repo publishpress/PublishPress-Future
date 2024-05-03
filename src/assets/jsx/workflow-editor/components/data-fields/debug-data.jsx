@@ -1,5 +1,5 @@
 import { sprintf, __ } from "@wordpress/i18n";
-import { SelectControl } from "@wordpress/components";
+import { TreeSelect } from "@wordpress/components";
 import { DatePicker } from "@wordpress/components";
 import { TextControl, Tooltip } from "@wordpress/components";
 import { Dashicon, Popover, Button } from "@wordpress/components";
@@ -10,18 +10,18 @@ import { __experimentalVStack as VStack } from "@wordpress/components";
 export function DebugData({ name, label, defaultValue, onChange, variables = [] }) {
 
     let debugOptions = [
-        { label: __("All received input", "publishpress-future-pro"), value: "all-input" },
+        { name: __("All received input", "publishpress-future-pro"), id: "all-input" },
     ];
 
     if (variables.length > 0) {
         variables.forEach((variable) => {
             debugOptions.push({
-                label: variable.label,
-                value: variable.name,
+                name: variable.name,
+                id: variable.id,
+                children: variable.children,
             });
         });
     }
-
 
     const defaultDebugOption = "all-input";
 
@@ -37,10 +37,10 @@ export function DebugData({ name, label, defaultValue, onChange, variables = [] 
     return (
         <>
             <VStack>
-                <SelectControl
+                <TreeSelect
                     label={__("Data to output", "publishpress-future-pro")}
-                    options={debugOptions}
-                    value={defaultValue?.dataToOutput || defaultDebugOption}
+                    tree={debugOptions}
+                    selectedId={defaultValue?.dataToOutput || defaultDebugOption}
                     onChange={(value) => onChangeSetting({ settingName: "dataToOutput", value })}
                 />
             </VStack>

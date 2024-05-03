@@ -80,12 +80,6 @@ class CoreOnPostUpdated implements NodeTypeInterface
     {
         return [
             [
-                'name' => 'postId',
-                'type' => 'integer',
-                'label' => __("Post ID", "publishpress-future-pro"),
-                'description' => __("The post ID of the updated post.", "publishpress-future-pro"),
-            ],
-            [
                 'name' => 'postBefore',
                 'type' => 'post',
                 'label' => __("Post Before", "publishpress-future-pro"),

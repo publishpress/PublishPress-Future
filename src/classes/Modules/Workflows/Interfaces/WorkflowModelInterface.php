@@ -21,6 +21,8 @@ interface WorkflowModelInterface
 
     public function setStatus(string $status);
 
+    public function getModifiedAt(): string;
+
     public function save();
 
     public function delete();
