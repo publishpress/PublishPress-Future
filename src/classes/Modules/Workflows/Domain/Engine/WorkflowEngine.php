@@ -59,16 +59,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
 
-            $globalVariables = [
-                'workflow' => [
-                    'id' => $workflowId,
-                    'title' => $workflow->getTitle(),
-                    'description' => $workflow->getDescription(),
-                    'modified_at' => $workflow->getModifiedAt(),
-                ],
-                'user' => [],
-                'site' => [],
-            ];
+            $globalVariables = $this->getGlobalVariables($workflow);
 
             $triggerNodes = $workflow->getTriggerNodes();
 
@@ -98,6 +89,20 @@ class WorkflowEngine implements WorkflowEngineInterface
                 $triggerRunner->setup($workflowId, $triggerNode, $routineTree[$triggerId], $globalVariables);
             }
         }
+    }
+
+    private function getGlobalVariables($workflow)
+    {
+        return [
+            'workflow' => [
+                'id' => $workflow->getId(),
+                'title' => $workflow->getTitle(),
+                'description' => $workflow->getDescription(),
+                'modified_at' => $workflow->getModifiedAt(),
+            ],
+            'user' => [],
+            'site' => [],
+        ];
     }
 
     public function executeNodeRoutine($step, $input, $globalVariables)
