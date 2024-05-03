@@ -6,11 +6,15 @@ import { SHORTCUT_TOGGLE_SIDEBAR } from '../keyboard-shortcuts/constants';
 import { PluginSidebarEditPost } from './plugin-sidebar';
 import { SettingsHeader } from './settings-header';
 import { __ } from '@wordpress/i18n';
-import { SLOT_SCOPE_WORKFLOW_EDITOR } from '../../constants';
+import {
+    SLOT_SCOPE_WORKFLOW_EDITOR,
+    FEATURE_DEVELOPER_MODE
+} from '../../constants';
 import { SIDEBAR_WORKFLOW, SIDEBAR_NODE_EDGE } from './constants';
 import { WorkflowSummary } from '../workflow-summary';
 import { NodeInspector } from '../node-inspector';
 import WorkflowGlobalVariables from '../workflow-global-variables';
+import { store as editorStore } from '../editor-store';
 
 
 const SIDEBAR_ACTIVE_BY_DEFAULT = Platform.select({
@@ -26,6 +30,16 @@ export const SettingsSidebar = () => {
         return {
             sidebarName: sidebarName,
             keyboardShortcut: shortcut,
+        };
+    });
+
+    const {
+        isDeveloperModeEnabled,
+    } = useSelect((select) => {
+        return {
+            isDeveloperModeEnabled: select(editorStore).isFeatureActive(
+                FEATURE_DEVELOPER_MODE,
+            ),
         };
     });
 
@@ -45,12 +59,15 @@ export const SettingsSidebar = () => {
             {sidebarName === SIDEBAR_WORKFLOW && (
                 <>
                     <WorkflowSummary />
-                    <WorkflowGlobalVariables />
+
+                    {isDeveloperModeEnabled &&
+                        <WorkflowGlobalVariables />
+                    }
                 </>
             )}
             {sidebarName === SIDEBAR_NODE_EDGE && (
                 <>
-                  <NodeInspector />
+                    <NodeInspector />
                 </>
             )}
         </PluginSidebarEditPost>
