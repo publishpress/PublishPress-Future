@@ -78,6 +78,15 @@ const loadWorkflowSuccess = (state, action) => {
         }
     });
 
+    state = setGlobalVariable(state, {
+        payload: {
+            name: 'trigger',
+            label: 'Trigger',
+            type: 'node',
+            runtimeOnly: true,
+        }
+    });
+
     return {
         ...state,
         isLoadingWorkflow: false,

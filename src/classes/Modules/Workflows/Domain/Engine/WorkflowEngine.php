@@ -85,6 +85,13 @@ class WorkflowEngine implements WorkflowEngineInterface
                     continue;
                 }
 
+                // Update the trigger global variables
+                $globalVariables['trigger'] = [
+                    'id' => $triggerId,
+                    'name' => $triggerName,
+                    'label' => $triggerNode['data']['label'],
+                ];
+
                 // Setup the trigger
                 $triggerRunner->setup($workflowId, $triggerNode, $routineTree[$triggerId], $globalVariables);
             }
@@ -124,6 +131,12 @@ class WorkflowEngine implements WorkflowEngineInterface
             'admin_email' => get_option('admin_email'),
             'name' => get_option('blogname'),
             'description' => get_option('blogdescription'),
+        ];
+
+        $globals['trigger'] = [
+            'id' => 0,
+            'name' => '',
+            'label' => '',
         ];
 
         return $globals;
