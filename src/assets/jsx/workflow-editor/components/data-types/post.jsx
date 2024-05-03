@@ -30,7 +30,7 @@ export function PostData() {
                 label: "Post Type",
             },
             {
-                name: "post_id",
+                name: "ID",
                 type: "integer",
                 label: "ID",
             },
