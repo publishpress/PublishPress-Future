@@ -113,6 +113,7 @@ export function getNodeInputs(node) {
                 nodeInputs = nodeInputs.concat(previousNodeInputs);
             } else {
                 nodeInputs.push({
+                    incomerId: incomer.id,
                     name: schemaItem.name,
                     type: schemaItem.type,
                     label: schemaItem.label,
@@ -122,6 +123,13 @@ export function getNodeInputs(node) {
             }
         });
     });
+
+    // Make sure we don't have repeated inputs, #712
+    nodeInputs = nodeInputs.filter((input, index, self) =>
+        index === self.findIndex((t) => (
+            t.name === input.name && t.type === input.type
+        ))
+    );
 
     return nodeInputs;
 }
@@ -152,8 +160,6 @@ export function getNodeInputVariables(node, types = []) {
 export function getGlobalVariablesExpanded(globalVariables) {
     const globalVariablesExpanded = [];
 
-    const getDataTypeByName = select(workflowStore).getDataTypeByName;
-
     Object.keys(globalVariables).forEach((variableName) => {
         const variable = globalVariables[variableName];
 
@@ -163,6 +169,11 @@ export function getGlobalVariablesExpanded(globalVariables) {
             label: variable.label,
             source: VARIABLE_SOURCE_GLOBAL,
         });
+    });
+
+    // Add "global." prefix to all global variables
+    globalVariablesExpanded.forEach((variable) => {
+        variable.name = 'global.' + variable.name;
     });
 
     return globalVariablesExpanded;

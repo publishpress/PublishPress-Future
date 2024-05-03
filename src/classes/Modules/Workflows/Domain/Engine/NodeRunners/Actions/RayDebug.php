@@ -41,17 +41,10 @@ class RayDebug implements NodeRunnerInterface
                 $dataToOutput = explode('.', $nodeSettings['data']['dataToOutput']);
             }
 
-            $dataSource = null;
-            if (isset($dataToOutput[0]) && $dataToOutput[0] === 'all-input') {
-                $dataSource = 'input';
-            } else if (isset($input[$dataToOutput[0]])) {
-                $dataSource = 'input';
-            } else if (isset($globalVariables[$dataToOutput[0]])) {
+            $dataSource = 'input';
+            if ($dataToOutput[0] === 'global') {
                 $dataSource = 'global';
-            }
-
-            if (! $dataSource) {
-                throw new Exception('Invalid data key: ' . $dataToOutput[0] . ' for data: ' . $input);
+                $dataToOutput = array_slice($dataToOutput, 1);
             }
 
             $sourceVariable = $dataSource === 'input' ? $input : $globalVariables;
@@ -66,7 +59,7 @@ class RayDebug implements NodeRunnerInterface
                         if (is_object($rayMessage) && isset($rayMessage->{$variablePart})) {
                             $rayMessage = $rayMessage->{$variablePart};
                         } else {
-                            throw new Exception('Invalid data key: ' . $variablePart . ' for data: ' . $sourceVariable);
+                            throw new Exception('Invalid data key: ' . $variablePart . ' for data: ' . print_r($sourceVariable, true));
                         }
                     }
                 }
@@ -115,7 +108,7 @@ class RayDebug implements NodeRunnerInterface
             /**
              * @var array $nextStep
              */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $input);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $input, $globalVariables);
         }
     }
 }
