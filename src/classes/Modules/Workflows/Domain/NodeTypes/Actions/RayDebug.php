@@ -63,7 +63,7 @@ class RayDebug implements NodeTypeInterface
                 "fields" => [
                     [
                         "name" => "data",
-                        "type" => "debug_data",
+                        "type" => "debugData",
                         "label" => __("Data", "publishpress-future-pro"),
                     ],
                     [
@@ -73,7 +73,7 @@ class RayDebug implements NodeTypeInterface
                     ],
                     [
                         "name" => "color",
-                        "type" => "ray_color",
+                        "type" => "rayColor",
                         "label" => __("Color", "publishpress-future-pro"),
                     ]
                 ],

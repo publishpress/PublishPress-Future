@@ -3,12 +3,13 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreDeletePost;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerMapperInterface;
 
@@ -19,9 +20,15 @@ class NodeRunnersMapper implements NodeRunnerMapperInterface
      */
     private $hooks;
 
-    public function __construct(HookableInterface $hooks)
+    /**
+     * @var \Closure
+     */
+    private $expirablePostModelFactory;
+
+    public function __construct(HookableInterface $hooks, \Closure $expirablePostModelFactory)
     {
         $this->hooks = $hooks;
+        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public function mapNodeToRunner($nodeName)
@@ -43,22 +50,12 @@ class NodeRunnersMapper implements NodeRunnerMapperInterface
             case FutureLegacyAction::NODE_NAME:
                 return new FutureLegacyAction($this->hooks);
 
-
-            // Flows
-            // case IfElse::NODE_NAME:
-                //     return null;
-
-            // case CoreSchedule::NODE_NAME:
-                //     return null;
-
             // Actions
             case RayDebug::NODE_NAME:
                 return new RayDebug($this->hooks);
-            // case CoreDeletePost::NODE_NAME:
-            //     return null;
 
-            // case CoreUpdatePost::NODE_NAME:
-            //     return null;
+            case CoreDeletePost::NODE_NAME:
+                return new CoreDeletePost($this->hooks, $this->expirablePostModelFactory);
         }
 
         return $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_TRIGGER, null, $nodeName);

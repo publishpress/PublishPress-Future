@@ -8,11 +8,11 @@ import Text from "../data-fields/text";
 
 export const MappedField = (props) => {
     switch (props.type) {
-        case "post_query":
+        case "postQuery":
             return (
                 <PostQuery {...props} />
             );
-        case "date_offset":
+        case "dateOffset":
             return (
                 <DateOffset {...props} />
             );
@@ -20,11 +20,11 @@ export const MappedField = (props) => {
             return (
                 <Recurrence {...props} />
             );
-        case "debug_data":
+        case "debugData":
             return (
                 <DebugData {...props} />
             );
-        case "ray_color":
+        case "rayColor":
             return (
                 <RayColor {...props} />
             );

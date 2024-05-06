@@ -1,6 +1,7 @@
 import { PanelRow, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useSelect, dispatch } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 
 import { FutureActionPanelAfterActionField } from '../../../../lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelAfterActionField';
 
@@ -24,8 +25,13 @@ const Fields = ({ storeName }) => {
     } = dispatch(storeName);
 
     const handleActionChange = (value) => {
+        console.log('handleActionChange', value);
         setExtraDataByName('workflow', value);
     }
+
+    useEffect(() => {
+        handleActionChange(defaultWorkflow);
+    }, []);
 
     return (
         <>

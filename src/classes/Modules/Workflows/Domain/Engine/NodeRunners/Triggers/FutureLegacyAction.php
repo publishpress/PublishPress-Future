@@ -64,9 +64,10 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
         }
 
         // Get next nodes in the routine tree
-        $nextSteps = $this->routineTree['next']['output'];
-
-        ray($args)->label('triggerCallback');
+        $nextSteps = [];
+        if (isset($this->routineTree['next']['output'])) {
+            $nextSteps = $this->routineTree['next']['output'];
+        }
 
         if (empty($nextSteps)) {
             return false;

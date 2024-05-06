@@ -7,7 +7,7 @@ class PostQuery implements DataTypeInterface
 {
     public function getName(): string
     {
-        return "post_query";
+        return "postQuery";
     }
 
     public function getLabel(): string

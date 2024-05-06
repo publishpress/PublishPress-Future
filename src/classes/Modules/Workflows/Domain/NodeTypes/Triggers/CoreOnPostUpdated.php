@@ -63,13 +63,16 @@ class CoreOnPostUpdated implements NodeTypeInterface
                 "description" => __("The query defines the posts that will trigger this action.", "publishpress-future-pro"),
                 "fields" => [
                     [
-                        "name" => "post_query",
-                        "type" => "post_query",
+                        "name" => "postQuery",
+                        "type" => "postQuery",
                         "label" => __("Post query", "publishpress-future-pro"),
                         "description" => __(
                             "The query defines the posts that will trigger this action.",
                             "publishpress-future-pro"
                         ),
+                        "settings" => [
+                            "acceptsInput" => false,
+                        ],
                     ],
                 ]
             ]

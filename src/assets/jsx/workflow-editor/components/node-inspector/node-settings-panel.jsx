@@ -72,7 +72,7 @@ export const NodeSettingsPanel = ({ node }) => {
     });
 
 
-    const panels = useMemo(() => {
+    const settingsPanels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {
             return (
                 <PanelBody title={settingPanel.label} key={settingPanel.label}>
@@ -88,6 +88,7 @@ export const NodeSettingsPanel = ({ node }) => {
                                     defaultValue={nodeSettings?.[field.name]}
                                     onChange={onChangeSetting}
                                     variables={allVariables}
+                                    settings={field?.settings}
                                 />
                             );
                         })}
@@ -99,7 +100,7 @@ export const NodeSettingsPanel = ({ node }) => {
 
     return (
         <>
-            {panels}
+            {settingsPanels}
         </>
     );
 };

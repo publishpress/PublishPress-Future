@@ -48,7 +48,10 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
     public function triggerCallback($postId, $postAfter, $postBefore)
     {
         // Get next nodes in the routine tree
-        $nextSteps = $this->routineTree['next']['output'];
+        $nextSteps = [];
+        if (isset($this->routineTree['next']['output'])) {
+            $nextSteps = $this->routineTree['next']['output'];
+        }
 
         if (empty($nextSteps)) {
             return false;
@@ -84,7 +87,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
     private function hasValidPostType($post)
     {
-        $settingPostTypes = $this->node['data']['settings']['post_query']['postType'] ?? [];
+        $settingPostTypes = $this->node['data']['settings']['postQuery']['postType'] ?? [];
 
         if (!empty($settingPostTypes) && !in_array($post->post_type, $settingPostTypes)) {
             return false;
@@ -95,7 +98,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
     private function hasValidPostId($postId)
     {
-        $settingPostIds = $this->node['data']['settings']['post_query']['postIds'] ?? [];
+        $settingPostIds = $this->node['data']['settings']['postQuery']['postIds'] ?? [];
 
         if (!empty($settingPostIds) && !in_array($postId, $settingPostIds)) {
             return false;
@@ -106,7 +109,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
     private function hasValidPostStatus($post)
     {
-        $settingPostStatus = $this->node['data']['settings']['post_query']['postStatus'] ?? [];
+        $settingPostStatus = $this->node['data']['settings']['postQuery']['postStatus'] ?? [];
 
         if (!empty($settingPostStatus) && !in_array($post->post_status, $settingPostStatus)) {
             return false;

@@ -249,7 +249,8 @@ return [
 
     ServicesAbstract::NODE_RUNNER_MAPPER => static function (ContainerInterface $container) {
         return new NodeRunnersMapper(
-            $container->get(ServicesAbstract::HOOKS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
         );
     },
 ];

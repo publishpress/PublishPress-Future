@@ -63,7 +63,7 @@ class CoreSchedule implements NodeTypeInterface
                 "fields" => [
                     [
                         "name" => "schedule",
-                        "type" => "date_offset",
+                        "type" => "dateOffset",
                         "label" => __("Date offset", "publishpress-future-pro"),
                     ],
                 ],

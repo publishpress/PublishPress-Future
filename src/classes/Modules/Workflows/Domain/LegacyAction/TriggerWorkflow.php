@@ -41,6 +41,7 @@ class TriggerWorkflow implements ExpirationActionInterface
         $actionsArgsModel->loadByPostId($postId, true);
 
         $args = $actionsArgsModel->getArgs();
+        $args['postId'] = $postId;
 
         if (isset($args['expireType']) && $args['expireType'] === self::ACTION_NAME) {
             $this->hooks->doAction(HooksAbstract::ACTION_LEGACY_ACTION, $postId, $post, $args);

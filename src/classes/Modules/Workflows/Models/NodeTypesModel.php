@@ -154,7 +154,7 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         $actionsInstances = [
             CoreDeletePost::NODE_NAME => new CoreDeletePost(),
-            CoreUpdatePost::NODE_NAME => new CoreUpdatePost(),
+            // CoreUpdatePost::NODE_NAME => new CoreUpdatePost(),
             RayDebug::NODE_NAME => new RayDebug(),
         ];
 
@@ -164,8 +164,8 @@ class NodeTypesModel implements NodeTypesModelInterface
     private function getDefaultFlows()
     {
         $flowsInstances = [
-            IfElse::NODE_NAME => new IfElse(),
-            CoreSchedule::NODE_NAME => new CoreSchedule(),
+            // IfElse::NODE_NAME => new IfElse(),
+            // CoreSchedule::NODE_NAME => new CoreSchedule(),
         ];
 
         return $flowsInstances;

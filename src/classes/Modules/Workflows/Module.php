@@ -497,7 +497,24 @@ class Module implements InitializableInterface
         $validViews = [
             'quick-edit',
             'bulk-edit',
+            'classic-editor',
+            'block-editor',
         ];
+
+        if (isset($_REQUEST['future_action_bulk_view'])) {
+            $_REQUEST['future_action_view'] = 'bulk-edit';
+            $_REQUEST['future_action_action'] = $_REQUEST['future_action_bulk_action'];
+        }
+
+        // Check if it is a REST call to the WP rest API
+        if (defined('REST_REQUEST') && REST_REQUEST) {
+            // Get the workflow ID from the $opts['extraData'] array
+            if (isset($opts['extraData']['workflow'])) {
+                $_REQUEST['future_action_view'] = 'block-editor';
+                $_REQUEST['future_action_action'] = 'trigger-workflow';
+                $_REQUEST['future_action_pro_workflow'] = (int) $opts['extraData']['workflow'];
+            }
+        }
 
         if (!isset($_REQUEST['future_action_view']) || ! in_array($_REQUEST['future_action_view'], $validViews)) {
             return $opts;
