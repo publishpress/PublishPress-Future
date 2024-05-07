@@ -22,6 +22,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\G
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\PostAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreDeletePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreStickPost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreUnstickPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
@@ -313,6 +314,14 @@ return [
 
                 case CoreStickPost::NODE_NAME:
                     $nodeRunner = new CoreStickPost(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                    );
+                    break;
+
+                case CoreUnstickPost::NODE_NAME:
+                    $nodeRunner = new CoreUnstickPost(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
