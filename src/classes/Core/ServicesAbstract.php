@@ -44,4 +44,7 @@ abstract class ServicesAbstract
     const CRON_SCHEDULES_MODEL = 'future.pro/cron-schedules-model';
     const WORKFLOW_ENGINE = 'future.pro/workflow-engine';
     const NODE_RUNNER_MAPPER = 'future.pro/node-runner-mapper';
+    const GENERAL_ACTION_NODE_RUNNER_PREPARER = 'future.pro/general-action-node-runner-preparer';
+    const POST_ACTION_NODE_RUNNER_PREPARER = 'future.pro/post-action-node-runner-preparer';
+    const NODE_RUNNER_FACTORY = 'future.pro/node-runner-factory';
 }

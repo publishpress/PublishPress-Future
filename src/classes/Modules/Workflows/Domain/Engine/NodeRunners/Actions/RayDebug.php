@@ -5,8 +5,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug as NodeTypeRayDebug;
-use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
 class RayDebug implements NodeRunnerInterface
 {
@@ -17,25 +17,41 @@ class RayDebug implements NodeRunnerInterface
      */
     private $hooks;
 
-    public function __construct(HookableInterface $hooks)
-    {
+    /**
+     * @var NodeRunnerPreparerInterface
+     */
+    private $nodeRunnerPreparer;
+
+    public function __construct(
+        HookableInterface $hooks,
+        NodeRunnerPreparerInterface $nodeRunnerPreparer
+    ) {
         $this->hooks = $hooks;
+        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
     }
 
     public function setup(array $step, array $input = [], array $globalVariables = []): void
     {
-        $node = $step['node'];
-        $nextSteps = [];
-        if (isset($step['next']['output'])) {
-            $nextSteps = $step['next']['output'];
-        }
-        $nodeSettings = [];
-        if (isset($node['data']['settings'])) {
-            $nodeSettings = $node['data']['settings'];
+        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $input, $globalVariables);
+    }
+
+    public function actionCallback(array $step, array $input, array $globalVariables)
+    {
+        if (! function_exists('ray')) {
+            $workflowId = $this->nodeRunnerPreparer->getWorkflowIdFromGlobalVariables($globalVariables);
+
+            $this->nodeRunnerPreparer->logError(
+                'Ray is not installed. Please install it from the WordPress plugins directory',
+                $workflowId,
+                $step
+            );
+            return;
         }
 
-        // What to output?
         try {
+            $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
+            $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
+
             $dataToOutput = [];
             if (isset($nodeSettings['data']['dataToOutput'])) {
                 $dataToOutput = explode('.', $nodeSettings['data']['dataToOutput']);
@@ -101,14 +117,6 @@ class RayDebug implements NodeRunnerInterface
                     $rayMessage->gray();
                     break;
             }
-        }
-
-        // Execute the next nodes
-        foreach ($nextSteps as $nextStep) {
-            /**
-             * @var array $nextStep
-             */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $input, $globalVariables);
         }
     }
 }

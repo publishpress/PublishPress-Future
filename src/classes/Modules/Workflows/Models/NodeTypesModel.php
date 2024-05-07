@@ -156,10 +156,11 @@ class NodeTypesModel implements NodeTypesModelInterface
         $actionsInstances = [
             CoreDeletePost::NODE_NAME => new CoreDeletePost(),
             CoreStickPost::NODE_NAME => new CoreStickPost(),
-            // CoreUpdatePost::NODE_NAME => new CoreUpdatePost(),
-            RayDebug::NODE_NAME => new RayDebug(),
-
         ];
+
+        if (function_exists('ray')) {
+            $actionsInstances[RayDebug::NODE_NAME] = new RayDebug();
+        }
 
         return $actionsInstances;
     }

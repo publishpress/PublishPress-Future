@@ -24,18 +24,18 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $nodeTypesModel;
 
     /**
-     * @var NodeRunnerMapperInterface
+     * @var \Closure
      */
-    private $nodeRunnerMapper;
+    private $nodeRunnerFactory;
 
     public function __construct(
         HookableInterface $hooks,
         NodeTypesModelInterface $nodeTypesModel,
-        NodeRunnerMapperInterface $nodeRunnerMapper
+        \Closure $nodeRunnerFactory
     ) {
         $this->hooks = $hooks;
         $this->nodeTypesModel = $nodeTypesModel;
-        $this->nodeRunnerMapper = $nodeRunnerMapper;
+        $this->nodeRunnerFactory = $nodeRunnerFactory;
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
         $this->hooks->addAction(HooksAbstract::ACTION_EXECUTE_NODE, [$this, 'executeNodeRoutine'], 10, 3);
@@ -70,7 +70,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 $triggerName = $triggerNode['data']['name'];
                 $triggerId = $triggerNode['id'];
 
-                $triggerRunner = $this->nodeRunnerMapper->mapNodeToRunner($triggerName);
+                $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
 
                 if (is_null($triggerRunner)) {
                     if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -147,7 +147,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         $node = $step['node'];
         $nodeName = $node['data']['name'];
 
-        $nodeRunner = $this->nodeRunnerMapper->mapNodeToRunner($nodeName);
+        $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
 
         if (is_null($nodeRunner)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {

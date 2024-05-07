@@ -20,6 +20,6 @@ Create a class that implements `NodeRunnerInterface` and put it in the folder `s
 
 Edit the class `PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel` and add the new node type to one of the methods: `getDefaultTriggers`, `getDefaultActions`, or `getDefaultFlows`.
 
-## Register the node runner in the node runner mapper
+## Register the node runner in the node runner factory
 
-Edit the class `PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerMapper` and add the new node runner to the `mapNodeToRunner` method.
+Edit the services file and add the new node runner to the service `ServicesAbstract::NODE_RUNNER_FACTORY`.
