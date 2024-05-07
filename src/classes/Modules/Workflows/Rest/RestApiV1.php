@@ -95,6 +95,26 @@ class RestApiV1 implements RestApiManagerInterface
                 'show_in_rest' => true,
             ]
         );
+
+        // Get all terms for a taxonomy
+        register_rest_route(
+            self::BASE_PATH,
+            '/terms/(?P<taxonomy>[a-zA-Z0-9_-]+)',
+            [
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => [$this, 'getTaxonomyTerms'],
+                'permission_callback' => [$this, 'getTaxonomyTermsPermissions'],
+                'args' => [
+                    'taxonomy' => [
+                        'description' => __('The taxonomy name', 'publishpress-future-pro'),
+                        'type' => 'string',
+                        'required' => true
+                    ]
+                ],
+                'show_in_index' => false,
+                'show_in_rest' => true,
+            ]
+        );
     }
 
     public function getWorkflow($request)
@@ -201,6 +221,26 @@ class RestApiV1 implements RestApiManagerInterface
         return rest_ensure_response(true);
     }
 
+    public function getTaxonomyTerms($request)
+    {
+        $taxonomy = $request['taxonomy'];
+
+        $terms = get_terms([
+            'taxonomy' => $taxonomy,
+            'hide_empty' => false,
+        ]);
+
+        $terms = array_map(function ($term) {
+            return [
+                'id' => $term->term_id,
+                'name' => $term->name,
+                'slug' => $term->slug,
+            ];
+        }, $terms);
+
+        return rest_ensure_response($terms);
+    }
+
     public function getWorkflowPermissions($request)
     {
         return current_user_can(self::PERMISSION_READ);
@@ -219,5 +259,10 @@ class RestApiV1 implements RestApiManagerInterface
     public function deleteWorkflowPermissions($request)
     {
         return current_user_can(self::PERMISSION_DELETE);
+    }
+
+    public function getTaxonomyTermsPermissions($request)
+    {
+        return current_user_can(self::PERMISSION_READ);
     }
 }

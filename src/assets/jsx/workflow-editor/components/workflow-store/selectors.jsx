@@ -181,3 +181,7 @@ export function getGlobalVariables(state) {
 export function getGlobalVariable(state, name) {
     return state.globalVariables.find(variable => variable.name === name);
 }
+
+export function getTaxonomyTerms(state, taxnomy) {
+    return state.taxonomyTerms[taxnomy] || [];
+}

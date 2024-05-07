@@ -4,6 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreAddTermsToPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreDeletePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreStickPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUnstickPost;
@@ -155,6 +156,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreDeletePost::NODE_NAME => new CoreDeletePost(),
             CoreStickPost::NODE_NAME => new CoreStickPost(),
             CoreUnstickPost::NODE_NAME => new CoreUnstickPost(),
+            CoreAddTermsToPost::NODE_NAME => new CoreAddTermsToPost(),
         ];
 
         if (function_exists('ray')) {

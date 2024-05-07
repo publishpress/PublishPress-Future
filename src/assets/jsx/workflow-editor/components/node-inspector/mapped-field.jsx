@@ -5,12 +5,17 @@ import { DateOffset } from "../data-fields/date-offset";
 import DebugData from "../data-fields/debug-data";
 import RayColor from "../data-fields/ray-color";
 import Text from "../data-fields/text";
+import TaxonomyTerms from "../data-fields/taxonomy-terms";
 
 export const MappedField = (props) => {
     switch (props.type) {
         case "postQuery":
             return (
                 <PostQuery {...props} />
+            );
+        case "taxonomyTerms":
+            return (
+                <TaxonomyTerms {...props} />
             );
         case "dateOffset":
             return (

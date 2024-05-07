@@ -290,3 +290,21 @@ export function setGlobalVariable(globalVariable) {
         payload: globalVariable,
     };
 }
+
+export function* fetchTaxonomyTerms(taxonomy) {
+    yield {type: 'FETCH_TAXONOMY_TERMS_START'};
+
+    try {
+        const result = yield apiFetch({
+            path: `${apiUrl}/terms/${taxonomy}`,
+            headers: {
+                'X-WP-Nonce': nonce,
+            },
+        });
+
+        yield {type: 'FETCH_TAXONOMY_TERMS_SUCCESS', payload: {taxonomy, result}};
+    } catch (error) {
+        // TODO: Show error message
+        yield {type: 'FETCH_TAXONOMY_TERMS_FAILURE'};
+    }
+}

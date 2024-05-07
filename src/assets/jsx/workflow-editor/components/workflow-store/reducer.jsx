@@ -1,4 +1,5 @@
 import { POST_TYPE } from '../../constants';
+import TaxonomyTerms from '../data-fields/taxonomy-terms';
 
 export const DEFAULT_STATE = {
     postType: POST_TYPE,
@@ -29,6 +30,8 @@ export const DEFAULT_STATE = {
     selectedEdges: [],
     dataTypes: [],
     globalVariables: [],
+    isFetchingTaxonomyTerms: false,
+    taxonomyTerms: {},
 }
 
 const loadWorkflowStart = (state, action) => {
@@ -413,6 +416,42 @@ const setGlobalVariable = (state, action) => {
     };
 }
 
+const fetchTaxonomyTermsStart = (state, action) => {
+    return {
+        ...state,
+        isFetchingTaxonomyTerms: true,
+    };
+}
+
+const fetchTaxonomyTermsSuccess = (state, action) => {
+    const { taxonomy, result } = action.payload;
+
+    const terms = result?.terms?.map(term => {
+        return {
+            value: term.id,
+            label: term.name,
+        };
+    }) || [];
+
+    const newTaxonomyTerms = {
+        ...state.taxonomyTerms,
+        [taxonomy]: terms,
+    };
+
+    return {
+        ...state,
+        isFetchingTaxonomyTerms: false,
+        taxonomyTerms: newTaxonomyTerms,
+    };
+}
+
+const fetchTaxonomyTermsFailure = (state, action) => {
+    return {
+        ...state,
+        isFetchingTaxonomyTerms: false,
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -479,6 +518,12 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return addDataType(state, action);
         case 'SET_GLOBAL_VARIABLE':
             return setGlobalVariable(state, action);
+        case 'FETCH_TAXONOMY_TERMS_START':
+            return fetchTaxonomyTermsStart(state, action);
+        case 'FETCH_TAXONOMY_TERMS_SUCCESS':
+            return fetchTaxonomyTermsSuccess(state, action);
+        case 'FETCH_TAXONOMY_TERMS_FAILURE':
+            return fetchTaxonomyTermsFailure(state, action);
     }
 
     return state;

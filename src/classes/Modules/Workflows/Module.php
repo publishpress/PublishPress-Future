@@ -15,6 +15,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\PostStatusesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\PostTypesModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\TaxonomiesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
@@ -449,6 +450,9 @@ class Module implements InitializableInterface
         $postStatusesModel = new PostStatusesModel();
         $postStatuses = $postStatusesModel->getPostStatusesAsOptions();
 
+        $taxonomiesModel = new TaxonomiesModel();
+        $taxonomies = $taxonomiesModel->getTaxonomiesAsOptions();
+
         wp_localize_script(
             "future_workflow_admin_script",
             "futureWorkflowEditor",
@@ -488,6 +492,7 @@ class Module implements InitializableInterface
                 "cronSchedules" => $this->cronSchedulesModel->getCronSchedulesAsOptions(),
                 "postTypes" => $postTypes,
                 "postStatuses" => $postStatuses,
+                "taxonomies" => $taxonomies,
             ]
         );
     }
