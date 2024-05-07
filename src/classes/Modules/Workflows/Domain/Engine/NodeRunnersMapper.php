@@ -10,6 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreDeletePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreStickPost;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerMapperInterface;
 
@@ -56,6 +57,9 @@ class NodeRunnersMapper implements NodeRunnerMapperInterface
 
             case CoreDeletePost::NODE_NAME:
                 return new CoreDeletePost($this->hooks, $this->expirablePostModelFactory);
+
+            case CoreStickPost::NODE_NAME:
+                return new CoreStickPost($this->hooks, $this->expirablePostModelFactory);
         }
 
         return $this->hooks->applyFilters(HooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_TRIGGER, null, $nodeName);

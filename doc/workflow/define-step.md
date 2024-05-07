@@ -12,11 +12,14 @@ The workflow engine supports 3 types of steps:
 
 Add your new class inside the specific subfolder for the type of step you are creating.
 
-## Register the node type in the model
-
-Edit the class `PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel` and add the new node type to one of the methods: `getDefaultTriggers`, `getDefaultActions`, or `getDefaultFlows`.
-
 ## Create the node runner
 
 Create a class that implements `NodeRunnerInterface` and put it in the folder `src/classes/Modules/Workflows/Domain/Engine/NodeRunners`.
 
+## Register the node type in the model
+
+Edit the class `PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel` and add the new node type to one of the methods: `getDefaultTriggers`, `getDefaultActions`, or `getDefaultFlows`.
+
+## Register the node runner in the node runner mapper
+
+Edit the class `PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerMapper` and add the new node runner to the `mapNodeToRunner` method.

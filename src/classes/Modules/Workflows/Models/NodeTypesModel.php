@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreDeletePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreStickPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUpdatePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule;
@@ -154,8 +155,10 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         $actionsInstances = [
             CoreDeletePost::NODE_NAME => new CoreDeletePost(),
+            CoreStickPost::NODE_NAME => new CoreStickPost(),
             // CoreUpdatePost::NODE_NAME => new CoreUpdatePost(),
             RayDebug::NODE_NAME => new RayDebug(),
+
         ];
 
         return $actionsInstances;
