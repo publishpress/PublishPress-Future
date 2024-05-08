@@ -5,13 +5,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreSetTermsToPost as NodeTypeCoreSetTermsToPost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd as NodeTypeCorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
-class CoreSetTermsToPost implements NodeRunnerInterface
+class CorePostTermsAdd implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreSetTermsToPost::NODE_NAME;
+    const NODE_NAME = NodeTypeCorePostTermsAdd::NODE_NAME;
 
     /**
      * @var HookableInterface
@@ -55,9 +55,11 @@ class CoreSetTermsToPost implements NodeRunnerInterface
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
 
         $taxonomy = $nodeSettings['taxonomyTerms']['taxonomy'];
-        $updatedTerms = $nodeSettings['taxonomyTerms']['terms'] ?? [];
+        $termsToAdd = $nodeSettings['taxonomyTerms']['terms'] ?? [];
 
         $originalTerms = $postModel->getTermIDs($taxonomy);
+        $updatedTerms = array_merge($originalTerms, $termsToAdd);
+        $updatedTerms = array_unique($updatedTerms);
 
         $result = $postModel->setTerms($updatedTerms, $taxonomy);
 

@@ -5,9 +5,9 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreSetTermsToPost implements NodeTypeInterface
+class CorePostTermsSet implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.replace-terms-to-post";
+    const NODE_NAME = "action/core.replace-post-terms";
 
     public function getElementarType(): string
     {

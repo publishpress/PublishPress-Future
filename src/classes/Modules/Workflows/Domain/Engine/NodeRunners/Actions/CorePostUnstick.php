@@ -4,13 +4,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUnstickPost as NodeTypeCoreUnstickPost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUnstick as NodeTypeCorePostUnstick;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
-class CoreUnstickPost implements NodeRunnerInterface
+class CorePostUnstick implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreUnstickPost::NODE_NAME;
+    const NODE_NAME = NodeTypeCorePostUnstick::NODE_NAME;
 
     /**
      * @var HookableInterface

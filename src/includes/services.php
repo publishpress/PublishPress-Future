@@ -20,12 +20,12 @@ use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\GeneralAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\PostAction;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreAddTermsToPost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreDeletePost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreRemoveTermsToPost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreSetTermsToPost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreStickPost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreUnstickPost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsAdd;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDelete;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsRemove;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsSet;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostStick;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostUnstick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
@@ -307,32 +307,32 @@ return [
                     );
                     break;
 
-                case CoreDeletePost::NODE_NAME:
-                    $nodeRunner = new CoreDeletePost(
+                case CorePostDelete::NODE_NAME:
+                    $nodeRunner = new CorePostDelete(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
                     );
                     break;
 
-                case CoreStickPost::NODE_NAME:
-                    $nodeRunner = new CoreStickPost(
+                case CorePostStick::NODE_NAME:
+                    $nodeRunner = new CorePostStick(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
                     );
                     break;
 
-                case CoreUnstickPost::NODE_NAME:
-                    $nodeRunner = new CoreUnstickPost(
+                case CorePostUnstick::NODE_NAME:
+                    $nodeRunner = new CorePostUnstick(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
                     );
                     break;
 
-                case CoreAddTermsToPost::NODE_NAME:
-                    $nodeRunner = new CoreAddTermsToPost(
+                case CorePostTermsAdd::NODE_NAME:
+                    $nodeRunner = new CorePostTermsAdd(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
@@ -340,8 +340,8 @@ return [
                     );
                     break;
 
-                case CoreSetTermsToPost::NODE_NAME:
-                    $nodeRunner = new CoreSetTermsToPost(
+                case CorePostTermsSet::NODE_NAME:
+                    $nodeRunner = new CorePostTermsSet(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
@@ -349,8 +349,8 @@ return [
                     );
                     break;
 
-                case CoreRemoveTermsToPost::NODE_NAME:
-                    $nodeRunner = new CoreRemoveTermsToPost(
+                case CorePostTermsRemove::NODE_NAME:
+                    $nodeRunner = new CorePostTermsRemove(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),

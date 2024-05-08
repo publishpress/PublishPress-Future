@@ -4,13 +4,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreStickPost as NodeTypeCoreStickPost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUpdate as NodeTypeCorePostUpdate;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
-class CoreStickPost implements NodeRunnerInterface
+class CorePostUpdate implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreStickPost::NODE_NAME;
+    const NODE_NAME = NodeTypeCorePostUpdate::NODE_NAME;
 
     /**
      * @var HookableInterface
@@ -45,6 +45,8 @@ class CoreStickPost implements NodeRunnerInterface
     public function actionCallback(int $postId, array $nodeSettings)
     {
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
-        $postModel->stick();
+        // $postModel->...
     }
+
+    // method to get ouput? output the input, filtered posts and the result?
 }

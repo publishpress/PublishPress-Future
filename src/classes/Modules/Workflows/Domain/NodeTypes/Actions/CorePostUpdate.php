@@ -5,9 +5,9 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreAddTermsToPost implements NodeTypeInterface
+class CorePostUpdate implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.add-terms-to-post";
+    const NODE_NAME = "action/core.update-post";
 
     public function getElementarType(): string
     {
@@ -26,12 +26,12 @@ class CoreAddTermsToPost implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Add extra terms to post", "publishpress-future-pro");
+        return __("Update Post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action adds extra terms to posts.", "publishpress-future-pro");
+        return __("This action updates a post.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -58,20 +58,8 @@ class CoreAddTermsToPost implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Extra terms", "publishpress-future-pro"),
-                "description" => __("The terms that will be added to the posts.", "publishpress-future-pro"),
-                "fields" => [
-                    [
-                        "name" => "taxonomyTerms",
-                        "type" => "taxonomyTerms",
-                        "label" => __("Terms", "publishpress-future-pro"),
-                        "description" => __("The terms that will be added to the posts.", "publishpress-future-pro"),
-                    ],
-                ]
-            ],
-            [
                 "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("The query defines the posts that will receive the extra terms. If no query is provided, no post will be updated.", "publishpress-future-pro"),
+                "description" => __("The query defines the posts that will be updated by this action. If no query is provided, no post will be updated.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "postQuery",

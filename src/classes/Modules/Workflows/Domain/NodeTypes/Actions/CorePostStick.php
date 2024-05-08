@@ -5,9 +5,9 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreUnstickPost implements NodeTypeInterface
+class CorePostStick implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.unstick-post";
+    const NODE_NAME = "action/core.stick-post";
 
     public function getElementarType(): string
     {
@@ -26,12 +26,12 @@ class CoreUnstickPost implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Unstick Post", "publishpress-future-pro");
+        return __("Stick Post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action unsticks a post.", "publishpress-future-pro");
+        return __("This action sticks a post.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -59,14 +59,14 @@ class CoreUnstickPost implements NodeTypeInterface
         return [
             [
                 "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("The query defines the posts that will be unsticked by this action. If no query is provided, no post will be unsticked.", "publishpress-future-pro"),
+                "description" => __("The query defines the posts that will be sticked by this action. If no query is provided, no post will be sticked.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "postQuery",
                         "type" => "postQuery",
                         "label" => __("Post query", "publishpress-future-pro"),
                         "description" => __(
-                            "The query defines the posts that will be unsticked by this action.",
+                            "The query defines the posts that will be sticked by this action.",
                             "publishpress-future-pro"
                         ),
                         "settings" => [

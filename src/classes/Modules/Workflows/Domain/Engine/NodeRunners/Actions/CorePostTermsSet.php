@@ -4,13 +4,14 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUpdatePost as NodeTypeCoreUpdatePost;
+use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet as NodeTypeCorePostTermsSet;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
-class CoreUpdatePost implements NodeRunnerInterface
+class CorePostTermsSet implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreUpdatePost::NODE_NAME;
+    const NODE_NAME = NodeTypeCorePostTermsSet::NODE_NAME;
 
     /**
      * @var HookableInterface
@@ -27,14 +28,21 @@ class CoreUpdatePost implements NodeRunnerInterface
      */
     private $expirablePostModelFactory;
 
+    /**
+     * @var ErrorFacade
+     */
+    private $errorFacade;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerPreparerInterface $nodeRunnerPreparer,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        ErrorFacade $errorFacade
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->errorFacade = $errorFacade;
     }
 
     public function setup(array $step, array $input = [], array $globalVariables = []): void
@@ -45,8 +53,25 @@ class CoreUpdatePost implements NodeRunnerInterface
     public function actionCallback(int $postId, array $nodeSettings)
     {
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
-        // $postModel->...
-    }
 
-    // method to get ouput? output the input, filtered posts and the result?
+        $taxonomy = $nodeSettings['taxonomyTerms']['taxonomy'];
+        $updatedTerms = $nodeSettings['taxonomyTerms']['terms'] ?? [];
+
+        $originalTerms = $postModel->getTermIDs($taxonomy);
+
+        $result = $postModel->setTerms($updatedTerms, $taxonomy);
+
+        $resultIsError = $this->errorFacade->isWpError($result);
+
+        // if (! $resultIsError) {
+        //     $this->log = [
+        //         'expiration_taxonomy' => $taxonomy,
+        //         'original_terms' => $originalTerms,
+        //         'terms_added' => $termsToAdd,
+        //         'updated_terms' => $updatedTerms,
+        //     ];
+        // } else {
+        //     $this->log['error'] = $result->get_error_message();
+        // }
+    }
 }

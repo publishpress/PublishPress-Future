@@ -4,13 +4,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreDeletePost as NodeTypeCoreDeletePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete as NodeTypeCorePostDelete;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
-class CoreDeletePost implements NodeRunnerInterface
+class CorePostDelete implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreDeletePost::NODE_NAME;
+    const NODE_NAME = NodeTypeCorePostDelete::NODE_NAME;
 
     /**
      * @var HookableInterface

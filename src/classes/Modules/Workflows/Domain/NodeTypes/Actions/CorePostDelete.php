@@ -5,7 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreDeletePost implements NodeTypeInterface
+class CorePostDelete implements NodeTypeInterface
 {
     const NODE_NAME = "action/core.delete-post";
 

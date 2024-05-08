@@ -5,9 +5,9 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreStickPost implements NodeTypeInterface
+class CorePostTermsRemove implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.stick-post";
+    const NODE_NAME = "action/core.remove-post-terms";
 
     public function getElementarType(): string
     {
@@ -26,12 +26,12 @@ class CoreStickPost implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Stick Post", "publishpress-future-pro");
+        return __("Remove terms to post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action sticks a post.", "publishpress-future-pro");
+        return __("This action removes terms to posts.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -58,15 +58,31 @@ class CoreStickPost implements NodeTypeInterface
     {
         return [
             [
+                "label" => __("Terms to remove", "publishpress-future-pro"),
+                "description" => __("The terms that will be removed from the posts.", "publishpress-future-pro"),
+                "fields" => [
+                    [
+                        "name" => "taxonomyTerms",
+                        "type" => "taxonomyTerms",
+                        "label" => __("Terms", "publishpress-future-pro"),
+                        "description" => __("The terms that will be removed from the posts.", "publishpress-future-pro"),
+                        "settings" => [
+                            "optionToSelectAll" => true,
+                            "labelOptionToSelectAll" => __("Remove all terms", "publishpress-future-pro"),
+                        ]
+                    ],
+                ]
+            ],
+            [
                 "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("The query defines the posts that will be sticked by this action. If no query is provided, no post will be sticked.", "publishpress-future-pro"),
+                "description" => __("The query defines the posts that will receive the extra terms. If no query is provided, no post will be updated.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "postQuery",
                         "type" => "postQuery",
                         "label" => __("Post query", "publishpress-future-pro"),
                         "description" => __(
-                            "The query defines the posts that will be sticked by this action.",
+                            "The query defines the posts that will be updated by this action.",
                             "publishpress-future-pro"
                         ),
                         "settings" => [

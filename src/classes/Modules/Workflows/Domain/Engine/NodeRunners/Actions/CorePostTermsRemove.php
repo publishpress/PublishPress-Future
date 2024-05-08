@@ -5,13 +5,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreAddTermsToPost as NodeTypeCoreAddTermsToPost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove as NodeTypeCorePostTermsRemove;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
-class CoreAddTermsToPost implements NodeRunnerInterface
+class CorePostTermsRemove implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreAddTermsToPost::NODE_NAME;
+    const NODE_NAME = NodeTypeCorePostTermsRemove::NODE_NAME;
 
     /**
      * @var HookableInterface
@@ -55,11 +55,12 @@ class CoreAddTermsToPost implements NodeRunnerInterface
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
 
         $taxonomy = $nodeSettings['taxonomyTerms']['taxonomy'];
-        $termsToAdd = $nodeSettings['taxonomyTerms']['terms'] ?? [];
+        $termsToRemove = $nodeSettings['taxonomyTerms']['terms'] ?? [];
+        $selectAll = $nodeSettings['taxonomyTerms']['selectAll'] ?? false;
 
         $originalTerms = $postModel->getTermIDs($taxonomy);
-        $updatedTerms = array_merge($originalTerms, $termsToAdd);
-        $updatedTerms = array_unique($updatedTerms);
+
+        $updatedTerms = $selectAll ? [] : array_diff($originalTerms, $termsToRemove);
 
         $result = $postModel->setTerms($updatedTerms, $taxonomy);
 

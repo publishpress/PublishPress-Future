@@ -4,12 +4,12 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreAddTermsToPost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreDeletePost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreRemoveTermsToPost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreSetTermsToPost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreStickPost;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUnstickPost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUnstick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
@@ -155,12 +155,12 @@ class NodeTypesModel implements NodeTypesModelInterface
     private function getDefaultActions()
     {
         $actionsInstances = [
-            CoreDeletePost::NODE_NAME => new CoreDeletePost(),
-            CoreStickPost::NODE_NAME => new CoreStickPost(),
-            CoreUnstickPost::NODE_NAME => new CoreUnstickPost(),
-            CoreAddTermsToPost::NODE_NAME => new CoreAddTermsToPost(),
-            CoreSetTermsToPost::NODE_NAME => new CoreSetTermsToPost(),
-            CoreRemoveTermsToPost::NODE_NAME => new CoreRemoveTermsToPost(),
+            CorePostDelete::NODE_NAME => new CorePostDelete(),
+            CorePostStick::NODE_NAME => new CorePostStick(),
+            CorePostUnstick::NODE_NAME => new CorePostUnstick(),
+            CorePostTermsAdd::NODE_NAME => new CorePostTermsAdd(),
+            CorePostTermsSet::NODE_NAME => new CorePostTermsSet(),
+            CorePostTermsRemove::NODE_NAME => new CorePostTermsRemove(),
         ];
 
         if (function_exists('ray')) {
