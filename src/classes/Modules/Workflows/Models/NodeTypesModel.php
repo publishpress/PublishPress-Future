@@ -6,6 +6,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreAddTermsToPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreDeletePost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreRemoveTermsToPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreSetTermsToPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreStickPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreUnstickPost;
@@ -159,6 +160,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreUnstickPost::NODE_NAME => new CoreUnstickPost(),
             CoreAddTermsToPost::NODE_NAME => new CoreAddTermsToPost(),
             CoreSetTermsToPost::NODE_NAME => new CoreSetTermsToPost(),
+            CoreRemoveTermsToPost::NODE_NAME => new CoreRemoveTermsToPost(),
         ];
 
         if (function_exists('ray')) {

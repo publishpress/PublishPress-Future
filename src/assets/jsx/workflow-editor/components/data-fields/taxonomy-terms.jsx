@@ -5,6 +5,7 @@ import { __experimentalVStack as VStack } from "@wordpress/components";
 import InlineMultiSelect from "../inline-multi-select";
 import { store as workflowStore } from "../workflow-store";
 import { useSelect, useDispatch } from "@wordpress/data";
+import { RadioControl } from "@wordpress/components";
 
 
 export function TaxonomyTerms({ name, label, defaultValue, onChange, settings }) {
@@ -28,9 +29,14 @@ export function TaxonomyTerms({ name, label, defaultValue, onChange, settings })
         fetchTaxonomyTerms,
     } = useDispatch(workflowStore)
 
+    const optionToSelectAll = settings && settings?.optionToSelectAll === true;
+    const labelOptionToSelectAll = settings && settings?.labelOptionToSelectAll;
+
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
         newValue[settingName] = value;
+
+        console.log('newValue', newValue);
 
         if (onChange) {
             onChange(name, newValue);
@@ -63,14 +69,41 @@ export function TaxonomyTerms({ name, label, defaultValue, onChange, settings })
                     onChange={(value) => onChangeSetting({ settingName: "taxonomy", value })}
                 />
 
-                <InlineMultiSelect
-                    label={__('Terms', 'publishpress-future-pro')}
-                    value={defaultValue?.terms || []}
-                    suggestions={taxonmoyTerms}
-                    expandOnFocus={true}
-                    autoSelectFirstMatch={true}
-                    onChange={(value) => onChangeSetting({ settingName: "terms", value })}
-                />
+                {optionToSelectAll && (
+                    <>
+                        <RadioControl
+                            label={__("Select the terms", "publishpress-future-pro")}
+                            selected={defaultValue?.selectAll || '0'}
+                            options={[
+                                { label: labelOptionToSelectAll, value: '1' },
+                                { label: __("Specific terms", "publishpress-future-pro"), value: '0' }
+                            ]}
+                            onChange={(value) => onChangeSetting({ settingName: "selectAll", value })}
+                        />
+
+                        {defaultValue?.selectAll !== '1' && (
+                            <InlineMultiSelect
+                                label={__('Terms', 'publishpress-future-pro')}
+                                value={defaultValue?.terms || []}
+                                suggestions={taxonmoyTerms}
+                                expandOnFocus={true}
+                                autoSelectFirstMatch={true}
+                                onChange={(value) => onChangeSetting({ settingName: "terms", value })}
+                            />
+                        )}
+                    </>
+                )}
+
+                {!optionToSelectAll && (
+                    <InlineMultiSelect
+                        label={__('Terms', 'publishpress-future-pro')}
+                        value={defaultValue?.terms || []}
+                        suggestions={taxonmoyTerms}
+                        expandOnFocus={true}
+                        autoSelectFirstMatch={true}
+                        onChange={(value) => onChangeSetting({ settingName: "terms", value })}
+                    />
+                )}
             </VStack>
         </>
     );
