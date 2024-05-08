@@ -20,6 +20,7 @@ use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\GeneralAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\PostAction;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDelete;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsRemove;
@@ -351,6 +352,15 @@ return [
 
                 case CorePostTermsRemove::NODE_NAME:
                     $nodeRunner = new CorePostTermsRemove(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(FreeServicesAbstract::ERROR)
+                    );
+                    break;
+
+                case CorePostChangeStatus::NODE_NAME:
+                    $nodeRunner = new CorePostChangeStatus(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),

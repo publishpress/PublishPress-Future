@@ -4,6 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove;
@@ -161,6 +162,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CorePostTermsAdd::NODE_NAME => new CorePostTermsAdd(),
             CorePostTermsSet::NODE_NAME => new CorePostTermsSet(),
             CorePostTermsRemove::NODE_NAME => new CorePostTermsRemove(),
+            CorePostChangeStatus::NODE_NAME => new CorePostChangeStatus(),
         ];
 
         if (function_exists('ray')) {

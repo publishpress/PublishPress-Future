@@ -36,8 +36,6 @@ export function TaxonomyTerms({ name, label, defaultValue, onChange, settings })
         const newValue = { ...defaultValue };
         newValue[settingName] = value;
 
-        console.log('newValue', newValue);
-
         if (onChange) {
             onChange(name, newValue);
         }

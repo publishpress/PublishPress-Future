@@ -6,12 +6,17 @@ import DebugData from "../data-fields/debug-data";
 import RayColor from "../data-fields/ray-color";
 import Text from "../data-fields/text";
 import TaxonomyTerms from "../data-fields/taxonomy-terms";
+import PostStatus from "../data-fields/post-status";
 
 export const MappedField = (props) => {
     switch (props.type) {
         case "postQuery":
             return (
                 <PostQuery {...props} />
+            );
+        case "postStatus":
+            return (
+                <PostStatus {...props} />
             );
         case "taxonomyTerms":
             return (
