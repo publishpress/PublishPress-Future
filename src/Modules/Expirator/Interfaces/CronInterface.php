@@ -30,13 +30,29 @@ interface CronInterface
 
     /**
      * @param int $timestamp
-     * @param string $action
      * @param string $hook
-    public function scheduleSingleAction($timestamp, $hook, $args = []);
      * @param array $args
      * @return int
      */
-    public function scheduleSingleAction($timestamp, $action, $args = []);
+    public function scheduleSingleAction($timestamp, $hook, $args = []);
+
+    /**
+     * @param int $timestamp
+     * @param int $intervalInSeconds
+     * @param string $hook
+     * @param array $args
+     * @param boolean $unique
+     * @param integer $priority
+     * @return int
+     */
+    public function scheduleRecurringAction(
+        $timestamp,
+        $intervalInSeconds,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    );
 
     /**
      * @param int $postId
