@@ -31,6 +31,8 @@ interface CronInterface
     /**
      * @param int $timestamp
      * @param string $action
+     * @param string $hook
+    public function scheduleSingleAction($timestamp, $hook, $args = []);
      * @param array $args
      * @return int
      */

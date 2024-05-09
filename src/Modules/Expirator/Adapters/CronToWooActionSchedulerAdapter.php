@@ -51,7 +51,7 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     /**
      * @inheritDoc
      */
-    public function scheduleSingleAction($timestamp, $action, $args = [])
+    public function scheduleSingleAction($timestamp, $hook, $args = [])
     {
         return as_schedule_single_action($timestamp, $action, $args, self::SCHEDULED_ACTION_GROUP);
     }
