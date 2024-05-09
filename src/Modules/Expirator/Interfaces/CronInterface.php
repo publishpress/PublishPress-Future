@@ -34,7 +34,13 @@ interface CronInterface
      * @param array $args
      * @return int
      */
-    public function scheduleSingleAction($timestamp, $hook, $args = []);
+    public function scheduleSingleAction(
+        $timestamp,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    );
 
     /**
      * @param int $timestamp
@@ -45,9 +51,41 @@ interface CronInterface
      * @param integer $priority
      * @return int
      */
-    public function scheduleRecurringAction(
+    public function scheduleRecurringActionInSeconds(
         $timestamp,
         $intervalInSeconds,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    );
+
+    /**
+     * @param int $timestamp
+     * @param string $schedule
+     * @param string $hook
+     * @param array $args
+     * @param boolean $unique
+     * @param integer $priority
+     * @return void
+     */
+    public function scheduleRecurringAction(
+        $timestamp,
+        $schedule,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    );
+
+    /**
+     * @param STRING $hook
+     * @param array $args
+     * @param boolean $unique
+     * @param integer $priority
+     * @return void
+     */
+    public function scheduleAsyncAction(
         $hook,
         $args = [],
         $unique = false,
