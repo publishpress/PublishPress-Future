@@ -410,14 +410,14 @@ class CoreSchedule implements NodeRunnerInterface
         return $selectedVariablesList[$variableName[0]];;
     }
 
-    public function actionCallback(array $compatedArgs)
+    public function actionCallback(array $compactedArgs)
     {
-        $args = $this->expandArguments($compatedArgs);
+        $args = $this->expandArguments($compactedArgs);
 
-        $step = $args['step'];
-        $input = $args['input'];
-        $globalVariables = $args['globalVariables'];
-
-        $this->nodeRunnerPreparer->runNextSteps($step, $input, $globalVariables);
+        $this->nodeRunnerPreparer->runNextSteps(
+            $args['step'],
+            $args['input'],
+            $args['globalVariables']
+        );
     }
 }
