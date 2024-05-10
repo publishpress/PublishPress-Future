@@ -196,7 +196,7 @@ var Fields = function Fields(_ref) {
     value: workflow
   })), workflowsOptions.length === 0 && action === 'trigger-workflow' && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
     className: "future-action-panel-content future-action-full-width"
-  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No workflows available.', 'publishpress-future-pro'))));
+  }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No compatible workflows available.', 'publishpress-future-pro'))));
 };
 var LegacyActionFields = function LegacyActionFields() {
   return /*#__PURE__*/React.createElement(_lib_vendor_publishpress_publishpress_future_assets_jsx_components_FutureActionPanelAfterActionField__WEBPACK_IMPORTED_MODULE_4__.FutureActionPanelAfterActionField, null, function (_ref2) {

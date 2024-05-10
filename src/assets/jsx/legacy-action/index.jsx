@@ -49,7 +49,7 @@ const Fields = ({ storeName }) => {
 
             { workflowsOptions.length === 0 && action === 'trigger-workflow' &&
                 <PanelRow className='future-action-panel-content future-action-full-width'>
-                    <p>{__('No workflows available.', 'publishpress-future-pro')}</p>
+                    <p>{__('No compatible workflows available.', 'publishpress-future-pro')}</p>
                 </PanelRow>
             }
         </>
