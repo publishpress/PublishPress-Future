@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use Exception;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use WP_Post;
 use WP_Query;
@@ -17,11 +18,15 @@ class WorkflowModel implements WorkflowModelInterface
 
     public const META_KEY_HAS_LEGACY_TRIGGER = '_workflow_has_legacy_trigger';
 
+    public const META_KEY_HAS_MANUAL_TRIGGER = '_workflow_has_manual_trigger';
+
     private $post;
 
     private $flow = [];
 
     private $hasLegacyActionTrigger = null;
+
+    private $hasManualSelectionTrigger = null;
 
     public function load(int $id): bool
     {
@@ -95,6 +100,17 @@ class WorkflowModel implements WorkflowModelInterface
         }
     }
 
+    private function updateManualSelectionMetadata()
+    {
+        $this->hasManualSelectionTrigger = $this->checkHasManualSelectionTriggerInTheFlow();
+
+        if ($this->hasManualSelectionTrigger) {
+            update_post_meta($this->post->ID, self::META_KEY_HAS_MANUAL_TRIGGER, '1');
+        } else {
+            delete_post_meta($this->post->ID, self::META_KEY_HAS_MANUAL_TRIGGER);
+        }
+    }
+
     public function getModifiedAt(): string
     {
         return $this->post->post_modified;
@@ -107,6 +123,7 @@ class WorkflowModel implements WorkflowModelInterface
         update_post_meta($this->post->ID, self::META_KEY_FLOW, json_encode($this->flow));
 
         $this->updateLegacyActionMetadata();
+        $this->updateManualSelectionMetadata();
     }
 
     public function delete()
@@ -300,12 +317,22 @@ class WorkflowModel implements WorkflowModelInterface
 
     private function checkHasLegacyActionTriggerInTheFlow(): bool
     {
+        return $this->checkHasTriggerInTheFlow(FutureLegacyAction::NODE_NAME);
+    }
+
+    private function checkHasManualSelectionTriggerInTheFlow(): bool
+    {
+        return $this->checkHasTriggerInTheFlow(CoreOnManuallyEnabledForPost::NODE_NAME);
+    }
+
+    private function checkHasTriggerInTheFlow(string $triggerName): bool
+    {
         $workflowTriggers = $this->getTriggerNodes();
 
         foreach ($workflowTriggers as $triggerNode) {
             if (
                 $triggerNode['data']['elementarType'] === NodeTypesModel::NODE_TYPE_TRIGGER
-                && $triggerNode['data']['name'] === FutureLegacyAction::NODE_NAME
+                && $triggerNode['data']['name'] === $triggerName
             ) {
                 return true;
             }

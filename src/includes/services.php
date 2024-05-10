@@ -31,6 +31,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\R
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction;
@@ -297,6 +298,10 @@ return [
 
                 case CoreOnAdminInit::NODE_NAME:
                     $nodeRunner = new CoreOnAdminInit($container->get(ServicesAbstract::HOOKS));
+                    break;
+
+                case CoreOnManuallyEnabledForPost::NODE_NAME:
+                    $nodeRunner = new CoreOnManuallyEnabledForPost($container->get(ServicesAbstract::HOOKS));
                     break;
 
                 case FutureLegacyAction::NODE_NAME:

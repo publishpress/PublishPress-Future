@@ -135,6 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _FutureActionPanelAfterActionField__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FutureActionPanelAfterActionField */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelAfterActionField.jsx");
+/* harmony import */ var _FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FutureActionPanelTop */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelTop.jsx");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -147,6 +148,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -478,6 +480,10 @@ var FutureActionPanel = function FutureActionPanel(props) {
     type: "hidden",
     name: 'future_action_enabled',
     value: 1
+  }), /*#__PURE__*/React.createElement(_FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelTop.Slot, {
+    fillProps: {
+      storeName: props.storeName
+    }
   }), !props.autoEnableAndHideCheckbox && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(CheckboxControl, {
     label: props.strings.enablePostExpiration,
     checked: enabled || false,
@@ -1038,6 +1044,37 @@ var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     value: props.nonce
   }));
 };
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelTop.jsx":
+/*!****************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelTop.jsx ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionPanelTop: () => (/* binding */ FutureActionPanelTop),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+var FutureActionPanelTop = function FutureActionPanelTop(_ref) {
+  var children = _ref.children;
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Fill, {
+    name: "FutureActionPanelTop"
+  }, children);
+};
+var FutureActionPanelTopSlot = function FutureActionPanelTopSlot(props) {
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Slot, _extends({
+    name: "FutureActionPanelTop"
+  }, props));
+};
+FutureActionPanelTop.Slot = FutureActionPanelTopSlot;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FutureActionPanelTop);
 
 /***/ }),
 

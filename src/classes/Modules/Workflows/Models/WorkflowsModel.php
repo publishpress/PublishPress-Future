@@ -24,16 +24,24 @@ class WorkflowsModel implements WorkflowsModelInterface
 
     public function getPublishedWorkflowsWithLegacyTriggerAsOptions(): array
     {
-        $metaKey = WorkflowModel::META_KEY_HAS_LEGACY_TRIGGER;
+        return $this->getPublishedWorkflowsWithMetadataAsOptions(WorkflowModel::META_KEY_HAS_LEGACY_TRIGGER, 1);
+    }
 
+    public function getPublishedWorkflowsWithManualTriggerAsOptions(): array
+    {
+        return $this->getPublishedWorkflowsWithMetadataAsOptions(WorkflowModel::META_KEY_HAS_MANUAL_TRIGGER, 1);
+    }
+
+    public function getPublishedWorkflowsWithMetadataAsOptions($metaKey, $metaValue): array
+    {
         $args = [
             'post_type' => Module::POST_TYPE_WORKFLOW,
             'post_status' => 'publish',
             'posts_per_page' => 100,
             'meta_query' => [
                 [
-                    'key' => $metaKey,
-                    'value' => '1',
+                    'key' => sanitize_key($metaKey),
+                    'value' => (int)$metaValue,
                 ],
             ],
         ];

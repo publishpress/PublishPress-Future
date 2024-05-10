@@ -3,6 +3,7 @@ import { ToggleCalendarDatePicker } from './ToggleCalendarDatePicker';
 import { PluginArea } from '@wordpress/plugins';
 import { Fill, Slot, SlotFillProvider } from '@wordpress/components';
 import { FutureActionPanelAfterActionField } from './FutureActionPanelAfterActionField';
+import { FutureActionPanelTop } from './FutureActionPanelTop';
 
 const { PanelRow, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl } = wp.components;
 const { Fragment, useEffect, useState } = wp.element;
@@ -337,6 +338,8 @@ export const FutureActionPanel = (props) => {
                 {props.autoEnableAndHideCheckbox && (
                     <input type="hidden" name={'future_action_enabled'} value={1} />
                 )}
+
+                <FutureActionPanelTop.Slot fillProps={{ storeName: props.storeName }} />
 
                 {!props.autoEnableAndHideCheckbox && (
                     <PanelRow>

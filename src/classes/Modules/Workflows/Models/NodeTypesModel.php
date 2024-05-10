@@ -15,6 +15,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
@@ -148,6 +149,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreOnPostUpdated::NODE_NAME => new CoreOnPostUpdated(),
             CoreOnInit::NODE_NAME => new CoreOnInit(),
             CoreOnAdminInit::NODE_NAME => new CoreOnAdminInit(),
+            CoreOnManuallyEnabledForPost::NODE_NAME => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::NODE_NAME => new FutureLegacyAction($this->hooks),
         ];
 

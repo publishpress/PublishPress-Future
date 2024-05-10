@@ -84,6 +84,10 @@ class Module implements InitializableInterface
             CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
             [$this, "enqueueScriptsLegacyAction"]
         );
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            [$this, "enqueueScriptsManualSelection"]
+        );
         $this->hooks->addAction(CoreHooksAbstract::ACTION_REST_API_INIT, [
             $this->restApiManager,
             "register",
@@ -390,6 +394,43 @@ class Module implements InitializableInterface
         wp_localize_script(
             "future_workflow_legacy_action_script",
             "futureWorkflows",
+            [
+                "workflows" => $workflows,
+            ]
+        );
+    }
+
+    public function enqueueScriptsManualSelection($hook)
+    {
+        wp_enqueue_style("wp-components");
+
+        wp_enqueue_script("wp-components");
+        wp_enqueue_script("wp-plugins");
+        wp_enqueue_script("wp-element");
+        wp_enqueue_script("wp-data");
+
+        wp_enqueue_script(
+            "future_workflow_manual_selection_script",
+            plugins_url(
+                "/src/assets/js/workflow-manual-selection.js",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
+            [
+                "wp-plugins",
+                "wp-components",
+                "wp-element",
+                "wp-data",
+            ],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+
+        $workflowsModel = new WorkflowsModel();
+        $workflows = $workflowsModel->getPublishedWorkflowsWithManualTriggerAsOptions();
+
+        wp_localize_script(
+            "future_workflow_manual_selection_script",
+            "futureWorkflowManualSelection",
             [
                 "workflows" => $workflows,
             ]
