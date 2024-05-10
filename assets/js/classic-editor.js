@@ -158,6 +158,8 @@ var _components = __webpack_require__(/*! @wordpress/components */ "@wordpress/c
 
 var _FutureActionPanelAfterActionField = __webpack_require__(/*! ./FutureActionPanelAfterActionField */ "./assets/jsx/components/FutureActionPanelAfterActionField.jsx");
 
+var _FutureActionPanelTop = __webpack_require__(/*! ./FutureActionPanelTop */ "./assets/jsx/components/FutureActionPanelTop.jsx");
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var _wp$components = wp.components,
@@ -553,6 +555,7 @@ var FutureActionPanel = exports.FutureActionPanel = function FutureActionPanel(p
             'div',
             { className: panelClass },
             props.autoEnableAndHideCheckbox && React.createElement('input', { type: 'hidden', name: 'future_action_enabled', value: 1 }),
+            React.createElement(_FutureActionPanelTop.FutureActionPanelTop.Slot, { fillProps: { storeName: props.storeName } }),
             !props.autoEnableAndHideCheckbox && React.createElement(
                 PanelRow,
                 null,
@@ -1198,6 +1201,42 @@ var FutureActionPanelQuickEdit = exports.FutureActionPanelQuickEdit = function F
         React.createElement('input', { type: 'hidden', name: '_future_action_nonce', value: props.nonce })
     );
 };
+
+/***/ }),
+
+/***/ "./assets/jsx/components/FutureActionPanelTop.jsx":
+/*!********************************************************!*\
+  !*** ./assets/jsx/components/FutureActionPanelTop.jsx ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.FutureActionPanelTop = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _components = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+
+var FutureActionPanelTop = exports.FutureActionPanelTop = function FutureActionPanelTop(_ref) {
+    var children = _ref.children;
+    return React.createElement(
+        _components.Fill,
+        { name: "FutureActionPanelTop" },
+        children
+    );
+};
+
+var FutureActionPanelTopSlot = function FutureActionPanelTopSlot(props) {
+    return React.createElement(_components.Slot, _extends({ name: "FutureActionPanelTop" }, props));
+};
+
+FutureActionPanelTop.Slot = FutureActionPanelTopSlot;
+
+exports["default"] = FutureActionPanelTop;
 
 /***/ }),
 
