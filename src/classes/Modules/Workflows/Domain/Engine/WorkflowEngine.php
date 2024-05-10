@@ -3,6 +3,7 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerMapperInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
@@ -19,6 +20,11 @@ class WorkflowEngine implements WorkflowEngineInterface
     private $hooks;
 
     /**
+     * @var CronInterface
+     */
+    private $cron;
+
+    /**
      * @var NodeTypesModelInterface
      */
     private $nodeTypesModel;
@@ -30,10 +36,12 @@ class WorkflowEngine implements WorkflowEngineInterface
 
     public function __construct(
         HookableInterface $hooks,
+        CronInterface $cron,
         NodeTypesModelInterface $nodeTypesModel,
         \Closure $nodeRunnerFactory
     ) {
         $this->hooks = $hooks;
+        $this->cron = $cron;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->nodeRunnerFactory = $nodeRunnerFactory;
 
@@ -48,6 +56,12 @@ class WorkflowEngine implements WorkflowEngineInterface
             HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
             [$this, "executeAsyncNodeRoutine"],
             10
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION,
+            [$this, "unscheduleRecurringNodeAction"],
+            10,
+            2
         );
     }
 
@@ -174,5 +188,10 @@ class WorkflowEngine implements WorkflowEngineInterface
     {
         $nodeRunner = call_user_func($this->nodeRunnerFactory, $args['step']['node']['data']['name']);
         $nodeRunner->actionCallback($args);
+    }
+
+    public function unscheduleRecurringNodeAction($hook, $args)
+    {
+        $this->cron->clearScheduledAction($hook, [$args]);
     }
 }

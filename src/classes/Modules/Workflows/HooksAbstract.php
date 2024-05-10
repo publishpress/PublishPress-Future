@@ -17,5 +17,6 @@ abstract class HooksAbstract {
     const FILTER_WORKFLOW_ENGINE_MAP_TRIGGER = 'publishpressfuturepro_workflow_engine_map_trigger';
     const ACTION_EXECUTE_NODE = 'publishpressfuturepro_workflow_execute_node';
     const ACTION_ASYNC_EXECUTE_NODE = 'publishpressfuturepro_workflow_async_execute_node';
+    const ACTION_UNSCHEDULE_RECURRING_NODE_ACTION = 'publishpressfuturepro_workflow_unschedule_recurring_node_action';
     const ACTION_LEGACY_ACTION = 'publishpressfuturepro_legacy_action';
 }

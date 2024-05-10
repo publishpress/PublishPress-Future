@@ -258,6 +258,7 @@ return [
     ServicesAbstract::WORKFLOW_ENGINE => static function (ContainerInterface $container) {
         return new WorkflowEngine(
             $container->get(ServicesAbstract::HOOKS),
+            $container->get(FreeServicesAbstract::CRON),
             $container->get(ServicesAbstract::NODE_TYPES_MODEL),
             $container->get(ServicesAbstract::NODE_RUNNER_FACTORY)
         );

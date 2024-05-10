@@ -21,6 +21,8 @@ interface WorkflowModelInterface
 
     public function setStatus(string $status);
 
+    public function isActive(): bool;
+
     public function getModifiedAt(): string;
 
     public function save();
@@ -40,4 +42,10 @@ interface WorkflowModelInterface
     public function getEdges(): array;
 
     public function getRoutineTree(array $nodeTypes): array;
+
+    public function resetNodeExecutionCount(string $nodeId);
+
+    public function incrementNodeExecutionCount(string $nodeId): int;
+
+    public function getNodeExecutionCount(string $nodeId): int;
 }

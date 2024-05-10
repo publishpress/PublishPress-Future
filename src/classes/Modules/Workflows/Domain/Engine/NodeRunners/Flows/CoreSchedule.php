@@ -4,6 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flo
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule as NodeTypeCoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
@@ -15,6 +16,8 @@ use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 class CoreSchedule implements NodeRunnerInterface
 {
     const NODE_NAME = NodeTypeCoreSchedule::NODE_NAME;
+
+    const DEFAULT_REPEAT_UNTIL_TIMES = 99999;
 
     /**
      * @var HookableInterface
@@ -412,14 +415,74 @@ class CoreSchedule implements NodeRunnerInterface
         return $selectedVariablesList[$variableName[0]];;
     }
 
+    private function cancelExpiredScheduledAction($args)
+    {
+        $this->cron->scheduleAsyncAction(
+            HooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION,
+            [HooksAbstract::ACTION_ASYNC_EXECUTE_NODE, $args],
+            false,
+            10
+        );
+    }
+
     public function actionCallback(array $compactedArgs)
     {
         $args = $this->expandArguments($compactedArgs);
+
+        // Check if the workflow is still active
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($args['globalVariables']['workflow']['id']);
+
+        if (! $workflowModel->isActive()) {
+            // TODO: Log this into the scheduler log
+            $this->cancelExpiredScheduledAction($compactedArgs);
+            return;
+        }
+
+        $nodeId = $args['step']['node']['id'];
+        $nodeSettings = $args['step']['node']['data']['settings'] ?? [];
+        $scheduleSettings = $nodeSettings['schedule'] ?? [];
+
+        $isRecurrent = $scheduleSettings['recurrence'] !== 'single' ?? false;
+        $unscheduleRecurringAction = false;
+
+        if ($isRecurrent) {
+            // Check if the node has a limit of executions
+            $repeatUntil = $scheduleSettings['repeatUntil'] ?? '';
+
+            if ($repeatUntil === 'date') {
+                $date = strtotime($scheduleSettings['repeatUntilDate'] ?? '');
+                $now = time();
+
+                if ($date <= $now) {
+                    $this->cancelExpiredScheduledAction($compactedArgs);
+                    // TODO: Log this into the scheduler log
+                    return;
+                }
+            } else if ($repeatUntil === 'times') {
+                $executionCount = $workflowModel->incrementNodeExecutionCount($nodeId);
+                $timesUntilExpire = (int)$scheduleSettings['repeatTimes'] ?? self::DEFAULT_REPEAT_UNTIL_TIMES;
+
+                $unscheduleRecurringAction = $executionCount >= $timesUntilExpire;
+                $abortExecution = $executionCount > $timesUntilExpire;
+
+                if ($abortExecution) {
+                    $this->cancelExpiredScheduledAction($compactedArgs);
+
+                    // TODO: Log this into the scheduler log
+                    return;
+                }
+            }
+        }
 
         $this->nodeRunnerPreparer->runNextSteps(
             $args['step'],
             $args['input'],
             $args['globalVariables']
         );
+
+        if ($unscheduleRecurringAction) {
+            $this->cancelExpiredScheduledAction($compactedArgs);
+        }
     }
 }

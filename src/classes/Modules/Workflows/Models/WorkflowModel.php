@@ -13,6 +13,8 @@ class WorkflowModel implements WorkflowModelInterface
 {
     public const META_KEY_FLOW = '_workflow_flow';
 
+    public const META_KEY_PREFIX_NODE_EXECUTION_COUNT = '_node_execution_count_';
+
     public const META_KEY_HAS_LEGACY_TRIGGER = '_workflow_has_legacy_trigger';
 
     private $post;
@@ -75,6 +77,11 @@ class WorkflowModel implements WorkflowModelInterface
     public function setStatus(string $status)
     {
         $this->post->post_status = sanitize_key($status);
+    }
+
+    public function isActive(): bool
+    {
+        return $this->post->post_status === 'publish';
     }
 
     private function updateLegacyActionMetadata()
@@ -314,5 +321,25 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         return get_post_meta($this->post->ID, self::META_KEY_HAS_LEGACY_TRIGGER, true) === '1';
+    }
+
+    public function resetNodeExecutionCount(string $nodeId)
+    {
+        delete_post_meta($this->post->ID, self::META_KEY_PREFIX_NODE_EXECUTION_COUNT . $nodeId);
+    }
+
+    public function incrementNodeExecutionCount(string $nodeId): int
+    {
+        $executionCount = $this->getNodeExecutionCount($nodeId);
+        $executionCount++;
+
+        update_post_meta($this->post->ID, self::META_KEY_PREFIX_NODE_EXECUTION_COUNT . $nodeId, $executionCount);
+
+        return $executionCount;
+    }
+
+    public function getNodeExecutionCount(string $nodeId): int
+    {
+        return (int) get_post_meta($this->post->ID, self::META_KEY_PREFIX_NODE_EXECUTION_COUNT . $nodeId, true);
     }
 }

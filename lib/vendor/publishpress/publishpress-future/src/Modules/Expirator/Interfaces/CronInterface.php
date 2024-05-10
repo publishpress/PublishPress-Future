@@ -17,9 +17,10 @@ interface CronInterface
     /**
      * @param string $action
      * @param array $args
-     * @return int|\WP_Error|false
+     * @param bool $clearOnlyPendingActions
+     * @return int|null
      */
-    public function clearScheduledAction($action, $args = []);
+    public function clearScheduledAction($action, $args = [], $clearOnlyPendingActions = false);
 
     /**
      * @param string $action

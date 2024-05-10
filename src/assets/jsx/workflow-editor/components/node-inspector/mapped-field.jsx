@@ -1,6 +1,5 @@
 import PostQuery from "../data-fields/post-query";
 import { __, sprintf } from "@wordpress/i18n";
-import Recurrence from "../data-fields/recurrence";
 import { DateOffset } from "../data-fields/date-offset";
 import DebugData from "../data-fields/debug-data";
 import RayColor from "../data-fields/ray-color";
