@@ -375,7 +375,8 @@ return [
                     $nodeRunner = new CoreSchedule(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
-                        $container->get(FreeServicesAbstract::CRON)
+                        $container->get(FreeServicesAbstract::CRON),
+                        $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL)
                     );
                     break;
             }

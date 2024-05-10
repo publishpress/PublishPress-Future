@@ -7,6 +7,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule as NodeTypeCoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
@@ -30,14 +31,21 @@ class CoreSchedule implements NodeRunnerInterface
      */
     private $cron;
 
+    /**
+     * @var CronSchedulesModelInterface
+     */
+    private $cronSchedulesModel;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerPreparerInterface $nodeRunnerPreparer,
-        CronInterface $cron
+        CronInterface $cron,
+        CronSchedulesModelInterface $cronSchedulesModel
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->cron = $cron;
+        $this->cronSchedulesModel = $cronSchedulesModel;
     }
 
     public function setup(array $step, array $input = [], array $globalVariables = []): void
@@ -90,23 +98,17 @@ class CoreSchedule implements NodeRunnerInterface
             }
         } else {
             if ($recurrence === 'custom') {
-                $interval = $nodeSettings['schedule']['interval'] ?? 0;
-                if ($interval > 0) {
-                    $this->cron->scheduleRecurringActionInSeconds(
-                        $timestamp,
-                        $interval,
-                        HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
-                        $actionArgs,
-                        $unique,
-                        $priority
-                    );
-                }
+                $interval = (int)$nodeSettings['schedule']['repeatInterval'] ?? 0;
             } else {
                 $recurrence = preg_replace('/^cron_/', '', $recurrence);
 
-                $this->cron->scheduleRecurringAction(
+                $interval = $this->cronSchedulesModel->getCronScheduleValueByName($recurrence);
+            }
+
+            if ($interval > 0) {
+                $this->cron->scheduleRecurringActionInSeconds(
                     $timestamp,
-                    $recurrence,
+                    $interval,
                     HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
                     $actionArgs,
                     $unique,

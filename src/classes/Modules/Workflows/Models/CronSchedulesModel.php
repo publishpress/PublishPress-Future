@@ -26,4 +26,17 @@ class CronSchedulesModel implements CronSchedulesModelInterface
 
         return $options;
     }
+
+    public function getCronScheduleValueByName(string $name): string
+    {
+        $schedules = $this->getCronSchedules();
+
+        foreach ($schedules as $key => $schedule) {
+            if ($key === $name) {
+                return (int)$schedule['interval'];
+            }
+        }
+
+        return 0;
+    }
 }
