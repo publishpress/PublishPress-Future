@@ -4,7 +4,6 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPrepa
 
 use Exception;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 use WpOrg\Requests\Hooks;
 

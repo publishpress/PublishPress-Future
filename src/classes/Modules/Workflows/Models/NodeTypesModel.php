@@ -12,6 +12,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTe
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUnstick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
@@ -176,7 +177,7 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         $flowsInstances = [
             // IfElse::NODE_NAME => new IfElse(),
-            // CoreSchedule::NODE_NAME => new CoreSchedule(),
+            CoreSchedule::NODE_NAME => new CoreSchedule(),
         ];
 
         return $flowsInstances;

@@ -6,6 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Node;
 use PublishPress\FuturePro\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
@@ -521,7 +522,7 @@ class Module implements InitializableInterface
             }
         }
 
-        if (!isset($_REQUEST['future_action_view']) || ! in_array($_REQUEST['future_action_view'], $validViews)) {
+        if (!isset($_REQUEST['future_action_view']) || !in_array($_REQUEST['future_action_view'], $validViews)) {
             return $opts;
         }
 

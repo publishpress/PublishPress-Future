@@ -1513,16 +1513,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.55.0",
+            "version": "v3.56.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "c9eeacb559bfa0bcc7f778cfb7b42715c83d2c7e"
+                "reference": "69c6168ae8bc96dc656c7f6c7271120a68ae5903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/c9eeacb559bfa0bcc7f778cfb7b42715c83d2c7e",
-                "reference": "c9eeacb559bfa0bcc7f778cfb7b42715c83d2c7e",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/69c6168ae8bc96dc656c7f6c7271120a68ae5903",
+                "reference": "69c6168ae8bc96dc656c7f6c7271120a68ae5903",
                 "shasum": ""
             },
             "require": {
@@ -1594,7 +1594,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.55.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.56.1"
             },
             "funding": [
                 {
@@ -1602,7 +1602,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-06T00:10:15+00:00"
+            "time": "2024-05-10T11:31:15+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -2852,16 +2852,16 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v6.5.2",
+            "version": "v6.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "379f17a90c01498d4c99a0d15aab6e7aa6a2c840"
+                "reference": "e611a83292d02055a25f83291a98fadd0c21e092"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/379f17a90c01498d4c99a0d15aab6e7aa6a2c840",
-                "reference": "379f17a90c01498d4c99a0d15aab6e7aa6a2c840",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/e611a83292d02055a25f83291a98fadd0c21e092",
+                "reference": "e611a83292d02055a25f83291a98fadd0c21e092",
                 "shasum": ""
             },
             "require-dev": {
@@ -2893,9 +2893,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.5.2"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.5.3"
             },
-            "time": "2024-04-14T17:30:14+00:00"
+            "time": "2024-05-08T02:12:31+00:00"
         },
         {
             "name": "php-webdriver/webdriver",
@@ -3110,12 +3110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "08b7d23c33e59d7ee154fa23d6522a14a4c9e29e"
+                "reference": "567d7859fd1bdf87718149e0c35be7ca50305d32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/08b7d23c33e59d7ee154fa23d6522a14a4c9e29e",
-                "reference": "08b7d23c33e59d7ee154fa23d6522a14a4c9e29e",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/567d7859fd1bdf87718149e0c35be7ca50305d32",
+                "reference": "567d7859fd1bdf87718149e0c35be7ca50305d32",
                 "shasum": ""
             },
             "require": {
@@ -3191,7 +3191,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-04-29T19:07:40+00:00"
+            "time": "2024-05-10T05:45:37+00:00"
         },
         {
             "name": "phpmd/phpmd",
@@ -3402,12 +3402,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "78d3d9945d8053be07b6f0018587314a59f7fc1d"
+                "reference": "49498ce9902722495eaba8a2fce57e1a289fc94b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/78d3d9945d8053be07b6f0018587314a59f7fc1d",
-                "reference": "78d3d9945d8053be07b6f0018587314a59f7fc1d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/49498ce9902722495eaba8a2fce57e1a289fc94b",
+                "reference": "49498ce9902722495eaba8a2fce57e1a289fc94b",
                 "shasum": ""
             },
             "require": {
@@ -3453,7 +3453,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-06T13:10:15+00:00"
+            "time": "2024-05-10T14:32:40+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4092,7 +4092,7 @@
         },
         {
             "name": "psr/http-factory",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-factory.git",
@@ -4108,7 +4108,6 @@
                 "php": ">=7.1",
                 "psr/http-message": "^1.0 || ^2.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -4257,12 +4256,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "5d259e91f8a24c51d4c79a51c957ddc4a9d79a3c"
+                "reference": "43b6b9de28addd3e42f5f501f1dfed2128169171"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/5d259e91f8a24c51d4c79a51c957ddc4a9d79a3c",
-                "reference": "5d259e91f8a24c51d4c79a51c957ddc4a9d79a3c",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/43b6b9de28addd3e42f5f501f1dfed2128169171",
+                "reference": "43b6b9de28addd3e42f5f501f1dfed2128169171",
                 "shasum": ""
             },
             "require": {
@@ -4329,7 +4328,7 @@
                 "issues": "https://github.com/bobthecow/psysh/issues",
                 "source": "https://github.com/bobthecow/psysh/tree/main"
             },
-            "time": "2024-05-05T01:30:19+00:00"
+            "time": "2024-05-07T11:51:23+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",

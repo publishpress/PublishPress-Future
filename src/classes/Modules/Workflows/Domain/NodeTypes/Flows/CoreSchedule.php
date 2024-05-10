@@ -67,18 +67,10 @@ class CoreSchedule implements NodeTypeInterface
                         "label" => __("Date offset", "publishpress-future-pro"),
                     ],
                 ],
+                "settings" => [
+                    "allowRecurrence" => true,
+                ]
             ],
-            [
-                "label" => __("Recurrence", "publishpress-future-pro"),
-                "fields" => [
-                    [
-                        "name" => "recurrence",
-                        "type" => "recurrence",
-                        "label" => __("Recurrence", "publishpress-future-pro"),
-                        "description" => __("The recurrence for this action.", "publishpress-future-pro"),
-                    ],
-                ],
-            ]
         ];
     }
 

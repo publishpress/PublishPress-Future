@@ -76,7 +76,7 @@ class GeneralAction implements NodeRunnerPreparerInterface
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log(
                 sprintf(
-                    '[PublishPress Future Pro] %1$s: workflowId: %2$i, step: %3$s',
+                    '[PublishPress Future Pro] %1$s: workflowId: %2$d, step: %3$s',
                     $message,
                     $workflowId,
                     print_r($step, true)

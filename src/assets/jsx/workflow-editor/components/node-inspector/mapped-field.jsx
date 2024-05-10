@@ -26,10 +26,6 @@ export const MappedField = (props) => {
             return (
                 <DateOffset {...props} />
             );
-        case "recurrence":
-            return (
-                <Recurrence {...props} />
-            );
         case "debugData":
             return (
                 <DebugData {...props} />

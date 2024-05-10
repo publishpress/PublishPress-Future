@@ -28,6 +28,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\C
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostStick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostUnstick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated;
@@ -280,6 +281,7 @@ return [
             $nodeRunner = null;
 
             switch ($nodeName) {
+                // Triggers
                 case CoreOnSavePost::NODE_NAME:
                     $nodeRunner = new CoreOnSavePost($container->get(ServicesAbstract::HOOKS));
                     break;
@@ -300,7 +302,7 @@ return [
                     $nodeRunner = new FutureLegacyAction($container->get(ServicesAbstract::HOOKS));
                     break;
 
-                    // Actions
+                // Actions
                 case RayDebug::NODE_NAME:
                     $nodeRunner = new RayDebug(
                         $container->get(ServicesAbstract::HOOKS),
@@ -365,6 +367,15 @@ return [
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
                         $container->get(FreeServicesAbstract::ERROR)
+                    );
+                    break;
+
+                // Flows
+                case CoreSchedule::NODE_NAME:
+                    $nodeRunner = new CoreSchedule(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
+                        $container->get(FreeServicesAbstract::CRON)
                     );
                     break;
             }

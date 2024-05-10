@@ -38,7 +38,17 @@ class WorkflowEngine implements WorkflowEngineInterface
         $this->nodeRunnerFactory = $nodeRunnerFactory;
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
-        $this->hooks->addAction(HooksAbstract::ACTION_EXECUTE_NODE, [$this, 'executeNodeRoutine'], 10, 3);
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_EXECUTE_NODE,
+            [$this, 'executeNodeRoutine'],
+            10,
+            3
+        );
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
+            [$this, "executeAsyncNodeRoutine"],
+            10
+        );
     }
 
     public function start()
@@ -158,5 +168,11 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
 
         $nodeRunner->setup($step, $input, $globalVariables);
+    }
+
+    public function executeAsyncNodeRoutine($args)
+    {
+        $nodeRunner = call_user_func($this->nodeRunnerFactory, $args['step']['node']['data']['name']);
+        $nodeRunner->actionCallback($args);
     }
 }

@@ -5,7 +5,7 @@ export function UserData() {
         type: "object",
         propertiesSchema: [
             {
-                name: "id",
+                name: "ID",
                 type: "integer",
                 label: "ID",
             },

@@ -51,9 +51,74 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     /**
      * @inheritDoc
      */
-    public function scheduleSingleAction($timestamp, $action, $args = [])
-    {
-        return as_schedule_single_action($timestamp, $action, $args, self::SCHEDULED_ACTION_GROUP);
+    public function scheduleSingleAction(
+        $timestamp,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    ) {
+        return as_schedule_single_action(
+            $timestamp,
+            $hook,
+            $args,
+            self::SCHEDULED_ACTION_GROUP,
+            $unique,
+            $priority
+        );
+    }
+
+    public function scheduleRecurringActionInSeconds(
+        $timestamp,
+        $intervalInSeconds,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    ) {
+        return as_schedule_recurring_action(
+            $timestamp,
+            $intervalInSeconds,
+            $hook,
+            $args,
+            self::SCHEDULED_ACTION_GROUP,
+            $unique,
+            $priority
+        );
+    }
+
+    public function scheduleRecurringAction(
+        $timestamp,
+        $schedule,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    ) {
+        return as_schedule_cron_action(
+            $timestamp,
+            $schedule,
+            $hook,
+            $args,
+            self::SCHEDULED_ACTION_GROUP,
+            $unique,
+            $priority
+        );
+    }
+
+    public function scheduleAsyncAction(
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    ) {
+        return as_enqueue_async_action(
+            $hook,
+            $args,
+            self::SCHEDULED_ACTION_GROUP,
+            $unique,
+            $priority
+        );
     }
 
     /**
@@ -62,11 +127,18 @@ class CronToWooActionSchedulerAdapter implements CronInterface
      */
     public function postHasScheduledActions($postId)
     {
-        $hasScheduledActions = as_has_scheduled_action(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
-
+        $hasScheduledActions = as_has_scheduled_action(
+            HooksAbstract::ACTION_RUN_WORKFLOW,
+            ['postId' => $postId, 'workflow' => 'expire'],
+            self::SCHEDULED_ACTION_GROUP
+        );
         if (! $hasScheduledActions) {
             // Try checking with the legacy hook.
-            $hasScheduledActions = as_has_scheduled_action(HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
+            $hasScheduledActions = as_has_scheduled_action(
+                HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW,
+                ['postId' => $postId, 'workflow' => 'expire'],
+                self::SCHEDULED_ACTION_GROUP
+            );
         }
 
         return $hasScheduledActions;
