@@ -10,7 +10,12 @@ class RestApiManager implements RestApiManagerInterface
 
     public function register()
     {
-        $restApiV1 = new RestApiV1();
-        $restApiV1->register();
+        $apiManagers = [
+            new RestApiV1()
+        ];
+
+        foreach ($apiManagers as $apiManater) {
+            $apiManater->register();
+        }
     }
 }

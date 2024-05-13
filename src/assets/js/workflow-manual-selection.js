@@ -171,12 +171,10 @@ var Fields = function Fields(_ref) {
         return isSelected ? workflow.value : null;
       });
       return {
-        getExtraDataByName: select(storeName).getExtraDataByName,
         workflowSelections: workflowSelections
       };
     }),
-    workflowSelections = _useSelect.workflowSelections,
-    getExtraDataByName = _useSelect.getExtraDataByName;
+    workflowSelections = _useSelect.workflowSelections;
   var _dispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)(storeName),
     setExtraDataByName = _dispatch.setExtraDataByName;
   var handleActionChange = function handleActionChange(workflowId, value) {

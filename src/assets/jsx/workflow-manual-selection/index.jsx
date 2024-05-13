@@ -10,7 +10,6 @@ const Fields = ({ storeName }) => {
 
     const {
         workflowSelections,
-        getExtraDataByName,
     } = useSelect((select) => {
         const workflowSelections = availableWorkflows.map((workflow) => {
             const isSelected = select(storeName).getExtraDataByName('workflowManualSelection' + workflow.value) || 0;
@@ -18,7 +17,6 @@ const Fields = ({ storeName }) => {
             return isSelected ? workflow.value : null;
         });
         return {
-            getExtraDataByName: select(storeName).getExtraDataByName,
             workflowSelections,
         };
     });

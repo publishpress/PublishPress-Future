@@ -1,0 +1,176 @@
+<?php
+namespace PublishPress\FuturePro\Modules\Workflows\Controllers;
+
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
+use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\PostStatusesModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\PostTypesModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\TaxonomiesModel;
+use PublishPress\FuturePro\Modules\Workflows\Module;
+
+class WorkflowsList implements InitializableInterface
+{
+    /**
+     * @var HookableInterface
+     */
+    private $hooks;
+
+    public function __construct(
+        HookableInterface $hooks
+    ) {
+        $this->hooks = $hooks;
+    }
+
+    public function initialize()
+    {
+        $this->hooks->addAction(CoreHooksAbstract::ACTION_ADMIN_MENU, [
+            $this,
+            "adminMenu",
+        ]);
+
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            [$this, "enqueueScriptsList"]
+        );
+
+        $this->hooks->addAction(
+            "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_columns",
+            [$this, "addCustomColumns"]
+        );
+
+        $this->hooks->addAction(
+            "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
+            [$this, "renderTriggersColumn"],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
+            "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
+            [$this, "renderPreviewColumn"],
+            10,
+            2
+        );
+    }
+
+    public function adminMenu()
+    {
+        global $submenu;
+
+        $indexAllWorkflows = array_search(
+            "edit.php?post_type=ppfuture_workflow",
+            array_column($submenu["publishpress-future"], 2)
+        );
+
+        $submenu["publishpress-future"][$indexAllWorkflows][0] = __(
+            "Workflows",
+            "publishpress-future-pro"
+        );
+
+        add_submenu_page(
+            "edit.php?post_type=" . Module::POST_TYPE_WORKFLOW,
+            "My Custom Post Type Editor",
+            "My Custom Post Type",
+            "edit_posts",
+            "future_workflow_editor",
+            [$this, "renderEditorPage"]
+        );
+    }
+
+    public function renderEditorPage()
+    {
+        $this->hooks->doAction(HooksAbstract::ACTION_RENDER_WORKFLOW_EDITOR_PAGE);
+    }
+
+    public function enqueueScriptsList($hook)
+    {
+        if ("edit.php" !== $hook) {
+            return;
+        }
+
+        global $post_type;
+        if (Module::POST_TYPE_WORKFLOW !== $post_type) {
+            return;
+        }
+
+        wp_enqueue_style("wp-jquery-ui-dialog");
+        wp_enqueue_script("jquery-ui-dialog");
+
+        wp_enqueue_script(
+            "future_workflow_list_script",
+            plugins_url(
+                "/src/assets/js/workflow-list.js",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
+            ["jquery", "jquery-ui-dialog"],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+    }
+
+    public function addCustomColumns($columns)
+    {
+        $columns["workflow_triggers"] = __(
+            "Triggers",
+            "publishpress-future-pro"
+        );
+        $columns["workflow_preview"] = __("Preview", "publishpress-future-pro");
+
+        // Move the date column to the end
+        $date = $columns["date"];
+        unset($columns["date"]);
+        $columns["date"] = $date;
+
+        return $columns;
+    }
+
+    public function renderTriggersColumn($column, $postId)
+    {
+        if ("workflow_triggers" !== $column) {
+            return;
+        }
+
+        $workflowFlow = get_post_meta($postId, "_workflow_flow", true);
+        $workflowFlow = json_decode($workflowFlow, true);
+
+        $triggers = [];
+
+        if (empty($workflowFlow) || !isset($workflowFlow["nodes"])) {
+            echo __("—", "publishpress-future-pro");
+            return;
+        }
+
+        foreach ($workflowFlow["nodes"] as $node) {
+            if (
+                NodeTypesModel::NODE_TYPE_TRIGGER ===
+                $node["data"]["elementarType"]
+            ) {
+                $triggers[] = $node["data"]["label"];
+            }
+        }
+
+        echo implode(", ", $triggers);
+    }
+
+    public function renderPreviewColumn($column, $postId)
+    {
+        if ("workflow_preview" !== $column) {
+            return;
+        }
+
+        $screenshot = get_the_post_thumbnail_url($postId, "thumbnail");
+
+        if (empty($screenshot)) {
+            echo __("No screenshot", "publishpress-future-pro");
+        } else {
+            $screenshotFull = get_the_post_thumbnail_url($postId, "full");
+
+            require __DIR__ . "/../Views/preview-column.html.php";
+        }
+    }
+}

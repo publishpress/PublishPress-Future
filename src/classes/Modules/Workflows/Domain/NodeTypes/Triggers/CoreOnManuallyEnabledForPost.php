@@ -58,6 +58,18 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
     {
         return [
             [
+                "label" => __("Settings", "publishpress-future-pro"),
+                "description" => __("Settings for the trigger.", "publishpress-future-pro"),
+                "fields" => [
+                    [
+                        "name" => "checkboxLabel",
+                        "type" => "text",
+                        "label" => __("Checkbox label", "publishpress-future-pro"),
+                        "description" => __("The label of the checkbox that enables the trigger.", "publishpress-future-pro"),
+                    ],
+                ]
+            ],
+            [
                 "label" => __("Post Query", "publishpress-future-pro"),
                 "description" => __("The query defines the posts that will trigger this action.", "publishpress-future-pro"),
                 "fields" => [

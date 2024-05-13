@@ -19,4 +19,5 @@ abstract class HooksAbstract {
     const ACTION_ASYNC_EXECUTE_NODE = 'publishpressfuturepro_workflow_async_execute_node';
     const ACTION_UNSCHEDULE_RECURRING_NODE_ACTION = 'publishpressfuturepro_workflow_unschedule_recurring_node_action';
     const ACTION_LEGACY_ACTION = 'publishpressfuturepro_legacy_action';
+    const ACTION_RENDER_WORKFLOW_EDITOR_PAGE = 'publishpressfuturepro_render_workflow_editor_page';
 }
