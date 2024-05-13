@@ -7,7 +7,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
-class PostManualEnabler implements InitializableInterface
+class ManualPostEnabler implements InitializableInterface
 {
     /**
      * @var HookableInterface
