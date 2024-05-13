@@ -4,15 +4,10 @@ namespace PublishPress\FuturePro\Modules\Workflows;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
-use PublishPress\FuturePro\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
-use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
-use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
 class Module implements InitializableInterface
 {

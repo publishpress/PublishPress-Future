@@ -1,4 +1,5 @@
 <?php
+
 namespace PublishPress\FuturePro\Modules\Workflows\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;

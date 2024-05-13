@@ -4,10 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorModuleHooksAbstract;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
-use PublishPress\FuturePro\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
-use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
 class PostManualEnabler implements InitializableInterface

@@ -1,16 +1,12 @@
 <?php
+
 namespace PublishPress\FuturePro\Modules\Workflows\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
-use PublishPress\FuturePro\Modules\Workflows\Models\PostStatusesModel;
-use PublishPress\FuturePro\Modules\Workflows\Models\PostTypesModel;
-use PublishPress\FuturePro\Modules\Workflows\Models\TaxonomiesModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 
 class WorkflowsList implements InitializableInterface
