@@ -39,6 +39,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowEngine;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Models\CronSchedulesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 use PublishPress\FuturePro\Modules\Workflows\Rest\RestApiManager;
 
