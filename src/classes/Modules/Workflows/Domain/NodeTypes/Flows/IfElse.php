@@ -61,7 +61,14 @@ class IfElse implements NodeTypeInterface
 
     public function getOutputSchema(): array
     {
-        return [];
+        return [
+            [
+                "name" => "input",
+                "type" => "input",
+                "label" => __("Node input", "publishpress-future-pro"),
+                "description" => __("The input data for this node.", "publishpress-future-pro"),
+            ]
+        ];
     }
 
     public function getCSSClass(): string
