@@ -121,6 +121,7 @@ class PostAction implements NodeRunnerPreparerInterface
         $postType = $nodeSettings['postQuery']['postType'] ?? false;
         $postQuery = [
             'posts_per_page' => -1,
+            'post_status' => 'any',
         ];
         if (! empty($postType)) {
             $postQuery['post_type'] = $postType;
