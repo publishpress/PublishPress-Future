@@ -12,7 +12,8 @@ import {
     WorkflowData as WorkflowDataType,
     UserData,
     SiteData,
-    NodeData
+    NodeData,
+    ArrayData
 } from "./data-types";
 
 export function WorkflowData() {
@@ -50,6 +51,7 @@ export function WorkflowData() {
         UserData(),
         SiteData(),
         NodeData(),
+        ArrayData(),
     ]
     setDataTypes(dataTypes);
 

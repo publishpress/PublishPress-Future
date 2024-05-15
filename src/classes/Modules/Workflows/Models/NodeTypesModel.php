@@ -7,6 +7,7 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick;
@@ -106,6 +107,15 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "background" => self::DEFAULT_ICON_BACKGROUND,
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
+            ],
+            [
+                "name" => "db-query",
+                "label" => __("Data Query", "publishpress-future-pro"),
+                "icon" => [
+                    "src" => "db-query",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
             ]
         ];
     }
@@ -166,6 +176,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CorePostTermsSet::NODE_NAME => new CorePostTermsSet(),
             CorePostTermsRemove::NODE_NAME => new CorePostTermsRemove(),
             CorePostChangeStatus::NODE_NAME => new CorePostChangeStatus(),
+            CorePostQuery::NODE_NAME => new CorePostQuery(),
         ];
 
         if (function_exists('ray')) {

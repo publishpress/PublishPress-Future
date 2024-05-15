@@ -8,3 +8,4 @@ export { default as WorkflowData } from './workflow';
 export { default as UserData } from './user';
 export { default as SiteData } from './site';
 export { default as NodeData } from './node';
+export { default as ArrayData } from './array';

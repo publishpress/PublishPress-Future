@@ -56,6 +56,10 @@ class CoreSchedule implements NodeRunnerInterface
         $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
         $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
 
+        if (! isset($nodeSettings['schedule'])) {
+            $nodeSettings['schedule'] = [];
+        }
+
         $recurrence = $nodeSettings['schedule']['recurrence'] ?? 'single';
         $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? 'event';
 
@@ -70,8 +74,8 @@ class CoreSchedule implements NodeRunnerInterface
             return;
         }
 
-        $priority = (int)$nodeSettings['schedule']['priority'] ?? 10;
-        $unique = (bool)$nodeSettings['schedule']['unique'] ?? true;
+        $priority = (int)($nodeSettings['schedule']['priority'] ?? 10);
+        $unique = (bool)($nodeSettings['schedule']['unique'] ?? true);
 
         if (empty($priority)) {
             $priority = 10;
@@ -442,8 +446,9 @@ class CoreSchedule implements NodeRunnerInterface
         $nodeId = $args['step']['node']['id'];
         $nodeSettings = $args['step']['node']['data']['settings'] ?? [];
         $scheduleSettings = $nodeSettings['schedule'] ?? [];
+        $recurrence = $scheduleSettings['recurrence'] ?? 'single';
 
-        $isRecurrent = $scheduleSettings['recurrence'] !== 'single' ?? false;
+        $isRecurrent = $recurrence !== 'single';
         $unscheduleRecurringAction = false;
 
         if ($isRecurrent) {

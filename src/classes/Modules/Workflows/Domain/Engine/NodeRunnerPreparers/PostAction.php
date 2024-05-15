@@ -32,37 +32,29 @@ class PostAction implements NodeRunnerPreparerInterface
             $nodeSettings = $this->getNodeSettings($node);
             $workflowId = $this->getWorkflowIdFromGlobalVariables($globalVariables);
 
-            if (empty($nodeSettings)) {
-                throw new Exception('Node has empty settings');
-            }
-
             if (empty($input)) {
                 throw new Exception('Node has empty input');
             }
 
-            $postSource = $nodeSettings['postQuery']['postSource'] ?? '';
-
-            if (empty($postSource)) {
-                throw new Exception('No post source defined');
+            if (! is_array($input)) {
+                $input = [$input];
             }
 
-            $posts = [];
-            if ($postSource === 'input') {
-                $posts = [$this->getPostFromInput($input)];
-            } else {
-                $posts = $this->getPostsFromQuery($nodeSettings);
-            }
-
-            // No post found
-            if (empty($posts)) {
-                return;
-            }
+            // TODO: Add a setting to allow the user to choose the key to get the posts, if more than one is available
+            $inputKeys = array_keys($input);
+            $posts = $input[$inputKeys[0]];
 
             foreach ($posts as $post) {
                 if (is_array($post)) {
-                    $postId = $post['post_id'];
-                } else {
+                    if (isset($post['post_id'])) {
+                        $postId = $post['post_id'];
+                    } elseif (isset($post['ID'])) {
+                        $postId = $post['ID'];
+                    }
+                } elseif (is_object($post) && isset($post->ID)) {
                     $postId = $post->ID;
+                } else {
+                    $postId = intval($post);
                 }
 
                 call_user_func($actionCallback, $postId, $nodeSettings);
@@ -102,68 +94,5 @@ class PostAction implements NodeRunnerPreparerInterface
     public function logError(string $message, int $workflowId, array $step)
     {
         $this->generalNodeRunnerPreparer->logError($message, $workflowId, $step);
-    }
-
-    private function getPostFromInput(array $input)
-    {
-        $postInputNames = $this->getPostInputNames($input);
-
-        if (empty($postInputNames)) {
-            throw new Exception('No post input found');
-        }
-
-        return $input[$postInputNames[0]];
-    }
-
-    private function getPostsFromQuery(array $nodeSettings)
-    {
-        // Post Type
-        $postType = $nodeSettings['postQuery']['postType'] ?? false;
-        $postQuery = [
-            'posts_per_page' => -1,
-            'post_status' => 'any',
-        ];
-        if (! empty($postType)) {
-            $postQuery['post_type'] = $postType;
-        }
-
-        // Post ID
-        $postId = $nodeSettings['postQuery']['postId'] ?? false;
-        if (! empty($postId)) {
-            if (! is_array($postId)) {
-                $postId = [$postId];
-            }
-
-            $postId = array_map('intval', $postId);
-
-            $postQuery['post__in'] = $postId;
-        }
-
-        // Post Status
-        $postStatus = $nodeSettings['postQuery']['postStatus'] ?? false;
-        if (! empty($postStatus)) {
-            $postQuery['post_status'] = $postStatus;
-        }
-
-        return get_posts($postQuery);
-    }
-
-    private function getPostInputNames(array $input): array
-    {
-        $postInputIndexes = [];
-
-        foreach ($input as $name => $value) {
-            if (is_array($value) && isset($value['post_id'])) {
-                $postInputIndexes[] = $name;
-                continue;
-            }
-
-            if (is_object($value) && get_class($value) === 'WP_Post') {
-                $postInputIndexes[] = $name;
-                continue;
-            }
-        }
-
-        return $postInputIndexes;
     }
 }

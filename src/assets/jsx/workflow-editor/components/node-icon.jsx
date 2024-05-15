@@ -12,6 +12,7 @@ import { SiWoo } from 'react-icons/si';
 import { FaUser } from 'react-icons/fa';
 import { HiMiniDocumentText } from 'react-icons/hi2';
 import { FaBug } from 'react-icons/fa6';
+import { ImDatabase } from "react-icons/im";
 
 export function NodeIcon({ icon, showColors = false, className }) {
 	const iconSrc = icon?.src || icon;
@@ -43,6 +44,12 @@ export function NodeIcon({ icon, showColors = false, className }) {
 	if (iconSrc === 'fa6-fabug') {
 		icon = {
 			src: FaBug,
+		};
+	}
+
+	if (iconSrc === 'db-query') {
+		icon = {
+			src: ImDatabase,
 		};
 	}
 

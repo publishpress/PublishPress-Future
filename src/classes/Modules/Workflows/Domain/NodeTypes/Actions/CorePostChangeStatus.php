@@ -69,24 +69,6 @@ class CorePostChangeStatus implements NodeTypeInterface
                     ],
                 ]
             ],
-            [
-                "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("The query defines the posts that will be moved to another status by this action. If no query is provided, no post will be updated.", "publishpress-future-pro"),
-                "fields" => [
-                    [
-                        "name" => "postQuery",
-                        "type" => "postQuery",
-                        "label" => __("Post query", "publishpress-future-pro"),
-                        "description" => __(
-                            "The query defines the posts that will be updated by this action.",
-                            "publishpress-future-pro"
-                        ),
-                        "settings" => [
-                            "acceptsInput" => true,
-                        ],
-                    ],
-                ]
-            ]
         ];
     }
 
