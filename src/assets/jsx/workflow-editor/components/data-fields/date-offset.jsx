@@ -50,7 +50,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     };
 
     const whenToRunOptions = [
-        { name: __("As soon as possible", "publishpress-future-pro"), id: "event" },
+        { name: __("As soon as possible", "publishpress-future-pro"), id: "now" },
         { name: __("Specific date", "publishpress-future-pro"), id: "date" },
         { name: __("After a specific date", "publishpress-future-pro"), id: "offset" },
     ];
@@ -58,6 +58,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const dateSourceOptions = [
         { name: __("Select in the calendar", "publishpress-future-pro"), id: "calendar" },
+        { name: __("Event date", "publishpress-future-pro"), id: "event"}
     ];
 
     if (variables.length > 0) {

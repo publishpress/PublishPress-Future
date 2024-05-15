@@ -89,7 +89,7 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getCSSClass(): string
     {
-        return "react-flow__node-genericAction";
+        return "react-flow__node-queryAction";
     }
 
     public function getSocketSchema(): array

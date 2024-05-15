@@ -61,10 +61,10 @@ class CoreSchedule implements NodeRunnerInterface
         }
 
         $recurrence = $nodeSettings['schedule']['recurrence'] ?? 'single';
-        $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? 'event';
+        $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? 'now';
 
         // Schedule
-        if ('single' === $recurrence && 'event' === $whenToRun) {
+        if ('single' === $recurrence && 'now' === $whenToRun) {
             $timestamp = 0;
         } else {
             $timestamp = $this->getSchedulingTimestamp($nodeSettings, $input, $globalVariables);
@@ -87,7 +87,7 @@ class CoreSchedule implements NodeRunnerInterface
         $actionArgs = [$this->compactArguments($step, $input, $globalVariables)];
 
         if ('single' === $recurrence) {
-            if ($whenToRun === 'event') {
+            if ($whenToRun === 'now') {
                 $this->cron->scheduleAsyncAction(
                     HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
                     $actionArgs,
@@ -185,18 +185,20 @@ class CoreSchedule implements NodeRunnerInterface
     {
         $scheduleSettings = $nodeSettings['schedule'];
 
-        $whenToRun = $scheduleSettings['whenToRun'] ?? 'event';
+        $whenToRun = $scheduleSettings['whenToRun'] ?? 'now';
         $dateSource = $scheduleSettings['dateSource'] ?? 'calendar';
 
         $timestamp = 0;
         switch ($whenToRun) {
-            case 'event':
+            case 'now':
                 $timestamp = time();
                 break;
             case 'date':
             case 'offset':
                 if ($dateSource === 'calendar') {
                     $timestamp = strtotime($scheduleSettings['specificDate']);
+                } elseif ($dateSource === 'event') {
+                    $timestamp = time();
                 } else {
                     $dateSourceParts = explode('.', $dateSource);
                     $timestamp = $this->getVariableValue($dateSourceParts, [$input, $globalVariables]);
