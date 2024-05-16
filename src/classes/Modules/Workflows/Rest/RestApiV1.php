@@ -5,7 +5,9 @@ namespace PublishPress\FuturePro\Modules\Workflows\Rest;
 use WP_Error;
 use WP_REST_Server;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Models\PostModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
 class RestApiV1 implements RestApiManagerInterface
 {
@@ -108,6 +110,26 @@ class RestApiV1 implements RestApiManagerInterface
                     'taxonomy' => [
                         'description' => __('The taxonomy name', 'publishpress-future-pro'),
                         'type' => 'string',
+                        'required' => true
+                    ]
+                ],
+                'show_in_index' => false,
+                'show_in_rest' => true,
+            ]
+        );
+
+        // Get the post workflow settings
+        register_rest_route(
+            self::BASE_PATH,
+            '/posts/workflow-settings/(?P<post>\d+)',
+            [
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => [$this, 'getPostWorkflowSettings'],
+                'permission_callback' => [$this, 'getPostWorkflowSettingsPermissions'],
+                'args' => [
+                    'post' => [
+                        'description' => __('The post ID', 'publishpress-future-pro'),
+                        'type' => 'integer',
                         'required' => true
                     ]
                 ],
@@ -241,6 +263,20 @@ class RestApiV1 implements RestApiManagerInterface
         return rest_ensure_response($terms);
     }
 
+    public function getPostWorkflowSettings($request)
+    {
+        $postId = (int) $request['post'];
+
+        $postModel = new PostModel();
+        $postModel->load($postId);
+
+        $manuallyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
+
+        return rest_ensure_response([
+            'manuallyEnabledWorkflows' => $manuallyEnabledWorkflows,
+        ]);
+    }
+
     public function getWorkflowPermissions($request)
     {
         return current_user_can(self::PERMISSION_READ);
@@ -262,6 +298,11 @@ class RestApiV1 implements RestApiManagerInterface
     }
 
     public function getTaxonomyTermsPermissions($request)
+    {
+        return current_user_can(self::PERMISSION_READ);
+    }
+
+    public function getPostWorkflowSettingsPermissions($request)
     {
         return current_user_can(self::PERMISSION_READ);
     }

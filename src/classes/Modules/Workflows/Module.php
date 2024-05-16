@@ -50,6 +50,10 @@ class Module implements InitializableInterface
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->workflowEngine = $workflowEngine;
 
+        /*
+         * We initialize the engine in the constructor because it requires
+         * the init hook has not been fired yet. The initialize method runs in the init hook.
+         */
         $this->initializeEngine();
     }
 
@@ -66,7 +70,7 @@ class Module implements InitializableInterface
             new Controllers\WorkflowEditor($this->hooks, $this->nodeTypesModel, $this->cronSchedulesModel),
             new Controllers\RestApi($this->hooks, $this->restApiManager),
             new Controllers\FutureLegacyAction($this->hooks),
-            new Controllers\ManualPostEnabler($this->hooks),
+            new Controllers\ManualPostTrigger($this->hooks),
             new Controllers\ScheduledActions($this->hooks),
         ];
 

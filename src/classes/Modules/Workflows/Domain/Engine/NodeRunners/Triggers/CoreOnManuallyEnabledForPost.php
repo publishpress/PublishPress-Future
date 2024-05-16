@@ -13,7 +13,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
     const NODE_NAME = NodeTypeCoreOnManuallyEnabledForPost::NODE_NAME;
 
-    const META_KEY_MANUALLY_ENABLED = '_workflow_manually_enabled_';
+    const META_KEY_MANUALLY_TRIGGERED = '_workflow_manually_triggered_';
 
     /**
      * @var HookableInterface
@@ -40,6 +40,11 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
      */
     private $postQueryValidator;
 
+    /**
+     * @var int
+     */
+    private $workflowId;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerPreparerInterface $nodeRunnerPreparer,
@@ -54,12 +59,19 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
     {
         $this->step = $step;
         $this->globalVariables = $globalVariables;
+        $this->workflowId = $workflowId;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_SAVE_POST, [$this, 'triggerCallback'], 10, 3);
+        $this->hooks->addAction(HooksAbstract::ACTION_MANUALLY_TRIGGERED_WORKFLOW, [$this, 'triggerCallback'], 10, 2);
     }
 
-    public function triggerCallback($postId, $post, $update)
+    public function triggerCallback($postId, $workflowId)
     {
+        if ($this->workflowId !== $workflowId) {
+            return;
+        }
+
+        $post = get_post($postId);
+
         $postQueryArgs = [
             'post' => $post,
             'node' => $this->step['node'],
@@ -69,16 +81,9 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
             return false;
         }
 
-        // Look for the metadata that indicates the post was manually enabled
-        $manuallyEnabled = (bool)get_post_meta($postId, self::META_KEY_MANUALLY_ENABLED . $this->workflowId, true);
-        if (! $manuallyEnabled) {
-            return false;
-        }
-
         $output = [
             'postId' => $postId,
             'post' => $post,
-            'update' => $update,
         ];
 
         $this->nodeRunnerPreparer->runNextSteps($this->step, $output, $this->globalVariables);

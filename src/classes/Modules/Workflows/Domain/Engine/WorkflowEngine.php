@@ -116,13 +116,9 @@ class WorkflowEngine implements WorkflowEngineInterface
                     'label' => $triggerNode['data']['label'],
                 ];
 
-                $step = [
-                    'node' => $triggerNode,
-                    'next' => $routineTree[$triggerId],
-                ];
 
                 // Setup the trigger
-                $triggerRunner->setup($workflowId, $step, $globalVariables);
+                $triggerRunner->setup($workflowId, $routineTree[$triggerId], $globalVariables);
             }
         }
     }

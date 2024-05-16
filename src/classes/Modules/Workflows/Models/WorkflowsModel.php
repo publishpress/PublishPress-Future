@@ -2,6 +2,7 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowsModelInterface;
 use WP_Query;
@@ -27,9 +28,34 @@ class WorkflowsModel implements WorkflowsModelInterface
         return $this->getPublishedWorkflowsWithMetadataAsOptions(WorkflowModel::META_KEY_HAS_LEGACY_TRIGGER, 1);
     }
 
-    public function getPublishedWorkflowsWithManualTriggerAsOptions(): array
+    public function getPublishedWorkflowsWithManualTrigger(): array
     {
-        return $this->getPublishedWorkflowsWithMetadataAsOptions(WorkflowModel::META_KEY_HAS_MANUAL_TRIGGER, 1);
+        $workflows = $this->getPublishedWorkflowsWithMetadataAsOptions(WorkflowModel::META_KEY_HAS_MANUAL_TRIGGER, 1);
+
+        $result = [];
+        foreach ($workflows as &$workflow) {
+            $workflowModel = new WorkflowModel();
+            $workflowModel->load($workflow['value']);
+
+            $triggers = $workflowModel->getTriggerNodes();
+
+            $resultItem = [
+                'workflowId' => $workflow['value'],
+                'label' => $workflow['label'],
+            ];
+
+            foreach ($triggers as $trigger) {
+                if ($trigger['data']['name'] !== CoreOnManuallyEnabledForPost::NODE_NAME) {
+                    continue;
+                }
+
+                $resultItem['label'] = $trigger['data']['settings']['checkboxLabel'] ?? $workflow['label'];
+            }
+
+            $result[] = $resultItem;
+        }
+
+        return $result;
     }
 
     public function getPublishedWorkflowsWithMetadataAsOptions($metaKey, $metaValue): array

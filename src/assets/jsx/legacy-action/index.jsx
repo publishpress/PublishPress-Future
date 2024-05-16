@@ -25,7 +25,6 @@ const Fields = ({ storeName }) => {
     } = dispatch(storeName);
 
     const handleActionChange = (value) => {
-        console.log('handleActionChange', value);
         setExtraDataByName('workflow', value);
     }
 

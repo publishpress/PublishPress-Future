@@ -177,7 +177,6 @@ var Fields = function Fields(_ref) {
   var _dispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.dispatch)(storeName),
     setExtraDataByName = _dispatch.setExtraDataByName;
   var handleActionChange = function handleActionChange(value) {
-    console.log('handleActionChange', value);
     setExtraDataByName('workflow', value);
   };
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
