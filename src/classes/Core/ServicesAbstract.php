@@ -47,4 +47,5 @@ abstract class ServicesAbstract
     const GENERAL_ACTION_NODE_RUNNER_PREPARER = 'future.pro/general-action-node-runner-preparer';
     const POST_ACTION_NODE_RUNNER_PREPARER = 'future.pro/post-action-node-runner-preparer';
     const NODE_RUNNER_FACTORY = 'future.pro/node-runner-factory';
+    const INPUT_VALIDATOR_POST_QUERY = 'future.pro/input-validator-post-query';
 }

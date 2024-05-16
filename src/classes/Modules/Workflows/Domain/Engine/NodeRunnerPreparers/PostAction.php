@@ -95,4 +95,54 @@ class PostAction implements NodeRunnerPreparerInterface
     {
         $this->generalNodeRunnerPreparer->logError($message, $workflowId, $step);
     }
+
+    public function validatePost($post, $node)
+    {
+        if (! $this->hasValidPostType($post, $node)) {
+            return false;
+        }
+
+        if (! $this->hasValidPostId($post, $node)) {
+            return false;
+        }
+
+        if (! $this->hasValidPostStatus($post, $node)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function hasValidPostType($post, array $node)
+    {
+        $settingPostTypes = $node['data']['settings']['postQuery']['postType'] ?? [];
+
+        if (!empty($settingPostTypes) && !in_array($post->post_type, $settingPostTypes)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function hasValidPostId($postId, array $node)
+    {
+        $settingPostIds = $node['data']['settings']['postQuery']['postIds'] ?? [];
+
+        if (!empty($settingPostIds) && !in_array($postId, $settingPostIds)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private function hasValidPostStatus($post, array $node)
+    {
+        $settingPostStatus = $node['data']['settings']['postQuery']['postStatus'] ?? [];
+
+        if (!empty($settingPostStatus) && !in_array($post->post_status, $settingPostStatus)) {
+            return false;
+        }
+
+        return true;
+    }
 }

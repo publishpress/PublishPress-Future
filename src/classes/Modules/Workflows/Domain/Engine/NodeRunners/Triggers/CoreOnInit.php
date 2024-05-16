@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Tri
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit as NodeTypeCoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 
 class CoreOnInit implements NodeTriggerRunnerInterface
@@ -19,49 +20,38 @@ class CoreOnInit implements NodeTriggerRunnerInterface
     /**
      * @var array
      */
-    private $node;
-
-    /**
-     * @var array
-     */
-    private $routineTree;
+    private $step;
 
     /**
      * @var array
      */
     private $globalVariables;
 
-    public function __construct(HookableInterface $hooks)
-    {
+    /**
+     * @var NodeRunnerPreparerInterface
+     */
+    private $nodeRunnerPreparer;
+
+    public function __construct(
+        HookableInterface $hooks,
+        NodeRunnerPreparerInterface $nodeRunnerPreparer
+    ) {
         $this->hooks = $hooks;
+        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
     }
 
-    public function setup(int $workflowId, array $node, array $routineTree = [], array $globalVariables = []): void
+    public function setup(int $workflowId, array $step, array $globalVariables = []): void
     {
-        $this->node = $node;
-        $this->routineTree = $routineTree;
+        $this->step = $step;
         $this->globalVariables = $globalVariables;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_INIT, [$this, 'triggerCallback'], 15);
+        $this->hooks->addAction(HooksAbstract::ACTION_INIT, [$this, 'triggerCallback'], 10);
     }
 
     public function triggerCallback()
     {
-        // Get next nodes in the routine tree
-        $nextSteps = [];
-        if (isset($this->routineTree['next']['output'])) {
-            $nextSteps = $this->routineTree['next']['output'];
-        }
+        $triggerOutput = [];
 
-        if (empty($nextSteps)) {
-            return false;
-        }
-
-        $output = [];
-
-        // Execute the next nodes
-        foreach ($nextSteps as $nextStep) {
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $output, $this->globalVariables);
-        }
+        $this->nodeRunnerPreparer->runNextSteps($this->step, $triggerOutput, $this->globalVariables);
     }
 }

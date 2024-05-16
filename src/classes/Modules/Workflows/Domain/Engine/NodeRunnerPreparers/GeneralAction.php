@@ -20,8 +20,6 @@ class GeneralAction implements NodeRunnerPreparerInterface
 
     public function setup(array $step, callable $actionCallback, array $input = [], array $globalVariables = []): void
     {
-        $nodeSettings = $this->getNodeSettings($this->getNodeFromStep($step));
-
         call_user_func($actionCallback, $step, $input, $globalVariables);
 
         $this->runNextSteps($step, $input, $globalVariables);

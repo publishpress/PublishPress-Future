@@ -5,6 +5,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Tri
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated as NodeTypeCoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\InputValidatorsInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 
 class CoreOnPostUpdated implements NodeTriggerRunnerInterface
@@ -19,27 +21,36 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
     /**
      * @var array
      */
-    private $node;
-
-    /**
-     * @var array
-     */
-    private $routineTree;
+    private $step;
 
     /**
      * @var array
      */
     private $globalVariables;
 
-    public function __construct(HookableInterface $hooks)
-    {
+    /**
+     * @var NodeRunnerPreparerInterface
+     */
+    private $nodeRunnerPreparer;
+
+    /**
+     * @var InputValidatorsInterface
+     */
+    private $postQueryValidator;
+
+    public function __construct(
+        HookableInterface $hooks,
+        NodeRunnerPreparerInterface $nodeRunnerPreparer,
+        InputValidatorsInterface $postQueryValidator
+    ) {
         $this->hooks = $hooks;
+        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->postQueryValidator = $postQueryValidator;
     }
 
-    public function setup(int $workflowId, array $node, array $routineTree = [], array $globalVariables = []): void
+    public function setup(int $workflowId, array $step, array $globalVariables = []): void
     {
-        $this->node = $node;
-        $this->routineTree = $routineTree;
+        $this->step = $step;
         $this->globalVariables = $globalVariables;
 
         $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 10, 3);
@@ -47,26 +58,12 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 
     public function triggerCallback($postId, $postAfter, $postBefore)
     {
-        // Get next nodes in the routine tree
-        $nextSteps = [];
-        if (isset($this->routineTree['next']['output'])) {
-            $nextSteps = $this->routineTree['next']['output'];
-        }
+        $postQueryArgs = [
+            'post' => $postBefore,
+            'node' => $this->step['node'],
+        ];
 
-        if (empty($nextSteps)) {
-            return false;
-        }
-
-        // Decide we should proceed with the next nodes based on the trigger settings
-        if (! $this->hasValidPostType($postBefore)) {
-            return false;
-        }
-
-        if (! $this->hasValidPostId($postId)) {
-            return false;
-        }
-
-        if (! $this->hasValidPostStatus($postBefore)) {
+        if (! $this->postQueryValidator->validate($postQueryArgs)) {
             return false;
         }
 
@@ -76,45 +73,6 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             'postAfter' => $postAfter,
         ];
 
-        // Execute the next nodes
-        foreach ($nextSteps as $nextStep) {
-            /**
-             * @var array $nextStep
-             */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $output, $this->globalVariables);
-        }
-    }
-
-    private function hasValidPostType($post)
-    {
-        $settingPostTypes = $this->node['data']['settings']['postQuery']['postType'] ?? [];
-
-        if (!empty($settingPostTypes) && !in_array($post->post_type, $settingPostTypes)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function hasValidPostId($postId)
-    {
-        $settingPostIds = $this->node['data']['settings']['postQuery']['postIds'] ?? [];
-
-        if (!empty($settingPostIds) && !in_array($postId, $settingPostIds)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private function hasValidPostStatus($post)
-    {
-        $settingPostStatus = $this->node['data']['settings']['postQuery']['postStatus'] ?? [];
-
-        if (!empty($settingPostStatus) && !in_array($post->post_status, $settingPostStatus)) {
-            return false;
-        }
-
-        return true;
+        $this->nodeRunnerPreparer->runNextSteps($this->step, $output, $this->globalVariables);
     }
 }

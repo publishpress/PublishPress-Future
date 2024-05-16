@@ -18,6 +18,7 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\GeneralAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\PostAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus;
@@ -287,27 +288,48 @@ return [
             switch ($nodeName) {
                 // Triggers
                 case CoreOnSavePost::NODE_NAME:
-                    $nodeRunner = new CoreOnSavePost($container->get(ServicesAbstract::HOOKS));
+                    $nodeRunner = new CoreOnSavePost(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
+                        $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY)
+                    );
                     break;
 
                 case CoreOnPostUpdated::NODE_NAME:
-                    $nodeRunner = new CoreOnPostUpdated($container->get(ServicesAbstract::HOOKS));
+                    $nodeRunner = new CoreOnPostUpdated(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
+                        $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY)
+                    );
                     break;
 
                 case CoreOnInit::NODE_NAME:
-                    $nodeRunner = new CoreOnInit($container->get(ServicesAbstract::HOOKS));
+                    $nodeRunner = new CoreOnInit(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
+                    );
                     break;
 
                 case CoreOnAdminInit::NODE_NAME:
-                    $nodeRunner = new CoreOnAdminInit($container->get(ServicesAbstract::HOOKS));
+                    $nodeRunner = new CoreOnAdminInit(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
+                    );
                     break;
 
                 case CoreOnManuallyEnabledForPost::NODE_NAME:
-                    $nodeRunner = new CoreOnManuallyEnabledForPost($container->get(ServicesAbstract::HOOKS));
+                    $nodeRunner = new CoreOnManuallyEnabledForPost(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
+                        $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY)
+                    );
                     break;
 
                 case FutureLegacyAction::NODE_NAME:
-                    $nodeRunner = new FutureLegacyAction($container->get(ServicesAbstract::HOOKS));
+                    $nodeRunner = new FutureLegacyAction(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
+                    );
                     break;
 
                 // Actions
@@ -406,5 +428,9 @@ return [
 
             return $nodeRunner;
         };
+    },
+
+    ServicesAbstract::INPUT_VALIDATOR_POST_QUERY => static function (ContainerInterface $container) {
+        return new PostQuery();
     },
 ];
