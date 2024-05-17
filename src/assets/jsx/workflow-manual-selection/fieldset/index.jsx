@@ -39,8 +39,12 @@ export function Fieldset({store, context}) {
 
     return (
         <>
-            <input type='hidden' name='future_workflow_view' value={context} />
-            {controls}
+            {controls.length > 0 && (
+                <div id="publishpress-future-pro-quick-edit-wrapper">
+                    <input type='hidden' name='future_workflow_view' value={context} />
+                    {controls}
+                </div>
+            )}
         </>
     );
 }

@@ -3725,11 +3725,13 @@ function Fieldset(_ref) {
       }
     });
   });
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("input", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, controls.length > 0 && /*#__PURE__*/React.createElement("div", {
+    id: "publishpress-future-pro-quick-edit-wrapper"
+  }, /*#__PURE__*/React.createElement("input", {
     type: "hidden",
     name: "future_workflow_view",
     value: context
-  }), controls);
+  }), controls));
 }
 
 /***/ }),
@@ -4048,20 +4050,19 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `#publishpress-future-pro-bulk-edit,
-#publishpress-future-pro-quick-edit {
+___CSS_LOADER_EXPORT___.push([module.id, `#publishpress-future-pro-quick-edit-wrapper {
     max-width: 340px;
     padding: 14px;
     border: 1px solid #ddd;
     margin-bottom: 20px;
 }
 
-#publishpress-future-pro-bulk-edit label,
-    #publishpress-future-pro-quick-edit label {
+
+#publishpress-future-pro-quick-edit-wrapper label {
     display: inline-block;
     max-width: 100%;
 }
-`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-manual-selection/css/style.css"],"names":[],"mappings":"AAAA;;IAEI,gBAAgB;IAChB,aAAa;IACb,sBAAsB;IACtB,mBAAmB;AACvB;;AAEA;;IAEI,qBAAqB;IACrB,eAAe;AACnB","sourcesContent":["#publishpress-future-pro-bulk-edit,\n#publishpress-future-pro-quick-edit {\n    max-width: 340px;\n    padding: 14px;\n    border: 1px solid #ddd;\n    margin-bottom: 20px;\n}\n\n#publishpress-future-pro-bulk-edit label,\n    #publishpress-future-pro-quick-edit label {\n    display: inline-block;\n    max-width: 100%;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-manual-selection/css/style.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;IAChB,aAAa;IACb,sBAAsB;IACtB,mBAAmB;AACvB;;;AAGA;IACI,qBAAqB;IACrB,eAAe;AACnB","sourcesContent":["#publishpress-future-pro-quick-edit-wrapper {\n    max-width: 340px;\n    padding: 14px;\n    border: 1px solid #ddd;\n    margin-bottom: 20px;\n}\n\n\n#publishpress-future-pro-quick-edit-wrapper label {\n    display: inline-block;\n    max-width: 100%;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

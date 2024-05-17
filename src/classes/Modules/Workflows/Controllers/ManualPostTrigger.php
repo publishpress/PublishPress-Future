@@ -53,7 +53,7 @@ class ManualPostTrigger implements InitializableInterface
             return;
         }
 
-        require __DIR__ . "/../Views/manual-trigger-quick-edit.html.php";
+        require_once __DIR__ . "/../Views/manual-trigger-quick-edit.html.php";
     }
 
     public function processQuickEditUpdate($postId)
