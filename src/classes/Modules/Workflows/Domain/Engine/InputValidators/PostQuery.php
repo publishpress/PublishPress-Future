@@ -10,7 +10,7 @@ class PostQuery implements InputValidatorsInterface
     {
         $post = $args['post'];
         $node = $args['node'];
-        $nodeSettings = $node['data']['settings'];
+        $nodeSettings = $node['data']['settings'] ?? [];
 
         if (! $this->hasValidPostType($post, $nodeSettings)) {
             return false;

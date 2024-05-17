@@ -1,21 +1,34 @@
 .react-flow__node-body {
-    padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     color: #171717;
-    font-size: 12px;
+    font-size: 10px;
     min-width: 140px;
     box-sizing: border-box;
     border: 1px solid transparent;
 }
 
+.react-flow__node-inner-body {
+    padding: 6px;
+}
+
 .react-flow__node-label {
     text-align: center;
     width: 100%;
+    position: relative;
+    padding-left: 22px;
+    text-align: left;
+}
+
+.react-flow__node-label svg {
+    margin-right: 4px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
 }
 
 .react-flow__handle {
-    width: 10px !important;
-    height: 10px !important;
+    width: 8px !important;
+    height: 8px !important;
     box-sizing: border-box;
 }
 
@@ -27,73 +40,131 @@
     top: -4px !important;
 }
 
+/* GENERIC NODE */
+
 .react-flow__node-genericNode {
     background-color: #b2b2c9;
-    border: 2px solid #b2b2c9;
+    border: 1px solid #b2b2c9;
 }
 
 .react-flow__node-genericNode .react-flow__handle {
     background-color: #fff;
-    border: 2px solid #b2b2c9;
+    border: 1px solid #b2b2c9;
 }
 
+
+/* TRIGGER */
+
 .react-flow__node-genericTrigger {
-    background-color: #B594B6;
-    border: 2px solid #B594B6;
+    background-color: #dce5df;
+    border: 1px solid #b9c0bb;
+    border-top-left-radius: 0;
 }
 
 .react-flow__node-genericTrigger .react-flow__handle {
     background-color: #fff;
-    border: 2px solid #7e798b;
+    border: 1px solid #B594B6;
 }
 
+.react-flow__trigger_tag {
+    background-color: #f3f3f3;
+    border-color: #e1e1e1;
+    border-style: solid;
+    border-left-width: 1px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 0;
+    color: #828282;
+    padding: 0px 8px;
+    padding-left: 18px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 8px;
+    display: inline-block;
+    position: relative;
+}
+
+.react-flow__trigger_tag svg {
+    margin-right: 4px;
+    display: block;
+    position: absolute;
+    left: 5px;
+    top: 4px;
+}
+
+/* GENERIC ACTION */
+
 .react-flow__node-genericAction {
-    background-color: #5BC0EB;
-    border: 2px solid #5BC0EB;
+    background-color: #89bae4;
+    border: 1px solid #7199bc;
 }
 
 .react-flow__node-genericAction .react-flow__handle {
     background-color: #fff;
-    border: 2px solid #43c5ce;
+    border: 1px solid #7199bc;
 }
 
+/* GENERIC FLOW */
+
 .react-flow__node-genericFlow {
-    background-color: #F7D08A;
-    border: 2px solid #F7D08A;
+    background-color: #f8ddad;
+    border: 1px solid #d3bc94;
 }
 
 .react-flow__node-genericFlow .react-flow__handle {
     background-color: #fff;
-    border: 2px solid #d6eb6d;
+    border: 1px solid #d3bc94;
 }
 
+/* QUERY ACTION */
+
 .react-flow__node-queryAction {
-    background-color: #836ec3;
-    border: 2px solid #836ec3;
+    background-color: #d8b6f2;
+    border: 1px solid #b891c2;
 }
 
 .react-flow__node-queryAction .react-flow__handle {
     background-color: #fff;
-    border: 2px solid #43c5ce;
+    border: 1px solid #b891c2;
 }
 
+/* DEBUG ACTION */
+
 .react-flow__node-debugAction {
-    background-color: #c36e8d;
-    border: 2px solid #c36e8d;
+    background-color: #f0aec6;
+    border: 1px solid #cf96ab;
 }
 
 .react-flow__node-debugAction .react-flow__handle {
     background-color: #fff;
-    border: 2px solid #c36e8d;
+    border: 1px solid #cf96ab;
 }
+
+/* SELECTED NODES */
 
 .react-flow__node.selected .react-flow__node-body {
     filter: drop-shadow( 0px 0px 3px rgba(118, 21, 150, 0.7));
     -webkit-filter: drop-shadow( 0px 0px 3px rgba(118, 21, 150, 0.7));
-    border: 2px solid #efefef;
+    border: 1px solid #efefef;
 }
 
 .react-flow__edge.selected {
     filter: drop-shadow( 0px 0px 2px rgba(118, 21, 150, 0.7));
     -webkit-filter: drop-shadow( 0px 0px 2px rgba(118, 21, 150, 0.7));
+}
+
+/* SOCKET AREA */
+
+.react-flow__node-socket-area {
+    font-size: 6px;
+    background-color: #fff;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.react-flow__node-socket-name {
+    padding: 2px;
+    padding-bottom: 6px;
+    text-align: center;
+    line-height: 100%;
 }

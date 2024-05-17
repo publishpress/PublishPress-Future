@@ -31,6 +31,7 @@ import {
     SIDEBAR_NODE_EDGE,
     SIDEBAR_WORKFLOW,
 } from "../settings-sidebar/constants";
+import TriggerNode from "../node-types/trigger";
 
 const GRID_SIZE = 10;
 
@@ -86,6 +87,7 @@ export const FlowEditor = (props) => {
 
     const nodeTypes = useMemo(() => ({
         generic: GenericNode,
+        trigger: TriggerNode,
     }), []);
 
     const updateFlowInEditedWorkflow = useCallback(() => {

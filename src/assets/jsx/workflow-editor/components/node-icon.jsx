@@ -14,7 +14,7 @@ import { HiMiniDocumentText } from 'react-icons/hi2';
 import { FaBug } from 'react-icons/fa6';
 import { ImDatabase } from "react-icons/im";
 
-export function NodeIcon({ icon, showColors = false, className }) {
+export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	const iconSrc = icon?.src || icon;
 
 	if (iconSrc === 'block-default') {
@@ -53,7 +53,7 @@ export function NodeIcon({ icon, showColors = false, className }) {
 		};
 	}
 
-	const renderedIcon = <Icon icon={icon && icon.src ? icon.src : icon} />;
+	const renderedIcon = <Icon icon={icon && icon.src ? icon.src : icon} size={size} />;
 	const style = showColors
 		? {
 			backgroundColor: icon && icon.background,
@@ -64,7 +64,7 @@ export function NodeIcon({ icon, showColors = false, className }) {
 	return (
 		<span
 			style={style}
-			className={classnames('block-editor-block-icon', className, {
+			className={classnames(className, {
 				'has-colors': showColors,
 			})}
 		>

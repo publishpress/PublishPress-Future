@@ -16,7 +16,7 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
 
     public function getType(): string
     {
-        return "generic";
+        return "trigger";
     }
 
     public function getName(): string

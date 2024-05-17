@@ -1,5 +1,6 @@
 import { Handle, Position } from 'reactflow';
 import { memo } from '@wordpress/element';
+import NodeIcon from '../node-icon';
 
 export const GenericNode = memo(({ data, isConnectable }) => {
     const nodeClassName = data?.className || 'react-flow__node-genericNode';
@@ -41,15 +42,24 @@ export const GenericNode = memo(({ data, isConnectable }) => {
     }
 
     return (
-        <div className={"react-flow__node-body " + nodeClassName}>
-            {targetHandles}
+        <>
+            <div className={"react-flow__node-body " + nodeClassName}>
+                {targetHandles}
 
-            <div className='react-flow__node-label'>
-                {data.label}
+                <div className='react-flow__node-inner-body'>
+                    <div className='react-flow__node-label'>
+                        <NodeIcon icon={data.icon} size={14} />
+                        <span>{data.label}</span>
+                    </div>
+                </div>
+
+                <div className='react-flow__node-socket-area'>
+                    <div className="react-flow__node-socket-name">Next</div>
+                </div>
+
+                {sourceHandles}
             </div>
-
-            {sourceHandles}
-        </div>
+        </>
     );
 });
 
