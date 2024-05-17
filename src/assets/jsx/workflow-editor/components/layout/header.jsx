@@ -17,7 +17,7 @@ import {
 import {
     AUTO_LAYOUT_DIRECTION_DOWN
 } from '../flow-editor/auto-layout/constants';
-import { FullscreenModeClose } from '../fullscree-mode-close';
+import { FullscreenModeClose } from '../fullscreen-mode-close';
 import { MoreMenu } from '../more-menu/menu';
 import { NavigableToolbar } from '../left-toolbar/toolbar';
 import { EditorHistoryUndo } from '../left-toolbar/undo';
