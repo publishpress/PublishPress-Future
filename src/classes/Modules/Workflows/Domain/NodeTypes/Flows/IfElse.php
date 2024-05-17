@@ -26,7 +26,7 @@ class IfElse implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Condition", "publishpress-future-pro");
+        return __("Simple Condition", "publishpress-future-pro");
     }
 
     public function getDescription(): string
@@ -36,7 +36,7 @@ class IfElse implements NodeTypeInterface
 
     public function getIcon(): string
     {
-        return "media-document";
+        return "route";
     }
 
     public function getFrecency(): int
@@ -56,7 +56,20 @@ class IfElse implements NodeTypeInterface
 
     public function getSettingsSchema(): array
     {
-        return [];
+        return [
+            [
+                "label" => __("Conditions", "publishpress-future-pro"),
+                "description" => __("THIS NODE IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now.", "publishpress-future-pro"),
+                "fields" => [
+                    [
+                        "name" => "test",
+                        "type" => "text",
+                        "label" => __("NOT IMPLEMENTED YET!", "publishpress-future-pro"),
+                        "description" => __("Still not implemented", "publishpress-future-pro"),
+                    ],
+                ]
+            ]
+        ];
     }
 
     public function getOutputSchema(): array
@@ -88,11 +101,13 @@ class IfElse implements NodeTypeInterface
             "source" => [
                 [
                     "id" => "true",
-                    "left" => "40%",
+                    "left" => "25%",
+                    "label" => __("True", "publishpress-future-pro"),
                 ],
                 [
                     "id" => "false",
-                    "left" => "60%",
+                    "left" => "75%",
+                    "label" => __("False", "publishpress-future-pro"),
                 ]
             ]
         ];

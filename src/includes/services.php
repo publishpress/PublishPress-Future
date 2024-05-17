@@ -31,6 +31,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\C
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostUnstick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows\CoreSchedule;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows\IfElse;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnManuallyEnabledForPost;
@@ -414,6 +415,13 @@ return [
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
                         $container->get(FreeServicesAbstract::CRON),
                         $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL)
+                    );
+                    break;
+
+                case IfElse::NODE_NAME:
+                    $nodeRunner = new IfElse(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
                     );
                     break;
             }
