@@ -54,6 +54,24 @@ class ManualPostTrigger implements InitializableInterface
             CoreHooksAbstract::ACTION_REST_API_INIT,
             [$this, 'registerRestField']
         );
+
+        // Classic Editor
+        $this->hooks->addAction(
+            FutureCoreHooksAbstract::ACTION_ADD_META_BOXES,
+            [$this, 'registerClassicEditorMetabox'],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
+            FutureCoreHooksAbstract::ACTION_SAVE_POST,
+            [$this, 'processMetaboxUpdate']
+        );
+
+        $this->hooks->addAction(
+            FutureCoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
+            [$this, 'enqueueScripts']
+        );
     }
 
     public function registerQuickEditCustomBox($columnName, $postType)
@@ -247,5 +265,101 @@ class ManualPostTrigger implements InitializableInterface
                 ]
             );
         }
+    }
+
+    public function registerClassicEditorMetabox($postType, $post)
+    {
+        $postModel = new PostModel();
+        $postModel->load($post->ID);
+
+        $workflows = $postModel->getValidWorkflowsWithManualTrigger($post->ID);
+
+        if (empty($workflows)) {
+            return;
+        }
+
+        add_meta_box(
+            'future_workflow_manual_trigger',
+            __('Workflow Manual Trigger', 'publishpress-future-pro'),
+            [$this, 'renderClassicEditorMetabox'],
+            $postType,
+            'side',
+            'default',
+            [$post]
+        );
+    }
+
+    public function renderClassicEditorMetabox($post)
+    {
+        require_once __DIR__ . "/../Views/manual-trigger-classic-editor.html.php";
+    }
+
+    public function processMetaboxUpdate($postId)
+    {
+        // Don't run if this is an auto save
+        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+            return;
+        }
+
+        // Don't update data if the function is called for saving revision.
+        $postType = get_post_type((int)$postId);
+        if ($postType === 'revision') {
+            return;
+        }
+
+        if (empty($_POST['future_workflow_view']) || $_POST['future_workflow_view'] !== 'classic-editor') {
+            return;
+        }
+
+        $manuallyEnabledWorkflows = isset($_POST['future_workflow_manual_trigger']) ? $_POST['future_workflow_manual_trigger'] : [];
+
+        $postModel = new PostModel();
+        $postModel->load($postId);
+        $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
+
+        $this->triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows);
+    }
+
+    public function enqueueScripts()
+    {
+        // Only enqueue scripts if we are in the post edit screen
+        if (get_current_screen()->id !== 'post') {
+            return;
+        }
+
+        wp_enqueue_style("wp-components");
+
+        wp_enqueue_script("wp-components");
+        wp_enqueue_script("wp-plugins");
+        wp_enqueue_script("wp-element");
+        wp_enqueue_script("wp-data");
+
+        wp_enqueue_script(
+            "future_workflow_manual_selection_script",
+            plugins_url(
+                "/src/assets/js/workflow-manual-selection-classic-editor.js",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
+            [
+                "wp-plugins",
+                "wp-components",
+                "wp-element",
+                "wp-data",
+            ],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+
+        $post = get_post();
+
+        wp_localize_script(
+            "future_workflow_manual_selection_script",
+            "futureWorkflowManualSelection",
+            [
+                "nonce" => wp_create_nonce("wp_rest"),
+                "apiUrl" => rest_url("publishpress-future/v1"),
+                "postId" => $post->ID,
+            ]
+        );
     }
 }

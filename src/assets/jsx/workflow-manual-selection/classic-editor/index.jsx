@@ -4,78 +4,44 @@ import { store } from '../store';
 import { Fieldset } from '../fieldset';
 import apiFetch from '@wordpress/api-fetch';
 
-// import './css/style.css';
 
-// // We create a copy of the WP inline edit post function
-// const wpInlineEditPro = window.inlineEditPost.edit;
-// const wpInlineEditProRevert = window.inlineEditPost.revert;
+const container = document.getElementById("publishpress-future-pro-classic-editor");
+const root = createRoot(container);
 
-// const getPostIdFromButton = (id) => {
-//     // If id is a string or a number, return it directly
-//     if (typeof id === 'string' || typeof id === 'number') {
-//         return id;
-//     }
+const saveButton = document.querySelector('.inline-edit-save .save');
+if (saveButton) {
+    saveButton.onclick = function() {
+        setTimeout(() => {
+            root.unmount();
+        }, delayToUnmountAfterSaving);
+    };
+}
 
-//     // Otherwise, assume it's an HTML element and extract the post ID
-//     const trElement = id.closest('tr');
-//     const trId = trElement.id;
-//     const postId = trId.split('-')[1];
+// Load the workflow settings for the post
+const apiUrl = window.futureWorkflowManualSelection.apiUrl;
+const nonce = window.futureWorkflowManualSelection.nonce;
+const postId = window.futureWorkflowManualSelection.postId;
 
-//     return postId;
-// }
+dispatch(store).setWorkflowsWithManualTrigger([]);
+dispatch(store).setWorkflowsEnabledForPost([]);
 
-// /**
-//  * We override the function with our own code so we can detect when
-//  * the inline edit row is displayed to recreate the React component.
-//  */
-// window.inlineEditPost.edit = function (button, id) {
-//     // Call the original WP edit function.
-//     wpInlineEditPro.apply(this, arguments);
+apiFetch({
+    path: `${apiUrl}/posts/workflow-settings/${postId}`,
+    headers: {
+        'X-WP-Nonce': nonce,
+    },
+}).then((response) => {
+    dispatch(store).setWorkflowsWithManualTrigger(response.workflowsWithManualTrigger);
+    dispatch(store).setWorkflowsEnabledForPost(response.manuallyEnabledWorkflows);
+});
 
-//     const postId = getPostIdFromButton(button);
+const component = (
+    <Fieldset
+        context='classic-editor'
+        postId={postId}
+        apiUrl={apiUrl}
+        nonce={nonce}
+    />
+);
 
-//     const container = document.getElementById("publishpress-future-pro-quick-edit");
-//     const root = createRoot(container);
-
-//     const saveButton = document.querySelector('.inline-edit-save .save');
-//     if (saveButton) {
-//         saveButton.onclick = function() {
-//             setTimeout(() => {
-//                 root.unmount();
-//             }, delayToUnmountAfterSaving);
-//         };
-//     }
-
-//     // Load the workflow settings for the post
-//     const apiUrl = window.futureWorkflowManualSelection.apiUrl;
-//     const nonce = window.futureWorkflowManualSelection.nonce;
-
-//     dispatch(store).setWorkflowsWithManualTrigger([]);
-//     dispatch(store).setWorkflowsEnabledForPost([]);
-
-//     apiFetch({
-//         path: `${apiUrl}/posts/workflow-settings/${postId}`,
-//         headers: {
-//             'X-WP-Nonce': nonce,
-//         },
-//     }).then((response) => {
-//         dispatch(store).setWorkflowsWithManualTrigger(response.workflowsWithManualTrigger);
-//         dispatch(store).setWorkflowsEnabledForPost(response.manuallyEnabledWorkflows);
-//     });
-
-//     const component = (
-//         <Fieldset
-//             store={store}
-//             context='quick-edit'
-//         />
-//     );
-
-//     root.render(component);
-
-//     window.inlineEditPost.revert = function () {
-//         root.unmount();
-
-//         // Call the original WP revert function.
-//         wpInlineEditProRevert.apply(this, arguments);
-//     };
-// };
+root.render(component);

@@ -1,3 +1,8 @@
+<?php
+
+defined('ABSPATH') or die('Direct access not allowed.');
+?>
+
 <div id="future-workflow-editor">
     <div class="loading">
         <span class="spinner-icon">
