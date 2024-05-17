@@ -58,7 +58,7 @@
         'publishpress/publishpress-future' => array(
             'pretty_version' => 'dev-release-3.4.0',
             'version' => 'dev-release-3.4.0',
-            'reference' => '28148ff59c4f455baf39ab1ca7a6d2201e39ed82',
+            'reference' => '7303206388d8d77931e22e90c01ef6a98bd40df5',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../publishpress/publishpress-future',
             'aliases' => array(),
