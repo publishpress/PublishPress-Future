@@ -3254,6 +3254,9 @@ _window.inlineEditPost.edit = function (button, id) {
     }
 
     var container = document.getElementById("publishpress-future-quick-edit");
+    if (!container) {
+        return;
+    }
     var root = (0, _element.createRoot)(container);
 
     var saveButton = document.querySelector('.inline-edit-save .save');

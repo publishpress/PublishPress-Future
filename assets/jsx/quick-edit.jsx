@@ -88,6 +88,9 @@ inlineEditPost.edit = function (button, id) {
     }
 
     const container = document.getElementById("publishpress-future-quick-edit");
+    if (!container) {
+        return;
+    }
     const root = createRoot(container);
 
     const saveButton = document.querySelector('.inline-edit-save .save');
