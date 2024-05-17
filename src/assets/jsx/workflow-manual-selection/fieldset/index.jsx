@@ -1,8 +1,10 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { CheckboxControl } from '@wordpress/components';
 import { store } from '../store';
+import { useEffect } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 
-export function Fieldset({store, context}) {
+export function Fieldset({context, postId, apiUrl, nonce, onChange}) {
     const {
         workflowsWithManualTrigger,
         workflowsEnabledForPost
@@ -14,11 +16,32 @@ export function Fieldset({store, context}) {
     });
 
     const {
-        updateWorkflowsEnabledForPost
+        updateWorkflowsEnabledForPost,
+        setWorkflowsWithManualTrigger,
+        setWorkflowsEnabledForPost
     } = useDispatch(store);
+
+    useEffect(() => {
+        setWorkflowsWithManualTrigger([]);
+        setWorkflowsEnabledForPost([]);
+
+        apiFetch({
+            path: `${apiUrl}/posts/workflow-settings/${postId}`,
+            headers: {
+                'X-WP-Nonce': nonce,
+            },
+        }).then((response) => {
+            setWorkflowsWithManualTrigger(response.workflowsWithManualTrigger);
+            setWorkflowsEnabledForPost(response.manuallyEnabledWorkflows);
+        });
+    }, [postId]);
 
     const handleChange = (workflowId, checked) => {
         updateWorkflowsEnabledForPost(workflowId, checked);
+
+        if (onChange) {
+            onChange(workflowId, checked);
+        }
     }
 
     const controls = Object.keys(workflowsWithManualTrigger).map((key) => {
@@ -40,7 +63,7 @@ export function Fieldset({store, context}) {
     return (
         <>
             {controls.length > 0 && (
-                <div id="publishpress-future-pro-quick-edit-wrapper">
+                <div id={`publishpress-future-pro-${context}-wrapper`}>
                     <input type='hidden' name='future_workflow_view' value={context} />
                     {controls}
                 </div>

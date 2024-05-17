@@ -5,6 +5,8 @@ import { useEffect } from '@wordpress/element';
 import { FutureActionPanelTop } from '../../../../lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelTop';
 import { CheckboxControl } from '@wordpress/components';
 
+// Example on how to extend using Slot
+
 const Fields = ({ storeName }) => {
     const availableWorkflows = futureWorkflowManualSelection.workflows;
 

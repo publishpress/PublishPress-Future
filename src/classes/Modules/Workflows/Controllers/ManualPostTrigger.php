@@ -7,8 +7,10 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Models\PostTypeModel;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Models\PostModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\PostTypesModel;
 
 class ManualPostTrigger implements InitializableInterface
 {
@@ -40,6 +42,17 @@ class ManualPostTrigger implements InitializableInterface
         $this->hooks->addAction(
             FutureCoreHooksAbstract::ACTION_ADMIN_PRINT_SCRIPTS_EDIT,
             [$this, 'enqueueQuickEditScripts']
+        );
+
+        // Block Editor
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ENQUEUE_BLOCK_EDITOR_ASSETS,
+            [$this, 'enqueueBlockEditorScripts']
+        );
+
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_REST_API_INIT,
+            [$this, 'registerRestField']
         );
     }
 
@@ -87,6 +100,11 @@ class ManualPostTrigger implements InitializableInterface
 
     public function enqueueQuickEditScripts()
     {
+        // Only enqueue scripts if we are in the post list table
+        if (get_current_screen()->id !== 'edit-post') {
+            return;
+        }
+
         wp_enqueue_style("wp-components");
 
         wp_enqueue_script("wp-components");
@@ -95,9 +113,9 @@ class ManualPostTrigger implements InitializableInterface
         wp_enqueue_script("wp-data");
 
         wp_enqueue_script(
-            "future_workflow_manual_selection_script",
+            "future_workflow_manual_selection_script_quick_edit",
             plugins_url(
-                "/src/assets/js/workflow-manual-selection.js",
+                "/src/assets/js/workflow-manual-selection-quick-edit.js",
                 PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
             ),
             [
@@ -111,12 +129,110 @@ class ManualPostTrigger implements InitializableInterface
         );
 
         wp_localize_script(
-            "future_workflow_manual_selection_script",
+            "future_workflow_manual_selection_script_quick_edit",
             "futureWorkflowManualSelection",
             [
                 "nonce" => wp_create_nonce("wp_rest"),
                 "apiUrl" => rest_url("publishpress-future/v1"),
             ]
         );
+    }
+
+    public function enqueueBlockEditorScripts()
+    {
+        global $post;
+
+        if (! $post) {
+            return;
+        }
+
+        $postModel = new PostModel();
+        $postModel->load($post->ID);
+
+        $workflowsWithManualTrigger = $postModel->getValidWorkflowsWithManualTrigger($post->ID);
+
+        if (empty($workflowsWithManualTrigger)) {
+            return;
+        }
+
+        wp_enqueue_style("wp-components");
+
+        wp_enqueue_script("wp-components");
+        wp_enqueue_script("wp-plugins");
+        wp_enqueue_script("wp-element");
+        wp_enqueue_script("wp-data");
+
+        wp_enqueue_script(
+            "future_workflow_manual_selection_script_block_editor",
+            plugins_url(
+                "/src/assets/js/workflow-manual-selection-block-editor.js",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
+            [
+                "wp-plugins",
+                "wp-components",
+                "wp-element",
+                "wp-data",
+            ],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            true
+        );
+
+        wp_localize_script(
+            "future_workflow_manual_selection_script_block_editor",
+            "futureWorkflowManualSelection",
+            [
+                "nonce" => wp_create_nonce("wp_rest"),
+                "apiUrl" => rest_url("publishpress-future/v1"),
+                "postId" => $post->ID,
+            ]
+        );
+    }
+
+    public function registerRestField()
+    {
+        $postTypesModel = new PostTypesModel();
+        $postTypes = $postTypesModel->getPostTypes();
+
+        foreach ($postTypes as $postType) {
+            register_rest_field(
+                $postType->name,
+                'publishpress_future_workflow_manual_trigger',
+                [
+                    'get_callback' => function ($post) {
+                        $post = get_post();
+
+                        if (! $post) {
+                            return [
+                                'enabledWorkflows' => []
+                            ];
+                        }
+
+                        $postModel = new PostModel();
+                        $postModel->load($post->ID);
+
+                        $enabledWorkflows = $postModel->getManuallyEnabledWorkflows();
+
+                        return [
+                            'enabledWorkflows' => $enabledWorkflows,
+                        ];
+                    },
+                    'update_callback' => function ($enabledWorkflows, $post) {
+                        $postModel = new PostModel();
+                        $postModel->load($post->ID);
+
+                        $enabledWorkflows = array_map('intval', $enabledWorkflows);
+
+                        $postModel->setManuallyEnabledWorkflows($enabledWorkflows);
+
+                        return true;
+                    },
+                    'schema' => [
+                        'description' => 'Workflow Manual Trigger',
+                        'type' => 'object',
+                    ]
+                ]
+            );
+        }
     }
 }
