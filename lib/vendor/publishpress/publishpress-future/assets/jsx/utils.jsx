@@ -69,6 +69,10 @@ export const getFieldValueByNameAsBool = (name, postId) => {
 export const getActionSettingsFromColumnData = (postId) => {
     const columnData = document.querySelector(`#post-expire-column-${postId}`);
 
+    if (!columnData) {
+        return {};
+    }
+
     return {
         enabled: columnData.dataset.actionEnabled === '1',
         action: columnData.dataset.actionType,

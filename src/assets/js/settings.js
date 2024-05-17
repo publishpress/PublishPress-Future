@@ -2191,6 +2191,9 @@ var getFieldValueByNameAsBool = function getFieldValueByNameAsBool(name, postId)
 };
 var getActionSettingsFromColumnData = function getActionSettingsFromColumnData(postId) {
   var columnData = document.querySelector("#post-expire-column-".concat(postId));
+  if (!columnData) {
+    return {};
+  }
   return {
     enabled: columnData.dataset.actionEnabled === '1',
     action: columnData.dataset.actionType,
