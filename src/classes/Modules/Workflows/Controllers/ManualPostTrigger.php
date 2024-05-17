@@ -110,14 +110,10 @@ class ManualPostTrigger implements InitializableInterface
             true
         );
 
-        $workflowsModel = new WorkflowsModel();
-        $workflowsWithManualTrigger = $workflowsModel->getPublishedWorkflowsWithManualTrigger();
-
         wp_localize_script(
             "future_workflow_manual_selection_script",
             "futureWorkflowManualSelection",
             [
-                "workflowsWithManualTrigger" => $workflowsWithManualTrigger,
                 "nonce" => wp_create_nonce("wp_rest"),
                 "apiUrl" => rest_url("publishpress-future/v1"),
             ]

@@ -2,6 +2,8 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\PostModelInterface;
 use WP_Post;
 
@@ -41,12 +43,46 @@ class PostModel implements PostModelInterface
         return $this->post->post_title;
     }
 
+    public function getValidWorkflowsWithManualTrigger(int $postId): array
+    {
+        $workflowsModel = new WorkflowsModel();
+        $workflows = $workflowsModel->getPublishedWorkflowsWithManualTrigger();
+
+        $postModel = new PostModel();
+        $postModel->load($postId);
+        $postQueryValidator = new PostQuery();
+
+        $validatedWorkflows = [];
+
+        foreach ($workflows as &$workflow) {
+
+            $workflowId = $workflow['workflowId'];
+
+            $workflowModel = new WorkflowModel();
+            $workflowModel->load($workflowId);
+
+            // Validate the trigger's post query
+            $triggers = $workflowModel->getTriggerNodes();
+            foreach ($triggers as $trigger) {
+                if ($trigger['data']['name'] !== CoreOnManuallyEnabledForPost::NODE_NAME) {
+                    continue;
+                }
+
+                if ($postQueryValidator->validate(['post' => $this->post, 'node' => $trigger])) {
+                    $validatedWorkflows[] = $workflow;
+                }
+            }
+        }
+
+        return $validatedWorkflows;
+    }
+
     public function getManuallyEnabledWorkflows(): array
     {
-        $workflowIds = get_post_meta($this->post->ID, self::META_KEY_WORKFLOW_MANUALLY_TRIGGERED, false);
-        $workflowIds = array_map('intval', $workflowIds);
+        $selectedWorkflowIds = get_post_meta($this->post->ID, self::META_KEY_WORKFLOW_MANUALLY_TRIGGERED, false);
+        $selectedWorkflowIds = array_map('intval', $selectedWorkflowIds);
 
-        return $workflowIds;
+        return $selectedWorkflowIds;
     }
 
     public function setManuallyEnabledWorkflows(array $workflowIds): void

@@ -270,9 +270,11 @@ class RestApiV1 implements RestApiManagerInterface
         $postModel = new PostModel();
         $postModel->load($postId);
 
+        $workflowsWithManualTrigger = $postModel->getValidWorkflowsWithManualTrigger($postId);
         $manuallyEnabledWorkflows = $postModel->getManuallyEnabledWorkflows();
 
         return rest_ensure_response([
+            'workflowsWithManualTrigger' => $workflowsWithManualTrigger,
             'manuallyEnabledWorkflows' => $manuallyEnabledWorkflows,
         ]);
     }

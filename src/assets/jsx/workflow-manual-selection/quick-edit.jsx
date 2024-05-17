@@ -50,7 +50,7 @@ export function setQuickEdit() {
         const apiUrl = window.futureWorkflowManualSelection.apiUrl;
         const nonce = window.futureWorkflowManualSelection.nonce;
 
-        dispatch(store).setWorkflowsWithManualTrigger(futureWorkflowManualSelection.workflowsWithManualTrigger);
+        dispatch(store).setWorkflowsWithManualTrigger([]);
         dispatch(store).setWorkflowsEnabledForPost([]);
 
         apiFetch({
@@ -59,6 +59,7 @@ export function setQuickEdit() {
                 'X-WP-Nonce': nonce,
             },
         }).then((response) => {
+            dispatch(store).setWorkflowsWithManualTrigger(response.workflowsWithManualTrigger);
             dispatch(store).setWorkflowsEnabledForPost(response.manuallyEnabledWorkflows);
         });
 

@@ -11,5 +11,7 @@ interface PostModelInterface
 
     public function getTitle(): string;
 
+    public function getValidWorkflowsWithManualTrigger(int $postId): array;
+
     public function getManuallyEnabledWorkflows(): array;
 }
