@@ -4137,7 +4137,9 @@ function BlockEditorWorkflowManualTrigger() {
         enabledWorkflows: []
       }
     };
-    attribute.publishpress_future_workflow_manual_trigger = enabledWorkflows;
+    attribute.publishpress_future_workflow_manual_trigger = {
+      enabledWorkflows: enabledWorkflows
+    };
     editPost(attribute);
   };
 

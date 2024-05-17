@@ -30,7 +30,7 @@ function BlockEditorWorkflowManualTrigger() {
             }
         };
 
-        attribute.publishpress_future_workflow_manual_trigger = enabledWorkflows;
+        attribute.publishpress_future_workflow_manual_trigger = {enabledWorkflows};
 
         editPost(attribute);
     }

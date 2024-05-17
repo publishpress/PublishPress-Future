@@ -194,6 +194,11 @@ class ManualPostTrigger implements InitializableInterface
         );
     }
 
+    /**
+     * Used by the block editor to read and update post attributes.
+     *
+     * @return void
+     */
     public function registerRestField()
     {
         $postTypesModel = new PostTypesModel();
@@ -222,10 +227,11 @@ class ManualPostTrigger implements InitializableInterface
                             'enabledWorkflows' => $enabledWorkflows,
                         ];
                     },
-                    'update_callback' => function ($manuallyEnabledWorkflows, $post) {
+                    'update_callback' => function ($manualTriggerAttributes, $post) {
                         $postModel = new PostModel();
                         $postModel->load($post->ID);
 
+                        $manuallyEnabledWorkflows = $manualTriggerAttributes['enabledWorkflows'] ?? [];
                         $manuallyEnabledWorkflows = array_map('intval', $manuallyEnabledWorkflows);
 
                         $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
