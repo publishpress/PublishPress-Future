@@ -77,6 +77,16 @@
     border: 2px solid #43c5ce;
 }
 
+.react-flow__node-debugAction {
+    background-color: #c36e8d;
+    border: 2px solid #c36e8d;
+}
+
+.react-flow__node-debugAction .react-flow__handle {
+    background-color: #fff;
+    border: 2px solid #c36e8d;
+}
+
 .react-flow__node.selected .react-flow__node-body {
     filter: drop-shadow( 0px 0px 3px rgba(118, 21, 150, 0.7));
     -webkit-filter: drop-shadow( 0px 0px 3px rgba(118, 21, 150, 0.7));
