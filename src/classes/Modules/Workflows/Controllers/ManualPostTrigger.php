@@ -92,6 +92,11 @@ class ManualPostTrigger implements InitializableInterface
         $postModel->load($postId);
         $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
+        $this->triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows);
+    }
+
+    private function triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows)
+    {
         // Trigger the action to trigger those workflows
         foreach ($manuallyEnabledWorkflows as $workflowId) {
             $this->hooks->doAction(HooksAbstract::ACTION_MANUALLY_TRIGGERED_WORKFLOW, (int)$postId, (int)$workflowId);
@@ -217,13 +222,15 @@ class ManualPostTrigger implements InitializableInterface
                             'enabledWorkflows' => $enabledWorkflows,
                         ];
                     },
-                    'update_callback' => function ($enabledWorkflows, $post) {
+                    'update_callback' => function ($manuallyEnabledWorkflows, $post) {
                         $postModel = new PostModel();
                         $postModel->load($post->ID);
 
-                        $enabledWorkflows = array_map('intval', $enabledWorkflows);
+                        $manuallyEnabledWorkflows = array_map('intval', $manuallyEnabledWorkflows);
 
-                        $postModel->setManuallyEnabledWorkflows($enabledWorkflows);
+                        $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
+
+                        $this->triggerManuallyEnabledWorkflow($post->ID, $manuallyEnabledWorkflows);
 
                         return true;
                     },
