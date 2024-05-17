@@ -2734,6 +2734,10 @@ var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function get
 var getActionSettingsFromColumnData = exports.getActionSettingsFromColumnData = function getActionSettingsFromColumnData(postId) {
     var columnData = document.querySelector('#post-expire-column-' + postId);
 
+    if (!columnData) {
+        return {};
+    }
+
     return {
         enabled: columnData.dataset.actionEnabled === '1',
         action: columnData.dataset.actionType,

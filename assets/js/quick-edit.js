@@ -3017,6 +3017,10 @@ var getFieldValueByNameAsBool = exports.getFieldValueByNameAsBool = function get
 var getActionSettingsFromColumnData = exports.getActionSettingsFromColumnData = function getActionSettingsFromColumnData(postId) {
     var columnData = document.querySelector('#post-expire-column-' + postId);
 
+    if (!columnData) {
+        return {};
+    }
+
     return {
         enabled: columnData.dataset.actionEnabled === '1',
         action: columnData.dataset.actionType,
@@ -3210,6 +3214,10 @@ _window.inlineEditPost.edit = function (button, id) {
 
     var postId = getPostIdFromButton(button);
     var data = (0, _utils.getActionSettingsFromColumnData)(postId);
+
+    if (!data) {
+        return;
+    }
 
     var enabled = data.enabled;
     var action = data.action;
