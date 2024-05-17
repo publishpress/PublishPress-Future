@@ -24,6 +24,7 @@ export const GenericNode = memo(({ data, isConnectable }) => {
     }
 
     let sourceHandles = null;
+    let socketAreas = null;
     if (data.socketSchema) {
         if (data.socketSchema.source) {
             sourceHandles = data.socketSchema.source.map((handle) => {
@@ -36,6 +37,17 @@ export const GenericNode = memo(({ data, isConnectable }) => {
                         style={{ left: handle.left }}
                         isConnectable={isConnectable}
                     />
+                );
+            });
+
+            socketAreas = data.socketSchema.source.map((handle) => {
+                return (
+                    <div
+                        key={handle.id + 'socketArea'}
+                        className='react-flow__node-socket-name'
+                    >
+                        {handle.label}
+                    </div>
                 );
             });
         }
@@ -54,7 +66,7 @@ export const GenericNode = memo(({ data, isConnectable }) => {
                 </div>
 
                 <div className='react-flow__node-socket-area'>
-                    <div className="react-flow__node-socket-name">Next</div>
+                    {socketAreas}
                 </div>
 
                 {sourceHandles}

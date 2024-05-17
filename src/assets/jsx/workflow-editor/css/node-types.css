@@ -160,6 +160,8 @@
     background-color: #fff;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    display: flex;
+    flex-direction: row;
 }
 
 .react-flow__node-socket-name {
@@ -167,4 +169,10 @@
     padding-bottom: 6px;
     text-align: center;
     line-height: 100%;
+    flex: 1;
+    border-left: 1px solid silver;
+}
+
+.react-flow__node-socket-name:first-child {
+    border-left: 0;
 }

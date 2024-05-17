@@ -1,7 +1,7 @@
 import { Handle, Position } from 'reactflow';
 import { memo } from '@wordpress/element';
 import { Icon } from '@wordpress/components';
-import { RxTarget } from "react-icons/rx";
+import { GrTrigger } from "react-icons/gr";
 import { NodeIcon } from '../node-icon';
 
 export const TriggerNode = memo(({ data, isConnectable }) => {
@@ -13,7 +13,7 @@ export const TriggerNode = memo(({ data, isConnectable }) => {
             targetHandles = data.socketSchema.target.map((handle) => {
                 return (
                     <Handle
-                        key={handle.id}
+                        key={handle.id + 'target'}
                         type="target"
                         position={Position.Top}
                         id={handle.id}
@@ -26,6 +26,7 @@ export const TriggerNode = memo(({ data, isConnectable }) => {
     }
 
     let sourceHandles = null;
+    let socketAreas = null;
     if (data.socketSchema) {
         if (data.socketSchema.source) {
             sourceHandles = data.socketSchema.source.map((handle) => {
@@ -40,13 +41,24 @@ export const TriggerNode = memo(({ data, isConnectable }) => {
                     />
                 );
             });
+
+            socketAreas = data.socketSchema.source.map((handle) => {
+                return (
+                    <div
+                        key={handle.id + 'socketArea'}
+                        className='react-flow__node-socket-name'
+                    >
+                        {handle.label}
+                    </div>
+                );
+            });
         }
     }
 
     return (
         <>
             <span className="react-flow__trigger_tag">
-                <Icon icon={RxTarget} size={10} />Trigger
+                <Icon icon={GrTrigger} size={10} />Trigger
             </span>
             <div className={"react-flow__node-body " + nodeClassName}>
                 {targetHandles}
@@ -59,7 +71,7 @@ export const TriggerNode = memo(({ data, isConnectable }) => {
                 </div>
 
                 <div className='react-flow__node-socket-area'>
-                    <div className="react-flow__node-socket-name">Next</div>
+                    {socketAreas}
                 </div>
 
                 {sourceHandles}

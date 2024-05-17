@@ -89,6 +89,7 @@ class CorePostStick implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
+                    "label" => __("Next", "publishpress-future-pro"),
                 ]
             ]
         ];
