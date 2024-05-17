@@ -49,6 +49,10 @@ inlineEditPost.edit = function (button, id) {
     const postId = getPostIdFromButton(button);
     const data = getActionSettingsFromColumnData(postId);
 
+    if (!data) {
+        return;
+    }
+
     const enabled = data.enabled;
     const action = data.action;
     const date = data.date;
