@@ -124,7 +124,8 @@ class ManualPostTrigger implements InitializableInterface
     public function enqueueQuickEditScripts()
     {
         // Only enqueue scripts if we are in the post list table
-        if (get_current_screen()->id !== 'edit-post') {
+
+        if (get_current_screen()->base !== 'edit') {
             return;
         }
 
