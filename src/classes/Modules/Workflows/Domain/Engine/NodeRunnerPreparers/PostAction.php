@@ -43,6 +43,7 @@ class PostAction implements NodeRunnerPreparerInterface
             // TODO: Add a setting to allow the user to choose the key to get the posts, if more than one is available
             $inputKeys = array_keys($input);
             $posts = $input[$inputKeys[0]];
+            $posts = [$posts];
 
             foreach ($posts as $post) {
                 if (is_array($post)) {
