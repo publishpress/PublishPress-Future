@@ -5,8 +5,6 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerMapperInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;

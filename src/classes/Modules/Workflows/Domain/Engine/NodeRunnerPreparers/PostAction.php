@@ -4,11 +4,14 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPrepa
 
 use Exception;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 use WpOrg\Requests\Hooks;
 
 class PostAction implements NodeRunnerPreparerInterface
 {
+    use InfiniteLoopPreventer;
+
     /**
      * @var HooksFacade
      */
@@ -69,6 +72,10 @@ class PostAction implements NodeRunnerPreparerInterface
 
     public function runNextSteps(array $step, array $input, array $globalVariables): void
     {
+        if ($this->isInfinityLoopDetected()) {
+            return;
+        }
+
         $this->generalNodeRunnerPreparer->runNextSteps($step, $input, $globalVariables);
     }
 
