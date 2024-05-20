@@ -12,6 +12,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTe
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUnstick;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\IfElse;
@@ -117,6 +118,16 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "background" => self::DEFAULT_ICON_BACKGROUND,
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],
+            ],
+            [
+                "name" => "messages",
+                "label" => __("Messages", "publishpress-future-pro"),
+                "icon" => [
+                    "src" => "messages",
+                    "background" => self::DEFAULT_ICON_BACKGROUND,
+                    "foreground" => self::DEFAULT_ICON_FOREGROUND,
+                ],
+
             ]
         ];
     }
@@ -178,6 +189,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CorePostTermsRemove::NODE_NAME => new CorePostTermsRemove(),
             CorePostChangeStatus::NODE_NAME => new CorePostChangeStatus(),
             CorePostQuery::NODE_NAME => new CorePostQuery(),
+            CoreSendEmail::NODE_NAME => new CoreSendEmail(),
         ];
 
         if (function_exists('ray')) {

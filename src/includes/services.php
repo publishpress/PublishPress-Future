@@ -29,6 +29,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\C
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsSet;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostStick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostUnstick;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreSendEmail;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows\IfElse;
@@ -405,6 +406,14 @@ return [
                     $nodeRunner = new CorePostQuery(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
+                    );
+                    break;
+
+                case CoreSendEmail::NODE_NAME:
+                    $nodeRunner = new CoreSendEmail(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
+                        $container->get(FreeServicesAbstract::EMAIL)
                     );
                     break;
 

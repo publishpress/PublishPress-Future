@@ -14,6 +14,8 @@ import { HiMiniDocumentText } from 'react-icons/hi2';
 import { FaBug } from 'react-icons/fa6';
 import { ImDatabase } from "react-icons/im";
 import { TbRouteAltRight } from "react-icons/tb";
+import { IoMdMail } from "react-icons/io";
+import { BiSolidMessageDetail } from "react-icons/bi";
 
 export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	const iconSrc = icon?.src || icon;
@@ -60,7 +62,17 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 		};
 	}
 
+	if (iconSrc === 'email') {
+		icon = {
+			src: IoMdMail,
+		};
+	}
 
+	if (iconSrc === 'message') {
+		icon = {
+			src: BiSolidMessageDetail,
+		};
+	}
 
 	const renderedIcon = <Icon icon={icon && icon.src ? icon.src : icon} size={size} />;
 	const style = showColors
