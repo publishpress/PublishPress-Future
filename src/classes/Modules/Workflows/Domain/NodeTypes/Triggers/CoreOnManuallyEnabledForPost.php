@@ -71,7 +71,7 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
             ],
             [
                 "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("The query defines the posts that will trigger this action.", "publishpress-future-pro"),
+                "description" => __("Specify the criteria for posts that will trigger this action. Leave blank to include all posts.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "postQuery",
