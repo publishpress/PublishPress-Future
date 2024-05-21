@@ -134,7 +134,7 @@ export function getNodeInputs(node) {
     return nodeInputs;
 }
 
-export function getNodeInputVariables(node, types = []) {
+export function getNodeInputVariables(node, types = [], addInputPrefix = true) {
     const nodeInputs = getNodeInputs(node);
 
     let variables = [];
@@ -146,8 +146,10 @@ export function getNodeInputVariables(node, types = []) {
     }
 
     variables = variables.map((variable) => {
+        const variableName = addInputPrefix ? 'input.' + variable.name : variable.name;
+
         return {
-            name: variable.name,
+            name: variableName,
             type: variable.type,
             label: variable.label,
             source: VARIABLE_SOURCE_NODE_INPUT,
