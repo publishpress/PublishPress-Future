@@ -3,6 +3,7 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated as NodeTypeCoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\InputValidatorsInterface;
@@ -11,6 +12,8 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterfa
 
 class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 {
+    use InfiniteLoopPreventer;
+
     public const NODE_NAME = NodeTypeCoreOnPostUpdated::NODE_NAME;
 
     /**
@@ -38,6 +41,11 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
      */
     private $postQueryValidator;
 
+    /**
+     * @var int
+     */
+    private $workflowId;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerPreparerInterface $nodeRunnerPreparer,
@@ -52,12 +60,17 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
     {
         $this->step = $step;
         $this->globalVariables = $globalVariables;
+        $this->workflowId = $workflowId;
 
         $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 10, 3);
     }
 
     public function triggerCallback($postId, $postAfter, $postBefore)
     {
+        if ($this->isInfinityLoopDetected($this->workflowId, $this->step)) {
+            return;
+        }
+
         $postQueryArgs = [
             'post' => $postBefore,
             'node' => $this->step['node'],

@@ -5,14 +5,18 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Traits;
 trait InfiniteLoopPreventer
 {
     /**
-     * @var bool
+     * @var array
      */
-    protected $isRunning = false;
+    protected $isRunningOnNodes = [];
 
-    protected function isInfinityLoopDetected(): bool
+    protected function isInfinityLoopDetected(int $workflowId, array $step): bool
     {
-        $isAlreadyRunning = $this->isRunning;
-        $this->isRunning = true;
+        $stepId = $step['node']['id'];
+
+        $infiniteLoopIndex = sprintf('%s-%s', $workflowId, $stepId);
+
+        $isAlreadyRunning = in_array($infiniteLoopIndex, $this->isRunningOnNodes);
+        $this->isRunningOnNodes[] = $infiniteLoopIndex;
 
         return $isAlreadyRunning;
     }

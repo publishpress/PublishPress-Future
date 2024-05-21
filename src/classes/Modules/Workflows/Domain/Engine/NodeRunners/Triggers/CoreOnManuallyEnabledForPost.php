@@ -3,6 +3,7 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost as NodeTypeCoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\InputValidatorsInterface;
@@ -11,6 +12,8 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterfa
 
 class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
+    use InfiniteLoopPreventer;
+
     const NODE_NAME = NodeTypeCoreOnManuallyEnabledForPost::NODE_NAME;
 
     const META_KEY_MANUALLY_TRIGGERED = '_workflow_manually_triggered_';
@@ -66,6 +69,10 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 
     public function triggerCallback($postId, $workflowId)
     {
+        if ($this->isInfinityLoopDetected($this->workflowId, $this->step)) {
+            return;
+        }
+
         if ($this->workflowId !== $workflowId) {
             return;
         }
