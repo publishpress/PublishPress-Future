@@ -19,6 +19,7 @@
     text-align: left;
 }
 
+.react-flow__node-label .dashicon,
 .react-flow__node-label svg {
     margin-right: 4px;
     position: absolute;

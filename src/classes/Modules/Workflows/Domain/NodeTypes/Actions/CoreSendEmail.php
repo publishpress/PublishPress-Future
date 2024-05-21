@@ -9,6 +9,16 @@ class CoreSendEmail implements NodeTypeInterface
 {
     const NODE_NAME = "action/core.send-email";
 
+    public static function getDefaultSubject()
+    {
+        return __('PublishPress Workflow: {{global.workflow.title}}', 'publishpress-future-pro');
+    }
+
+    public static function getDefaultMessage()
+    {
+        return __('This is a message sent by PublishPress Workflow: {{global.workflow.title}}.', 'publishpress-future-pro');
+    }
+
     public function getElementarType(): string
     {
         return NodeTypesModel::NODE_TYPE_ACTION;
@@ -65,16 +75,25 @@ class CoreSendEmail implements NodeTypeInterface
                         "name" => "recipient",
                         "type" => "emailRecipient",
                         "label" => __("Recipient", "publishpress-future-pro"),
+                        "settings" => [
+                            "defaultRecipient" => "global.site.admin_email",
+                        ],
                     ],
                     [
                         "name" => "subject",
                         "type" => "text",
                         "label" => __("Subject", "publishpress-future-pro"),
+                        "settings" => [
+                            "placeholder" => self::getDefaultSubject(),
+                        ],
                     ],
                     [
                         "name" => "message",
                         "type" => "textarea",
                         "label" => __("Message", "publishpress-future-pro"),
+                        "settings" => [
+                            "placeholder" => self::getDefaultMessage(),
+                        ],
                     ]
                 ],
             ]

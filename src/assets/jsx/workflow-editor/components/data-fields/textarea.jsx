@@ -2,7 +2,7 @@ import { __ } from "@wordpress/i18n";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 import { TextareaControl } from "@wordpress/components";
 
-export function Textarea({ name, label, defaultValue, onChange, variables = [] }) {
+export function Textarea({ name, label, defaultValue, settings, onChange, variables = [] }) {
 
     const onChangeSetting = ({ value }) => {
         if (onChange) {
@@ -14,6 +14,8 @@ export function Textarea({ name, label, defaultValue, onChange, variables = [] }
         defaultValue = '';
     }
 
+    const placeholder = settings?.placeholder || '';
+
     return (
         <>
             <VStack>
@@ -21,6 +23,7 @@ export function Textarea({ name, label, defaultValue, onChange, variables = [] }
                     label={label}
                     value={defaultValue || ""}
                     onChange={(value) => onChangeSetting({ value })}
+                    placeholder={placeholder}
                 />
             </VStack>
         </>

@@ -40,20 +40,28 @@ class CoreSendEmail implements NodeRunnerInterface
 
     public function setup(array $step, array $input = [], array $globalVariables = []): void
     {
-        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $input, $globalVariables);
+        $this->nodeRunnerPreparer->setup($step, [$this, 'processEmailSending'], $input, $globalVariables);
     }
 
-    public function actionCallback(array $step, array $input, array $globalVariables)
+    public function processEmailSending(array $step, array $input, array $globalVariables)
     {
         try {
             $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
             $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
 
-            ray($nodeSettings)->label('Node Settings');
-
             $recipient = $nodeSettings['recipient']['recipient'] ?? 'global.site.admin_email';
+
+            $workflowTitle = $globalVariables['workflow']['title'];
+
             $subject = $nodeSettings['subject'] ?? '';
+            if (empty($subject)) {
+                $subject = str_replace('{{global.workflow.title}}', $workflowTitle, NodeTypeCoreSendEmail::getDefaultSubject());
+            }
+
             $message = $nodeSettings['message'] ?? '';
+            if (empty($message)) {
+                $message = str_replace('{{global.workflow.title}}', $workflowTitle, NodeTypeCoreSendEmail::getDefaultMessage());
+            }
 
             $subject = sanitize_text_field($subject);
 

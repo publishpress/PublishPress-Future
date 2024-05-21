@@ -1,13 +1,8 @@
-import { sprintf, __ } from "@wordpress/i18n";
-import { SelectControl } from "@wordpress/components";
-import { DatePicker } from "@wordpress/components";
-import { TextControl, Tooltip } from "@wordpress/components";
-import { Dashicon, Popover, Button } from "@wordpress/components";
-import { useState } from "@wordpress/element";
-import { ToggleControl } from "@wordpress/components";
+import { __ } from "@wordpress/i18n";
+import { TextControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
-export function Text({ name, label, defaultValue, onChange, variables = [] }) {
+export function Text({ name, label, defaultValue, onChange, settings, variables = [] }) {
 
     const onChangeSetting = ({ value }) => {
         if (onChange) {
@@ -19,6 +14,8 @@ export function Text({ name, label, defaultValue, onChange, variables = [] }) {
         defaultValue = '';
     }
 
+    const placeholder = settings?.placeholder || '';
+
     return (
         <>
             <VStack>
@@ -26,6 +23,7 @@ export function Text({ name, label, defaultValue, onChange, variables = [] }) {
                     label={label}
                     value={defaultValue || ""}
                     onChange={(value) => onChangeSetting({ value })}
+                    placeholder={placeholder}
                 />
             </VStack>
         </>

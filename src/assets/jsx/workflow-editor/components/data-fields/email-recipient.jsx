@@ -3,7 +3,7 @@ import { TreeSelect } from "@wordpress/components";
 import { TextControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
-export function EmailRecipient({ name, label, defaultValue, onChange, variables = [] }) {
+export function EmailRecipient({ name, label, defaultValue, onChange, settings, variables = [] }) {
 
     let recipientOptions = [
         { name: __("Custom addressses", "publishpress-future-pro"), id: "custom" },
@@ -19,7 +19,7 @@ export function EmailRecipient({ name, label, defaultValue, onChange, variables 
         });
     }
 
-    const defaultRecipient = "global.site.admin_email";
+    const defaultRecipient = settings?.defaultRecipient || "custom";
 
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
