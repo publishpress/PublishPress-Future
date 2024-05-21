@@ -40,6 +40,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\FutureLegacyAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowEngine;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowVariablesHandler;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Models\CronSchedulesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
@@ -261,12 +262,17 @@ return [
         return new CronSchedulesModel();
     },
 
+    ServicesAbstract::WORKFLOW_VARIABLES_HANDLER => static function (ContainerInterface $container) {
+        return new WorkflowVariablesHandler();
+    },
+
     ServicesAbstract::WORKFLOW_ENGINE => static function (ContainerInterface $container) {
         return new WorkflowEngine(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(FreeServicesAbstract::CRON),
             $container->get(ServicesAbstract::NODE_TYPES_MODEL),
-            $container->get(ServicesAbstract::NODE_RUNNER_FACTORY)
+            $container->get(ServicesAbstract::NODE_RUNNER_FACTORY),
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
         );
     },
 
@@ -413,7 +419,8 @@ return [
                     $nodeRunner = new CoreSendEmail(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
-                        $container->get(FreeServicesAbstract::EMAIL)
+                        $container->get(FreeServicesAbstract::EMAIL),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
                     );
                     break;
 

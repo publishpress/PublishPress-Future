@@ -8,6 +8,7 @@ use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail as NodeTypeCoreSendEmail;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class CoreSendEmail implements NodeRunnerInterface
 {
@@ -28,14 +29,21 @@ class CoreSendEmail implements NodeRunnerInterface
      */
     private $emailFacade;
 
+    /**
+     * @var WorkflowEngineInterface
+     */
+    private $workflowEngine;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerPreparerInterface $nodeRunnerPreparer,
-        EmailFacade $emailFacade
+        EmailFacade $emailFacade,
+        WorkflowEngineInterface $workflowEngine
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->emailFacade = $emailFacade;
+        $this->workflowEngine = $workflowEngine;
     }
 
     public function setup(array $step, array $input = [], array $globalVariables = []): void
@@ -51,22 +59,28 @@ class CoreSendEmail implements NodeRunnerInterface
 
             $recipient = $nodeSettings['recipient']['recipient'] ?? 'global.site.admin_email';
 
-            $workflowTitle = $globalVariables['workflow']['title'];
+            $dataSources = [
+                'input' => $input,
+                'global' => $globalVariables,
+            ];
+
+            $variablesHandler = $this->workflowEngine->getVariablesHandler();
 
             $subject = $nodeSettings['subject'] ?? '';
             if (empty($subject)) {
-                $subject = str_replace('{{global.workflow.title}}', $workflowTitle, NodeTypeCoreSendEmail::getDefaultSubject());
+                $subject = NodeTypeCoreSendEmail::getDefaultSubject();
             }
+            $subject = $variablesHandler->replaceVariablesPlaceholdersInText($subject, $dataSources);
+            $subject = sanitize_text_field($subject);
 
             $message = $nodeSettings['message'] ?? '';
             if (empty($message)) {
-                $message = str_replace('{{global.workflow.title}}', $workflowTitle, NodeTypeCoreSendEmail::getDefaultMessage());
+                $message = NodeTypeCoreSendEmail::getDefaultMessage();
             }
-
-            $subject = sanitize_text_field($subject);
-
+            $message = $variablesHandler->replaceVariablesPlaceholdersInText($message, $dataSources);
             // TODO: Add support for HTML emails. Block editor or separated email templates?
             $message = sanitize_textarea_field($message);
+
 
             if ($recipient === 'custom') {
                 $customEmails = $nodeSettings['recipient']['custom'] ?? '';
@@ -75,11 +89,7 @@ class CoreSendEmail implements NodeRunnerInterface
                     $recipient = explode(',', $customEmails);
                 }
             } else {
-                $dataSources = [
-                    'input' => $input,
-                    'global' => $globalVariables,
-                ];
-                $recipient = $this->parseVariableValue($recipient, $dataSources);
+                $recipient = $variablesHandler->parseVariableValue($recipient, $dataSources);
             }
 
             if (empty($recipient)) {
@@ -103,42 +113,5 @@ class CoreSendEmail implements NodeRunnerInterface
         } catch (\Exception $e) {
             // $rayMessage = 'Error: ' . $e->getMessage();
         }
-    }
-
-    private function parseVariableValue($variableName, array $dataSources)
-    {
-        $variableName = explode('.', $variableName);
-
-        $variableSource = null;
-        if (in_array($variableName[0], array_keys($dataSources))) {
-            $variableSource = $dataSources[$variableName[0]];
-            $variableName = array_slice($variableName, 1);
-        } else {
-            return $variableName;
-        }
-
-        $value = $variableSource;
-        if (count($variableName) > 1) {
-            foreach ($variableName as $variableNameSegment) {
-                $value = $this->getValueFromVariable($variableNameSegment, $value);
-            }
-        } else if (count($variableName) === 1) {
-            $value = $variableSource[$variableName[0]];
-        }
-
-        return $value;
-    }
-
-    private function getValueFromVariable($variableName, $variable)
-    {
-        if (is_array($variable) && isset($variable[$variableName])) {
-            $variable = $variable[$variableName];
-        } else if (is_object($variable) && isset($variable->{$variableName})) {
-            $variable = $variable->{$variableName};
-        } else {
-            throw new Exception('Invalid data key: ' . $variableName . ' for data: ' . print_r($variable, true));
-        }
-
-        return $variable;
     }
 }

@@ -7,6 +7,7 @@ use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
@@ -32,16 +33,23 @@ class WorkflowEngine implements WorkflowEngineInterface
      */
     private $nodeRunnerFactory;
 
+    /**
+     * @var WorkflowVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
         CronInterface $cron,
         NodeTypesModelInterface $nodeTypesModel,
-        \Closure $nodeRunnerFactory
+        \Closure $nodeRunnerFactory,
+        WorkflowVariablesHandlerInterface $variablesHandler
     ) {
         $this->hooks = $hooks;
         $this->cron = $cron;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->nodeRunnerFactory = $nodeRunnerFactory;
+        $this->variablesHandler = $variablesHandler;
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
         $this->hooks->addAction(
@@ -81,7 +89,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             $workflow = new WorkflowModel();
             $workflow->load($workflowId);
 
-            $globalVariables = $this->getGlobalVariables($workflow);
+            $globalVariables = $this->variablesHandler->getGlobalVariables($workflow);
 
             $triggerNodes = $workflow->getTriggerNodes();
 
@@ -114,56 +122,13 @@ class WorkflowEngine implements WorkflowEngineInterface
                     'label' => $triggerNode['data']['label'],
                 ];
 
-
                 // Setup the trigger
                 $triggerRunner->setup($workflowId, $routineTree[$triggerId], $globalVariables);
             }
         }
     }
 
-    private function getGlobalVariables($workflow)
-    {
-        $globals = [];
 
-        $globals['workflow'] = [
-            'id' => $workflow->getId(),
-            'title' => $workflow->getTitle(),
-            'description' => $workflow->getDescription(),
-            'modified_at' => $workflow->getModifiedAt(),
-        ];
-
-
-        $userData = [];
-        $currentUser = wp_get_current_user();
-        if ($currentUser->exists()) {
-            $userData = [
-                'id' => $currentUser->ID,
-                'user_email' => $currentUser->user_email,
-                'user_login' => $currentUser->user_login,
-                'display_name' => $currentUser->display_name,
-                'roles' => $currentUser->roles,
-                'caps' => $currentUser->caps,
-                'user_registered' => $currentUser->user_registered,
-            ];
-        }
-        $globals['user'] = $userData;
-
-        $globals['site'] = [
-            'url' => get_site_url(),
-            'home_url' => get_home_url(),
-            'admin_email' => get_option('admin_email'),
-            'name' => get_option('blogname'),
-            'description' => get_option('blogdescription'),
-        ];
-
-        $globals['trigger'] = [
-            'id' => 0,
-            'name' => '',
-            'label' => '',
-        ];
-
-        return $globals;
-    }
 
     public function executeNodeRoutine($step, $input, $globalVariables)
     {
@@ -192,5 +157,10 @@ class WorkflowEngine implements WorkflowEngineInterface
     public function unscheduleRecurringNodeAction($hook, $args)
     {
         $this->cron->clearScheduledAction($hook, [$args]);
+    }
+
+    public function getVariablesHandler(): WorkflowVariablesHandlerInterface
+    {
+        return $this->variablesHandler;
     }
 }
