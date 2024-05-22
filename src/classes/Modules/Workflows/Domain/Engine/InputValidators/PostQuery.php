@@ -3,6 +3,8 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\InputValidators;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\InputValidatorsInterface;
+use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
+use PublishPress\FuturePro\Modules\Workflows\Module;
 
 class PostQuery implements InputValidatorsInterface
 {
@@ -29,6 +31,11 @@ class PostQuery implements InputValidatorsInterface
 
     private function hasValidPostType($post, array $nodeSettings)
     {
+        // Prevent to apply actions to workflows
+        if ($post->post_type === Module::POST_TYPE_WORKFLOW) {
+            return false;
+        }
+
         $settingPostTypes = $nodeSettings['postQuery']['postType'] ?? [];
 
         if (!empty($settingPostTypes) && !in_array($post->post_type, $settingPostTypes)) {

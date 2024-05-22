@@ -63,6 +63,18 @@ class CorePostTermsSet implements NodeTypeInterface
     {
         return [
             [
+                "label" => __("Post", "publishpress-future-pro"),
+                "description" => __("The post to update.", "publishpress-future-pro"),
+                "fields" => [
+                    [
+                        "name" => "post",
+                        "type" => "postInput",
+                        "label" => __("Post", "publishpress-future-pro"),
+                        "description" => __("Select the variable that contains the post to update. It can be a post instance or the post ID.", "publishpress-future-pro"),
+                    ],
+                ],
+            ],
+            [
                 "label" => __("New terms", "publishpress-future-pro"),
                 "description" => __("The terms that will be added to the posts after removing all the others.", "publishpress-future-pro"),
                 "fields" => [

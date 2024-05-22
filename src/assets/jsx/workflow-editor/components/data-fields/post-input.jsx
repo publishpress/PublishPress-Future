@@ -27,7 +27,12 @@ export function PostInput({ name, label, defaultValue, onChange, variables = [] 
     }
 
     useEffect(() => {
-        onChange(name, defaultValue?.variable || inputOptions[0]['id']);
+        onChangeSetting(
+            {
+                settingName: "variable",
+                value: defaultValue?.variable || inputOptions[0]?.id
+            }
+        );
     }, []);
 
     return (
