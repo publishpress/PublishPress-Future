@@ -24,6 +24,11 @@ class CorePostQuery implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "queryPost";
+    }
+
     public function getLabel(): string
     {
         return __("Query Posts", "publishpress-future-pro");

@@ -185,3 +185,7 @@ export function getGlobalVariable(state, name) {
 export function getTaxonomyTerms(state, taxnomy) {
     return state.taxonomyTerms[taxnomy] || [];
 }
+
+export function getBaseSlugCounts(state) {
+    return state.baseSlugCounts;
+}

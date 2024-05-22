@@ -25,6 +25,11 @@ class CoreOnSavePost implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "onSavePost";
+    }
+
     public function getLabel(): string
     {
         return __("Post is saved", "publishpress-future-pro");

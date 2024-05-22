@@ -24,6 +24,11 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "onManualEnableForPost";
+    }
+
     public function getLabel(): string
     {
         return __("Manually enabled for Post on save", "publishpress-future-pro");

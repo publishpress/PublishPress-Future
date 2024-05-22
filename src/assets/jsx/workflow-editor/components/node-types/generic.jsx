@@ -59,9 +59,10 @@ export const GenericNode = memo(({ data, isConnectable }) => {
                 {targetHandles}
 
                 <div className='react-flow__node-inner-body'>
-                    <div className='react-flow__node-label'>
+                    <div className="react-flow__node-slug">{data.slug}</div>
+                    <div className='react-flow__node-header'>
                         <NodeIcon icon={data.icon} size={14} />
-                        <span>{data.label}</span>
+                        <div className="react-flow__node-label">{data.label}</div>
                     </div>
                 </div>
 

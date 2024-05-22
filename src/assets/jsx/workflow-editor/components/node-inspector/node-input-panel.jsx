@@ -2,6 +2,11 @@ import { PanelBody } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
 export const NodeInputPanel = ({ inputSchema = []}) => {
+
+    if (!inputSchema) {
+        inputSchema = [];
+    }
+
     return (
         <PanelBody title={__("Inputs", "publishpress-future-pro")}>
             <div className="workflow-editor-inspector-card__input-schema">
@@ -9,7 +14,7 @@ export const NodeInputPanel = ({ inputSchema = []}) => {
                 <ul>
                     {inputSchema.map((schemaItem, index) => (
                         <li key={index}>
-                            <code>{schemaItem.label}</code>
+                            <code>{schemaItem.name}</code>
                         </li>
                     ))}
                 </ul>

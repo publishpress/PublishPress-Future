@@ -13,7 +13,7 @@ import NodeSettingsPanel from "./node-settings-panel";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 import NodeOutputPanel from "./node-output-panel";
 import NodeInputPanel from "./node-input-panel";
-import { nodeHasIncomers, nodeHasInput, getNodeIncomers } from "../../utils";
+import { nodeHasIncomers, nodeHasInput, getNodeIncomers, mapNodeInputs } from "../../utils";
 import { FEATURE_DEVELOPER_MODE } from "../../constants";
 
 export const NodeInspector = () => {
@@ -68,9 +68,11 @@ export const NodeInspector = () => {
     const nodeHasSettings = selectedNode?.data?.settingsSchema?.length > 0;
     const nodeHasOutput = selectedNode?.data?.outputSchema?.length > 0;
 
-    const nodeIncomers = getNodeIncomers(selectedNode);
+
     const selectedNodeHasIncomers = nodeHasIncomers(selectedNode);
     const selectedNodeHasInput = nodeHasInput(selectedNode);
+
+    const mappedNodeInputSchema = mapNodeInputs(selectedNode);
 
     return (
         <>
@@ -123,20 +125,16 @@ export const NodeInspector = () => {
                 <>
                     <NodeInspectorCard node={selectedNode} />
 
-                    {isDeveloperModeEnabled && selectedNodeHasIncomers && selectedNodeHasInput && (
-                        <>
-                            {nodeIncomers.map((incomer) => (
-                                <NodeInputPanel key={incomer.id} inputSchema={incomer.data.outputSchema} />
-                            ))}
-                        </>
-                    )}
-
-                    {isDeveloperModeEnabled && nodeHasOutput && (
-                        <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
-                    )}
-
                     {nodeHasSettings && (
                         <NodeSettingsPanel node={selectedNode} />
+                    )}
+
+                    {selectedNodeHasIncomers && selectedNodeHasInput && (
+                        <NodeInputPanel inputSchema={mappedNodeInputSchema} />
+                    )}
+
+                    {nodeHasOutput && (
+                        <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
                     )}
 
                     <div className="components-tools-panel"></div>

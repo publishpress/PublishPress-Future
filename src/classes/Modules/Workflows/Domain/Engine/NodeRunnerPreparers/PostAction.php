@@ -25,25 +25,23 @@ class PostAction implements NodeRunnerPreparerInterface
         $this->generalNodeRunnerPreparer = $generalNodeRunnerPreparer;
     }
 
-    public function setup(array $step, callable $actionCallback, array $input = [], array $globalVariables = []): void
+    public function setup(array $step, callable $actionCallback, array $contextVariables = []): void
     {
         try {
             $node = $this->getNodeFromStep($step);
             $nodeSettings = $this->getNodeSettings($node);
-            $workflowId = $this->getWorkflowIdFromGlobalVariables($globalVariables);
+            $workflowId = $this->getWorkflowIdFromContextVariables($contextVariables);
 
-            if (empty($input)) {
-                throw new Exception('Node has empty input');
+            if (! isset($nodeSettings['post'])) {
+                throw new Exception('The "post" variable is not set in the node settings');
             }
 
-            if (! is_array($input)) {
-                $input = [$input];
-            }
+            // We look for the "post" variable in the node settings
+            $posts = $this->getVariableValueFromContextVariables($nodeSettings['post'], $contextVariables);
 
-            // TODO: Add a setting to allow the user to choose the key to get the posts, if more than one is available
-            $inputKeys = array_keys($input);
-            $posts = $input[$inputKeys[0]];
-            $posts = [$posts];
+            if (! is_array($posts)) {
+                $posts = [$posts];
+            }
 
             foreach ($posts as $post) {
                 if (is_array($post)) {
@@ -61,15 +59,15 @@ class PostAction implements NodeRunnerPreparerInterface
                 call_user_func($actionCallback, $postId, $nodeSettings);
             }
 
-            $this->runNextSteps($step, $input, $globalVariables);
+            $this->runNextSteps($step, $contextVariables);
         } catch (\Exception $e) {
             $this->logError($e->getMessage(), $workflowId, $step);
         }
     }
 
-    public function runNextSteps(array $step, array $input, array $globalVariables): void
+    public function runNextSteps(array $step, array $contextVariables): void
     {
-        $this->generalNodeRunnerPreparer->runNextSteps($step, $input, $globalVariables);
+        $this->generalNodeRunnerPreparer->runNextSteps($step, $contextVariables);
     }
 
     public function getNextSteps(array $step)
@@ -82,18 +80,28 @@ class PostAction implements NodeRunnerPreparerInterface
         return $this->generalNodeRunnerPreparer->getNodeFromStep($step);
     }
 
+    public function getSlugFromStep(array $step)
+    {
+        return $this->generalNodeRunnerPreparer->getSlugFromStep($step);
+    }
+
     public function getNodeSettings(array $node)
     {
         return $this->generalNodeRunnerPreparer->getNodeSettings($node);
     }
 
-    public function getWorkflowIdFromGlobalVariables(array $globalVariables)
+    public function getWorkflowIdFromContextVariables(array $contextVariables)
     {
-        return $this->generalNodeRunnerPreparer->getWorkflowIdFromGlobalVariables($globalVariables);
+        return $this->generalNodeRunnerPreparer->getWorkflowIdFromContextVariables($contextVariables);
     }
 
     public function logError(string $message, int $workflowId, array $step)
     {
         $this->generalNodeRunnerPreparer->logError($message, $workflowId, $step);
+    }
+
+    public function getVariableValueFromContextVariables(string $variableName, array $contextVariables)
+    {
+        return $this->generalNodeRunnerPreparer->getVariableValueFromContextVariables($variableName, $contextVariables);
     }
 }

@@ -122,15 +122,19 @@ class WorkflowEngine implements WorkflowEngineInterface
                     'label' => $triggerNode['data']['label'],
                 ];
 
+                $contextVariables = [
+                    'global' => $globalVariables,
+                ];
+
                 // Setup the trigger
-                $triggerRunner->setup($workflowId, $routineTree[$triggerId], $globalVariables);
+                $triggerRunner->setup($workflowId, $routineTree[$triggerId], $contextVariables);
             }
         }
     }
 
 
 
-    public function executeNodeRoutine($step, $input, $globalVariables)
+    public function executeNodeRoutine($step, $contextVariables)
     {
         $node = $step['node'];
         $nodeName = $node['data']['name'];
@@ -145,7 +149,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             return;
         }
 
-        $nodeRunner->setup($step, $input, $globalVariables);
+        $nodeRunner->setup($step, $contextVariables);
     }
 
     public function executeAsyncNodeRoutine($args)

@@ -46,19 +46,19 @@ export const WorkflowGlobalVariables = () => {
                 </div>
 
                 {!isLoadingWorkflow && variablesNames.length > 0 && (
-                    <ul className='workflow-editor-global-var-list'>
+                    <ul className='workflow-editor-inspector-card__input-schema'>
                         {variablesNames.map((variableName) => {
                             const variable = globalVariables[variableName];
                             const dataType = getDataTypeByName(variable.type);
 
                             return (
                                 <li key={variableName}>
-                                    <div>{variable.label}</div>
+                                    <div></div>
                                     <ul>
                                         {dataType && dataType.propertiesSchema.map((property) => {
                                             return (
                                                 <li key={variableName + property.name}>
-                                                    {property.label}
+                                                    <code>{`global.${variable.name}.${property.name}`}</code>
                                                 </li>
                                             );
                                         })}

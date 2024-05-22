@@ -32,6 +32,7 @@ export const DEFAULT_STATE = {
     globalVariables: [],
     isFetchingTaxonomyTerms: false,
     taxonomyTerms: {},
+    baseSlugCounts: {},
 }
 
 const loadWorkflowStart = (state, action) => {
@@ -47,6 +48,16 @@ const loadWorkflowSuccess = (state, action) => {
     const nodes = payload.flow?.nodes || [];
     const edges = payload.flow?.edges || [];
     const viewport = payload.flow?.viewport || DEFAULT_STATE.viewport;
+
+    nodes.map(node => {
+        const slug = node?.data?.slug;
+
+        if (! slug) {
+            return;
+        }
+
+        state = updateBaseSlugCounts(state, {payload: slug});
+    });
 
     state = setGlobalVariable(state, {
         payload: {
@@ -452,6 +463,81 @@ const fetchTaxonomyTermsFailure = (state, action) => {
     };
 }
 
+const incrementBaseSlugCounts = (state, action) => {
+    const { payload } = action;
+
+    const newBaseSlugCounts = {
+        ...state.baseSlugCounts,
+        [payload]: (state.baseSlugCounts[payload] || 0) + 1,
+    };
+
+    return {
+        ...state,
+        baseSlugCounts: newBaseSlugCounts,
+    };
+}
+
+
+const extractSlugParts = (slug) => {
+    if (! slug) {
+        return {};
+    }
+
+    // The payload is a string with the format "baseSlug<count>"
+    const matches = slug.match(/([a-zA-Z0-9]+)(\d+)$/);
+
+    if (! matches) {
+        return {};
+    }
+
+    return {
+        baseSlug: matches[1],
+        count: parseInt(matches[2]),
+    };
+}
+
+const calculateBaseSlugCount = (state, slug) => {
+    const slugParts = extractSlugParts(slug);
+    const currentBaseSlugCount = state.baseSlugCounts[slugParts?.baseSlug] || 0;
+
+    const baseSlugCount = slugParts?.count || 0;
+
+    if (isNaN(baseSlugCount)) {
+        return currentBaseSlugCount;
+    }
+
+    if (baseSlugCount > currentBaseSlugCount) {
+        return baseSlugCount;
+    }
+
+    return currentBaseSlugCount;
+}
+
+const updateBaseSlugCounts = (state, action) => {
+    const { payload } = action;
+
+    const slugParts = extractSlugParts(payload);
+    const baseSlugCount = calculateBaseSlugCount(state, payload);
+
+    const baseSlug = slugParts?.baseSlug;
+
+    if (! baseSlug) {
+        return state;
+    }
+
+    if (! baseSlugCount) {
+        return state;
+    }
+
+    return {
+        ...state,
+        baseSlugCounts: {
+            ...state.baseSlugCounts,
+            [baseSlug]: baseSlugCount,
+        },
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -524,6 +610,10 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return fetchTaxonomyTermsSuccess(state, action);
         case 'FETCH_TAXONOMY_TERMS_FAILURE':
             return fetchTaxonomyTermsFailure(state, action);
+        case 'INCREMENT_BASE_SLUG_COUNTS':
+            return incrementBaseSlugCounts(state, action);
+        case 'UPDATE_BASE_SLUG_COUNTS':
+            return updateBaseSlugCounts(state, action);
     }
 
     return state;

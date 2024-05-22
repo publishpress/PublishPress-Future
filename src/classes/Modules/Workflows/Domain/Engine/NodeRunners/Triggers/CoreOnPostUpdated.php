@@ -29,7 +29,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
     /**
      * @var array
      */
-    private $globalVariables;
+    private $contextVariables;
 
     /**
      * @var NodeRunnerPreparerInterface
@@ -56,10 +56,10 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
         $this->postQueryValidator = $postQueryValidator;
     }
 
-    public function setup(int $workflowId, array $step, array $globalVariables = []): void
+    public function setup(int $workflowId, array $step, array $contextVariables = []): void
     {
         $this->step = $step;
-        $this->globalVariables = $globalVariables;
+        $this->contextVariables = $contextVariables;
         $this->workflowId = $workflowId;
 
         $this->hooks->addAction(HooksAbstract::ACTION_POST_UPDATED, [$this, 'triggerCallback'], 10, 3);
@@ -80,12 +80,16 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $output = [
+        $nodeSlug = $this->nodeRunnerPreparer->getSlugFromStep($this->step);
+
+        $contextVariables = $this->contextVariables;
+
+        $contextVariables[$nodeSlug] = [
             'postId' => $postId,
             'postBefore' => $postBefore,
             'postAfter' => $postAfter,
         ];
 
-        $this->nodeRunnerPreparer->runNextSteps($this->step, $output, $this->globalVariables);
+        $this->nodeRunnerPreparer->runNextSteps($this->step, $contextVariables);
     }
 }

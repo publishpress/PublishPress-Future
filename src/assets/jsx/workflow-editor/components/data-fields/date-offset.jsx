@@ -61,6 +61,8 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         { name: __("Event date", "publishpress-future-pro"), id: "event"}
     ];
 
+    console.log(variables)
+
     if (variables.length > 0) {
         variables.forEach((variable) => {
             dateSourceOptions.push({

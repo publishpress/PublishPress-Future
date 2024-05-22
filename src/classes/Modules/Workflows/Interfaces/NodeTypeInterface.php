@@ -27,4 +27,6 @@ interface NodeTypeInterface
     public function getOutputSchema(): array;
 
     public function getCSSClass(): string;
+
+    public function getBaseSlug(): string;
 }

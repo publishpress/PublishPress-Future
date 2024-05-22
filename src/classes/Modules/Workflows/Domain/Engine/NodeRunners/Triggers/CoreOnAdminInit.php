@@ -25,7 +25,7 @@ class CoreOnAdminInit implements NodeTriggerRunnerInterface
     /**
      * @var array
      */
-    private $globalVariables;
+    private $contextVariables;
 
     /**
      * @var NodeRunnerPreparerInterface
@@ -40,18 +40,16 @@ class CoreOnAdminInit implements NodeTriggerRunnerInterface
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
     }
 
-    public function setup(int $workflowId, array $step, array $globalVariables = []): void
+    public function setup(int $workflowId, array $step, array $contextVariables = []): void
     {
         $this->step = $step;
-        $this->globalVariables = $globalVariables;
+        $this->contextVariables = $contextVariables;
 
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'triggerCallback'], 10);
     }
 
     public function triggerCallback()
     {
-        $triggerOutput = [];
-
-        $this->nodeRunnerPreparer->runNextSteps($this->step, $triggerOutput, $this->globalVariables);
+        $this->nodeRunnerPreparer->runNextSteps($this->step, $this->contextVariables);
     }
 }

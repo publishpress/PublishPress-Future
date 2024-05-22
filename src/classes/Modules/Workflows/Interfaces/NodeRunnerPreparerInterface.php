@@ -5,17 +5,21 @@ namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
 interface NodeRunnerPreparerInterface
 {
-    public function setup(array $step, callable $actionCallback, array $input = [], array $globalVariables = []): void;
+    public function setup(array $step, callable $actionCallback, array $contextVariables = []): void;
 
-    public function runNextSteps(array $step, array $input, array $globalVariables): void;
+    public function runNextSteps(array $step, array $contextVariables): void;
 
     public function getNextSteps(array $step);
 
     public function getNodeFromStep(array $step);
 
+    public function getSlugFromStep(array $step);
+
+    public function getVariableValueFromContextVariables(string $variableName, array $contextVariables);
+
     public function getNodeSettings(array $node);
 
-    public function getWorkflowIdFromGlobalVariables(array $globalVariables);
+    public function getWorkflowIdFromContextVariables(array $contextVariables);
 
     public function logError(string $message, int $workflowId, array $step);
 }

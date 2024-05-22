@@ -180,3 +180,93 @@ export function getGlobalVariablesExpanded(globalVariables) {
 
     return globalVariablesExpanded;
 }
+
+export function mapNodeInputs(node) {
+    const previousNodes = getNodeIncomers(node);
+
+    const mappedInput = [];
+
+    previousNodes.forEach((previousNode) => {
+        if (!previousNode.data?.outputSchema?.length) {
+            return;
+        }
+
+        previousNode.data.outputSchema.forEach((outputItem) => {
+            if (outputItem.type === "input") {
+                // Get the previous node outputs to bypass to this node as input
+                const previousNodeInputs = mapNodeInputs(previousNode);
+
+                previousNodeInputs.map((inputItem) => {
+                    mappedInput.push({
+                        ...inputItem,
+                        name: `${inputItem.name}`,
+                    });
+                });
+            } else {
+                mappedInput.push({
+                    ...outputItem,
+                    name: `${previousNode.data.slug}.${outputItem.name}`,
+                });
+            }
+        });
+    });
+
+    // Remove duplicated inputs
+    const uniqueMappedInputs = mappedInput.filter(
+        (input, index, self) =>
+            index ===
+            self.findIndex(
+                (t) => t.name === input.name,
+            ),  // eslint-disable-line
+    );
+
+    // Sort inputs by name
+    uniqueMappedInputs.sort((a, b) => {
+        if (a.name < b.name) {
+            return -1;
+        }
+
+        if (a.name > b.name) {
+            return 1;
+        }
+
+        return 0;
+    });
+
+    return uniqueMappedInputs;
+}
+
+export function getExpandedVariableOptionsForSelect(node, globalVariables) {
+    const getDataTypeByName = select(workflowStore).getDataTypeByName;
+
+    const mappedNodeInputs = mapNodeInputs(node);
+    const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
+
+    let options;
+    mappedNodeInputs.concat(globalVariablesToList).forEach((variable) => {
+        if (!options) {
+            options = [];
+        }
+
+        const dataType = getDataTypeByName(variable.type);
+
+        const optionToAdd = {
+            id: variable.name,
+            name: variable.label,
+            children: []
+        };
+
+        if (dataType.type === 'object') {
+            optionToAdd.children = dataType.propertiesSchema.map((property) => {
+                return {
+                    id: variable.name + '.' + property.name,
+                    name: variable.label + '->' + property.label,
+                };
+            });
+        }
+
+        options.push(optionToAdd);
+    });
+
+    return options;
+}

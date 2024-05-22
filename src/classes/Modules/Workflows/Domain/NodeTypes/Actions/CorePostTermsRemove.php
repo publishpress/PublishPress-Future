@@ -24,6 +24,11 @@ class CorePostTermsRemove implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "removePostTerms";
+    }
+
     public function getLabel(): string
     {
         return __("Remove terms to post", "publishpress-future-pro");

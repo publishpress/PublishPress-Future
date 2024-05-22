@@ -30,7 +30,7 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
     /**
      * @var array
      */
-    private $globalVariables;
+    private $contextVariables;
 
     /**
      * @var NodeRunnerPreparerInterface
@@ -45,11 +45,11 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
     }
 
-    public function setup(int $workflowId, array $step, array $globalVariables = []): void
+    public function setup(int $workflowId, array $step, array $contextVariables = []): void
     {
         $this->step = $step;
         $this->workflowId = $workflowId;
-        $this->globalVariables = $globalVariables;
+        $this->contextVariables = $contextVariables;
 
         $this->hooks->addAction(HooksAbstract::ACTION_LEGACY_ACTION, [$this, 'triggerCallback'], 10, 3);
     }
@@ -61,10 +61,14 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $output = [
-            'post' => $post,
+        $nodeSlug = $this->nodeRunnerPreparer->getSlugFromStep($this->step);
+
+        $contextVariables = $this->contextVariables;
+
+        $contextVariables[$nodeSlug] = [
+            'post' => $post
         ];
 
-        $this->nodeRunnerPreparer->runNextSteps($this->step, $output, $this->globalVariables);
+        $this->nodeRunnerPreparer->runNextSteps($this->step, $contextVariables);
     }
 }

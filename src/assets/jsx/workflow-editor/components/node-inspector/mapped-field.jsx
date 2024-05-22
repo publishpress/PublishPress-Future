@@ -8,6 +8,7 @@ import TaxonomyTerms from "../data-fields/taxonomy-terms";
 import PostStatus from "../data-fields/post-status";
 import EmailRecipient from "../data-fields/email-recipient";
 import Textarea from "../data-fields/textarea";
+import PostInput from "../data-fields/post-input";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -46,6 +47,10 @@ export const MappedField = (props) => {
         case "emailRecipient":
             return (
                 <EmailRecipient {...props} />
+            );
+        case "postInput":
+            return (
+                <PostInput {...props} />
             );
     }
 

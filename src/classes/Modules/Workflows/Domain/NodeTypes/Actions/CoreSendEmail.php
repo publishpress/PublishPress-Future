@@ -34,6 +34,11 @@ class CoreSendEmail implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "sendEmail";
+    }
+
     public function getLabel(): string
     {
         return __("Send Email", "publishpress-future-pro");

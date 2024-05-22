@@ -36,7 +36,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
     /**
      * @var array
      */
-    private $globalVariables;
+    private $contextVariables;
 
     /**
      * @var InputValidatorsInterface
@@ -58,10 +58,10 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
         $this->postQueryValidator = $postQueryValidator;
     }
 
-    public function setup(int $workflowId, array $step, array $globalVariables = []): void
+    public function setup(int $workflowId, array $step, array $contextVariables = []): void
     {
         $this->step = $step;
-        $this->globalVariables = $globalVariables;
+        $this->contextVariables = $contextVariables;
         $this->workflowId = $workflowId;
 
         $this->hooks->addAction(HooksAbstract::ACTION_MANUALLY_TRIGGERED_WORKFLOW, [$this, 'triggerCallback'], 10, 2);
@@ -88,11 +88,15 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $output = [
+        $nodeSlug = $this->nodeRunnerPreparer->getSlugFromStep($this->step);
+
+        $contextVariables = $this->contextVariables;
+
+        $contextVariables[$nodeSlug] = [
             'postId' => $postId,
             'post' => $post,
         ];
 
-        $this->nodeRunnerPreparer->runNextSteps($this->step, $output, $this->globalVariables);
+        $this->nodeRunnerPreparer->runNextSteps($this->step, $contextVariables);
     }
 }

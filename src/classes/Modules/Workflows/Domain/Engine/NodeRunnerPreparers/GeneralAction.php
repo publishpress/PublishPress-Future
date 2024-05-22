@@ -18,24 +18,23 @@ class GeneralAction implements NodeRunnerPreparerInterface
         $this->hooks = $hooks;
     }
 
-    public function setup(array $step, callable $actionCallback, array $input = [], array $globalVariables = []): void
+    public function setup(array $step, callable $actionCallback, array $contextVariables = []): void
     {
-        call_user_func($actionCallback, $step, $input, $globalVariables);
+        call_user_func($actionCallback, $step, $contextVariables);
 
-        $this->runNextSteps($step, $input, $globalVariables);
+        $this->runNextSteps($step, $contextVariables);
     }
 
-    public function runNextSteps(array $step, array $input, array $globalVariables): void
+    public function runNextSteps(array $step, array $contextVariables): void
     {
         $nextSteps = $this->getNextSteps($step);
 
         foreach ($nextSteps as $nextStep) {
             /**
              * @var array $nextStep
-             * @var array $input
-             * @var array $globalVariables
+             * @var array $contextVariables
              */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $input, $globalVariables);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $contextVariables);
         }
     }
 
@@ -54,6 +53,13 @@ class GeneralAction implements NodeRunnerPreparerInterface
         return $step['node'];
     }
 
+    public function getSlugFromStep(array $step)
+    {
+        $node = $this->getNodeFromStep($step);
+
+        return $node['data']['slug'];
+    }
+
     public function getNodeSettings(array $node)
     {
         $nodeSettings = [];
@@ -64,9 +70,9 @@ class GeneralAction implements NodeRunnerPreparerInterface
         return $nodeSettings;
     }
 
-    public function getWorkflowIdFromGlobalVariables(array $globalVariables)
+    public function getWorkflowIdFromContextVariables(array $contextVariables)
     {
-        return $globalVariables['workflow']['id'] ?? 0;
+        return $contextVariables['global']['workflow']['id'] ?? 0;
     }
 
     public function logError(string $message, int $workflowId, array $step)
@@ -81,5 +87,34 @@ class GeneralAction implements NodeRunnerPreparerInterface
                 )
             );
         }
+    }
+
+    public function getVariableValueFromContextVariables(string $variableName, array $contextVariables)
+    {
+        $variableName = explode('.', $variableName);
+
+        if (! array_key_exists($variableName[0], $contextVariables)) {
+            return null;
+        }
+
+        $variable = $contextVariables[$variableName[0]];
+        $variableName = array_slice($variableName, 1);
+
+        if (count($variableName) === 0) {
+            return $variable;
+        }
+
+        foreach ($variableName as $variablePart) {
+            if (is_array($variable) && isset($variable[$variablePart])) {
+                $variable = $variable[$variablePart];
+            } else if (is_object($variable) && isset($variable->{$variablePart})) {
+                $variable = $variable->{$variablePart};
+            } else {
+                $variable = null;
+                break;
+            }
+        }
+
+        return $variable;
     }
 }

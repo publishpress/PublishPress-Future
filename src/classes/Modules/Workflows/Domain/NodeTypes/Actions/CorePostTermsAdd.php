@@ -24,6 +24,11 @@ class CorePostTermsAdd implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "addPostTerms";
+    }
+
     public function getLabel(): string
     {
         return __("Add extra terms to post", "publishpress-future-pro");

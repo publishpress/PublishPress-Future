@@ -156,6 +156,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "version" => $instance->getVersion(),
                     "outputSchema" => $instance->getOutputSchema(),
                     "socketSchema" => $instance->getSocketSchema(),
+                    "baseSlug" => $instance->getBaseSlug(),
                 ],
                 $type
             );

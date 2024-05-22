@@ -24,6 +24,11 @@ class CorePostUpdate implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "updatePost";
+    }
+
     public function getLabel(): string
     {
         return __("Update Post", "publishpress-future-pro");

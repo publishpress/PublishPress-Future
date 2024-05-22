@@ -25,6 +25,11 @@ class CoreOnPostUpdated implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "onPostUpdated";
+    }
+
     public function getLabel(): string
     {
         return __("Post is updated", "publishpress-future-pro");

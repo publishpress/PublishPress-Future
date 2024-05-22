@@ -24,6 +24,11 @@ class CorePostUnstick implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "unstickPost";
+    }
+
     public function getLabel(): string
     {
         return __("Unstick Post", "publishpress-future-pro");

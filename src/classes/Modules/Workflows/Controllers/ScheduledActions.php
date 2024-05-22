@@ -81,11 +81,11 @@ class ScheduledActions implements InitializableInterface
         $argsText = '';
         switch ($hook) {
             case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
-                if (! isset($args['globalVariables']['workflowId'])) {
+                if (! isset($args['contextVariables']['global']['workflow'])) {
                     return $args;
                 }
 
-                $workflowId = $args['globalVariables']['workflowId'] ?? 0;
+                $workflowId = $args['contextVariables']['global']['workflow'] ?? 0;
                 $workflowModel = new WorkflowModel();
                 $workflowModel->load($workflowId);
 

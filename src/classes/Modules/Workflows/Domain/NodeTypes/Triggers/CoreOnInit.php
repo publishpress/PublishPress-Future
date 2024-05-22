@@ -25,6 +25,11 @@ class CoreOnInit implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "onInit";
+    }
+
     public function getLabel(): string
     {
         return __("On Init", "publishpress-future-pro");

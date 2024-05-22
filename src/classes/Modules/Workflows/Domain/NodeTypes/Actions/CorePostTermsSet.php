@@ -24,6 +24,11 @@ class CorePostTermsSet implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "replacePostTerms";
+    }
+
     public function getLabel(): string
     {
         return __("Replace all terms to post", "publishpress-future-pro");

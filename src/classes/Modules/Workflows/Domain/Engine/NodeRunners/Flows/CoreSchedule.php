@@ -51,7 +51,7 @@ class CoreSchedule implements NodeRunnerInterface
         $this->cronSchedulesModel = $cronSchedulesModel;
     }
 
-    public function setup(array $step, array $input = [], array $globalVariables = []): void
+    public function setup(array $step, array $contextVariables = []): void
     {
         $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
         $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
@@ -67,7 +67,7 @@ class CoreSchedule implements NodeRunnerInterface
         if ('single' === $recurrence && 'now' === $whenToRun) {
             $timestamp = 0;
         } else {
-            $timestamp = $this->getSchedulingTimestamp($nodeSettings, $input, $globalVariables);
+            $timestamp = $this->getSchedulingTimestamp($nodeSettings, $contextVariables);
         }
 
         if (is_null($timestamp)) {
@@ -82,9 +82,9 @@ class CoreSchedule implements NodeRunnerInterface
         }
 
         // TODO: Should we add a field to the node settings to define the variable or action ID expression?
-        // $actionUID = $this->getScheduledActionUniqueId($node, $input);
+        // $actionUID = $this->getScheduledActionUniqueId($node, $contextVariables);
 
-        $actionArgs = [$this->compactArguments($step, $input, $globalVariables)];
+        $actionArgs = [$this->compactArguments($step, $contextVariables)];
 
         if ('single' === $recurrence) {
             if ($whenToRun === 'now') {
@@ -123,39 +123,14 @@ class CoreSchedule implements NodeRunnerInterface
                 );
             }
         }
-
-        // $actionId = $this->cron->scheduleSingleAction(
-        //     $timestamp,
-        //     HooksAbstract::ACTION_RUN_WORKFLOW,
-        //     [
-        //         'postId' => $postId,
-        //         'workflow' => 'expire'
-        //     ]
-        // );
-
-        // if (! $actionId) {
-        //     $this->logger->debug(
-        //         sprintf(
-        //             '%d  -> TRIED TO SCHEDULE ACTION using %s at %s (%s) with options %s',
-        //             $postId,
-        //             $this->cron->getIdentifier(),
-        //             $this->datetime->getWpDate('r', $timestamp),
-        //             $timestamp,
-        //             // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-        //             print_r($opts, true)
-        //         )
-        //     );
-
-        //     return;
-        // }
     }
 
-    private function getScheduledActionUniqueId(array $node, array $input)
+    private function getScheduledActionUniqueId(array $node, array $contextVariables)
     {
         $uniqueId = [];
         $uniqueId[] = $node['id'];
 
-        foreach ($input as $key => $value) {
+        foreach ($contextVariables as $key => $value) {
             if (is_scalar($value)) {
                 $uniqueId[] = $key . '-' . $value;
             } else if (is_array($value)) {
@@ -181,7 +156,7 @@ class CoreSchedule implements NodeRunnerInterface
         return implode('-', $uniqueId);
     }
 
-    private function getSchedulingTimestamp(array $nodeSettings, array $input, array $globalVariables)
+    private function getSchedulingTimestamp(array $nodeSettings, array $contextVariables)
     {
         $scheduleSettings = $nodeSettings['schedule'];
 
@@ -200,8 +175,7 @@ class CoreSchedule implements NodeRunnerInterface
                 } elseif ($dateSource === 'event') {
                     $timestamp = time();
                 } else {
-                    $dateSourceParts = explode('.', $dateSource);
-                    $timestamp = $this->getVariableValue($dateSourceParts, [$input, $globalVariables]);
+                    $timestamp = $this->nodeRunnerPreparer->getVariableValueFromContextVariables($dateSource, $contextVariables);
                 }
 
                 break;
@@ -233,84 +207,100 @@ class CoreSchedule implements NodeRunnerInterface
         return $timestamp;
     }
 
-    private function compactArguments(array $step, array $input, array $globalVariables): array
+    private function compactArguments(array $step, array $contextVariables): array
     {
         $compactedArgs = [];
         $compactedArgs['step'] = $step;
-        $compactedArgs['globalVariables'] = [];
-        $compactedArgs['globalVariables']['workflowId'] = $this->nodeRunnerPreparer->getWorkflowIdFromGlobalVariables($globalVariables);
-        $compactedArgs['globalVariables']['userId'] = $globalVariables['user']['id'] ?? '0';
-        $compactedArgs['globalVariables']['siteId'] = get_bloginfo('site_id');
-        $compactedArgs['globalVariables']['triggerNodeId'] = $globalVariables['trigger']['id'] ?? '0';
+        $compactedArgs['contextVariables'] = $contextVariables;
+        $compactedArgs['contextVariables']['global'] = [];
+        $compactedArgs['contextVariables']['global']['workflow'] = $this->nodeRunnerPreparer->getWorkflowIdFromContextVariables($contextVariables);
+        $compactedArgs['contextVariables']['global']['user'] = $contextVariables['global']['user']['id'] ?? '0';
+        $compactedArgs['contextVariables']['global']['site'] = get_bloginfo('site_id');
+        $compactedArgs['contextVariables']['global']['trigger'] = $contextVariables['global']['trigger']['id'] ?? '0';
 
-        $compactedInput = [];
-        foreach ($input as $key => $value) {
-            if (is_scalar($value)) {
-                $compactedInput[$key] = $value;
-            } else if (is_object($value)) {
-                $className = get_class($value);
-                if ('WP_Post' === $className) {
-                    $compactedInput[$key] = [
-                        'class' => 'WP_Post',
-                        'id' => $value->ID,
-                    ];
-                } else if ('WP_User' === $className) {
-                    $compactedInput[$key] = [
-                        'class' => 'WP_User',
-                        'id' => $value->ID,
-                    ];
-                } else {
-                    $compactedInput[$key] = $value;
+        foreach ($compactedArgs['contextVariables'] as $context => &$variables) {
+            if (is_array($variables)) {
+                foreach ($variables as $key => &$value) {
+                    if (is_object($value)) {
+                        $className = get_class($value);
+                        if ('WP_Post' === $className) {
+                            $value = [
+                                'class' => 'WP_Post',
+                                'id' => $value->ID,
+                                'diff' => $this->getPostDifferences($value, get_post($value->ID)),
+                            ];
+                        } else if ('WP_User' === $className) {
+                            $value = [
+                                'class' => 'WP_User',
+                                'id' => $value->ID,
+                            ];
+                        }
+                    }
                 }
-            } else {
-                $compactedInput[$key] = $value;
             }
         }
-        $compactedArgs['input'] = $compactedInput;
 
         return $compactedArgs;
     }
 
-    private function expandArguments(array $compactArguments): array
+    private function getPostDifferences($post1, $post2)
     {
-        // $step, $input, $globalVariables
-        $expandedArgs = [
-            'step' => $compactArguments['step'],
-        ];
+        $differences = [];
 
-        $expandedInput = [];
-        foreach ($compactArguments['input'] as $key => $value) {
-            if (is_array($value) && isset($value['class'])) {
-                if ($value['class'] === 'WP_Post') {
-                    $expandedInput[$key] = get_post($value['id']);
-                } else if ($value['class'] === 'WP_User') {
-                    $expandedInput[$key] = get_user_by('id', $value['id']);
-                } else {
-                    $expandedInput[$key] = $value;
-                }
-            } else {
-                $expandedInput[$key] = $value;
+        foreach ($post1 as $key => $value) {
+            if (! isset($post2->$key)) {
+                $differences[$key] = $value;
+            } else if ($post2->$key !== $value) {
+                $differences[$key] = $value;
             }
         }
-        $expandedArgs['input'] = $expandedInput;
 
-        $expandedArgs['globalVariables'] = [];
+        return $differences;
+    }
 
+    private function expandArguments(array $compactArguments): array
+    {
+        $expandedArgs = [
+            'step' => $compactArguments['step'],
+            'contextVariables' => [],
+        ];
+
+        foreach ($compactArguments['contextVariables'] as $context => $variables) {
+            foreach ($variables as $variableName => $value) {
+                if (is_array($value) && isset($value['class'])) {
+                    if ($value['class'] === 'WP_Post') {
+                        $expandedArgs['contextVariables'][$context][$variableName] = get_post($value['id']);
+
+                        if (! empty($value['diff'])) {
+                            foreach ($value['diff'] as $diffKey => $diffValue) {
+                                ($expandedArgs['contextVariables'][$context][$variableName])->$diffKey = $diffValue;
+                            }
+                        }
+                    } else if ($value['class'] === 'WP_User') {
+                        $expandedArgs['contextVariables'][$context][$variableName] = get_user_by('id', $value['id']);
+                    } else {
+                        $expandedArgs['contextVariables'][$context][$variableName] = $value;
+                    }
+                } else {
+                    $expandedArgs['contextVariables'][$context][$variableName] = $value;
+                }
+            }
+        }
 
         $workflowModel = new WorkflowModel();
-        $workflowModel->load($compactArguments['globalVariables']['workflowId']);
+        $workflowModel->load($compactArguments['contextVariables']['global']['workflow']);
 
-        $expandedArgs['globalVariables']['workflow'] = [
+        $expandedArgs['contextVariables']['global']['workflow'] = [
             'id' => $workflowModel->getId(),
             'title' => $workflowModel->getTitle(),
             'description' => $workflowModel->getDescription(),
             'modified_at' => $workflowModel->getModifiedAt(),
         ];
 
-        $user = get_user_by('id', $compactArguments['globalVariables']['userId']);
-        $expandedArgs['globalVariables']['user'] = [];
+        $user = get_user_by('id', $compactArguments['contextVariables']['global']['user']);
+        $expandedArgs['contextVariables']['global']['user'] = [];
         if (is_object($user)) {
-            $expandedArgs['globalVariables']['user'] = [
+            $expandedArgs['contextVariables']['global']['user'] = [
                 'id' => $user->ID,
                 'user_email' => $user->user_email,
                 'user_login' => $user->user_login,
@@ -321,7 +311,7 @@ class CoreSchedule implements NodeRunnerInterface
             ];
         }
 
-        $expandedArgs['globalVariables']['site'] = [
+        $expandedArgs['contextVariables']['global']['site'] = [
             'url' => get_site_url(),
             'home_url' => get_home_url(),
             'admin_email' => get_option('admin_email'),
@@ -330,7 +320,7 @@ class CoreSchedule implements NodeRunnerInterface
         ];
 
         $triggers = $workflowModel->getTriggerNodes();
-        $triggerId = $compactArguments['globalVariables']['triggerNodeId'];
+        $triggerId = $compactArguments['contextVariables']['global']['trigger'];
         $triggerNode = null;
 
         foreach ($triggers as $trigger) {
@@ -340,85 +330,13 @@ class CoreSchedule implements NodeRunnerInterface
             }
         }
 
-        $expandedArgs['globalVariables']['trigger'] = [
+        $expandedArgs['contextVariables']['global']['trigger'] = [
             'id' => $triggerId,
             'name' => $triggerNode['data']['name'] ?? 'unknown',
             'label' => $triggerNode['data']['label'] ?? 'Unknown',
         ];
 
         return $expandedArgs;
-    }
-
-    private function getVariableType(array $variableName, array $variablesLists): string
-    {
-        $variable = $this->getVariableFromListByName($variableName, $variablesLists);
-        $type = '';
-
-        if (is_array($variable)) {
-            $type = 'array';
-        } else if (is_object($variable)) {
-            $type = get_class($variable);
-        } else {
-            $type = 'scalar';
-        }
-
-        return $type;
-    }
-
-    private function getVariableValue(array $variableName, array $variablesLists): mixed
-    {
-        $variableListsIndex = null;
-
-        foreach ($variablesLists as $index => $variables) {
-            if (array_key_exists($variableName[0], $variables)) {
-                $variableListsIndex = $index;
-                break;
-            }
-        }
-
-        if ($variableListsIndex === null) {
-            return null;
-        }
-
-        $variable = $this->getVariableFromListByName($variableName, $variablesLists);
-        $variableName = array_slice($variableName, 1);
-
-        if (count($variableName) === 0) {
-            return $variable;
-        }
-
-        foreach ($variableName as $variablePart) {
-            if (is_array($variable) && isset($variable[$variablePart])) {
-                $variable = $variable[$variablePart];
-            } else if (is_object($variable) && isset($variable->{$variablePart})) {
-                $variable = $variable->{$variablePart};
-            } else {
-                $variable = null;
-                break;
-            }
-        }
-
-        return $variable;
-    }
-
-    private function getVariableFromListByName(array $variableName, array $variablesLists): mixed
-    {
-        $variableListsIndex = null;
-
-        foreach ($variablesLists as $index => $variables) {
-            if (array_key_exists($variableName[0], $variables)) {
-                $variableListsIndex = $index;
-                break;
-            }
-        }
-
-        if ($variableListsIndex === null) {
-            return null;
-        }
-
-        $selectedVariablesList = $variablesLists[$variableListsIndex];
-
-        return $selectedVariablesList[$variableName[0]];;
     }
 
     private function cancelExpiredScheduledAction($args)
@@ -437,7 +355,7 @@ class CoreSchedule implements NodeRunnerInterface
 
         // Check if the workflow is still active
         $workflowModel = new WorkflowModel();
-        $workflowModel->load($args['globalVariables']['workflow']['id']);
+        $workflowModel->load($args['contextVariables']['global']['workflow']['id']);
 
         if (! $workflowModel->isActive()) {
             // TODO: Log this into the scheduler log
@@ -482,11 +400,7 @@ class CoreSchedule implements NodeRunnerInterface
             }
         }
 
-        $this->nodeRunnerPreparer->runNextSteps(
-            $args['step'],
-            $args['input'],
-            $args['globalVariables']
-        );
+        $this->nodeRunnerPreparer->runNextSteps($args['step'], $args['contextVariables']);
 
         if ($unscheduleRecurringAction) {
             $this->cancelExpiredScheduledAction($compactedArgs);

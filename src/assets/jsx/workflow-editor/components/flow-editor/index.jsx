@@ -44,6 +44,7 @@ export const FlowEditor = (props) => {
         hasActiveSideBar,
         activeComplementaryArea,
         initialViewport,
+        baseSlugCounts,
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -59,6 +60,7 @@ export const FlowEditor = (props) => {
                 activeComplementaryArea !== null &&
                 activeComplementaryArea !== "null/undefined",
             initialViewport: select(workflowStore).getInitialViewport(),
+            baseSlugCounts: select(workflowStore).getBaseSlugCounts(),
         };
     });
 
@@ -68,6 +70,7 @@ export const FlowEditor = (props) => {
         setSelectedNodes,
         setSelectedEdges,
         setEditedWorkflowAttribute,
+        incrementBaseSlugCounts,
     } = useDispatch(workflowStore);
 
     const { openGeneralSidebar } = useDispatch(editorStore);
@@ -155,8 +158,24 @@ export const FlowEditor = (props) => {
         event.dataTransfer.dropEffect = "move";
     }, []);
 
+    const incrementAndGetNodeSlug = (nodeItem) => {
+        let baseSlug = nodeItem.baseSlug;
+
+        if (!baseSlug) {
+            baseSlug = "node";
+        }
+
+        incrementBaseSlugCounts(baseSlug);
+
+        const count = baseSlugCounts[baseSlug] || 0;
+
+        return `${baseSlug}${count + 1}`;
+    };
+
     const createNodeAfterDrop = useCallback(
         ({ item, position }) => {
+            const slug = incrementAndGetNodeSlug(item);
+
             const newNode = {
                 id: getId(),
                 type: item.type,
@@ -173,6 +192,8 @@ export const FlowEditor = (props) => {
                     outputSchema: item.outputSchema,
                     className: item.className,
                     socketSchema: item.socketSchema,
+                    baseSlug: item.baseSlug,
+                    slug: slug,
                 },
             };
 

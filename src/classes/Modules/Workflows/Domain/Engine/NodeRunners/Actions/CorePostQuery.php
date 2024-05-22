@@ -24,18 +24,19 @@ class CorePostQuery implements NodeRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer,
+        NodeRunnerPreparerInterface $nodeRunnerPreparer
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
     }
 
-    public function setup(array $step, array $input = [], array $globalVariables = []): void
+    public function setup(array $step, array $contextVariables = []): void
     {
         try {
             $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
             $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
-            $workflowId = $this->nodeRunnerPreparer->getWorkflowIdFromGlobalVariables($globalVariables);
+            $workflowId = $this->nodeRunnerPreparer->getWorkflowIdFromContextVariables($contextVariables);
+            $nodeSlug = $this->nodeRunnerPreparer->getSlugFromStep($step);
 
             if (empty($nodeSettings)) {
                 throw new Exception('Node has empty settings');
@@ -48,15 +49,18 @@ class CorePostQuery implements NodeRunnerInterface
                 return;
             }
 
-            $output = [
-                'posts' => array_map('intval', $posts),
-            ];
+            $contextVariables = array_merge(
+                $contextVariables,
+                [
+                    $nodeSlug . '.posts' => array_map('intval', $posts),
+                ]
+            );
 
-            $this->nodeRunnerPreparer->runNextSteps($step, $output, $globalVariables);
+            $this->nodeRunnerPreparer->runNextSteps($step, $contextVariables);
         } catch (\Exception $e) {
             $this->nodeRunnerPreparer->logError($e->getMessage(), $workflowId, $step);
         }
-        // $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $input, $globalVariables);
+        // $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $contextVariables);
     }
 
     public function actionCallback(int $postId, array $nodeSettings)

@@ -24,6 +24,11 @@ class IfElse implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "simpleCondition";
+    }
+
     public function getLabel(): string
     {
         return __("Simple Condition", "publishpress-future-pro");

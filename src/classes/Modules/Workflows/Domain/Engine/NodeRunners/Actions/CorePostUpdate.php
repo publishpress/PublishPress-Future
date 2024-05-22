@@ -37,9 +37,9 @@ class CorePostUpdate implements NodeRunnerInterface
         $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
-    public function setup(array $step, array $input = [], array $globalVariables = []): void
+    public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $input, $globalVariables);
+        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $contextVariables);
     }
 
     public function actionCallback(int $postId, array $nodeSettings)

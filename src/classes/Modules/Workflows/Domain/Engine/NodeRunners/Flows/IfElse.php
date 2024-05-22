@@ -37,26 +37,25 @@ class IfElse implements NodeRunnerInterface
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
     }
 
-    public function setup(array $step, array $input = [], array $globalVariables = []): void
+    public function setup(array $step, array $contextVariables = []): void
     {
         //TODO: Evaluate the conditional expression
         $this->expressionResult = true;
 
         // For now, considering it returns true
-        $this->runNextSteps($step, $input, $globalVariables);
+        $this->runNextSteps($step, $contextVariables);
     }
 
-    public function runNextSteps(array $step, array $input, array $globalVariables): void
+    public function runNextSteps(array $step, array $contextVariables): void
     {
         $nextSteps = $this->getNextSteps($step);
 
         foreach ($nextSteps as $nextStep) {
             /**
              * @var array $nextStep
-             * @var array $input
-             * @var array $globalVariables
+             * @var array $contextVariables
              */
-            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $input, $globalVariables);
+            $this->hooks->doAction(HooksAbstract::ACTION_EXECUTE_NODE, $nextStep, $contextVariables);
         }
     }
 
@@ -72,7 +71,7 @@ class IfElse implements NodeRunnerInterface
         return $nextSteps;
     }
 
-    public function actionCallback(array $step, array $input, array $globalVariables)
+    public function actionCallback(array $step, array $contextVariables)
     {
         //TODO: Implement the actionCallback method
     }

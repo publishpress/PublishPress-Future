@@ -30,15 +30,15 @@ class RayDebug implements NodeRunnerInterface
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
     }
 
-    public function setup(array $step, array $input = [], array $globalVariables = []): void
+    public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $input, $globalVariables);
+        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $contextVariables);
     }
 
-    public function actionCallback(array $step, array $input, array $globalVariables)
+    public function actionCallback(array $step, array $contextVariables)
     {
         if (! function_exists('ray')) {
-            $workflowId = $this->nodeRunnerPreparer->getWorkflowIdFromGlobalVariables($globalVariables);
+            $workflowId = $contextVariables['global']['workflow']['id'];
 
             $this->nodeRunnerPreparer->logError(
                 'Ray is not installed. Please install it from the WordPress plugins directory',
@@ -48,49 +48,26 @@ class RayDebug implements NodeRunnerInterface
             return;
         }
 
+        $output = null;
         try {
             $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
             $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
 
-            $dataToOutput = [];
-            if (isset($nodeSettings['data']['dataToOutput'])) {
-                $dataToOutput = explode('.', $nodeSettings['data']['dataToOutput']);
-            }
+            $dataToOutput = $nodeSettings['data']['dataToOutput'] ?? 'all-input';
 
-            $dataSource = 'input';
-            if ($dataToOutput[0] === 'global') {
-                $dataSource = 'global';
-                $dataToOutput = array_slice($dataToOutput, 1);
-            }
+            if ($dataToOutput === 'all-input') {
+                $onlyInputVariables = $contextVariables;
+                unset($onlyInputVariables['global']);
 
-            $sourceVariable = $dataSource === 'input' ? $input : $globalVariables;
-
-            $rayMessage = $sourceVariable;
-
-            if (count($dataToOutput) > 1 && $dataToOutput[0] !== 'all-input') {
-                foreach ($dataToOutput as $variablePart) {
-                    if (is_array($rayMessage) && isset($rayMessage[$variablePart])) {
-                        $rayMessage = $rayMessage[$variablePart];
-                    } else {
-                        if (is_object($rayMessage) && isset($rayMessage->{$variablePart})) {
-                            $rayMessage = $rayMessage->{$variablePart};
-                        } else {
-                            throw new Exception('Invalid data key: ' . $variablePart . ' for data: ' . print_r($sourceVariable, true));
-                        }
-                    }
-                }
+                $output = $onlyInputVariables;
             } else {
-                if (count($dataToOutput) === 1 && $dataToOutput[0] === 'all-input') {
-                    $rayMessage = $input;
-                } else if (count($dataToOutput) === 1) {
-                    $rayMessage = $sourceVariable[$dataToOutput[0]];
-                }
+                $output = $this->nodeRunnerPreparer->getVariableValueFromContextVariables($dataToOutput, $contextVariables);
             }
         } catch (\Exception $e) {
-            $rayMessage = 'Error: ' . $e->getMessage();
+            $output = 'Error: ' . $e->getMessage();
         }
 
-        $rayMessage = ray($rayMessage);
+        $rayMessage = ray($output);
 
         if (isset($nodeSettings['label'])) {
             $rayMessage->label($nodeSettings['label']);

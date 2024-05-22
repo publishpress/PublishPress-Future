@@ -40,6 +40,11 @@ class FutureLegacyAction implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "futureLegacyAction";
+    }
+
     public function getLabel(): string
     {
         return __("Legacy Future action", "publishpress-future-pro");

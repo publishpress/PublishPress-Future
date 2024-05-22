@@ -308,3 +308,17 @@ export function* fetchTaxonomyTerms(taxonomy) {
         yield {type: 'FETCH_TAXONOMY_TERMS_FAILURE'};
     }
 }
+
+export function incrementBaseSlugCounts(baseSlug) {
+    return {
+        type: 'INCREMENT_BASE_SLUG_COUNTS',
+        payload: baseSlug,
+    };
+}
+
+export function updateBaseSlugCounts(nodeSlug) {
+    return {
+        type: 'UPDATE_BASE_SLUG_COUNTS',
+        payload: nodeSlug,
+    };
+}

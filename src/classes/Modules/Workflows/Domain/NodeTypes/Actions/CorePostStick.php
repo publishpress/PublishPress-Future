@@ -24,6 +24,11 @@ class CorePostStick implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "stickPost";
+    }
+
     public function getLabel(): string
     {
         return __("Stick Post", "publishpress-future-pro");
@@ -56,7 +61,20 @@ class CorePostStick implements NodeTypeInterface
 
     public function getSettingsSchema(): array
     {
-        return [];
+        return [
+            [
+                "label" => __("Post", "publishpress-future-pro"),
+                "description" => __("The post to stick.", "publishpress-future-pro"),
+                "fields" => [
+                    [
+                        "name" => "post",
+                        "type" => "postInput",
+                        "label" => __("Post", "publishpress-future-pro"),
+                        "description" => __("Select the variable that contains the post to stick. It can be a post instance or the post ID.", "publishpress-future-pro"),
+                    ],
+                ],
+            ]
+        ];
     }
 
     public function getOutputSchema(): array
@@ -67,7 +85,7 @@ class CorePostStick implements NodeTypeInterface
                 "type" => "input",
                 "label" => __("Node input", "publishpress-future-pro"),
                 "description" => __("The input data for this node.", "publishpress-future-pro"),
-            ]
+            ],
         ];
     }
 

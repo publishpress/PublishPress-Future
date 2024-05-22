@@ -24,6 +24,11 @@ class CorePostChangeStatus implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "changePostStatus";
+    }
+
     public function getLabel(): string
     {
         return __("Move post to status", "publishpress-future-pro");

@@ -24,6 +24,11 @@ class CoreSchedule implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "schedule";
+    }
+
     public function getLabel(): string
     {
         return __("Schedule", "publishpress-future-pro");
@@ -82,7 +87,7 @@ class CoreSchedule implements NodeTypeInterface
                 "type" => "input",
                 "label" => __("Node input", "publishpress-future-pro"),
                 "description" => __("The input data for this node.", "publishpress-future-pro"),
-            ]
+            ],
         ];
     }
 

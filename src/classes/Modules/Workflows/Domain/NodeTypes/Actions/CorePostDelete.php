@@ -24,6 +24,11 @@ class CorePostDelete implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "deletePost";
+    }
+
     public function getLabel(): string
     {
         return __("Delete Post", "publishpress-future-pro");

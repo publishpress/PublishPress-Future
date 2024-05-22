@@ -46,12 +46,12 @@ class CoreSendEmail implements NodeRunnerInterface
         $this->workflowEngine = $workflowEngine;
     }
 
-    public function setup(array $step, array $input = [], array $globalVariables = []): void
+    public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerPreparer->setup($step, [$this, 'processEmailSending'], $input, $globalVariables);
+        $this->nodeRunnerPreparer->setup($step, [$this, 'processEmailSending'], $contextVariables);
     }
 
-    public function processEmailSending(array $step, array $input, array $globalVariables)
+    public function processEmailSending(array $step, array $contextVariables)
     {
         try {
             $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
@@ -59,25 +59,20 @@ class CoreSendEmail implements NodeRunnerInterface
 
             $recipient = $nodeSettings['recipient']['recipient'] ?? 'global.site.admin_email';
 
-            $dataSources = [
-                'input' => $input,
-                'global' => $globalVariables,
-            ];
-
             $variablesHandler = $this->workflowEngine->getVariablesHandler();
 
             $subject = $nodeSettings['subject'] ?? '';
             if (empty($subject)) {
                 $subject = NodeTypeCoreSendEmail::getDefaultSubject();
             }
-            $subject = $variablesHandler->replaceVariablesPlaceholdersInText($subject, $dataSources);
+            $subject = $variablesHandler->replaceVariablesPlaceholdersInText($subject, $contextVariables);
             $subject = sanitize_text_field($subject);
 
             $message = $nodeSettings['message'] ?? '';
             if (empty($message)) {
                 $message = NodeTypeCoreSendEmail::getDefaultMessage();
             }
-            $message = $variablesHandler->replaceVariablesPlaceholdersInText($message, $dataSources);
+            $message = $variablesHandler->replaceVariablesPlaceholdersInText($message, $contextVariables);
             // TODO: Add support for HTML emails. Block editor or separated email templates?
             $message = sanitize_textarea_field($message);
 
@@ -89,7 +84,7 @@ class CoreSendEmail implements NodeRunnerInterface
                     $recipient = explode(',', $customEmails);
                 }
             } else {
-                $recipient = $variablesHandler->parseVariableValue($recipient, $dataSources);
+                $recipient = $variablesHandler->parseVariableValue($recipient, $contextVariables);
             }
 
             if (empty($recipient)) {

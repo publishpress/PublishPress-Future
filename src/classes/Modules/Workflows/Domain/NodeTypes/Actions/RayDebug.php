@@ -24,6 +24,11 @@ class RayDebug implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "rayDebug";
+    }
+
     public function getLabel(): string
     {
         return __("Ray - Debug", "publishpress-future-pro");

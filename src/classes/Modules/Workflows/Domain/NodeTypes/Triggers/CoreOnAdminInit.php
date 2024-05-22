@@ -25,6 +25,11 @@ class CoreOnAdminInit implements NodeTypeInterface
         return self::NODE_NAME;
     }
 
+    public function getBaseSlug(): string
+    {
+        return "onAdminInit";
+    }
+
     public function getLabel(): string
     {
         return __("On Admin Init", "publishpress-future-pro");
