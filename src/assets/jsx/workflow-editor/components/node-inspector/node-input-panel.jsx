@@ -8,7 +8,7 @@ export const NodeInputPanel = ({ inputSchema = []}) => {
     }
 
     return (
-        <PanelBody title={__("Inputs", "publishpress-future-pro")}>
+        <PanelBody title={__("Inputs", "publishpress-future-pro")} className="workflow-editor-dev-panel">
             <div className="workflow-editor-inspector-card__input-schema">
                 <div>{__("This node receives the following input from previous node:", "publishpress-future-pro")}</div>
                 <ul>

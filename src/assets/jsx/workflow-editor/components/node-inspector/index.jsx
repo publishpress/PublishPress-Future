@@ -134,11 +134,11 @@ export const NodeInspector = () => {
                         <NodeValidationPanel errors={nodeErrors} />
                     )}
 
-                    {selectedNodeHasIncomers && selectedNodeHasInput && (
+                    {isDeveloperModeEnabled && selectedNodeHasIncomers && selectedNodeHasInput && (
                         <NodeInputPanel inputSchema={mappedNodeInputSchema} />
                     )}
 
-                    {nodeHasOutput && (
+                    {isDeveloperModeEnabled && nodeHasOutput && (
                         <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
                     )}
 

@@ -106,3 +106,7 @@
     min-height: 20px;
     min-width: 20px;
 }
+
+.workflow-editor-validation-panel span.dashicons {
+    color: #d90f0f;
+}

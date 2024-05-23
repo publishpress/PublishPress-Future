@@ -3,7 +3,7 @@ import { __ } from "@wordpress/i18n";
 
 export const NodeOutputPanel = ({ outputSchema }) => {
     return (
-        <PanelBody title={__("Outputs", "publishpress-future-pro")}>
+        <PanelBody title={__("Outputs", "publishpress-future-pro")} className="workflow-editor-dev-panel">
             <div className="workflow-editor-inspector-card__output-schema">
                 <div>{__("This node outputs the following data:", "publishpress-future-pro")}</div>
                 <ul>
