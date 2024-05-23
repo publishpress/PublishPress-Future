@@ -85,6 +85,20 @@ export function WelcomeGuide() {
                         ),
                         content: (
                             <WelcomeGuideContent
+                                title={__("Output and input", 'publishpress-future-pro')}
+                                content={__("Linked nodes can pass data forward as input to the next node.", 'publishpress-future-pro')}
+                            />
+                        ),
+                    },
+                    {
+                        image: (
+                            <WelcomeGuideImage
+                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
+                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
+                            />
+                        ),
+                        content: (
+                            <WelcomeGuideContent
                                 title={__("Customize the workflow", 'publishpress-future-pro')}
                                 content={__("Click on a step to customize it. You can change the step's settings in the right sidebar.", 'publishpress-future-pro')}
                             />
