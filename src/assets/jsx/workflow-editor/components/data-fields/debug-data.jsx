@@ -1,14 +1,8 @@
-import { sprintf, __ } from "@wordpress/i18n";
+import { __ } from "@wordpress/i18n";
 import { TreeSelect } from "@wordpress/components";
-import { DatePicker } from "@wordpress/components";
-import { TextControl, Tooltip } from "@wordpress/components";
-import { Dashicon, Popover, Button } from "@wordpress/components";
-import { useState } from "@wordpress/element";
-import { ToggleControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
 export function DebugData({ name, label, defaultValue, onChange, variables = [] }) {
-
     let debugOptions = [
         { name: __("All received input", "publishpress-future-pro"), id: "all-input" },
     ];
