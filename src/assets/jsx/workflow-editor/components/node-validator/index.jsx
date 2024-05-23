@@ -23,7 +23,6 @@ export function NodeValidator({})
     } = useDispatch(workflowStore);
 
     useEffect(() => {
-        console.log('NodeValidator effect');
         nodes.forEach((node) => {
             const nodeSettings = node.data.settings || {};
             const settingsSchema = node.data.settingsSchema;
