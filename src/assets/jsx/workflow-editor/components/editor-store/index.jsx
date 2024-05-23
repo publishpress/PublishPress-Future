@@ -299,7 +299,7 @@ const LOCAL_SETTINGS_KEY =
 const persistentFeatures = [
     FEATURE_FULLSCREEN_MODE,
     FEATURE_DEVELOPER_MODE,
-    FEATURE_WELCOME_GUIDE
+    FEATURE_WELCOME_GUIDE,
 ];
 
 const initLocalPreferences = () => {
@@ -326,7 +326,7 @@ const setLocalPreferences = (settings) => {
 const getPersistedFeatureValue = (feature) => {
     const localSettings = getLocalPreferences();
 
-    return localSettings.persistentFeatures[feature] || null;
+    return localSettings.persistentFeatures?.[feature];
 };
 
 const setPersistedFeatureValue = (feature, value) => {
@@ -338,12 +338,12 @@ const setPersistedFeatureValue = (feature, value) => {
 };
 
 // Enable fullscreen mode by default
-if (getPersistedFeatureValue(FEATURE_FULLSCREEN_MODE) === null) {
+if (getPersistedFeatureValue(FEATURE_FULLSCREEN_MODE) === null || getPersistedFeatureValue(FEATURE_FULLSCREEN_MODE) === undefined) {
     setPersistedFeatureValue(FEATURE_FULLSCREEN_MODE, true);
 }
 
 // Enable the welcome guide by default
-if (getPersistedFeatureValue(FEATURE_WELCOME_GUIDE) === null) {
+if (getPersistedFeatureValue(FEATURE_WELCOME_GUIDE) === null || getPersistedFeatureValue(FEATURE_WELCOME_GUIDE) === undefined) {
     setPersistedFeatureValue(FEATURE_WELCOME_GUIDE, true);
 }
 
