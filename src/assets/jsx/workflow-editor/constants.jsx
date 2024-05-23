@@ -7,6 +7,7 @@ export const FEATURE_SHOW_ICON_LABELS = 'showIconLabels';
 export const FEATURE_INSERTER = 'inserter';
 export const FEATURE_MOST_USED_NODES = 'mostUsedNodes';
 export const FEATURE_DEVELOPER_MODE = 'developerMode';
+export const FEATURE_WELCOME_GUIDE = 'welcomeGuide';
 
 export const INSERTER_TAB_TRIGGERS = 'triggers';
 export const INSERTER_TAB_ACTIONS = 'actions';

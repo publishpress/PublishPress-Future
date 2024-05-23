@@ -6,20 +6,27 @@ import { addBodyClasses, removeBodyClasses } from "../../utils";
 import { store as editorStore } from "../editor-store";
 import { ReactFlowProvider } from "reactflow";
 import { KeyboardShortcuts } from "../keyboard-shortcuts";
-import { FEATURE_FULLSCREEN_MODE, FEATURE_INSERTER } from "../../constants";
+import {
+    FEATURE_FULLSCREEN_MODE,
+    FEATURE_INSERTER,
+    FEATURE_WELCOME_GUIDE
+} from "../../constants";
 import { InserterSidebar } from "../secondary-sidebar/inserter";
 import classnames from 'classnames';
 import { SlotFillProvider } from "@wordpress/components";
 import { SettingsSidebar } from "../settings-sidebar/settings-sidebar";
+import WelcomeGuide from "../welcome-guide";
 
 export function WorkflowEditorLayout() {
     const {
         isFullscreenActive,
         isInserterOpened,
+        isWelcomeGuideActive,
     } = useSelect((select) => {
         return {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
             isInserterOpened: select(editorStore).isFeatureActive(FEATURE_INSERTER),
+            isWelcomeGuideActive: select(editorStore).isFeatureActive(FEATURE_WELCOME_GUIDE),
         }
     });
 
@@ -56,6 +63,9 @@ export function WorkflowEditorLayout() {
                     className={className}
                     secondarySidebar={secondarySidebar}
                 />
+                {isWelcomeGuideActive && (
+                    <WelcomeGuide />
+                )}
             </ReactFlowProvider>
         </SlotFillProvider>
     );

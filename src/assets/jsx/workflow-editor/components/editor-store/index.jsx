@@ -9,6 +9,7 @@ import { createReduxStore, dispatch, register } from "@wordpress/data";
 import {
     FEATURE_DEVELOPER_MODE,
     FEATURE_FULLSCREEN_MODE,
+    FEATURE_WELCOME_GUIDE,
     INSERTER_TAB_TRIGGERS,
     SLOT_SCOPE_WORKFLOW_EDITOR,
 } from "../../constants";
@@ -295,7 +296,11 @@ register(store);
 const LOCAL_SETTINGS_KEY =
     "FUTURE_PRO_WORKFLOW_PREFERENCES_" + futureWorkflowEditor.currentUserId;
 
-const persistentFeatures = [FEATURE_FULLSCREEN_MODE, FEATURE_DEVELOPER_MODE];
+const persistentFeatures = [
+    FEATURE_FULLSCREEN_MODE,
+    FEATURE_DEVELOPER_MODE,
+    FEATURE_WELCOME_GUIDE
+];
 
 const initLocalPreferences = () => {
     const localSettings = localStorage.getItem(LOCAL_SETTINGS_KEY);
