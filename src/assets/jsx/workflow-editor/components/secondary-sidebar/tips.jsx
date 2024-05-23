@@ -8,7 +8,7 @@ import { Tip } from '@wordpress/components';
 const globalTips = [
 	createInterpolateElement(
 		__(
-			'Move to another step by pressing <kbd>backspace</kbd> when another step is selected.'
+			'Select multiple node by pressing <kbd>shift</kbd> when clicking and selecting in the workflow board.'
 		),
 		{ kbd: <kbd /> }
 	),
