@@ -89,6 +89,12 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
                         "settings" => [
                             "acceptsInput" => false,
                         ],
+                        "validation" => [
+                            "postQuery.postId" => [
+                                "format" => "integerList",
+                                "label" => __("Post ID", "publishpress-future-pro")
+                            ]
+                        ],
                     ],
                 ]
             ]

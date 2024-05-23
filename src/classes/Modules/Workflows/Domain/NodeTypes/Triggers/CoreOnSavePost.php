@@ -79,8 +79,9 @@ class CoreOnSavePost implements NodeTypeInterface
                             "acceptsInput" => false,
                         ],
                         "validation" => [
-                            "postId" => [
-                                "format" => "integerCSV",
+                            "postQuery.postId" => [
+                                "format" => "integerList",
+                                "label" => __("Post ID", "publishpress-future-pro")
                             ]
                         ],
                     ],

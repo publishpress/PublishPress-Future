@@ -66,6 +66,8 @@ export function NodeValidator({})
                                 settingValue = settingValue?.[fieldNames[i]];
                             }
 
+                            const fieldLabelToDisplay = rules.label || field.label;
+
                             if (rules?.required) {
                                 if (rules.required === true && (!settingValue || settingValue == '')) {
                                     addNodeError(
@@ -73,7 +75,7 @@ export function NodeValidator({})
                                         `${fieldName}-required`,
                                         sprintf(
                                             __('The field %s is required', 'publishpress-future-pro'),
-                                            field.label
+                                            fieldLabelToDisplay
                                         )
                                     );
                                 } else {
@@ -95,13 +97,16 @@ export function NodeValidator({})
                                             `${fieldName}-required-if`,
                                             sprintf(
                                                 __('The field %s is required', 'publishpress-future-pro'),
-                                                rules.label || field.label
+                                                fieldLabelToDisplay
                                             )
                                         );
                                     } else {
                                         removeNodeError(node.id, `${fieldName}-required-if`);
                                     }
                                 }
+                            } else {
+                                removeNodeError(node.id, `${fieldName}-required`);
+                                removeNodeError(node.id, `${fieldName}-required-if`);
                             }
 
                             if (settingValue && rules?.format) {
@@ -112,12 +117,14 @@ export function NodeValidator({})
                                             `${fieldName}-email`,
                                             sprintf(
                                                 __('The field %s must be a valid email address', 'publishpress-future-pro'),
-                                                field.label
+                                                fieldLabelToDisplay
                                             )
                                         );
                                     } else {
                                         removeNodeError(node.id, `${fieldName}-email`);
                                     }
+                                } else {
+                                    removeNodeError(node.id, `${fieldName}-email`);
                                 }
 
                                 if (rules.format === 'emailCSV') {
@@ -132,7 +139,7 @@ export function NodeValidator({})
                                                 `${fieldName}-emailCSV`,
                                                 sprintf(
                                                     __('The field %s must be a valid email address list separated by commas', 'publishpress-future-pro'),
-                                                    field.label
+                                                    fieldLabelToDisplay
                                                 )
                                             );
 
@@ -141,24 +148,28 @@ export function NodeValidator({})
                                             removeNodeError(node.id, `${fieldName}-emailCSV`);
                                         }
                                     }
+                                } else {
+                                    removeNodeError(node.id, `${fieldName}-emailCSV`);
                                 }
 
-                                if (rules.format === 'integer') {
+                                if (rules.format === 'integer' && settingValue && settingValue?.trim() !== '') {
                                     if (!validator.isInt(settingValue)) {
                                         addNodeError(
                                             node.id,
                                             `${fieldName}-integer`,
                                             sprintf(
                                                 __('The field %s must be an integer', 'publishpress-future-pro'),
-                                                field.label
+                                                fieldLabelToDisplay
                                             )
                                         );
                                     } else {
                                         removeNodeError(node.id, `${fieldName}-integer`);
                                     }
+                                } else {
+                                    removeNodeError(node.id, `${fieldName}-integer`);
                                 }
 
-                                if (rules.format === 'integerCSV') {
+                                if (rules.format === 'integerCSV' && settingValue && settingValue?.trim() !== '') {
                                     const integers = settingValue.split(',');
                                     let integer;
                                     for (let i = 0; i < integers.length; i++) {
@@ -170,7 +181,7 @@ export function NodeValidator({})
                                                 `${fieldName}-integerCSV`,
                                                 sprintf(
                                                     __('The field %s must be an integer list separated by commas', 'publishpress-future-pro'),
-                                                    field.label
+                                                    fieldLabelToDisplay
                                                 )
                                             );
 
@@ -179,7 +190,32 @@ export function NodeValidator({})
                                             removeNodeError(node.id, `${fieldName}-integerCSV`);
                                         }
                                     }
+                                } else {
+                                    removeNodeError(node.id, `${fieldName}-integerCSV`);
+                                }
 
+                                if (rules.format === 'integerList' && settingValue && settingValue?.length > 0) {
+                                    let integer;
+                                    for (let i = 0; i < settingValue.length; i++) {
+                                        integer = settingValue[i].trim();
+
+                                        if (!validator.isInt(integer)) {
+                                            addNodeError(
+                                                node.id,
+                                                `${fieldName}-integerList`,
+                                                sprintf(
+                                                    __('The field %s must be an integer list', 'publishpress-future-pro'),
+                                                    fieldLabelToDisplay
+                                                )
+                                            );
+
+                                            break;
+                                        } else {
+                                            removeNodeError(node.id, `${fieldName}-integerList`);
+                                        }
+                                    }
+                                } else {
+                                    removeNodeError(node.id, `${fieldName}-integerList`);
                                 }
                             }
                         });
