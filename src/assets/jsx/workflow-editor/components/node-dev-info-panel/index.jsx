@@ -5,9 +5,11 @@ import ReactJson from "react-json-view";
 
 export function NodeDevInfoPanel({node}) {
     return (
-        <PanelBody title={__('Developer Info')} icon={'admin-tools'}>
+        <PanelBody title={__('Developer Info')} icon={'admin-tools'} className="workflow-editor-dev-info-panel">
             <PanelRow>
-                <ReactJson src={node} collapsed={1} collapseStringsAfterLength={40} displayDataTypes={false} displayObjectSize={false} />
+                <div className="workflow-editor-dev-info-wrapper">
+                    <ReactJson src={node} collapsed={1} collapseStringsAfterLength={50} displayDataTypes={false} displayObjectSize={false} enableClipboard={false} />
+                </div>
             </PanelRow>
         </PanelBody>
     );
