@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { TreeSelect } from "@wordpress/components";
+import { VariablesTreeSelect } from "../variables-tree-select";
 import { TextControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
@@ -7,17 +7,8 @@ export function EmailRecipient({ name, label, defaultValue, onChange, settings, 
 
     let recipientOptions = [
         { name: __("Custom addressses", "publishpress-future-pro"), id: "custom" },
+        ...variables
     ];
-
-    if (variables.length > 0) {
-        variables.forEach((variable) => {
-            recipientOptions.push({
-                name: variable.name,
-                id: variable.id,
-                children: variable.children,
-            });
-        });
-    }
 
     const defaultRecipient = settings?.defaultRecipient || "custom";
 
@@ -33,9 +24,9 @@ export function EmailRecipient({ name, label, defaultValue, onChange, settings, 
     return (
         <>
             <VStack>
-                <TreeSelect
-                    label={__("Email Recipient", "publishpress-future-pro")}
+                <VariablesTreeSelect
                     tree={recipientOptions}
+                    label={__("Email Recipient", "publishpress-future-pro")}
                     selectedId={defaultValue?.recipient || defaultRecipient}
                     onChange={(value) => onChangeSetting({ settingName: "recipient", value })}
                 />

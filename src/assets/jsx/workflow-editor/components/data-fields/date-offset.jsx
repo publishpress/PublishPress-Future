@@ -4,6 +4,7 @@ import {
     DatePicker,
     TextControl
 } from "@wordpress/components";
+import { VariablesTreeSelect } from "../variables-tree-select";
 import { Popover, Button } from "@wordpress/components";
 import { useState } from "@wordpress/element";
 import { ToggleControl } from "@wordpress/components";
@@ -58,20 +59,9 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const dateSourceOptions = [
         { name: __("Select in the calendar", "publishpress-future-pro"), id: "calendar" },
-        { name: __("Event date", "publishpress-future-pro"), id: "event"}
+        { name: __("Event date", "publishpress-future-pro"), id: "event"},
+        ...variables
     ];
-
-    console.log(variables)
-
-    if (variables.length > 0) {
-        variables.forEach((variable) => {
-            dateSourceOptions.push({
-                name: variable.name,
-                id: variable.id,
-                children: variable.children,
-            });
-        });
-    }
 
     let cronScheduleOptions = futureWorkflowEditor.cronSchedules;
     cronScheduleOptions = cronScheduleOptions.map((schedule) => {
@@ -126,7 +116,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
                 {(defaultValue.whenToRun === 'date' || defaultValue.whenToRun === 'offset') && (
                     <>
-                        <TreeSelect
+                        <VariablesTreeSelect
                             label={__("Date source", "publishpress-future-pro")}
                             tree={dateSourceOptions}
                             selectedId={defaultValue.dateSource}
