@@ -92,6 +92,12 @@ class CorePostTermsRemove implements NodeTypeInterface
                             "optionToSelectAll" => true,
                             "labelOptionToSelectAll" => __("Remove all terms", "publishpress-future-pro"),
                         ],
+                        "validation" => [
+                            'taxonomyTerms.terms' => [
+                                'required' => true,
+                                "label" => __("Terms", "publishpress-future-pro"),
+                            ],
+                        ],
                     ],
                 ]
             ],

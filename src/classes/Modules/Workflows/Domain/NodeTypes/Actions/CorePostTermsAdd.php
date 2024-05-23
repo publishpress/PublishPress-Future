@@ -88,6 +88,12 @@ class CorePostTermsAdd implements NodeTypeInterface
                         "type" => "taxonomyTerms",
                         "label" => __("Terms", "publishpress-future-pro"),
                         "description" => __("The terms that will be added to the posts.", "publishpress-future-pro"),
+                        "validation" => [
+                            'taxonomyTerms.terms' => [
+                                'required' => true,
+                                "label" => __("Terms", "publishpress-future-pro"),
+                            ],
+                        ],
                     ],
                 ]
             ],

@@ -70,12 +70,7 @@ class RayDebug implements NodeTypeInterface
                         "name" => "data",
                         "type" => "debugData",
                         "label" => __("Data", "publishpress-future-pro"),
-                        "validation" => [
-                            "debugData.dataToOutput" => [
-                                "required" => true,
-                                "label" => __("Data to Output", "publishpress-future-pro"),
-                            ]
-                        ],
+                        "validation" => [],
                     ],
                     [
                         "name" => "label",
