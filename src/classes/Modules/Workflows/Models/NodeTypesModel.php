@@ -203,7 +203,7 @@ class NodeTypesModel implements NodeTypesModelInterface
     private function getDefaultFlows()
     {
         $flowsInstances = [
-            IfElse::NODE_NAME => new IfElse(),
+            // IfElse::NODE_NAME => new IfElse(),
             CoreSchedule::NODE_NAME => new CoreSchedule(),
         ];
 
