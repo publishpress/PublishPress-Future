@@ -2,7 +2,6 @@ import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { __ } from "@wordpress/i18n";
-import { __experimentalHStack as HStack } from "@wordpress/components";
 import { GrObjectGroup } from "react-icons/gr";
 import { FaLinesLeaning } from "react-icons/fa6";
 import { sprintf } from "@wordpress/i18n";
@@ -10,13 +9,11 @@ import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
 import InspectorWarning from "../inspector-warning";
 import NodeSettingsPanel from "./node-settings-panel";
-import { __experimentalVStack as VStack } from "@wordpress/components";
-import NodeOutputPanel from "./node-output-panel";
-import NodeInputPanel from "./node-input-panel";
-import { nodeHasIncomers, nodeHasInput, getNodeIncomers, mapNodeInputs } from "../../utils";
+import { nodeHasIncomers, nodeHasInput, mapNodeInputs } from "../../utils";
 import { FEATURE_DEVELOPER_MODE } from "../../constants";
 import NodeValidationPanel from "../node-validation-panel";
 import NodeDevInfoPanel from "../node-dev-info-panel";
+import NodeSocketsPanel from "./node-sockets-panel";
 
 export const NodeInspector = () => {
     const {
@@ -135,11 +132,7 @@ export const NodeInspector = () => {
                     )}
 
                     {isDeveloperModeEnabled && selectedNodeHasIncomers && selectedNodeHasInput && (
-                        <NodeInputPanel inputSchema={mappedNodeInputSchema} />
-                    )}
-
-                    {isDeveloperModeEnabled && nodeHasOutput && (
-                        <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
+                        <NodeSocketsPanel inputSchema={mappedNodeInputSchema} outputSchema={selectedNode.data.outputSchema} />
                     )}
 
                     {isDeveloperModeEnabled && (
