@@ -43,3 +43,7 @@
 - lib/vendor/publishpress/publishpress-future/codeception.yml
 - yarn-error.log
 - codeception.yml
+- doc
+- tmp
+- future-pro.sublime-project
+- future-pro.sublime-workspace
