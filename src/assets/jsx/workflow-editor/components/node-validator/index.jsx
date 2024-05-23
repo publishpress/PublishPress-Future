@@ -19,13 +19,16 @@ export function NodeValidator({})
 
     const {
         addNodeError,
-        removeNodeError,
+        resetNodeErrors,
     } = useDispatch(workflowStore);
 
     useEffect(() => {
+        console.log('NodeValidator effect');
         nodes.forEach((node) => {
             const nodeSettings = node.data.settings || {};
             const settingsSchema = node.data.settingsSchema;
+
+            resetNodeErrors(node.id);
 
             // Check the node requires a connection
             if (node.type !== 'trigger' && !nodeHasIncomers(node)) {
@@ -34,8 +37,6 @@ export function NodeValidator({})
                     'no-incomers',
                     __('This node requires an incoming connection', 'publishpress-future-pro')
                 );
-            } else {
-                removeNodeError(node.id, 'no-incomers');
             }
 
             // Check the trigger has a connection
@@ -45,8 +46,6 @@ export function NodeValidator({})
                     'no-outgoers',
                     __('This trigger node requires an outgoing connection', 'publishpress-future-pro')
                 );
-            } else {
-                removeNodeError(node.id, 'no-outgoers');
             }
 
             if (settingsSchema) {
@@ -78,8 +77,6 @@ export function NodeValidator({})
                                             fieldLabelToDisplay
                                         )
                                     );
-                                } else {
-                                    removeNodeError(node.id, `${fieldName}-required`);
                                 }
 
                                 if (rules.required?.condition) {
@@ -100,13 +97,8 @@ export function NodeValidator({})
                                                 fieldLabelToDisplay
                                             )
                                         );
-                                    } else {
-                                        removeNodeError(node.id, `${fieldName}-required-if`);
                                     }
                                 }
-                            } else {
-                                removeNodeError(node.id, `${fieldName}-required`);
-                                removeNodeError(node.id, `${fieldName}-required-if`);
                             }
 
                             if (settingValue && rules?.format) {
@@ -120,11 +112,7 @@ export function NodeValidator({})
                                                 fieldLabelToDisplay
                                             )
                                         );
-                                    } else {
-                                        removeNodeError(node.id, `${fieldName}-email`);
                                     }
-                                } else {
-                                    removeNodeError(node.id, `${fieldName}-email`);
                                 }
 
                                 if (rules.format === 'emailCSV') {
@@ -144,12 +132,8 @@ export function NodeValidator({})
                                             );
 
                                             break;
-                                        } else {
-                                            removeNodeError(node.id, `${fieldName}-emailCSV`);
                                         }
                                     }
-                                } else {
-                                    removeNodeError(node.id, `${fieldName}-emailCSV`);
                                 }
 
                                 if (rules.format === 'integer' && settingValue && settingValue?.trim() !== '') {
@@ -162,11 +146,7 @@ export function NodeValidator({})
                                                 fieldLabelToDisplay
                                             )
                                         );
-                                    } else {
-                                        removeNodeError(node.id, `${fieldName}-integer`);
                                     }
-                                } else {
-                                    removeNodeError(node.id, `${fieldName}-integer`);
                                 }
 
                                 if (rules.format === 'integerCSV' && settingValue && settingValue?.trim() !== '') {
@@ -186,12 +166,8 @@ export function NodeValidator({})
                                             );
 
                                             break;
-                                        } else {
-                                            removeNodeError(node.id, `${fieldName}-integerCSV`);
                                         }
                                     }
-                                } else {
-                                    removeNodeError(node.id, `${fieldName}-integerCSV`);
                                 }
 
                                 if (rules.format === 'integerList' && settingValue && settingValue?.length > 0) {
@@ -210,12 +186,8 @@ export function NodeValidator({})
                                             );
 
                                             break;
-                                        } else {
-                                            removeNodeError(node.id, `${fieldName}-integerList`);
                                         }
                                     }
-                                } else {
-                                    removeNodeError(node.id, `${fieldName}-integerList`);
                                 }
                             }
                         });

@@ -336,3 +336,10 @@ export function removeNodeError(nodeId, error) {
         payload: {nodeId, error}
     };
 }
+
+export function resetNodeErrors(nodeId) {
+    return {
+        type: 'RESET_NODE_ERRORS',
+        payload: nodeId,
+    };
+}

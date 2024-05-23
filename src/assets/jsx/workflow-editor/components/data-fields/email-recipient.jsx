@@ -2,6 +2,7 @@ import { __ } from "@wordpress/i18n";
 import { VariablesTreeSelect } from "../variables-tree-select";
 import { TextControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
+import { useEffect } from "react";
 
 export function EmailRecipient({ name, label, defaultValue, onChange, settings, variables = [] }) {
 
@@ -14,6 +15,10 @@ export function EmailRecipient({ name, label, defaultValue, onChange, settings, 
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
         newValue[settingName] = value;
+
+        if (settingName === "recipient" && value !== "custom") {
+            newValue.custom = "";
+        }
 
         if (onChange) {
             onChange(name, newValue);

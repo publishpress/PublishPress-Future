@@ -578,6 +578,21 @@ const removeNodeError = (state, action) => {
     };
 }
 
+const resetNodeErrors = (state, action) => {
+    const { payload } = action;
+
+    const newErrors = {
+        ...state.nodeErrors,
+    };
+
+    delete newErrors[payload];
+
+    return {
+        ...state,
+        nodeErrors: newErrors,
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -658,6 +673,8 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return addNodeError(state, action);
         case 'REMOVE_NODE_ERROR':
             return removeNodeError(state, action);
+        case 'RESET_NODE_ERRORS':
+            return resetNodeErrors(state, action);
     }
 
     return state;
