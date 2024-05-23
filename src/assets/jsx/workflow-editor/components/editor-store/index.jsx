@@ -342,6 +342,11 @@ if (getPersistedFeatureValue(FEATURE_FULLSCREEN_MODE) === null) {
     setPersistedFeatureValue(FEATURE_FULLSCREEN_MODE, true);
 }
 
+// Enable the welcome guide by default
+if (getPersistedFeatureValue(FEATURE_WELCOME_GUIDE) === null) {
+    setPersistedFeatureValue(FEATURE_WELCOME_GUIDE, true);
+}
+
 // Update the store with the persisted features
 persistentFeatures.forEach((feature) => {
     if (getPersistedFeatureValue(feature)) {
