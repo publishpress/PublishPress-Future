@@ -37,7 +37,7 @@ class CoreOnPostUpdated implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger is fired when a post is updated.", "publishpress-future-pro");
+        return __("This trigger activates when an existing post is updated.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

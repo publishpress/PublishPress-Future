@@ -36,7 +36,7 @@ class CorePostTermsAdd implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action adds extra terms to posts.", "publishpress-future-pro");
+        return __("This action appends additional taxonomy terms to posts.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

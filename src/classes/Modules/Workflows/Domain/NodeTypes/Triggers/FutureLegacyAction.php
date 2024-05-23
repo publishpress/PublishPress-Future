@@ -52,7 +52,7 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger is fired when a future action is configured to execute this workflow.", "publishpress-future-pro");
+        return __("This trigger activates when a legacy future action is set to execute this workflow.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

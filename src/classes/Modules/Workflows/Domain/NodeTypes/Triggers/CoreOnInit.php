@@ -32,12 +32,12 @@ class CoreOnInit implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("On Init", "publishpress-future-pro");
+        return __("On Site Init", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This trigger is fired when the site is initialized.", "publishpress-future-pro");
+        return __("This trigger activates upon site initialization.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

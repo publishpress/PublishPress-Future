@@ -37,7 +37,7 @@ class CoreOnAdminInit implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger is fired when the admin is initialized.", "publishpress-future-pro");
+        return __("This trigger activates upon the initialization of the admin site.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

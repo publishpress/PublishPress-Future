@@ -37,7 +37,7 @@ class CoreOnSavePost implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger is fired when a post is saved.", "publishpress-future-pro");
+        return __("This trigger activates whenever a post is saved, regardless of whether it's newly created, imported, or updated.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

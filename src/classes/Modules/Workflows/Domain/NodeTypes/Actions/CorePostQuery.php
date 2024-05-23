@@ -36,7 +36,7 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action query posts to be passed to other nodes.", "publishpress-future-pro");
+        return __("This action retrieves multiple posts to serve as input for other actions.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

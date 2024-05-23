@@ -36,7 +36,7 @@ class CorePostTermsRemove implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action removes terms to posts.", "publishpress-future-pro");
+        return __("This action eliminates single, multiple, or all taxonomy terms from a post.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

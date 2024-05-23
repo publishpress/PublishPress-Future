@@ -36,7 +36,7 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This flow allows you to schedule an action.", "publishpress-future-pro");
+        return __("This flow facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

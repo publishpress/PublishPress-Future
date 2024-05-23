@@ -36,7 +36,7 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger is fired when a post is saved with the option enabled.", "publishpress-future-pro");
+        return __("This trigger activates when a post is saved with the option enabled, either through quick-edit or the editor panel, allowing manual selection of posts for activation.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
