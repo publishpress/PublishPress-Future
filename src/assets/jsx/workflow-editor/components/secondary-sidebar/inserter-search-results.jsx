@@ -63,7 +63,6 @@ export const InserterSearchResults = ({
         };
     });
 
-
     const filteredNodeTypes = useMemo(() => {
         const results = searchNodeItems(
             orderBy(nodeTypes, ['frecency'], ['desc']),

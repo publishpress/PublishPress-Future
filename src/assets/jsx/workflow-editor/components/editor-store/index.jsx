@@ -24,6 +24,7 @@ export const storeConfig = {
     flowCategories: [],
     flowNodes: [],
     activeSidebarName: null,
+    hoveredItem: null,
 };
 
 export const store = createReduxStore(STORE_NAME, {
@@ -149,6 +150,12 @@ export const store = createReduxStore(STORE_NAME, {
                     ...state,
                     activeSidebarName: action.payload,
                 };
+
+            case "SET_HOVERED_ITEM":
+                return {
+                    ...state,
+                    hoveredItem: action.payload,
+                };
         }
 
         return state;
@@ -241,6 +248,12 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: sidebar,
             };
         },
+        setHoveredItem(item) {
+            return {
+                type: "SET_HOVERED_ITEM",
+                payload: item,
+            };
+        },
     },
     selectors: {
         getActiveFeatures(state) {
@@ -269,6 +282,9 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getFlowNodes(state) {
             return state.flowNodes;
+        },
+        getHoveredItem(state) {
+            return state.hoveredItem;
         },
     },
 });

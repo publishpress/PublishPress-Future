@@ -23,6 +23,7 @@ export const NodesTab = ({
     categories,
     onInsert,
     onSelect,
+    onHover,
     showMostUsedNodes
 }) => {
     const MAX_SUGGESTED_ITEMS = 6;
@@ -56,10 +57,6 @@ export const NodesTab = ({
     useEffect(() => () => onHover(null), []);
 
     const onSelectItem = (item) => {
-
-    };
-
-    const onHover = (item) => {
 
     };
 

@@ -7,6 +7,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { useMemo, useRef, memo } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 
 import { ENTER } from '@wordpress/keycodes';
 
@@ -17,6 +18,7 @@ import NodeIcon from '../node-icon';
 import { InserterListboxItem } from './inserter-listbox';
 import InserterDraggableNodes from './inserter-draggable-nodes';
 import { isAppleOS } from '../../utils';
+import { store as editorStore } from '../editor-store';
 
 function InserterListItem({
     className,

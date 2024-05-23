@@ -13,6 +13,8 @@ import {
 import { store as editorStore } from '../editor-store';
 import { useDispatch } from '@wordpress/data';
 import InserterSearchResults from './inserter-search-results';
+import { Popover } from '@wordpress/components';
+import InserterPreviewPanel from './inserter-preview-panel';
 
 export function InserterMenu({
     onSelect,
@@ -25,28 +27,28 @@ export function InserterMenu({
         __experimentalFilterValue
     );
 
-    const [hoveredItem, setHoveredItem] = useState(null);
-
-    const { currentInserterTab } = useSelect((select) => {
+    const {
+        currentInserterTab,
+        hoveredItem,
+    } = useSelect((select) => {
         return {
             currentInserterTab: select(editorStore).getCurrentInserterTab(),
+            hoveredItem: select(editorStore).getHoveredItem(),
         };
-    }, []);
-    const { setCurrentInserterTab } = useDispatch(editorStore);
+    });
 
-    const onInsert = useCallback(
-        (blocks, meta, shouldForceFocusBlock) => {
-            onSelect();
-        },
-        [onSelect]
-    );
+    const {
+        setCurrentInserterTab,
+        setHoveredItem,
+    } = useDispatch(editorStore);
 
-    const onHover = useCallback(
-        (item) => {
-            setHoveredItem(item);
-        },
-        [setHoveredItem]
-    );
+    const onInsert = useCallback((blocks, meta, shouldForceFocusBlock) => {
+        onSelect();
+    }, [onSelect]);
+
+    const onHover = useCallback((item) => {
+        setHoveredItem(item);
+    }, [setHoveredItem]);
 
     const triggersTab = useMemo(
         () => {
@@ -217,9 +219,17 @@ export function InserterMenu({
                     )}
                 </div>
             </div>
-            {/* {showInserterHelpPanel && hoveredItem && (
-                <InserterPreviewPanel item={hoveredItem} />
-            )} */}
+            {showInserterHelpPanel && hoveredItem && (
+                <Popover
+                    className='block-editor-inserter__preview-container__popover'
+                    placement='right-start'
+                    offset={16}
+                    focusOnMount={false}
+                    animate={false}
+                >
+                    <InserterPreviewPanel item={hoveredItem} />
+                </Popover>
+            )}
         </div>
     );
 }
