@@ -39,6 +39,11 @@ class PostAction implements NodeRunnerPreparerInterface
             // We look for the "post" variable in the node settings
             $posts = $this->getVariableValueFromContextVariables($nodeSettings['post'], $contextVariables);
 
+            if (empty($posts)) {
+                // TODO: Log this
+                return;
+            }
+
             if (! is_array($posts)) {
                 $posts = [$posts];
             }

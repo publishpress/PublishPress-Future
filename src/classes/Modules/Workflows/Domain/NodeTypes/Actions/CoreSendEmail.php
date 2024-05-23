@@ -80,8 +80,20 @@ class CoreSendEmail implements NodeTypeInterface
                         "name" => "recipient",
                         "type" => "emailRecipient",
                         "label" => __("Recipient", "publishpress-future-pro"),
-                        "settings" => [
-                            "defaultRecipient" => "global.site.admin_email",
+                        "validation" => [
+                            'recipient.recipient' => [
+                                'required' => true,
+                            ],
+                            'recipient.custom' => [
+                                'label' => __('Custom Email Address', 'publishpress-future-pro'),
+                                'required' => [
+                                    'condition' => [
+                                        'field' => 'recipient.recipient',
+                                        'value' => 'custom',
+                                    ],
+                                ],
+                                'format' => 'emailCSV',
+                            ],
                         ],
                     ],
                     [

@@ -1,7 +1,7 @@
 import { applyFilters } from "@wordpress/hooks";
 import { select } from "@wordpress/data";
 import { store as workflowStore } from "./components/workflow-store";
-import { getIncomers } from "reactflow";
+import { getIncomers, getOutgoers } from "reactflow";
 
 const VARIABLE_SOURCE_NODE_INPUT = 'node-input';
 const VARIABLE_SOURCE_GLOBAL = 'global';
@@ -76,6 +76,22 @@ export function nodeHasIncomers(node) {
     const nodeHasIncomers = incomers?.length > 0;
 
     return nodeHasIncomers;
+}
+
+export function getNodeOutgoers(node) {
+    const nodes = select(workflowStore).getNodes();
+    const edges = select(workflowStore).getEdges();
+
+    if (!node) return [];
+
+    return getOutgoers(node, nodes, edges);
+}
+
+export function nodeHasOutgoers(node) {
+    const outgoers = getNodeOutgoers(node);
+    const nodeHasOutgoers = outgoers?.length > 0;
+
+    return nodeHasOutgoers;
 }
 
 export function nodeHasInput(node) {
@@ -200,12 +216,14 @@ export function mapNodeInputs(node) {
                     mappedInput.push({
                         ...inputItem,
                         name: `${inputItem.name}`,
+                        type: inputItem.type,
                     });
                 });
             } else {
                 mappedInput.push({
                     ...outputItem,
                     name: `${previousNode.data.slug}.${outputItem.name}`,
+                    type: outputItem.type,
                 });
             }
         });
@@ -253,7 +271,8 @@ export function getExpandedVariableOptionsForSelect(node, globalVariables) {
         const optionToAdd = {
             id: variable.name,
             name: variable.label,
-            children: []
+            children: [],
+            type: variable?.type,
         };
 
         if (dataType.type === 'object') {

@@ -32,6 +32,7 @@ import {
     SIDEBAR_WORKFLOW,
 } from "../settings-sidebar/constants";
 import TriggerNode from "../node-types/trigger";
+import NodeValidator from "../node-validator";
 
 const GRID_SIZE = 10;
 
@@ -335,6 +336,7 @@ export const FlowEditor = (props) => {
                 <Background variant="dots" color="#ccc" gap={GRID_SIZE} />
                 <Controls />
             </ReactFlow>
+            <NodeValidator />
         </div>
     );
 };

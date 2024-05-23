@@ -1,5 +1,4 @@
 import { POST_TYPE } from '../../constants';
-import TaxonomyTerms from '../data-fields/taxonomy-terms';
 
 export const DEFAULT_STATE = {
     postType: POST_TYPE,
@@ -33,6 +32,7 @@ export const DEFAULT_STATE = {
     isFetchingTaxonomyTerms: false,
     taxonomyTerms: {},
     baseSlugCounts: {},
+    nodeErrors: {},
 }
 
 const loadWorkflowStart = (state, action) => {
@@ -538,6 +538,46 @@ const updateBaseSlugCounts = (state, action) => {
     };
 }
 
+const addNodeError = (state, action) => {
+    const { payload } = action;
+
+    const theNodeErrors = state.nodeErrors[payload.nodeId] || {};
+
+    theNodeErrors[payload.error] = {
+        error: payload.error,
+        message: payload.message,
+    };
+
+    const nodeErrors = {
+        ...state.nodeErrors,
+        [payload.nodeId]: theNodeErrors,
+    };
+
+    return {
+        ...state,
+        nodeErrors: nodeErrors,
+    };
+}
+
+const removeNodeError = (state, action) => {
+    const { payload } = action;
+
+    const newErrors = {
+        ...state.nodeErrors,
+    };
+
+    if (! newErrors[payload.nodeId]) {
+        return state;
+    }
+
+    delete newErrors[payload.nodeId][payload.error];
+
+    return {
+        ...state,
+        nodeErrors: newErrors,
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -614,6 +654,10 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return incrementBaseSlugCounts(state, action);
         case 'UPDATE_BASE_SLUG_COUNTS':
             return updateBaseSlugCounts(state, action);
+        case 'ADD_NODE_ERROR':
+            return addNodeError(state, action);
+        case 'REMOVE_NODE_ERROR':
+            return removeNodeError(state, action);
     }
 
     return state;

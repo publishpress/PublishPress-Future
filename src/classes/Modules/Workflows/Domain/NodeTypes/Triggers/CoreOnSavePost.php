@@ -78,6 +78,11 @@ class CoreOnSavePost implements NodeTypeInterface
                         "settings" => [
                             "acceptsInput" => false,
                         ],
+                        "validation" => [
+                            "postId" => [
+                                "format" => "integerCSV",
+                            ]
+                        ],
                     ],
                 ]
             ]

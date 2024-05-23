@@ -15,6 +15,8 @@ import NodeOutputPanel from "./node-output-panel";
 import NodeInputPanel from "./node-input-panel";
 import { nodeHasIncomers, nodeHasInput, getNodeIncomers, mapNodeInputs } from "../../utils";
 import { FEATURE_DEVELOPER_MODE } from "../../constants";
+import NodeValidationPanel from "../node-validation-panel";
+import NodeDevInfoPanel from "../node-dev-info-panel";
 
 export const NodeInspector = () => {
     const {
@@ -23,30 +25,29 @@ export const NodeInspector = () => {
         selectedElementsCount,
         selectedNode,
         selectedEdge,
-        nodes,
-        edges,
+        nodeHasErrors,
+        nodeErrors,
     } = useSelect((select) => {
-        const nodes = select(workflowStore).getNodes();
-        const edges = select(workflowStore).getEdges();
         const selectedNodes = select(workflowStore).getSelectedNodes();
         const selectedEdges = select(workflowStore).getSelectedEdges();
         const getNodeById = select(workflowStore).getNodeById;
         const getEdgeById = select(workflowStore).getEdgeById;
-
         const selectedNode =
             selectedNodes.length === 1 ? getNodeById(selectedNodes[0]) : null;
         const selectedEdge =
             selectedEdges.length === 1 ? getEdgeById(selectedEdges[0]) : null;
+        const nodeErrors = select(workflowStore).getNodeErrors(selectedNode?.id) || {};
+        const nodeHasErrors = Object.keys(nodeErrors).length > 0;
+        const selectedElementsCount = select(workflowStore).getSelectedElementsCount();
 
         return {
-            nodes,
-            edges,
             selectedNodes,
             selectedEdges,
-            selectedElementsCount:
-                select(workflowStore).getSelectedElementsCount(),
+            selectedElementsCount,
             selectedNode,
             selectedEdge,
+            nodeHasErrors,
+            nodeErrors,
         };
     });
 
@@ -129,12 +130,20 @@ export const NodeInspector = () => {
                         <NodeSettingsPanel node={selectedNode} />
                     )}
 
+                    {nodeHasErrors && (
+                        <NodeValidationPanel errors={nodeErrors} />
+                    )}
+
                     {selectedNodeHasIncomers && selectedNodeHasInput && (
                         <NodeInputPanel inputSchema={mappedNodeInputSchema} />
                     )}
 
                     {nodeHasOutput && (
                         <NodeOutputPanel outputSchema={selectedNode.data.outputSchema} />
+                    )}
+
+                    {isDeveloperModeEnabled && (
+                        <NodeDevInfoPanel node={selectedNode} />
                     )}
 
                     <div className="components-tools-panel"></div>

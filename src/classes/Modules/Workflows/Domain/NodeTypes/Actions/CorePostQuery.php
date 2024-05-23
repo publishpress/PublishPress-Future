@@ -74,6 +74,9 @@ class CorePostQuery implements NodeTypeInterface
                             "The query defines the posts that will be selected by this action.",
                             "publishpress-future-pro"
                         ),
+                        "validation" => [
+                            'required' => true,
+                        ]
                     ],
                 ]
             ]

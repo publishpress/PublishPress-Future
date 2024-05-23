@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostStick implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.stick-post";
+    public const NODE_NAME = "action/core.stick-post";
 
     public function getElementarType(): string
     {
@@ -71,6 +71,11 @@ class CorePostStick implements NodeTypeInterface
                         "type" => "postInput",
                         "label" => __("Post", "publishpress-future-pro"),
                         "description" => __("Select the variable that contains the post to update. It can be a post instance or the post ID.", "publishpress-future-pro"),
+                        "validation" => [
+                            'post.variable' => [
+                                'required' => true,
+                            ],
+                        ],
                     ],
                 ],
             ],

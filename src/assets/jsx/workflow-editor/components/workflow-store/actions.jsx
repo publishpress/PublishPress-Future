@@ -322,3 +322,17 @@ export function updateBaseSlugCounts(nodeSlug) {
         payload: nodeSlug,
     };
 }
+
+export function addNodeError(nodeId, error, message) {
+    return {
+        type: 'ADD_NODE_ERROR',
+        payload: {nodeId, error, message},
+    };
+}
+
+export function removeNodeError(nodeId, error) {
+    return {
+        type: 'REMOVE_NODE_ERROR',
+        payload: {nodeId, error}
+    };
+}

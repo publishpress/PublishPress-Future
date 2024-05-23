@@ -1,9 +1,24 @@
 import { Handle, Position } from 'reactflow';
 import { memo } from '@wordpress/element';
 import NodeIcon from '../node-icon';
+import { BiSolidMessageAltError } from "react-icons/bi";
+import { useSelect } from "@wordpress/data";
+import { store as workflowStore } from "../workflow-store";
 
-export const GenericNode = memo(({ data, isConnectable }) => {
+export const GenericNode = memo(({ id, data, isConnectable }) => {
     const nodeClassName = data?.className || 'react-flow__node-genericNode';
+
+    const {
+        nodeErrors,
+        nodeHasErrors,
+    } = useSelect((select) => {
+        const nodeErrors = select(workflowStore).getNodeErrors(id);
+
+        return {
+            nodeErrors,
+            nodeHasErrors: Object.keys(nodeErrors).length > 0,
+        }
+    });
 
     let targetHandles = null;
     if (data.socketSchema) {
@@ -59,6 +74,11 @@ export const GenericNode = memo(({ data, isConnectable }) => {
                 {targetHandles}
 
                 <div className='react-flow__node-inner-body'>
+                    {nodeHasErrors && (
+                        <div className='react-flow__node-error'>
+                            <NodeIcon icon={BiSolidMessageAltError} size={16} />
+                        </div>
+                    )}
                     <div className="react-flow__node-slug">{data.slug}</div>
                     <div className='react-flow__node-header'>
                         <NodeIcon icon={data.icon} size={14} />

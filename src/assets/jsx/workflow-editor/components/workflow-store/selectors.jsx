@@ -189,3 +189,7 @@ export function getTaxonomyTerms(state, taxnomy) {
 export function getBaseSlugCounts(state) {
     return state.baseSlugCounts;
 }
+
+export function getNodeErrors(state, nodeId) {
+    return state.nodeErrors[nodeId] || [];
+}

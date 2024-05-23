@@ -15,6 +15,15 @@ export function PostInput({ name, label, defaultValue, onChange, variables, sett
 
     const defaultVariable = defaultValue?.variable;
 
+    const tree = [
+        {
+            id: "",
+            name: "",
+            "children": [],
+        },
+        ...variables,
+    ];
+
     useEffect(() => {
         onChangeSetting(
             {
@@ -28,7 +37,7 @@ export function PostInput({ name, label, defaultValue, onChange, variables, sett
         <>
             <VStack>
                 <VariablesTreeSelect
-                    tree={variables}
+                    tree={tree}
                     label={label}
                     selectedId={defaultValue?.variable}
                     onChange={(value) => onChangeSetting({ settingName: "variable", value })}

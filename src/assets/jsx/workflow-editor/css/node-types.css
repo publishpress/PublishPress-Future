@@ -212,3 +212,17 @@
 .react-flow__node-socket-name:first-child {
     border-left: 0;
 }
+
+/* Error mark */
+
+.react-flow__node-error {
+    color: #d90f0f;
+    position: absolute;
+    top: -16px;
+    right: 0;
+}
+
+.react-flow__node-genericTrigger .react-flow__node-error {
+    top: 4px;
+    right: 0;
+}
