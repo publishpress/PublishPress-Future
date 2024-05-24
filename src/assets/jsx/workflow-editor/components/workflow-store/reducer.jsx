@@ -42,33 +42,17 @@ const loadWorkflowStart = (state, action) => {
     };
 }
 
-const loadWorkflowSuccess = (state, action) => {
-    const { payload } = action;
-
-    const nodes = payload.flow?.nodes || [];
-    const edges = payload.flow?.edges || [];
-    const viewport = payload.flow?.viewport || DEFAULT_STATE.viewport;
-
-    nodes.map(node => {
-        const slug = node?.data?.slug;
-
-        if (! slug) {
-            return;
-        }
-
-        state = updateBaseSlugCounts(state, {payload: slug});
-    });
-
+function _setInitialStateForGlobalVariables(state, workflow = {}) {
     state = setGlobalVariable(state, {
         payload: {
             name: 'workflow',
             label: 'Future Workflow',
             type: 'workflow',
             value: {
-                id: payload.id,
-                title: payload.title,
-                description: payload.description,
-                modified: payload.modified,
+                id: workflow?.id,
+                title: workflow?.title,
+                description: workflow?.description,
+                modified: workflow?.modified,
             },
             runtimeOnly: false,
         }
@@ -101,6 +85,28 @@ const loadWorkflowSuccess = (state, action) => {
         }
     });
 
+    return state;
+}
+
+const loadWorkflowSuccess = (state, action) => {
+    const { payload } = action;
+
+    const nodes = payload.flow?.nodes || [];
+    const edges = payload.flow?.edges || [];
+    const viewport = payload.flow?.viewport || DEFAULT_STATE.viewport;
+
+    nodes.map(node => {
+        const slug = node?.data?.slug;
+
+        if (! slug) {
+            return;
+        }
+
+        state = updateBaseSlugCounts(state, {payload: slug});
+    });
+
+    state = _setInitialStateForGlobalVariables(state, payload);
+
     return {
         ...state,
         isLoadingWorkflow: false,
@@ -132,6 +138,8 @@ const createWorkflowStart = (state, action) => {
 
 const createWorkflowSuccess = (state, action) => {
     const { payload } = action;
+
+    state = _setInitialStateForGlobalVariables(state, {});
 
     return {
         ...state,
