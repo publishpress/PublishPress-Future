@@ -88,6 +88,9 @@ class CorePostQuery implements NodeTypeInterface
                     [
                         "rule" => "hasIncomingConnection",
                     ],
+                    [
+                        "rule" => "hasOutgoingConnection",
+                    ]
                 ],
             ],
             "settings" => [
