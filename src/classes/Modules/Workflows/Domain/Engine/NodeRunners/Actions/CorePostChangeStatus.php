@@ -46,7 +46,7 @@ class CorePostChangeStatus implements NodeRunnerInterface
     {
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
 
-        $newStatus = $nodeSettings['postStatus']['newStatus'];
+        $newStatus = $nodeSettings['newStatus']['status'];
 
         $postModel->setPostStatus($newStatus);
     }

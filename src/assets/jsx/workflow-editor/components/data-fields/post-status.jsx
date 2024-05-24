@@ -29,7 +29,7 @@ export function PostStatus({ name, label, defaultValue, onChange, settings }) {
                 newStatus: defaultStatus,
             };
 
-            onChangeSetting({ settingName: "newStatus", value: defaultStatus });
+            onChangeSetting({ settingName: "status", value: defaultStatus });
         }
     }, []);
 
@@ -38,9 +38,9 @@ export function PostStatus({ name, label, defaultValue, onChange, settings }) {
             <VStack>
                 <SelectControl
                     label={__("New Status", "publishpress-future-pro")}
-                    value={defaultValue?.newStatus}
+                    value={defaultValue?.status}
                     options={postStatuses}
-                    onChange={(value) => onChangeSetting({ settingName: "newStatus", value })}
+                    onChange={(value) => onChangeSetting({ settingName: "status", value })}
                 />
             </VStack>
         </>
