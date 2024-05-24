@@ -97,8 +97,9 @@ class CorePostQuery implements NodeTypeInterface
                 "rules" => [
                     [
                         "rule" => "format",
-                        "field" => "post.postID",
+                        "field" => "postQuery.postId",
                         "format" => "integerList",
+                        "label" => __("Post ID", "publishpress-future-pro"),
                     ],
                 ],
             ],
