@@ -80,21 +80,6 @@ class CoreSendEmail implements NodeTypeInterface
                         "name" => "recipient",
                         "type" => "emailRecipient",
                         "label" => __("Recipient", "publishpress-future-pro"),
-                        "validation" => [
-                            'recipient.recipient' => [
-                                'required' => true,
-                            ],
-                            'recipient.custom' => [
-                                'label' => __('Custom Email Address', 'publishpress-future-pro'),
-                                'required' => [
-                                    'condition' => [
-                                        'field' => 'recipient.recipient',
-                                        'value' => 'custom',
-                                    ],
-                                ],
-                                'format' => 'emailCSV',
-                            ],
-                        ],
                     ],
                     [
                         "name" => "subject",
@@ -113,6 +98,44 @@ class CoreSendEmail implements NodeTypeInterface
                         ],
                     ]
                 ],
+            ]
+        ];
+    }
+
+    public function getValidationSchema(): array
+    {
+        return [
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasIncomingConnection",
+                    ],
+                ],
+            ],
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "required",
+                        "field" => "recipient.recipient",
+                        "label" => __("Email Recipient", "publishpress-future-pro"),
+                    ],
+                    [
+                        "rule" => "required",
+                        "field" => "recipient.custom",
+                        "label" => __("Custom Email Address", "publishpress-future-pro"),
+                        "condition" => [
+                            "field" => "recipient.recipient",
+                            "value" => "custom",
+                        ],
+                    ],
+                    [
+                        "rule" => "format",
+                        "field" => "recipient.custom",
+                        "label" => __("Custom Email Address", "publishpress-future-pro"),
+                        "format" => "emailList",
+                    ],
+
+                ]
             ]
         ];
     }

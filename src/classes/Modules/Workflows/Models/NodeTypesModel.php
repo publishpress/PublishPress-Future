@@ -152,6 +152,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                         "foreground" => self::DEFAULT_ICON_FOREGROUND,
                     ],
                     "settingsSchema" => $instance->getSettingsSchema(),
+                    "validationSchema" => $instance->getValidationSchema(),
                     "className" => $instance->getCSSClass(),
                     "version" => $instance->getVersion(),
                     "outputSchema" => $instance->getOutputSchema(),

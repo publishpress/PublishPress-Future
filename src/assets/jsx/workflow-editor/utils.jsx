@@ -71,6 +71,24 @@ export function getNodeIncomers(node) {
     return getIncomers(node, nodes, edges);
 }
 
+export function getNodeIncomersRecursively(node) {
+    const incomers = getNodeIncomers(node);
+
+    if (!incomers.length) {
+        return [];
+    }
+
+    let allIncomers = incomers;
+
+    incomers.forEach((incomer) => {
+        const incomerIncomers = getNodeIncomersRecursively(incomer);
+
+        allIncomers = allIncomers.concat(incomerIncomers);
+    });
+
+    return allIncomers;
+}
+
 export function nodeHasIncomers(node) {
     const incomers = getNodeIncomers(node);
     const nodeHasIncomers = incomers?.length > 0;

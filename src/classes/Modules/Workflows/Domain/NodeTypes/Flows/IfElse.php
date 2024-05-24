@@ -77,6 +77,11 @@ class IfElse implements NodeTypeInterface
         ];
     }
 
+    public function getValidationSchema(): array
+    {
+        return [];
+    }
+
     public function getOutputSchema(): array
     {
         return [

@@ -36,8 +36,12 @@ class PostAction implements NodeRunnerPreparerInterface
                 throw new Exception('The "post" variable is not set in the node settings');
             }
 
+            if (! isset($nodeSettings['post']['variable'])) {
+                throw new Exception('The "post.variable" variable is not set in the node settings');
+            }
+
             // We look for the "post" variable in the node settings
-            $posts = $this->getVariableValueFromContextVariables($nodeSettings['post'], $contextVariables);
+            $posts = $this->getVariableValueFromContextVariables($nodeSettings['post']['variable'], $contextVariables);
 
             if (empty($posts)) {
                 // TODO: Log this

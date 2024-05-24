@@ -79,6 +79,22 @@ class CoreSchedule implements NodeTypeInterface
         ];
     }
 
+    public function getValidationSchema(): array
+    {
+        return [
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasIncomingConnection",
+                    ],
+                    [
+                        "rule" => "hasOutgoingConnection",
+                    ],
+                ]
+            ]
+        ];
+    }
+
     public function getOutputSchema(): array
     {
         return [

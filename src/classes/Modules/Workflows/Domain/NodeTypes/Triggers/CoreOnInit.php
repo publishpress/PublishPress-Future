@@ -65,6 +65,19 @@ class CoreOnInit implements NodeTypeInterface
         return [];
     }
 
+    public function getValidationSchema(): array
+    {
+        return [
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasOutgoingConnection",
+                    ],
+                ]
+            ]
+        ];
+    }
+
     public function getOutputSchema(): array
     {
         return [];

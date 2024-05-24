@@ -80,6 +80,29 @@ class FutureLegacyAction implements NodeTypeInterface
         return [];
     }
 
+    public function getValidationSchema(): array
+    {
+        return [
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "format",
+                        "field" => "postQuery.postId",
+                        "format" => "integerList",
+                        "label" => __("Post ID", "publishpress-future-pro"),
+                    ],
+                ],
+            ],
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasOutgoingConnection",
+                    ],
+                ]
+            ]
+        ];
+    }
+
     public function getOutputSchema(): array
     {
         return [

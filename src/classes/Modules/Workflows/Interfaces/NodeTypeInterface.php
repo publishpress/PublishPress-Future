@@ -24,6 +24,8 @@ interface NodeTypeInterface
 
     public function getSettingsSchema(): array;
 
+    public function getValidationSchema(): array;
+
     public function getOutputSchema(): array;
 
     public function getCSSClass(): string;

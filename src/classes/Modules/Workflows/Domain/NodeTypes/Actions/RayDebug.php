@@ -70,7 +70,6 @@ class RayDebug implements NodeTypeInterface
                         "name" => "data",
                         "type" => "debugData",
                         "label" => __("Data", "publishpress-future-pro"),
-                        "validation" => [],
                     ],
                     [
                         "name" => "label",
@@ -84,6 +83,19 @@ class RayDebug implements NodeTypeInterface
                     ]
                 ],
             ]
+        ];
+    }
+
+    public function getValidationSchema(): array
+    {
+        return [
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasIncomingConnection",
+                    ],
+                ],
+            ],
         ];
     }
 

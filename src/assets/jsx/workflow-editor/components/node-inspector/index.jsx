@@ -64,8 +64,6 @@ export const NodeInspector = () => {
         selectedNodes.length === 0 && selectedEdges.length > 0;
 
     const nodeHasSettings = selectedNode?.data?.settingsSchema?.length > 0;
-    const nodeHasOutput = selectedNode?.data?.outputSchema?.length > 0;
-
 
     const selectedNodeHasIncomers = nodeHasIncomers(selectedNode);
     const selectedNodeHasInput = nodeHasInput(selectedNode);

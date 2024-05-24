@@ -78,12 +78,29 @@ class CoreOnPostUpdated implements NodeTypeInterface
                         "settings" => [
                             "acceptsInput" => false,
                         ],
-                        "validation" => [
-                            "postQuery.postId" => [
-                                "format" => "integerList",
-                                "label" => __("Post ID", "publishpress-future-pro")
-                            ]
-                        ],
+                    ],
+                ]
+            ]
+        ];
+    }
+
+    public function getValidationSchema(): array
+    {
+        return [
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "format",
+                        "field" => "postQuery.postId",
+                        "format" => "integerList",
+                        "label" => __("Post ID", "publishpress-future-pro"),
+                    ],
+                ],
+            ],
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasOutgoingConnection",
                     ],
                 ]
             ]

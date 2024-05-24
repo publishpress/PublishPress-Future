@@ -2,7 +2,7 @@ import { store as workflowStore } from "../workflow-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
-import { nodeHasIncomers, nodeHasOutgoers } from "../../utils";
+import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecursively } from "../../utils";
 import validator from "validator";
 
 export function NodeValidator({})
@@ -24,173 +24,186 @@ export function NodeValidator({})
 
     useEffect(() => {
         nodes.forEach((node) => {
-            const nodeSettings = node.data.settings || {};
-            const settingsSchema = node.data.settingsSchema;
+            const nodeSettings = node.data?.settings || {};
+            const settingsSchema = node.data?.settingsSchema;
+            const validationSchema = node.data?.validationSchema;
 
             resetNodeErrors(node.id);
 
-            // Check the node requires a connection
-            if (node.type !== 'trigger' && !nodeHasIncomers(node)) {
-                addNodeError(
-                    node.id,
-                    'no-incomers',
-                    __('This node requires an incoming connection', 'publishpress-future-pro')
-                );
+            if (! validationSchema) {
+                return;
             }
 
-            // Check the trigger has a connection
-            if (node.type === 'trigger' && !nodeHasOutgoers(node)) {
-                addNodeError(
-                    node.id,
-                    'no-outgoers',
-                    __('This trigger node requires an outgoing connection', 'publishpress-future-pro')
-                );
-            }
+            if (validationSchema?.connections?.rules) {
+                validationSchema.connections.rules.forEach((ruleData) => {
+                    switch(ruleData.rule) {
+                        case 'hasIncomingConnection':
+                            if (!nodeHasIncomers(node)) {
+                                addNodeError(
+                                    node.id,
+                                    'no-incomers',
+                                    __('This node requires an incoming connection', 'publishpress-future-pro')
+                                );
+                            }
+                            break;
 
-            if (settingsSchema) {
-                settingsSchema.forEach((settingPanel) => {
-                    settingPanel.fields.forEach((field) => {
-                        if (! field?.validation) {
-                            return;
-                        }
+                        case 'hasOutgoingConnection':
+                            if (!nodeHasOutgoers(node)) {
+                                addNodeError(
+                                    node.id,
+                                    'no-outgoers',
+                                    __('This node requires an outgoing connection', 'publishpress-future-pro')
+                                );
+                            }
+                            break;
 
-                        Object.keys(field.validation).forEach((fieldName) => {
-                            const fieldNames = fieldName.split('.');
-                            const rules = field.validation[fieldName];
+                        case 'hasIncomerOfName':
+                            const allIncomers = getNodeIncomersRecursively(node);
 
-                            // Support multiple levels of nested fields, separated by dots.
-                            let settingValue = nodeSettings;
-                            for (let i = 0; i < fieldNames.length; i++) {
-                                settingValue = settingValue?.[fieldNames[i]];
+                            let hasError = false;
+
+                            if (allIncomers.length === 0) {
+                                hasError = true;
+                            } else {
+                                var hasIncomerOfName = false;
+                                allIncomers.forEach((incomer) => {
+                                    if (incomer.data?.name === ruleData.name) {
+                                        hasIncomerOfName = true;
+                                    }
+                                });
+
+                                hasError = !hasIncomerOfName;
                             }
 
-                            const fieldLabelToDisplay = rules.label || field.label;
+                            if (hasError) {
+                                addNodeError(
+                                    node.id,
+                                    'parent-name',
+                                    ruleData.message,
+                                );
+                            }
+                            break;
+                    }
+                });
+            }
 
-                            if (rules?.required) {
-                                if (rules.required === true && (!settingValue || settingValue == '')) {
+            if (validationSchema?.settings?.rules) {
+                validationSchema.settings.rules.forEach((ruleData) => {
+                    const rule = ruleData.rule;
+                    const fieldName = ruleData?.field || '';
+                    const fieldNames = fieldName?.split('.') || [];
+                    const fieldLabel = ruleData?.label || settingsSchema.find((panel) => panel?.fields.find((field) => field.name === fieldNames[0]))?.label;
+
+                    let settingValue = nodeSettings;
+                    for (let i = 0; i < fieldNames.length; i++) {
+                        settingValue = settingValue?.[fieldNames[i]];
+                    }
+
+                    switch(rule) {
+                        case 'required':
+                            if (ruleData?.condition) {
+                                const conditionField = ruleData.condition.field;
+                                const conditionValue = ruleData.condition.value;
+
+                                let conditionSettingValue = nodeSettings;
+                                for (let i = 0; i < conditionField.split('.').length; i++) {
+                                    conditionSettingValue = conditionSettingValue?.[conditionField.split('.')[i]];
+                                }
+
+                                if (conditionSettingValue == conditionValue && (!settingValue || settingValue == '')) {
+                                    addNodeError(
+                                        node.id,
+                                        `${fieldName}-required-if`,
+                                        sprintf(
+                                            __('The field %s is required', 'publishpress-future-pro'),
+                                            fieldLabel
+                                        )
+                                    );
+                                }
+                            } else {
+                                if (!settingValue || settingValue == '') {
                                     addNodeError(
                                         node.id,
                                         `${fieldName}-required`,
                                         sprintf(
                                             __('The field %s is required', 'publishpress-future-pro'),
-                                            fieldLabelToDisplay
+                                            fieldLabel
                                         )
                                     );
                                 }
+                            }
+                            break;
 
-                                if (rules.required?.condition) {
-                                    const conditionField = rules.required.condition.field;
-                                    const conditionValue = rules.required.condition.value;
+                        case 'format':
+                            const format = ruleData.format;
 
-                                    let conditionSettingValue = nodeSettings;
-                                    for (let i = 0; i < conditionField.split('.').length; i++) {
-                                        conditionSettingValue = conditionSettingValue?.[conditionField.split('.')[i]];
-                                    }
+                            if (settingValue === undefined || settingValue === null || settingValue === '') {
+                                return;
+                            }
 
-                                    if (conditionSettingValue == conditionValue && (!settingValue || settingValue == '')) {
+                            if (format === 'email') {
+                                if (! validator.isEmail(settingValue)) {
+                                    addNodeError(
+                                        node.id,
+                                        `${fieldName}-email`,
+                                        sprintf(
+                                            __('The field %s must be a valid email address', 'publishpress-future-pro'),
+                                            fieldLabel
+                                        )
+                                    );
+                                }
+                            } else if (format === 'emailList') {
+                                const emails = settingValue.split(',');
+                                let email;
+                                for (let i = 0; i < emails.length; i++) {
+                                    email = emails[i].trim();
+
+                                    if (!validator.isEmail(email)) {
                                         addNodeError(
                                             node.id,
-                                            `${fieldName}-required-if`,
+                                            `${fieldName}-emailList`,
                                             sprintf(
-                                                __('The field %s is required', 'publishpress-future-pro'),
-                                                fieldLabelToDisplay
+                                                __('The field %s must be a valid email address list separated by commas', 'publishpress-future-pro'),
+                                                fieldLabel
                                             )
                                         );
+
+                                        break;
+                                    }
+                                }
+                            } else if (format === 'integer') {
+                                if (!validator.isInt(settingValue)) {
+                                    addNodeError(
+                                        node.id,
+                                        `${fieldName}-integer`,
+                                        sprintf(
+                                            __('The field %s must be an integer', 'publishpress-future-pro'),
+                                            fieldLabel
+                                        )
+                                    );
+                                }
+                            } else if (format === 'integerList') {
+                                let integer;
+                                for (let i = 0; i < settingValue.length; i++) {
+                                    integer = settingValue[i].trim();
+
+                                    if (!validator.isInt(integer)) {
+                                        addNodeError(
+                                            node.id,
+                                            `${fieldName}-integerList`,
+                                            sprintf(
+                                                __('The field %s must be an integer list separated by commas', 'publishpress-future-pro'),
+                                                fieldLabel
+                                            )
+                                        );
+
+                                        break;
                                     }
                                 }
                             }
 
-                            if (settingValue && rules?.format) {
-                                if (rules.format === 'email') {
-                                    if (!validator.isEmail(settingValue)) {
-                                        addNodeError(
-                                            node.id,
-                                            `${fieldName}-email`,
-                                            sprintf(
-                                                __('The field %s must be a valid email address', 'publishpress-future-pro'),
-                                                fieldLabelToDisplay
-                                            )
-                                        );
-                                    }
-                                }
-
-                                if (rules.format === 'emailCSV') {
-                                    const emails = settingValue.split(',');
-                                    let email;
-                                    for (let i = 0; i < emails.length; i++) {
-                                        email = emails[i].trim();
-
-                                        if (!validator.isEmail(email)) {
-                                            addNodeError(
-                                                node.id,
-                                                `${fieldName}-emailCSV`,
-                                                sprintf(
-                                                    __('The field %s must be a valid email address list separated by commas', 'publishpress-future-pro'),
-                                                    fieldLabelToDisplay
-                                                )
-                                            );
-
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                if (rules.format === 'integer' && settingValue && settingValue?.trim() !== '') {
-                                    if (!validator.isInt(settingValue)) {
-                                        addNodeError(
-                                            node.id,
-                                            `${fieldName}-integer`,
-                                            sprintf(
-                                                __('The field %s must be an integer', 'publishpress-future-pro'),
-                                                fieldLabelToDisplay
-                                            )
-                                        );
-                                    }
-                                }
-
-                                if (rules.format === 'integerCSV' && settingValue && settingValue?.trim() !== '') {
-                                    const integers = settingValue.split(',');
-                                    let integer;
-                                    for (let i = 0; i < integers.length; i++) {
-                                        integer = integers[i].trim();
-
-                                        if (!validator.isInt(integer)) {
-                                            addNodeError(
-                                                node.id,
-                                                `${fieldName}-integerCSV`,
-                                                sprintf(
-                                                    __('The field %s must be an integer list separated by commas', 'publishpress-future-pro'),
-                                                    fieldLabelToDisplay
-                                                )
-                                            );
-
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                if (rules.format === 'integerList' && settingValue && settingValue?.length > 0) {
-                                    let integer;
-                                    for (let i = 0; i < settingValue.length; i++) {
-                                        integer = settingValue[i].trim();
-
-                                        if (!validator.isInt(integer)) {
-                                            addNodeError(
-                                                node.id,
-                                                `${fieldName}-integerList`,
-                                                sprintf(
-                                                    __('The field %s must be an integer list', 'publishpress-future-pro'),
-                                                    fieldLabelToDisplay
-                                                )
-                                            );
-
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    });
+                            break;
+                    }
                 });
             }
         });
