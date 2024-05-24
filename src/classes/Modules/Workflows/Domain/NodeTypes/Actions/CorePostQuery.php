@@ -114,7 +114,13 @@ class CorePostQuery implements NodeTypeInterface
                 "type" => "array",
                 "label" => __("Array of queried post IDs", "publishpress-future-pro"),
                 "description" => __("The posts found following the criteria of the query.", "publishpress-future-pro"),
-            ]
+            ],
+            [
+                "name" => "input",
+                "type" => "input",
+                "label" => __("Node input", "publishpress-future-pro"),
+                "description" => __("The input data for this node.", "publishpress-future-pro"),
+            ],
         ];
     }
 
