@@ -10,8 +10,8 @@ const elk = new ELK();
 // - https://www.eclipse.org/elk/reference/options.html
 const elkOptions = {
     'elk.algorithm': 'layered',
-    'elk.layered.spacing.nodeNodeBetweenLayers': '100',
-    'elk.spacing.nodeNode': '80',
+    'elk.layered.spacing.nodeNodeBetweenLayers': '70', // Vertical spacing between nodes/layers
+    'elk.spacing.nodeNode': '70', // Horizontal spacing between nodes
 };
 
 const getLayoutedElements = (nodes, edges, options = {}) => {
