@@ -52,7 +52,9 @@ class CorePostQuery implements NodeRunnerInterface
             $contextVariables = array_merge(
                 $contextVariables,
                 [
-                    $nodeSlug . '.posts' => array_map('intval', $posts),
+                    $nodeSlug => [
+                        'posts' => array_map('intval', $posts),
+                    ],
                 ]
             );
 
