@@ -24,15 +24,6 @@ export function PostInput({ name, label, defaultValue, onChange, variables, sett
         ...variables,
     ];
 
-    useEffect(() => {
-        onChangeSetting(
-            {
-                settingName: "variable",
-                value: defaultVariable?.id
-            }
-        );
-    }, []);
-
     return (
         <>
             <VStack>
