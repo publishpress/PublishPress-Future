@@ -1,7 +1,6 @@
 import { Handle, Position } from 'reactflow';
 import { memo } from '@wordpress/element';
 import NodeIcon from '../node-icon';
-import { BiSolidMessageAltError } from "react-icons/bi";
 import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 
@@ -76,7 +75,7 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
                 <div className='react-flow__node-inner-body'>
                     {nodeHasErrors && (
                         <div className='react-flow__node-error'>
-                            <NodeIcon icon={BiSolidMessageAltError} size={16} />
+                            <NodeIcon icon={'warning'} size={16} />
                         </div>
                     )}
                     <div className="react-flow__node-slug">{data.slug}</div>
