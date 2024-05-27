@@ -1,17 +1,17 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class IfElse implements NodeTypeInterface
+class RayDebug implements NodeTypeInterface
 {
-    const NODE_NAME = "flow/core.if-else";
+    const NODE_NAME = "action/ray.debug";
 
     public function getElementarType(): string
     {
-        return NodeTypesModel::NODE_TYPE_FLOW;
+        return NodeTypesModel::NODE_TYPE_ACTION;
     }
 
     public function getType(): string
@@ -26,22 +26,22 @@ class IfElse implements NodeTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "simpleCondition";
+        return "rayDebug";
     }
 
     public function getLabel(): string
     {
-        return __("Simple Condition", "publishpress-future-pro");
+        return __("Ray - Debug", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This flow allows you to create a conditional branch.", "publishpress-future-pro");
+        return __("This action transmits the flow's data to Ray Debug.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
     {
-        return "route";
+        return "fa6-fabug";
     }
 
     public function getFrecency(): int
@@ -56,30 +56,47 @@ class IfElse implements NodeTypeInterface
 
     public function getCategory(): string
     {
-        return "conditional";
+        return "debug";
     }
 
     public function getSettingsSchema(): array
     {
         return [
             [
-                "label" => __("Conditions", "publishpress-future-pro"),
-                "description" => __("THIS NODE IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now.", "publishpress-future-pro"),
+                "label" => __("Debug output", "publishpress-future-pro"),
+                "description" => __("The data to be sent to Ray.", "publishpress-future-pro"),
                 "fields" => [
                     [
-                        "name" => "test",
-                        "type" => "text",
-                        "label" => __("NOT IMPLEMENTED YET!", "publishpress-future-pro"),
-                        "description" => __("Still not implemented", "publishpress-future-pro"),
+                        "name" => "data",
+                        "type" => "debugData",
+                        "label" => __("Data", "publishpress-future-pro"),
                     ],
-                ]
+                    [
+                        "name" => "label",
+                        "type" => "text",
+                        "label" => __("Label", "publishpress-future-pro"),
+                    ],
+                    [
+                        "name" => "color",
+                        "type" => "rayColor",
+                        "label" => __("Color", "publishpress-future-pro"),
+                    ]
+                ],
             ]
         ];
     }
 
     public function getValidationSchema(): array
     {
-        return [];
+        return [
+            "connections" => [
+                "rules" => [
+                    [
+                        "rule" => "hasIncomingConnection",
+                    ],
+                ],
+            ],
+        ];
     }
 
     public function getOutputSchema(): array
@@ -96,7 +113,7 @@ class IfElse implements NodeTypeInterface
 
     public function getCSSClass(): string
     {
-        return "react-flow__node-genericFlow";
+        return "react-flow__node-debugAction";
     }
 
     public function getSocketSchema(): array
@@ -110,14 +127,9 @@ class IfElse implements NodeTypeInterface
             ],
             "source" => [
                 [
-                    "id" => "true",
-                    "left" => "25%",
-                    "label" => __("True", "publishpress-future-pro"),
-                ],
-                [
-                    "id" => "false",
-                    "left" => "75%",
-                    "label" => __("False", "publishpress-future-pro"),
+                    "id" => "output",
+                    "left" => "50%",
+                    "label" => __("Next", "publishpress-future-pro"),
                 ]
             ]
         ];

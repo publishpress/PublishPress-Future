@@ -1,17 +1,17 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CorePostQuery implements NodeTypeInterface
+class CoreSchedule implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.query-post";
+    const NODE_NAME = "advanced/core.schedule";
 
     public function getElementarType(): string
     {
-        return NodeTypesModel::NODE_TYPE_ACTION;
+        return NodeTypesModel::NODE_TYPE_ADVANCED;
     }
 
     public function getType(): string
@@ -26,22 +26,22 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "queryPost";
+        return "schedule";
     }
 
     public function getLabel(): string
     {
-        return __("Query Posts", "publishpress-future-pro");
+        return __("Schedule", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action retrieves multiple posts to serve as input for other actions.", "publishpress-future-pro");
+        return __("This node facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
     {
-        return "db-query";
+        return "media-document";
     }
 
     public function getFrecency(): int
@@ -56,27 +56,26 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getCategory(): string
     {
-        return "db-query";
+        return "async";
     }
 
     public function getSettingsSchema(): array
     {
         return [
             [
-                "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("The query defines the posts that will be passed to next nodes by this action. If no query is provided, no post will be outputed.", "publishpress-future-pro"),
+                "label" => __("Schedule", "publishpress-future-pro"),
+                "description" => __("The scheduled time for this action.", "publishpress-future-pro"),
                 "fields" => [
                     [
-                        "name" => "postQuery",
-                        "type" => "postQuery",
-                        "label" => __("Post query", "publishpress-future-pro"),
-                        "description" => __(
-                            "The query defines the posts that will be selected by this action.",
-                            "publishpress-future-pro"
-                        ),
+                        "name" => "schedule",
+                        "type" => "dateOffset",
+                        "label" => __("Date offset", "publishpress-future-pro"),
                     ],
+                ],
+                "settings" => [
+                    "allowRecurrence" => true,
                 ]
-            ]
+            ],
         ];
     }
 
@@ -90,31 +89,15 @@ class CorePostQuery implements NodeTypeInterface
                     ],
                     [
                         "rule" => "hasOutgoingConnection",
-                    ]
-                ],
-            ],
-            "settings" => [
-                "rules" => [
-                    [
-                        "rule" => "format",
-                        "field" => "postQuery.postId",
-                        "format" => "integerList",
-                        "label" => __("Post ID", "publishpress-future-pro"),
                     ],
-                ],
-            ],
+                ]
+            ]
         ];
     }
 
     public function getOutputSchema(): array
     {
         return [
-            [
-                "name" => "posts",
-                "type" => "array",
-                "label" => __("Array of queried post IDs", "publishpress-future-pro"),
-                "description" => __("The posts found following the criteria of the query.", "publishpress-future-pro"),
-            ],
             [
                 "name" => "input",
                 "type" => "input",
@@ -126,7 +109,7 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getCSSClass(): string
     {
-        return "react-flow__node-queryAction";
+        return "react-flow__node-genericAdvanced";
     }
 
     public function getSocketSchema(): array

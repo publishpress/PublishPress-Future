@@ -1,10 +1,10 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced;
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug as NodeTypeRayDebug;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug as NodeTypeRayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 

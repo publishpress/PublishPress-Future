@@ -22,8 +22,8 @@ export const storeConfig = {
     triggerNodes: [],
     actionCategories: [],
     actionNodes: [],
-    flowCategories: [],
-    flowNodes: [],
+    advancedCategories: [],
+    advancedNodes: [],
     activeSidebarName: null,
     hoveredItem: null,
 };
@@ -128,16 +128,16 @@ export const store = createReduxStore(STORE_NAME, {
                     actionNodes: action.payload,
                 };
 
-            case "SET_FLOW_CATEGORIES":
+            case "SET_ADVANCED_CATEGORIES":
                 return {
                     ...state,
-                    flowCategories: action.payload,
+                    advancedCategories: action.payload,
                 };
 
-            case "SET_FLOW_NODES":
+            case "SET_ADVANCED_NODES":
                 return {
                     ...state,
-                    flowNodes: action.payload,
+                    advancedNodes: action.payload,
                 };
 
             case "CLOSE_GENERAL_SIDEBAR":
@@ -216,15 +216,15 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: nodes,
             };
         },
-        setFlowCategories(categories) {
+        setAdvancedCategories(categories) {
             return {
-                type: "SET_FLOW_CATEGORIES",
+                type: "SET_ADVANCED_CATEGORIES",
                 payload: categories,
             };
         },
-        setFlowNodes(nodes) {
+        setAdvancedNodes(nodes) {
             return {
-                type: "SET_FLOW_NODES",
+                type: "SET_ADVANCED_NODES",
                 payload: nodes,
             };
         },
@@ -278,11 +278,11 @@ export const store = createReduxStore(STORE_NAME, {
         getActionNodes(state) {
             return state.actionNodes;
         },
-        getFlowCategories(state) {
-            return state.flowCategories;
+        getAdvancedCategories(state) {
+            return state.advancedCategories;
         },
-        getFlowNodes(state) {
-            return state.flowNodes;
+        getAdvancedNodes(state) {
+            return state.advancedNodes;
         },
         getHoveredItem(state) {
             return state.hoveredItem;

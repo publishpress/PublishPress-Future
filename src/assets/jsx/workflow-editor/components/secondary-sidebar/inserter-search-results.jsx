@@ -42,19 +42,19 @@ export const InserterSearchResults = ({
         const actionCategories = select(editorStore).getActionCategories();
         const triggerNodes = select(editorStore).getTriggerNodes();
         const triggerCategories = select(editorStore).getTriggerCategories();
-        const flowNodes = select(editorStore).getFlowNodes();
-        const flowCategories = select(editorStore).getFlowCategories();
+        const advancedNodes = select(editorStore).getAdvancedNodes();
+        const advancedCategories = select(editorStore).getAdvancedCategories();
 
         const nodeTypes = [
             ...actionNodes,
             ...triggerNodes,
-            ...flowNodes,
+            ...advancedNodes,
         ];
 
         const nodeTypeCategories = [
             ...actionCategories,
             ...triggerCategories,
-            ...flowCategories,
+            ...advancedCategories,
         ];
 
         return {

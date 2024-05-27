@@ -185,20 +185,20 @@ class WorkflowEditor implements InitializableInterface
                 "nodeTypes" => [
                     "triggers" => array_values(
                         $this->nodeTypesModel->convertInstancesToArray(
-                            $this->nodeTypesModel->getTriggers(),
+                            $this->nodeTypesModel->getTriggerNodes(),
                             NodeTypesModel::NODE_TYPE_TRIGGER
                         )
                     ),
                     "actions" => array_values(
                         $this->nodeTypesModel->convertInstancesToArray(
-                            $this->nodeTypesModel->getActions(),
+                            $this->nodeTypesModel->getActionNodes(),
                             NodeTypesModel::NODE_TYPE_ACTION
                         )
                     ),
-                    "flows" => array_values(
+                    "advanced" => array_values(
                         $this->nodeTypesModel->convertInstancesToArray(
-                            $this->nodeTypesModel->getFlows(),
-                            NodeTypesModel::NODE_TYPE_FLOW
+                            $this->nodeTypesModel->getAdvancedNodes(),
+                            NodeTypesModel::NODE_TYPE_ADVANCED
                         )
                     ),
                 ],

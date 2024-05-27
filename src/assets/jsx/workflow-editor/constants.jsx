@@ -11,6 +11,6 @@ export const FEATURE_WELCOME_GUIDE = 'welcomeGuide';
 
 export const INSERTER_TAB_TRIGGERS = 'triggers';
 export const INSERTER_TAB_ACTIONS = 'actions';
-export const INSERTER_TAB_FLOW = 'flow';
+export const INSERTER_TAB_ADVANCED = 'advanced';
 
 export const SLOT_SCOPE_WORKFLOW_EDITOR = 'publishpress-future/edit-workflow';

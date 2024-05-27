@@ -10,24 +10,24 @@ import { __ } from '@wordpress/i18n';
  */
 import {
     INSERTER_TAB_ACTIONS,
-    INSERTER_TAB_FLOW,
+    INSERTER_TAB_ADVANCED,
     INSERTER_TAB_TRIGGERS
 } from '../../constants';
 
 const triggersTab = {
     name: INSERTER_TAB_TRIGGERS,
     /* translators: Blocks tab title in the block inserter. */
-    title: __('Triggers'),
+    title: __('Triggers', 'publishpress-future-pro'),
 };
 const actionsTabs = {
     name: INSERTER_TAB_ACTIONS,
     /* translators: Patterns tab title in the block inserter. */
-    title: __('Actions'),
+    title: __('Actions', 'publishpress-future-pro'),
 };
-const flowTabs = {
-    name: INSERTER_TAB_FLOW,
+const advancedTabs = {
+    name: INSERTER_TAB_ADVANCED,
     /* translators: Patterns tab title in the block inserter. */
-    title: __('Flow'),
+    title: __('Advanced', 'publishpress-future-pro'),
 };
 
 function InserterTabs({
@@ -36,13 +36,13 @@ function InserterTabs({
     initialTabName = INSERTER_TAB_TRIGGERS,
 }) {
     const tabs = useMemo(() => {
-        const tempTabs = [triggersTab, actionsTabs, flowTabs];
+        const tempTabs = [triggersTab, actionsTabs, advancedTabs];
 
         return tempTabs;
     }, [
         triggersTab,
         actionsTabs,
-        flowTabs,
+        advancedTabs,
     ]);
 
     return (

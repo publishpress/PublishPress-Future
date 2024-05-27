@@ -87,7 +87,7 @@ class CorePostUnstick implements NodeTypeInterface
                     ],
                     [
                         "rule" => "hasIncomerOfName",
-                        "name" => "flow/core.schedule",
+                        "name" => "advanced/core.schedule",
                         "message" => __("The Stick Post action must be part of a Schedule flow", "publishpress-future-pro"),
                     ],
                 ],

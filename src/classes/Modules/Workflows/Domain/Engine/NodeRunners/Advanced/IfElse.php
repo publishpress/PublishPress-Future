@@ -1,12 +1,12 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced;
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\IfElse as NodeTypeIfElse;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\IfElse as NodeTypeIfElse;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;

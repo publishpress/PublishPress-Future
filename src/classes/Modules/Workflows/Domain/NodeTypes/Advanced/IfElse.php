@@ -1,17 +1,17 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreSchedule implements NodeTypeInterface
+class IfElse implements NodeTypeInterface
 {
-    const NODE_NAME = "flow/core.schedule";
+    const NODE_NAME = "advanced/core.if-else";
 
     public function getElementarType(): string
     {
-        return NodeTypesModel::NODE_TYPE_FLOW;
+        return NodeTypesModel::NODE_TYPE_ADVANCED;
     }
 
     public function getType(): string
@@ -26,22 +26,22 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "schedule";
+        return "simpleCondition";
     }
 
     public function getLabel(): string
     {
-        return __("Schedule", "publishpress-future-pro");
+        return __("Simple Condition", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This flow facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits.", "publishpress-future-pro");
+        return __("This node allows you to create a conditional branch.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
     {
-        return "media-document";
+        return "route";
     }
 
     public function getFrecency(): int
@@ -56,43 +56,30 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getCategory(): string
     {
-        return "async";
+        return "conditional";
     }
 
     public function getSettingsSchema(): array
     {
         return [
             [
-                "label" => __("Schedule", "publishpress-future-pro"),
-                "description" => __("The scheduled time for this action.", "publishpress-future-pro"),
+                "label" => __("Conditions", "publishpress-future-pro"),
+                "description" => __("THIS NODE IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now.", "publishpress-future-pro"),
                 "fields" => [
                     [
-                        "name" => "schedule",
-                        "type" => "dateOffset",
-                        "label" => __("Date offset", "publishpress-future-pro"),
+                        "name" => "test",
+                        "type" => "text",
+                        "label" => __("NOT IMPLEMENTED YET!", "publishpress-future-pro"),
+                        "description" => __("Still not implemented", "publishpress-future-pro"),
                     ],
-                ],
-                "settings" => [
-                    "allowRecurrence" => true,
                 ]
-            ],
+            ]
         ];
     }
 
     public function getValidationSchema(): array
     {
-        return [
-            "connections" => [
-                "rules" => [
-                    [
-                        "rule" => "hasIncomingConnection",
-                    ],
-                    [
-                        "rule" => "hasOutgoingConnection",
-                    ],
-                ]
-            ]
-        ];
+        return [];
     }
 
     public function getOutputSchema(): array
@@ -103,13 +90,13 @@ class CoreSchedule implements NodeTypeInterface
                 "type" => "input",
                 "label" => __("Node input", "publishpress-future-pro"),
                 "description" => __("The input data for this node.", "publishpress-future-pro"),
-            ],
+            ]
         ];
     }
 
     public function getCSSClass(): string
     {
-        return "react-flow__node-genericFlow";
+        return "react-flow__node-genericAdvanced";
     }
 
     public function getSocketSchema(): array
@@ -123,9 +110,14 @@ class CoreSchedule implements NodeTypeInterface
             ],
             "source" => [
                 [
-                    "id" => "output",
-                    "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "id" => "true",
+                    "left" => "25%",
+                    "label" => __("True", "publishpress-future-pro"),
+                ],
+                [
+                    "id" => "false",
+                    "left" => "75%",
+                    "label" => __("False", "publishpress-future-pro"),
                 ]
             ]
         ];

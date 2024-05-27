@@ -5,11 +5,11 @@ namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
 interface NodeTypesModelInterface
 {
-    public function getTriggers(): array;
+    public function getTriggerNodes(): array;
 
-    public function getActions(): array;
+    public function getActionNodes(): array;
 
-    public function getFlows(): array;
+    public function getAdvancedNodes(): array;
 
     public function convertInstancesToArray($instances, $type): array;
 

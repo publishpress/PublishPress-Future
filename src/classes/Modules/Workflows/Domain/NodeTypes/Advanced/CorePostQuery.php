@@ -1,13 +1,13 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class RayDebug implements NodeTypeInterface
+class CorePostQuery implements NodeTypeInterface
 {
-    const NODE_NAME = "action/ray.debug";
+    const NODE_NAME = "action/core.query-post";
 
     public function getElementarType(): string
     {
@@ -26,22 +26,22 @@ class RayDebug implements NodeTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "rayDebug";
+        return "queryPost";
     }
 
     public function getLabel(): string
     {
-        return __("Ray - Debug", "publishpress-future-pro");
+        return __("Query Posts", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action transmits the flow data to Ray Debug.", "publishpress-future-pro");
+        return __("This action retrieves multiple posts to serve as input for other actions.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
     {
-        return "fa6-fabug";
+        return "db-query";
     }
 
     public function getFrecency(): int
@@ -56,32 +56,26 @@ class RayDebug implements NodeTypeInterface
 
     public function getCategory(): string
     {
-        return "debug";
+        return "db-query";
     }
 
     public function getSettingsSchema(): array
     {
         return [
             [
-                "label" => __("Debug output", "publishpress-future-pro"),
-                "description" => __("The data to be sent to Ray.", "publishpress-future-pro"),
+                "label" => __("Post Query", "publishpress-future-pro"),
+                "description" => __("The query defines the posts that will be passed to next nodes by this action. If no query is provided, no post will be outputed.", "publishpress-future-pro"),
                 "fields" => [
                     [
-                        "name" => "data",
-                        "type" => "debugData",
-                        "label" => __("Data", "publishpress-future-pro"),
+                        "name" => "postQuery",
+                        "type" => "postQuery",
+                        "label" => __("Post query", "publishpress-future-pro"),
+                        "description" => __(
+                            "The query defines the posts that will be selected by this action.",
+                            "publishpress-future-pro"
+                        ),
                     ],
-                    [
-                        "name" => "label",
-                        "type" => "text",
-                        "label" => __("Label", "publishpress-future-pro"),
-                    ],
-                    [
-                        "name" => "color",
-                        "type" => "rayColor",
-                        "label" => __("Color", "publishpress-future-pro"),
-                    ]
-                ],
+                ]
             ]
         ];
     }
@@ -94,6 +88,19 @@ class RayDebug implements NodeTypeInterface
                     [
                         "rule" => "hasIncomingConnection",
                     ],
+                    [
+                        "rule" => "hasOutgoingConnection",
+                    ]
+                ],
+            ],
+            "settings" => [
+                "rules" => [
+                    [
+                        "rule" => "format",
+                        "field" => "postQuery.postId",
+                        "format" => "integerList",
+                        "label" => __("Post ID", "publishpress-future-pro"),
+                    ],
                 ],
             ],
         ];
@@ -103,17 +110,23 @@ class RayDebug implements NodeTypeInterface
     {
         return [
             [
+                "name" => "posts",
+                "type" => "array",
+                "label" => __("Array of queried post IDs", "publishpress-future-pro"),
+                "description" => __("The posts found following the criteria of the query.", "publishpress-future-pro"),
+            ],
+            [
                 "name" => "input",
                 "type" => "input",
                 "label" => __("Node input", "publishpress-future-pro"),
                 "description" => __("The input data for this node.", "publishpress-future-pro"),
-            ]
+            ],
         ];
     }
 
     public function getCSSClass(): string
     {
-        return "react-flow__node-debugAction";
+        return "react-flow__node-queryAction";
     }
 
     public function getSocketSchema(): array

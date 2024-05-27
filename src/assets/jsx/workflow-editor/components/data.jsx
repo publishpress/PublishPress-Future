@@ -27,8 +27,8 @@ export function WorkflowData() {
         setTriggerCategories,
         setActionCategories,
         setActionNodes,
-        setFlowCategories,
-        setFlowNodes,
+        setAdvancedCategories,
+        setAdvancedNodes,
     } = useDispatch(editorStore);
 
     setupEditor(workflowId);
@@ -37,8 +37,8 @@ export function WorkflowData() {
     setTriggerNodes(nodeTypes.triggers);
     setActionCategories(nodeTypeCategories);
     setActionNodes(nodeTypes.actions);
-    setFlowCategories(nodeTypeCategories);
-    setFlowNodes(nodeTypes.flows);
+    setAdvancedCategories(nodeTypeCategories);
+    setAdvancedNodes(nodeTypes.advanced);
 
     const dataTypes = [
         PostData(),

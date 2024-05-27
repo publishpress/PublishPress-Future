@@ -8,7 +8,7 @@ import InserterTabs from './tabs';
 import {
     INSERTER_TAB_ACTIONS,
     INSERTER_TAB_TRIGGERS,
-    INSERTER_TAB_FLOW
+    INSERTER_TAB_ADVANCED
 } from '../../constants';
 import { store as editorStore } from '../editor-store';
 import { useDispatch } from '@wordpress/data';
@@ -124,16 +124,16 @@ export function InserterMenu({
         ]
     );
 
-    const flowControlsTab = useMemo(
+    const advancedControlsTab = useMemo(
         () => {
-            const items = select(editorStore).getFlowNodes();
-            const categories = select(editorStore).getFlowCategories();
+            const items = select(editorStore).getAdvancedNodes();
+            const categories = select(editorStore).getAdvancedCategories();
 
             return (
                 <>
                     <div className="block-editor-inserter__block-list">
                         <NodesTab
-                            type={INSERTER_TAB_FLOW}
+                            type={INSERTER_TAB_ADVANCED}
                             onInsert={onInsert}
                             onHover={onHover}
                             showMostUsedNodes={showMostUsedNodes}
@@ -172,8 +172,8 @@ export function InserterMenu({
                 return actionsTab;
             }
 
-            if (tab.name === INSERTER_TAB_FLOW) {
-                return flowControlsTab;
+            if (tab.name === INSERTER_TAB_ADVANCED) {
+                return advancedControlsTab;
             }
         },
         [triggersTab, actionsTab]

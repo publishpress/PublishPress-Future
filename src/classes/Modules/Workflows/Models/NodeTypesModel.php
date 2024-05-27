@@ -7,15 +7,15 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUnstick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\RayDebug;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\CoreSchedule;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Flows\IfElse;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\IfElse;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
@@ -30,7 +30,7 @@ class NodeTypesModel implements NodeTypesModelInterface
 
     public const NODE_TYPE_TRIGGER = "trigger";
 
-    public const NODE_TYPE_FLOW = "flow";
+    public const NODE_TYPE_ADVANCED = "advanced";
 
     public const NODE_VERSION = "1";
 
@@ -42,11 +42,11 @@ class NodeTypesModel implements NodeTypesModelInterface
 
     private $categories = [];
 
-    private $triggers = [];
+    private $triggerNodes = [];
 
-    private $actions = [];
+    private $actionNodes = [];
 
-    private $flows = [];
+    private $advancedNodes = [];
 
     public function __construct(HooksFacade $hooks)
     {
@@ -166,9 +166,9 @@ class NodeTypesModel implements NodeTypesModelInterface
         return $instancesCopy;
     }
 
-    private function getDefaultTriggers()
+    private function getDefaultTriggerNodes()
     {
-        $triggersInstances = [
+        $nodesInstances = [
             CoreOnSavePost::NODE_NAME => new CoreOnSavePost(),
             CoreOnPostUpdated::NODE_NAME => new CoreOnPostUpdated(),
             CoreOnInit::NODE_NAME => new CoreOnInit(),
@@ -177,12 +177,12 @@ class NodeTypesModel implements NodeTypesModelInterface
             FutureLegacyAction::NODE_NAME => new FutureLegacyAction($this->hooks),
         ];
 
-        return $triggersInstances;
+        return $nodesInstances;
     }
 
-    private function getDefaultActions()
+    private function getDefaultActionNodes()
     {
-        $actionsInstances = [
+        $nodesInstances = [
             CorePostDelete::NODE_NAME => new CorePostDelete(),
             CorePostStick::NODE_NAME => new CorePostStick(),
             CorePostUnstick::NODE_NAME => new CorePostUnstick(),
@@ -190,25 +190,25 @@ class NodeTypesModel implements NodeTypesModelInterface
             CorePostTermsSet::NODE_NAME => new CorePostTermsSet(),
             CorePostTermsRemove::NODE_NAME => new CorePostTermsRemove(),
             CorePostChangeStatus::NODE_NAME => new CorePostChangeStatus(),
-            CorePostQuery::NODE_NAME => new CorePostQuery(),
             CoreSendEmail::NODE_NAME => new CoreSendEmail(),
         ];
 
-        if (function_exists('ray')) {
-            $actionsInstances[RayDebug::NODE_NAME] = new RayDebug();
-        }
-
-        return $actionsInstances;
+        return $nodesInstances;
     }
 
-    private function getDefaultFlows()
+    private function getDefaultAdvancedNodes()
     {
-        $flowsInstances = [
-            // IfElse::NODE_NAME => new IfElse(),
+        $nodesInstances = [
             CoreSchedule::NODE_NAME => new CoreSchedule(),
+            CorePostQuery::NODE_NAME => new CorePostQuery(),
+            // IfElse::NODE_NAME => new IfElse(),
         ];
 
-        return $flowsInstances;
+        if (function_exists('ray')) {
+            $nodesInstances[RayDebug::NODE_NAME] = new RayDebug();
+        }
+
+        return $nodesInstances;
     }
 
     private function applyDefaultParams(array $node, string $type): array
@@ -242,46 +242,46 @@ class NodeTypesModel implements NodeTypesModelInterface
         return array_merge($defaultNodeAttributes, $node);
     }
 
-    public function getTriggers(): array
+    public function getTriggerNodes(): array
     {
-        if (!empty($this->triggers)) {
-            return $this->triggers;
+        if (!empty($this->triggerNodes)) {
+            return $this->triggerNodes;
         }
 
-        $this->triggers = $this->hooks->applyFilters(
-            HooksAbstract::FILTER_WORKFLOW_TRIGGERS,
-            $this->getDefaultTriggers()
+        $this->triggerNodes = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_WORKFLOW_TRIGGER_NODES,
+            $this->getDefaultTriggerNodes()
         );
 
-        return $this->triggers;
+        return $this->triggerNodes;
     }
 
-    public function getActions(): array
+    public function getActionNodes(): array
     {
-        if (!empty($this->actions)) {
-            return $this->actions;
+        if (!empty($this->actionNodes)) {
+            return $this->actionNodes;
         }
 
-        $this->actions = $this->hooks->applyFilters(
-            HooksAbstract::FILTER_WORKFLOW_ACTIONS,
-            $this->getDefaultActions()
+        $this->actionNodes = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_WORKFLOW_ACTION_NODES,
+            $this->getDefaultActionNodes()
         );
 
-        return $this->actions;
+        return $this->actionNodes;
     }
 
-    public function getFlows(): array
+    public function getAdvancedNodes(): array
     {
-        if (!empty($this->flows)) {
-            return $this->flows;
+        if (!empty($this->advancedNodes)) {
+            return $this->advancedNodes;
         }
 
-        $this->flows = $this->hooks->applyFilters(
-            HooksAbstract::FILTER_WORKFLOW_FLOWS,
-            $this->getDefaultFlows()
+        $this->advancedNodes = $this->hooks->applyFilters(
+            HooksAbstract::FILTER_WORKFLOW_ADVANCED_NODES,
+            $this->getDefaultAdvancedNodes()
         );
 
-        return $this->flows;
+        return $this->advancedNodes;
     }
 
     public function getCategories(): array

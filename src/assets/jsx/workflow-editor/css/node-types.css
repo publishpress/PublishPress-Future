@@ -133,17 +133,17 @@
 
 /* GENERIC FLOW */
 
-.react-flow__node-genericFlow {
+.react-flow__node-genericAdvanced {
     background-color: #f8ddad;
     border: 1px solid #d3bc94;
 }
 
-.react-flow__node-genericFlow .react-flow__handle {
+.react-flow__node-genericAdvanced .react-flow__handle {
     background-color: #fff;
     border: 1px solid #d3bc94;
 }
 
-.react-flow__node-genericFlow .react-flow__node-slug {
+.react-flow__node-genericAdvanced .react-flow__node-slug {
     color: #b19f80;
 }
 

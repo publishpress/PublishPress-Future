@@ -24,15 +24,15 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers\P
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDelete;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsRemove;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsSet;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostStick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostUnstick;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreSendEmail;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\RayDebug;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows\CoreSchedule;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Flows\IfElse;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CorePostQuery;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\RayDebug;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CoreSchedule;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\IfElse;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnManuallyEnabledForPost;
@@ -341,13 +341,6 @@ return [
                     break;
 
                 // Actions
-                case RayDebug::NODE_NAME:
-                    $nodeRunner = new RayDebug(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
-                    );
-                    break;
-
                 case CorePostDelete::NODE_NAME:
                     $nodeRunner = new CorePostDelete(
                         $container->get(ServicesAbstract::HOOKS),
@@ -408,13 +401,6 @@ return [
                     );
                     break;
 
-                case CorePostQuery::NODE_NAME:
-                    $nodeRunner = new CorePostQuery(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
-                    );
-                    break;
-
                 case CoreSendEmail::NODE_NAME:
                     $nodeRunner = new CoreSendEmail(
                         $container->get(ServicesAbstract::HOOKS),
@@ -424,7 +410,7 @@ return [
                     );
                     break;
 
-                // Flows
+                // Advanced
                 case CoreSchedule::NODE_NAME:
                     $nodeRunner = new CoreSchedule(
                         $container->get(ServicesAbstract::HOOKS),
@@ -436,6 +422,20 @@ return [
 
                 case IfElse::NODE_NAME:
                     $nodeRunner = new IfElse(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
+                    );
+                    break;
+
+                case CorePostQuery::NODE_NAME:
+                    $nodeRunner = new CorePostQuery(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
+                    );
+                    break;
+
+                case RayDebug::NODE_NAME:
+                    $nodeRunner = new RayDebug(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
                     );
