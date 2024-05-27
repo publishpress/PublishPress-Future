@@ -36,7 +36,7 @@ export function WorkflowDeleteButton() {
             variant='secondary'
             isDestructive={true}
         >
-            {isMobileViewport ? __('Delete') : __('Move to trash')}
+            {isMobileViewport ? __('Delete', 'publishpress-future-pro') : __('Move to trash', 'publishpress-future-pro')}
         </Button>
     );
 }

@@ -24,7 +24,7 @@ export default function NodeDraggableChip({ node, icon }) {
 						) : (
 							sprintf(
 								/* translators: %d: Number of blocks. */
-								_n('%d block', '%d blocks', count),
+								_n('%d block', '%d blocks', count, 'publishpress-future-pro'),
 								count
 							)
 						)}

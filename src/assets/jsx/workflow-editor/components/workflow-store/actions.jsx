@@ -2,7 +2,6 @@ import { dispatch, select } from '@wordpress/data';
 import { apiFetch } from '@wordpress/data-controls';
 import { STORE_NAME } from './name';
 import { apiUrl, nonce } from 'future-workflow-editor';
-import { toPng } from 'html-to-image';
 
 const editableAttributes = ['title', 'description', 'flow', 'status'];
 

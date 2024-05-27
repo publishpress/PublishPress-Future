@@ -29,9 +29,9 @@ export const MoreMenuFeatureToggle = ({
     const { toggleFeature } = useDispatch(editorStore);
     const speakMessage = () => {
         if (isActive) {
-            speak(messageDeactivated || __('Feature deactivated'));
+            speak(messageDeactivated || __('Feature deactivated', 'publishpress-future-pro'));
         } else {
-            speak(messageActivated || __('Feature activated'));
+            speak(messageActivated || __('Feature activated', 'publishpress-future-pro'));
         }
     };
 

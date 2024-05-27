@@ -121,7 +121,7 @@ export const LayoutHeader = () => {
                             showTooltip={!showIconLabels}
                         >
                             {showIconLabels &&
-                                (!isInserterOpened ? __('Add') : __('Close'))}
+                                (!isInserterOpened ? __('Add', 'publishpress-future-pro') : __('Close', 'publishpress-future-pro'))}
                         </ToolbarItem>
 
                         <ToolbarItem
@@ -137,7 +137,7 @@ export const LayoutHeader = () => {
                             disabled={isLoadingWorkflow}
                         >
                             {showIconLabels &&
-                                __('Auto Layout')
+                                __('Auto Layout', 'publishpress-future-pro')
                             }
                         </ToolbarItem>
 

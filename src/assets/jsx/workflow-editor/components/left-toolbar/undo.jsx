@@ -28,7 +28,7 @@ function Component(props, ref) {
             ref={ref}
             icon={!isRTL() ? undoIcon : redoIcon}
             /* translators: button label text should, if possible, be under 16 characters. */
-            label={__('Undo')}
+            label={__('Undo', 'publishpress-future-pro')}
             shortcut={displayShortcut.primary('z')}
             // If there are no undo levels we don't want to actually disable this
             // button, because it will remove focus for keyboard users.

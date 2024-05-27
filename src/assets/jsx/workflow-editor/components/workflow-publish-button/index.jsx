@@ -79,7 +79,7 @@ export function WorkflowPublishButton({
 	}, [isSaving]);
 
 	/* translators: button label text should, if possible, be under 16 characters. */
-	const label = !isPublished ? __('Publish') : __('Update');
+	const label = !isPublished ? __('Publish', 'publishpress-future-pro') : __('Update', 'publishpress-future-pro');
 
 	const shortLabel = label;
 
@@ -90,9 +90,9 @@ export function WorkflowPublishButton({
 	let text;
 
 	if (isSaving) {
-		text = isAutosaving ? __('Autosaving...') : __('Updating...');
+		text = isAutosaving ? __('Autosaving...', 'publishpress-future-pro') : __('Updating...', 'publishpress-future-pro');
 	} else if (isSaved) {
-		text = __('Updated');
+		text = __('Updated', 'publishpress-future-pro');
 	} else if (isLargeViewport) {
 		text = label;
 	} else if (showIconLabels) {

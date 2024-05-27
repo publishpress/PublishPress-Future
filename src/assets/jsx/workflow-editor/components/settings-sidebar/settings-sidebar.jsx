@@ -47,11 +47,11 @@ export const SettingsSidebar = () => {
         <PluginSidebarEditPost
             identifier={sidebarName}
             header={<SettingsHeader sidebarName={sidebarName} />}
-            closeLabel={__('Close settings')}
+            closeLabel={__('Close settings', 'publishpress-future-pro')}
             headerClassName="edit-post-sidebar__panel-tabs"
             className="edit-post-sidebar__panel"
             /* translators: button label text should, if possible, be under 16 characters. */
-            title={__('Settings')}
+            title={__('Settings', 'publishpress-future-pro')}
             toggleShortcut={keyboardShortcut}
             icon={cog}
             isActiveByDefault={SIDEBAR_ACTIVE_BY_DEFAULT}

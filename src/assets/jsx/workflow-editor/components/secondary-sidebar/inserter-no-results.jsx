@@ -11,7 +11,7 @@ export function InserterNoResults() {
 				className="block-editor-inserter__no-results-icon"
 				icon={ blockDefault }
 			/>
-			<p>{ __( 'No results found.' ) }</p>
+			<p>{__('No results found.', 'publishpress-future-pro')}</p>
 		</div>
 	);
 }

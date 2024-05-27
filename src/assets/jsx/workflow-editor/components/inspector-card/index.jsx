@@ -1,4 +1,3 @@
-import { __ } from "@wordpress/i18n";
 import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { FEATURE_DEVELOPER_MODE } from "../../constants";

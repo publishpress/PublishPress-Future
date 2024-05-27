@@ -17,7 +17,7 @@ export const MoreMenuItemsView = () => {
 
 	return (
 		<>
-			<MenuGroup label={_x('View', 'noun')}>
+			<MenuGroup label={_x('View', 'noun', 'publishpress-future-pro')}>
 				<MoreMenuFeatureToggle
 					scope="core/edit-post"
 					feature={FEATURE_FULLSCREEN_MODE}

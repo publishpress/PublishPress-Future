@@ -8,7 +8,7 @@ export const MoreMenuDropdown = ( {
 	as: DropdownComponent = DropdownMenu,
 	className,
 	/* translators: button label text should, if possible, be under 16 characters. */
-	label = __( 'Options' ),
+	label = __('Options', 'publishpress-future-pro'),
 	popoverProps,
 	toggleProps,
 	children,

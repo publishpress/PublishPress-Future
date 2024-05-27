@@ -73,12 +73,12 @@ export const NodesTab = ({
         <InserterListbox>
             <div>
                 {showMostUsedNodes && suggestedItems.length > 0 && (
-                    <InserterPanel title={_x('Most used', 'blocks')}>
+                    <InserterPanel title={_x('Most used', 'blocks', 'publishpress-future-pro')}>
                         <NodeTypesList
                             items={suggestedItems}
                             onSelect={onSelectItem}
                             onHover={onHover}
-                            label={_x('Most used', 'blocks')}
+                            label={_x('Most used', 'blocks', 'publishpress-future-pro')}
                         />
                     </InserterPanel>
                 )}

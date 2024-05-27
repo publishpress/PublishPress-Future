@@ -1,5 +1,4 @@
 import { PanelBody } from "@wordpress/components";
-import { __ } from "@wordpress/i18n";
 import { store as workflowStore } from "../workflow-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";

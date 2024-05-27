@@ -70,7 +70,7 @@ export function InserterMenu({
                     {showInserterHelpPanel && (
                         <div className="block-editor-inserter__tips">
                             <VisuallyHidden as="h2">
-                                {__('A tip for using the block editor')}
+                                {__('A tip for using the workflow editor', 'publishpress-future-pro')}
                             </VisuallyHidden>
                             <Tips />
                         </div>
@@ -107,7 +107,7 @@ export function InserterMenu({
                     {showInserterHelpPanel && (
                         <div className="block-editor-inserter__tips">
                             <VisuallyHidden as="h2">
-                                {__('A tip for using the block editor')}
+                                {__('A tip for using the workflow editor', 'publishpress-future-pro')}
                             </VisuallyHidden>
                             <Tips />
                         </div>
@@ -144,7 +144,7 @@ export function InserterMenu({
                     {showInserterHelpPanel && (
                         <div className="block-editor-inserter__tips">
                             <VisuallyHidden as="h2">
-                                {__('A tip for using the block editor')}
+                                {__('A tip for using the workflow editor')}
                             </VisuallyHidden>
                             <Tips />
                         </div>

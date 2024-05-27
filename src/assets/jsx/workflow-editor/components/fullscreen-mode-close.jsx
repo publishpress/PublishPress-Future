@@ -40,7 +40,7 @@ export function FullscreenModeClose({ showTooltip }) {
                         post_type: POST_TYPE,
                     })
                 }
-                label={__('Back')}
+                label={__('Back', 'publishpress-future-pro')}
                 showTooltip={showTooltip}
             >
                 {buttonIcon}

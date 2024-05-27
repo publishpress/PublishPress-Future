@@ -31,7 +31,7 @@ export function PluginSidebarEditPost({ className, ...props }) {
 		<ComplementaryArea
 			panelClassName={className}
 			className="edit-post-sidebar"
-			smallScreenTitle={workflowTitle || __('(no name)')}
+			smallScreenTitle={workflowTitle || __('(no name)', 'publishpress-future-pro')}
 			scope={SLOT_SCOPE_WORKFLOW_EDITOR}
 			toggleShortcut={shortcut}
 			showIconLabels={showIconLabels}

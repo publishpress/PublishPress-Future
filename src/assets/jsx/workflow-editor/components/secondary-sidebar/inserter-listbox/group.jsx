@@ -11,7 +11,7 @@ function InserterListboxGroup(props, ref) {
 	useEffect(() => {
 		if (shouldSpeak) {
 			speak(
-				__('Use left and right arrow keys to move through blocks')
+				__('Use left and right arrow keys to move through blocks', 'publishpress-future-pro')
 			);
 		}
 	}, [shouldSpeak]);

@@ -1,11 +1,10 @@
 /**
  * WordPress dependencies
  */
-import { NavigableMenu, Toolbar } from '@wordpress/components';
+import { NavigableMenu } from '@wordpress/components';
 import {
 	useState,
 	useRef,
-	useLayoutEffect,
 	useEffect,
 	useCallback,
 } from '@wordpress/element';

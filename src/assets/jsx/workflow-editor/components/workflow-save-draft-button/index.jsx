@@ -82,10 +82,10 @@ export function WorkflowSaveDraftButton({
 	}
 
 	/* translators: button label text should, if possible, be under 16 characters. */
-	const label = __('Save draft');
+	const label = __('Save draft', 'publishpress-future-pro');
 
 	/* translators: button label text should, if possible, be under 16 characters. */
-	const shortLabel = __('Save');
+	const shortLabel = __('Save', 'publishpress-future-pro');
 
 	const isSaved = forceSavedMessage || (!isNew && !isDirty);
 	const isSavedState = isSaving || isSaved;
@@ -94,9 +94,9 @@ export function WorkflowSaveDraftButton({
 	let text;
 
 	if (isSaving) {
-		text = isAutosaving ? __('Autosaving') : __('Saving');
+		text = isAutosaving ? __('Autosaving', 'publishpress-future-pro') : __('Saving', 'publishpress-future-pro');
 	} else if (isSaved) {
-		text = __('Saved');
+		text = __('Saved', 'publishpress-future-pro');
 	} else if (isLargeViewport) {
 		text = label;
 	} else if (showIconLabels) {

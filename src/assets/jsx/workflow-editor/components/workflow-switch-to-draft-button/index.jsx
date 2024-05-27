@@ -53,7 +53,7 @@ export function WorkflowSwitchToDraftButton() {
             disabled={isSavingWorkflow}
             variant='secondary'
         >
-            {isMobileViewport ? __('Draft') : __('Switch to draft')}
+            {isMobileViewport ? __('Draft', 'publishpress-future-pro') : __('Switch to draft', 'publishpress-future-pro')}
         </Button>
     );
 }

@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { TabPanel } from '../../components/tab-panel';
-import { __, _x, sprintf } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
@@ -20,7 +20,7 @@ export const SettingsHeader = ({ sidebarName }) => {
     const { documentLabel } = useSelect((select) => {
         return {
             // translators: Default label for the Workflow sidebar tab, not selected.
-            documentLabel: _x('Workflow', 'noun'),
+            documentLabel: _x('Workflow', 'noun', 'publishpress-future-pro'),
         };
     }, []);
 
@@ -34,7 +34,7 @@ export const SettingsHeader = ({ sidebarName }) => {
                 },
                 {
                     name: SIDEBAR_NODE_EDGE,
-                    title: __('Element'),
+                    title: __('Element', 'publishpress-future-pro'),
                 },
             ]}
             onSelect={(tabName) => {

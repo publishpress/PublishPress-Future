@@ -88,7 +88,7 @@ export const InserterSearchResults = ({
         const count = filteredNodeTypes.length;
         const resultsFoundMessage = sprintf(
             /* translators: %d: number of results. */
-            _n('%d result found.', '%d results found.', count),
+            _n('%d result found.', '%d results found.', count, 'publishpress-future-pro'),
             count
         );
         debouncedSpeak(resultsFoundMessage);
@@ -107,14 +107,14 @@ export const InserterSearchResults = ({
             {!!hasItems && (
                 <InserterPanel
                     title={
-                        <VisuallyHidden>{__('Nodes')}</VisuallyHidden>
+                        <VisuallyHidden>{__('Nodes', 'publishpress-future-pro')}</VisuallyHidden>
                     }
                 >
                     <NodeTypesList
                         items={currentShownNodeTypes}
                         onSelect={onSelect}
                         onHover={onHover}
-                        label={__('Nodes')}
+                        label={__('Nodes', 'publishpress-future-pro')}
                         isDraggable={isDraggable}
                     />
                 </InserterPanel>

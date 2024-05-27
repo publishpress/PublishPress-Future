@@ -23,7 +23,7 @@ export const WorkflowGlobalVariables = () => {
 
     return (
         <PanelBody
-            title={__('Global Variables')}
+            title={__('Global Variables', 'publishpress-future-pro')}
             initialOpen={true}
             disabled={isLoadingWorkflow}
             className='workflow-editor-global-variables-panel'
