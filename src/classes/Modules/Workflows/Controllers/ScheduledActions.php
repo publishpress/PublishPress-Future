@@ -6,7 +6,9 @@ use Closure;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 
@@ -17,11 +19,18 @@ class ScheduledActions implements InitializableInterface
      */
     private $hooks;
 
+    /**
+     * @var NodeTypesModelInterface
+     */
+    private $nodeTypesModel;
+
 
     public function __construct(
-        HookableInterface $hooks
+        HookableInterface $hooks,
+        NodeTypesModelInterface $nodeTypesModel
     ) {
         $this->hooks = $hooks;
+        $this->nodeTypesModel = $nodeTypesModel;
     }
 
     public function initialize()
@@ -36,6 +45,13 @@ class ScheduledActions implements InitializableInterface
         $this->hooks->addFilter(
             WorkflowsHooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_ARGS,
             [$this, 'showArgsInArgsColumn'],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
+            [$this, 'enqueueScripts'],
             10,
             2
         );
@@ -92,9 +108,21 @@ class ScheduledActions implements InitializableInterface
                 $workflowTitle = $workflowModel->getTitle();
                 $next = $args['step']['next'] ?? [];
 
-                $nextNodes = '<ul>';
-                foreach ($next as $handler => $handlerNodes) {
-                    $nextNodes .= '<li>' . $handler . ':</li>';
+                $nodeType = $this->nodeTypesModel->getNodeType($args['step']['node']['data']['name']);
+
+                $sourceSockets = [];
+                if (! is_null($nodeType)) {
+                    $socketsSchema = $nodeType->getSocketSchema();
+
+                    foreach ($socketsSchema['source'] as $socket) {
+                        $sourceSockets[$socket['id']] = $socket['label'];
+                    }
+                }
+
+                $nextNodes = '<ul class="future-workflows-outputs">';
+                foreach ($next as $socketId => $handlerNodes) {
+                    $socketLabel = $sourceSockets[$socketId] ?? $socketId;
+                    $nextNodes .= '<li class="future-workflow-step-handler">' . $socketLabel . ':</li>';
                     $nextNodes .= '<ul>';
                     foreach ($handlerNodes as $nextStep) {
                         $nextNodes .= '<li>' . $nextStep['node']['data']['label'] . '</li>';
@@ -104,7 +132,8 @@ class ScheduledActions implements InitializableInterface
                 $nextNodes .= '</ul>';
 
                 $argsText = __('Workflow:', 'publishpress-future-pro') . ' ' . $workflowTitle;
-                $argsText .= __('Next nodes:', 'publishpress-future-pro') . '<br>' . $nextNodes;
+                $argsText .= '<br>';
+                $argsText .= __('Steps:', 'publishpress-future-pro') . '<br>' . $nextNodes;
                 break;
 
             case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
@@ -113,5 +142,22 @@ class ScheduledActions implements InitializableInterface
         }
 
         return $argsText;
+    }
+
+    public function enqueueScripts($hook)
+    {
+        if ('future_page_publishpress-future-scheduled-actions' !== $hook) {
+            return;
+        }
+
+        wp_enqueue_style(
+            "future_actions_admin_style",
+            plugins_url(
+                "/src/assets/css/future-actions.css",
+                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+            ),
+            ["wp-components", "wp-edit-post", "wp-editor"],
+            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
+        );
     }
 }
