@@ -133,7 +133,7 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_script("wp-plugins");
 
         wp_enqueue_script(
-            "future_workflow_admin_script",
+            "future_workflow_editor_script",
             plugins_url(
                 "/src/assets/js/workflow-editor.js",
                 PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
@@ -145,9 +145,16 @@ class WorkflowEditor implements InitializableInterface
                 "wp-data",
                 "wp-api-fetch",
                 "wp-plugins",
+                "wp-i18n",
             ],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true
+        );
+
+        wp_set_script_translations(
+            'future_workflow_editor_script',
+            'publishpress-future-pro',
+            PUBLISHPRESS_FUTURE_PRO_BASE_PATH . '/languages'
         );
 
         $postTypesModel = new PostTypesModel();
@@ -160,7 +167,7 @@ class WorkflowEditor implements InitializableInterface
         $taxonomies = $taxonomiesModel->getTaxonomiesAsOptions();
 
         wp_localize_script(
-            "future_workflow_admin_script",
+            "future_workflow_editor_script",
             "futureWorkflowEditor",
             [
                 "isWP65OrLater" => version_compare(

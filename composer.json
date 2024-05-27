@@ -69,8 +69,20 @@
     "build:js": "wp-scripts build --mode production",
     "get:version": "ppbuild version",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
+    "gen:pot-php": "wp i18n make-pot . ./languages/publishpress-future-pro.pot --domain=publishpress-future-pro --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
+    "gen:pot-js": "bash ./dev-workspace/scripts/lang-make-js-pot.sh",
     "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
-    "gen:pot": "wp i18n make-pot . ./languages/publishpress-future-pro.pot --domain=publishpress-future-pro --exclude=dev-workspace,.wordpress-org,.github,dist,tests --allow-root",
+    "gen:po-scripts": "bash ./dev-workspace/scripts/lang-update-js-po.sh",
+    "gen:po-json": "bash ./dev-workspace/scripts/lang-make-json.sh",
+    "gen:pot": [
+      "@gen:pot-php",
+      "@gen:pot-js"
+    ],
+    "gen:lang": [
+      "@gen:pot",
+      "@gen:mo",
+      "@gen:po-json"
+    ],
     "cleanup:gh-workflows": "user=publishpress repo=publishpress-future-pro; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
     "gen:alias-plugin": "php dev-workspace/scripts/gen-alias-plugin.php",
     "check:php": [

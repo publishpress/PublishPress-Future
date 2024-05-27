@@ -1,0 +1,450 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-05-27T15:47:49+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0-alpha\n"
+"X-Domain: publishpress-future-pro\n"
+
+#: components/data-fields/date-offset.jsx:54
+msgid "As soon as possible"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:55
+#: components/data-fields/date-offset.jsx:82
+msgid "Specific date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:56
+msgid "After a specific date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:61
+msgid "Select in the calendar"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:62
+msgid "Event date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:75
+msgid "Non-repeating"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:76
+msgid "Custom interval in seconds"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:81
+msgid "Forever"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:83
+msgid "For a number of times"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:105
+msgid "Avoid duplicated action"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:111
+msgid "When to run"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:120
+msgid "Date source"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:136
+msgid "Offset"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:150
+msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only terms in English."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:171
+msgid "Recurrence"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:179
+msgid "Interval in seconds"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:188
+msgid "Repeat until"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:196
+msgid "Times to repeat"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:212
+msgid "Priority"
+msgstr ""
+
+#: components/data-fields/debug-data.jsx:7
+msgid "All received input"
+msgstr ""
+
+#: components/data-fields/debug-data.jsx:35
+msgid "Data to output"
+msgstr ""
+
+#: components/data-fields/email-recipient.jsx:11
+msgid "Custom addressses"
+msgstr ""
+
+#: components/data-fields/email-recipient.jsx:33
+msgid "Email Recipient"
+msgstr ""
+
+#: components/data-fields/email-recipient.jsx:40
+msgid "Custom Email Addresses"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:45
+msgid "Post selection"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:48
+msgid "Post received as input"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:49
+msgid "Custom query"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:60
+msgid "Post Type"
+msgstr ""
+
+#: components/data-fields/post-query.jsx:75
+msgid "Post Status"
+msgstr ""
+
+#: components/data-fields/post-status.jsx:40
+msgid "New Status"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:13
+msgid "No color"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:14
+msgid "Green"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:15
+msgid "Orange"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:16
+msgid "Red"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:17
+msgid "Blue"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:18
+msgid "Purple"
+msgstr ""
+
+#: components/data-fields/ray-color.jsx:19
+msgid "Gray"
+msgstr ""
+
+#: components/data-fields/taxonomy-terms.jsx:64
+msgid "Taxonomy"
+msgstr ""
+
+#: components/data-fields/taxonomy-terms.jsx:73
+msgid "Select the terms"
+msgstr ""
+
+#: components/data-fields/taxonomy-terms.jsx:77
+msgid "Specific terms"
+msgstr ""
+
+#: components/data-fields/taxonomy-terms.jsx:84
+#: components/data-fields/taxonomy-terms.jsx:97
+msgid "Terms"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/layout/header.jsx:135
+msgid "Auto Layout"
+msgstr ""
+
+#: components/layout/interface.jsx:74
+msgid "Open node settings"
+msgstr ""
+
+#: components/layout/interface.jsx:75
+msgid "Open workflow settings"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:24
+msgid "Fullscreen mode"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:25
+msgid "Work without distraction"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:26
+msgid "Fullscreen mode activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:27
+msgid "Fullscreen mode deactivated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:34
+msgid "Developer mode"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:35
+msgid "Work in developer mode"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:36
+msgid "Developer mode activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:37
+msgid "Developer mode deactivated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:41
+msgid "Tools"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:45
+msgid "Welcome guide"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:46
+msgid "Display the welcome guide"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:47
+msgid "Welcome guide activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:48
+msgid "Welcome guide deactivated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:56
+msgid "Help"
+msgstr ""
+
+#: components/node-inspector/index.jsx:77
+msgid "No element selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:85
+msgid "Multiple and different elements selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:95
+msgid "%d nodes selected"
+msgstr ""
+
+#: components/node-inspector/index.jsx:98
+msgid "Multiple nodes selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:109
+msgid "%d edges selected"
+msgstr ""
+
+#: components/node-inspector/index.jsx:112
+msgid "Multiple edges selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:147
+msgid "Edge"
+msgstr ""
+
+#: components/node-inspector/index.jsx:148
+msgid "A connection between nodes"
+msgstr ""
+
+#: components/node-inspector/node-inspector-card.jsx:8
+msgid "Node"
+msgstr ""
+
+#: components/node-inspector/node-inspector-card.jsx:9
+msgid "No description"
+msgstr ""
+
+#: components/node-inspector/node-sockets-panel.jsx:12
+msgid "Sockets"
+msgstr ""
+
+#: components/node-inspector/node-sockets-panel.jsx:14
+msgid "Inputs"
+msgstr ""
+
+#: components/node-inspector/node-sockets-panel.jsx:16
+msgid "This node receives the following input from previous node:"
+msgstr ""
+
+#: components/node-inspector/node-sockets-panel.jsx:27
+msgid "Outputs"
+msgstr ""
+
+#: components/node-inspector/node-sockets-panel.jsx:29
+msgid "This node outputs the following data:"
+msgstr ""
+
+#: components/node-validator/index.jsx:45
+msgid "This node requires an incoming connection"
+msgstr ""
+
+#: components/node-validator/index.jsx:55
+msgid "This node requires an outgoing connection"
+msgstr ""
+
+#: components/node-validator/index.jsx:118
+#: components/node-validator/index.jsx:129
+msgid "The field %s is required"
+msgstr ""
+
+#: components/node-validator/index.jsx:150
+msgid "The field %s must be a valid email address"
+msgstr ""
+
+#: components/node-validator/index.jsx:166
+msgid "The field %s must be a valid email address list separated by commas"
+msgstr ""
+
+#: components/node-validator/index.jsx:180
+msgid "The field %s must be an integer"
+msgstr ""
+
+#: components/node-validator/index.jsx:195
+msgid "The field %s must be an integer list separated by commas"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:16
+#: components/welcome-guide/index.jsx:32
+msgid "Welcome to workflow editor"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:17
+msgid "Get started"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:33
+msgid "In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:46
+msgid "Use your imagination"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:47
+msgid "You're free to create very distinct workflows in your site, according to your needs."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:60
+msgid "A basic workflow"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:61
+msgid "Every workflow requires at least two steps connected to each other: one trigger and one action."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:74
+msgid "Add steps to your workflow"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:75
+msgid "Drag and drop steps from the inserter to add them to your workflow, and connect them to create a flow."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:88
+msgid "Output and input"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:89
+msgid "Linked nodes can pass data forward as input to the next node."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:102
+msgid "Customize the workflow"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:103
+msgid "Click on a step to customize it. You can change the step's settings in the right sidebar."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:116
+msgid "Workflow validation"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:117
+msgid "Error marks will appear atop nodes for any unfilled required settings, missed connections, or invalid values. Select the node to view the corresponding error in the sidebar."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:130
+msgid "Publish your workflow"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:131
+msgid "When you're ready, click the publish button to make your workflow live."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:144
+msgid "Need help?"
+msgstr ""
+
+#: components/welcome-guide/index.jsx:145
+msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
+msgstr ""
+
+#: components/workflow-delete-button/index.jsx:24
+msgid "Are you sure you want to delete this workflow?"
+msgstr ""
+
+#: components/workflow-global-variables/index.jsx:34
+msgid "Loading..."
+msgstr ""
+
+#: components/workflow-global-variables/index.jsx:40
+msgid "No global variables are declared"
+msgstr ""
+
+#: components/workflow-global-variables/index.jsx:45
+msgid "Variables list"
+msgstr ""
+
+#: components/workflow-global-variables/index.jsx:73
+msgid "Global variables are available to all nodes in the workflow that accepts variables."
+msgstr ""
+
+#: components/workflow-summary/index.jsx:37
+msgid "Summary"
+msgstr ""
+
+#: components/workflow-summary/index.jsx:43
+msgid "Title"
+msgstr ""
+
+#: components/workflow-summary/index.jsx:52
+msgid "Description"
+msgstr ""
+
+#: components/workflow-switch-to-draft-button/index.jsx:35
+msgid "Are you sure you want to unpublish this workflow?"
+msgstr ""

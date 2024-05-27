@@ -34,13 +34,13 @@ export const WorkflowSummary = () => {
     return (
         <PanelBody
             className='edit-post-post-status'
-            title={__('Summary')}
+            title={__('Summary', 'publishpress-future-pro')}
             initialOpen={true}
             disabled={isLoadingWorkflow}
         >
             <HStack className="editor-post-title__panel">
                 <TextControl
-                    label={__('Title')}
+                    label={__('Title', 'publishpress-future-pro')}
                     value={workflowTitle}
                     onChange={onChangeTitle}
                     disabled={isLoadingWorkflow}
@@ -49,7 +49,7 @@ export const WorkflowSummary = () => {
 
             <HStack className="editor-post-description__panel">
                 <TextareaControl
-                    label={__('Description')}
+                    label={__('Description', 'publishpress-future-pro')}
                     value={workflowDescription}
                     onChange={onChangeDescription}
                     disabled={isLoadingWorkflow}
