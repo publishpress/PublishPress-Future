@@ -44,7 +44,6 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowVariablesHand
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Models\CronSchedulesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
-use PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 use PublishPress\FuturePro\Modules\Workflows\Rest\RestApiManager;
 
@@ -311,19 +310,19 @@ return [
                     );
                     break;
 
-                case CoreOnInit::NODE_NAME:
-                    $nodeRunner = new CoreOnInit(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
-                    );
-                    break;
+                // case CoreOnInit::NODE_NAME:
+                //     $nodeRunner = new CoreOnInit(
+                //         $container->get(ServicesAbstract::HOOKS),
+                //         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
+                //     );
+                //     break;
 
-                case CoreOnAdminInit::NODE_NAME:
-                    $nodeRunner = new CoreOnAdminInit(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
-                    );
-                    break;
+                // case CoreOnAdminInit::NODE_NAME:
+                //     $nodeRunner = new CoreOnAdminInit(
+                //         $container->get(ServicesAbstract::HOOKS),
+                //         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
+                //     );
+                //     break;
 
                 case CoreOnManuallyEnabledForPost::NODE_NAME:
                     $nodeRunner = new CoreOnManuallyEnabledForPost(
