@@ -14,4 +14,8 @@ interface NodeTypesModelInterface
     public function convertInstancesToArray($instances, $type): array;
 
     public function getCategories(): array;
+
+    public function getAllNodeTypesIndexedByName(): array;
+
+    public function getNodeType(string $name): ?NodeTypeInterface;
 }

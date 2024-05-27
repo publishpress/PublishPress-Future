@@ -7,11 +7,11 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostQuery implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.query-post";
+    const NODE_NAME = "advanced/core.query-post";
 
     public function getElementarType(): string
     {
-        return NodeTypesModel::NODE_TYPE_ACTION;
+        return NodeTypesModel::NODE_TYPE_ADVANCED;
     }
 
     public function getType(): string
@@ -36,7 +36,7 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action retrieves multiple posts to serve as input for other actions.", "publishpress-future-pro");
+        return __("This action retrieves multiple posts to serve as the input for other actions.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

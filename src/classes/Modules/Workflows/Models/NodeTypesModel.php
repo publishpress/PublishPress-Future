@@ -23,6 +23,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPos
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 
 class NodeTypesModel implements NodeTypesModelInterface
 {
@@ -171,10 +172,10 @@ class NodeTypesModel implements NodeTypesModelInterface
         $nodesInstances = [
             CoreOnSavePost::NODE_NAME => new CoreOnSavePost(),
             CoreOnPostUpdated::NODE_NAME => new CoreOnPostUpdated(),
-            CoreOnInit::NODE_NAME => new CoreOnInit(),
-            CoreOnAdminInit::NODE_NAME => new CoreOnAdminInit(),
             CoreOnManuallyEnabledForPost::NODE_NAME => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::NODE_NAME => new FutureLegacyAction($this->hooks),
+            // CoreOnInit::NODE_NAME => new CoreOnInit(),
+            // CoreOnAdminInit::NODE_NAME => new CoreOnAdminInit(),
         ];
 
         return $nodesInstances;
@@ -296,5 +297,29 @@ class NodeTypesModel implements NodeTypesModelInterface
         );
 
         return $this->categories;
+    }
+
+    public function getAllNodeTypesIndexedByName(): array
+    {
+        $nodeTypes = array_merge(
+            $this->getTriggerNodes(),
+            $this->getActionNodes(),
+            $this->getAdvancedNodes()
+        );
+
+        $indexed = [];
+
+        foreach ($nodeTypes as $nodeType) {
+            $indexed[$nodeType->getName()] = $nodeType;
+        }
+
+        return $indexed;
+    }
+
+    public function getNodeType(string $name): ?NodeTypeInterface
+    {
+        $nodes = $this->getAllNodeTypesIndexedByName();
+
+        return $nodes[$name] ?? null;
     }
 }

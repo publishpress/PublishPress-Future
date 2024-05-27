@@ -71,7 +71,7 @@ class Module implements InitializableInterface
             new Controllers\RestApi($this->hooks, $this->restApiManager),
             new Controllers\FutureLegacyAction($this->hooks),
             new Controllers\ManualPostTrigger($this->hooks),
-            new Controllers\ScheduledActions($this->hooks),
+            new Controllers\ScheduledActions($this->hooks, $this->nodeTypesModel),
         ];
 
         foreach ($controllers as $controller) {

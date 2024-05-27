@@ -73,61 +73,67 @@ class WorkflowEngine implements WorkflowEngineInterface
 
     public function start()
     {
-        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_START);
+        try {
+            $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_START);
 
-        $workflowsModel = new WorkflowsModel();
-        $workflows = $workflowsModel->getPublishedWorkflowsIds();
+            $workflowsModel = new WorkflowsModel();
+            $workflows = $workflowsModel->getPublishedWorkflowsIds();
 
-        $nodeTypes = [
-            "action" => $this->nodeTypesModel->getActionNodes(),
-            "trigger" => $this->nodeTypesModel->getTriggerNodes(),
-            "advanced" => $this->nodeTypesModel->getAdvancedNodes(),
-        ];
+            $nodeTypes = [
+                "action" => $this->nodeTypesModel->getActionNodes(),
+                "trigger" => $this->nodeTypesModel->getTriggerNodes(),
+                "advanced" => $this->nodeTypesModel->getAdvancedNodes(),
+            ];
 
-        // Setup the workflow triggers
-        foreach ($workflows as $workflowId) {
-            $workflow = new WorkflowModel();
-            $workflow->load($workflowId);
+            // Setup the workflow triggers
+            foreach ($workflows as $workflowId) {
+                $workflow = new WorkflowModel();
+                $workflow->load($workflowId);
 
-            $globalVariables = $this->variablesHandler->getGlobalVariables($workflow);
+                $globalVariables = $this->variablesHandler->getGlobalVariables($workflow);
 
-            $triggerNodes = $workflow->getTriggerNodes();
+                $triggerNodes = $workflow->getTriggerNodes();
 
-            $routineTree = $workflow->getRoutineTree($nodeTypes);
+                $routineTree = $workflow->getRoutineTree($nodeTypes);
 
-            $triggerRunner = null;
-            foreach ($triggerNodes as $triggerNode) {
-                $triggerName = $triggerNode['data']['name'];
-                $triggerId = $triggerNode['id'];
+                $triggerRunner = null;
+                foreach ($triggerNodes as $triggerNode) {
+                    $triggerName = $triggerNode['data']['name'];
+                    $triggerId = $triggerNode['id'];
 
-                $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
+                    $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
 
-                if (is_null($triggerRunner)) {
-                    if (defined('WP_DEBUG') && WP_DEBUG) {
-                        error_log("[PublishPress Future Pro] Trigger not found: $triggerName");
+                    if (is_null($triggerRunner)) {
+                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                            error_log("[PublishPress Future Pro] Trigger not found: $triggerName");
+                        }
+
+                        continue;
                     }
 
-                    continue;
+                    // Ignore if there is no routine tree for this trigger
+                    if (! isset($routineTree[$triggerId])) {
+                        continue;
+                    }
+
+                    // Update the trigger global variables
+                    $globalVariables['trigger'] = [
+                        'id' => $triggerId,
+                        'name' => $triggerName,
+                        'label' => $triggerNode['data']['label'],
+                    ];
+
+                    $contextVariables = [
+                        'global' => $globalVariables,
+                    ];
+
+                    // Setup the trigger
+                    $triggerRunner->setup($workflowId, $routineTree[$triggerId], $contextVariables);
                 }
-
-                // Ignore if there is no routine tree for this trigger
-                if (! isset($routineTree[$triggerId])) {
-                    continue;
-                }
-
-                // Update the trigger global variables
-                $globalVariables['trigger'] = [
-                    'id' => $triggerId,
-                    'name' => $triggerName,
-                    'label' => $triggerNode['data']['label'],
-                ];
-
-                $contextVariables = [
-                    'global' => $globalVariables,
-                ];
-
-                // Setup the trigger
-                $triggerRunner->setup($workflowId, $routineTree[$triggerId], $contextVariables);
+            }
+        } catch (\Exception $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("[PublishPress Future Pro] Workflow engine error: {$e->getMessage()}");
             }
         }
     }
@@ -136,26 +142,34 @@ class WorkflowEngine implements WorkflowEngineInterface
 
     public function executeNodeRoutine($step, $contextVariables)
     {
-        $node = $step['node'];
-        $nodeName = $node['data']['name'];
+        try {
+            $node = $step['node'];
+            $nodeName = $node['data']['name'];
 
-        $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
+            $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
 
-        if (is_null($nodeRunner)) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("[PublishPress Future Pro] Node runner not found: {$nodeName}");
+            if (is_null($nodeRunner)) {
+                throw new \Exception("Node runner not found: $nodeName");
             }
 
-            return;
+            $nodeRunner->setup($step, $contextVariables);
+        } catch (\Exception $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("[PublishPress Future Pro] Node runner error: {$e->getMessage()}");
+            }
         }
-
-        $nodeRunner->setup($step, $contextVariables);
     }
 
     public function executeAsyncNodeRoutine($args)
     {
-        $nodeRunner = call_user_func($this->nodeRunnerFactory, $args['step']['node']['data']['name']);
-        $nodeRunner->actionCallback($args);
+        try {
+            $nodeRunner = call_user_func($this->nodeRunnerFactory, $args['step']['node']['data']['name']);
+            $nodeRunner->actionCallback($args);
+        } catch (\Exception $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("[PublishPress Future Pro] Async node runner error: {$e->getMessage()}");
+            }
+        }
     }
 
     public function unscheduleRecurringNodeAction($hook, $args)

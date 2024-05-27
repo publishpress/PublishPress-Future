@@ -31,4 +31,6 @@ interface NodeTypeInterface
     public function getCSSClass(): string;
 
     public function getBaseSlug(): string;
+
+    public function getSocketSchema(): array;
 }
