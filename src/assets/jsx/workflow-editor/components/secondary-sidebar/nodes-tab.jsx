@@ -61,7 +61,7 @@ export const NodesTab = ({
     };
 
     /**
-     * The inserter contains a big number of blocks and opening it is a costful operation.
+     * The inserter contains a big number of nodes and opening it is a costful operation.
      * The rendering is the most costful part of it, in order to improve the responsiveness
      * of the "opening" action, these lazy lists allow us to render the inserter category per category,
      * once all the categories are rendered, we start rendering the collections and the uncategorized block types.
@@ -73,12 +73,12 @@ export const NodesTab = ({
         <InserterListbox>
             <div>
                 {showMostUsedNodes && suggestedItems.length > 0 && (
-                    <InserterPanel title={_x('Most used', 'blocks', 'publishpress-future-pro')}>
+                    <InserterPanel title={_x('Most used', 'nodes', 'publishpress-future-pro')}>
                         <NodeTypesList
                             items={suggestedItems}
                             onSelect={onSelectItem}
                             onHover={onHover}
-                            label={_x('Most used', 'blocks', 'publishpress-future-pro')}
+                            label={_x('Most used', 'nodes', 'publishpress-future-pro')}
                         />
                     </InserterPanel>
                 )}
