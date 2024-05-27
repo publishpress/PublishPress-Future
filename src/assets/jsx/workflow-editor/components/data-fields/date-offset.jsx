@@ -52,8 +52,8 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const whenToRunOptions = [
         { name: __("As soon as possible", "publishpress-future-pro"), id: "now" },
-        { name: __("Specific date", "publishpress-future-pro"), id: "date" },
-        { name: __("After a specific date", "publishpress-future-pro"), id: "offset" },
+        { name: __("On a specific date", "publishpress-future-pro"), id: "date" },
+        { name: __("Relative a specific date", "publishpress-future-pro"), id: "offset" },
     ];
 
 
@@ -147,7 +147,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
                                                 <div dangerouslySetInnerHTML={{
                                                     __html: sprintf(
-                                                        __("For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only terms in English.", "publishpress-future-pro"),
+                                                        __("For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English.", "publishpress-future-pro"),
                                                         "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>",
                                                         "</a>",
                                                         "<code>",
@@ -168,7 +168,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                 )}
 
                 <TreeSelect
-                    label={__("Recurrence", "publishpress-future-pro")}
+                    label={__("Repeating Action", "publishpress-future-pro")}
                     tree={recurrenceOptions}
                     selectedId={defaultValue.recurrence}
                     onChange={(value) => onChangeSetting({ settingName: "recurrence", value })}

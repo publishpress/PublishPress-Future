@@ -21,13 +21,8 @@ msgstr "Ajuda"
 msgid "As soon as possible"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:55
 #: components/data-fields/date-offset.jsx:82
 msgid "Specific date"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:56
-msgid "After a specific date"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:61
@@ -68,14 +63,6 @@ msgstr ""
 
 #: components/data-fields/date-offset.jsx:136
 msgid "Offset"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:150
-msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only terms in English."
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:171
-msgid "Recurrence"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:179
@@ -185,6 +172,7 @@ msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
 #: components/layout/header.jsx:135
+#: components/layout/header.jsx:140
 msgid "Auto Layout"
 msgstr ""
 
@@ -448,4 +436,200 @@ msgstr ""
 
 #: components/workflow-switch-to-draft-button/index.jsx:35
 msgid "Are you sure you want to unpublish this workflow?"
+msgstr ""
+
+#: components/fullscreen-mode-close.jsx:43
+msgid "Back"
+msgstr ""
+
+#: components/layout/header.jsx:124
+msgid "Add"
+msgstr ""
+
+#: components/layout/header.jsx:124
+msgid "Close"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/left-toolbar/redo.jsx:31
+msgid "Redo"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/left-toolbar/undo.jsx:31
+msgid "Undo"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/more-menu/menu-dropdown.jsx:11
+msgid "Options"
+msgstr ""
+
+#: components/more-menu/menu-feature-toggle.jsx:32
+msgid "Feature deactivated"
+msgstr ""
+
+#: components/more-menu/menu-feature-toggle.jsx:34
+msgid "Feature activated"
+msgstr ""
+
+#: components/more-menu/menu-items-view.jsx:20
+msgctxt "noun"
+msgid "View"
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:8
+msgid "Developer Info"
+msgstr ""
+
+#: components/node-validation-panel/index.jsx:9
+msgid "Validation"
+msgstr ""
+
+#: components/secondary-sidebar/inserter-listbox/group.jsx:14
+msgid "Use left and right arrow keys to move through blocks"
+msgstr ""
+
+#: components/secondary-sidebar/inserter-no-results.jsx:14
+msgid "No results found."
+msgstr ""
+
+#. translators: %d: number of results.
+#: components/secondary-sidebar/inserter-search-results.jsx:91
+msgid "%d result found."
+msgid_plural "%d results found."
+msgstr[0] ""
+msgstr[1] ""
+
+#: components/secondary-sidebar/inserter-search-results.jsx:110
+#: components/secondary-sidebar/inserter-search-results.jsx:117
+msgid "Nodes"
+msgstr ""
+
+#: components/secondary-sidebar/menu.jsx:73
+#: components/secondary-sidebar/menu.jsx:110
+msgid "A tip for using the workflow editor"
+msgstr ""
+
+#. translators: %d: Number of blocks.
+#: components/secondary-sidebar/node-draggable-chip.jsx:27
+msgid "%d block"
+msgid_plural "%d blocks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: components/secondary-sidebar/nodes-tab.jsx:76
+#: components/secondary-sidebar/nodes-tab.jsx:81
+msgctxt "blocks"
+msgid "Most used"
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:10
+msgid "Select multiple node by pressing <kbd>shift</kbd> when clicking and selecting in the workflow board."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:16
+msgid "Drag nodes from the inserter into the workflow"
+msgstr ""
+
+#: components/settings-sidebar/plugin-sidebar.jsx:34
+msgid "(no name)"
+msgstr ""
+
+#. translators: Default label for the Workflow sidebar tab, not selected.
+#: components/settings-sidebar/settings-header.jsx:23
+msgctxt "noun"
+msgid "Workflow"
+msgstr ""
+
+#: components/settings-sidebar/settings-header.jsx:37
+msgid "Element"
+msgstr ""
+
+#: components/settings-sidebar/settings-sidebar.jsx:50
+msgid "Close settings"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/settings-sidebar/settings-sidebar.jsx:54
+msgid "Settings"
+msgstr ""
+
+#: components/workflow-delete-button/index.jsx:39
+msgid "Delete"
+msgstr ""
+
+#: components/workflow-delete-button/index.jsx:39
+msgid "Move to trash"
+msgstr ""
+
+#: components/workflow-global-variables/index.jsx:26
+msgid "Global Variables"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-publish-button/index.jsx:82
+msgid "Publish"
+msgstr ""
+
+#: components/workflow-publish-button/index.jsx:82
+msgid "Update"
+msgstr ""
+
+#: components/workflow-publish-button/index.jsx:93
+msgid "Autosaving..."
+msgstr ""
+
+#: components/workflow-publish-button/index.jsx:93
+msgid "Updating..."
+msgstr ""
+
+#: components/workflow-publish-button/index.jsx:95
+msgid "Updated"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-save-draft-button/index.jsx:85
+msgid "Save draft"
+msgstr ""
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-save-draft-button/index.jsx:88
+msgid "Save"
+msgstr ""
+
+#: components/workflow-save-draft-button/index.jsx:97
+msgid "Autosaving"
+msgstr ""
+
+#: components/workflow-save-draft-button/index.jsx:97
+msgid "Saving"
+msgstr ""
+
+#: components/workflow-save-draft-button/index.jsx:99
+msgid "Saved"
+msgstr ""
+
+#: components/workflow-switch-to-draft-button/index.jsx:56
+msgid "Draft"
+msgstr ""
+
+#: components/workflow-switch-to-draft-button/index.jsx:56
+msgid "Switch to draft"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:55
+msgid "On a specific date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:56
+msgid "Relative a specific date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:150
+msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:171
+msgid "Repeating Action"
 msgstr ""
