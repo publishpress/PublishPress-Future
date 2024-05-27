@@ -8,7 +8,7 @@ export function EmailRecipient({ name, label, defaultValue, onChange, settings, 
 
     let recipientOptions = [
         { name: '', id: '' },
-        { name: __("Custom addressses", "publishpress-future-pro"), id: "custom" },
+        { name: __("Addresses", "publishpress-future-pro"), id: "custom" },
         ...variables
     ];
 

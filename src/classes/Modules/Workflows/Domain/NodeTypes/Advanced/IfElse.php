@@ -36,7 +36,7 @@ class IfElse implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This node allows you to create a conditional branch.", "publishpress-future-pro");
+        return __("This step allows you to create a conditional branch.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -64,7 +64,7 @@ class IfElse implements NodeTypeInterface
         return [
             [
                 "label" => __("Conditions", "publishpress-future-pro"),
-                "description" => __("THIS NODE IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now.", "publishpress-future-pro"),
+                "description" => __("THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "test",
@@ -88,8 +88,8 @@ class IfElse implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Node input", "publishpress-future-pro"),
-                "description" => __("The input data for this node.", "publishpress-future-pro"),
+                "label" => __("Step input", "publishpress-future-pro"),
+                "description" => __("The input data for this step.", "publishpress-future-pro"),
             ]
         ];
     }

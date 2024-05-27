@@ -64,14 +64,14 @@ class CorePostQuery implements NodeTypeInterface
         return [
             [
                 "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("The query defines the posts that will be passed to next nodes by this action. If no query is provided, no post will be outputed.", "publishpress-future-pro"),
+                "description" => __("This query defines the posts that will be passed to the next action in the workflow.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "postQuery",
                         "type" => "postQuery",
                         "label" => __("Post query", "publishpress-future-pro"),
                         "description" => __(
-                            "The query defines the posts that will be selected by this action.",
+                            "The query defines the posts that will be retrieved by this action.",
                             "publishpress-future-pro"
                         ),
                     ],
@@ -118,8 +118,8 @@ class CorePostQuery implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Node input", "publishpress-future-pro"),
-                "description" => __("The input data for this node.", "publishpress-future-pro"),
+                "label" => __("Step input", "publishpress-future-pro"),
+                "description" => __("The input data for this step.", "publishpress-future-pro"),
             ],
         ];
     }

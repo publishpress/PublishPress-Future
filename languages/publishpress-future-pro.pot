@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-27T16:22:07+00:00\n"
+"POT-Creation-Date: 2024-05-27T22:59:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -302,23 +302,23 @@ msgstr ""
 msgid "Workflow updated."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:54
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:70
 msgid "Workflow scheduled action"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:58
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:74
 msgid "Unschedule workflow recurring scheduled action"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:106
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:134
 msgid "Workflow:"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:107
-msgid "Next nodes:"
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:136
+msgid "Steps:"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:111
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:140
 msgid "Workflow recurring scheduled action"
 msgstr ""
 
@@ -343,7 +343,7 @@ msgid "No screenshot"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/DataType/PostQuery.php:15
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:66
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:66
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:78
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:67
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:67
@@ -383,7 +383,7 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:127
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:116
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:112
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:61
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:62
 msgid "Post"
 msgstr ""
 
@@ -419,45 +419,45 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:119
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:107
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:121
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:112
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:124
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:128
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:124
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:112
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:149
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:108
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/CoreSchedule.php:104
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:91
-msgid "Node input"
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:121
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:104
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:91
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:108
+msgid "Step input"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:120
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:108
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:122
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:113
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:125
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:129
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:125
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:113
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:150
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:109
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/CoreSchedule.php:105
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:92
-msgid "The input data for this node."
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:122
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:105
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:92
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:109
+msgid "The input data for this step."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:143
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:131
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:145
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:136
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:148
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:152
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:148
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:136
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:173
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:132
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/CoreSchedule.php:128
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:145
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:128
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:132
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:99
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:99
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:146
@@ -473,45 +473,6 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:39
 msgid "This action deletes a post."
-msgstr ""
-
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:34
-msgid "Query Posts"
-msgstr ""
-
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:39
-msgid "This action retrieves multiple posts to serve as input for other actions."
-msgstr ""
-
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:67
-msgid "The query defines the posts that will be passed to next nodes by this action. If no query is provided, no post will be outputed."
-msgstr ""
-
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:72
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:84
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:73
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:73
-msgid "Post query"
-msgstr ""
-
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:73
-msgid "The query defines the posts that will be selected by this action."
-msgstr ""
-
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:102
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:107
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:96
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:96
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:92
-msgid "Post ID"
-msgstr ""
-
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:115
-msgid "Array of queried post IDs"
-msgstr ""
-
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostQuery.php:116
-msgid "The posts found following the criteria of the query."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:34
@@ -532,7 +493,7 @@ msgid "Add extra terms to post"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:39
-msgid "This action appends additional taxonomy terms to posts."
+msgid "This action keeps the current taxonomy terms and adds additional terms."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:78
@@ -555,11 +516,11 @@ msgid "Terms"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:34
-msgid "Remove terms to post"
+msgid "Remove terms from the post"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:39
-msgid "This action eliminates single, multiple, or all taxonomy terms from a post."
+msgid "This action removes current taxonomy terms."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:78
@@ -576,11 +537,11 @@ msgid "Remove all terms"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:34
-msgid "Replace all terms to post"
+msgid "Replace all terms on the post"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:39
-msgid "This action substitutes all taxonomy terms for posts."
+msgid "This action removes the current taxonomy terms and adds new terms."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:78
@@ -641,81 +602,120 @@ msgstr ""
 msgid "Custom Email Address"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:34
-msgid "Ray - Debug"
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:34
+msgid "Query Posts"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:39
-msgid "This action transmits the flow data to Ray Debug."
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:39
+msgid "This action retrieves multiple posts to serve as the input for other actions."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:66
-msgid "Debug output"
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:67
+msgid "This query defines the posts that will be passed to the next action in the workflow."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:67
-msgid "The data to be sent to Ray."
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:72
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:84
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:73
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:73
+msgid "Post query"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:72
-msgid "Data"
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:73
+msgid "The query defines the posts that will be retrieved by this action."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:77
-msgid "Label"
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:102
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:107
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:96
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:96
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:92
+msgid "Post ID"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/RayDebug.php:82
-msgid "Color"
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:115
+msgid "Array of queried post IDs"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/CoreSchedule.php:34
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/CoreSchedule.php:66
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:116
+msgid "The posts found following the criteria of the query."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:34
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:66
 msgid "Schedule"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/CoreSchedule.php:39
-msgid "This flow facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits."
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:39
+msgid "This step facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/CoreSchedule.php:67
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:67
 msgid "The scheduled time for this action."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/CoreSchedule.php:72
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:72
 msgid "Date offset"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:34
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:34
 msgid "Simple Condition"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:39
-msgid "This flow allows you to create a conditional branch."
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:39
+msgid "This step allows you to create a conditional branch."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:66
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:66
 msgid "Conditions"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:67
-msgid "THIS NODE IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now."
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:67
+msgid "THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:72
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:72
 msgid "NOT IMPLEMENTED YET!"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:73
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:73
 msgid "Still not implemented"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:115
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:115
 msgid "True"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Flows/IfElse.php:120
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:120
 msgid "False"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:34
+msgid "Ray - Debug"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:39
+msgid "This action transmits the flow's data to Ray Debug."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:66
+msgid "Debug output"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:67
+msgid "The data to be sent to Ray."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:72
+msgid "Data"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:77
+msgid "Label"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:82
+msgid "Color"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:35
@@ -735,11 +735,11 @@ msgid "This trigger activates upon site initialization."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:34
-msgid "Manually enabled for Post on save"
+msgid "Manually enabled"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:39
-msgid "This trigger activates when a post is saved with the option enabled, either through quick-edit or the editor panel, allowing manual selection of posts for activation."
+msgid "This trigger activates when the option with manually enabled. It can be enabled via the post editing screen or the Quick Edit panel."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:66
@@ -806,38 +806,38 @@ msgid "This trigger activates whenever a post is saved, regardless of whether it
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:50
-msgid "Legacy Future action"
+msgid "Future action"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:55
-msgid "This trigger activates when a legacy future action is set to execute this workflow."
+msgid "This trigger activates when a Future Action on posts is set to execute this workflow."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:70
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:71
 msgid "PublishPress Future"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:79
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:80
 msgid "Site"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:88
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:89
 msgid "Conditional"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:97
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:98
 msgid "Asynchronous"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:106
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:107
 msgid "Debug"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:115
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:116
 msgid "Data Query"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:124
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:125
 msgid "Messages"
 msgstr ""
 

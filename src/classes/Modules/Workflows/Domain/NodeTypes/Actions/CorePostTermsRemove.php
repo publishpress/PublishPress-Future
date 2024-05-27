@@ -31,12 +31,12 @@ class CorePostTermsRemove implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Remove terms to post", "publishpress-future-pro");
+        return __("Remove terms from the post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action eliminates single, multiple, or all taxonomy terms from a post.", "publishpress-future-pro");
+        return __("This action removes current taxonomy terms.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -125,8 +125,8 @@ class CorePostTermsRemove implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Node input", "publishpress-future-pro"),
-                "description" => __("The input data for this node.", "publishpress-future-pro"),
+                "label" => __("Step input", "publishpress-future-pro"),
+                "description" => __("The input data for this step.", "publishpress-future-pro"),
             ]
         ];
     }

@@ -36,7 +36,7 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This node facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits.", "publishpress-future-pro");
+        return __("This step facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -101,8 +101,8 @@ class CoreSchedule implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Node input", "publishpress-future-pro"),
-                "description" => __("The input data for this node.", "publishpress-future-pro"),
+                "label" => __("Step input", "publishpress-future-pro"),
+                "description" => __("The input data for this step.", "publishpress-future-pro"),
             ],
         ];
     }

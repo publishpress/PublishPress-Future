@@ -47,12 +47,12 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Legacy Future action", "publishpress-future-pro");
+        return __("Future action", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This trigger activates when a legacy future action is set to execute this workflow.", "publishpress-future-pro");
+        return __("This trigger activates when a Future Action on posts is set to execute this workflow.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

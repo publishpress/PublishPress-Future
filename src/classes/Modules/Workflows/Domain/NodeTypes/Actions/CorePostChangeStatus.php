@@ -116,8 +116,8 @@ class CorePostChangeStatus implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Node input", "publishpress-future-pro"),
-                "description" => __("The input data for this node.", "publishpress-future-pro"),
+                "label" => __("Step input", "publishpress-future-pro"),
+                "description" => __("The input data for this step.", "publishpress-future-pro"),
             ]
         ];
     }

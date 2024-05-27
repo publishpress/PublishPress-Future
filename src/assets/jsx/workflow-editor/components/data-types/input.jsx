@@ -1,7 +1,7 @@
 export function Input() {
     return {
         name: "input",
-        label: "Node input",
+        label: "Step input",
         type: "input",
     };
 }

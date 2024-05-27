@@ -31,12 +31,12 @@ class CorePostTermsSet implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Replace all terms to post", "publishpress-future-pro");
+        return __("Replace all terms on the post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action substitutes all taxonomy terms for posts.", "publishpress-future-pro");
+        return __("This action removes the current taxonomy terms and adds new terms.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -121,8 +121,8 @@ class CorePostTermsSet implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Node input", "publishpress-future-pro"),
-                "description" => __("The input data for this node.", "publishpress-future-pro"),
+                "label" => __("Step input", "publishpress-future-pro"),
+                "description" => __("The input data for this step.", "publishpress-future-pro"),
             ]
         ];
     }

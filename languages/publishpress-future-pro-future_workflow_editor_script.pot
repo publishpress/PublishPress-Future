@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-27T16:22:07+00:00\n"
+"POT-Creation-Date: 2024-05-27T22:59:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -101,7 +101,7 @@ msgid "Data to output"
 msgstr ""
 
 #: components/data-fields/email-recipient.jsx:11
-msgid "Custom addressses"
+msgid "Addresses"
 msgstr ""
 
 #: components/data-fields/email-recipient.jsx:33
@@ -344,7 +344,7 @@ msgid "Inputs"
 msgstr ""
 
 #: components/node-inspector/node-sockets-panel.jsx:16
-msgid "This node receives the following input from previous node:"
+msgid "This step receives the following input from previous step:"
 msgstr ""
 
 #: components/node-inspector/node-sockets-panel.jsx:27
@@ -352,7 +352,7 @@ msgid "Outputs"
 msgstr ""
 
 #: components/node-inspector/node-sockets-panel.jsx:29
-msgid "This node outputs the following data:"
+msgid "This step outputs the following data:"
 msgstr ""
 
 #: components/node-validation-panel/index.jsx:9
@@ -360,11 +360,11 @@ msgid "Validation"
 msgstr ""
 
 #: components/node-validator/index.jsx:45
-msgid "This node requires an incoming connection"
+msgid "This step requires an incoming connection"
 msgstr ""
 
 #: components/node-validator/index.jsx:55
-msgid "This node requires an outgoing connection"
+msgid "This step requires an outgoing connection"
 msgstr ""
 
 #: components/node-validator/index.jsx:118
@@ -422,8 +422,23 @@ msgstr[1] ""
 
 #: components/secondary-sidebar/nodes-tab.jsx:76
 #: components/secondary-sidebar/nodes-tab.jsx:81
-msgctxt "blocks"
+msgctxt "nodes"
 msgid "Most used"
+msgstr ""
+
+#. translators: Blocks tab title in the block inserter.
+#: components/secondary-sidebar/tabs.jsx:20
+msgid "Triggers"
+msgstr ""
+
+#. translators: Patterns tab title in the block inserter.
+#: components/secondary-sidebar/tabs.jsx:25
+msgid "Actions"
+msgstr ""
+
+#. translators: Patterns tab title in the block inserter.
+#: components/secondary-sidebar/tabs.jsx:30
+msgid "Advanced"
 msgstr ""
 
 #: components/secondary-sidebar/tips.jsx:10
@@ -491,7 +506,7 @@ msgid "Add steps to your workflow"
 msgstr ""
 
 #: components/welcome-guide/index.jsx:75
-msgid "Drag and drop steps from the inserter to add them to your workflow, and connect them to create a flow."
+msgid "Drag and drop steps to add them to your workflow. Connect the steps to create a workflow."
 msgstr ""
 
 #: components/welcome-guide/index.jsx:88
@@ -499,7 +514,7 @@ msgid "Output and input"
 msgstr ""
 
 #: components/welcome-guide/index.jsx:89
-msgid "Linked nodes can pass data forward as input to the next node."
+msgid "Linked steps can pass data forward as input to the next step."
 msgstr ""
 
 #: components/welcome-guide/index.jsx:102
@@ -515,7 +530,7 @@ msgid "Workflow validation"
 msgstr ""
 
 #: components/welcome-guide/index.jsx:117
-msgid "Error marks will appear atop nodes for any unfilled required settings, missed connections, or invalid values. Select the node to view the corresponding error in the sidebar."
+msgid "Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar."
 msgstr ""
 
 #: components/welcome-guide/index.jsx:130

@@ -72,7 +72,7 @@ export function WelcomeGuide() {
                         content: (
                             <WelcomeGuideContent
                                 title={__("Add steps to your workflow", 'publishpress-future-pro')}
-                                content={__("Drag and drop steps from the inserter to add them to your workflow, and connect them to create a flow.", 'publishpress-future-pro')}
+                                content={__("Drag and drop steps to add them to your workflow. Connect the steps to create a workflow.", 'publishpress-future-pro')}
                             />
                         ),
                     },
@@ -86,7 +86,7 @@ export function WelcomeGuide() {
                         content: (
                             <WelcomeGuideContent
                                 title={__("Output and input", 'publishpress-future-pro')}
-                                content={__("Linked nodes can pass data forward as input to the next node.", 'publishpress-future-pro')}
+                                content={__("Linked steps can pass data forward as input to the next step.", 'publishpress-future-pro')}
                             />
                         ),
                     },
@@ -114,7 +114,7 @@ export function WelcomeGuide() {
                         content: (
                             <WelcomeGuideContent
                                 title={__("Workflow validation", 'publishpress-future-pro')}
-                                content={__("Error marks will appear atop nodes for any unfilled required settings, missed connections, or invalid values. Select the node to view the corresponding error in the sidebar.", 'publishpress-future-pro')}
+                                content={__("Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar.", 'publishpress-future-pro')}
                             />
                         ),
                     },

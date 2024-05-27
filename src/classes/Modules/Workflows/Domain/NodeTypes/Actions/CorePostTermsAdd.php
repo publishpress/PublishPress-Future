@@ -36,7 +36,7 @@ class CorePostTermsAdd implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action appends additional taxonomy terms to posts.", "publishpress-future-pro");
+        return __("This action keeps the current taxonomy terms and adds additional terms.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
@@ -121,8 +121,8 @@ class CorePostTermsAdd implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Node input", "publishpress-future-pro"),
-                "description" => __("The input data for this node.", "publishpress-future-pro"),
+                "label" => __("Step input", "publishpress-future-pro"),
+                "description" => __("The input data for this step.", "publishpress-future-pro"),
             ]
         ];
     }

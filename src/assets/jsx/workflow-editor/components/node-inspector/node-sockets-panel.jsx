@@ -13,7 +13,7 @@ export const NodeSocketsPanel = ({ inputSchema = [], outputSchema = []}) => {
             <PanelRow className="workflow-editor-inspector-card__sockets-schema">
                 <h3>{__('Inputs', 'publishpress-future-pro')}</h3>
                 <div>
-                    <div>{__("This node receives the following input from previous node:", "publishpress-future-pro")}</div>
+                    <div>{__("This step receives the following input from previous step:", "publishpress-future-pro")}</div>
                     <ul>
                         {inputSchema.map((schemaItem, index) => (
                             <li key={index}>
@@ -26,7 +26,7 @@ export const NodeSocketsPanel = ({ inputSchema = [], outputSchema = []}) => {
             <PanelRow className="workflow-editor-inspector-card__sockets-schema">
                 <h3>{__('Outputs', 'publishpress-future-pro')}</h3>
                 <div>
-                    <div>{__("This node outputs the following data:", "publishpress-future-pro")}</div>
+                    <div>{__("This step outputs the following data:", "publishpress-future-pro")}</div>
                     <ul>
                     {outputSchema.map((schemaItem, index) => (
                         <li key={index}>

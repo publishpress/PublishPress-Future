@@ -7,11 +7,11 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class RayDebug implements NodeTypeInterface
 {
-    const NODE_NAME = "action/ray.debug";
+    const NODE_NAME = "advanced/ray.debug";
 
     public function getElementarType(): string
     {
-        return NodeTypesModel::NODE_TYPE_ACTION;
+        return NodeTypesModel::NODE_TYPE_ADVANCED;
     }
 
     public function getType(): string
@@ -105,8 +105,8 @@ class RayDebug implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Node input", "publishpress-future-pro"),
-                "description" => __("The input data for this node.", "publishpress-future-pro"),
+                "label" => __("Step input", "publishpress-future-pro"),
+                "description" => __("The input data for this step.", "publishpress-future-pro"),
             ]
         ];
     }
