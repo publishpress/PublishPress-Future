@@ -27,7 +27,7 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
             targetHandles = data.socketSchema.target.map((handle) => {
                 return (
                     <Handle
-                        key={handle.id}
+                        key={handle.id + '_target'}
                         type="target"
                         position={Position.Top}
                         id={handle.id}
@@ -46,7 +46,7 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
             sourceHandles = data.socketSchema.source.map((handle) => {
                 return (
                     <Handle
-                        key={handle.id}
+                        key={handle.id + '_source'}
                         type="source"
                         position={Position.Bottom}
                         id={handle.id}
@@ -74,6 +74,8 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
         topText = __('Action', 'publishpress-future-pro');
     } else if (data.elementarType === 'advanced') {
         topText = __('Advanced', 'publishpress-future-pro');
+    } else if (data.elementarType === 'trigger') {
+        topText = __('Trigger', 'publishpress-future-pro');
     }
 
     return (
