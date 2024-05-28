@@ -8,12 +8,19 @@ import { Tip } from '@wordpress/components';
 const globalTips = [
 	createInterpolateElement(
 		__(
-			'Select multiple node by pressing <kbd>shift</kbd> when clicking and selecting in the workflow board.',
+			'Select multiple steps by pressing <kbd>shift</kbd> when clicking and selecting in the workflow board.',
 			'publishpress-future-pro'
 		),
 		{ kbd: <kbd /> }
 	),
-	__('Drag nodes from the inserter into the workflow', 'publishpress-future-pro'),
+	createInterpolateElement(
+		__(
+			'Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow.',
+			'publishpress-future-pro'
+		),
+		{ kbd: <kbd /> }
+	),
+	__('Drag steps from the inserter into the workflow.', 'publishpress-future-pro'),
 ];
 
 export function Tips() {
