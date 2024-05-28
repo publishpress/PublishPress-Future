@@ -141,7 +141,7 @@ export const LayoutHeader = () => {
                             }
                         </ToolbarItem>
 
-                        {(isWideViewport || !showIconLabels) && (
+                        {/* {(isWideViewport || !showIconLabels) && (
                             <>
                                 <ToolbarItem
                                     as={EditorHistoryUndo}
@@ -156,7 +156,7 @@ export const LayoutHeader = () => {
                                     disabled={isLoadingWorkflow}
                                 />
                             </>
-                        )}
+                        )} */}
                     </div>
                 </NavigableToolbar>
             </div>
