@@ -2,7 +2,6 @@ import { FormTokenField, RadioControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from "@wordpress/element";
 import { InlineMultiSelect } from "../inline-multi-select";
-import BaseField from "./base-field";
 import { __experimentalVStack as VStack } from "@wordpress/components";
 
 
