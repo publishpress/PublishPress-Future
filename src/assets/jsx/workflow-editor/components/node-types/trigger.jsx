@@ -5,6 +5,7 @@ import { GrTrigger } from "react-icons/gr";
 import { NodeIcon } from '../node-icon';
 import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
+import { __ } from '@wordpress/i18n';
 
 export const TriggerNode = memo(({ id, data, isConnectable }) => {
     const nodeClassName = data?.className || 'react-flow__node-triggerNode';
@@ -69,13 +70,17 @@ export const TriggerNode = memo(({ id, data, isConnectable }) => {
         }
     }
 
+    let topText = __('Trigger', 'publishpress-future-pro');
+
     return (
         <>
-            <span className="react-flow__trigger_tag">
-                <Icon icon={GrTrigger} size={10} />Trigger
-            </span>
             <div className={"react-flow__node-body " + nodeClassName}>
                 {targetHandles}
+
+                <div className='react-flow__node-top'>
+                    <NodeIcon icon={GrTrigger} size={8} />
+                    {topText}
+                </div>
 
                 <div className='react-flow__node-inner-body'>
                     {nodeHasErrors && (
@@ -83,7 +88,6 @@ export const TriggerNode = memo(({ id, data, isConnectable }) => {
                             <NodeIcon icon={'warning'} size={16} />
                         </div>
                     )}
-                    <div className="react-flow__node-slug">{data.slug}</div>
                     <div className='react-flow__node-header'>
                         <NodeIcon icon={data.icon} size={14} />
                         <div className="react-flow__node-label">{data.label}</div>

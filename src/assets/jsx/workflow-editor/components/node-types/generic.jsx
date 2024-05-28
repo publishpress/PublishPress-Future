@@ -1,8 +1,10 @@
 import { Handle, Position } from 'reactflow';
 import { memo } from '@wordpress/element';
 import NodeIcon from '../node-icon';
+import { IoMdPlay } from "react-icons/io";
 import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
+import { __ } from '@wordpress/i18n';
 
 export const GenericNode = memo(({ id, data, isConnectable }) => {
     const nodeClassName = data?.className || 'react-flow__node-genericNode';
@@ -67,10 +69,21 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
         }
     }
 
+    let topText = __('Step', 'publishpress-future-pro');
+    if (data.elementarType === 'action') {
+        topText = __('Action', 'publishpress-future-pro');
+    } else if (data.elementarType === 'advanced') {
+        topText = __('Advanced', 'publishpress-future-pro');
+    }
+
     return (
         <>
             <div className={"react-flow__node-body " + nodeClassName}>
                 {targetHandles}
+                <div className='react-flow__node-top'>
+                    <NodeIcon icon={IoMdPlay} size={8} />
+                    {topText}
+                </div>
 
                 <div className='react-flow__node-inner-body'>
                     {nodeHasErrors && (
@@ -78,7 +91,6 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
                             <NodeIcon icon={'warning'} size={16} />
                         </div>
                     )}
-                    <div className="react-flow__node-slug">{data.slug}</div>
                     <div className='react-flow__node-header'>
                         <NodeIcon icon={data.icon} size={14} />
                         <div className="react-flow__node-label">{data.label}</div>

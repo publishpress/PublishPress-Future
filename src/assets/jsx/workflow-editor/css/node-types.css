@@ -18,7 +18,6 @@
     position: relative;
     padding-left: 22px;
     text-align: left;
-    margin-top: 7px;
 }
 
 .react-flow__node-header .dashicon,
@@ -30,19 +29,14 @@
 }
 
 .react-flow__node-slug {
-    font-size: 6px;
+    font-size: 8px;
     display: inline-block;
     height: 6px;
     line-height: 6px;
     padding: 2px;
     position: absolute;
-    top: 4px;
-    left: 29px;
-    color: gray;
-}
-
-.react-flow__node-trigger .react-flow__node-slug {
-    top: 25px;
+    top: 45px;
+    left: 27px;
 }
 
 .react-flow__handle {
@@ -59,6 +53,23 @@
     top: -4px !important;
 }
 
+.react-flow__node-top {
+    font-size: 8px;
+    padding: 0 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid silver;
+    position: relative;
+    padding-left: 18px;
+}
+
+.react-flow__node-top svg {
+    margin-right: 4px;
+    position: absolute;
+    top: 6px;
+    left: 8px;
+}
+
 /* GENERIC NODE */
 
 .react-flow__node-genericNode {
@@ -71,13 +82,19 @@
     border: 1px solid #b2b2c9;
 }
 
+.react-flow__node-genericNode .react-flow__node-top {
+    border-bottom: 1px solid #b2b2c9;
+}
+
+.react-flow__node-genericNode .react-flow__node-slug {
+    color: #b2b2c9;
+}
 
 /* TRIGGER */
 
 .react-flow__node-genericTrigger {
     background-color: #dce5df;
     border: 1px solid #b9c0bb;
-    border-top-left-radius: 0;
 }
 
 .react-flow__node-genericTrigger .react-flow__handle {
@@ -89,30 +106,12 @@
     color: #939895;
 }
 
-.react-flow__trigger_tag {
-    background-color: #f3f3f3;
-    border-color: #e1e1e1;
-    border-style: solid;
-    border-left-width: 1px;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 0;
-    color: #828282;
-    padding: 0px 8px;
-    padding-left: 18px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    font-size: 8px;
-    display: inline-block;
-    position: relative;
+.react-flow__node-genericTrigger .react-flow__node-top {
+    border-bottom: 1px solid #b9c0bb;
 }
 
-.react-flow__trigger_tag svg {
-    margin-right: 4px;
-    display: block;
-    position: absolute;
-    left: 5px;
-    top: 4px;
+.react-flow__node-genericTrigger .react-flow__node-slug {
+    color: #808882;
 }
 
 /* GENERIC ACTION */
@@ -131,7 +130,15 @@
     color: #8a62be;
 }
 
-/* GENERIC FLOW */
+.react-flow__node-genericAction .react-flow__node-top {
+    border-bottom: 1px solid #7199bc;
+}
+
+.react-flow__node-genericAction .react-flow__node-slug {
+    color: #526e87;
+}
+
+/* GENERIC ADVANCED */
 
 .react-flow__node-genericAdvanced {
     background-color: #f8ddad;
@@ -145,6 +152,14 @@
 
 .react-flow__node-genericAdvanced .react-flow__node-slug {
     color: #b19f80;
+}
+
+.react-flow__node-genericAdvanced .react-flow__node-top {
+    border-bottom: 1px solid #d3bc94;
+}
+
+.react-flow__node-genericAdvanced .react-flow__node-slug {
+    color: #908065;
 }
 
 /* QUERY ACTION */
@@ -163,6 +178,14 @@
     color: #9079a1;
 }
 
+.react-flow__node-queryAction .react-flow__node-top {
+    border-bottom: 1px solid #b891c2;
+}
+
+.react-flow__node-queryAction .react-flow__node-slug {
+    color: rgb(110, 110, 125);
+}
+
 /* DEBUG ACTION */
 
 .react-flow__node-debugAction {
@@ -179,14 +202,19 @@
     color: #916877;
 }
 
+.react-flow__node-debugAction .react-flow__node-top {
+    border-bottom: 1px solid #cf96ab;
+}
+
+
 /* SELECTED NODES */
 
 .react-flow__node.selected .react-flow__node-body {
     border: 1px solid #555;
 }
 
-.react-flow__edge.selected {
-
+.react-flow__node-genericNode .react-flow__node-slug {
+    color: #b2b2c9;
 }
 
 /* SOCKET AREA */
@@ -219,10 +247,5 @@
     color: #d90f0f;
     position: absolute;
     top: -16px;
-    right: 0;
-}
-
-.react-flow__node-genericTrigger .react-flow__node-error {
-    top: 4px;
     right: 0;
 }
