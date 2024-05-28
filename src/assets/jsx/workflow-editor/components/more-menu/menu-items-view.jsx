@@ -9,6 +9,7 @@ import {
 	FEATURE_WELCOME_GUIDE,
 	FEATURE_ADVANCED_SETTINGS,
 	FEATURE_MINI_MAP,
+	FEATURE_CONTROLS,
 } from '../../constants';
 
 export const MoreMenuItemsView = () => {
@@ -43,6 +44,14 @@ export const MoreMenuItemsView = () => {
 					feature={FEATURE_MINI_MAP}
 					label={__('Display a mini map', 'publishpress-future-pro')}
 					info={__('Display a mini map in the bottom of the editor, triggers and steps', 'publishpress-future-pro')}
+					messageActivated={__('Mini map activated', 'publishpress-future-pro')}
+					messageDeactivated={__('Mini map deactivated', 'publishpress-future-pro')}
+				/>
+				<MoreMenuFeatureToggle
+					scope="core/edit-post"
+					feature={FEATURE_CONTROLS}
+					label={__('Display the controls panel', 'publishpress-future-pro')}
+					info={__('Display the controls panel with buttons to zoon in, zoom out, fit the view and lock the viewport', 'publishpress-future-pro')}
 					messageActivated={__('Mini map activated', 'publishpress-future-pro')}
 					messageDeactivated={__('Mini map deactivated', 'publishpress-future-pro')}
 				/>

@@ -23,7 +23,7 @@ import {
 } from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
-import { FEATURE_MINI_MAP, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
+import { FEATURE_CONTROLS, FEATURE_MINI_MAP, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
 import GenericNode from "../node-types/generic";
 
 import { AUTO_LAYOUT_DEFAULT_DIRECTION } from "./auto-layout/constants";
@@ -46,7 +46,8 @@ export const FlowEditor = (props) => {
         activeComplementaryArea,
         initialViewport,
         baseSlugCounts,
-        isMiniMapActive,
+        isMiniMapFeatureActive,
+        isControlsFeatureActive,
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -63,7 +64,8 @@ export const FlowEditor = (props) => {
                 activeComplementaryArea !== "null/undefined",
             initialViewport: select(workflowStore).getInitialViewport(),
             baseSlugCounts: select(workflowStore).getBaseSlugCounts(),
-            isMiniMapActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
+            isMiniMapFeatureActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
+            isControlsFeatureActive: select(editorStore).isFeatureActive(FEATURE_CONTROLS),
         };
     });
 
@@ -329,7 +331,7 @@ export const FlowEditor = (props) => {
                 onNodesDelete={onNodesDelete}
                 onEdgesDelete={onEdgesDelete}
             >
-                {isMiniMapActive && (
+                {isMiniMapFeatureActive && (
                     <MiniMap
                         pannable
                         zoomable
@@ -338,8 +340,12 @@ export const FlowEditor = (props) => {
                         }}
                     />
                 )}
+
+                {isControlsFeatureActive && (
+                    <Controls />
+                )}
+
                 <Background variant="dots" color="#ccc" gap={GRID_SIZE} />
-                <Controls />
             </ReactFlow>
             <NodeValidator />
         </div>

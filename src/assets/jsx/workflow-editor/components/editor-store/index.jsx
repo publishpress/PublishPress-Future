@@ -12,6 +12,7 @@ import {
     FEATURE_WELCOME_GUIDE,
     FEATURE_ADVANCED_SETTINGS,
     FEATURE_MINI_MAP,
+    FEATURE_CONTROLS,
     INSERTER_TAB_TRIGGERS,
     SLOT_SCOPE_WORKFLOW_EDITOR,
 } from "../../constants";
@@ -327,6 +328,7 @@ const persistentFeatures = [
     FEATURE_WELCOME_GUIDE,
     FEATURE_ADVANCED_SETTINGS,
     FEATURE_MINI_MAP,
+    FEATURE_CONTROLS,
 ];
 
 const initLocalPreferences = () => {
@@ -402,6 +404,12 @@ if (isFullscreenModeEnabled === null || isFullscreenModeEnabled === undefined) {
 const isWelcomeGuideEnabled = getPersistedFeatureValue(FEATURE_WELCOME_GUIDE);
 if (isWelcomeGuideEnabled === null || isWelcomeGuideEnabled === undefined) {
     setPersistedFeatureValue(FEATURE_WELCOME_GUIDE, true);
+}
+
+// Enable controls by default
+const isControlsFeatureEnabled = getPersistedFeatureValue(FEATURE_CONTROLS);
+if (isControlsFeatureEnabled === null || isControlsFeatureEnabled === undefined) {
+    setPersistedFeatureValue(FEATURE_CONTROLS, true);
 }
 
 // Update the store with the persisted features
