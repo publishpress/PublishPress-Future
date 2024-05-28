@@ -249,3 +249,25 @@
     top: -16px;
     right: 0;
 }
+
+/* Node Content */
+.react-flow__node-content {
+    font-size: 6px;
+    margin-top: 6px;
+}
+
+.react-flow__node-content table {
+    border-spacing: 0;
+    width: 100%;
+}
+
+.react-flow__node-content table th {
+    text-align: left;
+}
+
+.react-flow__node-content table th,
+.react-flow__node-content table td {
+    padding: 0 6px;
+    font-size: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}

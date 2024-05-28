@@ -12,12 +12,14 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
     const {
         nodeErrors,
         nodeHasErrors,
+        isAdvancedSettingsEnabled,
     } = useSelect((select) => {
         const nodeErrors = select(workflowStore).getNodeErrors(id);
 
         return {
             nodeErrors,
             nodeHasErrors: Object.keys(nodeErrors).length > 0,
+            isAdvancedSettingsEnabled: true
         }
     });
 
@@ -78,6 +80,19 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
         topText = __('Trigger', 'publishpress-future-pro');
     }
 
+    const nodeAttributes = [
+        // {
+        //     id: 'id',
+        //     label: __('ID', 'publishpress-future-pro'),
+        //     value: id,
+        // },
+        // {
+        //     id: 'slug',
+        //     label: __('Slug', 'publishpress-future-pro'),
+        //     value: data.slug,
+        // },
+    ];
+
     return (
         <>
             <div className={"react-flow__node-body " + nodeClassName}>
@@ -97,6 +112,22 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
                         <NodeIcon icon={data.icon} size={14} />
                         <div className="react-flow__node-label">{data.label}</div>
                     </div>
+                    {isAdvancedSettingsEnabled && nodeAttributes.length > 0 &&
+                        <div className='react-flow__node-content'>
+                            <table>
+                                <tbody>
+                                    {nodeAttributes.map((attribute) => {
+                                        return (
+                                            <tr key={'attribute_' + attribute.id}>
+                                                <th>{attribute.label}</th>
+                                                <td>{attribute.value}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                 </div>
 
                 <div className='react-flow__node-socket-area'>
