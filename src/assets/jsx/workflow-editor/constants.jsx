@@ -9,6 +9,7 @@ export const FEATURE_MOST_USED_NODES = 'mostUsedNodes';
 export const FEATURE_DEVELOPER_MODE = 'developerMode';
 export const FEATURE_WELCOME_GUIDE = 'welcomeGuide';
 export const FEATURE_ADVANCED_SETTINGS = 'advancedSettings';
+export const FEATURE_MINI_MAP = 'miniMap';
 
 export const INSERTER_TAB_TRIGGERS = 'triggers';
 export const INSERTER_TAB_ACTIONS = 'actions';

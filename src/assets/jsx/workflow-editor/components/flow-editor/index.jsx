@@ -23,7 +23,7 @@ import {
 } from "@wordpress/element";
 import { defaultEdgeProps } from "../../default-edges-props";
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
-import { SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
+import { FEATURE_MINI_MAP, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
 import GenericNode from "../node-types/generic";
 
 import { AUTO_LAYOUT_DEFAULT_DIRECTION } from "./auto-layout/constants";
@@ -46,6 +46,7 @@ export const FlowEditor = (props) => {
         activeComplementaryArea,
         initialViewport,
         baseSlugCounts,
+        isMiniMapActive,
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -62,6 +63,7 @@ export const FlowEditor = (props) => {
                 activeComplementaryArea !== "null/undefined",
             initialViewport: select(workflowStore).getInitialViewport(),
             baseSlugCounts: select(workflowStore).getBaseSlugCounts(),
+            isMiniMapActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
         };
     });
 
@@ -327,13 +329,15 @@ export const FlowEditor = (props) => {
                 onNodesDelete={onNodesDelete}
                 onEdgesDelete={onEdgesDelete}
             >
-                <MiniMap
-                    pannable
-                    zoomable
-                    nodeColor={(node) => {
-                        if (node.type === "generic") return "#FFCC00";
-                    }}
-                />
+                {isMiniMapActive && (
+                    <MiniMap
+                        pannable
+                        zoomable
+                        nodeColor={(node) => {
+                            if (node.type === "generic") return "#FFCC00";
+                        }}
+                    />
+                )}
                 <Background variant="dots" color="#ccc" gap={GRID_SIZE} />
                 <Controls />
             </ReactFlow>

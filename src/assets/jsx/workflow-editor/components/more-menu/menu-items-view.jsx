@@ -8,6 +8,7 @@ import {
 	FEATURE_DEVELOPER_MODE,
 	FEATURE_WELCOME_GUIDE,
 	FEATURE_ADVANCED_SETTINGS,
+	FEATURE_MINI_MAP,
 } from '../../constants';
 
 export const MoreMenuItemsView = () => {
@@ -36,6 +37,14 @@ export const MoreMenuItemsView = () => {
 					messageActivated={__('Advanced settings mode activated', 'publishpress-future-pro')}
 					messageDeactivated={__('Advanced settings mode deactivated', 'publishpress-future-pro')}
 					shortcut={displayShortcut.secondary('a')}
+				/>
+				<MoreMenuFeatureToggle
+					scope="core/edit-post"
+					feature={FEATURE_MINI_MAP}
+					label={__('Display a mini map', 'publishpress-future-pro')}
+					info={__('Display a mini map in the bottom of the editor, triggers and steps', 'publishpress-future-pro')}
+					messageActivated={__('Mini map activated', 'publishpress-future-pro')}
+					messageDeactivated={__('Mini map deactivated', 'publishpress-future-pro')}
 				/>
 			</MenuGroup>
 			<MenuGroup label={__('Tools', 'publishpress-future-pro')}>

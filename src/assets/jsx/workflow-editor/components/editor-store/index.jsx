@@ -11,6 +11,7 @@ import {
     FEATURE_FULLSCREEN_MODE,
     FEATURE_WELCOME_GUIDE,
     FEATURE_ADVANCED_SETTINGS,
+    FEATURE_MINI_MAP,
     INSERTER_TAB_TRIGGERS,
     SLOT_SCOPE_WORKFLOW_EDITOR,
 } from "../../constants";
@@ -325,6 +326,7 @@ const persistentFeatures = [
     FEATURE_DEVELOPER_MODE,
     FEATURE_WELCOME_GUIDE,
     FEATURE_ADVANCED_SETTINGS,
+    FEATURE_MINI_MAP,
 ];
 
 const initLocalPreferences = () => {
