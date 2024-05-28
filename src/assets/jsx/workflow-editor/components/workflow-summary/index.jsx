@@ -1,10 +1,11 @@
-import { PanelBody, TextControl, TextareaControl, __experimentalHStack as HStack } from '@wordpress/components';
+import { PanelRow, TextControl, TextareaControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { store as workflowStore } from '../workflow-store';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useCallback } from '@wordpress/element';
 import { WorkflowSwitchToDraftButton } from '../workflow-switch-to-draft-button';
 import { WorkflowDeleteButton } from '../workflow-delete-button';
+import PersistentPanelBody from '../persistent-panel-body';
 
 export const WorkflowSummary = () => {
     const {
@@ -32,36 +33,35 @@ export const WorkflowSummary = () => {
     })
 
     return (
-        <PanelBody
+        <PersistentPanelBody
             className='edit-post-post-status'
             title={__('Summary', 'publishpress-future-pro')}
             initialOpen={true}
             disabled={isLoadingWorkflow}
         >
-            <HStack className="editor-post-title__panel">
+            <PanelRow className="editor-post-title__panel">
                 <TextControl
                     label={__('Title', 'publishpress-future-pro')}
                     value={workflowTitle}
                     onChange={onChangeTitle}
                     disabled={isLoadingWorkflow}
                 />
-            </HStack>
+            </PanelRow>
 
-            <HStack className="editor-post-description__panel">
+            <PanelRow className="editor-post-description__panel">
                 <TextareaControl
                     label={__('Description', 'publishpress-future-pro')}
                     value={workflowDescription}
                     onChange={onChangeDescription}
                     disabled={isLoadingWorkflow}
                 />
-            </HStack>
+            </PanelRow>
 
-            <HStack className="editor-post-status__panel">
+            <PanelRow className="editor-post-status__panel">
                 <WorkflowSwitchToDraftButton />
                 <WorkflowDeleteButton />
-            </HStack>
-
-        </PanelBody>
+            </PanelRow>
+        </PersistentPanelBody>
     );
 };
 

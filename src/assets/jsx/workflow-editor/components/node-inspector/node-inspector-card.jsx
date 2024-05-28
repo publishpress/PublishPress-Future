@@ -8,6 +8,7 @@ export const NodeInspectorCard = ({ node }) => {
     const nodeLabel = node?.data?.label || __("Node", "publishpress-future-pro");
     const nodeDescription = node?.data?.description || __("No description", "publishpress-future-pro");
     const nodeId = node?.id;
+    const nodeSlug = node?.data?.slug;
 
     const Icon = <NodeIcon icon={nodeIcon} />;
 
@@ -17,6 +18,7 @@ export const NodeInspectorCard = ({ node }) => {
             description={nodeDescription}
             id={nodeId}
             icon={Icon}
+            slug={nodeSlug}
         />
     );
 };

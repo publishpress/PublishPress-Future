@@ -5,6 +5,7 @@ import { IoMdPlay } from "react-icons/io";
 import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { __ } from '@wordpress/i18n';
+import { Tooltip } from '@wordpress/components';
 
 export const GenericNode = memo(({ id, data, isConnectable }) => {
     const nodeClassName = data?.className || 'react-flow__node-genericNode';
@@ -95,47 +96,49 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
 
     return (
         <>
-            <div className={"react-flow__node-body " + nodeClassName}>
-                {targetHandles}
-                <div className='react-flow__node-top'>
-                    <NodeIcon icon={IoMdPlay} size={8} />
-                    {topText}
-                </div>
-
-                <div className='react-flow__node-inner-body'>
-                    {nodeHasErrors && (
-                        <div className='react-flow__node-error'>
-                            <NodeIcon icon={'warning'} size={16} />
-                        </div>
-                    )}
-                    <div className='react-flow__node-header'>
-                        <NodeIcon icon={data.icon} size={14} />
-                        <div className="react-flow__node-label">{data.label}</div>
+            <Tooltip text={__('Slug: ', 'publishpress-future-pro') + data.slug} placement="right-end">
+                <div className={"react-flow__node-body " + nodeClassName}>
+                    {targetHandles}
+                    <div className='react-flow__node-top'>
+                        <NodeIcon icon={IoMdPlay} size={8} />
+                        {topText}
                     </div>
-                    {isAdvancedSettingsEnabled && nodeAttributes.length > 0 &&
-                        <div className='react-flow__node-content'>
-                            <table>
-                                <tbody>
-                                    {nodeAttributes.map((attribute) => {
-                                        return (
-                                            <tr key={'attribute_' + attribute.id}>
-                                                <th>{attribute.label}</th>
-                                                <td>{attribute.value}</td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+
+                    <div className='react-flow__node-inner-body'>
+                        {nodeHasErrors && (
+                            <div className='react-flow__node-error'>
+                                <NodeIcon icon={'warning'} size={16} />
+                            </div>
+                        )}
+                        <div className='react-flow__node-header'>
+                            <NodeIcon icon={data.icon} size={14} />
+                            <div className="react-flow__node-label">{data.label}</div>
                         </div>
-                    }
-                </div>
+                        {isAdvancedSettingsEnabled && nodeAttributes.length > 0 &&
+                            <div className='react-flow__node-content'>
+                                <table>
+                                    <tbody>
+                                        {nodeAttributes.map((attribute) => {
+                                            return (
+                                                <tr key={'attribute_' + attribute.id}>
+                                                    <th>{attribute.label}</th>
+                                                    <td>{attribute.value}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
 
-                <div className='react-flow__node-socket-area'>
-                    {socketAreas}
-                </div>
+                    <div className='react-flow__node-socket-area'>
+                        {socketAreas}
+                    </div>
 
-                {sourceHandles}
-            </div>
+                    {sourceHandles}
+                </div>
+            </Tooltip>
         </>
     );
 });

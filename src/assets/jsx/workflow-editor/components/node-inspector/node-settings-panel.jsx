@@ -1,10 +1,10 @@
-import { PanelBody } from "@wordpress/components";
+import { PanelRow } from "@wordpress/components";
 import { store as workflowStore } from "../workflow-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";
-import BaseField from "../data-fields/base-field";
 import { getExpandedVariableOptionsForSelect } from "../../utils";
 import MappedField from "./mapped-field";
+import PersistentPanelBody from "../persistent-panel-body";
 
 export const NodeSettingsPanel = ({ node }) => {
     const {
@@ -46,12 +46,17 @@ export const NodeSettingsPanel = ({ node }) => {
     const settingsPanels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {
             return (
-                <PanelBody title={settingPanel.label} key={settingPanel.label}>
-                    <BaseField description={settingPanel?.description}>
-                        {settingPanel.fields.map((field) => {
-                            return (
+                <PersistentPanelBody title={settingPanel.label} key={settingPanel.label}>
+                    {settingPanel?.description && (
+                        <PanelRow>
+                            <div className="settings-field-description">{settingPanel?.description}</div>
+                        </PanelRow>
+                    )}
+
+                    {settingPanel.fields.map((field) => {
+                        return (
+                            <PanelRow key={settingPanel.label + '-' + field.name}>
                                 <MappedField
-                                    key={settingPanel.label + '-' + field.name}
                                     type={field.type}
                                     name={field.name}
                                     description={field?.description}
@@ -61,10 +66,10 @@ export const NodeSettingsPanel = ({ node }) => {
                                     variables={variableListOptions}
                                     settings={field?.settings}
                                 />
-                            );
-                        })}
-                    </BaseField>
-                </PanelBody>
+                            </PanelRow>
+                        );
+                    })}
+                </PersistentPanelBody>
             );
         });
     }, [settingsSchema, nodeSettings]);

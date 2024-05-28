@@ -10,6 +10,7 @@ import {
     FEATURE_DEVELOPER_MODE,
     FEATURE_FULLSCREEN_MODE,
     FEATURE_WELCOME_GUIDE,
+    FEATURE_ADVANCED_SETTINGS,
     INSERTER_TAB_TRIGGERS,
     SLOT_SCOPE_WORKFLOW_EDITOR,
 } from "../../constants";
@@ -26,6 +27,7 @@ export const storeConfig = {
     advancedNodes: [],
     activeSidebarName: null,
     hoveredItem: null,
+    panelBodyStates: {},
 };
 
 export const store = createReduxStore(STORE_NAME, {
@@ -157,6 +159,19 @@ export const store = createReduxStore(STORE_NAME, {
                     ...state,
                     hoveredItem: action.payload,
                 };
+
+            case "SET_PANEL_BODY_STATE":
+                const newState = {
+                    ...state,
+                    panelBodyStates: {
+                        ...state.panelBodyStates,
+                        [action.payload.panel]: action.payload.state,
+                    },
+                };
+
+                setPersistedPanelBodyState(action.payload.panel, action.payload.state)
+
+                return newState;
         }
 
         return state;
@@ -255,6 +270,12 @@ export const store = createReduxStore(STORE_NAME, {
                 payload: item,
             };
         },
+        setPanelBodyState(panel, state) {
+            return {
+                type: "SET_PANEL_BODY_STATE",
+                payload: { panel, state },
+            };
+        },
     },
     selectors: {
         getActiveFeatures(state) {
@@ -287,6 +308,9 @@ export const store = createReduxStore(STORE_NAME, {
         getHoveredItem(state) {
             return state.hoveredItem;
         },
+        getPanelBodyState(state, panel) {
+            return state.panelBodyStates[panel];
+        }
     },
 });
 
@@ -300,6 +324,7 @@ const persistentFeatures = [
     FEATURE_FULLSCREEN_MODE,
     FEATURE_DEVELOPER_MODE,
     FEATURE_WELCOME_GUIDE,
+    FEATURE_ADVANCED_SETTINGS,
 ];
 
 const initLocalPreferences = () => {
@@ -308,7 +333,10 @@ const initLocalPreferences = () => {
     if (localSettings === null) {
         localStorage.setItem(
             LOCAL_SETTINGS_KEY,
-            JSON.stringify({ persistentFeatures: {} }),
+            JSON.stringify({
+                persistentFeatures: {},
+                panelBodyStates: {}
+            }),
         );
     }
 };
@@ -323,6 +351,7 @@ const setLocalPreferences = (settings) => {
     localStorage.setItem(LOCAL_SETTINGS_KEY, JSON.stringify(settings));
 };
 
+
 const getPersistedFeatureValue = (feature) => {
     const localSettings = getLocalPreferences();
 
@@ -332,18 +361,44 @@ const getPersistedFeatureValue = (feature) => {
 const setPersistedFeatureValue = (feature, value) => {
     const localSettings = getLocalPreferences();
 
+    if (! localSettings.persistentFeatures) {
+        localSettings.persistentFeatures = {};
+    }
+
     localSettings.persistentFeatures[feature] = value;
 
     setLocalPreferences(localSettings);
 };
 
+
+const getPersistedPanelBodyState = () => {
+    const localSettings = getLocalPreferences();
+
+    return localSettings.panelBodyStates || {};
+};
+
+const setPersistedPanelBodyState = (panel, state) => {
+    const localSettings = getLocalPreferences();
+
+    if (! localSettings.panelBodyStates) {
+        localSettings.panelBodyStates = {};
+    }
+
+    localSettings.panelBodyStates[panel] = state;
+
+    setLocalPreferences(localSettings);
+}
+
+
 // Enable fullscreen mode by default
-if (getPersistedFeatureValue(FEATURE_FULLSCREEN_MODE) === null || getPersistedFeatureValue(FEATURE_FULLSCREEN_MODE) === undefined) {
+const isFullscreenModeEnabled = getPersistedFeatureValue(FEATURE_FULLSCREEN_MODE);
+if (isFullscreenModeEnabled === null || isFullscreenModeEnabled === undefined) {
     setPersistedFeatureValue(FEATURE_FULLSCREEN_MODE, true);
 }
 
 // Enable the welcome guide by default
-if (getPersistedFeatureValue(FEATURE_WELCOME_GUIDE) === null || getPersistedFeatureValue(FEATURE_WELCOME_GUIDE) === undefined) {
+const isWelcomeGuideEnabled = getPersistedFeatureValue(FEATURE_WELCOME_GUIDE);
+if (isWelcomeGuideEnabled === null || isWelcomeGuideEnabled === undefined) {
     setPersistedFeatureValue(FEATURE_WELCOME_GUIDE, true);
 }
 
@@ -355,5 +410,13 @@ persistentFeatures.forEach((feature) => {
         dispatch(store).disableFeature(feature);
     }
 });
+
+// Update the store with the persisted panel body states
+const panelBodyStates = getPersistedPanelBodyState();
+if (panelBodyStates) {
+    Object.keys(panelBodyStates).forEach((panel) => {
+        dispatch(store).setPanelBodyState(panel, panelBodyStates[panel]);
+    });
+}
 
 export default store;

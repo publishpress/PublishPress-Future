@@ -10,10 +10,11 @@ import InspectorCard from "../inspector-card";
 import InspectorWarning from "../inspector-warning";
 import NodeSettingsPanel from "./node-settings-panel";
 import { nodeHasIncomers, nodeHasInput, mapNodeInputs } from "../../utils";
-import { FEATURE_DEVELOPER_MODE } from "../../constants";
+import { FEATURE_ADVANCED_SETTINGS, FEATURE_DEVELOPER_MODE } from "../../constants";
 import NodeValidationPanel from "../node-validation-panel";
 import NodeDevInfoPanel from "../node-dev-info-panel";
 import NodeSocketsPanel from "./node-sockets-panel";
+import WorkflowGlobalVariables from "../workflow-global-variables";
 
 export const NodeInspector = () => {
     const {
@@ -50,11 +51,11 @@ export const NodeInspector = () => {
 
     const {
         isDeveloperModeEnabled,
+        isAdvancedSettingsEnabled,
     } = useSelect((select) => {
         return {
-            isDeveloperModeEnabled: select(editorStore).isFeatureActive(
-                FEATURE_DEVELOPER_MODE,
-            ),
+            isDeveloperModeEnabled: select(editorStore).isFeatureActive(FEATURE_DEVELOPER_MODE),
+            isAdvancedSettingsEnabled: select(editorStore).isFeatureActive(FEATURE_ADVANCED_SETTINGS),
         };
     });
 
@@ -129,6 +130,10 @@ export const NodeInspector = () => {
                         <NodeValidationPanel errors={nodeErrors} />
                     )}
 
+                    {isAdvancedSettingsEnabled &&(
+                        <WorkflowGlobalVariables />
+                    )}
+
                     {isDeveloperModeEnabled && selectedNodeHasIncomers && selectedNodeHasInput && (
                         <NodeSocketsPanel inputSchema={mappedNodeInputSchema} outputSchema={selectedNode.data.outputSchema} />
                     )}
@@ -136,6 +141,8 @@ export const NodeInspector = () => {
                     {isDeveloperModeEnabled && (
                         <NodeDevInfoPanel node={selectedNode} />
                     )}
+
+
 
                     <div className="components-tools-panel"></div>
                 </>

@@ -7,6 +7,7 @@ import {
 	FEATURE_FULLSCREEN_MODE,
 	FEATURE_DEVELOPER_MODE,
 	FEATURE_WELCOME_GUIDE,
+	FEATURE_ADVANCED_SETTINGS,
 } from '../../constants';
 
 export const MoreMenuItemsView = () => {
@@ -27,7 +28,17 @@ export const MoreMenuItemsView = () => {
 					messageDeactivated={__('Fullscreen mode deactivated', 'publishpress-future-pro')}
 					shortcut={displayShortcut.secondary('f')}
 				/>
-
+				<MoreMenuFeatureToggle
+					scope="core/edit-post"
+					feature={FEATURE_ADVANCED_SETTINGS}
+					label={__('Advanced Settings', 'publishpress-future-pro')}
+					info={__('Display advanced settings for the workflow, triggers and steps', 'publishpress-future-pro')}
+					messageActivated={__('Advanced settings mode activated', 'publishpress-future-pro')}
+					messageDeactivated={__('Advanced settings mode deactivated', 'publishpress-future-pro')}
+					shortcut={displayShortcut.secondary('a')}
+				/>
+			</MenuGroup>
+			<MenuGroup label={__('Tools', 'publishpress-future-pro')}>
 				<MoreMenuFeatureToggle
 					scope="core/edit-post"
 					feature={FEATURE_DEVELOPER_MODE}
@@ -37,8 +48,6 @@ export const MoreMenuItemsView = () => {
 					messageDeactivated={__('Developer mode deactivated', 'publishpress-future-pro')}
 					shortcut={displayShortcut.secondary('d')}
 				/>
-			</MenuGroup>
-			<MenuGroup label={__('Tools', 'publishpress-future-pro')}>
 				<MoreMenuFeatureToggle
 					scope="core/edit-post"
 					feature={FEATURE_WELCOME_GUIDE}

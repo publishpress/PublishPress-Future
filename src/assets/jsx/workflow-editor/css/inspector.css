@@ -110,3 +110,21 @@
 .workflow-editor-validation-panel span.dashicons {
     color: #d90f0f;
 }
+
+.edit-post-sidebar__panel .components-h-stack {
+    width: 100%;
+}
+
+.workflow-editor-inspector-card__content table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.workflow-editor-inspector-card__content table th,
+.workflow-editor-inspector-card__content table td {
+    padding: 2px 3px;
+    border: 1px solid #e1e1e1;
+    text-align: left;
+}

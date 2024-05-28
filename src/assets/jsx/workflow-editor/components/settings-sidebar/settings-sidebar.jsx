@@ -8,7 +8,7 @@ import { SettingsHeader } from './settings-header';
 import { __ } from '@wordpress/i18n';
 import {
     SLOT_SCOPE_WORKFLOW_EDITOR,
-    FEATURE_DEVELOPER_MODE
+    FEATURE_ADVANCED_SETTINGS
 } from '../../constants';
 import { SIDEBAR_WORKFLOW, SIDEBAR_NODE_EDGE } from './constants';
 import { WorkflowSummary } from '../workflow-summary';
@@ -34,12 +34,10 @@ export const SettingsSidebar = () => {
     });
 
     const {
-        isDeveloperModeEnabled,
+        isAdvancedSettingsEnabled,
     } = useSelect((select) => {
         return {
-            isDeveloperModeEnabled: select(editorStore).isFeatureActive(
-                FEATURE_DEVELOPER_MODE,
-            ),
+            isAdvancedSettingsEnabled: select(editorStore).isFeatureActive(FEATURE_ADVANCED_SETTINGS),
         };
     });
 
@@ -59,7 +57,9 @@ export const SettingsSidebar = () => {
             {sidebarName === SIDEBAR_WORKFLOW && (
                 <>
                     <WorkflowSummary />
-                    <WorkflowGlobalVariables />
+                    {isAdvancedSettingsEnabled && (
+                        <WorkflowGlobalVariables />
+                    )}
                 </>
             )}
             {sidebarName === SIDEBAR_NODE_EDGE && (

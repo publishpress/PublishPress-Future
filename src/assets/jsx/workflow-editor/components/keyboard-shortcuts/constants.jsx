@@ -9,3 +9,5 @@ export const SHORTCUT_TOGGLE_SIDEBAR =
     "publishpress-future/workflow-editor/toggle-sidebar";
 export const SHORTCUT_TOGGLE_DEVELOPER_MODE =
     "publishpress-future/workflow-editor/toggle-developer-mode";
+export const SHORTCUT_TOGGLE_ADVANCED_SETTINGS =
+    "publishpress-future/workflow-editor/toggle-advanced-settings";

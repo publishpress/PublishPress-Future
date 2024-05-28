@@ -1,6 +1,6 @@
 import { PanelRow } from "@wordpress/components";
-import { PanelBody } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
+import PersistentPanelBody from "../persistent-panel-body";
 
 export const NodeSocketsPanel = ({ inputSchema = [], outputSchema = []}) => {
 
@@ -9,7 +9,7 @@ export const NodeSocketsPanel = ({ inputSchema = [], outputSchema = []}) => {
     }
 
     return (
-        <PanelBody title={__("Sockets", "publishpress-future-pro")} className="workflow-editor-dev-panel">
+        <PersistentPanelBody title={__("Sockets", "publishpress-future-pro")} className="workflow-editor-dev-panel">
             <PanelRow className="workflow-editor-inspector-card__sockets-schema">
                 <h3>{__('Inputs', 'publishpress-future-pro')}</h3>
                 <div>
@@ -36,7 +36,7 @@ export const NodeSocketsPanel = ({ inputSchema = [], outputSchema = []}) => {
                 </ul>
                 </div>
             </PanelRow>
-        </PanelBody>
+        </PersistentPanelBody>
     );
 };
 

@@ -5,6 +5,7 @@ import {
 import { store as editorStore } from "../editor-store";
 import { useEffect } from "@wordpress/element";
 import {
+    FEATURE_ADVANCED_SETTINGS,
     FEATURE_DEVELOPER_MODE,
     FEATURE_FULLSCREEN_MODE,
     FEATURE_INSERTER,
@@ -21,6 +22,7 @@ import {
     SHORTCUT_AUTO_LAYOUT,
     SHORTCUT_TOGGLE_SIDEBAR,
     SHORTCUT_TOGGLE_DEVELOPER_MODE,
+    SHORTCUT_TOGGLE_ADVANCED_SETTINGS,
 } from "./constants";
 import { useReactFlow } from "reactflow";
 
@@ -47,6 +49,16 @@ export const KeyboardShortcuts = () => {
             keyCombination: {
                 modifier: "secondary",
                 character: "d",
+            },
+        });
+
+        registerShortcut({
+            name: SHORTCUT_TOGGLE_ADVANCED_SETTINGS,
+            category: "global",
+            description: "Toggle advanced settings",
+            keyCombination: {
+                modifier: "secondary",
+                character: "a",
             },
         });
 
@@ -120,6 +132,10 @@ export const KeyboardShortcuts = () => {
     });
 
     useShortcut(SHORTCUT_TOGGLE_SIDEBAR, () => {});
+
+    useShortcut(SHORTCUT_TOGGLE_ADVANCED_SETTINGS, () => {
+        toggleFeature(FEATURE_ADVANCED_SETTINGS);
+    });
 
     return null;
 };
