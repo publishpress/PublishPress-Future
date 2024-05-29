@@ -42,7 +42,7 @@ export function NodeValidator({})
                                 addNodeError(
                                     node.id,
                                     'no-incomers',
-                                    __('This step requires an incoming connection', 'publishpress-future-pro')
+                                    __('This step requires a connection from a previous step', 'publishpress-future-pro')
                                 );
                             }
                             break;
@@ -52,7 +52,7 @@ export function NodeValidator({})
                                 addNodeError(
                                     node.id,
                                     'no-outgoers',
-                                    __('This step requires an outgoing connection', 'publishpress-future-pro')
+                                    __('This step requires a connection to a following step', 'publishpress-future-pro')
                                 );
                             }
                             break;
