@@ -153,7 +153,7 @@ class ExpirationScheduler implements SchedulerInterface
         $actionArgsModel = $factory();
         $id = $actionArgsModel->setCronActionId($actionId)
             ->setPostId($postId)
-            ->setScheduledDateFromUnixTime($timestamp)
+            ->setScheduledDate($timestamp)
             ->setArgs($opts)
             ->insert();
 

@@ -456,7 +456,7 @@ class ActionArgsModel
      */
     public function setScheduledDate($scheduledDate)
     {
-        $this->scheduledDate = $scheduledDate;
+        $this->scheduledDate = date('Y-m-d H:i:s', $scheduledDate);
         return $this;
     }
 
