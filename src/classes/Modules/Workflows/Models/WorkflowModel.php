@@ -291,6 +291,13 @@ class WorkflowModel implements WorkflowModelInterface
         $elementarType = $node['data']['elementarType'];
         $nodeName = $node['data']['name'];
         $nodeTypeInstance = $nodeTypes[$elementarType][$nodeName];
+
+        if (is_null($nodeTypeInstance)) {
+            if (defined(WP_DEBUG) && WP_DEBUG) {
+                error_log('Node type not found: ' . $elementarType . ' - ' . $nodeName . ' - ' . $sourceNodeId);
+            }
+            return [];
+        }
         $socketSchema = $nodeTypeInstance->getSocketSchema();
 
         $tree = ['node' => $node,];
