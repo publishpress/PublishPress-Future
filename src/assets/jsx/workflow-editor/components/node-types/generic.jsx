@@ -136,7 +136,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
                     <div className='react-flow__node-inner-body'>
                         {nodeHasErrors && (
                             <div className='react-flow__node-error'>
-                                <NodeIcon icon={'warning'} size={16} />
+                                <NodeIcon icon={'error'} size={16} />
                             </div>
                         )}
                         <div className='react-flow__node-header'>

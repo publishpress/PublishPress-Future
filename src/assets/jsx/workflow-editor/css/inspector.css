@@ -107,7 +107,22 @@
     min-width: 20px;
 }
 
-.workflow-editor-validation-panel span.dashicons {
+.workflow-editor-validation-notification {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.workflow-editor-validation-panel .node-icon {
+    margin-right: 5px;
+}
+
+.workflow-editor-validation-notification.workflow-editor-success .node-icon * {
+    color: #46b450;
+}
+
+.workflow-editor-validation-notification.workflow-editor-error .node-icon * {
     color: #d90f0f;
 }
 

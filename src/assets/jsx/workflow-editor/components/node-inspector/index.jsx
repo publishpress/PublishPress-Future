@@ -23,7 +23,6 @@ export const NodeInspector = () => {
         selectedElementsCount,
         selectedNode,
         selectedEdge,
-        nodeHasErrors,
         nodeErrors,
     } = useSelect((select) => {
         const selectedNodes = select(workflowStore).getSelectedNodes();
@@ -35,7 +34,6 @@ export const NodeInspector = () => {
         const selectedEdge =
             selectedEdges.length === 1 ? getEdgeById(selectedEdges[0]) : null;
         const nodeErrors = select(workflowStore).getNodeErrors(selectedNode?.id) || {};
-        const nodeHasErrors = Object.keys(nodeErrors).length > 0;
         const selectedElementsCount = select(workflowStore).getSelectedElementsCount();
 
         return {
@@ -44,7 +42,6 @@ export const NodeInspector = () => {
             selectedElementsCount,
             selectedNode,
             selectedEdge,
-            nodeHasErrors,
             nodeErrors,
         };
     });
@@ -66,7 +63,6 @@ export const NodeInspector = () => {
 
     const nodeHasSettings = selectedNode?.data?.settingsSchema?.length > 0;
 
-    const selectedNodeHasIncomers = nodeHasIncomers(selectedNode);
     const selectedNodeHasInput = nodeHasInput(selectedNode);
     const selectedNodeHasOutput = nodeHasOutput(selectedNode);
 
@@ -142,9 +138,7 @@ export const NodeInspector = () => {
                         <NodeSettingsPanel node={selectedNode} />
                     )}
 
-                    {nodeHasErrors && (
-                        <NodeValidationPanel errors={nodeErrors} />
-                    )}
+                    <NodeValidationPanel errors={nodeErrors} />
 
                     {isAdvancedSettingsEnabled &&(
                         <WorkflowGlobalVariables />

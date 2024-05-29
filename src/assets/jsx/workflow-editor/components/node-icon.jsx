@@ -16,63 +16,73 @@ import { ImDatabase } from "react-icons/im";
 import { TbRouteAltRight } from "react-icons/tb";
 import { IoMdMail } from "react-icons/io";
 import { BiSolidMessageDetail } from "react-icons/bi";
+import { IoMdWarning } from "react-icons/io";
 
 export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	const iconSrc = icon?.src || icon;
 
-	if (iconSrc === 'block-default') {
-		icon = {
-			src: blockDefault,
-		};
+	switch (iconSrc) {
+		case 'block-default':
+			icon = {
+				src: blockDefault,
+			};
+			break;
+		case 'document':
+		case 'media-document':
+			icon = {
+				src: HiMiniDocumentText,
+			};
+			break;
+		case 'users':
+			icon = {
+				src: FaUser,
+			};
+			break;
+		case 'woo':
+			icon = {
+				src: SiWoo,
+			};
+			break;
+		case 'fa6-fabug':
+			icon = {
+				src: FaBug,
+			};
+			break;
+		case 'db-query':
+			icon = {
+				src: ImDatabase,
+			};
+			break;
+		case 'route':
+			icon = {
+				src: TbRouteAltRight,
+			};
+			break;
+		case 'email':
+			icon = {
+				src: IoMdMail,
+			};
+			break;
+		case 'message':
+			icon = {
+				src: BiSolidMessageDetail,
+			};
+			break;
+		case 'error':
+			icon = {
+				src: 'warning',
+			};
+			break;
+		case 'warning':
+			icon = {
+				src: IoMdWarning,
+			};
+			break;
 	}
 
-	if (iconSrc === 'document' || iconSrc === 'media-document') {
-		icon = {
-			src: HiMiniDocumentText,
-		};
-	}
-
-	if (iconSrc === 'users') {
-		icon = {
-			src: FaUser,
-		};
-	}
-
-	if (iconSrc === 'woo') {
-		icon = {
-			src: SiWoo,
-		};
-	}
-
-	if (iconSrc === 'fa6-fabug') {
-		icon = {
-			src: FaBug,
-		};
-	}
-
-	if (iconSrc === 'db-query') {
-		icon = {
-			src: ImDatabase,
-		};
-	}
-
-	if (iconSrc === 'route') {
-		icon = {
-			src: TbRouteAltRight,
-		};
-	}
-
-	if (iconSrc === 'email') {
-		icon = {
-			src: IoMdMail,
-		};
-	}
-
-	if (iconSrc === 'message') {
-		icon = {
-			src: BiSolidMessageDetail,
-		};
-	}
+	const mergedClassName = classnames(className, 'node-icon', {
+		'has-colors': showColors,
+	});
 
 	const renderedIcon = <Icon icon={icon && icon.src ? icon.src : icon} size={size} />;
 	const style = showColors
@@ -85,9 +95,7 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	return (
 		<span
 			style={style}
-			className={classnames(className, {
-				'has-colors': showColors,
-			})}
+			className={mergedClassName}
 		>
 			{renderedIcon}
 		</span>
