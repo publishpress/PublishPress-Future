@@ -152,6 +152,7 @@ export const FlowEditor = (props) => {
             params = {
                 ...params,
                 type: 'genericEdge',
+                id: `${params.source}-${params.sourceHandle}-${params.target}-${params.targetHandle}`,
             };
 
             setEdges(addEdge(params, edges));
@@ -160,7 +161,7 @@ export const FlowEditor = (props) => {
         [edges],
     );
 
-    const getId = () => `node_${+new Date()}`;
+    const getId = () => `n${+new Date()}`;
 
     const onDragOver = useCallback((event) => {
         event.preventDefault();
