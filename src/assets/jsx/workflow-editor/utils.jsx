@@ -120,6 +120,12 @@ export function nodeHasInput(node) {
     return nodeHasInput;
 }
 
+export function nodeHasOutput(node) {
+    const nodeHasOutput = node.data?.outputSchema?.length > 0;
+
+    return nodeHasOutput;
+}
+
 export function getNodeInputs(node) {
     const incomers = getNodeIncomers(node);
     const nodeHasIncomers = incomers?.length > 0;

@@ -9,7 +9,7 @@ import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
 import InspectorWarning from "../inspector-warning";
 import NodeSettingsPanel from "./node-settings-panel";
-import { nodeHasIncomers, nodeHasInput, mapNodeInputs } from "../../utils";
+import { nodeHasIncomers, nodeHasInput, mapNodeInputs, nodeHasOutput } from "../../utils";
 import { FEATURE_ADVANCED_SETTINGS, FEATURE_DEVELOPER_MODE } from "../../constants";
 import NodeValidationPanel from "../node-validation-panel";
 import NodeDevInfoPanel from "../node-dev-info-panel";
@@ -68,8 +68,21 @@ export const NodeInspector = () => {
 
     const selectedNodeHasIncomers = nodeHasIncomers(selectedNode);
     const selectedNodeHasInput = nodeHasInput(selectedNode);
+    const selectedNodeHasOutput = nodeHasOutput(selectedNode);
 
     const mappedNodeInputSchema = mapNodeInputs(selectedNode);
+
+    const nodeOutputSchema = selectedNode?.data?.outputSchema || [];
+    let mappedNodeOutputSchema = [];
+    if (nodeOutputSchema.length > 0) {
+        nodeOutputSchema.forEach((schemaItem) => {
+            if (schemaItem.type === "input") {
+                mappedNodeOutputSchema = mappedNodeOutputSchema.concat(mappedNodeInputSchema);
+            } else {
+                mappedNodeOutputSchema.push(schemaItem);
+            }
+        });
+    }
 
     return (
         <>
@@ -134,8 +147,8 @@ export const NodeInspector = () => {
                         <WorkflowGlobalVariables />
                     )}
 
-                    {isDeveloperModeEnabled && selectedNodeHasIncomers && selectedNodeHasInput && (
-                        <NodeSocketsPanel inputSchema={mappedNodeInputSchema} outputSchema={selectedNode.data.outputSchema} />
+                    {isDeveloperModeEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && (
+                        <NodeSocketsPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
                     )}
 
                     {isDeveloperModeEnabled && (
