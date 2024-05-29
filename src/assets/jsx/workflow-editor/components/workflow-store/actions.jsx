@@ -342,3 +342,17 @@ export function resetNodeErrors(nodeId) {
         payload: nodeId,
     };
 }
+
+export function removeNode(nodeId) {
+    return {
+        type: 'REMOVE_NODE',
+        payload: nodeId,
+    };
+}
+
+export function removeEdge(edgeId) {
+    return {
+        type: 'REMOVE_EDGE',
+        payload: edgeId,
+    };
+}

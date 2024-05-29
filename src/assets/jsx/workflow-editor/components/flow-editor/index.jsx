@@ -21,7 +21,6 @@ import {
     Platform,
     useMemo,
 } from "@wordpress/element";
-import { defaultEdgeProps } from "../../default-edges-props";
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
 import { FEATURE_CONTROLS, FEATURE_MINI_MAP, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
 import GenericNode from "../node-types/generic";
@@ -33,6 +32,7 @@ import {
 } from "../settings-sidebar/constants";
 import TriggerNode from "../node-types/trigger";
 import NodeValidator from "../node-validator";
+import { GenericEdge } from "../edge-types";
 
 const GRID_SIZE = 10;
 
@@ -98,6 +98,10 @@ export const FlowEditor = (props) => {
         trigger: TriggerNode,
     }), []);
 
+    const edgeTypes = useMemo(() => ({
+        genericEdge: GenericEdge,
+    }), []);
+
     const updateFlowInEditedWorkflow = useCallback(() => {
         // We need to delay the update of the flow to avoid missing the changes.
         setTimeout(() => {
@@ -147,7 +151,7 @@ export const FlowEditor = (props) => {
         (params) => {
             params = {
                 ...params,
-                ...defaultEdgeProps,
+                type: 'genericEdge',
             };
 
             setEdges(addEdge(params, edges));
@@ -328,6 +332,7 @@ export const FlowEditor = (props) => {
                 snapToGrid={true}
                 snapGrid={[GRID_SIZE, GRID_SIZE]}
                 nodeTypes={nodeTypes}
+                edgeTypes={edgeTypes}
                 onNodesDelete={onNodesDelete}
                 onEdgesDelete={onEdgesDelete}
             >

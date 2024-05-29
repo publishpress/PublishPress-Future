@@ -601,6 +601,28 @@ const resetNodeErrors = (state, action) => {
     };
 }
 
+const removeNode = (state, action) => {
+    const { payload } = action;
+
+    const newNodes = state.nodes.filter(node => node.id !== payload);
+
+    return {
+        ...state,
+        nodes: newNodes,
+    };
+}
+
+const removeEdge = (state, action) => {
+    const { payload } = action;
+
+    const newEdges = state.edges.filter(edge => edge.id !== payload);
+
+    return {
+        ...state,
+        edges: newEdges,
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -683,6 +705,10 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return removeNodeError(state, action);
         case 'RESET_NODE_ERRORS':
             return resetNodeErrors(state, action);
+        case 'REMOVE_NODE':
+            return removeNode(state, action);
+        case 'REMOVE_EDGE':
+            return removeEdge(state, action);
     }
 
     return state;

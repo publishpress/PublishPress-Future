@@ -2,27 +2,36 @@ import { Handle, Position } from 'reactflow';
 import { memo } from '@wordpress/element';
 import NodeIcon from '../node-icon';
 import { IoMdPlay } from "react-icons/io";
-import { useSelect } from "@wordpress/data";
+import { useSelect, useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { __ } from '@wordpress/i18n';
-import { Tooltip } from '@wordpress/components';
+import { Tooltip, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
+import { Toolbar } from 'reakit';
 
-export const GenericNode = memo(({ id, data, isConnectable }) => {
+
+export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
     const nodeClassName = data?.className || 'react-flow__node-genericNode';
 
     const {
         nodeErrors,
         nodeHasErrors,
         isAdvancedSettingsEnabled,
+        isSingularElementSelected
     } = useSelect((select) => {
         const nodeErrors = select(workflowStore).getNodeErrors(id);
+        const selectedElementsCount = select(workflowStore).getSelectedElementsCount();
 
         return {
             nodeErrors,
             nodeHasErrors: Object.keys(nodeErrors).length > 0,
-            isAdvancedSettingsEnabled: true
+            isAdvancedSettingsEnabled: true,
+            isSingularElementSelected: selectedElementsCount === 1,
         }
     });
+
+    const {
+        removeNode,
+    } = useDispatch(workflowStore);
 
     let targetHandles = null;
     if (data.socketSchema) {
@@ -94,8 +103,28 @@ export const GenericNode = memo(({ id, data, isConnectable }) => {
         // },
     ];
 
+    const onClickDeleteNode = () => {
+        removeNode(id);
+    };
+
     return (
         <>
+            {selected && isSingularElementSelected && (
+                <>
+                    <Popover placement="top-start" offset={14}>
+                        <Toolbar className="components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar">
+                            <ToolbarGroup>
+                                <ToolbarButton
+                                    icon={'trash'}
+                                    label={__('Delete', 'publishpress-future-pro')}
+                                    onClick={onClickDeleteNode}
+                                />
+                            </ToolbarGroup>
+                        </Toolbar>
+                    </Popover>
+                </>
+            )}
+
             <Tooltip text={__('Slug: ', 'publishpress-future-pro') + data.slug} placement="right-end">
                 <div className={"react-flow__node-body " + nodeClassName}>
                     {targetHandles}
