@@ -9,6 +9,9 @@ import { Popover, Button } from "@wordpress/components";
 import { useState } from "@wordpress/element";
 import { ToggleControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
+import { useSelect } from "@wordpress/data";
+import { store as editorStore } from "../editor-store";
+import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
 
 /**
  *  When to execute:
@@ -49,6 +52,14 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         dateOffset: "+7 days",
         ...defaultValue
     };
+
+    const {
+        isAdvancedSettingsEnabled,
+    } = useSelect((select) => {
+        return {
+            isAdvancedSettingsEnabled: select(editorStore).isFeatureActive(FEATURE_ADVANCED_SETTINGS),
+        };
+    });
 
     const whenToRunOptions = [
         { name: __("As soon as possible", "publishpress-future-pro"), id: "now" },
@@ -208,11 +219,13 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
 
-                <TextControl
-                    label={__("Priority", "publishpress-future-pro")}
-                    value={defaultValue.priority}
-                    onChange={(value) => onChangeSetting({ settingName: "priority", value })}
-                />
+                {isAdvancedSettingsEnabled && (
+                    <TextControl
+                        label={__("Priority", "publishpress-future-pro")}
+                        value={defaultValue.priority}
+                        onChange={(value) => onChangeSetting({ settingName: "priority", value })}
+                    />
+                )}
             </VStack>
         </>
     );
