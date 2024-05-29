@@ -79,7 +79,10 @@ export const NodeInspector = () => {
             if (schemaItem.type === "input") {
                 mappedNodeOutputSchema = mappedNodeOutputSchema.concat(mappedNodeInputSchema);
             } else {
-                mappedNodeOutputSchema.push(schemaItem);
+                mappedNodeOutputSchema.push({
+                    ...schemaItem,
+                    name: `${selectedNode?.data?.slug}.${schemaItem.name}`,
+                });
             }
         });
     }

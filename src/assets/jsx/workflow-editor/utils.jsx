@@ -121,7 +121,7 @@ export function nodeHasInput(node) {
 }
 
 export function nodeHasOutput(node) {
-    const nodeHasOutput = node.data?.outputSchema?.length > 0;
+    const nodeHasOutput = node?.data?.outputSchema?.length > 0;
 
     return nodeHasOutput;
 }
