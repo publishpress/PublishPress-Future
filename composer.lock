@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8bafca1efca2693cd3cdfa9082439e9",
+    "content-hash": "6d179d3bce716860d499264fb8054a23",
     "packages": [
         {
             "name": "publishpress/publishpress-future",
@@ -50,32 +50,25 @@
     "packages-dev": [
         {
             "name": "automattic/vipwpcs",
-            "version": "3.0.1",
+            "version": "0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "2b1d206d81b74ed999023cffd924f862ff2753c8"
+                "reference": "c74e8861cf3a0db3a3a1633cb9b7854144ec585b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/2b1d206d81b74ed999023cffd924f862ff2753c8",
-                "reference": "2b1d206d81b74ed999023cffd924f862ff2753c8",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/c74e8861cf3a0db3a3a1633cb9b7854144ec585b",
+                "reference": "c74e8861cf3a0db3a3a1633cb9b7854144ec585b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4",
-                "phpcsstandards/phpcsextra": "^1.2.1",
-                "phpcsstandards/phpcsutils": "^1.0.11",
-                "sirbrillig/phpcs-variable-analysis": "^2.11.18",
-                "squizlabs/php_codesniffer": "^3.9.2",
-                "wp-coding-standards/wpcs": "^3.1.0"
+                "php": ">=5.3",
+                "squizlabs/php_codesniffer": "^2.9.0 || ^3.0.2",
+                "wp-coding-standards/wpcs": "*"
             },
-            "require-dev": {
-                "php-parallel-lint/php-console-highlighter": "^1.0.0",
-                "php-parallel-lint/php-parallel-lint": "^1.3.2",
-                "phpcompatibility/php-compatibility": "^9",
-                "phpcsstandards/phpcsdevtools": "^1.0",
-                "phpunit/phpunit": "^4 || ^5 || ^6 || ^7 || ^8 || ^9"
+            "suggest": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1"
             },
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
@@ -92,15 +85,13 @@
             "keywords": [
                 "phpcs",
                 "standards",
-                "static analysis",
                 "wordpress"
             ],
             "support": {
                 "issues": "https://github.com/Automattic/VIP-Coding-Standards/issues",
-                "source": "https://github.com/Automattic/VIP-Coding-Standards",
-                "wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
+                "source": "https://github.com/Automattic/VIP-Coding-Standards"
             },
-            "time": "2024-05-10T20:31:09+00:00"
+            "time": "2018-07-18T16:53:09+00:00"
         },
         {
             "name": "behat/gherkin",
@@ -1688,16 +1679,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.57.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "3f7efe667a8c9818aacceee478add7c0fc24cb21"
+                "reference": "08bc02ca64de12ad946b92312fe0fda1706f8394"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/3f7efe667a8c9818aacceee478add7c0fc24cb21",
-                "reference": "3f7efe667a8c9818aacceee478add7c0fc24cb21",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/08bc02ca64de12ad946b92312fe0fda1706f8394",
+                "reference": "08bc02ca64de12ad946b92312fe0fda1706f8394",
                 "shasum": ""
             },
             "require": {
@@ -1744,6 +1735,7 @@
                 "ext-dom": "For handling output formats in XML",
                 "ext-mbstring": "For handling non-UTF8 characters."
             },
+            "default-branch": true,
             "bin": [
                 "php-cs-fixer"
             ],
@@ -1776,7 +1768,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.57.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/master"
             },
             "funding": [
                 {
@@ -1784,7 +1776,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-15T22:01:07+00:00"
+            "time": "2024-05-29T16:39:41+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -6167,65 +6159,6 @@
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
-            "name": "sirbrillig/phpcs-variable-analysis",
-            "version": "2.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "bb070b8f0fbccaa789e59c81f7a2212f0a7d5052"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/bb070b8f0fbccaa789e59c81f7a2212f0a7d5052",
-                "reference": "bb070b8f0fbccaa789e59c81f7a2212f0a7d5052",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "squizlabs/php_codesniffer": "^3.5.6"
-            },
-            "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7 || ^1.0",
-                "phpcsstandards/phpcsdevcs": "^1.1",
-                "phpstan/phpstan": "^1.7",
-                "phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.5 || ^7.0 || ^8.0 || ^9.0",
-                "sirbrillig/phpcs-import-detection": "^1.1",
-                "vimeo/psalm": "^0.2 || ^0.3 || ^1.1 || ^4.24 || ^5.0@beta"
-            },
-            "default-branch": true,
-            "type": "phpcodesniffer-standard",
-            "autoload": {
-                "psr-4": {
-                    "VariableAnalysis\\": "VariableAnalysis/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sam Graham",
-                    "email": "php-codesniffer-variableanalysis@illusori.co.uk"
-                },
-                {
-                    "name": "Payton Swick",
-                    "email": "payton@foolord.com"
-                }
-            ],
-            "description": "A PHPCS sniff to detect problems with variables.",
-            "keywords": [
-                "phpcs",
-                "static analysis"
-            ],
-            "support": {
-                "issues": "https://github.com/sirbrillig/phpcs-variable-analysis/issues",
-                "source": "https://github.com/sirbrillig/phpcs-variable-analysis",
-                "wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
-            },
-            "time": "2024-04-24T14:41:44+00:00"
-        },
-        {
             "name": "softcreatr/jsonpath",
             "version": "0.8.3",
             "source": {
@@ -6299,12 +6232,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "72b50b9aa22b65fd41be21a5de272d53a327d125"
+                "reference": "0c6c929144e77601e0c98c43571e5d45ba09a07d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/72b50b9aa22b65fd41be21a5de272d53a327d125",
-                "reference": "72b50b9aa22b65fd41be21a5de272d53a327d125",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/0c6c929144e77601e0c98c43571e5d45ba09a07d",
+                "reference": "0c6c929144e77601e0c98c43571e5d45ba09a07d",
                 "shasum": ""
             },
             "require": {
@@ -6372,7 +6305,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-05-16T06:02:46+00:00"
+            "time": "2024-05-23T22:20:24+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -8972,16 +8905,16 @@
         },
         {
             "name": "wp-coding-standards/wpcs",
-            "version": "3.1.0",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "9333efcbff231f10dfd9c56bb7b65818b4733ca7"
+                "reference": "29488feb64b723674fe463e691a4f83682c2dd5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/9333efcbff231f10dfd9c56bb7b65818b4733ca7",
-                "reference": "9333efcbff231f10dfd9c56bb7b65818b4733ca7",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/29488feb64b723674fe463e691a4f83682c2dd5e",
+                "reference": "29488feb64b723674fe463e691a4f83682c2dd5e",
                 "shasum": ""
             },
             "require": {
@@ -9005,6 +8938,7 @@
                 "ext-iconv": "For improved results",
                 "ext-mbstring": "For improved results"
             },
+            "default-branch": true,
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -9034,7 +8968,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-03-25T16:39:00+00:00"
+            "time": "2024-04-25T09:28:10+00:00"
         }
     ],
     "aliases": [],
