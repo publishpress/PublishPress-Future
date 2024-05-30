@@ -14,7 +14,7 @@ use PublishPress\FuturePro\Core\HooksAbstract;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-function uninstall()
+function uninstall(): void
 {
     // Deactivate the Pro plugin.
     do_action(HooksAbstract::ACTION_DEACTIVATE_PLUGIN);

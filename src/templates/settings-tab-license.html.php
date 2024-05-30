@@ -18,7 +18,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
             </th>
             <td>
                 <?php
+                // @phpstan-ignore variable.undefined
                 $value = $this->settingsModel->getLicenseKey();
+                // @phpstan-ignore variable.undefined
                 $status = $this->settingsModel->getLicenseStatus();
                 $error = '';
 

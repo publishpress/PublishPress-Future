@@ -10,6 +10,8 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
+use function PublishPress\FuturePro\logError;
+
 class CoreSendEmail implements NodeRunnerInterface
 {
     public const NODE_NAME = NodeTypeCoreSendEmail::NODE_NAME;
@@ -106,16 +108,7 @@ class CoreSendEmail implements NodeRunnerInterface
                 $this->emailFacade->send($recipientAddress, $subject, $message);
             }
         } catch (\Exception $e) {
-            if (defined('WP_DEBUG' && WP_DEBUG)) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log(
-                    sprintf(
-                        // translators: %s is the error message
-                        __('[PublishPress Future Pro] Error sending email: %s', 'publishpress-future-pro'),
-                        $e->getMessage()
-                    )
-                );
-            }
+            logError("Error sending email", $e);
         }
     }
 }

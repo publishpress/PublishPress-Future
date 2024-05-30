@@ -6,6 +6,8 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
+use function PublishPress\FuturePro\logError;
+
 class GeneralAction implements NodeRunnerPreparerInterface
 {
     /**
@@ -77,17 +79,14 @@ class GeneralAction implements NodeRunnerPreparerInterface
 
     public function logError(string $message, int $workflowId, array $step)
     {
-        if (defined('WP_DEBUG') && WP_DEBUG) {
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-            error_log(
-                sprintf(
-                    __('[PublishPress Future Pro] %1$s: workflowId: %2$d, step: %3$s', 'publishpress-future-pro'),
-                    $message,
-                    $workflowId,
-                    print_r($step, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-                )
-            );
-        }
+        logError(
+            sprintf(
+                '[PublishPress Future Pro] %1$s: workflowId: %2$d, step: %3$s',
+                $message,
+                $workflowId,
+                print_r($step, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+            )
+        );
     }
 
     public function getVariableValueFromContextVariables(string $variableName, array $contextVariables)

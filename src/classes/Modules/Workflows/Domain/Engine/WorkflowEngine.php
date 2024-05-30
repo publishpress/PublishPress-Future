@@ -2,6 +2,7 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine;
 
+use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
@@ -10,6 +11,8 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
+
+use function PublishPress\FuturePro\logError;
 
 class WorkflowEngine implements WorkflowEngineInterface
 {
@@ -104,16 +107,13 @@ class WorkflowEngine implements WorkflowEngineInterface
                     $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
 
                     if (is_null($triggerRunner)) {
-                        if (defined('WP_DEBUG') && WP_DEBUG) {
-                            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                            error_log(
-                                sprintf(
-                                    // translators: %s is the trigger name
-                                    __('[PublishPress Future Pro] Trigger not found: %s', 'publishpress-future-pro'),
-                                    $triggerName
-                                )
-                            );
-                        }
+                        logError(
+                            sprintf(
+                                // translators: %s is the trigger name
+                                __('[PublishPress Future Pro] Trigger not found: %s', 'publishpress-future-pro'),
+                                $triggerName
+                            )
+                        );
 
                         continue;
                     }
@@ -138,17 +138,8 @@ class WorkflowEngine implements WorkflowEngineInterface
                     $triggerRunner->setup($workflowId, $routineTree[$triggerId], $contextVariables);
                 }
             }
-        } catch (\Exception $e) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log(
-                    sprintf(
-                        // translators: %s is the error message
-                        __('[PublishPress Future Pro] Workflow engine error: %s', 'publishpress-future-pro'),
-                        $e->getMessage()
-                    )
-                );
-            }
+        } catch (Exception $e) {
+            logError("Workflow engine error", $e);
         }
     }
 
@@ -167,17 +158,8 @@ class WorkflowEngine implements WorkflowEngineInterface
             }
 
             $nodeRunner->setup($step, $contextVariables);
-        } catch (\Exception $e) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log(
-                    sprintf(
-                        // translators: %s is the error message
-                        __('[PublishPress Future Pro] Node runner error: %s', 'publishpress-future-pro'),
-                        $e->getMessage()
-                    )
-                );
-            }
+        } catch (Exception $e) {
+            logError("Node runner error", $e);
         }
     }
 
@@ -186,17 +168,8 @@ class WorkflowEngine implements WorkflowEngineInterface
         try {
             $nodeRunner = call_user_func($this->nodeRunnerFactory, $args['step']['node']['data']['name']);
             $nodeRunner->actionCallback($args);
-        } catch (\Exception $e) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log(
-                    sprintf(
-                        // translators: %s is the error message
-                        __('[PublishPress Future Pro] Async node runner error: %s', 'publishpress-future-pro'),
-                        $e->getMessage()
-                    )
-                );
-            }
+        } catch (Exception $e) {
+            logError("Async node runner error", $e);
         }
     }
 

@@ -8,7 +8,10 @@ use PublishPress\FuturePro\Models\SettingsModel;
         <?php esc_html_e('Action Date Calculation Base', 'publishpress-future-pro'); ?>
     </th>
     <td>
-        <?php $baseDate = $this->settingsModel->getBaseDate() ?: SettingsModel::BASE_DATE_CURRENT; ?>
+        <?php
+            // @phpstan-ignore variable.undefined
+            $baseDate = $this->settingsModel->getBaseDate() ?: SettingsModel::BASE_DATE_CURRENT;
+        ?>
         <div class="pp-settings-field-row">
             <input type="radio" name="future-action-base-date"
                 id="future-action-base-date-current"

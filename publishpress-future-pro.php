@@ -101,9 +101,9 @@ try {
 
             define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
         } catch (Exception $e) {
-            logCatchException($e);
+            logError('Error initializing the plugin', $e);
         }
     }, 12, 0);
 } catch (Exception $e) {
-    logCatchException($e);
+    logError('Error loading the plugin', $e);
 }

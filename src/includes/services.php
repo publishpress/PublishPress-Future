@@ -381,8 +381,7 @@ return [
                     $nodeRunner = new CorePostChangeStatus(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-                        $container->get(FreeServicesAbstract::ERROR)
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
                     );
                     break;
 
@@ -434,8 +433,6 @@ return [
                 $nodeRunner,
                 $nodeName
             );
-
-            return $nodeRunner;
         };
     },
 

@@ -13,7 +13,7 @@ use PublishPress\FuturePro\Core\HooksAbstract;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-function install()
+function install(): void
 {
     do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
 }

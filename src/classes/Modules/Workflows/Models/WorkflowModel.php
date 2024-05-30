@@ -10,6 +10,8 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLeg
 use WP_Post;
 use WP_Query;
 
+use function PublishPress\FuturePro\logError;
+
 class WorkflowModel implements WorkflowModelInterface
 {
     public const META_KEY_FLOW = '_workflow_flow';
@@ -300,23 +302,21 @@ class WorkflowModel implements WorkflowModelInterface
     private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null)
     {
         $node = $nodes[$sourceNodeId];
-        $elementarType = $node['data']['elementarType'];
-        $nodeName = $node['data']['name'];
-        $nodeTypeInstance = $nodeTypes[$elementarType][$nodeName];
+        $elementarType = $node['data']['elementarType'] ?? null;
+        $nodeName = $node['data']['name'] ?? null;
+        $nodeTypeInstance = $nodeTypes[$elementarType][$nodeName] ?? null;
 
         if (is_null($nodeTypeInstance)) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-                error_log(
-                    sprintf(
-                        // translators: 1: Node type, 2: Node name, 3: Source node ID
-                        'Node type not found: %1$s - %2$s - %3$s',
-                        $elementarType,
-                        $nodeName,
-                        $sourceNodeId
-                    )
-                );
-            }
+            logError(
+                sprintf(
+                    'Node type not found. Workflow: %1$d; ElementarType: %2$s; NodeName; %3$s; SourceNodeId: %4$s',
+                    $this->post->ID,
+                    $elementarType,
+                    $nodeName,
+                    $sourceNodeId
+                )
+            );
+
             return [];
         }
         $socketSchema = $nodeTypeInstance->getSocketSchema();
