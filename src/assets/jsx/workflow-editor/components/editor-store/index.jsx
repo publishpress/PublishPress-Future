@@ -312,6 +312,9 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getPanelBodyState(state, panel) {
             return state.panelBodyStates[panel];
+        },
+        getAllNodes(state) {
+            return state.triggerNodes.concat(state.actionNodes, state.advancedNodes);
         }
     },
 });
