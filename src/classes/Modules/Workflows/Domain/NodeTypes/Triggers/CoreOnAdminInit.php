@@ -8,7 +8,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreOnAdminInit implements NodeTypeInterface
 {
-    const NODE_NAME = "trigger/core.admin-init";
+    public const NODE_NAME = "trigger/core.admin-init";
 
     public function getElementarType(): string
     {

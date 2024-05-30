@@ -6,7 +6,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
 
 class RestApiManager implements RestApiManagerInterface
 {
-    const API_BASE = 'publishpress-future';
+    public const API_BASE = 'publishpress-future';
 
     public function register()
     {

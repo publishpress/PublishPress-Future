@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class FutureLegacyAction implements NodeTypeInterface
 {
-    const NODE_NAME = "trigger/future.legacy-action";
+    public const NODE_NAME = "trigger/future.legacy-action";
 
     /**
      * @var HookableInterface

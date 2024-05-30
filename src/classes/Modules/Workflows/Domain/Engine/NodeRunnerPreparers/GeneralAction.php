@@ -107,7 +107,7 @@ class GeneralAction implements NodeRunnerPreparerInterface
         foreach ($variableName as $variablePart) {
             if (is_array($variable) && isset($variable[$variablePart])) {
                 $variable = $variable[$variablePart];
-            } else if (is_object($variable) && isset($variable->{$variablePart})) {
+            } elseif (is_object($variable) && isset($variable->{$variablePart})) {
                 $variable = $variable->{$variablePart};
             } else {
                 $variable = null;

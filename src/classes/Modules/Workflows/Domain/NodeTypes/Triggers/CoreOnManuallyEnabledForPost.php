@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreOnManuallyEnabledForPost implements NodeTypeInterface
 {
-    const NODE_NAME = "trigger/core.manually-enabled-for-post";
+    public const NODE_NAME = "trigger/core.manually-enabled-for-post";
 
     public function getElementarType(): string
     {

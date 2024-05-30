@@ -14,8 +14,8 @@ defined('ABSPATH') or die('No direct script access allowed.');
 
 class CustomStatusesModel
 {
-    const OUTPUT_OBJECTS = 'objects';
-    const OUTPUT_NAMES = 'names';
+    public const OUTPUT_OBJECTS = 'objects';
+    public const OUTPUT_NAMES = 'names';
 
     /**
      * @return \stdClass[]

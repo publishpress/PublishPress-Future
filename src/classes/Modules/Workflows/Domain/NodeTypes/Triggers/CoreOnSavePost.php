@@ -8,7 +8,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreOnSavePost implements NodeTypeInterface
 {
-    const NODE_NAME = "trigger/core.save-post";
+    public const NODE_NAME = "trigger/core.save-post";
 
     public function getElementarType(): string
     {

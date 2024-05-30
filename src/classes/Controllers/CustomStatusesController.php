@@ -21,7 +21,7 @@ defined('ABSPATH') or die('No direct script access allowed.');
 
 class CustomStatusesController implements ModuleInterface
 {
-    const ACTION_PREFIX = 'custom_status_';
+    public const ACTION_PREFIX = 'custom_status_';
 
     /**
      * @var HooksFacade

@@ -207,12 +207,12 @@ class WorkflowModel implements WorkflowModelInterface
 
             $upload = wp_upload_bits($imageFileName, null, $image_data);
             if ($upload['error'] === false) {
-                $attachment = array(
+                $attachment = [
                     'post_mime_type' => $upload['type'],
                     'post_title' => basename($upload['file']),
                     'post_content' => '',
                     'post_status' => 'inherit'
-                );
+                ];
                 $attach_id = wp_insert_attachment($attachment, $upload['file']);
                 if (!is_wp_error($attach_id)) {
                     require_once(ABSPATH . 'wp-admin/includes/image.php');

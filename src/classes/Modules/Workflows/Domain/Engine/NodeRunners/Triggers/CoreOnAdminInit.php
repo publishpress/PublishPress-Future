@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterfa
 
 class CoreOnAdminInit implements NodeTriggerRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreOnAdminInit::NODE_NAME;
+    public const NODE_NAME = NodeTypeCoreOnAdminInit::NODE_NAME;
 
     /**
      * @var HookableInterface

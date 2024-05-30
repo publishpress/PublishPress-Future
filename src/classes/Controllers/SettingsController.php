@@ -348,7 +348,7 @@ class SettingsController implements ModuleInterface
             // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $license_key = isset($_POST['license_key']) ? $_POST['license_key'] : '';
+            $license_key = $_POST['license_key'] ?? '';
 
             $this->settingsModel->setLicenseKey($license_key);
 
@@ -381,8 +381,7 @@ class SettingsController implements ModuleInterface
 
         $this->settingsModel->setEnabledCustomStatusForPostType(
             $postType,
-            isset($_POST['expirationdate_custom-statuses-' . $postType])
-                ? $_POST['expirationdate_custom-statuses-' . $postType] : []
+            $_POST['expirationdate_custom-statuses-' . $postType] ?? []
         );
         // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
     }
@@ -397,18 +396,15 @@ class SettingsController implements ModuleInterface
         $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         $this->settingsModel->setMetadataMappingStatus(
-            isset($_POST['expirationdate_metadata_mapping_enabled'])
-                ? $_POST['expirationdate_metadata_mapping_enabled'] : []
+            $_POST['expirationdate_metadata_mapping_enabled'] ?? []
         );
 
         $this->settingsModel->setMetadataMapping(
-            isset($_POST['expirationdate_metadata_mapping'])
-                ? $_POST['expirationdate_metadata_mapping'] : []
+            $_POST['expirationdate_metadata_mapping'] ?? []
         );
 
         $this->settingsModel->setMetaboxHideStatus(
-            isset($_POST['expirationdate_hide_metabox'])
-                ? $_POST['expirationdate_hide_metabox'] : []
+            $_POST['expirationdate_hide_metabox'] ?? []
         );
         // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\DataType;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\DataTypeInterface;

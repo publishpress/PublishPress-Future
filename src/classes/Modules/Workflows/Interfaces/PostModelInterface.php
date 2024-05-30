@@ -2,7 +2,6 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
-
 interface PostModelInterface
 {
     public function load(int $id): bool;

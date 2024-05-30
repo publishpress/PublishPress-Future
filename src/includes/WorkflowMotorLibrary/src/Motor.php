@@ -11,6 +11,5 @@ class Motor
 
     public function start()
     {
-
     }
 }

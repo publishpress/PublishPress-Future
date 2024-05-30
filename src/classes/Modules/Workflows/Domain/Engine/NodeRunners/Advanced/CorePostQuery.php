@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostQuery implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCorePostQuery::NODE_NAME;
+    public const NODE_NAME = NodeTypeCorePostQuery::NODE_NAME;
 
     /**
      * @var HookableInterface

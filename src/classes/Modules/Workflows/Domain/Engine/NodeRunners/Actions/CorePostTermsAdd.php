@@ -11,7 +11,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostTermsAdd implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCorePostTermsAdd::NODE_NAME;
+    public const NODE_NAME = NodeTypeCorePostTermsAdd::NODE_NAME;
 
     /**
      * @var HookableInterface

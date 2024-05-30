@@ -1,4 +1,5 @@
 <?php
+
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\LegacyAction;
 
 use PublishPress\Future\Core\DI\ServicesAbstract;
@@ -8,7 +9,7 @@ use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 
 class TriggerWorkflow implements ExpirationActionInterface
 {
-    const ACTION_NAME = 'trigger-workflow';
+    public const ACTION_NAME = 'trigger-workflow';
 
     /**
      * @var HookableInterface

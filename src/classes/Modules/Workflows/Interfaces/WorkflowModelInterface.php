@@ -2,7 +2,6 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
-
 interface WorkflowModelInterface
 {
     public function load(int $id): bool;

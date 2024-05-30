@@ -8,27 +8,27 @@ defined('ABSPATH') or die('No direct script access allowed.');
 
 class SettingsModel
 {
-    const OPTION_PRESERVE_DATA = 'expirationdate_preserve_data';
+    public const OPTION_PRESERVE_DATA = 'expirationdate_preserve_data';
 
-    const OPTION_LICENSE_KEY = 'ppfuturepro_license_key';
+    public const OPTION_LICENSE_KEY = 'ppfuturepro_license_key';
 
-    const OPTION_LICENSE_STATUS = 'ppfuturepro_license_status';
+    public const OPTION_LICENSE_STATUS = 'ppfuturepro_license_status';
 
-    const OPTION_ENABLED_CUSTOM_STATUSES = 'ppfuturepro_enabled_custom_statuses';
+    public const OPTION_ENABLED_CUSTOM_STATUSES = 'ppfuturepro_enabled_custom_statuses';
 
-    const OPTION_BASE_DATE = 'ppfuturepro_base_date';
+    public const OPTION_BASE_DATE = 'ppfuturepro_base_date';
 
-    const OPTION_LOG_ENABLED = 'ppfuturepro_log_enabled';
+    public const OPTION_LOG_ENABLED = 'ppfuturepro_log_enabled';
 
-    const OPTION_METADATA_MAPPING_STATUS = 'ppfuturepro_metadata_mapping_status';
+    public const OPTION_METADATA_MAPPING_STATUS = 'ppfuturepro_metadata_mapping_status';
 
-    const OPTION_HIDE_METABOX = 'ppfuturepro_hide_metabox';
+    public const OPTION_HIDE_METABOX = 'ppfuturepro_hide_metabox';
 
-    const OPTION_METADATA_MAPPING = 'ppfuturepro_metadata_mapping';
+    public const OPTION_METADATA_MAPPING = 'ppfuturepro_metadata_mapping';
 
-    const BASE_DATE_CURRENT = 'current';
+    public const BASE_DATE_CURRENT = 'current';
 
-    const BASE_DATE_PUBLISHING = 'publishing';
+    public const BASE_DATE_PUBLISHING = 'publishing';
 
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\OptionsFacade
@@ -141,7 +141,7 @@ class SettingsModel
     {
         $statuses = $this->getEnabledCustomStatuses();
 
-        return isset($statuses[$postType]) ? $statuses[$postType] : [];
+        return $statuses[$postType] ?? [];
     }
 
     /**

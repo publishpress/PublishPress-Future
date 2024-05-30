@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostDelete implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCorePostDelete::NODE_NAME;
+    public const NODE_NAME = NodeTypeCorePostDelete::NODE_NAME;
 
     /**
      * @var HookableInterface

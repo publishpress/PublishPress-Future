@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostChangeStatus implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.post-change-status";
+    public const NODE_NAME = "action/core.post-change-status";
 
     public function getElementarType(): string
     {

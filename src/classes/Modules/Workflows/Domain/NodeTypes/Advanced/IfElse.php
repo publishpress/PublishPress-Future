@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class IfElse implements NodeTypeInterface
 {
-    const NODE_NAME = "advanced/core.if-else";
+    public const NODE_NAME = "advanced/core.if-else";
 
     public function getElementarType(): string
     {

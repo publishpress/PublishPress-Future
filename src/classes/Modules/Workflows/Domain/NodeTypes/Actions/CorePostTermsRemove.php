@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostTermsRemove implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.remove-post-terms";
+    public const NODE_NAME = "action/core.remove-post-terms";
 
     public function getElementarType(): string
     {

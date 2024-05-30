@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostTermsSet implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.replace-post-terms";
+    public const NODE_NAME = "action/core.replace-post-terms";
 
     public function getElementarType(): string
     {

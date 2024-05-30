@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class RayDebug implements NodeTypeInterface
 {
-    const NODE_NAME = "advanced/ray.debug";
+    public const NODE_NAME = "advanced/ray.debug";
 
     public function getElementarType(): string
     {

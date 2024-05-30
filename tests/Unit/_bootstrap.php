@@ -1,4 +1,5 @@
 <?php
+
 // Load the MotorLibrary classes
 
 use PublishPress\WorkflowMotorLibrary\Autoloader;

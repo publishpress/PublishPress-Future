@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostStick implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCorePostStick::NODE_NAME;
+    public const NODE_NAME = NodeTypeCorePostStick::NODE_NAME;
 
     /**
      * @var HookableInterface

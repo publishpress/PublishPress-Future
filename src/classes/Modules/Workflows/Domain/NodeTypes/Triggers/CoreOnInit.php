@@ -8,7 +8,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreOnInit implements NodeTypeInterface
 {
-    const NODE_NAME = "trigger/core.init";
+    public const NODE_NAME = "trigger/core.init";
 
     public function getElementarType(): string
     {

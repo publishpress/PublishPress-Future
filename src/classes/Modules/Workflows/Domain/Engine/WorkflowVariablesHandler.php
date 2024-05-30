@@ -45,7 +45,7 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
             foreach ($variableName as $variableNameSegment) {
                 $value = $this->getValueFromVariable($variableNameSegment, $value);
             }
-        } else if (count($variableName) === 1) {
+        } elseif (count($variableName) === 1) {
             $value = $variableSource[$variableName[0]];
         }
 
@@ -56,7 +56,7 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
     {
         if (is_array($variable) && isset($variable[$variableName])) {
             $variable = $variable[$variableName];
-        } else if (is_object($variable) && isset($variable->{$variableName})) {
+        } elseif (is_object($variable) && isset($variable->{$variableName})) {
             $variable = $variable->{$variableName};
         } else {
             throw new Exception('Invalid data key: ' . $variableName . ' for data: ' . print_r($variable, true));

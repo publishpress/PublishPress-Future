@@ -2,7 +2,6 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
-
 interface WorkflowVariablesHandlerInterface
 {
     public function extractVariablePlaceholdersFromText($text);

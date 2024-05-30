@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests\Unit\MotorLibrary;
 
 use Tests\Support\UnitTester;
@@ -8,7 +7,7 @@ use PublishPress\WorkflowMotorLibrary\SignatureManager;
 
 class SignatureManagerCest
 {
-    const PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----
+    public const PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDocaiWN/8D8QY8
 w+ClPq7WAS9ahrp0ayVzdpVBMD5/jrQhRI+4LHNsUG0/7jhgvGm1cVA0La0bckDH
 0PyaLTXEejuMOgrlh5yoifUlRof7ZNjBEPaQrOh1sRBPGjRRFPuKbfTkhvq1KfAG
@@ -37,7 +36,7 @@ mq1SRIMwE+brjpX9YBBjVOuNamW4Xpl9Q1CjUbSWeD1K0lged5uE6vstcGesbZhm
 JXsf8dGRPKM7oH82MkbnkKU=
 -----END PRIVATE KEY-----";
 
-    const PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----
+    public const PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6HGoljf/A/EGPMPgpT6u
 1gEvWoa6dGslc3aVQTA+f460IUSPuCxzbFBtP+44YLxptXFQNC2tG3JAx9D8mi01
 xHo7jDoK5YecqIn1JUaH+2TYwRD2kKzodbEQTxo0URT7im305Ib6tSnwBqheVAGS

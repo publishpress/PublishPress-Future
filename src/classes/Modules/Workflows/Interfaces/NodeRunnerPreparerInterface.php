@@ -2,7 +2,6 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
-
 interface NodeRunnerPreparerInterface
 {
     public function setup(array $step, callable $actionCallback, array $contextVariables = []): void;

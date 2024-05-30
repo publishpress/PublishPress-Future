@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostQuery implements NodeTypeInterface
 {
-    const NODE_NAME = "advanced/core.query-post";
+    public const NODE_NAME = "advanced/core.query-post";
 
     public function getElementarType(): string
     {

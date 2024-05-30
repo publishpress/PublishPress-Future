@@ -10,7 +10,8 @@ class StepsIterator implements IteratorAggregate
 {
     private $steps = [];
 
-    public function getIterator(): Traversable {
+    public function getIterator(): Traversable
+    {
         return new ArrayIterator($this->steps);
     }
 }

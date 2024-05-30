@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostChangeStatus implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCorePostChangeStatus::NODE_NAME;
+    public const NODE_NAME = NodeTypeCorePostChangeStatus::NODE_NAME;
 
     /**
      * @var HookableInterface

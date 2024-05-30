@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author PublishPress
  * @copyright Copyright (c) 2023, PublishPress

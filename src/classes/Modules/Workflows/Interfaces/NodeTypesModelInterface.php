@@ -2,7 +2,6 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
-
 interface NodeTypesModelInterface
 {
     public function getTriggerNodes(): array;

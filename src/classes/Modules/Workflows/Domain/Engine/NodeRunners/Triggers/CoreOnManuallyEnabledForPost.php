@@ -14,9 +14,9 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
     use InfiniteLoopPreventer;
 
-    const NODE_NAME = NodeTypeCoreOnManuallyEnabledForPost::NODE_NAME;
+    public const NODE_NAME = NodeTypeCoreOnManuallyEnabledForPost::NODE_NAME;
 
-    const META_KEY_MANUALLY_TRIGGERED = '_workflow_manually_triggered_';
+    public const META_KEY_MANUALLY_TRIGGERED = '_workflow_manually_triggered_';
 
     /**
      * @var HookableInterface

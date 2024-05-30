@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class RayDebug implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeRayDebug::NODE_NAME;
+    public const NODE_NAME = NodeTypeRayDebug::NODE_NAME;
 
     /**
      * @var HookableInterface
@@ -74,7 +74,7 @@ class RayDebug implements NodeRunnerInterface
         }
 
         if (isset($nodeSettings['color'])) {
-            switch($nodeSettings['color']) {
+            switch ($nodeSettings['color']) {
                 case 'red':
                     $rayMessage->red();
                     break;

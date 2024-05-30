@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreSendEmail implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.send-email";
+    public const NODE_NAME = "action/core.send-email";
 
     public static function getDefaultSubject()
     {

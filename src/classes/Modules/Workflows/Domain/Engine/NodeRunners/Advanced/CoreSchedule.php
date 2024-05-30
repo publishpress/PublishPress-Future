@@ -15,9 +15,9 @@ use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 
 class CoreSchedule implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreSchedule::NODE_NAME;
+    public const NODE_NAME = NodeTypeCoreSchedule::NODE_NAME;
 
-    const DEFAULT_REPEAT_UNTIL_TIMES = 99999;
+    public const DEFAULT_REPEAT_UNTIL_TIMES = 99999;
 
     /**
      * @var HookableInterface
@@ -133,21 +133,21 @@ class CoreSchedule implements NodeRunnerInterface
         foreach ($contextVariables as $key => $value) {
             if (is_scalar($value)) {
                 $uniqueId[] = $key . '-' . $value;
-            } else if (is_array($value)) {
+            } elseif (is_array($value)) {
                 // Look for any index ID, id
                 if (isset($value['id'])) {
                     $uniqueId[] = $key . '-' . $value['id'];
-                } else if (isset($value['ID'])) {
+                } elseif (isset($value['ID'])) {
                     $uniqueId[] = $key . '-' . $value['ID'];
                 }
-            } else if (is_object($value)) {
+            } elseif (is_object($value)) {
                 if (get_class($value) === 'WP_Post') {
                     $uniqueId[] = $value->ID;
-                } else if (get_class($value) === 'WP_User') {
+                } elseif (get_class($value) === 'WP_User') {
                     $uniqueId[] = $value->ID;
-                } else if (isset($value->id)) {
+                } elseif (isset($value->id)) {
                     $uniqueId[] = $key . '-' . $value->id;
-                } else if (isset($value->ID)) {
+                } elseif (isset($value->ID)) {
                     $uniqueId[] = $key . '-' . $value->ID;
                 }
             }
@@ -229,7 +229,7 @@ class CoreSchedule implements NodeRunnerInterface
                                 'id' => $value->ID,
                                 'diff' => $this->getPostDifferences($value, get_post($value->ID)),
                             ];
-                        } else if ('WP_User' === $className) {
+                        } elseif ('WP_User' === $className) {
                             $value = [
                                 'class' => 'WP_User',
                                 'id' => $value->ID,
@@ -250,7 +250,7 @@ class CoreSchedule implements NodeRunnerInterface
         foreach ($post1 as $key => $value) {
             if (! isset($post2->$key)) {
                 $differences[$key] = $value;
-            } else if ($post2->$key !== $value) {
+            } elseif ($post2->$key !== $value) {
                 $differences[$key] = $value;
             }
         }
@@ -276,7 +276,7 @@ class CoreSchedule implements NodeRunnerInterface
                                 ($expandedArgs['contextVariables'][$context][$variableName])->$diffKey = $diffValue;
                             }
                         }
-                    } else if ($value['class'] === 'WP_User') {
+                    } elseif ($value['class'] === 'WP_User') {
                         $expandedArgs['contextVariables'][$context][$variableName] = get_user_by('id', $value['id']);
                     } else {
                         $expandedArgs['contextVariables'][$context][$variableName] = $value;
@@ -384,7 +384,7 @@ class CoreSchedule implements NodeRunnerInterface
                     // TODO: Log this into the scheduler log
                     return;
                 }
-            } else if ($repeatUntil === 'times') {
+            } elseif ($repeatUntil === 'times') {
                 $executionCount = $workflowModel->incrementNodeExecutionCount($nodeId);
                 $timesUntilExpire = (int)$scheduleSettings['repeatTimes'] ?? self::DEFAULT_REPEAT_UNTIL_TIMES;
 

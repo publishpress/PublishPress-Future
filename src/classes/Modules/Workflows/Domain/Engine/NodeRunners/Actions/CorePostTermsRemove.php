@@ -11,7 +11,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostTermsRemove implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCorePostTermsRemove::NODE_NAME;
+    public const NODE_NAME = NodeTypeCorePostTermsRemove::NODE_NAME;
 
     /**
      * @var HookableInterface

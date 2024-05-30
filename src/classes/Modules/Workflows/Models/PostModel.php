@@ -9,7 +9,7 @@ use WP_Post;
 
 class PostModel implements PostModelInterface
 {
-    const META_KEY_WORKFLOW_MANUALLY_TRIGGERED = '_workflow_manually_triggered';
+    public const META_KEY_WORKFLOW_MANUALLY_TRIGGERED = '_workflow_manually_triggered';
 
     private $post;
 
@@ -55,7 +55,6 @@ class PostModel implements PostModelInterface
         $validatedWorkflows = [];
 
         foreach ($workflows as &$workflow) {
-
             $workflowId = $workflow['workflowId'];
 
             $workflowModel = new WorkflowModel();

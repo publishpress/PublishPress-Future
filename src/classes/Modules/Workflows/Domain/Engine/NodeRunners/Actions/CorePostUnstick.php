@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostUnstick implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCorePostUnstick::NODE_NAME;
+    public const NODE_NAME = NodeTypeCorePostUnstick::NODE_NAME;
 
     /**
      * @var HookableInterface

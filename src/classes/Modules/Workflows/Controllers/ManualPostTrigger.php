@@ -104,7 +104,7 @@ class ManualPostTrigger implements InitializableInterface
             return;
         }
 
-        $manuallyEnabledWorkflows = isset($_POST['future_workflow_manual_trigger']) ? $_POST['future_workflow_manual_trigger'] : [];
+        $manuallyEnabledWorkflows = $_POST['future_workflow_manual_trigger'] ?? [];
 
         $postModel = new PostModel();
         $postModel->load($postId);
@@ -312,7 +312,7 @@ class ManualPostTrigger implements InitializableInterface
             return;
         }
 
-        $manuallyEnabledWorkflows = isset($_POST['future_workflow_manual_trigger']) ? $_POST['future_workflow_manual_trigger'] : [];
+        $manuallyEnabledWorkflows = $_POST['future_workflow_manual_trigger'] ?? [];
 
         $postModel = new PostModel();
         $postModel->load($postId);

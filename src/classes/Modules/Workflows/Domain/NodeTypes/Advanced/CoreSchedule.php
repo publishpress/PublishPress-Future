@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreSchedule implements NodeTypeInterface
 {
-    const NODE_NAME = "advanced/core.schedule";
+    public const NODE_NAME = "advanced/core.schedule";
 
     public function getElementarType(): string
     {

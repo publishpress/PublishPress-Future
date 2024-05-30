@@ -11,17 +11,17 @@ use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
 class RestApiV1 implements RestApiManagerInterface
 {
-    const ERROR_WORKFLOW_NOT_FOUND = 'publishpressfuturepro_workflow_not_found';
+    public const ERROR_WORKFLOW_NOT_FOUND = 'publishpressfuturepro_workflow_not_found';
 
-    const BASE_PATH = RestApiManager::API_BASE . '/v1';
+    public const BASE_PATH = RestApiManager::API_BASE . '/v1';
 
-    const PERMISSION_READ = 'edit_posts';
+    public const PERMISSION_READ = 'edit_posts';
 
-    const PERMISSION_CREATE = 'edit_posts';
+    public const PERMISSION_CREATE = 'edit_posts';
 
-    const PERMISSION_UPDATE = 'edit_posts';
+    public const PERMISSION_UPDATE = 'edit_posts';
 
-    const PERMISSION_DELETE = 'edit_posts';
+    public const PERMISSION_DELETE = 'edit_posts';
 
     public function register()
     {

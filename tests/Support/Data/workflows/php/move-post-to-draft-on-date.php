@@ -27,7 +27,7 @@ $publish_post = new PostPublished(
         'terms' => ['expirable'],
     ],
     // next
-    function() {
+    function () {
         $globals = GlobalsStore::getInstance(GLOBAL_STORE_KEY);
         $post = $globals->get('post');
 

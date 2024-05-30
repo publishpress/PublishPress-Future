@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostUnstick implements NodeTypeInterface
 {
-    const NODE_NAME = "action/core.unstick-post";
+    public const NODE_NAME = "action/core.unstick-post";
 
     public function getElementarType(): string
     {

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests\Integration\MotorLIbrary;
 
 use Tests\Support\IntegrationTester;

@@ -12,7 +12,7 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class CoreSendEmail implements NodeRunnerInterface
 {
-    const NODE_NAME = NodeTypeCoreSendEmail::NODE_NAME;
+    public const NODE_NAME = NodeTypeCoreSendEmail::NODE_NAME;
 
     /**
      * @var HookableInterface

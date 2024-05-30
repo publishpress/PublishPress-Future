@@ -4,9 +4,9 @@ namespace PublishPress\WorkflowMotorLibrary;
 
 class SignatureManager implements SignatureManagerInterface
 {
-    const PRIVATE_KEY_TYPE = OPENSSL_KEYTYPE_RSA;
+    public const PRIVATE_KEY_TYPE = OPENSSL_KEYTYPE_RSA;
 
-    const SIGNATURE_ALGORITHM = OPENSSL_ALGO_SHA256;
+    public const SIGNATURE_ALGORITHM = OPENSSL_ALGO_SHA256;
 
     public function generateKeyPair(): array
     {
