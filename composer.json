@@ -109,6 +109,8 @@
     "check:longpath": "longpath .",
     "check:deps": "checkdep ./lib publishpress/publishpress-future",
     "fix:deps": "mergedep ./lib publishpress/publishpress-future",
+    "fix:cs": "phpcbf --standard=.phpcs.xml",
+    "fix:php": "php-cs-fixer fix .",
     "tests:dev-start": "./vendor/bin/codecept dev:start",
     "tests:dev-stop": "./vendor/bin/codecept dev:stop",
     "tests:dev-restart": "./vendor/bin/codecept dev:restart",
