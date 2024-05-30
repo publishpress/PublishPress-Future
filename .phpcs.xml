@@ -22,6 +22,8 @@
     <exclude-pattern>/languages/*</exclude-pattern>
     <exclude-pattern>/node_modules/*</exclude-pattern>
     <exclude-pattern>/dev-workspace/*</exclude-pattern>
+    <exclude-pattern>/lib/vendor/*</exclude-pattern>
+    <exclude-pattern>/tmp/*</exclude-pattern>
 
     <rule ref="PSR12"/>
     <rule ref="WordPressVIPMinimum">
