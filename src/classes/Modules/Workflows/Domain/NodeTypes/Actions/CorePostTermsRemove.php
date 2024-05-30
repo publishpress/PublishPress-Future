@@ -70,7 +70,10 @@ class CorePostTermsRemove implements NodeTypeInterface
                         "name" => "post",
                         "type" => "postInput",
                         "label" => __("Post", "publishpress-future-pro"),
-                        "description" => __("Select the variable that contains the post to update. It can be a post instance or the post ID.", "publishpress-future-pro"),
+                        "description" => __(
+                            "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                            "publishpress-future-pro"
+                        ),
                     ],
                 ],
             ],
@@ -82,7 +85,10 @@ class CorePostTermsRemove implements NodeTypeInterface
                         "name" => "taxonomyTerms",
                         "type" => "taxonomyTerms",
                         "label" => __("Terms", "publishpress-future-pro"),
-                        "description" => __("The terms that will be removed from the posts.", "publishpress-future-pro"),
+                        "description" => __(
+                            "The terms that will be removed from the posts.",
+                            "publishpress-future-pro"
+                        ),
                         "settings" => [
                             "optionToSelectAll" => true,
                             "labelOptionToSelectAll" => __("Remove all terms", "publishpress-future-pro"),

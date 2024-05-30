@@ -78,12 +78,13 @@ class GeneralAction implements NodeRunnerPreparerInterface
     public function logError(string $message, int $workflowId, array $step)
     {
         if (defined('WP_DEBUG') && WP_DEBUG) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
             error_log(
                 sprintf(
-                    '[PublishPress Future Pro] %1$s: workflowId: %2$d, step: %3$s',
+                    __('[PublishPress Future Pro] %1$s: workflowId: %2$d, step: %3$s', 'publishpress-future-pro'),
                     $message,
                     $workflowId,
-                    print_r($step, true)
+                    print_r($step, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
                 )
             );
         }

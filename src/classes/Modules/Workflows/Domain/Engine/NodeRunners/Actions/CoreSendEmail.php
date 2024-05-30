@@ -106,7 +106,16 @@ class CoreSendEmail implements NodeRunnerInterface
                 $this->emailFacade->send($recipientAddress, $subject, $message);
             }
         } catch (\Exception $e) {
-            // $rayMessage = 'Error: ' . $e->getMessage();
+            if (defined('WP_DEBUG' && WP_DEBUG)) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                error_log(
+                    sprintf(
+                        // translators: %s is the error message
+                        __('[PublishPress Future Pro] Error sending email: %s', 'publishpress-future-pro'),
+                        $e->getMessage()
+                    )
+                );
+            }
         }
     }
 }

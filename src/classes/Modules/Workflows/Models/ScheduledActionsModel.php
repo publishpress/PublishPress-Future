@@ -15,12 +15,15 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
     {
         global $wpdb;
 
-        $query = $wpdb->prepare(
-            "SELECT * FROM {$wpdb->prefix}actionscheduler_actions WHERE action_id = %d",
-            $id
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $this->data = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT * FROM %i WHERE action_id = %d",
+                $wpdb->prefix . 'actionscheduler_actions',
+                $id
+            ),
+            ARRAY_A
         );
-
-        $this->data = $wpdb->get_row($query, ARRAY_A);
 
         return $this;
     }

@@ -66,7 +66,8 @@ class WorkflowEditor implements InitializableInterface
 
     public function renderEditorPage()
     {
-        $workflowId = isset($_GET["workflow"]) ? (int) $_GET["workflow"] : 0;
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $workflowId = (int)($_GET["workflow"] ?? 0);
 
         require_once __DIR__ . "/../Views/editor.html.php";
     }
@@ -82,7 +83,8 @@ class WorkflowEditor implements InitializableInterface
         $url = admin_url("admin.php?page=future_workflow_editor");
 
         if ($pagenow === "post.php") {
-            $postId = (int) $_GET["post"];
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $postId = (int) $_GET["post"] ?? 0;
 
             if (empty($postId)) {
                 return;
@@ -93,7 +95,9 @@ class WorkflowEditor implements InitializableInterface
             return;
         }
 
-        if (isset($_GET["action"]) && "trash" === $_GET["action"]) {
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $action = $_GET["action"] ?? "";
+        if ("trash" === $action) {
             return;
         }
 
@@ -166,6 +170,9 @@ class WorkflowEditor implements InitializableInterface
         $taxonomiesModel = new TaxonomiesModel();
         $taxonomies = $taxonomiesModel->getTaxonomiesAsOptions();
 
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $workflowId = (int)($_GET["workflow"] ?? 0);
+
         wp_localize_script(
             "future_workflow_editor_script",
             "futureWorkflowEditor",
@@ -176,9 +183,7 @@ class WorkflowEditor implements InitializableInterface
                     ">="
                 ),
                 "apiUrl" => rest_url("publishpress-future/v1"),
-                "workflowId" => isset($_GET["workflow"])
-                    ? (int) $_GET["workflow"]
-                    : 0,
+                "workflowId" => $workflowId,
                 "nonce" => wp_create_nonce("wp_rest"),
                 "nodeTypeCategories" => $this->nodeTypesModel->getCategories(),
                 "currentUserId" => get_current_user_id(),

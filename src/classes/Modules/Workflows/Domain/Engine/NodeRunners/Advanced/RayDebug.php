@@ -61,12 +61,16 @@ class RayDebug implements NodeRunnerInterface
 
                 $output = $onlyInputVariables;
             } else {
-                $output = $this->nodeRunnerPreparer->getVariableValueFromContextVariables($dataToOutput, $contextVariables);
+                $output = $this->nodeRunnerPreparer->getVariableValueFromContextVariables(
+                    $dataToOutput,
+                    $contextVariables
+                );
             }
         } catch (\Exception $e) {
             $output = 'Error: ' . $e->getMessage();
         }
 
+        // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
         $rayMessage = ray($output);
 
         if (isset($nodeSettings['label'])) {

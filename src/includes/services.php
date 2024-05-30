@@ -310,20 +310,6 @@ return [
                     );
                     break;
 
-                    // case CoreOnInit::NODE_NAME:
-                    //     $nodeRunner = new CoreOnInit(
-                    //         $container->get(ServicesAbstract::HOOKS),
-                    //         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
-                    //     );
-                    //     break;
-
-                    // case CoreOnAdminInit::NODE_NAME:
-                    //     $nodeRunner = new CoreOnAdminInit(
-                    //         $container->get(ServicesAbstract::HOOKS),
-                    //         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
-                    //     );
-                    //     break;
-
                 case CoreOnManuallyEnabledForPost::NODE_NAME:
                     $nodeRunner = new CoreOnManuallyEnabledForPost(
                         $container->get(ServicesAbstract::HOOKS),

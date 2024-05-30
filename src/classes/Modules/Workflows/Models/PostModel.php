@@ -89,6 +89,7 @@ class PostModel implements PostModelInterface
         delete_post_meta($this->post->ID, self::META_KEY_WORKFLOW_MANUALLY_TRIGGERED);
 
         foreach ($workflowIds as $workflowId) {
+            $workflowId = (int)$workflowId;
             add_post_meta($this->post->ID, self::META_KEY_WORKFLOW_MANUALLY_TRIGGERED, $workflowId, false);
         }
     }

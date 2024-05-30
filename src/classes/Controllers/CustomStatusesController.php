@@ -38,8 +38,11 @@ class CustomStatusesController implements ModuleInterface
      */
     private $settingsModel;
 
-    public function __construct(HooksFacade $hooks, CustomStatusesModel $modelCustomStatuses, SettingsModel $settingsModel)
-    {
+    public function __construct(
+        HooksFacade $hooks,
+        CustomStatusesModel $modelCustomStatuses,
+        SettingsModel $settingsModel
+    ) {
         $this->hooks = $hooks;
         $this->modelCustomStatuses = $modelCustomStatuses;
         $this->settingsModel = $settingsModel;

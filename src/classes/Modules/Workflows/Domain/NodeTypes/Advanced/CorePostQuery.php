@@ -36,7 +36,10 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action retrieves multiple posts to serve as the input for other actions.", "publishpress-future-pro");
+        return __(
+            "This action retrieves multiple posts to serve as the input for other actions.",
+            "publishpress-future-pro"
+        );
     }
 
     public function getIcon(): string
@@ -64,7 +67,10 @@ class CorePostQuery implements NodeTypeInterface
         return [
             [
                 "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("This query defines the posts that will be passed to the next action in the workflow.", "publishpress-future-pro"),
+                "description" => __(
+                    "This query defines the posts that will be passed to the next action in the workflow.",
+                    "publishpress-future-pro"
+                ),
                 "fields" => [
                     [
                         "name" => "postQuery",

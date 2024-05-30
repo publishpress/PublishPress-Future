@@ -70,7 +70,10 @@ class CorePostStick implements NodeTypeInterface
                         "name" => "post",
                         "type" => "postInput",
                         "label" => __("Post", "publishpress-future-pro"),
-                        "description" => __("Select the variable that contains the post to update. It can be a post instance or the post ID.", "publishpress-future-pro"),
+                        "description" => __(
+                            "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                            "publishpress-future-pro"
+                        ),
                     ],
                 ],
             ],
@@ -88,7 +91,10 @@ class CorePostStick implements NodeTypeInterface
                     [
                         "rule" => "hasIncomerOfName",
                         "name" => "advanced/core.schedule",
-                        "message" => __("The Stick Post action must be part of a Schedule flow", "publishpress-future-pro"),
+                        "message" => __(
+                            "The Stick Post action must be part of a Schedule flow",
+                            "publishpress-future-pro"
+                        ),
                     ],
                 ],
             ],

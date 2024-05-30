@@ -5,13 +5,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove as NodeTypeCorePostTermsRemove;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsRemove as NodeType;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
 class CorePostTermsRemove implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeCorePostTermsRemove::NODE_NAME;
+    public const NODE_NAME = NodeType::NODE_NAME;
 
     /**
      * @var HookableInterface
@@ -63,18 +63,5 @@ class CorePostTermsRemove implements NodeRunnerInterface
         $updatedTerms = $selectAll ? [] : array_diff($originalTerms, $termsToRemove);
 
         $result = $postModel->setTerms($updatedTerms, $taxonomy);
-
-        $resultIsError = $this->errorFacade->isWpError($result);
-
-        // if (! $resultIsError) {
-        //     $this->log = [
-        //         'expiration_taxonomy' => $taxonomy,
-        //         'original_terms' => $originalTerms,
-        //         'terms_added' => $termsToAdd,
-        //         'updated_terms' => $updatedTerms,
-        //     ];
-        // } else {
-        //     $this->log['error'] = $result->get_error_message();
-        // }
     }
 }

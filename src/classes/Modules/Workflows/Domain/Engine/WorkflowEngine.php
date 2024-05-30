@@ -105,7 +105,14 @@ class WorkflowEngine implements WorkflowEngineInterface
 
                     if (is_null($triggerRunner)) {
                         if (defined('WP_DEBUG') && WP_DEBUG) {
-                            error_log("[PublishPress Future Pro] Trigger not found: $triggerName");
+                            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                            error_log(
+                                sprintf(
+                                    // translators: %s is the trigger name
+                                    __('[PublishPress Future Pro] Trigger not found: %s', 'publishpress-future-pro'),
+                                    $triggerName
+                                )
+                            );
                         }
 
                         continue;
@@ -133,7 +140,14 @@ class WorkflowEngine implements WorkflowEngineInterface
             }
         } catch (\Exception $e) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("[PublishPress Future Pro] Workflow engine error: {$e->getMessage()}");
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                error_log(
+                    sprintf(
+                        // translators: %s is the error message
+                        __('[PublishPress Future Pro] Workflow engine error: %s', 'publishpress-future-pro'),
+                        $e->getMessage()
+                    )
+                );
             }
         }
     }
@@ -155,7 +169,14 @@ class WorkflowEngine implements WorkflowEngineInterface
             $nodeRunner->setup($step, $contextVariables);
         } catch (\Exception $e) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("[PublishPress Future Pro] Node runner error: {$e->getMessage()}");
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                error_log(
+                    sprintf(
+                        // translators: %s is the error message
+                        __('[PublishPress Future Pro] Node runner error: %s', 'publishpress-future-pro'),
+                        $e->getMessage()
+                    )
+                );
             }
         }
     }
@@ -167,7 +188,14 @@ class WorkflowEngine implements WorkflowEngineInterface
             $nodeRunner->actionCallback($args);
         } catch (\Exception $e) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log("[PublishPress Future Pro] Async node runner error: {$e->getMessage()}");
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                error_log(
+                    sprintf(
+                        // translators: %s is the error message
+                        __('[PublishPress Future Pro] Async node runner error: %s', 'publishpress-future-pro'),
+                        $e->getMessage()
+                    )
+                );
             }
         }
     }

@@ -59,7 +59,16 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
         } elseif (is_object($variable) && isset($variable->{$variableName})) {
             $variable = $variable->{$variableName};
         } else {
-            throw new Exception('Invalid data key: ' . $variableName . ' for data: ' . print_r($variable, true));
+            throw new Exception(
+                esc_html(
+                    sprintf(
+                        // translators: %s is the variable name and %s is the variable value
+                        __('Invalid data key: %s for data: %s', 'publishpress-future-pro'),
+                        $variableName,
+                        print_r($variable, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+                    )
+                )
+            );
         }
 
         return $variable;

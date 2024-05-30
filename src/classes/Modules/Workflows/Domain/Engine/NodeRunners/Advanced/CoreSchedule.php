@@ -175,7 +175,10 @@ class CoreSchedule implements NodeRunnerInterface
                 } elseif ($dateSource === 'event') {
                     $timestamp = time();
                 } else {
-                    $timestamp = $this->nodeRunnerPreparer->getVariableValueFromContextVariables($dateSource, $contextVariables);
+                    $timestamp = $this->nodeRunnerPreparer->getVariableValueFromContextVariables(
+                        $dateSource,
+                        $contextVariables
+                    );
                 }
 
                 break;
@@ -202,8 +205,6 @@ class CoreSchedule implements NodeRunnerInterface
             }
         }
 
-        // $timestamp = $this->convertLocalTimeToUtc($timestamp);
-
         return $timestamp;
     }
 
@@ -213,7 +214,8 @@ class CoreSchedule implements NodeRunnerInterface
         $compactedArgs['step'] = $step;
         $compactedArgs['contextVariables'] = $contextVariables;
         $compactedArgs['contextVariables']['global'] = [];
-        $compactedArgs['contextVariables']['global']['workflow'] = $this->nodeRunnerPreparer->getWorkflowIdFromContextVariables($contextVariables);
+        $compactedArgs['contextVariables']['global']['workflow'] =
+            $this->nodeRunnerPreparer->getWorkflowIdFromContextVariables($contextVariables);
         $compactedArgs['contextVariables']['global']['user'] = $contextVariables['global']['user']['id'] ?? '0';
         $compactedArgs['contextVariables']['global']['site'] = get_bloginfo('site_id');
         $compactedArgs['contextVariables']['global']['trigger'] = $contextVariables['global']['trigger']['id'] ?? '0';

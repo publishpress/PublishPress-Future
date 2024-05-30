@@ -64,7 +64,10 @@ class IfElse implements NodeTypeInterface
         return [
             [
                 "label" => __("Conditions", "publishpress-future-pro"),
-                "description" => __("THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now.", "publishpress-future-pro"),
+                "description" => __(
+                    "THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                    "publishpress-future-pro"
+                ),
                 "fields" => [
                     [
                         "name" => "test",

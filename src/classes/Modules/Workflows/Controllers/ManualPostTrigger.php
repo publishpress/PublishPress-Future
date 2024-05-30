@@ -89,6 +89,7 @@ class ManualPostTrigger implements InitializableInterface
 
     public function processQuickEditUpdate($postId)
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
         // Don't run if this is an auto save
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
@@ -100,17 +101,23 @@ class ManualPostTrigger implements InitializableInterface
             return;
         }
 
-        if (empty($_POST['future_workflow_view']) || $_POST['future_workflow_view'] !== 'quick-edit') {
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $view = $_POST['future_workflow_view'] ?? '';
+
+        if (empty($view) || $view !== 'quick-edit') {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $manuallyEnabledWorkflows = $_POST['future_workflow_manual_trigger'] ?? [];
+        $manuallyEnabledWorkflows = array_map('intval', $manuallyEnabledWorkflows);
 
         $postModel = new PostModel();
         $postModel->load($postId);
         $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
         $this->triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows);
+        // phpcs:enable
     }
 
     private function triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows)
@@ -297,6 +304,7 @@ class ManualPostTrigger implements InitializableInterface
 
     public function processMetaboxUpdate($postId)
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Missing
         // Don't run if this is an auto save
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
@@ -308,17 +316,23 @@ class ManualPostTrigger implements InitializableInterface
             return;
         }
 
-        if (empty($_POST['future_workflow_view']) || $_POST['future_workflow_view'] !== 'classic-editor') {
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+        $view = $_POST['future_workflow_view'] ?? '';
+
+        if (empty($view) || $view !== 'classic-editor') {
             return;
         }
 
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $manuallyEnabledWorkflows = $_POST['future_workflow_manual_trigger'] ?? [];
+        $manuallyEnabledWorkflows = array_map('intval', $manuallyEnabledWorkflows);
 
         $postModel = new PostModel();
         $postModel->load($postId);
         $postModel->setManuallyEnabledWorkflows($manuallyEnabledWorkflows);
 
         $this->triggerManuallyEnabledWorkflow($postId, $manuallyEnabledWorkflows);
+        // phpcs:enable
     }
 
     public function enqueueScripts()

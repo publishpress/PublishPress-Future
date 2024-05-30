@@ -137,7 +137,7 @@ class WorkflowsList implements InitializableInterface
         $triggers = [];
 
         if (empty($workflowFlow) || !isset($workflowFlow["nodes"])) {
-            echo __("—", "publishpress-future-pro");
+            esc_html_e("—", "publishpress-future-pro");
             return;
         }
 
@@ -150,7 +150,7 @@ class WorkflowsList implements InitializableInterface
             }
         }
 
-        echo implode(", ", $triggers);
+        esc_html(implode(", ", $triggers));
     }
 
     public function renderPreviewColumn($column, $postId)
@@ -162,7 +162,7 @@ class WorkflowsList implements InitializableInterface
         $screenshot = get_the_post_thumbnail_url($postId, "thumbnail");
 
         if (empty($screenshot)) {
-            echo __("No screenshot", "publishpress-future-pro");
+            esc_html_e("No screenshot", "publishpress-future-pro");
         } else {
             $screenshotFull = get_the_post_thumbnail_url($postId, "full");
 

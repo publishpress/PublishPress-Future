@@ -4,13 +4,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus as NodeTypeCorePostChangeStatus;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus as NodeType;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
 class CorePostChangeStatus implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeCorePostChangeStatus::NODE_NAME;
+    public const NODE_NAME = NodeType::NODE_NAME;
 
     /**
      * @var HookableInterface

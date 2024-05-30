@@ -120,7 +120,7 @@ class WorkflowModel implements WorkflowModelInterface
     {
         wp_update_post($this->post);
 
-        update_post_meta($this->post->ID, self::META_KEY_FLOW, json_encode($this->flow));
+        update_post_meta($this->post->ID, self::META_KEY_FLOW, wp_json_encode($this->flow));
 
         $this->updateLegacyActionMetadata();
         $this->updateManualSelectionMetadata();
@@ -193,7 +193,7 @@ class WorkflowModel implements WorkflowModelInterface
         return $id;
     }
 
-    public function setScreenshot(string $baseUrl)
+    public function setScreenshot(string $dataImage)
     {
         // Delete existing screenshot files
         $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
@@ -201,7 +201,14 @@ class WorkflowModel implements WorkflowModelInterface
             wp_delete_attachment($existingScreenshotId, true);
         }
 
-        $image_data = file_get_contents($baseUrl);
+        // Sanitize the baseurl to make sure it has data:image/png;base64
+        if (strpos($dataImage, 'data:image/png;base64') !== 0) {
+            return;
+        }
+
+        // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+        $image_data = file_get_contents($dataImage);
+
         if ($image_data !== false) {
             $imageFileName = 'workflow-screenshot-' . $this->post->ID . '.png';
 
@@ -279,7 +286,12 @@ class WorkflowModel implements WorkflowModelInterface
         // Build the abstract routine tree for each trigger node
         $routineTree = [];
         foreach ($workflowTriggers as $triggerNode) {
-            $routineTree[$triggerNode['id']] = $this->getRoutineNodesTree($edges, $nodesById, $triggerNode['id'], $nodeTypes);
+            $routineTree[$triggerNode['id']] = $this->getRoutineNodesTree(
+                $edges,
+                $nodesById,
+                $triggerNode['id'],
+                $nodeTypes
+            );
         }
 
         return $routineTree;
@@ -293,8 +305,17 @@ class WorkflowModel implements WorkflowModelInterface
         $nodeTypeInstance = $nodeTypes[$elementarType][$nodeName];
 
         if (is_null($nodeTypeInstance)) {
-            if (defined(WP_DEBUG) && WP_DEBUG) {
-                error_log('Node type not found: ' . $elementarType . ' - ' . $nodeName . ' - ' . $sourceNodeId);
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+                error_log(
+                    sprintf(
+                        // translators: 1: Node type, 2: Node name, 3: Source node ID
+                        'Node type not found: %1$s - %2$s - %3$s',
+                        $elementarType,
+                        $nodeName,
+                        $sourceNodeId
+                    )
+                );
             }
             return [];
         }
@@ -314,7 +335,13 @@ class WorkflowModel implements WorkflowModelInterface
                     if (! isset($tree['next'][$socket['id']])) {
                         $tree['next'][$socket['id']] = [];
                     }
-                    $tree['next'][$socket['id']][] = $this->getRoutineNodesTree($edges, $nodes, $edge['target'], $nodeTypes, $edge['id']);
+                    $tree['next'][$socket['id']][] = $this->getRoutineNodesTree(
+                        $edges,
+                        $nodes,
+                        $edge['target'],
+                        $nodeTypes,
+                        $edge['id']
+                    );
                 }
             }
         }

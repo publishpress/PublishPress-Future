@@ -22,7 +22,12 @@ class FutureLegacyAction implements NodeTypeInterface
         $this->hooks = $hooks;
 
         $this->hooks->addFilter(HooksAbstract::FILTER_EXPIRATION_ACTIONS, [$this, 'addExpirationAction']);
-        $this->hooks->addFilter(HooksAbstract::FILTER_EXPIRATION_ACTION_FACTORY, [$this, 'createExpirationAction'], 10, 4);
+        $this->hooks->addFilter(
+            HooksAbstract::FILTER_EXPIRATION_ACTION_FACTORY,
+            [$this, 'createExpirationAction'],
+            10,
+            4
+        );
     }
 
     public function getElementarType(): string
@@ -52,7 +57,10 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This trigger activates when a Future Action on posts is set to execute this workflow.", "publishpress-future-pro");
+        return __(
+            "This trigger activates when a Future Action on posts is set to execute this workflow.",
+            "publishpress-future-pro"
+        );
     }
 
     public function getIcon(): string

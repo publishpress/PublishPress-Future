@@ -174,8 +174,6 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreOnPostUpdated::NODE_NAME => new CoreOnPostUpdated(),
             CoreOnManuallyEnabledForPost::NODE_NAME => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::NODE_NAME => new FutureLegacyAction($this->hooks),
-            // CoreOnInit::NODE_NAME => new CoreOnInit(),
-            // CoreOnAdminInit::NODE_NAME => new CoreOnAdminInit(),
         ];
 
         return $nodesInstances;
@@ -202,7 +200,6 @@ class NodeTypesModel implements NodeTypesModelInterface
         $nodesInstances = [
             CoreSchedule::NODE_NAME => new CoreSchedule(),
             CorePostQuery::NODE_NAME => new CorePostQuery(),
-            // IfElse::NODE_NAME => new IfElse(),
         ];
 
         if (function_exists('ray')) {

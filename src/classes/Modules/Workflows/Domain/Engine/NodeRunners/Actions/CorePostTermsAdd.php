@@ -64,16 +64,5 @@ class CorePostTermsAdd implements NodeRunnerInterface
         $result = $postModel->setTerms($updatedTerms, $taxonomy);
 
         $resultIsError = $this->errorFacade->isWpError($result);
-
-        // if (! $resultIsError) {
-        //     $this->log = [
-        //         'expiration_taxonomy' => $taxonomy,
-        //         'original_terms' => $originalTerms,
-        //         'terms_added' => $termsToAdd,
-        //         'updated_terms' => $updatedTerms,
-        //     ];
-        // } else {
-        //     $this->log['error'] = $result->get_error_message();
-        // }
     }
 }

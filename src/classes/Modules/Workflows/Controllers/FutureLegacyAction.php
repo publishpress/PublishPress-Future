@@ -76,6 +76,7 @@ class FutureLegacyAction implements InitializableInterface
 
     public function preparePostExpirationOpts($opts, $postId)
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         $validViews = [
             'quick-edit',
             'bulk-edit',
@@ -85,7 +86,7 @@ class FutureLegacyAction implements InitializableInterface
 
         if (isset($_REQUEST['future_action_bulk_view'])) {
             $_REQUEST['future_action_view'] = 'bulk-edit';
-            $_REQUEST['future_action_action'] = $_REQUEST['future_action_bulk_action'];
+            $_REQUEST['future_action_action'] = sanitize_key($_REQUEST['future_action_bulk_action'] ?? '');
         }
 
         // Check if it is a REST call to the WP rest API
@@ -102,11 +103,14 @@ class FutureLegacyAction implements InitializableInterface
             return $opts;
         }
 
-        if (!isset($_REQUEST['future_action_action']) || TriggerWorkflow::ACTION_NAME !== $_REQUEST['future_action_action']) {
+        if (
+            !isset($_REQUEST['future_action_action'])
+            || TriggerWorkflow::ACTION_NAME !== $_REQUEST['future_action_action']
+        ) {
             return $opts;
         }
 
-        $workflowId = isset($_REQUEST['future_action_pro_workflow']) ? (int) $_REQUEST['future_action_pro_workflow'] : 0;
+        $workflowId = (int)$_REQUEST['future_action_pro_workflow'] ?? 0;
 
         if (empty($workflowId)) {
             return $opts;
@@ -119,5 +123,6 @@ class FutureLegacyAction implements InitializableInterface
         $opts['workflowTitle'] = $workflowModel->getTitle();
 
         return $opts;
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
     }
 }

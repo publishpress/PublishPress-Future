@@ -4,7 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Tri
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost as NodeTypeCoreOnManuallyEnabledForPost;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost as NodeType;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\InputValidatorsInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
@@ -14,7 +14,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
     use InfiniteLoopPreventer;
 
-    public const NODE_NAME = NodeTypeCoreOnManuallyEnabledForPost::NODE_NAME;
+    public const NODE_NAME = NodeType::NODE_NAME;
 
     public const META_KEY_MANUALLY_TRIGGERED = '_workflow_manually_triggered_';
 

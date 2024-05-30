@@ -60,10 +60,12 @@ class WorkflowsModel implements WorkflowsModelInterface
 
     public function getPublishedWorkflowsWithMetadataAsOptions($metaKey, $metaValue): array
     {
+        // TODO: Implement another method to filter the workflows without using metaquery. Maybe a custom table?
         $args = [
             'post_type' => Module::POST_TYPE_WORKFLOW,
             'post_status' => 'publish',
             'posts_per_page' => 100,
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
             'meta_query' => [
                 [
                     'key' => sanitize_key($metaKey),

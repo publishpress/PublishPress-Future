@@ -65,7 +65,10 @@ class CoreOnPostUpdated implements NodeTypeInterface
         return [
             [
                 "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __("Specify the criteria for posts that will trigger this action. Leave blank to include all posts.", "publishpress-future-pro"),
+                "description" => __(
+                    "Specify the criteria for posts that will trigger this action. Leave blank to include all posts.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                    "publishpress-future-pro"
+                ),
                 "fields" => [
                     [
                         "name" => "postQuery",

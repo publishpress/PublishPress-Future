@@ -21,8 +21,8 @@ interface SignatureManagerInterface
     public function sign(string $data, string $privateKey): string;
 
     /**
-     * Verify the given signature (base64 encoded) for the given data using the given public key. It returns true if the signature is
-     * valid, false otherwise.
+     * Verify the given signature (base64 encoded) for the given data using the given public key.
+     * It returns true if the signature is valid, false otherwise.
      *
      * @param string $data
      * @param string $signature

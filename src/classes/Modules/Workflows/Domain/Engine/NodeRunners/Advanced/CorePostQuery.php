@@ -4,13 +4,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Adv
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery as NodeTypeCorePostQuery;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery as NodeType;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
 
 class CorePostQuery implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeCorePostQuery::NODE_NAME;
+    public const NODE_NAME = NodeType::NODE_NAME;
 
     /**
      * @var HookableInterface
@@ -62,7 +62,6 @@ class CorePostQuery implements NodeRunnerInterface
         } catch (\Exception $e) {
             $this->nodeRunnerPreparer->logError($e->getMessage(), $workflowId, $step);
         }
-        // $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $contextVariables);
     }
 
     public function actionCallback(int $postId, array $nodeSettings)

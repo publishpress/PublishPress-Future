@@ -16,7 +16,10 @@ class CoreSendEmail implements NodeTypeInterface
 
     public static function getDefaultMessage()
     {
-        return __('This is a message sent by PublishPress Workflow: {{global.workflow.title}}.', 'publishpress-future-pro');
+        return __(
+            'This is a message sent by PublishPress Workflow: {{global.workflow.title}}.',
+            'publishpress-future-pro'
+        );
     }
 
     public function getElementarType(): string
