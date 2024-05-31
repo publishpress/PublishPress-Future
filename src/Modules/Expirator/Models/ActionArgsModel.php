@@ -97,11 +97,7 @@ class ActionArgsModel implements ActionArgsModelInterface
         }
     }
 
-    /**
-     * @param int $id
-     * @return bool
-     */
-    public function load($id)
+    public function load(int $id): bool
     {
         global $wpdb;
 
@@ -121,11 +117,7 @@ class ActionArgsModel implements ActionArgsModelInterface
         return is_object($row);
     }
 
-    /**
-     * @param int $actionId
-     * @return bool
-     */
-    public function loadByActionId($actionId)
+    public function loadByActionId(int $actionId): bool
     {
         global $wpdb;
 
@@ -145,13 +137,7 @@ class ActionArgsModel implements ActionArgsModelInterface
         return is_object($row);
     }
 
-    /**
-     * Load the enabled action by post ID. We can have only one enabled per post.
-     *
-     * @param int $postId
-     * @return bool
-     */
-    public function loadByPostId($postId, $filterEnabled = false)
+    public function loadByPostId(int $postId, bool $filterEnabled = false): bool
     {
         global $wpdb;
 
@@ -183,7 +169,7 @@ class ActionArgsModel implements ActionArgsModelInterface
         return is_object($row);
     }
 
-    public function save()
+    public function save(): void
     {
         global $wpdb;
 
@@ -206,10 +192,7 @@ class ActionArgsModel implements ActionArgsModelInterface
         );
     }
 
-    /**
-     * @return int
-     */
-    public function insert()
+    public function insert(): int
     {
         global $wpdb;
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
@@ -230,9 +213,8 @@ class ActionArgsModel implements ActionArgsModelInterface
 
     /**
      * @param int|null $postId
-     * @return void
      */
-    public function disableAllForPost($postId = null)
+    public function disableAllForPost($postId = null): void
     {
         global $wpdb;
 
@@ -252,7 +234,7 @@ class ActionArgsModel implements ActionArgsModelInterface
         );
     }
 
-    public function delete()
+    public function delete(): void
     {
         global $wpdb;
 
@@ -265,10 +247,7 @@ class ActionArgsModel implements ActionArgsModelInterface
         );
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return absint($this->id);
     }
@@ -276,44 +255,29 @@ class ActionArgsModel implements ActionArgsModelInterface
     /**
      * @return int
      */
-    public function getCronActionId()
+    public function getCronActionId(): int
     {
         return absint($this->cronActionId);
     }
 
-    /**
-     * @param int $cronActionId
-     * @return ActionArgsModel
-     */
-    public function setCronActionId($cronActionId)
+    public function setCronActionId(int $cronActionId): ActionArgsModelInterface
     {
         $this->cronActionId = $cronActionId;
         return $this;
     }
 
-
-    /**
-     * @return int
-     */
-    public function getPostId()
+    public function getPostId(): int
     {
         return (int)$this->postId;
     }
 
-    /**
-     * @param int $postId
-     * @return ActionArgsModel
-     */
-    public function setPostId($postId)
+    public function setPostId(int $postId): ActionArgsModelInterface
     {
         $this->postId = $postId;
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getArgs()
+    public function getArgs(): array
     {
         return (array)$this->args;
     }
@@ -323,15 +287,12 @@ class ActionArgsModel implements ActionArgsModelInterface
         return isset($this->args[$key]) ? $this->args[$key] : '';
     }
 
-    public function getAction()
+    public function getAction(): string
     {
         return isset($this->args['expireType']) ? $this->args['expireType'] : '';
     }
 
-    /**
-     * @return string
-     */
-    public function getActionLabel($postType = '')
+    public function getActionLabel(string $postType = ''): string
     {
         $label = $this->expirationActionsModel->getLabelForAction($this->getAction(), $postType);
 
@@ -342,10 +303,7 @@ class ActionArgsModel implements ActionArgsModelInterface
         return $label;
     }
 
-    /**
-     * @return array
-     */
-    public function getTaxonomyTerms()
+    public function getTaxonomyTerms(): array
     {
         $terms = isset($this->args['category']) ? $this->args['category'] : [];
 
@@ -356,15 +314,12 @@ class ActionArgsModel implements ActionArgsModelInterface
         return $terms;
     }
 
-    public function getTaxonomy()
+    public function getTaxonomy(): string
     {
         return isset($this->args['categoryTaxonomy']) ? $this->args['categoryTaxonomy'] : '';
     }
 
-    /**
-     * @return array
-     */
-    public function getTaxonomyTermsNames()
+    public function getTaxonomyTermsNames(): array
     {
         $terms = $this->getTaxonomyTerms();
 
@@ -379,40 +334,26 @@ class ActionArgsModel implements ActionArgsModelInterface
         return $names;
     }
 
-    /**
-     * @param array $args
-     * @return ActionArgsModel
-     */
-    public function setArgs($args)
+    public function setArgs(array $args): ActionArgsModelInterface
     {
         $this->args = $args;
+
         return $this;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     * @return ActionsArgsModel
-     */
-    public function setArg(string $key, $value)
+    public function setArg(string $key, $value): ActionArgsModelInterface
     {
         $this->args[$key] = $value;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return (string)$this->createdAt;
     }
 
-    /**
-     * @param string $createdAt
-     * @return ActionArgsModel
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(string $createdAt): ActionArgsModelInterface
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -435,20 +376,13 @@ class ActionArgsModel implements ActionArgsModelInterface
         return (string)$this->scheduledDate;
     }
 
-    /**
-     * @param bool $enabled
-     * @return $this
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): ActionArgsModelInterface
     {
         $this->enabled = $enabled;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getEnabled()
+    public function getEnabled(): bool
     {
         return (bool)$this->enabled;
     }

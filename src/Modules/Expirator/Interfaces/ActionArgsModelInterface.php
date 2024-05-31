@@ -13,118 +13,62 @@ interface ActionArgsModelInterface
 {
     public function __construct(ExpirationActionsModel $expirationActionsModel);
 
-    /**
-     * @param int $id
-     * @return bool
-     */
-    public function load($id);
+    public function load(int $id): bool;
 
-    /**
-     * @param int $actionId
-     * @return bool
-     */
-    public function loadByActionId($actionId);
+    public function loadByActionId(int $actionId): bool;
 
-    /**
-     * Load the enabled action by post ID. We can have only one enabled per post.
-     *
-     * @param int $postId
-     * @return bool
-     */
-    public function loadByPostId($postId, $filterEnabled = false);
+    public function loadByPostId(int $postId, bool $filterEnabled = false): bool;
 
-    public function save();
+    public function save(): void;
 
     /**
      * @return int
      */
-    public function insert();
+    public function insert(): int;
 
     /**
      * @param int|null $postId
-     * @return void
      */
-    public function disableAllForPost($postId = null);
+    public function disableAllForPost($postId = null): void;
 
-    public function delete();
+    public function delete(): void;
 
-    /**
-     * @return int
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @return int
-     */
-    public function getCronActionId();
+    public function getCronActionId(): int;
 
-    /**
-     * @param int $cronActionId
-     * @return ActionArgsModel
-     */
-    public function setCronActionId($cronActionId);
+    public function setCronActionId(int $cronActionId): ActionArgsModelInterface;
 
+    public function getPostId(): int;
 
-    /**
-     * @return int
-     */
-    public function getPostId();
+    public function setPostId(int $postId): ActionArgsModelInterface;
 
-    /**
-     * @param int $postId
-     * @return ActionArgsModel
-     */
-    public function setPostId($postId);
-
-    /**
-     * @return array
-     */
-    public function getArgs();
+    public function getArgs(): array;
 
     public function getArg(string $key): string;
 
-    public function getAction();
+    public function getAction(): string;
 
-    /**
-     * @return string
-     */
-    public function getActionLabel($postType = '');
+    public function getActionLabel(string $postType = ''): string;
 
-    /**
-     * @return array
-     */
-    public function getTaxonomyTerms();
+    public function getTaxonomyTerms(): array;
 
-    public function getTaxonomy();
+    public function getTaxonomy(): string;
 
-    /**
-     * @return array
-     */
-    public function getTaxonomyTermsNames();
+    public function getTaxonomyTermsNames(): array;
 
-    /**
-     * @param array $args
-     * @return ActionArgsModel
-     */
-    public function setArgs($args);
+    public function setArgs(array $args): ActionArgsModelInterface;
 
     /**
      * @param string $key
      * @param mixed $value
      * @return ActionsArgsModel
      */
-    public function setArg(string $key, $value);
+    public function setArg(string $key, $value): ActionArgsModelInterface;
 
-    /**
-     * @return string
-     */
-    public function getCreatedAt();
+    public function getCreatedAt(): string;
 
-    /**
-     * @param string $createdAt
-     * @return ActionArgsModel
-     */
-    public function setCreatedAt($createdAt);
+    public function setCreatedAt(string $createdAt): ActionArgsModelInterface;
 
     /**
      * @deprecated version 3.4.0, use getCreatedAtAsISO8601 or getCreatedAtAsUnixTime
@@ -133,16 +77,9 @@ interface ActionArgsModelInterface
 
     public function getScheduledDateAsISO8601(): string;
 
-    /**
-     * @param bool $enabled
-     * @return $this
-     */
-    public function setEnabled($enabled);
+    public function setEnabled(bool $enabled): ActionArgsModelInterface;
 
-    /**
-     * @return bool
-     */
-    public function getEnabled();
+    public function getEnabled(): bool;
 
     public function getScheduledDateAsUnixTime(): int;
 
