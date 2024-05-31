@@ -6,12 +6,15 @@
 namespace PublishPress\Future\Modules\Expirator\Models;
 
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-class ActionArgsModel
+class ActionArgsModel implements ActionArgsModelInterface
 {
+    private const DATE_FORMAT_ISO_8601 = 'Y-m-d H:i:s';
+
     /**
      * @var int
      */
@@ -416,10 +419,19 @@ class ActionArgsModel
     }
 
     /**
-     * @return string
+     * @deprecated version 3.4.0, use getScheduledDateAsISO8601 or getScheduledDateAsUnixTime
      */
-    public function getScheduledDate()
+    public function getScheduledDate(): string
     {
+        return $this->getScheduledDateAsISO8601();
+    }
+
+    public function getScheduledDateAsISO8601(): string
+    {
+        if (is_numeric($this->scheduledDate)) {
+            $this->scheduledDate = $this->convertUnixTimeDateToISO8601($this->scheduledDate);
+        }
+
         return (string)$this->scheduledDate;
     }
 
@@ -441,32 +453,45 @@ class ActionArgsModel
         return (bool)$this->enabled;
     }
 
+    public function getScheduledDateAsUnixTime(): int
+    {
+        return $this->convertISO8601DateToUnixTime($this->getScheduledDateAsISO8601());
+    }
+
     /**
-     * @return int
+     * @deprecated version 3.4.0, use setScheduledDateFromISO8601 or setScheduledDateFromUnixTime
      */
-    public function getScheduledDateAsUnixTime()
+    public function setScheduledDate(string $scheduledDate): ActionArgsModelInterface
+    {
+        $this->scheduledDate = $this->setScheduledDateFromISO8601($scheduledDate);
+
+        return $this;
+    }
+
+    public function setScheduledDateFromISO8601(string $scheduledDate): ActionArgsModelInterface
+    {
+        // We convert the date to unix time and then back to ISO8601 to ensure the date is valid.
+        $unixTime = $this->convertISO8601DateToUnixTime($scheduledDate);
+        $this->scheduledDate = $this->convertUnixTimeDateToISO8601($unixTime);
+
+        return $this;
+    }
+
+    public function setScheduledDateFromUnixTime(int $scheduledDate): ActionArgsModelInterface
+    {
+        $this->scheduledDate = $this->convertUnixTimeDateToISO8601($scheduledDate);
+
+        return $this;
+    }
+
+    private function convertUnixTimeDateToISO8601(int $date): string
     {
         // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-        return date('U', strtotime($this->getScheduledDate()));
+        return date(self::DATE_FORMAT_ISO_8601, $date);
     }
 
-    /**
-     * @param string $scheduledDate
-     * @return ActionArgsModel
-     */
-    public function setScheduledDate($scheduledDate)
+    private function convertISO8601DateToUnixTime(string $date): int
     {
-        $this->scheduledDate = date('Y-m-d H:i:s', $scheduledDate);
-        return $this;
-    }
-
-    /**
-     * @param int $scheduledDate
-     * @return ActionArgsModel
-     */
-    public function setScheduledDateFromUnixTime($scheduledDate)
-    {
-        $this->scheduledDate = gmdate('Y-m-d H:i:s', $scheduledDate);
-        return $this;
+        return (int) strtotime($date);
     }
 }

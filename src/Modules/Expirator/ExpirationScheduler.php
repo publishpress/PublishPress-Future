@@ -67,7 +67,7 @@ class ExpirationScheduler implements SchedulerInterface
      * @param LoggerInterface $logger
      * @param DateTimeFacade $datetime
      * @param \Closure $postModelFactory
-     * @param $actionArgsModelFactory
+     * @param \Closure $actionArgsModelFactory
      * @param ExpirationActionsModel $expirationActionsModel
      */
     public function __construct(

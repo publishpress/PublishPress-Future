@@ -357,7 +357,7 @@ class ExpirablePostModel extends PostModel
     {
         if (is_null($this->expirationDate)) {
             if ($this->getPostStatus() !== 'auto-draft') {
-                $this->expirationDate = $this->actionArgsModel->getScheduledDate();
+                $this->expirationDate = $this->actionArgsModel->getScheduledDateAsISO8601();
             }
 
             if (
