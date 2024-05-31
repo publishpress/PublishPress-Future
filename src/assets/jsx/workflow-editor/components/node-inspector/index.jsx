@@ -24,6 +24,7 @@ export const NodeInspector = () => {
         selectedNode,
         selectedEdge,
         nodeErrors,
+        nodeType,
     } = useSelect((select) => {
         const selectedNodes = select(workflowStore).getSelectedNodes();
         const selectedEdges = select(workflowStore).getSelectedEdges();
@@ -35,6 +36,10 @@ export const NodeInspector = () => {
             selectedEdges.length === 1 ? getEdgeById(selectedEdges[0]) : null;
         const nodeErrors = select(workflowStore).getNodeErrors(selectedNode?.id) || {};
         const selectedElementsCount = select(workflowStore).getSelectedElementsCount();
+        let nodeType = null;
+        if (selectedNode) {
+            nodeType = select(editorStore).getNodeTypeByName(selectedNode?.data?.name);
+        }
 
         return {
             selectedNodes,
@@ -43,6 +48,7 @@ export const NodeInspector = () => {
             selectedNode,
             selectedEdge,
             nodeErrors,
+            nodeType,
         };
     });
 
@@ -61,14 +67,14 @@ export const NodeInspector = () => {
     const onlyEdgesSelected =
         selectedNodes.length === 0 && selectedEdges.length > 0;
 
-    const nodeHasSettings = selectedNode?.data?.settingsSchema?.length > 0;
+    const nodeHasSettings = nodeType?.settingsSchema?.length > 0;
 
     const selectedNodeHasInput = nodeHasInput(selectedNode);
     const selectedNodeHasOutput = nodeHasOutput(selectedNode);
 
     const mappedNodeInputSchema = mapNodeInputs(selectedNode);
 
-    const nodeOutputSchema = selectedNode?.data?.outputSchema || [];
+    const nodeOutputSchema = nodeType?.outputSchema || [];
     let mappedNodeOutputSchema = [];
     if (nodeOutputSchema.length > 0) {
         nodeOutputSchema.forEach((schemaItem) => {

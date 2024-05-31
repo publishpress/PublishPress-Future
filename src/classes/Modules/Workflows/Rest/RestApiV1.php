@@ -158,7 +158,7 @@ class RestApiV1 implements RestApiManagerInterface
             'id' => $workflowModel->getId(),
             'title' => $workflowModel->getTitle(),
             'description' => $workflowModel->getDescription(),
-            'flow' => $workflowModel->getFlow(),
+            'flow' => $workflowModel->getFlow(true),
             'status' => $workflowModel->getStatus(),
         ]);
     }

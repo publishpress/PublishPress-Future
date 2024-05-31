@@ -66,7 +66,7 @@ class Module implements InitializableInterface
     {
         $controllers = [
             new Controllers\PostType($this->hooks),
-            new Controllers\WorkflowsList($this->hooks),
+            new Controllers\WorkflowsList($this->hooks, $this->nodeTypesModel),
             new Controllers\WorkflowEditor($this->hooks, $this->nodeTypesModel, $this->cronSchedulesModel),
             new Controllers\RestApi($this->hooks, $this->restApiManager),
             new Controllers\FutureLegacyAction($this->hooks),

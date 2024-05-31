@@ -17,4 +17,6 @@ interface NodeTypesModelInterface
     public function getAllNodeTypesIndexedByName(): array;
 
     public function getNodeType(string $name): ?NodeTypeInterface;
+
+    public function getStrings(): array;
 }

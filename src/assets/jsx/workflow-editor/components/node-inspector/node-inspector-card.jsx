@@ -1,12 +1,24 @@
 import { __ } from "@wordpress/i18n";
+import { useSelect } from "@wordpress/data";
+import { store as editorStore } from "../editor-store";
 
 import InspectorCard from "../inspector-card";
 import NodeIcon from "../node-icon";
 
 export const NodeInspectorCard = ({ node }) => {
-    const nodeIcon = node?.data?.icon || "media-document";
-    const nodeLabel = node?.data?.label || __("Node", "publishpress-future-pro");
-    const nodeDescription = node?.data?.description || __("No description", "publishpress-future-pro");
+    const {
+        getNodeTypeByName,
+    } = useSelect((select) => {
+        return {
+            getNodeTypeByName: select(editorStore).getNodeTypeByName,
+        };
+    });
+
+    const nodeType = getNodeTypeByName(node?.data?.name);
+    const nodeLabel = nodeType.label || node?.data.label || __("Node", "publishpress-future-pro");
+    const nodeDescription = nodeType.description || node?.data.description || __("No description", "publishpress-future-pro")
+
+    const nodeIcon = nodeType.icon?.src || "media-document";
     const nodeId = node?.id;
     const nodeSlug = node?.data?.slug;
 

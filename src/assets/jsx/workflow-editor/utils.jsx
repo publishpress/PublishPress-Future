@@ -1,6 +1,7 @@
 import { applyFilters } from "@wordpress/hooks";
 import { select } from "@wordpress/data";
 import { store as workflowStore } from "./components/workflow-store";
+import { store as editorStore } from "./components/editor-store";
 import { getIncomers, getOutgoers } from "reactflow";
 
 const VARIABLE_SOURCE_NODE_INPUT = 'node-input';
@@ -113,20 +114,24 @@ export function nodeHasOutgoers(node) {
 }
 
 export function nodeHasInput(node) {
+    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
+
     const incomers = getNodeIncomers(node);
     const nodeHasIncomers = incomers?.length > 0;
-    const nodeHasInput = nodeHasIncomers && incomers.filter((incomer) => incomer.data?.outputSchema?.length > 0)?.length > 0;
+    const nodeHasInput = nodeHasIncomers && incomers.filter((incomer) => nodeType?.outputSchema?.length > 0)?.length > 0;
 
     return nodeHasInput;
 }
 
 export function nodeHasOutput(node) {
-    const nodeHasOutput = node?.data?.outputSchema?.length > 0;
+    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
+    const nodeHasOutput = nodeType?.outputSchema?.length > 0;
 
     return nodeHasOutput;
 }
 
 export function getNodeInputs(node) {
+    const nodeType = select(editorStore).getNodeTypeByName(node?.data?.name);
     const incomers = getNodeIncomers(node);
     const nodeHasIncomers = incomers?.length > 0;
 
@@ -139,11 +144,11 @@ export function getNodeInputs(node) {
     let nodeInputs = [];
 
     incomers.forEach((incomer) => {
-        if (!incomer.data?.outputSchema?.length) {
+        if (!nodeType?.outputSchema?.length) {
             return;
         }
 
-        incomer.data.outputSchema.forEach((schemaItem) => {
+        nodeType?.outputSchema.forEach((schemaItem) => {
             const dataType = getDataTypeByName(schemaItem.type);
 
             // If input, look for the previous node inputs to bypass as this node's input
@@ -222,16 +227,19 @@ export function getGlobalVariablesExpanded(globalVariables) {
 }
 
 export function mapNodeInputs(node) {
+    const getNodeTypeByName = select(editorStore).getNodeTypeByName;
     const previousNodes = getNodeIncomers(node);
 
     const mappedInput = [];
 
     previousNodes.forEach((previousNode) => {
-        if (!previousNode.data?.outputSchema?.length) {
+        const nodeType = getNodeTypeByName(previousNode.data?.name);
+
+        if (!nodeType?.outputSchema?.length) {
             return;
         }
 
-        previousNode.data.outputSchema.forEach((outputItem) => {
+        nodeType.outputSchema.forEach((outputItem) => {
             if (outputItem.type === "input") {
                 // Get the previous node outputs to bypass to this node as input
                 const previousNodeInputs = mapNodeInputs(previousNode);

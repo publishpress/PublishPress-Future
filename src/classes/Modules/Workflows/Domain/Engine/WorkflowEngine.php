@@ -103,6 +103,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                 foreach ($triggerNodes as $triggerNode) {
                     $triggerName = $triggerNode['data']['name'];
                     $triggerId = $triggerNode['id'];
+                    $nodeType = $this->nodeTypesModel->getNodeType($triggerName);
 
                     $triggerRunner = call_user_func($this->nodeRunnerFactory, $triggerName);
 
@@ -110,7 +111,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                         logError(
                             sprintf(
                                 // translators: %s is the trigger name
-                                __('[PublishPress Future Pro] Trigger not found: %s', 'publishpress-future-pro'),
+                                __('Trigger not found: %s', 'publishpress-future-pro'),
                                 $triggerName
                             )
                         );
@@ -127,7 +128,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                     $globalVariables['trigger'] = [
                         'id' => $triggerId,
                         'name' => $triggerName,
-                        'label' => $triggerNode['data']['label'],
+                        'label' => $nodeType->getLabel(),
                     ];
 
                     $contextVariables = [

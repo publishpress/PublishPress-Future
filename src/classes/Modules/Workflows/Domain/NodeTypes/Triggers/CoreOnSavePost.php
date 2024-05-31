@@ -55,7 +55,7 @@ class CoreOnSavePost implements NodeTypeInterface
 
     public function getVersion(): int
     {
-        return 1;
+        return 2;
     }
 
     public function getCategory(): string

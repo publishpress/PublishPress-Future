@@ -81,7 +81,7 @@ class GeneralAction implements NodeRunnerPreparerInterface
     {
         logError(
             sprintf(
-                '[PublishPress Future Pro] %1$s: workflowId: %2$d, step: %3$s',
+                '%1$s: workflowId: %2$d, step: %3$s',
                 $message,
                 $workflowId,
                 print_r($step, true) // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r

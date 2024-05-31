@@ -316,4 +316,19 @@ class NodeTypesModel implements NodeTypesModelInterface
 
         return $nodes[$name] ?? null;
     }
+
+    public function getStrings(): array
+    {
+        $nodeTypes = $this->getAllNodeTypesIndexedByName();
+
+        $strings = [];
+        foreach ($nodeTypes as $nodeType) {
+            $strings[$nodeType->getName()] = [
+                'label' => $nodeType->getLabel(),
+                'description' => $nodeType->getDescription(),
+            ];
+        }
+
+        return $strings;
+    }
 }

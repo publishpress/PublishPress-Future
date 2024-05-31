@@ -1,5 +1,6 @@
 import { PanelRow } from "@wordpress/components";
 import { store as workflowStore } from "../workflow-store";
+import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useMemo } from "@wordpress/element";
 import { getExpandedVariableOptionsForSelect } from "../../utils";
@@ -9,11 +10,11 @@ import PersistentPanelBody from "../persistent-panel-body";
 export const NodeSettingsPanel = ({ node }) => {
     const {
         globalVariables,
-        getDataTypeByName,
+        nodeType,
     } = useSelect((select) => {
         return {
             globalVariables: select(workflowStore).getGlobalVariables(),
-            getDataTypeByName: select(workflowStore).getDataTypeByName,
+            nodeType: select(editorStore).getNodeTypeByName(node?.data?.name),
         }
     });
 
@@ -39,7 +40,7 @@ export const NodeSettingsPanel = ({ node }) => {
     if (!nodeSettings) {
         nodeSettings = {};
     }
-    const settingsSchema = node?.data?.settingsSchema || {};
+    const settingsSchema = nodeType?.settingsSchema || {};
 
     const variableListOptions = getExpandedVariableOptionsForSelect(node, globalVariables);
 

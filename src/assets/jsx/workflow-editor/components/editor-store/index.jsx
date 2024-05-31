@@ -315,7 +315,11 @@ export const store = createReduxStore(STORE_NAME, {
         },
         getAllNodes(state) {
             return state.triggerNodes.concat(state.actionNodes, state.advancedNodes);
-        }
+        },
+        getNodeTypeByName(state, nodeName) {
+            const allNodes = state.triggerNodes.concat(state.actionNodes, state.advancedNodes);
+            return allNodes.find((n) => n.name === nodeName) || {};
+        },
     },
 });
 

@@ -4,19 +4,18 @@ import NodeIcon from '../node-icon';
 import { IoMdPlay } from "react-icons/io";
 import { useSelect, useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
+import { store as editorStore } from "../editor-store";
 import { __ } from '@wordpress/i18n';
-import { Tooltip, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
-import { Toolbar } from 'reakit';
+import { Toolbar, Tooltip, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
 
 
 export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
-    const nodeClassName = data?.className || 'react-flow__node-genericNode';
-
     const {
         nodeErrors,
         nodeHasErrors,
         isAdvancedSettingsEnabled,
-        isSingularElementSelected
+        isSingularElementSelected,
+        getNodeTypeByName,
     } = useSelect((select) => {
         const nodeErrors = select(workflowStore).getNodeErrors(id);
         const selectedElementsCount = select(workflowStore).getSelectedElementsCount();
@@ -26,6 +25,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
             nodeHasErrors: Object.keys(nodeErrors).length > 0,
             isAdvancedSettingsEnabled: true,
             isSingularElementSelected: selectedElementsCount === 1,
+            getNodeTypeByName: select(editorStore).getNodeTypeByName,
         }
     });
 
@@ -33,10 +33,14 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
         removeNode,
     } = useDispatch(workflowStore);
 
+    const nodeType = getNodeTypeByName(data.name);
+    const nodeLabel = nodeType.label || data.label || __('Node', 'publishpress-future-pro');
+    const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
+
     let targetHandles = null;
-    if (data.socketSchema) {
-        if (data.socketSchema.target) {
-            targetHandles = data.socketSchema.target.map((handle) => {
+    if (nodeType.socketSchema) {
+        if (nodeType.socketSchema.target) {
+            targetHandles = nodeType.socketSchema.target.map((handle) => {
                 return (
                     <Handle
                         key={handle.id + '_target'}
@@ -53,9 +57,9 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
 
     let sourceHandles = null;
     let socketAreas = null;
-    if (data.socketSchema) {
-        if (data.socketSchema.source) {
-            sourceHandles = data.socketSchema.source.map((handle) => {
+    if (nodeType.socketSchema) {
+        if (nodeType.socketSchema.source) {
+            sourceHandles = nodeType.socketSchema.source.map((handle) => {
                 return (
                     <Handle
                         key={handle.id + '_source'}
@@ -68,7 +72,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
                 );
             });
 
-            socketAreas = data.socketSchema.source.map((handle) => {
+            socketAreas = nodeType.socketSchema.source.map((handle) => {
                 return (
                     <div
                         key={handle.id + 'socketArea'}
@@ -140,8 +144,8 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
                             </div>
                         )}
                         <div className='react-flow__node-header'>
-                            <NodeIcon icon={data.icon} size={14} />
-                            <div className="react-flow__node-label">{data.label}</div>
+                            <NodeIcon icon={nodeType.icon.src} size={14} />
+                            <div className="react-flow__node-label">{nodeLabel}</div>
                         </div>
                         {isAdvancedSettingsEnabled && nodeAttributes.length > 0 &&
                             <div className='react-flow__node-content'>

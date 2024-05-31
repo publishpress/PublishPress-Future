@@ -6,6 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 
@@ -16,10 +17,17 @@ class WorkflowsList implements InitializableInterface
      */
     private $hooks;
 
+    /**
+     * @var NodeTypesModelInterface
+     */
+    private $nodeTypesModel;
+
     public function __construct(
-        HookableInterface $hooks
+        HookableInterface $hooks,
+        NodeTypesModelInterface $nodeTypesModel
     ) {
         $this->hooks = $hooks;
+        $this->nodeTypesModel = $nodeTypesModel;
     }
 
     public function initialize()
@@ -146,11 +154,17 @@ class WorkflowsList implements InitializableInterface
                 NodeTypesModel::NODE_TYPE_TRIGGER ===
                 $node["data"]["elementarType"]
             ) {
-                $triggers[] = $node["data"]["label"];
+                $nodeType = $this->nodeTypesModel->getNodeType($node["data"]["name"]);
+
+                if (empty($nodeType)) {
+                    $triggers[] = esc_html($node["data"]["name"]);
+                } else {
+                    $triggers[] = $nodeType->getLabel();
+                }
             }
         }
 
-        esc_html(implode(", ", $triggers));
+        echo esc_html(implode(", ", $triggers));
     }
 
     public function renderPreviewColumn($column, $postId)

@@ -48,6 +48,7 @@ export const FlowEditor = (props) => {
         baseSlugCounts,
         isMiniMapFeatureActive,
         isControlsFeatureActive,
+        getNodeTypeByName,
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -66,6 +67,7 @@ export const FlowEditor = (props) => {
             baseSlugCounts: select(workflowStore).getBaseSlugCounts(),
             isMiniMapFeatureActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
             isControlsFeatureActive: select(editorStore).isFeatureActive(FEATURE_CONTROLS),
+            getNodeTypeByName: select(editorStore).getNodeTypeByName,
         };
     });
 
@@ -169,7 +171,9 @@ export const FlowEditor = (props) => {
     }, []);
 
     const incrementAndGetNodeSlug = (nodeItem) => {
-        let baseSlug = nodeItem.baseSlug;
+        const nodeType = getNodeTypeByName(nodeItem.name);
+
+        let baseSlug = nodeType.baseSlug;
 
         if (!baseSlug) {
             baseSlug = "node";
@@ -193,17 +197,7 @@ export const FlowEditor = (props) => {
                 data: {
                     name: item.name,
                     elementarType: item.elementarType,
-                    label: item.label,
-                    description: item.description,
-                    settingsSchema: item.settingsSchema,
-                    validationSchema: item.validationSchema,
-                    category: item.category,
-                    icon: item.icon,
                     version: item.version,
-                    outputSchema: item.outputSchema,
-                    className: item.className,
-                    socketSchema: item.socketSchema,
-                    baseSlug: item.baseSlug,
                     slug: slug,
                 },
             };

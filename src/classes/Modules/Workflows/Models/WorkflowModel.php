@@ -5,6 +5,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use Exception;
+use PublishPress\Future\Core\DI\Container;
+use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use WP_Post;
@@ -29,6 +31,8 @@ class WorkflowModel implements WorkflowModelInterface
     private $hasLegacyActionTrigger = null;
 
     private $hasManualSelectionTrigger = null;
+
+    private $allNodeTypes = null;
 
     public function load(int $id): bool
     {
@@ -135,22 +139,115 @@ class WorkflowModel implements WorkflowModelInterface
         $this->reset();
     }
 
-    public function getFlow(): array
+    private function getAllNodeTypes(): array
     {
-        if (empty($this->flow)) {
-            try {
+        if (is_null($this->allNodeTypes)) {
+            // FIXME: Use dependency injection
+            $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
+
+            // Ensure the flow is updated with the latest node types
+            $nodeTypesModel = new NodeTypesModel($hooks);
+            $this->allNodeTypes = $nodeTypesModel->getAllNodeTypesIndexedByName();
+        }
+
+        return $this->allNodeTypes;
+    }
+
+    public function getFlow(bool $updateNodes = false): array
+    {
+        try {
+            if (empty($this->flow)) {
                 $this->flow = get_post_meta($this->post->ID, self::META_KEY_FLOW, true);
                 $this->flow = json_decode($this->flow, true);
 
                 if (! is_array($this->flow)) {
                     $this->flow = [];
                 }
-            } catch (Exception $e) {
-                $this->flow = [];
+
+                if ($updateNodes) {
+                    if (empty($this->flow)) {
+                        return $this->flow;
+                    }
+
+                    // Check if the nodes are updated and update them if necessary
+                    $nodes = $this->flow['nodes'] ?? [];
+                    $nodesUpdated = false;
+                    foreach ($nodes as &$node) {
+                        if (! $this->isNodeUpdated($node)) {
+                            $node = $this->updateNode($node);
+                            $nodesUpdated = true;
+                        }
+                    }
+                    if ($nodesUpdated) {
+                        $this->flow['nodes'] = $nodes;
+                    }
+                }
             }
+        } catch (Exception $e) {
+            $this->flow = [];
+
+            logError('Error getting the workflow', $e);
         }
 
         return $this->flow;
+    }
+
+    private function getNodeTypeByname(string $name)
+    {
+        $nodeTypes = $this->getAllNodeTypes();
+
+        $nodeType = $nodeTypes[$name] ?? null;
+
+        if (is_null($nodeType)) {
+            throw new Exception('Node type not found: ' . esc_html($name));
+        }
+
+        return $nodeType;
+    }
+
+    private function isNodeUpdated(array $node): bool
+    {
+        $nodeType = $this->getNodeTypeByname($node['data']['name']);
+        $nodeVersion = $this->getNodeVersion($node);
+
+        return $nodeVersion === $nodeType->getVersion();
+    }
+
+    private function getNodeVersion(array $node): int
+    {
+        return (int)($node['data']['version'] ?? 0);
+    }
+
+    private function getUnstranslatedString(string $string): string
+    {
+        // Force the WP locale to en_US to get the untranslated string
+        $currentLocale = get_locale();
+        switch_to_locale('en_US');
+
+        $untranslatedString = __($string, 'publishpress-future-pro');
+
+        // Restore the original locale
+        switch_to_locale($currentLocale);
+
+        return $untranslatedString;
+    }
+
+    private function updateNode(array $node): array
+    {
+        $nodeType = $this->getNodeTypeByname($node['data']['name']);
+        $nodeVersion = $this->getNodeVersion($node);
+
+        if ($nodeType->getVersion() < $nodeVersion) {
+            // TODO: What to do when the node type is downgraded? Should we have a check in the version of the builder?
+            return $node;
+        }
+        // phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+        // if ($nodeType->getVersion() > $nodeVersion) {
+        //     // Update the version
+        //     $node['data']['version'] = $nodeType->getVersion();
+        // }
+
+        return $node;
     }
 
     public function setFlow(array $flow)

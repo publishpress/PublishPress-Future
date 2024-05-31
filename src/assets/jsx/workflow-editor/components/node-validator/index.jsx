@@ -1,4 +1,5 @@
 import { store as workflowStore } from "../workflow-store";
+import { store as editorStore } from "../editor-store";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
@@ -10,10 +11,12 @@ export function NodeValidator({})
     const {
         nodes,
         edges,
+        getNodeTypeByName,
     } = useSelect((select) => {
         return {
             nodes: select(workflowStore).getNodes(),
             edges: select(workflowStore).getEdges(),
+            getNodeTypeByName: select(editorStore).getNodeTypeByName,
         }
     });
 
@@ -24,9 +27,10 @@ export function NodeValidator({})
 
     useEffect(() => {
         nodes.forEach((node) => {
+            const nodeType = getNodeTypeByName(node.data?.name);
             const nodeSettings = node.data?.settings || {};
-            const settingsSchema = node.data?.settingsSchema;
-            const validationSchema = node.data?.validationSchema;
+            const settingsSchema = nodeType?.settingsSchema;
+            const validationSchema = nodeType?.validationSchema;
 
             resetNodeErrors(node.id);
 
