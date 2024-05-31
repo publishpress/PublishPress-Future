@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "POT-Creation-Date: 2024-05-30T22:01:51+00:00\n"
-"PO-Revision-Date: 2024-05-30 22:28-0300\n"
+"PO-Revision-Date: 2024-05-31 13:01-0300\n"
 "Last-Translator: Anderson Grüdtner Martins <anderson@publishpress.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -16,12 +16,12 @@ msgstr ""
 #. Plugin Name of the plugin
 #: publishpress-future-pro.php
 msgid "PublishPress Future Pro"
-msgstr ""
+msgstr "PublishPress Future Pro"
 
 #. Plugin URI of the plugin
 #: publishpress-future-pro.php
 msgid "http://wordpress.org/extend/plugins/post-expirator/"
-msgstr ""
+msgstr "http://wordpress.org/extend/plugins/post-expirator/"
 
 #. Description of the plugin
 #: publishpress-future-pro.php
@@ -29,85 +29,91 @@ msgid ""
 "PublishPress Future allows you to schedule automatic changes to posts, pages "
 "and other content types."
 msgstr ""
+"O PublishPress Future permite que você programe alterações automáticas em "
+"posts, páginas e outros tipos de conteúdo."
 
 #. Author of the plugin
 #: publishpress-future-pro.php
 msgid "PublishPress"
-msgstr ""
+msgstr "PublishPress"
 
 #. Author URI of the plugin
 #: publishpress-future-pro.php
 msgid "http://publishpress.com"
-msgstr ""
+msgstr "http://publishpress.com"
 
 #. Translators: Do not translate the #ACTIONDATE, or #ACTIONTIME placeholders.
 #: src/classes/Controllers/BlocksController.php:47
 msgid "Post expires at #ACTIONTIME on #ACTIONDATE."
-msgstr ""
+msgstr "O post expira às #ACTIONTIME do dia #ACTIONDATE."
 
 #: src/classes/Controllers/BlocksController.php:48
 msgid "F j, Y"
-msgstr ""
+msgstr "d/m/Y"
 
 #: src/classes/Controllers/BlocksController.php:49
 msgid "g:i a"
-msgstr ""
+msgstr "H:i"
 
 #: src/classes/Controllers/BlocksController.php:87
 msgid "Displays a message with the date and time of the future action."
-msgstr ""
+msgstr "Exibe uma mensagem com a data e a hora da ação futura."
 
 #: src/classes/Controllers/BlocksController.php:88
 msgid ""
 "Type the text template and use # to see the autocomplete options with the "
 "available placeholders."
 msgstr ""
+"Digite o modelo de texto e use # para ver as opções de preenchimento "
+"automático com os espaços reservados disponíveis."
 
 #: src/classes/Controllers/BlocksController.php:89
 msgid "Available placeholders"
-msgstr ""
+msgstr "Espaços reservados disponíveis"
 
 #: src/classes/Controllers/BlocksController.php:90
 msgid ""
 "Future action block template. Type the text and # to see the autocomplete "
 "options."
 msgstr ""
+"Modelo de bloco de ação futura. Digite o texto e # para ver as opções de "
+"preenchimento automático."
 
 #: src/classes/Controllers/BlocksController.php:91
 msgid "Action time"
-msgstr ""
+msgstr "Hora da ação"
 
 #: src/classes/Controllers/BlocksController.php:92
 msgid "Action date"
-msgstr ""
+msgstr "Data da ação"
 
 #: src/classes/Controllers/SettingsController.php:197
 msgid "Custom statuses"
-msgstr ""
+msgstr "Status personalizados"
 
 #: src/classes/Controllers/SettingsController.php:198
 msgid "Enable custom statuses for the post type."
-msgstr ""
+msgstr "Ativar status personalizados para o tipo de post."
 
 #: src/classes/Controllers/SettingsController.php:202
 msgid "Enabled"
-msgstr ""
+msgstr "Habilitado"
 
 #: src/classes/Controllers/SettingsController.php:203
 msgid "Disabled"
-msgstr ""
+msgstr "Desabilitado"
 
 #: src/classes/Controllers/SettingsController.php:204
 msgid "Select all"
-msgstr ""
+msgstr "Selecionar todos"
 
 #: src/classes/Controllers/SettingsController.php:205
 msgid "Unselect all"
-msgstr ""
+msgstr "Deselecionar todos"
 
 #: src/classes/Controllers/SettingsController.php:206
 msgid "Enable Metadata Scheduling"
-msgstr ""
+msgstr "Ativar o Agendamento de Metadados"
 
 #: src/classes/Controllers/SettingsController.php:207
 msgid "Enable metadata scheduling for the post type"
@@ -221,23 +227,23 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Controllers/ManualPostTrigger.php:291
 msgid "Workflow Manual Trigger"
-msgstr ""
+msgstr "Acionador Manual de Fluxo de Trabalho"
 
 #: src/classes/Modules/Workflows/Controllers/PostType.php:34
 msgid "Future Workflows"
-msgstr ""
+msgstr "Fluxos de Trabalho Futuros"
 
 #: src/classes/Modules/Workflows/Controllers/PostType.php:35
 msgid "Future Workflow"
-msgstr ""
+msgstr "Fluxo de Trabalho Futuro"
 
 #: src/classes/Modules/Workflows/Controllers/PostType.php:36
 msgid "Add New"
-msgstr ""
+msgstr "Adicionar Novo"
 
 #: src/classes/Modules/Workflows/Controllers/PostType.php:37
 msgid "Add New Workflow"
-msgstr ""
+msgstr "Novo Fluxo de Trabalho"
 
 #: src/classes/Modules/Workflows/Controllers/PostType.php:41
 msgid "Edit Workflow"
@@ -330,7 +336,7 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:136
 msgid "Steps:"
-msgstr ""
+msgstr "Passos:"
 
 #: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:140
 msgid "Workflow recurring scheduled action"
@@ -380,7 +386,7 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:76
 msgid "Trigger Workflow"
-msgstr ""
+msgstr "Acionar Workflow"
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:34
 msgid "Move post to status"
@@ -409,7 +415,7 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:120
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:59
 msgid "Post"
-msgstr ""
+msgstr "Post"
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:67
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:67
@@ -607,7 +613,7 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:79
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:98
 msgid "Message"
-msgstr ""
+msgstr "Mensagem"
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:80
 msgid "The email message"
@@ -719,11 +725,11 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:118
 msgid "True"
-msgstr ""
+msgstr "Verdadeiro"
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:123
 msgid "False"
-msgstr ""
+msgstr "Falso"
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:34
 msgid "Ray - Debug"
@@ -834,7 +840,7 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:125
 msgid "Post After"
-msgstr ""
+msgstr "Post Depois"
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:35
 msgid "Post is saved"
@@ -860,31 +866,31 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:68
 msgid "PublishPress Future"
-msgstr ""
+msgstr "PublishPress Future"
 
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:77
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:86
 msgid "Conditional"
-msgstr ""
+msgstr "Condicional"
 
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:95
 msgid "Asynchronous"
-msgstr ""
+msgstr "Asincrono"
 
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:104
 msgid "Debug"
-msgstr ""
+msgstr "Depuração"
 
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:113
 msgid "Data Query"
-msgstr ""
+msgstr "Consulta de Dados"
 
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:122
 msgid "Messages"
-msgstr ""
+msgstr "Mensagens"
 
 #: src/classes/Modules/Workflows/Rest/RestApiV1.php:38
 #: src/classes/Modules/Workflows/Rest/RestApiV1.php:71
@@ -912,57 +918,59 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:8
 msgid "Enabled Workflows"
-msgstr ""
+msgstr "Fluxos de Trabalho Ativados"
 
 #: src/classes/Modules/Workflows/Views/preview-column.html.php:9
 msgid "Screenshot"
-msgstr ""
+msgstr "Captura de tela"
 
 #: src/templates/settings-tab-advanced.html.php:8
 msgid "Action Date Calculation Base"
-msgstr ""
+msgstr "Base de Cálculo da Data da Ação"
 
 #: src/templates/settings-tab-advanced.html.php:22
 msgid "Use Current Date"
-msgstr ""
+msgstr "Usar a Data Atual"
 
 #: src/templates/settings-tab-advanced.html.php:24
 msgid "Calculates the future action date based on today's date."
-msgstr ""
+msgstr "Calcula a data da ação futura com base na data de hoje."
 
 #: src/templates/settings-tab-advanced.html.php:36
 msgid "Use Post's Publish Date"
-msgstr ""
+msgstr "Usar a Data de Publicação do Post"
 
 #: src/templates/settings-tab-advanced.html.php:38
 msgid ""
 "Calculates the future action date from the post's original publish date."
 msgstr ""
+"Calcula a data da ação futura a partir da data de publicação original do "
+"post."
 
 #: src/templates/settings-tab-license.html.php:11
 #: src/templates/settings-tab-license.html.php:17
 msgid "License"
-msgstr ""
+msgstr "Licença"
 
 #: src/templates/settings-tab-license.html.php:37
 msgid "Activated"
-msgstr ""
+msgstr "Ativado"
 
 #: src/templates/settings-tab-license.html.php:39
 msgid "Inactive"
-msgstr ""
+msgstr "Desativado"
 
 #: src/templates/settings-tab-license.html.php:54
 msgid "Status: "
-msgstr ""
+msgstr "Status: "
 
 #: src/templates/settings-tab-license.html.php:56
 msgid "Enter the license key for being able to update the plugin."
-msgstr ""
+msgstr "Digite a chave de licença para poder atualizar o plug-in."
 
 #: src/templates/settings-tab-license.html.php:69
 msgid "Save Changes"
-msgstr ""
+msgstr "Salvar Alterações"
 
 #~ msgid "Help"
 #~ msgstr "Ajuda"
