@@ -3,7 +3,15 @@ import { __ } from "@wordpress/i18n";
 import ReactJson from "react-json-view";
 import PersistentPanelBody from "../persistent-panel-body";
 
-export function NodeDevInfoPanel({node}) {
+export function NodeDevInfoPanel({node, nodeType}) {
+    const reactJSONParams = {
+        collapsed: 1,
+        collapseStringsAfterLength: 50,
+        displayDataTypes: false,
+        displayObjectSize: false,
+        enableClipboard: false,
+    };
+
     return (
         <PersistentPanelBody
             title={__('Developer Info', 'publishpress-future-pro')}
@@ -11,8 +19,20 @@ export function NodeDevInfoPanel({node}) {
             className="workflow-editor-dev-info-panel workflow-editor-dev-panel"
         >
             <PanelRow>
-                <div className="workflow-editor-dev-info-wrapper">
-                    <ReactJson src={node} collapsed={1} collapseStringsAfterLength={50} displayDataTypes={false} displayObjectSize={false} enableClipboard={false} />
+                <div>
+                    <h3>{__('Node', 'publishpress-future-pro')}</h3>
+                    <div className="workflow-editor-dev-info-wrapper">
+                        <ReactJson src={node} {...reactJSONParams} />
+                    </div>
+                </div>
+            </PanelRow>
+
+            <PanelRow>
+                <div>
+                    <h3>{__('Node Type', 'publishpress-future-pro')}</h3>
+                    <div className="workflow-editor-dev-info-wrapper">
+                        <ReactJson src={nodeType} {...reactJSONParams} />
+                    </div>
                 </div>
             </PanelRow>
         </PersistentPanelBody>

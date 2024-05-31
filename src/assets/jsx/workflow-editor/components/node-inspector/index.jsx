@@ -155,7 +155,7 @@ export const NodeInspector = () => {
                     )}
 
                     {isDeveloperModeEnabled && (
-                        <NodeDevInfoPanel node={selectedNode} />
+                        <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
                     )}
 
 
