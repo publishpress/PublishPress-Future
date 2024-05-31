@@ -117,8 +117,8 @@ class FutureLegacyAction implements NodeTypeInterface
             [
                 'name' => 'post',
                 'type' => 'post',
-                'label' => __("Post", "publishpress-future-pro"),
-                'description' => __("The post that was saved, with the new properties.", "publishpress-future-pro"),
+                'label' => __("Action Post", "publishpress-future-pro"),
+                'description' => __("The post that was saved triggering the action.", "publishpress-future-pro"),
             ]
         ];
     }
