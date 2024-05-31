@@ -2714,12 +2714,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "d327cf2acf22ad3d1fac5a382b7420bb6fd73bb8"
+                "reference": "d57da64d7cf4ccf3711ed26b334307bbd4811e31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/d327cf2acf22ad3d1fac5a382b7420bb6fd73bb8",
-                "reference": "d327cf2acf22ad3d1fac5a382b7420bb6fd73bb8",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/d57da64d7cf4ccf3711ed26b334307bbd4811e31",
+                "reference": "d57da64d7cf4ccf3711ed26b334307bbd4811e31",
                 "shasum": ""
             },
             "require": {
@@ -2765,7 +2765,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/master"
             },
-            "time": "2024-05-21T16:12:19+00:00"
+            "time": "2024-05-31T07:32:45+00:00"
         },
         {
             "name": "overtrue/phplint",
@@ -3587,12 +3587,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "dd3ec664792d4021cd5c2f4e1d205d1631b3b4d5"
+                "reference": "ebdfd071644bab1458303c4d4125b91927a79c5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dd3ec664792d4021cd5c2f4e1d205d1631b3b4d5",
-                "reference": "dd3ec664792d4021cd5c2f4e1d205d1631b3b4d5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ebdfd071644bab1458303c4d4125b91927a79c5c",
+                "reference": "ebdfd071644bab1458303c4d4125b91927a79c5c",
                 "shasum": ""
             },
             "require": {
@@ -3638,7 +3638,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-30T15:01:54+00:00"
+            "time": "2024-05-31T14:26:57+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -7444,12 +7444,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "c9e59dec962d38cf2e0e4c61c4a1a1312f4dd7fe"
+                "reference": "0424dff1c58f028c451efff2045f5d92410bd540"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/c9e59dec962d38cf2e0e4c61c4a1a1312f4dd7fe",
-                "reference": "c9e59dec962d38cf2e0e4c61c4a1a1312f4dd7fe",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/0424dff1c58f028c451efff2045f5d92410bd540",
+                "reference": "0424dff1c58f028c451efff2045f5d92410bd540",
                 "shasum": ""
             },
             "require": {
@@ -7516,7 +7516,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-19T06:31:17+00:00"
+            "time": "2024-05-31T15:07:36+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -7603,12 +7603,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-normalizer.git",
-                "reference": "2a090dc3db090fcb35cc7329d18a07f281f15d79"
+                "reference": "a95281b0be0d9ab48050ebd988b967875cdb9fdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/2a090dc3db090fcb35cc7329d18a07f281f15d79",
-                "reference": "2a090dc3db090fcb35cc7329d18a07f281f15d79",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-normalizer/zipball/a95281b0be0d9ab48050ebd988b967875cdb9fdb",
+                "reference": "a95281b0be0d9ab48050ebd988b967875cdb9fdb",
                 "shasum": ""
             },
             "require": {
@@ -7677,7 +7677,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-19T06:31:17+00:00"
+            "time": "2024-05-31T15:07:36+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -7685,12 +7685,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "e642fbe7a7b73cdb05460555289a9057bfd6ead6"
+                "reference": "098e36a5b73de12beeb5ac17e80abf3696f7ad5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/e642fbe7a7b73cdb05460555289a9057bfd6ead6",
-                "reference": "e642fbe7a7b73cdb05460555289a9057bfd6ead6",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/098e36a5b73de12beeb5ac17e80abf3696f7ad5f",
+                "reference": "098e36a5b73de12beeb5ac17e80abf3696f7ad5f",
                 "shasum": ""
             },
             "require": {
@@ -7758,7 +7758,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-19T06:31:17+00:00"
+            "time": "2024-05-31T15:07:36+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
@@ -7766,12 +7766,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php73.git",
-                "reference": "bca7fd9c46ef734d27d59dae1b71ce4f4ff70b03"
+                "reference": "ec444d3f3f6505bb28d11afa41e75faadebc10a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/bca7fd9c46ef734d27d59dae1b71ce4f4ff70b03",
-                "reference": "bca7fd9c46ef734d27d59dae1b71ce4f4ff70b03",
+                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/ec444d3f3f6505bb28d11afa41e75faadebc10a1",
+                "reference": "ec444d3f3f6505bb28d11afa41e75faadebc10a1",
                 "shasum": ""
             },
             "require": {
@@ -7835,7 +7835,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-19T06:31:17+00:00"
+            "time": "2024-05-31T15:07:36+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -7843,12 +7843,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "7d191eb4022901cd3d91a816ec5464ca3a08a8aa"
+                "reference": "77fa7995ac1b21ab60769b7323d600a991a90433"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/7d191eb4022901cd3d91a816ec5464ca3a08a8aa",
-                "reference": "7d191eb4022901cd3d91a816ec5464ca3a08a8aa",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/77fa7995ac1b21ab60769b7323d600a991a90433",
+                "reference": "77fa7995ac1b21ab60769b7323d600a991a90433",
                 "shasum": ""
             },
             "require": {
@@ -7916,7 +7916,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-19T06:31:17+00:00"
+            "time": "2024-05-31T15:07:36+00:00"
         },
         {
             "name": "symfony/polyfill-php81",
@@ -9044,7 +9044,8 @@
     "stability-flags": {
         "publishpress/publishpress-future": 20,
         "publishpress/publishpress-phpcs-standards": 20,
-        "giacocorsiglia/wordpress-stubs": 20
+        "giacocorsiglia/wordpress-stubs": 20,
+        "friendsofphp/php-cs-fixer": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

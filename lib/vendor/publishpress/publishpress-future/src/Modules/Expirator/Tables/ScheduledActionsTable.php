@@ -385,6 +385,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             $container = Container::getInstance();
             $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
 
+            /**
+             * @var \PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface
+             */
             $argsModel = $argsModelFactory();
             $argsModel->loadByActionId($row['ID']);
 
@@ -460,6 +463,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         $container = Container::getInstance();
         $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
 
+        /**
+         * @var \PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface
+         */
         $argsModel = $argsModelFactory();
         $argsModel->loadByActionId($row['ID']);
 
@@ -498,6 +504,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         $postModel = $factory($row['args']['postId']);
 
         $argsModelFactory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
+        /**
+         * @var \PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface
+         */
         $argsModel = $argsModelFactory();
         $argsModel->loadByActionId($row['ID']);
 
