@@ -74,9 +74,6 @@ class CorePostUnstick implements NodeTypeInterface
                             "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
                             "publishpress-future-pro"
                         ),
-                        "settings" => [
-                            "filterDataTypes" => ['post'],
-                        ],
                     ],
                 ],
             ],
