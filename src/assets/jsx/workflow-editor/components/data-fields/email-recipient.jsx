@@ -2,9 +2,11 @@ import { __ } from "@wordpress/i18n";
 import { VariablesTreeSelect } from "../variables-tree-select";
 import { TextControl } from "@wordpress/components";
 import { __experimentalVStack as VStack } from "@wordpress/components";
-import { useEffect } from "react";
+import { filterVariableOptionsByDataType } from "../../utils";
 
 export function EmailRecipient({ name, label, defaultValue, onChange, settings, variables = [] }) {
+
+    variables = filterVariableOptionsByDataType(variables, ['email']);
 
     let recipientOptions = [
         { name: '', id: '' },

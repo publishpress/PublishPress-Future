@@ -27,7 +27,7 @@ export function SiteData() {
             },
             {
                 name: "admin_email",
-                type: "string",
+                type: "email",
                 label: "Admin Email",
             },
         ],

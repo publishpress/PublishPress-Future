@@ -52,6 +52,7 @@ const dataTypes = [
     DateData(),
     IntegerData(),
     StringData(),
+    EmailData(),
     InputData(),
     WorkflowDataType(),
     UserData(),

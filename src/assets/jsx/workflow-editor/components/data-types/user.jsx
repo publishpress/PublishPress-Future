@@ -12,7 +12,7 @@ export function UserData() {
             },
             {
                 name: "user_email",
-                type: "string",
+                type: "email",
                 label: "Email",
             },
             {
