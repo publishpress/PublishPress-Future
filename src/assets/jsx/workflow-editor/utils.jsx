@@ -1,5 +1,5 @@
 import { applyFilters } from "@wordpress/hooks";
-import { select } from "@wordpress/data";
+import { select, dispatch } from "@wordpress/data";
 import { store as workflowStore } from "./components/workflow-store";
 import { store as editorStore } from "./components/editor-store";
 import { getIncomers, getOutgoers } from "reactflow";
@@ -393,4 +393,51 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
     });
 
     return filteredVariables;
+}
+
+export const getId = () => `n${+new Date()}`;
+
+export function incrementAndGetNodeSlug(nodeItem) {
+    const nodeType = select(editorStore).getNodeTypeByName(nodeItem.name);
+    const baseSlugCounts = select(workflowStore).getBaseSlugCounts();
+
+    let baseSlug = nodeType.baseSlug;
+
+    if (!baseSlug) {
+        baseSlug = "node";
+    }
+
+    dispatch(workflowStore).incrementBaseSlugCounts(baseSlug);
+
+    const count = baseSlugCounts[baseSlug] || 0;
+
+    return `${baseSlug}${count + 1}`;
+};
+
+export function createNewNode({item, position, reactFlowInstance}) {
+    const slug = incrementAndGetNodeSlug(item);
+    const nodes = select(workflowStore).getNodes();
+
+    const newNode = {
+        id: getId(),
+        type: item.type,
+        position: position,
+        data: {
+            name: item.name,
+            elementarType: item.elementarType,
+            version: item.version,
+            slug: slug,
+        },
+    };
+
+    dispatch(workflowStore).setNodes(nodes.concat(newNode));
+
+    updateFlowInEditedWorkflow(reactFlowInstance);
+}
+
+export function updateFlowInEditedWorkflow(reactFlowInstance) {
+    // We need to delay the update of the flow to avoid missing the changes.
+    setTimeout(() => {
+        dispatch(workflowStore).setEditedWorkflowAttribute("flow", reactFlowInstance.toObject());
+    }, 400);
 }

@@ -198,7 +198,7 @@ export function InserterMenu({
                             setFilterValue(value);
                         }}
                         value={filterValue}
-                        label={__('Search for blocks and patterns')}
+                        label={__('Search for triggers and steps', 'publishpress-future-pro')}
                         placeholder={__('Search')}
                     />
                     {!!filterValue && (

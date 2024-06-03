@@ -22,7 +22,7 @@ import {
     useMemo,
 } from "@wordpress/element";
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
-import { FEATURE_CONTROLS, FEATURE_MINI_MAP, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
+import { EVENT_DROP_NODE, FEATURE_CONTROLS, FEATURE_MINI_MAP, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
 import GenericNode from "../node-types/generic";
 
 import { AUTO_LAYOUT_DEFAULT_DIRECTION } from "./auto-layout/constants";
@@ -33,6 +33,8 @@ import {
 import TriggerNode from "../node-types/trigger";
 import NodeValidator from "../node-validator";
 import { GenericEdge } from "../edge-types";
+import { PlaceholderNode } from "../node-types/placeholder";
+import { createNewNode } from "../../utils";
 
 const GRID_SIZE = 10;
 
@@ -45,10 +47,8 @@ export const FlowEditor = (props) => {
         hasActiveSideBar,
         activeComplementaryArea,
         initialViewport,
-        baseSlugCounts,
         isMiniMapFeatureActive,
         isControlsFeatureActive,
-        getNodeTypeByName,
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -64,10 +64,8 @@ export const FlowEditor = (props) => {
                 activeComplementaryArea !== null &&
                 activeComplementaryArea !== "null/undefined",
             initialViewport: select(workflowStore).getInitialViewport(),
-            baseSlugCounts: select(workflowStore).getBaseSlugCounts(),
             isMiniMapFeatureActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
             isControlsFeatureActive: select(editorStore).isFeatureActive(FEATURE_CONTROLS),
-            getNodeTypeByName: select(editorStore).getNodeTypeByName,
         };
     });
 
@@ -77,7 +75,6 @@ export const FlowEditor = (props) => {
         setSelectedNodes,
         setSelectedEdges,
         setEditedWorkflowAttribute,
-        incrementBaseSlugCounts,
     } = useDispatch(workflowStore);
 
     const { openGeneralSidebar } = useDispatch(editorStore);
@@ -98,6 +95,7 @@ export const FlowEditor = (props) => {
     const nodeTypes = useMemo(() => ({
         generic: GenericNode,
         trigger: TriggerNode,
+        placeholder: PlaceholderNode
     }), []);
 
     const edgeTypes = useMemo(() => ({
@@ -163,51 +161,10 @@ export const FlowEditor = (props) => {
         [edges],
     );
 
-    const getId = () => `n${+new Date()}`;
-
     const onDragOver = useCallback((event) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = "move";
     }, []);
-
-    const incrementAndGetNodeSlug = (nodeItem) => {
-        const nodeType = getNodeTypeByName(nodeItem.name);
-
-        let baseSlug = nodeType.baseSlug;
-
-        if (!baseSlug) {
-            baseSlug = "node";
-        }
-
-        incrementBaseSlugCounts(baseSlug);
-
-        const count = baseSlugCounts[baseSlug] || 0;
-
-        return `${baseSlug}${count + 1}`;
-    };
-
-    const createNodeAfterDrop = useCallback(
-        ({ item, position }) => {
-            const slug = incrementAndGetNodeSlug(item);
-
-            const newNode = {
-                id: getId(),
-                type: item.type,
-                position: position,
-                data: {
-                    name: item.name,
-                    elementarType: item.elementarType,
-                    version: item.version,
-                    slug: slug,
-                },
-            };
-
-            setNodes(nodes.concat(newNode));
-
-            updateFlowInEditedWorkflow();
-        },
-        [nodes],
-    );
 
     const onDrop = useCallback(
         (event) => {
@@ -218,14 +175,13 @@ export const FlowEditor = (props) => {
                 y: event.clientY,
             });
 
-            const dataTransferItem = event.dataTransfer.getData(
-                "application/future-workflow-editor-node",
-            );
+            const dataTransferItem = event.dataTransfer.getData(EVENT_DROP_NODE);
             const item = JSON.parse(dataTransferItem);
 
-            createNodeAfterDrop({
-                item: item,
-                position: position,
+            createNewNode({
+                item,
+                position,
+                reactFlowInstance
             });
         },
         [reactFlowInstance, nodes],
@@ -259,6 +215,14 @@ export const FlowEditor = (props) => {
 
     useOnSelectionChange({
         onChange: ({ nodes, edges }) => {
+            // Avoid selecting the placeholder node.
+            if (nodes.length > 0 && nodes[0].type === 'placeholder') {
+                setSelectedNodes([]);
+                setSelectedEdges([]);
+
+                return;
+            }
+
             setSelectedNodes(nodes.map((node) => node.id));
             setSelectedEdges(edges.map((edge) => edge.id));
 
@@ -308,6 +272,24 @@ export const FlowEditor = (props) => {
         }
     }, [activeComplementaryArea, selectedEdges, selectedNodes]);
 
+    // Add the placeholder node if there is no node in the flow.
+    // Otherwise, remove it.
+    useEffect(() => {
+        if (! nodes.length) {
+            nodes.push({
+                id: 'placeholder',
+                type: 'placeholder',
+                position: { x: 0, y: 0 },
+            });
+            onAutoLayout();
+        } else if (nodes.length > 1) {
+            const placeholderIndex = nodes.findIndex((node) => node.id === 'placeholder');
+            if (placeholderIndex !== -1) {
+                nodes.splice(placeholderIndex, 1);
+            }
+        }
+    }, [nodes]);
+
     return (
         <div className="reactflow-wrapper" ref={reactFlowWrapperRef}>
             <AutoLayout onLayout={onAutoLayout} />
@@ -330,6 +312,7 @@ export const FlowEditor = (props) => {
                 edgeTypes={edgeTypes}
                 onNodesDelete={onNodesDelete}
                 onEdgesDelete={onEdgesDelete}
+                connectionLineStyle={{ stroke: "#c2c2c2", strokeWidth: 2, strokeDasharray: '3,4', }}
             >
                 {isMiniMapFeatureActive && (
                     <MiniMap

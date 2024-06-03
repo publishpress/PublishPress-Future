@@ -54,10 +54,12 @@ export const NodesTab = ({
     }, [items]);
 
     // Hide block preview on unmount.
-    useEffect(() => () => onHover(null), []);
+    useEffect(() => () => onHover ? onHover(null) : null, []);
 
     const onSelectItem = (item) => {
-
+        if (onSelect) {
+            onSelect(item);
+        }
     };
 
     /**

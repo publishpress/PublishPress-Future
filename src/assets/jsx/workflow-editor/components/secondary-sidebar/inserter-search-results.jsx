@@ -9,7 +9,7 @@ import { orderBy, isEmpty } from 'lodash';
 import { useMemo, useEffect } from '@wordpress/element';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { VisuallyHidden } from '@wordpress/components';
-import { useDebounce, useAsyncList } from '@wordpress/compose';
+import { useDebounce } from '@wordpress/compose';
 import { speak } from '@wordpress/a11y';
 import { useSelect } from '@wordpress/data';
 
@@ -23,14 +23,13 @@ import { InserterListbox } from './inserter-listbox';
 import { InserterNoResults } from './inserter-no-results';
 import { store as editorStore } from '../editor-store';
 
-const INITIAL_INSERTER_RESULTS = 9;
-
 export const InserterSearchResults = ({
     filterValue,
     onSelect,
     onHover,
     maxNodeTypes,
     isDraggable = true,
+    filterTypes,
 }) => {
     const debouncedSpeak = useDebounce(speak, 500);
 
@@ -45,11 +44,21 @@ export const InserterSearchResults = ({
         const advancedNodes = select(editorStore).getAdvancedNodes();
         const advancedCategories = select(editorStore).getAdvancedCategories();
 
-        const nodeTypes = [
-            ...actionNodes,
-            ...triggerNodes,
-            ...advancedNodes,
-        ];
+        let nodeTypes = [];
+
+        if (filterTypes && filterTypes.length) {
+            nodeTypes = [
+                ...actionNodes.filter((node) => filterTypes.includes(node.type)),
+                ...triggerNodes.filter((node) => filterTypes.includes(node.type)),
+                ...advancedNodes.filter((node) => filterTypes.includes(node.type)),
+            ];
+        } else {
+            nodeTypes = [
+                ...triggerNodes,
+                ...actionNodes,
+                ...advancedNodes,
+            ];
+        }
 
         const nodeTypeCategories = [
             ...actionCategories,
@@ -94,10 +103,6 @@ export const InserterSearchResults = ({
         debouncedSpeak(resultsFoundMessage);
     }, [filterValue, debouncedSpeak, filteredNodeTypes]);
 
-    const currentShownNodeTypes = useAsyncList(filteredNodeTypes, {
-        step: INITIAL_INSERTER_RESULTS,
-    });
-
     const hasItems = !isEmpty(filteredNodeTypes);
 
     return (
@@ -111,7 +116,7 @@ export const InserterSearchResults = ({
                     }
                 >
                     <NodeTypesList
-                        items={currentShownNodeTypes}
+                        items={filteredNodeTypes}
                         onSelect={onSelect}
                         onHover={onHover}
                         label={__('Nodes', 'publishpress-future-pro')}
@@ -119,11 +124,6 @@ export const InserterSearchResults = ({
                     />
                 </InserterPanel>
             )}
-
-            {/* {!!hasItems &&
-                (
-                    <div className="block-editor-inserter__quick-inserter-separator" />
-                )} */}
         </InserterListbox>
     );
 }

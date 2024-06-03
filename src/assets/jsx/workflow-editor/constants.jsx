@@ -17,3 +17,5 @@ export const INSERTER_TAB_ACTIONS = 'actions';
 export const INSERTER_TAB_ADVANCED = 'advanced';
 
 export const SLOT_SCOPE_WORKFLOW_EDITOR = 'publishpress-future/edit-workflow';
+
+export const EVENT_DROP_NODE = 'application/future-workflow-editor-node';

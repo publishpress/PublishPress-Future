@@ -19,6 +19,7 @@ import { InserterListboxItem } from './inserter-listbox';
 import InserterDraggableNodes from './inserter-draggable-nodes';
 import { isAppleOS } from '../../utils';
 import { store as editorStore } from '../editor-store';
+import { EVENT_DROP_NODE } from '../../constants';
 
 function InserterListItem({
     className,
@@ -53,7 +54,7 @@ function InserterListItem({
                     onDragStart={(event) => {
                         isDragging.current = true;
 
-                        event.dataTransfer.setData('application/future-workflow-editor-node', JSON.stringify(item));
+                        event.dataTransfer.setData(EVENT_DROP_NODE, JSON.stringify(item));
 
                         if (onDragStart) {
                             onHover(null);
