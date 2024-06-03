@@ -45,30 +45,6 @@ const loadWorkflowStart = (state, action) => {
 function _setInitialStateForGlobalVariables(state, workflow = {}) {
     state = setGlobalVariable(state, {
         payload: {
-            name: 'workflow',
-            label: 'Future Workflow',
-            type: 'workflow',
-            value: {
-                id: workflow?.id,
-                title: workflow?.title,
-                description: workflow?.description,
-                modified: workflow?.modified,
-            },
-            runtimeOnly: false,
-        }
-    });
-
-    state = setGlobalVariable(state, {
-        payload: {
-            name: 'user',
-            label: 'User',
-            type: 'user',
-            runtimeOnly: true,
-        }
-    });
-
-    state = setGlobalVariable(state, {
-        payload: {
             name: 'site',
             label: 'Site',
             type: 'site',
@@ -78,8 +54,26 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
 
     state = setGlobalVariable(state, {
         payload: {
+            name: 'workflow',
+            label: 'Workflow',
+            type: 'workflow',
+            runtimeOnly: false,
+        }
+    });
+
+    state = setGlobalVariable(state, {
+        payload: {
+            name: 'user',
+            label: 'Activating User',
+            type: 'user',
+            runtimeOnly: true,
+        }
+    });
+
+    state = setGlobalVariable(state, {
+        payload: {
             name: 'trigger',
-            label: 'Trigger',
+            label: 'Activating Trigger',
             type: 'node',
             runtimeOnly: true,
         }

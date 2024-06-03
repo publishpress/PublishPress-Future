@@ -3,6 +3,7 @@ export function UserData() {
         name: "user",
         label: "User",
         type: "object",
+        objectType: "user",
         propertiesSchema: [
             {
                 name: "ID",

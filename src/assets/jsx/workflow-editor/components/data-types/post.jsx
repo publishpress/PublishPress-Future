@@ -3,6 +3,7 @@ export function PostData() {
         name: "post",
         label: "Post",
         type: "object",
+        objectType: "post",
         propertiesSchema: [
             {
                 name: "post_title",

@@ -71,6 +71,9 @@ class CorePostTermsAdd implements NodeTypeInterface
                         "type" => "postInput",
                         "label" => __("Post", "publishpress-future-pro"),
                         "description" => __("Select the variable that contains the post to update. It can be a post instance or the post ID.", "publishpress-future-pro"), // phpcs:ignore Generic.Files.LineLength.TooLong
+                        "settings" => [
+                            "filterDataTypes" => ['post'],
+                        ],
                     ],
                 ],
             ],

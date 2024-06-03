@@ -116,13 +116,13 @@ class CoreOnPostUpdated implements NodeTypeInterface
             [
                 'name' => 'postBefore',
                 'type' => 'post',
-                'label' => __("Post before saving", "publishpress-future-pro"),
+                'label' => __("Post Before Update", "publishpress-future-pro"),
                 'description' => __("The post that was saved, with the old properties.", "publishpress-future-pro"),
             ],
             [
                 'name' => 'postAfter',
                 'type' => 'post',
-                'label' => __("Post after saving", "publishpress-future-pro"),
+                'label' => __("Post After Update", "publishpress-future-pro"),
                 'description' => __("The post that was saved, with the new properties.", "publishpress-future-pro"),
             ]
         ];

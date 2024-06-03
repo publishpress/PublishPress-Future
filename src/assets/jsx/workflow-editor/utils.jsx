@@ -249,6 +249,7 @@ export function mapNodeInputs(node) {
                         ...inputItem,
                         name: `${inputItem.name}`,
                         type: inputItem.type,
+                        nodeLabel: nodeType.label,
                     });
                 });
             } else {
@@ -256,6 +257,7 @@ export function mapNodeInputs(node) {
                     ...outputItem,
                     name: `${previousNode.data.slug}.${outputItem.name}`,
                     type: outputItem.type,
+                    nodeLabel: nodeType.label,
                 });
             }
         });
@@ -287,37 +289,110 @@ export function mapNodeInputs(node) {
 }
 
 export function getExpandedVariableOptionsForSelect(node, globalVariables) {
-    const getDataTypeByName = select(workflowStore).getDataTypeByName;
-
     const mappedNodeInputs = mapNodeInputs(node);
     const globalVariablesToList = getGlobalVariablesExpanded(globalVariables);
 
-    let options;
-    mappedNodeInputs.concat(globalVariablesToList).forEach((variable) => {
-        if (!options) {
-            options = [];
-        }
+    var options = [];
+    mappedNodeInputs.forEach((variable) => {
+        const optionsToAdd = getOptionsForVariable(variable);
 
-        const dataType = getDataTypeByName(variable.type);
+        options.push(optionsToAdd);
+    });
 
-        const optionToAdd = {
-            id: variable.name,
-            name: variable.label,
-            children: [],
-            type: variable?.type,
-        };
+    globalVariablesToList.forEach((variable) => {
+        const optionsToAdd = getOptionsForVariable(variable);
 
-        if (dataType.type === 'object') {
-            optionToAdd.children = dataType.propertiesSchema.map((property) => {
-                return {
-                    id: variable.name + '.' + property.name,
-                    name: variable.label + '->' + property.label,
-                };
-            });
-        }
-
-        options.push(optionToAdd);
+        options.push(optionsToAdd);
     });
 
     return options;
+}
+
+function getOptionsForVariable(variable) {
+    const getDataTypeByName = select(workflowStore).getDataTypeByName;
+    const dataType = getDataTypeByName(variable.type);
+
+    const option = {
+        id: variable.name,
+        name: variable.label,
+        children: [],
+        type: variable?.type,
+    };
+
+    // If the variable is an object, add its properties as children
+    if (dataType.type === 'object') {
+        option.children = dataType.propertiesSchema.map((property) => {
+            return {
+                id: variable.name + '.' + property.name,
+                name: variable.label + ' -> ' + property.label,
+            };
+        });
+    }
+
+    return option;
+}
+
+export function isValidDataType(dataType, expectedDataTypes) {
+    let hasValidDataType = true;
+
+    if (expectedDataTypes?.length) {
+        hasValidDataType = expectedDataTypes.includes(dataType?.type);
+
+        if (dataType?.type === 'object' && !hasValidDataType) {
+            hasValidDataType = expectedDataTypes.includes(dataType?.objectType);
+        }
+    }
+
+    return hasValidDataType;
+}
+
+export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
+    const getDataTypeByName = select(workflowStore).getDataTypeByName;
+    let filteredVariables = [];
+
+    variables.forEach((variable) => {
+        const dataType = getDataTypeByName(variable.type);
+        const variableHasValidDataType = isValidDataType(dataType, expectedDataTypes);
+        let validVariable = null;
+        let validChildren = [];
+
+        // Desn't include the variable properties if the variable itself is invalid
+        if (dataType.type === 'object') {
+            const properties = dataType.propertiesSchema;
+
+            // Ignore the properties if the variable itself is valid.
+            properties.forEach((property) => {
+                const propertyDataType = getDataTypeByName(property.type);
+                const propertyHasValidDataType = isValidDataType(propertyDataType, expectedDataTypes);
+
+                if (propertyHasValidDataType) {
+                    validChildren.push({
+                        id: variable.id + '.' + property.name,
+                        name: variable.name + ' -> ' + property.label,
+                    });
+                }
+
+                console.log('propertyHasValidDataType', variable.name, propertyHasValidDataType);
+            });
+
+            validVariable = {
+                id: variable.id,
+                name: variable.name,
+                children: validChildren,
+                type: variable.type,
+            };
+
+            if (variableHasValidDataType) {
+                filteredVariables.push(validVariable);
+            } else if (validChildren.length) {
+                filteredVariables = filteredVariables.concat(validChildren);
+            }
+        } else {
+            if (variableHasValidDataType) {
+                filteredVariables.push(variable);
+            }
+        }
+    });
+
+    return filteredVariables;
 }

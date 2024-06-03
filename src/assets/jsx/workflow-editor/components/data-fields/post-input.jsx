@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { VariablesTreeSelect } from "../variables-tree-select";
 import { __experimentalVStack as VStack } from "@wordpress/components";
-import { useEffect } from "@wordpress/element";
+import { filterVariableOptionsByDataType } from "../../utils";
 
 export function PostInput({ name, label, defaultValue, onChange, variables, settings }) {
     const onChangeSetting = ({ settingName, value }) => {
@@ -14,6 +14,10 @@ export function PostInput({ name, label, defaultValue, onChange, variables, sett
     }
 
     const defaultVariable = defaultValue?.variable;
+
+    if (settings?.filterDataTypes) {
+        variables = filterVariableOptionsByDataType(variables, settings.filterDataTypes);
+    }
 
     const tree = [
         {

@@ -3,6 +3,7 @@ export function NodeData() {
         name: "node",
         label: "Workflow Node",
         type: "object",
+        objectType: "node",
         propertiesSchema: [
             {
                 name: "id",

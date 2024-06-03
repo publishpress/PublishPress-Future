@@ -3,7 +3,18 @@ export function SiteData() {
         name: "site",
         label: "Site",
         type: "object",
+        objectType: "site",
         propertiesSchema: [
+            {
+                name: "name",
+                type: "string",
+                label: "Name",
+            },
+            {
+                name: "description",
+                type: "string",
+                label: "Description",
+            },
             {
                 name: "url",
                 type: "string",
@@ -18,16 +29,6 @@ export function SiteData() {
                 name: "admin_email",
                 type: "string",
                 label: "Admin Email",
-            },
-            {
-                name: "name",
-                type: "string",
-                label: "Blog Name",
-            },
-            {
-                name: "description",
-                type: "string",
-                label: "Blog Description",
             },
         ],
     };
