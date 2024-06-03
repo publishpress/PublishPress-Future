@@ -371,8 +371,6 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
                         name: variable.name + ' -> ' + property.label,
                     });
                 }
-
-                console.log('propertyHasValidDataType', variable.name, propertyHasValidDataType);
             });
 
             validVariable = {
