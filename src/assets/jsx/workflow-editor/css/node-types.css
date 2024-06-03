@@ -71,18 +71,18 @@
 }
 
 /* PLACEHOLDER FOR EMPTY FLOW */
-.react-flow__node-placeholderNode {
+.react-flow__node-triggerPlaceholderNode {
     background-color: #fff;
     border: 1px dashed #d2d2d2;
     cursor: pointer;
 }
 
-.react-flow__node-placeholderNode .react-flow__node-header {
+.react-flow__node-triggerPlaceholderNode .react-flow__node-header {
     display: flex;
     align-items: center;
 }
 
-.react-flow__node-placeholderNode .react-flow__node-header .icon {
+.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {
     color: #fff;
     background-color: #d2d2d2;
     padding: 2px;
@@ -95,30 +95,30 @@
     margin-right: 6px;
 }
 
-.react-flow__node-placeholderNode .react-flow__node-header .icon svg {
+.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.react-flow__node-placeholderNode .react-flow__node-header .react-flow__node-label {
+.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {
     color: #d2d2d2
 }
 
-.react-flow__node-placeholderNode .react-flow__node-header {
+.react-flow__node-triggerPlaceholderNode .react-flow__node-header {
     padding-left: 0;
 }
 
-.react-flow__node-placeholderNode:hover {
+.react-flow__node-triggerPlaceholderNode:hover {
     border: 1px dashed #aeaeae;
 }
 
-.react-flow__node-placeholderNode:hover .react-flow__node-header .icon {
+.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {
     background-color: #aeaeae;
 }
 
-.react-flow__node-placeholderNode:hover .react-flow__node-header .react-flow__node-label {
+.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {
     color: #aeaeae;
 }
 
