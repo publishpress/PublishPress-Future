@@ -2,17 +2,35 @@ import { memo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
     NODE_TYPE_ACTION,
-    NODE_TYPE_ADVANCED
+    NODE_TYPE_ADVANCED,
+    NODE_TYPE_TRIGGER,
+    HANDLE_TYPE_SOURCE,
 } from '../../constants';
+import { store as workflowStore } from '../workflow-store';
+import { useSelect } from '@wordpress/data';
 import { Placeholder } from './placeholder';
 
-export const NodePlaceholder = memo(({id, label, popoverIsOpen = false, searchLabel, elementarTypes}) => {
+export const NodePlaceholder = memo((props) => {
+    const {
+        draggingFromHandle,
+    } = useSelect((select) => {
+        const draggingFromHandle = select(workflowStore).getDraggingFromHandle();
+
+        return {
+            draggingFromHandle,
+        };
+    });
+
+    const elementarTypes = (draggingFromHandle.handleType === HANDLE_TYPE_SOURCE) ?
+        [NODE_TYPE_ACTION, NODE_TYPE_ADVANCED] : [NODE_TYPE_TRIGGER, NODE_TYPE_ACTION, NODE_TYPE_ADVANCED];
+
+
     return (
         <Placeholder
-            id={id}
+            {...props}
             popoverIsOpen={true}
             searchLabel={__('Search for actions', 'publishpress-future-pro')}
-            elementTypes={[NODE_TYPE_ACTION, NODE_TYPE_ADVANCED]}
+            elementarTypes={elementarTypes}
         />
     );
 });

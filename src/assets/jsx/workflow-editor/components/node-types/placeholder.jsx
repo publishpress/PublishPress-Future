@@ -41,7 +41,6 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
         const actionNodes = select(editorStore).getActionNodes();
         const advancedNodes = select(editorStore).getAdvancedNodes();
 
-        // FIXME: Fix this
         let items = [];
         if (! elementarTypes) {
             items = [...triggerNodes, ...actionNodes, ...advancedNodes];
@@ -71,6 +70,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
     const {
         setEdges,
         setDraggingFromHandle,
+        setSelectedNodes,
     } = useDispatch(workflowStore);
 
     const onClickAddButton = (event) => {
@@ -122,7 +122,6 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
                 };
             }
 
-            // Get the target input handle
             setEdges(addEdge(newEdgeParams, edges));
 
             setDraggingFromHandle({sourceId: null, sourceHandle: null, handleType: null});
