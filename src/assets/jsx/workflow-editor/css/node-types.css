@@ -5,6 +5,7 @@
     min-width: 140px;
     box-sizing: border-box;
     border: 1px solid transparent;
+    cursor: pointer;
 }
 
 .react-flow__node-inner-body {
