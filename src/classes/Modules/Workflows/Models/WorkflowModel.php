@@ -207,8 +207,12 @@ class WorkflowModel implements WorkflowModelInterface
 
     private function isNodeUpdated(array $node): bool
     {
-        $nodeType = $this->getNodeTypeByname($node['data']['name']);
+        $nodeType = $this->getNodeTypeByname($node['data']['name'] ?? '');
         $nodeVersion = $this->getNodeVersion($node);
+
+        if (! $nodeType) {
+            return false;
+        }
 
         return $nodeVersion === $nodeType->getVersion();
     }

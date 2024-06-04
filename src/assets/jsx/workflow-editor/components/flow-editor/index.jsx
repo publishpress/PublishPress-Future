@@ -162,45 +162,47 @@ export const FlowEditor = (props) => {
         [edges],
     );
 
-    const onConnectStart = useCallback((_, { nodeId }) => {
-        connectingNodeId.current = nodeId;
-      }, []);
+    // const onConnectStart = useCallback((_, { nodeId }) => {
+    //     connectingNodeId.current = nodeId;
+    //   }, []);
 
-    const onConnectEnd = useCallback((event) => {
-        if (!connectingNodeId.current) {
-            return;
-        }
+    // const onConnectEnd = useCallback((event) => {
+    //     if (!connectingNodeId.current) {
+    //         return;
+    //     }
 
-        const targetIsPane = event.target.classList.contains("react-flow__pane");
+    //     const targetIsPane = event.target.classList.contains("react-flow__pane");
 
-        if (targetIsPane) {
-            const position = reactFlowInstance.screenToFlowPosition({
-                x: event.clientX,
-                y: event.clientY,
-            });
+    //     if (targetIsPane) {
+    //         const position = reactFlowInstance.screenToFlowPosition({
+    //             x: event.clientX,
+    //             y: event.clientY,
+    //         });
 
-            const id = getId();
+    //         const id = getId();
 
-            const item = {
-                id,
-                type: 'triggerPlaceholder',
-                data: {},
-                position,
-                origin: [0.5, 0.0],
-            };
+    //         const item = {
+    //             id,
+    //             type: 'nodePlaceholder',
+    //             data: {
+    //                 name: 'core/node-placeholder',
+    //             },
+    //             position,
+    //             origin: [0.5, 0.0],
+    //         };
 
-            setNodes([...nodes, item]);
-            setEdges([
-                ...edges,
-                {
-                    id: `${connectingNodeId.current}-${item.id}`,
-                    source: connectingNodeId.current,
-                    target: item.id,
-                    type: 'genericEdge',
-                },
-            ]);
-        }
-    }, [reactFlowInstance.screenToFlowPosition]);
+    //         setNodes([...nodes, item]);
+    //         setEdges([
+    //             ...edges,
+    //             {
+    //                 id: `${connectingNodeId.current}-${item.id}`,
+    //                 source: connectingNodeId.current,
+    //                 target: item.id,
+    //                 type: 'genericEdge',
+    //             },
+    //         ]);
+    //     }
+    // }, [reactFlowInstance.screenToFlowPosition]);
 
 
     const onDragOver = useCallback((event) => {
@@ -321,6 +323,10 @@ export const FlowEditor = (props) => {
             nodes.push({
                 id: 'triggerPlaceholder',
                 type: 'triggerPlaceholder',
+                data: {
+                    name: 'core/trigger-placeholder',
+                    label: 'Trigger Placeholder',
+                },
                 position: { x: 0, y: 0 },
             });
             onAutoLayout();
@@ -342,8 +348,8 @@ export const FlowEditor = (props) => {
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onEdgeUpdate={onEdgeUpdate}
-                onConnectStart={onConnectStart}
-                onConnectEnd={onConnectEnd}
+                // onConnectStart={onConnectStart}
+                // onConnectEnd={onConnectEnd}
                 onConnect={onConnect}
                 onDrop={onDrop}
                 onDragOver={onDragOver}
