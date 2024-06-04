@@ -18,23 +18,27 @@ export function NodeDevInfoPanel({node, nodeType}) {
             icon={'admin-tools'}
             className="workflow-editor-dev-info-panel workflow-editor-dev-panel"
         >
-            <PanelRow>
-                <div>
-                    <h3>{__('Node', 'publishpress-future-pro')}</h3>
-                    <div className="workflow-editor-dev-info-wrapper">
-                        <ReactJson src={node} {...reactJSONParams} />
+            {node && (
+                <PanelRow>
+                    <div>
+                        <h3>{__('Node', 'publishpress-future-pro')}</h3>
+                        <div className="workflow-editor-dev-info-wrapper">
+                            <ReactJson src={node} {...reactJSONParams} />
+                        </div>
                     </div>
-                </div>
-            </PanelRow>
+                </PanelRow>
+            )}
 
-            <PanelRow>
-                <div>
-                    <h3>{__('Node Type', 'publishpress-future-pro')}</h3>
-                    <div className="workflow-editor-dev-info-wrapper">
-                        <ReactJson src={nodeType} {...reactJSONParams} />
+            {nodeType && (
+                <PanelRow>
+                    <div>
+                        <h3>{__('Node Type', 'publishpress-future-pro')}</h3>
+                        <div className="workflow-editor-dev-info-wrapper">
+                            <ReactJson src={nodeType} {...reactJSONParams} />
+                        </div>
                     </div>
-                </div>
-            </PanelRow>
+                </PanelRow>
+            )}
         </PersistentPanelBody>
     );
 }

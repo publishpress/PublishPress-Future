@@ -633,6 +633,8 @@ const removeNode = (state, action) => {
     return {
         ...state,
         nodes: newNodes,
+        selectedNodes: [],
+        selectedEdges: [],
     };
 }
 
@@ -644,6 +646,8 @@ const removeEdge = (state, action) => {
     return {
         ...state,
         edges: newEdges,
+        selectedNodes: [],
+        selectedEdges: [],
     };
 }
 
