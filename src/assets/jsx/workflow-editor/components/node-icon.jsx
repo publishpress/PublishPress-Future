@@ -17,6 +17,7 @@ import { TbRouteAltRight } from "react-icons/tb";
 import { IoMdMail } from "react-icons/io";
 import { BiSolidMessageDetail } from "react-icons/bi";
 import { IoMdWarning } from "react-icons/io";
+import { MdSchedule } from "react-icons/md";
 
 export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	const iconSrc = icon?.src || icon;
@@ -76,6 +77,11 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 		case 'warning':
 			icon = {
 				src: IoMdWarning,
+			};
+			break;
+		case 'schedule':
+			icon = {
+				src: MdSchedule,
 			};
 			break;
 	}

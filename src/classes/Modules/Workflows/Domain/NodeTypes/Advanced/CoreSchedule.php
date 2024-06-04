@@ -44,7 +44,7 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getIcon(): string
     {
-        return "media-document";
+        return "schedule";
     }
 
     public function getFrecency(): int
