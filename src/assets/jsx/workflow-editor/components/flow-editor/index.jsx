@@ -49,6 +49,7 @@ export const FlowEditor = (props) => {
         initialViewport,
         isMiniMapFeatureActive,
         isControlsFeatureActive,
+        isLoadingWorkflow,
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -66,6 +67,7 @@ export const FlowEditor = (props) => {
             initialViewport: select(workflowStore).getInitialViewport(),
             isMiniMapFeatureActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
             isControlsFeatureActive: select(editorStore).isFeatureActive(FEATURE_CONTROLS),
+            isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
         };
     });
 
@@ -342,45 +344,47 @@ export const FlowEditor = (props) => {
     return (
         <div className="reactflow-wrapper" ref={reactFlowWrapperRef}>
             <AutoLayout onLayout={onAutoLayout} />
-            <ReactFlow
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                onEdgeUpdate={onEdgeUpdate}
-                // onConnectStart={onConnectStart}
-                // onConnectEnd={onConnectEnd}
-                onConnect={onConnect}
-                onDrop={onDrop}
-                onDragOver={onDragOver}
-                nodesDraggable={true}
-                proOptions={proOptions}
-                fitView
-                style={editorStyle}
-                snapToGrid={true}
-                snapGrid={[GRID_SIZE, GRID_SIZE]}
-                nodeTypes={nodeTypes}
-                edgeTypes={edgeTypes}
-                onNodesDelete={onNodesDelete}
-                onEdgesDelete={onEdgesDelete}
-                connectionLineStyle={{ stroke: "#c2c2c2", strokeWidth: 2, strokeDasharray: '3,4', }}
-            >
-                {isMiniMapFeatureActive && (
-                    <MiniMap
-                        pannable
-                        zoomable
-                        nodeColor={(node) => {
-                            if (node.type === "generic") return "#FFCC00";
-                        }}
-                    />
-                )}
+            {! isLoadingWorkflow && (
+                <ReactFlow
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    onEdgeUpdate={onEdgeUpdate}
+                    // onConnectStart={onConnectStart}
+                    // onConnectEnd={onConnectEnd}
+                    onConnect={onConnect}
+                    onDrop={onDrop}
+                    onDragOver={onDragOver}
+                    nodesDraggable={true}
+                    proOptions={proOptions}
+                    fitView
+                    style={editorStyle}
+                    snapToGrid={true}
+                    snapGrid={[GRID_SIZE, GRID_SIZE]}
+                    nodeTypes={nodeTypes}
+                    edgeTypes={edgeTypes}
+                    onNodesDelete={onNodesDelete}
+                    onEdgesDelete={onEdgesDelete}
+                    connectionLineStyle={{ stroke: "#c2c2c2", strokeWidth: 2, strokeDasharray: '3,4', }}
+                >
+                    {isMiniMapFeatureActive && (
+                        <MiniMap
+                            pannable
+                            zoomable
+                            nodeColor={(node) => {
+                                if (node.type === "generic") return "#FFCC00";
+                            }}
+                        />
+                    )}
 
-                {isControlsFeatureActive && (
-                    <Controls />
-                )}
+                    {isControlsFeatureActive && (
+                        <Controls />
+                    )}
 
-                <Background variant="dots" color="#ccc" gap={GRID_SIZE} />
-            </ReactFlow>
+                    <Background variant="dots" color="#ccc" gap={GRID_SIZE} />
+                </ReactFlow>
+            )}
             <NodeValidator />
         </div>
     );
