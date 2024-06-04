@@ -376,3 +376,10 @@ export function setDraggingFromHandle({sourceId, handleId, handleType}) {
         payload: {sourceId, handleId, handleType},
     };
 }
+
+export function setIsConnectingNodes(isConnecting) {
+    return {
+        type: 'SET_IS_CONNECTING_NODES',
+        payload: isConnecting,
+    };
+}

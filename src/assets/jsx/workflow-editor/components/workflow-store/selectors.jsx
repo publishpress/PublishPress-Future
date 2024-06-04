@@ -197,3 +197,7 @@ export function getNodeErrors(state, nodeId) {
 export function getDraggingFromHandle(state) {
     return state.draggingFromHandle;
 }
+
+export function isConnectingNodes(state) {
+    return !!state.isConnectingNodes;
+}

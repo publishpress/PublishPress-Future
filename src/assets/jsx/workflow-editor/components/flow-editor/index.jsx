@@ -51,7 +51,7 @@ export const FlowEditor = (props) => {
         isMiniMapFeatureActive,
         isControlsFeatureActive,
         isLoadingWorkflow,
-        draggingFromHandle
+        isConnectingNodes,
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -70,7 +70,7 @@ export const FlowEditor = (props) => {
             isMiniMapFeatureActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
             isControlsFeatureActive: select(editorStore).isFeatureActive(FEATURE_CONTROLS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
-            draggingFromHandle: select(workflowStore).getDraggingFromHandle(),
+            isConnectingNodes: select(workflowStore).isConnectingNodes(),
         };
     });
 
@@ -83,6 +83,7 @@ export const FlowEditor = (props) => {
         setEditedWorkflowAttribute,
         removePlaceholderNodes,
         setDraggingFromHandle,
+        setIsConnectingNodes,
     } = useDispatch(workflowStore);
 
     const {
@@ -194,7 +195,7 @@ export const FlowEditor = (props) => {
 
         const targetIsPane = event.target.classList.contains("react-flow__pane");
 
-        if (targetIsPane) {
+        if (targetIsPane && ! isConnectingNodes) {
             const width = event.target.offsetWidth;
 
             // Convert the screen element size to the flow position.
@@ -220,8 +221,15 @@ export const FlowEditor = (props) => {
 
             addNode(item);
         }
-    }, [reactFlowInstance.screenToFlowPosition]);
 
+        setIsConnectingNodes(false);
+    }, [reactFlowInstance.screenToFlowPosition, isConnectingNodes, addNode]);
+
+    const isValidConnection = useCallback((connection) => {
+        setIsConnectingNodes(true);
+
+        return true;
+    }, []);
 
     const onDragOver = useCallback((event) => {
         event.preventDefault();
@@ -349,11 +357,12 @@ export const FlowEditor = (props) => {
                     onConnectStart={onConnectStart}
                     onConnectEnd={onConnectEnd}
                     onConnect={onConnect}
+                    isValidConnection={isValidConnection}
                     onDrop={onDrop}
                     onDragOver={onDragOver}
                     nodesDraggable={true}
                     proOptions={proOptions}
-                    fitView
+                    fitView={fitView}
                     style={editorStyle}
                     snapToGrid={true}
                     snapGrid={[GRID_SIZE, GRID_SIZE]}

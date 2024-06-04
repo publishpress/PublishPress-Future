@@ -42,6 +42,7 @@ export const DEFAULT_STATE = {
         handleId: null,
         handleType: null,
     },
+    isConnectingNodes: false,
 }
 
 const loadWorkflowStart = (state, action) => {
@@ -673,6 +674,13 @@ const setDraggingFromHandle = (state, action) => {
     };
 }
 
+const setIsConnectingNodes = (state, action) => {
+    return {
+        ...state,
+        isConnectingNodes: action.payload,
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -767,6 +775,8 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return removePlaceholderNodes(state, action);
         case 'SET_DRAGGING_FROM_HANDLE':
             return setDraggingFromHandle(state, action);
+        case 'SET_IS_CONNECTING_NODES':
+            return setIsConnectingNodes(state, action);
     }
 
     return state;
