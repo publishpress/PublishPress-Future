@@ -22,7 +22,7 @@ import {
     useMemo,
 } from "@wordpress/element";
 import { useLayoutedElements, AutoLayout } from "./auto-layout";
-import { EVENT_DROP_NODE, FEATURE_CONTROLS, FEATURE_MINI_MAP, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
+import { EVENT_DROP_NODE, FEATURE_CONTROLS, FEATURE_MINI_MAP, NODE_TYPE_PLACEHOLDER, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
 import GenericNode from "../node-types/generic";
 
 import { AUTO_LAYOUT_DEFAULT_DIRECTION } from "./auto-layout/constants";
@@ -35,6 +35,7 @@ import NodeValidator from "../node-validator";
 import { GenericEdge } from "../edge-types";
 import { TriggerPlaceholder } from "../node-types/trigger-placeholder";
 import { createNewNode, getId } from "../../utils";
+import NodePlaceholder from "../node-types/node-placeholder";
 
 const GRID_SIZE = 10;
 
@@ -50,6 +51,7 @@ export const FlowEditor = (props) => {
         isMiniMapFeatureActive,
         isControlsFeatureActive,
         isLoadingWorkflow,
+        draggingFromHandle
     } = useSelect((select) => {
         const activeComplementaryArea = select(
             "core/interface",
@@ -68,18 +70,24 @@ export const FlowEditor = (props) => {
             isMiniMapFeatureActive: select(editorStore).isFeatureActive(FEATURE_MINI_MAP),
             isControlsFeatureActive: select(editorStore).isFeatureActive(FEATURE_CONTROLS),
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
+            draggingFromHandle: select(workflowStore).getDraggingFromHandle(),
         };
     });
 
     const {
         setNodes,
         setEdges,
+        addNode,
         setSelectedNodes,
         setSelectedEdges,
         setEditedWorkflowAttribute,
+        removePlaceholderNodes,
+        setDraggingFromHandle,
     } = useDispatch(workflowStore);
 
-    const { openGeneralSidebar } = useDispatch(editorStore);
+    const {
+        openGeneralSidebar,
+    } = useDispatch(editorStore);
 
     const reactFlowWrapperRef = useRef(null);
     const reactFlowInstance = useReactFlow();
@@ -98,7 +106,8 @@ export const FlowEditor = (props) => {
     const nodeTypes = useMemo(() => ({
         generic: GenericNode,
         trigger: TriggerNode,
-        triggerPlaceholder: TriggerPlaceholder
+        triggerPlaceholder: TriggerPlaceholder,
+        nodePlaceholder: NodePlaceholder,
     }), []);
 
     const edgeTypes = useMemo(() => ({
@@ -164,47 +173,54 @@ export const FlowEditor = (props) => {
         [edges],
     );
 
-    // const onConnectStart = useCallback((_, { nodeId }) => {
-    //     connectingNodeId.current = nodeId;
-    //   }, []);
+    // This is used to create a new node when the user connects a node to the pane.
+    const onConnectStart = useCallback((event, { nodeId, handleId, handleType }) => {
+        connectingNodeId.current = nodeId;
 
-    // const onConnectEnd = useCallback((event) => {
-    //     if (!connectingNodeId.current) {
-    //         return;
-    //     }
+        setDraggingFromHandle({
+            sourceId: nodeId,
+            handleId,
+            handleType,
+        })
+      }, []);
 
-    //     const targetIsPane = event.target.classList.contains("react-flow__pane");
+    // This is used to create a new node when the user connects a node to the pane.
+    const onConnectEnd = useCallback((event) => {
+        event.stopPropagation();
 
-    //     if (targetIsPane) {
-    //         const position = reactFlowInstance.screenToFlowPosition({
-    //             x: event.clientX,
-    //             y: event.clientY,
-    //         });
+        if (!connectingNodeId.current) {
+            return;
+        }
 
-    //         const id = getId();
+        const targetIsPane = event.target.classList.contains("react-flow__pane");
 
-    //         const item = {
-    //             id,
-    //             type: 'nodePlaceholder',
-    //             data: {
-    //                 name: 'core/node-placeholder',
-    //             },
-    //             position,
-    //             origin: [0.5, 0.0],
-    //         };
+        if (targetIsPane) {
+            const width = event.target.offsetWidth;
 
-    //         setNodes([...nodes, item]);
-    //         setEdges([
-    //             ...edges,
-    //             {
-    //                 id: `${connectingNodeId.current}-${item.id}`,
-    //                 source: connectingNodeId.current,
-    //                 target: item.id,
-    //                 type: 'genericEdge',
-    //             },
-    //         ]);
-    //     }
-    // }, [reactFlowInstance.screenToFlowPosition]);
+            // Convert the screen element size to the flow position.
+            const offset = reactFlowInstance.screenToFlowPosition({
+                x: width / 2,
+                y: 0,
+            });
+
+            const position = reactFlowInstance.screenToFlowPosition({
+                x: event.clientX - offset.x,
+                y: event.clientY,
+            });
+
+            const item = {
+                id: getId(),
+                type: 'nodePlaceholder',
+                data: {
+                    name: 'core/node-placeholder',
+                    elementarType: NODE_TYPE_PLACEHOLDER,
+                },
+                position,
+            };
+
+            addNode(item);
+        }
+    }, [reactFlowInstance.screenToFlowPosition]);
 
 
     const onDragOver = useCallback((event) => {
@@ -229,6 +245,8 @@ export const FlowEditor = (props) => {
                 position,
                 reactFlowInstance
             });
+
+            removePlaceholderNodes();
         },
         [reactFlowInstance, nodes],
     );
@@ -318,29 +336,6 @@ export const FlowEditor = (props) => {
         }
     }, [activeComplementaryArea, selectedEdges, selectedNodes]);
 
-    // Add the placeholder node if there is no node in the flow.
-    // Otherwise, remove it.
-    useEffect(() => {
-        if (! nodes.length) {
-            nodes.push({
-                id: 'triggerPlaceholder',
-                type: 'triggerPlaceholder',
-                data: {
-                    name: 'core/trigger-placeholder',
-                    label: 'Trigger Placeholder',
-                },
-                position: { x: 0, y: 0 },
-            });
-            onAutoLayout();
-        } else if (nodes.length > 1) {
-            const placeholderIndex = nodes.findIndex((node) => node.type === 'triggerPlaceholder');
-
-            if (placeholderIndex !== -1) {
-                nodes.splice(placeholderIndex, 1);
-            }
-        }
-    }, [nodes]);
-
     return (
         <div className="reactflow-wrapper" ref={reactFlowWrapperRef}>
             <AutoLayout onLayout={onAutoLayout} />
@@ -351,8 +346,8 @@ export const FlowEditor = (props) => {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onEdgeUpdate={onEdgeUpdate}
-                    // onConnectStart={onConnectStart}
-                    // onConnectEnd={onConnectEnd}
+                    onConnectStart={onConnectStart}
+                    onConnectEnd={onConnectEnd}
                     onConnect={onConnect}
                     onDrop={onDrop}
                     onDragOver={onDragOver}

@@ -19,3 +19,11 @@ export const INSERTER_TAB_ADVANCED = 'advanced';
 export const SLOT_SCOPE_WORKFLOW_EDITOR = 'publishpress-future/edit-workflow';
 
 export const EVENT_DROP_NODE = 'application/future-workflow-editor-node';
+
+export const NODE_TYPE_TRIGGER = 'trigger';
+export const NODE_TYPE_ACTION = 'action';
+export const NODE_TYPE_ADVANCED = 'advanced';
+export const NODE_TYPE_PLACEHOLDER = 'placeholder';
+
+export const HANDLE_TYPE_TARGET = 'target';
+export const HANDLE_TYPE_SOURCE = 'source';

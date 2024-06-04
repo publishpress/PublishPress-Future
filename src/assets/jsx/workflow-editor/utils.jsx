@@ -3,6 +3,7 @@ import { select, dispatch } from "@wordpress/data";
 import { store as workflowStore } from "./components/workflow-store";
 import { store as editorStore } from "./components/editor-store";
 import { getIncomers, getOutgoers } from "reactflow";
+import { NODE_TYPE_PLACEHOLDER } from "./constants";
 
 const VARIABLE_SOURCE_NODE_INPUT = 'node-input';
 const VARIABLE_SOURCE_GLOBAL = 'global';
@@ -416,7 +417,7 @@ export function incrementAndGetNodeSlug(nodeItem) {
 
 export function createNewNode({item, position, reactFlowInstance}) {
     const slug = incrementAndGetNodeSlug(item);
-    const nodes = select(workflowStore).getNodes();
+    let nodes = select(workflowStore).getNodes();
 
     const newNode = {
         id: getId(),
@@ -430,9 +431,13 @@ export function createNewNode({item, position, reactFlowInstance}) {
         },
     };
 
+    nodes = nodes.filter((node) => node.data.elementarType !== NODE_TYPE_PLACEHOLDER);
+
     dispatch(workflowStore).setNodes(nodes.concat(newNode));
 
     updateFlowInEditedWorkflow(reactFlowInstance);
+
+    return newNode;
 }
 
 export function updateFlowInEditedWorkflow(reactFlowInstance) {
@@ -440,4 +445,18 @@ export function updateFlowInEditedWorkflow(reactFlowInstance) {
     setTimeout(() => {
         dispatch(workflowStore).setEditedWorkflowAttribute("flow", reactFlowInstance.toObject());
     }, 400);
+}
+
+export const newTriggerPlaceholderNode = () => {
+    return {
+        id: getId(),
+        type: 'triggerPlaceholder',
+        position: { x: 0, y: 0 },
+        data: {
+            name: 'placeholder/trigger',
+            elementarType: NODE_TYPE_PLACEHOLDER,
+            version: 1,
+            slug: 'triggerPlaceholder1',
+        },
+    };
 }

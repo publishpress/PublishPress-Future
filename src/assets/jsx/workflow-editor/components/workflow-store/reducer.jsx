@@ -1,4 +1,8 @@
-import { POST_TYPE } from '../../constants';
+import {
+    POST_TYPE,
+    NODE_TYPE_PLACEHOLDER
+} from '../../constants';
+import { newTriggerPlaceholderNode } from '../../utils';
 
 export const DEFAULT_STATE = {
     postType: POST_TYPE,
@@ -33,6 +37,11 @@ export const DEFAULT_STATE = {
     taxonomyTerms: {},
     baseSlugCounts: {},
     nodeErrors: {},
+    draggingFromHandle: {
+        sourceId: null,
+        handleId: null,
+        handleType: null,
+    },
 }
 
 const loadWorkflowStart = (state, action) => {
@@ -85,9 +94,9 @@ function _setInitialStateForGlobalVariables(state, workflow = {}) {
 const loadWorkflowSuccess = (state, action) => {
     const { payload } = action;
 
-    const nodes = payload.flow?.nodes || [];
+    let nodes = payload.flow?.nodes || [];
     const edges = payload.flow?.edges || [];
-    const viewport = payload.flow?.viewport || DEFAULT_STATE.viewport;
+    const initialViewport = payload.flow?.viewport || DEFAULT_STATE.viewport;
 
     nodes.map(node => {
         const slug = node?.data?.slug;
@@ -99,6 +108,10 @@ const loadWorkflowSuccess = (state, action) => {
         state = updateBaseSlugCounts(state, {payload: slug});
     });
 
+    if (! nodes.length) {
+        nodes = [newTriggerPlaceholderNode()];
+    }
+
     state = _setInitialStateForGlobalVariables(state, payload);
 
     return {
@@ -107,9 +120,9 @@ const loadWorkflowSuccess = (state, action) => {
         workflow: payload,
         editedWorkflowAttributes: {},
         isNewWorkflow: payload.status === 'auto-draft',
-        nodes: nodes,
-        edges: edges,
-        initialViewport: viewport,
+        nodes,
+        edges,
+        initialViewport,
         isEditedWorkflowEmpty: state.edges.length === 0 && state.nodes.length === 0,
         isCurrentWorkflowPublished: payload.status === 'publish',
     };
@@ -133,10 +146,13 @@ const createWorkflowStart = (state, action) => {
 const createWorkflowSuccess = (state, action) => {
     const { payload } = action;
 
+    const nodes = [newTriggerPlaceholderNode()];
+
     state = _setInitialStateForGlobalVariables(state, {});
 
     return {
         ...state,
+        nodes,
         isCreatingWorkflow: false,
         isLoadingWorkflow: false,
         workflow: payload,
@@ -307,6 +323,20 @@ const setNodes = (state, action) => {
     return {
         ...state,
         nodes: payload,
+    };
+}
+
+const addNode = (state, action) => {
+    const { payload } = action;
+
+    const newNodes = [
+        ...state.nodes,
+        payload,
+    ];
+
+    return {
+        ...state,
+        nodes: newNodes,
     };
 }
 
@@ -617,6 +647,28 @@ const removeEdge = (state, action) => {
     };
 }
 
+const removePlaceholderNodes = (state, action) => {
+    const newNodes = state.nodes.filter(node => node.data.elementarType !== NODE_TYPE_PLACEHOLDER);
+
+    return {
+        ...state,
+        nodes: newNodes,
+    };
+}
+
+const setDraggingFromHandle = (state, action) => {
+    const { sourceId, handleId, handleType } = action.payload;
+
+    return {
+        ...state,
+        draggingFromHandle: {
+            sourceId,
+            handleId,
+            handleType,
+        },
+    };
+}
+
 export const reducer = (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case 'CREATE_WORKFLOW_START':
@@ -661,8 +713,12 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return setPostType(state, action);
         case 'SET_NODES':
             return setNodes(state, action);
+        case 'ADD_NODE':
+            return addNode(state, action);
         case 'SET_EDGES':
             return setEdges(state, action);
+        case 'ADD_EDGE':
+            return addEdge(state, action);
         case 'SET_INITIAL_VIEWPORT':
             return setInitialViewport(state, action);
         case 'SET_SELECTED_NODES':
@@ -703,6 +759,10 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return removeNode(state, action);
         case 'REMOVE_EDGE':
             return removeEdge(state, action);
+        case 'REMOVE_PLACEHOLDER_NODES':
+            return removePlaceholderNodes(state, action);
+        case 'SET_DRAGGING_FROM_HANDLE':
+            return setDraggingFromHandle(state, action);
     }
 
     return state;

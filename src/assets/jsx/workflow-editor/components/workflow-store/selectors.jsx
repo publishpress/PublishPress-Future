@@ -193,3 +193,7 @@ export function getBaseSlugCounts(state) {
 export function getNodeErrors(state, nodeId) {
     return state.nodeErrors[nodeId] || [];
 }
+
+export function getDraggingFromHandle(state) {
+    return state.draggingFromHandle;
+}

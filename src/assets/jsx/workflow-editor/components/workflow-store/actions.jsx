@@ -356,3 +356,23 @@ export function removeEdge(edgeId) {
         payload: edgeId,
     };
 }
+
+export function addNode(node) {
+    return {
+        type: 'ADD_NODE',
+        payload: node,
+    };
+}
+
+export function removePlaceholderNodes() {
+    return {
+        type: 'REMOVE_PLACEHOLDER_NODES',
+    };
+}
+
+export function setDraggingFromHandle({sourceId, handleId, handleType}) {
+    return {
+        type: 'SET_DRAGGING_FROM_HANDLE',
+        payload: {sourceId, handleId, handleType},
+    };
+}
