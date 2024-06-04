@@ -21,7 +21,6 @@ import InserterListbox from './inserter-listbox';
 export const NodesTab = ({
     items,
     categories,
-    onInsert,
     onSelect,
     onHover,
     showMostUsedNodes

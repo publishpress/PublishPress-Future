@@ -28,6 +28,7 @@ export const NodePlaceholder = memo((props) => {
     return (
         <Placeholder
             {...props}
+            label={__('Add a step', 'publishpress-future-pro')}
             popoverIsOpen={true}
             searchLabel={__('Search for actions', 'publishpress-future-pro')}
             elementarTypes={elementarTypes}

@@ -129,49 +129,47 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
                 </>
             )}
 
-            <Tooltip text={__('Slug: ', 'publishpress-future-pro') + data.slug} placement="right-end">
-                <div className={"react-flow__node-body " + nodeClassName}>
-                    {targetHandles}
-                    <div className='react-flow__node-top'>
-                        <NodeIcon icon={IoMdPlay} size={8} />
-                        {topText}
-                    </div>
-
-                    <div className='react-flow__node-inner-body'>
-                        {nodeHasErrors && (
-                            <div className='react-flow__node-error'>
-                                <NodeIcon icon={'error'} size={16} />
-                            </div>
-                        )}
-                        <div className='react-flow__node-header'>
-                            <NodeIcon icon={nodeType.icon.src} size={14} />
-                            <div className="react-flow__node-label">{nodeLabel}</div>
-                        </div>
-                        {isAdvancedSettingsEnabled && nodeAttributes.length > 0 &&
-                            <div className='react-flow__node-content'>
-                                <table>
-                                    <tbody>
-                                        {nodeAttributes.map((attribute) => {
-                                            return (
-                                                <tr key={'attribute_' + attribute.id}>
-                                                    <th>{attribute.label}</th>
-                                                    <td>{attribute.value}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        }
-                    </div>
-
-                    <div className='react-flow__node-socket-area'>
-                        {socketAreas}
-                    </div>
-
-                    {sourceHandles}
+            <div className={"react-flow__node-body " + nodeClassName}>
+                {targetHandles}
+                <div className='react-flow__node-top'>
+                    <NodeIcon icon={IoMdPlay} size={8} />
+                    {topText}
                 </div>
-            </Tooltip>
+
+                <div className='react-flow__node-inner-body'>
+                    {nodeHasErrors && (
+                        <div className='react-flow__node-error'>
+                            <NodeIcon icon={'error'} size={16} />
+                        </div>
+                    )}
+                    <div className='react-flow__node-header'>
+                        <NodeIcon icon={nodeType.icon.src} size={14} />
+                        <div className="react-flow__node-label">{nodeLabel}</div>
+                    </div>
+                    {isAdvancedSettingsEnabled && nodeAttributes.length > 0 &&
+                        <div className='react-flow__node-content'>
+                            <table>
+                                <tbody>
+                                    {nodeAttributes.map((attribute) => {
+                                        return (
+                                            <tr key={'attribute_' + attribute.id}>
+                                                <th>{attribute.label}</th>
+                                                <td>{attribute.value}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+
+                <div className='react-flow__node-socket-area'>
+                    {socketAreas}
+                </div>
+
+                {sourceHandles}
+            </div>
         </>
     );
 });

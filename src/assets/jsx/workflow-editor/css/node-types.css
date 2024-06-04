@@ -125,7 +125,32 @@
 
 .react-flow__node-inserter-popover .components-popover__content {
     width: 350px;
-    height: 470px;
+}
+
+.react-flow__node-inserter-popover {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.react-flow__node-inserter-popover-content {
+    height: 100%;
+    overflow-y: auto;
+    height: 340px;
+}
+
+.react-flow__node-inserter-popover-close {
+    cursor: pointer;
+    background-color: #000;
+    color: #fff;
+    display: block;
+    width: 100%;
+    padding: 6px;
+    height: 44px;
+}
+
+.react-flow__node-inserter-popover .components-popover__content {
+    height: ;
 }
 
 /* GENERIC NODE */

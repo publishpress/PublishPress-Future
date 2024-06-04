@@ -1,7 +1,7 @@
 import { memo, useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { FiPlus } from "react-icons/fi";
-import { Popover, SearchControl } from '@wordpress/components';
+import { Button, Popover, SearchControl } from '@wordpress/components';
 import { NodesTab } from '../secondary-sidebar/nodes-tab';
 import { store as editorStore } from '../editor-store';
 import { store as workflowStore } from '../workflow-store';
@@ -22,6 +22,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
     const nodeLabel = label || '';
 
     const nodeId = useRef(null);
+    const searchControlRef = useRef(null);
 
     const reactFlowInstance = useReactFlow();
 
@@ -70,8 +71,12 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
     const {
         setEdges,
         setDraggingFromHandle,
-        setSelectedNodes,
+        removePlaceholderNodes,
     } = useDispatch(workflowStore);
+
+    const {
+        enableFeature,
+    } = useDispatch(editorStore);
 
     const onClickAddButton = (event) => {
         event.stopPropagation();
@@ -128,53 +133,83 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
         }
     }
 
-    useEffect(() => {
-        if (isSidebarInserterOpen) {
-            setInserterIsOpen(false);
-        }
-    }, [isSidebarInserterOpen]);
+    const onClosePopup = () => {
+        setInserterIsOpen(false);
+        removePlaceholderNodes();
+    }
+
+    const onBrowseAll = () => {
+        enableFeature(FEATURE_INSERTER);
+        removePlaceholderNodes();
+    }
 
     useEffect(() => {
         if (! nodeId.current) {
             nodeId.current = id;
         }
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' || event.keyCode === 27) {
+                onClosePopup();
+            }
+        });
     }, []);
 
     if (! searchLabel) {
         searchLabel = __('Search for steps', 'publishpress-future-pro');
     }
 
+    useEffect(() => {
+        if (inserterIsOpen) {
+            searchControlRef.current?.focus();
+        } else {
+            // If open the inserter by default, we remove the placeholder when it is closed
+            if (popoverIsOpen) {
+                removePlaceholderNodes();
+            }
+        }
+    }, [inserterIsOpen]);
+
     return (
         <>
             {inserterIsOpen && (
                 <Popover placement="bottom-start" offset={14} className='react-flow__node-inserter-popover'>
-                    <SearchControl
-                        className="block-editor-inserter__search"
-                        onChange={(value) => {
-                            setFilterValue(value);
-                        }}
-                        value={filterValue}
-                        label={__('Search for triggers and steps', 'publishpress-future-pro')}
-                        placeholder={__('Search')}
-                    />
-                    {!!filterValue && (
-                        <InserterSearchResults
-                            filterValue={filterValue}
-                            onSelect={onSelectItem}
-                            filterTypes={['trigger']}
+                    <div className="react-flow__node-inserter-popover-content">
+                        <SearchControl
+                            ref={searchControlRef}
+                            className="block-editor-inserter__search"
+                            onChange={(value) => {
+                                setFilterValue(value);
+                            }}
+                            value={filterValue}
+                            label={__('Search for triggers and steps', 'publishpress-future-pro')}
+                            placeholder={__('Search')}
                         />
-                    )}
 
-                    {!filterValue && (
-                        <div className="block-editor-inserter__block-list">
-                            <NodesTab
-                                type={INSERTER_TAB_TRIGGERS}
+                        {!!filterValue && (
+                            <InserterSearchResults
+                                filterValue={filterValue}
                                 onSelect={onSelectItem}
-                                items={items}
-                                categories={categories}
+                                filterTypes={elementarTypes}
                             />
-                        </div>
-                    )}
+                        )}
+
+                        {!filterValue && (
+                            <div className="block-editor-inserter__block-list">
+                                <NodesTab
+                                    type={INSERTER_TAB_TRIGGERS}
+                                    onSelect={onSelectItem}
+                                    items={items}
+                                    showMostUsedNodes={true}
+                                    categories={[]}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <Button
+                        onClick={onBrowseAll}
+                        className="react-flow__node-inserter-popover-close"
+                    >{__('Browse all')}</Button>
                 </Popover>
             )}
             <div className={"react-flow__node-body react-flow__node-triggerPlaceholderNode"} onClick={onClickAddButton}>
