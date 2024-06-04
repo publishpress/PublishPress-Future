@@ -11,7 +11,7 @@ import InserterSearchResults from '../secondary-sidebar/inserter-search-results'
 import { useReactFlow } from 'reactflow';
 import { createNewNode } from '../../utils';
 
-export const PlaceholderNode = memo(() => {
+export const TriggerPlaceholder = memo(() => {
     const nodeLabel = __('Click to add a trigger', 'publishpress-future-pro');
 
     const reactFlowInstance = useReactFlow();
@@ -42,7 +42,7 @@ export const PlaceholderNode = memo(() => {
     }
 
     const onSelectItem = (item) => {
-        const placeholderNode = nodes.find((node) => node.type === 'placeholder');
+        const placeholderNode = nodes.find((node) => node.type === 'triggerPlaceholder');
 
         const position = {
             x: placeholderNode.position.x,
@@ -99,7 +99,7 @@ export const PlaceholderNode = memo(() => {
                     )}
                 </Popover>
             )}
-            <div className={"react-flow__node-body react-flow__node-placeholderNode"} onClick={onClickAddButton}>
+            <div className={"react-flow__node-body react-flow__node-triggerPlaceholderNode"} onClick={onClickAddButton}>
                 <div className='react-flow__node-inner-body'>
                     <div className='react-flow__node-header'>
                         <div className='icon'>
@@ -113,4 +113,4 @@ export const PlaceholderNode = memo(() => {
     );
 });
 
-export default PlaceholderNode;
+export default TriggerPlaceholder;

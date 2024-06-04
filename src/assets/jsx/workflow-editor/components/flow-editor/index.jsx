@@ -33,8 +33,8 @@ import {
 import TriggerNode from "../node-types/trigger";
 import NodeValidator from "../node-validator";
 import { GenericEdge } from "../edge-types";
-import { PlaceholderNode } from "../node-types/placeholder";
-import { createNewNode } from "../../utils";
+import { TriggerPlaceholder } from "../node-types/trigger-placeholder";
+import { createNewNode, getId } from "../../utils";
 
 const GRID_SIZE = 10;
 
@@ -95,7 +95,7 @@ export const FlowEditor = (props) => {
     const nodeTypes = useMemo(() => ({
         generic: GenericNode,
         trigger: TriggerNode,
-        placeholder: PlaceholderNode
+        triggerPlaceholder: TriggerPlaceholder
     }), []);
 
     const edgeTypes = useMemo(() => ({
@@ -216,7 +216,7 @@ export const FlowEditor = (props) => {
     useOnSelectionChange({
         onChange: ({ nodes, edges }) => {
             // Avoid selecting the placeholder node.
-            if (nodes.length > 0 && nodes[0].type === 'placeholder') {
+            if (nodes.length > 0 && nodes[0].type === 'triggerPlaceholder') {
                 setSelectedNodes([]);
                 setSelectedEdges([]);
 
@@ -277,13 +277,14 @@ export const FlowEditor = (props) => {
     useEffect(() => {
         if (! nodes.length) {
             nodes.push({
-                id: 'placeholder',
-                type: 'placeholder',
+                id: 'triggerPlaceholder',
+                type: 'triggerPlaceholder',
                 position: { x: 0, y: 0 },
             });
             onAutoLayout();
         } else if (nodes.length > 1) {
-            const placeholderIndex = nodes.findIndex((node) => node.id === 'placeholder');
+            const placeholderIndex = nodes.findIndex((node) => node.type === 'triggerPlaceholder');
+
             if (placeholderIndex !== -1) {
                 nodes.splice(placeholderIndex, 1);
             }
