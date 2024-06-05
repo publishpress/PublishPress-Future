@@ -38,6 +38,11 @@ class PostQuery implements InputValidatorsInterface
 
         $settingPostTypes = $nodeSettings['postQuery']['postType'] ?? [];
 
+        // Invalidate nodes that don't specify a post type to avoid applying actions to all post types
+        if (empty($settingPostTypes)) {
+            return false;
+        }
+
         if (!empty($settingPostTypes) && !in_array($post->post_type, $settingPostTypes)) {
             return false;
         }
