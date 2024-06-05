@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-31T01:39:58+00:00\n"
+"POT-Creation-Date: 2024-06-05T16:02:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -100,15 +100,15 @@ msgstr ""
 msgid "Data to output"
 msgstr ""
 
-#: components/data-fields/email-recipient.jsx:11
+#: components/data-fields/email-recipient.jsx:13
 msgid "Addresses"
 msgstr ""
 
-#: components/data-fields/email-recipient.jsx:33
+#: components/data-fields/email-recipient.jsx:35
 msgid "Email Recipient"
 msgstr ""
 
-#: components/data-fields/email-recipient.jsx:40
+#: components/data-fields/email-recipient.jsx:42
 msgid "Custom Email Addresses"
 msgstr ""
 
@@ -333,8 +333,18 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: components/node-dev-info-panel/index.jsx:9
+#: components/node-dev-info-panel/index.jsx:17
 msgid "Developer Info"
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:24
+#: components/node-inspector/node-inspector-card.jsx:18
+#: components/node-types/generic.jsx:37
+msgid "Node"
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:35
+msgid "Node Type"
 msgstr ""
 
 #: components/node-inspector/index.jsx:96
@@ -367,11 +377,6 @@ msgstr ""
 
 #: components/node-inspector/index.jsx:171
 msgid "A connection between nodes"
-msgstr ""
-
-#: components/node-inspector/node-inspector-card.jsx:18
-#: components/node-types/generic.jsx:37
-msgid "Node"
 msgstr ""
 
 #: components/node-inspector/node-inspector-card.jsx:19
@@ -421,8 +426,26 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: components/node-types/generic.jsx:132
-msgid "Slug: "
+#: components/node-types/node-placeholder.jsx:31
+msgid "Add a step"
+msgstr ""
+
+#: components/node-types/node-placeholder.jsx:33
+msgid "Search for actions"
+msgstr ""
+
+#: components/node-types/placeholder.jsx:159
+msgid "Search for steps"
+msgstr ""
+
+#: components/node-types/placeholder.jsx:185
+#: components/node-types/trigger-placeholder.jsx:13
+#: components/secondary-sidebar/menu.jsx:201
+msgid "Search for triggers and steps"
+msgstr ""
+
+#: components/node-types/trigger-placeholder.jsx:11
+msgid "Click to add a trigger"
 msgstr ""
 
 #: components/node-validation-panel/index.jsx:14
@@ -471,14 +494,14 @@ msgid "No results found."
 msgstr ""
 
 #. translators: %d: number of results.
-#: components/secondary-sidebar/inserter-search-results.jsx:91
+#: components/secondary-sidebar/inserter-search-results.jsx:100
 msgid "%d result found."
 msgid_plural "%d results found."
 msgstr[0] ""
 msgstr[1] ""
 
-#: components/secondary-sidebar/inserter-search-results.jsx:110
-#: components/secondary-sidebar/inserter-search-results.jsx:117
+#: components/secondary-sidebar/inserter-search-results.jsx:115
+#: components/secondary-sidebar/inserter-search-results.jsx:122
 msgid "Nodes"
 msgstr ""
 
@@ -494,8 +517,8 @@ msgid_plural "%d blocks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: components/secondary-sidebar/nodes-tab.jsx:76
-#: components/secondary-sidebar/nodes-tab.jsx:81
+#: components/secondary-sidebar/nodes-tab.jsx:77
+#: components/secondary-sidebar/nodes-tab.jsx:82
 msgctxt "nodes"
 msgid "Most used"
 msgstr ""
@@ -511,14 +534,10 @@ msgid "Actions"
 msgstr ""
 
 #: components/secondary-sidebar/tips.jsx:10
-msgid "Select multiple steps by pressing <kbd>shift</kbd> when clicking and selecting in the workflow board."
-msgstr ""
-
-#: components/secondary-sidebar/tips.jsx:17
 msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow."
 msgstr ""
 
-#: components/secondary-sidebar/tips.jsx:23
+#: components/secondary-sidebar/tips.jsx:16
 msgid "Drag steps from the inserter into the workflow."
 msgstr ""
 

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future Pro 3.4.0-beta.2\n"
+"Project-Id-Version: PublishPress Future Pro 3.4.0-beta.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-31T01:39:57+00:00\n"
+"POT-Creation-Date: 2024-06-05T16:02:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -230,7 +230,7 @@ msgid "Edit Workflow"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Controllers/PostType.php:42
-#: src/classes/Modules/Workflows/Models/WorkflowModel.php:282
+#: src/classes/Modules/Workflows/Models/WorkflowModel.php:295
 msgid "New Workflow"
 msgstr ""
 
@@ -302,6 +302,38 @@ msgstr ""
 msgid "Workflow updated."
 msgstr ""
 
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:34
+msgid "Notify when a post is updated"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:35
+msgid "Notify the site admin when a post is updated."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:40
+msgid "Unpublish to Draft after a week"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:41
+msgid "Change the post status to Draft after a week it was published."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:46
+msgid "Unpublish and change category after one week"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:47
+msgid "Move the post to draft and add a category after 15 days."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:52
+msgid "Add extra categories one month after publishing"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:53
+msgid "Sample workflow to add extra categories one month after publishing"
+msgstr ""
+
 #: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:70
 msgid "Workflow scheduled action"
 msgstr ""
@@ -322,23 +354,23 @@ msgstr ""
 msgid "Workflow recurring scheduled action"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:74
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:75
 msgid "Workflows"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:122
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:123
 msgid "Triggers"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:126
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:127
 msgid "Preview"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:148
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:151
 msgid "—"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:179
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:182
 msgid "No screenshot"
 msgstr ""
 
@@ -390,9 +422,6 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:72
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:66
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:72
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:136
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:122
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:120
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:59
 msgid "Post"
 msgstr ""
@@ -430,7 +459,7 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:125
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:110
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:118
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:124
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:127
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:134
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:130
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:118
@@ -445,7 +474,7 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:126
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:111
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:119
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:125
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:128
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:135
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:131
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:119
@@ -460,7 +489,7 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:149
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:134
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:142
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:148
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:151
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:158
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:154
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:142
@@ -506,18 +535,18 @@ msgstr ""
 msgid "This action keeps the current taxonomy terms and adds additional terms."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:78
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:81
 msgid "Extra terms"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:79
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:85
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:82
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:88
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:91
 msgid "The terms that will be added to the posts."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:84
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:111
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:87
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:114
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:87
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:121
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:90
@@ -780,10 +809,14 @@ msgstr ""
 msgid "The query defines the posts that will trigger this action."
 msgstr ""
 
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:136
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:122
+msgid "Saved post"
+msgstr ""
+
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:137
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:126
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:123
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:121
 msgid "The post that was saved, with the new properties."
 msgstr ""
 
@@ -796,7 +829,7 @@ msgid "This trigger activates when an existing post is updated."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:119
-msgid "Post Before"
+msgid "Post Before Update"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:120
@@ -804,7 +837,7 @@ msgid "The post that was saved, with the old properties."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:125
-msgid "Post After"
+msgid "Post After Update"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:35
@@ -821,6 +854,14 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:60
 msgid "This trigger activates when a Future Action on posts is set to execute this workflow."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:120
+msgid "Action Post"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:121
+msgid "The post that was saved triggering the action."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Models/NodeTypesModel.php:68
