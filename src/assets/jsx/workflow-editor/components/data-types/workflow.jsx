@@ -22,8 +22,8 @@ export function WorkflowData() {
             },
             {
                 name: "modified_at",
-                type: "date",
-                label: "Modified At",
+                type: "datetime",
+                label: "Modification Date",
             },
         ],
     };

@@ -15,8 +15,6 @@ export function PostInput({ name, label, defaultValue, onChange, variables, sett
         }
     }
 
-    const defaultVariable = defaultValue?.variable;
-
     const tree = [
         {
             id: "",

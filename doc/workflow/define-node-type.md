@@ -49,7 +49,7 @@ Edit the constant `dataTypes` in the [data.jsx](../../src/assets/jsx/workflow-ed
 const dataTypes = [
     PostData(),
     BooleanData(),
-    DateData(),
+    DatetimeData(),
     IntegerData(),
     StringData(),
     EmailData(),

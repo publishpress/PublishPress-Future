@@ -94,9 +94,9 @@ class FutureLegacyAction implements NodeTypeInterface
             "settings" => [
                 "rules" => [
                     [
-                        "rule" => "format",
+                        "rule" => "dataType",
                         "field" => "postQuery.postId",
-                        "format" => "integerList",
+                        "type" => "integerList",
                         "label" => __("Post ID", "publishpress-future-pro"),
                     ],
                 ],

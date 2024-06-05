@@ -12,6 +12,7 @@ import { __experimentalVStack as VStack } from "@wordpress/components";
 import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
+import { filterVariableOptionsByDataType } from "../../utils";
 
 /**
  *  When to execute:
@@ -32,6 +33,8 @@ import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
  *
  */
 export function DateOffset({ name, label, defaultValue, onChange, variables = [] }) {
+    variables = filterVariableOptionsByDataType(variables, ['datetime']);
+
     const defaultSpecificDate = new Date();
     defaultSpecificDate.setDate(defaultSpecificDate.getDate() + 3);
 
@@ -69,7 +72,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
 
     const dateSourceOptions = [
-        { name: __("Select in the calendar", "publishpress-future-pro"), id: "calendar" },
+        { name: __("Selected in the calendar", "publishpress-future-pro"), id: "calendar" },
         { name: __("When the trigger is activated", "publishpress-future-pro"), id: "event"},
         ...variables
     ];

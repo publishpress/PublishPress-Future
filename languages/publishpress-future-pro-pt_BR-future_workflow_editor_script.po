@@ -18,63 +18,59 @@ msgstr ""
 msgid "Help"
 msgstr "Ajuda"
 
-#: components/data-fields/date-offset.jsx:65
+#: components/data-fields/date-offset.jsx:68
 msgid "As soon as possible"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:93
+#: components/data-fields/date-offset.jsx:96
 msgid "Specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:72
-msgid "Select in the calendar"
-msgstr ""
-
-#: components/data-fields/date-offset.jsx:86
+#: components/data-fields/date-offset.jsx:89
 msgid "Non-repeating"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:87
+#: components/data-fields/date-offset.jsx:90
 msgid "Custom interval in seconds"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:92
+#: components/data-fields/date-offset.jsx:95
 msgid "Forever"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:94
+#: components/data-fields/date-offset.jsx:97
 msgid "For a number of times"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:116
+#: components/data-fields/date-offset.jsx:119
 msgid "Avoid duplicated action"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:122
+#: components/data-fields/date-offset.jsx:125
 msgid "When to run"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:131
+#: components/data-fields/date-offset.jsx:134
 msgid "Date source"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:147
+#: components/data-fields/date-offset.jsx:150
 msgid "Offset"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:190
+#: components/data-fields/date-offset.jsx:193
 msgid "Interval in seconds"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:199
+#: components/data-fields/date-offset.jsx:202
 msgid "Repeat until"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:207
+#: components/data-fields/date-offset.jsx:210
 msgid "Times to repeat"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:224
+#: components/data-fields/date-offset.jsx:227
 msgid "Priority"
 msgstr ""
 
@@ -551,15 +547,15 @@ msgstr ""
 msgid "Switch to draft"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:66
+#: components/data-fields/date-offset.jsx:69
 msgid "On a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:161
+#: components/data-fields/date-offset.jsx:164
 msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:182
+#: components/data-fields/date-offset.jsx:185
 msgid "Repeating Action"
 msgstr ""
 
@@ -693,7 +689,7 @@ msgstr ""
 msgid "Click to add a trigger"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:67
+#: components/data-fields/date-offset.jsx:70
 msgid "Relative to a specific date"
 msgstr ""
 
@@ -734,6 +730,10 @@ msgstr ""
 msgid "The field %s must be an integer list separated by commas."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:73
+#: components/data-fields/date-offset.jsx:76
 msgid "When the trigger is activated"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:75
+msgid "Selected in the calendar"
 msgstr ""

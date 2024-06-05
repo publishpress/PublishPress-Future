@@ -37,8 +37,8 @@ export function UserData() {
             },
             {
                 name: "user_registered",
-                type: "date",
-                label: "Registered At",
+                type: "datetime",
+                label: "Registration Date",
             }
         ],
     };

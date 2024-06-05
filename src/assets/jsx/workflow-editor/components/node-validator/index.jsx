@@ -138,14 +138,14 @@ export function NodeValidator({})
                             }
                             break;
 
-                        case 'format':
-                            const format = ruleData.format;
+                        case 'dataType':
+                            const type = ruleData.type;
 
                             if (settingValue === undefined || settingValue === null || settingValue === '') {
                                 return;
                             }
 
-                            if (format === 'email') {
+                            if (type === 'email') {
                                 if (! validator.isEmail(settingValue)) {
                                     addNodeError(
                                         node.id,
@@ -156,7 +156,7 @@ export function NodeValidator({})
                                         )
                                     );
                                 }
-                            } else if (format === 'emailList') {
+                            } else if (type === 'emailList') {
                                 const emails = settingValue.split(',');
                                 let email;
                                 for (let i = 0; i < emails.length; i++) {
@@ -175,7 +175,7 @@ export function NodeValidator({})
                                         break;
                                     }
                                 }
-                            } else if (format === 'integer') {
+                            } else if (type === 'integer') {
                                 if (!validator.isInt(settingValue)) {
                                     addNodeError(
                                         node.id,
@@ -186,7 +186,7 @@ export function NodeValidator({})
                                         )
                                     );
                                 }
-                            } else if (format === 'integerList') {
+                            } else if (type === 'integerList') {
                                 let integer;
                                 for (let i = 0; i < settingValue.length; i++) {
                                     integer = settingValue[i].trim();

@@ -5,7 +5,7 @@ import { workflowId, nodeTypeCategories, nodeTypes } from 'future-workflow-edito
 import {
     PostData,
     BooleanData,
-    DateData,
+    DatetimeData,
     IntegerData,
     StringData,
     EmailData,
@@ -44,7 +44,7 @@ export function WorkflowData() {
     const dataTypes = [
         PostData(),
         BooleanData(),
-        DateData(),
+        DatetimeData(),
         IntegerData(),
         StringData(),
         EmailData(),

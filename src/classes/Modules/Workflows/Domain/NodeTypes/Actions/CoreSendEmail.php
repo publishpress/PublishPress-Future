@@ -132,10 +132,10 @@ class CoreSendEmail implements NodeTypeInterface
                         ],
                     ],
                     [
-                        "rule" => "format",
+                        "rule" => "dataType",
                         "field" => "recipient.custom",
                         "label" => __("Custom Email Address", "publishpress-future-pro"),
-                        "format" => "emailList",
+                        "type" => "emailList",
                     ],
 
                 ]

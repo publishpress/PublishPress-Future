@@ -37,13 +37,13 @@ export function PostData() {
             },
             {
                 name: "post_date",
-                type: "date",
-                label: "Date",
+                type: "datetime",
+                label: "Publish Date",
             },
             {
                 name: "post_modified",
-                type: "date",
-                label: "Modified",
+                type: "datetime",
+                label: "Modifcation Date",
             },
         ],
     };
