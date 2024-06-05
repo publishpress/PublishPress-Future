@@ -80,6 +80,12 @@ class CorePostQuery implements NodeTypeInterface
                             "The query defines the posts that will be retrieved by this action.",
                             "publishpress-future-pro"
                         ),
+                        "default" => [
+                            "postSource" => "custom",
+                            "postType" => ["post"],
+                            "postId" => [],
+                            "postStatus" => [],
+                        ],
                     ],
                 ]
             ]

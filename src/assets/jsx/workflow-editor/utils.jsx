@@ -428,8 +428,22 @@ export function createNewNode({item, position, reactFlowInstance}) {
             elementarType: item.elementarType,
             version: item.version,
             slug: slug,
+            settings: {},
         },
     };
+
+    // Add default settings values if specified in the node type settings schema.
+    if (item.settingsSchema) {
+        item.settingsSchema.forEach((panel) => {
+            panel.fields.forEach((field) => {
+                if (field.default === undefined) {
+                    return;
+                }
+
+                newNode.data.settings[field.name] = field.default;
+            });
+        });
+    }
 
     nodes = nodes.filter((node) => node.data.elementarType !== NODE_TYPE_PLACEHOLDER);
 
