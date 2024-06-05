@@ -46,7 +46,7 @@ export function NodeValidator({})
                                 addNodeError(
                                     node.id,
                                     'no-incomers',
-                                    __('This step requires a connection from a previous step', 'publishpress-future-pro')
+                                    __('This step requires a connection from a previous step.', 'publishpress-future-pro')
                                 );
                             }
                             break;
@@ -56,7 +56,7 @@ export function NodeValidator({})
                                 addNodeError(
                                     node.id,
                                     'no-outgoers',
-                                    __('This step requires a connection to a following step', 'publishpress-future-pro')
+                                    __('This step requires a connection to a following step.', 'publishpress-future-pro')
                                 );
                             }
                             break;
@@ -119,7 +119,7 @@ export function NodeValidator({})
                                         node.id,
                                         `${fieldName}-required-if`,
                                         sprintf(
-                                            __('The field %s is required', 'publishpress-future-pro'),
+                                            __('The field %s is required.', 'publishpress-future-pro'),
                                             fieldLabel
                                         )
                                     );
@@ -130,7 +130,7 @@ export function NodeValidator({})
                                         node.id,
                                         `${fieldName}-required`,
                                         sprintf(
-                                            __('The field %s is required', 'publishpress-future-pro'),
+                                            __('The field %s is required.', 'publishpress-future-pro'),
                                             fieldLabel
                                         )
                                     );
@@ -151,7 +151,7 @@ export function NodeValidator({})
                                         node.id,
                                         `${fieldName}-email`,
                                         sprintf(
-                                            __('The field %s must be a valid email address', 'publishpress-future-pro'),
+                                            __('The field %s must be a valid email address.', 'publishpress-future-pro'),
                                             fieldLabel
                                         )
                                     );
@@ -167,7 +167,7 @@ export function NodeValidator({})
                                             node.id,
                                             `${fieldName}-emailList`,
                                             sprintf(
-                                                __('The field %s must be a valid email address list separated by commas', 'publishpress-future-pro'),
+                                                __('The field %s must be a valid email address list separated by commas.', 'publishpress-future-pro'),
                                                 fieldLabel
                                             )
                                         );
@@ -181,7 +181,7 @@ export function NodeValidator({})
                                         node.id,
                                         `${fieldName}-integer`,
                                         sprintf(
-                                            __('The field %s must be an integer', 'publishpress-future-pro'),
+                                            __('The field %s must be an integer.', 'publishpress-future-pro'),
                                             fieldLabel
                                         )
                                     );
@@ -196,7 +196,7 @@ export function NodeValidator({})
                                             node.id,
                                             `${fieldName}-integerList`,
                                             sprintf(
-                                                __('The field %s must be an integer list separated by commas', 'publishpress-future-pro'),
+                                                __('The field %s must be an integer list separated by commas.', 'publishpress-future-pro'),
                                                 fieldLabel
                                             )
                                         );

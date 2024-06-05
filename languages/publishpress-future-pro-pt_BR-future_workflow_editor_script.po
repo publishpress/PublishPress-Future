@@ -30,10 +30,6 @@ msgstr ""
 msgid "Select in the calendar"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:73
-msgid "Event date"
-msgstr ""
-
 #: components/data-fields/date-offset.jsx:86
 msgid "Non-repeating"
 msgstr ""
@@ -285,27 +281,6 @@ msgstr ""
 
 #: components/node-inspector/node-sockets-panel.jsx:31
 msgid "Outputs"
-msgstr ""
-
-#: components/node-validator/index.jsx:122
-#: components/node-validator/index.jsx:133
-msgid "The field %s is required"
-msgstr ""
-
-#: components/node-validator/index.jsx:154
-msgid "The field %s must be a valid email address"
-msgstr ""
-
-#: components/node-validator/index.jsx:170
-msgid "The field %s must be a valid email address list separated by commas"
-msgstr ""
-
-#: components/node-validator/index.jsx:184
-msgid "The field %s must be an integer"
-msgstr ""
-
-#: components/node-validator/index.jsx:199
-msgid "The field %s must be an integer list separated by commas"
 msgstr ""
 
 #: components/welcome-guide/index.jsx:16
@@ -580,20 +555,12 @@ msgstr ""
 msgid "On a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:67
-msgid "Relative a specific date"
-msgstr ""
-
 #: components/data-fields/date-offset.jsx:161
 msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:182
 msgid "Repeating Action"
-msgstr ""
-
-#: components/data-fields/email-recipient.jsx:13
-msgid "Addresses"
 msgstr ""
 
 #: components/node-inspector/node-sockets-panel.jsx:17
@@ -692,24 +659,12 @@ msgstr "Ação"
 msgid "Trigger"
 msgstr "Gatilho"
 
-#: components/node-validator/index.jsx:49
-msgid "This step requires a connection from a previous step"
-msgstr ""
-
-#: components/node-validator/index.jsx:59
-msgid "This step requires a connection to a following step"
-msgstr ""
-
 #: components/secondary-sidebar/tips.jsx:10
 msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow."
 msgstr ""
 
 #: components/secondary-sidebar/tips.jsx:16
 msgid "Drag steps from the inserter into the workflow."
-msgstr ""
-
-#: components/node-validation-panel/index.jsx:31
-msgid "All checks have passed for this node"
 msgstr ""
 
 #: components/node-dev-info-panel/index.jsx:35
@@ -736,4 +691,49 @@ msgstr ""
 
 #: components/node-types/trigger-placeholder.jsx:11
 msgid "Click to add a trigger"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:67
+msgid "Relative to a specific date"
+msgstr ""
+
+#: components/data-fields/email-recipient.jsx:13
+msgid "Custom Addresses"
+msgstr ""
+
+#: components/node-validation-panel/index.jsx:31
+msgid "All checks have passed for this step."
+msgstr ""
+
+#: components/node-validator/index.jsx:49
+msgid "This step requires a connection from a previous step."
+msgstr ""
+
+#: components/node-validator/index.jsx:59
+msgid "This step requires a connection to a following step."
+msgstr ""
+
+#: components/node-validator/index.jsx:122
+#: components/node-validator/index.jsx:133
+msgid "The field %s is required."
+msgstr ""
+
+#: components/node-validator/index.jsx:154
+msgid "The field %s must be a valid email address."
+msgstr ""
+
+#: components/node-validator/index.jsx:170
+msgid "The field %s must be a valid email address list separated by commas."
+msgstr ""
+
+#: components/node-validator/index.jsx:184
+msgid "The field %s must be an integer."
+msgstr ""
+
+#: components/node-validator/index.jsx:199
+msgid "The field %s must be an integer list separated by commas."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:73
+msgid "When the trigger is activated"
 msgstr ""

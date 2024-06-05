@@ -28,7 +28,7 @@ export function NodeValidationPanel({ errors = {} }) {
             {!hasNotifications && (
                 <PanelRow className="workflow-editor-validation-notification workflow-editor-success">
                     <NodeIcon icon={'yes-alt'} size={iconSize} />
-                    {__('All checks have passed for this node', 'publishpress-future-pro')}
+                    {__('All checks have passed for this step.', 'publishpress-future-pro')}
                 </PanelRow>
             )}
         </PersistentPanelBody>

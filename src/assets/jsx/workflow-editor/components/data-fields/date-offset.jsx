@@ -64,13 +64,13 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     const whenToRunOptions = [
         { name: __("As soon as possible", "publishpress-future-pro"), id: "now" },
         { name: __("On a specific date", "publishpress-future-pro"), id: "date" },
-        { name: __("Relative a specific date", "publishpress-future-pro"), id: "offset" },
+        { name: __("Relative to a specific date", "publishpress-future-pro"), id: "offset" },
     ];
 
 
     const dateSourceOptions = [
         { name: __("Select in the calendar", "publishpress-future-pro"), id: "calendar" },
-        { name: __("Event date", "publishpress-future-pro"), id: "event"},
+        { name: __("When the trigger is activated", "publishpress-future-pro"), id: "event"},
         ...variables
     ];
 
