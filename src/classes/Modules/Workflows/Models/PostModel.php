@@ -9,7 +9,7 @@ use WP_Post;
 
 class PostModel implements PostModelInterface
 {
-    public const META_KEY_WORKFLOW_MANUALLY_TRIGGERED = '_workflow_manually_triggered';
+    public const META_KEY_WORKFLOW_MANUALLY_TRIGGERED = '_pp_workflow_manually_triggered';
 
     private $post;
 

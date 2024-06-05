@@ -16,7 +16,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 
     public const NODE_NAME = NodeType::NODE_NAME;
 
-    public const META_KEY_MANUALLY_TRIGGERED = '_workflow_manually_triggered_';
+    public const META_KEY_MANUALLY_TRIGGERED = '_pp_workflow_manually_triggered_';
 
     /**
      * @var HookableInterface

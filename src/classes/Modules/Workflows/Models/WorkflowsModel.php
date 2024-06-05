@@ -9,6 +9,8 @@ use WP_Query;
 
 class WorkflowsModel implements WorkflowsModelInterface
 {
+    private const OPTION_SAMPLE_WORKFLOWS_CREATED = 'publishpress_future_workflow_samples_created';
+
     public function getPublishedWorkflowsIds($limit = -1): array
     {
         $args = [
@@ -86,5 +88,33 @@ class WorkflowsModel implements WorkflowsModelInterface
         }
 
         return $workflows;
+    }
+
+    public function hasCreatedSampleWorkflows(): bool
+    {
+        return (bool) get_option(self::OPTION_SAMPLE_WORKFLOWS_CREATED, false);
+    }
+
+    private function setSampleWorkflowsCreated(): void
+    {
+        update_option(self::OPTION_SAMPLE_WORKFLOWS_CREATED, true);
+    }
+
+    public function createSampleWorkflows(array $samples): void
+    {
+        foreach ($samples as $sample) {
+            $workflow = new WorkflowModel();
+            $workflow->createNew();
+            $workflow->setStatus(WorkflowModel::STATUS_DISABLED);
+            $workflow->setTitle($sample['title']);
+            $workflow->setDescription($sample['description']);
+            $workflow->setFlow(json_decode($sample['flow'], true));
+            $workflow->setScreenshotFromFile(
+                PUBLISHPRESS_FUTURE_PRO_ASSETS_DIR . '/images/sample-workflows/' . $sample['screenshot']
+            );
+            $workflow->save();
+        }
+
+        $this->setSampleWorkflowsCreated();
     }
 }

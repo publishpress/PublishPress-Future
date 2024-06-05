@@ -72,6 +72,7 @@ class Module implements InitializableInterface
             new Controllers\FutureLegacyAction($this->hooks),
             new Controllers\ManualPostTrigger($this->hooks),
             new Controllers\ScheduledActions($this->hooks, $this->nodeTypesModel),
+            new Controllers\SampleWorkflows(),
         ];
 
         foreach ($controllers as $controller) {

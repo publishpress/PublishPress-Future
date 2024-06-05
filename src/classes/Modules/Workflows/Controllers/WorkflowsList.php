@@ -8,6 +8,7 @@ use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
 
 class WorkflowsList implements InitializableInterface
@@ -139,8 +140,10 @@ class WorkflowsList implements InitializableInterface
             return;
         }
 
-        $workflowFlow = get_post_meta($postId, "_workflow_flow", true);
-        $workflowFlow = json_decode($workflowFlow, true);
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($postId);
+
+        $workflowFlow = $workflowModel->getFlow();
 
         $triggers = [];
 

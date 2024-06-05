@@ -209,7 +209,7 @@ class RestApiV1 implements RestApiManagerInterface
         }
 
         if (isset($request['screenshot'])) {
-            $workflowModel->setScreenshot($request['screenshot']);
+            $workflowModel->setScreenshotFromBase64($request['screenshot']);
         }
 
         $workflowModel->save();

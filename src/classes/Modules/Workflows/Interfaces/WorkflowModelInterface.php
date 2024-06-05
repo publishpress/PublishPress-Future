@@ -32,7 +32,9 @@ interface WorkflowModelInterface
 
     public function setFlow(array $flow);
 
-    public function setScreenshot(string $dataImage);
+    public function setScreenshotFromBase64(string $dataImage);
+
+    public function setScreenshotFromFile(string $filePath);
 
     public function createNew($reuseAutoDraft = true): int;
 

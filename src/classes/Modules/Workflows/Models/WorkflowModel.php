@@ -16,17 +16,22 @@ use function PublishPress\FuturePro\logError;
 
 class WorkflowModel implements WorkflowModelInterface
 {
-    public const META_KEY_FLOW = '_workflow_flow';
+    public const META_KEY_PREFIX_NODE_EXECUTION_COUNT = '_pp_workflow_node_execution_count_';
 
-    public const META_KEY_PREFIX_NODE_EXECUTION_COUNT = '_node_execution_count_';
+    public const META_KEY_HAS_LEGACY_TRIGGER = '_pp_workflow_has_legacy_trigger';
 
-    public const META_KEY_HAS_LEGACY_TRIGGER = '_workflow_has_legacy_trigger';
+    public const META_KEY_HAS_MANUAL_TRIGGER = '_pp_workflow_has_manual_trigger';
 
-    public const META_KEY_HAS_MANUAL_TRIGGER = '_workflow_has_manual_trigger';
+    public const STATUS_ENABLED = 'publish';
+
+    public const STATUS_DISABLED = 'draft';
 
     private $post;
 
-    private $flow = [];
+    /**
+     * @var array
+     */
+    private $flow = null;
 
     private $hasLegacyActionTrigger = null;
 
@@ -52,7 +57,10 @@ class WorkflowModel implements WorkflowModelInterface
     private function reset(): void
     {
         $this->post = null;
-        $this->flow = [];
+        $this->flow = null;
+        $this->hasLegacyActionTrigger = null;
+        $this->hasManualSelectionTrigger = null;
+        $this->allNodeTypes = null;
     }
 
     public function getId(): int
@@ -72,12 +80,12 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getDescription(): string
     {
-        return $this->post->post_content;
+        return $this->post->post_excerpt;
     }
 
     public function setDescription(string $description)
     {
-        $this->post->post_content = $description;
+        $this->post->post_excerpt = $description;
     }
 
     public function getStatus(): string
@@ -92,7 +100,7 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function isActive(): bool
     {
-        return $this->post->post_status === 'publish';
+        return $this->post->post_status === self::STATUS_ENABLED;
     }
 
     private function updateLegacyActionMetadata()
@@ -126,8 +134,6 @@ class WorkflowModel implements WorkflowModelInterface
     {
         wp_update_post($this->post);
 
-        update_post_meta($this->post->ID, self::META_KEY_FLOW, wp_json_encode($this->flow));
-
         $this->updateLegacyActionMetadata();
         $this->updateManualSelectionMetadata();
     }
@@ -157,8 +163,7 @@ class WorkflowModel implements WorkflowModelInterface
     {
         try {
             if (empty($this->flow)) {
-                $this->flow = get_post_meta($this->post->ID, self::META_KEY_FLOW, true);
-                $this->flow = json_decode($this->flow, true);
+                $this->flow = json_decode($this->post->post_content, true);
 
                 if (! is_array($this->flow)) {
                     $this->flow = [];
@@ -256,7 +261,11 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function setFlow(array $flow)
     {
+        // Update the editor version in the flow
+        $flow['editorVersion'] = PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION;
+
         $this->flow = $flow;
+        $this->post->post_content = wp_json_encode($this->flow);
     }
 
     public function createNew($reuseAutoDraft = true): int
@@ -296,7 +305,7 @@ class WorkflowModel implements WorkflowModelInterface
         return $id;
     }
 
-    public function setScreenshot(string $dataImage)
+    public function setScreenshotFromBase64(string $dataImage)
     {
         // Delete existing screenshot files
         $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
@@ -332,6 +341,13 @@ class WorkflowModel implements WorkflowModelInterface
                 }
             }
         }
+    }
+
+    public function setScreenshotFromFile(string $filePath)
+    {
+        $dataImage = 'data:image/png;base64,' . base64_encode(file_get_contents($filePath));
+
+        $this->setScreenshotFromBase64($dataImage);
     }
 
     public function getTriggerNodes(): array
