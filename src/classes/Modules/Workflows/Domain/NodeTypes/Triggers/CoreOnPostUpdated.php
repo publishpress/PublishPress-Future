@@ -93,6 +93,11 @@ class CoreOnPostUpdated implements NodeTypeInterface
             "settings" => [
                 "rules" => [
                     [
+                        "rule" => "required",
+                        "field" => "postQuery.postType",
+                        "label" => __("Post Type", "publishpress-future-pro"),
+                    ],
+                    [
                         "rule" => "dataType",
                         "field" => "postQuery.postId",
                         "type" => "integerList",
