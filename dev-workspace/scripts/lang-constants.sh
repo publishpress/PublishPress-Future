@@ -5,7 +5,7 @@ export LANG_DOMAIN="publishpress-future-pro"
 export LANG_DIR="languages"
 
 # Space separated list of locales that the plugin supports in scripts
-export LANG_LOCALES="pt_BR"
+export LANG_LOCALES="pt_BR it_IT"
 
 # Space separated list of script handlers that the plugin provides
 export LANG_SCRIPT_HANDLERS="future_workflow_editor_script"

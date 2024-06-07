@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-05T16:49:23+00:00\n"
+"POT-Creation-Date: 2024-06-06T15:07:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -564,80 +564,80 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:16
-#: components/welcome-guide/index.jsx:32
+#: components/welcome-guide/index.jsx:18
+#: components/welcome-guide/index.jsx:34
 msgid "Welcome to workflow editor"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:17
+#: components/welcome-guide/index.jsx:19
 msgid "Get started"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:33
+#: components/welcome-guide/index.jsx:35
 msgid "In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow."
 msgstr ""
 
-#: components/welcome-guide/index.jsx:46
+#: components/welcome-guide/index.jsx:48
 msgid "Use your imagination"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:47
+#: components/welcome-guide/index.jsx:49
 msgid "You're free to create very distinct workflows in your site, according to your needs."
 msgstr ""
 
-#: components/welcome-guide/index.jsx:60
+#: components/welcome-guide/index.jsx:62
 msgid "A basic workflow"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:61
+#: components/welcome-guide/index.jsx:63
 msgid "Every workflow requires at least two steps connected to each other: one trigger and one action."
 msgstr ""
 
-#: components/welcome-guide/index.jsx:74
+#: components/welcome-guide/index.jsx:76
 msgid "Add steps to your workflow"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:75
+#: components/welcome-guide/index.jsx:77
 msgid "Drag and drop steps to add them to your workflow. Connect the steps to create a workflow."
 msgstr ""
 
-#: components/welcome-guide/index.jsx:88
+#: components/welcome-guide/index.jsx:90
 msgid "Output and input"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:89
+#: components/welcome-guide/index.jsx:91
 msgid "Linked steps can pass data forward as input to the next step."
 msgstr ""
 
-#: components/welcome-guide/index.jsx:102
+#: components/welcome-guide/index.jsx:104
 msgid "Customize the workflow"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:103
+#: components/welcome-guide/index.jsx:105
 msgid "Click on a step to customize it. You can change the step's settings in the right sidebar."
 msgstr ""
 
-#: components/welcome-guide/index.jsx:116
+#: components/welcome-guide/index.jsx:118
 msgid "Workflow validation"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:117
+#: components/welcome-guide/index.jsx:119
 msgid "Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar."
 msgstr ""
 
-#: components/welcome-guide/index.jsx:130
+#: components/welcome-guide/index.jsx:132
 msgid "Publish your workflow"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:131
+#: components/welcome-guide/index.jsx:133
 msgid "When you're ready, click the publish button to make your workflow live."
 msgstr ""
 
-#: components/welcome-guide/index.jsx:144
+#: components/welcome-guide/index.jsx:146
 msgid "Need help?"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:145
+#: components/welcome-guide/index.jsx:147
 msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
 msgstr ""
 
