@@ -4,11 +4,16 @@ import { store as editorStore } from "../editor-store";
 import { useDispatch } from "@wordpress/data";
 import { FEATURE_WELCOME_GUIDE } from "../../constants";
 
-export function WelcomeGuide() {
+const getWelcomeGuideImageUrl = (imageName) => {
+    return futureWorkflowEditor.assetsUrl + '/images/workflow-welcome-guide/' + imageName + '?v=' + futureWorkflowEditor.pluginVersion;
+};
 
+export function WelcomeGuide() {
     const {
         disableFeature,
     } = useDispatch(editorStore);
+
+    const pagesContent = futureWorkflowEditor.welcomeGuidePages;
 
     return (
         <Guide
@@ -19,158 +24,26 @@ export function WelcomeGuide() {
                 disableFeature(FEATURE_WELCOME_GUIDE);
             }}
             pages={
-                [
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
+                pagesContent.map(({ title, content, image }) => ({
+                    content: (
+                        <>
+                            <h1 className="edit-post-welcome-guide__heading">{ title }</h1>
+                            <p className="edit-post-welcome-guide__text">{ content }</p>
+                        </>
+                    ),
+                    image: (
+                        <picture className="edit-post-welcome-guide__image">
+                            <source
+                                srcSet={ getWelcomeGuideImageUrl(image + '.png') }
+                                media="(prefers-reduced-motion: reduce)"
                             />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("Welcome to workflow editor", 'publishpress-future-pro')}
-                                content={__("In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
-                            />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("Use your imagination", 'publishpress-future-pro')}
-                                content={__("You're free to create very distinct workflows in your site, according to your needs.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
-                            />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("A basic workflow", 'publishpress-future-pro')}
-                                content={__("Every workflow requires at least two steps connected to each other: one trigger and one action.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
-                            />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("Add steps to your workflow", 'publishpress-future-pro')}
-                                content={__("Drag and drop steps to add them to your workflow. Connect the steps to create a workflow.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
-                            />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("Output and input", 'publishpress-future-pro')}
-                                content={__("Linked steps can pass data forward as input to the next step.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
-                            />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("Customize the workflow", 'publishpress-future-pro')}
-                                content={__("Click on a step to customize it. You can change the step's settings in the right sidebar.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
-                            />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("Workflow validation", 'publishpress-future-pro')}
-                                content={__("Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
-                            />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("Publish your workflow", 'publishpress-future-pro')}
-                                content={__("When you're ready, click the publish button to make your workflow live.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                    {
-                        image: (
-                            <WelcomeGuideImage
-                                nonAnimatedSrc="https://s.w.org/images/block-editor/welcome-canvas.svg"
-                                animatedSrc="https://s.w.org/images/block-editor/welcome-canvas.gif"
-                            />
-                        ),
-                        content: (
-                            <WelcomeGuideContent
-                                title={__("Need help?", 'publishpress-future-pro')}
-                                content={__("If you have any questions or need help, click the help button in the top right corner to access the support resources.", 'publishpress-future-pro')}
-                            />
-                        ),
-                    },
-                ]
+                            <img src={ getWelcomeGuideImageUrl(image + '.gif') } width="312" height="240" alt="" />
+                        </picture>
+                    ),
+                }))
             }
         />
     )
 }
 
 export default WelcomeGuide;
-
-function WelcomeGuideImage( { nonAnimatedSrc, animatedSrc } ) {
-	return (
-		<picture className="edit-post-welcome-guide__image">
-			<source
-				srcSet={ nonAnimatedSrc }
-				media="(prefers-reduced-motion: reduce)"
-			/>
-			<img src={ animatedSrc } width="312" height="240" alt="" />
-		</picture>
-	);
-}
-
-function WelcomeGuideContent( { title, content } ) {
-    return (
-        <>
-            <h1 className="edit-post-welcome-guide__heading">{ title }</h1>
-            <p className="edit-post-welcome-guide__text">{ content }</p>
-        </>
-    );
-}

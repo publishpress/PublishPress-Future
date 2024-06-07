@@ -30,6 +30,10 @@ node_modules
 /lib/vendor/publishpress/publishpress-future/tests-old/
 /lib/vendor/publishpress/publishpress-future/codeception.yml
 
+/src/assets/adobe-animate/*/*.html
+/src/assets/adobe-animate/*/*.js
+/src/assets/adobe-animate/*/images
+/src/assets/adobe-animate/*/RECOVER_*
 
 *.log
 #bin

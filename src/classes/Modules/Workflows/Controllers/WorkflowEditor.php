@@ -183,6 +183,8 @@ class WorkflowEditor implements InitializableInterface
                     ">="
                 ),
                 "apiUrl" => rest_url("publishpress-future/v1"),
+                "pluginVersion" => PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+                "assetsUrl" => PUBLISHPRESS_FUTURE_PRO_ASSETS_URL,
                 "workflowId" => $workflowId,
                 "nonce" => wp_create_nonce("wp_rest"),
                 "nodeTypeCategories" => $this->nodeTypesModel->getCategories(),
@@ -211,7 +213,61 @@ class WorkflowEditor implements InitializableInterface
                 "postTypes" => $postTypes,
                 "postStatuses" => $postStatuses,
                 "taxonomies" => $taxonomies,
+                "welcomeGuidePages" => $this->getWelcomeGuidePages(),
             ]
         );
     }
+
+    // phpcs:disable Generic.Files.LineLength.TooLong
+    private function getWelcomeGuidePages()
+    {
+        return [
+            [
+                "title" => __("Welcome to workflow editor", 'publishpress-future-pro'),
+                "content" => __("In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow.", 'publishpress-future-pro'),
+                "image" => '1-welcome-to-editor',
+            ],
+            [
+                "title" => __("Use your imagination", 'publishpress-future-pro'),
+                "content" => __("You're free to create very distinct workflows in your site, according to your needs.", 'publishpress-future-pro'),
+                "image" => '2-use-imagination',
+            ],
+            [
+                "title" => __("A basic workflow", 'publishpress-future-pro'),
+                "content" => __("Every workflow requires at least two steps connected to each other: one trigger and one action.", 'publishpress-future-pro'),
+                "image" => '3-basic-workflow',
+            ],
+            [
+                "title" => __("Add steps to your workflow", 'publishpress-future-pro'),
+                "content" => __("Drag and drop steps to add them to your workflow. Connect the steps to create a workflow.", 'publishpress-future-pro'),
+                "image" => '4-add-steps',
+            ],
+            [
+                "title" => __("Output and input", 'publishpress-future-pro'),
+                "content" => __("Linked steps can pass data forward as input to the next step.", 'publishpress-future-pro'),
+                "image" => '5-output-input',
+            ],
+            [
+                "title" => __("Customize the workflow", 'publishpress-future-pro'),
+                "content" => __("Click on a step to customize it. You can change the step's settings in the right sidebar.", 'publishpress-future-pro'),
+                "image" => '6-customize-workflow',
+            ],
+            [
+                "title" => __("Workflow validation", 'publishpress-future-pro'),
+                "content" => __("Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar.", 'publishpress-future-pro'),
+                "image" => '7-workflow-validation',
+            ],
+            [
+                "title" => __("Publish your workflow", 'publishpress-future-pro'),
+                "content" => __("When you're ready, click the publish button to make your workflow live.", 'publishpress-future-pro'),
+                "image" => '8-publish-workflow',
+            ],
+            [
+                "title" => __("Need help?", 'publishpress-future-pro'),
+                "content" => __("If you have any questions or need help, click the help button in the top right corner to access the support resources.", 'publishpress-future-pro'),
+                "image" => '9-need-help',
+            ],
+        ];
+    }
+    // phpcs:enable Generic.Files.LineLength.TooLong
 }
