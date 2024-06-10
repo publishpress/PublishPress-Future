@@ -11,6 +11,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeInterface;
+use PublishPress\Future\Modules\Expirator\Controllers\PluginsListController;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
@@ -133,6 +134,9 @@ class Plugin implements InitializableInterface
         do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
 
         SettingsFacade::setDefaultSettings();
+
+        // Set flag to redirect to the settings page after activation
+        set_transient(PluginsListController::TRANSIENT_REDIRECT_AFTER_ACTIVATION, true, 60);
     }
 
     public static function onDeactivate()
