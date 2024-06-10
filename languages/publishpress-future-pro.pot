@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-06T15:07:50+00:00\n"
+"POT-Creation-Date: 2024-06-10T19:56:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -352,6 +352,78 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:140
 msgid "Workflow recurring scheduled action"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:226
+msgid "Welcome to workflow editor"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:227
+msgid "In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:231
+msgid "Use your imagination"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:232
+msgid "You're free to create very distinct workflows in your site, according to your needs."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:236
+msgid "A basic workflow"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:237
+msgid "Every workflow requires at least two steps connected to each other: one trigger and one action."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:241
+msgid "Add steps to your workflow"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:242
+msgid "Drag and drop steps to add them to your workflow. Connect the steps to create a workflow."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:246
+msgid "Output and input"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:247
+msgid "Linked steps can pass data forward as input to the next step."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:251
+msgid "Customize the workflow"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:252
+msgid "Click on a step to customize it. You can change the step's settings in the right sidebar."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:256
+msgid "Workflow validation"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:257
+msgid "Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:261
+msgid "Publish your workflow"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:262
+msgid "When you're ready, click the publish button to make your workflow live."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:266
+msgid "Need help?"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:267
+msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:75

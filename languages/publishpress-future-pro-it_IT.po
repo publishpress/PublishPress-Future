@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PublishPress Future Pro\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "POT-Creation-Date: 2024-05-31T01:39:57+00:00\n"
-"PO-Revision-Date: 2024-06-06 11:19+0200\n"
+"PO-Revision-Date: 2024-06-06 23:51+0200\n"
 "Last-Translator: \n"
 "Language-Team: Angelo Giammarresi - info@wocmultimedia.com\n"
 "Language: it_IT\n"
@@ -883,7 +883,7 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:119
 msgid "Post Before"
-msgstr "Prima dell'articolo"
+msgstr "L'articolo prima dell'aggiornamento"
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:120
 msgid "The post that was saved, with the old properties."
@@ -891,7 +891,7 @@ msgstr "L'articolo salvato con le vecchie proprietà."
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:125
 msgid "Post After"
-msgstr "Dopo l'articolo"
+msgstr "L'articolo dopo l'aggiornamento"
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:35
 msgid "Post is saved"

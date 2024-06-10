@@ -279,69 +279,12 @@ msgstr ""
 msgid "Outputs"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:18
-#: components/welcome-guide/index.jsx:34
+#: components/welcome-guide/index.jsx:21
 msgid "Welcome to workflow editor"
 msgstr ""
 
-#: components/welcome-guide/index.jsx:19
+#: components/welcome-guide/index.jsx:22
 msgid "Get started"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:35
-msgid "In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow."
-msgstr ""
-
-#: components/welcome-guide/index.jsx:48
-msgid "Use your imagination"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:49
-msgid "You're free to create very distinct workflows in your site, according to your needs."
-msgstr ""
-
-#: components/welcome-guide/index.jsx:62
-msgid "A basic workflow"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:63
-msgid "Every workflow requires at least two steps connected to each other: one trigger and one action."
-msgstr ""
-
-#: components/welcome-guide/index.jsx:76
-msgid "Add steps to your workflow"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:90
-msgid "Output and input"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:104
-msgid "Customize the workflow"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:105
-msgid "Click on a step to customize it. You can change the step's settings in the right sidebar."
-msgstr ""
-
-#: components/welcome-guide/index.jsx:118
-msgid "Workflow validation"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:132
-msgid "Publish your workflow"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:133
-msgid "When you're ready, click the publish button to make your workflow live."
-msgstr ""
-
-#: components/welcome-guide/index.jsx:146
-msgid "Need help?"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:147
-msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
 msgstr ""
 
 #: components/workflow-delete-button/index.jsx:24
@@ -587,18 +530,6 @@ msgstr "Ações"
 #: components/node-types/generic.jsx:92
 #: components/secondary-sidebar/tabs.jsx:30
 msgid "Advanced"
-msgstr ""
-
-#: components/welcome-guide/index.jsx:77
-msgid "Drag and drop steps to add them to your workflow. Connect the steps to create a workflow."
-msgstr ""
-
-#: components/welcome-guide/index.jsx:91
-msgid "Linked steps can pass data forward as input to the next step."
-msgstr ""
-
-#: components/welcome-guide/index.jsx:119
-msgid "Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar."
 msgstr ""
 
 #: components/more-menu/menu-items-view.jsx:36

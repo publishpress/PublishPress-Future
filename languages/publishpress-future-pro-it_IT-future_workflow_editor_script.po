@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-05-31T01:39:58+00:00\n"
-"PO-Revision-Date: 2024-06-06 12:45+0200\n"
+"PO-Revision-Date: 2024-06-06 15:46+0200\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.4\n"
@@ -491,82 +491,13 @@ msgstr "Chiudi impostazioni"
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: components/welcome-guide/index.jsx:18
-#: components/welcome-guide/index.jsx:34
+#: components/welcome-guide/index.jsx:21
 msgid "Welcome to workflow editor"
 msgstr "Benvenuto nell'editor del flusso di lavoro"
 
-#: components/welcome-guide/index.jsx:19
+#: components/welcome-guide/index.jsx:22
 msgid "Get started"
 msgstr "Guida introduttiva"
-
-#: components/welcome-guide/index.jsx:35
-msgid "In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow."
-msgstr "Nell'editor del flusso di lavoro di PublishPress, ogni fase del flusso di lavoro"
-
-#: components/welcome-guide/index.jsx:48
-msgid "Use your imagination"
-msgstr "Usa la tua fantasia"
-
-#: components/welcome-guide/index.jsx:49
-msgid "You're free to create very distinct workflows in your site, according to your needs."
-msgstr "Sei libero di creare nel tuo sito dei flussi di lavoro molto differenziati, in base alle tue esigenze."
-
-#: components/welcome-guide/index.jsx:62
-msgid "A basic workflow"
-msgstr "Un flusso di lavoro basico"
-
-#: components/welcome-guide/index.jsx:63
-msgid "Every workflow requires at least two steps connected to each other: one trigger and one action."
-msgstr "Ogni flusso di lavoro necessita di almeno due fasi conensse tra loro: un trigger e un'azione."
-
-#: components/welcome-guide/index.jsx:76
-msgid "Add steps to your workflow"
-msgstr "Aggiungi fasi al tuo flusso di lavoro"
-
-#: components/welcome-guide/index.jsx:77
-msgid "Drag and drop steps to add them to your workflow. Connect the steps to create a workflow."
-msgstr "Trascina e rilascia le fasi per aggiungerle al tuo flusso di lavoro. Collega le fasi per creare un flusso di lavoro."
-
-#: components/welcome-guide/index.jsx:90
-msgid "Output and input"
-msgstr "Output e input"
-
-#: components/welcome-guide/index.jsx:91
-msgid "Linked steps can pass data forward as input to the next step."
-msgstr "Le fasi collegate possono trasmettere i dati come input per la fase successiva."
-
-#: components/welcome-guide/index.jsx:104
-msgid "Customize the workflow"
-msgstr "Personalizza il flusso di lavoro"
-
-#: components/welcome-guide/index.jsx:105
-msgid "Click on a step to customize it. You can change the step's settings in the right sidebar."
-msgstr "Fai clic su una fase per personalizzarla. Puoi cambiare le impostazioni della fase nella barra laterale destra."
-
-#: components/welcome-guide/index.jsx:118
-msgid "Workflow validation"
-msgstr "Convalida flusso di lavoro"
-
-#: components/welcome-guide/index.jsx:119
-msgid "Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar."
-msgstr "Un messaggio di errore apparirà per ciascuna impostazione obbligatoria non completata, per i collegamenti mancanti o valori non validi. Seleziona la fase per visualizzare gli errori corrispondenti nella barra laterale."
-
-#: components/welcome-guide/index.jsx:132
-msgid "Publish your workflow"
-msgstr "Pubblica il tuo flusso di lavoro"
-
-#: components/welcome-guide/index.jsx:133
-msgid "When you're ready, click the publish button to make your workflow live."
-msgstr "Quando sei pronto, fai clic sul pulsante \"Pubblica\" e rendi operativo il tuo flusso di lavoro."
-
-#: components/welcome-guide/index.jsx:146
-msgid "Need help?"
-msgstr "Hai bisogno di aiuto?"
-
-#: components/welcome-guide/index.jsx:147
-msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
-msgstr "Se hai delle domande o necessiti aiuto, fai clic sul pulsante \"Aiuto\" nell'angolo in alto a destra per accedere alle risorse di supporto."
 
 #: components/workflow-delete-button/index.jsx:24
 msgid "Are you sure you want to delete this workflow?"
