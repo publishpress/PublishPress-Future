@@ -10,7 +10,6 @@ import { Icon } from '@wordpress/components';
 import { blockDefault } from '@wordpress/icons';
 import { SiWoo } from 'react-icons/si';
 import { FaUser } from 'react-icons/fa';
-import { HiMiniDocumentText } from 'react-icons/hi2';
 import { FaBug } from 'react-icons/fa6';
 import { ImDatabase } from "react-icons/im";
 import { TbRouteAltRight } from "react-icons/tb";
@@ -18,6 +17,7 @@ import { IoMdMail } from "react-icons/io";
 import { BiSolidMessageDetail } from "react-icons/bi";
 import { IoMdWarning } from "react-icons/io";
 import { MdSchedule } from "react-icons/md";
+import DocumentTextIcon from './icons/document-text';
 
 export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	const iconSrc = icon?.src || icon;
@@ -31,7 +31,7 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 		case 'document':
 		case 'media-document':
 			icon = {
-				src: HiMiniDocumentText,
+				src: DocumentTextIcon,
 			};
 			break;
 		case 'users':

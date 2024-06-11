@@ -2,8 +2,6 @@ import { useSelect } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { __ } from "@wordpress/i18n";
-import { GrObjectGroup } from "react-icons/gr";
-import { FaLinesLeaning } from "react-icons/fa6";
 import { sprintf } from "@wordpress/i18n";
 import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
@@ -15,6 +13,8 @@ import NodeValidationPanel from "../node-validation-panel";
 import NodeDevInfoPanel from "../node-dev-info-panel";
 import NodeSocketsPanel from "./node-sockets-panel";
 import WorkflowGlobalVariables from "../workflow-global-variables";
+import ObjectGroupIcon from "../icons/object-group";
+import LinesLeaningIcon from "../icons/lines-leaning";
 
 export const NodeInspector = () => {
     const {
@@ -118,7 +118,7 @@ export const NodeInspector = () => {
                         "Multiple nodes selected.",
                         "publishpress-future-pro",
                     )}
-                    icon={<GrObjectGroup />}
+                    icon={<ObjectGroupIcon size={24} />}
                 />
             )}
 
@@ -132,7 +132,7 @@ export const NodeInspector = () => {
                         "Multiple edges selected.",
                         "publishpress-future-pro",
                     )}
-                    icon={<FaLinesLeaning />}
+                    icon={<LinesLeaningIcon size={24} />}
                 />
             )}
 
@@ -172,7 +172,7 @@ export const NodeInspector = () => {
                             "A connection between nodes",
                             "publishpress-future-pro",
                         )}
-                        icon={<FaLinesLeaning />}
+                        icon={<LinesLeaningIcon size={24} />}
                         id={selectedEdge.id}
                     />
                     <div className="components-tools-panel"></div>

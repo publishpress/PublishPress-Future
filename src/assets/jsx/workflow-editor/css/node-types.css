@@ -21,12 +21,18 @@
     text-align: left;
 }
 
-.react-flow__node-header .dashicon,
-.react-flow__node-header svg {
+.react-flow__node-header .dashicon {
     margin-right: 4px;
     position: absolute;
     left: 2px;
     top: 2px;
+}
+
+.react-flow__node-header .node-icon {
+    margin-right: 4px;
+    position: absolute;
+    top: 1px;
+    left: 2px;
 }
 
 .react-flow__node-slug {
@@ -64,10 +70,10 @@
     padding-left: 18px;
 }
 
-.react-flow__node-top svg {
+.react-flow__node-top .publishpress-icon {
     margin-right: 4px;
     position: absolute;
-    top: 6px;
+    top: 1px;
     left: 8px;
 }
 
@@ -101,6 +107,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
 }
 
 .react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {

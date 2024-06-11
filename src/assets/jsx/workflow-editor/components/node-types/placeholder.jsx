@@ -1,6 +1,5 @@
 import { memo, useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { FiPlus } from "react-icons/fi";
 import { Button, Popover, SearchControl } from '@wordpress/components';
 import { NodesTab } from '../secondary-sidebar/nodes-tab';
 import { store as editorStore } from '../editor-store';
@@ -17,6 +16,8 @@ import {
 import InserterSearchResults from '../secondary-sidebar/inserter-search-results';
 import { useReactFlow, addEdge } from 'reactflow';
 import { createNewNode } from '../../utils';
+import PlusIcon from '../icons/plus';
+
 
 export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel, elementarTypes}) => {
     const nodeLabel = label || '';
@@ -216,7 +217,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
                 <div className='react-flow__node-inner-body'>
                     <div className='react-flow__node-header'>
                         <div className='icon'>
-                            <FiPlus />
+                            <PlusIcon size={12} />
                         </div>
                         <div className="react-flow__node-label">{nodeLabel}</div>
                     </div>

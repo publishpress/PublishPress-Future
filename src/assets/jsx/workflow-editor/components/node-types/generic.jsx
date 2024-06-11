@@ -1,12 +1,12 @@
 import { Handle, Position } from 'reactflow';
 import { memo } from '@wordpress/element';
 import NodeIcon from '../node-icon';
-import { IoMdPlay } from "react-icons/io";
 import { useSelect, useDispatch } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { __ } from '@wordpress/i18n';
-import { Toolbar, Tooltip, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
+import { Toolbar, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
+import PlayIcon from "../icons/play";
 
 
 export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
@@ -132,7 +132,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
             <div className={"react-flow__node-body " + nodeClassName}>
                 {targetHandles}
                 <div className='react-flow__node-top'>
-                    <NodeIcon icon={IoMdPlay} size={8} />
+                    <PlayIcon size={8} />
                     {topText}
                 </div>
 
