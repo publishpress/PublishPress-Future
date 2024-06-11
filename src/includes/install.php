@@ -10,10 +10,15 @@
 namespace PublishPress\FuturePro;
 
 use PublishPress\FuturePro\Core\HooksAbstract;
+use function PublishPress\Future\install as installFree;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
 function install(): void
 {
+    // Action for the Free plugin activation.
+    installFree();
+
+    // Action for the Pro plugin activation.
     do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
 }

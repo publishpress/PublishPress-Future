@@ -103,20 +103,11 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
             define('PUBLISHPRESS_FUTURE_LOADED_DEPENDENCIES', true);
         }
 
-        HooksFacade::registerActivationHook(
-            __FILE__,
-            function () {
-                Plugin::onActivate();
-            }
-        );
+        require_once __DIR__ . '/src/install.php';
+        require_once __DIR__ . '/src/uninstall.php';
 
-        HooksFacade::registerDeactivationHook(
-            __FILE__,
-            function () {
-                    loadDependencies();
-                    Plugin::onDeactivate();
-            }
-        );
+        HooksFacade::registerActivationHook(__FILE__, __NAMESPACE__ . '\\install');
+        HooksFacade::registerDeactivationHook(__FILE__, __NAMESPACE__ . '\\uninstall');
 
         add_action('init', function () {
             try {

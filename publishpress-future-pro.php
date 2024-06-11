@@ -92,12 +92,7 @@ try {
             $container = Container::getInstance();
             $container->registerServices($services);
 
-            require_once __DIR__ . '/src/includes/install.php';
-            require_once __DIR__ . '/src/includes/uninstall.php';
             require_once __DIR__ . '/src/includes/deprecated.php';
-
-            register_activation_hook(__FILE__, 'PublishPress\\FuturePro\\install');
-            register_deactivation_hook(__FILE__, 'PublishPress\\FuturePro\\uninstall');
 
             $container->get(ServicesAbstract::PLUGIN)->initialize();
 
@@ -106,6 +101,12 @@ try {
             logError('Error initializing the plugin', $e);
         }
     }, 12, 0);
+
+    require_once __DIR__ . '/src/includes/install.php';
+    require_once __DIR__ . '/src/includes/uninstall.php';
+
+    register_activation_hook(__FILE__, 'PublishPress\\FuturePro\\install');
+    register_deactivation_hook(__FILE__, 'PublishPress\\FuturePro\\uninstall');
 } catch (Exception $e) {
     logError('Error loading the plugin', $e);
 }
