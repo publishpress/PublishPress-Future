@@ -44,3 +44,7 @@ report.csv
 ray.php
 
 .phplint.cache*
+
+webpack-bundle-stats.json
+stats.json
+report.csv

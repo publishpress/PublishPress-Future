@@ -48,3 +48,6 @@
 - future-pro.sublime-project
 - future-pro.sublime-workspace
 - src/assets/adobe-animate
+- webpack-bundle-stats.json
+- stats.json
+- report.csv

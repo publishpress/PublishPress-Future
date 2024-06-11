@@ -1,6 +1,8 @@
 var glob = require("glob");
 var path = require("path");
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 module.exports = [
     {
         entry: glob.sync(
@@ -106,6 +108,10 @@ module.exports = [
                 }
             ]
         },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin(),
+        ],
         resolve: {
             modules: [
                 "node_modules",
