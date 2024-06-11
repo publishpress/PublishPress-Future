@@ -2,7 +2,10 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { partial, noop, find } from 'lodash';
+
+import partial from 'lodash/partial';
+import noop from 'lodash/noop';
+import find from 'lodash/find';
 
 /**
  * WordPress dependencies

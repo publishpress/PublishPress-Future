@@ -9,7 +9,7 @@ import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
 import InspectorWarning from "../inspector-warning";
 import NodeSettingsPanel from "./node-settings-panel";
-import { nodeHasIncomers, nodeHasInput, mapNodeInputs, nodeHasOutput } from "../../utils";
+import { nodeHasInput, mapNodeInputs, nodeHasOutput } from "../../utils";
 import { FEATURE_ADVANCED_SETTINGS, FEATURE_DEVELOPER_MODE } from "../../constants";
 import NodeValidationPanel from "../node-validation-panel";
 import NodeDevInfoPanel from "../node-dev-info-panel";

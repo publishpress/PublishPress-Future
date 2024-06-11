@@ -1,7 +1,8 @@
 /**
  * External dependencies
  */
-import { orderBy, isEmpty } from 'lodash';
+import orderBy from 'lodash/orderBy';
+import isEmpty from 'lodash/isEmpty';
 
 /**
  * WordPress dependencies

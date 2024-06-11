@@ -1,7 +1,11 @@
 /**
  * External dependencies
  */
-import { deburr, differenceWith, find, words } from 'lodash';
+import deburr from 'lodash/deburr';
+import differenceWith from 'lodash/differenceWith';
+import find from 'lodash/find';
+import words from 'lodash/words';
+
 
 // Default search helpers
 const defaultGetName = (item) => item.name || '';

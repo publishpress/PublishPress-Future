@@ -1,7 +1,10 @@
 /**
  * External dependencies
  */
-import { map, flow, groupBy, orderBy } from 'lodash';
+import map from 'lodash/map';
+import flow from 'lodash/flow';
+import groupBy from 'lodash/groupBy';
+import orderBy from 'lodash/orderBy';
 
 /**
  * WordPress dependencies
