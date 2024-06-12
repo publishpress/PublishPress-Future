@@ -139,7 +139,7 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_script(
             "future_workflow_editor_script",
             plugins_url(
-                "/src/assets/js/workflow-editor/editor.js",
+                "/src/assets/js/workflow-editor.js",
                 PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
             ),
             [

@@ -14,9 +14,7 @@ import NodeSocketsPanel from "./node-sockets-panel";
 import WorkflowGlobalVariables from "../workflow-global-variables";
 import ObjectGroupIcon from "../icons/object-group";
 import LinesLeaningIcon from "../icons/lines-leaning";
-import { lazy, Suspense } from "@wordpress/element";
-
-const NodeDevInfoPanel = lazy(() => import("../node-dev-info-panel"));
+import NodeDevInfoPanel from "../node-dev-info-panel";
 
 export const NodeInspector = () => {
     const {
@@ -91,10 +89,6 @@ export const NodeInspector = () => {
         });
     }
 
-    const lazyLoadLoading = (
-        <PanelRow><div>{__('Loading...', 'publishpress-future-pro')}</div></PanelRow>
-    );
-
     return (
         <>
             {selectedElementsCount === 0 && (
@@ -161,9 +155,7 @@ export const NodeInspector = () => {
                     )}
 
                     {isDeveloperModeEnabled && (
-                        <Suspense fallback={lazyLoadLoading}>
-                            <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
-                        </Suspense>
+                        <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
                     )}
 
                     <div className="components-tools-panel"></div>

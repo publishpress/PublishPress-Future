@@ -1,7 +1,9 @@
 import { PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import ReactJson from "react-json-view";
 import PersistentPanelBody from "../persistent-panel-body";
+import { lazy, Suspense } from "@wordpress/element";
+
+const ReactJson = lazy(() => import('react-json-view'));
 
 export function NodeDevInfoPanel({node, nodeType}) {
     const reactJSONParams = {
@@ -11,6 +13,10 @@ export function NodeDevInfoPanel({node, nodeType}) {
         displayObjectSize: false,
         enableClipboard: false,
     };
+
+    const lazyLoadLoading = (
+        <PanelRow><div>{__('Loading...', 'publishpress-future-pro')}</div></PanelRow>
+    );
 
     return (
         <PersistentPanelBody
@@ -23,7 +29,9 @@ export function NodeDevInfoPanel({node, nodeType}) {
                     <div>
                         <h3>{__('Node', 'publishpress-future-pro')}</h3>
                         <div className="workflow-editor-dev-info-wrapper">
-                            <ReactJson src={node} {...reactJSONParams} />
+                            <Suspense fallback={lazyLoadLoading}>
+                                <ReactJson src={node} {...reactJSONParams} />
+                            </Suspense>
                         </div>
                     </div>
                 </PanelRow>
@@ -34,7 +42,9 @@ export function NodeDevInfoPanel({node, nodeType}) {
                     <div>
                         <h3>{__('Node Type', 'publishpress-future-pro')}</h3>
                         <div className="workflow-editor-dev-info-wrapper">
-                            <ReactJson src={nodeType} {...reactJSONParams} />
+                            <Suspense fallback={lazyLoadLoading}>
+                                <ReactJson src={nodeType} {...reactJSONParams} />
+                            </Suspense>
                         </div>
                     </div>
                 </PanelRow>
