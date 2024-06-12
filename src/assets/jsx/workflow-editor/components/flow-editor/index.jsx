@@ -35,8 +35,7 @@ import { GenericEdge } from "../edge-types";
 import { TriggerPlaceholder } from "../node-types/trigger-placeholder";
 import { createNewNode, getId } from "../../utils";
 import NodePlaceholder from "../node-types/node-placeholder";
-import AutoLayout from "./auto-layout/auto-layout";
-import useLayoutedElements from "./auto-layout/elk";
+import AutoLayout from "./auto-layout";
 
 const GRID_SIZE = 10;
 
@@ -272,20 +271,6 @@ export const FlowEditor = (props) => {
         reactFlowInstance.fitView();
     }, [reactFlowInstance]);
 
-    const applyLayout = useLayoutedElements({
-        nodes,
-        edges,
-        onLayout: (layoutedNodes, layoutedEdges) => {
-            setNodes(layoutedNodes);
-            setEdges(layoutedEdges);
-        },
-        onAnimationFrame: () => {
-            fitView();
-
-            updateFlowInEditedWorkflow();
-        },
-    });
-
     useOnSelectionChange({
         onChange: ({ nodes, edges }) => {
             // Avoid selecting the placeholder node.
@@ -314,8 +299,24 @@ export const FlowEditor = (props) => {
     });
 
     const onAutoLayout = useCallback(() => {
-        applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
-    }, [applyLayout]);
+        import("./auto-layout/elk").then(({ useLayoutedElements }) => {
+            const applyLayout = useLayoutedElements({
+                nodes,
+                edges,
+                onLayout: (layoutedNodes, layoutedEdges) => {
+                    setNodes(layoutedNodes);
+                    setEdges(layoutedEdges);
+                },
+                onAnimationFrame: () => {
+                    fitView();
+
+                    updateFlowInEditedWorkflow();
+                },
+            });
+
+            applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
+        });
+    }, [nodes, edges, fitView, updateFlowInEditedWorkflow]);
 
     // Calculate the initial layout on mount.
     useLayoutEffect(() => {
