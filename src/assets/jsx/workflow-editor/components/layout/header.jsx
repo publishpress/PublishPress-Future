@@ -3,7 +3,7 @@ import { Button, ToolbarItem } from '@wordpress/components';
 import { PinnedItems } from '@wordpress/interface';
 import { useViewportMatch } from '@wordpress/compose';
 import { __, _x } from '@wordpress/i18n';
-import { useRef, useCallback } from '@wordpress/element';
+import { useRef, useCallback, lazy } from '@wordpress/element';
 import { plus, layout } from '@wordpress/icons';
 import { store as editorStore } from '../editor-store';
 import { store as workflowStore } from '../workflow-store';
@@ -23,10 +23,10 @@ import { NavigableToolbar } from '../left-toolbar/toolbar';
 import { EditorHistoryUndo } from '../left-toolbar/undo';
 import { EditorHistoryRedo } from '../left-toolbar/redo';
 import { displayShortcut } from '@wordpress/keycodes';
-import { useAutoLayout } from '../flow-editor/auto-layout';
 import { WorkflowSaveDraftButton } from '../workflow-save-draft-button';
 import { isWP65OrLater } from 'future-workflow-editor';
 import WorkflowPublishButton from '../workflow-publish-button';
+import { useAutoLayout } from '../flow-editor/auto-layout/hooks';
 
 const preventDefault = (event) => {
     event.preventDefault();

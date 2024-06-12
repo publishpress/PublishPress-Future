@@ -21,7 +21,6 @@ import {
     Platform,
     useMemo,
 } from "@wordpress/element";
-import { useLayoutedElements, AutoLayout } from "./auto-layout";
 import { EVENT_DROP_NODE, FEATURE_CONTROLS, FEATURE_MINI_MAP, NODE_TYPE_PLACEHOLDER, SLOT_SCOPE_WORKFLOW_EDITOR } from "../../constants";
 import GenericNode from "../node-types/generic";
 
@@ -36,6 +35,8 @@ import { GenericEdge } from "../edge-types";
 import { TriggerPlaceholder } from "../node-types/trigger-placeholder";
 import { createNewNode, getId } from "../../utils";
 import NodePlaceholder from "../node-types/node-placeholder";
+import AutoLayout from "./auto-layout/auto-layout";
+import useLayoutedElements from "./auto-layout/elk";
 
 const GRID_SIZE = 10;
 
