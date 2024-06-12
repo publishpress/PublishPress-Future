@@ -90,8 +90,8 @@ module.exports = [
         ),
         devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "src", "assets", "js"),
-            filename: "workflow-editor.js"
+            path: path.join(__dirname, "src", "assets", "js", "workflow-editor"),
+            filename: "editor.js"
         },
         module: {
             rules: [

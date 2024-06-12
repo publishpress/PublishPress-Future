@@ -10,11 +10,13 @@ import NodeSettingsPanel from "./node-settings-panel";
 import { nodeHasInput, mapNodeInputs, nodeHasOutput } from "../../utils";
 import { FEATURE_ADVANCED_SETTINGS, FEATURE_DEVELOPER_MODE } from "../../constants";
 import NodeValidationPanel from "../node-validation-panel";
-import NodeDevInfoPanel from "../node-dev-info-panel";
 import NodeSocketsPanel from "./node-sockets-panel";
 import WorkflowGlobalVariables from "../workflow-global-variables";
 import ObjectGroupIcon from "../icons/object-group";
 import LinesLeaningIcon from "../icons/lines-leaning";
+import { lazy, Suspense } from "@wordpress/element";
+
+const NodeDevInfoPanel = lazy(() => import("../node-dev-info-panel"));
 
 export const NodeInspector = () => {
     const {
@@ -89,6 +91,10 @@ export const NodeInspector = () => {
         });
     }
 
+    const lazyLoadLoading = (
+        <PanelRow><div>{__('Loading...', 'publishpress-future-pro')}</div></PanelRow>
+    );
+
     return (
         <>
             {selectedElementsCount === 0 && (
@@ -155,10 +161,10 @@ export const NodeInspector = () => {
                     )}
 
                     {isDeveloperModeEnabled && (
-                        <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
+                        <Suspense fallback={lazyLoadLoading}>
+                            <NodeDevInfoPanel node={selectedNode} nodeType={nodeType} />
+                        </Suspense>
                     )}
-
-
 
                     <div className="components-tools-panel"></div>
                 </>
