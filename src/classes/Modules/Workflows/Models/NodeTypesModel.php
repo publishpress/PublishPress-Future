@@ -103,7 +103,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                 "name" => "debug",
                 "label" => __("Debug", "publishpress-future-pro"),
                 "icon" => [
-                    "src" => "fa6-fabug",
+                    "src" => "debug",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
                     "foreground" => self::DEFAULT_ICON_FOREGROUND,
                 ],

@@ -41,7 +41,7 @@ class RayDebug implements NodeTypeInterface
 
     public function getIcon(): string
     {
-        return "fa6-fabug";
+        return "debug";
     }
 
     public function getFrecency(): int

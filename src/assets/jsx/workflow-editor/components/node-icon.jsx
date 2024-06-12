@@ -8,15 +8,15 @@ import classnames from 'classnames';
  */
 import { Icon } from '@wordpress/components';
 import { blockDefault } from '@wordpress/icons';
-import { SiWoo } from 'react-icons/si';
-import { FaUser } from 'react-icons/fa';
-import { FaBug } from 'react-icons/fa6';
-import { ImDatabase } from "react-icons/im";
-import { TbRouteAltRight } from "react-icons/tb";
-import { IoMdMail } from "react-icons/io";
-import { BiSolidMessageDetail } from "react-icons/bi";
-import { IoMdWarning } from "react-icons/io";
-import { MdSchedule } from "react-icons/md";
+import WooIcon from './icons/woo';
+import UserIcon from './icons/user';
+import BugIcon from './icons/bug';
+import DatabaseIcon from './icons/database';
+import RouteRightIcon from './icons/route-right';
+import MailIcon from './icons/mail';
+import MessageIcon from './icons/message';
+import WarningIcon from './icons/warning';
+import ScheduleIcon from './icons/schedule';
 import DocumentTextIcon from './icons/document-text';
 
 export function NodeIcon({ icon, showColors = false, className, size = 20}) {
@@ -36,37 +36,37 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 			break;
 		case 'users':
 			icon = {
-				src: FaUser,
+				src: UserIcon,
 			};
 			break;
 		case 'woo':
 			icon = {
-				src: SiWoo,
+				src: WooIcon,
 			};
 			break;
-		case 'fa6-fabug':
+		case 'debug':
 			icon = {
-				src: FaBug,
+				src: BugIcon,
 			};
 			break;
 		case 'db-query':
 			icon = {
-				src: ImDatabase,
+				src: DatabaseIcon,
 			};
 			break;
 		case 'route':
 			icon = {
-				src: TbRouteAltRight,
+				src: RouteRightIcon,
 			};
 			break;
 		case 'email':
 			icon = {
-				src: IoMdMail,
+				src: MailIcon,
 			};
 			break;
 		case 'message':
 			icon = {
-				src: BiSolidMessageDetail,
+				src: MessageIcon,
 			};
 			break;
 		case 'error':
@@ -76,12 +76,12 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 			break;
 		case 'warning':
 			icon = {
-				src: IoMdWarning,
+				src: WarningIcon,
 			};
 			break;
 		case 'schedule':
 			icon = {
-				src: MdSchedule,
+				src: ScheduleIcon,
 			};
 			break;
 	}
