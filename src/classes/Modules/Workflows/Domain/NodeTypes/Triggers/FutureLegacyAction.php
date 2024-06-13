@@ -80,7 +80,7 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function getCategory(): string
     {
-        return "future";
+        return "post";
     }
 
     public function getSettingsSchema(): array
