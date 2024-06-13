@@ -40,7 +40,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         $this->hooks = $hooks;
 
-        $this->table_header = __('Future Actions', 'post-expirator');
+        $this->table_header = __('Scheduled Actions', 'post-expirator');
 
         unset($this->columns['group']);
         $this->columns['hook'] = __('Action', 'post-expirator');
