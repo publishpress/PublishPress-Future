@@ -301,23 +301,34 @@ class Plugin implements InitializableInterface
 
         $futureMenu = $submenu['publishpress-future'];
 
+        $menuNames = array_column($futureMenu, 2);
+
         // Get the Settings menu index
-        $settingsIndex = array_search('publishpress-future', array_column($futureMenu, 2));
+        $settingsIndex = array_search('publishpress-future', $menuNames);
 
         // Get the Actions menu list
-        $actionsIndex = array_search('publishpress-future-scheduled-actions', array_column($futureMenu, 2));
+        $actionsIndex = array_search('publishpress-future-scheduled-actions', $menuNames);
+
+        // Get the Upgrade to Pro menu list, if exists
+        $upgradeToProIndex = array_search('publishpress-future-menu-upgrade-link', $menuNames);
 
         // Remove the Actions menu
         $settingsSubmenu = $futureMenu[$settingsIndex];
         $actionsSubmenu = $futureMenu[$actionsIndex];
+        $upgradeToProSubmenu = $futureMenu[$upgradeToProIndex];
         unset($futureMenu[$actionsIndex]);
         unset($futureMenu[$settingsIndex]);
+        unset($futureMenu[$upgradeToProIndex]);
 
         $futureMenu = array_merge(
             [$actionsSubmenu],
             $futureMenu,
             [$settingsSubmenu]
         );
+
+        if ($upgradeToProIndex !== false) {
+            $futureMenu[] = $upgradeToProSubmenu;
+        }
 
         $submenu['publishpress-future'] = $futureMenu;
     }
