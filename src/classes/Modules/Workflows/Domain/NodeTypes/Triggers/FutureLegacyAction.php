@@ -52,7 +52,7 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Future action", "publishpress-future-pro");
+        return __("Manually enabled via Future Actions box", "publishpress-future-pro");
     }
 
     public function getDescription(): string

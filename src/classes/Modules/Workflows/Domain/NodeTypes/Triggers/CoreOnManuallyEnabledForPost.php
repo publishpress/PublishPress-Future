@@ -31,7 +31,7 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Manually enabled", "publishpress-future-pro");
+        return __("Manually enabled via checkbox", "publishpress-future-pro");
     }
 
     public function getDescription(): string
