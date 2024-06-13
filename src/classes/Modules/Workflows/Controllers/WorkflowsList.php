@@ -73,14 +73,14 @@ class WorkflowsList implements InitializableInterface
         );
 
         $submenu["publishpress-future"][$indexAllWorkflows][0] = __(
-            "Workflows",
+            "Action Workflows",
             "publishpress-future-pro"
         );
 
         add_submenu_page(
             "edit.php?post_type=" . Module::POST_TYPE_WORKFLOW,
-            "My Custom Post Type Editor",
-            "My Custom Post Type",
+            "Action Workflows",
+            "Action Workflows",
             "edit_posts",
             "future_workflow_editor",
             [$this, "renderEditorPage"]

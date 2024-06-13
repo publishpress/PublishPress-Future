@@ -31,7 +31,7 @@ class PostType implements InitializableInterface
     {
         register_post_type(Module::POST_TYPE_WORKFLOW, [
             "labels" => [
-                "name" => __("Future Workflows", "publishpress-future-pro"),
+                "name" => __("Action Workflows", "publishpress-future-pro"),
                 "singular_name" => __("Future Workflow", "publishpress-future-pro"),
                 "add_new" => __("Add New", "publishpress-future-pro"),
                 "add_new_item" => __(
@@ -78,7 +78,7 @@ class PostType implements InitializableInterface
                     "Workflows list navigation",
                     "publishpress-future-pro"
                 ),
-                "items_list" => __("Future Workflows list", "publishpress-future-pro"),
+                "items_list" => __("Action Workflows list", "publishpress-future-pro"),
                 "item_published" => __(
                     "Workflow published.",
                     "publishpress-future-pro"
