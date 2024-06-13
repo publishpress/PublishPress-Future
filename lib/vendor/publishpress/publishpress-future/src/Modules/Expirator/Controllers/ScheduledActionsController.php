@@ -91,8 +91,8 @@ class ScheduledActionsController implements InitializableInterface
         );
         add_submenu_page(
             'publishpress-future',
-            __('Settings', 'post-expirator'),
-            __('Settings', 'post-expirator'),
+            __('Action Settings', 'post-expirator'),
+            __('Action Settings', 'post-expirator'),
             'manage_options',
             'publishpress-future',
             [\PostExpirator_Display::getInstance(), 'settings_tabs']
@@ -100,8 +100,8 @@ class ScheduledActionsController implements InitializableInterface
 
         $hook_suffix = add_submenu_page(
             'publishpress-future',
-            __('Future Actions', 'post-expirator'),
-            __('Future Actions', 'post-expirator'),
+            __('Scheduled Actions', 'post-expirator'),
+            __('Scheduled Actions', 'post-expirator'),
             'manage_options',
             'publishpress-future-scheduled-actions',
             [$this, 'renderScheduledActionsTemplate']
