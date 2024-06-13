@@ -11,6 +11,7 @@ use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 
 class CoreSchedule implements NodeRunnerInterface
@@ -39,16 +40,23 @@ class CoreSchedule implements NodeRunnerInterface
      */
     private $cronSchedulesModel;
 
+    /**
+     * @var NodeTypesModelInterface
+     */
+    private $nodeTypesModel;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerPreparerInterface $nodeRunnerPreparer,
         CronInterface $cron,
-        CronSchedulesModelInterface $cronSchedulesModel
+        CronSchedulesModelInterface $cronSchedulesModel,
+        NodeTypesModelInterface $nodeTypesModel
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->cron = $cron;
         $this->cronSchedulesModel = $cronSchedulesModel;
+        $this->nodeTypesModel = $nodeTypesModel;
     }
 
     public function setup(array $step, array $contextVariables = []): void
@@ -332,10 +340,27 @@ class CoreSchedule implements NodeRunnerInterface
             }
         }
 
+        $triggerLabel = '';
+
+        if (isset($triggerNode['data']['label'])) {
+            $triggerLabel = $triggerNode['data']['label'];
+        }
+
+        if (empty($triggerLabel)) {
+            $triggerNodeType = $this->nodeTypesModel->getNodeType($triggerNode['data']['name']);
+            if (is_object($triggerNodeType)) {
+                $triggerLabel = $triggerNodeType->getLabel();
+            }
+        }
+
+        if (empty($triggerLabel)) {
+            $triggerLabel = $triggerNode['data']['label'] ?? 'Unknown';
+        }
+
         $expandedArgs['contextVariables']['global']['trigger'] = [
             'id' => $triggerId,
             'name' => $triggerNode['data']['name'] ?? 'unknown',
-            'label' => $triggerNode['data']['label'] ?? 'Unknown',
+            'label' => $triggerLabel,
         ];
 
         return $expandedArgs;

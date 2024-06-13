@@ -125,7 +125,23 @@ class ScheduledActions implements InitializableInterface
                     $nextNodes .= '<li class="future-workflow-step-handler">' . $socketLabel . ':</li>';
                     $nextNodes .= '<ul>';
                     foreach ($handlerNodes as $nextStep) {
-                        $nextNodes .= '<li>' . $nextStep['node']['data']['label'] . '</li>';
+                        $stepLabel = '';
+                        if (isset($nextStep['node']['data']['label'])) {
+                            $stepLabel = $nextStep['node']['data']['label'];
+                        }
+
+                        if (empty($stepLabel)) {
+                            $stepNodeType = $this->nodeTypesModel->getNodeType($nextStep['node']['data']['name']);
+                            if (is_object($stepNodeType)) {
+                                $stepLabel = $stepNodeType->getLabel();
+                            }
+                        }
+
+                        if (empty($stepLabel)) {
+                            $stepLabel = $nextStep['node']['data']['name'];
+                        }
+
+                        $nextNodes .= '<li>' . $stepLabel . '</li>';
                     }
                     $nextNodes .= '</ul>';
                 }
