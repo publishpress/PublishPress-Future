@@ -9,7 +9,7 @@ import { Toolbar, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/compon
 import PlayIcon from "../icons/play";
 
 
-export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
+export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIcon }) => {
     const {
         nodeErrors,
         nodeHasErrors,
@@ -111,6 +111,10 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
         removeNode(id);
     };
 
+    if (! nodeTypeIcon) {
+        nodeTypeIcon = <PlayIcon size={8} />;
+    }
+
     return (
         <>
             {selected && isSingularElementSelected && (
@@ -132,7 +136,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected }) => {
             <div className={"react-flow__node-body " + nodeClassName}>
                 {targetHandles}
                 <div className='react-flow__node-top'>
-                    <PlayIcon size={8} />
+                    {nodeTypeIcon}
                     {topText}
                 </div>
 
