@@ -1,3 +1,7 @@
+.react-flow__node {
+    max-width: 170px;
+}
+
 .react-flow__node-body {
     border-radius: 8px;
     color: #171717;
@@ -17,8 +21,11 @@
     text-align: center;
     width: 100%;
     position: relative;
-    padding-left: 22px;
     text-align: left;
+}
+
+.react-flow__node-header .react-flow__node-label {
+    margin-left: 22px;
 }
 
 .react-flow__node-header .dashicon {
