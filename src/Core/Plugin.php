@@ -315,10 +315,14 @@ class Plugin implements InitializableInterface
         // Remove the Actions menu
         $settingsSubmenu = $futureMenu[$settingsIndex];
         $actionsSubmenu = $futureMenu[$actionsIndex];
-        $upgradeToProSubmenu = $futureMenu[$upgradeToProIndex];
+
         unset($futureMenu[$actionsIndex]);
         unset($futureMenu[$settingsIndex]);
-        unset($futureMenu[$upgradeToProIndex]);
+
+        if (false !== $upgradeToProIndex) {
+            $upgradeToProSubmenu = $futureMenu[$upgradeToProIndex];
+            unset($futureMenu[$upgradeToProIndex]);
+        }
 
         $futureMenu = array_merge(
             [$actionsSubmenu],
@@ -326,7 +330,7 @@ class Plugin implements InitializableInterface
             [$settingsSubmenu]
         );
 
-        if ($upgradeToProIndex !== false) {
+        if (false !== $upgradeToProIndex) {
             $futureMenu[] = $upgradeToProSubmenu;
         }
 
