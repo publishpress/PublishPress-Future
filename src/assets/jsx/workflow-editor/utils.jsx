@@ -318,6 +318,7 @@ function getOptionsForVariable(variable) {
         name: variable.label,
         children: [],
         type: variable?.type,
+        itemsType: variable?.itemsType,
     };
 
     // If the variable is an object, add its properties as children
@@ -353,7 +354,22 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
 
     variables.forEach((variable) => {
         const dataType = getDataTypeByName(variable.type);
-        const variableHasValidDataType = isValidDataType(dataType, expectedDataTypes);
+        const itemsType = variable?.itemsType;
+        let variableHasValidDataType = isValidDataType(dataType, expectedDataTypes);
+
+        if (variable.type === 'array' && itemsType && !variableHasValidDataType) {
+            const expectedItemsDataTypes = expectedDataTypes.map((type) => {
+                if (type.startsWith('array:')) {
+                    return type.replace('array:', '');
+                }
+
+                return null;
+            });
+
+            const itemsDataType = getDataTypeByName(itemsType);
+            variableHasValidDataType = isValidDataType(itemsDataType, expectedItemsDataTypes);
+        }
+
         let validVariable = null;
         let validChildren = [];
 

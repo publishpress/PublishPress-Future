@@ -4,7 +4,7 @@ import { __experimentalVStack as VStack } from "@wordpress/components";
 import { filterVariableOptionsByDataType } from "../../utils";
 
 export function PostInput({ name, label, defaultValue, onChange, variables, settings }) {
-    variables = filterVariableOptionsByDataType(variables, ['post']);
+    variables = filterVariableOptionsByDataType(variables, ['post', 'array:integer']);
 
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
