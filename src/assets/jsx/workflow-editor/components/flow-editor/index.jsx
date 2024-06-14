@@ -1,4 +1,4 @@
-import { useSelect, useDispatch } from "@wordpress/data";
+import { useSelect, useDispatch, select } from "@wordpress/data";
 import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import ReactFlow, {
@@ -300,9 +300,18 @@ export const FlowEditor = (props) => {
 
     const onAutoLayout = useCallback(() => {
         import("./auto-layout/elk").then(({ useLayoutedElements }) => {
+            /*
+             * WARNING: Inside this kind of import statements, any state
+             * var here will hold the initial state of the component. So
+             * Do not use hooks or any state var here. Get the state from
+             * the store directly.
+             */
+            const currentNodes = select(workflowStore).getNodes();
+            const currentEdges = select(workflowStore).getEdges();
+
             const applyLayout = useLayoutedElements({
-                nodes,
-                edges,
+                currentNodes,
+                currentEdges,
                 onLayout: (layoutedNodes, layoutedEdges) => {
                     setNodes(layoutedNodes);
                     setEdges(layoutedEdges);
@@ -316,7 +325,7 @@ export const FlowEditor = (props) => {
 
             applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
         });
-    }, [nodes, edges, fitView, updateFlowInEditedWorkflow]);
+    }, [fitView, updateFlowInEditedWorkflow]);
 
     // Calculate the initial layout on mount.
     useLayoutEffect(() => {
