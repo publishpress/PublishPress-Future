@@ -7,6 +7,7 @@ const editableAttributes = ['title', 'description', 'flow', 'status'];
 
 export function* setupEditor(workflowId) {
     yield {type: 'LOAD_WORKFLOW_START'};
+    workflowId = parseInt(workflowId, 10);
 
     if (workflowId == 0) {
         yield {type: 'CREATE_WORKFLOW_START'};
@@ -60,7 +61,7 @@ export function* saveAsDraft({ screenshot }) {
         }
 
         const newWorkflow = yield apiFetch({
-            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
             method: 'PUT',
             headers: {
                 'X-WP-Nonce': nonce,
@@ -70,7 +71,7 @@ export function* saveAsDraft({ screenshot }) {
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${newWorkflow.id}`);
+            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
         }
 
         yield {type: 'SAVE_AS_DRAFT_SUCCESS', payload: newWorkflow};
@@ -92,7 +93,7 @@ export function* saveAsCurrentStatus({ screenshot }) {
         }
 
         const newWorkflow = yield apiFetch({
-            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
             method: 'PUT',
             headers: {
                 'X-WP-Nonce': nonce,
@@ -121,7 +122,7 @@ export function* publishWorkflow({ screenshot }) {
         }
 
         const newWorkflow = yield apiFetch({
-            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
             method: 'PUT',
             headers: {
                 'X-WP-Nonce': nonce,
@@ -131,7 +132,7 @@ export function* publishWorkflow({ screenshot }) {
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${newWorkflow.id}`);
+            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
         }
 
         yield {type: 'PUBLISH_WORKFLOW_SUCCESS', payload: newWorkflow};
@@ -156,7 +157,7 @@ export function* switchToDraft({ screenshot }) {
         }
 
         const newWorkflow = yield apiFetch({
-            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
             method: 'PUT',
             headers: {
                 'X-WP-Nonce': nonce,
@@ -166,7 +167,7 @@ export function* switchToDraft({ screenshot }) {
 
         // Add the workflow id to the url, keeping current state in the history
         if (wasNewWorkflow) {
-            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${newWorkflow.id}`);
+            window.history.pushState({}, '', `?page=future_workflow_editor&workflow=${parseInt(newWorkflow.id)}`);
         }
 
         yield {type: 'SWITCH_TO_DRAFT_SUCCESS', payload: newWorkflow};
@@ -244,7 +245,7 @@ export function* deleteWorkflow () {
 
     try {
         const newWorkflow = yield apiFetch({
-            path: `${apiUrl}/workflows/${editedWorkflow.id}`,
+            path: `${apiUrl}/workflows/${parseInt(editedWorkflow.id)}`,
             method: 'DELETE',
             headers: {
                 'X-WP-Nonce': nonce,
