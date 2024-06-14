@@ -300,18 +300,9 @@ export const FlowEditor = (props) => {
 
     const onAutoLayout = useCallback(() => {
         import("./auto-layout/elk").then(({ useLayoutedElements }) => {
-            /*
-             * WARNING: Inside this kind of import statements, any state
-             * var here will hold the initial state of the component. So
-             * Do not use hooks or any state var here. Get the state from
-             * the store directly.
-             */
-            const currentNodes = select(workflowStore).getNodes();
-            const currentEdges = select(workflowStore).getEdges();
-
             const applyLayout = useLayoutedElements({
-                currentNodes,
-                currentEdges,
+                nodes,
+                edges,
                 onLayout: (layoutedNodes, layoutedEdges) => {
                     setNodes(layoutedNodes);
                     setEdges(layoutedEdges);
@@ -325,12 +316,7 @@ export const FlowEditor = (props) => {
 
             applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
         });
-    }, [fitView, updateFlowInEditedWorkflow]);
-
-    // Calculate the initial layout on mount.
-    useLayoutEffect(() => {
-        onAutoLayout();
-    }, []);
+    }, [nodes, edges, fitView, updateFlowInEditedWorkflow]);
 
     useEffect(() => {
         const sidebarIsActiveByDefault = Platform.select({
