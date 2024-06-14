@@ -86,7 +86,7 @@ module.exports = [
     },
     {
         entry: glob.sync(
-            "./src/assets/jsx/workflow-editor/editor.jsx",
+            "./src/assets/jsx/workflow-editor/index.jsx",
         ),
         devtool: 'source-map',
         output: {
