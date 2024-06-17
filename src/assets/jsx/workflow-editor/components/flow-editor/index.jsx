@@ -162,6 +162,11 @@ export const FlowEditor = (props) => {
 
     const onConnect = useCallback(
         (params) => {
+            // Prevents the user from connecting a node to itself.
+            if (params.source === params.target) {
+                return;
+            }
+
             params = {
                 ...params,
                 type: 'genericEdge',
