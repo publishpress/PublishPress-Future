@@ -6,21 +6,22 @@
 
 ## Public Technical Documentation
 
-### Workflow Overview
+### Actions Workflow Overview
 
-- [ ] Definitions
-- [ ] How it Works (parallel processes, rules, etc.)
-- [ ] Connections and Sockets (handles)
+- [x] Definitions
+  - [x] Workflow
+  - [x] Step
+  - [x] Trigger
+  - [x] Action
+  - [x] Connection
+  - [x] Handle
 
-### Workflow Engine
+### Actions Workflow Engine and the Data Flow
 
-- [ ] Overview
-
-### Data Flow
-
-- [ ] Input and Output
-- [ ] Asynchronous Workflows
-- [ ] Global Variables
+- [x] Overview
+- [x] Global Variables
+- [x] Input and Output
+- [x] Asynchronous Workflows
 
 ### Available Steps
 
@@ -38,6 +39,7 @@
   - [ ] Output Schema
 - [ ] Creating New Step Types
 - [ ] Creating New Data Types
+- [ ] Adding global variables
 - [ ] API Usage and Extensions
 
 ## Developer Documentation - SLAB
