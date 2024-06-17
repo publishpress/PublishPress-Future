@@ -111,11 +111,11 @@ export const NodeInspector = () => {
             {onlyNodesSelected && selectedElementsCount > 1 && (
                 <InspectorCard
                     title={sprintf(
-                        __("%d nodes selected", "publishpress-future-pro"),
+                        __("%d steps selected", "publishpress-future-pro"),
                         selectedElementsCount,
                     )}
                     description={__(
-                        "Multiple nodes selected.",
+                        "Multiple steps selected.",
                         "publishpress-future-pro",
                     )}
                     icon={<ObjectGroupIcon size={24} />}
@@ -125,11 +125,11 @@ export const NodeInspector = () => {
             {onlyEdgesSelected && selectedElementsCount > 1 && (
                 <InspectorCard
                     title={sprintf(
-                        __("%d edges selected", "publishpress-future-pro"),
+                        __("%d connections selected", "publishpress-future-pro"),
                         selectedElementsCount,
                     )}
                     description={__(
-                        "Multiple edges selected.",
+                        "Multiple connections selected.",
                         "publishpress-future-pro",
                     )}
                     icon={<LinesLeaningIcon size={24} />}
@@ -165,9 +165,9 @@ export const NodeInspector = () => {
             {onlyEdgesSelected && selectedElementsCount === 1 && selectedEdge && (
                 <>
                     <InspectorCard
-                        title={__("Edge", "publishpress-future-pro")}
+                        title={__("Connection", "publishpress-future-pro")}
                         description={__(
-                            "A connection between nodes",
+                            "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another.",
                             "publishpress-future-pro",
                         )}
                         icon={<LinesLeaningIcon size={24} />}
