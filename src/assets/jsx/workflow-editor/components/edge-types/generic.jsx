@@ -18,7 +18,6 @@ export function GenericEdge({
     sourcePosition,
     targetPosition,
     style = {},
-    markedEnd,
     selected,
 }) {
     const {
@@ -51,7 +50,7 @@ export function GenericEdge({
     const markerEnd = {
         type: MarkerType.ArrowClosed,
         width: 20,
-        height: 10
+        height: 10,
     }
 
     const edgeStyle = {
@@ -61,7 +60,7 @@ export function GenericEdge({
 
     return (
         <>
-            <BaseEdge path={edgePath} markerEnd={markedEnd} style={edgeStyle} animated={false} />
+            <BaseEdge path={edgePath} markerEnd={markerEnd} style={edgeStyle} animated={false} />
             {selected && isSingularElementSelected && (
                 <EdgeLabelRenderer>
                     <div
