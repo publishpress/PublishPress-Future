@@ -10,7 +10,7 @@ class CoreOnInit implements NodeTypeInterface
 {
     public const NODE_NAME = "trigger/core.init";
 
-    public function getElementarType(): string
+    public function getElementaryType(): string
     {
         return NodeTypesModel::NODE_TYPE_TRIGGER;
     }

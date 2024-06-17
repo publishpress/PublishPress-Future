@@ -361,7 +361,7 @@ class WorkflowModel implements WorkflowModelInterface
         // Build a list of trigger nodes
         $triggers = [];
         foreach ($abstractFlow['nodes'] as $node) {
-            if ($node['data']['elementarType'] === NodeTypesModel::NODE_TYPE_TRIGGER) {
+            if ($node['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER) {
                 $triggers[] = $node;
             }
         }
@@ -419,16 +419,16 @@ class WorkflowModel implements WorkflowModelInterface
     private function getRoutineNodesTree($edges, $nodes, $sourceNodeId, $nodeTypes, $edgeId = null)
     {
         $node = $nodes[$sourceNodeId];
-        $elementarType = $node['data']['elementarType'] ?? null;
+        $elementaryType = $node['data']['elementaryType'] ?? null;
         $nodeName = $node['data']['name'] ?? null;
-        $nodeTypeInstance = $nodeTypes[$elementarType][$nodeName] ?? null;
+        $nodeTypeInstance = $nodeTypes[$elementaryType][$nodeName] ?? null;
 
         if (is_null($nodeTypeInstance)) {
             logError(
                 sprintf(
-                    'Node type not found. Workflow: %1$d; ElementarType: %2$s; NodeName; %3$s; SourceNodeId: %4$s',
+                    'Node type not found. Workflow: %1$d; ElementaryType: %2$s; NodeName; %3$s; SourceNodeId: %4$s',
                     $this->post->ID,
-                    $elementarType,
+                    $elementaryType,
                     $nodeName,
                     $sourceNodeId
                 )
@@ -482,7 +482,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         foreach ($workflowTriggers as $triggerNode) {
             if (
-                $triggerNode['data']['elementarType'] === NodeTypesModel::NODE_TYPE_TRIGGER
+                $triggerNode['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER
                 && $triggerNode['data']['name'] === $triggerName
             ) {
                 return true;

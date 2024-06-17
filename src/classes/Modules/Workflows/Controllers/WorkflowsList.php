@@ -155,7 +155,7 @@ class WorkflowsList implements InitializableInterface
         foreach ($workflowFlow["nodes"] as $node) {
             if (
                 NodeTypesModel::NODE_TYPE_TRIGGER ===
-                $node["data"]["elementarType"]
+                $node["data"]["elementaryType"]
             ) {
                 $nodeType = $this->nodeTypesModel->getNodeType($node["data"]["name"]);
 

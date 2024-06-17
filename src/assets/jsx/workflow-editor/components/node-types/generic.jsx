@@ -86,11 +86,11 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     }
 
     let topText = __('Step', 'publishpress-future-pro');
-    if (data.elementarType === 'action') {
+    if (data.elementaryType === 'action') {
         topText = __('Action', 'publishpress-future-pro');
-    } else if (data.elementarType === 'advanced') {
+    } else if (data.elementaryType === 'advanced') {
         topText = __('Advanced', 'publishpress-future-pro');
-    } else if (data.elementarType === 'trigger') {
+    } else if (data.elementaryType === 'trigger') {
         topText = __('Trigger', 'publishpress-future-pro');
     }
 

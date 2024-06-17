@@ -19,7 +19,7 @@ import { createNewNode } from '../../utils';
 import PlusIcon from '../icons/plus';
 
 
-export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel, elementarTypes}) => {
+export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel, elementaryTypes}) => {
     const nodeLabel = label || '';
 
     const nodeId = useRef(null);
@@ -44,16 +44,16 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
         const advancedNodes = select(editorStore).getAdvancedNodes();
 
         let items = [];
-        if (! elementarTypes) {
+        if (! elementaryTypes) {
             items = [...triggerNodes, ...actionNodes, ...advancedNodes];
         } else {
-            if (elementarTypes.includes(NODE_TYPE_TRIGGER)) {
+            if (elementaryTypes.includes(NODE_TYPE_TRIGGER)) {
                 items = items.concat(triggerNodes);
             }
-            if (elementarTypes.includes(NODE_TYPE_ACTION)) {
+            if (elementaryTypes.includes(NODE_TYPE_ACTION)) {
                 items = items.concat(actionNodes);
             }
-            if (elementarTypes.includes(NODE_TYPE_ADVANCED)) {
+            if (elementaryTypes.includes(NODE_TYPE_ADVANCED)) {
                 items = items.concat(advancedNodes);
             }
         }
@@ -191,7 +191,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
                             <InserterSearchResults
                                 filterValue={filterValue}
                                 onSelect={onSelectItem}
-                                filterTypes={elementarTypes}
+                                filterTypes={elementaryTypes}
                             />
                         )}
 

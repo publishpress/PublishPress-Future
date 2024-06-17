@@ -138,7 +138,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             $instance = $this->applyDefaultParams(
                 [
                     "type" => $instance->getType(),
-                    "elementarType" => $instance->getElementarType(),
+                    "elementaryType" => $instance->getElementaryType(),
                     "name" => $instance->getName(),
                     "label" => $instance->getLabel(),
                     "description" => $instance->getDescription(),

@@ -653,7 +653,7 @@ const removeEdge = (state, action) => {
 }
 
 const removePlaceholderNodes = (state, action) => {
-    const newNodes = state.nodes.filter(node => node.data.elementarType !== NODE_TYPE_PLACEHOLDER);
+    const newNodes = state.nodes.filter(node => node.data.elementaryType !== NODE_TYPE_PLACEHOLDER);
 
     return {
         ...state,

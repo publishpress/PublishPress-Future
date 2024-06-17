@@ -11,7 +11,7 @@ export const TriggerPlaceholder = memo((props) => {
             label={__('Click to add a trigger', 'publishpress-future-pro')}
             popoverIsOpen={false}
             searchLabel={__('Search for triggers and steps', 'publishpress-future-pro')}
-            elementarTypes={[NODE_TYPE_TRIGGER]}
+            elementaryTypes={[NODE_TYPE_TRIGGER]}
         />
     );
 });

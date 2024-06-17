@@ -4,7 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
 interface NodeTypeInterface
 {
-    public function getElementarType(): string;
+    public function getElementaryType(): string;
 
     public function getType(): string;
 

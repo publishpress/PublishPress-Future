@@ -9,7 +9,7 @@ class CorePostTermsRemove implements NodeTypeInterface
 {
     public const NODE_NAME = "action/core.remove-post-terms";
 
-    public function getElementarType(): string
+    public function getElementaryType(): string
     {
         return NodeTypesModel::NODE_TYPE_ACTION;
     }

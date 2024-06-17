@@ -441,7 +441,7 @@ export function createNewNode({item, position, reactFlowInstance}) {
         position: position,
         data: {
             name: item.name,
-            elementarType: item.elementarType,
+            elementaryType: item.elementaryType,
             version: item.version,
             slug: slug,
             settings: {},
@@ -461,7 +461,7 @@ export function createNewNode({item, position, reactFlowInstance}) {
         });
     }
 
-    nodes = nodes.filter((node) => node.data.elementarType !== NODE_TYPE_PLACEHOLDER);
+    nodes = nodes.filter((node) => node.data.elementaryType !== NODE_TYPE_PLACEHOLDER);
 
     dispatch(workflowStore).setNodes(nodes.concat(newNode));
 
@@ -484,7 +484,7 @@ export const newTriggerPlaceholderNode = () => {
         position: { x: 0, y: 0 },
         data: {
             name: 'placeholder/trigger',
-            elementarType: NODE_TYPE_PLACEHOLDER,
+            elementaryType: NODE_TYPE_PLACEHOLDER,
             version: 1,
             slug: 'triggerPlaceholder1',
         },

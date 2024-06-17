@@ -9,7 +9,7 @@ class CorePostQuery implements NodeTypeInterface
 {
     public const NODE_NAME = "advanced/core.query-post";
 
-    public function getElementarType(): string
+    public function getElementaryType(): string
     {
         return NodeTypesModel::NODE_TYPE_ADVANCED;
     }

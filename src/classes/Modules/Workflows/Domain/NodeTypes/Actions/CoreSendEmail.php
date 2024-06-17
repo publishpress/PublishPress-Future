@@ -22,7 +22,7 @@ class CoreSendEmail implements NodeTypeInterface
         );
     }
 
-    public function getElementarType(): string
+    public function getElementaryType(): string
     {
         return NodeTypesModel::NODE_TYPE_ACTION;
     }

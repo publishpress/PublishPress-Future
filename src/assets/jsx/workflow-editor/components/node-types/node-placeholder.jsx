@@ -21,7 +21,7 @@ export const NodePlaceholder = memo((props) => {
         };
     });
 
-    const elementarTypes = (draggingFromHandle.handleType === HANDLE_TYPE_SOURCE) ?
+    const elementaryTypes = (draggingFromHandle.handleType === HANDLE_TYPE_SOURCE) ?
         [NODE_TYPE_ACTION, NODE_TYPE_ADVANCED] : [NODE_TYPE_TRIGGER, NODE_TYPE_ACTION, NODE_TYPE_ADVANCED];
 
 
@@ -31,7 +31,7 @@ export const NodePlaceholder = memo((props) => {
             label={__('Add a step', 'publishpress-future-pro')}
             popoverIsOpen={true}
             searchLabel={__('Search for actions', 'publishpress-future-pro')}
-            elementarTypes={elementarTypes}
+            elementaryTypes={elementaryTypes}
         />
     );
 });

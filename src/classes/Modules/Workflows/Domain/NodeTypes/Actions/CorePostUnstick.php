@@ -9,7 +9,7 @@ class CorePostUnstick implements NodeTypeInterface
 {
     public const NODE_NAME = "action/core.unstick-post";
 
-    public function getElementarType(): string
+    public function getElementaryType(): string
     {
         return NodeTypesModel::NODE_TYPE_ACTION;
     }

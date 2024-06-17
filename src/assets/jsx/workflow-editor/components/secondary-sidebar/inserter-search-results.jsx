@@ -49,9 +49,9 @@ export const InserterSearchResults = ({
 
         if (filterTypes && filterTypes.length) {
             nodeTypes = [
-                ...actionNodes.filter((node) => filterTypes.includes(node.elementarType)),
-                ...triggerNodes.filter((node) => filterTypes.includes(node.elementarType)),
-                ...advancedNodes.filter((node) => filterTypes.includes(node.elementarType)),
+                ...actionNodes.filter((node) => filterTypes.includes(node.elementaryType)),
+                ...triggerNodes.filter((node) => filterTypes.includes(node.elementaryType)),
+                ...advancedNodes.filter((node) => filterTypes.includes(node.elementaryType)),
             ];
         } else {
             nodeTypes = [

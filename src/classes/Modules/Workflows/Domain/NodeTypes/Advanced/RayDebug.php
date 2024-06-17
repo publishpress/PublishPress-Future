@@ -9,7 +9,7 @@ class RayDebug implements NodeTypeInterface
 {
     public const NODE_NAME = "advanced/ray.debug";
 
-    public function getElementarType(): string
+    public function getElementaryType(): string
     {
         return NodeTypesModel::NODE_TYPE_ADVANCED;
     }
