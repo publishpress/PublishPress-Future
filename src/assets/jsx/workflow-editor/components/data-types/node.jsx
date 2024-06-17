@@ -19,6 +19,11 @@ export function NodeData() {
                 name: "label",
                 type: "string",
                 label: "Label",
+            },
+            {
+                name: "activation_timestamp",
+                type: "string",
+                label: "Activation Time",
             }
         ],
     };

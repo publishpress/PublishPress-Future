@@ -113,6 +113,7 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
             'id' => 0,
             'name' => '',
             'label' => '',
+            'activation_timestamp' => date('Y-m-d H:i:s')
         ];
 
         return $globals;
