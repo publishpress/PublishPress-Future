@@ -18645,7 +18645,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils */ "./src/assets/jsx/workflow-editor/utils.jsx");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../constants */ "./src/assets/jsx/workflow-editor/constants.jsx");
 /* harmony import */ var _node_validation_panel__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../node-validation-panel */ "./src/assets/jsx/workflow-editor/components/node-validation-panel/index.jsx");
-/* harmony import */ var _node_sockets_panel__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./node-sockets-panel */ "./src/assets/jsx/workflow-editor/components/node-inspector/node-sockets-panel.jsx");
+/* harmony import */ var _node_data_flow_panel__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./node-data-flow-panel */ "./src/assets/jsx/workflow-editor/components/node-inspector/node-data-flow-panel.jsx");
 /* harmony import */ var _workflow_global_variables__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../workflow-global-variables */ "./src/assets/jsx/workflow-editor/components/workflow-global-variables/index.jsx");
 /* harmony import */ var _icons_object_group__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../icons/object-group */ "./src/assets/jsx/workflow-editor/components/icons/object-group.jsx");
 /* harmony import */ var _icons_lines_leaning__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../icons/lines-leaning */ "./src/assets/jsx/workflow-editor/components/icons/lines-leaning.jsx");
@@ -18752,7 +18752,7 @@ var NodeInspector = function NodeInspector() {
     node: selectedNode
   }), /*#__PURE__*/React.createElement(_node_validation_panel__WEBPACK_IMPORTED_MODULE_10__["default"], {
     errors: nodeErrors
-  }), isAdvancedSettingsEnabled && /*#__PURE__*/React.createElement(_workflow_global_variables__WEBPACK_IMPORTED_MODULE_12__["default"], null), isDeveloperModeEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && /*#__PURE__*/React.createElement(_node_sockets_panel__WEBPACK_IMPORTED_MODULE_11__["default"], {
+  }), isAdvancedSettingsEnabled && /*#__PURE__*/React.createElement(_workflow_global_variables__WEBPACK_IMPORTED_MODULE_12__["default"], null), isDeveloperModeEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && /*#__PURE__*/React.createElement(_node_data_flow_panel__WEBPACK_IMPORTED_MODULE_11__["default"], {
     inputSchema: mappedNodeInputSchema,
     outputSchema: mappedNodeOutputSchema
   }), isDeveloperModeEnabled && /*#__PURE__*/React.createElement(_node_dev_info_panel__WEBPACK_IMPORTED_MODULE_15__["default"], {
@@ -18836,6 +18836,55 @@ var MappedField = function MappedField(props) {
   return /*#__PURE__*/React.createElement("i", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Field type %s is not implemented', 'publihspress-future-pro'), props.type));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MappedField);
+
+/***/ }),
+
+/***/ "./src/assets/jsx/workflow-editor/components/node-inspector/node-data-flow-panel.jsx":
+/*!*******************************************************************************************!*\
+  !*** ./src/assets/jsx/workflow-editor/components/node-inspector/node-data-flow-panel.jsx ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NodeDataFlowPanel: () => (/* binding */ NodeDataFlowPanel),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _persistent_panel_body__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../persistent-panel-body */ "./src/assets/jsx/workflow-editor/components/persistent-panel-body/index.jsx");
+
+
+
+var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
+  var _ref$inputSchema = _ref.inputSchema,
+    inputSchema = _ref$inputSchema === void 0 ? [] : _ref$inputSchema,
+    _ref$outputSchema = _ref.outputSchema,
+    outputSchema = _ref$outputSchema === void 0 ? [] : _ref$outputSchema;
+  if (!inputSchema) {
+    inputSchema = [];
+  }
+  return /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Step Data Flow", "publishpress-future-pro"),
+    className: "workflow-editor-dev-panel"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
+    className: "workflow-editor-inspector-card__handles-schema"
+  }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Inputs', 'publishpress-future-pro')), /*#__PURE__*/React.createElement("div", null, inputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step receives the following input from previous step:", "publishpress-future-pro")), /*#__PURE__*/React.createElement("ul", null, inputSchema.map(function (schemaItem, index) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: index
+    }, /*#__PURE__*/React.createElement("code", null, schemaItem.name));
+  }))), inputSchema.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step does not receive any input from previous step.", "publishpress-future-pro"))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
+    className: "workflow-editor-inspector-card__handles-schema"
+  }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Outputs', 'publishpress-future-pro')), /*#__PURE__*/React.createElement("div", null, outputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step outputs the following data:", "publishpress-future-pro")), /*#__PURE__*/React.createElement("ul", null, outputSchema.map(function (schemaItem, index) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: index
+    }, /*#__PURE__*/React.createElement("code", null, schemaItem.name));
+  }))), outputSchema.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step does not output any data.", "publishpress-future-pro"))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NodeDataFlowPanel);
 
 /***/ }),
 
@@ -18988,55 +19037,6 @@ var NodeSettingsPanel = function NodeSettingsPanel(_ref) {
 
 /***/ }),
 
-/***/ "./src/assets/jsx/workflow-editor/components/node-inspector/node-sockets-panel.jsx":
-/*!*****************************************************************************************!*\
-  !*** ./src/assets/jsx/workflow-editor/components/node-inspector/node-sockets-panel.jsx ***!
-  \*****************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   NodeSocketsPanel: () => (/* binding */ NodeSocketsPanel),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _persistent_panel_body__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../persistent-panel-body */ "./src/assets/jsx/workflow-editor/components/persistent-panel-body/index.jsx");
-
-
-
-var NodeSocketsPanel = function NodeSocketsPanel(_ref) {
-  var _ref$inputSchema = _ref.inputSchema,
-    inputSchema = _ref$inputSchema === void 0 ? [] : _ref$inputSchema,
-    _ref$outputSchema = _ref.outputSchema,
-    outputSchema = _ref$outputSchema === void 0 ? [] : _ref$outputSchema;
-  if (!inputSchema) {
-    inputSchema = [];
-  }
-  return /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Sockets", "publishpress-future-pro"),
-    className: "workflow-editor-dev-panel"
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
-    className: "workflow-editor-inspector-card__sockets-schema"
-  }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Inputs', 'publishpress-future-pro')), /*#__PURE__*/React.createElement("div", null, inputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step receives the following input from previous step:", "publishpress-future-pro")), /*#__PURE__*/React.createElement("ul", null, inputSchema.map(function (schemaItem, index) {
-    return /*#__PURE__*/React.createElement("li", {
-      key: index
-    }, /*#__PURE__*/React.createElement("code", null, schemaItem.name));
-  }))), inputSchema.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step does not receive any input from previous step.", "publishpress-future-pro"))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
-    className: "workflow-editor-inspector-card__sockets-schema"
-  }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Outputs', 'publishpress-future-pro')), /*#__PURE__*/React.createElement("div", null, outputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step outputs the following data:", "publishpress-future-pro")), /*#__PURE__*/React.createElement("ul", null, outputSchema.map(function (schemaItem, index) {
-    return /*#__PURE__*/React.createElement("li", {
-      key: index
-    }, /*#__PURE__*/React.createElement("code", null, schemaItem.name));
-  }))), outputSchema.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step does not output any data.", "publishpress-future-pro"))));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NodeSocketsPanel);
-
-/***/ }),
-
 /***/ "./src/assets/jsx/workflow-editor/components/node-types/generic.jsx":
 /*!**************************************************************************!*\
   !*** ./src/assets/jsx/workflow-editor/components/node-types/generic.jsx ***!
@@ -19099,9 +19099,9 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
   var nodeLabel = nodeType.label || data.label || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Node', 'publishpress-future-pro');
   var nodeClassName = (nodeType === null || nodeType === void 0 ? void 0 : nodeType.className) || 'react-flow__node-genericNode';
   var targetHandles = null;
-  if (nodeType.socketSchema) {
-    if (nodeType.socketSchema.target) {
-      targetHandles = nodeType.socketSchema.target.map(function (handle) {
+  if (nodeType.handleSchema) {
+    if (nodeType.handleSchema.target) {
+      targetHandles = nodeType.handleSchema.target.map(function (handle) {
         return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_8__.Handle, {
           key: handle.id + '_target',
           type: "target",
@@ -19116,10 +19116,10 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
     }
   }
   var sourceHandles = null;
-  var socketAreas = null;
-  if (nodeType.socketSchema) {
-    if (nodeType.socketSchema.source) {
-      sourceHandles = nodeType.socketSchema.source.map(function (handle) {
+  var handleAreas = null;
+  if (nodeType.handleSchema) {
+    if (nodeType.handleSchema.source) {
+      sourceHandles = nodeType.handleSchema.source.map(function (handle) {
         return /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_8__.Handle, {
           key: handle.id + '_source',
           type: "source",
@@ -19131,10 +19131,10 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
           isConnectable: isConnectable
         });
       });
-      socketAreas = nodeType.socketSchema.source.map(function (handle) {
+      handleAreas = nodeType.handleSchema.source.map(function (handle) {
         return /*#__PURE__*/React.createElement("div", {
-          key: handle.id + 'socketArea',
-          className: "react-flow__node-socket-name"
+          key: handle.id + 'handleArea',
+          className: "react-flow__node-handle-name"
         }, handle.label);
       });
     }
@@ -19201,8 +19201,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       key: 'attribute_' + attribute.id
     }, /*#__PURE__*/React.createElement("th", null, attribute.label), /*#__PURE__*/React.createElement("td", null, attribute.value));
   }))))), /*#__PURE__*/React.createElement("div", {
-    className: "react-flow__node-socket-area"
-  }, socketAreas), sourceHandles));
+    className: "react-flow__node-handle-area"
+  }, handleAreas), sourceHandles));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GenericNode);
 
@@ -19389,7 +19389,7 @@ var Placeholder = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       var firstTargetHandleId;
       var newEdgeParams;
       if (draggingFromHandle.handleType === _constants__WEBPACK_IMPORTED_MODULE_7__.HANDLE_TYPE_SOURCE) {
-        firstTargetHandleId = nodeType.socketSchema.target[0].id;
+        firstTargetHandleId = nodeType.handleSchema.target[0].id;
         newEdgeParams = {
           source: draggingFromHandle.sourceId,
           sourceHandle: draggingFromHandle.handleId,
@@ -19399,7 +19399,7 @@ var Placeholder = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
           id: "".concat(draggingFromHandle.sourceId, "-").concat(draggingFromHandle.handleId, "-").concat(newNode.id, "-").concat(firstTargetHandleId)
         };
       } else {
-        firstTargetHandleId = nodeType.socketSchema.source[0].id;
+        firstTargetHandleId = nodeType.handleSchema.source[0].id;
         newEdgeParams = {
           source: newNode.id,
           sourceHandle: firstTargetHandleId,
@@ -25161,11 +25161,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.components-button svg {
     right: 10px;
 }
 
-.workflow-editor-inspector-card__sockets-schema {
+.workflow-editor-inspector-card__handles-schema {
     flex-flow: wrap;
 }
 
-.workflow-editor-inspector-card__sockets-schema code {
+.workflow-editor-inspector-card__handles-schema code {
     padding: 3px 10px;
     border-radius: 4px;
     font-size: 12px;
@@ -25202,7 +25202,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.components-button svg {
 .workflow-editor-global-var-list ul li {
     margin-bottom: 0;
 }
-`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/custom.css"],"names":[],"mappings":"AAAA;IACI,YAAY;AAChB;;AAEA;IACI,wBAAwB;AAC5B;;AAEA;IACI,sCAAsC;IACtC,sBAAsB;AAC1B;;AAEA;IACI,qCAAqC;AACzC;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;AAC3B;;AAEA;;;;;;;;;;;;IAYI,6BAA6B;AACjC;;AAEA;;GAEG;;AAEH;IACI,eAAe;IACf,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,eAAe;IACf,WAAW;IACX,YAAY;IACZ,aAAa;IACb,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,WAAW;AACf;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,iBAAiB;IACjB,kBAAkB;IAClB,eAAe;IACf,mBAAmB;IACnB,cAAc;AAClB;;AAEA;IACI,eAAe;IACf,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,gBAAgB;IAChB,yBAAyB;IACzB,qBAAqB;IACrB,wBAAwB;IACxB,YAAY;AAChB;AACA;IACI,SAAS;IACT,YAAY;IACZ,8DAA8D;AAClE;;AAEA;IACI,gBAAgB;IAChB,iBAAiB;AACrB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":[".components-button svg {\n    height: 100%;\n}\n\n#wpfooter {\n    display: none !important;\n}\n\n.react-flow {\n    height: calc(100vh - 112px) !important;\n    width: 100% !important;\n}\n\n.is-fullscreen-mode .react-flow {\n    height: calc(100vh - 80px) !important;\n}\n\n.components-menu-items__item-icon.has-icon-right {\n    width: 24px !important;\n    height: 24px !important;\n}\n\n.react-flow__node-default.selectable.selected,\n.react-flow__node-default.selectable:focus,\n.react-flow__node-default.selectable:focus-visible,\n.react-flow__node-input.selectable.selected,\n.react-flow__node-input.selectable:focus,\n.react-flow__node-input.selectable:focus-visible,\n.react-flow__node-output.selectable.selected,\n.react-flow__node-output.selectable:focus,\n.react-flow__node-output.selectable:focus-visible,\n.react-flow__node-group.selectable.selected,\n.react-flow__node-group.selectable:focus,\n.react-flow__node-group.selectable:focus-visible {\n    box-shadow: 0 0 0 2px #1a192b;\n}\n\n/* .react-flow {\n    background-color: #e1e1e1 !important;\n} */\n\n.settings-field-description {\n    font-size: 12px;\n    color: #666;\n    margin-bottom: 15px;\n}\n\n.settings-field-help-popover {\n    font-size: 12px;\n    color: #666;\n    width: 320px;\n    padding: 16px;\n    position: relative;\n    padding-top: 50px;\n}\n\n.settings-field-help-popover button {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n}\n\n.workflow-editor-inspector-card__sockets-schema {\n    flex-flow: wrap;\n}\n\n.workflow-editor-inspector-card__sockets-schema code {\n    padding: 3px 10px;\n    border-radius: 4px;\n    font-size: 12px;\n    background: #ebebeb;\n    color: #696969;\n}\n\n.workflow-editor-global-variables-description {\n    font-size: 12px;\n    color: #666;\n    margin-bottom: 15px;\n}\n\n.workflow-editor-global-variables-label {\n    font-size: 11px;\n    font-weight: 500;\n    line-height: 1.4;\n    text-transform: uppercase;\n    display: inline-block;\n    margin-bottom: calc(8px);\n    padding: 0px;\n}\n.workflow-editor-global-var-list {\n    margin: 0;\n    padding: 5px;\n    border: 1px solid var(--wp-components-color-gray-600, #949494);\n}\n\n.workflow-editor-global-var-list ul {\n    list-style: disc;\n    margin-left: 30px;\n}\n\n.workflow-editor-global-var-list ul li {\n    margin-bottom: 0;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/custom.css"],"names":[],"mappings":"AAAA;IACI,YAAY;AAChB;;AAEA;IACI,wBAAwB;AAC5B;;AAEA;IACI,sCAAsC;IACtC,sBAAsB;AAC1B;;AAEA;IACI,qCAAqC;AACzC;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;AAC3B;;AAEA;;;;;;;;;;;;IAYI,6BAA6B;AACjC;;AAEA;;GAEG;;AAEH;IACI,eAAe;IACf,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,eAAe;IACf,WAAW;IACX,YAAY;IACZ,aAAa;IACb,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,SAAS;IACT,WAAW;AACf;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,iBAAiB;IACjB,kBAAkB;IAClB,eAAe;IACf,mBAAmB;IACnB,cAAc;AAClB;;AAEA;IACI,eAAe;IACf,WAAW;IACX,mBAAmB;AACvB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,gBAAgB;IAChB,yBAAyB;IACzB,qBAAqB;IACrB,wBAAwB;IACxB,YAAY;AAChB;AACA;IACI,SAAS;IACT,YAAY;IACZ,8DAA8D;AAClE;;AAEA;IACI,gBAAgB;IAChB,iBAAiB;AACrB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":[".components-button svg {\n    height: 100%;\n}\n\n#wpfooter {\n    display: none !important;\n}\n\n.react-flow {\n    height: calc(100vh - 112px) !important;\n    width: 100% !important;\n}\n\n.is-fullscreen-mode .react-flow {\n    height: calc(100vh - 80px) !important;\n}\n\n.components-menu-items__item-icon.has-icon-right {\n    width: 24px !important;\n    height: 24px !important;\n}\n\n.react-flow__node-default.selectable.selected,\n.react-flow__node-default.selectable:focus,\n.react-flow__node-default.selectable:focus-visible,\n.react-flow__node-input.selectable.selected,\n.react-flow__node-input.selectable:focus,\n.react-flow__node-input.selectable:focus-visible,\n.react-flow__node-output.selectable.selected,\n.react-flow__node-output.selectable:focus,\n.react-flow__node-output.selectable:focus-visible,\n.react-flow__node-group.selectable.selected,\n.react-flow__node-group.selectable:focus,\n.react-flow__node-group.selectable:focus-visible {\n    box-shadow: 0 0 0 2px #1a192b;\n}\n\n/* .react-flow {\n    background-color: #e1e1e1 !important;\n} */\n\n.settings-field-description {\n    font-size: 12px;\n    color: #666;\n    margin-bottom: 15px;\n}\n\n.settings-field-help-popover {\n    font-size: 12px;\n    color: #666;\n    width: 320px;\n    padding: 16px;\n    position: relative;\n    padding-top: 50px;\n}\n\n.settings-field-help-popover button {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n}\n\n.workflow-editor-inspector-card__handles-schema {\n    flex-flow: wrap;\n}\n\n.workflow-editor-inspector-card__handles-schema code {\n    padding: 3px 10px;\n    border-radius: 4px;\n    font-size: 12px;\n    background: #ebebeb;\n    color: #696969;\n}\n\n.workflow-editor-global-variables-description {\n    font-size: 12px;\n    color: #666;\n    margin-bottom: 15px;\n}\n\n.workflow-editor-global-variables-label {\n    font-size: 11px;\n    font-weight: 500;\n    line-height: 1.4;\n    text-transform: uppercase;\n    display: inline-block;\n    margin-bottom: calc(8px);\n    padding: 0px;\n}\n.workflow-editor-global-var-list {\n    margin: 0;\n    padding: 5px;\n    border: 1px solid var(--wp-components-color-gray-600, #949494);\n}\n\n.workflow-editor-global-var-list ul {\n    list-style: disc;\n    margin-left: 30px;\n}\n\n.workflow-editor-global-var-list ul li {\n    margin-bottom: 0;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25827,9 +25827,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     color: #b2b2c9;
 }
 
-/* SOCKET AREA */
+/* HANDLE AREA */
 
-.react-flow__node-socket-area {
+.react-flow__node-handle-area {
     font-size: 6px;
     background-color: #fff;
     border-bottom-left-radius: 8px;
@@ -25838,7 +25838,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     flex-direction: row;
 }
 
-.react-flow__node-socket-name {
+.react-flow__node-handle-name {
     padding: 2px;
     padding-bottom: 6px;
     text-align: center;
@@ -25847,7 +25847,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     border-left: 1px solid silver;
 }
 
-.react-flow__node-socket-name:first-child {
+.react-flow__node-handle-name:first-child {
     border-left: 0;
 }
 
@@ -25881,7 +25881,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     font-size: 6px;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
-`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/node-types.css"],"names":[],"mappings":"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","sourcesContent":[".react-flow__node {\n    max-width: 170px;\n}\n\n.react-flow__node-body {\n    border-radius: 8px;\n    color: #171717;\n    font-size: 10px;\n    min-width: 140px;\n    box-sizing: border-box;\n    border: 1px solid transparent;\n    cursor: pointer;\n}\n\n.react-flow__node-inner-body {\n    padding: 6px;\n    box-sizing: border-box;\n}\n\n.react-flow__node-header {\n    text-align: center;\n    width: 100%;\n    position: relative;\n    text-align: left;\n}\n\n.react-flow__node-header .react-flow__node-label {\n    margin-left: 22px;\n}\n\n.react-flow__node-header .dashicon {\n    margin-right: 4px;\n    position: absolute;\n    left: 2px;\n    top: 2px;\n}\n\n.react-flow__node-header .node-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 2px;\n}\n\n.react-flow__node-slug {\n    font-size: 8px;\n    display: inline-block;\n    height: 6px;\n    line-height: 6px;\n    padding: 2px;\n    position: absolute;\n    top: 45px;\n    left: 27px;\n}\n\n.react-flow__handle {\n    width: 8px !important;\n    height: 8px !important;\n    box-sizing: border-box;\n}\n\n.react-flow__handle.react-flow__handle-bottom {\n    bottom: -4px !important;\n}\n\n.react-flow__handle.react-flow__handle-top {\n    top: -4px !important;\n}\n\n.react-flow__node-top {\n    font-size: 8px;\n    padding: 0 8px;\n    border-top-left-radius: 8px;\n    border-top-right-radius: 8px;\n    border-bottom: 1px solid silver;\n    position: relative;\n    padding-left: 18px;\n}\n\n.react-flow__node-top .publishpress-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 8px;\n}\n\n/* PLACEHOLDER FOR EMPTY FLOW */\n.react-flow__node-triggerPlaceholderNode {\n    background-color: #fff;\n    border: 1px dashed #d2d2d2;\n    cursor: pointer;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    display: flex;\n    align-items: center;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {\n    color: #fff;\n    background-color: #d2d2d2;\n    padding: 2px;\n    display: inline-block;\n    width: 12px;\n    height: 12px;\n    box-sizing: border-box;\n    position: relative;\n    border-radius: 1px;\n    margin-right: 6px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 12px;\n    height: 12px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {\n    color: #d2d2d2\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    padding-left: 0;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover {\n    border: 1px dashed #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {\n    background-color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {\n    color: #aeaeae;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    width: 350px;\n}\n\n.react-flow__node-inserter-popover {\n    display: flex;\n    flex-direction: column;\n    position: relative;\n}\n\n.react-flow__node-inserter-popover-content {\n    height: 100%;\n    overflow-y: auto;\n    height: 340px;\n}\n\n.react-flow__node-inserter-popover-close {\n    cursor: pointer;\n    background-color: #000;\n    color: #fff;\n    display: block;\n    width: 100%;\n    padding: 6px;\n    height: 44px;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    height: ;\n}\n\n/* GENERIC NODE */\n\n.react-flow__node-genericNode {\n    background-color: #b2b2c9;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-top {\n    border-bottom: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* TRIGGER */\n\n.react-flow__node-genericTrigger {\n    background-color: #dce5df;\n    border: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #B594B6;\n}\n\n.react-flow__node-genericTrigger  .react-flow__node-slug {\n    color: #939895;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-top {\n    border-bottom: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-slug {\n    color: #808882;\n}\n\n/* GENERIC ACTION */\n\n.react-flow__node-genericAction {\n    background-color: #89bae4;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #8a62be;\n}\n\n.react-flow__node-genericAction .react-flow__node-top {\n    border-bottom: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #526e87;\n}\n\n/* GENERIC ADVANCED */\n\n.react-flow__node-genericAdvanced {\n    background-color: #f8ddad;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #b19f80;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-top {\n    border-bottom: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #908065;\n}\n\n/* QUERY ACTION */\n\n.react-flow__node-queryAction {\n    background-color: #d8b6f2;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: #9079a1;\n}\n\n.react-flow__node-queryAction .react-flow__node-top {\n    border-bottom: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: rgb(110, 110, 125);\n}\n\n/* DEBUG ACTION */\n\n.react-flow__node-debugAction {\n    background-color: #f0aec6;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-slug {\n    color: #916877;\n}\n\n.react-flow__node-debugAction .react-flow__node-top {\n    border-bottom: 1px solid #cf96ab;\n}\n\n\n/* SELECTED NODES */\n\n.react-flow__node.selected .react-flow__node-body {\n    border: 1px solid #555;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* SOCKET AREA */\n\n.react-flow__node-socket-area {\n    font-size: 6px;\n    background-color: #fff;\n    border-bottom-left-radius: 8px;\n    border-bottom-right-radius: 8px;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-flow__node-socket-name {\n    padding: 2px;\n    padding-bottom: 6px;\n    text-align: center;\n    line-height: 100%;\n    flex: 1;\n    border-left: 1px solid silver;\n}\n\n.react-flow__node-socket-name:first-child {\n    border-left: 0;\n}\n\n/* Error mark */\n\n.react-flow__node-error {\n    color: #d90f0f;\n    position: absolute;\n    top: -16px;\n    right: 0;\n}\n\n/* Node Content */\n.react-flow__node-content {\n    font-size: 6px;\n    margin-top: 6px;\n}\n\n.react-flow__node-content table {\n    border-spacing: 0;\n    width: 100%;\n}\n\n.react-flow__node-content table th {\n    text-align: left;\n}\n\n.react-flow__node-content table th,\n.react-flow__node-content table td {\n    padding: 0 6px;\n    font-size: 6px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/node-types.css"],"names":[],"mappings":"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","sourcesContent":[".react-flow__node {\n    max-width: 170px;\n}\n\n.react-flow__node-body {\n    border-radius: 8px;\n    color: #171717;\n    font-size: 10px;\n    min-width: 140px;\n    box-sizing: border-box;\n    border: 1px solid transparent;\n    cursor: pointer;\n}\n\n.react-flow__node-inner-body {\n    padding: 6px;\n    box-sizing: border-box;\n}\n\n.react-flow__node-header {\n    text-align: center;\n    width: 100%;\n    position: relative;\n    text-align: left;\n}\n\n.react-flow__node-header .react-flow__node-label {\n    margin-left: 22px;\n}\n\n.react-flow__node-header .dashicon {\n    margin-right: 4px;\n    position: absolute;\n    left: 2px;\n    top: 2px;\n}\n\n.react-flow__node-header .node-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 2px;\n}\n\n.react-flow__node-slug {\n    font-size: 8px;\n    display: inline-block;\n    height: 6px;\n    line-height: 6px;\n    padding: 2px;\n    position: absolute;\n    top: 45px;\n    left: 27px;\n}\n\n.react-flow__handle {\n    width: 8px !important;\n    height: 8px !important;\n    box-sizing: border-box;\n}\n\n.react-flow__handle.react-flow__handle-bottom {\n    bottom: -4px !important;\n}\n\n.react-flow__handle.react-flow__handle-top {\n    top: -4px !important;\n}\n\n.react-flow__node-top {\n    font-size: 8px;\n    padding: 0 8px;\n    border-top-left-radius: 8px;\n    border-top-right-radius: 8px;\n    border-bottom: 1px solid silver;\n    position: relative;\n    padding-left: 18px;\n}\n\n.react-flow__node-top .publishpress-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 8px;\n}\n\n/* PLACEHOLDER FOR EMPTY FLOW */\n.react-flow__node-triggerPlaceholderNode {\n    background-color: #fff;\n    border: 1px dashed #d2d2d2;\n    cursor: pointer;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    display: flex;\n    align-items: center;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {\n    color: #fff;\n    background-color: #d2d2d2;\n    padding: 2px;\n    display: inline-block;\n    width: 12px;\n    height: 12px;\n    box-sizing: border-box;\n    position: relative;\n    border-radius: 1px;\n    margin-right: 6px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 12px;\n    height: 12px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {\n    color: #d2d2d2\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    padding-left: 0;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover {\n    border: 1px dashed #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {\n    background-color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {\n    color: #aeaeae;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    width: 350px;\n}\n\n.react-flow__node-inserter-popover {\n    display: flex;\n    flex-direction: column;\n    position: relative;\n}\n\n.react-flow__node-inserter-popover-content {\n    height: 100%;\n    overflow-y: auto;\n    height: 340px;\n}\n\n.react-flow__node-inserter-popover-close {\n    cursor: pointer;\n    background-color: #000;\n    color: #fff;\n    display: block;\n    width: 100%;\n    padding: 6px;\n    height: 44px;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    height: ;\n}\n\n/* GENERIC NODE */\n\n.react-flow__node-genericNode {\n    background-color: #b2b2c9;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-top {\n    border-bottom: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* TRIGGER */\n\n.react-flow__node-genericTrigger {\n    background-color: #dce5df;\n    border: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #B594B6;\n}\n\n.react-flow__node-genericTrigger  .react-flow__node-slug {\n    color: #939895;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-top {\n    border-bottom: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-slug {\n    color: #808882;\n}\n\n/* GENERIC ACTION */\n\n.react-flow__node-genericAction {\n    background-color: #89bae4;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #8a62be;\n}\n\n.react-flow__node-genericAction .react-flow__node-top {\n    border-bottom: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #526e87;\n}\n\n/* GENERIC ADVANCED */\n\n.react-flow__node-genericAdvanced {\n    background-color: #f8ddad;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #b19f80;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-top {\n    border-bottom: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #908065;\n}\n\n/* QUERY ACTION */\n\n.react-flow__node-queryAction {\n    background-color: #d8b6f2;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: #9079a1;\n}\n\n.react-flow__node-queryAction .react-flow__node-top {\n    border-bottom: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: rgb(110, 110, 125);\n}\n\n/* DEBUG ACTION */\n\n.react-flow__node-debugAction {\n    background-color: #f0aec6;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-slug {\n    color: #916877;\n}\n\n.react-flow__node-debugAction .react-flow__node-top {\n    border-bottom: 1px solid #cf96ab;\n}\n\n\n/* SELECTED NODES */\n\n.react-flow__node.selected .react-flow__node-body {\n    border: 1px solid #555;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* HANDLE AREA */\n\n.react-flow__node-handle-area {\n    font-size: 6px;\n    background-color: #fff;\n    border-bottom-left-radius: 8px;\n    border-bottom-right-radius: 8px;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-flow__node-handle-name {\n    padding: 2px;\n    padding-bottom: 6px;\n    text-align: center;\n    line-height: 100%;\n    flex: 1;\n    border-left: 1px solid silver;\n}\n\n.react-flow__node-handle-name:first-child {\n    border-left: 0;\n}\n\n/* Error mark */\n\n.react-flow__node-error {\n    color: #d90f0f;\n    position: absolute;\n    top: -16px;\n    right: 0;\n}\n\n/* Node Content */\n.react-flow__node-content {\n    font-size: 6px;\n    margin-top: 6px;\n}\n\n.react-flow__node-content table {\n    border-spacing: 0;\n    width: 100%;\n}\n\n.react-flow__node-content table th {\n    text-align: left;\n}\n\n.react-flow__node-content table th,\n.react-flow__node-content table td {\n    padding: 0 6px;\n    font-size: 6px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

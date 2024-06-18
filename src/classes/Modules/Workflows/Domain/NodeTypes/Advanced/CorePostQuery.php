@@ -145,7 +145,7 @@ class CorePostQuery implements NodeTypeInterface
         return "react-flow__node-queryAction";
     }
 
-    public function getSocketSchema(): array
+    public function getHandleSchema(): array
     {
         return [
             "target" => [

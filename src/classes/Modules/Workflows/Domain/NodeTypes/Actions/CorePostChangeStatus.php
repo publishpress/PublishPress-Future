@@ -131,7 +131,7 @@ class CorePostChangeStatus implements NodeTypeInterface
         return "react-flow__node-genericAction";
     }
 
-    public function getSocketSchema(): array
+    public function getHandleSchema(): array
     {
         return [
             "target" => [

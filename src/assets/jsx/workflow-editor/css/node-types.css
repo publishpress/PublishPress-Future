@@ -315,9 +315,9 @@
     color: #b2b2c9;
 }
 
-/* SOCKET AREA */
+/* HANDLE AREA */
 
-.react-flow__node-socket-area {
+.react-flow__node-handle-area {
     font-size: 6px;
     background-color: #fff;
     border-bottom-left-radius: 8px;
@@ -326,7 +326,7 @@
     flex-direction: row;
 }
 
-.react-flow__node-socket-name {
+.react-flow__node-handle-name {
     padding: 2px;
     padding-bottom: 6px;
     text-align: center;
@@ -335,7 +335,7 @@
     border-left: 1px solid silver;
 }
 
-.react-flow__node-socket-name:first-child {
+.react-flow__node-handle-name:first-child {
     border-left: 0;
 }
 

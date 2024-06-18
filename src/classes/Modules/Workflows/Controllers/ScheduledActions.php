@@ -110,19 +110,19 @@ class ScheduledActions implements InitializableInterface
 
                 $nodeType = $this->nodeTypesModel->getNodeType($args['step']['node']['data']['name']);
 
-                $sourceSockets = [];
+                $sourceHandles = [];
                 if (! is_null($nodeType)) {
-                    $socketsSchema = $nodeType->getSocketSchema();
+                    $handlesSchema = $nodeType->getHandleSchema();
 
-                    foreach ($socketsSchema['source'] as $socket) {
-                        $sourceSockets[$socket['id']] = $socket['label'];
+                    foreach ($handlesSchema['source'] as $handle) {
+                        $sourceHandles[$handle['id']] = $handle['label'];
                     }
                 }
 
                 $nextNodes = '<ul class="future-workflows-outputs">';
-                foreach ($next as $socketId => $handlerNodes) {
-                    $socketLabel = $sourceSockets[$socketId] ?? $socketId;
-                    $nextNodes .= '<li class="future-workflow-step-handler">' . $socketLabel . ':</li>';
+                foreach ($next as $handleId => $handlerNodes) {
+                    $handleLabel = $sourceHandles[$handleId] ?? $handleId;
+                    $nextNodes .= '<li class="future-workflow-step-handler">' . $handleLabel . ':</li>';
                     $nextNodes .= '<ul>';
                     foreach ($handlerNodes as $nextStep) {
                         $stepLabel = '';

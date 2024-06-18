@@ -64,11 +64,11 @@ class IfElse implements NodeRunnerInterface
 
     public function getNextSteps(array $step)
     {
-        $socketName = $this->expressionResult ? 'true' : 'false';
+        $handleName = $this->expressionResult ? 'true' : 'false';
 
         $nextSteps = [];
-        if (isset($step['next'][$socketName])) {
-            $nextSteps = $step['next'][$socketName];
+        if (isset($step['next'][$handleName])) {
+            $nextSteps = $step['next'][$handleName];
         }
 
         return $nextSteps;

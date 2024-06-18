@@ -156,7 +156,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "className" => $instance->getCSSClass(),
                     "version" => $instance->getVersion(),
                     "outputSchema" => $instance->getOutputSchema(),
-                    "socketSchema" => $instance->getSocketSchema(),
+                    "handleSchema" => $instance->getHandleSchema(),
                     "baseSlug" => $instance->getBaseSlug(),
                 ],
                 $type
@@ -233,7 +233,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             "settingsSchema" => [],
             "outputSchema" => [],
             "className" => "react-flow__node-genericNode",
-            "socketSchema" => [],
+            "handleSchema" => [],
         ];
 
         return array_merge($defaultNodeAttributes, $node);

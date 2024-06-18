@@ -102,10 +102,10 @@ interface NodeTypeInterface
     public function getBaseSlug(): string;
 
     /**
-     * The schema of the sockets of the node-type. This is used to
+     * The schema of the handles of the node-type. This is used to
      * specify the handles of the node in the workflow editor, for
      * source or target handles. The handles are used to connect
      * the nodes in the workflow editor.
      */
-    public function getSocketSchema(): array;
+    public function getHandleSchema(): array;
 }

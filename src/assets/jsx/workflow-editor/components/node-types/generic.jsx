@@ -38,9 +38,9 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
 
     let targetHandles = null;
-    if (nodeType.socketSchema) {
-        if (nodeType.socketSchema.target) {
-            targetHandles = nodeType.socketSchema.target.map((handle) => {
+    if (nodeType.handleSchema) {
+        if (nodeType.handleSchema.target) {
+            targetHandles = nodeType.handleSchema.target.map((handle) => {
                 return (
                     <Handle
                         key={handle.id + '_target'}
@@ -56,10 +56,10 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     }
 
     let sourceHandles = null;
-    let socketAreas = null;
-    if (nodeType.socketSchema) {
-        if (nodeType.socketSchema.source) {
-            sourceHandles = nodeType.socketSchema.source.map((handle) => {
+    let handleAreas = null;
+    if (nodeType.handleSchema) {
+        if (nodeType.handleSchema.source) {
+            sourceHandles = nodeType.handleSchema.source.map((handle) => {
                 return (
                     <Handle
                         key={handle.id + '_source'}
@@ -72,11 +72,11 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                 );
             });
 
-            socketAreas = nodeType.socketSchema.source.map((handle) => {
+            handleAreas = nodeType.handleSchema.source.map((handle) => {
                 return (
                     <div
-                        key={handle.id + 'socketArea'}
-                        className='react-flow__node-socket-name'
+                        key={handle.id + 'handleArea'}
+                        className='react-flow__node-handle-name'
                     >
                         {handle.label}
                     </div>
@@ -168,8 +168,8 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                     }
                 </div>
 
-                <div className='react-flow__node-socket-area'>
-                    {socketAreas}
+                <div className='react-flow__node-handle-area'>
+                    {handleAreas}
                 </div>
 
                 {sourceHandles}

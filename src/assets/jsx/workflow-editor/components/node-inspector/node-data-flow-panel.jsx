@@ -2,15 +2,15 @@ import { PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import PersistentPanelBody from "../persistent-panel-body";
 
-export const NodeSocketsPanel = ({ inputSchema = [], outputSchema = []}) => {
+export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
 
     if (!inputSchema) {
         inputSchema = [];
     }
 
     return (
-        <PersistentPanelBody title={__("Sockets", "publishpress-future-pro")} className="workflow-editor-dev-panel">
-            <PanelRow className="workflow-editor-inspector-card__sockets-schema">
+        <PersistentPanelBody title={__("Step Data Flow", "publishpress-future-pro")} className="workflow-editor-dev-panel">
+            <PanelRow className="workflow-editor-inspector-card__handles-schema">
                 <h3>{__('Inputs', 'publishpress-future-pro')}</h3>
                 <div>
                     {inputSchema.length > 0 && (
@@ -30,7 +30,7 @@ export const NodeSocketsPanel = ({ inputSchema = [], outputSchema = []}) => {
                 </div>
             </PanelRow>
 
-            <PanelRow className="workflow-editor-inspector-card__sockets-schema">
+            <PanelRow className="workflow-editor-inspector-card__handles-schema">
                 <h3>{__('Outputs', 'publishpress-future-pro')}</h3>
                 <div>
                     {outputSchema.length > 0 && (
@@ -53,4 +53,4 @@ export const NodeSocketsPanel = ({ inputSchema = [], outputSchema = []}) => {
     );
 };
 
-export default NodeSocketsPanel;
+export default NodeDataFlowPanel;

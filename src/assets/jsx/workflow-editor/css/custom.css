@@ -60,11 +60,11 @@
     right: 10px;
 }
 
-.workflow-editor-inspector-card__sockets-schema {
+.workflow-editor-inspector-card__handles-schema {
     flex-flow: wrap;
 }
 
-.workflow-editor-inspector-card__sockets-schema code {
+.workflow-editor-inspector-card__handles-schema code {
     padding: 3px 10px;
     border-radius: 4px;
     font-size: 12px;

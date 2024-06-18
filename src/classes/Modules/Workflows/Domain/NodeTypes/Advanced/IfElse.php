@@ -63,7 +63,7 @@ class IfElse implements NodeTypeInterface
             [
                 "label" => __("Conditions", "publishpress-future-pro"),
                 "description" => __(
-                    "THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True socket is implemented. False will not run the next actions for now.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                    "THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True handle is implemented. False will not run the next actions for now.", // phpcs:ignore Generic.Files.LineLength.TooLong
                     "publishpress-future-pro"
                 ),
                 "fields" => [
@@ -100,7 +100,7 @@ class IfElse implements NodeTypeInterface
         return "react-flow__node-genericAdvanced";
     }
 
-    public function getSocketSchema(): array
+    public function getHandleSchema(): array
     {
         return [
             "target" => [

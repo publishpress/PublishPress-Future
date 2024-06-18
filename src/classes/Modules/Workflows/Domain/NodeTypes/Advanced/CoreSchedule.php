@@ -113,7 +113,7 @@ class CoreSchedule implements NodeTypeInterface
         return "react-flow__node-genericAdvanced";
     }
 
-    public function getSocketSchema(): array
+    public function getHandleSchema(): array
     {
         return [
             "target" => [

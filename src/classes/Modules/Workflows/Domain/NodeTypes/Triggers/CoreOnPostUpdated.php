@@ -142,7 +142,7 @@ class CoreOnPostUpdated implements NodeTypeInterface
         return "react-flow__node-genericTrigger";
     }
 
-    public function getSocketSchema(): array
+    public function getHandleSchema(): array
     {
         return [
             "target" => [],

@@ -107,7 +107,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
             let newEdgeParams;
 
             if (draggingFromHandle.handleType === HANDLE_TYPE_SOURCE) {
-                firstTargetHandleId = nodeType.socketSchema.target[0].id;
+                firstTargetHandleId = nodeType.handleSchema.target[0].id;
                 newEdgeParams = {
                     source: draggingFromHandle.sourceId,
                     sourceHandle: draggingFromHandle.handleId,
@@ -117,7 +117,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
                     id: `${draggingFromHandle.sourceId}-${draggingFromHandle.handleId}-${newNode.id}-${firstTargetHandleId}`,
                 };
             } else {
-                firstTargetHandleId = nodeType.socketSchema.source[0].id;
+                firstTargetHandleId = nodeType.handleSchema.source[0].id;
                 newEdgeParams = {
                     source: newNode.id,
                     sourceHandle: firstTargetHandleId,

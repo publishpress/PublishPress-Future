@@ -436,7 +436,7 @@ class WorkflowModel implements WorkflowModelInterface
 
             return [];
         }
-        $socketSchema = $nodeTypeInstance->getSocketSchema();
+        $handleSchema = $nodeTypeInstance->getHandleSchema();
 
         $tree = ['node' => $node,];
 
@@ -446,13 +446,13 @@ class WorkflowModel implements WorkflowModelInterface
 
         $tree['next'] = [];
 
-        foreach ($socketSchema['source'] as $socket) {
+        foreach ($handleSchema['source'] as $handle) {
             foreach ($edges as $edge) {
-                if ($edge['source'] === $sourceNodeId && $edge['sourceHandle'] === $socket['id']) {
-                    if (! isset($tree['next'][$socket['id']])) {
-                        $tree['next'][$socket['id']] = [];
+                if ($edge['source'] === $sourceNodeId && $edge['sourceHandle'] === $handle['id']) {
+                    if (! isset($tree['next'][$handle['id']])) {
+                        $tree['next'][$handle['id']] = [];
                     }
-                    $tree['next'][$socket['id']][] = $this->getRoutineNodesTree(
+                    $tree['next'][$handle['id']][] = $this->getRoutineNodesTree(
                         $edges,
                         $nodes,
                         $edge['target'],

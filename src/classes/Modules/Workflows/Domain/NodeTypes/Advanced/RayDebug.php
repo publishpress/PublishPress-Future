@@ -114,7 +114,7 @@ class RayDebug implements NodeTypeInterface
         return "react-flow__node-debugAction";
     }
 
-    public function getSocketSchema(): array
+    public function getHandleSchema(): array
     {
         return [
             "target" => [

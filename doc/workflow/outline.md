@@ -32,15 +32,16 @@
 ## Custom Development
 
 - [ ] Step Types
-  - [ ] Type and Runner Definitions
+  - [x] Type and Runner Definitions
   - [ ] Settings Schema
   - [ ] Validation Schema
-  - [ ] Socket Schema
+  - [ ] Handle Schema
   - [ ] Output Schema
 - [ ] Creating New Step Types
 - [ ] Creating New Data Types
 - [ ] Adding global variables
 - [ ] API Usage and Extensions
+- [ ] Development Mode
 
 ## Developer Documentation - SLAB
 
