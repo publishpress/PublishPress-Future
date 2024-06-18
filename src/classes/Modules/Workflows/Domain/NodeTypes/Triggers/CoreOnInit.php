@@ -8,7 +8,10 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreOnInit implements NodeTypeInterface
 {
-    public const NODE_NAME = "trigger/core.init";
+    public static function getNodeTypeName(): string
+    {
+        return "trigger/core.init";
+    }
 
     public function getElementaryType(): string
     {
@@ -18,11 +21,6 @@ class CoreOnInit implements NodeTypeInterface
     public function getType(): string
     {
         return "trigger";
-    }
-
-    public function getName(): string
-    {
-        return self::NODE_NAME;
     }
 
     public function getBaseSlug(): string

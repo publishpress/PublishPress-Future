@@ -14,8 +14,6 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
 {
     use InfiniteLoopPreventer;
 
-    public const NODE_NAME = NodeType::NODE_NAME;
-
     public const META_KEY_MANUALLY_TRIGGERED = '_pp_workflow_manually_triggered_';
 
     /**
@@ -56,6 +54,11 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->postQueryValidator = $postQueryValidator;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeType::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step, array $contextVariables = []): void

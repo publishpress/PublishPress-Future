@@ -10,8 +10,6 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostQuery implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeType::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -28,6 +26,11 @@ class CorePostQuery implements NodeRunnerInterface
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeType::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

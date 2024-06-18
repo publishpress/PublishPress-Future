@@ -10,8 +10,6 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterfa
 
 class FutureLegacyAction implements NodeTriggerRunnerInterface
 {
-    public const NODE_NAME = NodeTypeFutureLegacyAction::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -43,6 +41,11 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeFutureLegacyAction::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step, array $contextVariables = []): void

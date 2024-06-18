@@ -47,7 +47,7 @@ class WorkflowsModel implements WorkflowsModelInterface
             ];
 
             foreach ($triggers as $trigger) {
-                if ($trigger['data']['name'] !== CoreOnManuallyEnabledForPost::NODE_NAME) {
+                if ($trigger['data']['name'] !== CoreOnManuallyEnabledForPost::getNodeTypeName()) {
                     continue;
                 }
 

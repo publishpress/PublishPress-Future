@@ -468,12 +468,12 @@ class WorkflowModel implements WorkflowModelInterface
 
     private function checkHasLegacyActionTriggerInTheFlow(): bool
     {
-        return $this->checkHasTriggerInTheFlow(FutureLegacyAction::NODE_NAME);
+        return $this->checkHasTriggerInTheFlow(FutureLegacyAction::getNodeTypeName());
     }
 
     private function checkHasManualSelectionTriggerInTheFlow(): bool
     {
-        return $this->checkHasTriggerInTheFlow(CoreOnManuallyEnabledForPost::NODE_NAME);
+        return $this->checkHasTriggerInTheFlow(CoreOnManuallyEnabledForPost::getNodeTypeName());
     }
 
     private function checkHasTriggerInTheFlow(string $triggerName): bool

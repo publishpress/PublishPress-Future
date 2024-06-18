@@ -7,7 +7,10 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreOnManuallyEnabledForPost implements NodeTypeInterface
 {
-    public const NODE_NAME = "trigger/core.manually-enabled-for-post";
+    public static function getNodeTypeName(): string
+    {
+        return "trigger/core.manually-enabled-for-post";
+    }
 
     public function getElementaryType(): string
     {
@@ -17,11 +20,6 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
     public function getType(): string
     {
         return "trigger";
-    }
-
-    public function getName(): string
-    {
-        return self::NODE_NAME;
     }
 
     public function getBaseSlug(): string

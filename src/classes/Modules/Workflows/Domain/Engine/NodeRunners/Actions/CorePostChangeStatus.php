@@ -10,8 +10,6 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostChangeStatus implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeType::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -35,6 +33,11 @@ class CorePostChangeStatus implements NodeRunnerInterface
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeType::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

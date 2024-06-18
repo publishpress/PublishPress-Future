@@ -10,8 +10,6 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostStick implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeCorePostStick::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -35,6 +33,11 @@ class CorePostStick implements NodeRunnerInterface
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeCorePostStick::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

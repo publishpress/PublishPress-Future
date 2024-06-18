@@ -7,7 +7,10 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostTermsAdd implements NodeTypeInterface
 {
-    public const NODE_NAME = "action/core.add-post-terms";
+    public static function getNodeTypeName(): string
+    {
+        return "action/core.add-post-terms";
+    }
 
     public function getElementaryType(): string
     {
@@ -17,11 +20,6 @@ class CorePostTermsAdd implements NodeTypeInterface
     public function getType(): string
     {
         return "generic";
-    }
-
-    public function getName(): string
-    {
-        return self::NODE_NAME;
     }
 
     public function getBaseSlug(): string

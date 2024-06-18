@@ -5,6 +5,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 interface NodeTypeInterface
 {
     /**
+     * The name of the node-type. This must be unique and must be
+     * lower case with no spaces. It must be a compound name
+     * initiating with the node elementary type, separated by a slash "/".
+     */
+    public static function getNodeTypeName(): string;
+
+    /**
      * There are three elementary types: trigger, action, and advanced.
      */
     public function getElementaryType(): string;
@@ -15,13 +22,6 @@ interface NodeTypeInterface
      * rendering purposes.
      */
     public function getType(): string;
-
-    /**
-     * Must be a compound name in lower case, with no spaces, initiating
-     * with the node elementary type, separated by a slash "/", then
-     * the name of the node-type.
-     */
-    public function getName(): string;
 
     /**
      * The label displayed in the workflow editor.

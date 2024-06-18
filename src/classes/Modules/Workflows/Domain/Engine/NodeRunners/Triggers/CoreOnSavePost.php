@@ -14,8 +14,6 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
 {
     use InfiniteLoopPreventer;
 
-    public const NODE_NAME = NodeTypeCoreOnSavePost::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -55,6 +53,11 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->postQueryValidator = $postQueryValidator;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeCoreOnSavePost::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step, array $contextVariables = []): void

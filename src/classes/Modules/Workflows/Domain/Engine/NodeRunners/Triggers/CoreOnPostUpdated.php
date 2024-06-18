@@ -14,8 +14,6 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
 {
     use InfiniteLoopPreventer;
 
-    public const NODE_NAME = NodeTypeCoreOnPostUpdated::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -54,6 +52,11 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->postQueryValidator = $postQueryValidator;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeCoreOnPostUpdated::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step, array $contextVariables = []): void

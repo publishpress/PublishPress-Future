@@ -10,8 +10,6 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterfa
 
 class CoreOnInit implements NodeTriggerRunnerInterface
 {
-    public const NODE_NAME = NodeTypeCoreOnInit::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -38,6 +36,11 @@ class CoreOnInit implements NodeTriggerRunnerInterface
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeCoreOnInit::getNodeTypeName();
     }
 
     public function setup(int $workflowId, array $step, array $contextVariables = []): void

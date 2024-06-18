@@ -292,7 +292,7 @@ return [
 
             switch ($nodeName) {
                 // Triggers
-                case CoreOnSavePost::NODE_NAME:
+                case CoreOnSavePost::getNodeTypeName():
                     $nodeRunner = new CoreOnSavePost(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
@@ -300,7 +300,7 @@ return [
                     );
                     break;
 
-                case CoreOnPostUpdated::NODE_NAME:
+                case CoreOnPostUpdated::getNodeTypeName():
                     $nodeRunner = new CoreOnPostUpdated(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
@@ -308,7 +308,7 @@ return [
                     );
                     break;
 
-                case CoreOnManuallyEnabledForPost::NODE_NAME:
+                case CoreOnManuallyEnabledForPost::getNodeTypeName():
                     $nodeRunner = new CoreOnManuallyEnabledForPost(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
@@ -316,15 +316,15 @@ return [
                     );
                     break;
 
-                case FutureLegacyAction::NODE_NAME:
+                case FutureLegacyAction::getNodeTypeName():
                     $nodeRunner = new FutureLegacyAction(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
                     );
                     break;
 
-                    // Actions
-                case CorePostDelete::NODE_NAME:
+                // Actions
+                case CorePostDelete::getNodeTypeName():
                     $nodeRunner = new CorePostDelete(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
@@ -332,7 +332,7 @@ return [
                     );
                     break;
 
-                case CorePostStick::NODE_NAME:
+                case CorePostStick::getNodeTypeName():
                     $nodeRunner = new CorePostStick(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
@@ -340,7 +340,7 @@ return [
                     );
                     break;
 
-                case CorePostUnstick::NODE_NAME:
+                case CorePostUnstick::getNodeTypeName():
                     $nodeRunner = new CorePostUnstick(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
@@ -348,7 +348,7 @@ return [
                     );
                     break;
 
-                case CorePostTermsAdd::NODE_NAME:
+                case CorePostTermsAdd::getNodeTypeName():
                     $nodeRunner = new CorePostTermsAdd(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
@@ -357,7 +357,7 @@ return [
                     );
                     break;
 
-                case CorePostTermsSet::NODE_NAME:
+                case CorePostTermsSet::getNodeTypeName():
                     $nodeRunner = new CorePostTermsSet(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
@@ -366,7 +366,7 @@ return [
                     );
                     break;
 
-                case CorePostTermsRemove::NODE_NAME:
+                case CorePostTermsRemove::getNodeTypeName():
                     $nodeRunner = new CorePostTermsRemove(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
@@ -375,7 +375,7 @@ return [
                     );
                     break;
 
-                case CorePostChangeStatus::NODE_NAME:
+                case CorePostChangeStatus::getNodeTypeName():
                     $nodeRunner = new CorePostChangeStatus(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PREPARER),
@@ -383,7 +383,7 @@ return [
                     );
                     break;
 
-                case CoreSendEmail::NODE_NAME:
+                case CoreSendEmail::getNodeTypeName():
                     $nodeRunner = new CoreSendEmail(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
@@ -392,8 +392,8 @@ return [
                     );
                     break;
 
-                    // Advanced
-                case CoreSchedule::NODE_NAME:
+                // Advanced
+                case CoreSchedule::getNodeTypeName():
                     $nodeRunner = new CoreSchedule(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER),
@@ -403,21 +403,21 @@ return [
                     );
                     break;
 
-                case IfElse::NODE_NAME:
+                case IfElse::getNodeTypeName():
                     $nodeRunner = new IfElse(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
                     );
                     break;
 
-                case CorePostQuery::NODE_NAME:
+                case CorePostQuery::getNodeTypeName():
                     $nodeRunner = new CorePostQuery(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)
                     );
                     break;
 
-                case RayDebug::NODE_NAME:
+                case RayDebug::getNodeTypeName():
                     $nodeRunner = new RayDebug(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PREPARER)

@@ -15,8 +15,6 @@ use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 
 class IfElse implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeIfElse::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -35,6 +33,11 @@ class IfElse implements NodeRunnerInterface
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeIfElse::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

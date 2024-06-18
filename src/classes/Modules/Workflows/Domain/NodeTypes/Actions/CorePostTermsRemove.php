@@ -7,7 +7,10 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostTermsRemove implements NodeTypeInterface
 {
-    public const NODE_NAME = "action/core.remove-post-terms";
+    public static function getNodeTypeName(): string
+    {
+        return "action/core.remove-post-terms";
+    }
 
     public function getElementaryType(): string
     {
@@ -17,11 +20,6 @@ class CorePostTermsRemove implements NodeTypeInterface
     public function getType(): string
     {
         return "generic";
-    }
-
-    public function getName(): string
-    {
-        return self::NODE_NAME;
     }
 
     public function getBaseSlug(): string

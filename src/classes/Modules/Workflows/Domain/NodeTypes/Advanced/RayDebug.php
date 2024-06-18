@@ -7,7 +7,10 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class RayDebug implements NodeTypeInterface
 {
-    public const NODE_NAME = "advanced/ray.debug";
+    public static function getNodeTypeName(): string
+    {
+        return "advanced/ray.debug";
+    }
 
     public function getElementaryType(): string
     {
@@ -17,11 +20,6 @@ class RayDebug implements NodeTypeInterface
     public function getType(): string
     {
         return "generic";
-    }
-
-    public function getName(): string
-    {
-        return self::NODE_NAME;
     }
 
     public function getBaseSlug(): string

@@ -10,8 +10,6 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class RayDebug implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeRayDebug::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -28,6 +26,11 @@ class RayDebug implements NodeRunnerInterface
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeRayDebug::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

@@ -16,8 +16,6 @@ use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 
 class CoreSchedule implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeCoreSchedule::NODE_NAME;
-
     public const DEFAULT_REPEAT_UNTIL_TIMES = 99999;
 
     /**
@@ -57,6 +55,11 @@ class CoreSchedule implements NodeRunnerInterface
         $this->cron = $cron;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->nodeTypesModel = $nodeTypesModel;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeCoreSchedule::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

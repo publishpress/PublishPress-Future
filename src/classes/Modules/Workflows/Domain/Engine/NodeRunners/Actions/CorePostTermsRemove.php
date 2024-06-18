@@ -11,8 +11,6 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostTermsRemove implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeType::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -43,6 +41,11 @@ class CorePostTermsRemove implements NodeRunnerInterface
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->errorFacade = $errorFacade;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeType::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

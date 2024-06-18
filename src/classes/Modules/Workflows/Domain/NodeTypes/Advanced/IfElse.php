@@ -7,7 +7,10 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class IfElse implements NodeTypeInterface
 {
-    public const NODE_NAME = "advanced/core.if-else";
+    public static function getNodeTypeName(): string
+    {
+        return "advanced/core.if-else";
+    }
 
     public function getElementaryType(): string
     {
@@ -17,11 +20,6 @@ class IfElse implements NodeTypeInterface
     public function getType(): string
     {
         return "generic";
-    }
-
-    public function getName(): string
-    {
-        return self::NODE_NAME;
     }
 
     public function getBaseSlug(): string

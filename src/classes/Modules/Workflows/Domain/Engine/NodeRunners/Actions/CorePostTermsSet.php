@@ -11,8 +11,6 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterf
 
 class CorePostTermsSet implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeCorePostTermsSet::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -43,6 +41,11 @@ class CorePostTermsSet implements NodeRunnerInterface
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->errorFacade = $errorFacade;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeCorePostTermsSet::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

@@ -135,11 +135,13 @@ class NodeTypesModel implements NodeTypesModelInterface
         $instancesCopy = $instances;
 
         foreach ($instancesCopy as &$instance) {
+            $instanceClass = get_class($instance);
+
             $instance = $this->applyDefaultParams(
                 [
                     "type" => $instance->getType(),
                     "elementaryType" => $instance->getElementaryType(),
-                    "name" => $instance->getName(),
+                    "name" => $instanceClass::getNodeTypeName(),
                     "label" => $instance->getLabel(),
                     "description" => $instance->getDescription(),
                     "category" => $instance->getCategory(),
@@ -167,10 +169,10 @@ class NodeTypesModel implements NodeTypesModelInterface
     private function getDefaultTriggerNodes()
     {
         $nodesInstances = [
-            CoreOnSavePost::NODE_NAME => new CoreOnSavePost(),
-            CoreOnPostUpdated::NODE_NAME => new CoreOnPostUpdated(),
-            CoreOnManuallyEnabledForPost::NODE_NAME => new CoreOnManuallyEnabledForPost(),
-            FutureLegacyAction::NODE_NAME => new FutureLegacyAction($this->hooks),
+            CoreOnSavePost::getNodeTypeName() => new CoreOnSavePost(),
+            CoreOnPostUpdated::getNodeTypeName() => new CoreOnPostUpdated(),
+            CoreOnManuallyEnabledForPost::getNodeTypeName() => new CoreOnManuallyEnabledForPost(),
+            FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
         ];
 
         return $nodesInstances;
@@ -179,14 +181,14 @@ class NodeTypesModel implements NodeTypesModelInterface
     private function getDefaultActionNodes()
     {
         $nodesInstances = [
-            CorePostDelete::NODE_NAME => new CorePostDelete(),
-            CorePostStick::NODE_NAME => new CorePostStick(),
-            CorePostUnstick::NODE_NAME => new CorePostUnstick(),
-            CorePostTermsAdd::NODE_NAME => new CorePostTermsAdd(),
-            CorePostTermsSet::NODE_NAME => new CorePostTermsSet(),
-            CorePostTermsRemove::NODE_NAME => new CorePostTermsRemove(),
-            CorePostChangeStatus::NODE_NAME => new CorePostChangeStatus(),
-            CoreSendEmail::NODE_NAME => new CoreSendEmail(),
+            CorePostDelete::getNodeTypeName() => new CorePostDelete(),
+            CorePostStick::getNodeTypeName() => new CorePostStick(),
+            CorePostUnstick::getNodeTypeName() => new CorePostUnstick(),
+            CorePostTermsAdd::getNodeTypeName() => new CorePostTermsAdd(),
+            CorePostTermsSet::getNodeTypeName() => new CorePostTermsSet(),
+            CorePostTermsRemove::getNodeTypeName() => new CorePostTermsRemove(),
+            CorePostChangeStatus::getNodeTypeName() => new CorePostChangeStatus(),
+            CoreSendEmail::getNodeTypeName() => new CoreSendEmail(),
         ];
 
         return $nodesInstances;
@@ -195,12 +197,12 @@ class NodeTypesModel implements NodeTypesModelInterface
     private function getDefaultAdvancedNodes()
     {
         $nodesInstances = [
-            CoreSchedule::NODE_NAME => new CoreSchedule(),
-            CorePostQuery::NODE_NAME => new CorePostQuery(),
+            CoreSchedule::getNodeTypeName() => new CoreSchedule(),
+            CorePostQuery::getNodeTypeName() => new CorePostQuery(),
         ];
 
         if (function_exists('ray')) {
-            $nodesInstances[RayDebug::NODE_NAME] = new RayDebug();
+            $nodesInstances[RayDebug::getNodeTypeName()] = new RayDebug();
         }
 
         return $nodesInstances;
@@ -304,7 +306,8 @@ class NodeTypesModel implements NodeTypesModelInterface
         $indexed = [];
 
         foreach ($nodeTypes as $nodeType) {
-            $indexed[$nodeType->getName()] = $nodeType;
+            $nodeTypeClass = get_class($nodeType);
+            $indexed[$nodeTypeClass::getNodeTypeName()] = $nodeType;
         }
 
         return $indexed;
@@ -323,7 +326,9 @@ class NodeTypesModel implements NodeTypesModelInterface
 
         $strings = [];
         foreach ($nodeTypes as $nodeType) {
-            $strings[$nodeType->getName()] = [
+            $nodeTypeClass = get_class($nodeType);
+
+            $strings[$nodeTypeClass::getNodeTypeName()] = [
                 'label' => $nodeType->getLabel(),
                 'description' => $nodeType->getDescription(),
             ];

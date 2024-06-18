@@ -14,8 +14,6 @@ use function PublishPress\FuturePro\logError;
 
 class CoreSendEmail implements NodeRunnerInterface
 {
-    public const NODE_NAME = NodeTypeCoreSendEmail::NODE_NAME;
-
     /**
      * @var HookableInterface
      */
@@ -46,6 +44,11 @@ class CoreSendEmail implements NodeRunnerInterface
         $this->nodeRunnerPreparer = $nodeRunnerPreparer;
         $this->emailFacade = $emailFacade;
         $this->workflowEngine = $workflowEngine;
+    }
+
+    public static function getNodeTypeName(): string
+    {
+        return NodeTypeCoreSendEmail::getNodeTypeName();
     }
 
     public function setup(array $step, array $contextVariables = []): void

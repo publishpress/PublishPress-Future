@@ -7,7 +7,10 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CorePostStick implements NodeTypeInterface
 {
-    public const NODE_NAME = "action/core.stick-post";
+    public static function getNodeTypeName(): string
+    {
+        return "action/core.stick-post";
+    }
 
     public function getElementaryType(): string
     {
@@ -17,11 +20,6 @@ class CorePostStick implements NodeTypeInterface
     public function getType(): string
     {
         return "generic";
-    }
-
-    public function getName(): string
-    {
-        return self::NODE_NAME;
     }
 
     public function getBaseSlug(): string

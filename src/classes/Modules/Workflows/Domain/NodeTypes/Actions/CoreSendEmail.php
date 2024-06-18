@@ -7,7 +7,10 @@ use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
 class CoreSendEmail implements NodeTypeInterface
 {
-    public const NODE_NAME = "action/core.send-email";
+    public static function getNodeTypeName(): string
+    {
+        return "action/core.send-email";
+    }
 
     public static function getDefaultSubject()
     {
@@ -30,11 +33,6 @@ class CoreSendEmail implements NodeTypeInterface
     public function getType(): string
     {
         return "generic";
-    }
-
-    public function getName(): string
-    {
-        return self::NODE_NAME;
     }
 
     public function getBaseSlug(): string
