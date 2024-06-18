@@ -139,7 +139,7 @@ class NodeTypesModel implements NodeTypesModelInterface
 
             $instance = $this->applyDefaultParams(
                 [
-                    "type" => $instance->getType(),
+                    "type" => $instance->getReactFlowNodeType(),
                     "elementaryType" => $instance->getElementaryType(),
                     "name" => $instanceClass::getNodeTypeName(),
                     "label" => $instance->getLabel(),

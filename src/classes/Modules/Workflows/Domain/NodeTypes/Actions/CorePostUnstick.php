@@ -17,7 +17,7 @@ class CorePostUnstick implements NodeTypeInterface
         return NodeTypesModel::NODE_TYPE_ACTION;
     }
 
-    public function getType(): string
+    public function getReactFlowNodeType(): string
     {
         return "generic";
     }

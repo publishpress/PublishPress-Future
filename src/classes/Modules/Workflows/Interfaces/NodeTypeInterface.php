@@ -21,7 +21,7 @@ interface NodeTypeInterface
      * the workflow editor to differentiate between the two for
      * rendering purposes.
      */
-    public function getType(): string;
+    public function getReactFlowNodeType(): string;
 
     /**
      * The label displayed in the workflow editor.

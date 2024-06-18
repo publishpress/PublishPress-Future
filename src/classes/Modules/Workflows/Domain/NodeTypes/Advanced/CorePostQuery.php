@@ -17,7 +17,7 @@ class CorePostQuery implements NodeTypeInterface
         return NodeTypesModel::NODE_TYPE_ADVANCED;
     }
 
-    public function getType(): string
+    public function getReactFlowNodeType(): string
     {
         return "generic";
     }

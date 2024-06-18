@@ -18,7 +18,7 @@ class CoreOnSavePost implements NodeTypeInterface
         return NodeTypesModel::NODE_TYPE_TRIGGER;
     }
 
-    public function getType(): string
+    public function getReactFlowNodeType(): string
     {
         return "trigger";
     }
