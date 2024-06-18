@@ -18,7 +18,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
                             <div>{__("This step receives the following input from previous step:", "publishpress-future-pro")}</div>
                             <ul>
                                 {inputSchema.map((schemaItem, index) => (
-                                    <li key={index}>
+                                    <li key={`input-${schemaItem.name}-${index}`}>
                                         <code>{schemaItem.name}</code>
                                     </li>
                                 ))}
@@ -38,7 +38,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
                         <div>{__("This step outputs the following data:", "publishpress-future-pro")}</div>
                         <ul>
                             {outputSchema.map((schemaItem, index) => (
-                                <li key={index}>
+                                <li key={`output-${schemaItem.name}-${index}`}>
                                     <code>{schemaItem.name}</code>
                                 </li>
                             ))}

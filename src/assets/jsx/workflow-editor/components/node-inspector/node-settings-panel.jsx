@@ -47,7 +47,7 @@ export const NodeSettingsPanel = ({ node }) => {
     const settingsPanels = useMemo(() => {
         return settingsSchema.map((settingPanel) => {
             return (
-                <PersistentPanelBody title={settingPanel.label} key={settingPanel.label}>
+                <PersistentPanelBody title={settingPanel.label} key={`settings-panel-${node.id}-${settingPanel.label}`}>
                     {settingPanel?.description && (
                         <PanelRow>
                             <div className="settings-field-description">{settingPanel?.description}</div>
@@ -56,7 +56,7 @@ export const NodeSettingsPanel = ({ node }) => {
 
                     {settingPanel.fields.map((field) => {
                         return (
-                            <PanelRow key={settingPanel.label + '-' + field.name}>
+                            <PanelRow key={settingPanel.label + '-' + node.id + '-' + field.name}>
                                 <MappedField
                                     type={field.type}
                                     name={field.name}

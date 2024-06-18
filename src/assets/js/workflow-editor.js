@@ -18874,13 +18874,13 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
     className: "workflow-editor-inspector-card__handles-schema"
   }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Inputs', 'publishpress-future-pro')), /*#__PURE__*/React.createElement("div", null, inputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step receives the following input from previous step:", "publishpress-future-pro")), /*#__PURE__*/React.createElement("ul", null, inputSchema.map(function (schemaItem, index) {
     return /*#__PURE__*/React.createElement("li", {
-      key: index
+      key: "input-".concat(schemaItem.name, "-").concat(index)
     }, /*#__PURE__*/React.createElement("code", null, schemaItem.name));
   }))), inputSchema.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step does not receive any input from previous step.", "publishpress-future-pro"))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
     className: "workflow-editor-inspector-card__handles-schema"
   }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Outputs', 'publishpress-future-pro')), /*#__PURE__*/React.createElement("div", null, outputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step outputs the following data:", "publishpress-future-pro")), /*#__PURE__*/React.createElement("ul", null, outputSchema.map(function (schemaItem, index) {
     return /*#__PURE__*/React.createElement("li", {
-      key: index
+      key: "output-".concat(schemaItem.name, "-").concat(index)
     }, /*#__PURE__*/React.createElement("code", null, schemaItem.name));
   }))), outputSchema.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step does not output any data.", "publishpress-future-pro"))));
 };
@@ -19011,13 +19011,13 @@ var NodeSettingsPanel = function NodeSettingsPanel(_ref) {
     return settingsSchema.map(function (settingPanel) {
       return /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_7__["default"], {
         title: settingPanel.label,
-        key: settingPanel.label
+        key: "settings-panel-".concat(node.id, "-").concat(settingPanel.label)
       }, (settingPanel === null || settingPanel === void 0 ? void 0 : settingPanel.description) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement("div", {
         className: "settings-field-description"
       }, settingPanel === null || settingPanel === void 0 ? void 0 : settingPanel.description)), settingPanel.fields.map(function (field) {
         var _nodeSettings;
         return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
-          key: settingPanel.label + '-' + field.name
+          key: settingPanel.label + '-' + node.id + '-' + field.name
         }, /*#__PURE__*/React.createElement(_mapped_field__WEBPACK_IMPORTED_MODULE_6__["default"], {
           type: field.type,
           name: field.name,
@@ -19601,7 +19601,7 @@ function NodeValidationPanel(_ref) {
     className: "workflow-editor-validation-panel"
   }, hasNotifications && /*#__PURE__*/React.createElement(React.Fragment, null, nodeErrors.map(function (error, index) {
     return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, {
-      key: index,
+      key: "".concat(error.error, "-").concat(index),
       className: "workflow-editor-validation-notification workflow-editor-error"
     }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_0__["default"], {
       icon: 'error',

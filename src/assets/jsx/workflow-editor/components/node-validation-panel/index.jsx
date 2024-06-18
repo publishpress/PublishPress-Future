@@ -16,7 +16,7 @@ export function NodeValidationPanel({ errors = {} }) {
                 <>
                     {nodeErrors.map((error, index) => {
                         return (
-                            <PanelRow key={index} className="workflow-editor-validation-notification workflow-editor-error">
+                            <PanelRow key={`${error.error}-${index}`} className="workflow-editor-validation-notification workflow-editor-error">
                                 <NodeIcon icon={'error'} size={iconSize} />
                                 {error.message}
                             </PanelRow>
