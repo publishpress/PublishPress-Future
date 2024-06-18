@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-10T19:56:05+00:00\n"
+"POT-Creation-Date: 2024-06-18T18:05:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -333,17 +333,22 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: components/node-dev-info-panel/index.jsx:17
+#: components/node-dev-info-panel/index.jsx:18
+#: components/workflow-global-variables/index.jsx:37
+msgid "Loading..."
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:23
 msgid "Developer Info"
 msgstr ""
 
-#: components/node-dev-info-panel/index.jsx:24
+#: components/node-dev-info-panel/index.jsx:30
 #: components/node-inspector/node-inspector-card.jsx:18
 #: components/node-types/generic.jsx:37
 msgid "Node"
 msgstr ""
 
-#: components/node-dev-info-panel/index.jsx:35
+#: components/node-dev-info-panel/index.jsx:43
 msgid "Node Type"
 msgstr ""
 
@@ -356,51 +361,59 @@ msgid "Multiple and different elements selected."
 msgstr ""
 
 #: components/node-inspector/index.jsx:114
-msgid "%d nodes selected"
+msgid "%d steps selected"
 msgstr ""
 
 #: components/node-inspector/index.jsx:117
-msgid "Multiple nodes selected."
+msgid "Multiple steps selected."
 msgstr ""
 
 #: components/node-inspector/index.jsx:128
-msgid "%d edges selected"
+msgid "%d connections selected"
 msgstr ""
 
 #: components/node-inspector/index.jsx:131
-msgid "Multiple edges selected."
+msgid "Multiple connections selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:170
-msgid "Edge"
+#: components/node-inspector/index.jsx:168
+msgid "Connection"
 msgstr ""
 
-#: components/node-inspector/index.jsx:171
-msgid "A connection between nodes"
+#: components/node-inspector/index.jsx:169
+msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:12
+msgid "Step Data Flow"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:14
+msgid "Inputs"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:18
+msgid "This step receives the following input from previous step:"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:29
+msgid "This step does not receive any input from previous step."
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:34
+msgid "Outputs"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:38
+msgid "This step outputs the following data:"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:49
+msgid "This step does not output any data."
 msgstr ""
 
 #: components/node-inspector/node-inspector-card.jsx:19
 msgid "No description"
-msgstr ""
-
-#: components/node-inspector/node-sockets-panel.jsx:12
-msgid "Sockets"
-msgstr ""
-
-#: components/node-inspector/node-sockets-panel.jsx:15
-msgid "Inputs"
-msgstr ""
-
-#: components/node-inspector/node-sockets-panel.jsx:17
-msgid "This step receives the following input from previous step:"
-msgstr ""
-
-#: components/node-inspector/node-sockets-panel.jsx:31
-msgid "Outputs"
-msgstr ""
-
-#: components/node-inspector/node-sockets-panel.jsx:33
-msgid "This step outputs the following data:"
 msgstr ""
 
 #: components/node-types/generic.jsx:88
@@ -421,7 +434,7 @@ msgstr ""
 msgid "Trigger"
 msgstr ""
 
-#: components/node-types/generic.jsx:123
+#: components/node-types/generic.jsx:127
 #: components/workflow-delete-button/index.jsx:39
 msgid "Delete"
 msgstr ""
@@ -434,11 +447,11 @@ msgstr ""
 msgid "Search for actions"
 msgstr ""
 
-#: components/node-types/placeholder.jsx:159
+#: components/node-types/placeholder.jsx:160
 msgid "Search for steps"
 msgstr ""
 
-#: components/node-types/placeholder.jsx:185
+#: components/node-types/placeholder.jsx:186
 #: components/node-types/trigger-placeholder.jsx:13
 #: components/secondary-sidebar/menu.jsx:201
 msgid "Search for triggers and steps"
@@ -494,14 +507,14 @@ msgid "No results found."
 msgstr ""
 
 #. translators: %d: number of results.
-#: components/secondary-sidebar/inserter-search-results.jsx:100
+#: components/secondary-sidebar/inserter-search-results.jsx:101
 msgid "%d result found."
 msgid_plural "%d results found."
 msgstr[0] ""
 msgstr[1] ""
 
-#: components/secondary-sidebar/inserter-search-results.jsx:115
-#: components/secondary-sidebar/inserter-search-results.jsx:122
+#: components/secondary-sidebar/inserter-search-results.jsx:116
+#: components/secondary-sidebar/inserter-search-results.jsx:123
 msgid "Nodes"
 msgstr ""
 
@@ -517,8 +530,8 @@ msgid_plural "%d blocks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: components/secondary-sidebar/nodes-tab.jsx:77
-#: components/secondary-sidebar/nodes-tab.jsx:82
+#: components/secondary-sidebar/nodes-tab.jsx:80
+#: components/secondary-sidebar/nodes-tab.jsx:85
 msgctxt "nodes"
 msgid "Most used"
 msgstr ""
@@ -582,10 +595,6 @@ msgstr ""
 
 #: components/workflow-global-variables/index.jsx:28
 msgid "Global Variables"
-msgstr ""
-
-#: components/workflow-global-variables/index.jsx:37
-msgid "Loading..."
 msgstr ""
 
 #: components/workflow-global-variables/index.jsx:43
