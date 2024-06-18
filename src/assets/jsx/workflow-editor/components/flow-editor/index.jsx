@@ -219,7 +219,7 @@ export const FlowEditor = (props) => {
                 type: 'nodePlaceholder',
                 data: {
                     name: 'core/node-placeholder',
-                    elementarType: NODE_TYPE_PLACEHOLDER,
+                    elementaryType: NODE_TYPE_PLACEHOLDER,
                 },
                 position,
             };
