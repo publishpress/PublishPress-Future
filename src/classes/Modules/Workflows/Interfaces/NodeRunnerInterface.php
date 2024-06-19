@@ -9,5 +9,9 @@ interface NodeRunnerInterface
      */
     public static function getNodeTypeName(): string;
 
+    /**
+     * Setup the node runner with the step and context variables, and
+     * execute the next steps if needed.
+     */
     public function setup(array $step, array $contextVariables = []): void;
 }
