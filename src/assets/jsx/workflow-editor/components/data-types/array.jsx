@@ -1,4 +1,4 @@
-export function Array() {
+export function ArrayData() {
     return {
         name: "array",
         label: "Array",
@@ -6,4 +6,4 @@ export function Array() {
     };
 }
 
-export default Array;
+export default ArrayData;
