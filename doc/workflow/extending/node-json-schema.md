@@ -1,6 +1,8 @@
+# Node JSON Schema
+
 The node tree is stored as JSON data in the workflow's data. A typical node has the following schema:
 
-```
+```json
 {
     "id": "n1718737475263",
     "type": "generic",

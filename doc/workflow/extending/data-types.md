@@ -1,3 +1,5 @@
+# Data Types
+
 Data Types define the nature and structure of the data that flows through the workflow. Each data type specifies the kind of information a node can handle, ensuring that data is processed correctly and consistently. Some data types are objects and expose internal properties that can be accessed by using `.` as separator: `post.post_title`.
 
 Here is a list of the available data types.
