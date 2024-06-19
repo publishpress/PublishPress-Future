@@ -18,6 +18,7 @@ To release the Free plugin, ensure you complete all the tasks below.
 - [ ] Review the updated packages. Mention any production library updates in the changelog.
 - [ ] Inspect GitHub's Dependabot warnings or Pull Requests for relevant issues. Resolve any false positives first, then fix and commit the remaining issues.
 - [ ] If necessary, build JS files for production using `composer build:js` and commit the changes.
+- [ ] Run the build to dir command with `composer build:dir` to ensure the plugin is ready for quality checks.
 - [ ] Run a WP VIP scan with `composer check:phpcs` to ensure no warnings or errors greater than 5 exist.
 - [ ] Update the `.pot` file executing `composer gen:pot` and include a note in the changelog.
 - [ ] Update the `.mo` files executing `composer gen:mo` and include a note in the changelog.
