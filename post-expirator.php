@@ -18,7 +18,6 @@ use Exception;
 use PublishPress\Future\Core\Autoloader;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
-use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
