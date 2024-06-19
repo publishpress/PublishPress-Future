@@ -1,4 +1,4 @@
-# Defining a node type
+# Defining a data type
 
 ## Defining the data type schema
 
