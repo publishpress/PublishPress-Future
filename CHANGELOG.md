@@ -3,6 +3,27 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.4.0] - 19 Jun, 2024 =
+
+* ADDED: In the JS context, implemented a way to extend the future action panel using SlotFill `FutureActionPanelAfterActionField` and setting extra fields to the panel, right after the action field;
+* ADDED: Add a new filter to allow filtering the options of the future action being scheduled: `publishpressfuture_prepare_post_expiration_opts`;
+* ADDED: Add method `scheduleRecurringAction` to the `CronToWooActionSchedulerAdapter` to schedule recurring action;
+* ADDED: Add method `scheduleAsyncAction` to the `CronToWooActionSchedulerAdapter` to schedule async action;
+* ADDED: In the JS context, added the slot `FutureActionPanelTop` to the beginning of the future panel;
+* CHANGED: Added `$unique` and `$priority` arguments to the `scheduleSingleAction` method in the `CronToWooActionSchedulerAdapter` class;
+* CHANGED: Method `scheduleRecurringAction` renamed to `scheduleRecurringActionInSeconds` in the `CronToWooActionSchedulerAdapter` class;
+* CHANGED: Added argument `$clearOnlyPendingActions` to the method signature `clearScheduledAction` to the `CronInterface` interface;
+* CHANGED: Changed the method `clearScheduledAction` in the class `CronToWooActionSchedulerAdapter` adding new argument `$clearOnlyPendingActions`, allowing to remove running actions;
+* CHANGED: The plugin activation and deactivation callback functions were moved from the main file to independent files;
+* CHANGED: Change the admin menu names for clarity;
+* CHANGED: Update the promo sidebar for mentioning the Actions Workflow feature;
+* FIXED: Fix error when quick-edit data is not available, #730;
+* FIXED: Fix dependency of the enqueued scripts for the future action box. Add 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins' as dependencies;
+* FIXED: Updated ES, FR and IT translations, #698;
+* FIXED: Redirects to the settings page after activating the plugin, #764;
+* FIXED: Fix access to the View Debug settings tab when debug is disabled;
+* FIXED: Fix the position of the "Upgrade to Pro" and "Settings" menu items in the admin bar;
+
 = [3.3.1] - 19 Mar, 2024 =
 
 * ADDED: Add validation for the date and time offset in the settings page, #683;
