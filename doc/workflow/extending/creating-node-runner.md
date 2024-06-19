@@ -1,6 +1,8 @@
+# Creating a Node Runner
+
 The "Node Rnuner" is the class containing the logic executed by the specific node. It is only used at runtime. The workflow engine instantiates the specific runner for the node type of the step in execution.
 
-# Node Runner Interface
+## Node Runner Interface
 
 A node runner must implement the interface `PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface`.
 
@@ -25,7 +27,7 @@ interface NodeRunnerInterface
 
 ```
 
-# Node Runner Example
+## Node Runner Example
 
 The following code implements a node runner for a step that sticks the post set in the step's settings.
 

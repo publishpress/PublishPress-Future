@@ -1,3 +1,5 @@
+# Node Settings Schema
+
 The settings schema defines the fields displayed in the node inspector when the node is selected in the builder to be configured.
 
 The schema is an associative array defined in the Node Type class, returned by the method `getSettingsSchema`. Each item in the first level of the array is a group of fields. The group of fields has a list of fields following structure:
