@@ -38,7 +38,8 @@
     "inquirer-autocomplete-prompt": "^3.0.0",
     "inquirer-interrupted-prompt": "^2.0.1",
     "node-ray": "^1.19.4",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "webpack": "^5.90.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^5.1.4"
   }
 }
