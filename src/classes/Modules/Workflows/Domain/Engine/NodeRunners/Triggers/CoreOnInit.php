@@ -5,7 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Tri
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit as NodeTypeCoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 
 class CoreOnInit implements NodeTriggerRunnerInterface
@@ -26,16 +26,16 @@ class CoreOnInit implements NodeTriggerRunnerInterface
     private $contextVariables;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer
+        NodeRunnerProcessorInterface $nodeRunnerProcessor
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
     }
 
     public static function getNodeTypeName(): string
@@ -53,6 +53,6 @@ class CoreOnInit implements NodeTriggerRunnerInterface
 
     public function triggerCallback()
     {
-        $this->nodeRunnerPreparer->runNextSteps($this->step, $this->contextVariables);
+        $this->nodeRunnerProcessor->runNextSteps($this->step, $this->contextVariables);
     }
 }

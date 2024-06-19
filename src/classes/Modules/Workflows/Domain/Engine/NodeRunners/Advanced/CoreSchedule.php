@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSched
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 
@@ -24,9 +24,9 @@ class CoreSchedule implements NodeRunnerInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     /**
      * @var CronInterface
@@ -45,13 +45,13 @@ class CoreSchedule implements NodeRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer,
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
         CronInterface $cron,
         CronSchedulesModelInterface $cronSchedulesModel,
         NodeTypesModelInterface $nodeTypesModel
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->cron = $cron;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->nodeTypesModel = $nodeTypesModel;
@@ -64,8 +64,8 @@ class CoreSchedule implements NodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
-        $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
+        $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
+        $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
 
         if (! isset($nodeSettings['schedule'])) {
             $nodeSettings['schedule'] = [];
@@ -186,7 +186,7 @@ class CoreSchedule implements NodeRunnerInterface
                 } elseif ($dateSource === 'event') {
                     $timestamp = time();
                 } else {
-                    $timestamp = $this->nodeRunnerPreparer->getVariableValueFromContextVariables(
+                    $timestamp = $this->nodeRunnerProcessor->getVariableValueFromContextVariables(
                         $dateSource,
                         $contextVariables
                     );
@@ -226,7 +226,7 @@ class CoreSchedule implements NodeRunnerInterface
         $compactedArgs['contextVariables'] = $contextVariables;
         $compactedArgs['contextVariables']['global'] = [];
         $compactedArgs['contextVariables']['global']['workflow'] =
-            $this->nodeRunnerPreparer->getWorkflowIdFromContextVariables($contextVariables);
+            $this->nodeRunnerProcessor->getWorkflowIdFromContextVariables($contextVariables);
         $compactedArgs['contextVariables']['global']['user'] = $contextVariables['global']['user']['id'] ?? '0';
         $compactedArgs['contextVariables']['global']['site'] = get_bloginfo('site_id');
         $compactedArgs['contextVariables']['global']['trigger'] = $contextVariables['global']['trigger']['id'] ?? '0';
@@ -430,7 +430,7 @@ class CoreSchedule implements NodeRunnerInterface
             }
         }
 
-        $this->nodeRunnerPreparer->runNextSteps($args['step'], $args['contextVariables']);
+        $this->nodeRunnerProcessor->runNextSteps($args['step'], $args['contextVariables']);
 
         if ($unscheduleRecurringAction) {
             $this->cancelExpiredScheduledAction($compactedArgs);

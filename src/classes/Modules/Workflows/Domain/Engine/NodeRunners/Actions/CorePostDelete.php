@@ -6,7 +6,7 @@ use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete as NodeTypeCorePostDelete;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
 class CorePostDelete implements NodeRunnerInterface
 {
@@ -16,9 +16,9 @@ class CorePostDelete implements NodeRunnerInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     /**
      * @var \Closure
@@ -27,11 +27,11 @@ class CorePostDelete implements NodeRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer,
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
         \Closure $expirablePostModelFactory
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
@@ -42,7 +42,7 @@ class CorePostDelete implements NodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback'], $contextVariables);
     }
 
     public function actionCallback(int $postId, array $nodeSettings)

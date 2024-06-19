@@ -5,7 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Tri
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction as NodeTypeFutureLegacyAction;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 
 class FutureLegacyAction implements NodeTriggerRunnerInterface
@@ -31,16 +31,16 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
     private $contextVariables;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer
+        NodeRunnerProcessorInterface $nodeRunnerProcessor
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
     }
 
     public static function getNodeTypeName(): string
@@ -64,7 +64,7 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $nodeSlug = $this->nodeRunnerPreparer->getSlugFromStep($this->step);
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
         $contextVariables = $this->contextVariables;
 
@@ -72,6 +72,6 @@ class FutureLegacyAction implements NodeTriggerRunnerInterface
             'post' => $post
         ];
 
-        $this->nodeRunnerPreparer->runNextSteps($this->step, $contextVariables);
+        $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);
     }
 }

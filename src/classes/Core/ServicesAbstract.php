@@ -45,8 +45,8 @@ abstract class ServicesAbstract
     public const WORKFLOW_ENGINE = 'future.pro/workflow-engine';
     public const WORKFLOW_VARIABLES_HANDLER = 'future.pro/workflow-variables-handler';
     public const NODE_RUNNER_MAPPER = 'future.pro/node-runner-mapper';
-    public const GENERAL_ACTION_NODE_RUNNER_PREPARER = 'future.pro/general-action-node-runner-preparer';
-    public const POST_ACTION_NODE_RUNNER_PREPARER = 'future.pro/post-action-node-runner-preparer';
+    public const GENERAL_ACTION_NODE_RUNNER_PROCESSOR = 'future.pro/general-action-node-runner-processor';
+    public const POST_ACTION_NODE_RUNNER_PROCESSOR = 'future.pro/post-action-node-runner-processor';
     public const NODE_RUNNER_FACTORY = 'future.pro/node-runner-factory';
     public const INPUT_VALIDATOR_POST_QUERY = 'future.pro/input-validator-post-query';
 }

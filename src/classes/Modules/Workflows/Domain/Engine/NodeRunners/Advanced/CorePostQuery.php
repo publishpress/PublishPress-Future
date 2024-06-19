@@ -6,7 +6,7 @@ use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery as NodeType;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
 class CorePostQuery implements NodeRunnerInterface
 {
@@ -16,16 +16,16 @@ class CorePostQuery implements NodeRunnerInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer
+        NodeRunnerProcessorInterface $nodeRunnerProcessor
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
     }
 
     public static function getNodeTypeName(): string
@@ -36,10 +36,10 @@ class CorePostQuery implements NodeRunnerInterface
     public function setup(array $step, array $contextVariables = []): void
     {
         try {
-            $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
-            $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
-            $workflowId = $this->nodeRunnerPreparer->getWorkflowIdFromContextVariables($contextVariables);
-            $nodeSlug = $this->nodeRunnerPreparer->getSlugFromStep($step);
+            $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
+            $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
+            $workflowId = $this->nodeRunnerProcessor->getWorkflowIdFromContextVariables($contextVariables);
+            $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
             if (empty($nodeSettings)) {
                 throw new Exception('Node has empty settings');
@@ -61,9 +61,9 @@ class CorePostQuery implements NodeRunnerInterface
                 ]
             );
 
-            $this->nodeRunnerPreparer->runNextSteps($step, $contextVariables);
+            $this->nodeRunnerProcessor->runNextSteps($step, $contextVariables);
         } catch (\Exception $e) {
-            $this->nodeRunnerPreparer->logError($e->getMessage(), $workflowId, $step);
+            $this->nodeRunnerProcessor->logError($e->getMessage(), $workflowId, $step);
         }
     }
 

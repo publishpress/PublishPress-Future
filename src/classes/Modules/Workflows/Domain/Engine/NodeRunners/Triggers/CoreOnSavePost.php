@@ -7,7 +7,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPr
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost as NodeTypeCoreOnSavePost;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\InputValidatorsInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
 
 class CoreOnSavePost implements NodeTriggerRunnerInterface
@@ -30,9 +30,9 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
     private $contextVariables;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     /**
      * @var InputValidatorsInterface
@@ -47,11 +47,11 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer,
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
         InputValidatorsInterface $postQueryValidator
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->postQueryValidator = $postQueryValidator;
     }
 
@@ -84,7 +84,7 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             return false;
         }
 
-        $nodeSlug = $this->nodeRunnerPreparer->getSlugFromStep($this->step);
+        $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
         $contextVariables = $this->contextVariables;
 
@@ -94,6 +94,6 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             'update' => $update,
         ];
 
-        $this->nodeRunnerPreparer->runNextSteps($this->step, $contextVariables);
+        $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);
     }
 }

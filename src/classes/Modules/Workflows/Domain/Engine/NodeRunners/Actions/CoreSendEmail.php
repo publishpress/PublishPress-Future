@@ -7,7 +7,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail as NodeTypeCoreSendEmail;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 use function PublishPress\FuturePro\logError;
@@ -20,9 +20,9 @@ class CoreSendEmail implements NodeRunnerInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     /**
      * @var EmailFacade
@@ -36,12 +36,12 @@ class CoreSendEmail implements NodeRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer,
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
         EmailFacade $emailFacade,
         WorkflowEngineInterface $workflowEngine
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->emailFacade = $emailFacade;
         $this->workflowEngine = $workflowEngine;
     }
@@ -53,14 +53,14 @@ class CoreSendEmail implements NodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerPreparer->setup($step, [$this, 'processEmailSending'], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'processEmailSending'], $contextVariables);
     }
 
     public function processEmailSending(array $step, array $contextVariables)
     {
         try {
-            $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
-            $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
+            $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
+            $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
 
             $recipient = $nodeSettings['recipient']['recipient'] ?? 'global.site.admin_email';
 

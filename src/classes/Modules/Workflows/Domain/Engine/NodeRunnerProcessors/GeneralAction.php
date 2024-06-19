@@ -1,14 +1,14 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors;
 
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
 use function PublishPress\FuturePro\logError;
 
-class GeneralAction implements NodeRunnerPreparerInterface
+class GeneralAction implements NodeRunnerProcessorInterface
 {
     /**
      * @var HooksFacade

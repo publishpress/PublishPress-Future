@@ -1,13 +1,12 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerPreparers;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors;
 
 use Exception;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
-use WpOrg\Requests\Hooks;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
-class PostAction implements NodeRunnerPreparerInterface
+class PostAction implements NodeRunnerProcessorInterface
 {
     /**
      * @var HooksFacade
@@ -15,14 +14,14 @@ class PostAction implements NodeRunnerPreparerInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $generalNodeRunnerPreparer;
+    private $generalNodeRunnerProcessor;
 
-    public function __construct(HooksFacade $hooks, NodeRunnerPreparerInterface $generalNodeRunnerPreparer)
+    public function __construct(HooksFacade $hooks, NodeRunnerProcessorInterface $generalNodeRunnerProcessor)
     {
         $this->hooks = $hooks;
-        $this->generalNodeRunnerPreparer = $generalNodeRunnerPreparer;
+        $this->generalNodeRunnerProcessor = $generalNodeRunnerProcessor;
     }
 
     public function setup(array $step, callable $actionCallback, array $contextVariables = []): void
@@ -76,41 +75,41 @@ class PostAction implements NodeRunnerPreparerInterface
 
     public function runNextSteps(array $step, array $contextVariables): void
     {
-        $this->generalNodeRunnerPreparer->runNextSteps($step, $contextVariables);
+        $this->generalNodeRunnerProcessor->runNextSteps($step, $contextVariables);
     }
 
     public function getNextSteps(array $step)
     {
-        return $this->generalNodeRunnerPreparer->getNextSteps($step);
+        return $this->generalNodeRunnerProcessor->getNextSteps($step);
     }
 
     public function getNodeFromStep(array $step)
     {
-        return $this->generalNodeRunnerPreparer->getNodeFromStep($step);
+        return $this->generalNodeRunnerProcessor->getNodeFromStep($step);
     }
 
     public function getSlugFromStep(array $step)
     {
-        return $this->generalNodeRunnerPreparer->getSlugFromStep($step);
+        return $this->generalNodeRunnerProcessor->getSlugFromStep($step);
     }
 
     public function getNodeSettings(array $node)
     {
-        return $this->generalNodeRunnerPreparer->getNodeSettings($node);
+        return $this->generalNodeRunnerProcessor->getNodeSettings($node);
     }
 
     public function getWorkflowIdFromContextVariables(array $contextVariables)
     {
-        return $this->generalNodeRunnerPreparer->getWorkflowIdFromContextVariables($contextVariables);
+        return $this->generalNodeRunnerProcessor->getWorkflowIdFromContextVariables($contextVariables);
     }
 
     public function logError(string $message, int $workflowId, array $step)
     {
-        $this->generalNodeRunnerPreparer->logError($message, $workflowId, $step);
+        $this->generalNodeRunnerProcessor->logError($message, $workflowId, $step);
     }
 
     public function getVariableValueFromContextVariables(string $variableName, array $contextVariables)
     {
-        return $this->generalNodeRunnerPreparer->getVariableValueFromContextVariables($variableName, $contextVariables);
+        return $this->generalNodeRunnerProcessor->getVariableValueFromContextVariables($variableName, $contextVariables);
     }
 }

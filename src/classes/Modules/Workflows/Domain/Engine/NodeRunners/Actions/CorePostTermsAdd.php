@@ -7,7 +7,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd as NodeTypeCorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
 class CorePostTermsAdd implements NodeRunnerInterface
 {
@@ -17,9 +17,9 @@ class CorePostTermsAdd implements NodeRunnerInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     /**
      * @var \Closure
@@ -33,12 +33,12 @@ class CorePostTermsAdd implements NodeRunnerInterface
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer,
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
         \Closure $expirablePostModelFactory,
         ErrorFacade $errorFacade
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->errorFacade = $errorFacade;
     }
@@ -50,7 +50,7 @@ class CorePostTermsAdd implements NodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback'], $contextVariables);
     }
 
     public function actionCallback(int $postId, array $nodeSettings)

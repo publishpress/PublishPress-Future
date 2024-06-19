@@ -6,7 +6,7 @@ use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug as NodeTypeRayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerPreparerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
 class RayDebug implements NodeRunnerInterface
 {
@@ -16,16 +16,16 @@ class RayDebug implements NodeRunnerInterface
     private $hooks;
 
     /**
-     * @var NodeRunnerPreparerInterface
+     * @var NodeRunnerProcessorInterface
      */
-    private $nodeRunnerPreparer;
+    private $nodeRunnerProcessor;
 
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerPreparerInterface $nodeRunnerPreparer
+        NodeRunnerProcessorInterface $nodeRunnerProcessor
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerPreparer = $nodeRunnerPreparer;
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
     }
 
     public static function getNodeTypeName(): string
@@ -35,7 +35,7 @@ class RayDebug implements NodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerPreparer->setup($step, [$this, 'actionCallback'], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback'], $contextVariables);
     }
 
     public function actionCallback(array $step, array $contextVariables)
@@ -43,7 +43,7 @@ class RayDebug implements NodeRunnerInterface
         if (! function_exists('ray')) {
             $workflowId = $contextVariables['global']['workflow']['id'];
 
-            $this->nodeRunnerPreparer->logError(
+            $this->nodeRunnerProcessor->logError(
                 'Ray is not installed. Please install it from the WordPress plugins directory',
                 $workflowId,
                 $step
@@ -53,8 +53,8 @@ class RayDebug implements NodeRunnerInterface
 
         $output = null;
         try {
-            $node = $this->nodeRunnerPreparer->getNodeFromStep($step);
-            $nodeSettings = $this->nodeRunnerPreparer->getNodeSettings($node);
+            $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
+            $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
 
             $dataToOutput = $nodeSettings['data']['dataToOutput'] ?? 'all-input';
 
@@ -64,7 +64,7 @@ class RayDebug implements NodeRunnerInterface
 
                 $output = $onlyInputVariables;
             } else {
-                $output = $this->nodeRunnerPreparer->getVariableValueFromContextVariables(
+                $output = $this->nodeRunnerProcessor->getVariableValueFromContextVariables(
                     $dataToOutput,
                     $contextVariables
                 );
