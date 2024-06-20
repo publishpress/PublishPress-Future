@@ -37,11 +37,11 @@ interface ActionArgsModelInterface
 
     public function getCronActionId(): int;
 
-    public function setCronActionId(int $cronActionId): ActionArgsModelInterface;
+    public function setCronActionId(int $cronActionId): void;
 
     public function getPostId(): int;
 
-    public function setPostId(int $postId): ActionArgsModelInterface;
+    public function setPostId(int $postId): void;
 
     public function getArgs(): array;
 
@@ -57,18 +57,18 @@ interface ActionArgsModelInterface
 
     public function getTaxonomyTermsNames(): array;
 
-    public function setArgs(array $args): ActionArgsModelInterface;
+    public function setArgs(array $args): void;
 
     /**
      * @param string $key
      * @param mixed $value
      * @return ActionsArgsModel
      */
-    public function setArg(string $key, $value): ActionArgsModelInterface;
+    public function setArg(string $key, $value): void;
 
     public function getCreatedAt(): string;
 
-    public function setCreatedAt(string $createdAt): ActionArgsModelInterface;
+    public function setCreatedAt(string $createdAt): void;
 
     /**
      * @deprecated version 3.4.0, use getCreatedAtAsISO8601 or getCreatedAtAsUnixTime
@@ -77,7 +77,7 @@ interface ActionArgsModelInterface
 
     public function getScheduledDateAsISO8601(): string;
 
-    public function setEnabled(bool $enabled): ActionArgsModelInterface;
+    public function setEnabled(bool $enabled): void;
 
     public function getEnabled(): bool;
 
@@ -86,9 +86,13 @@ interface ActionArgsModelInterface
     /**
      * @deprecated version 3.4.0, use setScheduledDateFromISO8601 or setScheduledDateFromUnixTime
      */
-    public function setScheduledDate(string $scheduledDate): ActionArgsModelInterface;
+    public function setScheduledDate(string $scheduledDate): void;
 
-    public function setScheduledDateFromISO8601(string $scheduledDate): ActionArgsModelInterface;
+    public function setScheduledDateFromISO8601(string $scheduledDate): void;
 
-    public function setScheduledDateFromUnixTime(int $scheduledDate): ActionArgsModelInterface;
+    public function setScheduledDateFromUnixTime(int $scheduledDate): void;
+
+    public function convertUnixTimeDateToISO8601(int $date): string;
+
+    public function convertISO8601DateToUnixTime(string $date): int;
 }
