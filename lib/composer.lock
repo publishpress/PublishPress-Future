@@ -302,12 +302,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "7bf00eeebbf7d17752b3013a29598ea7f5219265"
+                "reference": "035685d88b9cad198e3efb9d32f6f45953b43100"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/7bf00eeebbf7d17752b3013a29598ea7f5219265",
-                "reference": "7bf00eeebbf7d17752b3013a29598ea7f5219265",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/035685d88b9cad198e3efb9d32f6f45953b43100",
+                "reference": "035685d88b9cad198e3efb9d32f6f45953b43100",
                 "shasum": ""
             },
             "require": {
@@ -373,7 +373,10 @@
                 "build:js-dev": [
                     "wp-scripts build --mode development"
                 ],
-                "build:js-watch": [
+                "profile:js": [
+                    "webpack --profile --json > webpack-bundle-stats.json"
+                ],
+                "watch:js": [
                     "wp-scripts build --mode development --watch"
                 ],
                 "get:version": [
@@ -384,6 +387,10 @@
                 ],
                 "gen:pot": [
                     "wp i18n make-pot . languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests, --allow-root"
+                ],
+                "gen:lang": [
+                    "@gen:pot",
+                    "@gen:mo"
                 ],
                 "cleanup:gh-workflows": [
                     "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE"
@@ -497,7 +504,7 @@
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/release-3.4.0",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-06-13T21:19:34+00:00"
+            "time": "2024-06-20T14:21:22+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
