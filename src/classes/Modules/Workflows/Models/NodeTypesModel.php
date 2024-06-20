@@ -219,6 +219,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             "name" => "",
             "label" => "",
             "description" => "",
+            "baseSlug" => "node",
             "initiatlAttributes" => [],
             "category" => "",
             "disabled" => false,

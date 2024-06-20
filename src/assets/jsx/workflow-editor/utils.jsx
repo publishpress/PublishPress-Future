@@ -412,7 +412,16 @@ export function filterVariableOptionsByDataType(variables, expectedDataTypes) {
     return filteredVariables;
 }
 
-export const getId = () => `n${+new Date()}`;
+export const getId = (prefix = "node") => {
+    // We are subtracting the current date from the date 2024-01-01,
+    // and using a 32 base number to get a smaller number
+    const currentTimestamp = new Date().getTime();
+    const pastTimestamp = new Date('2024-01-01 00:00:00').getTime();
+
+    const UID = (currentTimestamp - pastTimestamp).toString(32);
+
+    return `${prefix}_${UID}`
+};
 
 export function incrementAndGetNodeSlug(nodeItem) {
     const nodeType = select(editorStore).getNodeTypeByName(nodeItem.name);
@@ -435,8 +444,10 @@ export function createNewNode({item, position, reactFlowInstance}) {
     const slug = incrementAndGetNodeSlug(item);
     let nodes = select(workflowStore).getNodes();
 
+    const idPrefix = item.baseSlug ?? "node";
+
     const newNode = {
-        id: getId(),
+        id: getId(idPrefix),
         type: item.type,
         position: position,
         data: {
@@ -479,7 +490,7 @@ export function updateFlowInEditedWorkflow(reactFlowInstance) {
 
 export const newTriggerPlaceholderNode = () => {
     return {
-        id: getId(),
+        id: getId("triggerPlaceholder"),
         type: 'triggerPlaceholder',
         position: { x: 0, y: 0 },
         data: {
