@@ -260,10 +260,9 @@ class ActionArgsModel implements ActionArgsModelInterface
         return absint($this->cronActionId);
     }
 
-    public function setCronActionId(int $cronActionId): ActionArgsModelInterface
+    public function setCronActionId(int $cronActionId): void
     {
         $this->cronActionId = $cronActionId;
-        return $this;
     }
 
     public function getPostId(): int
@@ -271,10 +270,9 @@ class ActionArgsModel implements ActionArgsModelInterface
         return (int)$this->postId;
     }
 
-    public function setPostId(int $postId): ActionArgsModelInterface
+    public function setPostId(int $postId): void
     {
         $this->postId = $postId;
-        return $this;
     }
 
     public function getArgs(): array
@@ -334,18 +332,14 @@ class ActionArgsModel implements ActionArgsModelInterface
         return $names;
     }
 
-    public function setArgs(array $args): ActionArgsModelInterface
+    public function setArgs(array $args): void
     {
         $this->args = $args;
-
-        return $this;
     }
 
-    public function setArg(string $key, $value): ActionArgsModelInterface
+    public function setArg(string $key, $value): void
     {
         $this->args[$key] = $value;
-
-        return $this;
     }
 
     public function getCreatedAt(): string
@@ -353,10 +347,9 @@ class ActionArgsModel implements ActionArgsModelInterface
         return (string)$this->createdAt;
     }
 
-    public function setCreatedAt(string $createdAt): ActionArgsModelInterface
+    public function setCreatedAt(string $createdAt): void
     {
         $this->createdAt = $createdAt;
-        return $this;
     }
 
     /**
@@ -370,16 +363,15 @@ class ActionArgsModel implements ActionArgsModelInterface
     public function getScheduledDateAsISO8601(): string
     {
         if (is_numeric($this->scheduledDate)) {
-            $this->scheduledDate = $this->convertUnixTimeDateToISO8601($this->scheduledDate);
+            $this->scheduledDate = $this->convertUnixTimeDateToISO8601((int)$this->scheduledDate);
         }
 
         return (string)$this->scheduledDate;
     }
 
-    public function setEnabled(bool $enabled): ActionArgsModelInterface
+    public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
-        return $this;
     }
 
     public function getEnabled(): bool
@@ -395,36 +387,32 @@ class ActionArgsModel implements ActionArgsModelInterface
     /**
      * @deprecated version 3.4.0, use setScheduledDateFromISO8601 or setScheduledDateFromUnixTime
      */
-    public function setScheduledDate(string $scheduledDate): ActionArgsModelInterface
+    public function setScheduledDate(string $scheduledDate): void
     {
-        $this->scheduledDate = $this->setScheduledDateFromISO8601($scheduledDate);
+        if (is_numeric($scheduledDate)) {
+            $scheduledDate = $this->convertUnixTimeDateToISO8601((int)$scheduledDate);
+        }
 
-        return $this;
+        $this->setScheduledDateFromISO8601($scheduledDate);
     }
 
-    public function setScheduledDateFromISO8601(string $scheduledDate): ActionArgsModelInterface
+    public function setScheduledDateFromISO8601(string $scheduledDate): void
     {
-        // We convert the date to unix time and then back to ISO8601 to ensure the date is valid.
-        $unixTime = $this->convertISO8601DateToUnixTime($scheduledDate);
-        $this->scheduledDate = $this->convertUnixTimeDateToISO8601($unixTime);
-
-        return $this;
+        $this->scheduledDate = $scheduledDate;
     }
 
-    public function setScheduledDateFromUnixTime(int $scheduledDate): ActionArgsModelInterface
+    public function setScheduledDateFromUnixTime(int $scheduledDate): void
     {
         $this->scheduledDate = $this->convertUnixTimeDateToISO8601($scheduledDate);
-
-        return $this;
     }
 
-    private function convertUnixTimeDateToISO8601(int $date): string
+    public function convertUnixTimeDateToISO8601(int $date): string
     {
         // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         return date(self::DATE_FORMAT_ISO_8601, $date);
     }
 
-    private function convertISO8601DateToUnixTime(string $date): int
+    public function convertISO8601DateToUnixTime(string $date): int
     {
         return (int) strtotime($date);
     }
