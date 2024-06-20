@@ -25,7 +25,7 @@ To release the Free plugin, ensure you complete all the tasks below.
 - [ ] Update the changelog in `/CHANGELOG.md` with a user-friendly description and correct release date.
 - [ ] Update the changelog in `readme.txt`, maintaining records of the last 4-5 releases only.
 - [ ] Confirm there are no uncommitted changes.
-- [ ] Build the zip package with `composer build`, creating a new package in the ./dist directory.
+- [ ] Build the zip package with `composer build`, creating a new package in the `./dist` directory.
 - [ ] Distribute the new package to the team for testing.
 
 ### Release Checklist
