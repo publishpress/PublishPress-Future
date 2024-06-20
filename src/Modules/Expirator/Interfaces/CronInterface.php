@@ -17,9 +17,10 @@ interface CronInterface
     /**
      * @param string $action
      * @param array $args
-     * @return int|\WP_Error|false
+     * @param bool $clearOnlyPendingActions
+     * @return int|null
      */
-    public function clearScheduledAction($action, $args = []);
+    public function clearScheduledAction($action, $args = [], $clearOnlyPendingActions = false);
 
     /**
      * @param string $action
@@ -30,11 +31,67 @@ interface CronInterface
 
     /**
      * @param int $timestamp
-     * @param string $action
+     * @param string $hook
      * @param array $args
      * @return int
      */
-    public function scheduleSingleAction($timestamp, $action, $args = []);
+    public function scheduleSingleAction(
+        $timestamp,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    );
+
+    /**
+     * @param int $timestamp
+     * @param int $intervalInSeconds
+     * @param string $hook
+     * @param array $args
+     * @param boolean $unique
+     * @param integer $priority
+     * @return int
+     */
+    public function scheduleRecurringActionInSeconds(
+        $timestamp,
+        $intervalInSeconds,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    );
+
+    /**
+     * @param int $timestamp
+     * @param string $schedule
+     * @param string $hook
+     * @param array $args
+     * @param boolean $unique
+     * @param integer $priority
+     * @return void
+     */
+    public function scheduleRecurringAction(
+        $timestamp,
+        $schedule,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    );
+
+    /**
+     * @param STRING $hook
+     * @param array $args
+     * @param boolean $unique
+     * @param integer $priority
+     * @return void
+     */
+    public function scheduleAsyncAction(
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    );
 
     /**
      * @param int $postId

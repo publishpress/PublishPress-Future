@@ -1,5 +1,9 @@
 import { compact } from '../utils';
 import { ToggleCalendarDatePicker } from './ToggleCalendarDatePicker';
+import { PluginArea } from '@wordpress/plugins';
+import { Fill, Slot, SlotFillProvider } from '@wordpress/components';
+import { FutureActionPanelAfterActionField } from './FutureActionPanelAfterActionField';
+import { FutureActionPanelTop } from './FutureActionPanelTop';
 
 const { PanelRow, CheckboxControl, SelectControl, FormTokenField, Spinner, BaseControl } = wp.components;
 const { Fragment, useEffect, useState } = wp.element;
@@ -53,7 +57,7 @@ export const FutureActionPanel = (props) => {
     }
 
     const insertTerm = (term) => {
-        termsListByName[term] = {id: term, count: 0, description: "", link: "", name: term, slug: term, taxonomy: taxonomy};
+        termsListByName[term] = { id: term, count: 0, description: "", link: "", name: term, slug: term, taxonomy: taxonomy };
         termsListById[term] = term;
         setTermsListByName(termsListByName);
         setTermsListById(termsListById);
@@ -159,7 +163,7 @@ export const FutureActionPanel = (props) => {
     }
 
     useEffect(() => {
-        if (props.autoEnableAndHideCheckbox)  {
+        if (props.autoEnableAndHideCheckbox) {
             setEnabled(true);
         } else {
             setEnabled(props.enabled);
@@ -197,7 +201,7 @@ export const FutureActionPanel = (props) => {
             props.onDataIsValid();
         }
 
-        if (! hasValidData && props.onDataIsInvalid) {
+        if (!hasValidData && props.onDataIsInvalid) {
             props.onDataIsInvalid();
         }
     }, [hasValidData]);
@@ -222,7 +226,7 @@ export const FutureActionPanel = (props) => {
 
     let is24hour;
     if (props.timeFormat === 'inherited') {
-        is24hour = ! props.is12Hour;
+        is24hour = !props.is12Hour;
     } else {
         is24hour = props.timeFormat === '24h';
     }
@@ -248,7 +252,7 @@ export const FutureActionPanel = (props) => {
 
     // Remove items from actions list if related to taxonomies and there is no taxonmoy for the post type
     let actionsSelectOptions = props.actionsSelectOptions;
-    if (! props.taxonomy) {
+    if (!props.taxonomy) {
         actionsSelectOptions = props.actionsSelectOptions.filter((item) => {
             return ['category', 'category-add', 'category-remove', 'category-remove-all'].indexOf(item.value) === -1;
         });
@@ -273,17 +277,17 @@ export const FutureActionPanel = (props) => {
     const validateData = () => {
         let valid = true;
 
-        if (! enabled) {
+        if (!enabled) {
             setValidationError('');
             return true;
         }
 
-        if (! action) {
+        if (!action) {
             setValidationError(props.strings.errorActionRequired);
             valid = false;
         }
 
-        if (! date) {
+        if (!date) {
             setValidationError(props.strings.errorDateRequired);
             valid = false;
         }
@@ -310,7 +314,7 @@ export const FutureActionPanel = (props) => {
     }
 
     useEffect(() => {
-        if (! enabled) {
+        if (!enabled) {
             setHasValidData(true);
             setValidationError('');
 
@@ -329,123 +333,130 @@ export const FutureActionPanel = (props) => {
     }
 
     return (
-        <div className={panelClass}>
-            {props.autoEnableAndHideCheckbox && (
-                <input type="hidden" name={'future_action_enabled'} value={1} />
-            )}
+        <SlotFillProvider>
+            <div className={panelClass}>
+                {props.autoEnableAndHideCheckbox && (
+                    <input type="hidden" name={'future_action_enabled'} value={1} />
+                )}
 
-            {! props.autoEnableAndHideCheckbox && (
-                <PanelRow>
-                    <CheckboxControl
-                        label={props.strings.enablePostExpiration}
-                        checked={enabled || false}
-                        onChange={handleEnabledChange}
-                    />
-                </PanelRow>
-            )}
+                <FutureActionPanelTop.Slot fillProps={{ storeName: props.storeName }} />
 
-            {enabled && (
-                <Fragment>
-                    <PanelRow className={contentPanelClass + ' future-action-full-width'}>
-                        <SelectControl
-                            label={props.strings.action}
-                            value={action}
-                            options={actionsSelectOptions}
-                            onChange={handleActionChange}
+                {!props.autoEnableAndHideCheckbox && (
+                    <PanelRow>
+                        <CheckboxControl
+                            label={props.strings.enablePostExpiration}
+                            checked={enabled || false}
+                            onChange={handleEnabledChange}
                         />
                     </PanelRow>
+                )}
 
-                    {action === 'change-status' &&
-                        <PanelRow className="new-status">
+                {enabled && (
+                    <Fragment>
+                        <PanelRow className={contentPanelClass + ' future-action-full-width'}>
                             <SelectControl
-                                label={props.strings.newStatus}
-                                options={props.statusesSelectOptions}
-                                value={newStatus}
-                                onChange={handleNewStatusChange}
+                                label={props.strings.action}
+                                value={action}
+                                options={actionsSelectOptions}
+                                onChange={handleActionChange}
                             />
                         </PanelRow>
-                    }
 
-                    {
-                        displayTaxonomyField && (
-                            isFetchingTerms && (
-                                <PanelRow>
-                                    <BaseControl label={taxonomyName}>
-                                        {`${props.strings.loading} (${taxonomyName})`}
-                                        <Spinner />
-                                    </BaseControl>
-                                </PanelRow>
-                            )
-                            || (!taxonomy && (
-                                <PanelRow>
-                                    <BaseControl label={taxonomyName} className="future-action-warning">
-                                        <div>
-                                            <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
-                                        </div>
-                                    </BaseControl>
-                                </PanelRow>
-                            )
-                                || (
-                                    termsListByNameKeys.length === 0 && (
-                                        <PanelRow>
-                                            <BaseControl label={taxonomyName} className="future-action-warning">
-                                                <div>
-                                                    <i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}
-                                                </div>
-                                            </BaseControl>
-                                        </PanelRow>
-                                    )
+                        <FutureActionPanelAfterActionField.Slot fillProps={{ storeName: props.storeName }} />
+
+                        {action === 'change-status' &&
+                            <PanelRow className="new-status">
+                                <SelectControl
+                                    label={props.strings.newStatus}
+                                    options={props.statusesSelectOptions}
+                                    value={newStatus}
+                                    onChange={handleNewStatusChange}
+                                />
+                            </PanelRow>
+                        }
+
+                        {
+                            displayTaxonomyField && (
+                                isFetchingTerms && (
+                                    <PanelRow>
+                                        <BaseControl label={taxonomyName}>
+                                            {`${props.strings.loading} (${taxonomyName})`}
+                                            <Spinner />
+                                        </BaseControl>
+                                    </PanelRow>
+                                )
+                                || (!taxonomy && (
+                                    <PanelRow>
+                                        <BaseControl label={taxonomyName} className="future-action-warning">
+                                            <div>
+                                                <i className="dashicons dashicons-warning"></i> {props.strings.noTaxonomyFound}
+                                            </div>
+                                        </BaseControl>
+                                    </PanelRow>
+                                )
                                     || (
-                                        <PanelRow className="future-action-full-width">
-                                            <BaseControl>
-                                                <FormTokenField
-                                                    label={termsFieldLabel}
-                                                    value={selectedTerms}
-                                                    suggestions={termsListByNameKeys}
-                                                    onChange={handleTermsChange}
-                                                    placeholder={props.strings.addTermsPlaceholder}
-                                                    maxSuggestions={1000}
-                                                    onFocus={forceIgnoreAutoSubmitOnEnter}
-                                                    __experimentalExpandOnFocus={true}
-                                                    __experimentalAutoSelectFirstMatch={true}
-                                                />
-                                            </BaseControl>
-                                        </PanelRow>
+                                        termsListByNameKeys.length === 0 && (
+                                            <PanelRow>
+                                                <BaseControl label={taxonomyName} className="future-action-warning">
+                                                    <div>
+                                                        <i className="dashicons dashicons-warning"></i> {props.strings.noTermsFound}
+                                                    </div>
+                                                </BaseControl>
+                                            </PanelRow>
+                                        )
+                                        || (
+                                            <PanelRow className="future-action-full-width">
+                                                <BaseControl>
+                                                    <FormTokenField
+                                                        label={termsFieldLabel}
+                                                        value={selectedTerms}
+                                                        suggestions={termsListByNameKeys}
+                                                        onChange={handleTermsChange}
+                                                        placeholder={props.strings.addTermsPlaceholder}
+                                                        maxSuggestions={1000}
+                                                        onFocus={forceIgnoreAutoSubmitOnEnter}
+                                                        __experimentalExpandOnFocus={true}
+                                                        __experimentalAutoSelectFirstMatch={true}
+                                                    />
+                                                </BaseControl>
+                                            </PanelRow>
+                                        )
                                     )
                                 )
                             )
-                        )
-                    }
+                        }
 
-                    <PanelRow className={datePanelClass}>
-                        <ToggleCalendarDatePicker
-                            currentDate={date}
-                            onChangeDate={handleDateChange}
-                            onToggleCalendar={() => setCalendarIsVisible(!calendarIsVisible)}
-                            is12Hour={!is24hour}
-                            startOfWeek={props.startOfWeek}
-                            isExpanded={calendarIsVisible}
-                            strings={props.strings}
-                        />
-                    </PanelRow>
-
-                    <PanelRow>
-                        <div className="future-action-help-text">
-                            <hr />
-
-                            <span className="dashicons dashicons-info"></span> {HelpText}
-                        </div>
-                    </PanelRow>
-
-                    {! hasValidData && (
-                        <PanelRow>
-                            <BaseControl className="notice notice-error">
-                                <div>{validationError}</div>
-                            </BaseControl>
+                        <PanelRow className={datePanelClass}>
+                            <ToggleCalendarDatePicker
+                                currentDate={date}
+                                onChangeDate={handleDateChange}
+                                onToggleCalendar={() => setCalendarIsVisible(!calendarIsVisible)}
+                                is12Hour={!is24hour}
+                                startOfWeek={props.startOfWeek}
+                                isExpanded={calendarIsVisible}
+                                strings={props.strings}
+                            />
                         </PanelRow>
-                    )}
-                </Fragment>
-            )}
-        </div>
+
+                        <PanelRow>
+                            <div className="future-action-help-text">
+                                <hr />
+
+                                <span className="dashicons dashicons-info"></span> {HelpText}
+                            </div>
+                        </PanelRow>
+
+                        {!hasValidData && (
+                            <PanelRow>
+                                <BaseControl className="notice notice-error">
+                                    <div>{validationError}</div>
+                                </BaseControl>
+                            </PanelRow>
+                        )}
+                    </Fragment>
+                )}
+            </div>
+            <PluginArea scope='publishpress-future' />
+        </SlotFillProvider>
     );
 };

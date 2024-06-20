@@ -11,6 +11,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeInterface;
+use PublishPress\Future\Modules\Expirator\Controllers\PluginsListController;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
@@ -19,6 +20,7 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
+use WpOrg\Requests\Hooks;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -103,6 +105,7 @@ class Plugin implements InitializableInterface
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'manageUpgrade'], 99);
         $this->hooks->addAction(HooksAbstract::ACTION_INSERT_POST, [$this, 'setDefaultMetaForPost'], 10, 3);
         $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
+        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'sortAdminMenu'], 100);
 
         $this->notices->init();
 
@@ -131,6 +134,9 @@ class Plugin implements InitializableInterface
         do_action(HooksAbstract::ACTION_ACTIVATE_PLUGIN);
 
         SettingsFacade::setDefaultSettings();
+
+        // Set flag to redirect to the settings page after activation
+        set_transient(PluginsListController::TRANSIENT_REDIRECT_AFTER_ACTIVATION, true, 60);
     }
 
     public static function onDeactivate()
@@ -287,5 +293,47 @@ class Plugin implements InitializableInterface
             $defaultExpire['ts'],
             $opts
         );
+    }
+
+    public function sortAdminMenu()
+    {
+        global $submenu;
+
+        $futureMenu = $submenu['publishpress-future'];
+
+        $menuNames = array_column($futureMenu, 2);
+
+        // Get the Settings menu index
+        $settingsIndex = array_search('publishpress-future', $menuNames);
+
+        // Get the Actions menu list
+        $actionsIndex = array_search('publishpress-future-scheduled-actions', $menuNames);
+
+        // Get the Upgrade to Pro menu list, if exists
+        $upgradeToProIndex = array_search('publishpress-future-menu-upgrade-link', $menuNames);
+
+        // Remove the Actions menu
+        $settingsSubmenu = $futureMenu[$settingsIndex];
+        $actionsSubmenu = $futureMenu[$actionsIndex];
+
+        unset($futureMenu[$actionsIndex]);
+        unset($futureMenu[$settingsIndex]);
+
+        if (false !== $upgradeToProIndex) {
+            $upgradeToProSubmenu = $futureMenu[$upgradeToProIndex];
+            unset($futureMenu[$upgradeToProIndex]);
+        }
+
+        $futureMenu = array_merge(
+            [$actionsSubmenu],
+            $futureMenu,
+            [$settingsSubmenu]
+        );
+
+        if (false !== $upgradeToProIndex) {
+            $futureMenu[] = $upgradeToProSubmenu;
+        }
+
+        $submenu['publishpress-future'] = $futureMenu;
     }
 }

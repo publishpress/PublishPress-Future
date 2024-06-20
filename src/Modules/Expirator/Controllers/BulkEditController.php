@@ -88,10 +88,15 @@ class BulkEditController implements InitializableInterface
 
     public function enqueueScripts()
     {
+        wp_enqueue_script("wp-components");
+        wp_enqueue_script("wp-plugins");
+        wp_enqueue_script("wp-element");
+        wp_enqueue_script("wp-data");
+
         wp_enqueue_script(
             'postexpirator-bulk-edit',
              POSTEXPIRATOR_BASEURL . '/assets/js/bulk-edit.js',
-             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities'],
+             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
              POSTEXPIRATOR_VERSION,
              true
         );

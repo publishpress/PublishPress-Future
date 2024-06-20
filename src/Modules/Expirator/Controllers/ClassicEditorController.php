@@ -301,10 +301,15 @@ class ClassicEditorController implements InitializableInterface
             return;
         }
 
+        wp_enqueue_script("wp-components");
+        wp_enqueue_script("wp-plugins");
+        wp_enqueue_script("wp-element");
+        wp_enqueue_script("wp-data");
+
         wp_enqueue_script(
             'publishpress-future-classic-editor',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
-            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'wp-html-entities'],
+            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );

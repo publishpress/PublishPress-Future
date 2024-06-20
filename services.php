@@ -41,6 +41,7 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlacehol
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
+use PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
@@ -518,8 +519,8 @@ return [
         };
     },
 
-    ServicesAbstract::ACTION_ARGS_MODEL_FACTORY => static function (ContainerInterface $container) {
-        return function () use ($container) {
+    ServicesAbstract::ACTION_ARGS_MODEL_FACTORY => static function (ContainerInterface $container): Closure {
+        return function () use ($container): ActionArgsModelInterface {
             return new ActionArgsModel(
                 $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
             );

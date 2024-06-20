@@ -94,12 +94,21 @@ class PostExpirator_Display
             wp_die(esc_html__('You do not have permission to configure PublishPress Future.', 'post-expirator'));
         }
 
-        $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', ];
-
-        $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
-
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : '';
+
+        $allowed_tabs = ['defaults', 'general', 'display', 'advanced', 'diagnostics', 'viewdebug', ];
+        $allowed_tabs = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_ALLOWED_TABS, $allowed_tabs);
+
+        $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
+        if (! $debugIsEnabled) {
+            unset($allowed_tabs['viewdebug']);
+
+            if ($tab === 'viewdebug') {
+                wp_die(esc_html__('Debug is disabled', 'post-expirator'));
+            }
+        }
+
         if (empty($tab) || ! in_array($tab, $allowed_tabs, true)) {
             $tab = 'defaults';
         }
@@ -107,11 +116,6 @@ class PostExpirator_Display
         ob_start();
         $this->load_tab($tab);
         $html = ob_get_clean();
-
-        $debugIsEnabled = (bool)$this->hooks->applyFilters(SettingsHooksAbstract::FILTER_DEBUG_ENABLED, false);
-        if (! $debugIsEnabled) {
-            unset($allowed_tabs['viewdebug']);
-        }
 
         $this->render_template('tabs', ['tabs' => $allowed_tabs, 'html' => $html, 'tab' => $tab]);
 

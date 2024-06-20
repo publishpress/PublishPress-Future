@@ -32,6 +32,7 @@ export const FutureActionPanelBlockEditor = (props) => {
             newAttribute['date'] = store.getDate();
             newAttribute['terms'] = store.getTerms();
             newAttribute['taxonomy'] = store.getTaxonomy();
+            newAttribute['extraData'] = store.getExtraData();
         }
 
         editPostAttribute(newAttribute);

@@ -1,7 +1,7 @@
 import { FutureActionPanelBulkEdit } from './components';
 import { createStore } from './data';
-import { createRoot } from '&wp.element';
-import { select, dispatch } from '&wp.data';
+import { createRoot } from '@wordpress/element';
+import { select, dispatch } from '@wordpress/data';
 import { inlineEditPost } from "&window";
 import {
     postTypeDefaultConfig,

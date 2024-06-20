@@ -72,7 +72,7 @@ class BlockEditorController implements InitializableInterface
             wp_enqueue_script(
                 'postexpirator-block-editor',
                 POSTEXPIRATOR_BASEURL . 'assets/js/block-editor.js',
-                ['wp-edit-post'],
+                ['wp-edit-post', 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
                 POSTEXPIRATOR_VERSION,
                 true
             );
