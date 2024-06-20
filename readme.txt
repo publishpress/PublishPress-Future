@@ -87,6 +87,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 A full changelog is available in the plugin's GitHub repository.
 
+= [3.4.0.1] - 20 Jun, 2024 =
+
+* FIXED: Fix fatal error for low level users when PublishPress menu is not available, #803;
+* FIXED: Fix wrong action date on the future action panel, #802;
+* CHANGED: The interface `PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface` has changed:
+  * Method `setCronActionId` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setPostId` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setArgs` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setArg` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setCreatedAt` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setEnabled` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDate` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDateFromISO8601` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDateFromUnixTime` now returns void instead of `ActionArgsModelInterface`;
+  * Method `convertUnixTimeDateToISO8601` is now public;
+  * Method `convertISO8601DateToUnixTime` is now public;
+
 = [3.4.0] - 20 Jun, 2024 =
 
 * ADDED: Add action workflow editor and engine, #687;
@@ -181,11 +198,3 @@ A full changelog is available in the plugin's GitHub repository.
 * FIXED: Added back support for reusable blocks, #200;
 * FIXED: Updated the language files, #653;
 * FIXED: Fix error 404 when activating future action on a post type that has no taxonomy registered, #662;
-
-= [3.1.7] - 04 Jan, 2024 =
-
-* FIXED: Fix compatibility with plugins like "Hide Categories and Products for Woocommerce", making sure terms are not hidden in the taxonomy field, #639;
-* FIXED: Fix the terms select field in the settings page, expanding it on focus, #638;
-* FIXED: Fix the fatal error when hook `add_meta_boxes` didn't receive a `WP_Post` instance as parameter, #640;
-* FIXED: Fix issue with the "NaN" categories in the classic editor, #647;
-* FIXED: Fix issue with accents on the taxonomy field in the settings, #642;
