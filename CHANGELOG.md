@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+= [3.4.0.1] - 20 Jun, 2024 =
+
+* FIXED: Fix fatal error for low level users when PublishPress menu is not available, #803;
+
 = [3.4.0] - 20 Jun, 2024 =
 
 * ADDED: In the JS context, implemented a way to extend the future action panel using SlotFill `FutureActionPanelAfterActionField` and setting extra fields to the panel, right after the action field;
