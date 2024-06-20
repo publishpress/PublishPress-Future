@@ -90,10 +90,10 @@ class ExpirationScheduler implements SchedulerInterface
         $this->expirationActionsModel = $expirationActionsModel;
     }
 
-    private function convertLocalTimeToUtc($timestamp)
+    private function convertLocalTimeToUtc($timestamp):int
     {
         // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
-        return get_gmt_from_date(date('Y-m-d H:i:s', $timestamp), 'U');
+        return (int)get_gmt_from_date(date('Y-m-d H:i:s', $timestamp), 'U');
     }
 
     /**
@@ -150,12 +150,18 @@ class ExpirationScheduler implements SchedulerInterface
 
         $opts = $this->hooks->applyFilters(HooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS, $opts, $postId);
 
+        /**
+         * @var ActionArgsModelInterface $actionArgsModel
+         */
         $actionArgsModel = $factory();
-        $id = $actionArgsModel->setCronActionId($actionId)
-            ->setPostId($postId)
-            ->setScheduledDate($timestamp)
-            ->setArgs($opts)
-            ->insert();
+        $actionArgsModel->setCronActionId($actionId);
+        $actionArgsModel->setPostId($postId);
+        if (! is_numeric($timestamp)) {
+            $timestamp = $actionArgsModel->convertISO8601DateToUnixTime($timestamp);
+        }
+        $actionArgsModel->setScheduledDateFromUnixTime($timestamp);
+        $actionArgsModel->setArgs($opts);
+        $id = $actionArgsModel->insert();
 
         $this->logger->debug(
             sprintf(

@@ -19,7 +19,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 class Module implements ModuleInterface
 {
     /**
-     * @var \PublishPress\Future\Core\HookableInterface;
+     * @var \PublishPress\Future\Core\HookableInterface
      */
     private $hooks;
 

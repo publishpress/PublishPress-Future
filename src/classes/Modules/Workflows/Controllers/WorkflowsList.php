@@ -67,6 +67,10 @@ class WorkflowsList implements InitializableInterface
     {
         global $submenu;
 
+        if (!isset($submenu["publishpress-future"])) {
+            return;
+        }
+
         $indexAllWorkflows = array_search(
             "edit.php?post_type=ppfuture_workflow",
             array_column($submenu["publishpress-future"], 2)

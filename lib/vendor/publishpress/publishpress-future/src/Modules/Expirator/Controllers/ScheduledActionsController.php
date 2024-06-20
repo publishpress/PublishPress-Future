@@ -131,7 +131,8 @@ class ScheduledActionsController implements InitializableInterface
         $factory = $this->actionArgsModelFactory;
         $actionArgsModel = $factory();
         if ($actionArgsModel->loadByActionId($actionId)) {
-            $actionArgsModel->setEnabled(false)->save();
+            $actionArgsModel->setEnabled(false);
+            $actionArgsModel->save();
         };
     }
 

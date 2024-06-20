@@ -3,7 +3,24 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-= [3.4.0] - 20 Jun, 2024 =
+## 3.4.0.1 - 20 Jun, 2024
+
+* FIXED: Fix fatal error for low level users when PublishPress menu is not available, #803;
+* FIXED: Fix wrong action date on the future action panel, #802;
+* CHANGED: The interface `PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface` has changed:
+  * Method `setCronActionId` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setPostId` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setArgs` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setArg` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setCreatedAt` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setEnabled` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDate` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDateFromISO8601` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDateFromUnixTime` now returns void instead of `ActionArgsModelInterface`;
+  * Method `convertUnixTimeDateToISO8601` is now public;
+  * Method `convertISO8601DateToUnixTime` is now public;
+
+## 3.4.0 - 20 Jun, 2024
 
 * ADDED: Add action workflow editor and engine, #687;
 * ADDED: In the JS context, implemented a way to extend the future action panel using SlotFill `FutureActionPanelAfterActionField` and setting extra fields to the panel, right after the action field;
@@ -25,7 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Fix access to the View Debug settings tab when debug is disabled;
 * FIXED: Fix the position of the "Upgrade to Pro" and "Settings" menu items in the admin bar;
 
-= [3.3.1] - 19 Mar, 2024 =
+## 3.3.1 - 19 Mar, 2024
 
 * ADDED: Add validation for the date and time offset in the settings page, #683;
 * ADDED: Add form validation to the settings panel;
@@ -47,7 +64,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Improve the message when no actions are found: "No Future Actions", #666;
 * FIXED: Escape string in a exception message;
 
-= [3.3.0] - 29 Feb, 2024 =
+## 3.3.0 - 29 Feb, 2024
 
 * ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
 * ADDED: Add new filter for choosing to hide or not the Future Action in the post editors: publishpressfuture_hide_metabox, #69;
@@ -78,7 +95,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * REMOVED: Remove the legacy action `postExpiratorExpire`. This action will not trigger the future actions anymore;
 * REMOVED: Remove the legacy action `publishpressfuture_expire`. This action will not trigger the future actions anymore;
 
-= [3.2.0] - 25 Jan, 2024 =
+## 3.2.0 - 25 Jan, 2024
 
 * ADDED: Add new advanced setting to choose the base date for the future actions: current date or post publishing date #530;
 * ADDED: Add the possibility to use non hierarchical taxonomies, #285;
@@ -98,7 +115,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Updated the language files, #653;
 * FIXED: Fix error 404 when activating future action on a post type that has no taxonomy registered, #662;
 
-= [3.1.7] - 04 Jan, 2024 =
+## 3.1.7 - 04 Jan, 2024
 
 * FIXED: Fix compatibility with plugins like "Hide Categories and Products for Woocommerce", making sure terms are not hidden in the taxonomy field, #639;
 * FIXED: Fix the terms select field in the settings page, expanding it on focus, #638;
@@ -106,7 +123,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Fix issue with the "NaN" categories in the classic editor, #647;
 * FIXED: Fix issue with accents on the taxonomy field in the settings, #642;
 
-= [3.1.6] - 20 Dec, 2023 =
+## 3.1.6 - 20 Dec, 2023
 
 * ADDED: Add a new setting to select the time format in the date picker component, #626;
 * CHANGED: Stick the library woocommerce/action-scheduler on version 3.7.0, so we don't force WP min to 6.2;
@@ -121,7 +138,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Fix support to custom taxonomies that are not showed in the Rest API, #629;
 * FIXED: Fix compatibility with PublishPress Statuses' custom statuses, #632;
 
-= [3.1.5] - 14 Dec, 2023 =
+## 3.1.5 - 14 Dec, 2023
 
 * FIXED: Fix array_map(): Argument must be of type array, string given, #606;
 * FIXED: Remove broken and invalid setting to use classic metabox, #604;
@@ -129,7 +146,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Update the ES, IT and FR translations, #609;
 * CHANGED: Limit the version of the library woocommerce/action-scheduler to 3.7.0, until we can set WP 6.2 as the minimum version;
 
-= [3.1.4] - 13 Dec, 2023 =
+## 3.1.4 - 13 Dec, 2023
 
 * ADDED: Taxonomy term field now supports adding a new term by typing a new value;
 * ADDED: Add a button to toggle the calendar on the future action panels. Quick/Bulk edit are collapsed by default, #583;
@@ -167,16 +184,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * REMOVED: Internal function `postexpirator_add_footer` was removed, and the footer is now handled in the `ContentController` class;
 * REMOVED: Internal function `postexpirator_get_footer_text` was removed;
 
-= [3.1.3] - 09 Nov, 2023 =
+## 3.1.3 - 09 Nov, 2023
 
 * FIXED: Fix JS error Cannot read properties of undefined (reading ‘length’) on the block editor, #561;
 
-= [3.1.2] - 07 Nov, 2023 =
+## 3.1.2 - 07 Nov, 2023
 
 * CHANGED: Update the library woocommerce/action-scheduler from 3.6.3 to 3.6.4;
 * FIXED: Fix compatibility with WP 6.4 removing dependency of lodash, #555;
 
-= [3.1.1] - 11 Oct, 2023 =
+## 3.1.1 - 11 Oct, 2023
 
 * ADDED: Add new bulk action for posts to update future action scheduler based on post's metadata, #538;
 * DEPRECATED: Deprecate class PublishPress\Future\Core\DI\ContainerNotInitializedException;
@@ -188,7 +205,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Fix plugin activation hook not running on plugin activation, #539;
 * REMOVED: Remove tooltip from the "Expires" column in the posts list, #511;
 
-= [3.1.0] - 06 Sep, 2023 =
+## 3.1.0 - 06 Sep, 2023
 
 * CHANGED: Updated base plugin to 3.1.0;
 * CHANGED: Change min PHP version to 7.2.5. If not compatible, the plugin will not execute;
@@ -204,37 +221,37 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Update translations for IT, #524;
 * FIXED: Fix some calls to the deprecated namespace `PublishPressFuture`, refactoring to the new namespace `PublishPress\Future`;
 
-= [3.0.6] - 26 Jul 2023 =
+## 3.0.6 - 26 Jul 2023
 
 * CHANGED: Updated base plugin to 3.0.6;
 
-= [3.0.5] - 25 Jul 2023 =
+## 3.0.5 - 25 Jul 2023
 
 * CHANGED: Updated base plugin to 3.0.5;
 * FIXED: Updated .pot file, #493;
 * FIXED: Updated translations for es_ES, fr_FR, it_IT, #493;
 
-= [3.0.4] - 04 Jul 2023 =
+## 3.0.4 - 04 Jul 2023
 
 * CHANGED: Updated base plugin to 3.0.4;
 
-= [3.0.3] - 20 Jun 2023 =
+## 3.0.3 - 20 Jun 2023
 
 * CHANGED: Updated base plugin to 3.0.3;
 
-= [3.0.2] - 19 Jun 2023 =
+## 3.0.2 - 19 Jun 2023
 
 * CHANGED: Updated base plugin to 3.0.2;
 
-= [3.0.1] - 15 Jun 2023 =
+## 3.0.1 - 15 Jun 2023
 
 * CHANGED: Updated base plugin to 3.0.1;
 
-= [3.0.0] - 13 Jun 2023 =
+## 3.0.0 - 13 Jun 2023
 
 * CHANGED: Updated base plugin to 3.0.0;
 
-= [2.9.2] - 01 Mar 2023 =
+## 2.9.2 - 01 Mar 2023
 
 * FIXED: List of actions in the post type settings is not filtered by post types, #400;
 * FIXED: Include Statuses as a Default option, #395;
@@ -243,13 +260,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * FIXED: Fix data sanitization and security issues in the log screen;
 * FIXED: Fix PHP warning saying the method `WorkflowLogModel::countAll` returned NULL instead of an integer;
 
-= [2.9.1] - 23 Feb 2023 =
+## 2.9.1 - 23 Feb 2023
 
 * FIXED: Fix issue with WordPress banners css file being missed, #393;
 * FIXED: Fix support to delete all settings when uninstalling the plugin;
 * FIXED: Stop automatically adding settings register if not existent and settings page is visited;
 
-= [2.9.0] - 14 Feb 2023 =
+## 2.9.0 - 14 Feb 2023
 
 * ADDED: Add support for custom statuses, #224;
 * ADDED: Add improved logs for past expiration dates, #233;
