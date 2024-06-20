@@ -67,7 +67,7 @@
     "build:clean": "ppbuild clean",
     "build:js-dev": "wp-scripts build --mode development",
     "build:js": "wp-scripts build --mode production",
-    "build:js-profile": "webpack --profile --json > webpack-bundle-stats.json",
+    "profile:js": "webpack --profile --json > webpack-bundle-stats.json",
     "watch:js": "wp-scripts build --mode development --watch",
     "get:version": "ppbuild version",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
