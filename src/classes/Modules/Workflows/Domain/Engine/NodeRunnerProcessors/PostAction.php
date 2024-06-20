@@ -110,6 +110,9 @@ class PostAction implements NodeRunnerProcessorInterface
 
     public function getVariableValueFromContextVariables(string $variableName, array $contextVariables)
     {
-        return $this->generalNodeRunnerProcessor->getVariableValueFromContextVariables($variableName, $contextVariables);
+        return $this->generalNodeRunnerProcessor->getVariableValueFromContextVariables(
+            $variableName,
+            $contextVariables
+        );
     }
 }

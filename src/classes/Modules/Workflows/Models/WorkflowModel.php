@@ -345,6 +345,7 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function setScreenshotFromFile(string $filePath)
     {
+        // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
         $dataImage = 'data:image/png;base64,' . base64_encode(file_get_contents($filePath));
 
         $this->setScreenshotFromBase64($dataImage);

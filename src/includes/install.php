@@ -10,6 +10,7 @@
 namespace PublishPress\FuturePro;
 
 use PublishPress\FuturePro\Core\HooksAbstract;
+
 use function PublishPress\Future\install as installFree;
 
 defined('ABSPATH') or die('No direct script access allowed.');

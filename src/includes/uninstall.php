@@ -10,6 +10,7 @@
 namespace PublishPress\FuturePro;
 
 use PublishPress\Future\Core\HooksAbstract as HooksAbstractFree;
+
 use function PublishPress\Future\uninstall as uninstallFree;
 
 defined('ABSPATH') or die('No direct script access allowed.');
