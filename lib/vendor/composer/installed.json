@@ -304,17 +304,17 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.3.1",
-            "version_normalized": "3.3.1.0",
+            "version": "3.4.0",
+            "version_normalized": "3.4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "497b29d55ed725d43e94fd77927b087c2c8733cc"
+                "reference": "43868c26acc08217d6b257a9f8c654e8c2896b47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/497b29d55ed725d43e94fd77927b087c2c8733cc",
-                "reference": "497b29d55ed725d43e94fd77927b087c2c8733cc",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/43868c26acc08217d6b257a9f8c654e8c2896b47",
+                "reference": "43868c26acc08217d6b257a9f8c654e8c2896b47",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "wp-cli/i18n-command": "^2.6",
                 "wp-coding-standards/wpcs": "^3"
             },
-            "time": "2024-03-19T15:49:58+00:00",
+            "time": "2024-06-20T16:34:32+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -382,7 +382,10 @@
                 "build:js-dev": [
                     "wp-scripts build --mode development"
                 ],
-                "build:js-watch": [
+                "profile:js": [
+                    "webpack --profile --json > webpack-bundle-stats.json"
+                ],
+                "watch:js": [
                     "wp-scripts build --mode development --watch"
                 ],
                 "get:version": [
@@ -393,6 +396,10 @@
                 ],
                 "gen:pot": [
                     "wp i18n make-pot . languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests, --allow-root"
+                ],
+                "gen:lang": [
+                    "@gen:pot",
+                    "@gen:mo"
                 ],
                 "cleanup:gh-workflows": [
                     "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE"
@@ -503,7 +510,7 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.3.1",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.4.0",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "install-path": "../publishpress/publishpress-future"

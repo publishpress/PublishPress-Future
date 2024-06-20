@@ -16,6 +16,25 @@ You can download a built package from [releases page](/releases/) and install it
 
 Please, check our Slab documentation for more information about how to build a package: [How to build a package](https://rambleventures.slab.com/posts/building-plugin-packages-odg3nll2)
 
+## How to analyse webpack bundle?
+
+```bash
+./node_modules/.bin/webpack --profile --json > webpack-bundle-stats.json
+```
+
+Then load `https://127.0.0.1:8888` in the browser.
+
+Please, note this do not work inside the dev-workflow for now.
+
+### Another option is analysing the source map files
+
+```bash
+./node_modules/.bin/source-map-explorer ./src/assets/js/workflow-editor.js
+```
+
+It will open an HTML page with the analysis of the source map file in the browser.
+Please, note this do not work inside the dev-workflow for now.
+
 ## License
 
 License: [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html)

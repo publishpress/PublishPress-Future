@@ -86,6 +86,9 @@ class PostExpirator_Facade
         $container = Container::getInstance();
         $factory = $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY);
 
+        /**
+         * @var \PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface
+         */
         $actionArgsModel = $factory();
 
         $actionArgsModel->loadByPostId($postId);

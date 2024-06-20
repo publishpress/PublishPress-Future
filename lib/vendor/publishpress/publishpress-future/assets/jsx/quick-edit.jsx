@@ -1,8 +1,8 @@
 import { FutureActionPanelQuickEdit } from './components';
 import { createStore } from './data';
 import { getActionSettingsFromColumnData } from './utils';
-import { createRoot } from '&wp.element';
-import { select, dispatch } from '&wp.data';
+import { createRoot } from '@wordpress/element';
+import { select, dispatch } from '@wordpress/data';
 import { inlineEditPost } from "&window";
 import {
     postType,
@@ -49,6 +49,10 @@ inlineEditPost.edit = function (button, id) {
     const postId = getPostIdFromButton(button);
     const data = getActionSettingsFromColumnData(postId);
 
+    if (!data) {
+        return;
+    }
+
     const enabled = data.enabled;
     const action = data.action;
     const date = data.date;
@@ -84,6 +88,9 @@ inlineEditPost.edit = function (button, id) {
     }
 
     const container = document.getElementById("publishpress-future-quick-edit");
+    if (!container) {
+        return;
+    }
     const root = createRoot(container);
 
     const saveButton = document.querySelector('.inline-edit-save .save');

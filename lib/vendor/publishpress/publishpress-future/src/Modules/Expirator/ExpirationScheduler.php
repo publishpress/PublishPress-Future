@@ -67,7 +67,7 @@ class ExpirationScheduler implements SchedulerInterface
      * @param LoggerInterface $logger
      * @param DateTimeFacade $datetime
      * @param \Closure $postModelFactory
-     * @param $actionArgsModelFactory
+     * @param \Closure $actionArgsModelFactory
      * @param ExpirationActionsModel $expirationActionsModel
      */
     public function __construct(
@@ -148,10 +148,12 @@ class ExpirationScheduler implements SchedulerInterface
         $opts['postLink'] = $postModel->getPermalink();
         $opts['postTypeLabel'] = $postModel->getPostTypeSingularLabel();
 
+        $opts = $this->hooks->applyFilters(HooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS, $opts, $postId);
+
         $actionArgsModel = $factory();
         $id = $actionArgsModel->setCronActionId($actionId)
             ->setPostId($postId)
-            ->setScheduledDateFromUnixTime($timestamp)
+            ->setScheduledDate($timestamp)
             ->setArgs($opts)
             ->insert();
 

@@ -1,0 +1,679 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-05-31T01:39:58+00:00\n"
+"PO-Revision-Date: 2024-06-06 15:46+0200\n"
+"Language: it_IT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Domain: publishpress-future-pro\n"
+
+#: components/data-fields/date-offset.jsx:68
+msgid "As soon as possible"
+msgstr "Prima possibile"
+
+#: components/data-fields/date-offset.jsx:69
+msgid "On a specific date"
+msgstr "In una data specifica"
+
+#: components/data-fields/date-offset.jsx:89
+msgid "Non-repeating"
+msgstr "Non ripetibile"
+
+#: components/data-fields/date-offset.jsx:90
+msgid "Custom interval in seconds"
+msgstr "Intervallo personalizzato in secondi"
+
+#: components/data-fields/date-offset.jsx:95
+msgid "Forever"
+msgstr "Per sempre"
+
+#: components/data-fields/date-offset.jsx:96
+msgid "Specific date"
+msgstr "Data specifica"
+
+#: components/data-fields/date-offset.jsx:97
+msgid "For a number of times"
+msgstr "Per un numero di volte"
+
+#: components/data-fields/date-offset.jsx:119
+msgid "Avoid duplicated action"
+msgstr "Evita azioni duplicate"
+
+#: components/data-fields/date-offset.jsx:125
+msgid "When to run"
+msgstr "Quando eseguire"
+
+#: components/data-fields/date-offset.jsx:134
+msgid "Date source"
+msgstr "Fonte della data"
+
+#: components/data-fields/date-offset.jsx:150
+msgid "Offset"
+msgstr "Offset"
+
+#: components/data-fields/date-offset.jsx:164
+msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
+msgstr "Per informazioni sulla formattazione, vedere la funzione %sPHP strtotime%s . Ad esempio, si può inserire %s+1 mese%s o %s+1 settimana 2 giorni 4 ore 2 secondi%s o %sgiovedì prossimo%s. Utilizzare solo frasi in inglese."
+
+#: components/data-fields/date-offset.jsx:185
+msgid "Repeating Action"
+msgstr "Azione ripetibile"
+
+#: components/data-fields/date-offset.jsx:193
+msgid "Interval in seconds"
+msgstr "Intervalllo in secondi"
+
+#: components/data-fields/date-offset.jsx:202
+msgid "Repeat until"
+msgstr "Ripeti fino a"
+
+#: components/data-fields/date-offset.jsx:210
+msgid "Times to repeat"
+msgstr "Volte da ripetere"
+
+#: components/data-fields/date-offset.jsx:227
+msgid "Priority"
+msgstr "Priorità"
+
+#: components/data-fields/debug-data.jsx:7
+msgid "All received input"
+msgstr "Tutti gli input ricevuti"
+
+#: components/data-fields/debug-data.jsx:35
+msgid "Data to output"
+msgstr "Dati da mostrare"
+
+#: components/data-fields/email-recipient.jsx:35
+msgid "Email Recipient"
+msgstr "Email destinatario"
+
+#: components/data-fields/email-recipient.jsx:42
+msgid "Custom Email Addresses"
+msgstr "Indirizzi email personalizzati"
+
+#: components/data-fields/post-query.jsx:44
+msgid "Post selection"
+msgstr "Seleziona articoli"
+
+#: components/data-fields/post-query.jsx:47
+msgid "Post received as input"
+msgstr "Articoli ricevuti come input"
+
+#: components/data-fields/post-query.jsx:48
+msgid "Custom query"
+msgstr "Query personalizzata"
+
+#: components/data-fields/post-query.jsx:59
+msgid "Post Type"
+msgstr "Tipo di articolo"
+
+#: components/data-fields/post-query.jsx:74
+msgid "Post Status"
+msgstr "Stato dell'articolo"
+
+#: components/data-fields/post-status.jsx:40
+msgid "New Status"
+msgstr "Nuovo stato"
+
+#: components/data-fields/ray-color.jsx:13
+msgid "No color"
+msgstr "Senza colore"
+
+#: components/data-fields/ray-color.jsx:14
+msgid "Green"
+msgstr "Verde"
+
+#: components/data-fields/ray-color.jsx:15
+msgid "Orange"
+msgstr "Arancione"
+
+#: components/data-fields/ray-color.jsx:16
+msgid "Red"
+msgstr "Rosso"
+
+#: components/data-fields/ray-color.jsx:17
+msgid "Blue"
+msgstr "Blu"
+
+#: components/data-fields/ray-color.jsx:18
+msgid "Purple"
+msgstr "Violetto"
+
+#: components/data-fields/ray-color.jsx:19
+msgid "Gray"
+msgstr "Grigio"
+
+#: components/data-fields/taxonomy-terms.jsx:64
+msgid "Taxonomy"
+msgstr "Tassonomia"
+
+#: components/data-fields/taxonomy-terms.jsx:73
+msgid "Select the terms"
+msgstr "Seleziona termine"
+
+#: components/data-fields/taxonomy-terms.jsx:77
+msgid "Specific terms"
+msgstr "Specifica termine"
+
+#: components/data-fields/taxonomy-terms.jsx:84
+#: components/data-fields/taxonomy-terms.jsx:97
+msgid "Terms"
+msgstr "Termini"
+
+#: components/fullscreen-mode-close.jsx:43
+msgid "Back"
+msgstr "Indietro"
+
+#: components/layout/header.jsx:124
+msgid "Add"
+msgstr "Aggiungi"
+
+#: components/layout/header.jsx:124
+msgid "Close"
+msgstr "Chiudi"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/layout/header.jsx:135
+#: components/layout/header.jsx:140
+msgid "Auto Layout"
+msgstr "Layout automatico"
+
+#: components/layout/interface.jsx:74
+msgid "Open node settings"
+msgstr "Apri impostazioni del nodo"
+
+#: components/layout/interface.jsx:75
+msgid "Open workflow settings"
+msgstr "Apri impostazioni del flusso di lavoro"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/left-toolbar/redo.jsx:31
+msgid "Redo"
+msgstr "Ripeti"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/left-toolbar/undo.jsx:31
+msgid "Undo"
+msgstr "Annulla"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/more-menu/menu-dropdown.jsx:11
+msgid "Options"
+msgstr "Opzioni"
+
+#: components/more-menu/menu-feature-toggle.jsx:32
+msgid "Feature deactivated"
+msgstr "Feature disattivato"
+
+#: components/more-menu/menu-feature-toggle.jsx:34
+msgid "Feature activated"
+msgstr "Feature attivato"
+
+#: components/more-menu/menu-items-view.jsx:23
+msgctxt "noun"
+msgid "View"
+msgstr "Visualizza"
+
+#: components/more-menu/menu-items-view.jsx:27
+msgid "Fullscreen mode"
+msgstr "Modalità a schermo intero"
+
+#: components/more-menu/menu-items-view.jsx:28
+msgid "Work without distraction"
+msgstr "Lavora senza distrazioni"
+
+#: components/more-menu/menu-items-view.jsx:29
+msgid "Fullscreen mode activated"
+msgstr "Modalità a schermo intero attivata"
+
+#: components/more-menu/menu-items-view.jsx:30
+msgid "Fullscreen mode deactivated"
+msgstr "Modalità a schermo intero disattivata"
+
+#: components/more-menu/menu-items-view.jsx:36
+msgid "Advanced Settings"
+msgstr "Impostazioni avanzate"
+
+#: components/more-menu/menu-items-view.jsx:37
+msgid "Display advanced settings for the workflow, triggers and steps"
+msgstr "Visualizza le impostazioni avanzate per flusso di lavoro, trigger e fasi"
+
+#: components/more-menu/menu-items-view.jsx:38
+msgid "Advanced settings mode activated"
+msgstr "Modalità impostazioni avanzate attivata"
+
+#: components/more-menu/menu-items-view.jsx:39
+msgid "Advanced settings mode deactivated"
+msgstr "Modalità impostazioni avanzate disattivata"
+
+#: components/more-menu/menu-items-view.jsx:45
+msgid "Display a mini map"
+msgstr "Visualizza una mini mappa"
+
+#: components/more-menu/menu-items-view.jsx:46
+msgid "Display a mini map in the bottom of the editor, triggers and steps"
+msgstr "Visualizza una mini mappa in fondo all'editor, ai trigger e alle fasi"
+
+#: components/more-menu/menu-items-view.jsx:47
+#: components/more-menu/menu-items-view.jsx:55
+msgid "Mini map activated"
+msgstr "Mini mappa attivata"
+
+#: components/more-menu/menu-items-view.jsx:48
+#: components/more-menu/menu-items-view.jsx:56
+msgid "Mini map deactivated"
+msgstr "Mini mappa disattivata"
+
+#: components/more-menu/menu-items-view.jsx:53
+msgid "Display the controls panel"
+msgstr "Visualizza il pannello di controllo"
+
+#: components/more-menu/menu-items-view.jsx:54
+msgid "Display the controls panel with buttons to zoon in, zoom out, fit the view and lock the viewport"
+msgstr "Visualizza il pannello di controllo con i pulsanti di zoom in, zoom out, adatta alla vista e blocca il viewport"
+
+#: components/more-menu/menu-items-view.jsx:59
+msgid "Tools"
+msgstr "Strumenti"
+
+#: components/more-menu/menu-items-view.jsx:63
+msgid "Developer mode"
+msgstr "Modalità sviluppatore"
+
+#: components/more-menu/menu-items-view.jsx:64
+msgid "Work in developer mode"
+msgstr "Lavora in modalità sviluppatore"
+
+#: components/more-menu/menu-items-view.jsx:65
+msgid "Developer mode activated"
+msgstr "Modalità sviluppatore attivata"
+
+#: components/more-menu/menu-items-view.jsx:66
+msgid "Developer mode deactivated"
+msgstr "Modalità sviluppatore disattivata"
+
+#: components/more-menu/menu-items-view.jsx:72
+msgid "Welcome guide"
+msgstr "Guida di benvenuto"
+
+#: components/more-menu/menu-items-view.jsx:73
+msgid "Display the welcome guide"
+msgstr "Visualizza la guida di benvenuto"
+
+#: components/more-menu/menu-items-view.jsx:74
+msgid "Welcome guide activated"
+msgstr "Guida di benvenuto attivata"
+
+#: components/more-menu/menu-items-view.jsx:75
+msgid "Welcome guide deactivated"
+msgstr "Guida di benvenuto disattivata"
+
+#: components/more-menu/menu-items-view.jsx:83
+msgid "Help"
+msgstr "Aiuto"
+
+#: components/node-dev-info-panel/index.jsx:23
+msgid "Developer Info"
+msgstr "Informazioni sviluppatore"
+
+#: components/node-inspector/index.jsx:96
+msgid "No element selected."
+msgstr "Nessun elemento selezionato."
+
+#: components/node-inspector/index.jsx:104
+msgid "Multiple and different elements selected."
+msgstr "Molti e differenti elementi selezionati."
+
+#: components/node-dev-info-panel/index.jsx:30
+#: components/node-inspector/node-inspector-card.jsx:18
+#: components/node-types/generic.jsx:37
+msgid "Node"
+msgstr "Nodo"
+
+#: components/node-inspector/node-inspector-card.jsx:19
+msgid "No description"
+msgstr "Senza descrizione"
+
+#: components/node-inspector/node-data-flow-panel.jsx:14
+msgid "Inputs"
+msgstr "Input"
+
+#: components/node-inspector/node-data-flow-panel.jsx:18
+msgid "This step receives the following input from previous step:"
+msgstr "Questa fase riceve l'input seguente dalla fase precedente:"
+
+#: components/node-inspector/node-data-flow-panel.jsx:34
+msgid "Outputs"
+msgstr "Risultati"
+
+#: components/node-inspector/node-data-flow-panel.jsx:38
+msgid "This step outputs the following data:"
+msgstr "Questa fase mostra i seguenti dati:"
+
+#: components/node-types/generic.jsx:88
+msgid "Step"
+msgstr "Fase"
+
+#: components/node-types/generic.jsx:90
+msgid "Action"
+msgstr "Azione"
+
+#. translators: Patterns tab title in the block inserter.
+#: components/node-types/generic.jsx:92
+#: components/secondary-sidebar/tabs.jsx:30
+msgid "Advanced"
+msgstr "Avanzato"
+
+#: components/node-types/generic.jsx:94
+msgid "Trigger"
+msgstr "Trigger"
+
+#: components/node-types/generic.jsx:127
+#: components/workflow-delete-button/index.jsx:39
+msgid "Delete"
+msgstr "Elimina"
+
+#: components/node-validation-panel/index.jsx:14
+msgid "Validation"
+msgstr "Convalida"
+
+#: components/secondary-sidebar/inserter-listbox/group.jsx:14
+msgid "Use left and right arrow keys to move through blocks"
+msgstr "Utilizza i tasti freccia sinistra e destra per spostarti tra i blocchi"
+
+#: components/secondary-sidebar/inserter-no-results.jsx:14
+msgid "No results found."
+msgstr "Nessun risultato trovato."
+
+#. translators: %d: number of results.
+#: components/secondary-sidebar/inserter-search-results.jsx:101
+msgid "%d result found."
+msgid_plural "%d results found."
+msgstr[0] "%d risultato trovato."
+msgstr[1] "%d risultati trovati."
+
+#: components/secondary-sidebar/inserter-search-results.jsx:116
+#: components/secondary-sidebar/inserter-search-results.jsx:123
+msgid "Nodes"
+msgstr "Nodi"
+
+#: components/secondary-sidebar/menu.jsx:73
+#: components/secondary-sidebar/menu.jsx:110
+msgid "A tip for using the workflow editor"
+msgstr "Un suggerimento per usare l'editor di flusso di lavoro"
+
+#. translators: %d: Number of blocks.
+#: components/secondary-sidebar/node-draggable-chip.jsx:27
+msgid "%d block"
+msgid_plural "%d blocks"
+msgstr[0] "%d blocco"
+msgstr[1] "%d blocchi"
+
+#: components/secondary-sidebar/nodes-tab.jsx:80
+#: components/secondary-sidebar/nodes-tab.jsx:85
+msgctxt "nodes"
+msgid "Most used"
+msgstr "Più usato"
+
+#. translators: Blocks tab title in the block inserter.
+#: components/secondary-sidebar/tabs.jsx:20
+msgid "Triggers"
+msgstr "Trigger"
+
+#. translators: Patterns tab title in the block inserter.
+#: components/secondary-sidebar/tabs.jsx:25
+msgid "Actions"
+msgstr "Azioni"
+
+#: components/secondary-sidebar/tips.jsx:10
+msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow."
+msgstr "Selezionare più fasi premendo <kbd>cmd o ctrl</kbd> e fare clic su ogni fase del flusso di lavoro."
+
+#: components/secondary-sidebar/tips.jsx:16
+msgid "Drag steps from the inserter into the workflow."
+msgstr "Trascina le fasi dall'inseritore nel flusso di lavoro."
+
+#: components/settings-sidebar/plugin-sidebar.jsx:34
+msgid "(no name)"
+msgstr "(senza nome)"
+
+#. translators: Default label for the Workflow sidebar tab, not selected.
+#: components/settings-sidebar/settings-header.jsx:23
+msgctxt "noun"
+msgid "Workflow"
+msgstr "Flusso di lavoro"
+
+#: components/settings-sidebar/settings-header.jsx:37
+msgid "Element"
+msgstr "Elemento"
+
+#: components/settings-sidebar/settings-sidebar.jsx:48
+msgid "Close settings"
+msgstr "Chiudi impostazioni"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/settings-sidebar/settings-sidebar.jsx:52
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: components/welcome-guide/index.jsx:21
+msgid "Welcome to workflow editor"
+msgstr "Benvenuto nell'editor del flusso di lavoro"
+
+#: components/welcome-guide/index.jsx:22
+msgid "Get started"
+msgstr "Guida introduttiva"
+
+#: components/workflow-delete-button/index.jsx:24
+msgid "Are you sure you want to delete this workflow?"
+msgstr "Vuoi davvero eliminare questo flusso di lavoro?"
+
+#: components/workflow-delete-button/index.jsx:39
+msgid "Move to trash"
+msgstr "Sposta nel cestino"
+
+#: components/workflow-global-variables/index.jsx:28
+msgid "Global Variables"
+msgstr "Variabili globali"
+
+#: components/node-dev-info-panel/index.jsx:18
+#: components/workflow-global-variables/index.jsx:37
+msgid "Loading..."
+msgstr "Caricamento in corso…"
+
+#: components/workflow-global-variables/index.jsx:43
+msgid "No global variables are declared"
+msgstr "Nessuna variabile globale dichiarata"
+
+#: components/workflow-global-variables/index.jsx:48
+msgid "Variables list"
+msgstr "Elenco variabili"
+
+#: components/workflow-global-variables/index.jsx:76
+msgid "Global variables are available to all nodes in the workflow that accepts variables."
+msgstr "Le variabili globali sono disponibili per tutti i nodi del flusso di lavoro che accetta variabili."
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-publish-button/index.jsx:82
+msgid "Publish"
+msgstr "Pubblica"
+
+#: components/workflow-publish-button/index.jsx:82
+msgid "Update"
+msgstr "Aggiorna"
+
+#: components/workflow-publish-button/index.jsx:93
+msgid "Autosaving..."
+msgstr "Salvataggio automatico in corso…"
+
+#: components/workflow-publish-button/index.jsx:93
+msgid "Updating..."
+msgstr "Aggiornamento in corso…"
+
+#: components/workflow-publish-button/index.jsx:95
+msgid "Updated"
+msgstr "Aggiornato"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-save-draft-button/index.jsx:85
+msgid "Save draft"
+msgstr "Salva bozza"
+
+#. translators: button label text should, if possible, be under 16 characters.
+#: components/workflow-save-draft-button/index.jsx:88
+msgid "Save"
+msgstr "Salva"
+
+#: components/workflow-save-draft-button/index.jsx:97
+msgid "Autosaving"
+msgstr "Salvataggio automatico"
+
+#: components/workflow-save-draft-button/index.jsx:97
+msgid "Saving"
+msgstr "Salvataggio"
+
+#: components/workflow-save-draft-button/index.jsx:99
+msgid "Saved"
+msgstr "Salvato"
+
+#: components/workflow-summary/index.jsx:38
+msgid "Summary"
+msgstr "Sommario"
+
+#: components/workflow-summary/index.jsx:44
+msgid "Title"
+msgstr "Titolo"
+
+#: components/workflow-summary/index.jsx:53
+msgid "Description"
+msgstr "Descrizione"
+
+#: components/workflow-switch-to-draft-button/index.jsx:35
+msgid "Are you sure you want to unpublish this workflow?"
+msgstr "Vuoi davvero non pubblicare questo flusso di lavoro?"
+
+#: components/workflow-switch-to-draft-button/index.jsx:56
+msgid "Draft"
+msgstr "Bozza"
+
+#: components/workflow-switch-to-draft-button/index.jsx:56
+msgid "Switch to draft"
+msgstr "Passa alla bozza"
+
+#: components/data-fields/date-offset.jsx:70
+msgid "Relative to a specific date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:75
+msgid "Selected in the calendar"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:76
+msgid "When the trigger is activated"
+msgstr ""
+
+#: components/data-fields/email-recipient.jsx:13
+msgid "Custom Addresses"
+msgstr ""
+
+#: components/node-dev-info-panel/index.jsx:43
+msgid "Node Type"
+msgstr ""
+
+#: components/node-types/node-placeholder.jsx:31
+msgid "Add a step"
+msgstr ""
+
+#: components/node-types/node-placeholder.jsx:33
+msgid "Search for actions"
+msgstr ""
+
+#: components/node-types/placeholder.jsx:160
+msgid "Search for steps"
+msgstr ""
+
+#: components/node-types/placeholder.jsx:186
+#: components/node-types/trigger-placeholder.jsx:13
+#: components/secondary-sidebar/menu.jsx:201
+msgid "Search for triggers and steps"
+msgstr ""
+
+#: components/node-types/trigger-placeholder.jsx:11
+msgid "Click to add a trigger"
+msgstr ""
+
+#: components/node-validation-panel/index.jsx:31
+msgid "All checks have passed for this step."
+msgstr ""
+
+#: components/node-validator/index.jsx:49
+msgid "This step requires a connection from a previous step."
+msgstr ""
+
+#: components/node-validator/index.jsx:59
+msgid "This step requires a connection to a following step."
+msgstr ""
+
+#: components/node-validator/index.jsx:122
+#: components/node-validator/index.jsx:133
+msgid "The field %s is required."
+msgstr ""
+
+#: components/node-validator/index.jsx:154
+msgid "The field %s must be a valid email address."
+msgstr ""
+
+#: components/node-validator/index.jsx:170
+msgid "The field %s must be a valid email address list separated by commas."
+msgstr ""
+
+#: components/node-validator/index.jsx:184
+msgid "The field %s must be an integer."
+msgstr ""
+
+#: components/node-validator/index.jsx:199
+msgid "The field %s must be an integer list separated by commas."
+msgstr ""
+
+#: components/node-inspector/index.jsx:114
+msgid "%d steps selected"
+msgstr ""
+
+#: components/node-inspector/index.jsx:117
+msgid "Multiple steps selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:128
+msgid "%d connections selected"
+msgstr ""
+
+#: components/node-inspector/index.jsx:131
+msgid "Multiple connections selected."
+msgstr ""
+
+#: components/node-inspector/index.jsx:168
+msgid "Connection"
+msgstr ""
+
+#: components/node-inspector/index.jsx:169
+msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:12
+msgid "Step Data Flow"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:29
+msgid "This step does not receive any input from previous step."
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:49
+msgid "This step does not output any data."
+msgstr ""

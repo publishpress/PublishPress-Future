@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
-import { Fragment, useState  } from "&wp.element";
-import { CheckboxControl as WPCheckboxControl } from "&wp.components";
+import { Fragment, useState  } from "@wordpress/element";
+import { CheckboxControl as WPCheckboxControl } from "@wordpress/components";
 
 export const CheckboxControl = function (props) {
     const [checked, setChecked] = useState(props.checked || false);

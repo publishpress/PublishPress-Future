@@ -1,5 +1,4 @@
 import { FutureActionDate } from "./blocks/FutureActionDate";
-
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 
 registerBlockType('publishpress-future-pro/future-action-date', FutureActionDate);

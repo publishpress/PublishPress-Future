@@ -8,6 +8,7 @@
 ehthumbs.db
 Thumbs.db
 .idea
+.zed
 
 *.sublime-project
 *.sublime-workspace
@@ -29,6 +30,10 @@ node_modules
 /lib/vendor/publishpress/publishpress-future/tests-old/
 /lib/vendor/publishpress/publishpress-future/codeception.yml
 
+/src/assets/adobe-animate/*/*.html
+/src/assets/adobe-animate/*/*.js
+/src/assets/adobe-animate/*/images
+/src/assets/adobe-animate/*/RECOVER_*
 
 *.log
 #bin
@@ -39,3 +44,7 @@ report.csv
 ray.php
 
 .phplint.cache*
+
+webpack-bundle-stats.json
+stats.json
+report.csv

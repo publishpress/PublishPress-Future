@@ -3,6 +3,12 @@
     "allowJs": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "dist",
+    "vendor",
+    "lib/vendor",
+    "tests",
+    "dev-workspace",
+    ".phplint.cache"
   ]
 }

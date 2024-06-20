@@ -11,9 +11,9 @@ import {
     TokensControl,
     CheckboxControl
 } from './';
-import { useEffect, useState, Fragment } from '&wp.element';
-import { addQueryArgs } from '&wp.url';
-import { applyFilters } from '&wp.hooks';
+import { useEffect, useState, Fragment } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
+import { applyFilters } from '@wordpress/hooks';
 import { apiFetch } from '&wp';
 
 const { PanelRow, BaseControl } = wp.components;

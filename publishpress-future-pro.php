@@ -5,11 +5,11 @@
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: PublishPress Future allows you to schedule automatic changes to posts, pages and other content types.
  * Author: PublishPress
- * Version: 3.3.1
+ * Version: 3.4.0
  * Author URI: http://publishpress.com
  * Text Domain: publishpress-future-pro
  * Domain Path: /languages
- * Requires at least: 6.1
+ * Requires at least: 6.5
  * Requires PHP: 7.2.5
  */
 
@@ -28,7 +28,7 @@ if (defined('PUBLISHPRESS_FUTURE_PRO_LOADED')) {
 global $wp_version;
 
 $min_php_version = '7.2.5';
-$min_wp_version  = '6.1';
+$min_wp_version  = '6.5';
 
 // If the PHP or WP version is not compatible, terminate the plugin execution.
 $invalid_php_version = version_compare(phpversion(), $min_php_version, '<');
@@ -38,12 +38,15 @@ if ($invalid_php_version || $invalid_wp_version) {
     return;
 }
 
-define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION', '3.3.1');
+define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION', '3.4.0');
 define('PUBLISHPRESS_FUTURE_PRO_EDD_ITEM_ID', '129032');
 define('PUBLISHPRESS_FUTURE_PRO_EDD_SITE_URL', 'https://publishpress.com');
 define('PUBLISHPRESS_FUTURE_PRO_BASE_PATH', __DIR__);
 define('PUBLISHPRESS_FUTURE_PRO_INCLUDES_DIR', PUBLISHPRESS_FUTURE_PRO_BASE_PATH . '/src/includes');
 define('PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR', PUBLISHPRESS_FUTURE_PRO_BASE_PATH . '/lib/vendor');
+define('PUBLISHPRESS_FUTURE_PRO_ASSETS_DIR', PUBLISHPRESS_FUTURE_PRO_BASE_PATH . '/src/assets');
+define('PUBLISHPRESS_FUTURE_PRO_ASSETS_URL', plugins_url('src/assets', __FILE__));
+define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE', __FILE__);
 define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_SLUG', 'publishpress-future-pro');
 define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_NAME', 'PublishPress Future Pro');
 define('PUBLISHPRESS_FUTURE_PRO_FREE_PLUGIN_NAME', 'PublishPress Future');
@@ -89,20 +92,21 @@ try {
             $container = Container::getInstance();
             $container->registerServices($services);
 
-            require_once __DIR__ . '/src/includes/install.php';
-            require_once __DIR__ . '/src/includes/uninstall.php';
             require_once __DIR__ . '/src/includes/deprecated.php';
-
-            register_activation_hook(__FILE__, 'PublishPress\\FuturePro\\install');
-            register_deactivation_hook(__FILE__, 'PublishPress\\FuturePro\\uninstall');
 
             $container->get(ServicesAbstract::PLUGIN)->initialize();
 
             define('PUBLISHPRESS_FUTURE_PRO_LOADED', true);
         } catch (Exception $e) {
-            logCatchException($e);
+            logError('Error initializing the plugin', $e);
         }
     }, 12, 0);
+
+    require_once __DIR__ . '/src/includes/install.php';
+    require_once __DIR__ . '/src/includes/uninstall.php';
+
+    register_activation_hook(__FILE__, 'PublishPress\\FuturePro\\install');
+    register_deactivation_hook(__FILE__, 'PublishPress\\FuturePro\\uninstall');
 } catch (Exception $e) {
-    logCatchException($e);
+    logError('Error loading the plugin', $e);
 }

@@ -89,26 +89,24 @@ class ScheduledActionsController implements InitializableInterface
             'dashicons-clock',
             74
         );
+        add_submenu_page(
+            'publishpress-future',
+            __('Action Settings', 'post-expirator'),
+            __('Action Settings', 'post-expirator'),
+            'manage_options',
+            'publishpress-future',
+            [\PostExpirator_Display::getInstance(), 'settings_tabs']
+        );
 
         $hook_suffix = add_submenu_page(
             'publishpress-future',
-            __('Future Actions', 'post-expirator'),
-            __('Future Actions', 'post-expirator'),
+            __('Scheduled Actions', 'post-expirator'),
+            __('Scheduled Actions', 'post-expirator'),
             'manage_options',
             'publishpress-future-scheduled-actions',
             [$this, 'renderScheduledActionsTemplate']
         );
         add_action( 'load-' . $hook_suffix , [$this, 'processAdminUi']);
-
-        global $submenu;
-
-        if (isset($submenu['publishpress-future']) && isset($submenu['publishpress-future'][0])) {
-            $tmpMenu = $submenu['publishpress-future'][0];
-            $tmpMenu[0] = __('Settings', 'post-expirator');
-
-            $submenu['publishpress-future'][0] = $submenu['publishpress-future'][1];
-            $submenu['publishpress-future'][1] = $tmpMenu;
-        }
     }
 
     public function renderScheduledActionsTemplate()

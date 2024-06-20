@@ -114,6 +114,8 @@ class QuickEditController implements InitializableInterface
 
         check_ajax_referer('__future_action', '_future_action_nonce');
 
+
+
         // Classic editor, quick edit
         $shouldSchedule = isset($_POST['future_action_enabled']) && $_POST['future_action_enabled'] === '1';
 
@@ -166,10 +168,15 @@ class QuickEditController implements InitializableInterface
 
     public function enqueueScripts()
     {
+        wp_enqueue_script("wp-components");
+        wp_enqueue_script("wp-plugins");
+        wp_enqueue_script("wp-element");
+        wp_enqueue_script("wp-data");
+
         wp_enqueue_script(
             'postexpirator-quick-edit',
              POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
-             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities'],
+             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
              POSTEXPIRATOR_VERSION,
              true
         );

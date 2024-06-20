@@ -24,3 +24,4 @@
 - composer.json
 - composer.lock
 - .DS_Store
+- /src/assets/adobe-animate

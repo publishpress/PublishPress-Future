@@ -31,4 +31,3 @@ $globals['trigger'] = [
 ```
 
 The value for this global will be set dynamically when a trigger is fired, but otherwise you should add the default values here.
-

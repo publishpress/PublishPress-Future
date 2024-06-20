@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -19,9 +20,14 @@ class PluginInitializator implements InitializableInterface
     private $initialized = false;
 
     /**
-     * @var ModuleInterface[]
+     * @var InitializableInterface[]
      */
     private $controllers;
+
+    /**
+     * @var InitializableInterface[]
+     */
+    private $modules;
 
     /**
      * @var HookableInterface
@@ -34,18 +40,20 @@ class PluginInitializator implements InitializableInterface
     private $basePath;
 
     /**
-     * @param ModuleInterface[] $controllers
+     * @param InitializableInterface[] $controllers
      * @param HookableInterface $hooksFacade
      * @param string $basePath
      */
     public function __construct(
         array $controllers,
         HookableInterface $hooksFacade,
-        string $basePath
+        string $basePath,
+        array $modules
     ) {
         $this->controllers = $controllers;
         $this->hooks = $hooksFacade;
         $this->basePath = $basePath;
+        $this->modules = $modules;
     }
 
     public function initialize()
@@ -56,10 +64,20 @@ class PluginInitializator implements InitializableInterface
 
         $this->initialized = true;
 
-        $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
-
         $this->loadTextDomain();
+        $this->initializeModules();
         $this->initializeControllers();
+
+        $this->hooks->doAction(HooksAbstract::ACTION_INIT_PLUGIN);
+    }
+
+    private function initializeModules()
+    {
+        foreach ($this->modules as $module) {
+            if ($module instanceof InitializableInterface) {
+                $module->initialize();
+            }
+        }
     }
 
     private function initializeControllers()

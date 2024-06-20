@@ -7,4 +7,5 @@ parameters:
         maximumNumberOfProcesses: 2
     phpVersion: 70200
     scanDirectories:
+        - lib/vendor
         - vendor

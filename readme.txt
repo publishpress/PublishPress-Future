@@ -3,11 +3,11 @@ Contributors: publishpress, kevinB, stevejburge, andergmartins, rozroz
 Author: publishpress
 Author URI: https://publishpress.com
 Tags: expire, posts, pages, schedule
-Requires at least: 6.1
+Requires at least: 6.5
 Requires PHP: 7.2.5
 License: GPLv2 or later
 Tested up to: 6.5
-Stable tag: 3.3.1
+Stable tag: 3.4.0
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
@@ -86,6 +86,28 @@ This section describes how to install the plugin and get it working.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 A full changelog is available in the plugin's GitHub repository.
+
+= [3.4.0] - 20 Jun, 2024 =
+
+* ADDED: Add action workflow editor and engine, #687;
+* ADDED: In the JS context, implemented a way to extend the future action panel using SlotFill `FutureActionPanelAfterActionField` and setting extra fields to the panel, right after the action field;
+* ADDED: Add a new filter to allow filtering the options of the future action being scheduled: `publishpressfuture_prepare_post_expiration_opts`;
+* ADDED: Add method `scheduleRecurringAction` to the `CronToWooActionSchedulerAdapter` to schedule recurring action;
+* ADDED: Add method `scheduleAsyncAction` to the `CronToWooActionSchedulerAdapter` to schedule async action;
+* ADDED: In the JS context, added the slot `FutureActionPanelTop` to the beginning of the future panel;
+* CHANGED: Added `$unique` and `$priority` arguments to the `scheduleSingleAction` method in the `CronToWooActionSchedulerAdapter` class;
+* CHANGED: Method `scheduleRecurringAction` renamed to `scheduleRecurringActionInSeconds` in the `CronToWooActionSchedulerAdapter` class;
+* CHANGED: Added argument `$clearOnlyPendingActions` to the method signature `clearScheduledAction` to the `CronInterface` interface;
+* CHANGED: Changed the method `clearScheduledAction` in the class `CronToWooActionSchedulerAdapter` adding new argument `$clearOnlyPendingActions`, allowing to remove running actions;
+* CHANGED: The plugin activation and deactivation callback functions were moved from the main file to independent files;
+* CHANGED: Change the admin menu names for clarity;
+* CHANGED: Update the promo sidebar for mentioning the Actions Workflow feature;
+* FIXED: Fix error when quick-edit data is not available, #730;
+* FIXED: Fix dependency of the enqueued scripts for the future action box. Add 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins' as dependencies;
+* FIXED: Updated ES, FR and IT translations, #698;
+* FIXED: Redirects to the settings page after activating the plugin, #764;
+* FIXED: Fix access to the View Debug settings tab when debug is disabled;
+* FIXED: Fix the position of the "Upgrade to Pro" and "Settings" menu items in the admin bar;
 
 = [3.3.1] - 19 Mar, 2024 =
 
@@ -167,26 +189,3 @@ A full changelog is available in the plugin's GitHub repository.
 * FIXED: Fix the fatal error when hook `add_meta_boxes` didn't receive a `WP_Post` instance as parameter, #640;
 * FIXED: Fix issue with the "NaN" categories in the classic editor, #647;
 * FIXED: Fix issue with accents on the taxonomy field in the settings, #642;
-
-= [3.1.6] - 20 Dec, 2023 =
-
-* ADDED: Add a new setting to select the time format in the date picker component, #626;
-* CHANGED: Stick the library woocommerce/action-scheduler on version 3.7.0, so we don't force WP min to 6.2;
-* CHANGED: Min WP version is now 6.1, #627;
-* CHANGED: The field to select terms now expands when the user focus on it, not requiring to type a search text, #633;
-* CHANGED: Increase the limit of items displayed i nthe the field to select terms. It shows up to 1000 items now, #633;
-* FIXED: Fix support for WP between 6.1 and 6.4, #625;
-* FIXED: Fix the search of posts in the posts lists, #620;
-* FIXED: Fix classic meta box when using Classic Editor plugin with the classic editor as default, #624;
-* FIXED: Fix default date for new posts, #623;
-* FIXED: Fix the quick edit form and future action column for pages, #618;
-* FIXED: Fix support to custom taxonomies that are not showed in the Rest API, #629;
-* FIXED: Fix compatibility with PublishPress Statuses' custom statuses, #632;
-
-= [3.1.5] - 14 Dec, 2023 =
-
-* FIXED: Fix array_map(): Argument must be of type array, string given, #606;
-* FIXED: Remove broken and invalid setting to use classic metabox, #604;
-* FIXED: Prevent a PHP warning in the posts screen if the selected term do not exists anymore, #612;
-* FIXED: Update the ES, IT and FR translations, #609;
-* CHANGED: Limit the version of the library woocommerce/action-scheduler to 3.7.0, until we can set WP 6.2 as the minimum version;

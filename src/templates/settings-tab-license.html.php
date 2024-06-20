@@ -18,7 +18,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
             </th>
             <td>
                 <?php
+                // @phpstan-ignore variable.undefined
                 $value = $this->settingsModel->getLicenseKey();
+                // @phpstan-ignore variable.undefined
                 $status = $this->settingsModel->getLicenseStatus();
                 $error = '';
 
@@ -26,7 +28,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                     $status = 'invalid';
                 }
 
-                if (! in_array($status, array('valid', 'invalid'))) {
+                if (! in_array($status, ['valid', 'invalid'])) {
                     $error = $status;
                     $status = 'invalid';
                 }
@@ -50,7 +52,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
                 echo '<div class="ppfuturepro_license_status ppfuturepro_license_status_' . esc_attr(
                     $status
                 ) . '">' . esc_html__('Status: ', 'publishpress-future-pro') .
-                    '<span>' . esc_html($statusLabel) . '</span></div>';
+                '<span>' . esc_html($statusLabel) . '</span></div>';
                 echo '<p class="description">' . esc_html__(
                     'Enter the license key for being able to update the plugin.',
                     'publishpress-future-pro'

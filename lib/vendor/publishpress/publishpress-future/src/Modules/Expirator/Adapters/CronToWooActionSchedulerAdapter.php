@@ -5,6 +5,9 @@
 
 namespace PublishPress\Future\Modules\Expirator\Adapters;
 
+use ActionScheduler;
+use ActionScheduler_Store;
+use Exception;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 
@@ -20,9 +23,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class CronToWooActionSchedulerAdapter implements CronInterface
 {
-    const SCHEDULED_ACTION_GROUP = 'publishpress-future';
+    public const SCHEDULED_ACTION_GROUP = 'publishpress-future';
 
-    const IDENTIFIER = 'woo-action-scheduler';
+    public const IDENTIFIER = 'woo-action-scheduler';
 
     /**
      * @return string
@@ -35,9 +38,47 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     /**
      * @inheritDoc
      */
-    public function clearScheduledAction($action, $args = [])
+    public function clearScheduledAction($action, $args = [], $clearOnlyPendingActions = true)
     {
-        return as_unschedule_action($action, $args, self::SCHEDULED_ACTION_GROUP);
+        if ($clearOnlyPendingActions) {
+            return as_unschedule_action($action, $args, self::SCHEDULED_ACTION_GROUP);
+        }
+
+        // The original method only unschedule pending actions.
+        if (! ActionScheduler::is_initialized(__FUNCTION__)) {
+            return 0;
+        }
+        $params = array(
+            'hook'    => $action,
+            'orderby' => 'date',
+            'order'   => 'ASC',
+            'group'   => self::SCHEDULED_ACTION_GROUP,
+        );
+        if (is_array($args)) {
+            $params['args'] = $args;
+        }
+
+        $actionId = ActionScheduler::store()->query_action($params);
+
+        if ($actionId) {
+            try {
+                ActionScheduler::store()->cancel_action($actionId);
+            } catch (Exception $exception) {
+                ActionScheduler::logger()->log(
+                    $actionId,
+                    sprintf(
+                        /* translators: %1$s is the name of the hook to be cancelled, %2$s is the exception message. */
+                        __('Caught exception while cancelling action "%1$s": %2$s', 'action-scheduler'),
+                        $action,
+                        $exception->getMessage()
+                    )
+                );
+
+                $actionId = null;
+            }
+        }
+
+        return $actionId;
     }
 
     /**
@@ -51,9 +92,75 @@ class CronToWooActionSchedulerAdapter implements CronInterface
     /**
      * @inheritDoc
      */
-    public function scheduleSingleAction($timestamp, $action, $args = [])
-    {
-        return as_schedule_single_action($timestamp, $action, $args, self::SCHEDULED_ACTION_GROUP);
+    public function scheduleSingleAction(
+        $timestamp,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    ) {
+        return as_schedule_single_action(
+            $timestamp,
+            $hook,
+            $args,
+            self::SCHEDULED_ACTION_GROUP,
+            $unique,
+            $priority
+        );
+    }
+
+    public function scheduleRecurringActionInSeconds(
+        $timestamp,
+        $intervalInSeconds,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    ) {
+        return as_schedule_recurring_action(
+            $timestamp,
+            $intervalInSeconds,
+            $hook,
+            $args,
+            self::SCHEDULED_ACTION_GROUP,
+            $unique,
+            $priority
+        );
+    }
+
+    public function scheduleRecurringAction(
+        $timestamp,
+        $schedule,
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    ) {
+
+        return as_schedule_cron_action(
+            $timestamp,
+            $schedule,
+            $hook,
+            $args,
+            self::SCHEDULED_ACTION_GROUP,
+            $unique,
+            $priority
+        );
+    }
+
+    public function scheduleAsyncAction(
+        $hook,
+        $args = [],
+        $unique = false,
+        $priority = 10
+    ) {
+        return as_enqueue_async_action(
+            $hook,
+            $args,
+            self::SCHEDULED_ACTION_GROUP,
+            $unique,
+            $priority
+        );
     }
 
     /**
@@ -62,11 +169,18 @@ class CronToWooActionSchedulerAdapter implements CronInterface
      */
     public function postHasScheduledActions($postId)
     {
-        $hasScheduledActions = as_has_scheduled_action(HooksAbstract::ACTION_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
-
+        $hasScheduledActions = as_has_scheduled_action(
+            HooksAbstract::ACTION_RUN_WORKFLOW,
+            ['postId' => $postId, 'workflow' => 'expire'],
+            self::SCHEDULED_ACTION_GROUP
+        );
         if (! $hasScheduledActions) {
             // Try checking with the legacy hook.
-            $hasScheduledActions = as_has_scheduled_action(HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW, ['postId' => $postId, 'workflow' => 'expire'], self::SCHEDULED_ACTION_GROUP);
+            $hasScheduledActions = as_has_scheduled_action(
+                HooksAbstract::ACTION_LEGACY_RUN_WORKFLOW,
+                ['postId' => $postId, 'workflow' => 'expire'],
+                self::SCHEDULED_ACTION_GROUP
+            );
         }
 
         return $hasScheduledActions;

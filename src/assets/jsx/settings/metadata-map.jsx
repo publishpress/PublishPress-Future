@@ -7,8 +7,8 @@ import {
     text
 } from "&config.pro-settings";
 
-import { CheckboxControl, Tooltip } from "&wp.components";
-import { Fragment } from "&wp.element";
+import { CheckboxControl, Tooltip } from "@wordpress/components";
+import { Fragment } from "@wordpress/element";
 
 const SectionTitle = (props) => {
     return (

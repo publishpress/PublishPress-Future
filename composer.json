@@ -16,7 +16,8 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "phpstan/extension-installer": true
-    }
+    },
+    "process-timeout": 0
   },
   "repositories": [
     {
@@ -45,31 +46,48 @@
     "codeception/module-sequence": "^3",
     "publishpress/publishpress-phpcs-standards": "dev-main",
     "phpcompatibility/php-compatibility": "^9",
-    "squizlabs/php_codesniffer": "^3.8",
-    "wp-coding-standards/wpcs": "^3",
+    "squizlabs/php_codesniffer": "*",
     "phpmd/phpmd": "^2",
     "sebastian/phpcpd": "^6.0",
     "overtrue/phplint": "^9",
     "wp-cli/i18n-command": "^2.6",
-    "friendsofphp/php-cs-fixer": "^3.49",
     "phpstan/phpstan": "^1.10",
-    "automattic/vipwpcs": "^3",
-    "dealerdirect/phpcodesniffer-composer-installer": "^1",
+    "automattic/vipwpcs": "*",
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
     "szepeviktor/phpstan-wordpress": "^1.3",
     "phpstan/extension-installer": "^1.3",
-    "giacocorsiglia/wordpress-stubs": "dev-master"
+    "giacocorsiglia/wordpress-stubs": "dev-master",
+    "sirbrillig/phpcs-variable-analysis": "^2.11",
+    "wp-coding-standards/wpcs": "^3",
+    "friendsofphp/php-cs-fixer": "dev-master"
   },
   "scripts": {
     "build": "ppbuild build",
     "build:dir": "ppbuild build-dir",
     "build:clean": "ppbuild clean",
     "build:js-dev": "wp-scripts build --mode development",
-    "build:js-watch": "wp-scripts build --mode development --watch",
     "build:js": "wp-scripts build --mode production",
+    "profile:js": "webpack --profile --json > webpack-bundle-stats.json",
+    "watch:js": "wp-scripts build --mode development --watch",
     "get:version": "ppbuild version",
     "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
+    "gen:pot-php": "wp i18n make-pot . ./languages/publishpress-future-pro.pot --domain=publishpress-future-pro --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
+    "gen:pot-js": "bash ./dev-workspace/scripts/lang-make-js-pot.sh",
     "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
-    "gen:pot": "wp i18n make-pot . ./languages/publishpress-future-pro.pot --domain=publishpress-future-pro --exclude=dev-workspace,.wordpress-org,.github,dist,tests --allow-root",
+    "gen:po-scripts": "bash ./dev-workspace/scripts/lang-update-js-po.sh",
+    "gen:po-json": "bash ./dev-workspace/scripts/lang-make-json.sh",
+    "gen:pot": [
+      "@gen:pot-php",
+      "@gen:pot-js"
+    ],
+    "gen:lang": [
+      "@gen:pot",
+      "@gen:mo",
+      "@gen:po-scripts",
+      "@gen:po-json",
+      "@cleanup:js-mo"
+    ],
+    "cleanup:js-mo": "bash ./dev-workspace/scripts/lang-cleanup.sh",
     "cleanup:gh-workflows": "user=publishpress repo=publishpress-future-pro; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
     "gen:alias-plugin": "php dev-workspace/scripts/gen-alias-plugin.php",
     "check:php": [
@@ -87,11 +105,16 @@
     "check:php-8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
     "check:php-8.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2",
     "check:lint": "phplint",
-    "check:phpcs": "phpcs",
+    "check:cs": "phpcs",
     "check:stan": "phpstan",
     "check:longpath": "longpath .",
     "check:deps": "checkdep ./lib publishpress/publishpress-future",
     "fix:deps": "mergedep ./lib publishpress/publishpress-future",
+    "fix:cs": "phpcbf --standard=.phpcs.xml",
+    "fix:php": [
+      "php-cs-fixer fix .",
+      "@fix:cs"
+    ],
     "tests:dev-start": "./vendor/bin/codecept dev:start",
     "tests:dev-stop": "./vendor/bin/codecept dev:stop",
     "tests:dev-restart": "./vendor/bin/codecept dev:restart",
@@ -100,11 +123,12 @@
     "tests:run": "./vendor/bin/codecept run",
     "tests:integration": "./vendor/bin/codecept run Integration",
     "tests:e2e": "./vendor/bin/codecept run EndToEnd",
+    "config:phpcs": "phpcs --config-set installed_paths \"../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../publishpress/publishpress-phpcs-standards/standards,../../wp-coding-standards/wpcs\"",
     "post-install-cmd": [
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
+      "@config:phpcs"
     ],
     "post-update-cmd": [
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || vendor/bin/phpcs --config-set installed_paths \"../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../wp-coding-standards/wpcs,../../publishpress/publishpress-phpcs-standards/standards/PublishPressStandards\""
+      "@config:phpcs"
     ],
     "pre-autoload-dump": "composer dumpautoload --working-dir=./lib",
     "pre-update-cmd": "composer update --working-dir=./lib",

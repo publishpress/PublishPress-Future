@@ -1,0 +1,16 @@
+#future-workflow-editor .loading {
+    margin-top: 50%;
+    font-size: 17px;
+    text-align: center;
+    position: relative;
+}
+
+#future-workflow-editor .loading .spinner-icon {
+    margin-right: 10px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+body.admin_page_future_workflow_editor {
+    background-color: #fff;;
+}

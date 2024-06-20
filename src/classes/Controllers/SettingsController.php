@@ -187,6 +187,7 @@ class SettingsController implements ModuleInterface
             wp_enqueue_script('wp-components');
             wp_enqueue_script('wp-data');
 
+
             wp_localize_script(
                 'publishpress-future-pro-settings-panel',
                 'publishpressFutureProSettings',
@@ -208,7 +209,7 @@ class SettingsController implements ModuleInterface
                             'publishpress-future-pro'
                         ),
                         'enableMetadataDrivenSchedulingHelp' => __(
-                            'Checking this option will allow you to use the post metadata to control the scheduling of Future actions in your content.',
+                            'Checking this option will allow you to use the post metadata to control the scheduling of Future actions in your content.', // phpcs:ignore Generic.Files.LineLength.TooLong
                             'publishpress-future-pro'
                         ),
                         'metadataMapping' => __('Metadata Mapping', 'publishpress-future-pro'),
@@ -220,13 +221,13 @@ class SettingsController implements ModuleInterface
                             'Read more about metadata mapping.',
                             'publishpress-future-pro'
                         ),
-                        'readmoreMetadataMappingHelpUrl' => 'https://publishpress.com/knowledge-base/metadata-scheduling/',
+                        'readmoreMetadataMappingHelpUrl' => 'https://publishpress.com/knowledge-base/metadata-scheduling/', // phpcs:ignore Generic.Files.LineLength.TooLong
                         'originalKey' => __('Original Metakey', 'publishpress-future-pro'),
                         'mappedKey' => __('New Metakey', 'publishpress-future-pro'),
                         'description' => __('Description', 'publishpress-future-pro'),
                         'hideMetabox' => __('Hide Future metabox for this post type', 'publishpress-future-pro'),
                         'hideMetaboxHelp' => __(
-                            'Checking this option will disable the PublishPress Future metabox. This can prevent conflicts if you\'re using Metadata Scheduling with plugins such as ACF or Pods.',
+                            'Checking this option will disable the PublishPress Future metabox. This can prevent conflicts if you\'re using Metadata Scheduling with plugins such as ACF or Pods.', // phpcs:ignore Generic.Files.LineLength.TooLong
                             'publishpress-future-pro'
                         ),
 
@@ -239,7 +240,7 @@ class SettingsController implements ModuleInterface
                             'mappedKey' => '',
                             'label' => __('Action Date (Required)', 'publishpress-future-pro'),
                             'description' => __(
-                                "The date used for scheduling the action. The date must be a unix time stamp or in the 'Y-m-d H:i:s' format.",
+                                "The date used for scheduling the action. The date must be a unix time stamp or in the 'Y-m-d H:i:s' format.", // phpcs:ignore Generic.Files.LineLength.TooLong
                                 'publishpress-future-pro'
                             ),
                         ],
@@ -266,7 +267,7 @@ class SettingsController implements ModuleInterface
                             'mappedKey' => '',
                             'label' => __('Action Status', 'publishpress-future-pro'),
                             'description' => __(
-                                "The status for the action. Anything different than 'saved' will be considered as not active.",
+                                "The status for the action. Anything different than 'saved' will be considered as not active.", // phpcs:ignore Generic.Files.LineLength.TooLong
                                 'publishpress-future-pro'
                             ),
                         ],
@@ -342,13 +343,15 @@ class SettingsController implements ModuleInterface
                     'postexpirator_menu_license'
                 )
             ) {
-                wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'publishpress-future-pro'));
+                wp_die(
+                    esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'publishpress-future-pro')
+                );
             }
 
             // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            $license_key = isset($_POST['license_key']) ? $_POST['license_key'] : '';
+            $license_key = $_POST['license_key'] ?? '';
 
             $this->settingsModel->setLicenseKey($license_key);
 
@@ -381,8 +384,7 @@ class SettingsController implements ModuleInterface
 
         $this->settingsModel->setEnabledCustomStatusForPostType(
             $postType,
-            isset($_POST['expirationdate_custom-statuses-' . $postType])
-                ? $_POST['expirationdate_custom-statuses-' . $postType] : []
+            $_POST['expirationdate_custom-statuses-' . $postType] ?? []
         );
         // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
     }
@@ -397,18 +399,15 @@ class SettingsController implements ModuleInterface
         $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         $this->settingsModel->setMetadataMappingStatus(
-            isset($_POST['expirationdate_metadata_mapping_enabled'])
-                ? $_POST['expirationdate_metadata_mapping_enabled'] : []
+            $_POST['expirationdate_metadata_mapping_enabled'] ?? []
         );
 
         $this->settingsModel->setMetadataMapping(
-            isset($_POST['expirationdate_metadata_mapping'])
-                ? $_POST['expirationdate_metadata_mapping'] : []
+            $_POST['expirationdate_metadata_mapping'] ?? []
         );
 
         $this->settingsModel->setMetaboxHideStatus(
-            isset($_POST['expirationdate_hide_metabox'])
-                ? $_POST['expirationdate_hide_metabox'] : []
+            $_POST['expirationdate_hide_metabox'] ?? []
         );
         // phpcs:enable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
     }

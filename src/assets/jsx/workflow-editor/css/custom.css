@@ -1,0 +1,103 @@
+.components-button svg {
+    height: 100%;
+}
+
+#wpfooter {
+    display: none !important;
+}
+
+.react-flow {
+    height: calc(100vh - 112px) !important;
+    width: 100% !important;
+}
+
+.is-fullscreen-mode .react-flow {
+    height: calc(100vh - 80px) !important;
+}
+
+.components-menu-items__item-icon.has-icon-right {
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.react-flow__node-default.selectable.selected,
+.react-flow__node-default.selectable:focus,
+.react-flow__node-default.selectable:focus-visible,
+.react-flow__node-input.selectable.selected,
+.react-flow__node-input.selectable:focus,
+.react-flow__node-input.selectable:focus-visible,
+.react-flow__node-output.selectable.selected,
+.react-flow__node-output.selectable:focus,
+.react-flow__node-output.selectable:focus-visible,
+.react-flow__node-group.selectable.selected,
+.react-flow__node-group.selectable:focus,
+.react-flow__node-group.selectable:focus-visible {
+    box-shadow: 0 0 0 2px #1a192b;
+}
+
+/* .react-flow {
+    background-color: #e1e1e1 !important;
+} */
+
+.settings-field-description {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.settings-field-help-popover {
+    font-size: 12px;
+    color: #666;
+    width: 320px;
+    padding: 16px;
+    position: relative;
+    padding-top: 50px;
+}
+
+.settings-field-help-popover button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.workflow-editor-inspector-card__handles-schema {
+    flex-flow: wrap;
+}
+
+.workflow-editor-inspector-card__handles-schema code {
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: #ebebeb;
+    color: #696969;
+}
+
+.workflow-editor-global-variables-description {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.workflow-editor-global-variables-label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: calc(8px);
+    padding: 0px;
+}
+.workflow-editor-global-var-list {
+    margin: 0;
+    padding: 5px;
+    border: 1px solid var(--wp-components-color-gray-600, #949494);
+}
+
+.workflow-editor-global-var-list ul {
+    list-style: disc;
+    margin-left: 30px;
+}
+
+.workflow-editor-global-var-list ul li {
+    margin-bottom: 0;
+}

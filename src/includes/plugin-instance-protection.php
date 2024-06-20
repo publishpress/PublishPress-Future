@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author PublishPress
  * @copyright Copyright (c) 2023, PublishPress
@@ -13,7 +14,8 @@ use PublishPressInstanceProtection\InstanceChecker;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-const INSTANCE_PROTECTION_INCLUDE_FILE = PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR . '/publishpress/instance-protection/include.php';
+const INSTANCE_PROTECTION_INCLUDE_FILE =
+    PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR . '/publishpress/instance-protection/include.php';
 
 if (file_exists(INSTANCE_PROTECTION_INCLUDE_FILE)) {
     require_once INSTANCE_PROTECTION_INCLUDE_FILE;

@@ -76,6 +76,7 @@ class BlocksController implements ModuleInterface
             true
         );
 
+        // phpcs:disable Generic.Files.LineLength.TooLong
         // Localize the script with new data
         $l10n = [
             'dateFormat' => $this->defaultDateFormat,
@@ -92,6 +93,7 @@ class BlocksController implements ModuleInterface
             ]
         ];
         wp_localize_script('future-pro-blocks', 'publishpressFutureProBlocks', $l10n);
+        // phpcs:enable
 
         wp_enqueue_style(
             'future-pro-blocks',

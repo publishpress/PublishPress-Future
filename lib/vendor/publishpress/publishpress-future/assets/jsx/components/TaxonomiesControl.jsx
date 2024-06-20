@@ -3,7 +3,7 @@
  */
 
 import { SelectControl } from ".";
-import { Fragment } from "&wp.element";
+import { Fragment } from "@wordpress/element";
 
 export const TaxonomiesControl = function (props) {
     const taxonomiesOptions = [];
