@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 = [3.4.0.1] - 20 Jun, 2024 =
 
 * FIXED: Fix fatal error for low level users when PublishPress menu is not available, #803;
+* FIXED: Fix wrong action date on the future action panel, #802;
+* CHANGED: The interface `PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface` has changed:
+  * Method `setCronActionId` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setPostId` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setArgs` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setArg` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setCreatedAt` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setEnabled` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDate` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDateFromISO8601` now returns void instead of `ActionArgsModelInterface`;
+  * Method `setScheduledDateFromUnixTime` now returns void instead of `ActionArgsModelInterface`;
+  * Method `convertUnixTimeDateToISO8601` is now public;
+  * Method `convertISO8601DateToUnixTime` is now public;
 
 = [3.4.0] - 20 Jun, 2024 =
 
