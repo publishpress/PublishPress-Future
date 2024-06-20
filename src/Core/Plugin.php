@@ -299,6 +299,10 @@ class Plugin implements InitializableInterface
     {
         global $submenu;
 
+        if (! isset($submenu['publishpress-future'])) {
+            return;
+        }
+
         $futureMenu = $submenu['publishpress-future'];
 
         $menuNames = array_column($futureMenu, 2);
