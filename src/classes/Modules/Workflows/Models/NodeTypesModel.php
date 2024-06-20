@@ -215,7 +215,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         $defaultNodeAttributes = [
             "id" => "",
             "type" => $type,
-            "elementarType" => "",
+            "elementaryType" => "",
             "name" => "",
             "label" => "",
             "description" => "",
