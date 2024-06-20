@@ -1,8 +1,8 @@
-=== PublishPress Future: Schedule Changes to WordPress Posts ===
+=== Schedule Post Changes: Unpublish, Delete, Change Status, Trash, Change Categories and Tags with PublishPress Future ===
 Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
-Tags: expire posts, update posts, schedule changes, automatic changes,
+Tags: expire posts, update posts, schedule changes, automatic changes
 Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.5
@@ -100,10 +100,10 @@ For each expiration event, a custom cron job is scheduled. This can help reduce 
 
 ## Logs for All Your Post Changes
 
-PublishPress Future Pro allows you to keep a detailed record of all the changes that happen to your posts. PublishPress Future records several key data points for all actions:
+PublishPress Future Pro allows you to keep a detailed record of all the post updates. PublishPress Future records several key data points for all actions:
 
 * The post that the action was performed on.
-* Details of the change made to the post.
+* Details of the post update.
 * When the change was made to the post.
 
 [Click here to see more about the logs feature](https://publishpress.com/knowledge-base/action-logs/).
