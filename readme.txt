@@ -7,7 +7,7 @@ Requires at least: 6.5
 Requires PHP: 7.2.5
 License: GPLv2 or later
 Tested up to: 6.5
-Stable tag: 3.4.0
+Stable tag: 3.4.0.1
 
 Add an expiration date to posts. When your post is automatically unpublished, you can delete the post, change the status, or update the post categories.
 
