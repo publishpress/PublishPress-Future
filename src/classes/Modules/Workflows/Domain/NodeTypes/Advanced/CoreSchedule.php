@@ -65,7 +65,7 @@ class CoreSchedule implements NodeTypeInterface
         return [
             [
                 "label" => __("Schedule", "publishpress-future-pro"),
-                "description" => __("The scheduled time for this action.", "publishpress-future-pro"),
+                "description" => __("A scheduled delay between steps.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "schedule",

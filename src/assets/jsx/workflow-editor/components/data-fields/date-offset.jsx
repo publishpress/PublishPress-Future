@@ -2,13 +2,15 @@ import { sprintf, __ } from "@wordpress/i18n";
 import {
     TreeSelect,
     DatePicker,
-    TextControl
+    TextControl,
+    PanelRow,
+    Popover,
+    Button,
+    ToggleControl,
+    __experimentalVStack as VStack,
 } from "@wordpress/components";
 import { VariablesTreeSelect } from "../variables-tree-select";
-import { Popover, Button } from "@wordpress/components";
 import { useState } from "@wordpress/element";
-import { ToggleControl } from "@wordpress/components";
-import { __experimentalVStack as VStack } from "@wordpress/components";
 import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
@@ -115,12 +117,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     return (
         <>
             <VStack>
-                <ToggleControl
-                    label={__("Avoid duplicated action", "publishpress-future-pro")}
-                    checked={defaultValue.unique || false}
-                    onChange={(value) => onChangeSetting({ settingName: "unique", value })}
-                />
-
                 <TreeSelect
                     label={__("When to run", "publishpress-future-pro")}
                     tree={whenToRunOptions}
@@ -221,6 +217,15 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                         )}
                     </>
                 )}
+
+                <PanelRow>
+                    <ToggleControl
+                        label={__("Prevent duplicate scheduling", "publishpress-future-pro")}
+                        checked={defaultValue.unique || false}
+                        onChange={(value) => onChangeSetting({ settingName: "unique", value })}
+                        help={__("If enabled, the step will not be scheduled again if it is already scheduled with the same parameters.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
+                    />
+                </PanelRow>
 
                 {isAdvancedSettingsEnabled && (
                     <TextControl
