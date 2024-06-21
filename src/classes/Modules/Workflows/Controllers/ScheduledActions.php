@@ -78,7 +78,7 @@ class ScheduledActions implements InitializableInterface
         return $title;
     }
 
-    public function showArgsInArgsColumn($args, $row)
+    public function showArgsInArgsColumn($html, $row)
     {
         $actionModel = new ScheduledActionsModel();
         $actionModel->load($row['ID']);
@@ -87,20 +87,20 @@ class ScheduledActions implements InitializableInterface
         $args = $actionModel->getArgs();
 
         if (empty($args)) {
-            return $args;
+            return $html;
         }
 
         if (isset($args[0])) {
             $args = $args[0];
         }
 
-        $argsText = '';
         switch ($hook) {
             case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
                 if (! isset($args['contextVariables']['global']['workflow'])) {
-                    return $args;
+                    return $html;
                 }
 
+                $argsText = '';
                 $workflowId = $args['contextVariables']['global']['workflow'] ?? 0;
                 $workflowModel = new WorkflowModel();
                 $workflowModel->load($workflowId);
@@ -150,14 +150,16 @@ class ScheduledActions implements InitializableInterface
                 $argsText = __('Workflow:', 'publishpress-future-pro') . ' ' . $workflowTitle;
                 $argsText .= '<br>';
                 $argsText .= __('Steps:', 'publishpress-future-pro') . '<br>' . $nextNodes;
+
+                $html = $argsText;
                 break;
 
             case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
-                $argsText = __('Workflow recurring scheduled action', 'publishpress-future-pro');
+                $html = __('Workflow recurring scheduled action', 'publishpress-future-pro');
                 break;
         }
 
-        return $argsText;
+        return $html;
     }
 
     public function enqueueScripts($hook)
