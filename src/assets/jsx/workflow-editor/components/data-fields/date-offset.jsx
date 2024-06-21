@@ -232,6 +232,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                         label={__("Priority", "publishpress-future-pro")}
                         value={defaultValue.priority}
                         onChange={(value) => onChangeSetting({ settingName: "priority", value })}
+                        help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
                     />
                 )}
             </VStack>
