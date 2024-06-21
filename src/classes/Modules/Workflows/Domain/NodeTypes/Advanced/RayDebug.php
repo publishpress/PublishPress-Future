@@ -34,7 +34,7 @@ class RayDebug implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action transmits the flow's data to Ray Debug.", "publishpress-future-pro");
+        return __("This step transmits the flow's data to Ray Debug.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

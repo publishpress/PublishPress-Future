@@ -34,7 +34,7 @@ class CorePostTermsSet implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action removes the current taxonomy terms and adds new terms.", "publishpress-future-pro");
+        return __("This step removes the current taxonomy terms and adds new terms.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

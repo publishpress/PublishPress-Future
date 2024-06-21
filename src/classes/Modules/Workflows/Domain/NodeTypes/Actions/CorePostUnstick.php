@@ -29,12 +29,12 @@ class CorePostUnstick implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Unstick Post", "publishpress-future-pro");
+        return __("Unstick post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action unsticks a post.", "publishpress-future-pro");
+        return __("This step unsticks a post.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

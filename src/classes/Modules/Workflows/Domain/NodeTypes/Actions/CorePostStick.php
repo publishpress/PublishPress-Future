@@ -29,12 +29,12 @@ class CorePostStick implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Stick Post", "publishpress-future-pro");
+        return __("Stick post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action sticks a post.", "publishpress-future-pro");
+        return __("This step sticks a post.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

@@ -29,13 +29,13 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Query Posts", "publishpress-future-pro");
+        return __("Query posts", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
         return __(
-            "This action retrieves multiple posts to serve as the input for other actions.",
+            "This step defines the posts that will be passed to the next step in the workflow.",
             "publishpress-future-pro"
         );
     }
@@ -65,10 +65,6 @@ class CorePostQuery implements NodeTypeInterface
         return [
             [
                 "label" => __("Post Query", "publishpress-future-pro"),
-                "description" => __(
-                    "This query defines the posts that will be passed to the next action in the workflow.",
-                    "publishpress-future-pro"
-                ),
                 "fields" => [
                     [
                         "name" => "postQuery",

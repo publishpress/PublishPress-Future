@@ -29,7 +29,7 @@ class IfElse implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Simple Condition", "publishpress-future-pro");
+        return __("Simple condition", "publishpress-future-pro");
     }
 
     public function getDescription(): string

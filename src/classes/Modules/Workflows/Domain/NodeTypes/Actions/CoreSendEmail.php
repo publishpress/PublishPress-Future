@@ -42,12 +42,12 @@ class CoreSendEmail implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Send Email", "publishpress-future-pro");
+        return __("Send email", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action dispatches a message via email.", "publishpress-future-pro");
+        return __("This step dispatches a message via email.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
