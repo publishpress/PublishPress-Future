@@ -223,7 +223,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                         label={__("Prevent duplicate scheduling", "publishpress-future-pro")}
                         checked={defaultValue.unique || false}
                         onChange={(value) => onChangeSetting({ settingName: "unique", value })}
-                        help={__("If enabled, the step will not be scheduled again if it is already scheduled with the same parameters.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
+                        help={__("If enabled, the step will prevent the step from being accidentally scheduled multiple times.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
                     />
                 </PanelRow>
 
