@@ -11,6 +11,7 @@ import { store as editorStore } from "../editor-store";
 import { __ } from "@wordpress/i18n";
 import { SIDEBAR_NODE_EDGE, SIDEBAR_WORKFLOW } from "../settings-sidebar/constants";
 import { SLOT_SCOPE_WORKFLOW_EDITOR, FEATURE_SHOW_ICON_LABELS } from "../../constants";
+import EditorNotices from "../editor-notices";
 
 export function WorkflowEditorInterface({ className, secondarySidebar }) {
     const isMobileViewport = useViewportMatch('medium', '<');
@@ -55,7 +56,6 @@ export function WorkflowEditorInterface({ className, secondarySidebar }) {
             className={interfaceClassNames}
             header={<LayoutHeader />}
             secondarySidebar={secondarySidebar()}
-            notices={null}
             content={<LayoutContent />}
             footer={<LayoutFooter />}
             actions={null}

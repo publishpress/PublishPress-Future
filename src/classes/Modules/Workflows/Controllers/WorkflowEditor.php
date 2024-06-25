@@ -119,6 +119,7 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_style("wp-components");
         wp_enqueue_style("wp-edit-post");
         wp_enqueue_style("wp-editor");
+        wp_enqueue_style("wp-notices");
 
         wp_enqueue_style(
             "future_workflow_admin_style",
@@ -135,6 +136,7 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_script("wp-components");
         wp_enqueue_script("wp-data");
         wp_enqueue_script("wp-plugins");
+        wp_enqueue_script("wp-notices");
 
         wp_enqueue_script(
             "future_workflow_editor_script",
@@ -150,6 +152,7 @@ class WorkflowEditor implements InitializableInterface
                 "wp-api-fetch",
                 "wp-plugins",
                 "wp-i18n",
+                "wp-notices",
             ],
             PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
             true

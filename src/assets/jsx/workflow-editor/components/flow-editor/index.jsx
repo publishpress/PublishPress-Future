@@ -36,6 +36,7 @@ import { TriggerPlaceholder } from "../node-types/trigger-placeholder";
 import { createNewNode, getId } from "../../utils";
 import NodePlaceholder from "../node-types/node-placeholder";
 import AutoLayout from "./auto-layout";
+import { __ } from "@wordpress/i18n";
 
 const GRID_SIZE = 10;
 
@@ -89,6 +90,10 @@ export const FlowEditor = (props) => {
     const {
         openGeneralSidebar,
     } = useDispatch(editorStore);
+
+    const {
+        createSuccessNotice,
+    } = useDispatch('core/notices');
 
     const reactFlowWrapperRef = useRef(null);
     const reactFlowInstance = useReactFlow();
@@ -320,6 +325,14 @@ export const FlowEditor = (props) => {
             });
 
             applyLayout({ direction: AUTO_LAYOUT_DEFAULT_DIRECTION });
+
+            createSuccessNotice(
+                __('Auto layout applied.', 'publishpress-future-pro'),
+                {
+                    isDismissible: true,
+                    type: 'snackbar'
+                }
+            )
         });
     }, [nodes, edges, fitView, updateFlowInEditedWorkflow]);
 

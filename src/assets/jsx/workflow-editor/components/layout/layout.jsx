@@ -66,6 +66,7 @@ export function WorkflowEditorLayout() {
                 {isWelcomeGuideActive && (
                     <WelcomeGuide />
                 )}
+
             </ReactFlowProvider>
         </SlotFillProvider>
     );
