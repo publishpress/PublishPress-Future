@@ -12,6 +12,7 @@ import ReactFlow, {
     useReactFlow,
     useOnSelectionChange,
     useOnViewportChange,
+    MarkerType,
 } from "reactflow";
 import {
     useCallback,
@@ -176,6 +177,9 @@ export const FlowEditor = (props) => {
                 ...params,
                 type: 'genericEdge',
                 id: `${params.source}-${params.sourceHandle}-${params.target}-${params.targetHandle}`,
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                },
             };
 
             setEdges(addEdge(params, edges));
