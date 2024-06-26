@@ -12,7 +12,6 @@ use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapt
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeModel;
-use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -781,6 +780,6 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 	 * @since 3.1.0
 	 */
 	public function no_items() {
-        echo esc_html__('No Future Actions.', 'post-expirator');
+        echo esc_html__('No Scheduled Actions.', 'post-expirator');
     }
 }

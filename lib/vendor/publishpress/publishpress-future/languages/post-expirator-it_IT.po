@@ -6,7 +6,7 @@ msgstr ""
 "WordPress Posts - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "POT-Creation-Date: 2024-06-19T17:27:41+00:00\n"
-"PO-Revision-Date: 2024-06-20 06:14+0200\n"
+"PO-Revision-Date: 2024-06-21 01:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -726,7 +726,7 @@ msgstr "Non ripetibile"
 
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:784
 msgid "No Future Actions."
-msgstr "Nessuna azione Future"
+msgstr "Nessuna azione Future."
 
 #: src/Modules/Settings/Controllers/Controller.php:202
 msgid "Default Values"
