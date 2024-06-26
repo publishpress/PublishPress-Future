@@ -27503,10 +27503,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.workflow-editor-notices__snackbar-lis
 }
 
 .folded .workflow-editor-notices__snackbar-list {
-    bottom: 3px;
     left: 92px;
 }
-`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/notices.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,WAAW;IACX,UAAU;AACd","sourcesContent":[".workflow-editor-notices__snackbar-list {\n    position: fixed;\n    bottom: 35px;\n    left: 220px;\n}\n\n.folded .workflow-editor-notices__snackbar-list {\n    bottom: 3px;\n    left: 92px;\n}\n"],"sourceRoot":""}]);
+
+.is-fullscreen-mode .workflow-editor-notices__snackbar-list {
+    left: 60px;
+}
+`, "",{"version":3,"sources":["webpack://./src/assets/jsx/workflow-editor/css/notices.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,UAAU;AACd;;AAEA;IACI,UAAU;AACd","sourcesContent":[".workflow-editor-notices__snackbar-list {\n    position: fixed;\n    bottom: 35px;\n    left: 220px;\n}\n\n.folded .workflow-editor-notices__snackbar-list {\n    left: 92px;\n}\n\n.is-fullscreen-mode .workflow-editor-notices__snackbar-list {\n    left: 60px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
