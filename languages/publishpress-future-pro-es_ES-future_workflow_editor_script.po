@@ -14,71 +14,67 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 "X-Domain: publishpress-future-pro\n"
 
-#: components/data-fields/date-offset.jsx:68
+#: components/data-fields/date-offset.jsx:70
 msgid "As soon as possible"
 msgstr "Lo antes posible"
 
-#: components/data-fields/date-offset.jsx:69
+#: components/data-fields/date-offset.jsx:71
 msgid "On a specific date"
 msgstr "En una fecha determinada"
 
-#: components/data-fields/date-offset.jsx:89
+#: components/data-fields/date-offset.jsx:91
 msgid "Non-repeating"
 msgstr "No repetitiva"
 
-#: components/data-fields/date-offset.jsx:90
+#: components/data-fields/date-offset.jsx:92
 msgid "Custom interval in seconds"
 msgstr "Intervalo personalizado en segundos"
 
-#: components/data-fields/date-offset.jsx:95
+#: components/data-fields/date-offset.jsx:97
 msgid "Forever"
 msgstr "Por siempre"
 
-#: components/data-fields/date-offset.jsx:96
+#: components/data-fields/date-offset.jsx:98
 msgid "Specific date"
 msgstr "Fecha específica"
 
-#: components/data-fields/date-offset.jsx:97
+#: components/data-fields/date-offset.jsx:99
 msgid "For a number of times"
 msgstr "Por un número de veces"
 
-#: components/data-fields/date-offset.jsx:119
-msgid "Avoid duplicated action"
-msgstr "Evitar la duplicación de acciones"
-
-#: components/data-fields/date-offset.jsx:125
+#: components/data-fields/date-offset.jsx:121
 msgid "When to run"
 msgstr "Cuándo ejecutar"
 
-#: components/data-fields/date-offset.jsx:134
+#: components/data-fields/date-offset.jsx:130
 msgid "Date source"
 msgstr "Fuente de la fecha"
 
-#: components/data-fields/date-offset.jsx:150
+#: components/data-fields/date-offset.jsx:146
 msgid "Offset"
 msgstr "Desfase"
 
-#: components/data-fields/date-offset.jsx:164
+#: components/data-fields/date-offset.jsx:160
 msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
 msgstr "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
 
-#: components/data-fields/date-offset.jsx:185
+#: components/data-fields/date-offset.jsx:181
 msgid "Repeating Action"
 msgstr "Acción de repetición"
 
-#: components/data-fields/date-offset.jsx:193
+#: components/data-fields/date-offset.jsx:189
 msgid "Interval in seconds"
 msgstr "Intervalo in segundos"
 
-#: components/data-fields/date-offset.jsx:202
+#: components/data-fields/date-offset.jsx:198
 msgid "Repeat until"
 msgstr "Repetir hasta"
 
-#: components/data-fields/date-offset.jsx:210
+#: components/data-fields/date-offset.jsx:206
 msgid "Times to repeat"
 msgstr "Veces a repetir"
 
-#: components/data-fields/date-offset.jsx:227
+#: components/data-fields/date-offset.jsx:232
 msgid "Priority"
 msgstr "Prioridad"
 
@@ -463,10 +459,6 @@ msgstr "Cerrar ajustes"
 msgid "Settings"
 msgstr "Ajustes"
 
-#: components/welcome-guide/index.jsx:21
-msgid "Welcome to workflow editor"
-msgstr "Bienvenido al editor de flujos de trabajo"
-
 #: components/welcome-guide/index.jsx:22
 msgid "Get started"
 msgstr "Primeros pasos"
@@ -567,15 +559,15 @@ msgstr "Borrador"
 msgid "Switch to draft"
 msgstr "Cambiar a borrador"
 
-#: components/data-fields/date-offset.jsx:70
+#: components/data-fields/date-offset.jsx:72
 msgid "Relative to a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:75
+#: components/data-fields/date-offset.jsx:77
 msgid "Selected in the calendar"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:76
+#: components/data-fields/date-offset.jsx:78
 msgid "When the trigger is activated"
 msgstr ""
 
@@ -595,11 +587,11 @@ msgstr ""
 msgid "Search for actions"
 msgstr ""
 
-#: components/node-types/placeholder.jsx:160
+#: components/node-types/placeholder.jsx:166
 msgid "Search for steps"
 msgstr ""
 
-#: components/node-types/placeholder.jsx:186
+#: components/node-types/placeholder.jsx:192
 #: components/node-types/trigger-placeholder.jsx:13
 #: components/secondary-sidebar/menu.jsx:201
 msgid "Search for triggers and steps"
@@ -676,4 +668,69 @@ msgstr ""
 
 #: components/node-inspector/node-data-flow-panel.jsx:49
 msgid "This step does not output any data."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:223
+msgid "Prevent duplicate scheduling"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:226
+msgid "If enabled, the step will prevent the step from being accidentally scheduled multiple times."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:235
+msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
+msgstr ""
+
+#: components/flow-editor/index.jsx:334
+msgid "Auto layout applied."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:21
+msgid "Welcome to the workflow editor"
+msgstr ""
+
+#: components/workflow-store/actions.jsx:29
+msgid "Unable to create a new workflow. Please try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:48
+msgid "Unable to load the workflow. Please try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:86
+msgid "Workflow saved as draft."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:94
+#: components/workflow-store/actions.jsx:131
+msgid "Unable to save workflow. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:123
+msgid "Workflow saved."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:168
+msgid "Workflow published."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:176
+msgid "Unable to publish the workflow. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:213
+msgid "Workflow switched to draft."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:221
+msgid "Unable to switch workflow to draft. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:305
+msgid "Workflow deleted. Redirecting..."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:316
+msgid "Unable to delete the workflow. Please, try again."
 msgstr ""
