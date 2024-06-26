@@ -226,7 +226,7 @@ class WorkflowEditor implements InitializableInterface
     {
         return [
             [
-                "title" => __("Welcome to workflow editor", 'publishpress-future-pro'),
+                "title" => __("Welcome to the workflow editor", 'publishpress-future-pro'),
                 "content" => __("In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow.", 'publishpress-future-pro'),
                 "image" => '1-welcome-to-editor',
             ],

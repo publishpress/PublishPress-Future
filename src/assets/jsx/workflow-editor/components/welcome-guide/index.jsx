@@ -18,7 +18,7 @@ export function WelcomeGuide() {
     return (
         <Guide
             className="workflow-editor-welcome-guide"
-            contentLabel={__("Welcome to workflow editor", 'publishpress-future-pro')}
+            contentLabel={__("Welcome to the workflow editor", 'publishpress-future-pro')}
             finishButtonText={__("Get started", 'publishpress-future-pro')}
             onFinish={() => {
                 disableFeature(FEATURE_WELCOME_GUIDE);
