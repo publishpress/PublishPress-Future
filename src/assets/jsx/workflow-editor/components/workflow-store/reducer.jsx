@@ -69,6 +69,19 @@ const normalizeMarkerEnd = (payload) => {
     });
 }
 
+const removeBrokenConnections = (nodes, edges) => {
+    return edges.filter(edge => {
+        const sourceNode = nodes.find(node => node.id === edge.source);
+        const targetNode = nodes.find(node => node.id === edge.target);
+
+        if (! sourceNode || ! targetNode) {
+            return false;
+        }
+
+        return true;
+    });
+}
+
 function _setInitialStateForGlobalVariables(state, workflow = {}) {
     state = setGlobalVariable(state, {
         payload: {
@@ -131,6 +144,7 @@ const loadWorkflowSuccess = (state, action) => {
     }
 
     edges = normalizeMarkerEnd(edges);
+    edges = removeBrokenConnections(nodes, edges);
 
     state = _setInitialStateForGlobalVariables(state, payload);
 
