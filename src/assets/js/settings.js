@@ -2,6 +2,2221 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ButtonsPanel.jsx":
+/*!********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ButtonsPanel.jsx ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ButtonsPanel: () => (/* binding */ ButtonsPanel)
+/* harmony export */ });
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var ButtonsPanel = function ButtonsPanel(props) {
+  return /*#__PURE__*/React.createElement("div", null, props.children);
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/CheckboxControl.jsx":
+/*!***********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/CheckboxControl.jsx ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CheckboxControl: () => (/* binding */ CheckboxControl)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+
+var CheckboxControl = function CheckboxControl(props) {
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(props.checked || false),
+    _useState2 = _slicedToArray(_useState, 2),
+    checked = _useState2[0],
+    setChecked = _useState2[1];
+  var description;
+  if (props.unescapedDescription) {
+    // If using this option, the HTML has to be escaped before injected into the JS interface.
+    description = /*#__PURE__*/React.createElement("p", {
+      className: "description",
+      dangerouslySetInnerHTML: {
+        __html: props.description
+      }
+    });
+  } else {
+    description = /*#__PURE__*/React.createElement("p", {
+      className: "description"
+    }, props.description);
+  }
+  var onChange = function onChange(value) {
+    setChecked(value);
+    if (props.onChange) {
+      props.onChange(value);
+    }
+  };
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
+    label: props.label,
+    name: props.name,
+    id: props.name,
+    className: props.className,
+    checked: checked || false,
+    onChange: onChange
+  }), description);
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/DateTimePicker.jsx":
+/*!**********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/DateTimePicker.jsx ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DateTimePicker: () => (/* binding */ DateTimePicker)
+/* harmony export */ });
+/* harmony import */ var _time__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../time */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/time.jsx");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var DateTimePicker = function DateTimePicker(_ref) {
+  var currentDate = _ref.currentDate,
+    onChange = _ref.onChange,
+    is12Hour = _ref.is12Hour,
+    startOfWeek = _ref.startOfWeek;
+  if (typeof currentDate === 'number') {
+    currentDate = (0,_time__WEBPACK_IMPORTED_MODULE_0__.normalizeUnixTimeToMilliseconds)(currentDate);
+  }
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.DateTimePicker, {
+    currentDate: currentDate,
+    onChange: onChange,
+    __nextRemoveHelpButton: true,
+    is12Hour: is12Hour,
+    startOfWeek: startOfWeek
+  });
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanel.jsx":
+/*!*************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanel.jsx ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionPanel: () => (/* binding */ FutureActionPanel)
+/* harmony export */ });
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/utils.jsx");
+/* harmony import */ var _ToggleCalendarDatePicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ToggleCalendarDatePicker */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ToggleCalendarDatePicker.jsx");
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _FutureActionPanelAfterActionField__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FutureActionPanelAfterActionField */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelAfterActionField.jsx");
+/* harmony import */ var _FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FutureActionPanelTop */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelTop.jsx");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var _wp$components = wp.components,
+  PanelRow = _wp$components.PanelRow,
+  CheckboxControl = _wp$components.CheckboxControl,
+  SelectControl = _wp$components.SelectControl,
+  FormTokenField = _wp$components.FormTokenField,
+  Spinner = _wp$components.Spinner,
+  BaseControl = _wp$components.BaseControl;
+var _wp$element = wp.element,
+  Fragment = _wp$element.Fragment,
+  useEffect = _wp$element.useEffect,
+  useState = _wp$element.useState;
+var decodeEntities = wp.htmlEntities.decodeEntities;
+var addQueryArgs = wp.url.addQueryArgs;
+var _wp$data = wp.data,
+  useSelect = _wp$data.useSelect,
+  useDispatch = _wp$data.useDispatch;
+var _wp = wp,
+  apiFetch = _wp.apiFetch;
+var FutureActionPanel = function FutureActionPanel(props) {
+  var action = useSelect(function (select) {
+    return select(props.storeName).getAction();
+  }, []);
+  var date = useSelect(function (select) {
+    return select(props.storeName).getDate();
+  }, []);
+  var enabled = useSelect(function (select) {
+    return select(props.storeName).getEnabled();
+  }, []);
+  var terms = useSelect(function (select) {
+    return select(props.storeName).getTerms();
+  }, []);
+  var taxonomy = useSelect(function (select) {
+    return select(props.storeName).getTaxonomy();
+  }, []);
+  var taxonomyName = useSelect(function (select) {
+    return select(props.storeName).getTaxonomyName();
+  }, []);
+  var termsListByName = useSelect(function (select) {
+    return select(props.storeName).getTermsListByName();
+  }, []);
+  var termsListById = useSelect(function (select) {
+    return select(props.storeName).getTermsListById();
+  }, []);
+  var isFetchingTerms = useSelect(function (select) {
+    return select(props.storeName).getIsFetchingTerms();
+  }, []);
+  var calendarIsVisible = useSelect(function (select) {
+    return select(props.storeName).getCalendarIsVisible();
+  }, []);
+  var hasValidData = useSelect(function (select) {
+    return select(props.storeName).getHasValidData();
+  }, []);
+  var newStatus = useSelect(function (select) {
+    return select(props.storeName).getNewStatus();
+  }, []);
+  var _useState = useState(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    validationError = _useState2[0],
+    setValidationError = _useState2[1];
+  var _useDispatch = useDispatch(props.storeName),
+    setAction = _useDispatch.setAction,
+    setDate = _useDispatch.setDate,
+    setEnabled = _useDispatch.setEnabled,
+    setTerms = _useDispatch.setTerms,
+    setTaxonomy = _useDispatch.setTaxonomy,
+    setTermsListByName = _useDispatch.setTermsListByName,
+    setTermsListById = _useDispatch.setTermsListById,
+    setTaxonomyName = _useDispatch.setTaxonomyName,
+    setIsFetchingTerms = _useDispatch.setIsFetchingTerms,
+    setCalendarIsVisible = _useDispatch.setCalendarIsVisible,
+    setHasValidData = _useDispatch.setHasValidData,
+    setNewStatus = _useDispatch.setNewStatus;
+  var mapTermsListById = function mapTermsListById(terms) {
+    if (_typeof(terms) !== 'object' || terms === null) {
+      return {};
+    }
+    return terms.map(function (term) {
+      return termsListById[term];
+    });
+  };
+  var insertTerm = function insertTerm(term) {
+    termsListByName[term] = {
+      id: term,
+      count: 0,
+      description: "",
+      link: "",
+      name: term,
+      slug: term,
+      taxonomy: taxonomy
+    };
+    termsListById[term] = term;
+    setTermsListByName(termsListByName);
+    setTermsListById(termsListById);
+    setTerms([].concat(_toConsumableArray(terms), [term]));
+  };
+  var mapTermsListByName = function mapTermsListByName(terms) {
+    if (_typeof(terms) !== 'object' || terms === null) {
+      return {};
+    }
+    return terms.map(function (term) {
+      if (termsListByName[term]) {
+        return termsListByName[term].id;
+      }
+      insertTerm(term);
+      return term;
+    });
+  };
+  var callOnChangeData = function callOnChangeData(attribute, value) {
+    if (typeof props.onChangeData === 'function') {
+      props.onChangeData(attribute, value);
+    }
+  };
+  var handleEnabledChange = function handleEnabledChange(isChecked) {
+    setEnabled(isChecked);
+    if (isChecked) {
+      setAction(props.action);
+      setDate(props.date);
+      setNewStatus(props.newStatus);
+      setTerms(props.terms);
+      setTaxonomy(props.taxonomy);
+      fetchTerms();
+    }
+    callOnChangeData('enabled', isChecked);
+  };
+  var handleActionChange = function handleActionChange(value) {
+    setAction(value);
+    callOnChangeData('action', value);
+  };
+  var handleNewStatusChange = function handleNewStatusChange(value) {
+    setNewStatus(value);
+    callOnChangeData('newStatus', value);
+  };
+  var handleDateChange = function handleDateChange(value) {
+    setDate(value);
+    callOnChangeData('date', value);
+  };
+  var handleTermsChange = function handleTermsChange(value) {
+    value = mapTermsListByName(value);
+    setTerms(value);
+    callOnChangeData('terms', value);
+  };
+  var fetchTerms = function fetchTerms() {
+    var termsListByName = {};
+    var termsListById = {};
+    if (!taxonomy) {
+      return;
+    }
+    setIsFetchingTerms(true);
+    apiFetch({
+      path: addQueryArgs("publishpress-future/v1/terms/".concat(taxonomy))
+    }).then(function (result) {
+      result.terms.forEach(function (term) {
+        termsListByName[decodeEntities(term.name)] = term;
+        termsListById[term.id] = decodeEntities(term.name);
+      });
+      setTermsListByName(termsListByName);
+      setTermsListById(termsListById);
+      setTaxonomyName(decodeEntities(result.taxonomyName));
+      setIsFetchingTerms(false);
+    });
+  };
+  var storeCalendarIsVisibleOnStorage = function storeCalendarIsVisibleOnStorage(value) {
+    localStorage.setItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context, value ? '1' : '0');
+  };
+  var getCalendarIsVisibleFromStorage = function getCalendarIsVisibleFromStorage() {
+    return localStorage.getItem('FUTURE_ACTION_CALENDAR_IS_VISIBLE_' + props.context);
+  };
+  useEffect(function () {
+    if (props.autoEnableAndHideCheckbox) {
+      setEnabled(true);
+    } else {
+      setEnabled(props.enabled);
+    }
+    setAction(props.action);
+    setNewStatus(props.newStatus);
+    setDate(props.date);
+    setTerms(props.terms);
+    setTaxonomy(props.taxonomy);
+    if (getCalendarIsVisibleFromStorage() === null) {
+      setCalendarIsVisible(props.calendarIsVisible);
+    } else {
+      setCalendarIsVisible(getCalendarIsVisibleFromStorage() === '1');
+    }
+
+    // We need to get the value directly from the props because the value from the store is not updated yet
+    if (props.enabled) {
+      if (props.isCleanNewPost) {
+        // Force populate the default values
+        handleEnabledChange(true);
+      }
+      fetchTerms();
+    }
+  }, []);
+  useEffect(function () {
+    storeCalendarIsVisibleOnStorage(calendarIsVisible);
+  }, [calendarIsVisible]);
+  useEffect(function () {
+    if (hasValidData && props.onDataIsValid) {
+      props.onDataIsValid();
+    }
+    if (!hasValidData && props.onDataIsInvalid) {
+      props.onDataIsInvalid();
+    }
+  }, [hasValidData]);
+  var selectedTerms = [];
+  if (terms && terms.length > 0 && termsListById) {
+    selectedTerms = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.compact)(mapTermsListById(terms));
+    if (typeof selectedTerms === 'string') {
+      selectedTerms = [];
+    }
+  }
+  var termsListByNameKeys = [];
+  if (_typeof(termsListByName) === 'object' && termsListByName !== null) {
+    termsListByNameKeys = Object.keys(termsListByName);
+  }
+  var panelClass = calendarIsVisible ? 'future-action-panel' : 'future-action-panel hidden-calendar';
+  var contentPanelClass = calendarIsVisible ? 'future-action-panel-content' : 'future-action-panel-content hidden-calendar';
+  var datePanelClass = calendarIsVisible ? 'future-action-date-panel' : 'future-action-date-panel hidden-calendar';
+  var is24hour;
+  if (props.timeFormat === 'inherited') {
+    is24hour = !props.is12Hour;
+  } else {
+    is24hour = props.timeFormat === '24h';
+  }
+  var replaceCurlyBracketsWithLink = function replaceCurlyBracketsWithLink(string, href, target) {
+    var parts = string.split('{');
+    var result = [];
+    result.push(parts.shift());
+    var _iterator = _createForOfIteratorHelper(parts),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var part = _step.value;
+        var _part$split = part.split('}'),
+          _part$split2 = _slicedToArray(_part$split, 2),
+          before = _part$split2[0],
+          after = _part$split2[1];
+        result.push( /*#__PURE__*/React.createElement("a", {
+          href: href,
+          target: target,
+          key: href
+        }, before));
+        result.push(after);
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+    return result;
+  };
+
+  // Remove items from actions list if related to taxonomies and there is no taxonmoy for the post type
+  var actionsSelectOptions = props.actionsSelectOptions;
+  if (!props.taxonomy) {
+    actionsSelectOptions = props.actionsSelectOptions.filter(function (item) {
+      return ['category', 'category-add', 'category-remove', 'category-remove-all'].indexOf(item.value) === -1;
+    });
+  }
+  var HelpText = replaceCurlyBracketsWithLink(props.strings.timezoneSettingsHelp, '/wp-admin/options-general.php#timezone_string', '_blank');
+  var displayTaxonomyField = String(action).includes('category') && action !== 'category-remove-all';
+  var termsFieldLabel = taxonomyName;
+  switch (action) {
+    case 'category':
+      termsFieldLabel = props.strings.newTerms.replace('%s', taxonomyName);
+      break;
+    case 'category-remove':
+      termsFieldLabel = props.strings.removeTerms.replace('%s', taxonomyName);
+      break;
+    case 'category-add':
+      termsFieldLabel = props.strings.addTerms.replace('%s', taxonomyName);
+      break;
+  }
+  var validateData = function validateData() {
+    var valid = true;
+    if (!enabled) {
+      setValidationError('');
+      return true;
+    }
+    if (!action) {
+      setValidationError(props.strings.errorActionRequired);
+      valid = false;
+    }
+    if (!date) {
+      setValidationError(props.strings.errorDateRequired);
+      valid = false;
+    }
+
+    // Check if the date is in the past
+    if (date && new Date(date) < new Date()) {
+      setValidationError(props.strings.errorDateInPast);
+      valid = false;
+    }
+    var isTermRequired = ['category', 'category-add', 'category-remove'].includes(action);
+    var noTermIsSelected = terms.length === 0 || terms.length === 1 && (terms[0] === '' || terms[0] === '0');
+    if (isTermRequired && noTermIsSelected) {
+      setValidationError(props.strings.errorTermsRequired);
+      valid = false;
+    }
+    if (valid) {
+      setValidationError('');
+    }
+    return valid;
+  };
+  useEffect(function () {
+    if (!enabled) {
+      setHasValidData(true);
+      setValidationError('');
+      return;
+    }
+    setHasValidData(validateData());
+  }, [action, date, enabled, terms, taxonomy]);
+
+  // This adds a 'cancel' class to the input when the user clicks on the
+  // field to prevent the form from being submitted. This is a workaround
+  // for the issue on the quick-edit form where the form is submitted when
+  // the user presses the 'Enter' key trying to add a term to the field.
+  var forceIgnoreAutoSubmitOnEnter = function forceIgnoreAutoSubmitOnEnter(e) {
+    jQuery(e.target).addClass('cancel');
+  };
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SlotFillProvider, null, /*#__PURE__*/React.createElement("div", {
+    className: panelClass
+  }, props.autoEnableAndHideCheckbox && /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_enabled',
+    value: 1
+  }), /*#__PURE__*/React.createElement(_FutureActionPanelTop__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelTop.Slot, {
+    fillProps: {
+      storeName: props.storeName
+    }
+  }), !props.autoEnableAndHideCheckbox && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(CheckboxControl, {
+    label: props.strings.enablePostExpiration,
+    checked: enabled || false,
+    onChange: handleEnabledChange
+  })), enabled && /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(PanelRow, {
+    className: contentPanelClass + ' future-action-full-width'
+  }, /*#__PURE__*/React.createElement(SelectControl, {
+    label: props.strings.action,
+    value: action,
+    options: actionsSelectOptions,
+    onChange: handleActionChange
+  })), /*#__PURE__*/React.createElement(_FutureActionPanelAfterActionField__WEBPACK_IMPORTED_MODULE_4__.FutureActionPanelAfterActionField.Slot, {
+    fillProps: {
+      storeName: props.storeName
+    }
+  }), action === 'change-status' && /*#__PURE__*/React.createElement(PanelRow, {
+    className: "new-status"
+  }, /*#__PURE__*/React.createElement(SelectControl, {
+    label: props.strings.newStatus,
+    options: props.statusesSelectOptions,
+    value: newStatus,
+    onChange: handleNewStatusChange
+  })), displayTaxonomyField && (isFetchingTerms && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
+    label: taxonomyName
+  }, "".concat(props.strings.loading, " (").concat(taxonomyName, ")"), /*#__PURE__*/React.createElement(Spinner, null))) || !taxonomy && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
+    label: taxonomyName,
+    className: "future-action-warning"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("i", {
+    className: "dashicons dashicons-warning"
+  }), " ", props.strings.noTaxonomyFound))) || termsListByNameKeys.length === 0 && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
+    label: taxonomyName,
+    className: "future-action-warning"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("i", {
+    className: "dashicons dashicons-warning"
+  }), " ", props.strings.noTermsFound))) || /*#__PURE__*/React.createElement(PanelRow, {
+    className: "future-action-full-width"
+  }, /*#__PURE__*/React.createElement(BaseControl, null, /*#__PURE__*/React.createElement(FormTokenField, {
+    label: termsFieldLabel,
+    value: selectedTerms,
+    suggestions: termsListByNameKeys,
+    onChange: handleTermsChange,
+    placeholder: props.strings.addTermsPlaceholder,
+    maxSuggestions: 1000,
+    onFocus: forceIgnoreAutoSubmitOnEnter,
+    __experimentalExpandOnFocus: true,
+    __experimentalAutoSelectFirstMatch: true
+  })))), /*#__PURE__*/React.createElement(PanelRow, {
+    className: datePanelClass
+  }, /*#__PURE__*/React.createElement(_ToggleCalendarDatePicker__WEBPACK_IMPORTED_MODULE_1__.ToggleCalendarDatePicker, {
+    currentDate: date,
+    onChangeDate: handleDateChange,
+    onToggleCalendar: function onToggleCalendar() {
+      return setCalendarIsVisible(!calendarIsVisible);
+    },
+    is12Hour: !is24hour,
+    startOfWeek: props.startOfWeek,
+    isExpanded: calendarIsVisible,
+    strings: props.strings
+  })), /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("div", {
+    className: "future-action-help-text"
+  }, /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement("span", {
+    className: "dashicons dashicons-info"
+  }), " ", HelpText)), !hasValidData && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
+    className: "notice notice-error"
+  }, /*#__PURE__*/React.createElement("div", null, validationError))))), /*#__PURE__*/React.createElement(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_2__.PluginArea, {
+    scope: "publishpress-future"
+  }));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelAfterActionField.jsx":
+/*!*****************************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelAfterActionField.jsx ***!
+  \*****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionPanelAfterActionField: () => (/* binding */ FutureActionPanelAfterActionField),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+var FutureActionPanelAfterActionField = function FutureActionPanelAfterActionField(_ref) {
+  var children = _ref.children;
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Fill, {
+    name: "FutureActionPanelAfterActionField"
+  }, children);
+};
+var FutureActionPanelAfterActionFieldSlot = function FutureActionPanelAfterActionFieldSlot(props) {
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Slot, _extends({
+    name: "FutureActionPanelAfterActionField"
+  }, props));
+};
+FutureActionPanelAfterActionField.Slot = FutureActionPanelAfterActionFieldSlot;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FutureActionPanelAfterActionField);
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelBlockEditor.jsx":
+/*!************************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelBlockEditor.jsx ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionPanelBlockEditor: () => (/* binding */ FutureActionPanelBlockEditor)
+/* harmony export */ });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) {
+  var PluginDocumentSettingPanel = wp.editPost.PluginDocumentSettingPanel;
+  var _wp$data = wp.data,
+    useDispatch = _wp$data.useDispatch,
+    select = _wp$data.select;
+  var _useDispatch = useDispatch('core/editor'),
+    editPost = _useDispatch.editPost;
+  var editPostAttribute = function editPostAttribute(newAttribute) {
+    var attribute = {
+      publishpress_future_action: {}
+    };
+
+    // For each property on newAttribute, set the value on attribute
+    for (var _i = 0, _Object$entries = Object.entries(newAttribute); _i < _Object$entries.length; _i++) {
+      var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+        name = _Object$entries$_i[0],
+        value = _Object$entries$_i[1];
+      attribute.publishpress_future_action[name] = value;
+    }
+    editPost(attribute);
+  };
+  var onChangeData = function onChangeData(attribute, value) {
+    var store = select(props.storeName);
+    var newAttribute = {
+      'enabled': store.getEnabled()
+    };
+    if (newAttribute.enabled) {
+      newAttribute['action'] = store.getAction();
+      newAttribute['newStatus'] = store.getNewStatus();
+      newAttribute['date'] = store.getDate();
+      newAttribute['terms'] = store.getTerms();
+      newAttribute['taxonomy'] = store.getTaxonomy();
+      newAttribute['extraData'] = store.getExtraData();
+    }
+    editPostAttribute(newAttribute);
+  };
+  var data = select('core/editor').getEditedPostAttribute('publishpress_future_action');
+  var _useDispatch2 = useDispatch('core/editor'),
+    lockPostSaving = _useDispatch2.lockPostSaving,
+    unlockPostSaving = _useDispatch2.unlockPostSaving;
+  var onDataIsValid = function onDataIsValid() {
+    unlockPostSaving('future-action');
+  };
+  var onDataIsInvalid = function onDataIsInvalid() {
+    lockPostSaving('future-action');
+  };
+  return /*#__PURE__*/React.createElement(PluginDocumentSettingPanel, {
+    name: 'publishpress-future-action-panel',
+    title: props.strings.panelTitle,
+    icon: "calendar",
+    initialOpen: props.postTypeDefaultConfig.autoEnable,
+    className: 'post-expirator-panel'
+  }, /*#__PURE__*/React.createElement("div", {
+    id: "publishpress-future-block-editor"
+  }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.FutureActionPanel, {
+    context: 'block-editor',
+    postType: props.postType,
+    isCleanNewPost: props.isCleanNewPost,
+    actionsSelectOptions: props.actionsSelectOptions,
+    statusesSelectOptions: props.statusesSelectOptions,
+    enabled: data.enabled,
+    calendarIsVisible: true,
+    action: data.action,
+    newStatus: data.newStatus,
+    date: data.date,
+    terms: data.terms,
+    taxonomy: data.taxonomy,
+    taxonomyName: props.taxonomyName,
+    onChangeData: onChangeData,
+    is12Hour: props.is12Hour,
+    timeFormat: props.timeFormat,
+    startOfWeek: props.startOfWeek,
+    storeName: props.storeName,
+    strings: props.strings,
+    onDataIsValid: onDataIsValid,
+    onDataIsInvalid: onDataIsInvalid
+  })));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelBulkEdit.jsx":
+/*!*********************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelBulkEdit.jsx ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionPanelBulkEdit: () => (/* binding */ FutureActionPanelBulkEdit)
+/* harmony export */ });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! . */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/utils.jsx");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+
+
+var FutureActionPanelBulkEdit = function FutureActionPanelBulkEdit(props) {
+  var _wp$data = wp.data,
+    useSelect = _wp$data.useSelect,
+    useDispatch = _wp$data.useDispatch,
+    select = _wp$data.select;
+  var useEffect = wp.element.useEffect;
+  var onChangeData = function onChangeData(attribute, value) {
+    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getElementByName)('future_action_bulk_enabled').value = select(props.storeName).getEnabled() ? 1 : 0;
+    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getElementByName)('future_action_bulk_action').value = select(props.storeName).getAction();
+    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getElementByName)('future_action_bulk_new_status').value = select(props.storeName).getNewStatus();
+    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getElementByName)('future_action_bulk_date').value = select(props.storeName).getDate();
+    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getElementByName)('future_action_bulk_terms').value = select(props.storeName).getTerms().join(',');
+    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getElementByName)('future_action_bulk_taxonomy').value = select(props.storeName).getTaxonomy();
+  };
+  var date = useSelect(function (select) {
+    return select(props.storeName).getDate();
+  }, []);
+  var enabled = useSelect(function (select) {
+    return select(props.storeName).getEnabled();
+  }, []);
+  var action = useSelect(function (select) {
+    return select(props.storeName).getAction();
+  }, []);
+  var newStatus = useSelect(function (select) {
+    return select(props.storeName).getNewStatus();
+  }, []);
+  var terms = useSelect(function (select) {
+    return select(props.storeName).getTerms();
+  }, []);
+  var taxonomy = useSelect(function (select) {
+    return select(props.storeName).getTaxonomy();
+  }, []);
+  var changeAction = useSelect(function (select) {
+    return select(props.storeName).getChangeAction();
+  }, []);
+  var hasValidData = useSelect(function (select) {
+    return select(props.storeName).getHasValidData();
+  }, []);
+  var _useDispatch = useDispatch(props.storeName),
+    setChangeAction = _useDispatch.setChangeAction;
+  var termsString = terms;
+  if (_typeof(terms) === 'object') {
+    termsString = terms.join(',');
+  }
+  var handleStrategyChange = function handleStrategyChange(value) {
+    setChangeAction(value);
+  };
+  var options = [{
+    value: 'no-change',
+    label: props.strings.noChange
+  }, {
+    value: 'change-add',
+    label: props.strings.changeAdd
+  }, {
+    value: 'add-only',
+    label: props.strings.addOnly
+  }, {
+    value: 'change-only',
+    label: props.strings.changeOnly
+  }, {
+    value: 'remove-only',
+    label: props.strings.removeOnly
+  }];
+  var optionsToDisplayPanel = ['change-add', 'add-only', 'change-only'];
+  useEffect(function () {
+    // We are not using onDataIsValid and onDataIsInvalid because we need to enable/disable the button
+    // also based on the changeAction value.
+    if (hasValidData || changeAction === 'no-change') {
+      jQuery('#bulk_edit').prop('disabled', false);
+    } else {
+      jQuery('#bulk_edit').prop('disabled', true);
+    }
+  }, [hasValidData, changeAction]);
+  return /*#__PURE__*/React.createElement("div", {
+    className: 'post-expirator-panel'
+  }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+    label: props.strings.futureActionUpdate,
+    name: 'future_action_bulk_change_action',
+    value: changeAction,
+    options: options,
+    onChange: handleStrategyChange
+  }), optionsToDisplayPanel.includes(changeAction) && /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.FutureActionPanel, {
+    context: 'bulk-edit',
+    autoEnableAndHideCheckbox: true,
+    postType: props.postType,
+    isCleanNewPost: props.isNewPost,
+    actionsSelectOptions: props.actionsSelectOptions,
+    statusesSelectOptions: props.statusesSelectOptions,
+    enabled: true,
+    calendarIsVisible: false,
+    action: action,
+    newStatus: newStatus,
+    date: date,
+    terms: terms,
+    taxonomy: taxonomy,
+    taxonomyName: props.taxonomyName,
+    onChangeData: onChangeData,
+    is12Hour: props.is12Hour,
+    timeFormat: props.timeFormat,
+    startOfWeek: props.startOfWeek,
+    storeName: props.storeName,
+    strings: props.strings
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_bulk_enabled',
+    value: enabled ? 1 : 0
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_bulk_action',
+    value: action
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_bulk_new_status',
+    value: newStatus
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_bulk_date',
+    value: date
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_bulk_terms',
+    value: termsString
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_bulk_taxonomy',
+    value: taxonomy
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_bulk_view',
+    value: "bulk-edit"
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: '_future_action_nonce',
+    value: props.nonce
+  }));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelClassicEditor.jsx":
+/*!**************************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelClassicEditor.jsx ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionPanelClassicEditor: () => (/* binding */ FutureActionPanelClassicEditor)
+/* harmony export */ });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var FutureActionPanelClassicEditor = function FutureActionPanelClassicEditor(props) {
+  var browserTimezoneOffset = new Date().getTimezoneOffset();
+  var getElementByName = function getElementByName(name) {
+    return document.getElementsByName(name)[0];
+  };
+  var onChangeData = function onChangeData(attribute, value) {
+    var store = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.select)(props.storeName);
+    getElementByName('future_action_enabled').value = store.getEnabled() ? 1 : 0;
+    getElementByName('future_action_action').value = store.getAction();
+    getElementByName('future_action_new_status').value = store.getNewStatus();
+    getElementByName('future_action_date').value = store.getDate();
+    getElementByName('future_action_terms').value = store.getTerms().join(',');
+    getElementByName('future_action_taxonomy').value = store.getTaxonomy();
+  };
+  var getTermsFromElementByName = function getTermsFromElementByName(name) {
+    var element = getElementByName(name);
+    if (!element) {
+      return [];
+    }
+    var terms = element.value.split(',');
+    if (terms.length === 1 && terms[0] === '') {
+      terms = [];
+    }
+    return terms.map(function (term) {
+      return parseInt(term);
+    });
+  };
+  var getElementValueByName = function getElementValueByName(name) {
+    var element = getElementByName(name);
+    if (!element) {
+      return '';
+    }
+    return element.value;
+  };
+  var data = {
+    enabled: getElementValueByName('future_action_enabled') === '1',
+    action: getElementValueByName('future_action_action'),
+    newStatus: getElementValueByName('future_action_new_status'),
+    date: getElementValueByName('future_action_date'),
+    terms: getTermsFromElementByName('future_action_terms'),
+    taxonomy: getElementValueByName('future_action_taxonomy')
+  };
+  var onDataIsValid = function onDataIsValid() {
+    jQuery('#publish').prop('disabled', false);
+  };
+  var onDataIsInvalid = function onDataIsInvalid() {
+    jQuery('#publish').prop('disabled', true);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: 'post-expirator-panel'
+  }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.FutureActionPanel, {
+    context: 'classic-editor',
+    postType: props.postType,
+    isCleanNewPost: props.isNewPost,
+    actionsSelectOptions: props.actionsSelectOptions,
+    statusesSelectOptions: props.statusesSelectOptions,
+    enabled: data.enabled,
+    calendarIsVisible: true,
+    action: data.action,
+    newStatus: data.newStatus,
+    date: data.date,
+    terms: data.terms,
+    taxonomy: data.taxonomy,
+    taxonomyName: props.taxonomyName,
+    onChangeData: onChangeData,
+    is12Hour: props.is12Hour,
+    timeFormat: props.timeFormat,
+    startOfWeek: props.startOfWeek,
+    storeName: props.storeName,
+    strings: props.strings,
+    onDataIsValid: onDataIsValid,
+    onDataIsInvalid: onDataIsInvalid
+  }));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelQuickEdit.jsx":
+/*!**********************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelQuickEdit.jsx ***!
+  \**********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionPanelQuickEdit: () => (/* binding */ FutureActionPanelQuickEdit)
+/* harmony export */ });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+
+
+
+var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
+  var onChangeData = function onChangeData(attribute, value) {};
+  var date = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(function (select) {
+    return select(props.storeName).getDate();
+  }, []);
+  var enabled = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(function (select) {
+    return select(props.storeName).getEnabled();
+  }, []);
+  var action = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(function (select) {
+    return select(props.storeName).getAction();
+  }, []);
+  var terms = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(function (select) {
+    return select(props.storeName).getTerms();
+  }, []);
+  var taxonomy = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(function (select) {
+    return select(props.storeName).getTaxonomy();
+  }, []);
+  var hasValidData = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(function (select) {
+    return select(props.storeName).getHasValidData();
+  }, []);
+  var newStatus = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(function (select) {
+    return select(props.storeName).getNewStatus();
+  }, []);
+  var termsString = terms;
+  if (_typeof(terms) === 'object') {
+    termsString = terms.join(',');
+  }
+  var onDataIsValid = function onDataIsValid() {
+    jQuery('.button-primary.save').prop('disabled', false);
+  };
+  var onDataIsInvalid = function onDataIsInvalid() {
+    jQuery('.button-primary.save').prop('disabled', true);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: 'post-expirator-panel'
+  }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.FutureActionPanel, {
+    context: 'quick-edit',
+    postType: props.postType,
+    isCleanNewPost: props.isNewPost,
+    actionsSelectOptions: props.actionsSelectOptions,
+    statusesSelectOptions: props.statusesSelectOptions,
+    enabled: enabled,
+    calendarIsVisible: false,
+    action: action,
+    newStatus: newStatus,
+    date: date,
+    terms: terms,
+    taxonomy: taxonomy,
+    taxonomyName: props.taxonomyName,
+    onChangeData: onChangeData,
+    is12Hour: props.is12Hour,
+    timeFormat: props.timeFormat,
+    startOfWeek: props.startOfWeek,
+    storeName: props.storeName,
+    strings: props.strings,
+    onDataIsValid: onDataIsValid,
+    onDataIsInvalid: onDataIsInvalid
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_enabled',
+    value: enabled ? 1 : 0
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_action',
+    value: action ? action : ''
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_new_status',
+    value: newStatus ? newStatus : ''
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_date',
+    value: date ? date : ''
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_terms',
+    value: termsString ? termsString : ''
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_taxonomy',
+    value: taxonomy ? taxonomy : ''
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: 'future_action_view',
+    value: "quick-edit"
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: '_future_action_nonce',
+    value: props.nonce
+  }));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelTop.jsx":
+/*!****************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelTop.jsx ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FutureActionPanelTop: () => (/* binding */ FutureActionPanelTop),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+var FutureActionPanelTop = function FutureActionPanelTop(_ref) {
+  var children = _ref.children;
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Fill, {
+    name: "FutureActionPanelTop"
+  }, children);
+};
+var FutureActionPanelTopSlot = function FutureActionPanelTopSlot(props) {
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Slot, _extends({
+    name: "FutureActionPanelTop"
+  }, props));
+};
+FutureActionPanelTop.Slot = FutureActionPanelTopSlot;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FutureActionPanelTop);
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/NonceControl.jsx":
+/*!********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/NonceControl.jsx ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NonceControl: () => (/* binding */ NonceControl)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var NonceControl = function NonceControl(props) {
+  if (!props.name) {
+    props.name = '_wpnonce';
+  }
+  if (!props.referrer) {
+    props.referrer = true;
+  }
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: props.name,
+    id: props.name,
+    value: props.nonce
+  }), props.referrer && /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: "_wp_http_referer",
+    value: props.referrer
+  }));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/PostTypeSettingsPanel.jsx":
+/*!*****************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/PostTypeSettingsPanel.jsx ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PostTypeSettingsPanel: () => (/* binding */ PostTypeSettingsPanel)
+/* harmony export */ });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
+/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! &wp */ "&wp");
+/* harmony import */ var _wp__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wp__WEBPACK_IMPORTED_MODULE_4__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+
+
+
+
+
+var _wp$components = wp.components,
+  PanelRow = _wp$components.PanelRow,
+  BaseControl = _wp$components.BaseControl;
+var apiRequestController = null;
+var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
+  var originalExpireTypeList = props.expireTypeList[props.postType];
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.taxonomy),
+    _useState2 = _slicedToArray(_useState, 2),
+    postTypeTaxonomy = _useState2[0],
+    setPostTypeTaxonomy = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    termOptions = _useState4[0],
+    setTermOptions = _useState4[1];
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    termsSelectIsLoading = _useState6[0],
+    setTermsSelectIsLoading = _useState6[1];
+  var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState8 = _slicedToArray(_useState7, 2),
+    selectedTerms = _useState8[0],
+    setSelectedTerms = _useState8[1];
+  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.howToExpire),
+    _useState10 = _slicedToArray(_useState9, 2),
+    settingHowToExpire = _useState10[0],
+    setSettingHowToExpire = _useState10[1];
+  var _useState11 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.active),
+    _useState12 = _slicedToArray(_useState11, 2),
+    isActive = _useState12[0],
+    setIsActive = _useState12[1];
+  var _useState13 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.defaultExpireOffset),
+    _useState14 = _slicedToArray(_useState13, 2),
+    expireOffset = _useState14[0],
+    setExpireOffset = _useState14[1];
+  var _useState15 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.emailNotification),
+    _useState16 = _slicedToArray(_useState15, 2),
+    emailNotification = _useState16[0],
+    setEmailNotification = _useState16[1];
+  var _useState17 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.autoEnabled),
+    _useState18 = _slicedToArray(_useState17, 2),
+    isAutoEnabled = _useState18[0],
+    setIsAutoEnabled = _useState18[1];
+  var _useState19 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    hasValidData = _useState20[0],
+    setHasValidData = _useState20[1];
+  var _useState21 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState22 = _slicedToArray(_useState21, 2),
+    validationError = _useState22[0],
+    setValidationError = _useState22[1];
+  var _useState23 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState24 = _slicedToArray(_useState23, 2),
+    taxonomyLabel = _useState24[0],
+    setTaxonomyLabel = _useState24[1];
+  var _useState25 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(originalExpireTypeList),
+    _useState26 = _slicedToArray(_useState25, 2),
+    howToExpireList = _useState26[0],
+    setHowToExpireList = _useState26[1];
+  var _useState27 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(props.settings.newStatus),
+    _useState28 = _slicedToArray(_useState27, 2),
+    newStatus = _useState28[0],
+    setNewStatus = _useState28[1];
+  var _useState29 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState30 = _slicedToArray(_useState29, 2),
+    hasPendingValidation = _useState30[0],
+    setHasPendingValidation = _useState30[1];
+  var _useState31 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState32 = _slicedToArray(_useState31, 2),
+    offsetPreview = _useState32[0],
+    setOffsetPreview = _useState32[1];
+  var taxonomyRelatedActions = ['category', 'category-add', 'category-remove', 'category-remove-all'];
+  var onChangeTaxonomy = function onChangeTaxonomy(value) {
+    setPostTypeTaxonomy(value);
+  };
+  var onChangeTerms = function onChangeTerms(value) {
+    setSelectedTerms(value);
+  };
+  var onChangeHowToExpire = function onChangeHowToExpire(value) {
+    setSettingHowToExpire(value);
+  };
+  var onChangeActive = function onChangeActive(value) {
+    setIsActive(value);
+  };
+  var onChangeExpireOffset = function onChangeExpireOffset(value) {
+    setExpireOffset(value);
+  };
+  var onChangeEmailNotification = function onChangeEmailNotification(value) {
+    setEmailNotification(value);
+  };
+  var onChangeAutoEnabled = function onChangeAutoEnabled(value) {
+    setIsAutoEnabled(value);
+  };
+  var validateData = function validateData() {
+    if (!isActive) {
+      setValidationError('');
+      return true;
+    }
+    if (expireOffset) {
+      if (apiRequestController) {
+        apiRequestController.abort();
+      }
+      apiRequestController = typeof AbortController === 'undefined' ? undefined : new AbortController();
+      var signal = apiRequestController ? apiRequestController.signal : undefined;
+      setHasPendingValidation(true);
+      (0,_wp__WEBPACK_IMPORTED_MODULE_4__.apiFetch)({
+        path: (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.addQueryArgs)("publishpress-future/v1/settings/validate-expire-offset"),
+        method: 'POST',
+        data: {
+          offset: expireOffset
+        },
+        signal: signal
+      }).then(function (result) {
+        setHasPendingValidation(false);
+        setHasValidData(result.isValid);
+        setValidationError(result.message);
+        if (result.isValid) {
+          setOffsetPreview(result.preview);
+        } else {
+          setOffsetPreview('');
+        }
+      });
+    }
+    setValidationError('');
+    return true;
+  };
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    // Remove items from expireTypeList if related to taxonomies and there is no taxonmoy for the post type
+    if (props.taxonomiesList.length === 0) {
+      var newExpireTypeList = [];
+      newExpireTypeList = howToExpireList.filter(function (item) {
+        return taxonomyRelatedActions.indexOf(item.value) === -1;
+      });
+      setHowToExpireList(newExpireTypeList);
+    }
+  }, []);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    if (!postTypeTaxonomy || !props.taxonomiesList) {
+      return;
+    }
+    setTermsSelectIsLoading(true);
+    (0,_wp__WEBPACK_IMPORTED_MODULE_4__.apiFetch)({
+      path: (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.addQueryArgs)("publishpress-future/v1/terms/".concat(postTypeTaxonomy))
+    }).then(function (result) {
+      var options = [];
+      var settingsTermsOptions = null;
+      var option;
+      result.terms.forEach(function (term) {
+        option = {
+          value: term.id,
+          label: term.name
+        };
+        options.push(option);
+        if (postTypeTaxonomy === props.settings.taxonomy && props.settings.terms.includes(term.id)) {
+          if (settingsTermsOptions === null) {
+            settingsTermsOptions = [];
+          }
+          settingsTermsOptions.push(option.label);
+        }
+      });
+      setTermOptions(options);
+      setSelectedTerms(settingsTermsOptions);
+      setTermsSelectIsLoading(false);
+    });
+    props.taxonomiesList.forEach(function (taxonomy) {
+      if (taxonomy.value === postTypeTaxonomy) {
+        setTaxonomyLabel(taxonomy.label);
+      }
+    });
+  }, [postTypeTaxonomy]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    setHasValidData(validateData());
+  }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel, expireOffset]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    if (!taxonomyLabel) {
+      return;
+    }
+
+    // Update the list of actions replacing the taxonomy name.
+    var newExpireTypeList = [];
+    originalExpireTypeList.forEach(function (expireType) {
+      var label = expireType.label;
+      if (taxonomyRelatedActions.indexOf(expireType.value) !== -1) {
+        label = label.replace('%s', taxonomyLabel.toLowerCase());
+      }
+      newExpireTypeList.push({
+        value: expireType.value,
+        label: label
+      });
+    });
+    setHowToExpireList(newExpireTypeList);
+  }, [taxonomyLabel]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    if (hasValidData && props.onDataIsValid) {
+      props.onDataIsValid(props.postType);
+    }
+    if (!hasValidData && props.onDataIsInvalid) {
+      props.onDataIsInvalid(props.postType);
+    }
+  }, [hasValidData]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    if (hasPendingValidation && props.onValidationStarted) {
+      props.onValidationStarted(props.postType);
+    }
+    if (!hasPendingValidation && props.onValidationFinished) {
+      props.onValidationFinished(props.postType);
+    }
+  }, [hasPendingValidation]);
+  var termOptionsLabels = termOptions.map(function (term) {
+    return term.label;
+  });
+  var settingsRows = [/*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+    label: props.text.fieldActive,
+    key: 'expirationdate_activemeta-' + props.postType
+  }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.CheckboxControl, {
+    name: 'expirationdate_activemeta-' + props.postType,
+    checked: isActive || false,
+    label: props.text.fieldActiveLabel,
+    onChange: onChangeActive
+  }))];
+  if (isActive) {
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+      label: props.text.fieldAutoEnable,
+      key: 'expirationdate_autoenable-' + props.postType
+    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.CheckboxControl, {
+      name: 'expirationdate_autoenable-' + props.postType,
+      checked: isAutoEnabled || false,
+      label: props.text.fieldAutoEnableLabel,
+      onChange: onChangeAutoEnabled
+    })));
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+      label: props.text.fieldTaxonomy,
+      key: 'expirationdate_taxonomy-' + props.postType
+    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+      name: 'expirationdate_taxonomy-' + props.postType,
+      options: props.taxonomiesList,
+      selected: postTypeTaxonomy,
+      noItemFoundMessage: props.text.noItemsfound,
+      description: props.text.fieldTaxonomyDescription,
+      data: props.postType,
+      onChange: onChangeTaxonomy
+    })));
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+      label: props.text.fieldHowToExpire,
+      key: 'expirationdate_expiretype-' + props.postType
+    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+      name: 'expirationdate_expiretype-' + props.postType,
+      className: 'pe-howtoexpire',
+      options: howToExpireList,
+      description: props.text.fieldHowToExpireDescription,
+      selected: settingHowToExpire,
+      onChange: onChangeHowToExpire
+    }), settingHowToExpire === 'change-status' && /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+      name: 'expirationdate_newstatus-' + props.postType,
+      options: props.statusesList,
+      selected: newStatus,
+      onChange: setNewStatus
+    }), props.taxonomiesList.length > 0 && ['category', 'category-add', 'category-remove'].indexOf(settingHowToExpire) > -1 && /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TokensControl, {
+      label: props.text.fieldTerm,
+      name: 'expirationdate_terms-' + props.postType,
+      options: termOptionsLabels,
+      value: selectedTerms,
+      isLoading: termsSelectIsLoading,
+      onChange: onChangeTerms,
+      description: props.text.fieldTermDescription,
+      maxSuggestions: 1000,
+      expandOnFocus: true,
+      autoSelectFirstMatch: true
+    })));
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+      label: props.text.fieldDefaultDateTimeOffset,
+      key: 'expired-custom-date-' + props.postType
+    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+      name: 'expired-custom-date-' + props.postType,
+      value: expireOffset,
+      loading: hasPendingValidation,
+      placeholder: props.settings.globalDefaultExpireOffset,
+      description: props.text.fieldDefaultDateTimeOffsetDescription,
+      unescapedDescription: true,
+      onChange: onChangeExpireOffset
+    }), offsetPreview && /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, /*#__PURE__*/React.createElement("h4", null, props.text.datePreview), /*#__PURE__*/React.createElement("code", null, offsetPreview))));
+    settingsRows.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+      label: props.text.fieldWhoToNotify,
+      key: 'expirationdate_emailnotification-' + props.postType
+    }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+      name: 'expirationdate_emailnotification-' + props.postType,
+      className: "large-text",
+      value: emailNotification,
+      description: props.text.fieldWhoToNotifyDescription,
+      onChange: onChangeEmailNotification
+    })));
+  }
+  settingsRows = (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__.applyFilters)('expirationdate_settings_posttype', settingsRows, props, isActive, _wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState);
+  return /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingsFieldset, {
+    legend: props.legend
+  }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingsTable, {
+    bodyChildren: settingsRows
+  }), !hasValidData && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
+    className: "notice notice-error"
+  }, /*#__PURE__*/React.createElement("div", null, validationError))));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/PostTypesSettingsPanels.jsx":
+/*!*******************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/PostTypesSettingsPanels.jsx ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PostTypesSettingsPanels: () => (/* binding */ PostTypesSettingsPanels)
+/* harmony export */ });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+
+var PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
+  var panels = [];
+  for (var _i = 0, _Object$entries = Object.entries(props.settings); _i < _Object$entries.length; _i++) {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+      postType = _Object$entries$_i[0],
+      postTypeSettings = _Object$entries$_i[1];
+    panels.push( /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.PostTypeSettingsPanel, {
+      legend: postTypeSettings.label,
+      text: props.text,
+      postType: postType,
+      settings: postTypeSettings,
+      expireTypeList: props.expireTypeList,
+      taxonomiesList: props.taxonomiesList[postType],
+      statusesList: props.statusesList[postType],
+      key: "".concat(postType, "-panel"),
+      onDataIsValid: props.onDataIsValid,
+      onDataIsInvalid: props.onDataIsInvalid,
+      onValidationStarted: props.onValidationStarted,
+      onValidationFinished: props.onValidationFinished
+    }));
+  }
+  return panels;
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SelectControl.jsx":
+/*!*********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SelectControl.jsx ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SelectControl: () => (/* binding */ SelectControl)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+
+var SelectControl = function SelectControl(props) {
+  var onChange = function onChange(value) {
+    props.onChange(value);
+  };
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, props.options.length === 0 && /*#__PURE__*/React.createElement("div", null, props.noItemFoundMessage), props.options.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+    label: props.label,
+    name: props.name,
+    id: props.name,
+    className: props.className,
+    value: props.selected,
+    onChange: onChange,
+    "data-data": props.data,
+    options: props.options
+  }), props.children, /*#__PURE__*/React.createElement("p", {
+    className: "description"
+  }, props.description));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingRow.jsx":
+/*!******************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingRow.jsx ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SettingRow: () => (/* binding */ SettingRow)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingRow = function SettingRow(props) {
+  return /*#__PURE__*/React.createElement("tr", {
+    valign: "top"
+  }, /*#__PURE__*/React.createElement("th", {
+    scope: "row"
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: ""
+  }, props.label)), /*#__PURE__*/React.createElement("td", null, props.children));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsFieldset.jsx":
+/*!************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsFieldset.jsx ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SettingsFieldset: () => (/* binding */ SettingsFieldset)
+/* harmony export */ });
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsFieldset = function SettingsFieldset(props) {
+  return /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, props.legend), props.children);
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsForm.jsx":
+/*!********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsForm.jsx ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SettingsForm: () => (/* binding */ SettingsForm)
+/* harmony export */ });
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsForm = function SettingsForm(props) {
+  return /*#__PURE__*/React.createElement("form", {
+    method: "post"
+  }, props.children);
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsSection.jsx":
+/*!***********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsSection.jsx ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SettingsSection: () => (/* binding */ SettingsSection)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsSection = function SettingsSection(props) {
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("h2", null, props.title), /*#__PURE__*/React.createElement("p", null, props.description), props.children);
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsTable.jsx":
+/*!*********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsTable.jsx ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SettingsTable: () => (/* binding */ SettingsTable)
+/* harmony export */ });
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SettingsTable = function SettingsTable(props) {
+  return /*#__PURE__*/React.createElement("table", {
+    className: "form-table"
+  }, /*#__PURE__*/React.createElement("tbody", null, props.bodyChildren));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/Spinner.jsx":
+/*!***************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/Spinner.jsx ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Spinner: () => (/* binding */ Spinner)
+/* harmony export */ });
+/*
+ * Copyright (c) 2024. PublishPress, All rights reserved.
+ */
+var Spinner = function Spinner(props) {
+  return /*#__PURE__*/React.createElement("span", {
+    className: "publishpress-future-spinner"
+  }, /*#__PURE__*/React.createElement("div", null), /*#__PURE__*/React.createElement("div", null), /*#__PURE__*/React.createElement("div", null), /*#__PURE__*/React.createElement("div", null));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SubmitButton.jsx":
+/*!********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SubmitButton.jsx ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SubmitButton: () => (/* binding */ SubmitButton)
+/* harmony export */ });
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var SubmitButton = function SubmitButton(props) {
+  return /*#__PURE__*/React.createElement("input", {
+    type: "submit",
+    name: props.name,
+    value: props.text,
+    disabled: props.disabled,
+    className: "button-primary"
+  });
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TextControl.jsx":
+/*!*******************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TextControl.jsx ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TextControl: () => (/* binding */ TextControl)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+
+
+var TextControl = function TextControl(props) {
+  var description;
+  if (props.unescapedDescription) {
+    // If using this option, the HTML has to be escaped before injected into the JS interface.
+    description = /*#__PURE__*/React.createElement("p", {
+      className: "description",
+      dangerouslySetInnerHTML: {
+        __html: props.description
+      }
+    });
+  } else {
+    description = /*#__PURE__*/React.createElement("p", {
+      className: "description"
+    }, props.description);
+  }
+  var onChange = function onChange(value) {
+    if (props.onChange) {
+      props.onChange(value);
+    }
+  };
+  var className = props.className ? props.className : '';
+  if (props.loading) {
+    className += ' publishpress-future-loading publishpress-future-loading-input';
+  }
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: className
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    type: "text",
+    label: props.label,
+    name: props.name,
+    id: props.name,
+    className: props.className,
+    value: props.value,
+    placeholder: props.placeholder,
+    onChange: onChange
+  }), props.loading && /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_2__.Spinner, null), description));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ToggleArrowButton.jsx":
+/*!*************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ToggleArrowButton.jsx ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ToggleArrowButton: () => (/* binding */ ToggleArrowButton)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+
+var ToggleArrowButton = function ToggleArrowButton(props) {
+  var onClick = function onClick() {
+    if (props.onClick) {
+      props.onClick();
+    }
+  };
+  var iconExpanded = props.iconExpanded ? props.iconExpanded : 'arrow-up-alt2';
+  var iconCollapsed = props.iconCollapsed ? props.iconCollapsed : 'arrow-down-alt2';
+  var icon = props.isExpanded ? iconExpanded : iconCollapsed;
+  var title = props.isExpanded ? props.titleExpanded : props.titleCollapsed;
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
+    isSmall: true,
+    title: title,
+    icon: icon,
+    onClick: onClick,
+    className: props.className
+  });
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ToggleCalendarDatePicker.jsx":
+/*!********************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ToggleCalendarDatePicker.jsx ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ToggleCalendarDatePicker: () => (/* binding */ ToggleCalendarDatePicker)
+/* harmony export */ });
+/* harmony import */ var _ToggleArrowButton__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ToggleArrowButton */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ToggleArrowButton.jsx");
+/* harmony import */ var _DateTimePicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DateTimePicker */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/DateTimePicker.jsx");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+var ToggleCalendarDatePicker = function ToggleCalendarDatePicker(_ref) {
+  var isExpanded = _ref.isExpanded,
+    strings = _ref.strings,
+    onToggleCalendar = _ref.onToggleCalendar,
+    currentDate = _ref.currentDate,
+    onChangeDate = _ref.onChangeDate,
+    is12Hour = _ref.is12Hour,
+    startOfWeek = _ref.startOfWeek;
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    // Move the element of the toggle button to between the time and date elements.
+    var toggleButtonElement = document.querySelector('.future-action-calendar-toggle');
+    if (!toggleButtonElement) {
+      return;
+    }
+    var dateTimeElement = toggleButtonElement.nextElementSibling;
+    if (!dateTimeElement) {
+      return;
+    }
+    var timeElement = dateTimeElement.querySelector('.components-datetime__time');
+    if (!timeElement) {
+      return;
+    }
+    var dateElement = timeElement.nextSibling;
+    if (!dateElement) {
+      return;
+    }
+    dateTimeElement.insertBefore(toggleButtonElement, dateElement);
+  });
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/React.createElement(_ToggleArrowButton__WEBPACK_IMPORTED_MODULE_0__.ToggleArrowButton, {
+    className: "future-action-calendar-toggle",
+    isExpanded: isExpanded,
+    iconExpanded: "arrow-up-alt2",
+    iconCollapsed: "calendar",
+    titleExpanded: strings.hideCalendar,
+    titleCollapsed: strings.showCalendar,
+    onClick: onToggleCalendar
+  }), /*#__PURE__*/React.createElement(_DateTimePicker__WEBPACK_IMPORTED_MODULE_1__.DateTimePicker, {
+    currentDate: currentDate,
+    onChange: onChangeDate,
+    __nextRemoveHelpButton: true,
+    is12Hour: is12Hour,
+    startOfWeek: startOfWeek
+  }));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TokensControl.jsx":
+/*!*********************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TokensControl.jsx ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TokensControl: () => (/* binding */ TokensControl)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+
+var TokensControl = function TokensControl(props) {
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    stringValue = _useState2[0],
+    setStringValue = _useState2[1];
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (props.value) {
+      setStringValue(props.value.join(','));
+    }
+  }, [props.value]);
+  var description;
+  if (props.description) {
+    if (props.unescapedDescription) {
+      // If using this option, the HTML has to be escaped before injected into the JS interface.
+      description = /*#__PURE__*/React.createElement("p", {
+        className: "description",
+        dangerouslySetInnerHTML: {
+          __html: props.description
+        }
+      });
+    } else {
+      description = /*#__PURE__*/React.createElement("p", {
+        className: "description"
+      }, props.description);
+    }
+  }
+  var onChange = function onChange(value) {
+    if (props.onChange) {
+      props.onChange(value);
+    }
+    if (_typeof(value) === 'object') {
+      setStringValue(value.join(','));
+    } else {
+      setStringValue('');
+    }
+  };
+  var value = props.value ? props.value : [];
+  return /*#__PURE__*/React.createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormTokenField, {
+    label: props.label,
+    value: value,
+    suggestions: props.options,
+    onChange: onChange,
+    maxSuggestions: props.maxSuggestions,
+    className: "publishpres-future-token-field",
+    __experimentalExpandOnFocus: props.expandOnFocus,
+    __experimentalAutoSelectFirstMatch: props.autoSelectFirstMatch
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "hidden",
+    name: props.name,
+    value: stringValue
+  }), description);
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TrueFalseControl.jsx":
+/*!************************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TrueFalseControl.jsx ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TrueFalseControl: () => (/* binding */ TrueFalseControl)
+/* harmony export */ });
+/*
+ * Copyright (c) 2023. PublishPress, All rights reserved.
+ */
+
+var TrueFalseControl = function TrueFalseControl(props) {
+  var Fragment = wp.element.Fragment;
+  var onChange = function onChange(e) {
+    if (props.onChange) {
+      props.onChange(e.target.value === props.trueValue && jQuery(e.target).is(':checked'));
+      // Check only the true radio... using the field name? or directly the ID
+    }
+  };
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("input", {
+    type: "radio",
+    name: props.name,
+    id: props.name + '-true',
+    value: props.trueValue,
+    defaultChecked: props.selected,
+    onChange: onChange
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: props.name + '-true'
+  }, props.trueLabel), "\xA0\xA0", /*#__PURE__*/React.createElement("input", {
+    type: "radio",
+    name: props.name,
+    defaultChecked: !props.selected,
+    id: props.name + '-false',
+    value: props.falseValue,
+    onChange: onChange
+  }), /*#__PURE__*/React.createElement("label", {
+    htmlFor: props.name + '-false'
+  }, props.falseLabel), /*#__PURE__*/React.createElement("p", {
+    className: "description"
+  }, props.description));
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx":
+/*!*************************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ButtonsPanel: () => (/* reexport safe */ _ButtonsPanel__WEBPACK_IMPORTED_MODULE_0__.ButtonsPanel),
+/* harmony export */   CheckboxControl: () => (/* reexport safe */ _CheckboxControl__WEBPACK_IMPORTED_MODULE_14__.CheckboxControl),
+/* harmony export */   FutureActionPanel: () => (/* reexport safe */ _FutureActionPanel__WEBPACK_IMPORTED_MODULE_1__.FutureActionPanel),
+/* harmony export */   FutureActionPanelBlockEditor: () => (/* reexport safe */ _FutureActionPanelBlockEditor__WEBPACK_IMPORTED_MODULE_2__.FutureActionPanelBlockEditor),
+/* harmony export */   FutureActionPanelBulkEdit: () => (/* reexport safe */ _FutureActionPanelBulkEdit__WEBPACK_IMPORTED_MODULE_5__.FutureActionPanelBulkEdit),
+/* harmony export */   FutureActionPanelClassicEditor: () => (/* reexport safe */ _FutureActionPanelClassicEditor__WEBPACK_IMPORTED_MODULE_3__.FutureActionPanelClassicEditor),
+/* harmony export */   FutureActionPanelQuickEdit: () => (/* reexport safe */ _FutureActionPanelQuickEdit__WEBPACK_IMPORTED_MODULE_4__.FutureActionPanelQuickEdit),
+/* harmony export */   NonceControl: () => (/* reexport safe */ _NonceControl__WEBPACK_IMPORTED_MODULE_18__.NonceControl),
+/* harmony export */   PostTypeSettingsPanel: () => (/* reexport safe */ _PostTypeSettingsPanel__WEBPACK_IMPORTED_MODULE_6__.PostTypeSettingsPanel),
+/* harmony export */   PostTypesSettingsPanels: () => (/* reexport safe */ _PostTypesSettingsPanels__WEBPACK_IMPORTED_MODULE_7__.PostTypesSettingsPanels),
+/* harmony export */   SelectControl: () => (/* reexport safe */ _SelectControl__WEBPACK_IMPORTED_MODULE_15__.SelectControl),
+/* harmony export */   SettingRow: () => (/* reexport safe */ _SettingRow__WEBPACK_IMPORTED_MODULE_8__.SettingRow),
+/* harmony export */   SettingsFieldset: () => (/* reexport safe */ _SettingsFieldset__WEBPACK_IMPORTED_MODULE_9__.SettingsFieldset),
+/* harmony export */   SettingsForm: () => (/* reexport safe */ _SettingsForm__WEBPACK_IMPORTED_MODULE_10__.SettingsForm),
+/* harmony export */   SettingsSection: () => (/* reexport safe */ _SettingsSection__WEBPACK_IMPORTED_MODULE_11__.SettingsSection),
+/* harmony export */   SettingsTable: () => (/* reexport safe */ _SettingsTable__WEBPACK_IMPORTED_MODULE_12__.SettingsTable),
+/* harmony export */   Spinner: () => (/* reexport safe */ _Spinner__WEBPACK_IMPORTED_MODULE_20__.Spinner),
+/* harmony export */   SubmitButton: () => (/* reexport safe */ _SubmitButton__WEBPACK_IMPORTED_MODULE_13__.SubmitButton),
+/* harmony export */   TextControl: () => (/* reexport safe */ _TextControl__WEBPACK_IMPORTED_MODULE_16__.TextControl),
+/* harmony export */   TokensControl: () => (/* reexport safe */ _TokensControl__WEBPACK_IMPORTED_MODULE_17__.TokensControl),
+/* harmony export */   TrueFalseControl: () => (/* reexport safe */ _TrueFalseControl__WEBPACK_IMPORTED_MODULE_19__.TrueFalseControl)
+/* harmony export */ });
+/* harmony import */ var _ButtonsPanel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ButtonsPanel */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/ButtonsPanel.jsx");
+/* harmony import */ var _FutureActionPanel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FutureActionPanel */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanel.jsx");
+/* harmony import */ var _FutureActionPanelBlockEditor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FutureActionPanelBlockEditor */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelBlockEditor.jsx");
+/* harmony import */ var _FutureActionPanelClassicEditor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FutureActionPanelClassicEditor */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelClassicEditor.jsx");
+/* harmony import */ var _FutureActionPanelQuickEdit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FutureActionPanelQuickEdit */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelQuickEdit.jsx");
+/* harmony import */ var _FutureActionPanelBulkEdit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FutureActionPanelBulkEdit */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/FutureActionPanelBulkEdit.jsx");
+/* harmony import */ var _PostTypeSettingsPanel__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PostTypeSettingsPanel */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/PostTypeSettingsPanel.jsx");
+/* harmony import */ var _PostTypesSettingsPanels__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PostTypesSettingsPanels */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/PostTypesSettingsPanels.jsx");
+/* harmony import */ var _SettingRow__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SettingRow */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingRow.jsx");
+/* harmony import */ var _SettingsFieldset__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./SettingsFieldset */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsFieldset.jsx");
+/* harmony import */ var _SettingsForm__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./SettingsForm */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsForm.jsx");
+/* harmony import */ var _SettingsSection__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SettingsSection */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsSection.jsx");
+/* harmony import */ var _SettingsTable__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./SettingsTable */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SettingsTable.jsx");
+/* harmony import */ var _SubmitButton__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./SubmitButton */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SubmitButton.jsx");
+/* harmony import */ var _CheckboxControl__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./CheckboxControl */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/CheckboxControl.jsx");
+/* harmony import */ var _SelectControl__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./SelectControl */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/SelectControl.jsx");
+/* harmony import */ var _TextControl__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./TextControl */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TextControl.jsx");
+/* harmony import */ var _TokensControl__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./TokensControl */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TokensControl.jsx");
+/* harmony import */ var _NonceControl__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./NonceControl */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/NonceControl.jsx");
+/* harmony import */ var _TrueFalseControl__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./TrueFalseControl */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/TrueFalseControl.jsx");
+/* harmony import */ var _Spinner__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Spinner */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/Spinner.jsx");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/time.jsx":
+/*!*************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/time.jsx ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   formatTimestampToUnixTime: () => (/* binding */ formatTimestampToUnixTime),
+/* harmony export */   formatUnixTimeToTimestamp: () => (/* binding */ formatUnixTimeToTimestamp),
+/* harmony export */   getCurrentTimeAsTimestamp: () => (/* binding */ getCurrentTimeAsTimestamp),
+/* harmony export */   getCurrentTimeInSeconds: () => (/* binding */ getCurrentTimeInSeconds),
+/* harmony export */   normalizeUnixTimeToMilliseconds: () => (/* binding */ normalizeUnixTimeToMilliseconds),
+/* harmony export */   normalizeUnixTimeToSeconds: () => (/* binding */ normalizeUnixTimeToSeconds),
+/* harmony export */   timeIsInSeconds: () => (/* binding */ timeIsInSeconds)
+/* harmony export */ });
+var getCurrentTimeInSeconds = function getCurrentTimeInSeconds() {
+  return normalizeUnixTimeToSeconds(new Date().getTime());
+};
+var getCurrentTimeAsTimestamp = function getCurrentTimeAsTimestamp() {
+  return formatUnixTimeToTimestamp(getCurrentTimeInSeconds());
+};
+var formatUnixTimeToTimestamp = function formatUnixTimeToTimestamp(unixTimestamp) {
+  var date = new Date(normalizeUnixTimeToSeconds(unixTimestamp));
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+  var day = ("0" + date.getDate()).slice(-2);
+  var hours = ("0" + date.getHours()).slice(-2);
+  var minutes = ("0" + date.getMinutes()).slice(-2);
+  var seconds = ("0" + date.getSeconds()).slice(-2);
+  return "".concat(year, "-").concat(month, "-").concat(day, " ").concat(hours, ":").concat(minutes, ":").concat(seconds);
+};
+var formatTimestampToUnixTime = function formatTimestampToUnixTime(time) {
+  var date = new Date(time);
+  return normalizeUnixTimeToSeconds(date.getTime());
+};
+var timeIsInSeconds = function timeIsInSeconds(time) {
+  return parseInt(time).toString().length <= 10;
+};
+var normalizeUnixTimeToSeconds = function normalizeUnixTimeToSeconds(time) {
+  time = parseInt(time);
+  return timeIsInSeconds() ? time : time / 1000;
+};
+var normalizeUnixTimeToMilliseconds = function normalizeUnixTimeToMilliseconds(time) {
+  time = parseInt(time);
+  return timeIsInSeconds() ? time * 1000 : time;
+};
+
+/***/ }),
+
+/***/ "./lib/vendor/publishpress/publishpress-future/assets/jsx/utils.jsx":
+/*!**************************************************************************!*\
+  !*** ./lib/vendor/publishpress/publishpress-future/assets/jsx/utils.jsx ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   compact: () => (/* binding */ compact),
+/* harmony export */   debugLogFactory: () => (/* binding */ debugLogFactory),
+/* harmony export */   getActionSettingsFromColumnData: () => (/* binding */ getActionSettingsFromColumnData),
+/* harmony export */   getElementByName: () => (/* binding */ getElementByName),
+/* harmony export */   getFieldByName: () => (/* binding */ getFieldByName),
+/* harmony export */   getFieldValueByName: () => (/* binding */ getFieldValueByName),
+/* harmony export */   getFieldValueByNameAsArrayOfInt: () => (/* binding */ getFieldValueByNameAsArrayOfInt),
+/* harmony export */   getFieldValueByNameAsBool: () => (/* binding */ getFieldValueByNameAsBool),
+/* harmony export */   isGutenbergEnabled: () => (/* binding */ isGutenbergEnabled),
+/* harmony export */   isNumber: () => (/* binding */ isNumber)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var compact = function compact(array) {
+  if (!array) {
+    return [];
+  }
+  if (!Array.isArray(array) && _typeof(array) === 'object') {
+    array = Object.values(array);
+  }
+  return array.filter(function (item) {
+    return item !== null && item !== undefined && item !== '';
+  });
+};
+var debugLogFactory = function debugLogFactory(config) {
+  return function (description) {
+    if (console && config.isDebugEnabled) {
+      var _console;
+      for (var _len = arguments.length, message = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        message[_key - 1] = arguments[_key];
+      }
+      (_console = console).debug.apply(_console, ['[Future]', description].concat(message));
+    }
+  };
+};
+var isGutenbergEnabled = function isGutenbergEnabled() {
+  return document.body.classList.contains('block-editor-page');
+};
+var getElementByName = function getElementByName(name) {
+  return document.getElementsByName(name)[0];
+};
+var getFieldByName = function getFieldByName(name, postId) {
+  return document.querySelector("#the-list tr#post-".concat(postId, " .column-expirationdate input#future_action_").concat(name, "-").concat(postId));
+};
+var getFieldValueByName = function getFieldValueByName(name, postId) {
+  var field = getFieldByName(name, postId);
+  if (!field) {
+    return null;
+  }
+  return field.value;
+};
+var getFieldValueByNameAsArrayOfInt = function getFieldValueByNameAsArrayOfInt(name, postId) {
+  var field = getFieldByName(name, postId);
+  if (!field || !field.value) {
+    return [];
+  }
+  if (typeof field.value === 'number') {
+    field.value = field.value.toString();
+  }
+  return field.value.split(',').map(function (term) {
+    return parseInt(term);
+  });
+};
+var getFieldValueByNameAsBool = function getFieldValueByNameAsBool(name, postId) {
+  var field = getFieldByName(name, postId);
+  if (!field) {
+    return false;
+  }
+  return field.value === '1' || field.value === 'true';
+};
+var getActionSettingsFromColumnData = function getActionSettingsFromColumnData(postId) {
+  var columnData = document.querySelector("#post-expire-column-".concat(postId));
+  if (!columnData) {
+    return {};
+  }
+  return {
+    enabled: columnData.dataset.actionEnabled === '1',
+    action: columnData.dataset.actionType,
+    date: columnData.dataset.actionDate,
+    dateUnix: columnData.dataset.actionDateUnix,
+    taxonomy: columnData.dataset.actionTaxonomy,
+    terms: columnData.dataset.actionTerms,
+    newStatus: columnData.dataset.actionNewStatus
+  };
+};
+
+/**
+ * This function is used to determine if a value is a number, including strings.
+ *
+ * @param {*} value
+ * @returns
+ */
+var isNumber = function isNumber(value) {
+  return !isNaN(value);
+};
+
+/***/ }),
+
 /***/ "./src/assets/jsx/settings/custom-statuses.jsx":
 /*!*****************************************************!*\
   !*** ./src/assets/jsx/settings/custom-statuses.jsx ***!
@@ -12,7 +2227,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addCustomStatusSettings: () => (/* binding */ addCustomStatusSettings)
 /* harmony export */ });
-Object(function webpackMissingModule() { var e = new Error("Cannot find module '&publishpress-free/components'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _publishpress_free_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! &publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
 /* harmony import */ var _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! &config.pro-settings */ "&config.pro-settings");
 /* harmony import */ var _config_pro_settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_config_pro_settings__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
@@ -86,7 +2301,7 @@ var addCustomStatusSettings = function addCustomStatusSettings(settingsRows, pro
         title: postStatus.value
       });
     });
-    settingsRows.push( /*#__PURE__*/React.createElement(Object(function webpackMissingModule() { var e = new Error("Cannot find module '&publishpress-free/components'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+    settingsRows.push( /*#__PURE__*/React.createElement(_publishpress_free_components__WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__.text.enableCustomStatuses,
       key: 'custom-statuses'
     }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__.text.enableCustomStatusesDesc)), /*#__PURE__*/React.createElement("div", {
@@ -114,7 +2329,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addMetadataSettings: () => (/* binding */ addMetadataSettings)
 /* harmony export */ });
-Object(function webpackMissingModule() { var e = new Error("Cannot find module '&publishpress-free/components'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _publishpress_free_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! &publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
 /* harmony import */ var _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! &config.pro-settings */ "&config.pro-settings");
 /* harmony import */ var _config_pro_settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_config_pro_settings__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
@@ -228,7 +2443,7 @@ var addMetadataSettings = function addMetadataSettings(settingsRows, props, sett
     setHideMetabox(checked);
   };
   if (settingActive) {
-    settingsRows.push( /*#__PURE__*/React.createElement(Object(function webpackMissingModule() { var e = new Error("Cannot find module '&publishpress-free/components'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()), {
+    settingsRows.push( /*#__PURE__*/React.createElement(_publishpress_free_components__WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__.text.enableMetadataDrivenScheduling,
       key: 'metadata_mapping'
     }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
@@ -298,6 +2513,16 @@ module.exports = publishpressFutureProSettings;
 
 /***/ }),
 
+/***/ "&wp":
+/*!*********************!*\
+  !*** external "wp" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = wp;
+
+/***/ }),
+
 /***/ "@wordpress/components":
 /*!********************************!*\
   !*** external "wp.components" ***!
@@ -305,6 +2530,16 @@ module.exports = publishpressFutureProSettings;
 /***/ ((module) => {
 
 module.exports = wp.components;
+
+/***/ }),
+
+/***/ "@wordpress/data":
+/*!**************************!*\
+  !*** external "wp.data" ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = wp.data;
 
 /***/ }),
 
@@ -325,6 +2560,26 @@ module.exports = wp.element;
 /***/ ((module) => {
 
 module.exports = wp.hooks;
+
+/***/ }),
+
+/***/ "@wordpress/plugins":
+/*!*****************************!*\
+  !*** external "wp.plugins" ***!
+  \*****************************/
+/***/ ((module) => {
+
+module.exports = wp.plugins;
+
+/***/ }),
+
+/***/ "@wordpress/url":
+/*!*************************!*\
+  !*** external "wp.url" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = wp.url;
 
 /***/ })
 
