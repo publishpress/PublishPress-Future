@@ -6,45 +6,50 @@ export function PostData() {
         objectType: "post",
         propertiesSchema: [
             {
-                name: "post_title",
+                name: "title",
                 type: "string",
                 label: "Title",
             },
             {
-                name: "post_content",
+                name: "content",
                 type: "string",
                 label: "Content",
             },
             {
-                name: "post_excerpt",
+                name: "excerpt",
                 type: "string",
                 label: "Excerpt",
             },
             {
-                name: "post_status",
+                name: "status",
                 type: "string",
                 label: "Post Status",
             },
             {
-                name: "post_type",
+                name: "type",
                 type: "string",
                 label: "Post Type",
             },
             {
-                name: "ID",
+                name: "id",
                 type: "integer",
                 label: "ID",
             },
             {
-                name: "post_date",
+                name: "date",
                 type: "datetime",
                 label: "Publish Date",
             },
             {
-                name: "post_modified",
+                name: "modified",
                 type: "datetime",
                 label: "Modifcation Date",
             },
+            {
+                name: "permalink",
+                type: "string",
+                label: "Permalink",
+            }
         ],
     };
 }

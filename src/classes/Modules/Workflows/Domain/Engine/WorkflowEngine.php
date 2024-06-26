@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine;
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\NodeResolver;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
@@ -125,11 +126,14 @@ class WorkflowEngine implements WorkflowEngineInterface
                     }
 
                     // Update the trigger global variables
-                    $globalVariables['trigger'] = [
-                        'id' => $triggerId,
-                        'name' => $triggerName,
-                        'label' => $nodeType->getLabel(),
-                    ];
+                    $globalVariables['trigger'] = new NodeResolver(
+                        [
+                            'id' => $triggerId,
+                            'name' => $triggerName,
+                            'label' => $nodeType->getLabel(),
+                            'activation_timestamp' => date('Y-m-d H:i:s'),
+                        ]
+                    );
 
                     $contextVariables = [
                         'global' => $globalVariables,

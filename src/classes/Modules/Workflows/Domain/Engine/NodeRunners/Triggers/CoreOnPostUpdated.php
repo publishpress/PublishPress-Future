@@ -4,6 +4,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Tri
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\Traits\InfiniteLoopPreventer;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\IntegerResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\PostResolver;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated as NodeTypeCoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\InputValidatorsInterface;
@@ -88,9 +90,9 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
         $contextVariables = $this->contextVariables;
 
         $contextVariables[$nodeSlug] = [
-            'postId' => $postId,
-            'postBefore' => $postBefore,
-            'postAfter' => $postAfter,
+            'postId' => new IntegerResolver($postId),
+            'postBefore' => new PostResolver($postBefore),
+            'postAfter' => new PostResolver($postAfter),
         ];
 
         $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);

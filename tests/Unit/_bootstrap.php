@@ -1,9 +1,35 @@
 <?php
 
-// Load the MotorLibrary classes
+class Autoloader
+{
+    public function autoload($class)
+    {
+        $prefix = 'PublishPress\\FuturePro\\';
+        $base_dir = __DIR__ . '/../../src/classes/';
 
-use PublishPress\WorkflowMotorLibrary\Autoloader;
+        $len = strlen($prefix);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            return;
+        }
 
-require_once __DIR__ . '/../../src/includes/WorkflowMotorLibrary/src/Autoloader.php';
+        $relative_class = substr($class, $len);
+        $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
 
-Autoloader::register();
+        if (file_exists($file)) {
+            require $file;
+        }
+    }
+
+}
+
+spl_autoload_register([new Autoloader(), 'autoload']);
+
+function __(string $text, string $textDomain )
+{
+    return $text;
+}
+
+function esc_html(string $text)
+{
+    return $text;
+}

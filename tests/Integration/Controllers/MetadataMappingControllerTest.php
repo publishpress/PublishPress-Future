@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Controllers;
 
 use lucatume\WPBrowser\TestCase\WPTestCase;
 use PublishPress\Future\Core\DI\Container;
