@@ -73,7 +73,8 @@ class ShortcodeController implements InitializableInterface
             $debugIsEnabled = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_DEBUG_ENABLED, false);
 
             if ($debugIsEnabled) {
-                trigger_error(__('The shortcode [futureaction] must be used inside the loop or with the post_id attribute.', 'post-expirator'), E_USER_WARNING);
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
+                trigger_error(esc_html__('The shortcode [futureaction] must be used inside the loop or with the post_id attribute.', 'post-expirator'), E_USER_WARNING);
             }
 
             return '';
