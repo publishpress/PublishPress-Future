@@ -5,13 +5,13 @@ namespace Tests\Modules\Workflows\Domain\Engine;
 
 use lucatume\WPBrowser\TestCase\WPTestCase;
 use Codeception\Stub;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\BooleanResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\IntegerResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\NodeResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\PostResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\SiteResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\UserResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\WorkflowResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use WP_User;
 
 class WorkflowVariablesHandlerCest extends WPTestCase

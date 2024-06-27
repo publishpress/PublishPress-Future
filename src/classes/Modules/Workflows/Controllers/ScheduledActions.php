@@ -101,7 +101,14 @@ class ScheduledActions implements InitializableInterface
                 }
 
                 $argsText = '';
-                $workflowId = $args['contextVariables']['global']['workflow'] ?? 0;
+
+                // Before v3.4.1 the plugin version was not set in the arguments
+                if (isset($args['pluginVersion'])) {
+                    $workflowId = $args['contextVariables']['global']['workflow']['value'] ?? 0;
+                } else {
+                    $workflowId = $args['contextVariables']['global']['workflow'] ?? 0;
+                }
+
                 $workflowModel = new WorkflowModel();
                 $workflowModel->load($workflowId);
 

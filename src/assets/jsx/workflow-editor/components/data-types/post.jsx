@@ -6,27 +6,27 @@ export function PostData() {
         objectType: "post",
         propertiesSchema: [
             {
-                name: "title",
+                name: "post_title",
                 type: "string",
                 label: "Title",
             },
             {
-                name: "content",
+                name: "post_content",
                 type: "string",
                 label: "Content",
             },
             {
-                name: "excerpt",
+                name: "post_excerpt",
                 type: "string",
                 label: "Excerpt",
             },
             {
-                name: "status",
+                name: "post_status",
                 type: "string",
                 label: "Post Status",
             },
             {
-                name: "type",
+                name: "post_type",
                 type: "string",
                 label: "Post Type",
             },
@@ -36,12 +36,12 @@ export function PostData() {
                 label: "ID",
             },
             {
-                name: "date",
+                name: "post_date",
                 type: "datetime",
                 label: "Publish Date",
             },
             {
-                name: "modified",
+                name: "post_modified",
                 type: "datetime",
                 label: "Modifcation Date",
             },

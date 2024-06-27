@@ -3,11 +3,11 @@
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine;
 
 use Exception;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\NodeResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\SiteResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\UserResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\WorkflowResolver;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\VariableStringResolverInterface;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\VariableResolverInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 
 class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
@@ -23,12 +23,12 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
     public function getVariablesValue($variableName, $variable)
     {
         if (is_array($variable) && isset($variable[$variableName])) {
-            if (is_object($variable[$variableName]) && $variable[$variableName] instanceof VariableStringResolverInterface) {
+            if (is_object($variable[$variableName]) && $variable[$variableName] instanceof VariableResolverInterface) {
                 return $variable[$variableName]->getValueAsString();
             }
 
             return $variable[$variableName];
-        } elseif (is_object($variable) && $variable instanceof VariableStringResolverInterface) {
+        } elseif (is_object($variable) && $variable instanceof VariableResolverInterface) {
             return $variable->getValueAsString($variableName);
         } elseif (is_object($variable) && isset($variable->{$variableName})) {
             return $variable->{$variableName};

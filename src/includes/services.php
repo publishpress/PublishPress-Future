@@ -275,7 +275,8 @@ return [
 
     ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR => static function (ContainerInterface $container) {
         return new GeneralAction(
-            $container->get(ServicesAbstract::HOOKS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
         );
     },
 
@@ -399,7 +400,9 @@ return [
                         $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR),
                         $container->get(FreeServicesAbstract::CRON),
                         $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
-                        $container->get(ServicesAbstract::NODE_TYPES_MODEL)
+                        $container->get(ServicesAbstract::NODE_TYPES_MODEL),
+                        $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+                        $container->get(ServicesAbstract::PLUGIN_VERSION)
                     );
                     break;
 

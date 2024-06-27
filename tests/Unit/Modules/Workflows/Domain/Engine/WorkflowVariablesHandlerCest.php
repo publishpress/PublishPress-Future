@@ -3,11 +3,11 @@
 namespace Tests\Modules\Workflows\Domain\Engine;
 
 use Codeception\Stub;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\BooleanResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\IntegerResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\PostResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\StringResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableStringResolvers\WorkflowResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\StringResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowVariablesHandler;
 use stdClass;
 use Tests\Support\UnitTester;
@@ -250,5 +250,10 @@ class WorkflowVariablesHandlerCest
         $I->assertArrayHasKey('user', $result);
         $I->assertArrayHasKey('site', $result);
         $I->assertArrayHasKey('trigger', $result);
+
+        $I->assertEquals(new stdClass(), $result['user']);
+        $I->assertEquals(new stdClass(), $result['site']);
+        $I->assertEquals(new stdClass(), $result['trigger']);
+        $I->assertEquals(new stdClass(), $result['workflow']);
     }
 }
