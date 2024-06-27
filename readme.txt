@@ -186,10 +186,6 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Update composer files for dev dependencies
 - Release checklist
 
-### Changed
-
-- Bump version to 3.4.1-beta.1
-
 ## [3.4.0.1] - 20 Jun, 2024
 
 ### Fixed
