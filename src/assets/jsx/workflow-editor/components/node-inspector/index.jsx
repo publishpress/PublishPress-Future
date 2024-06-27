@@ -11,7 +11,6 @@ import { nodeHasInput, mapNodeInputs, nodeHasOutput } from "../../utils";
 import { FEATURE_ADVANCED_SETTINGS, FEATURE_DEVELOPER_MODE } from "../../constants";
 import NodeValidationPanel from "../node-validation-panel";
 import NodeDataFlowPanel from "./node-data-flow-panel";
-import WorkflowGlobalVariables from "../workflow-global-variables";
 import ObjectGroupIcon from "../icons/object-group";
 import LinesLeaningIcon from "../icons/lines-leaning";
 import NodeDevInfoPanel from "../node-dev-info-panel";
@@ -148,10 +147,6 @@ export const NodeInspector = () => {
 
                     {isAdvancedSettingsEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && (
                         <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
-                    )}
-
-                    {isAdvancedSettingsEnabled &&(
-                        <WorkflowGlobalVariables />
                     )}
 
                     {isDeveloperModeEnabled && (

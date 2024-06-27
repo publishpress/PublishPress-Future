@@ -143,3 +143,23 @@
     border: 1px solid #e1e1e1;
     text-align: left;
 }
+
+.workflow-editor-data-flow-variable ul {
+    margin-left: 40px;
+    margin-top: 6px;
+    margin-bottom: 11px;
+    padding: 2px;
+}
+
+.workflow-editor-data-flow-variable ul li {
+    margin-bottom: 2px;
+    list-style: disc;
+    line-height: 16px;
+}
+
+.workflow-editor-data-flow-variable ul code {
+    max-width: 204px;
+    display: inline-block;
+    overflow: auto;
+    text-wrap: wrap;
+}
