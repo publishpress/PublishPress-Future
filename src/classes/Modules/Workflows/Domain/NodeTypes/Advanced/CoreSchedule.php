@@ -35,7 +35,7 @@ class CoreSchedule implements NodeTypeInterface
     public function getDescription(): string
     {
         return __(
-            "This step facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits.", // phpcs:ignore Generic.Files.LineLength.TooLong
+            "This step enables actions to be scheduled. You can choose when to run the next step.", // phpcs:ignore Generic.Files.LineLength.TooLong
             "publishpress-future-pro"
         );
     }

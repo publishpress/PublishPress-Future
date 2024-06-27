@@ -157,7 +157,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
                                                 <div dangerouslySetInnerHTML={{
                                                     __html: sprintf(
-                                                        __("For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English.", "publishpress-future-pro"),
+                                                        __("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "publishpress-future-pro"),
                                                         "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>",
                                                         "</a>",
                                                         "<code>",

@@ -43,7 +43,7 @@ export function PostData() {
             {
                 name: "post_modified",
                 type: "datetime",
-                label: "Modifcation Date",
+                label: "Modification Date",
             },
             {
                 name: "permalink",
