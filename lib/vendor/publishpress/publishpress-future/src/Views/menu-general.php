@@ -79,7 +79,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                                 );
 
                                 echo sprintf(
-                                    $description,
+                                    $description, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                                     '<a href="https://www.php.net/manual/en/function.strtotime.php" target="_new">' . esc_html__('PHP strtotime function', 'post-expirator') . '</a>',
                                     '<code>',
                                     '</code>'
