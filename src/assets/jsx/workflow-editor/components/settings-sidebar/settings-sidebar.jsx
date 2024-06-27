@@ -57,9 +57,6 @@ export const SettingsSidebar = () => {
             {sidebarName === SIDEBAR_WORKFLOW && (
                 <>
                     <WorkflowSummary />
-                    {isAdvancedSettingsEnabled && (
-                        <WorkflowGlobalVariables />
-                    )}
                 </>
             )}
             {sidebarName === SIDEBAR_NODE_EDGE && (
