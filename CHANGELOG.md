@@ -36,6 +36,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update language files
 - Update composer files for dev dependencies
 - Optimize the workflow editor script size by removing unused validation libs
+- Moved the Step Data Flow panel from the developer mode to the advanced mode
+- Improve visualization of available variables on the selected step
+- Moved the global variables to the Step Data Flow panel
 
 ## [3.4.0.1] - 20 Jun, 2024
 
