@@ -166,79 +166,104 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
-= [3.4.0.1] - 20 Jun, 2024 =
+## [3.4.1] - 26 Jun, 2024
 
-* FIXED: Fix fatal error for low level users when PublishPress menu is not available, #803;
-* FIXED: Fix wrong action date on the future action panel, #802;
-* CHANGED: The interface `PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface` has changed:
-  * Method `setCronActionId` now returns void instead of `ActionArgsModelInterface`;
-  * Method `setPostId` now returns void instead of `ActionArgsModelInterface`;
-  * Method `setArgs` now returns void instead of `ActionArgsModelInterface`;
-  * Method `setArg` now returns void instead of `ActionArgsModelInterface`;
-  * Method `setCreatedAt` now returns void instead of `ActionArgsModelInterface`;
-  * Method `setEnabled` now returns void instead of `ActionArgsModelInterface`;
-  * Method `setScheduledDate` now returns void instead of `ActionArgsModelInterface`;
-  * Method `setScheduledDateFromISO8601` now returns void instead of `ActionArgsModelInterface`;
-  * Method `setScheduledDateFromUnixTime` now returns void instead of `ActionArgsModelInterface`;
-  * Method `convertUnixTimeDateToISO8601` is now public;
-  * Method `convertISO8601DateToUnixTime` is now public;
+### Added
 
-= [3.4.0] - 20 Jun, 2024 =
+- Implement add promo screen for Actions Workflows, #777
+- Implement the post_id attribute to the futureaction shortcode, #814
 
-* ADDED: In the JS context, implemented a way to extend the future action panel using SlotFill `FutureActionPanelAfterActionField` and setting extra fields to the panel, right after the action field;
-* ADDED: Add a new filter to allow filtering the options of the future action being scheduled: `publishpressfuture_prepare_post_expiration_opts`;
-* ADDED: Add method `scheduleRecurringAction` to the `CronToWooActionSchedulerAdapter` to schedule recurring action;
-* ADDED: Add method `scheduleAsyncAction` to the `CronToWooActionSchedulerAdapter` to schedule async action;
-* ADDED: In the JS context, added the slot `FutureActionPanelTop` to the beginning of the future panel;
-* CHANGED: Added `$unique` and `$priority` arguments to the `scheduleSingleAction` method in the `CronToWooActionSchedulerAdapter` class;
-* CHANGED: Method `scheduleRecurringAction` renamed to `scheduleRecurringActionInSeconds` in the `CronToWooActionSchedulerAdapter` class;
-* CHANGED: Added argument `$clearOnlyPendingActions` to the method signature `clearScheduledAction` to the `CronInterface` interface;
-* CHANGED: Changed the method `clearScheduledAction` in the class `CronToWooActionSchedulerAdapter` adding new argument `$clearOnlyPendingActions`, allowing to remove running actions;
-* CHANGED: The plugin activation and deactivation callback functions were moved from the main file to independent files;
-* CHANGED: Change the admin menu names for clarity;
-* CHANGED: Update the promo sidebar for mentioning the Actions Workflow feature;
-* FIXED: Fix error when quick-edit data is not available, #730;
-* FIXED: Fix dependency of the enqueued scripts for the future action box. Add 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins' as dependencies;
-* FIXED: Updated ES, FR and IT translations, #698;
-* FIXED: Redirects to the settings page after activating the plugin, #764;
-* FIXED: Fix access to the View Debug settings tab when debug is disabled;
-* FIXED: Fix the position of the "Upgrade to Pro" and "Settings" menu items in the admin bar;
+### Fixed
 
-= [3.3.1] - 19 Mar, 2024 =
+- Fix some translations in ES, FR, and IT languages, #798
+- Fix “no future actions” message in the scheduled actions list, #788
+- Try to avoid fatal error for wrong argument counting
+- Minor issues pointed by PHPCS
 
-* ADDED: Add validation for the date and time offset in the settings page, #683;
-* ADDED: Add form validation to the settings panel;
-* ADDED: Add form validation to the metabox panel;
-* ADDED: Add a date preview to the date/time offset setting field;
-* CHANGED: The actions to move posts to another status where grouped in a single action, with a dropdown to select the status, #668;
-* CHANGED: The actions "draft", "private" and "trash" are deprecated in favor of "change-status", #668;
-* CHANGED: The metadata hash key has now a prefix "_" marking it as a private key, #695;
-* CHANGED: Improved the name of some actions;
-* CHANGED: Change the label of the field to select terms when "Replace all terms" is selected, #664;
-* FIXED: Make it impossible to choose dates in the past, #443;
-* FIXED: Enter key submits quick-edit panel when selecting a taxonomy term, #586;
-* FIXED: The name of the taxonomy in the actions field is now updated in the settings panel when the taxonomy is changed, #676;
-* FIXED: Possible to add an action using an empty category setting, #587;
-* FIXED: Fix language files for ES, IT, FR, #685;
-* FIXED: Fix inconsistent text in the filter for "Pending" actions, #673;
-* FIXED: Improve the message when no actions are found: "No Future Actions", #666;
+### Updated
 
-= [3.3.0] - 28 Fev, 2024 =
+- Update language files
+- Update composer files for dev dependencies
+- Release checklist
 
-* ADDED: Add new filter for filtering the list of post types supported by the plugin: publishpressfuture_supported_post_types, #677;
-* ADDED: Add new filter for choosing to hide or not the Future Action in the post editors: publishpressfuture_hide_metabox, #69;
-* ADDED: Add new filter for filtering the post metakeys in the post model: publishpressfuture_action_meta_key, #69;
-* ADDED: Add new method `medataExists` to the `PublishPress\Future\Framework\WordPress\Models\PostModel` class;
-* ADDED: Add support to a hash in the the post meta `pp_future_metadata_hash`, to identify if the future action's post meta has changed or was scheduled by metadata (fully availale only on PRO);
-* CHANGED: Deprecated the filter `postexpirator_unset_post_types` in favor of the new filter `publishpressfuture_supported_post_types`, allowing not only remove, but add new post types to the list of supported post types, #677;
-* CHANGED: The list of post types in the settings page now also shows the non-public post types that are not built in on WordPress, #677;
-* CHANGED: Remove the X and Facebook icons from the footer in the admin pages, #667;
-* CHANGED: Updated the URLs on the plugin's footer, #667;
-* CHANGED: Minor change in the description of the setting that controls the activation/deactivation future action for the post type;
-* CHANGED: The metadata `_expiration-date-status` now can be specified as `1` or `'1'` and not only `'saved'`, #69;
-* CHANGED: The action `publishpress_future/run_workflow` is now depreacated in favor of `publishpressfuture_run_workflow`;
-* FIXED: Fix language files for ES, IT, FR, #665;
-* FIXED: Fix error when a term does not exists, #675;
-* FIXED: Add new interface for NoticeFacade: NoticeInterface;
-* REMOVED: Remove the legacy action `postExpiratorExpire`. This action will not trigger the future actions anymore;
-* REMOVED: Remove the legacy action `publishpressfuture_expire`. This action will not trigger the future actions anymore;
+### Changed
+
+- Bump version to 3.4.1-beta.1
+
+## [3.4.0.1] - 20 Jun, 2024
+
+### Fixed
+
+- Fix fatal error for low level users when PublishPress menu is not available, #803
+- Fix wrong action date on the future action panel, #802
+
+### Changed
+
+- The interface `PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface` has changed:
+  - Method `setCronActionId` now returns void instead of `ActionArgsModelInterface`
+  - Method `setPostId` now returns void instead of `ActionArgsModelInterface`
+  - Method `setArgs` now returns void instead of `ActionArgsModelInterface`
+  - Method `setArg` now returns void instead of `ActionArgsModelInterface`
+  - Method `setCreatedAt` now returns void instead of `ActionArgsModelInterface`
+  - Method `setEnabled` now returns void instead of `ActionArgsModelInterface`
+  - Method `setScheduledDate` now returns void instead of `ActionArgsModelInterface`
+  - Method `setScheduledDateFromISO8601` now returns void instead of `ActionArgsModelInterface`
+  - Method `setScheduledDateFromUnixTime` now returns void instead of `ActionArgsModelInterface`
+  - Method `convertUnixTimeDateToISO8601` is now public
+  - Method `convertISO8601DateToUnixTime` is now public
+
+## [3.4.0] - 20 Jun, 2024
+
+### Added
+
+- In the JS context, implemented a way to extend the future action panel using SlotFill `FutureActionPanelAfterActionField` and setting extra fields to the panel, right after the action field
+- Add a new filter to allow filtering the options of the future action being scheduled: `publishpressfuture_prepare_post_expiration_opts`
+- Add method `scheduleRecurringAction` to the `CronToWooActionSchedulerAdapter` to schedule recurring action
+- Add method `scheduleAsyncAction` to the `CronToWooActionSchedulerAdapter` to schedule async action
+- In the JS context, added the slot `FutureActionPanelTop` to the beginning of the future panel
+
+### Changed
+
+- Added `$unique` and `$priority` arguments to the `scheduleSingleAction` method in the `CronToWooActionSchedulerAdapter` class
+- Method `scheduleRecurringAction` renamed to `scheduleRecurringActionInSeconds` in the `CronToWooActionSchedulerAdapter` class
+- Added argument `$clearOnlyPendingActions` to the method signature `clearScheduledAction` to the `CronInterface` interface
+- Changed the method `clearScheduledAction` in the class `CronToWooActionSchedulerAdapter` adding new argument `$clearOnlyPendingActions`, allowing to remove running actions
+- The plugin activation and deactivation callback functions were moved from the main file to independent files
+- Change the admin menu names for clarity
+- Update the promo sidebar for mentioning the Actions Workflow feature
+
+### Fixed
+
+- Fix error when quick-edit data is not available, #730
+- Fix dependency of the enqueued scripts for the future action box. Add 'wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins' as dependencies
+- Updated ES, FR and IT translations, #698
+- Redirects to the settings page after activating the plugin, #764
+- Fix access to the View Debug settings tab when debug is disabled
+- Fix the position of the "Upgrade to Pro" and "Settings" menu items in the admin bar
+
+## [3.3.1] - 19 Mar, 2024
+
+### Added
+
+- Add validation for the date and time offset in the settings page, #683
+- Add form validation to the settings panel
+- Add form validation to the metabox panel
+- Add a date preview to the date/time offset setting field
+
+### Changed
+
+- The actions to move posts to another status where grouped in a single action, with a dropdown to select the status, #668
+- The actions "draft", "private" and "trash" are deprecated in favor of "change-status", #668
+- The metadata hash key has now a prefix "_" marking it as a private key, #695
+- Improved the name of some actions
+- Change the label of the field to select terms when "Replace all terms" is selected, #664
+
+### Fixed
+
+- Make it impossible to choose dates in the past, #443
+- Enter key submits quick-edit panel when selecting a taxonomy term, #586
+- The name of the taxonomy in the actions field is now updated in the settings panel when the taxonomy is changed, #676
+- Possible to add an action using an empty category setting, #587
+- Fix language files for ES, IT, FR, #685
+- Fix inconsistent text in the filter for "Pending" actions, #673
+- Improve the message when no actions are found: "No Future Actions", #666
