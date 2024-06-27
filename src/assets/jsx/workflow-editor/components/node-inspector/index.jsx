@@ -146,12 +146,12 @@ export const NodeInspector = () => {
 
                     <NodeValidationPanel errors={nodeErrors} />
 
-                    {isAdvancedSettingsEnabled &&(
-                        <WorkflowGlobalVariables />
+                    {isAdvancedSettingsEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && (
+                        <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
                     )}
 
-                    {isDeveloperModeEnabled && (selectedNodeHasInput || selectedNodeHasOutput) && (
-                        <NodeDataFlowPanel inputSchema={mappedNodeInputSchema} outputSchema={mappedNodeOutputSchema} />
+                    {isAdvancedSettingsEnabled &&(
+                        <WorkflowGlobalVariables />
                     )}
 
                     {isDeveloperModeEnabled && (

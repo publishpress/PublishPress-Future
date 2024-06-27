@@ -1,15 +1,24 @@
 import { PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import PersistentPanelBody from "../persistent-panel-body";
+import { useSelect } from "@wordpress/data";
+import { store as workflowStore } from '../workflow-store';
 
 export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
+    const {
+        getDataTypeByName,
+    } = useSelect((select) => {
+        return {
+            getDataTypeByName: select(workflowStore).getDataTypeByName,
+        };
+    });
 
     if (!inputSchema) {
         inputSchema = [];
     }
 
     return (
-        <PersistentPanelBody title={__("Step Data Flow", "publishpress-future-pro")} className="workflow-editor-dev-panel">
+        <PersistentPanelBody title={__("Step Data Flow", "publishpress-future-pro")}>
             <PanelRow className="workflow-editor-inspector-card__handles-schema">
                 <h3>{__('Inputs', 'publishpress-future-pro')}</h3>
                 <div>
@@ -19,7 +28,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
                             <ul>
                                 {inputSchema.map((schemaItem, index) => (
                                     <li key={`input-${schemaItem.name}-${index}`}>
-                                        <code>{schemaItem.name}</code>
+                                        <span title={(getDataTypeByName(schemaItem.type)).propertiesSchema.map(property => property.name).join(',')}><code>{schemaItem.name}</code></span>
                                     </li>
                                 ))}
                             </ul>
@@ -39,7 +48,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
                         <ul>
                             {outputSchema.map((schemaItem, index) => (
                                 <li key={`output-${schemaItem.name}-${index}`}>
-                                    <code>{schemaItem.name}</code>
+                                    <span title={(getDataTypeByName(schemaItem.type)).propertiesSchema.map(property => property.name).join(',')}><code>{schemaItem.name}</code></span>
                                 </li>
                             ))}
                         </ul>
