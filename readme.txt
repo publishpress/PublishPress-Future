@@ -207,6 +207,7 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
   - Method `setScheduledDateFromUnixTime` now returns void instead of `ActionArgsModelInterface`
   - Method `convertUnixTimeDateToISO8601` is now public
   - Method `convertISO8601DateToUnixTime` is now public
+- Improve exception message when the date/time offset is invalid
 
 ## [3.4.0] - 20 Jun, 2024
 
