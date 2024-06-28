@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Moved the Step Data Flow panel from the developer mode to the advanced mode
 - Improve visualization of available variables on the selected step
 - Moved the global variables to the Step Data Flow panel
+- Change the method signature of `parseNestedVariableValue` in the `PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface` interface to accept mixed in the second argument
 
 ## [3.4.0.1] - 20 Jun, 2024
 
