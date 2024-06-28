@@ -96,6 +96,9 @@ A full changelog is available in the plugin's GitHub repository.
 - Display the data flow panel for selected nodes in the advanced mode in the workflow editor
 - Add notices to the workflow editor when the workflow is saved
 - Add the list of available properties to the data flow panel in the workflow editor when hovering over a input/output in the panel
+- Add the trigger's name in the Scheduled Actions list, #829
+- Add the title and link to the post in the Scheduled Actions list for actions added by a workflow and triggered by a post, #829
+- Add the trigger's slug to the global variables in a workflow
 
 ### Fixed
 
@@ -123,6 +126,7 @@ A full changelog is available in the plugin's GitHub repository.
 - Moved the Step Data Flow panel from the developer mode to the advanced mode
 - Improve visualization of available variables on the selected step
 - Moved the global variables to the Step Data Flow panel
+- Change the method signature of `parseNestedVariableValue` in the `PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface` interface to accept mixed in the second argument
 
 ## [3.4.0.1] - 20 Jun, 2024
 

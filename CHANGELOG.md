@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Display the data flow panel for selected nodes in the advanced mode in the workflow editor
 - Add notices to the workflow editor when the workflow is saved
 - Add the list of available properties to the data flow panel in the workflow editor when hovering over a input/output in the panel
+- Add the trigger's name in the Scheduled Actions list, #829
+- Add the title and link to the post in the Scheduled Actions list for actions added by a workflow and triggered by a post, #829
+- Add the trigger's slug to the global variables in a workflow
 
 ### Fixed
 
