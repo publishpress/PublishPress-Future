@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-28T14:16:22+00:00\n"
+"POT-Creation-Date: 2024-06-28T15:28:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: post-expirator\n"
@@ -709,7 +709,7 @@ msgid "No Scheduled Actions."
 msgstr ""
 
 #: src/Modules/ProFeaturesAds/views/actions-workflows-page.html.php:16
-msgid "Unlock advanced scheduling and management with the Workflow Editor. Available in PublishPress Future Pro."
+msgid "Update your content using Action Workflows in PublishPress Future Pro. Your workflows can have multiple steps, schedules and emails."
 msgstr ""
 
 #: src/Modules/ProFeaturesAds/views/actions-workflows-page.html.php:18
