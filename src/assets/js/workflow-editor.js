@@ -16765,6 +16765,10 @@ function NodeData() {
       type: "string",
       label: "Name"
     }, {
+      name: "slug",
+      type: "string",
+      label: "Slug"
+    }, {
       name: "label",
       type: "string",
       label: "Label"
