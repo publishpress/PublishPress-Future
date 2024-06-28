@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future Pro 3.4.0.1\n"
+"Project-Id-Version: PublishPress Future Pro 3.4.1-beta.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-26T00:35:49+00:00\n"
+"POT-Creation-Date: 2024-06-28T18:36:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -343,15 +343,24 @@ msgstr ""
 msgid "Unschedule workflow recurring scheduled action"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:150
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:157
 msgid "Workflow:"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:152
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:160
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:180
+msgid "Trigger: "
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:173
+msgid "Post:"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:184
 msgid "Steps:"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:158
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:190
 msgid "Workflow recurring scheduled action"
 msgstr ""
 
@@ -455,14 +464,19 @@ msgstr ""
 msgid "A query to select posts"
 msgstr ""
 
-#. translators: %s is the trigger name
-#: src/classes/Modules/Workflows/Domain/Engine/WorkflowEngine.php:114
-msgid "Trigger not found: %s"
+#: src/classes/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:31
+#: src/classes/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:69
+msgid "Yes"
 msgstr ""
 
-#. translators: %s is the variable name and %s is the variable value
-#: src/classes/Modules/Workflows/Domain/Engine/WorkflowVariablesHandler.php:66
-msgid "Invalid data key: %s for data: %s"
+#: src/classes/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:31
+#: src/classes/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:69
+msgid "No"
+msgstr ""
+
+#. translators: %s is the trigger name
+#: src/classes/Modules/Workflows/Domain/Engine/WorkflowEngine.php:115
+msgid "Trigger not found: %s"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:76
@@ -757,7 +771,7 @@ msgid "Schedule"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:37
-msgid "This step facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits."
+msgid "This step enables actions to be scheduled. You can choose when to run the next step."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:68

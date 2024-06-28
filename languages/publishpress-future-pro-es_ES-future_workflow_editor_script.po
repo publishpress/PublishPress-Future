@@ -54,10 +54,6 @@ msgstr "Fuente de la fecha"
 msgid "Offset"
 msgstr "Desfase"
 
-#: components/data-fields/date-offset.jsx:160
-msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
-msgstr "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
-
 #: components/data-fields/date-offset.jsx:181
 msgid "Repeating Action"
 msgstr "Acción de repetición"
@@ -319,11 +315,11 @@ msgstr "Ayuda"
 msgid "Developer Info"
 msgstr "Información para desarrolladores"
 
-#: components/node-inspector/index.jsx:96
+#: components/node-inspector/index.jsx:95
 msgid "No element selected."
 msgstr "No hay elementos seleccionados."
 
-#: components/node-inspector/index.jsx:104
+#: components/node-inspector/index.jsx:103
 msgid "Multiple and different elements selected."
 msgstr "Múltiples y diferentes elementos seleccionados."
 
@@ -337,19 +333,19 @@ msgstr "Nodo"
 msgid "No description"
 msgstr "Sin descripción"
 
-#: components/node-inspector/node-data-flow-panel.jsx:14
+#: components/node-inspector/node-data-flow-panel.jsx:60
 msgid "Inputs"
 msgstr "Entradas"
 
-#: components/node-inspector/node-data-flow-panel.jsx:18
+#: components/node-inspector/node-data-flow-panel.jsx:64
 msgid "This step receives the following input from previous step:"
 msgstr "Este paso recibe la siguiente entrada del paso anterior:"
 
-#: components/node-inspector/node-data-flow-panel.jsx:34
+#: components/node-inspector/node-data-flow-panel.jsx:80
 msgid "Outputs"
 msgstr "Entradas"
 
-#: components/node-inspector/node-data-flow-panel.jsx:38
+#: components/node-inspector/node-data-flow-panel.jsx:84
 msgid "This step outputs the following data:"
 msgstr "Este paso muestra los siguientes datos:"
 
@@ -450,12 +446,12 @@ msgstr "Flujo de trabajo"
 msgid "Element"
 msgstr "Elemento"
 
-#: components/settings-sidebar/settings-sidebar.jsx:48
+#: components/settings-sidebar/settings-sidebar.jsx:47
 msgid "Close settings"
 msgstr "Cerrar ajustes"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/settings-sidebar/settings-sidebar.jsx:52
+#: components/settings-sidebar/settings-sidebar.jsx:51
 msgid "Settings"
 msgstr "Ajustes"
 
@@ -471,26 +467,17 @@ msgstr "¿Estás seguro de querer borrar este flujo de trabajo?"
 msgid "Move to trash"
 msgstr "Mover a la papelera"
 
-#: components/workflow-global-variables/index.jsx:28
+#: components/node-inspector/node-data-flow-panel.jsx:100
 msgid "Global Variables"
 msgstr "Variables globales"
 
 #: components/node-dev-info-panel/index.jsx:18
-#: components/workflow-global-variables/index.jsx:37
 msgid "Loading..."
 msgstr "Cargando…"
 
-#: components/workflow-global-variables/index.jsx:43
+#: components/node-inspector/node-data-flow-panel.jsx:104
 msgid "No global variables are declared"
 msgstr "No hay variable globales declaradas"
-
-#: components/workflow-global-variables/index.jsx:48
-msgid "Variables list"
-msgstr "Lista de variables"
-
-#: components/workflow-global-variables/index.jsx:76
-msgid "Global variables are available to all nodes in the workflow that accepts variables."
-msgstr "La variables globales están disponible para todos los nodos del flujo de trabajo que accepta variables."
 
 #. translators: button label text should, if possible, be under 16 characters.
 #: components/workflow-publish-button/index.jsx:82
@@ -605,68 +592,68 @@ msgstr ""
 msgid "All checks have passed for this step."
 msgstr ""
 
-#: components/node-validator/index.jsx:49
+#: components/node-validator/index.jsx:50
 msgid "This step requires a connection from a previous step."
 msgstr ""
 
-#: components/node-validator/index.jsx:59
+#: components/node-validator/index.jsx:60
 msgid "This step requires a connection to a following step."
 msgstr ""
 
-#: components/node-validator/index.jsx:122
-#: components/node-validator/index.jsx:133
+#: components/node-validator/index.jsx:123
+#: components/node-validator/index.jsx:134
 msgid "The field %s is required."
 msgstr ""
 
-#: components/node-validator/index.jsx:154
+#: components/node-validator/index.jsx:155
 msgid "The field %s must be a valid email address."
 msgstr ""
 
-#: components/node-validator/index.jsx:170
+#: components/node-validator/index.jsx:171
 msgid "The field %s must be a valid email address list separated by commas."
 msgstr ""
 
-#: components/node-validator/index.jsx:184
+#: components/node-validator/index.jsx:185
 msgid "The field %s must be an integer."
 msgstr ""
 
-#: components/node-validator/index.jsx:199
+#: components/node-validator/index.jsx:200
 msgid "The field %s must be an integer list separated by commas."
 msgstr ""
 
-#: components/node-inspector/index.jsx:114
+#: components/node-inspector/index.jsx:113
 msgid "%d steps selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:117
+#: components/node-inspector/index.jsx:116
 msgid "Multiple steps selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:128
+#: components/node-inspector/index.jsx:127
 msgid "%d connections selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:131
+#: components/node-inspector/index.jsx:130
 msgid "Multiple connections selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:168
+#: components/node-inspector/index.jsx:163
 msgid "Connection"
 msgstr ""
 
-#: components/node-inspector/index.jsx:169
+#: components/node-inspector/index.jsx:164
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:12
+#: components/node-inspector/node-data-flow-panel.jsx:58
 msgid "Step Data Flow"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:29
+#: components/node-inspector/node-data-flow-panel.jsx:75
 msgid "This step does not receive any input from previous step."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:49
+#: components/node-inspector/node-data-flow-panel.jsx:95
 msgid "This step does not output any data."
 msgstr ""
 
@@ -733,4 +720,8 @@ msgstr ""
 
 #: components/workflow-store/actions.jsx:316
 msgid "Unable to delete the workflow. Please, try again."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:160
+msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""

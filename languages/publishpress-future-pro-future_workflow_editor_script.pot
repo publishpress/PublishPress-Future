@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-26T00:35:52+00:00\n"
+"POT-Creation-Date: 2024-06-28T18:36:35+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -65,7 +65,7 @@ msgid "Offset"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:160
-msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
+msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:181
@@ -346,7 +346,6 @@ msgid "Help"
 msgstr ""
 
 #: components/node-dev-info-panel/index.jsx:18
-#: components/workflow-global-variables/index.jsx:37
 msgid "Loading..."
 msgstr ""
 
@@ -364,64 +363,72 @@ msgstr ""
 msgid "Node Type"
 msgstr ""
 
-#: components/node-inspector/index.jsx:96
+#: components/node-inspector/index.jsx:95
 msgid "No element selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:104
+#: components/node-inspector/index.jsx:103
 msgid "Multiple and different elements selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:114
+#: components/node-inspector/index.jsx:113
 msgid "%d steps selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:117
+#: components/node-inspector/index.jsx:116
 msgid "Multiple steps selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:128
+#: components/node-inspector/index.jsx:127
 msgid "%d connections selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:131
+#: components/node-inspector/index.jsx:130
 msgid "Multiple connections selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:168
+#: components/node-inspector/index.jsx:163
 msgid "Connection"
 msgstr ""
 
-#: components/node-inspector/index.jsx:169
+#: components/node-inspector/index.jsx:164
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:12
+#: components/node-inspector/node-data-flow-panel.jsx:58
 msgid "Step Data Flow"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:14
+#: components/node-inspector/node-data-flow-panel.jsx:60
 msgid "Inputs"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:18
+#: components/node-inspector/node-data-flow-panel.jsx:64
 msgid "This step receives the following input from previous step:"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:29
+#: components/node-inspector/node-data-flow-panel.jsx:75
 msgid "This step does not receive any input from previous step."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:34
+#: components/node-inspector/node-data-flow-panel.jsx:80
 msgid "Outputs"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:38
+#: components/node-inspector/node-data-flow-panel.jsx:84
 msgid "This step outputs the following data:"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:49
+#: components/node-inspector/node-data-flow-panel.jsx:95
 msgid "This step does not output any data."
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:100
+msgid "Global Variables"
+msgstr ""
+
+#: components/node-inspector/node-data-flow-panel.jsx:104
+msgid "No global variables are declared"
 msgstr ""
 
 #: components/node-inspector/node-inspector-card.jsx:19
@@ -481,32 +488,32 @@ msgstr ""
 msgid "All checks have passed for this step."
 msgstr ""
 
-#: components/node-validator/index.jsx:49
+#: components/node-validator/index.jsx:50
 msgid "This step requires a connection from a previous step."
 msgstr ""
 
-#: components/node-validator/index.jsx:59
+#: components/node-validator/index.jsx:60
 msgid "This step requires a connection to a following step."
 msgstr ""
 
-#: components/node-validator/index.jsx:122
-#: components/node-validator/index.jsx:133
+#: components/node-validator/index.jsx:123
+#: components/node-validator/index.jsx:134
 msgid "The field %s is required."
 msgstr ""
 
-#: components/node-validator/index.jsx:154
+#: components/node-validator/index.jsx:155
 msgid "The field %s must be a valid email address."
 msgstr ""
 
-#: components/node-validator/index.jsx:170
+#: components/node-validator/index.jsx:171
 msgid "The field %s must be a valid email address list separated by commas."
 msgstr ""
 
-#: components/node-validator/index.jsx:184
+#: components/node-validator/index.jsx:185
 msgid "The field %s must be an integer."
 msgstr ""
 
-#: components/node-validator/index.jsx:199
+#: components/node-validator/index.jsx:200
 msgid "The field %s must be an integer list separated by commas."
 msgstr ""
 
@@ -580,12 +587,12 @@ msgstr ""
 msgid "Element"
 msgstr ""
 
-#: components/settings-sidebar/settings-sidebar.jsx:48
+#: components/settings-sidebar/settings-sidebar.jsx:47
 msgid "Close settings"
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/settings-sidebar/settings-sidebar.jsx:52
+#: components/settings-sidebar/settings-sidebar.jsx:51
 msgid "Settings"
 msgstr ""
 
@@ -603,22 +610,6 @@ msgstr ""
 
 #: components/workflow-delete-button/index.jsx:39
 msgid "Move to trash"
-msgstr ""
-
-#: components/workflow-global-variables/index.jsx:28
-msgid "Global Variables"
-msgstr ""
-
-#: components/workflow-global-variables/index.jsx:43
-msgid "No global variables are declared"
-msgstr ""
-
-#: components/workflow-global-variables/index.jsx:48
-msgid "Variables list"
-msgstr ""
-
-#: components/workflow-global-variables/index.jsx:76
-msgid "Global variables are available to all nodes in the workflow that accepts variables."
 msgstr ""
 
 #. translators: button label text should, if possible, be under 16 characters.
