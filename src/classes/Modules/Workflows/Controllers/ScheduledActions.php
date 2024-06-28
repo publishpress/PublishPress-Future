@@ -154,14 +154,34 @@ class ScheduledActions implements InitializableInterface
                 }
                 $nextNodes .= '</ul>';
 
-                $argsText = __('Workflow:', 'publishpress-future-pro') . ' ' . $workflowTitle . '<br>';
+                $argsText = '<strong>' . __('Workflow:', 'publishpress-future-pro') . '</strong> ' . $workflowTitle . '<br>';
 
                 if (isset($args['pluginVersion'])) {
-                    $argsText .= __('Trigger: ', 'publishpress-future-pro') . $args['contextVariables']['global']['trigger']['value']['label'] . '<br>';
+                    $argsText .= '<strong>' . __('Trigger: ', 'publishpress-future-pro') . '</strong>'
+                        . $args['contextVariables']['global']['trigger']['value']['label'] . '<br>';
+
+                    // Check if the trigger is related to a post
+                    if (isset($args['contextVariables']['global']['trigger']['value']['slug'])) {
+                        $nodeSlug = $args['contextVariables']['global']['trigger']['value']['slug'];
+
+                        if (isset($args['contextVariables'][$nodeSlug]['postId'])) {
+                            $postId = $args['contextVariables'][$nodeSlug]['postId']['value'];
+                            $post = get_post($postId);
+
+                            if ($post instanceof \WP_Post) {
+                                $postPermaling = get_permalink($post->ID);
+                                $argsText .= '<strong>' . __('Post:', 'publishpress-future-pro')
+                                    . '</strong> <a target="_blank" href="' . esc_url($postPermaling) . '">'
+                                    . $post->post_title . '</a><br>';
+                            }
+                        }
+                    }
                 } else {
-                    $argsText .= __('Trigger: ', 'publishpress-future-pro') . $args['contextVariables']['global']['trigger']['label'] . '<br>';
+                    $argsText .= '<strong>' . __('Trigger: ', 'publishpress-future-pro') . '</strong>'
+                        . $args['contextVariables']['global']['trigger']['label'] . '<br>';
                 }
-                $argsText .= __('Steps:', 'publishpress-future-pro') . '<br>' . $nextNodes;
+
+                $argsText .= '<strong>' . __('Steps:', 'publishpress-future-pro') . '</strong><br>' . $nextNodes;
 
                 $html = $argsText;
                 break;
