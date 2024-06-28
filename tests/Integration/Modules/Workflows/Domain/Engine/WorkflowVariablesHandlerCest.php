@@ -54,7 +54,8 @@ class WorkflowVariablesHandlerCest extends WPTestCase
                     'ID' => 1,
                     'name' => 'Post is saved',
                     'label' => 'Post is saved',
-                    'activation_timestamp' => '2021-01-01 00:00:15'
+                    'activation_timestamp' => '2021-01-01 00:00:15',
+                    'slug' => 'onSavePost1',
                 ]),
             ],
             'onSavePost1' => [

@@ -36,6 +36,9 @@ class NodeResolver implements VariableResolverInterface
 
             case 'activation_timestamp':
                 return (string)$this->node['activation_timestamp'];
+
+            case 'slug':
+                return (string)$this->node['slug'];
         }
 
         return '';
@@ -61,7 +64,7 @@ class NodeResolver implements VariableResolverInterface
 
     public function __isset($name): bool
     {
-        return in_array($name, ['ID', 'name', 'label', 'activation_timestamp']);
+        return in_array($name, ['ID', 'name', 'label', 'activation_timestamp', 'slug']);
     }
 
     public function __get($name)

@@ -14,7 +14,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals('node', $resolver->getType());
@@ -26,13 +27,15 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals('34', $resolver->getValueAsString('ID'));
         $I->assertEquals('Node Name', $resolver->getValueAsString('name'));
         $I->assertEquals('Node Label', $resolver->getValueAsString('label'));
         $I->assertEquals('2021-01-01 00:00:00', $resolver->getValueAsString('activation_timestamp'));
+        $I->assertEquals('nodeSlug', $resolver->getValueAsString('slug'));
     }
 
     public function getValueAsStringReturnsEmptyStringWhenPropertyNotExists(UnitTester $I)
@@ -41,7 +44,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals('', $resolver->getValueAsString('non_existent_property'));
@@ -53,7 +57,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals('', $resolver->getValueAsString('non_existent_property'));
@@ -65,7 +70,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals('', $resolver->getValueAsString(''));
@@ -77,7 +83,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals('', $resolver->getValueAsString(false));
@@ -89,7 +96,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals('', $resolver->getValueAsString(0));
@@ -101,7 +109,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals('', $resolver->getValueAsString('0'));
@@ -113,7 +122,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertTrue(isset($resolver->ID));
@@ -128,7 +138,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertFalse(isset($resolver->non_existent_property));
@@ -140,13 +151,15 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals(34, $resolver->ID);
         $I->assertEquals('Node Name', $resolver->name);
         $I->assertEquals('Node Label', $resolver->label);
         $I->assertEquals('2021-01-01 00:00:00', $resolver->activation_timestamp);
+        $I->assertEquals('nodeSlug', $resolver->slug);
     }
 
     public function getReturnsNullWhenPropertyDoesNotExist(UnitTester $I)
@@ -155,7 +168,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertNull($resolver->non_existent_property);
@@ -167,7 +181,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $resolver->ID = 35;
@@ -187,7 +202,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         unset($resolver->ID);
@@ -207,10 +223,11 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('{"ID":34,"name":"Node Name","label":"Node Label","activation_timestamp":"2021-01-01 00:00:00"}', (string)$resolver);
+        $I->assertEquals('{"ID":34,"name":"Node Name","label":"Node Label","activation_timestamp":"2021-01-01 00:00:00","slug":"nodeSlug"}', (string)$resolver);
     }
 
     public function toStringReturnsEmptyJsonWhenArrayIsEmpty(UnitTester $I)
@@ -226,7 +243,8 @@ class NodeResolverCest
             'ID' => 34,
             'name' => 'Node Name',
             'label' => 'Node Label',
-            'activation_timestamp' => '2021-01-01 00:00:00'
+            'activation_timestamp' => '2021-01-01 00:00:00',
+            'slug' => 'nodeSlug',
         ]);
 
         $I->assertEquals(
@@ -236,7 +254,8 @@ class NodeResolverCest
                     'ID' => 34,
                     'name' => 'Node Name',
                     'label' => 'Node Label',
-                    'activation_timestamp' => '2021-01-01 00:00:00'
+                    'activation_timestamp' => '2021-01-01 00:00:00',
+                    'slug' => 'nodeSlug',
                 ]
             ],
             $resolver->compact()
