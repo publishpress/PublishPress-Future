@@ -664,11 +664,14 @@ const resetNodeErrors = (state, action) => {
 const removeNode = (state, action) => {
     const { payload } = action;
 
+    // Remove the edges that are connected to the node
+    const newEdges = state.edges.filter(edge => edge.source !== payload && edge.target !== payload);
     const newNodes = state.nodes.filter(node => node.id !== payload);
 
     return {
         ...state,
         nodes: newNodes,
+        edges: newEdges,
         selectedNodes: [],
         selectedEdges: [],
     };
