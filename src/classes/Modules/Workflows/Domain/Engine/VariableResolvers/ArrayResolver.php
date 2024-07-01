@@ -43,7 +43,10 @@ class ArrayResolver implements VariableResolverInterface
         ];
     }
 
-    public function getVariable(): mixed
+    /**
+     * @return mixed
+     */
+    public function getVariable()
     {
         return $this->variable;
     }

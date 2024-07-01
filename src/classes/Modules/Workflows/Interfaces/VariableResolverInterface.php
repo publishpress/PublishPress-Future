@@ -12,7 +12,10 @@ interface VariableResolverInterface
 
     public function compact(): array;
 
-    public function getVariable(): mixed;
+    /**
+     * @return mixed
+     */
+    public function getVariable();
 
     public function __isset($name): bool;
 

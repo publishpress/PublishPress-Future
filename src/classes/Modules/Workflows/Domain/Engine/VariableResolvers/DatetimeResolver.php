@@ -39,7 +39,10 @@ class DatetimeResolver implements VariableResolverInterface
         ];
     }
 
-    public function getVariable(): mixed
+    /**
+     * @inheritDoc
+     */
+    public function getVariable()
     {
         return $this->variable;
     }

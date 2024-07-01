@@ -71,7 +71,10 @@ class UserResolver implements VariableResolverInterface
         ];
     }
 
-    public function getVariable(): mixed
+    /**
+     * @inheritDoc
+     */
+    public function getVariable()
     {
         return $this->user;
     }
