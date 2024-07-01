@@ -37,7 +37,7 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
         return '';
     }
 
-    public function parseNestedVariableValue($nestedVariableName, mixed $dataSources)
+    public function parseNestedVariableValue(string $nestedVariableName, $dataSources)
     {
         $nestedVariableName = explode('.', $nestedVariableName);
 

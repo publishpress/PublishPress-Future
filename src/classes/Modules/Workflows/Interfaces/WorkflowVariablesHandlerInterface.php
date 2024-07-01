@@ -8,7 +8,7 @@ interface WorkflowVariablesHandlerInterface
 
     public function replaceVariablesPlaceholdersInText($text, array $variables);
 
-    public function parseNestedVariableValue($nestedVariableName, mixed $dataSources);
+    public function parseNestedVariableValue(string $nestedVariableName, $dataSources);
 
     public function getVariablesValue($variableName, $variable);
 
