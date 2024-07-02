@@ -13,7 +13,7 @@
 
     <div class="pp-future-pro-feature-ad-banner">
         <p>
-            <?php esc_html_e('Unlock advanced scheduling and management with the Workflow Editor. Available in PublishPress Future Pro.', 'post-expirator'); ?>
+            <?php esc_html_e('Update your content using Action Workflows in PublishPress Future Pro. Your workflows can have multiple steps, schedules and emails.', 'post-expirator'); ?>
         </p>
         <a href="https://publishpress.com/links/future-banner" target="_blank"><?php esc_html_e('Upgrade to Pro', 'post-expirator'); ?></a>
     </div>

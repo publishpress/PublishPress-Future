@@ -1694,12 +1694,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "8c49ab66d27d71cd83012662dc96057740f4de0f"
+                "reference": "f39165215aa943294c19b5487d8ffe7a6061558d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/8c49ab66d27d71cd83012662dc96057740f4de0f",
-                "reference": "8c49ab66d27d71cd83012662dc96057740f4de0f",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/f39165215aa943294c19b5487d8ffe7a6061558d",
+                "reference": "f39165215aa943294c19b5487d8ffe7a6061558d",
                 "shasum": ""
             },
             "require": {
@@ -1790,7 +1790,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-18T21:56:18+00:00"
+            "time": "2024-06-22T16:16:34+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -2453,16 +2453,16 @@
         },
         {
             "name": "lucatume/wp-browser",
-            "version": "4.2.4",
+            "version": "4.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucatume/wp-browser.git",
-                "reference": "620a8e2901f0669a190b0e9eeebc9c8c564a07e2"
+                "reference": "442e488aec53278b8e3b2b6ee8f688bd4315b09b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/620a8e2901f0669a190b0e9eeebc9c8c564a07e2",
-                "reference": "620a8e2901f0669a190b0e9eeebc9c8c564a07e2",
+                "url": "https://api.github.com/repos/lucatume/wp-browser/zipball/442e488aec53278b8e3b2b6ee8f688bd4315b09b",
+                "reference": "442e488aec53278b8e3b2b6ee8f688bd4315b09b",
                 "shasum": ""
             },
             "require": {
@@ -2540,7 +2540,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lucatume/wp-browser/issues",
-                "source": "https://github.com/lucatume/wp-browser/tree/4.2.4"
+                "source": "https://github.com/lucatume/wp-browser/tree/4.2.5"
             },
             "funding": [
                 {
@@ -2548,7 +2548,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-06T06:06:07+00:00"
+            "time": "2024-06-26T07:01:47+00:00"
         },
         {
             "name": "mck89/peast",
@@ -2713,16 +2713,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "dev-master",
+            "version": "v5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "3ef0811e45ba7e91fb0f066af5af7d52c3b24469"
+                "reference": "683130c2ff8c2739f4822ff7ac5c873ec529abd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3ef0811e45ba7e91fb0f066af5af7d52c3b24469",
-                "reference": "3ef0811e45ba7e91fb0f066af5af7d52c3b24469",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/683130c2ff8c2739f4822ff7ac5c873ec529abd1",
+                "reference": "683130c2ff8c2739f4822ff7ac5c873ec529abd1",
                 "shasum": ""
             },
             "require": {
@@ -2735,7 +2735,6 @@
                 "ircmaxell/php-yacc": "^0.0.7",
                 "phpunit/phpunit": "^9.0"
             },
-            "default-branch": true,
             "bin": [
                 "bin/php-parse"
             ],
@@ -2766,9 +2765,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/master"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.1.0"
             },
-            "time": "2024-06-12T18:31:58+00:00"
+            "time": "2024-07-01T20:03:41+00:00"
         },
         {
             "name": "overtrue/phplint",
@@ -3591,12 +3590,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "00ef9df54f72c5cf4d003346ef3bce44b02426f1"
+                "reference": "e0cd698c0dc3efbb5997451a7a2a5aa24bd76717"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/00ef9df54f72c5cf4d003346ef3bce44b02426f1",
-                "reference": "00ef9df54f72c5cf4d003346ef3bce44b02426f1",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e0cd698c0dc3efbb5997451a7a2a5aa24bd76717",
+                "reference": "e0cd698c0dc3efbb5997451a7a2a5aa24bd76717",
                 "shasum": ""
             },
             "require": {
@@ -3642,7 +3641,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-20T13:53:41+00:00"
+            "time": "2024-07-02T16:34:47+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3650,12 +3649,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "3352293d9e91513d5508c415835014881b420218"
+                "reference": "39d628812d8d83344a6c1b07799e3700d830d355"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/3352293d9e91513d5508c415835014881b420218",
-                "reference": "3352293d9e91513d5508c415835014881b420218",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/39d628812d8d83344a6c1b07799e3700d830d355",
+                "reference": "39d628812d8d83344a6c1b07799e3700d830d355",
                 "shasum": ""
             },
             "require": {
@@ -3674,7 +3673,7 @@
                 "theseer/tokenizer": "^1.2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.3"
+                "phpunit/phpunit": "^9.6"
             },
             "suggest": {
                 "ext-pcov": "PHP extension that provides line coverage",
@@ -3683,7 +3682,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "9.2-dev"
+                    "dev-main": "9.2-dev"
                 }
             },
             "autoload": {
@@ -3720,7 +3719,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-22T05:16:32+00:00"
+            "time": "2024-06-29T07:23:05+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4445,12 +4444,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "a80c3aa3b3684fcfb15d4219cca0d023babf28e4"
+                "reference": "0df038ebf0efc4322ae8749ff62deb7ce621f180"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/a80c3aa3b3684fcfb15d4219cca0d023babf28e4",
-                "reference": "a80c3aa3b3684fcfb15d4219cca0d023babf28e4",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/0df038ebf0efc4322ae8749ff62deb7ce621f180",
+                "reference": "0df038ebf0efc4322ae8749ff62deb7ce621f180",
                 "shasum": ""
             },
             "require": {
@@ -4517,7 +4516,7 @@
                 "issues": "https://github.com/bobthecow/psysh/issues",
                 "source": "https://github.com/bobthecow/psysh/tree/main"
             },
-            "time": "2024-06-18T16:01:54+00:00"
+            "time": "2024-06-30T19:38:19+00:00"
         },
         {
             "name": "publishpress/publishpress-phpcs-standards",
@@ -6177,12 +6176,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "bb070b8f0fbccaa789e59c81f7a2212f0a7d5052"
+                "reference": "bc8d7e30e2005bce5c59018b7cdb08e9fb45c0d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/bb070b8f0fbccaa789e59c81f7a2212f0a7d5052",
-                "reference": "bb070b8f0fbccaa789e59c81f7a2212f0a7d5052",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/bc8d7e30e2005bce5c59018b7cdb08e9fb45c0d1",
+                "reference": "bc8d7e30e2005bce5c59018b7cdb08e9fb45c0d1",
                 "shasum": ""
             },
             "require": {
@@ -6228,7 +6227,7 @@
                 "source": "https://github.com/sirbrillig/phpcs-variable-analysis",
                 "wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
             },
-            "time": "2024-04-24T14:41:44+00:00"
+            "time": "2024-06-26T20:08:34+00:00"
         },
         {
             "name": "softcreatr/jsonpath",
@@ -6304,12 +6303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "df258d47231f1ed86c59b4c51a95ec00b852f588"
+                "reference": "e24508814f243ebece90a193a6e77b1f86f73849"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/df258d47231f1ed86c59b4c51a95ec00b852f588",
-                "reference": "df258d47231f1ed86c59b4c51a95ec00b852f588",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/e24508814f243ebece90a193a6e77b1f86f73849",
+                "reference": "e24508814f243ebece90a193a6e77b1f86f73849",
                 "shasum": ""
             },
             "require": {
@@ -6377,7 +6376,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-06-05T17:35:20+00:00"
+            "time": "2024-07-02T07:22:32+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -8725,12 +8724,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/i18n-command.git",
-                "reference": "643422d7d0826154537a2fae8ab3e5b125010c0b"
+                "reference": "6f52398030618d6e3436d0ba533fbeb5458ebf04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/643422d7d0826154537a2fae8ab3e5b125010c0b",
-                "reference": "643422d7d0826154537a2fae8ab3e5b125010c0b",
+                "url": "https://api.github.com/repos/wp-cli/i18n-command/zipball/6f52398030618d6e3436d0ba533fbeb5458ebf04",
+                "reference": "6f52398030618d6e3436d0ba533fbeb5458ebf04",
                 "shasum": ""
             },
             "require": {
@@ -8787,7 +8786,7 @@
                 "issues": "https://github.com/wp-cli/i18n-command/issues",
                 "source": "https://github.com/wp-cli/i18n-command/tree/main"
             },
-            "time": "2024-06-15T05:59:45+00:00"
+            "time": "2024-06-28T09:58:52+00:00"
         },
         {
             "name": "wp-cli/mustangostang-spyc",
