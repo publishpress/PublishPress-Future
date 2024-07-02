@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.4.1] - 26 Jun, 2024
+## [3.4.1] - 02 Jul, 2024
 
 ### Added
 
@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix “no future actions” message in the scheduled actions list, #788
 - Try to avoid fatal error for wrong argument counting
 - Minor issues pointed by PHPCS
+- Escape an exception message
 - Fix warning in the args column on scheduled actions list
 - Fix marker end on edges in the workflow to show the arrow
 - Remove broken connections when the workflow is loaded
@@ -38,6 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update the help text of the "Prevent duplicate scheduling" setting
 - Update language files
 - Update composer files for dev dependencies
+- Improve the exception message when the date/time offset is invalid
 - Optimize the workflow editor script size by removing unused validation libs
 - Moved the Step Data Flow panel from the developer mode to the advanced mode
 - Improve visualization of available variables on the selected step
