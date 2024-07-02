@@ -34,7 +34,7 @@ class CorePostChangeStatus implements NodeTypeInterface
 
     public function getDescription(): string
     {
-        return __("This action transitions a post to a different status.", "publishpress-future-pro");
+        return __("This step transitions a post to a different status.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

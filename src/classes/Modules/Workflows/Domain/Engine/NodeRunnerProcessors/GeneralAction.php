@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProce
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 
 use function PublishPress\FuturePro\logError;
 
@@ -15,9 +16,15 @@ class GeneralAction implements NodeRunnerProcessorInterface
      */
     private $hooks;
 
-    public function __construct(HooksFacade $hooks)
+    /**
+     * @var WorkflowVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
+    public function __construct(HooksFacade $hooks, WorkflowVariablesHandlerInterface $variablesHandler)
     {
         $this->hooks = $hooks;
+        $this->variablesHandler = $variablesHandler;
     }
 
     public function setup(array $step, callable $actionCallback, array $contextVariables = []): void
@@ -74,7 +81,9 @@ class GeneralAction implements NodeRunnerProcessorInterface
 
     public function getWorkflowIdFromContextVariables(array $contextVariables)
     {
-        return $contextVariables['global']['workflow']['id'] ?? 0;
+        $workflowId = $this->variablesHandler->parseNestedVariableValue('global.workflow.id', $contextVariables);
+
+        return ! empty($workflowId) ? $workflowId : 0;
     }
 
     public function logError(string $message, int $workflowId, array $step)

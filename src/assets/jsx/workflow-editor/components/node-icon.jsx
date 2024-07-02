@@ -84,6 +84,16 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 				src: ScheduleIcon,
 			};
 			break;
+		case 'info':
+			icon = {
+				src: 'info',
+			};
+			break;
+		case 'arrow-down':
+			icon = {
+				src: 'arrow-down',
+			};
+			break;
 	}
 
 	const mergedClassName = classnames(className, 'node-icon', {

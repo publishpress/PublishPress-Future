@@ -7,12 +7,7 @@
 }
 
 .react-flow {
-    height: calc(100vh - 112px) !important;
     width: 100% !important;
-}
-
-.is-fullscreen-mode .react-flow {
-    height: calc(100vh - 80px) !important;
 }
 
 .components-menu-items__item-icon.has-icon-right {
@@ -61,15 +56,23 @@
 }
 
 .workflow-editor-inspector-card__handles-schema {
-    flex-flow: wrap;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .workflow-editor-inspector-card__handles-schema code {
-    padding: 3px 10px;
+    padding: 3px 6px;
     border-radius: 4px;
     font-size: 12px;
     background: #ebebeb;
     color: #696969;
+}
+
+.workflow-editor-inspector-card__handles-schema h3 {
+    margin-bottom: 4px !important;
 }
 
 .workflow-editor-global-variables-description {

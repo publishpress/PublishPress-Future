@@ -31,7 +31,7 @@ export function PostData() {
                 label: "Post Type",
             },
             {
-                name: "ID",
+                name: "id",
                 type: "integer",
                 label: "ID",
             },
@@ -43,8 +43,13 @@ export function PostData() {
             {
                 name: "post_modified",
                 type: "datetime",
-                label: "Modifcation Date",
+                label: "Modification Date",
             },
+            {
+                name: "permalink",
+                type: "string",
+                label: "Permalink",
+            }
         ],
     };
 }

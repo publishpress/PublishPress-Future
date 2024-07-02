@@ -30,7 +30,7 @@ class CoreOnAdminInit implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("On Admin Init", "publishpress-future-pro");
+        return __("On admin init", "publishpress-future-pro");
     }
 
     public function getDescription(): string

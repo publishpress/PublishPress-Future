@@ -89,7 +89,7 @@ class CoreSendEmail implements NodeRunnerInterface
                     $recipient = explode(',', $customEmails);
                 }
             } else {
-                $recipient = $variablesHandler->parseVariableValue($recipient, $contextVariables);
+                $recipient = $variablesHandler->parseNestedVariableValue($recipient, $contextVariables);
             }
 
             if (empty($recipient)) {

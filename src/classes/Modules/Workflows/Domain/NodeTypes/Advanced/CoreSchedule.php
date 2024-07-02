@@ -35,7 +35,7 @@ class CoreSchedule implements NodeTypeInterface
     public function getDescription(): string
     {
         return __(
-            "This step facilitates action scheduling, allowing configuration of specific or relative future dates, recurrence, and execution limits.", // phpcs:ignore Generic.Files.LineLength.TooLong
+            "This step enables actions to be scheduled. You can choose when to run the next step.", // phpcs:ignore Generic.Files.LineLength.TooLong
             "publishpress-future-pro"
         );
     }
@@ -65,7 +65,7 @@ class CoreSchedule implements NodeTypeInterface
         return [
             [
                 "label" => __("Schedule", "publishpress-future-pro"),
-                "description" => __("The scheduled time for this action.", "publishpress-future-pro"),
+                "description" => __("A scheduled delay between steps.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "schedule",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00405c898b8ad41ecc44cff469095443",
+    "content-hash": "9907619a0c55e5affe06b5a8008fdb5f",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.4.0.1",
+            "version": "3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "57b5398c03234b2162ac81b06f1b066c8be1c64e"
+                "reference": "abab71cb3f75b9fcf931eaf94208944b01dc72e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/57b5398c03234b2162ac81b06f1b066c8be1c64e",
-                "reference": "57b5398c03234b2162ac81b06f1b066c8be1c64e",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/abab71cb3f75b9fcf931eaf94208944b01dc72e4",
+                "reference": "abab71cb3f75b9fcf931eaf94208944b01dc72e4",
                 "shasum": ""
             },
             "require": {
@@ -431,7 +431,8 @@
                     "@check:php74",
                     "@check:php80",
                     "@check:php81",
-                    "@check:php82"
+                    "@check:php82",
+                    "@check:php83"
                 ],
                 "check:php56": [
                     "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php"
@@ -450,6 +451,9 @@
                 ],
                 "check:php82": [
                     "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2"
+                ],
+                "check:php83": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.3"
                 ],
                 "tests:dev-start": [
                     "./vendor/bin/codecept dev:start"
@@ -501,10 +505,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.4.0.1",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.4.1",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-06-20T21:59:39+00:00"
+            "time": "2024-07-02T16:51:56+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",

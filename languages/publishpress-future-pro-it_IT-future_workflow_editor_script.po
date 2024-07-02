@@ -14,71 +14,63 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 "X-Domain: publishpress-future-pro\n"
 
-#: components/data-fields/date-offset.jsx:68
+#: components/data-fields/date-offset.jsx:70
 msgid "As soon as possible"
 msgstr "Prima possibile"
 
-#: components/data-fields/date-offset.jsx:69
+#: components/data-fields/date-offset.jsx:71
 msgid "On a specific date"
 msgstr "In una data specifica"
 
-#: components/data-fields/date-offset.jsx:89
+#: components/data-fields/date-offset.jsx:91
 msgid "Non-repeating"
 msgstr "Non ripetibile"
 
-#: components/data-fields/date-offset.jsx:90
+#: components/data-fields/date-offset.jsx:92
 msgid "Custom interval in seconds"
 msgstr "Intervallo personalizzato in secondi"
 
-#: components/data-fields/date-offset.jsx:95
+#: components/data-fields/date-offset.jsx:97
 msgid "Forever"
 msgstr "Per sempre"
 
-#: components/data-fields/date-offset.jsx:96
+#: components/data-fields/date-offset.jsx:98
 msgid "Specific date"
 msgstr "Data specifica"
 
-#: components/data-fields/date-offset.jsx:97
+#: components/data-fields/date-offset.jsx:99
 msgid "For a number of times"
 msgstr "Per un numero di volte"
 
-#: components/data-fields/date-offset.jsx:119
-msgid "Avoid duplicated action"
-msgstr "Evita azioni duplicate"
-
-#: components/data-fields/date-offset.jsx:125
+#: components/data-fields/date-offset.jsx:121
 msgid "When to run"
 msgstr "Quando eseguire"
 
-#: components/data-fields/date-offset.jsx:134
+#: components/data-fields/date-offset.jsx:130
 msgid "Date source"
 msgstr "Fonte della data"
 
-#: components/data-fields/date-offset.jsx:150
+#: components/data-fields/date-offset.jsx:146
 msgid "Offset"
 msgstr "Offset"
 
-#: components/data-fields/date-offset.jsx:164
-msgid "For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English."
-msgstr "Per informazioni sulla formattazione, vedere la funzione %sPHP strtotime%s . Ad esempio, si può inserire %s+1 mese%s o %s+1 settimana 2 giorni 4 ore 2 secondi%s o %sgiovedì prossimo%s. Utilizzare solo frasi in inglese."
-
-#: components/data-fields/date-offset.jsx:185
+#: components/data-fields/date-offset.jsx:181
 msgid "Repeating Action"
 msgstr "Azione ripetibile"
 
-#: components/data-fields/date-offset.jsx:193
+#: components/data-fields/date-offset.jsx:189
 msgid "Interval in seconds"
 msgstr "Intervalllo in secondi"
 
-#: components/data-fields/date-offset.jsx:202
+#: components/data-fields/date-offset.jsx:198
 msgid "Repeat until"
 msgstr "Ripeti fino a"
 
-#: components/data-fields/date-offset.jsx:210
+#: components/data-fields/date-offset.jsx:206
 msgid "Times to repeat"
 msgstr "Volte da ripetere"
 
-#: components/data-fields/date-offset.jsx:227
+#: components/data-fields/date-offset.jsx:232
 msgid "Priority"
 msgstr "Priorità"
 
@@ -323,11 +315,11 @@ msgstr "Aiuto"
 msgid "Developer Info"
 msgstr "Informazioni sviluppatore"
 
-#: components/node-inspector/index.jsx:96
+#: components/node-inspector/index.jsx:95
 msgid "No element selected."
 msgstr "Nessun elemento selezionato."
 
-#: components/node-inspector/index.jsx:104
+#: components/node-inspector/index.jsx:103
 msgid "Multiple and different elements selected."
 msgstr "Molti e differenti elementi selezionati."
 
@@ -341,19 +333,19 @@ msgstr "Nodo"
 msgid "No description"
 msgstr "Senza descrizione"
 
-#: components/node-inspector/node-data-flow-panel.jsx:14
+#: components/node-inspector/node-data-flow-panel.jsx:60
 msgid "Inputs"
 msgstr "Input"
 
-#: components/node-inspector/node-data-flow-panel.jsx:18
+#: components/node-inspector/node-data-flow-panel.jsx:64
 msgid "This step receives the following input from previous step:"
 msgstr "Questa fase riceve l'input seguente dalla fase precedente:"
 
-#: components/node-inspector/node-data-flow-panel.jsx:34
+#: components/node-inspector/node-data-flow-panel.jsx:80
 msgid "Outputs"
 msgstr "Risultati"
 
-#: components/node-inspector/node-data-flow-panel.jsx:38
+#: components/node-inspector/node-data-flow-panel.jsx:84
 msgid "This step outputs the following data:"
 msgstr "Questa fase mostra i seguenti dati:"
 
@@ -454,18 +446,14 @@ msgstr "Flusso di lavoro"
 msgid "Element"
 msgstr "Elemento"
 
-#: components/settings-sidebar/settings-sidebar.jsx:48
+#: components/settings-sidebar/settings-sidebar.jsx:47
 msgid "Close settings"
 msgstr "Chiudi impostazioni"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/settings-sidebar/settings-sidebar.jsx:52
+#: components/settings-sidebar/settings-sidebar.jsx:51
 msgid "Settings"
 msgstr "Impostazioni"
-
-#: components/welcome-guide/index.jsx:21
-msgid "Welcome to workflow editor"
-msgstr "Benvenuto nell'editor del flusso di lavoro"
 
 #: components/welcome-guide/index.jsx:22
 msgid "Get started"
@@ -479,26 +467,17 @@ msgstr "Vuoi davvero eliminare questo flusso di lavoro?"
 msgid "Move to trash"
 msgstr "Sposta nel cestino"
 
-#: components/workflow-global-variables/index.jsx:28
+#: components/node-inspector/node-data-flow-panel.jsx:100
 msgid "Global Variables"
 msgstr "Variabili globali"
 
 #: components/node-dev-info-panel/index.jsx:18
-#: components/workflow-global-variables/index.jsx:37
 msgid "Loading..."
 msgstr "Caricamento in corso…"
 
-#: components/workflow-global-variables/index.jsx:43
+#: components/node-inspector/node-data-flow-panel.jsx:104
 msgid "No global variables are declared"
 msgstr "Nessuna variabile globale dichiarata"
-
-#: components/workflow-global-variables/index.jsx:48
-msgid "Variables list"
-msgstr "Elenco variabili"
-
-#: components/workflow-global-variables/index.jsx:76
-msgid "Global variables are available to all nodes in the workflow that accepts variables."
-msgstr "Le variabili globali sono disponibili per tutti i nodi del flusso di lavoro che accetta variabili."
 
 #. translators: button label text should, if possible, be under 16 characters.
 #: components/workflow-publish-button/index.jsx:82
@@ -567,15 +546,15 @@ msgstr "Bozza"
 msgid "Switch to draft"
 msgstr "Passa alla bozza"
 
-#: components/data-fields/date-offset.jsx:70
+#: components/data-fields/date-offset.jsx:72
 msgid "Relative to a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:75
+#: components/data-fields/date-offset.jsx:77
 msgid "Selected in the calendar"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:76
+#: components/data-fields/date-offset.jsx:78
 msgid "When the trigger is activated"
 msgstr ""
 
@@ -595,11 +574,11 @@ msgstr ""
 msgid "Search for actions"
 msgstr ""
 
-#: components/node-types/placeholder.jsx:160
+#: components/node-types/placeholder.jsx:166
 msgid "Search for steps"
 msgstr ""
 
-#: components/node-types/placeholder.jsx:186
+#: components/node-types/placeholder.jsx:192
 #: components/node-types/trigger-placeholder.jsx:13
 #: components/secondary-sidebar/menu.jsx:201
 msgid "Search for triggers and steps"
@@ -613,67 +592,136 @@ msgstr ""
 msgid "All checks have passed for this step."
 msgstr ""
 
-#: components/node-validator/index.jsx:49
+#: components/node-validator/index.jsx:50
 msgid "This step requires a connection from a previous step."
 msgstr ""
 
-#: components/node-validator/index.jsx:59
+#: components/node-validator/index.jsx:60
 msgid "This step requires a connection to a following step."
 msgstr ""
 
-#: components/node-validator/index.jsx:122
-#: components/node-validator/index.jsx:133
+#: components/node-validator/index.jsx:123
+#: components/node-validator/index.jsx:134
 msgid "The field %s is required."
 msgstr ""
 
-#: components/node-validator/index.jsx:154
+#: components/node-validator/index.jsx:155
 msgid "The field %s must be a valid email address."
 msgstr ""
 
-#: components/node-validator/index.jsx:170
+#: components/node-validator/index.jsx:171
 msgid "The field %s must be a valid email address list separated by commas."
 msgstr ""
 
-#: components/node-validator/index.jsx:184
+#: components/node-validator/index.jsx:185
 msgid "The field %s must be an integer."
 msgstr ""
 
-#: components/node-validator/index.jsx:199
+#: components/node-validator/index.jsx:200
 msgid "The field %s must be an integer list separated by commas."
 msgstr ""
 
-#: components/node-inspector/index.jsx:114
+#: components/node-inspector/index.jsx:113
 msgid "%d steps selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:117
+#: components/node-inspector/index.jsx:116
 msgid "Multiple steps selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:128
+#: components/node-inspector/index.jsx:127
 msgid "%d connections selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:131
+#: components/node-inspector/index.jsx:130
 msgid "Multiple connections selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:168
+#: components/node-inspector/index.jsx:163
 msgid "Connection"
 msgstr ""
 
-#: components/node-inspector/index.jsx:169
+#: components/node-inspector/index.jsx:164
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:12
+#: components/node-inspector/node-data-flow-panel.jsx:58
 msgid "Step Data Flow"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:29
+#: components/node-inspector/node-data-flow-panel.jsx:75
 msgid "This step does not receive any input from previous step."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:49
+#: components/node-inspector/node-data-flow-panel.jsx:95
 msgid "This step does not output any data."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:223
+msgid "Prevent duplicate scheduling"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:226
+msgid "If enabled, the step will prevent the step from being accidentally scheduled multiple times."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:235
+msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
+msgstr ""
+
+#: components/flow-editor/index.jsx:334
+msgid "Auto layout applied."
+msgstr ""
+
+#: components/welcome-guide/index.jsx:21
+msgid "Welcome to the workflow editor"
+msgstr ""
+
+#: components/workflow-store/actions.jsx:29
+msgid "Unable to create a new workflow. Please try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:48
+msgid "Unable to load the workflow. Please try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:86
+msgid "Workflow saved as draft."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:94
+#: components/workflow-store/actions.jsx:131
+msgid "Unable to save workflow. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:123
+msgid "Workflow saved."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:168
+msgid "Workflow published."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:176
+msgid "Unable to publish the workflow. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:213
+msgid "Workflow switched to draft."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:221
+msgid "Unable to switch workflow to draft. Please, try again."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:305
+msgid "Workflow deleted. Redirecting..."
+msgstr ""
+
+#: components/workflow-store/actions.jsx:316
+msgid "Unable to delete the workflow. Please, try again."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:160
+msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""

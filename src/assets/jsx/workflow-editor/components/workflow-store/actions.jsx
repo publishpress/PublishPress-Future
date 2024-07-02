@@ -2,6 +2,7 @@ import { dispatch, select } from '@wordpress/data';
 import { apiFetch } from '@wordpress/data-controls';
 import { STORE_NAME } from './name';
 import { apiUrl, nonce } from 'future-workflow-editor';
+import { __ } from '@wordpress/i18n';
 
 const editableAttributes = ['title', 'description', 'flow', 'status'];
 
@@ -24,6 +25,9 @@ export function* setupEditor(workflowId) {
 
             yield {type: 'CREATE_WORKFLOW_SUCCESS', payload: workflow};
         } catch (error) {
+            dispatch('core/notices').createErrorNotice(
+                __('Unable to create a new workflow. Please try again.', 'publishpress-future-pro')
+            );
             // TODO: Show error message
             yield {type: 'CREATE_WORKFLOW_FAILURE'};
         }
@@ -40,7 +44,9 @@ export function* setupEditor(workflowId) {
 
             yield {type: 'LOAD_WORKFLOW_SUCCESS', payload: workflow};
         } catch (error) {
-            // TODO: Show error message
+            dispatch('core/notices').createErrorNotice(
+                __('Unable to load the workflow. Please try again.', 'publishpress-future-pro')
+            );
             yield {type: 'LOAD_WORKFLOW_FAILURE'};
         }
     }
@@ -75,10 +81,20 @@ export function* saveAsDraft({ screenshot }) {
         }
 
         yield {type: 'SAVE_AS_DRAFT_SUCCESS', payload: newWorkflow};
+
+        dispatch('core/notices').createSuccessNotice(
+            __('Workflow saved as draft.', 'publishpress-future-pro'),
+            {
+                type: 'snackbar',
+                isDismissible: true,
+            }
+        );
     } catch (error) {
-        // TODO: Show error message
+        dispatch('core/notices').createErrorNotice(
+            __('Unable to save workflow. Please, try again.', 'publishpress-future-pro')
+        );
+
         yield {type: 'SAVE_AS_DRAFT_FAILURE'};
-        console.log('error', error);
     }
 }
 
@@ -102,9 +118,20 @@ export function* saveAsCurrentStatus({ screenshot }) {
         });
 
         yield {type: 'SAVE_AS_CURRENT_STATUS_SUCCESS', payload: newWorkflow};
+
+        dispatch('core/notices').createSuccessNotice(
+            __('Workflow saved.', 'publishpress-future-pro'),
+            {
+                type: 'snackbar',
+                isDismissible: true,
+            }
+        );
     } catch (error) {
+        dispatch('core/notices').createErrorNotice(
+            __('Unable to save workflow. Please, try again.', 'publishpress-future-pro')
+        );
+
         yield {type: 'SAVE_AS_CURRENT_STATUS_FAILURE'};
-        console.log('error', error);
     }
 }
 
@@ -136,10 +163,20 @@ export function* publishWorkflow({ screenshot }) {
         }
 
         yield {type: 'PUBLISH_WORKFLOW_SUCCESS', payload: newWorkflow};
+
+        dispatch('core/notices').createSuccessNotice(
+            __('Workflow published.', 'publishpress-future-pro'),
+            {
+                type: 'snackbar',
+                isDismissible: true,
+            }
+        );
     } catch (error) {
-        // TODO: Show error message
+        dispatch('core/notices').createErrorNotice(
+            __('Unable to publish the workflow. Please, try again.', 'publishpress-future-pro')
+        );
+
         yield {type: 'PUBLISH_WORKFLOW_FAILURE'};
-        console.log('error', error);
     }
 }
 
@@ -171,10 +208,20 @@ export function* switchToDraft({ screenshot }) {
         }
 
         yield {type: 'SWITCH_TO_DRAFT_SUCCESS', payload: newWorkflow};
+
+        dispatch('core/notices').createSuccessNotice(
+            __('Workflow switched to draft.', 'publishpress-future-pro'),
+            {
+                type: 'snackbar',
+                isDismissible: true,
+            }
+        );
     } catch (error) {
-        // TODO: Show error message
+        dispatch('core/notices').createErrorNotice(
+            __('Unable to switch workflow to draft. Please, try again.', 'publishpress-future-pro')
+        );
+
         yield {type: 'SWITCH_TO_DRAFT_FAILURE'};
-        console.log('error', error);
     }
 }
 
@@ -254,12 +301,22 @@ export function* deleteWorkflow () {
 
         yield {type: 'DELETE_WORKFLOW_SUCCESS', payload: newWorkflow};
 
+        dispatch('core/notices').createSuccessNotice(
+            __('Workflow deleted. Redirecting...', 'publishpress-future-pro'),
+            {
+                type: 'snackbar',
+                isDismissible: true,
+            }
+        );
+
         // Redirect to the workflow list
         window.location.href = `edit.php?post_type=ppfuture_workflow`;
     } catch (error) {
-        // TODO: Show error message
+        dispatch('core/notices').createErrorNotice(
+            __('Unable to delete the workflow. Please, try again.', 'publishpress-future-pro')
+        );
+
         yield {type: 'DELETE_WORKFLOW_FAILURE'};
-        console.log('error', error);
     }
 }
 

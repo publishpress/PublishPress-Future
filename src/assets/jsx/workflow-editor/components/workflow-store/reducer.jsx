@@ -1,3 +1,4 @@
+import { MarkerType } from 'reactflow';
 import {
     POST_TYPE,
     NODE_TYPE_PLACEHOLDER
@@ -52,6 +53,35 @@ const loadWorkflowStart = (state, action) => {
     };
 }
 
+// Update the markerEnd for each edge
+const normalizeMarkerEnd = (payload) => {
+    return payload.map(edge => {
+        if (edge.type !== 'genericEdge') {
+            return edge;
+        }
+
+        return {
+            ...edge,
+            markerEnd: {
+                type: MarkerType.ArrowClosed,
+            },
+        };
+    });
+}
+
+const removeBrokenConnections = (nodes, edges) => {
+    return edges.filter(edge => {
+        const sourceNode = nodes.find(node => node.id === edge.source);
+        const targetNode = nodes.find(node => node.id === edge.target);
+
+        if (! sourceNode || ! targetNode) {
+            return false;
+        }
+
+        return true;
+    });
+}
+
 function _setInitialStateForGlobalVariables(state, workflow = {}) {
     state = setGlobalVariable(state, {
         payload: {
@@ -96,7 +126,7 @@ const loadWorkflowSuccess = (state, action) => {
     const { payload } = action;
 
     let nodes = payload.flow?.nodes || [];
-    const edges = payload.flow?.edges || [];
+    let edges = payload.flow?.edges || [];
     const initialViewport = payload.flow?.viewport || DEFAULT_STATE.viewport;
 
     nodes.map(node => {
@@ -112,6 +142,9 @@ const loadWorkflowSuccess = (state, action) => {
     if (! nodes.length) {
         nodes = [newTriggerPlaceholderNode()];
     }
+
+    edges = normalizeMarkerEnd(edges);
+    edges = removeBrokenConnections(nodes, edges);
 
     state = _setInitialStateForGlobalVariables(state, payload);
 
@@ -344,9 +377,11 @@ const addNode = (state, action) => {
 const setEdges = (state, action) => {
     const { payload } = action;
 
+    const updatedEdges = normalizeMarkerEnd(payload);
+
     return {
         ...state,
-        edges: payload,
+        edges: updatedEdges,
     };
 }
 
@@ -629,11 +664,14 @@ const resetNodeErrors = (state, action) => {
 const removeNode = (state, action) => {
     const { payload } = action;
 
+    // Remove the edges that are connected to the node
+    const newEdges = state.edges.filter(edge => edge.source !== payload && edge.target !== payload);
     const newNodes = state.nodes.filter(node => node.id !== payload);
 
     return {
         ...state,
         nodes: newNodes,
+        edges: newEdges,
         selectedNodes: [],
         selectedEdges: [],
     };

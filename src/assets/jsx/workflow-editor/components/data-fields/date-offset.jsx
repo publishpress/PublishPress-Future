@@ -2,13 +2,15 @@ import { sprintf, __ } from "@wordpress/i18n";
 import {
     TreeSelect,
     DatePicker,
-    TextControl
+    TextControl,
+    PanelRow,
+    Popover,
+    Button,
+    ToggleControl,
+    __experimentalVStack as VStack,
 } from "@wordpress/components";
 import { VariablesTreeSelect } from "../variables-tree-select";
-import { Popover, Button } from "@wordpress/components";
 import { useState } from "@wordpress/element";
-import { ToggleControl } from "@wordpress/components";
-import { __experimentalVStack as VStack } from "@wordpress/components";
 import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
@@ -115,12 +117,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     return (
         <>
             <VStack>
-                <ToggleControl
-                    label={__("Avoid duplicated action", "publishpress-future-pro")}
-                    checked={defaultValue.unique || false}
-                    onChange={(value) => onChangeSetting({ settingName: "unique", value })}
-                />
-
                 <TreeSelect
                     label={__("When to run", "publishpress-future-pro")}
                     tree={whenToRunOptions}
@@ -161,7 +157,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
                                                 <div dangerouslySetInnerHTML={{
                                                     __html: sprintf(
-                                                        __("For information on formatting, see %sPHP strtotime function%s . For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please, use only phrases in English.", "publishpress-future-pro"),
+                                                        __("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "publishpress-future-pro"),
                                                         "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>",
                                                         "</a>",
                                                         "<code>",
@@ -222,11 +218,21 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
 
+                <PanelRow>
+                    <ToggleControl
+                        label={__("Prevent duplicate scheduling", "publishpress-future-pro")}
+                        checked={defaultValue.unique || false}
+                        onChange={(value) => onChangeSetting({ settingName: "unique", value })}
+                        help={__("If enabled, the step will prevent the step from being accidentally scheduled multiple times.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
+                    />
+                </PanelRow>
+
                 {isAdvancedSettingsEnabled && (
                     <TextControl
                         label={__("Priority", "publishpress-future-pro")}
                         value={defaultValue.priority}
                         onChange={(value) => onChangeSetting({ settingName: "priority", value })}
+                        help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
                     />
                 )}
             </VStack>

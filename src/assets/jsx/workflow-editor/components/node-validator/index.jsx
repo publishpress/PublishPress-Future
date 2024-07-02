@@ -4,7 +4,8 @@ import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
 import { __, sprintf } from "@wordpress/i18n";
 import { nodeHasIncomers, nodeHasOutgoers, getNodeIncomers, getNodeIncomersRecursively } from "../../utils";
-import validator from "validator";
+import isEmail from "validator/lib/isEmail";
+import isInt from "validator/lib/isInt";
 
 export function NodeValidator({})
 {
@@ -146,7 +147,7 @@ export function NodeValidator({})
                             }
 
                             if (type === 'email') {
-                                if (! validator.isEmail(settingValue)) {
+                                if (! isEmail(settingValue)) {
                                     addNodeError(
                                         node.id,
                                         `${fieldName}-email`,
@@ -162,7 +163,7 @@ export function NodeValidator({})
                                 for (let i = 0; i < emails.length; i++) {
                                     email = emails[i].trim();
 
-                                    if (!validator.isEmail(email)) {
+                                    if (!isEmail(email)) {
                                         addNodeError(
                                             node.id,
                                             `${fieldName}-emailList`,
@@ -176,7 +177,7 @@ export function NodeValidator({})
                                     }
                                 }
                             } else if (type === 'integer') {
-                                if (!validator.isInt(settingValue)) {
+                                if (!isInt(settingValue)) {
                                     addNodeError(
                                         node.id,
                                         `${fieldName}-integer`,
@@ -191,7 +192,7 @@ export function NodeValidator({})
                                 for (let i = 0; i < settingValue.length; i++) {
                                     integer = settingValue[i].trim();
 
-                                    if (!validator.isInt(integer)) {
+                                    if (!isInt(integer)) {
                                         addNodeError(
                                             node.id,
                                             `${fieldName}-integerList`,

@@ -13,7 +13,6 @@ import {
 import { SIDEBAR_WORKFLOW, SIDEBAR_NODE_EDGE } from './constants';
 import { WorkflowSummary } from '../workflow-summary';
 import { NodeInspector } from '../node-inspector';
-import WorkflowGlobalVariables from '../workflow-global-variables';
 import { store as editorStore } from '../editor-store';
 
 
@@ -57,9 +56,6 @@ export const SettingsSidebar = () => {
             {sidebarName === SIDEBAR_WORKFLOW && (
                 <>
                     <WorkflowSummary />
-                    {isAdvancedSettingsEnabled && (
-                        <WorkflowGlobalVariables />
-                    )}
                 </>
             )}
             {sidebarName === SIDEBAR_NODE_EDGE && (

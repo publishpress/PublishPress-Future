@@ -1,0 +1,13 @@
+.workflow-editor-notices__snackbar-list {
+    position: fixed;
+    bottom: 35px;
+    left: 220px;
+}
+
+.folded .workflow-editor-notices__snackbar-list {
+    left: 92px;
+}
+
+.is-fullscreen-mode .workflow-editor-notices__snackbar-list {
+    left: 60px;
+}

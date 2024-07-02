@@ -14,7 +14,7 @@ import {
     NODE_TYPE_TRIGGER
 } from '../../constants';
 import InserterSearchResults from '../secondary-sidebar/inserter-search-results';
-import { useReactFlow, addEdge } from 'reactflow';
+import { useReactFlow, addEdge, MarkerType } from 'reactflow';
 import { createNewNode } from '../../utils';
 import PlusIcon from '../icons/plus';
 
@@ -115,6 +115,9 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
                     targetHandle: firstTargetHandleId,
                     type: 'genericEdge',
                     id: `${draggingFromHandle.sourceId}-${draggingFromHandle.handleId}-${newNode.id}-${firstTargetHandleId}`,
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                    },
                 };
             } else {
                 firstTargetHandleId = nodeType.handleSchema.source[0].id;
@@ -125,6 +128,9 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
                     targetHandle: draggingFromHandle.handleId,
                     type: 'genericEdge',
                     id: `${newNode.id}-${firstTargetHandleId}-${draggingFromHandle.sourceId}-${draggingFromHandle.handleId}`,
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                    },
                 };
             }
 

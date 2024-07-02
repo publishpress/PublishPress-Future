@@ -19,6 +19,7 @@ export function GenericEdge({
     targetPosition,
     style = {},
     selected,
+    markerEnd,
 }) {
     const {
         isSingularElementSelected,
@@ -45,12 +46,6 @@ export function GenericEdge({
 
     const onEdgeClick = () => {
         removeEdge(id);
-    }
-
-    const markerEnd = {
-        type: MarkerType.ArrowClosed,
-        width: 20,
-        height: 10,
     }
 
     const edgeStyle = {

@@ -78,7 +78,7 @@ class ScheduledActions implements InitializableInterface
         return $title;
     }
 
-    public function showArgsInArgsColumn($args, $row)
+    public function showArgsInArgsColumn($html, $row)
     {
         $actionModel = new ScheduledActionsModel();
         $actionModel->load($row['ID']);
@@ -87,21 +87,28 @@ class ScheduledActions implements InitializableInterface
         $args = $actionModel->getArgs();
 
         if (empty($args)) {
-            return $args;
+            return $html;
         }
 
         if (isset($args[0])) {
             $args = $args[0];
         }
 
-        $argsText = '';
         switch ($hook) {
             case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
                 if (! isset($args['contextVariables']['global']['workflow'])) {
-                    return $args;
+                    return $html;
                 }
 
-                $workflowId = $args['contextVariables']['global']['workflow'] ?? 0;
+                $argsText = '';
+
+                // Before v3.4.1 the plugin version was not set in the arguments
+                if (isset($args['pluginVersion'])) {
+                    $workflowId = $args['contextVariables']['global']['workflow']['value'] ?? 0;
+                } else {
+                    $workflowId = $args['contextVariables']['global']['workflow'] ?? 0;
+                }
+
                 $workflowModel = new WorkflowModel();
                 $workflowModel->load($workflowId);
 
@@ -147,17 +154,45 @@ class ScheduledActions implements InitializableInterface
                 }
                 $nextNodes .= '</ul>';
 
-                $argsText = __('Workflow:', 'publishpress-future-pro') . ' ' . $workflowTitle;
-                $argsText .= '<br>';
-                $argsText .= __('Steps:', 'publishpress-future-pro') . '<br>' . $nextNodes;
+                $argsText = '<strong>' . __('Workflow:', 'publishpress-future-pro') . '</strong> '
+                    . $workflowTitle . '<br>';
+
+                if (isset($args['pluginVersion'])) {
+                    $argsText .= '<strong>' . __('Trigger: ', 'publishpress-future-pro') . '</strong>'
+                        . $args['contextVariables']['global']['trigger']['value']['label'] . '<br>';
+
+                    // Check if the trigger is related to a post
+                    if (isset($args['contextVariables']['global']['trigger']['value']['slug'])) {
+                        $nodeSlug = $args['contextVariables']['global']['trigger']['value']['slug'];
+
+                        if (isset($args['contextVariables'][$nodeSlug]['postId'])) {
+                            $postId = $args['contextVariables'][$nodeSlug]['postId']['value'];
+                            $post = get_post($postId);
+
+                            if ($post instanceof \WP_Post) {
+                                $postPermaling = get_permalink($post->ID);
+                                $argsText .= '<strong>' . __('Post:', 'publishpress-future-pro')
+                                    . '</strong> <a target="_blank" href="' . esc_url($postPermaling) . '">'
+                                    . $post->post_title . '</a><br>';
+                            }
+                        }
+                    }
+                } else {
+                    $argsText .= '<strong>' . __('Trigger: ', 'publishpress-future-pro') . '</strong>'
+                        . $args['contextVariables']['global']['trigger']['label'] . '<br>';
+                }
+
+                $argsText .= '<strong>' . __('Steps:', 'publishpress-future-pro') . '</strong><br>' . $nextNodes;
+
+                $html = $argsText;
                 break;
 
             case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
-                $argsText = __('Workflow recurring scheduled action', 'publishpress-future-pro');
+                $html = __('Workflow recurring scheduled action', 'publishpress-future-pro');
                 break;
         }
 
-        return $argsText;
+        return $html;
     }
 
     public function enqueueScripts($hook)

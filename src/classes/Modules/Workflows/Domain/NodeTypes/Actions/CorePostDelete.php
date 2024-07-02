@@ -29,12 +29,12 @@ class CorePostDelete implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Delete Post", "publishpress-future-pro");
+        return __("Delete post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __("This action deletes a post.", "publishpress-future-pro");
+        return __("This step deletes a post.", "publishpress-future-pro");
     }
 
     public function getIcon(): string

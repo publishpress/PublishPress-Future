@@ -105,6 +105,10 @@ class Module implements ModuleInterface
                                 [
                                     'base' => 'future_page_publishpress-future-scheduled-actions',
                                     'id' => 'future_page_publishpress-future-scheduled-actions'
+                                ],
+                                [
+                                    'base' => 'future_page_publishpress_future_pro_features_ads',
+                                    'id' => 'future_page_publishpress_future_pro_features_ads'
                                 ]
                             ]
                         ];

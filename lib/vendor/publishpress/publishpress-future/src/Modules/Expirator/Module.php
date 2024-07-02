@@ -182,7 +182,7 @@ class Module implements ModuleInterface
 
     private function factoryShortcodeController()
     {
-        return new Controllers\ShortcodeController();
+        return new Controllers\ShortcodeController($this->hooks);
     }
 
     private function factoryPostsListController()

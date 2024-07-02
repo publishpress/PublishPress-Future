@@ -6,13 +6,25 @@ use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\EmailResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule as NodeTypeCoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
+use WP_CLI\Fetchers\Post;
 
 class CoreSchedule implements NodeRunnerInterface
 {
@@ -43,18 +55,32 @@ class CoreSchedule implements NodeRunnerInterface
      */
     private $nodeTypesModel;
 
+    /**
+     * @var WorkflowVariablesHandlerInterface
+     */
+    private $variablesHandler;
+
+    /**
+     * @var string
+     */
+    private $pluginVersion;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         CronInterface $cron,
         CronSchedulesModelInterface $cronSchedulesModel,
-        NodeTypesModelInterface $nodeTypesModel
+        NodeTypesModelInterface $nodeTypesModel,
+        WorkflowVariablesHandlerInterface $variablesHandler,
+        string $pluginVersion
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->cron = $cron;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->nodeTypesModel = $nodeTypesModel;
+        $this->variablesHandler = $variablesHandler;
+        $this->pluginVersion = $pluginVersion;
     }
 
     public static function getNodeTypeName(): string
@@ -186,7 +212,7 @@ class CoreSchedule implements NodeRunnerInterface
                 } elseif ($dateSource === 'event') {
                     $timestamp = time();
                 } else {
-                    $timestamp = $this->nodeRunnerProcessor->getVariableValueFromContextVariables(
+                    $timestamp = $this->variablesHandler->parseNestedVariableValue(
                         $dateSource,
                         $contextVariables
                     );
@@ -221,32 +247,28 @@ class CoreSchedule implements NodeRunnerInterface
 
     private function compactArguments(array $step, array $contextVariables): array
     {
-        $compactedArgs = [];
-        $compactedArgs['step'] = $step;
-        $compactedArgs['contextVariables'] = $contextVariables;
-        $compactedArgs['contextVariables']['global'] = [];
-        $compactedArgs['contextVariables']['global']['workflow'] =
-            $this->nodeRunnerProcessor->getWorkflowIdFromContextVariables($contextVariables);
-        $compactedArgs['contextVariables']['global']['user'] = $contextVariables['global']['user']['id'] ?? '0';
-        $compactedArgs['contextVariables']['global']['site'] = get_bloginfo('site_id');
-        $compactedArgs['contextVariables']['global']['trigger'] = $contextVariables['global']['trigger']['id'] ?? '0';
+        $compactedArgs = [
+            'pluginVersion' => $this->pluginVersion,
+            'step' => $step,
+            'contextVariables' => $contextVariables,
+        ];
 
         foreach ($compactedArgs['contextVariables'] as $context => &$variables) {
             if (is_array($variables)) {
-                foreach ($variables as $key => &$value) {
-                    if (is_object($value)) {
-                        $className = get_class($value);
-                        if ('WP_Post' === $className) {
-                            $value = [
-                                'class' => 'WP_Post',
-                                'id' => $value->ID,
-                                'diff' => $this->getPostDifferences($value, get_post($value->ID)),
-                            ];
-                        } elseif ('WP_User' === $className) {
-                            $value = [
-                                'class' => 'WP_User',
-                                'id' => $value->ID,
-                            ];
+                foreach ($variables as &$variableResolver) {
+                    if (is_object($variableResolver)) {
+                        $diff = null;
+                        if ($variableResolver->getType() === 'post') {
+                            $diff = $this->getPostDifferences(
+                                $variableResolver->getVariable(),
+                                get_post($variableResolver->getValue('ID'))
+                            );
+                        }
+
+                        $variableResolver = $variableResolver->compact();
+
+                        if ($diff) {
+                            $variableResolver['diff'] = $diff;
                         }
                     }
                 }
@@ -278,93 +300,199 @@ class CoreSchedule implements NodeRunnerInterface
             'contextVariables' => [],
         ];
 
+        // Before v3.4.1 the pluginVersion was not included in the compacted arguments
+        $isLegacyCompact = ! isset($compactArguments['pluginVersion']);
+
+        /**
+         * Example of the different types of compacted arguments, LEGACY is the format
+         * before v3.4.1.
+         *
+         * ----------------------------------------
+         * LEGACY compacted arguments:
+         *
+         *   ...
+         *   "contextVariables": {
+         *      "global": {
+         *          "workflow": 1417,
+         *          "user": 1,
+         *          "site": "Future Pro Workflow Dev",
+         *          "trigger": "onPostUpdated_ebtrjpm"
+         *      },
+         *      "onPostUpdated1": {
+         *          "postId": 1402,
+         *          "postBefore": {
+         *              "class": "WP_Post",
+         *              "id": 1402,
+         *              "diff": {
+         *                  "post_title": "Custom Development??",
+         *                  "post_status": "draft",
+         *                  "post_modified": "2024-06-27 15:10:06",
+         *                  "post_modified_gmt": "2024-06-27 18:10:06"
+         *              }
+         *          },
+         *          "postAfter": {
+         *              "class": "WP_Post",
+         *              "id": 1402,
+         *              "diff": []
+         *          }
+         *      }
+         *  }
+         *  ...
+         * ----------------------------------------
+         * NEW compacted arguments:
+         *
+         *  "contextVariables": {
+         *    "global": {
+         *        "workflow": {
+         *            "type": "workflow",
+         *            "value": 1417
+         *        },
+         *        "user": {
+         *            "type": "user",
+         *            "value": 1
+         *        },
+         *        "site": {
+         *            "type": "site",
+         *            "value": "Future Pro Workflow Dev"
+         *        },
+         *        "trigger": {
+         *            "type": "node",
+         *            "value": {
+         *                "id": "onPostUpdated_ebtrjpm",
+         *                "name": "trigger\/core.post-updated",
+         *                "label": "Post is updated",
+         *                "activation_timestamp": "2024-06-27 18:19:24"
+         *            }
+         *        }
+         *    },
+         *    "onPostUpdated1": {
+         *        "postId": {
+         *            "type": "integer",
+         *            "value": 1402
+         *        },
+         *        "postBefore": {
+         *            "type": "post",
+         *            "value": 1402,
+         *            "diff": {
+         *                "post_title": "Custom Development??",
+         *                "post_status": "draft",
+         *                "post_modified": "2024-06-27 15:16:56",
+         *                "post_modified_gmt": "2024-06-27 18:16:56"
+         *            }
+         *        },
+         *        "postAfter": {
+         *            "type": "post",
+         *            "value": 1402
+         *        }
+         *    }
+         *}
+         */
+
         foreach ($compactArguments['contextVariables'] as $context => $variables) {
             foreach ($variables as $variableName => $value) {
-                if (is_array($value) && isset($value['class'])) {
-                    if ($value['class'] === 'WP_Post') {
-                        $expandedArgs['contextVariables'][$context][$variableName] = get_post($value['id']);
+                $type = 'unknown';
 
-                        if (! empty($value['diff'])) {
-                            foreach ($value['diff'] as $diffKey => $diffValue) {
-                                ($expandedArgs['contextVariables'][$context][$variableName])->$diffKey = $diffValue;
+                if ($isLegacyCompact) {
+                    if ($variableName === 'workflow') {
+                        $type = 'worfklow';
+                    } elseif ($variableName === 'user') {
+                        $type = 'user';
+                    } elseif ($variableName === 'site') {
+                        $type = 'site';
+                    } elseif ($variableName === 'trigger') {
+                        $type = 'node';
+                    } elseif (is_array($value)) {
+                        $type = 'array';
+
+                        if (isset($value['class'])) {
+                            if ($value['class'] === 'WP_Post') {
+                                $type = 'post';
+                            } elseif ($value['class'] === 'WP_User') {
+                                $type = 'user';
                             }
                         }
-                    } elseif ($value['class'] === 'WP_User') {
-                        $expandedArgs['contextVariables'][$context][$variableName] = get_user_by('id', $value['id']);
+                    } elseif (is_numeric($value)) {
+                        $type = 'integer';
+                    } elseif (is_string($value)) {
+                        $type = 'string';
+                    }
+                } else {
+                    $type = $value['type'] ?? 'unknown';
+                }
+
+                $resolversMap = [
+                    'array' => ArrayResolver::class,
+                    'boolean' => BooleanResolver::class,
+                    'datetime' => DatetimeResolver::class,
+                    'email' => EmailResolver::class,
+                    'integer' => IntegerResolver::class,
+                    'node' => NodeResolver::class,
+                    'post' => PostResolver::class,
+                    'site' => SiteResolver::class,
+                    'user' => UserResolver::class,
+                    'workflow' => WorkflowResolver::class,
+                ];
+
+
+                if (! $isLegacyCompact) {
+                    $resolverArgument = $value['value'] ?? null;
+                } else {
+                    $resolverArgument = $value;
+                }
+
+                switch ($type) {
+                    case 'post':
+                        if ($isLegacyCompact) {
+                            $postId = (int)$value['id'];
+                        } else {
+                            $postId = (int)$value['value'];
+                        }
+
+                        $resolverArgument = get_post($postId);
+
+                        break;
+                    case 'user':
+                        if ($isLegacyCompact) {
+                            $userId = (int)$value;
+                        } else {
+                            $userId = (int)$value['value'];
+                        }
+
+                        $resolverArgument = get_user_by('id', $userId);
+                        break;
+                    case 'workflow':
+                        if ($isLegacyCompact) {
+                            $workflowId = (int)$value;
+                        } else {
+                            $workflowId = (int)$value['value'];
+                        }
+
+                        $workflowModel = new WorkflowModel();
+                        $workflowModel->load($workflowId);
+                        $resolverArgument = [
+                            'id' => $workflowModel->getId(),
+                            'title' => $workflowModel->getTitle(),
+                            'description' => $workflowModel->getDescription(),
+                            'modified_at' => $workflowModel->getModifiedAt(),
+                        ];
+                        break;
+                }
+
+                if (isset($resolversMap[$type])) {
+                    $resolverClass = $resolversMap[$type];
+
+                    if ($type === 'site') {
+                        $expandedArgs['contextVariables'][$context][$variableName] = new $resolverClass();
                     } else {
-                        $expandedArgs['contextVariables'][$context][$variableName] = $value;
+                        $expandedArgs['contextVariables'][$context][$variableName] = new $resolverClass(
+                            $resolverArgument
+                        );
                     }
                 } else {
                     $expandedArgs['contextVariables'][$context][$variableName] = $value;
                 }
             }
         }
-
-        $workflowModel = new WorkflowModel();
-        $workflowModel->load($compactArguments['contextVariables']['global']['workflow']);
-
-        $expandedArgs['contextVariables']['global']['workflow'] = [
-            'id' => $workflowModel->getId(),
-            'title' => $workflowModel->getTitle(),
-            'description' => $workflowModel->getDescription(),
-            'modified_at' => $workflowModel->getModifiedAt(),
-        ];
-
-        $user = get_user_by('id', $compactArguments['contextVariables']['global']['user']);
-        $expandedArgs['contextVariables']['global']['user'] = [];
-        if (is_object($user)) {
-            $expandedArgs['contextVariables']['global']['user'] = [
-                'id' => $user->ID,
-                'user_email' => $user->user_email,
-                'user_login' => $user->user_login,
-                'display_name' => $user->display_name,
-                'roles' => $user->roles,
-                'caps' => $user->caps,
-                'user_registered' => $user->user_registered,
-            ];
-        }
-
-        $expandedArgs['contextVariables']['global']['site'] = [
-            'url' => get_site_url(),
-            'home_url' => get_home_url(),
-            'admin_email' => get_option('admin_email'),
-            'name' => get_bloginfo('name'),
-            'description' => get_bloginfo('description'),
-        ];
-
-        $triggers = $workflowModel->getTriggerNodes();
-        $triggerId = $compactArguments['contextVariables']['global']['trigger'];
-        $triggerNode = null;
-
-        foreach ($triggers as $trigger) {
-            if ($trigger['id'] === $triggerId) {
-                $triggerNode = $trigger;
-                break;
-            }
-        }
-
-        $triggerLabel = '';
-
-        if (isset($triggerNode['data']['label'])) {
-            $triggerLabel = $triggerNode['data']['label'];
-        }
-
-        if (empty($triggerLabel)) {
-            $triggerNodeType = $this->nodeTypesModel->getNodeType($triggerNode['data']['name']);
-            if (is_object($triggerNodeType)) {
-                $triggerLabel = $triggerNodeType->getLabel();
-            }
-        }
-
-        if (empty($triggerLabel)) {
-            $triggerLabel = $triggerNode['data']['label'] ?? 'Unknown';
-        }
-
-        $expandedArgs['contextVariables']['global']['trigger'] = [
-            'id' => $triggerId,
-            'name' => $triggerNode['data']['name'] ?? 'unknown',
-            'label' => $triggerLabel,
-        ];
 
         return $expandedArgs;
     }
@@ -385,7 +513,7 @@ class CoreSchedule implements NodeRunnerInterface
 
         // Check if the workflow is still active
         $workflowModel = new WorkflowModel();
-        $workflowModel->load($args['contextVariables']['global']['workflow']['id']);
+        $workflowModel->load($args['contextVariables']['global']['workflow']->id);
 
         if (! $workflowModel->isActive()) {
             // TODO: Log this into the scheduler log

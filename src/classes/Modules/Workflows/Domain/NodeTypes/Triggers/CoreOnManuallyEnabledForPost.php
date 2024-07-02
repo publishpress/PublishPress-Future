@@ -35,7 +35,7 @@ class CoreOnManuallyEnabledForPost implements NodeTypeInterface
     public function getDescription(): string
     {
         return __(
-            "This trigger activates when the option with manually enabled. It can be enabled via the post editing screen or the Quick Edit panel.", // phpcs:ignore Generic.Files.LineLength.TooLong
+            "This trigger activates when the option is manually enabled. It can be enabled via the post editing screen or the Quick Edit panel.", // phpcs:ignore Generic.Files.LineLength.TooLong
             "publishpress-future-pro"
         );
     }
