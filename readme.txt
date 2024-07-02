@@ -166,7 +166,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
-## [3.4.1] - 26 Jun, 2024
+## [3.4.1] - 02 Jul, 2024
 
 ### Added
 
@@ -179,12 +179,13 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Fix “no future actions” message in the scheduled actions list, #788
 - Try to avoid fatal error for wrong argument counting
 - Minor issues pointed by PHPCS
+- Escape an exception message
 
-### Updated
+### Changed
 
 - Update language files
+- Improve the exception message when the date/time offset is invalid
 - Update composer files for dev dependencies
-- Release checklist
 
 ## [3.4.0.1] - 20 Jun, 2024
 
