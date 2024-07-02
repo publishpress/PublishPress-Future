@@ -132,11 +132,11 @@ class PostTypeDefaultDataModel
 
         if (false === $calculatedDate) {
             // translators: %s is the date/time offset and %s is the post type.
-            $errorMessage = __('Invalid date/time offset "%s" for post type "%s". Please ensure you use only English terms for the date/time offset, such as "3 months" or "1 week".', 'post-expirator');
+            $errorMessage = esc_html__('Invalid date/time offset "%s" for post type "%s". Please ensure you use only English terms for the date/time offset, such as "3 months" or "1 week".', 'post-expirator');
 
             throw new \Exception(
                 sprintf(
-                    $errorMessage,
+                    $errorMessage, // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
                     esc_html($dateTimeOffset),
                     esc_html($this->postType)
                 )
