@@ -50,6 +50,7 @@ abstract class ServicesAbstract
     const MODULE_EXPIRATOR = 'future.free/module-expirator';
     const MODULE_SETTINGS = 'future.free/module-settings';
     const MODULE_VERSION_NOTICES = 'future.free/module-version-notices';
+    const MODULE_PRO_FEATURES_ADS = 'future.free/module-pro-features-ads';
     const POST_MODEL_FACTORY = 'future.free/post-model-factory';
     const TERM_MODEL_FACTORY = 'future.free/term-model-factory';
     const USER_MODEL_FACTORY = 'future.free/user-model-factory';

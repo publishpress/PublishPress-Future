@@ -6,7 +6,7 @@ msgstr ""
 "WordPress Posts - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "POT-Creation-Date: 2024-06-19T17:27:41+00:00\n"
-"PO-Revision-Date: 2024-06-20 06:23+0200\n"
+"PO-Revision-Date: 2024-06-21 01:22+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -361,7 +361,7 @@ msgstr "Réglages des actions"
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:104
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:43
 msgid "Scheduled Actions"
-msgstr "Action planifiée"
+msgstr "Actions planifiées"
 
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:172
 msgid "Log format"

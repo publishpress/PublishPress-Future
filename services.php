@@ -57,6 +57,7 @@ use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
+use PublishPress\Future\Modules\ProFeaturesAds\Module as ProFeaturesAdsModule;
 use PublishPress\Psr\Container\ContainerInterface;
 
 return [
@@ -105,6 +106,10 @@ return [
             ServicesAbstract::MODULE_SETTINGS,
             ServicesAbstract::MODULE_WOOCOMMERCE,
         ];
+
+        if (! defined('PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION')) {
+            $modulesServiceList[] = ServicesAbstract::MODULE_PRO_FEATURES_ADS;
+        }
 
         $modules = [];
         foreach ($modulesServiceList as $service) {
@@ -356,6 +361,17 @@ return [
             $container->get(ServicesAbstract::TAXONOMIES_MODEL_FACTORY),
             $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
             $container->get(ServicesAbstract::MIGRATIONS_FACTORY)
+        );
+    },
+
+    /**
+     * @return ModuleInterface
+     */
+    ServicesAbstract::MODULE_PRO_FEATURES_ADS => static function (ContainerInterface $container) {
+        return new ProFeaturesAdsModule(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::BASE_URL),
+            $container->get(ServicesAbstract::PLUGIN_VERSION)
         );
     },
 

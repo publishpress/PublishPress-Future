@@ -12,7 +12,7 @@ To release the Pro plugin, ensure you complete all the tasks below.
 
 - [ ] Create the release branch as `release-<version>` from the development branch.
 - [ ] Review and merge all relevant Pull Requests into the release branch.
-- [ ] Update the version number in the main plugin file and `readme.txt` (stable version) per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
+- [ ] - [ ] Update the version number to a beta version in the main plugin file as per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
 - [ ] Verify the correct version of the free plugin is referenced in the `lib/composer.json` file. Prefer stable versions.
 - [ ] Start a dev-workspace session.
 - [ ] Run `composer update` (updating root and lib vendors).
@@ -28,11 +28,13 @@ To release the Pro plugin, ensure you complete all the tasks below.
 - [ ] Update the changelog in `/CHANGELOG.md` with a user-friendly description and correct release date.
 - [ ] Update the changelog in `readme.txt`, maintaining records of the last 4-5 releases only.
 - [ ] Confirm there are no uncommitted changes.
-- [ ] Build the zip package with `composer build`, creating a new package in the `./dist` directory.
+- [ ] Build the zip package with `composer build`, creating a new beta package in the `./dist` directory.
 - [ ] Distribute the new package to the team for testing.
 
 ### Release Checklist
 
+- [ ] Update the version number to a stable version in the main plugin file and `readme.txt` as per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
+- [ ] Build the final zip package with `composer build`, creating a new package in the `./dist` directory.
 - [ ] Create and merge a Pull Request for the release branch into the `main` branch.
 - [ ] Merge the `main` branch into the `development` branch.
 - [ ] Establish the GitHub release on the `main` branch with the correct tag.
