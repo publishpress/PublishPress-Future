@@ -28,7 +28,7 @@ class WorkflowResolver implements VariableResolverInterface
 
     public function getValue(string $property = '')
     {
-        switch($property) {
+        switch ($property) {
             case 'id':
             case 'ID':
                 return (int)$this->workflow['ID'];
@@ -93,6 +93,6 @@ class WorkflowResolver implements VariableResolverInterface
 
     public function __toString(): string
     {
-        return json_encode($this->workflow);
+        return wp_json_encode($this->workflow);
     }
 }

@@ -23,7 +23,7 @@ class PostResolver implements VariableResolverInterface
 
     public function getValue(string $property = '')
     {
-        switch($property) {
+        switch ($property) {
             case 'ID':
             case 'id':
                 return $this->post->ID;
@@ -91,7 +91,21 @@ class PostResolver implements VariableResolverInterface
 
     public function __isset($name): bool
     {
-        return in_array($name, ['id', 'ID', 'post_title', 'post_content', 'post_excerpt', 'post_type', 'post_status', 'post_date', 'post_modified', 'permalink']);
+        return in_array(
+            $name,
+            [
+                'id',
+                'ID',
+                'post_title',
+                'post_content',
+                'post_excerpt',
+                'post_type',
+                'post_status',
+                'post_date',
+                'post_modified',
+                'permalink'
+            ]
+        );
     }
 
     public function __get($name)

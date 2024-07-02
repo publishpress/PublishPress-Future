@@ -259,7 +259,10 @@ class CoreSchedule implements NodeRunnerInterface
                     if (is_object($variableResolver)) {
                         $diff = null;
                         if ($variableResolver->getType() === 'post') {
-                            $diff = $this->getPostDifferences($variableResolver->getVariable(), get_post($variableResolver->getValue('ID')));
+                            $diff = $this->getPostDifferences(
+                                $variableResolver->getVariable(),
+                                get_post($variableResolver->getValue('ID'))
+                            );
                         }
 
                         $variableResolver = $variableResolver->compact();
@@ -437,7 +440,7 @@ class CoreSchedule implements NodeRunnerInterface
                     $resolverArgument = $value;
                 }
 
-                switch($type) {
+                switch ($type) {
                     case 'post':
                         if ($isLegacyCompact) {
                             $postId = (int)$value['id'];
@@ -481,7 +484,9 @@ class CoreSchedule implements NodeRunnerInterface
                     if ($type === 'site') {
                         $expandedArgs['contextVariables'][$context][$variableName] = new $resolverClass();
                     } else {
-                        $expandedArgs['contextVariables'][$context][$variableName] = new $resolverClass($resolverArgument);
+                        $expandedArgs['contextVariables'][$context][$variableName] = new $resolverClass(
+                            $resolverArgument
+                        );
                     }
                 } else {
                     $expandedArgs['contextVariables'][$context][$variableName] = $value;

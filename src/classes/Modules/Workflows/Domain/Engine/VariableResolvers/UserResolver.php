@@ -23,7 +23,7 @@ class UserResolver implements VariableResolverInterface
 
     public function getValue(string $property = '')
     {
-        switch($property) {
+        switch ($property) {
             case 'id':
             case 'ID':
                 return $this->user->ID;
@@ -105,6 +105,6 @@ class UserResolver implements VariableResolverInterface
 
     public function __toString(): string
     {
-        return json_encode($this->user);
+        return wp_json_encode($this->user);
     }
 }

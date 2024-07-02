@@ -14,7 +14,7 @@ class SiteResolver implements VariableResolverInterface
 
     public function getValue(string $propertyName = '')
     {
-        switch($propertyName) {
+        switch ($propertyName) {
             case 'name':
                 return $this->getSiteName();
 
@@ -87,7 +87,7 @@ class SiteResolver implements VariableResolverInterface
 
     public function __get($name)
     {
-        switch($name) {
+        switch ($name) {
             case 'name':
                 return $this->getSiteName();
 

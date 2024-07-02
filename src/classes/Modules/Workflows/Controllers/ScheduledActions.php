@@ -154,7 +154,8 @@ class ScheduledActions implements InitializableInterface
                 }
                 $nextNodes .= '</ul>';
 
-                $argsText = '<strong>' . __('Workflow:', 'publishpress-future-pro') . '</strong> ' . $workflowTitle . '<br>';
+                $argsText = '<strong>' . __('Workflow:', 'publishpress-future-pro') . '</strong> '
+                    . $workflowTitle . '<br>';
 
                 if (isset($args['pluginVersion'])) {
                     $argsText .= '<strong>' . __('Trigger: ', 'publishpress-future-pro') . '</strong>'

@@ -24,7 +24,7 @@ class NodeResolver implements VariableResolverInterface
 
     public function getValue(string $propertyName = '')
     {
-        switch($propertyName) {
+        switch ($propertyName) {
             case 'ID':
                 return (int)$this->node['ID'];
 
@@ -91,6 +91,6 @@ class NodeResolver implements VariableResolverInterface
 
     public function __toString(): string
     {
-        return json_encode($this->node);
+        return wp_json_encode($this->node);
     }
 }

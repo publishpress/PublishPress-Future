@@ -77,6 +77,6 @@ class ArrayResolver implements VariableResolverInterface
 
     public function __toString(): string
     {
-        return json_encode($this->variable);
+        return wp_json_encode($this->variable);
     }
 }
