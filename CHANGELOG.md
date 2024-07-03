@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.2] - UNRELEASED
+
+### Fixed
+
+- Fix the UserResolver to accept empty user when a user is not logged in, #832
+
 ## [3.4.1] - 02 Jul, 2024
 
 ### Added
