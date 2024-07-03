@@ -117,7 +117,7 @@
       "php-cs-fixer fix .",
       "@fix:cs"
     ],
-    "dev:install": [
+    "tests:dev-install": [
       "rm -rf ./tests/_wordpress",
       "vendor/bin/wp core download --path=tests/_wordpress --version=6.5.5 --allow-root",
       "cp tests/Support/wp-config-sample.php tests/_wordpress/wp-config.php",
