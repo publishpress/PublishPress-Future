@@ -142,4 +142,79 @@ class UserResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $this->assertEquals(['type' => 'user', 'value' => 23], $resolver->compact());
     }
+
+    public function testGetVariableReturnsNullWhenUserIsNull(): void
+    {
+        $resolver = new UserResolver(null);
+
+        $this->assertNull($resolver->getVariable());
+    }
+
+    public function testGetTypeReturnsCorrectTypeWhenUserIsNull(): void
+    {
+        $resolver = new UserResolver(null);
+
+        $this->assertEquals('user', $resolver->getType());
+    }
+
+    public function testGetValueAsStringReturnsEmptyStringWhenUserIsNull(): void
+    {
+        $resolver = new UserResolver(null);
+
+        $this->assertEquals('', $resolver->getValueAsString('ID'));
+        $this->assertEquals('', $resolver->getValueAsString('id'));
+        $this->assertEquals('', $resolver->getValueAsString('user_login'));
+        $this->assertEquals('', $resolver->getValueAsString('user_email'));
+        $this->assertEquals('', $resolver->getValueAsString('roles'));
+        $this->assertEquals('', $resolver->getValueAsString('caps'));
+        $this->assertEquals('', $resolver->getValueAsString('display_name'));
+        $this->assertEquals('', $resolver->getValueAsString('registered'));
+    }
+
+    public function testGetValueReturnsNullWhenUserIsNull(): void
+    {
+        $resolver = new UserResolver(null);
+
+        $this->assertEquals('', $resolver->getValue('ID'));
+        $this->assertEquals('', $resolver->getValue('user_login'));
+        $this->assertEquals('', $resolver->getValue('user_email'));
+        $this->assertEquals('', $resolver->getValue('roles'));
+        $this->assertEquals('', $resolver->getValue('caps'));
+        $this->assertEquals('', $resolver->getValue('display_name'));
+        $this->assertEquals('', $resolver->getValue('registered'));
+    }
+
+    public function testCompactReturnsArrayWhenUserIsNull(): void
+    {
+        $resolver = new UserResolver(null);
+
+        $this->assertEquals(['type' => 'user', 'value' => ''], $resolver->compact());
+    }
+
+    public function testIssetReturnsTrueWhenPropertyExistsAndUserIsNull(): void
+    {
+        $resolver = new UserResolver(null);
+
+        $this->assertTrue(isset($resolver->ID));
+        $this->assertTrue(isset($resolver->id));
+        $this->assertTrue(isset($resolver->user_login));
+        $this->assertTrue(isset($resolver->user_email));
+        $this->assertTrue(isset($resolver->roles));
+        $this->assertTrue(isset($resolver->caps));
+        $this->assertTrue(isset($resolver->display_name));
+        $this->assertTrue(isset($resolver->registered));
+    }
+
+    public function testGetReturnsEmptyStringWhenUserIsNull(): void
+    {
+        $resolver = new UserResolver(null);
+
+        $this->assertEquals('', $resolver->ID);
+        $this->assertEquals('', $resolver->user_login);
+        $this->assertEquals('', $resolver->user_email);
+        $this->assertEquals('', $resolver->roles);
+        $this->assertEquals('', $resolver->caps);
+        $this->assertEquals('', $resolver->display_name);
+        $this->assertEquals('', $resolver->registered);
+    }
 }
