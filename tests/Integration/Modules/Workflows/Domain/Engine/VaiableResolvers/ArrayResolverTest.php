@@ -27,14 +27,6 @@ class ArrayResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         parent::tearDown();
     }
 
-    // Tests
-    // public function test_factory() :void
-    // {
-    //     $post = static::factory()->post->create_and_get();
-
-    //     $this->assertInstanceOf(\WP_Post::class, $post);
-    // }
-
     public function testGetTypeReturnsCorrectType(): void
     {
         $resolver = new ArrayResolver(['key' => 'value']);
