@@ -117,6 +117,10 @@
       "php-cs-fixer fix .",
       "@fix:cs"
     ],
+    "dbox:up": "pdropbox upload && pdropbox share",
+    "dbox:list": "pdropbox list",
+    "dbox:remove": "pdropbox remove",
+    "dbox:unlink": "pdropbox unlink",
     "tests:dev-install": [
       "rm -rf ./tests/_wordpress",
       "vendor/bin/wp core download --path=tests/_wordpress --version=6.5.5 --allow-root",
