@@ -50,3 +50,4 @@ stats.json
 report.csv
 
 /tests/.env
+/tests/_wordpress/
