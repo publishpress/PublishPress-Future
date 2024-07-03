@@ -6,9 +6,30 @@ namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
 use Tests\Support\UnitTester;
 
-class NodeResolverCest
+class NodeResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {
-    public function getTypeReturnsCorrectType(UnitTester $I)
+    /**
+     * @var \IntegrationTester
+     */
+    protected $tester;
+
+    public function setUp() :void
+    {
+        // Before...
+        parent::setUp();
+
+        // Your set up methods here.
+    }
+
+    public function tearDown() :void
+    {
+        // Your tear down methods here.
+
+        // Then...
+        parent::tearDown();
+    }
+
+    public function testGetTypeReturnsCorrectType(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -18,10 +39,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('node', $resolver->getType());
+        $this->assertEquals('node', $resolver->getType());
     }
 
-    public function getValueAsStringReturnsCorrectValue(UnitTester $I)
+    public function testGetValueAsStringReturnsCorrectValue(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -31,14 +52,14 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('34', $resolver->getValueAsString('ID'));
-        $I->assertEquals('Node Name', $resolver->getValueAsString('name'));
-        $I->assertEquals('Node Label', $resolver->getValueAsString('label'));
-        $I->assertEquals('2021-01-01 00:00:00', $resolver->getValueAsString('activation_timestamp'));
-        $I->assertEquals('nodeSlug', $resolver->getValueAsString('slug'));
+        $this->assertEquals('34', $resolver->getValueAsString('ID'));
+        $this->assertEquals('Node Name', $resolver->getValueAsString('name'));
+        $this->assertEquals('Node Label', $resolver->getValueAsString('label'));
+        $this->assertEquals('2021-01-01 00:00:00', $resolver->getValueAsString('activation_timestamp'));
+        $this->assertEquals('nodeSlug', $resolver->getValueAsString('slug'));
     }
 
-    public function getValueAsStringReturnsEmptyStringWhenPropertyNotExists(UnitTester $I)
+    public function testGetValueAsStringReturnsEmptyStringWhenPropertyNotExists(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -48,10 +69,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('', $resolver->getValueAsString('non_existent_property'));
+        $this->assertEquals('', $resolver->getValueAsString('non_existent_property'));
     }
 
-    public function getValueAsStringReturnsEmptyStringWhenPropertyIsNull(UnitTester $I)
+    public function testGetValueAsStringReturnsEmptyStringWhenPropertyIsNull(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -61,10 +82,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('', $resolver->getValueAsString('non_existent_property'));
+        $this->assertEquals('', $resolver->getValueAsString('non_existent_property'));
     }
 
-    public function getValueAsStringReturnsEmptyStringWhenPropertyIsEmptyString(UnitTester $I)
+    public function testGetValueAsStringReturnsEmptyStringWhenPropertyIsEmptyString(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -74,10 +95,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('', $resolver->getValueAsString(''));
+        $this->assertEquals('', $resolver->getValueAsString(''));
     }
 
-    public function getValueAsStringReturnsEmptyStringWhenPropertyIsFalse(UnitTester $I)
+    public function testGetValueAsStringReturnsEmptyStringWhenPropertyIsFalse(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -87,10 +108,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('', $resolver->getValueAsString(false));
+        $this->assertEquals('', $resolver->getValueAsString(false));
     }
 
-    public function getValueAsStringReturnsEmptyStringWhenPropertyIsZero(UnitTester $I)
+    public function testGetValueAsStringReturnsEmptyStringWhenPropertyIsZero(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -100,10 +121,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('', $resolver->getValueAsString(0));
+        $this->assertEquals('', $resolver->getValueAsString(0));
     }
 
-    public function getValueAsStringReturnsEmptyStringWhenPropertyIsZeroString(UnitTester $I)
+    public function testGetValueAsStringReturnsEmptyStringWhenPropertyIsZeroString(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -113,10 +134,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('', $resolver->getValueAsString('0'));
+        $this->assertEquals('', $resolver->getValueAsString('0'));
     }
 
-    public function issetReturnsTrueWhenPropertyExists(UnitTester $I)
+    public function testIssetReturnsTrueWhenPropertyExists(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -126,13 +147,13 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertTrue(isset($resolver->ID));
-        $I->assertTrue(isset($resolver->name));
-        $I->assertTrue(isset($resolver->label));
-        $I->assertTrue(isset($resolver->activation_timestamp));
+        $this->assertTrue(isset($resolver->ID));
+        $this->assertTrue(isset($resolver->name));
+        $this->assertTrue(isset($resolver->label));
+        $this->assertTrue(isset($resolver->activation_timestamp));
     }
 
-    public function issetReturnsFalseWhenPropertyDoesNotExist(UnitTester $I)
+    public function testIssetReturnsFalseWhenPropertyDoesNotExist(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -142,10 +163,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertFalse(isset($resolver->non_existent_property));
+        $this->assertFalse(isset($resolver->non_existent_property));
     }
 
-    public function getReturnsCorrectValueWhenPropertyExists(UnitTester $I)
+    public function testGetReturnsCorrectValueWhenPropertyExists(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -155,14 +176,14 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals(34, $resolver->ID);
-        $I->assertEquals('Node Name', $resolver->name);
-        $I->assertEquals('Node Label', $resolver->label);
-        $I->assertEquals('2021-01-01 00:00:00', $resolver->activation_timestamp);
-        $I->assertEquals('nodeSlug', $resolver->slug);
+        $this->assertEquals(34, $resolver->ID);
+        $this->assertEquals('Node Name', $resolver->name);
+        $this->assertEquals('Node Label', $resolver->label);
+        $this->assertEquals('2021-01-01 00:00:00', $resolver->activation_timestamp);
+        $this->assertEquals('nodeSlug', $resolver->slug);
     }
 
-    public function getReturnsNullWhenPropertyDoesNotExist(UnitTester $I)
+    public function testGetReturnsNullWhenPropertyDoesNotExist(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -172,10 +193,10 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertNull($resolver->non_existent_property);
+        $this->assertNull($resolver->non_existent_property);
     }
 
-    public function setSetsValueDoNotChangeTheValues(UnitTester $I)
+    public function testSetSetsValueDoNotChangeTheValues(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -190,13 +211,13 @@ class NodeResolverCest
         $resolver->label = 'New Node Label';
         $resolver->activation_timestamp = '2021-01-02 00:00:00';
 
-        $I->assertEquals(34, $resolver->ID);
-        $I->assertEquals('Node Name', $resolver->name);
-        $I->assertEquals('Node Label', $resolver->label);
-        $I->assertEquals('2021-01-01 00:00:00', $resolver->activation_timestamp);
+        $this->assertEquals(34, $resolver->ID);
+        $this->assertEquals('Node Name', $resolver->name);
+        $this->assertEquals('Node Label', $resolver->label);
+        $this->assertEquals('2021-01-01 00:00:00', $resolver->activation_timestamp);
     }
 
-    public function unsetRemovesProperty(UnitTester $I)
+    public function testUnsetRemovesProperty(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -211,13 +232,13 @@ class NodeResolverCest
         unset($resolver->label);
         unset($resolver->activation_timestamp);
 
-        $I->assertNotNull($resolver->ID);
-        $I->assertNotNull($resolver->name);
-        $I->assertNotNull($resolver->label);
-        $I->assertNotNull($resolver->activation_timestamp);
+        $this->assertNotNull($resolver->ID);
+        $this->assertNotNull($resolver->name);
+        $this->assertNotNull($resolver->label);
+        $this->assertNotNull($resolver->activation_timestamp);
     }
 
-    public function toStringReturnsJsonEncodedArray(UnitTester $I)
+    public function testToStringReturnsJsonEncodedArray(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -227,17 +248,17 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals('{"ID":34,"name":"Node Name","label":"Node Label","activation_timestamp":"2021-01-01 00:00:00","slug":"nodeSlug"}', (string)$resolver);
+        $this->assertEquals('{"ID":34,"name":"Node Name","label":"Node Label","activation_timestamp":"2021-01-01 00:00:00","slug":"nodeSlug"}', (string)$resolver);
     }
 
-    public function toStringReturnsEmptyJsonWhenArrayIsEmpty(UnitTester $I)
+    public function testToStringReturnsEmptyJsonWhenArrayIsEmpty(): void
     {
         $resolver = new NodeResolver([]);
 
-        $I->assertEquals('[]', (string)$resolver);
+        $this->assertEquals('[]', (string)$resolver);
     }
 
-    public function compactReturnsCompactedArray(UnitTester $I)
+    public function testCompactReturnsCompactedArray(): void
     {
         $resolver = new NodeResolver([
             'ID' => 34,
@@ -247,7 +268,7 @@ class NodeResolverCest
             'slug' => 'nodeSlug',
         ]);
 
-        $I->assertEquals(
+        $this->assertEquals(
             [
                 'type' => 'node',
                 'value' => [

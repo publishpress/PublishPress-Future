@@ -4,6 +4,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolve
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\VariableResolverInterface;
 
+use function wp_json_encode;
+
 class WorkflowResolver implements VariableResolverInterface
 {
     /**
