@@ -59,7 +59,8 @@
     "giacocorsiglia/wordpress-stubs": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.11",
     "wp-coding-standards/wpcs": "^3",
-    "friendsofphp/php-cs-fixer": "dev-master"
+    "friendsofphp/php-cs-fixer": "dev-master",
+    "wp-cli/wp-cli-bundle": "^2.10"
   },
   "scripts": {
     "build": "ppbuild build",
@@ -70,7 +71,6 @@
     "profile:js": "webpack --profile --json > webpack-bundle-stats.json",
     "watch:js": "wp-scripts build --mode development --watch",
     "get:version": "ppbuild version",
-    "wp": "docker exec -it devkinsta_fpm wp --allow-root --path=/www/kinsta/public/php80dev/",
     "gen:pot-php": "wp i18n make-pot . ./languages/publishpress-future-pro.pot --domain=publishpress-future-pro --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
     "gen:pot-js": "bash ./dev-workspace/scripts/lang-make-js-pot.sh",
     "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
@@ -117,14 +117,27 @@
       "php-cs-fixer fix .",
       "@fix:cs"
     ],
+    "dev:install": [
+      "rm -rf ./tests/_wordpress",
+      "vendor/bin/wp core download --path=tests/_wordpress --version=6.5.5 --allow-root",
+      "cp tests/Support/wp-config-sample.php tests/_wordpress/wp-config.php",
+      "rm -rf ./tests/_wordpress/data",
+      "mkdir ./tests/_wordpress/data",
+      "echo \"DENY FROM ALL\" > ./tests/_wordpress/data/.htaccess",
+      "echo \"<?php // Silence is gold. ?>\" > ./tests/_wordpress/data/index.php",
+      "vendor/bin/composer tests:import-db",
+      "ln -s \"$PWD\" \"$PWD/tests/_wordpress/wp-content/plugins/publishpress-future-pro\""
+    ],
     "tests:dev-start": "./vendor/bin/codecept dev:start",
     "tests:dev-stop": "./vendor/bin/codecept dev:stop",
     "tests:dev-restart": "./vendor/bin/codecept dev:restart",
+    "tests:dev-info": "./vendor/bin/codecept dev:info",
     "tests:cd-update": "./vendor/bin/codecept chromedriver:update",
     "tests:import-db": "rm -rf ./tests/_wordpress/data && mkdir ./tests/_wordpress/data && vendor/bin/codecept wp:db:import ./tests/_wordpress ./tests/Support/Data/dump.sql",
     "tests:run": "./vendor/bin/codecept run",
     "tests:integration": "./vendor/bin/codecept run Integration",
     "tests:e2e": "./vendor/bin/codecept run EndToEnd",
+    "tests:unit": "./vendor/bin/codecept run Unit",
     "config:phpcs": "phpcs --config-set installed_paths \"../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../publishpress/publishpress-phpcs-standards/standards,../../wp-coding-standards/wpcs\"",
     "post-install-cmd": [
       "@config:phpcs"

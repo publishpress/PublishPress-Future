@@ -2,6 +2,15 @@
 
 We use Codeception and WPBrowser to test the plugin. The tests are located in the `tests` directory.
 
+## Installation
+
+The tests require the WordPress core files to be downloaded in the folder `tests/_wordpress`.
+To download and prepare the WordPress core files, execute the following command:
+
+```bash
+composer tests:dev-install
+```
+
 ## Starting the test environment
 
 All the commands to interact with the test environment should not be executed from inside the dev-workspace container.
