@@ -138,10 +138,22 @@
     "tests:dev-info": "./vendor/bin/codecept dev:info",
     "tests:cd-update": "./vendor/bin/codecept chromedriver:update",
     "tests:import-db": "rm -rf ./tests/_wordpress/data && mkdir ./tests/_wordpress/data && vendor/bin/codecept wp:db:import ./tests/_wordpress ./tests/Support/Data/dump.sql",
-    "tests:run": "./vendor/bin/codecept run",
-    "tests:integration": "./vendor/bin/codecept run Integration",
-    "tests:e2e": "./vendor/bin/codecept run EndToEnd",
-    "tests:unit": "./vendor/bin/codecept run Unit",
+    "tests:run": [
+      "@tests:import-db",
+      "./vendor/bin/codecept run"
+    ],
+    "tests:integration": [
+      "@tests:import-db",
+      "./vendor/bin/codecept run Integration"
+    ],
+    "tests:e2e": [
+      "@tests:import-db",
+      "./vendor/bin/codecept run EndToEnd"
+    ],
+    "tests:unit": [
+      "@tests:import-db",
+      "./vendor/bin/codecept run Unit"
+    ],
     "config:phpcs": "phpcs --config-set installed_paths \"../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../publishpress/publishpress-phpcs-standards/standards,../../wp-coding-standards/wpcs\"",
     "post-install-cmd": [
       "@config:phpcs"
