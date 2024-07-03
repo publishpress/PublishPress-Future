@@ -48,3 +48,5 @@ ray.php
 webpack-bundle-stats.json
 stats.json
 report.csv
+
+/tests/.env
