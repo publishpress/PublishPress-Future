@@ -9,16 +9,12 @@ modules:
         - lucatume\WPBrowser\Module\WPLoader
     config:
         lucatume\WPBrowser\Module\WPLoader:
-           wpRootFolder: "%WORDPRESS_ROOT_DIR%"
+           wpRootFolder: "%WORDPRESS_ROOT_DIR%" 
            dbUrl: '%WORDPRESS_DB_URL%'
            wpDebug: true
-           dump:
-               - 'tests/Support/Data/dump.sql'
            tablePrefix: '%TEST_TABLE_PREFIX%'
            domain: '%WORDPRESS_DOMAIN%'
            adminEmail: 'admin@%WORDPRESS_DOMAIN%'
            title: 'Integration Tests'
-           plugins:
-              - 'publishpress-future-pro/publishpress-future-pro.php'
+           plugins: ['./publishpress-future-pro.php']
            theme: ''
-           loadOnly: false
