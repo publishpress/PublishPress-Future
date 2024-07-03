@@ -19,7 +19,7 @@ extensions:
         lucatume\WPBrowser\Extension\ChromeDriverController:
             port: '%CHROMEDRIVER_PORT%'
             binary: '%CHROMEDRIVER_BINARY%'
-            suites: ['EndToEnd', 'Integration']
+            suites: ['EndToEnd']
         lucatume\WPBrowser\Extension\BuiltInServerController:
             workers: 5
             port: '%BUILTIN_SERVER_PORT%'
