@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix the UserResolver to accept empty user when a user is not logged in, #832
 - Remove deprecated constant FILTER_SANITIZE_STRING
 - Optimized the date/time offset validation requests in the Post Types settings, #840
+- Fix error message in the date/time offset setting field, #841
+- Fix translations for ES, FR, and IT, #699
+- Fix user capabilities check in the block editor, #727
+- Fix error when selecting Query Posts step in the workflow editor and Advanced Settings is not enabled, #850
 
 ## [3.4.1] - 02 Jul, 2024
 
