@@ -358,9 +358,9 @@ export const PostTypeSettingsPanel = function (props) {
 
             {! hasValidData && (
                 <PanelRow>
-                    <BaseControl className="notice notice-error">
-                        <div>{validationError}</div>
-                    </BaseControl>
+                    <div className="publishpress-future-notice publishpress-future-notice-error">
+                        <strong>{props.text.error}:</strong> {validationError}
+                    </div>
                 </PanelRow>
             )}
         </SettingsFieldset>

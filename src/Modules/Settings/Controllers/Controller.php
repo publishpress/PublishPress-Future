@@ -246,6 +246,7 @@ class Controller implements InitializableInterface
                         'datePreview' => __('Date Preview', 'post-expirator'),
                         'datePreviewCurrent' => __('Current Date', 'post-expirator'),
                         'datePreviewComputed' => __('Computed Date', 'post-expirator'),
+                        'error' => __('Error', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),
