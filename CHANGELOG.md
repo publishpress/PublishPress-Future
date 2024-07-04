@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.2] - UNRELEASED
+
+### Added
+
+- Add the current date and time to date preview in the date/time offset setting field, #840
+
+### Fixed
+
+- Optimized the date/time offset validation requests in the Post Types settings, #840
+- Fix error message in the date/time offset setting field, #841
+
 ## [3.4.1] - 02 Jul, 2024
 
 ### Added
