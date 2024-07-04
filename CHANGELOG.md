@@ -5,9 +5,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.4.2] - UNRELEASED
 
+### Added
+
+- Add the current date and time to date preview in the date/time offset setting field, #840
+
 ### Fixed
 
 - Fix the UserResolver to accept empty user when a user is not logged in, #832
+- Remove deprecated constant FILTER_SANITIZE_STRING
+- Optimized the date/time offset validation requests in the Post Types settings, #840
 
 ## [3.4.1] - 02 Jul, 2024
 
