@@ -185,11 +185,13 @@ class RestAPIController implements InitializableInterface
         $isValid = true;
         $message = '';
         $preview = '';
+        $currentTime = '';
 
         try {
             $jsonParams = $request->get_json_params('offset');
             $offset = sanitize_text_field($jsonParams['offset']);
 
+            $currentTime = time();
             $time = strtotime($offset);
 
             if (empty($time)) {
@@ -197,12 +199,18 @@ class RestAPIController implements InitializableInterface
             }
 
             $preview = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $time);
+            $currentTime = date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $currentTime);
         } catch (Exception $e) {
             $isValid = false;
             $message = __('Invalid date time offset.', 'post-expirator');
         }
 
-        return rest_ensure_response(['isValid' => $isValid, 'message' => $message, 'preview' => $preview]);
+        return rest_ensure_response([
+            'isValid' => $isValid,
+            'message' => $message,
+            'preview' => $preview,
+            'currentTime' => $currentTime,
+        ]);
     }
 
     private function registerRestField()
