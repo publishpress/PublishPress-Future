@@ -11,14 +11,12 @@ import {
     TokensControl,
     CheckboxControl
 } from './';
-import { useEffect, useState, Fragment } from '@wordpress/element';
+import { useEffect, useState, Fragment, useRef } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { applyFilters } from '@wordpress/hooks';
 import { apiFetch } from '&wp';
 
 const { PanelRow, BaseControl } = wp.components;
-
-var apiRequestController = null;
 
 export const PostTypeSettingsPanel = function (props) {
     const originalExpireTypeList = props.expireTypeList[props.postType];
@@ -39,6 +37,8 @@ export const PostTypeSettingsPanel = function (props) {
     const [newStatus, setNewStatus] = useState(props.settings.newStatus);
     const [hasPendingValidation, setHasPendingValidation] = useState(false);
     const [offsetPreview, setOffsetPreview] = useState('');
+    const [currentTime, setCurrentTime] = useState();
+    const apiRequestController = useRef(new AbortController());
 
     const taxonomyRelatedActions = [
         'category',
@@ -81,22 +81,27 @@ export const PostTypeSettingsPanel = function (props) {
             return true;
         }
 
-        if (expireOffset) {
-            if (apiRequestController) {
-                apiRequestController.abort();
+        const offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
+
+        if (offset) {
+            const controller = apiRequestController.current;
+
+            if (controller) {
+                controller.abort();
             }
 
-            apiRequestController = typeof AbortController === 'undefined' ? undefined : new AbortController();
-            const signal = apiRequestController ? apiRequestController.signal : undefined;
+            apiRequestController.current = new AbortController();
+            const { signal } = apiRequestController.current;
+
             setHasPendingValidation(true);
 
             apiFetch({
                 path: addQueryArgs(`publishpress-future/v1/settings/validate-expire-offset`),
                 method: 'POST',
                 data: {
-                    offset: expireOffset
+                    offset
                 },
-                signal: signal
+                signal,
             }).then((result) => {
                 setHasPendingValidation(false);
 
@@ -105,9 +110,19 @@ export const PostTypeSettingsPanel = function (props) {
 
                 if (result.isValid) {
                     setOffsetPreview(result.preview);
+                    setCurrentTime(result.currentTime);
                 } else {
                     setOffsetPreview('');
                 }
+            }).catch((error) => {
+                if (error.name === 'AbortError') {
+                    return;
+                }
+
+                setHasPendingValidation(false);
+                setHasValidData(false);
+                setValidationError(error.message);
+                setOffsetPreview('');
             });
         }
 
@@ -307,7 +322,16 @@ export const PostTypeSettingsPanel = function (props) {
                 {offsetPreview && (
                     <Fragment>
                         <h4>{props.text.datePreview}</h4>
-                        <code>{offsetPreview}</code>
+                        <div>
+                            <div>
+                                <span>{props.text.datePreviewCurrent}: </span>
+                                <span><code>{currentTime}</code></span>
+                            </div>
+                            <div>
+                                <span>{props.text.datePreviewComputed}: </span>
+                                <span><code>{offsetPreview}</code></span>
+                            </div>
+                        </div>
                     </Fragment>
                 )}
             </SettingRow>
