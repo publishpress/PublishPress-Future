@@ -38,7 +38,7 @@ export const PostTypeSettingsPanel = function (props) {
     const [hasPendingValidation, setHasPendingValidation] = useState(false);
     const [offsetPreview, setOffsetPreview] = useState('');
     const [currentTime, setCurrentTime] = useState();
-    const apiRequestController = useRef(new AbortController());
+    const apiRequestControllerRef = useRef(new AbortController());
 
     const taxonomyRelatedActions = [
         'category',
@@ -84,14 +84,14 @@ export const PostTypeSettingsPanel = function (props) {
         const offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
 
         if (offset) {
-            const controller = apiRequestController.current;
+            const controller = apiRequestControllerRef.current;
 
             if (controller) {
                 controller.abort();
             }
 
-            apiRequestController.current = new AbortController();
-            const { signal } = apiRequestController.current;
+            apiRequestControllerRef.current = new AbortController();
+            const { signal } = apiRequestControllerRef.current;
 
             setHasPendingValidation(true);
 
@@ -184,7 +184,7 @@ export const PostTypeSettingsPanel = function (props) {
 
     useEffect(() => {
         setHasValidData(validateData());
-    }, [isActive, postTypeTaxonomy, selectedTerms, settingHowToExpire, taxonomyLabel, expireOffset]);
+    }, [isActive, expireOffset]);
 
     useEffect(() => {
         if (!taxonomyLabel) {
