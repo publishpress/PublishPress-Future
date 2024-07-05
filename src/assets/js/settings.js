@@ -1460,9 +1460,9 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     legend: props.legend
   }, /*#__PURE__*/React.createElement(___WEBPACK_IMPORTED_MODULE_0__.SettingsTable, {
     bodyChildren: settingsRows
-  }), !hasValidData && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement(BaseControl, {
-    className: "notice notice-error"
-  }, /*#__PURE__*/React.createElement("div", null, validationError))));
+  }), !hasValidData && /*#__PURE__*/React.createElement(PanelRow, null, /*#__PURE__*/React.createElement("div", {
+    className: "publishpress-future-notice publishpress-future-notice-error"
+  }, /*#__PURE__*/React.createElement("strong", null, props.text.error, ":"), " ", validationError)));
 };
 
 /***/ }),
