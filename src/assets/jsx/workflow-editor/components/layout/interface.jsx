@@ -35,7 +35,8 @@ export function WorkflowEditorInterface({ className, secondarySidebar }) {
     });
 
     const {
-        openGeneralSidebar
+        openGeneralSidebar,
+        closeInserter,
     } = useDispatch(editorStore);
 
     const interfaceClassNames = classnames(className, {

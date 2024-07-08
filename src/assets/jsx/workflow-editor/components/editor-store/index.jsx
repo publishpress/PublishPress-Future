@@ -15,6 +15,7 @@ import {
     FEATURE_CONTROLS,
     INSERTER_TAB_TRIGGERS,
     SLOT_SCOPE_WORKFLOW_EDITOR,
+    FEATURE_INSERTER,
 } from "../../constants";
 import { STORE_NAME } from "./constants";
 
@@ -34,6 +35,8 @@ export const storeConfig = {
 
 export const store = createReduxStore(STORE_NAME, {
     reducer(state = storeConfig, action) {
+        let newActiveSidebarName;
+
         switch (action.type) {
             case "SET_ACTIVE_FEATURES":
                 // Update local storage for persisted features
@@ -43,9 +46,18 @@ export const store = createReduxStore(STORE_NAME, {
                     }
                 });
 
+                // Close the sidebar when the inserter is enabled
+                newActiveSidebarName = action.payload.includes(FEATURE_INSERTER) ? null : state.activeSidebarName;
+                if (newActiveSidebarName === null) {
+                    dispatch("core/interface").disableComplementaryArea(
+                        SLOT_SCOPE_WORKFLOW_EDITOR,
+                    );
+                }
+
                 return {
                     ...state,
                     activeFeatures: action.payload,
+                    activeSidebarName: newActiveSidebarName,
                 };
 
             case "TOGGLE_FEATURE":
@@ -70,9 +82,18 @@ export const store = createReduxStore(STORE_NAME, {
                     }
                 });
 
+                // Close the sidebar when the inserter is enabled
+                newActiveSidebarName = activeFeatures.includes(FEATURE_INSERTER) ? null : state.activeSidebarName;
+                if (newActiveSidebarName === null) {
+                    dispatch("core/interface").disableComplementaryArea(
+                        SLOT_SCOPE_WORKFLOW_EDITOR,
+                    );
+                }
+
                 return {
                     ...state,
                     activeFeatures: activeFeatures,
+                    activeSidebarName: newActiveSidebarName,
                 };
             case "ENABLE_FEATURE":
                 const featureToEnable = action.payload;
@@ -82,9 +103,20 @@ export const store = createReduxStore(STORE_NAME, {
                     setPersistedFeatureValue(featureToEnable, true);
                 }
 
+                const newActiveFeatures = [...state.activeFeatures, featureToEnable];
+
+                // Close the sidebar when the inserter is enabled
+                newActiveSidebarName = newActiveFeatures.includes(FEATURE_INSERTER) ? null : state.activeSidebarName;
+                if (newActiveSidebarName === null) {
+                    dispatch("core/interface").disableComplementaryArea(
+                        SLOT_SCOPE_WORKFLOW_EDITOR,
+                    );
+                }
+
                 return {
                     ...state,
-                    activeFeatures: [...state.activeFeatures, featureToEnable],
+                    activeFeatures: newActiveFeatures,
+                    activeSidebarName: newActiveSidebarName,
                 };
 
             case "DISABLE_FEATURE":
@@ -154,6 +186,10 @@ export const store = createReduxStore(STORE_NAME, {
                 return {
                     ...state,
                     activeSidebarName: action.payload,
+                    // Close the inserter when opening a sidebar
+                    activeFeatures: state.activeFeatures.filter(
+                        (f) => f !== FEATURE_INSERTER
+                    ),
                 };
 
             case "SET_HOVERED_ITEM":
@@ -264,6 +300,18 @@ export const store = createReduxStore(STORE_NAME, {
             return {
                 type: "OPEN_GENERAL_SIDEBAR",
                 payload: sidebar,
+            };
+        },
+        openInserter() {
+            return {
+                type: "ENABLE_FEATURE",
+                payload: FEATURE_INSERTER,
+            };
+        },
+        closeInserter() {
+            return {
+                type: "DISABLE_FEATURE",
+                payload: FEATURE_INSERTER,
             };
         },
         setHoveredItem(item) {
