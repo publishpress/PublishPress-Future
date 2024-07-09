@@ -3,7 +3,7 @@
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 
-<div id="future-workflow-editor">
+<div id="future-workflow-editor" class="hide-if-no-js">
     <div class="loading">
         <span class="spinner-icon">
             <?php // phpcs:ignore Generic.Files.LineLength.TooLong ?>

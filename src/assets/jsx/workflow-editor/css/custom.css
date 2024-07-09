@@ -104,3 +104,20 @@
 .workflow-editor-global-var-list ul li {
     margin-bottom: 0;
 }
+
+.edit-post-editor__inserter-panel-content {
+    height: 100%;
+}
+
+.block-editor-inserter__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    overflow-y: hidden;
+    position: relative;
+}
+
+.editor-inserter-sidebar *, .editor-inserter-sidebar :after, .editor-inserter-sidebar :before {
+    box-sizing: inherit;
+}
