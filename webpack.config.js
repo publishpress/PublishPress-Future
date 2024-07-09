@@ -128,6 +128,7 @@ module.exports = [
             '@wordpress/i18n': 'wp.i18n',
             '@wordpress/plugins': 'wp.plugins',
             'future-workflow-editor': 'futureWorkflowEditor',
+            'jquery': 'jQuery',
         }
     },
     {
