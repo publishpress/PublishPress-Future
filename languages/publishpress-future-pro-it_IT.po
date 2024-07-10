@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PublishPress Future Pro\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
-"POT-Creation-Date: 2024-03-19T17:42:24+00:00\n"
-"PO-Revision-Date: 2024-03-20 18:34+0100\n"
+"POT-Creation-Date: 2024-07-02T17:41:26+00:00\n"
+"PO-Revision-Date: 2024-07-09 22:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: Angelo Giammarresi - info@wocmultimedia.com\n"
 "Language: it_IT\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: publishpress-future-pro.php\n"
@@ -69,11 +69,11 @@ msgstr "j F Y"
 msgid "g:i a"
 msgstr "G:i"
 
-#: src/classes/Controllers/BlocksController.php:86
+#: src/classes/Controllers/BlocksController.php:87
 msgid "Displays a message with the date and time of the future action."
 msgstr "Visualizza un messaggio con la data e l'ora dell'azione di future."
 
-#: src/classes/Controllers/BlocksController.php:87
+#: src/classes/Controllers/BlocksController.php:88
 msgid ""
 "Type the text template and use # to see the autocomplete options with the "
 "available placeholders."
@@ -81,11 +81,11 @@ msgstr ""
 "Digitare il template di testo e usare # per visualizzare le opzioni di "
 "completamento automatico con i segnaposto disponibili."
 
-#: src/classes/Controllers/BlocksController.php:88
+#: src/classes/Controllers/BlocksController.php:89
 msgid "Available placeholders"
 msgstr "Segnaposti disponibili"
 
-#: src/classes/Controllers/BlocksController.php:89
+#: src/classes/Controllers/BlocksController.php:90
 msgid ""
 "Future action block template. Type the text and # to see the autocomplete "
 "options."
@@ -93,47 +93,47 @@ msgstr ""
 "Template del blocco d'azione di Future. Digitare il testo e # per "
 "visualizzare le opzioni di completamento automatico."
 
-#: src/classes/Controllers/BlocksController.php:90
+#: src/classes/Controllers/BlocksController.php:91
 msgid "Action time"
 msgstr "Orario dell'azione"
 
-#: src/classes/Controllers/BlocksController.php:91
+#: src/classes/Controllers/BlocksController.php:92
 msgid "Action date"
 msgstr "Data dell'azione"
 
-#: src/classes/Controllers/SettingsController.php:196
+#: src/classes/Controllers/SettingsController.php:197
 msgid "Custom statuses"
 msgstr "Stati personalizzati"
 
-#: src/classes/Controllers/SettingsController.php:197
+#: src/classes/Controllers/SettingsController.php:198
 msgid "Enable custom statuses for the post type."
 msgstr "Abilita gli stati personalizzati per il tipo di contenuto:"
 
-#: src/classes/Controllers/SettingsController.php:201
+#: src/classes/Controllers/SettingsController.php:202
 msgid "Enabled"
 msgstr "Abilitato"
 
-#: src/classes/Controllers/SettingsController.php:202
+#: src/classes/Controllers/SettingsController.php:203
 msgid "Disabled"
 msgstr "Disabilitato"
 
-#: src/classes/Controllers/SettingsController.php:203
+#: src/classes/Controllers/SettingsController.php:204
 msgid "Select all"
 msgstr "Seleziona tutto"
 
-#: src/classes/Controllers/SettingsController.php:204
+#: src/classes/Controllers/SettingsController.php:205
 msgid "Unselect all"
 msgstr "Deseleziona tutto"
 
-#: src/classes/Controllers/SettingsController.php:205
+#: src/classes/Controllers/SettingsController.php:206
 msgid "Enable Metadata Scheduling"
 msgstr "Abilita la \"Programmazione dei metadati\""
 
-#: src/classes/Controllers/SettingsController.php:206
+#: src/classes/Controllers/SettingsController.php:207
 msgid "Enable metadata scheduling for the post type"
 msgstr "Abilita la \"Programmazione dei metadati\" per il tipo di contenuto"
 
-#: src/classes/Controllers/SettingsController.php:210
+#: src/classes/Controllers/SettingsController.php:211
 msgid ""
 "Checking this option will allow you to use the post metadata to control the "
 "scheduling of Future actions in your content."
@@ -141,35 +141,35 @@ msgstr ""
 "Selezionando questa opzione è possibile utilizzare i metadati dell'articolo "
 "per controllare la programmazione delle azioni di Future nel contenuto."
 
-#: src/classes/Controllers/SettingsController.php:214
+#: src/classes/Controllers/SettingsController.php:215
 msgid "Metadata Mapping"
 msgstr "Mappatura dei metadati"
 
-#: src/classes/Controllers/SettingsController.php:215
+#: src/classes/Controllers/SettingsController.php:216
 msgid "To use the default mapping, please leave the fields empty."
 msgstr "Per utilizzare la mappatura predefinita, lasciare vuoti i campi."
 
-#: src/classes/Controllers/SettingsController.php:219
+#: src/classes/Controllers/SettingsController.php:220
 msgid "Read more about metadata mapping."
 msgstr "Approfondisci sulla mappatura dei metadati"
 
-#: src/classes/Controllers/SettingsController.php:224
+#: src/classes/Controllers/SettingsController.php:225
 msgid "Original Metakey"
 msgstr "Metakey originale"
 
-#: src/classes/Controllers/SettingsController.php:225
+#: src/classes/Controllers/SettingsController.php:226
 msgid "New Metakey"
 msgstr "Nuovo metakey"
 
-#: src/classes/Controllers/SettingsController.php:226
+#: src/classes/Controllers/SettingsController.php:227
 msgid "Description"
 msgstr "Descrizione"
 
-#: src/classes/Controllers/SettingsController.php:227
+#: src/classes/Controllers/SettingsController.php:228
 msgid "Hide Future metabox for this post type"
 msgstr "Nascondi il metabox di Future per questo tipo di contenuto"
 
-#: src/classes/Controllers/SettingsController.php:228
+#: src/classes/Controllers/SettingsController.php:229
 msgid ""
 "Checking this option will disable the PublishPress Future metabox. This can "
 "prevent conflicts if you're using Metadata Scheduling with plugins such as "
@@ -179,11 +179,11 @@ msgstr ""
 "questo modo si possono evitare conflitti se si utilizza la \"Programmazione "
 "dei metadati\" con plugin come ACF o Pods."
 
-#: src/classes/Controllers/SettingsController.php:240
+#: src/classes/Controllers/SettingsController.php:241
 msgid "Action Date (Required)"
 msgstr "Data dell'azione (obbligatoria)"
 
-#: src/classes/Controllers/SettingsController.php:241
+#: src/classes/Controllers/SettingsController.php:242
 msgid ""
 "The date used for scheduling the action. The date must be a unix time stamp "
 "or in the 'Y-m-d H:i:s' format."
@@ -191,27 +191,27 @@ msgstr ""
 "La data utilizzata per programmare l'azione. La data deve essere una marca "
 "temporale unix o nel formato \"Y-m-d H:i:s\"."
 
-#: src/classes/Controllers/SettingsController.php:249
+#: src/classes/Controllers/SettingsController.php:250
 msgid "Action Type"
 msgstr "Tipo d'azione"
 
-#: src/classes/Controllers/SettingsController.php:250
+#: src/classes/Controllers/SettingsController.php:251
 msgid "The type of action to be performed."
 msgstr "Il tipo di azione da compiere."
 
-#: src/classes/Controllers/SettingsController.php:258
+#: src/classes/Controllers/SettingsController.php:259
 msgid "New Post Status"
 msgstr "Nuovo stato dell'articolo"
 
-#: src/classes/Controllers/SettingsController.php:259
+#: src/classes/Controllers/SettingsController.php:260
 msgid "The new post status to be applied to the post."
 msgstr "Il nuovo stato dell'articolo da applicare all'articolo."
 
-#: src/classes/Controllers/SettingsController.php:267
+#: src/classes/Controllers/SettingsController.php:268
 msgid "Action Status"
 msgstr "Stato dell'azione"
 
-#: src/classes/Controllers/SettingsController.php:268
+#: src/classes/Controllers/SettingsController.php:269
 msgid ""
 "The status for the action. Anything different than 'saved' will be "
 "considered as not active."
@@ -219,23 +219,23 @@ msgstr ""
 "Lo stato dell'azione. Qualsiasi cosa diversa da \"salvato\" sarà considerata "
 "non attivo."
 
-#: src/classes/Controllers/SettingsController.php:276
+#: src/classes/Controllers/SettingsController.php:277
 msgid "Taxonomy Name"
 msgstr "Nome della tassonomia"
 
-#: src/classes/Controllers/SettingsController.php:277
+#: src/classes/Controllers/SettingsController.php:278
 msgid "The taxonomy used for scheduling the action."
 msgstr "La tassonomia utilizzata per la programmazione dell'azione."
 
-#: src/classes/Controllers/SettingsController.php:285
+#: src/classes/Controllers/SettingsController.php:286
 msgid "Taxonomy Terms"
 msgstr "Termini della tassonomia"
 
-#: src/classes/Controllers/SettingsController.php:286
+#: src/classes/Controllers/SettingsController.php:287
 msgid "The terms used for scheduling the action."
 msgstr "I termini utilizzati per la programmazione dell'azione."
 
-#: src/classes/Controllers/SettingsController.php:345
+#: src/classes/Controllers/SettingsController.php:347
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr "Errore di convalida del modulo: il nonce non è stato verificato."
 
@@ -248,23 +248,917 @@ msgstr "Cambia lo stato dell'articolo ad uno stato personalizzato"
 msgid "Change status to %s"
 msgstr "Cambia lo stato a %s"
 
-#: src/templates/settings-tab-advanced.html.php:6
+#: src/classes/Modules/Workflows/Controllers/ManualPostTrigger.php:291
+msgid "Workflow Manual Trigger"
+msgstr "Trigger manuale del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:34
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:79
+msgid "Action Workflows"
+msgstr "Flussi di lavoro di azione"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:35
+msgid "Future Workflow"
+msgstr "Flusso di lavoro di Future"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:36
+msgid "Add New"
+msgstr "Aggiungi nuovo"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:37
+msgid "Add New Workflow"
+msgstr "Aggiungi nuovo flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:41
+msgid "Edit Workflow"
+msgstr "Modifica flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:42
+#: src/classes/Modules/Workflows/Models/WorkflowModel.php:295
+msgid "New Workflow"
+msgstr "Nuovo flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:43
+msgid "View Workflow"
+msgstr "Visualizza flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:44
+msgid "Search Workflows"
+msgstr "Cerca flussi di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:48
+msgid "No Workflows found"
+msgstr "Nessun flusso di lavoro trovato"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:52
+msgid "No Workflows found in Trash"
+msgstr "Nessun flusso di lavoro trovato nel cestino"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:56
+msgid "Parent Workflow:"
+msgstr "Flusso di lavoro genitore:"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:60
+msgid "All Workflows"
+msgstr "Tutti i flussi di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:61
+msgid "Workflow Archives"
+msgstr "Archivi del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:65
+msgid "Insert into workflow"
+msgstr "Inserisci nel flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:69
+msgid "Uploaded to this workflow"
+msgstr "Caricato in questo flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:73
+msgid "Filter workflows list"
+msgstr "Filtra elenco flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:77
+msgid "Workflows list navigation"
+msgstr "Navigazione elenco flussi di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:81
+msgid "Action Workflows list"
+msgstr "Elenco flussi di lavoro di azione"
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:82
+msgid "Workflow published."
+msgstr "Flusso di lavoro pubblicato."
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:86
+msgid "Workflow published privately."
+msgstr "Flusso di lavoro pubblicato come privato."
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:90
+msgid "Workflow reverted to draft."
+msgstr "Flusso di lavoro ripristinato a bozza."
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:94
+msgid "Workflow scheduled."
+msgstr "Flusso di lavoro programmato."
+
+#: src/classes/Modules/Workflows/Controllers/PostType.php:98
+msgid "Workflow updated."
+msgstr "Flusso di lavoro aggiornato."
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:34
+msgid "Notify when a post is updated"
+msgstr "Notifica quando un articolo viene aggiornato"
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:35
+#| msgid "This trigger activates when an existing post is updated."
+msgid "Notify the site admin when a post is updated."
+msgstr ""
+"Notifica all'amministratore del sito quando un articolo viene aggiornato."
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:40
+msgid "Unpublish to Draft after a week"
+msgstr "Converti in bozza dopo una settimana"
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:41
+msgid "Change the post status to Draft a week after it was published."
+msgstr ""
+"Cambia lo stato dell'articolo a \"Bozza\" una settimana dopo la "
+"pubblicazione."
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:46
+msgid "Unpublish and change category after one week"
+msgstr "Non pubblicare e cambia categoria dopo una settimana"
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:47
+msgid "Move the post to draft and add a category after 15 days."
+msgstr "Sposta l'articolo in bozza e aggiungi una categoria dopo 15 giorni."
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:52
+msgid "Add extra categories one month after publishing"
+msgstr "Aggiungi categorie extra un mese dopo la pubblicazione"
+
+#: src/classes/Modules/Workflows/Controllers/SampleWorkflows.php:53
+msgid "Sample workflow to add extra categories one month after publishing"
+msgstr ""
+"Esempio di flusso di lavoro per aggiungere categorie supplementari un mese "
+"dopo la pubblicazione"
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:70
+msgid "Workflow scheduled action"
+msgstr "Azione programmata del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:74
+msgid "Unschedule workflow recurring scheduled action"
+msgstr "Annullamento dell'azione ricorrente programmata del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:157
+msgid "Workflow:"
+msgstr "Flusso di lavoro:"
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:161
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:181
+msgid "Trigger: "
+msgstr "Trigger: "
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:174
+msgid "Post:"
+msgstr "Articolo:"
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:185
+msgid "Steps:"
+msgstr "Passaggi:"
+
+#: src/classes/Modules/Workflows/Controllers/ScheduledActions.php:191
+msgid "Workflow recurring scheduled action"
+msgstr "Azione ricorrente programmata del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:229
+msgid "Welcome to the workflow editor"
+msgstr "Benvenuto nell'editor del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:230
+msgid ""
+"In the PublishPress Workflow Editor, each workflow step is presented as a "
+"distinct 'node' in the workflow."
+msgstr ""
+"Nell'editor del flusso di lavoro di PublishPress, ogni passaggio del flusso "
+"di lavoro viene presentato come un \"nodo\" distinto del flusso di lavoro."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:234
+msgid "Use your imagination"
+msgstr "Usa la tua fantasia"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:235
+msgid ""
+"You're free to create very distinct workflows in your site, according to "
+"your needs."
+msgstr ""
+"Sei libero di creare flussi di lavoro molto distinti nel tuo sito, in base "
+"alle tue esigenze."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:239
+msgid "A basic workflow"
+msgstr "Un flusso di lavoro basico"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:240
+msgid ""
+"Every workflow requires at least two steps connected to each other: one "
+"trigger and one action."
+msgstr ""
+"Ogni flusso di lavoro necessita almeno due passaggi connessi tra loro: un "
+"trigger e un'azione."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:244
+msgid "Add steps to your workflow"
+msgstr "Aggiungi passaggi al tuo flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:245
+msgid ""
+"Drag and drop steps to add them to your workflow. Connect the steps to "
+"create a workflow."
+msgstr ""
+"Trascina e rilascia i passaggi pe aggiungerli al tuo flusso di lavoro. "
+"Collega i passaggi per creare il flusso di lavoro."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:249
+#| msgid "Step input"
+msgid "Output and input"
+msgstr "Output and input"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:250
+msgid "Linked steps can pass data forward as input to the next step."
+msgstr ""
+"I passaggi collegati possono passare i dati come input al passaggio "
+"successivo."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:254
+msgid "Customize the workflow"
+msgstr "Personalizza il flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:255
+msgid ""
+"Click on a step to customize it. You can change the step's settings in the "
+"right sidebar."
+msgstr ""
+"Fai clic su un passaggio per personalizzarlo. Puoi cambiare le impostazioni "
+"del passaggio nella barra laterale destra."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:259
+msgid "Workflow validation"
+msgstr "Convalida del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:260
+msgid ""
+"Error messages will appear for any unfilled required settings, missed "
+"connections, or invalid values. Select the step to view the corresponding "
+"error in the sidebar."
+msgstr ""
+"Messaggi di errori appariranno per ogni impostazione obbligatoria non "
+"riempita, per i collegamenti mancanti o valori non validi. Seleziona il "
+"passaggio per vedere il corrispondente errore nella barra laterale."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:264
+msgid "Publish your workflow"
+msgstr "Pubblica il tuo flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:265
+msgid "When you're ready, click the publish button to make your workflow live."
+msgstr ""
+"Quando sei pronto, fai clic sul pulsante \"Pubblica\" per rendere attivo il "
+"tuo flusso di lavoro."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:269
+msgid "Need help?"
+msgstr "Hai bisogno d'aiuto?"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:270
+msgid ""
+"If you have any questions or need help, click the help button in the top "
+"right corner to access the support resources."
+msgstr ""
+"Se hai domande o bisogno di aiuto, fai clic sul pulsante Aiuto nell'angolo "
+"in alto a destra per accedere alle risorse di supporto."
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:127
+msgid "Triggers"
+msgstr "Trigger"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:131
+msgid "Preview"
+msgstr "Anteprima"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:155
+msgid "—"
+msgstr "—"
+
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:186
+msgid "No screenshot"
+msgstr "Nessun screenshot"
+
+#: src/classes/Modules/Workflows/Domain/DataType/PostQuery.php:16
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:67
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:82
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:65
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:68
+msgid "Post Query"
+msgstr "Query articolo"
+
+#: src/classes/Modules/Workflows/Domain/DataType/PostQuery.php:21
+msgid "A query to select posts"
+msgstr "Una query per selezionare gli articoli"
+
+#: src/classes/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:31
+#: src/classes/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:72
+msgid "Yes"
+msgstr "Sì"
+
+#: src/classes/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:31
+#: src/classes/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:72
+msgid "No"
+msgstr "No"
+
+#. translators: %s is the trigger name
+#: src/classes/Modules/Workflows/Domain/Engine/WorkflowEngine.php:115
+msgid "Trigger not found: %s"
+msgstr "Trigger non trovato: %s"
+
+#: src/classes/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:76
+msgid "Trigger Workflow"
+msgstr "Trigger del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:32
+msgid "Move post to status"
+msgstr "Muovi l'articolo nello stato"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:37
+msgid "This step transitions a post to a different status."
+msgstr "Questo passaggio sposta un articolo ad un altro stato."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:64
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:70
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:64
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:70
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:64
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:70
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:64
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:70
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:64
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:70
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:64
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:70
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:64
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:70
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:59
+msgid "Post"
+msgstr "Articolo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:65
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:65
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:65
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:65
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:65
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:65
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:65
+msgid "The post to update."
+msgstr "L'articolo da aggiornare."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:71
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:71
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:71
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:71
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:71
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:71
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:71
+msgid ""
+"Select the variable that contains the post to update. It can be a post "
+"instance or the post ID."
+msgstr ""
+"Seleziona la variabile che contiene l'articolo da aggiornare. Può essere una "
+"istanza di articolo oppure l'ID articolo."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:79
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:85
+msgid "New status"
+msgstr "Nuovo stato"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:80
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:86
+msgid "The new status that the post will be moved to."
+msgstr "Il nuovo stato dove verrà spostato l'articolo."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:123
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:108
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:116
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:125
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:132
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:128
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:116
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:150
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:133
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:105
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:92
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:106
+msgid "Step input"
+msgstr "Input passo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:124
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:109
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:117
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:126
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:133
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:129
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:117
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:151
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:134
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:106
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:93
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:107
+msgid "The input data for this step."
+msgstr "I dati di input per questo passaggio."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:147
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:132
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:140
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:149
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:156
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:152
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:140
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:174
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:157
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:129
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:130
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:97
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:97
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:164
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:153
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:150
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:127
+msgid "Next"
+msgstr "Successivo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:32
+msgid "Delete post"
+msgstr "Elimina articolo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:37
+msgid "This step deletes a post."
+msgstr "Questo passaggio elimina un articolo."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:32
+msgid "Stick post"
+msgstr "Articolo in evidenza"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:37
+msgid "This step sticks a post."
+msgstr "Questo passaggio mette in evidenza un articolo."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:92
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:92
+msgid "The Stick Post action must be part of a Schedule flow"
+msgstr ""
+"L'azione dell'articolo in evidenza deve essere parte di un flusso di "
+"programma"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:32
+msgid "Add extra terms to post"
+msgstr "Aggiungi termini extra all'articolo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:37
+msgid "This step keeps the current taxonomy terms and adds additional terms."
+msgstr ""
+"Questo passaggio mantiene i termini della tassonomia attuale e aggiunge dei "
+"termini supplementari."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:79
+msgid "Extra terms"
+msgstr "Termini extra"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:80
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:86
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:89
+msgid "The terms that will be added to the posts."
+msgstr "I termini che saranno aggiunti agli articoli."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:85
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:112
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:85
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:119
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:88
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:115
+msgid "Terms"
+msgstr "Termini"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:32
+msgid "Remove terms from the post"
+msgstr "Rimuovi tutti i termini dall'articolo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:37
+msgid "This step removes current taxonomy terms."
+msgstr "Questo passaggio rimuove i termini della tassonomia attuale."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:79
+msgid "Terms to remove"
+msgstr "Termini da rimuovere"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:80
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:86
+msgid "The terms that will be removed from the posts."
+msgstr "I termini che saranno rimossi dagli articoli."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:92
+msgid "Remove all terms"
+msgstr "Rimuovi tutti i termini"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:32
+msgid "Replace all terms on the post"
+msgstr "Sosituisci tutti i termini dell'articolo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:37
+msgid "This step removes the current taxonomy terms and adds new terms."
+msgstr ""
+"Questo passaggio rimuove i termini della tassonomia attuale e aggiunge nuovi "
+"termini."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:79
+msgid "New terms"
+msgstr "Nuovi termini"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:80
+msgid ""
+"The terms that will be added to the posts after removing all the others."
+msgstr ""
+"I termini che saranno aggiunti agli articoli dopo aver rimosso gli altri."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:32
+msgid "Unstick post"
+msgstr "Rimuovi l'articolo da in evidenza"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:37
+msgid "This step unsticks a post."
+msgstr "Questo passaggio rimuove un articolo da in evidenza."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:17
+msgid "PublishPress Workflow: {{global.workflow.title}}"
+msgstr "Flusso di lavoro PublishPress: {{global.workflow.title}}"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:22
+msgid ""
+"This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
+msgstr ""
+"Questo è un messaggio inviato dal flusso di lavoro di PublishPress: {{global."
+"workflow.title}}."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:45
+msgid "Send email"
+msgstr "Invia email"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:50
+msgid "This step dispatches a message via email."
+msgstr "Questo passaggio invia un messaggio via email."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:77
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:96
+msgid "Message"
+msgstr "Messaggio"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:78
+msgid "The email message"
+msgstr "Il messaggio email"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:83
+msgid "Recipient"
+msgstr "Destinatario"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:88
+msgid "Subject"
+msgstr "Oggetto"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:121
+msgid "Email Recipient"
+msgstr "Email destinatario"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:126
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:135
+msgid "Custom Email Address"
+msgstr "Indirizzo email personalizzato"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:32
+msgid "Query posts"
+msgstr "Query articoli"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:37
+msgid ""
+"This step defines the posts that will be passed to the next step in the "
+"workflow."
+msgstr ""
+"Questo passaggio definisce gli articoli che passeranno al prossimo passaggio "
+"del flusso di lavoro."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:72
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:91
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:74
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:77
+msgid "Post query"
+msgstr "Query articolo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:73
+msgid "The query defines the posts that will be retrieved by this action."
+msgstr ""
+"La query definisce gli articoli che saranno recuperati da questa azione."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:107
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:119
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:102
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:105
+msgid "Post Type"
+msgstr "Tipo di articolo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:113
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:125
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:108
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:111
+msgid "Post ID"
+msgstr "ID articolo"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:127
+msgid "Array of queried post IDs"
+msgstr "Array degli ID degli articoli della query"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:128
+msgid "The posts found following the criteria of the query."
+msgstr "L'articolo trovato secondo i criteri della query."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:32
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:67
+msgid "Schedule"
+msgstr "Programma"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:37
+msgid ""
+"This step enables actions to be scheduled. You can choose when to run the "
+"next step."
+msgstr ""
+"Questo passaggio consente di programmare le azioni. Puoi scegliere quando "
+"eseguire il passaggio successivo."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:68
+msgid "A scheduled delay between steps."
+msgstr "Un ritardo programmato fra i passaggi."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:73
+msgid "Date offset"
+msgstr "Offset data"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:32
+msgid "Simple condition"
+msgstr "Condizione semplice"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:37
+msgid "This step allows you to create a conditional branch."
+msgstr "Questo passaggio ti consente di creare una diramazione condizionale."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:64
+msgid "Conditions"
+msgstr "Condizioni"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:65
+msgid ""
+"THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the "
+"True handle is implemented. False will not run the next actions for now."
+msgstr ""
+"Questo passaggio è attualmente solo un segnaposto. Non ancora implementato "
+"completamente. È implementato solo il collegamento \"Vero\". Falso per "
+"adesso non eseguirà le azioni successive."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:73
+msgid "NOT IMPLEMENTED YET!"
+msgstr "Non ancora implementato!"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:74
+msgid "Still not implemented"
+msgstr "Non ancora implementato"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:116
+msgid "True"
+msgstr "Vero"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:121
+msgid "False"
+msgstr "Falso"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:32
+msgid "Ray - Debug"
+msgstr "Ray - Debug"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:37
+msgid "This step transmits the flow's data to Ray Debug."
+msgstr "Questo passaggio trasmette i dati del flusso a Ray Debug."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:64
+msgid "Debug output"
+msgstr "Risultato debug"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:65
+msgid "The data to be sent to Ray."
+msgstr "I dati da inviare a Ray."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:70
+msgid "Data"
+msgstr "Dati"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:75
+msgid "Label"
+msgstr "Etichetta"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:80
+msgid "Color"
+msgstr "Colore"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:33
+msgid "On admin init"
+msgstr "Al caricamento della bacheca"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:38
+msgid "This trigger activates upon the initialization of the admin site."
+msgstr ""
+"Questo trigger si attiva dopo l'inizializzazione del sito dell'ammistratore."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:33
+msgid "On site init"
+msgstr "Al caricamento del sito"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:38
+msgid "This trigger activates upon site initialization."
+msgstr "Questo trigger si attiva dopo l'inizializzazione del sito."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:32
+msgid "Manually enabled via checkbox"
+msgstr "Abilitato manualmente via checkbox"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:37
+msgid ""
+"This trigger activates when the option is manually enabled. It can be "
+"enabled via the post editing screen or the Quick Edit panel."
+msgstr ""
+"Questo trigger si attiva quando l'opzione è abilitata manualmente. Può "
+"essere abilitata dalla schermata di modifica dell'articolo o dal pannello "
+"\"Modifica rapida\"."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:67
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:68
+msgid "Settings for the trigger."
+msgstr "Impostazioni per il trigger"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:73
+msgid "Checkbox label"
+msgstr "Etichetta checkbox"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:74
+msgid "The label of the checkbox that enables the trigger."
+msgstr "L'etichetta del checkbox che attiva il trigger."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:83
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:66
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:69
+msgid ""
+"Specify the criteria for posts that will trigger this action. Leave blank to "
+"include all posts."
+msgstr ""
+"Specifica i criteri per gli articoli che attiveranno l'azione. Lascia vuoto "
+"per includere tutti gli articoli."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:92
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:75
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:78
+msgid "The query defines the posts that will trigger this action."
+msgstr "La query definisce gli articoli che saranno attivati da questa azione."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:145
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:131
+msgid "Saved post"
+msgstr "Articolo salvato"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:146
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:135
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:132
+msgid "The post that was saved, with the new properties."
+msgstr "L'articolo salvato con le nuove proprietà."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:33
+msgid "Post is updated"
+msgstr "L'articolo è stato aggiornato"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:38
+msgid "This trigger activates when an existing post is updated."
+msgstr ""
+"Questo trigger si attiva quando un articolo esistente viene aggiornato."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:128
+msgid "Post Before Update"
+msgstr "L'articolo prima dell'aggiornamento"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:129
+msgid "The post that was saved, with the old properties."
+msgstr "L'articolo salvato con le vecchie proprietà."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:134
+msgid "Post After Update"
+msgstr "L'articolo dopo l'aggiornamento"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:33
+msgid "Post is saved"
+msgstr "L'articolo è stato salvato"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:38
+msgid ""
+"This trigger activates whenever a post is saved, regardless of whether it's "
+"newly created, imported, or updated."
+msgstr ""
+"Questo trigger si attiva quando un articolo viene salvato, indipendentemente "
+"dal fatto che sia stato creato, importato o aggiornato."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:53
+msgid "Manually enabled via Future Actions box"
+msgstr "Abilitato manualmente via riquadro azioni di Future"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:58
+msgid ""
+"This trigger activates when a Future Action on posts is set to execute this "
+"workflow."
+msgstr ""
+"Questo trigger si attiva quando una azione di Future in un articolo è "
+"impostata per eseguire questo flusso di lavoro."
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:108
+msgid "Action Post"
+msgstr "Articolo dell'azione"
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:109
+#| msgid "The post that was saved, with the new properties."
+msgid "The post that was saved triggering the action."
+msgstr "L'articolo salvato che ha innescato l'azione."
+
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:68
+msgid "PublishPress Future"
+msgstr "PublishPress Future"
+
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:77
+msgid "Site"
+msgstr "Sito"
+
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:86
+msgid "Conditional"
+msgstr "Condizionale"
+
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:95
+msgid "Asynchronous"
+msgstr "Asincrono"
+
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:104
+msgid "Debug"
+msgstr "Debug"
+
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:113
+msgid "Data Query"
+msgstr "Query di dati"
+
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:122
+msgid "Messages"
+msgstr "Messaggi"
+
+#: src/classes/Modules/Workflows/Rest/RestApiV1.php:38
+#: src/classes/Modules/Workflows/Rest/RestApiV1.php:71
+#: src/classes/Modules/Workflows/Rest/RestApiV1.php:91
+msgid "The ID of the workflow"
+msgstr "L'ID del flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Rest/RestApiV1.php:111
+msgid "The taxonomy name"
+msgstr "Il nome della tassonomia"
+
+#: src/classes/Modules/Workflows/Rest/RestApiV1.php:131
+msgid "The post ID"
+msgstr "L'ID dell'articolo"
+
+#: src/classes/Modules/Workflows/Rest/RestApiV1.php:152
+#: src/classes/Modules/Workflows/Rest/RestApiV1.php:190
+#: src/classes/Modules/Workflows/Rest/RestApiV1.php:236
+msgid "Workflow not found"
+msgstr "Flusso di lavoro non trovato"
+
+#: src/classes/Modules/Workflows/Views/editor.html.php:13
+msgid "Loading the workflow editor..."
+msgstr "Caricamento dell'editor del flusso di lavoro in corso…"
+
+#: src/classes/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:8
+msgid "Enabled Workflows"
+msgstr "Abilita flusso di lavoro"
+
+#: src/classes/Modules/Workflows/Views/preview-column.html.php:9
+msgid "Screenshot"
+msgstr "Screenshot"
+
+#: src/templates/settings-tab-advanced.html.php:8
 msgid "Action Date Calculation Base"
 msgstr "Base del calcolo della data dell'azione"
 
-#: src/templates/settings-tab-advanced.html.php:17
+#: src/templates/settings-tab-advanced.html.php:22
 msgid "Use Current Date"
 msgstr "Usa la data attuale"
 
-#: src/templates/settings-tab-advanced.html.php:19
+#: src/templates/settings-tab-advanced.html.php:24
 msgid "Calculates the future action date based on today's date."
 msgstr "Calcola la data dell'azione di future in base alla data odierna."
 
-#: src/templates/settings-tab-advanced.html.php:29
+#: src/templates/settings-tab-advanced.html.php:36
 msgid "Use Post's Publish Date"
 msgstr "Usa la data di pubblicazione dell'articolo"
 
-#: src/templates/settings-tab-advanced.html.php:31
+#: src/templates/settings-tab-advanced.html.php:38
 msgid ""
 "Calculates the future action date from the post's original publish date."
 msgstr ""
@@ -276,25 +1170,55 @@ msgstr ""
 msgid "License"
 msgstr "Licenza"
 
-#: src/templates/settings-tab-license.html.php:35
+#: src/templates/settings-tab-license.html.php:37
 msgid "Activated"
 msgstr "Attivato"
 
-#: src/templates/settings-tab-license.html.php:37
+#: src/templates/settings-tab-license.html.php:39
 msgid "Inactive"
 msgstr "Inattivo"
 
-#: src/templates/settings-tab-license.html.php:52
+#: src/templates/settings-tab-license.html.php:54
 msgid "Status: "
 msgstr "Stato: "
 
-#: src/templates/settings-tab-license.html.php:54
+#: src/templates/settings-tab-license.html.php:56
 msgid "Enter the license key for being able to update the plugin."
 msgstr "Inserisci la chiave di licenza per poter aggiornare il plugin."
 
-#: src/templates/settings-tab-license.html.php:67
+#: src/templates/settings-tab-license.html.php:69
 msgid "Save Changes"
 msgstr "Salva modifiche"
+
+#~ msgid "Future Workflows"
+#~ msgstr "Flussi di lavoro di Future"
+
+#~ msgid "Workflows"
+#~ msgstr "Flussi di lavoro"
+
+#~ msgid "Invalid data key: %s for data: %s"
+#~ msgstr "Chiave dati non valida: %s per i dati: %s"
+
+#~ msgid ""
+#~ "This action retrieves multiple posts to serve as the input for other "
+#~ "actions."
+#~ msgstr ""
+#~ "Quest'azione recupera più articoli da utilizzare come input per altre "
+#~ "azioni."
+
+#~ msgid ""
+#~ "This step facilitates action scheduling, allowing configuration of "
+#~ "specific or relative future dates, recurrence, and execution limits."
+#~ msgstr ""
+#~ "Questo passaggio facilita la programmazione dell'azione, consentendo la "
+#~ "configurazione di specifiche o correlate date future, ricorrenze e limiti "
+#~ "di esecuzione."
+
+#~ msgid "The scheduled time for this action."
+#~ msgstr "L'ora programmata per questa azione."
+
+#~ msgid "Future action"
+#~ msgstr "Azione di Future"
 
 #~ msgid "Change post status to %s"
 #~ msgstr "Cambiare lo stato dell'articolo in %s"

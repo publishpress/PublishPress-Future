@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-02T17:41:28+00:00\n"
+"POT-Creation-Date: 2024-07-10T17:10:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha\n"
 "X-Domain: publishpress-future-pro\n"
@@ -211,11 +211,11 @@ msgstr ""
 msgid "Auto Layout"
 msgstr ""
 
-#: components/layout/interface.jsx:74
+#: components/layout/interface.jsx:75
 msgid "Open node settings"
 msgstr ""
 
-#: components/layout/interface.jsx:75
+#: components/layout/interface.jsx:76
 msgid "Open workflow settings"
 msgstr ""
 
@@ -355,7 +355,7 @@ msgstr ""
 
 #: components/node-dev-info-panel/index.jsx:30
 #: components/node-inspector/node-inspector-card.jsx:18
-#: components/node-types/generic.jsx:37
+#: components/node-types/generic.jsx:42
 msgid "Node"
 msgstr ""
 
@@ -363,71 +363,71 @@ msgstr ""
 msgid "Node Type"
 msgstr ""
 
-#: components/node-inspector/index.jsx:95
+#: components/node-inspector/index.jsx:101
 msgid "No element selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:103
+#: components/node-inspector/index.jsx:109
 msgid "Multiple and different elements selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:113
+#: components/node-inspector/index.jsx:119
 msgid "%d steps selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:116
+#: components/node-inspector/index.jsx:122
 msgid "Multiple steps selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:127
+#: components/node-inspector/index.jsx:133
 msgid "%d connections selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:130
+#: components/node-inspector/index.jsx:136
 msgid "Multiple connections selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:163
+#: components/node-inspector/index.jsx:169
 msgid "Connection"
 msgstr ""
 
-#: components/node-inspector/index.jsx:164
+#: components/node-inspector/index.jsx:170
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:58
+#: components/node-inspector/node-data-flow-panel.jsx:63
 msgid "Step Data Flow"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:60
+#: components/node-inspector/node-data-flow-panel.jsx:65
 msgid "Inputs"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:64
+#: components/node-inspector/node-data-flow-panel.jsx:69
 msgid "This step receives the following input from previous step:"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:75
+#: components/node-inspector/node-data-flow-panel.jsx:80
 msgid "This step does not receive any input from previous step."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:80
+#: components/node-inspector/node-data-flow-panel.jsx:85
 msgid "Outputs"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:84
+#: components/node-inspector/node-data-flow-panel.jsx:89
 msgid "This step outputs the following data:"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:95
+#: components/node-inspector/node-data-flow-panel.jsx:100
 msgid "This step does not output any data."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:100
+#: components/node-inspector/node-data-flow-panel.jsx:105
 msgid "Global Variables"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:104
+#: components/node-inspector/node-data-flow-panel.jsx:109
 msgid "No global variables are declared"
 msgstr ""
 
@@ -435,25 +435,25 @@ msgstr ""
 msgid "No description"
 msgstr ""
 
-#: components/node-types/generic.jsx:88
+#: components/node-types/generic.jsx:93
 msgid "Step"
 msgstr ""
 
-#: components/node-types/generic.jsx:90
+#: components/node-types/generic.jsx:95
 msgid "Action"
 msgstr ""
 
 #. translators: Patterns tab title in the block inserter.
-#: components/node-types/generic.jsx:92
+#: components/node-types/generic.jsx:97
 #: components/secondary-sidebar/tabs.jsx:30
 msgid "Advanced"
 msgstr ""
 
-#: components/node-types/generic.jsx:94
+#: components/node-types/generic.jsx:99
 msgid "Trigger"
 msgstr ""
 
-#: components/node-types/generic.jsx:127
+#: components/node-types/generic.jsx:138
 #: components/workflow-delete-button/index.jsx:39
 msgid "Delete"
 msgstr ""
@@ -570,7 +570,23 @@ msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each ste
 msgstr ""
 
 #: components/secondary-sidebar/tips.jsx:16
-msgid "Drag steps from the inserter into the workflow."
+msgid "Drag steps from the inserter and drop them directly into your workflow for easy customization."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:17
+msgid "Simply double-click any step to bring up the settings sidebar for quick adjustments."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:18
+msgid "Double-click the workflow pane to increase the zoom level for a closer look."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:20
+msgid "Hold down the <kbd>shift</kbd> key and double-click the workflow pane to decrease the zoom level."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:26
+msgid "Easily add new steps by clicking on a step's handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need."
 msgstr ""
 
 #: components/settings-sidebar/plugin-sidebar.jsx:34
@@ -700,15 +716,15 @@ msgstr ""
 msgid "Unable to delete the workflow. Please, try again."
 msgstr ""
 
-#: components/workflow-summary/index.jsx:38
+#: components/workflow-summary/index.jsx:44
 msgid "Summary"
 msgstr ""
 
-#: components/workflow-summary/index.jsx:44
+#: components/workflow-summary/index.jsx:50
 msgid "Title"
 msgstr ""
 
-#: components/workflow-summary/index.jsx:53
+#: components/workflow-summary/index.jsx:59
 msgid "Description"
 msgstr ""
 
