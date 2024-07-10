@@ -28,9 +28,9 @@ class ClassicEditorController implements InitializableInterface
     private $hooks;
 
     /**
-     * @var \Closure
+     * @var CurrentUserModel
      */
-    private $currentUserModelFactory;
+    private $currentUserModel;
 
     /**
      * @param HookableInterface $hooksFacade
@@ -41,11 +41,15 @@ class ClassicEditorController implements InitializableInterface
         $currentUserModelFactory
     ) {
         $this->hooks = $hooksFacade;
-        $this->currentUserModelFactory = $currentUserModelFactory;
+        $this->currentUserModel = $currentUserModelFactory();
     }
 
     public function initialize()
     {
+        if (! $this->currentUserModel->userCanExpirePosts()) {
+            return;
+        }
+
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_ADD_META_BOXES,
             [$this, 'registerClassicEditorMetabox'],
@@ -106,13 +110,6 @@ class ClassicEditorController implements InitializableInterface
 
     public function registerClassicEditorMetabox($postType, $post)
     {
-        $factory = $this->currentUserModelFactory;
-        $currentUserModel = $factory();
-
-        if (! $currentUserModel->userCanExpirePosts()) {
-            return;
-        }
-
         // Only show the metabox if the block editor is not enabled for the post type
         if (! empty($post) && $this->isGutenbergAvailableForThePost($post)) {
             if (! $this->classicEditorIsActiveForCurrentSession() ) {
@@ -198,13 +195,6 @@ class ClassicEditorController implements InitializableInterface
             return;
         }
 
-        $currentUserModelFactory = Container::getInstance()->get(ServicesAbstract::CURRENT_USER_MODEL_FACTORY);
-        $currentUserModel = $currentUserModelFactory();
-
-        if (! $currentUserModel->userCanExpirePosts()) {
-            return;
-        }
-
         // Don't run if was triggered by block editor. It is processed on the method "ExpirationController::handleRestAPIInit".
         if (empty($_POST['future_action_view'])) {
             return;
@@ -275,13 +265,6 @@ class ClassicEditorController implements InitializableInterface
         $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
         if (! $isEditPostPage && ! $isNewPostPage) {
-            return;
-        }
-
-        $currentUserModelFactory = $this->currentUserModelFactory;
-        $currentUserModel = $currentUserModelFactory();
-
-        if (! $currentUserModel->userCanExpirePosts()) {
             return;
         }
 

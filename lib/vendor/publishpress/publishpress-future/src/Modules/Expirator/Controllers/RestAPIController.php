@@ -14,6 +14,7 @@ use PublishPress\Future\Modules\Expirator\CapabilitiesAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use WP_REST_Request;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -31,15 +32,22 @@ class RestAPIController implements InitializableInterface
     private $expirablePostModelFactory;
 
     /**
+     * @var CurrentUserModel
+     */
+    private $currentUserModel;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param callable $expirablePostModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
-        $expirablePostModelFactory
+        $expirablePostModelFactory,
+        \Closure $currentUserModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->currentUserModel = $currentUserModelFactory();
     }
 
     public function initialize()
@@ -64,7 +72,8 @@ class RestAPIController implements InitializableInterface
             'methods' => 'GET',
             'callback' => [$this, 'getFutureActionData'],
             'permission_callback' => function () {
-                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+                // Everyone with read access should be able to see the expiration data
+                return true;
             },
             'args' => [
                 'postId' => [
@@ -82,7 +91,7 @@ class RestAPIController implements InitializableInterface
             'methods' => 'POST',
             'callback' => [$this, 'saveFutureActionData'],
             'permission_callback' => function () {
-                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+                return $this->currentUserModel->userCanExpirePosts();
             },
             'args' => [
                 'postId' => [
@@ -139,7 +148,7 @@ class RestAPIController implements InitializableInterface
             'methods' => 'GET',
             'callback' => [$this, 'getPostTypeTaxonomies'],
             'permission_callback' => function () {
-                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+                return $this->currentUserModel->userCanExpirePosts();
             },
             'args' => [
                 'postType' => [
@@ -157,7 +166,7 @@ class RestAPIController implements InitializableInterface
             'methods' => 'GET',
             'callback' => [$this, 'getTaxonomyTerms'],
             'permission_callback' => function () {
-                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+                return $this->currentUserModel->userCanExpirePosts();
             },
             'args' => [
                 'taxonomy' => [
@@ -175,7 +184,7 @@ class RestAPIController implements InitializableInterface
             'methods' => 'POST',
             'callback' => [$this, 'validateTextualDatetime'],
             'permission_callback' => function () {
-                return current_user_can(CapabilitiesAbstract::EXPIRE_POST);
+                return $this->currentUserModel->userCanExpirePosts();
             }
         ]);
     }
@@ -264,6 +273,10 @@ class RestAPIController implements InitializableInterface
                         ];
                     },
                     'update_callback' => function ($value, $post) {
+                        if (! $this->currentUserModel->userCanExpirePosts()) {
+                            return false;
+                        }
+
                         if (isset($value['enabled']) && (bool)$value['enabled']) {
                             $expireType = sanitize_text_field($value['action']);
                             $newStatus = sanitize_key($value['newStatus']);
