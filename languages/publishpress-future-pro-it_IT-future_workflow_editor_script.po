@@ -177,14 +177,6 @@ msgstr "Chiudi"
 msgid "Auto Layout"
 msgstr "Layout automatico"
 
-#: components/layout/interface.jsx:75
-msgid "Open node settings"
-msgstr "Apri impostazioni del nodo"
-
-#: components/layout/interface.jsx:76
-msgid "Open workflow settings"
-msgstr "Apri impostazioni del flusso di lavoro"
-
 #. translators: button label text should, if possible, be under 16 characters.
 #: components/left-toolbar/redo.jsx:31
 msgid "Redo"

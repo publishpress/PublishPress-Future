@@ -161,14 +161,6 @@ msgstr ""
 msgid "Auto Layout"
 msgstr ""
 
-#: components/layout/interface.jsx:75
-msgid "Open node settings"
-msgstr ""
-
-#: components/layout/interface.jsx:76
-msgid "Open workflow settings"
-msgstr ""
-
 #: components/more-menu/menu-items-view.jsx:27
 msgid "Fullscreen mode"
 msgstr ""
