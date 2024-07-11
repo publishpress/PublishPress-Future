@@ -25,3 +25,5 @@
 - composer.lock
 - .DS_Store
 - /src/assets/adobe-animate
+- .phplint.cache
+- .php-cs-fixer.php
