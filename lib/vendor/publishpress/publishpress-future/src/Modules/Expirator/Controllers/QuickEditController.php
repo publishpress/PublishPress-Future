@@ -6,7 +6,6 @@
 namespace PublishPress\Future\Modules\Expirator\Controllers;
 
 use PostExpirator_Display;
-use PostExpirator_Facade;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
