@@ -92,7 +92,8 @@ A full changelog is available in the plugin's GitHub repository.
 ### Added
 
 - Add the current date and time to date preview in the date/time offset setting field, #840
-- Add new tipos to the inserter in the workflow editor
+- Add new tips to the inserter in the workflow editor
+- Add double-click behavior to the steps in a workflow to load the settings sidebar
 
 ### Fixed
 
@@ -103,10 +104,10 @@ A full changelog is available in the plugin's GitHub repository.
 - Fix translations for ES, FR, and IT, #699, #859
 - Fix user capabilities check in the block editor, #727
 - Fix error when selecting Query Posts step in the workflow editor and Advanced Settings is not enabled, #850
-- Fix inserter and sidebar in the workflow editor, closing each other when one is opened, #740
-- Fix the vertical size of the inserter, #740
+- Fix inserter and sidebar in the workflow editor, ensuring they are not visible at the same time, #740
+- Fix the vertical size of the inserter and scroll on small screens, #740
 - Fix the scroll position in the settings sidebar when it opens, #855
-- Fix text for the Future Actions trigger, #31
+- Fix step description for the Future Actions trigger, #31
 - Fix the workflow editor layout for WordPress 6.6, #863
 
 ## [3.4.1] - 26 Jun, 2024
