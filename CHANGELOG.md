@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Optimized the date/time offset validation requests in the Post Types settings, #840
 - Fix error message in the date/time offset setting field, #841
 - Fix user capabilities check in the block editor, #727
+- Update ES, FR, and IT translations, #859
 
 ## [3.4.1] - 02 Jul, 2024
 
