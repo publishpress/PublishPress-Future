@@ -58,7 +58,7 @@ export const LayoutHeader = () => {
         disableFeature
     } = useDispatch(editorStore);
 
-    const headerClasses = 'edit-post-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
+    const headerClasses = 'edit-post-header editor-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
 
     const isWideViewport = useViewportMatch('wide');
 
@@ -96,7 +96,7 @@ export const LayoutHeader = () => {
                 <FullscreenModeClose />
             }
 
-            <div className="edit-post-header__toolbar">
+            <div className="edit-post-header__toolbar editor-header__toolbar">
                 <NavigableToolbar
                     className="edit-post-header-toolbar editor-document-tools"
                     aria-label={toolbarAriaLabel}
@@ -160,7 +160,7 @@ export const LayoutHeader = () => {
                     </div>
                 </NavigableToolbar>
             </div>
-            <div className="edit-post-header__settings">
+            <div className="edit-post-header__settings editor-header__settings">
                 <WorkflowSaveDraftButton />
                 <WorkflowPublishButton />
 
