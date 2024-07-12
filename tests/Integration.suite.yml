@@ -16,5 +16,5 @@ modules:
            domain: '%WORDPRESS_DOMAIN%'
            adminEmail: 'admin@%WORDPRESS_DOMAIN%'
            title: 'Integration Tests'
-           plugins: ['post-expirator/post-expirator.php']
+           plugins: ['./post-expirator.php']
            theme: ''

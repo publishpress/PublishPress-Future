@@ -1,6 +1,0 @@
-actor: UnitTester
-modules:
-    enabled:
-        - Tests\Support\Helper\Unit
-        - Asserts
-bootstrap: bootstrap.php
