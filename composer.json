@@ -94,6 +94,13 @@
     "cleanup:js-mo": "bash ./dev-workspace/scripts/lang-cleanup.sh",
     "cleanup:gh-workflows": "user=publishpress repo=publishpress-future-pro; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
     "gen:alias-plugin": "php dev-workspace/scripts/gen-alias-plugin.php",
+    "check": [
+      "@check:lint",
+      "@check:php",
+      "@check:cs",
+      "@check:longpath",
+      "@check:deps"
+    ],
     "check:php": [
       "@check:php-5.6",
       "@check:php-7.2",
@@ -183,6 +190,7 @@
     "check:stan": "Checks the PHP files for static analysis.",
     "check:longpath": "Checks the PHP files for long paths.",
     "check:deps": "Checks the dependencies.",
+    "check": "Runs all the checks.",
     "fix:deps": "Fixes the dependencies.",
     "fix:cs": "Fixes the PHP files for coding standards.",
     "fix:php": "Fixes the PHP files.",
