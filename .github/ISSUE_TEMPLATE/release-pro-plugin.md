@@ -12,7 +12,7 @@ To release the Pro plugin, ensure you complete all the tasks below.
 
 - [ ] Create the release branch as `release-<version>` from the development branch.
 - [ ] Review and merge all relevant Pull Requests into the release branch.
-- [ ] - [ ] Update the version number to a beta version in the main plugin file as per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
+- [ ] Update the version number to a beta version in the main plugin file as per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
 - [ ] Verify the correct version of the free plugin is referenced in the `lib/composer.json` file. Prefer stable versions.
 - [ ] Start a dev-workspace session.
 - [ ] Run `composer update` (updating root and lib vendors).
@@ -42,5 +42,5 @@ To release the Pro plugin, ensure you complete all the tasks below.
 
 #### PublishPress.com Deployment
 
-- [ ] Update the EDD registry on the Downloads menu, uploading the new package.
+- [ ] Update the EDD registry on the Downloads menu, uploading the new package and updating the changelog.
 - [ ] Perform a final test by updating the plugin on a staging site.
