@@ -1,4 +1,20 @@
-path: ./dist/publishpress-future-pro
+path: .
 jobs: 10
 extensions:
   - php
+exclude:
+  - .github
+  - .vscode
+  - .idea
+  - tests
+  - tests-old
+  - .wordpress-org
+  - bin
+  - vendor
+  - dist
+  - languages
+  - node_modules
+  - dev-workspace
+  - cache
+  - .cache
+  - lib/vendor

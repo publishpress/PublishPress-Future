@@ -24,6 +24,7 @@
     <exclude-pattern>/dev-workspace/*</exclude-pattern>
     <exclude-pattern>/lib/vendor/*</exclude-pattern>
     <exclude-pattern>/tmp/*</exclude-pattern>
+    <exclude-pattern>/lib/vendor/*</exclude-pattern>
 
     <rule ref="PSR12"/>
     <rule ref="WordPressVIPMinimum">

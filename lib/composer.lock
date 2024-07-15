@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59cf92faf788d6c91811c08506b8e720",
+    "content-hash": "a2208d2d5a3b729d6c49635db01a7857",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-release-3.4.2",
+            "version": "3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "7798d9cc6bab410f65327e0570f5dcb4bbab55d1"
+                "reference": "cfbf40ac7b5ffab210d839d0a353ef830f92e39a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/7798d9cc6bab410f65327e0570f5dcb4bbab55d1",
-                "reference": "7798d9cc6bab410f65327e0570f5dcb4bbab55d1",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/cfbf40ac7b5ffab210d839d0a353ef830f92e39a",
+                "reference": "cfbf40ac7b5ffab210d839d0a353ef830f92e39a",
                 "shasum": ""
             },
             "require": {
@@ -340,6 +340,7 @@
                 "squizlabs/php_codesniffer": "^3.8",
                 "szepeviktor/phpstan-wordpress": "^1.3",
                 "wp-cli/i18n-command": "^2.6",
+                "wp-cli/wp-cli-bundle": "^2.10",
                 "wp-coding-standards/wpcs": "^3"
             },
             "type": "wordpress-plugin",
@@ -382,18 +383,92 @@
                 "get:version": [
                     "pbuild version"
                 ],
+                "gen:pot-php": [
+                    "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root"
+                ],
+                "gen:pot-js": [
+                    "bash ./dev-workspace/scripts/lang-make-js-pot.sh"
+                ],
                 "gen:mo": [
                     "wp i18n make-mo ./languages ./languages --allow-root"
                 ],
+                "gen:po-scripts": [
+                    "bash ./dev-workspace/scripts/lang-update-js-po.sh"
+                ],
+                "gen:po-json": [
+                    "bash ./dev-workspace/scripts/lang-make-json.sh"
+                ],
                 "gen:pot": [
-                    "wp i18n make-pot . languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests, --allow-root"
+                    "@gen:pot-php",
+                    "@gen:pot-js"
                 ],
                 "gen:lang": [
                     "@gen:pot",
-                    "@gen:mo"
+                    "@gen:mo",
+                    "@gen:po-scripts",
+                    "@gen:po-json",
+                    "@cleanup:js-mo"
+                ],
+                "cleanup:js-mo": [
+                    "bash ./dev-workspace/scripts/lang-cleanup.sh"
                 ],
                 "cleanup:gh-workflows": [
                     "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE"
+                ],
+                "check": [
+                    "@check:php",
+                    "@check:lint",
+                    "@check:cs",
+                    "@check:longpath"
+                ],
+                "check:php": [
+                    "@check:php-5.6",
+                    "@check:php-7.2",
+                    "@check:php-7.4",
+                    "@check:php-8.0",
+                    "@check:php-8.1",
+                    "@check:php-8.2",
+                    "@check:php-8.3"
+                ],
+                "check:php-5.6": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php"
+                ],
+                "check:php-7.2": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2"
+                ],
+                "check:php-7.4": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4"
+                ],
+                "check:php-8.0": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0"
+                ],
+                "check:php-8.1": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1"
+                ],
+                "check:php-8.2": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2"
+                ],
+                "check:php-8.3": [
+                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.3"
+                ],
+                "check:lint": [
+                    "phplint --no-cache"
+                ],
+                "check:cs": [
+                    "phpcs"
+                ],
+                "check:stan": [
+                    "phpstan"
+                ],
+                "check:longpath": [
+                    "longpath ."
+                ],
+                "fix:cs": [
+                    "phpcbf --standard=.phpcs.xml"
+                ],
+                "fix:php": [
+                    "php-cs-fixer fix .",
+                    "@fix:cs"
                 ],
                 "dbox:up": [
                     "pdropbox upload && pdropbox share"
@@ -407,70 +482,28 @@
                 "dbox:unlink": [
                     "pdropbox unlink"
                 ],
-                "check": [
-                    "@build:dir",
-                    "@check:lint",
-                    "@check:php",
-                    "@check:phpcs"
+                "tests:wp": [
+                    "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" \"$@\""
                 ],
-                "check:longpath": [
-                    "longpath ."
+                "tests:clean": [
+                    "vendor/bin/codecept clean"
                 ],
-                "check:lint": [
-                    "phplint"
+                "tests:link": [
+                    "source ./tests/.env && if [ ! -L \"$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG\" ]; then ln -s \"$PWD\" \"$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG\"; fi"
                 ],
-                "check:phpcs": [
-                    "phpcs"
+                "tests:activate": [
+                    "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" plugin activate $PLUGIN_SLUG/${PLUGIN_SLUG}.php"
                 ],
-                "check:stan": [
-                    "phpstan"
+                "tests:db-export": [
+                    "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db export ./tests/Support/Data/dump.sql"
                 ],
-                "check:php": [
-                    "@check:php56",
-                    "@check:php72",
-                    "@check:php74",
-                    "@check:php80",
-                    "@check:php81",
-                    "@check:php82",
-                    "@check:php83"
+                "tests:db-import": [
+                    "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db import ./tests/Support/Data/dump.sql"
                 ],
-                "check:php56": [
-                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php"
+                "tests:chromedriver": [
+                    "source ./tests/.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT"
                 ],
-                "check:php72": [
-                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2"
-                ],
-                "check:php74": [
-                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4"
-                ],
-                "check:php80": [
-                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0"
-                ],
-                "check:php81": [
-                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1"
-                ],
-                "check:php82": [
-                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2"
-                ],
-                "check:php83": [
-                    "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.3"
-                ],
-                "tests:dev-start": [
-                    "./vendor/bin/codecept dev:start"
-                ],
-                "tests:dev-stop": [
-                    "./vendor/bin/codecept dev:stop"
-                ],
-                "tests:dev-restart": [
-                    "./vendor/bin/codecept dev:restart"
-                ],
-                "tests:cd-update": [
-                    "./vendor/bin/codecept chromedriver:update"
-                ],
-                "tests:import-db": [
-                    "rm -rf ./tests/_wordpress/data && mkdir ./tests/_wordpress/data && vendor/bin/codecept wp:db:import ./tests/_wordpress ./tests/Support/Data/dump.sql"
-                ],
-                "tests:run": [
+                "tests:all": [
                     "./vendor/bin/codecept run"
                 ],
                 "tests:integration": [
@@ -479,14 +512,35 @@
                 "tests:e2e": [
                     "./vendor/bin/codecept run EndToEnd"
                 ],
+                "tests:unit": [
+                    "./vendor/bin/codecept run Unit"
+                ],
+                "test": [
+                    "./vendor/bin/codecept run $@"
+                ],
+                "codeception": [
+                    "./vendor/bin/codecept $@"
+                ],
+                "docker:cleanup": [
+                    "docker system prune -f"
+                ],
+                "config:phpcs": [
+                    "phpcs --config-set installed_paths \"../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../publishpress/publishpress-phpcs-standards/standards,../../wp-coding-standards/wpcs\""
+                ],
+                "post-install-cmd": [
+                    "@config:phpcs"
+                ],
+                "post-update-cmd": [
+                    "@config:phpcs"
+                ],
                 "pre-autoload-dump": [
-                    "composer dumpautoload --working-dir=./lib"
+                    "@composer dumpautoload --working-dir=./lib"
                 ],
                 "pre-update-cmd": [
-                    "composer update --working-dir=./lib"
+                    "@composer update --working-dir=./lib"
                 ],
                 "pre-install-cmd": [
-                    "composer install --working-dir=./lib"
+                    "@composer install --working-dir=./lib"
                 ]
             },
             "license": [
@@ -505,10 +559,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/release-3.4.2",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.4.2",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-07-11T23:26:07+00:00"
+            "time": "2024-07-15T18:55:22+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -808,9 +862,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "publishpress/publishpress-future": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

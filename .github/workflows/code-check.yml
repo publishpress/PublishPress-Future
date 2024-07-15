@@ -12,43 +12,33 @@ on:
 
   workflow_dispatch:
     inputs:
-      debug_enabled_code_check:
+      tmate_enabled:
         type: boolean
-        description: 'Enable "tmate" debugging for the code check'
+        description: 'Enable "tmate" for debugging'
         required: false
         default: false
 jobs:
   check:
     name: Check the code
     runs-on: ubuntu-latest
-    container:
-      image: publishpress/dev-workspace-terminal:future-pro-2
-      options: -v ${{ github.workspace }}:/project --workdir="/project"
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    env:
+      DOCKER_IMAGE: publishpress/dev-workspace-terminal:future-free-4
 
-      - name: Setup tmate session for Debugging, if inputs.debug_enabled_code_check is true
+    steps:
+      - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
-        if: ${{ inputs.debug_enabled_code_check }}
+        if: ${{ inputs.tmate_enabled }}
         timeout-minutes: 10
         with:
           detached: true
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
+      - name: Checkout code
+        uses: actions/checkout@master
 
-      - name: Composer install
-        run: composer install --no-interaction --no-progress --prefer-dist --ignore-platform-reqs
+      - name: Prepare composer
+        run: |
+          $GITHUB_WORKSPACE/dev-workspace/run composer validate && composer install
 
-      - name: Build the package to a dir
-        run: composer build:dir
-
-      - name: PHPLint - Check PHP syntax errors
-        run: composer check:lint
-
-      - name: PHP - Check PHP compatibility
-        run: composer check:php
-
-      - name: PHPCS - Check VIP scan and code standards
-        run: composer check:phpcs
+      - name: Run code checks inside dev-workspace
+        run: |
+          $GITHUB_WORKSPACE/dev-workspace/run composer check
