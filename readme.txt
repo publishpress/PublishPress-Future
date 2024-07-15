@@ -173,7 +173,7 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
-## [3.4.2] - UNRELEASED
+## [3.4.2] - 15 Jul, 2024
 
 ### Added
 
@@ -185,6 +185,10 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Fix error message in the date/time offset setting field, #841
 - Fix user capabilities check in the block editor, #727
 - Update ES, FR, and IT translations, #859
+
+### Changed
+
+- Change the text in the promo screen for the Actions Workflow feature, #867
 
 ## [3.4.1] - 02 Jul, 2024
 

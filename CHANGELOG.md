@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.4.2] - UNRELEASED
+## [3.4.2] - 15 Jul, 2024
 
 ### Added
 
@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix error message in the date/time offset setting field, #841
 - Fix user capabilities check in the block editor, #727
 - Update ES, FR, and IT translations, #859
+
+### Changed
+
+- Change the text in the promo screen for the Actions Workflow feature, #867
 
 ## [3.4.1] - 02 Jul, 2024
 
