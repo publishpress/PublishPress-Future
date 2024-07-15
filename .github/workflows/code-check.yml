@@ -35,34 +35,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
 
-      - name: Cache Docker image
-        id: cache-image
-        uses: actions/cache@v3
-        env:
-          cache-name: image-cache
-        with:
-          path: ~/image-cache-terminal.tar
-          # Adjust key to meet your cache time requirements e.g.
-          # ${{ hashFiles(*) }} can be useful here to invalidate
-          # cache on file changes
-          key: image-cache-${{ hashFiles('dev-workspace/docker/Dockerfile') }}
-          restore-keys: |
-            image-cache-
-
-      - if: steps.cache-image.outputs.cache-hit != 'true'
-        name: Pull Docker image
+      - name: Prepare composer
         run: |
-          docker pull $DOCKER_IMAGE
-          docker save -o ~/image-cache-terminal.tar $DOCKER_IMAGE
+          $GITHUB_WORKSPACE/dev-workspace/run composer validate && composer install
 
-      - if: steps.cache-image.outputs.cache-hit == 'true'
-        name: Load Docker image from cache
-        run: docker load -i ~/image-cache-terminal.tar
-
-      - name: Run code checks
+      - name: Run code checks inside dev-workspace
         run: |
-          docker run --rm \
-            -v ${{ github.workspace }}:/project \
-            --workdir="/project" \
-            $DOCKER_IMAGE \
-            bash -c "composer validate && composer install --no-interaction --no-progress --prefer-dist --ignore-platform-reqs && composer check"
+          $GITHUB_WORKSPACE/dev-workspace/run composer check
