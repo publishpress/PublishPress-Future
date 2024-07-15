@@ -5,7 +5,7 @@ on:
 
   workflow_dispatch:
     inputs:
-      tmate_enabled:
+      tmate_enabled_pro:
         type: boolean
         description: 'Enable "tmate" for debugging'
         required: false
@@ -30,9 +30,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
 
-      - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
+      - name: Setup tmate session for Debugging, if inputs.tmate_enabled_pro is true
         uses: mxschmitt/action-tmate@v3
-        if: ${{ inputs.tmate_enabled }}
+        if: ${{ inputs.tmate_enabled_pro }}
         timeout-minutes: 10
         with:
           detached: true
