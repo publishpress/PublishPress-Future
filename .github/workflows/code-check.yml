@@ -12,9 +12,9 @@ on:
 
   workflow_dispatch:
     inputs:
-      debug_enabled_code_check:
+      tmate_enabled:
         type: boolean
-        description: 'Enable "tmate" debugging for the code check'
+        description: 'Enable "tmate" for debugging'
         required: false
         default: false
 jobs:
@@ -22,18 +22,18 @@ jobs:
     name: Check the code
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE: publishpress/dev-workspace-terminal:future-free-2
+      DOCKER_IMAGE: publishpress/dev-workspace-terminal:future-free-4
 
     steps:
-      - name: Setup tmate session for Debugging, if inputs.debug_enabled_code_check is true
+      - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
-        if: ${{ inputs.debug_enabled_code_check }}
+        if: ${{ inputs.tmate_enabled }}
         timeout-minutes: 10
         with:
           detached: true
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@master
 
       - name: Cache Docker image
         id: cache-image

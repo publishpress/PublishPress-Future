@@ -5,9 +5,9 @@ on:
 
   workflow_dispatch:
     inputs:
-      debug_enabled_deployment:
+      tmate_enabled:
         type: boolean
-        description: 'Enable "tmate" debugging for the deployment'
+        description: 'Enable "tmate" for debugging'
         required: false
         default: false
 
@@ -28,19 +28,18 @@ jobs:
           sudo apt-get install -y iproute2
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
 
-      - name: Setup tmate session for Debugging, if inputs.debug_enabled_deployment is true
+      - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
-        if: ${{ inputs.debug_enabled_deployment }}
+        if: ${{ inputs.tmate_enabled }}
         timeout-minutes: 10
         with:
           detached: true
 
-      - name: Build the package on ./dev-workspace
+      - name: Build the package using ./dev-workspace
         run: |
-          cd $GITHUB_WORKSPACE/dev-workspace
-          sh run composer build
+          sh $GITHUB_WORKSPACE/dev-workspace/run composer build
 
       - name: WordPress.org plugin deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
