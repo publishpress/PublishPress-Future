@@ -5,9 +5,9 @@ on:
 
   workflow_dispatch:
     inputs:
-      debug_enabled_deployment:
+      tmate_enabled:
         type: boolean
-        description: 'Enable "tmate" debugging for the deployment'
+        description: 'Enable "tmate" for debugging'
         required: false
         default: false
 
@@ -28,19 +28,22 @@ jobs:
           sudo apt-get install -y iproute2
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
 
-      - name: Setup tmate session for Debugging, if inputs.debug_enabled_deployment is true
+      - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
-        if: ${{ inputs.debug_enabled_deployment }}
+        if: ${{ inputs.tmate_enabled }}
         timeout-minutes: 10
         with:
           detached: true
 
-      - name: Build the package on ./dev-workspace
+      - name: Prepare composer
         run: |
-          cd $GITHUB_WORKSPACE/dev-workspace
-          sh run composer build
+          $GITHUB_WORKSPACE/dev-workspace/run composer validate && composer install
+
+      - name: Build the package using ./dev-workspace
+        run: |
+          $GITHUB_WORKSPACE/dev-workspace/run composer build
 
       - name: WordPress.org plugin deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
@@ -50,21 +53,11 @@ jobs:
           SLUG: post-expirator
           BUILD_DIR: ${{ github.workspace }}/dist/post-expirator
 
-      - name: Save version number to version.txt
-        run: |
-          cd $GITHUB_WORKSPACE/dev-workspace
-          sh run composer get:version
-
-      - name: Get version number from version.txt
+      - name: Get the plugin version number
         id: get-version
-        run: echo "version=$(cat $GITHUB_WORKSPACE/version.txt)" >> "$GITHUB_OUTPUT"
+        run: echo "version=$($GITHUB_WORKSPACE/dev-workspace/run pversion)" >> "$GITHUB_OUTPUT"
 
       - name: Upload release asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ${{ github.workspace }}/dist/
-          asset_name: publishpress-future-${{ steps.get-version.outputs.version }}.zip
-          asset_content_type: application/zip
+          files: ${{ github.workspace }}/dist/post-expirator-${{ steps.get-version.outputs.version }}.zip

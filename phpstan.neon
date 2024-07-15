@@ -1,7 +1,21 @@
 parameters:
     level: 8
     paths:
-    	- dist/post-expirator
+    	- .
     excludePaths:
-        - dist/post-expirator/lib
-        - dist/post-expirator/vendor
+        - lib
+        - vendor
+        - .github
+        - .vscode
+        - .idea
+        - tests
+        - tests-old
+        - .wordpress-org
+        - bin
+        - vendor
+        - dist
+        - languages
+        - node_modules
+        - dev-workspace
+        - cache
+        - .cache

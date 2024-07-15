@@ -1,4 +1,20 @@
-path: ./dist/post-expirator
+path: .
 jobs: 10
 extensions:
   - php
+exclude:
+  - .github
+  - .vscode
+  - .idea
+  - tests
+  - tests-old
+  - .wordpress-org
+  - bin
+  - vendor
+  - dist
+  - languages
+  - node_modules
+  - dev-workspace
+  - cache
+  - .cache
+  - assets
