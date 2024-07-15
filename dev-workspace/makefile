@@ -16,7 +16,7 @@ build:
 	CACHE_PATH=$${CACHE_PATH} \
 	$${BIN_PATH}/exec build "$$@";
 
-buildpush:
+push:
 	source ./.env && \
 	CONTAINER_NAME=$${CONTAINER_NAME} \
 	IMAGE_NAME=$${IMAGE_NAME} \
