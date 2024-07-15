@@ -3,6 +3,29 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.2] - UNRELEASED
+
+### Added
+
+- Add the current date and time to date preview in the date/time offset setting field, #840
+- Add new tips to the inserter in the workflow editor
+- Add double-click behavior to the steps in a workflow to load the settings sidebar
+
+### Fixed
+
+- Fix the UserResolver to accept empty user when a user is not logged in, #832
+- Remove deprecated constant FILTER_SANITIZE_STRING
+- Optimized the date/time offset validation requests in the Post Types settings, #840
+- Fix error message in the date/time offset setting field, #841
+- Fix translations for ES, FR, and IT, #699, #859
+- Fix user capabilities check in the block editor, #727
+- Fix error when selecting Query Posts step in the workflow editor and Advanced Settings is not enabled, #850
+- Fix inserter and sidebar in the workflow editor, ensuring they are not visible at the same time, #740
+- Fix the vertical size of the inserter and scroll on small screens, #740
+- Fix the scroll position in the settings sidebar when it opens, #855
+- Fix step description for the Future Actions trigger, #31
+- Fix the workflow editor layout for WordPress 6.6, #863
+
 ## [3.4.1] - 02 Jul, 2024
 
 ### Added

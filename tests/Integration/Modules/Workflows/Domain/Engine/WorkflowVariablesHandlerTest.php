@@ -10,11 +10,32 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\Str
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowVariablesHandler;
 use stdClass;
-use Tests\Support\UnitTester;
 
-class WorkflowVariablesHandlerCest
+
+class WorkflowVariablesHandlerTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {
-    public function extractVariablePlaceholdersFromTextReturnsVariablesForCorrectText(UnitTester $I)
+    /**
+     * @var \IntegrationTester
+     */
+    protected $tester;
+
+    public function setUp() :void
+    {
+        // Before...
+        parent::setUp();
+
+        // Your set up methods here.
+    }
+
+    public function tearDown() :void
+    {
+        // Your tear down methods here.
+
+        // Then...
+        parent::tearDown();
+    }
+
+    public function testExtractVariablePlaceholdersFromTextReturnsVariablesForCorrectText(): void
     {
         $text = 'This is a text with a {{variable}} and another {{global.variable}} and another {{global.variable.with.subproperty}}';
 
@@ -22,14 +43,14 @@ class WorkflowVariablesHandlerCest
 
         $variables = $handler->extractVariablePlaceholdersFromText($text);
 
-        $I->assertEquals([
+        $this->assertEquals([
             'variable',
             'global.variable',
             'global.variable.with.subproperty'
         ], $variables);
     }
 
-    public function extractVariablePlaceholdersFromTextReturnsEmptyArrayWhenNoVariables(UnitTester $I)
+    public function testExtractVariablePlaceholdersFromTextReturnsEmptyArrayWhenNoVariables(): void
     {
         $text = 'This is a text without variables';
 
@@ -37,10 +58,10 @@ class WorkflowVariablesHandlerCest
 
         $variables = $handler->extractVariablePlaceholdersFromText($text);
 
-        $I->assertEquals([], $variables);
+        $this->assertEquals([], $variables);
     }
 
-    public function extractVariablePlaceholdersFromTextReturnsEmptyArrayWhenEmptyText(UnitTester $I)
+    public function testExtractVariablePlaceholdersFromTextReturnsEmptyArrayWhenEmptyText(): void
     {
         $text = '';
 
@@ -48,10 +69,10 @@ class WorkflowVariablesHandlerCest
 
         $variables = $handler->extractVariablePlaceholdersFromText($text);
 
-        $I->assertEquals([], $variables);
+        $this->assertEquals([], $variables);
     }
 
-    public function extractVariablePlaceholdersFromTextReturnsEmptyArrayWhenNullText(UnitTester $I)
+    public function testExtractVariablePlaceholdersFromTextReturnsEmptyArrayWhenNullText(): void
     {
         $text = null;
 
@@ -59,10 +80,10 @@ class WorkflowVariablesHandlerCest
 
         $variables = $handler->extractVariablePlaceholdersFromText($text);
 
-        $I->assertEquals([], $variables);
+        $this->assertEquals([], $variables);
     }
 
-    public function getValueFromVariableReturnsCorrectValueWhenPassingSimpleVariable(UnitTester $I)
+    public function testGetValueFromVariableReturnsCorrectValueWhenPassingSimpleVariable(): void
     {
         $handler = new WorkflowVariablesHandler();
 
@@ -70,39 +91,39 @@ class WorkflowVariablesHandlerCest
             'variable' => 'Variable value'
         ]);
 
-        $I->assertEquals('Variable value', $result);
+        $this->assertEquals('Variable value', $result);
     }
 
-    public function getValueFromVariableReturnsCorrectValueWhenPassingVariableAsStringResolver(UnitTester $I)
+    public function testGetValueFromVariableReturnsCorrectValueWhenPassingVariableAsStringResolver(): void
     {
         $handler = new WorkflowVariablesHandler();
         $resolver = new StringResolver('Variable value');
 
         $result = $handler->getVariablesValue('name', $resolver);
 
-        $I->assertEquals('Variable value', $result);
+        $this->assertEquals('Variable value', $result);
     }
 
-    public function getValueFromVariableReturnsEmptyStringWhenVariableNotFound(UnitTester $I)
+    public function testGetValueFromVariableReturnsEmptyStringWhenVariableNotFound(): void
     {
         $handler = new WorkflowVariablesHandler();
 
         $result = $handler->getVariablesValue('variable', []);
 
-        $I->assertEquals('', $result);
+        $this->assertEquals('', $result);
     }
 
-    public function getValueFromVariableReturnsCorrectValueWhenPassingVariableAsBooleanResolver(UnitTester $I)
+    public function testGetValueFromVariableReturnsCorrectValueWhenPassingVariableAsBooleanResolver(): void
     {
         $handler = new WorkflowVariablesHandler();
         $resolver = new BooleanResolver(true);
 
         $result = $handler->getVariablesValue('', $resolver);
 
-        $I->assertEquals('Yes', $result);
+        $this->assertEquals('Yes', $result);
     }
 
-    public function getValueFromVariableReturnsCorrectValueWhenPassingVariableAsPostResolver(UnitTester $I)
+    public function testGetValueFromVariableReturnsCorrectValueWhenPassingVariableAsPostResolver(): void
     {
         $handler = new WorkflowVariablesHandler();
 
@@ -112,10 +133,10 @@ class WorkflowVariablesHandlerCest
 
         $result = $handler->getVariablesValue('post_title', $resolver);
 
-        $I->assertEquals('Post title', $result);
+        $this->assertEquals('Post title', $result);
     }
 
-    public function getValueFromVariableReturnsEmptyStringWhenPassingVariableAsPostResolverAndPropertyNotFound(UnitTester $I)
+    public function testGetValueFromVariableReturnsEmptyStringWhenPassingVariableAsPostResolverAndPropertyNotFound(): void
     {
         $handler = new WorkflowVariablesHandler();
 
@@ -125,10 +146,10 @@ class WorkflowVariablesHandlerCest
 
         $result = $handler->getVariablesValue('non_existent_property', $resolver);
 
-        $I->assertEquals('', $result);
+        $this->assertEquals('', $result);
     }
 
-    public function getValueFromVariableReturnsCorrectValueWhenPassingVariableAsPostResolverAndPropertyIsPermalink(UnitTester $I)
+    public function testGetValueFromVariableReturnsCorrectValueWhenPassingVariableAsPostResolverAndPropertyIsPermalink(): void
     {
         $handler = new WorkflowVariablesHandler();
 
@@ -142,10 +163,10 @@ class WorkflowVariablesHandlerCest
 
         $result = $handler->getVariablesValue('permalink', $resolver);
 
-        $I->assertEquals('http://example.com/test-post', $result);
+        $this->assertEquals('http://example.com/test-post', $result);
     }
 
-    public function parseNestedVariableValueReturnsCorrectValueForSimpleVariable(UnitTester $I)
+    public function testParseNestedVariableValueReturnsCorrectValueForSimpleVariable(): void
     {
         $handler = new WorkflowVariablesHandler();
 
@@ -155,10 +176,10 @@ class WorkflowVariablesHandlerCest
 
         $result = $handler->parseNestedVariableValue('test', $dataSources);
 
-        $I->assertEquals('235', $result);
+        $this->assertEquals('235', $result);
     }
 
-    public function parseNestedVariableValueReturnsCorrectValueForNestedVariable(UnitTester $I)
+    public function testParseNestedVariableValueReturnsCorrectValueForNestedVariable(): void
     {
         $handler = new WorkflowVariablesHandler();
 
@@ -186,15 +207,15 @@ class WorkflowVariablesHandlerCest
             ],
         ];
 
-        $I->assertEquals('175', $handler->parseNestedVariableValue('global.workflow.id', $dataSources));
-        $I->assertEquals('Test Workflow', $handler->parseNestedVariableValue('global.workflow.title', $dataSources));
-        $I->assertEquals('235', $handler->parseNestedVariableValue('onSavePost1.postId', $dataSources));
-        $I->assertEquals('Yes', $handler->parseNestedVariableValue('onSavePost1.update', $dataSources));
-        $I->assertEquals('Post title', $handler->parseNestedVariableValue('onSavePost1.post.post_title', $dataSources));
-        $I->assertEquals('http://example.com/test-post', $handler->parseNestedVariableValue('onSavePost1.post.permalink', $dataSources));
+        $this->assertEquals('175', $handler->parseNestedVariableValue('global.workflow.id', $dataSources));
+        $this->assertEquals('Test Workflow', $handler->parseNestedVariableValue('global.workflow.title', $dataSources));
+        $this->assertEquals('235', $handler->parseNestedVariableValue('onSavePost1.postId', $dataSources));
+        $this->assertEquals('Yes', $handler->parseNestedVariableValue('onSavePost1.update', $dataSources));
+        $this->assertEquals('Post title', $handler->parseNestedVariableValue('onSavePost1.post.post_title', $dataSources));
+        $this->assertEquals('http://example.com/test-post', $handler->parseNestedVariableValue('onSavePost1.post.permalink', $dataSources));
     }
 
-    public function replaceVariablesPlaceholdersInTextReturnsCorrectText(UnitTester $I)
+    public function testReplaceVariablesPlaceholdersInTextReturnsCorrectText(): void
     {
         $handler = new WorkflowVariablesHandler();
 
@@ -226,10 +247,10 @@ class WorkflowVariablesHandlerCest
 
         $result = $handler->replaceVariablesPlaceholdersInText($text, $dataSources);
 
-        $I->assertEquals('This is a test with a Test Workflow and a 235 and a Yes, Post title, but not .', $result);
+        $this->assertEquals('This is a test with a Test Workflow and a 235 and a Yes, Post title, but not .', $result);
     }
 
-    public function getGlobalVariablesReturnsCorrectValues(UnitTester $I)
+    public function testGetGlobalVariablesReturnsCorrectValues(): void
     {
         $handler = Stub::make(WorkflowVariablesHandler::class, [
             'getUserGlobal' => new stdClass(),
@@ -246,14 +267,14 @@ class WorkflowVariablesHandlerCest
 
         $result = $handler->getGlobalVariables($workflow);
 
-        $I->assertArrayHasKey('workflow', $result);
-        $I->assertArrayHasKey('user', $result);
-        $I->assertArrayHasKey('site', $result);
-        $I->assertArrayHasKey('trigger', $result);
+        $this->assertArrayHasKey('workflow', $result);
+        $this->assertArrayHasKey('user', $result);
+        $this->assertArrayHasKey('site', $result);
+        $this->assertArrayHasKey('trigger', $result);
 
-        $I->assertEquals(new stdClass(), $result['user']);
-        $I->assertEquals(new stdClass(), $result['site']);
-        $I->assertEquals(new stdClass(), $result['trigger']);
-        $I->assertEquals(new stdClass(), $result['workflow']);
+        $this->assertEquals(new stdClass(), $result['user']);
+        $this->assertEquals(new stdClass(), $result['site']);
+        $this->assertEquals(new stdClass(), $result['trigger']);
+        $this->assertEquals(new stdClass(), $result['workflow']);
     }
 }

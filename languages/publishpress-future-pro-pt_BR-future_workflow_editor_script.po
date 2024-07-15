@@ -161,14 +161,6 @@ msgstr ""
 msgid "Auto Layout"
 msgstr ""
 
-#: components/layout/interface.jsx:74
-msgid "Open node settings"
-msgstr ""
-
-#: components/layout/interface.jsx:75
-msgid "Open workflow settings"
-msgstr ""
-
 #: components/more-menu/menu-items-view.jsx:27
 msgid "Fullscreen mode"
 msgstr ""
@@ -221,17 +213,17 @@ msgstr ""
 msgid "Welcome guide deactivated"
 msgstr ""
 
-#: components/node-inspector/index.jsx:95
+#: components/node-inspector/index.jsx:101
 msgid "No element selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:103
+#: components/node-inspector/index.jsx:109
 msgid "Multiple and different elements selected."
 msgstr ""
 
 #: components/node-dev-info-panel/index.jsx:30
 #: components/node-inspector/node-inspector-card.jsx:18
-#: components/node-types/generic.jsx:37
+#: components/node-types/generic.jsx:42
 msgid "Node"
 msgstr ""
 
@@ -239,11 +231,11 @@ msgstr ""
 msgid "No description"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:60
+#: components/node-inspector/node-data-flow-panel.jsx:65
 msgid "Inputs"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:80
+#: components/node-inspector/node-data-flow-panel.jsx:85
 msgid "Outputs"
 msgstr ""
 
@@ -259,19 +251,19 @@ msgstr ""
 msgid "Loading..."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:104
+#: components/node-inspector/node-data-flow-panel.jsx:109
 msgid "No global variables are declared"
 msgstr ""
 
-#: components/workflow-summary/index.jsx:38
+#: components/workflow-summary/index.jsx:44
 msgid "Summary"
 msgstr ""
 
-#: components/workflow-summary/index.jsx:44
+#: components/workflow-summary/index.jsx:50
 msgid "Title"
 msgstr ""
 
-#: components/workflow-summary/index.jsx:53
+#: components/workflow-summary/index.jsx:59
 msgid "Description"
 msgstr ""
 
@@ -382,7 +374,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: components/node-types/generic.jsx:127
+#: components/node-types/generic.jsx:138
 #: components/workflow-delete-button/index.jsx:39
 msgid "Delete"
 msgstr ""
@@ -391,7 +383,7 @@ msgstr ""
 msgid "Move to trash"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:100
+#: components/node-inspector/node-data-flow-panel.jsx:105
 msgid "Global Variables"
 msgstr ""
 
@@ -454,11 +446,11 @@ msgstr ""
 msgid "Repeating Action"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:64
+#: components/node-inspector/node-data-flow-panel.jsx:69
 msgid "This step receives the following input from previous step:"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:84
+#: components/node-inspector/node-data-flow-panel.jsx:89
 msgid "This step outputs the following data:"
 msgstr ""
 
@@ -479,7 +471,7 @@ msgid "Actions"
 msgstr "Ações"
 
 #. translators: Patterns tab title in the block inserter.
-#: components/node-types/generic.jsx:92
+#: components/node-types/generic.jsx:97
 #: components/secondary-sidebar/tabs.jsx:30
 msgid "Advanced"
 msgstr ""
@@ -526,24 +518,20 @@ msgstr ""
 msgid "Display the controls panel with buttons to zoon in, zoom out, fit the view and lock the viewport"
 msgstr ""
 
-#: components/node-types/generic.jsx:88
+#: components/node-types/generic.jsx:93
 msgid "Step"
 msgstr ""
 
-#: components/node-types/generic.jsx:90
+#: components/node-types/generic.jsx:95
 msgid "Action"
 msgstr "Ação"
 
-#: components/node-types/generic.jsx:94
+#: components/node-types/generic.jsx:99
 msgid "Trigger"
 msgstr "Gatilho"
 
 #: components/secondary-sidebar/tips.jsx:10
 msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow."
-msgstr ""
-
-#: components/secondary-sidebar/tips.jsx:16
-msgid "Drag steps from the inserter into the workflow."
 msgstr ""
 
 #: components/node-dev-info-panel/index.jsx:43
@@ -621,39 +609,39 @@ msgstr ""
 msgid "Selected in the calendar"
 msgstr ""
 
-#: components/node-inspector/index.jsx:113
+#: components/node-inspector/index.jsx:119
 msgid "%d steps selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:116
+#: components/node-inspector/index.jsx:122
 msgid "Multiple steps selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:127
+#: components/node-inspector/index.jsx:133
 msgid "%d connections selected"
 msgstr ""
 
-#: components/node-inspector/index.jsx:130
+#: components/node-inspector/index.jsx:136
 msgid "Multiple connections selected."
 msgstr ""
 
-#: components/node-inspector/index.jsx:163
+#: components/node-inspector/index.jsx:169
 msgid "Connection"
 msgstr ""
 
-#: components/node-inspector/index.jsx:164
+#: components/node-inspector/index.jsx:170
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:58
+#: components/node-inspector/node-data-flow-panel.jsx:63
 msgid "Step Data Flow"
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:75
+#: components/node-inspector/node-data-flow-panel.jsx:80
 msgid "This step does not receive any input from previous step."
 msgstr ""
 
-#: components/node-inspector/node-data-flow-panel.jsx:95
+#: components/node-inspector/node-data-flow-panel.jsx:100
 msgid "This step does not output any data."
 msgstr ""
 
@@ -724,4 +712,24 @@ msgstr ""
 
 #: components/data-fields/date-offset.jsx:160
 msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:16
+msgid "Drag steps from the inserter and drop them directly into your workflow for easy customization."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:17
+msgid "Simply double-click any step to bring up the settings sidebar for quick adjustments."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:18
+msgid "Double-click the workflow pane to increase the zoom level for a closer look."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:20
+msgid "Hold down the <kbd>shift</kbd> key and double-click the workflow pane to decrease the zoom level."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:26
+msgid "Easily add new steps by clicking on a step's handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need."
 msgstr ""

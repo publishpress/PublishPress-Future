@@ -4,6 +4,8 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolve
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\VariableResolverInterface;
 
+use function wp_json_encode;
+
 class UserResolver implements VariableResolverInterface
 {
     /**
@@ -11,9 +13,13 @@ class UserResolver implements VariableResolverInterface
      */
     private $user;
 
-    public function __construct(object $user)
+    public function __construct($user)
     {
-        $this->user = $user;
+        if (is_object($user)) {
+            $this->user = $user;
+        } else {
+            $this->user = null;
+        }
     }
 
     public function getType(): string
@@ -23,6 +29,10 @@ class UserResolver implements VariableResolverInterface
 
     public function getValue(string $property = '')
     {
+        if (empty($this->user)) {
+            return '';
+        }
+
         switch ($property) {
             case 'id':
             case 'ID':

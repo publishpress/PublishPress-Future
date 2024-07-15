@@ -328,3 +328,17 @@ p.description,
     margin: 0;
     border-width: 3px;
 }
+
+/* Notices  */
+.publishpress-future-notice {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.publishpress-future-notice-error {
+    background-color: #f2dede;
+    border-color: #deb2ba;
+    color: #a94442;
+}

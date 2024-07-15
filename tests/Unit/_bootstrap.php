@@ -23,13 +23,3 @@ class Autoloader
 }
 
 spl_autoload_register([new Autoloader(), 'autoload']);
-
-function __(string $text, string $textDomain )
-{
-    return $text;
-}
-
-function esc_html(string $text)
-{
-    return $text;
-}

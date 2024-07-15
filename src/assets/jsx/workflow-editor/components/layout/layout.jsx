@@ -30,7 +30,7 @@ export function WorkflowEditorLayout() {
         }
     });
 
-    const className = classnames('edit-post-layout', {
+    const className = classnames('edit-post-layout editor-editor-interface', {
         'is-inserter-opened': isInserterOpened,
     });
 

@@ -12,9 +12,9 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -26,15 +26,27 @@ class QuickEditController implements InitializableInterface
     private $hooks;
 
     /**
+     * @var CurrentUserModel
+     */
+    private $currentUserModel;
+
+    /**
      * @param HookableInterface $hooksFacade
      */
-    public function __construct(HookableInterface $hooksFacade)
-    {
+    public function __construct(
+        HookableInterface $hooksFacade,
+        \Closure $currentUserModelFactory
+    ) {
         $this->hooks = $hooksFacade;
+        $this->currentUserModel = $currentUserModelFactory();
     }
 
     public function initialize()
     {
+        if (! $this->currentUserModel->userCanExpirePosts()) {
+            return;
+        }
+
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_QUICK_EDIT_CUSTOM_BOX,
             [$this, 'registerQuickEditCustomBox'],
@@ -55,12 +67,7 @@ class QuickEditController implements InitializableInterface
 
     public function registerQuickEditCustomBox($columnName, $postType)
     {
-        $facade = PostExpirator_Facade::getInstance();
-
-        if (
-            ($columnName !== 'expirationdate')
-            || (! $facade->current_user_can_expire_posts())
-        ) {
+        if ($columnName !== 'expirationdate') {
             return;
         }
 

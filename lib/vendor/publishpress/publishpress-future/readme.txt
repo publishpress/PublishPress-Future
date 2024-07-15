@@ -2,29 +2,25 @@
 Contributors: publishpress, kevinB, stevejburge, andergmartins
 Author: publishpress
 Author URI: https://publishpress.com
-Tags: expire posts, update posts, schedule changes, automatic changes
+Tags: unpublish posts, update posts, schedule changes, automatic changes, workflows
 Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.5
 License: GPLv2 or later
-Stable tag: 3.4.0.1
+Stable tag: 3.4.2
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
 == Description ==
 
-The PublishPress Future plugin allows you to schedule changes to posts, pages and other content types. On a date you choose, PublishPress Future can delete your post, change the status, or update the post categories, or make other changes.
+The PublishPress Future plugin allows you to schedule changes to posts, pages and other content types. With this plugin you can create automatic actions to unpublish, delete, trash, move a post to a new status and more. With the Pro version you can update your content using custom workflows with multiple steps and schedules.
 
 Here's an overview of what you can do with PublishPress Future:
 
-* Choose unpublish dates for your posts.
-* Modify, remove or completely delete content when the expiry date arrives.
-* Add or remove categories.
-* Modify expiry dates using "Quick Edit" and "Bulk Edit".
-* Receive email notifications when your content expires.
-* Show expiry dates in your content, automatically or with shortcodes.
+* Select future action dates in the right sidebar when you are editing a post. This makes it very easy to schedule changes to your content.
+* Receive email notifications when Future makes changes to your content.
+* Build Action Workflows that allow you to update your content using custom workflows with multiple steps and schedules (available in the Pro version).
 * Control post changes via integrations with Advanced Custom Fields and other plugins (available in the Pro version).
-* Import changes via plugin such as WP All Import (available in the Pro version).
 
 ## PublishPress Future Pro ##
 
@@ -48,6 +44,17 @@ With PublishPress Future, you can configure actions that will happen automatical
 
 [Click here for details on scheduling post changes](https://publishpress.com/knowledge-base/ways-to-expire-posts/).
 
+## Custom Workflows to Schedule Content Changes
+
+With PublishPress Future Pro, you can build Action Workflows. These allow you to update your content using custom workflows with multiple steps and schedules. Here are some examples of what you can do with Action Workflows:
+
+* Email the site admin when a post is updated.
+* Change the post status to “Trash” a week after it was published.
+* 15 days after the post is published, move the post to the “Draft” status and add a new category.
+* 1 year after a post is published, send an email to the author asking them to check the content.
+
+[Click here for details on workflows for changes](https://publishpress.com/knowledge-base/workflows/).
+
 ## Display the Action Date in Your Content
 
 PublishPress Future allows you to place automatically show the expiry or action date inside your articles. The date will be added at the bottom of your post.
@@ -58,9 +65,9 @@ You can use shortcodes to show the expiration date inside your posts. You can cu
 
 [Click here to see the shortcode options](https://publishpress.com/knowledge-base/shortcodes-to-show-expiration-date/).
 
-## Expiry Defaults for Post Types
+## Choose Actions Defaults for Post Types
 
-PublishPress Future can support any post type in WordPress. Go to Settings > PublishPress Future > Defaults and you can choose default expiry options for each post type.
+PublishPress Future can support any post type in WordPress. Go to Settings > PublishPress Future > Defaults and you can choose default actions for each post type.
 
 [Click here to see the default options](https://publishpress.com/knowledge-base/defaults-for-post-types/).
 
@@ -165,6 +172,23 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 == Changelog ==
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
+
+## [3.4.2] - 15 Jul, 2024
+
+### Added
+
+- Add the current date and time to date preview in the date/time offset setting field, #840
+
+### Fixed
+
+- Optimized the date/time offset validation requests in the Post Types settings, #840
+- Fix error message in the date/time offset setting field, #841
+- Fix user capabilities check in the block editor, #727
+- Update ES, FR, and IT translations, #859
+
+### Changed
+
+- Change the text in the promo screen for the Actions Workflow feature, #867
 
 ## [3.4.1] - 02 Jul, 2024
 

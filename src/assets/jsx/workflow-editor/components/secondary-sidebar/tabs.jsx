@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { useMemo } from '@wordpress/element';
-import { TabPanel } from '@wordpress/components';
+import { TabPanel } from '../tab-panel';
 import { __ } from '@wordpress/i18n';
 
 /**

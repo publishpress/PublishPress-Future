@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-05-31T01:39:58+00:00\n"
-"PO-Revision-Date: 2024-06-06 23:48+0200\n"
+"PO-Revision-Date: 2024-07-10 17:20+0200\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.4.4\n"
@@ -177,14 +177,6 @@ msgstr "Fermer"
 msgid "Auto Layout"
 msgstr "Mise en page automatique"
 
-#: components/layout/interface.jsx:74
-msgid "Open node settings"
-msgstr "Ouvrir les réglages du nœud"
-
-#: components/layout/interface.jsx:75
-msgid "Open workflow settings"
-msgstr "Ouvrir les réglages du flux de travail"
-
 #. translators: button label text should, if possible, be under 16 characters.
 #: components/left-toolbar/redo.jsx:31
 msgid "Redo"
@@ -315,17 +307,17 @@ msgstr "Aide"
 msgid "Developer Info"
 msgstr "Informations pour le développeur/développeuse"
 
-#: components/node-inspector/index.jsx:95
+#: components/node-inspector/index.jsx:101
 msgid "No element selected."
 msgstr "Aucune élément sélectionné."
 
-#: components/node-inspector/index.jsx:103
+#: components/node-inspector/index.jsx:109
 msgid "Multiple and different elements selected."
 msgstr "Éléments multiples et différents sélectionnés."
 
 #: components/node-dev-info-panel/index.jsx:30
 #: components/node-inspector/node-inspector-card.jsx:18
-#: components/node-types/generic.jsx:37
+#: components/node-types/generic.jsx:42
 msgid "Node"
 msgstr "Nœud"
 
@@ -333,41 +325,41 @@ msgstr "Nœud"
 msgid "No description"
 msgstr "Aucune description"
 
-#: components/node-inspector/node-data-flow-panel.jsx:60
+#: components/node-inspector/node-data-flow-panel.jsx:65
 msgid "Inputs"
 msgstr "Entrées"
 
-#: components/node-inspector/node-data-flow-panel.jsx:64
+#: components/node-inspector/node-data-flow-panel.jsx:69
 msgid "This step receives the following input from previous step:"
 msgstr "Cette étape reçoit les données suivantes de l’étape précédente :"
 
-#: components/node-inspector/node-data-flow-panel.jsx:80
+#: components/node-inspector/node-data-flow-panel.jsx:85
 msgid "Outputs"
 msgstr "Sorties"
 
-#: components/node-inspector/node-data-flow-panel.jsx:84
+#: components/node-inspector/node-data-flow-panel.jsx:89
 msgid "This step outputs the following data:"
 msgstr "Cette étape affiche les données suivantes :"
 
-#: components/node-types/generic.jsx:88
+#: components/node-types/generic.jsx:93
 msgid "Step"
 msgstr "Étape"
 
-#: components/node-types/generic.jsx:90
+#: components/node-types/generic.jsx:95
 msgid "Action"
 msgstr "Action"
 
 #. translators: Patterns tab title in the block inserter.
-#: components/node-types/generic.jsx:92
+#: components/node-types/generic.jsx:97
 #: components/secondary-sidebar/tabs.jsx:30
 msgid "Advanced"
 msgstr "Avancé"
 
-#: components/node-types/generic.jsx:94
+#: components/node-types/generic.jsx:99
 msgid "Trigger"
 msgstr "Déclencheur"
 
-#: components/node-types/generic.jsx:127
+#: components/node-types/generic.jsx:138
 #: components/workflow-delete-button/index.jsx:39
 msgid "Delete"
 msgstr "Supprimer"
@@ -428,10 +420,6 @@ msgstr "Actions"
 msgid "Select multiple steps by pressing <kbd>cmd</kbd> and clicking on each step in the workflow."
 msgstr "Sélectionner plusieurs étapes en appuyant sur <kbd>cmd ou ctrl</kbd> et en cliquant sur chaque étape du flux de travail."
 
-#: components/secondary-sidebar/tips.jsx:16
-msgid "Drag steps from the inserter into the workflow."
-msgstr "Glisser les étapes de l’outil d’insertion dans le flux de travail."
-
 #: components/settings-sidebar/plugin-sidebar.jsx:34
 msgid "(no name)"
 msgstr "(sans nom)"
@@ -467,7 +455,7 @@ msgstr "Confirmez-vous vouloir supprimer ce flux de travail ?"
 msgid "Move to trash"
 msgstr "Déplacer dans la corbeille"
 
-#: components/node-inspector/node-data-flow-panel.jsx:100
+#: components/node-inspector/node-data-flow-panel.jsx:105
 msgid "Global Variables"
 msgstr "Variables globales"
 
@@ -475,7 +463,7 @@ msgstr "Variables globales"
 msgid "Loading..."
 msgstr "Chargement en cours…"
 
-#: components/node-inspector/node-data-flow-panel.jsx:104
+#: components/node-inspector/node-data-flow-panel.jsx:109
 msgid "No global variables are declared"
 msgstr "Aucune variable globale n’est déclarée"
 
@@ -522,15 +510,15 @@ msgstr "Enregistrement"
 msgid "Saved"
 msgstr "Enregistré"
 
-#: components/workflow-summary/index.jsx:38
+#: components/workflow-summary/index.jsx:44
 msgid "Summary"
 msgstr "Résumé"
 
-#: components/workflow-summary/index.jsx:44
+#: components/workflow-summary/index.jsx:50
 msgid "Title"
 msgstr "Titre"
 
-#: components/workflow-summary/index.jsx:53
+#: components/workflow-summary/index.jsx:59
 msgid "Description"
 msgstr "Description"
 
@@ -548,180 +536,200 @@ msgstr "Passer en brouillon"
 
 #: components/data-fields/date-offset.jsx:72
 msgid "Relative to a specific date"
-msgstr ""
+msgstr "Relatif à une date spécifique"
 
 #: components/data-fields/date-offset.jsx:77
 msgid "Selected in the calendar"
-msgstr ""
+msgstr "Sélectionné dans le calendrier"
 
 #: components/data-fields/date-offset.jsx:78
 msgid "When the trigger is activated"
-msgstr ""
+msgstr "Lorsque le déclencheur est activé"
 
 #: components/data-fields/email-recipient.jsx:13
 msgid "Custom Addresses"
-msgstr ""
+msgstr "Adresses personnalisées"
 
 #: components/node-dev-info-panel/index.jsx:43
 msgid "Node Type"
-msgstr ""
+msgstr "Type de nœud"
 
 #: components/node-types/node-placeholder.jsx:31
 msgid "Add a step"
-msgstr ""
+msgstr "Ajouter une étape"
 
 #: components/node-types/node-placeholder.jsx:33
 msgid "Search for actions"
-msgstr ""
+msgstr "Recherche d’actions"
 
 #: components/node-types/placeholder.jsx:166
 msgid "Search for steps"
-msgstr ""
+msgstr "Recherche d’étapes"
 
 #: components/node-types/placeholder.jsx:192
 #: components/node-types/trigger-placeholder.jsx:13
 #: components/secondary-sidebar/menu.jsx:201
 msgid "Search for triggers and steps"
-msgstr ""
+msgstr "Recherche de déclencheurs et d’étapes"
 
 #: components/node-types/trigger-placeholder.jsx:11
 msgid "Click to add a trigger"
-msgstr ""
+msgstr "Cliquer pour ajouter un déclencheur"
 
 #: components/node-validation-panel/index.jsx:31
 msgid "All checks have passed for this step."
-msgstr ""
+msgstr "Tous les contrôles ont été effectués pour cette étape."
 
 #: components/node-validator/index.jsx:50
 msgid "This step requires a connection from a previous step."
-msgstr ""
+msgstr "Cette étape nécessite une connexion à partir d’une étape précédente."
 
 #: components/node-validator/index.jsx:60
 msgid "This step requires a connection to a following step."
-msgstr ""
+msgstr "Cette étape nécessite une connexion avec l’étape suivante."
 
 #: components/node-validator/index.jsx:123
 #: components/node-validator/index.jsx:134
 msgid "The field %s is required."
-msgstr ""
+msgstr "Le champ %s est obligatoire."
 
 #: components/node-validator/index.jsx:155
 msgid "The field %s must be a valid email address."
-msgstr ""
+msgstr "Le champ %s doit être une e-mail valide."
 
 #: components/node-validator/index.jsx:171
 msgid "The field %s must be a valid email address list separated by commas."
-msgstr ""
+msgstr "Le champ %s doit être une liste d’e-mails valides séparés par des virgules."
 
 #: components/node-validator/index.jsx:185
 msgid "The field %s must be an integer."
-msgstr ""
+msgstr "Le champ %s doit être un entier."
 
 #: components/node-validator/index.jsx:200
 msgid "The field %s must be an integer list separated by commas."
-msgstr ""
+msgstr "Le champ %s doit être une liste d’entiers séparés par des virgules."
 
-#: components/node-inspector/index.jsx:113
+#: components/node-inspector/index.jsx:119
 msgid "%d steps selected"
-msgstr ""
+msgstr "%d étapes sélectionnées"
 
-#: components/node-inspector/index.jsx:116
+#: components/node-inspector/index.jsx:122
 msgid "Multiple steps selected."
-msgstr ""
+msgstr "Étapes multiples sélectionnées."
 
-#: components/node-inspector/index.jsx:127
+#: components/node-inspector/index.jsx:133
 msgid "%d connections selected"
-msgstr ""
+msgstr "%d connexions sélectionnées"
 
-#: components/node-inspector/index.jsx:130
+#: components/node-inspector/index.jsx:136
 msgid "Multiple connections selected."
-msgstr ""
+msgstr "Connexions multiples sélectionnées."
 
-#: components/node-inspector/index.jsx:163
+#: components/node-inspector/index.jsx:169
 msgid "Connection"
-msgstr ""
+msgstr "Connection"
 
-#: components/node-inspector/index.jsx:164
+#: components/node-inspector/index.jsx:170
 msgid "The connection between nodes in the workflow. Signifies the path along which data or control flow one node to another."
-msgstr ""
+msgstr "La connexion entre les nœuds du flux de travail. Signifie le chemin le long duquel les données ou le contrôle circulent d’un nœud à l’autre."
 
-#: components/node-inspector/node-data-flow-panel.jsx:58
+#: components/node-inspector/node-data-flow-panel.jsx:63
 msgid "Step Data Flow"
-msgstr ""
+msgstr "Flux de données par étape"
 
-#: components/node-inspector/node-data-flow-panel.jsx:75
+#: components/node-inspector/node-data-flow-panel.jsx:80
 msgid "This step does not receive any input from previous step."
-msgstr ""
+msgstr "Cette étape ne reçoit aucune donnée de l’étape précédente."
 
-#: components/node-inspector/node-data-flow-panel.jsx:95
+#: components/node-inspector/node-data-flow-panel.jsx:100
 msgid "This step does not output any data."
-msgstr ""
+msgstr "Cette étape ne génère aucune donnée."
 
 #: components/data-fields/date-offset.jsx:223
 msgid "Prevent duplicate scheduling"
-msgstr ""
+msgstr "Empêcher la planification en double"
 
 #: components/data-fields/date-offset.jsx:226
 msgid "If enabled, the step will prevent the step from being accidentally scheduled multiple times."
-msgstr ""
+msgstr "Si cela est activé, l’étape empêchera qu’elle soit accidentellement planifiée plusieurs fois."
 
 #: components/data-fields/date-offset.jsx:235
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
-msgstr ""
+msgstr "Définit la priorité d’exécution de l’étape planifiée. Les nombres inférieurs indiquent une priorité plus élevée et sont exécutés en premier."
 
 #: components/flow-editor/index.jsx:334
 msgid "Auto layout applied."
-msgstr ""
+msgstr "Mise en page automatique appliquée."
 
 #: components/welcome-guide/index.jsx:21
 msgid "Welcome to the workflow editor"
-msgstr ""
+msgstr "Bienvenue dans l’éditeur de flux de travail"
 
 #: components/workflow-store/actions.jsx:29
 msgid "Unable to create a new workflow. Please try again."
-msgstr ""
+msgstr "Impossible de créer un nouveau flux de travail. Veuillez réessayer."
 
 #: components/workflow-store/actions.jsx:48
 msgid "Unable to load the workflow. Please try again."
-msgstr ""
+msgstr "Impossible de charger le flux de travail. Veuillez réessayer."
 
 #: components/workflow-store/actions.jsx:86
 msgid "Workflow saved as draft."
-msgstr ""
+msgstr "Workflow enregistré comme brouillon."
 
 #: components/workflow-store/actions.jsx:94
 #: components/workflow-store/actions.jsx:131
 msgid "Unable to save workflow. Please, try again."
-msgstr ""
+msgstr "Impossible de enregistrer le flux de travail. Veuillez réessayer."
 
 #: components/workflow-store/actions.jsx:123
 msgid "Workflow saved."
-msgstr ""
+msgstr "Workflow enregistré."
 
 #: components/workflow-store/actions.jsx:168
 msgid "Workflow published."
-msgstr ""
+msgstr "Flux de travail publié."
 
 #: components/workflow-store/actions.jsx:176
 msgid "Unable to publish the workflow. Please, try again."
-msgstr ""
+msgstr "Impossible de publier le flux de travail. Veuillez réessayer."
 
 #: components/workflow-store/actions.jsx:213
 msgid "Workflow switched to draft."
-msgstr ""
+msgstr "Le flux de travail est passé à l’état de brouillon."
 
 #: components/workflow-store/actions.jsx:221
 msgid "Unable to switch workflow to draft. Please, try again."
-msgstr ""
+msgstr "Impossible de basculer le flux de travail en brouillon. Veuillez réessayer."
 
 #: components/workflow-store/actions.jsx:305
 msgid "Workflow deleted. Redirecting..."
-msgstr ""
+msgstr "Flux de travail supprimé. Redirection…"
 
 #: components/workflow-store/actions.jsx:316
 msgid "Unable to delete the workflow. Please, try again."
-msgstr ""
+msgstr "Impossible de supprimer le flux de travail. Veuillez réessayer."
 
 #: components/data-fields/date-offset.jsx:160
 msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
+msgstr "Pour plus d’informations sur le formatage, voir la fonction %sPHP strtotime%s. Par exemple, vous pouvez saisir %s+1 mois%s ou %s+1 semaine 2 jours 4 heures 2 secondes%s ou %sprochain jeudi%s. Veuillez utiliser uniquement des phrases en anglais."
+
+#: components/secondary-sidebar/tips.jsx:16
+msgid "Drag steps from the inserter and drop them directly into your workflow for easy customization."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:17
+msgid "Simply double-click any step to bring up the settings sidebar for quick adjustments."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:18
+msgid "Double-click the workflow pane to increase the zoom level for a closer look."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:20
+msgid "Hold down the <kbd>shift</kbd> key and double-click the workflow pane to decrease the zoom level."
+msgstr ""
+
+#: components/secondary-sidebar/tips.jsx:26
+msgid "Easily add new steps by clicking on a step's handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need."
 msgstr ""

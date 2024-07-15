@@ -349,7 +349,7 @@ class SettingsController implements ModuleInterface
             }
 
             // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-            $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
             $license_key = $_POST['license_key'] ?? '';
 
@@ -380,7 +380,7 @@ class SettingsController implements ModuleInterface
     public function savePostTypeSettings($settings, $postType)
     {
         // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-        $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->settingsModel->setEnabledCustomStatusForPostType(
             $postType,
@@ -396,7 +396,7 @@ class SettingsController implements ModuleInterface
     public function saveAllPostTypesSettings($settings, $postType)
     {
         // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-        $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $_POST = \filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->settingsModel->setMetadataMappingStatus(
             $_POST['expirationdate_metadata_mapping_enabled'] ?? []

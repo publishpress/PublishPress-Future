@@ -13,6 +13,8 @@ use WP_Post;
 use WP_Query;
 
 use function PublishPress\FuturePro\logError;
+use function wp_json_encode;
+use function get_post;
 
 class WorkflowModel implements WorkflowModelInterface
 {

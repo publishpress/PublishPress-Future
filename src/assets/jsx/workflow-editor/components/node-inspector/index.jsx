@@ -3,6 +3,7 @@ import { store as workflowStore } from "../workflow-store";
 import { store as editorStore } from "../editor-store";
 import { __ } from "@wordpress/i18n";
 import { sprintf } from "@wordpress/i18n";
+import { useRef } from "@wordpress/element";
 import NodeInspectorCard from "./node-inspector-card";
 import InspectorCard from "../inspector-card";
 import InspectorWarning from "../inspector-warning";
@@ -14,6 +15,7 @@ import NodeDataFlowPanel from "./node-data-flow-panel";
 import ObjectGroupIcon from "../icons/object-group";
 import LinesLeaningIcon from "../icons/lines-leaning";
 import NodeDevInfoPanel from "../node-dev-info-panel";
+import useScrollToTop from "../scrolled-to-top";
 
 export const NodeInspector = () => {
     const {
@@ -61,6 +63,8 @@ export const NodeInspector = () => {
         };
     });
 
+    const sidebarRef = useRef(null);
+
     const onlyNodesSelected =
         selectedNodes.length > 0 && selectedEdges.length === 0;
     const onlyEdgesSelected =
@@ -88,8 +92,10 @@ export const NodeInspector = () => {
         });
     }
 
+    useScrollToTop(sidebarRef, ".interface-interface-skeleton__sidebar");
+
     return (
-        <>
+        <div ref={sidebarRef}>
             {selectedElementsCount === 0 && (
                 <InspectorWarning>
                     {__("No element selected.", "publishpress-future-pro")}
@@ -171,7 +177,7 @@ export const NodeInspector = () => {
                     <div className="components-tools-panel"></div>
                 </>
             )}
-        </>
+        </div>
     );
 };
 

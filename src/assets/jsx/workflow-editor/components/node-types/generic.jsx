@@ -7,6 +7,7 @@ import { store as editorStore } from "../editor-store";
 import { __ } from '@wordpress/i18n';
 import { Toolbar, ToolbarGroup, ToolbarButton, Popover } from '@wordpress/components';
 import PlayIcon from "../icons/play";
+import { SIDEBAR_NODE_EDGE } from '../settings-sidebar/constants';
 
 
 export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIcon }) => {
@@ -32,6 +33,10 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     const {
         removeNode,
     } = useDispatch(workflowStore);
+
+    const {
+        openGeneralSidebar,
+    } = useDispatch(editorStore);
 
     const nodeType = getNodeTypeByName(data.name);
     const nodeLabel = nodeType.label || data.label || __('Node', 'publishpress-future-pro');
@@ -111,6 +116,12 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         removeNode(id);
     };
 
+    const onDoubleClick = () => {
+        if (isSingularElementSelected) {
+            openGeneralSidebar(SIDEBAR_NODE_EDGE);
+        }
+    }
+
     if (! nodeTypeIcon) {
         nodeTypeIcon = <PlayIcon size={8} />;
     }
@@ -133,7 +144,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                 </>
             )}
 
-            <div className={"react-flow__node-body " + nodeClassName}>
+            <div className={"react-flow__node-body " + nodeClassName} onDoubleClick={onDoubleClick}>
                 {targetHandles}
                 <div className='react-flow__node-top'>
                     {nodeTypeIcon}

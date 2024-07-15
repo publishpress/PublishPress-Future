@@ -35,7 +35,8 @@ export function WorkflowEditorInterface({ className, secondarySidebar }) {
     });
 
     const {
-        openGeneralSidebar
+        openGeneralSidebar,
+        closeInserter,
     } = useDispatch(editorStore);
 
     const interfaceClassNames = classnames(className, {
@@ -61,23 +62,7 @@ export function WorkflowEditorInterface({ className, secondarySidebar }) {
             actions={null}
             sidebar={
                 (!isMobileViewport || sidebarIsOpened) && (
-                    <>
-                        {!isMobileViewport && !sidebarIsOpened && (
-                            <div className="edit-post-layout__toggle-sidebar-panel">
-                                <Button
-                                    variant="secondary"
-                                    className="edit-post-layout__toggle-sidebar-panel-button"
-                                    onClick={openSidebarPanel}
-                                    aria-expanded={false}
-                                >
-                                    {hasSelectedNodes
-                                        ? __('Open node settings', 'publishpress-future-pro')
-                                        : __('Open workflow settings', 'publishpress-future-pro')}
-                                </Button>
-                            </div>
-                        )}
-                        <ComplementaryArea.Slot scope={SLOT_SCOPE_WORKFLOW_EDITOR} />
-                    </>
+                    <ComplementaryArea.Slot scope={SLOT_SCOPE_WORKFLOW_EDITOR} />
                 )
             }
         >

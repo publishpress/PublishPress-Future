@@ -15,6 +15,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -36,9 +37,9 @@ class BulkEditController implements InitializableInterface
     private $sanitization;
 
     /**
-     * @var \Closure
+     * @var CurrentUserModel
      */
-    private $currentUserModelFactory;
+    private $currentUserModel;
 
     /**
      * @var \PublishPress\Future\Framework\WordPress\Facade\RequestFacade
@@ -62,12 +63,16 @@ class BulkEditController implements InitializableInterface
         $this->hooks = $hooksFacade;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->sanitization = $sanitization;
-        $this->currentUserModelFactory = $currentUserModelFactory;
+        $this->currentUserModel = $currentUserModelFactory();
         $this->request = $request;
     }
 
     public function initialize()
     {
+        if (! $this->currentUserModel->userCanExpirePosts()) {
+            return;
+        }
+
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_BULK_EDIT_CUSTOM_BOX,
             [$this, 'registerBulkEditCustomBox'],
@@ -253,10 +258,7 @@ class BulkEditController implements InitializableInterface
             return;
         }
 
-        $currentUserModelFactory = $this->currentUserModelFactory;
-        $currentUserModel = $currentUserModelFactory();
-
-        if (! $currentUserModel->userCanExpirePosts()) {
+        if (! $this->currentUserModel->userCanExpirePosts()) {
             return;
         }
 

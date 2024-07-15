@@ -86,7 +86,7 @@ export function TabPanel({
 				role="tablist"
 				orientation={orientation}
 				onNavigate={onNavigate}
-				className="components-tab-panel__tabs"
+				className="components-tab-panel__tabs block-editor-inserter__tablist-and-close-button"
 			>
 				{tabs.map((tab) => (
 					<TabButton
@@ -113,7 +113,7 @@ export function TabPanel({
 					aria-labelledby={selectedId}
 					role="tabpanel"
 					id={`${selectedId}-view`}
-					className="components-tab-panel__tab-content"
+					className="components-tab-panel__tab-content block-editor-inserter__tabpanel"
 				>
 					{children(selectedTab)}
 				</div>

@@ -32,7 +32,12 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
             setIsOpen(!isOpen);
         }
 
-        const properties = getDataTypeByName(schemaItem.type).propertiesSchema.map(property => <li key={`${schemaItem.name}${property.name}`}><code>{property.name}</code></li>);
+        const dataType = getDataTypeByName(schemaItem.type);
+        let properties = null;
+
+        if (dataType.propertiesSchema) {
+            properties = dataType.propertiesSchema.map(property => <li key={`${schemaItem.name}${property.name}`}><code>{property.name}</code></li>);
+        }
 
         return (
             <>
@@ -40,7 +45,7 @@ export const NodeDataFlowPanel = ({ inputSchema = [], outputSchema = []}) => {
                     <NodeIcon icon={isOpen ? 'arrow-down' : 'arrow-right'} />
                     <code>{prefix}{schemaItem.name}</code>
 
-                    {isOpen && (
+                    {isOpen && properties && (
                         <Animate type="slide-in" options={{origin: 'top'}}>
                             {({ className }) => (
                                 <ul>

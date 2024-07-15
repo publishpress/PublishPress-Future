@@ -13,7 +13,17 @@ const globalTips = [
 		),
 		{ kbd: <kbd /> }
 	),
-	__('Drag steps from the inserter into the workflow.', 'publishpress-future-pro'),
+	__('Drag steps from the inserter and drop them directly into your workflow for easy customization.', 'publishpress-future-pro'),
+	__('Simply double-click any step to bring up the settings sidebar for quick adjustments.', 'publishpress-future-pro'),
+	__('Double-click the workflow pane to increase the zoom level for a closer look.', 'publishpress-future-pro'),
+	createInterpolateElement(
+		__(
+			'Hold down the <kbd>shift</kbd> key and double-click the workflow pane to decrease the zoom level.',
+			'publishpress-future-pro'
+		),
+		{ kbd: <kbd /> }
+	),
+	__('Easily add new steps by clicking on a step\'s handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need.', 'publishpress-future-pro'),
 ];
 
 export function Tips() {

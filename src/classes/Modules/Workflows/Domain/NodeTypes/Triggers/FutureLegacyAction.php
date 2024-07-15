@@ -56,7 +56,7 @@ class FutureLegacyAction implements NodeTypeInterface
     public function getDescription(): string
     {
         return __(
-            "This trigger activates when a Future Action on posts is set to execute this workflow.",
+            "This trigger allows users to choose the workflow from the dropdown menu in the Future Actions options.",
             "publishpress-future-pro"
         );
     }

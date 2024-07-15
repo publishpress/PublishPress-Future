@@ -13,27 +13,16 @@ extensions:
     enabled:
         - Codeception\Extension\RunFailed
         - lucatume\WPBrowser\Extension\ChromeDriverController
-        - lucatume\WPBrowser\Extension\BuiltInServerController
     config:
         lucatume\WPBrowser\Extension\ChromeDriverController:
             port: '%CHROMEDRIVER_PORT%'
-        lucatume\WPBrowser\Extension\BuiltInServerController:
-            workers: 5
-            port: '%BUILTIN_SERVER_PORT%'
-            docroot: '%WORDPRESS_ROOT_DIR%'
-            env:
-                DATABASE_TYPE: sqlite
-                DB_ENGINE: sqlite
-                DB_DIR: '%codecept_root_dir%/tests/Support/Data'
-                DB_FILE: db.sqlite
+            binary: '%CHROMEDRIVER_BINARY%'
+            suites: ['EndToEnd']
     commands:
         - lucatume\WPBrowser\Command\RunOriginal
         - lucatume\WPBrowser\Command\RunAll
         - lucatume\WPBrowser\Command\GenerateWPUnit
         - lucatume\WPBrowser\Command\DbExport
         - lucatume\WPBrowser\Command\DbImport
-        - lucatume\WPBrowser\Command\DevStart
-        - lucatume\WPBrowser\Command\DevStop
-        - lucatume\WPBrowser\Command\DevInfo
-        - lucatume\WPBrowser\Command\DevRestart
-        - lucatume\WPBrowser\Command\ChromedriverUpdate
+        - lucatume\WPBrowser\Command\MonkeyCachePath
+        - lucatume\WPBrowser\Command\MonkeyCacheClear
