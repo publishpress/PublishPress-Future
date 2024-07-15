@@ -37,9 +37,6 @@
         "woocommerce/action-scheduler": "3.7.0"
     },
     "scripts": {
-        "check:deps": "checkdep . publishpress/publishpress-future",
-        "fix:deps": "mergedep . publishpress/publishpress-future",
-        "post-autoload-dump": "@check:deps",
         "post-update-cmd": "rm -rf vendor/publishpress/publishpress-future/lib/vendor",
         "post-install-cmd": "@post-update-cmd"
     }
