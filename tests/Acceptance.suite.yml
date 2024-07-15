@@ -1,4 +1,5 @@
 actor: AcceptanceTester
+suite_namespace: Tests\Acceptance
 modules:
     enabled:
         - WPDb
@@ -10,7 +11,7 @@ modules:
         - Filesystem
     config:
         WPDb:
-            dump: "tests/codeception/Support/Data/sql/dump.sql"
+            dump: "tests/Support/Data/sql/dump.sql"
             populate: false
             cleanup: false
             urlReplacement: false

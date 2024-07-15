@@ -244,6 +244,9 @@ class Controller implements InitializableInterface
                         // translators: %s is the name of the taxonomy in singular form.
                         'errorTermsRequired' => __('Please select one or more %s', 'post-expirator'),
                         'datePreview' => __('Date Preview', 'post-expirator'),
+                        'datePreviewCurrent' => __('Current Date', 'post-expirator'),
+                        'datePreviewComputed' => __('Computed Date', 'post-expirator'),
+                        'error' => __('Error', 'post-expirator'),
                     ],
                     'settings' => $settingsModel->getPostTypesSettings(),
                     'expireTypeList' => $this->actionsModel->getActionsAsOptionsForAllPostTypes(false),

@@ -9,6 +9,8 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
+use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
+
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -36,22 +38,34 @@ class BulkActionController implements InitializableInterface
     private $notices;
 
     /**
+     * @var CurrentUserModel
+     */
+    private $currentUserModel;
+
+    /**
      * @param HookableInterface $hooksFacade
      * @param callable $expirablePostModelFactory
      * @param \PublishPress\Future\Framework\WordPress\Facade\NoticeFacade $notices
+     * @param \Closure $currentUserModelFactory
      */
     public function __construct(
         HookableInterface $hooksFacade,
         $expirablePostModelFactory,
-        $notices
+        $notices,
+        \Closure $currentUserModelFactory
     ) {
         $this->hooks = $hooksFacade;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
         $this->notices = $notices;
+        $this->currentUserModel = $currentUserModelFactory();
     }
 
     public function initialize()
     {
+        if (! $this->currentUserModel->userCanExpirePosts()) {
+            return;
+        }
+
         $this->addHooks();
         $this->registerNotices();
     }

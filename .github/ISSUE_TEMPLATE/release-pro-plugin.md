@@ -34,6 +34,7 @@ To release the Pro plugin, ensure you complete all the tasks below.
 ### Release Checklist
 
 - [ ] Update the version number to a stable version in the main plugin file and `readme.txt` as per [tech documentation](https://rambleventures.slab.com/posts/version-numbers-58nmrk4b), and commit to the release branch.
+- [ ] If anything changed in the code after test package distribution, redo the pre-release checklist.
 - [ ] Build the final zip package with `composer build`, creating a new package in the `./dist` directory.
 - [ ] Create and merge a Pull Request for the release branch into the `main` branch.
 - [ ] Merge the `main` branch into the `development` branch.

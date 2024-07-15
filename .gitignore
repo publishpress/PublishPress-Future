@@ -20,3 +20,6 @@ ray.php
 /cache
 /.cache
 .phplint.cache*
+
+/tests-*
+/tests/.env

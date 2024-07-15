@@ -151,7 +151,10 @@ class Module implements ModuleInterface
 
     private function factoryQuickEditController()
     {
-        return new Controllers\QuickEditController($this->hooks);
+        return new Controllers\QuickEditController(
+            $this->hooks,
+            $this->currentUserModelFactory
+        );
     }
 
     private function factoryScheduledActionsController()
@@ -168,7 +171,8 @@ class Module implements ModuleInterface
         return new Controllers\BulkActionController(
             $this->hooks,
             $this->expirablePostModelFactory,
-            $this->noticesFacade
+            $this->noticesFacade,
+            $this->currentUserModelFactory
         );
     }
 
@@ -204,12 +208,16 @@ class Module implements ModuleInterface
     {
         return new Controllers\RestAPIController(
             $this->hooks,
-            $this->expirablePostModelFactory
+            $this->expirablePostModelFactory,
+            $this->currentUserModelFactory
         );
     }
 
     private function factoryBlockController()
     {
-        return new Controllers\BlockEditorController($this->hooks);
+        return new Controllers\BlockEditorController(
+            $this->hooks,
+            $this->currentUserModelFactory
+        );
     }
 }
