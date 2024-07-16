@@ -27,6 +27,7 @@
     <exclude-pattern>/cache/*</exclude-pattern>
     <exclude-pattern>/.cache/*</exclude-pattern>
 
+    <rule ref="PSR12"/>
     <rule ref="WordPressVIPMinimum">
         <exclude name="WordPress.DateTime.RestrictedFunctions.date_date" />
         <exclude name="WordPress.WP.GlobalVariablesOverride.Prohibited" />
