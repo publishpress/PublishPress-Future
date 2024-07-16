@@ -31,7 +31,7 @@
   "minimum-stability": "dev",
   "require": {
     "php": ">=7.2.5",
-    "publishpress/publishpress-future": "dev-3.1.0-alias-plugin"
+    "publishpress/publishpress-future": "3.1.0.1"
   },
   "require-dev": {
     "lucatume/wp-browser": "^4",
