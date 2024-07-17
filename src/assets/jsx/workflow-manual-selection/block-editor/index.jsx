@@ -43,7 +43,7 @@ function BlockEditorWorkflowManualTrigger() {
     return (
         <PluginDocumentSettingPanel
             name={'publishpress-future-workflow-manual-trigger'}
-            title={__('Workflow Manual Trigger', 'publishpress-future-pro')}
+            title={__('Action Workflows', 'publishpress-future-pro')}
             initialOpen={true}
             className={'future-workflow-manual-trigger'}
         >
