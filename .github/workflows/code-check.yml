@@ -21,9 +21,6 @@ jobs:
   check:
     name: Check the code
     runs-on: ubuntu-latest
-    env:
-      DOCKER_IMAGE: publishpress/dev-workspace-terminal:future-free-4
-
     steps:
       - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
