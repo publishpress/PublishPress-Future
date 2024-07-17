@@ -27,15 +27,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y iproute2
 
-      - name: Checkout code
-        uses: actions/checkout@master
-
       - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
         uses: mxschmitt/action-tmate@v3
         if: ${{ inputs.tmate_enabled }}
         timeout-minutes: 10
         with:
           detached: true
+      - name: Checkout code
+        uses: actions/checkout@master
 
       - name: Prepare composer
         run: |
