@@ -16,12 +16,8 @@ export function TaxonomyTerms({ name, label, defaultValue, onChange, settings })
     const {
         taxonmoyTerms,
     } = useSelect((select) => {
-        const {
-            getTaxonomyTerms,
-        } = select(workflowStore);
-
         return {
-            taxonmoyTerms: getTaxonomyTerms(defaultTaxonomy),
+            taxonmoyTerms: select(workflowStore).getTaxonomyTerms(defaultTaxonomy),
         };
     });
 
@@ -79,7 +75,7 @@ export function TaxonomyTerms({ name, label, defaultValue, onChange, settings })
                             onChange={(value) => onChangeSetting({ settingName: "selectAll", value })}
                         />
 
-                        {defaultValue?.selectAll !== '1' && (
+                        {defaultValue?.selectAll !== '1' && taxonmoyTerms.length && (
                             <InlineMultiSelect
                                 label={__('Terms', 'publishpress-future-pro')}
                                 value={defaultValue?.terms || []}
@@ -92,7 +88,8 @@ export function TaxonomyTerms({ name, label, defaultValue, onChange, settings })
                     </>
                 )}
 
-                {!optionToSelectAll && (
+                {/* We are checking the taxonomyTerms.length to make sure the field renders only after labels are available */}
+                {!optionToSelectAll && taxonmoyTerms.length && (
                     <InlineMultiSelect
                         label={__('Terms', 'publishpress-future-pro')}
                         value={defaultValue?.terms || []}
@@ -100,6 +97,7 @@ export function TaxonomyTerms({ name, label, defaultValue, onChange, settings })
                         expandOnFocus={true}
                         autoSelectFirstMatch={true}
                         onChange={(value) => onChangeSetting({ settingName: "terms", value })}
+                        className="future-taxonomy-terms"
                     />
                 )}
             </VStack>

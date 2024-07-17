@@ -31,7 +31,8 @@ export const InlineMultiSelect = ({
     autoSelectFirstMatch,
     onChange,
     suggestions,
-    value
+    value,
+    className
 }) => {
 
     const defaultSelectedLabels = useMemo(() => {
@@ -71,6 +72,7 @@ export const InlineMultiSelect = ({
             __experimentalExpandOnFocus={expandOnFocus}
             __experimentalAutoSelectFirstMatch={autoSelectFirstMatch}
             onChange={onValueChange}
+            className={className}
         />
     );
 }
