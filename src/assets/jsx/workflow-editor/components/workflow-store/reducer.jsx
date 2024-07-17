@@ -412,6 +412,14 @@ const setSelectedEdges = (state, action) => {
     };
 }
 
+const unselectAll = (state, action) => {
+    return {
+        ...state,
+        selectedNodes: [],
+        selectedEdges: [],
+    };
+}
+
 const deleteWorkflowStart = (state, action) => {
     return {
         ...state,
@@ -775,6 +783,8 @@ export const reducer = (state = DEFAULT_STATE, action) => {
             return setSelectedNodes(state, action);
         case 'SET_SELECTED_EDGES':
             return setSelectedEdges(state, action);
+        case 'UNSELECT_ALL':
+            return unselectAll(state, action);
         case 'DELETE_WORKFLOW_START':
             return deleteWorkflowStart(state, action);
         case 'DELETE_WORKFLOW_SUCCESS':
