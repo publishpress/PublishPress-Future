@@ -37,14 +37,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
 
-      - name: Show version of tools inside the dev-workspace
-        run: |
-          $GITHUB_WORKSPACE/dev-workspace/run composer info:versions
-
       - name: Prepare composer
         run: |
           $GITHUB_WORKSPACE/dev-workspace/run composer validate
           $GITHUB_WORKSPACE/dev-workspace/run composer install
+
+      - name: Show version of tools inside the dev-workspace
+        run: |
+          $GITHUB_WORKSPACE/dev-workspace/run composer info:versions
 
       - name: Build the package using ./dev-workspace
         run: |
