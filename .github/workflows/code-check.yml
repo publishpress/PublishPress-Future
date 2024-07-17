@@ -22,7 +22,7 @@ jobs:
     name: Check the code
     runs-on: ubuntu-latest
     env:
-      DOCKER_IMAGE: publishpress/dev-workspace-terminal:future-free-4
+      DOCKER_IMAGE: publishpress/dev-workspace-terminal:future-free
 
     steps:
       - name: Setup tmate session for Debugging, if inputs.tmate_enabled is true
