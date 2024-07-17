@@ -36,7 +36,8 @@ jobs:
 
       - name: Show inspection of dev-workspace image
         run: |
-          docker image inspect publishpress/dev-workspace-terminal:future-pro
+          docker pull publishpress/dev-workspace-terminal:future-pro && \
+            docker image inspect publishpress/dev-workspace-terminal:future-pro
 
       - name: Checkout code
         uses: actions/checkout@master
