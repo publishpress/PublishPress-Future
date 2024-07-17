@@ -43,6 +43,10 @@ export function* setupEditor(workflowId) {
             });
 
             yield {type: 'LOAD_WORKFLOW_SUCCESS', payload: workflow};
+
+            // Unselect all elements after loading the workflow
+            setTimeout(() => jQuery('.react-flow__pane').click(), 200);
+
         } catch (error) {
             dispatch('core/notices').createErrorNotice(
                 __('Unable to load the workflow. Please try again.', 'publishpress-future-pro')
@@ -264,6 +268,12 @@ export const setSelectedNodes = (nodes) => {
     return {
         type: 'SET_SELECTED_NODES',
         payload: nodes,
+    };
+};
+
+export const unselectAll = () => {
+    return {
+        type: 'UNSELECT_ALL',
     };
 };
 
