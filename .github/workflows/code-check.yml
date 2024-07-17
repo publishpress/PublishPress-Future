@@ -29,6 +29,18 @@ jobs:
         with:
           detached: true
 
+      - name: Show inspection of dev-workspace image
+        run: |
+          docker image inspect publishpress/dev-workspace-terminal:future-pro
+
+      - name: Show version of tools
+        run: |
+          echo "PHP Version: $(php -v)"
+          echo "Composer Version: $(composer --version)"
+          echo "Node Version: $(node -v)"
+          echo "NPM Version: $(npm -v)"
+          echo "Yarn Version: $(yarn -v)"
+
       - name: Checkout code
         uses: actions/checkout@master
 

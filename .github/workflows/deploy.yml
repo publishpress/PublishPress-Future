@@ -34,6 +34,10 @@ jobs:
         with:
           detached: true
 
+      - name: Show inspection of dev-workspace image
+        run: |
+          docker image inspect publishpress/dev-workspace-terminal:future-pro
+
       - name: Checkout code
         uses: actions/checkout@master
 
