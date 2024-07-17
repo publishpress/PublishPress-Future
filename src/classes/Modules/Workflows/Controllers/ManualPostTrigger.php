@@ -288,7 +288,7 @@ class ManualPostTrigger implements InitializableInterface
 
         add_meta_box(
             'future_workflow_manual_trigger',
-            __('Workflow Manual Trigger', 'publishpress-future-pro'),
+            __('Action Workflows', 'publishpress-future-pro'),
             [$this, 'renderClassicEditorMetabox'],
             $postType,
             'side',
