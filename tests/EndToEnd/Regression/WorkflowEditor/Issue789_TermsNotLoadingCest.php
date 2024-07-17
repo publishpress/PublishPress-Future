@@ -19,6 +19,7 @@ class Issue789_TermsNotLoadingCest
 
         $I->amOnWorkflowEditorPage($postId);
         $I->selectWorkflowStep('addPostTerms_fv6u7vv');
-        $I->see('Uncategorized', '.components-form-token-field__input-container.future-taxonomy-terms');
+        $I->wait(1);
+        $I->see('Uncategorized', '.edit-post-sidebar__panel .future-taxonomy-terms');
     }
 }
