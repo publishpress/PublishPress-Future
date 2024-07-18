@@ -215,7 +215,7 @@
         "codeception": "Runs Codeception commands.",
         "docker:cleanup": "Cleans up the Docker system.",
         "config:phpcs": "Configures the PHP CodeSniffer installed paths.",
-        "info:version": "Gets the version of the main tools available.",
+        "info:versions": "Gets the version of the main tools available.",
         "set:version": "Sets the version of the plugin."
     },
     "extra": {

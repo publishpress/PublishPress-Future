@@ -95,7 +95,7 @@ function updateVersionInComposerJson($newVersion): void
 }
 
 updateVersionConstantInMainPluginFile(VERSION_CONSTANT, NEW_VERSION);
-updateVersionInComposerJson(NEW_VERSION);
+// updateVersionInComposerJson(NEW_VERSION);
 
 if (isStableVersion(NEW_VERSION)) {
     updateVersionInReadme(NEW_VERSION);
