@@ -12,5 +12,4 @@ echo "PHP Mess Detector Version: " $(phpmd --version)
 echo "PHP Copy/Paste Detector Version: " $(phpcpd --version)
 echo "PHP Lint Version: " $(phplint --version)
 echo "PHPStan Version: " $(phpstan --version)
-echo "Builder Version:"
-echo $(pbuild version)
+echo "Builder Version:" "$(pbuild version | grep -o 'PUBLISHPRESS PLUGIN BUILDER - v[0-9]\+\.[0-9]\+\.[0-9]\+')"
