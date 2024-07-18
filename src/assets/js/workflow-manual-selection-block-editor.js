@@ -4149,7 +4149,7 @@ function BlockEditorWorkflowManualTrigger() {
   var postId = window.futureWorkflowManualSelection.postId;
   return /*#__PURE__*/React.createElement(PluginDocumentSettingPanel, {
     name: 'publishpress-future-workflow-manual-trigger',
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Workflow Manual Trigger', 'publishpress-future-pro'),
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Action Workflows', 'publishpress-future-pro'),
     initialOpen: true,
     className: 'future-workflow-manual-trigger'
   }, /*#__PURE__*/React.createElement(_fieldset__WEBPACK_IMPORTED_MODULE_2__.Fieldset, {

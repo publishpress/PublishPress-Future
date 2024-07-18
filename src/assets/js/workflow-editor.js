@@ -16354,10 +16354,8 @@ function TaxonomyTerms(_ref) {
   var taxonomies = futureWorkflowEditor.taxonomies;
   var defaultTaxonomy = ((_defaultValue = defaultValue) === null || _defaultValue === void 0 ? void 0 : _defaultValue.taxonomy) || ((_taxonomies$ = taxonomies[0]) === null || _taxonomies$ === void 0 ? void 0 : _taxonomies$.value);
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(function (select) {
-      var _select = select(_workflow_store__WEBPACK_IMPORTED_MODULE_4__.store),
-        getTaxonomyTerms = _select.getTaxonomyTerms;
       return {
-        taxonmoyTerms: getTaxonomyTerms(defaultTaxonomy)
+        taxonmoyTerms: select(_workflow_store__WEBPACK_IMPORTED_MODULE_4__.store).getTaxonomyTerms(defaultTaxonomy)
       };
     }),
     taxonmoyTerms = _useSelect.taxonmoyTerms;
@@ -16417,7 +16415,7 @@ function TaxonomyTerms(_ref) {
         value: value
       });
     }
-  }), ((_defaultValue4 = defaultValue) === null || _defaultValue4 === void 0 ? void 0 : _defaultValue4.selectAll) !== '1' && /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }), ((_defaultValue4 = defaultValue) === null || _defaultValue4 === void 0 ? void 0 : _defaultValue4.selectAll) !== '1' && taxonmoyTerms.length && /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Terms', 'publishpress-future-pro'),
     value: ((_defaultValue5 = defaultValue) === null || _defaultValue5 === void 0 ? void 0 : _defaultValue5.terms) || [],
     suggestions: taxonmoyTerms,
@@ -16429,7 +16427,7 @@ function TaxonomyTerms(_ref) {
         value: value
       });
     }
-  })), !optionToSelectAll && /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  })), !optionToSelectAll && taxonmoyTerms.length && /*#__PURE__*/React.createElement(_inline_multi_select__WEBPACK_IMPORTED_MODULE_3__["default"], {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Terms', 'publishpress-future-pro'),
     value: ((_defaultValue6 = defaultValue) === null || _defaultValue6 === void 0 ? void 0 : _defaultValue6.terms) || [],
     suggestions: taxonmoyTerms,
@@ -16440,7 +16438,8 @@ function TaxonomyTerms(_ref) {
         settingName: "terms",
         value: value
       });
-    }
+    },
+    className: "future-taxonomy-terms"
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TaxonomyTerms);
@@ -18822,7 +18821,8 @@ var InlineMultiSelect = function InlineMultiSelect(_ref) {
     autoSelectFirstMatch = _ref.autoSelectFirstMatch,
     onChange = _ref.onChange,
     suggestions = _ref.suggestions,
-    value = _ref.value;
+    value = _ref.value,
+    className = _ref.className;
   var defaultSelectedLabels = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     return convertListOfValuesToLabels(value, suggestions);
   });
@@ -18855,7 +18855,8 @@ var InlineMultiSelect = function InlineMultiSelect(_ref) {
     suggestions: suggestionsLabels,
     __experimentalExpandOnFocus: expandOnFocus,
     __experimentalAutoSelectFirstMatch: autoSelectFirstMatch,
-    onChange: onValueChange
+    onChange: onValueChange,
+    className: className
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InlineMultiSelect);
@@ -23979,6 +23980,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   setSelectedNodes: () => (/* binding */ setSelectedNodes),
 /* harmony export */   setupEditor: () => (/* binding */ setupEditor),
 /* harmony export */   switchToDraft: () => (/* binding */ switchToDraft),
+/* harmony export */   unselectAll: () => (/* binding */ unselectAll),
 /* harmony export */   updateBaseSlugCounts: () => (/* binding */ updateBaseSlugCounts),
 /* harmony export */   updateNode: () => (/* binding */ updateNode)
 /* harmony export */ });
@@ -24051,7 +24053,7 @@ function setupEditor(workflowId) {
         };
       case 19:
         if (!(workflowId > 0)) {
-          _context.next = 33;
+          _context.next = 34;
           break;
         }
         _context.prev = 20;
@@ -24070,21 +24072,25 @@ function setupEditor(workflowId) {
           payload: _workflow
         };
       case 26:
-        _context.next = 33;
+        // Unselect all elements after loading the workflow
+        setTimeout(function () {
+          return jQuery('.react-flow__pane').click();
+        }, 200);
+        _context.next = 34;
         break;
-      case 28:
-        _context.prev = 28;
+      case 29:
+        _context.prev = 29;
         _context.t1 = _context["catch"](20);
         (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)('core/notices').createErrorNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Unable to load the workflow. Please try again.', 'publishpress-future-pro'));
-        _context.next = 33;
+        _context.next = 34;
         return {
           type: 'LOAD_WORKFLOW_FAILURE'
         };
-      case 33:
+      case 34:
       case "end":
         return _context.stop();
     }
-  }, _marked, null, [[6, 14], [20, 28]]);
+  }, _marked, null, [[6, 14], [20, 29]]);
 }
 ;
 function saveAsDraft(_ref) {
@@ -24386,6 +24392,11 @@ var setSelectedNodes = function setSelectedNodes(nodes) {
   return {
     type: 'SET_SELECTED_NODES',
     payload: nodes
+  };
+};
+var unselectAll = function unselectAll() {
+  return {
+    type: 'UNSELECT_ALL'
   };
 };
 var setSelectedEdges = function setSelectedEdges(edges) {
@@ -25041,6 +25052,12 @@ var setSelectedEdges = function setSelectedEdges(state, action) {
     selectedEdges: payload
   });
 };
+var unselectAll = function unselectAll(state, action) {
+  return _objectSpread(_objectSpread({}, state), {}, {
+    selectedNodes: [],
+    selectedEdges: []
+  });
+};
 var deleteWorkflowStart = function deleteWorkflowStart(state, action) {
   return _objectSpread(_objectSpread({}, state), {}, {
     isDeletingWorkflow: true
@@ -25320,6 +25337,8 @@ var reducer = function reducer() {
       return setSelectedNodes(state, action);
     case 'SET_SELECTED_EDGES':
       return setSelectedEdges(state, action);
+    case 'UNSELECT_ALL':
+      return unselectAll(state, action);
     case 'DELETE_WORKFLOW_START':
       return deleteWorkflowStart(state, action);
     case 'DELETE_WORKFLOW_SUCCESS':
