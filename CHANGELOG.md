@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.3] - UNRELEASED
+
+### Changed
+
+- Removed icon from the "PublishPress Future" metabox in the block editor, #821
+- Changed the title of the "Workflow Manual Trigger" metabox to "Action Workflows", #821
+
+### Fixed
+
+- Cetegories sometimes appears as number in the workflow editor, #789
+- Custom code to move posts to a custom status do not work using legacy expireType, #877
+
 ## [3.4.2] - 15 Jul, 2024
 
 ### Added
