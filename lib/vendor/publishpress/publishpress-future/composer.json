@@ -1,219 +1,223 @@
 {
-  "name": "publishpress/publishpress-future",
-  "type": "wordpress-plugin",
-  "license": "GPL-2.0-or-later",
-  "description": "",
-  "authors": [
-    {
-      "name": "PublishPress",
-      "email": "help@publishpress.com",
-      "homepage": "https://publishpress.com",
-      "role": "Developer"
+    "name": "publishpress/publishpress-future",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "description": "",
+    "authors": [
+        {
+            "name": "PublishPress",
+            "email": "help@publishpress.com",
+            "homepage": "https://publishpress.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Aaron Axelsen",
+            "homepage": "http://postexpirator.tuxdocs.net/"
+        }
+    ],
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true,
+            "automattic/jetpack-autoloader": true
+        },
+        "process-timeout": 0
     },
-    {
-      "name": "Aaron Axelsen",
-      "homepage": "http://postexpirator.tuxdocs.net/"
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/codeception/"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.2.5",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "lucatume/wp-browser": "^4",
+        "codeception/module-asserts": "^3",
+        "codeception/module-phpbrowser": "^3",
+        "codeception/module-webdriver": "^3",
+        "codeception/module-db": "^3",
+        "codeception/module-filesystem": "^3",
+        "codeception/module-cli": "^2",
+        "codeception/util-universalframework": "^1",
+        "codeception/module-rest": "^3",
+        "codeception/module-sequence": "^3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "wp-coding-standards/wpcs": "^3",
+        "phpmd/phpmd": "^2.15",
+        "squizlabs/php_codesniffer": "^3.8",
+        "overtrue/phplint": "^9.1",
+        "wp-cli/i18n-command": "^2.6",
+        "wp-cli/wp-cli-bundle": "^2.10",
+        "friendsofphp/php-cs-fixer": "^3.49",
+        "phpstan/phpstan": "^1.10",
+        "szepeviktor/phpstan-wordpress": "^1.3",
+        "phpstan/extension-installer": "^1.3",
+        "behat/behat": "^3.14",
+        "automattic/vipwpcs": "^3",
+        "publishpress/publishpress-phpcs-standards": "dev-main",
+        "ext-pdo": "*",
+        "ext-yaml": "*"
+    },
+    "scripts": {
+        "build": "pbuild build",
+        "build:up": [
+            "@build",
+            "@dbox:up"
+        ],
+        "build:dir": "pbuild build-dir",
+        "build:clean": "pbuild clean",
+        "build:js": "wp-scripts build --mode production",
+        "build:js-dev": "wp-scripts build --mode development",
+        "profile:js": "webpack --profile --json > webpack-bundle-stats.json",
+        "watch:js": "wp-scripts build --mode development --watch",
+        "get:version": "pbuild version",
+        "gen:pot-php": "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
+        "gen:pot-js": "bash ./dev-workspace/scripts/lang-make-js-pot.sh",
+        "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
+        "gen:po-scripts": "bash ./dev-workspace/scripts/lang-update-js-po.sh",
+        "gen:po-json": "bash ./dev-workspace/scripts/lang-make-json.sh",
+        "gen:pot": [
+            "@gen:pot-php",
+            "@gen:pot-js"
+        ],
+        "gen:lang": [
+            "@gen:pot",
+            "@gen:mo",
+            "@gen:po-scripts",
+            "@gen:po-json",
+            "@cleanup:js-mo"
+        ],
+        "cleanup:js-mo": "bash ./dev-workspace/scripts/lang-cleanup.sh",
+        "cleanup:gh-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
+        "check": [
+            "@check:php",
+            "@check:lint",
+            "@check:cs",
+            "@check:longpath"
+        ],
+        "check:php": [
+            "@check:php-5.6",
+            "@check:php-7.2",
+            "@check:php-7.4",
+            "@check:php-8.0",
+            "@check:php-8.1",
+            "@check:php-8.2",
+            "@check:php-8.3"
+        ],
+        "check:php-5.6": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php",
+        "check:php-7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
+        "check:php-7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
+        "check:php-8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
+        "check:php-8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
+        "check:php-8.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2",
+        "check:php-8.3": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.3",
+        "check:lint": "phplint --no-cache",
+        "check:cs": "phpcs",
+        "check:stan": "phpstan",
+        "check:longpath": "longpath .",
+        "fix:cs": "phpcbf --standard=.phpcs.xml",
+        "fix:php": [
+            "php-cs-fixer fix .",
+            "@fix:cs"
+        ],
+        "dbox:up": "pdropbox upload && pdropbox share",
+        "dbox:list": "pdropbox list",
+        "dbox:remove": "pdropbox remove",
+        "dbox:unlink": "pdropbox unlink",
+        "tests:wp": "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" \"$@\"",
+        "tests:clean": "vendor/bin/codecept clean",
+        "tests:link": "source ./tests/.env && if [ ! -L \"$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG\" ]; then ln -s \"$PWD\" \"$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG\"; fi",
+        "tests:activate": "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" plugin activate $PLUGIN_SLUG/${PLUGIN_SLUG}.php",
+        "tests:db-export": "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db export ./tests/Support/Data/dump.sql",
+        "tests:db-import": "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db import ./tests/Support/Data/dump.sql",
+        "tests:chromedriver": "source ./tests/.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT",
+        "tests:all": "./vendor/bin/codecept run",
+        "tests:integration": "./vendor/bin/codecept run Integration",
+        "tests:e2e": "./vendor/bin/codecept run EndToEnd",
+        "tests:unit": "./vendor/bin/codecept run Unit",
+        "test": "./vendor/bin/codecept run $@",
+        "codeception": "./vendor/bin/codecept $@",
+        "docker:cleanup": "docker system prune -f",
+        "info:versions": "bash .\/dev-workspace\/scripts\/info-versions.sh",
+        "set:version": "php .\/dev-workspace\/scripts\/bump-version.php \"$@\"",
+        "config:phpcs": "phpcs --config-set installed_paths \"../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../publishpress/publishpress-phpcs-standards/standards,../../wp-coding-standards/wpcs\"",
+        "post-install-cmd": [
+            "@config:phpcs"
+        ],
+        "post-update-cmd": [
+            "@config:phpcs"
+        ],
+        "pre-autoload-dump": "@composer dumpautoload --working-dir=./lib",
+        "pre-update-cmd": "@composer update --working-dir=./lib",
+        "pre-install-cmd": "@composer install --working-dir=./lib"
+    },
+    "scripts-descriptions": {
+        "build": "Builds the plugin.",
+        "build:up": "Builds the plugin and uploads it to Dropbox.",
+        "build:dir": "Builds the plugin in a directory.",
+        "build:clean": "Cleans up the build directory.",
+        "build:js-dev": "Builds the JavaScript files in development mode.",
+        "build:js": "Builds the JavaScript files in production mode.",
+        "profile:js": "Generates a profile of the JavaScript build.",
+        "watch:js": "Watches the JavaScript files for changes.",
+        "get:version": "Gets the version of the plugin.",
+        "gen:pot-php": "Generates the PHP POT file for translations.",
+        "gen:pot-js": "Generates the JavaScript POT file for translations.",
+        "gen:mo": "Generates the MO files for translations.",
+        "gen:po-scripts": "Updates the JavaScript PO files for translations.",
+        "gen:po-json": "Generates the JSON files for translations.",
+        "gen:pot": "Generates the POT files for translations.",
+        "gen:lang": "Generates the language files for translations.",
+        "cleanup:js-mo": "Cleans up the JavaScript MO files.",
+        "cleanup:gh-workflows": "Cleans up the GitHub workflows.",
+        "check": "Runs all the checks.",
+        "check:php": "Checks the PHP compatibility for all versions.",
+        "check:php-5.6": "Checks the PHP compatibility for PHP 5.6 in the main file only.",
+        "check:php-7.2": "Checks the PHP compatibility for PHP 7.2.",
+        "check:php-7.4": "Checks the PHP compatibility for PHP 7.4.",
+        "check:php-8.0": "Checks the PHP compatibility for PHP 8.0.",
+        "check:php-8.1": "Checks the PHP compatibility for PHP 8.1.",
+        "check:php-8.2": "Checks the PHP compatibility for PHP 8.2.",
+        "check:php-8.3": "Checks the PHP compatibility for PHP 8.3.",
+        "check:lint": "Checks the PHP files for syntax errors.",
+        "check:cs": "Checks the PHP files for coding standards.",
+        "check:stan": "Checks the PHP files for static analysis.",
+        "check:longpath": "Checks the PHP files for long paths.",
+        "fix:cs": "Fixes the PHP files for coding standards.",
+        "fix:php": "Fixes the PHP files.",
+        "dbox:up": "Uploads the built package to Dropbox and generates a sharable URL.",
+        "dbox:list": "Lists the package in Dropbox.",
+        "dbox:remove": "Removes the built package from Dropbox.",
+        "dbox:unlink": "Unlinks the Dropbox account.",
+        "tests:wp": "Runs WP-CLI commands within the context of the test environment.",
+        "tests:clean": "Cleans up the Codeception cache and generated files.",
+        "tests:link": "Creates a symbolic link of the plugin directory in the WordPress installation for testing.",
+        "tests:activate": "Activates the plugin within the WordPress test environment using WP-CLI.",
+        "tests:db-export": "Exports the WordPress database to a SQL file.",
+        "tests:db-import": "Imports a SQL file into the WordPress test database.",
+        "tests:chromedriver": "Starts the ChromeDriver server.",
+        "tests:all": "Runs all the tests defined in Codeception.",
+        "tests:integration": "Runs the integration tests.",
+        "tests:e2e": "Run the end-to-end tests.",
+        "tests:unit": "Run the unit tests.",
+        "test": "Runs tests with custom arguments or specific files.",
+        "codeception": "Runs Codeception commands.",
+        "docker:cleanup": "Cleans up the Docker system.",
+        "config:phpcs": "Configures the PHP CodeSniffer installed paths.",
+        "info:versions": "Gets the version of the main tools available.",
+        "set:version": "Sets the version of the plugin."
+    },
+    "extra": {
+        "plugin-slug": "post-expirator",
+        "plugin-name": "publishpress-future",
+        "plugin-folder": "post-expirator"
     }
-  ],
-  "config": {
-    "preferred-install": {
-      "*": "dist"
-    },
-    "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true,
-      "phpstan/extension-installer": true,
-      "automattic/jetpack-autoloader": true
-    },
-    "process-timeout": 0
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/codeception/"
-    }
-  },
-  "prefer-stable": true,
-  "minimum-stability": "stable",
-  "require": {
-    "php": ">=7.2.5",
-    "ext-json": "*"
-  },
-  "require-dev": {
-    "lucatume/wp-browser": "^4",
-    "codeception/module-asserts": "^3",
-    "codeception/module-phpbrowser": "^3",
-    "codeception/module-webdriver": "^3",
-    "codeception/module-db": "^3",
-    "codeception/module-filesystem": "^3",
-    "codeception/module-cli": "^2",
-    "codeception/util-universalframework": "^1",
-    "codeception/module-rest": "^3",
-    "codeception/module-sequence": "^3",
-    "dealerdirect/phpcodesniffer-composer-installer": "^1",
-    "phpcompatibility/php-compatibility": "^9.3",
-    "wp-coding-standards/wpcs": "^3",
-    "phpmd/phpmd": "^2.15",
-    "squizlabs/php_codesniffer": "^3.8",
-    "overtrue/phplint": "^9.1",
-    "wp-cli/i18n-command": "^2.6",
-    "wp-cli/wp-cli-bundle": "^2.10",
-    "friendsofphp/php-cs-fixer": "^3.49",
-    "phpstan/phpstan": "^1.10",
-    "szepeviktor/phpstan-wordpress": "^1.3",
-    "phpstan/extension-installer": "^1.3",
-    "behat/behat": "^3.14",
-    "automattic/vipwpcs": "^3",
-    "publishpress/publishpress-phpcs-standards": "dev-main",
-    "ext-pdo": "*",
-    "ext-yaml": "*"
-  },
-  "scripts": {
-    "build": "pbuild build",
-    "build:up": [
-      "@build",
-      "@dbox:up"
-    ],
-    "build:dir": "pbuild build-dir",
-    "build:clean": "pbuild clean",
-    "build:js": "wp-scripts build --mode production",
-    "build:js-dev": "wp-scripts build --mode development",
-    "profile:js": "webpack --profile --json > webpack-bundle-stats.json",
-    "watch:js": "wp-scripts build --mode development --watch",
-    "get:version": "pbuild version",
-    "gen:pot-php": "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
-    "gen:pot-js": "bash ./dev-workspace/scripts/lang-make-js-pot.sh",
-    "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
-    "gen:po-scripts": "bash ./dev-workspace/scripts/lang-update-js-po.sh",
-    "gen:po-json": "bash ./dev-workspace/scripts/lang-make-json.sh",
-    "gen:pot": [
-      "@gen:pot-php",
-      "@gen:pot-js"
-    ],
-    "gen:lang": [
-      "@gen:pot",
-      "@gen:mo",
-      "@gen:po-scripts",
-      "@gen:po-json",
-      "@cleanup:js-mo"
-    ],
-    "cleanup:js-mo": "bash ./dev-workspace/scripts/lang-cleanup.sh",
-    "cleanup:gh-workflows": "user=publishpress repo=publishpress-future; gh api repos/$user/$repo/actions/runs --paginate -q '.workflow_runs[] | select(.head_branch != \"master\") | \"\\(.id)\"' | xargs -n1 -I % gh api --silent repos/$user/$repo/actions/runs/% -X DELETE",
-    "check": [
-      "@check:php",
-      "@check:lint",
-      "@check:cs",
-      "@check:longpath"
-    ],
-    "check:php": [
-      "@check:php-5.6",
-      "@check:php-7.2",
-      "@check:php-7.4",
-      "@check:php-8.0",
-      "@check:php-8.1",
-      "@check:php-8.2",
-      "@check:php-8.3"
-    ],
-    "check:php-5.6": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 5.6 ./post-expirator.php",
-    "check:php-7.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.2",
-    "check:php-7.4": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 7.4",
-    "check:php-8.0": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.0",
-    "check:php-8.1": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.1",
-    "check:php-8.2": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.2",
-    "check:php-8.3": "phpcs --standard=.phpcs-php-compatibility.xml --runtime-set testVersion 8.3",
-    "check:lint": "phplint --no-cache",
-    "check:cs": "phpcs",
-    "check:stan": "phpstan",
-    "check:longpath": "longpath .",
-    "fix:cs": "phpcbf --standard=.phpcs.xml",
-    "fix:php": [
-      "php-cs-fixer fix .",
-      "@fix:cs"
-    ],
-    "dbox:up": "pdropbox upload && pdropbox share",
-    "dbox:list": "pdropbox list",
-    "dbox:remove": "pdropbox remove",
-    "dbox:unlink": "pdropbox unlink",
-    "tests:wp": "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" \"$@\"",
-    "tests:clean": "vendor/bin/codecept clean",
-    "tests:link": "source ./tests/.env && if [ ! -L \"$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG\" ]; then ln -s \"$PWD\" \"$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG\"; fi",
-    "tests:activate": "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" plugin activate $PLUGIN_SLUG/${PLUGIN_SLUG}.php",
-    "tests:db-export": "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db export ./tests/Support/Data/dump.sql",
-    "tests:db-import": "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db import ./tests/Support/Data/dump.sql",
-    "tests:chromedriver": "source ./tests/.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT",
-    "tests:all": "./vendor/bin/codecept run",
-    "tests:integration": "./vendor/bin/codecept run Integration",
-    "tests:e2e": "./vendor/bin/codecept run EndToEnd",
-    "tests:unit": "./vendor/bin/codecept run Unit",
-    "test": "./vendor/bin/codecept run $@",
-    "codeception": "./vendor/bin/codecept $@",
-    "docker:cleanup": "docker system prune -f",
-    "config:phpcs": "phpcs --config-set installed_paths \"../../phpcsstandards/phpcsutils,../../phpcsstandards/phpcsextra,../../automattic/vipwpcs,../../phpcompatibility/php-compatibility,../../sirbrillig/phpcs-variable-analysis,../../publishpress/publishpress-phpcs-standards/standards,../../wp-coding-standards/wpcs\"",
-    "post-install-cmd": [
-      "@config:phpcs"
-    ],
-    "post-update-cmd": [
-      "@config:phpcs"
-    ],
-    "pre-autoload-dump": "@composer dumpautoload --working-dir=./lib",
-    "pre-update-cmd": "@composer update --working-dir=./lib",
-    "pre-install-cmd": "@composer install --working-dir=./lib"
-  },
-  "scripts-descriptions": {
-    "build": "Builds the plugin.",
-    "build:up": "Builds the plugin and uploads it to Dropbox.",
-    "build:dir": "Builds the plugin in a directory.",
-    "build:clean": "Cleans up the build directory.",
-    "build:js-dev": "Builds the JavaScript files in development mode.",
-    "build:js": "Builds the JavaScript files in production mode.",
-    "profile:js": "Generates a profile of the JavaScript build.",
-    "watch:js": "Watches the JavaScript files for changes.",
-    "get:version": "Gets the version of the plugin.",
-    "gen:pot-php": "Generates the PHP POT file for translations.",
-    "gen:pot-js": "Generates the JavaScript POT file for translations.",
-    "gen:mo": "Generates the MO files for translations.",
-    "gen:po-scripts": "Updates the JavaScript PO files for translations.",
-    "gen:po-json": "Generates the JSON files for translations.",
-    "gen:pot": "Generates the POT files for translations.",
-    "gen:lang": "Generates the language files for translations.",
-    "cleanup:js-mo": "Cleans up the JavaScript MO files.",
-    "cleanup:gh-workflows": "Cleans up the GitHub workflows.",
-    "check": "Runs all the checks.",
-    "check:php": "Checks the PHP compatibility for all versions.",
-    "check:php-5.6": "Checks the PHP compatibility for PHP 5.6 in the main file only.",
-    "check:php-7.2": "Checks the PHP compatibility for PHP 7.2.",
-    "check:php-7.4": "Checks the PHP compatibility for PHP 7.4.",
-    "check:php-8.0": "Checks the PHP compatibility for PHP 8.0.",
-    "check:php-8.1": "Checks the PHP compatibility for PHP 8.1.",
-    "check:php-8.2": "Checks the PHP compatibility for PHP 8.2.",
-    "check:php-8.3": "Checks the PHP compatibility for PHP 8.3.",
-    "check:lint": "Checks the PHP files for syntax errors.",
-    "check:cs": "Checks the PHP files for coding standards.",
-    "check:stan": "Checks the PHP files for static analysis.",
-    "check:longpath": "Checks the PHP files for long paths.",
-    "fix:cs": "Fixes the PHP files for coding standards.",
-    "fix:php": "Fixes the PHP files.",
-    "dbox:up": "Uploads the built package to Dropbox and generates a sharable URL.",
-    "dbox:list": "Lists the package in Dropbox.",
-    "dbox:remove": "Removes the built package from Dropbox.",
-    "dbox:unlink": "Unlinks the Dropbox account.",
-    "tests:wp": "Runs WP-CLI commands within the context of the test environment.",
-    "tests:clean": "Cleans up the Codeception cache and generated files.",
-    "tests:link": "Creates a symbolic link of the plugin directory in the WordPress installation for testing.",
-    "tests:activate": "Activates the plugin within the WordPress test environment using WP-CLI.",
-    "tests:db-export": "Exports the WordPress database to a SQL file.",
-    "tests:db-import": "Imports a SQL file into the WordPress test database.",
-    "tests:chromedriver": "Starts the ChromeDriver server.",
-    "tests:all": "Runs all the tests defined in Codeception.",
-    "tests:integration": "Runs the integration tests.",
-    "tests:e2e": "Run the end-to-end tests.",
-    "tests:unit": "Run the unit tests.",
-    "test": "Runs tests with custom arguments or specific files.",
-    "codeception": "Runs Codeception commands.",
-    "docker:cleanup": "Cleans up the Docker system.",
-    "config:phpcs": "Configures the PHP CodeSniffer installed paths."
-  },
-  "extra": {
-    "plugin-slug": "post-expirator",
-    "plugin-name": "publishpress-future",
-    "plugin-folder": "post-expirator"
-  }
 }
