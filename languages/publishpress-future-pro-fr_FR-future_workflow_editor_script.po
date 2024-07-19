@@ -142,20 +142,20 @@ msgstr "Violet"
 msgid "Gray"
 msgstr "Gris"
 
-#: components/data-fields/taxonomy-terms.jsx:64
+#: components/data-fields/taxonomy-terms.jsx:60
 msgid "Taxonomy"
 msgstr "Taxonomie"
 
-#: components/data-fields/taxonomy-terms.jsx:73
+#: components/data-fields/taxonomy-terms.jsx:69
 msgid "Select the terms"
 msgstr "Sélectionner les termes"
 
-#: components/data-fields/taxonomy-terms.jsx:77
+#: components/data-fields/taxonomy-terms.jsx:73
 msgid "Specific terms"
 msgstr "Termes spécifiques"
 
-#: components/data-fields/taxonomy-terms.jsx:84
-#: components/data-fields/taxonomy-terms.jsx:97
+#: components/data-fields/taxonomy-terms.jsx:80
+#: components/data-fields/taxonomy-terms.jsx:94
 msgid "Terms"
 msgstr "Termes"
 
@@ -669,44 +669,44 @@ msgstr "Bienvenue dans l’éditeur de flux de travail"
 msgid "Unable to create a new workflow. Please try again."
 msgstr "Impossible de créer un nouveau flux de travail. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:48
+#: components/workflow-store/actions.jsx:52
 msgid "Unable to load the workflow. Please try again."
 msgstr "Impossible de charger le flux de travail. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:86
+#: components/workflow-store/actions.jsx:90
 msgid "Workflow saved as draft."
 msgstr "Workflow enregistré comme brouillon."
 
-#: components/workflow-store/actions.jsx:94
-#: components/workflow-store/actions.jsx:131
+#: components/workflow-store/actions.jsx:98
+#: components/workflow-store/actions.jsx:135
 msgid "Unable to save workflow. Please, try again."
 msgstr "Impossible de enregistrer le flux de travail. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:123
+#: components/workflow-store/actions.jsx:127
 msgid "Workflow saved."
 msgstr "Workflow enregistré."
 
-#: components/workflow-store/actions.jsx:168
+#: components/workflow-store/actions.jsx:172
 msgid "Workflow published."
 msgstr "Flux de travail publié."
 
-#: components/workflow-store/actions.jsx:176
+#: components/workflow-store/actions.jsx:180
 msgid "Unable to publish the workflow. Please, try again."
 msgstr "Impossible de publier le flux de travail. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:213
+#: components/workflow-store/actions.jsx:217
 msgid "Workflow switched to draft."
 msgstr "Le flux de travail est passé à l’état de brouillon."
 
-#: components/workflow-store/actions.jsx:221
+#: components/workflow-store/actions.jsx:225
 msgid "Unable to switch workflow to draft. Please, try again."
 msgstr "Impossible de basculer le flux de travail en brouillon. Veuillez réessayer."
 
-#: components/workflow-store/actions.jsx:305
+#: components/workflow-store/actions.jsx:315
 msgid "Workflow deleted. Redirecting..."
 msgstr "Flux de travail supprimé. Redirection…"
 
-#: components/workflow-store/actions.jsx:316
+#: components/workflow-store/actions.jsx:326
 msgid "Unable to delete the workflow. Please, try again."
 msgstr "Impossible de supprimer le flux de travail. Veuillez réessayer."
 
