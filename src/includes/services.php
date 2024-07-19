@@ -141,7 +141,9 @@ return [
         return new CustomStatusesController(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES),
-            $container->get(ServicesAbstract::MODEL_SETTINGS)
+            $container->get(ServicesAbstract::MODEL_SETTINGS),
+            $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+            $container->get(FreeServicesAbstract::EXPIRATION_ACTIONS_MODEL)
         );
     },
 

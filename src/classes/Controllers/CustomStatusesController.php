@@ -8,14 +8,11 @@ namespace PublishPress\FuturePro\Controllers;
 
 use PublishPress\Future\Framework\ModuleInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
-use PublishPress\Future\Modules\Settings\HooksAbstract;
-use PublishPress\FuturePro\Domain\ExpirationActions\PostStatusToCustomStatus;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
-
-use function __;
+use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -38,14 +35,28 @@ class CustomStatusesController implements ModuleInterface
      */
     private $settingsModel;
 
+    /**
+     * @var ExpirationActionsModel
+     */
+    private $expirationActionsModel;
+
+    /**
+     * @var \Closure
+     */
+    private $postModelFactory;
+
     public function __construct(
         HooksFacade $hooks,
         CustomStatusesModel $modelCustomStatuses,
-        SettingsModel $settingsModel
+        SettingsModel $settingsModel,
+        \Closure $postModelFactory,
+        ExpirationActionsModel $expirationActionsModel
     ) {
         $this->hooks = $hooks;
         $this->modelCustomStatuses = $modelCustomStatuses;
         $this->settingsModel = $settingsModel;
+        $this->postModelFactory = $postModelFactory;
+        $this->expirationActionsModel = $expirationActionsModel;
     }
 
     public function initialize()
@@ -53,6 +64,13 @@ class CustomStatusesController implements ModuleInterface
         $this->hooks->addFilter(
             ExpirationHooksAbstract::FILTER_EXPIRATION_STATUSES,
             [$this, 'filterExpirationStatuses'],
+            10,
+            2
+        );
+
+        $this->hooks->addFilter(
+            ExpirationHooksAbstract::FILTER_PREPARE_POST_EXPIRATION_OPTS,
+            [$this, 'preparePostExpirationOpts'],
             10,
             2
         );
@@ -82,5 +100,24 @@ class CustomStatusesController implements ModuleInterface
         }
 
         return $statuses;
+    }
+
+    public function preparePostExpirationOpts(array $opts, int $postId): array
+    {
+        // Add backward compatibility with the old custom status expiration type
+        if (isset($opts['expireType']) && str_contains($opts['expireType'], self::ACTION_PREFIX)) {
+            $customStatus = str_replace(self::ACTION_PREFIX, '', $opts['expireType']);
+
+            $postModel = $this->postModelFactory->__invoke($postId);
+
+            $opts['expireType'] = ExpirationActionsAbstract::CHANGE_POST_STATUS;
+            $opts['newStatus'] = $customStatus;
+            $opts['actionLabel'] = $this->expirationActionsModel->getLabelForAction(
+                $opts['expireType'],
+                $postModel->getPostType()
+            );
+        }
+
+        return $opts;
     }
 }
