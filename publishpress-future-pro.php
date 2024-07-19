@@ -38,7 +38,7 @@ if ($invalid_php_version || $invalid_wp_version) {
     return;
 }
 
-define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION', '3.4.3-alpha.1');
+define('PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION', '3.4.3-beta.1');
 define('PUBLISHPRESS_FUTURE_PRO_EDD_ITEM_ID', '129032');
 define('PUBLISHPRESS_FUTURE_PRO_EDD_SITE_URL', 'https://publishpress.com');
 define('PUBLISHPRESS_FUTURE_PRO_BASE_PATH', __DIR__);
