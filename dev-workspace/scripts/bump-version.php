@@ -70,6 +70,21 @@ function updateVersionConstantInMainPluginFile($versionConstant, $newVersion): v
     file_put_contents($mainPluginFilePath, $mainPluginFile);
 }
 
+function updateVersionInMainPluginFileHeader($newVersion): void
+{
+    $mainPluginFilePath = BASE_PATH . '/' . PLUGIN_SLUG . '.php';
+
+    $mainPluginFile = file_get_contents($mainPluginFilePath);
+
+    $mainPluginFile = preg_replace(
+        '/\*\s+Version: .*/',
+        '* Version: ' . $newVersion,
+        $mainPluginFile
+    );
+
+    file_put_contents($mainPluginFilePath, $mainPluginFile);
+}
+
 function updateVersionInReadme($newVersion): void
 {
     $readmeFilePath = BASE_PATH . '/readme.txt';
@@ -95,6 +110,7 @@ function updateVersionInComposerJson($newVersion): void
 }
 
 updateVersionConstantInMainPluginFile(VERSION_CONSTANT, NEW_VERSION);
+updateVersionInMainPluginFileHeader(NEW_VERSION);
 // updateVersionInComposerJson(NEW_VERSION);
 
 if (isStableVersion(NEW_VERSION)) {
