@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./dev-workspace/scripts/lang-constants.sh
+source /project/dev-workspace/scripts/lang-constants.sh
 
 export JSX_SCRIPTS="workflow-editor/future_workflow_editor_script"
 
