@@ -7,7 +7,6 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract as DIServicesAbstract;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
-use PublishPress\FuturePro\Controllers\MetadataMappingController;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\SettingsModel;
 
@@ -25,13 +24,13 @@ class MetadataMappingControllerTest extends WPTestCase
 
     private function enableMetaMappingForPost()
     {
-        update_option(SettingsModel::OPTION_METADATA_MAPPING_STATUS, json_encode(['post' => true]));
-        update_option(SettingsModel::OPTION_METADATA_MAPPING, json_encode($this->metadataMap));
+        update_option(SettingsModel::OPTION_METADATA_MAPPING_STATUS, ['post' => true]);
+        update_option(SettingsModel::OPTION_METADATA_MAPPING, $this->metadataMap);
     }
 
     private function disableMetaMappingForPost()
     {
-        update_option(SettingsModel::OPTION_METADATA_MAPPING_STATUS, json_encode(['post' => false]));
+        update_option(SettingsModel::OPTION_METADATA_MAPPING_STATUS, ['post' => false]);
         update_option(SettingsModel::OPTION_METADATA_MAPPING, '[]');
     }
 
@@ -77,14 +76,16 @@ class MetadataMappingControllerTest extends WPTestCase
 
         $container = Container::getInstance();
         $controller = $container->get(ServicesAbstract::CONTROLLER_METADATA_MAPPING);
+        $postModelFactory = $container->get(DIServicesAbstract::POST_MODEL_FACTORY);
 
         $post = static::factory()->post->create_and_get();
 
         $controller->initialize();
 
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, '2050-12-31 23:59:59');
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TYPE, 'draft');
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+        $postModel = $postModelFactory->__invoke($post->ID);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, '2050-12-31 23:59:59');
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, 'draft');
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
 
         do_action('save_post', $post->ID, $post);
 
@@ -100,10 +101,13 @@ class MetadataMappingControllerTest extends WPTestCase
 
         $container = Container::getInstance();
         $controller = $container->get(ServicesAbstract::CONTROLLER_METADATA_MAPPING);
+        $postModelFactory = $container->get(DIServicesAbstract::POST_MODEL_FACTORY);
 
         $post = static::factory()->post->create_and_get();
 
         $controller->initialize();
+
+        $postModel = $postModelFactory->__invoke($post->ID);
 
         $metaValues = [
             PostMetaAbstract::EXPIRATION_STATUS => 'saved',
@@ -114,13 +118,13 @@ class MetadataMappingControllerTest extends WPTestCase
         ];
 
         $metadataHash = md5(serialize($metaValues));
-        update_post_meta($post->ID, ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
+        $postModel->updateMeta(ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
 
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_STATUS, $metaValues[PostMetaAbstract::EXPIRATION_STATUS]);
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, $metaValues[PostMetaAbstract::EXPIRATION_TIMESTAMP]);
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TYPE, 'draft');
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TAXONOMY, $metaValues[PostMetaAbstract::EXPIRATION_TAXONOMY]);
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TERMS, $metaValues[PostMetaAbstract::EXPIRATION_TERMS]);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, $metaValues[PostMetaAbstract::EXPIRATION_STATUS]);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $metaValues[PostMetaAbstract::EXPIRATION_TIMESTAMP]);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, 'draft');
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $metaValues[PostMetaAbstract::EXPIRATION_TAXONOMY]);
+        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $metaValues[PostMetaAbstract::EXPIRATION_TERMS]);
 
         do_action('save_post', $post->ID, $post);
 
