@@ -52,3 +52,4 @@ report.csv
 /tests/.env
 /tests/_wordpress
 version.txt
+tests.env

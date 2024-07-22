@@ -4,18 +4,13 @@ We use Codeception and WPBrowser to test the plugin. The tests are located in th
 
 ## Installation
 
-Make sure all the required packages are installed by executing the following command:
+Make sure all the required packages are installed by executing the following command **inside the dev-workspace terminal**:
 
 ```bash
 composer install
 ```
 
-The tests require the WordPress core files to be downloaded in the folder `tests/_wordpress`.
-To download and prepare the WordPress core files, execute the following command:
-
-```bash
-composer tests:dev-install
-```
+Exit the dev-workspace terminal and run the following commands **outside the dev-workspace terminal**.
 
 Install ChromeDriver on your machine. You can do this by downloading directly from
 https://googlechromelabs.github.io/chrome-for-testing/#stable according to your current platform, and extracting the binary to a known path in your system.
@@ -27,25 +22,24 @@ After installing it, update the `tests/.env` file with the path to the ChromeDri
 CHROMEDRIVER_BINARY=/opt/homebrew/bin/chromedriver
 ```
 
-Copy the file `tests/.env-dist` as  `tests/.env` and only update its data if needed. The default values should work for most cases.
+Copy the file `tests/.env-dist` as  `tests.env` (in the project root) and customize its data. The default values should work for most cases.
 The variables that usually need to be updated are: CHROMEDRIVER_BINARY, CHROMEDRIVER_PORT and BUILTIN_SERVER_PORT, in case the default ports
 are already in use or you installed chromedriver on a different path.
 
-## Starting the test environment
+## Linking the plugin
 
-All the commands to interact with the test environment "should not be executed from inside the dev-workspace container".
-That is because the test environment requires ChromeDriver which is not installed in the dev-workspace container but locally.
-
-To start the test environment, execute the following command:
+To run the tests, the plugin must be linked to the WordPress installation. To do this, execute the following command:
 
 ```bash
-composer tests:dev-start
+composer tests:link
 ```
 
-Check the test environment information by executing the following command:
+## Start the ChromeDriver
+
+Run the ChromeDriver binary in a separate terminal:
 
 ```bash
-composer tests:dev-info
+chromedriver --port=9515
 ```
 
 ## Running the tests
