@@ -22,7 +22,7 @@ After installing it, update the `tests/.env` file with the path to the ChromeDri
 CHROMEDRIVER_BINARY=/opt/homebrew/bin/chromedriver
 ```
 
-Copy the file `tests/.env-dist` as  `tests.env` (in the project root) and customize its data. The default values should work for most cases.
+Copy the file `dev-workspace/.env-example` as  `dev-workspace/.env` and customize its data. The default values should work for most cases.
 The variables that usually need to be updated are: CHROMEDRIVER_BINARY, CHROMEDRIVER_PORT and BUILTIN_SERVER_PORT, in case the default ports
 are already in use or you installed chromedriver on a different path.
 

@@ -45,5 +45,8 @@ modules:
         lucatume\WPBrowser\Module\WPLoader:
             loadOnly: true
             wpRootFolder: '%WORDPRESS_ROOT_DIR%'
-            dbUrl: '%WORDPRESS_DB_URL%'
             domain: '%WORDPRESS_DOMAIN%'
+            dbHost: "%WORDPRESS_DB_HOST%"
+            dbName: "%WORDPRESS_DB_NAME%"
+            dbUser: "%WORDPRESS_DB_USER%"
+            dbPassword: "%WORDPRESS_DB_PASSWORD%"

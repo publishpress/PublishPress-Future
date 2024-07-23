@@ -46,53 +46,28 @@ class MetadataMappingControllerTest extends WPTestCase
         $controller->initialize();
 
         $metaValues = [
-            PostMetaAbstract::EXPIRATION_STATUS => 'saved',
-            PostMetaAbstract::EXPIRATION_TIMESTAMP => '2050-12-31 23:59:59',
-            PostMetaAbstract::EXPIRATION_TYPE => 'draft',
-            PostMetaAbstract::EXPIRATION_TAXONOMY => 'category',
-            PostMetaAbstract::EXPIRATION_TERMS => '',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_STATUS] => 'saved',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TIMESTAMP] => '2050-12-31 23:59:59',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TYPE] => 'draft',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TAXONOMY] => 'category',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TERMS] => '',
         ];
 
         $metadataHash = md5(serialize($metaValues));
 
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_STATUS, $metaValues[PostMetaAbstract::EXPIRATION_STATUS]);
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, $metaValues[PostMetaAbstract::EXPIRATION_TIMESTAMP]);
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TYPE, $metaValues[PostMetaAbstract::EXPIRATION_TYPE]);
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TAXONOMY, $metaValues[PostMetaAbstract::EXPIRATION_TAXONOMY]);
-        update_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TERMS, $metaValues[PostMetaAbstract::EXPIRATION_TERMS]);
-        update_post_meta($post->ID, ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_STATUS], 'saved');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TIMESTAMP], '2050-12-31 23:59:59');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TYPE], 'draft');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TAXONOMY], 'category');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TERMS], '');
+        add_post_meta($post->ID, ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
 
         do_action('save_post', $post->ID, $post);
 
         $scheduler = $container->get(DIServicesAbstract::EXPIRATION_SCHEDULER);
         $actionIsSchedulled = $scheduler->postIsScheduled($post->ID);
 
-        $this->assertFalse($actionIsSchedulled);
-    }
-
-    public function testSchedulingIsExecutedWhenFlagDoesNotExist(): void
-    {
-        $this->enableMetaMappingForPost();
-
-        $container = Container::getInstance();
-        $controller = $container->get(ServicesAbstract::CONTROLLER_METADATA_MAPPING);
-        $postModelFactory = $container->get(DIServicesAbstract::POST_MODEL_FACTORY);
-
-        $post = static::factory()->post->create_and_get();
-
-        $controller->initialize();
-
-        $postModel = $postModelFactory->__invoke($post->ID);
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, '2050-12-31 23:59:59');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, 'draft');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, 'saved');
-
-        do_action('save_post', $post->ID, $post);
-
-        $scheduler = $container->get(DIServicesAbstract::EXPIRATION_SCHEDULER);
-        $actionIsSchedulled = $scheduler->postIsScheduled($post->ID);
-
-        $this->assertTrue($actionIsSchedulled);
+        $this->assertFalse($actionIsSchedulled, 'When flag exists and hash is valid, the action should be skipped');
     }
 
     public function testSchedulingIsExecutedWhenFlagExistsButHashIsInvalid(): void
@@ -101,36 +76,65 @@ class MetadataMappingControllerTest extends WPTestCase
 
         $container = Container::getInstance();
         $controller = $container->get(ServicesAbstract::CONTROLLER_METADATA_MAPPING);
-        $postModelFactory = $container->get(DIServicesAbstract::POST_MODEL_FACTORY);
 
         $post = static::factory()->post->create_and_get();
 
         $controller->initialize();
 
-        $postModel = $postModelFactory->__invoke($post->ID);
-
         $metaValues = [
-            PostMetaAbstract::EXPIRATION_STATUS => 'saved',
-            PostMetaAbstract::EXPIRATION_TIMESTAMP => '2050-12-31 23:59:59',
-            PostMetaAbstract::EXPIRATION_TYPE => 'trash',
-            PostMetaAbstract::EXPIRATION_TAXONOMY => 'category',
-            PostMetaAbstract::EXPIRATION_TERMS => '',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_STATUS] => 'saved',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TIMESTAMP] => '2050-12-31 23:59:59',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TYPE] => 'draft',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TAXONOMY] => 'category',
+            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TERMS] => '',
+            'invalid' => 'value',
         ];
 
         $metadataHash = md5(serialize($metaValues));
-        $postModel->updateMeta(ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
 
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_STATUS, $metaValues[PostMetaAbstract::EXPIRATION_STATUS]);
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TIMESTAMP, $metaValues[PostMetaAbstract::EXPIRATION_TIMESTAMP]);
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TYPE, 'draft');
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TAXONOMY, $metaValues[PostMetaAbstract::EXPIRATION_TAXONOMY]);
-        $postModel->updateMeta(PostMetaAbstract::EXPIRATION_TERMS, $metaValues[PostMetaAbstract::EXPIRATION_TERMS]);
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_STATUS], 'saved');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TIMESTAMP], '2050-12-31 23:59:59');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TYPE], 'draft');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TAXONOMY], 'category');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TERMS], '');
+        add_post_meta($post->ID, ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
+
+        global $wpdb;
+        $postMeta = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = %d",
+                $post->ID
+            )
+        );
 
         do_action('save_post', $post->ID, $post);
 
         $scheduler = $container->get(DIServicesAbstract::EXPIRATION_SCHEDULER);
         $actionIsSchedulled = $scheduler->postIsScheduled($post->ID);
 
-        $this->assertTrue($actionIsSchedulled);
+        $this->assertTrue($actionIsSchedulled, 'When flag exists but hash is invalid, the action should be scheduled');
+    }
+
+    public function testSchedulingIsExecutedWhenFlagDoesNotExist(): void
+    {
+        $this->enableMetaMappingForPost();
+
+        $container = Container::getInstance();
+        $controller = $container->get(ServicesAbstract::CONTROLLER_METADATA_MAPPING);
+
+        $post = static::factory()->post->create_and_get();
+
+        $controller->initialize();
+
+        add_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, '2050-12-31 23:59:59');
+        add_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TYPE, 'draft');
+        add_post_meta($post->ID, PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+
+        do_action('save_post', $post->ID, $post);
+
+        $scheduler = $container->get(DIServicesAbstract::EXPIRATION_SCHEDULER);
+        $actionIsSchedulled = $scheduler->postIsScheduled($post->ID);
+
+        $this->assertTrue($actionIsSchedulled, 'When flag does not exist, the action should be scheduled');
     }
 }

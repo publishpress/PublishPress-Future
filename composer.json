@@ -62,7 +62,9 @@
         "friendsofphp\/php-cs-fixer": "dev-master",
         "wp-cli\/wp-cli-bundle": "^2.10",
         "spatie/ray": "^1.41",
-        "rector/rector": "dev-main"
+        "rector/rector": "dev-main",
+        "vlucas/phpdotenv": "*",
+        "wp-cli/wp-cli": "*"
     },
     "scripts": {
         "build": "pbuild build",
@@ -134,24 +136,31 @@
         "dbox:list": "pdropbox list",
         "dbox:remove": "pdropbox remove",
         "dbox:unlink": "pdropbox unlink",
-        "tests:wp": "source .\/tests.env && wp --path=\"$WORDPRESS_ROOT_DIR\" \"$@\"",
-        "tests:clean": "vendor\/bin\/codecept clean",
-        "tests:link": "source .\/tests.env && if [ ! -L \"$WORDPRESS_ROOT_DIR\/wp-content\/plugins\/$PLUGIN_SLUG\" ]; then ln -s \"$PWD\" \"$WORDPRESS_ROOT_DIR\/wp-content\/plugins\/$PLUGIN_SLUG\"; fi",
-        "tests:activate": "source .\/tests.env && wp --path=\"$WORDPRESS_ROOT_DIR\" plugin activate $PLUGIN_SLUG\/${PLUGIN_SLUG}.php",
-        "tests:db-export": "source .\/tests.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db export .\/tests\/Support\/Data\/dump.sql",
-        "tests:db-import": "source .\/tests.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db import .\/tests\/Support\/Data\/dump.sql",
-        "tests:chromedriver": "source .\/tests.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT",
-        "tests:all": ".\/vendor\/bin\/codecept run",
-        "tests:integration": ".\/vendor\/bin\/codecept run Integration",
-        "tests:e2e": ".\/vendor\/bin\/codecept run EndToEnd",
-        "tests:unit": ".\/vendor\/bin\/codecept run Unit",
-        "test": ".\/vendor\/bin\/codecept run $@",
-        "codeception": ".\/vendor\/bin\/codecept $@",
-        "cleanup:docker": "docker system prune -f",
-        "cleanup:ray": "vendor/bin/rector process publishpress-future-pro.php src tests/EndToEnd tests/Integration tests/Unit --config vendor/spatie/ray/remove-ray-rector.php",
+
+        "tests:env": "bash dev-workspace/tests bootstrap",
+        "tests:chromedriver": "source .\/tests/.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT",
+
+        "tests:wp": "bash dev-workspace/scripts/tests-wp-cli.sh $@",
+        "tests:activate": "bash dev-workspace/scripts/tests-activate-plugin.sh $@",
+        "tests:db-export": "bash dev-workspace/scripts/tests-db-export.sh $@",
+        "tests:db-import": "bash dev-workspace/scripts/tests-db-import.sh $@",
+
+        "tests:up": "bash dev-workspace/tests up",
+        "tests:down": "bash dev-workspace/tests down",
+        "tests:stop": "bash dev-workspace/tests stop",
+        "tests:cleanup": "bash dev-workspace/tests cleanup",
+        "tests:info": "bash dev-workspace/tests info",
+        "tests:refresh": "bash dev-workspace/tests refresh",
+
+        "tests": "echo \"$WORDPRESS_DB_USER\"; .\/vendor\/bin\/codecept run $@",
+        "codecept": ".\/vendor\/bin\/codecept $@",
+
+        "docker:cleanup": "docker system prune -f",
+        "ray:cleanup": "vendor/bin/rector process publishpress-future-pro.php src tests/EndToEnd tests/Integration tests/Unit --config vendor/spatie/ray/remove-ray-rector.php",
         "info:versions": "bash .\/dev-workspace\/scripts\/info-versions.sh",
         "set:version": "php .\/dev-workspace\/scripts\/bump-version.php \"$@\"",
         "config:phpcs": "phpcs --config-set installed_paths \"..\/..\/phpcsstandards\/phpcsutils,..\/..\/phpcsstandards\/phpcsextra,..\/..\/automattic\/vipwpcs,..\/..\/phpcompatibility\/php-compatibility,..\/..\/sirbrillig\/phpcs-variable-analysis,..\/..\/publishpress\/publishpress-phpcs-standards\/standards,..\/..\/wp-coding-standards\/wpcs\"",
+
         "post-install-cmd": [
             "@config:phpcs"
         ],
