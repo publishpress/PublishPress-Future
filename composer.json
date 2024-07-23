@@ -28,7 +28,7 @@
             ]
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=7.2.5",
         "publishpress\/publishpress-future": "3.1.0.1"
