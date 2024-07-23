@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f967a3628ef2f9787746293b35f54f1",
+    "content-hash": "9091610911597f56877dc62573ac9dc1",
     "packages": [
         {
             "name": "publishpress/publishpress-future",
@@ -298,12 +298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "16621cca659537a7e70a50b3a82d4d221f1639b2"
+                "reference": "8d4f11db238ea65b911d75c751a65ddc1baa9a19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/16621cca659537a7e70a50b3a82d4d221f1639b2",
-                "reference": "16621cca659537a7e70a50b3a82d4d221f1639b2",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/8d4f11db238ea65b911d75c751a65ddc1baa9a19",
+                "reference": "8d4f11db238ea65b911d75c751a65ddc1baa9a19",
                 "shasum": ""
             },
             "require": {
@@ -321,12 +321,12 @@
                 "psy/psysh": "^0.11.2 || ^0.12",
                 "sebastian/comparator": "^4.0.5 || ^5.0 || ^6.0",
                 "sebastian/diff": "^4.0.3 || ^5.0 || ^6.0",
-                "symfony/console": ">=4.4.24 <8.0",
-                "symfony/css-selector": ">=4.4.24 <8.0",
-                "symfony/event-dispatcher": ">=4.4.24 <8.0",
-                "symfony/finder": ">=4.4.24 <8.0",
-                "symfony/var-dumper": ">=4.4.24 <8.0",
-                "symfony/yaml": ">=4.4.24 <8.0"
+                "symfony/console": ">=5.4.24 <8.0",
+                "symfony/css-selector": ">=5.4.24 <8.0",
+                "symfony/event-dispatcher": ">=5.4.24 <8.0",
+                "symfony/finder": ">=5.4.24 <8.0",
+                "symfony/var-dumper": ">=5.4.24 <8.0",
+                "symfony/yaml": ">=5.4.24 <8.0"
             },
             "conflict": {
                 "codeception/lib-innerbrowser": "<3.1.3",
@@ -347,8 +347,8 @@
                 "codeception/util-universalframework": "*@dev",
                 "ext-simplexml": "*",
                 "jetbrains/phpstorm-attributes": "^1.0",
-                "symfony/dotenv": ">=4.4.24 <8.0",
-                "symfony/process": ">=4.4.24 <8.0",
+                "symfony/dotenv": ">=5.4.24 <8.0",
+                "symfony/process": ">=5.4.24 <8.0",
                 "vlucas/phpdotenv": "^5.1"
             },
             "suggest": {
@@ -406,7 +406,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-07-10T18:16:13+00:00"
+            "time": "2024-07-23T13:17:19+00:00"
         },
         {
             "name": "codeception/lib-asserts",
@@ -3096,12 +3096,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mck89/peast.git",
-                "reference": "5d441a0475506d8bb5cacb45136032d56dd37517"
+                "reference": "645ec21b650bc2aced18285c85f220d22afc1430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mck89/peast/zipball/5d441a0475506d8bb5cacb45136032d56dd37517",
-                "reference": "5d441a0475506d8bb5cacb45136032d56dd37517",
+                "url": "https://api.github.com/repos/mck89/peast/zipball/645ec21b650bc2aced18285c85f220d22afc1430",
+                "reference": "645ec21b650bc2aced18285c85f220d22afc1430",
                 "shasum": ""
             },
             "require": {
@@ -3115,7 +3115,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.16.2-dev"
+                    "dev-master": "1.16.3-dev"
                 }
             },
             "autoload": {
@@ -3136,9 +3136,9 @@
             "description": "Peast is PHP library that generates AST for JavaScript code",
             "support": {
                 "issues": "https://github.com/mck89/peast/issues",
-                "source": "https://github.com/mck89/peast/tree/master"
+                "source": "https://github.com/mck89/peast/tree/v1.16.3"
             },
-            "time": "2024-07-10T06:22:18+00:00"
+            "time": "2024-07-23T14:00:32+00:00"
         },
         {
             "name": "mustache/mustache",
@@ -3815,12 +3815,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSExtra.git",
-                "reference": "6dcc44351983b9dbddf9012a3533804768ca4bbb"
+                "reference": "de3789a59ee046291bb196c03862c871a692dc75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/6dcc44351983b9dbddf9012a3533804768ca4bbb",
-                "reference": "6dcc44351983b9dbddf9012a3533804768ca4bbb",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSExtra/zipball/de3789a59ee046291bb196c03862c871a692dc75",
+                "reference": "de3789a59ee046291bb196c03862c871a692dc75",
                 "shasum": ""
             },
             "require": {
@@ -3886,7 +3886,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-04-24T13:22:43+00:00"
+            "time": "2024-07-23T06:25:32+00:00"
         },
         {
             "name": "phpcsstandards/phpcsutils",
@@ -4187,12 +4187,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a4b01df5e276c06364a976e434d6b4d4113fe824"
+                "reference": "f9561186f933d724b497d9080c8d3020a765e30f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a4b01df5e276c06364a976e434d6b4d4113fe824",
-                "reference": "a4b01df5e276c06364a976e434d6b4d4113fe824",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f9561186f933d724b497d9080c8d3020a765e30f",
+                "reference": "f9561186f933d724b497d9080c8d3020a765e30f",
                 "shasum": ""
             },
             "require": {
@@ -4238,7 +4238,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-21T14:22:48+00:00"
+            "time": "2024-07-23T20:41:38+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5301,12 +5301,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "49f8f205baa5de8741f8fa1a543ae0cb781f2ee5"
+                "reference": "892e2a056d9903358f01f0e700866b14cdbe5590"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/49f8f205baa5de8741f8fa1a543ae0cb781f2ee5",
-                "reference": "49f8f205baa5de8741f8fa1a543ae0cb781f2ee5",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/892e2a056d9903358f01f0e700866b14cdbe5590",
+                "reference": "892e2a056d9903358f01f0e700866b14cdbe5590",
                 "shasum": ""
             },
             "require": {
@@ -5386,7 +5386,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-15T21:18:28+00:00"
+            "time": "2024-07-22T21:31:36+00:00"
         },
         {
             "name": "react/cache",
@@ -5929,12 +5929,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "dd8c5b5f6df292b5ecf64bf5b82648781f8df73a"
+                "reference": "65dfd8cb761609ca398db8034dd84bd31e427435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/dd8c5b5f6df292b5ecf64bf5b82648781f8df73a",
-                "reference": "dd8c5b5f6df292b5ecf64bf5b82648781f8df73a",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/65dfd8cb761609ca398db8034dd84bd31e427435",
+                "reference": "65dfd8cb761609ca398db8034dd84bd31e427435",
                 "shasum": ""
             },
             "require": {
@@ -5981,7 +5981,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-22T22:19:14+00:00"
+            "time": "2024-07-23T21:21:50+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -7516,12 +7516,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "9e73d47881eac6f66b4992d9cc53a8e3396b0897"
+                "reference": "329ad21d895bb2c4b7aacdb2b70b3c938a855823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/9e73d47881eac6f66b4992d9cc53a8e3396b0897",
-                "reference": "9e73d47881eac6f66b4992d9cc53a8e3396b0897",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/329ad21d895bb2c4b7aacdb2b70b3c938a855823",
+                "reference": "329ad21d895bb2c4b7aacdb2b70b3c938a855823",
                 "shasum": ""
             },
             "require": {
@@ -7589,7 +7589,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-07-21T23:52:43+00:00"
+            "time": "2024-07-23T06:11:24+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -7665,12 +7665,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "c091304e62ad137bd6a43ea06046491460d2f2ca"
+                "reference": "fd6121840d8730a906d4b52ce7b47c44cf92d7d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/c091304e62ad137bd6a43ea06046491460d2f2ca",
-                "reference": "c091304e62ad137bd6a43ea06046491460d2f2ca",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/fd6121840d8730a906d4b52ce7b47c44cf92d7d6",
+                "reference": "fd6121840d8730a906d4b52ce7b47c44cf92d7d6",
                 "shasum": ""
             },
             "require": {
@@ -7754,7 +7754,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-17T08:06:34+00:00"
+            "time": "2024-07-22T14:54:13+00:00"
         },
         {
             "name": "symfony/cache-contracts",
