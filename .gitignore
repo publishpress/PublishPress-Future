@@ -53,3 +53,4 @@ report.csv
 /tests/_wordpress
 version.txt
 tests.env
+rector.php

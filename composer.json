@@ -60,7 +60,9 @@
         "sirbrillig\/phpcs-variable-analysis": "^2.11",
         "wp-coding-standards\/wpcs": "^3",
         "friendsofphp\/php-cs-fixer": "dev-master",
-        "wp-cli\/wp-cli-bundle": "^2.10"
+        "wp-cli\/wp-cli-bundle": "^2.10",
+        "spatie/ray": "^1.41",
+        "rector/rector": "dev-main"
     },
     "scripts": {
         "build": "pbuild build",
@@ -145,7 +147,8 @@
         "tests:unit": ".\/vendor\/bin\/codecept run Unit",
         "test": ".\/vendor\/bin\/codecept run $@",
         "codeception": ".\/vendor\/bin\/codecept $@",
-        "docker:cleanup": "docker system prune -f",
+        "cleanup:docker": "docker system prune -f",
+        "cleanup:ray": "vendor/bin/rector process publishpress-future-pro.php src tests/EndToEnd tests/Integration tests/Unit --config vendor/spatie/ray/remove-ray-rector.php",
         "info:versions": "bash .\/dev-workspace\/scripts\/info-versions.sh",
         "set:version": "php .\/dev-workspace\/scripts\/bump-version.php \"$@\"",
         "config:phpcs": "phpcs --config-set installed_paths \"..\/..\/phpcsstandards\/phpcsutils,..\/..\/phpcsstandards\/phpcsextra,..\/..\/automattic\/vipwpcs,..\/..\/phpcompatibility\/php-compatibility,..\/..\/sirbrillig\/phpcs-variable-analysis,..\/..\/publishpress\/publishpress-phpcs-standards\/standards,..\/..\/wp-coding-standards\/wpcs\"",
