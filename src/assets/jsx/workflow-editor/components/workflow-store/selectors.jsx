@@ -201,3 +201,15 @@ export function getDraggingFromHandle(state) {
 export function isConnectingNodes(state) {
     return !!state.isConnectingNodes;
 }
+
+export function getRayDebugShowQueries(state) {
+    return state.rayDebug.showQueries;
+}
+
+export function getRayDebugShowEmails(state) {
+    return state.rayDebug.showEmails;
+}
+
+export function getRayDebugShowWordPressErrors(state) {
+    return state.rayDebug.showWordPressErrors;
+}

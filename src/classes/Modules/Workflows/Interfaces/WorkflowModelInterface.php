@@ -36,6 +36,18 @@ interface WorkflowModelInterface
 
     public function setScreenshotFromFile(string $filePath);
 
+    public function setDebugRayShowQueries(bool $debugRayShowQueries);
+
+    public function setDebugRayShowEmails(bool $debugRayShowEmails);
+
+    public function setDebugRayShowWordPressErrors(bool $debugRayShowWordPressErrors);
+
+    public function isDebugRayShowQueriesEnabled(): bool;
+
+    public function isDebugRayShowEmailsEnabled(): bool;
+
+    public function isDebugRayShowWordPressErrorsEnabled(): bool;
+
     public function createNew($reuseAutoDraft = true): int;
 
     public function getTriggerNodes(): array;

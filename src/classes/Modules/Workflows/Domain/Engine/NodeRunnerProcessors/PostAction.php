@@ -115,4 +115,8 @@ class PostAction implements NodeRunnerProcessorInterface
             $contextVariables
         );
     }
+
+    public function triggerCallbackIsRunning(array $contextVariables): void {
+        $this->generalNodeRunnerProcessor->triggerCallbackIsRunning($contextVariables);
+    }
 }

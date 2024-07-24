@@ -8,12 +8,13 @@ import { SettingsHeader } from './settings-header';
 import { __ } from '@wordpress/i18n';
 import {
     SLOT_SCOPE_WORKFLOW_EDITOR,
-    FEATURE_ADVANCED_SETTINGS
+    FEATURE_DEVELOPER_MODE
 } from '../../constants';
 import { SIDEBAR_WORKFLOW, SIDEBAR_NODE_EDGE } from './constants';
 import { WorkflowSummary } from '../workflow-summary';
 import { NodeInspector } from '../node-inspector';
 import { store as editorStore } from '../editor-store';
+import WorkflowDebugRayPanel from '../workflow-debug-ray-panel';
 
 
 const SIDEBAR_ACTIVE_BY_DEFAULT = Platform.select({
@@ -33,10 +34,12 @@ export const SettingsSidebar = () => {
     });
 
     const {
-        isAdvancedSettingsEnabled,
+        isDeveloperModeEnabled,
+        isRayDebugInstalled,
     } = useSelect((select) => {
         return {
-            isAdvancedSettingsEnabled: select(editorStore).isFeatureActive(FEATURE_ADVANCED_SETTINGS),
+            isDeveloperModeEnabled: select(editorStore).isFeatureActive(FEATURE_DEVELOPER_MODE),
+            isRayDebugInstalled: select(editorStore).isRayDebugInstalled(),
         };
     });
 
@@ -56,6 +59,11 @@ export const SettingsSidebar = () => {
             {sidebarName === SIDEBAR_WORKFLOW && (
                 <>
                     <WorkflowSummary />
+                    {isDeveloperModeEnabled && isRayDebugInstalled && (
+                        <>
+                            <WorkflowDebugRayPanel />
+                        </>
+                    )}
                 </>
             )}
             {sidebarName === SIDEBAR_NODE_EDGE && (

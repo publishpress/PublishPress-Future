@@ -97,6 +97,7 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             'update' => new BooleanResolver($update),
         ];
 
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
         $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);
     }
 }

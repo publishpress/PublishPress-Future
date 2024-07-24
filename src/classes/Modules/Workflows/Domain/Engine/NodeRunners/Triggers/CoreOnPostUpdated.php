@@ -95,6 +95,7 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             'postAfter' => new PostResolver($postAfter),
         ];
 
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
         $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);
     }
 }

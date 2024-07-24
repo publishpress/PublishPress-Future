@@ -368,6 +368,9 @@ export const store = createReduxStore(STORE_NAME, {
             const allNodes = state.triggerNodes.concat(state.actionNodes, state.advancedNodes);
             return allNodes.find((n) => n.name === nodeName) || {};
         },
+        isRayDebugInstalled(state) {
+            return state.advancedNodes.some((node) => node.name === "advanced/ray.debug");
+        }
     },
 });
 

@@ -4,7 +4,7 @@ import { STORE_NAME } from './name';
 import { apiUrl, nonce } from 'future-workflow-editor';
 import { __ } from '@wordpress/i18n';
 
-const editableAttributes = ['title', 'description', 'flow', 'status'];
+const editableAttributes = ['title', 'description', 'flow', 'status', 'debugRayShowQueries', 'debugRayShowEmails', 'debugRayShowWordPressErrors'];
 
 export function* setupEditor(workflowId) {
     yield {type: 'LOAD_WORKFLOW_START'};

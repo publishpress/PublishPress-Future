@@ -139,6 +139,20 @@ class RestApiV1 implements RestApiManagerInterface
         );
     }
 
+    private function getWorkflowForResponse(WorkflowModel $workflowModel)
+    {
+        return [
+            'id' => $workflowModel->getId(),
+            'title' => $workflowModel->getTitle(),
+            'description' => $workflowModel->getDescription(),
+            'flow' => $workflowModel->getFlow(),
+            'status' => $workflowModel->getStatus(),
+            'debugRayShowQueries' => $workflowModel->isDebugRayShowQueriesEnabled(),
+            'debugRayShowEmails' => $workflowModel->isDebugRayShowEmailsEnabled(),
+            'debugRayShowWordPressErrors' => $workflowModel->isDebugRayShowWordPressErrorsEnabled(),
+        ];
+    }
+
     public function getWorkflow($request)
     {
         $id = (int) $request['id'];
@@ -154,13 +168,7 @@ class RestApiV1 implements RestApiManagerInterface
             );
         }
 
-        return rest_ensure_response([
-            'id' => $workflowModel->getId(),
-            'title' => $workflowModel->getTitle(),
-            'description' => $workflowModel->getDescription(),
-            'flow' => $workflowModel->getFlow(true),
-            'status' => $workflowModel->getStatus(),
-        ]);
+        return rest_ensure_response($this->getWorkflowForResponse($workflowModel));
     }
 
     public function createWorkflow($request)
@@ -168,13 +176,7 @@ class RestApiV1 implements RestApiManagerInterface
         $workflowModel = new WorkflowModel();
         $workflowModel->createNew();
 
-        return rest_ensure_response([
-            'id' => $workflowModel->getId(),
-            'title' => $workflowModel->getTitle(),
-            'description' => $workflowModel->getDescription(),
-            'flow' => $workflowModel->getFlow(),
-            'status' => $workflowModel->getStatus(),
-        ]);
+        return rest_ensure_response($this->getWorkflowForResponse($workflowModel));
     }
 
     public function updateWorkflow($request)
@@ -212,15 +214,21 @@ class RestApiV1 implements RestApiManagerInterface
             $workflowModel->setScreenshotFromBase64($request['screenshot']);
         }
 
+        if (isset($request['debugRayShowQueries'])) {
+            $workflowModel->setDebugRayShowQueries($request['debugRayShowQueries']);
+        }
+
+        if (isset($request['debugRayShowEmails'])) {
+            $workflowModel->setDebugRayShowEmails($request['debugRayShowEmails']);
+        }
+
+        if (isset($request['debugRayShowWordPressErrors'])) {
+            $workflowModel->setDebugRayShowWordPressErrors($request['debugRayShowWordPressErrors']);
+        }
+
         $workflowModel->save();
 
-        return rest_ensure_response([
-            'id' => $workflowModel->getId(),
-            'title' => $workflowModel->getTitle(),
-            'description' => $workflowModel->getDescription(),
-            'flow' => $workflowModel->getFlow(),
-            'status' => $workflowModel->getStatus(),
-        ]);
+        return rest_ensure_response($this->getWorkflowForResponse($workflowModel));
     }
 
     public function deleteWorkflow($request)

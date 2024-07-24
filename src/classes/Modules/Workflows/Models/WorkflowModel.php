@@ -24,6 +24,12 @@ class WorkflowModel implements WorkflowModelInterface
 
     public const META_KEY_HAS_MANUAL_TRIGGER = '_pp_workflow_has_manual_trigger';
 
+    public const META_KEY_DEBUG_RAY_SHOW_QUERIES = '_pp_workflow_debug_ray_show_queries';
+
+    public const META_KEY_DEBUG_RAY_SHOW_EMAILS = '_pp_workflow_debug_ray_show_emails';
+
+    public const META_KEY_DEBUG_RAY_SHOW_WORDPRESS_ERRORS = '_pp_workflow_debug_ray_show_wordpress_errors';
+
     public const STATUS_ENABLED = 'publish';
 
     public const STATUS_DISABLED = 'draft';
@@ -40,6 +46,12 @@ class WorkflowModel implements WorkflowModelInterface
     private $hasManualSelectionTrigger = null;
 
     private $allNodeTypes = null;
+
+    private $debugRayShowQueries = null;
+
+    private $debugRayShowEmails = null;
+
+    private $debugRayShowWordPressErrors = null;
 
     public function load(int $id): bool
     {
@@ -63,6 +75,9 @@ class WorkflowModel implements WorkflowModelInterface
         $this->hasLegacyActionTrigger = null;
         $this->hasManualSelectionTrigger = null;
         $this->allNodeTypes = null;
+        $this->debugRayShowEmails = null;
+        $this->debugRayShowQueries = null;
+        $this->debugRayShowWordPressErrors = null;
     }
 
     public function getId(): int
@@ -127,6 +142,13 @@ class WorkflowModel implements WorkflowModelInterface
         }
     }
 
+    private function updateDebugRayMetadata()
+    {
+        update_post_meta($this->post->ID, self::META_KEY_DEBUG_RAY_SHOW_QUERIES, $this->debugRayShowQueries ? '1' : '0');
+        update_post_meta($this->post->ID, self::META_KEY_DEBUG_RAY_SHOW_EMAILS, $this->debugRayShowEmails ? '1' : '0');
+        update_post_meta($this->post->ID, self::META_KEY_DEBUG_RAY_SHOW_WORDPRESS_ERRORS, $this->debugRayShowWordPressErrors ? '1' : '0');
+    }
+
     public function getModifiedAt(): string
     {
         return $this->post->post_modified;
@@ -138,6 +160,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         $this->updateLegacyActionMetadata();
         $this->updateManualSelectionMetadata();
+        $this->updateDebugRayMetadata();
     }
 
     public function delete()
@@ -522,5 +545,41 @@ class WorkflowModel implements WorkflowModelInterface
     public function getNodeExecutionCount(string $nodeId): int
     {
         return (int) get_post_meta($this->post->ID, self::META_KEY_PREFIX_NODE_EXECUTION_COUNT . $nodeId, true);
+    }
+
+    public function setDebugRayShowQueries(bool $debugRayShowQueries) {
+        $this->debugRayShowQueries = $debugRayShowQueries;
+    }
+
+    public function setDebugRayShowEmails(bool $debugRayShowEmails) {
+        $this->debugRayShowEmails = $debugRayShowEmails;
+    }
+
+    public function setDebugRayShowWordPressErrors(bool $debugRayShowWordPressErrors) {
+        $this->debugRayShowWordPressErrors = $debugRayShowWordPressErrors;
+    }
+
+    public function isDebugRayShowQueriesEnabled(): bool {
+        if (null === $this->debugRayShowQueries) {
+            $this->debugRayShowQueries = get_post_meta($this->post->ID, self::META_KEY_DEBUG_RAY_SHOW_QUERIES, true) === '1';
+        }
+
+        return $this->debugRayShowQueries;
+    }
+
+    public function isDebugRayShowEmailsEnabled(): bool {
+        if (null === $this->debugRayShowEmails) {
+            $this->debugRayShowEmails = get_post_meta($this->post->ID, self::META_KEY_DEBUG_RAY_SHOW_EMAILS, true) === '1';
+        }
+
+        return $this->debugRayShowEmails;
+    }
+
+    public function isDebugRayShowWordPressErrorsEnabled(): bool {
+        if (null === $this->debugRayShowWordPressErrors) {
+            $this->debugRayShowWordPressErrors = get_post_meta($this->post->ID, self::META_KEY_DEBUG_RAY_SHOW_WORDPRESS_ERRORS, true) === '1';
+        }
+
+        return $this->debugRayShowWordPressErrors;
     }
 }

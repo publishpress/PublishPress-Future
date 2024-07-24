@@ -6,6 +6,7 @@ use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 
 use function PublishPress\FuturePro\logError;
 
@@ -125,5 +126,39 @@ class GeneralAction implements NodeRunnerProcessorInterface
         }
 
         return $variable;
+    }
+
+    private function isWordPressRayInstalled(): bool
+    {
+        return class_exists('Spatie\\WordPressRay\\Ray');
+    }
+
+    private function activateGlobalRayDebug(array $contextVariables): void
+    {
+        if (! $this->isWordPressRayInstalled()) {
+            return;
+        }
+
+        $workflowId = $this->variablesHandler->parseNestedVariableValue('global.workflow.id', $contextVariables);
+
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($workflowId);
+
+        if ($workflowModel->isDebugRayShowQueriesEnabled()) {
+            ray()->showQueries();
+        }
+
+        if ($workflowModel->isDebugRayShowEmailsEnabled()) {
+            ray()->showMails();
+        }
+
+        if ($workflowModel->isDebugRayShowWordPressErrorsEnabled()) {
+            ray()->showWordPressErrors();
+        }
+    }
+
+    public function triggerCallbackIsRunning(array $contextVariables): void
+    {
+        $this->activateGlobalRayDebug($contextVariables);
     }
 }

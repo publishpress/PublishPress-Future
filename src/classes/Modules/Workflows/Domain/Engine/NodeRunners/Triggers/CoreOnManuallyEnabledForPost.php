@@ -102,6 +102,7 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
             'post' => new PostResolver($post),
         ];
 
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
         $this->nodeRunnerProcessor->runNextSteps($this->step, $contextVariables);
     }
 }

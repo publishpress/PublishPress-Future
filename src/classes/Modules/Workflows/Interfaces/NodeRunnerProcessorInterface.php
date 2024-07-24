@@ -21,4 +21,6 @@ interface NodeRunnerProcessorInterface
     public function getWorkflowIdFromContextVariables(array $contextVariables);
 
     public function logError(string $message, int $workflowId, array $step);
+
+    public function triggerCallbackIsRunning(array $contextVariables): void;
 }

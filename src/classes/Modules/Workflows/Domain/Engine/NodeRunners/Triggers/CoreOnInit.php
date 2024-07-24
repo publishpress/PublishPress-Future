@@ -53,6 +53,7 @@ class CoreOnInit implements NodeTriggerRunnerInterface
 
     public function triggerCallback()
     {
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
         $this->nodeRunnerProcessor->runNextSteps($this->step, $this->contextVariables);
     }
 }
