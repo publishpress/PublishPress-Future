@@ -181,3 +181,32 @@ To confirm the site URL, you can run the following command:
 ```bash
 composer tests:info
 ```
+
+## Troubleshooting
+
+
+### Can't access the test site
+
+After running Integration tests and trying to access the test site URL, you may encounter issue logging in in the admin.
+Also the frontend of the test site will be unasseccible. This is because the Integration tests change the DB structure.
+You can easily fix this by running the following command:
+
+```bash
+composer tests:db-import
+```
+
+This will import the database from `tests/Support/Data/dump.sql` and you will be able to access the test site again.
+
+### Connection refused while creating PDO connection
+
+If you try to run tests and you see the error:
+
+```text
+Db: SQLSTATE[HY000] [2002] Connection refused while creating PDO connection
+```
+
+That happens for different reasons:
+
+1. The database container is not running or is not ready. You can check it by running `composer tests:info`.
+2. The database connection information is incorrect. You can manually check the connection information in the `tests/.env` file, or delete it and recreate the file by running `composer tests:env`.
+3. You're running the tests commands inside the `dev-workspace` terminal. You should run the tests commands outside the `dev-workspace` terminal.
