@@ -77,6 +77,10 @@ try {
     define('PUBLISHPRESS_FUTURE_LOADED_BY_PRO', true);
     define('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES', true);
 
+    if (! defined('PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL')) {
+        define('PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL', false);
+    }
+
     require_once __DIR__ . '/src/includes/free-plugin-launcher.php';
 
     add_action('init', function () {

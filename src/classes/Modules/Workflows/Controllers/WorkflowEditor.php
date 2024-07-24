@@ -217,6 +217,7 @@ class WorkflowEditor implements InitializableInterface
                 "postStatuses" => $postStatuses,
                 "taxonomies" => $taxonomies,
                 "welcomeGuidePages" => $this->getWelcomeGuidePages(),
+                "isExperimentalFeaturesEnabled" => PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL,
             ]
         );
     }
