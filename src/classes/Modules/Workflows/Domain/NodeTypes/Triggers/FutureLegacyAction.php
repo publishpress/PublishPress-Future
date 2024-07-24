@@ -83,23 +83,7 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function getSettingsSchema(): array
     {
-        return [
-            [
-                "label" => __("Settings", "publishpress-future-pro"),
-                "description" => __("Settings for the trigger.", "publishpress-future-pro"),
-                "fields" => [
-                    [
-                        "name" => "futureActionLabel",
-                        "type" => "text",
-                        "label" => __("Future Action Label", "publishpress-future-pro"),
-                        "description" => __(
-                            "The label of the option in the Future Actions list.",
-                            "publishpress-future-pro"
-                        ),
-                    ],
-                ]
-            ],
-        ];
+        return [];
     }
 
     public function getValidationSchema(): array
