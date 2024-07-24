@@ -48,7 +48,7 @@ class CoreOnInit implements NodeTriggerRunnerInterface
         $this->step = $step;
         $this->contextVariables = $contextVariables;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_INIT, [$this, 'triggerCallback'], 10);
+        $this->hooks->addAction(HooksAbstract::ACTION_INIT, [$this, 'triggerCallback'], 13);
     }
 
     public function triggerCallback()
