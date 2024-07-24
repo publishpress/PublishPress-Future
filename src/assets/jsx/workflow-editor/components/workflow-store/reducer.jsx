@@ -148,6 +148,8 @@ const loadWorkflowSuccess = (state, action) => {
 
     state = _setInitialStateForGlobalVariables(state, payload);
 
+    unselectAll();
+
     return {
         ...state,
         isLoadingWorkflow: false,
@@ -413,6 +415,8 @@ const setSelectedEdges = (state, action) => {
 }
 
 const unselectAll = (state, action) => {
+    setTimeout(() => jQuery('.react-flow__pane').click(), 200);
+
     return {
         ...state,
         selectedNodes: [],
