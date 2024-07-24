@@ -46,11 +46,12 @@ class MetadataMappingControllerTest extends WPTestCase
         $controller->initialize();
 
         $metaValues = [
-            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_STATUS] => 'saved',
-            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TIMESTAMP] => '2050-12-31 23:59:59',
-            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TYPE] => 'draft',
-            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TAXONOMY] => 'category',
-            $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TERMS] => '',
+            '2050-12-31 23:59:59', // timestamp
+            'saved', // status
+            'draft', // type
+            'draft', // new status
+            'category', // taxonomy
+            [], // terms
         ];
 
         $metadataHash = md5(serialize($metaValues));
@@ -61,6 +62,11 @@ class MetadataMappingControllerTest extends WPTestCase
         add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TAXONOMY], 'category');
         add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TERMS], '');
         add_post_meta($post->ID, ExpirablePostModel::FLAG_METADATA_HASH, $metadataHash);
+
+        $scheduler = $container->get(DIServicesAbstract::EXPIRATION_SCHEDULER);
+        $actionIsSchedulled = $scheduler->postIsScheduled($post->ID);
+
+        $this->assertFalse($actionIsSchedulled, 'Checking if the action is not yet scheduled');
 
         do_action('save_post', $post->ID, $post);
 
@@ -126,9 +132,9 @@ class MetadataMappingControllerTest extends WPTestCase
 
         $controller->initialize();
 
-        add_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TIMESTAMP, '2050-12-31 23:59:59');
-        add_post_meta($post->ID, PostMetaAbstract::EXPIRATION_TYPE, 'draft');
-        add_post_meta($post->ID, PostMetaAbstract::EXPIRATION_STATUS, 'saved');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_STATUS], 'saved');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TIMESTAMP], '2050-12-31 23:59:59');
+        add_post_meta($post->ID, $this->metadataMap['post'][PostMetaAbstract::EXPIRATION_TYPE], 'draft');
 
         do_action('save_post', $post->ID, $post);
 
