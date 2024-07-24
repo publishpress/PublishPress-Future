@@ -33,6 +33,8 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\IfElse;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnSavePost;
@@ -295,6 +297,24 @@ return [
 
             switch ($nodeName) {
                 // Triggers
+                case CoreOnInit::getNodeTypeName():
+                    if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL) {
+                        $nodeRunner = new CoreOnInit(
+                            $container->get(ServicesAbstract::HOOKS),
+                            $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+                        );
+                    }
+                    break;
+
+                case CoreOnAdminInit::getNodeTypeName():
+                    if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL) {
+                        $nodeRunner = new CoreOnAdminInit(
+                            $container->get(ServicesAbstract::HOOKS),
+                            $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+                        );
+                    }
+                    break;
+
                 case CoreOnSavePost::getNodeTypeName():
                     $nodeRunner = new CoreOnSavePost(
                         $container->get(ServicesAbstract::HOOKS),

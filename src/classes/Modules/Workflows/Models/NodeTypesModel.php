@@ -15,6 +15,8 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEm
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnSavePost;
@@ -174,6 +176,11 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreOnManuallyEnabledForPost::getNodeTypeName() => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
         ];
+
+        if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL) {
+            $nodesInstances[CoreOnInit::getNodeTypeName()] = new CoreOnInit();
+            $nodesInstances[CoreOnAdminInit::getNodeTypeName()] = new CoreOnAdminInit();
+        }
 
         return $nodesInstances;
     }
