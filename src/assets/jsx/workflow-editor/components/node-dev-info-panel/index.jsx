@@ -3,7 +3,7 @@ import { __ } from "@wordpress/i18n";
 import PersistentPanelBody from "../persistent-panel-body";
 import { lazy, Suspense } from "@wordpress/element";
 
-const ReactJson = lazy(() => import('react-json-view'));
+const ReactJson = lazy(() => import('@microlink/react-json-view'));
 
 export function NodeDevInfoPanel({node, nodeType}) {
     const reactJSONParams = {
