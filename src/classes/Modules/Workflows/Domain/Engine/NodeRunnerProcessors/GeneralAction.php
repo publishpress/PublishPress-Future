@@ -145,14 +145,17 @@ class GeneralAction implements NodeRunnerProcessorInterface
         $workflowModel->load($workflowId);
 
         if ($workflowModel->isDebugRayShowQueriesEnabled()) {
+            // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
             ray()->showQueries();
         }
 
         if ($workflowModel->isDebugRayShowEmailsEnabled()) {
+            // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
             ray()->showMails();
         }
 
         if ($workflowModel->isDebugRayShowWordPressErrorsEnabled()) {
+            // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
             ray()->showWordPressErrors();
         }
     }
