@@ -313,6 +313,14 @@ export const FlowEditor = (props) => {
     });
 
     const onAutoLayout = useCallback(() => {
+        createSuccessNotice(
+            __('Applying auto layout.', 'publishpress-future-pro'),
+            {
+                isDismissible: true,
+                type: 'snackbar'
+            }
+        )
+
         import("./auto-layout/elk").then(({ useLayoutedElements }) => {
             const applyLayout = useLayoutedElements({
                 nodes,
