@@ -22,55 +22,55 @@ msgstr "Prima possibile"
 msgid "On a specific date"
 msgstr "In una data specifica"
 
-#: components/data-fields/date-offset.jsx:91
+#: components/data-fields/date-offset.jsx:92
 msgid "Non-repeating"
 msgstr "Non ripetibile"
 
-#: components/data-fields/date-offset.jsx:92
+#: components/data-fields/date-offset.jsx:93
 msgid "Custom interval in seconds"
 msgstr "Intervallo personalizzato in secondi"
 
-#: components/data-fields/date-offset.jsx:97
+#: components/data-fields/date-offset.jsx:98
 msgid "Forever"
 msgstr "Per sempre"
 
-#: components/data-fields/date-offset.jsx:98
+#: components/data-fields/date-offset.jsx:99
 msgid "Specific date"
 msgstr "Data specifica"
 
-#: components/data-fields/date-offset.jsx:99
+#: components/data-fields/date-offset.jsx:100
 msgid "For a number of times"
 msgstr "Per un numero di volte"
 
-#: components/data-fields/date-offset.jsx:121
+#: components/data-fields/date-offset.jsx:122
 msgid "When to run"
 msgstr "Quando eseguire"
 
-#: components/data-fields/date-offset.jsx:130
+#: components/data-fields/date-offset.jsx:131
 msgid "Date source"
 msgstr "Fonte della data"
 
-#: components/data-fields/date-offset.jsx:146
+#: components/data-fields/date-offset.jsx:147
 msgid "Offset"
 msgstr "Offset"
 
-#: components/data-fields/date-offset.jsx:181
+#: components/data-fields/date-offset.jsx:182
 msgid "Repeating Action"
 msgstr "Azione ripetibile"
 
-#: components/data-fields/date-offset.jsx:189
+#: components/data-fields/date-offset.jsx:190
 msgid "Interval in seconds"
 msgstr "Intervalllo in secondi"
 
-#: components/data-fields/date-offset.jsx:198
+#: components/data-fields/date-offset.jsx:199
 msgid "Repeat until"
 msgstr "Ripeti fino a"
 
-#: components/data-fields/date-offset.jsx:206
+#: components/data-fields/date-offset.jsx:207
 msgid "Times to repeat"
 msgstr "Volte da ripetere"
 
-#: components/data-fields/date-offset.jsx:232
+#: components/data-fields/date-offset.jsx:233
 msgid "Priority"
 msgstr "Priorità"
 
@@ -434,12 +434,12 @@ msgstr "Flusso di lavoro"
 msgid "Element"
 msgstr "Elemento"
 
-#: components/settings-sidebar/settings-sidebar.jsx:47
+#: components/settings-sidebar/settings-sidebar.jsx:50
 msgid "Close settings"
 msgstr "Chiudi impostazioni"
 
 #. translators: button label text should, if possible, be under 16 characters.
-#: components/settings-sidebar/settings-sidebar.jsx:51
+#: components/settings-sidebar/settings-sidebar.jsx:54
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -645,15 +645,15 @@ msgstr ""
 msgid "This step does not output any data."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:223
+#: components/data-fields/date-offset.jsx:224
 msgid "Prevent duplicate scheduling"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:226
+#: components/data-fields/date-offset.jsx:227
 msgid "If enabled, the step will prevent the step from being accidentally scheduled multiple times."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:235
+#: components/data-fields/date-offset.jsx:236
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
 msgstr ""
 
@@ -669,48 +669,48 @@ msgstr ""
 msgid "Unable to create a new workflow. Please try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:52
+#: components/workflow-store/actions.jsx:48
 msgid "Unable to load the workflow. Please try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:90
+#: components/workflow-store/actions.jsx:86
 msgid "Workflow saved as draft."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:98
-#: components/workflow-store/actions.jsx:135
+#: components/workflow-store/actions.jsx:94
+#: components/workflow-store/actions.jsx:131
 msgid "Unable to save workflow. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:127
+#: components/workflow-store/actions.jsx:123
 msgid "Workflow saved."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:172
+#: components/workflow-store/actions.jsx:168
 msgid "Workflow published."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:180
+#: components/workflow-store/actions.jsx:176
 msgid "Unable to publish the workflow. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:217
+#: components/workflow-store/actions.jsx:213
 msgid "Workflow switched to draft."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:225
+#: components/workflow-store/actions.jsx:221
 msgid "Unable to switch workflow to draft. Please, try again."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:315
+#: components/workflow-store/actions.jsx:311
 msgid "Workflow deleted. Redirecting..."
 msgstr ""
 
-#: components/workflow-store/actions.jsx:326
+#: components/workflow-store/actions.jsx:322
 msgid "Unable to delete the workflow. Please, try again."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:160
+#: components/data-fields/date-offset.jsx:161
 msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""
 
@@ -732,4 +732,28 @@ msgstr ""
 
 #: components/secondary-sidebar/tips.jsx:26
 msgid "Easily add new steps by clicking on a step's handle and dragging it. Drop it in the workflow pane to see a floating inserter where you can type and search for the step you need."
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:79
+msgid "When the step is activated"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:47
+msgid "Ray Debug"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:52
+msgid "Enable or disable the different types of debug information that is shown in Ray when this workflow is activated."
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:56
+msgid "Show Queries"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:63
+msgid "Show Emails"
+msgstr ""
+
+#: components/workflow-debug-ray-panel/index.jsx:70
+msgid "Show WordPress Errors"
 msgstr ""

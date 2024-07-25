@@ -210,6 +210,11 @@ class CoreSchedule implements NodeRunnerInterface
                 if ($dateSource === 'calendar') {
                     $timestamp = strtotime($scheduleSettings['specificDate']);
                 } elseif ($dateSource === 'event') {
+                    $timestamp = $this->variablesHandler->parseNestedVariableValue(
+                        'global.trigger.activation_timestamp',
+                        $contextVariables
+                    );
+                } elseif ($dateSource === 'step') {
                     $timestamp = time();
                 } else {
                     $timestamp = $this->variablesHandler->parseNestedVariableValue(

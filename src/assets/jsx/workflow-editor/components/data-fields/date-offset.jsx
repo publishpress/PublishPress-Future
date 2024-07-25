@@ -76,6 +76,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     const dateSourceOptions = [
         { name: __("Selected in the calendar", "publishpress-future-pro"), id: "calendar" },
         { name: __("When the trigger is activated", "publishpress-future-pro"), id: "event"},
+        { name: __("When the step is activated", "publishpress-future-pro"), id: "step"},
         ...variables
     ];
 
