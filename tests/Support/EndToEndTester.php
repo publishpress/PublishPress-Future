@@ -104,4 +104,28 @@ class EndToEndTester extends \Codeception\Actor
 
         return $files;
     }
+
+    public function amOnWorkflowsListPage(): void
+    {
+        $this->amOnAdminPage('edit.php?post_type=ppfuture_workflow');
+    }
+
+    public function amOnWorkflowEditorPageWithSampleWorkflow(
+        $title = 'Testing Workflow',
+        $description = 'A workflow for tests'
+    ): void {
+        $this->amOnAdminPage('edit.php?post_type=ppfuture_workflow');
+        $this->amOnWorkflowEditorPage(0);
+        $this->wait(0.2);
+
+        // Change the title and description
+        $this->fillField('.editor-post-title__panel input', $title);
+        $this->seeInField('.editor-post-title__panel input', $title);
+        $this->fillField('.editor-post-description__panel textarea', $description);
+        $this->seeInField('.editor-post-description__panel textarea', $description);
+
+        // Add a trigger node
+        $this->click('.react-flow__node-triggerPlaceholderNode');
+        $this->click('Post is saved');
+    }
 }
