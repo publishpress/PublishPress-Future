@@ -148,6 +148,8 @@
         "tests:clean": "bash dev-workspace/scripts/tests-env.sh cleanup",
         "tests:info": "bash dev-workspace/scripts/tests-env.sh info",
         "tests:refresh": "bash dev-workspace/scripts/tests-env.sh refresh",
+        "tests:snippets": "composer codecept gherkin:snippets $@",
+        "tests:steps": "composer codecept gherkin:steps $@",
         "test": ".\/vendor\/bin\/codecept run $@",
         "codecept": ".\/vendor\/bin\/codecept $@",
         "docker:cleanup": "docker system prune -f",
@@ -223,6 +225,8 @@
         "tests:stop": "Stops the test environment.",
         "tests:up": "Starts the test environment.",
         "tests:wp": "Runs WP-CLI commands within the context of the test environment.",
+        "tests:snippets": "Show all the gherkin snippets that are not implemented.",
+        "tests:steps": "Show all the gherkin steps for the suite.",
         "test": "Runs tests with custom arguments or specific files.",
         "watch:js": "Watches the JavaScript files for changes."
     },
