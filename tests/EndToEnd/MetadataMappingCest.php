@@ -6,7 +6,7 @@ use Tests\Support\EndToEndTester;
 
 class MetadatamappingCest
 {
-    public function test_action_is_scheduled_using_unfiltered_metadata(EndToEndTester $I): void
+    public function testActionIsScheduledUsingUnfilteredMetadata(EndToEndTester $I): void
     {
         $I->loginAsAdmin();
 

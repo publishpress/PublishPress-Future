@@ -23,15 +23,18 @@ class WorkflowScreenshotsCest
         $I->click('Save draft');
         $I->wait(1);
         $I->click('.edit-post-fullscreen-mode-close');
-        $I->dontSee('No screenshot');
 
         $posts = $I->grabEntriesFromDatabase($I->grabPostsTableName(), ['post_type' => 'ppfuture_workflow']);
         $lastPost = end($posts);
+        $postId = $lastPost['ID'];
+        $uploadsPath = $I->getUploadsPath() . '/publishpress-future/workflows';
 
-        $I->seeFileFound('workflow-screenshot-' . $lastPost['ID'] . '.png', $I->getUploadsPath() . '/publishpress-future/workflows');
-        $I->seeFileFound('workflow-screenshot-' . $lastPost['ID'] . '-150x150.png', $I->getUploadsPath() . '/publishpress-future/workflows');
-        $I->seeFileFound('workflow-screenshot-' . $lastPost['ID'] . '-258x300.png', $I->getUploadsPath() . '/publishpress-future/workflows');
-        $I->seeFileFound('workflow-screenshot-' . $lastPost['ID'] . '-768x892.png', $I->getUploadsPath() . '/publishpress-future/workflows');
-        $I->seeFileFound('workflow-screenshot-' . $lastPost['ID'] . '-882x915.png', $I->getUploadsPath() . '/publishpress-future/workflows');
+        $I->seeFileFound('workflow-screenshot-' . $postId . '.png', $uploadsPath);
+        $I->seeFileFound('workflow-screenshot-' . $postId . '-150x150.png', $uploadsPath);
+        $I->seeFileFound('workflow-screenshot-' . $postId . '-258x300.png', $uploadsPath);
+        $I->seeFileFound('workflow-screenshot-' . $postId . '-768x892.png', $uploadsPath);
+        $I->seeFileFound('workflow-screenshot-' . $postId . '-882x915.png', $uploadsPath);
+
+        $I->dontSee('No screenshot', '#post-' . $postId . ' .column-workflow_preview');
     }
 }

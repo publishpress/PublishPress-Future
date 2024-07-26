@@ -6,7 +6,7 @@ use Tests\Support\EndToEndTester;
 
 class ActivationCest
 {
-    public function test_plugin_is_activated(EndToEndTester $I): void
+    public function testPluginIsActivated(EndToEndTester $I): void
     {
         $I->loginAsAdmin();
         $I->amOnPluginsPage();
@@ -14,7 +14,7 @@ class ActivationCest
         $I->seePluginActivated('publishpress-future-pro');
     }
 
-    public function test_plugin_deactivates_activates_correctly(EndToEndTester $I): void
+    public function testPluginDeactivatesActivatesCorrectly(EndToEndTester $I): void
     {
         $I->loginAsAdmin();
         $I->amOnPluginsPage();
@@ -27,7 +27,7 @@ class ActivationCest
         $I->seePluginActivated('publishpress-future-pro');
     }
 
-    public function test_plugin_redirects_to_settings_after_activation(EndToEndTester $I): void
+    public function testPluginRedirectsToSettingsAfterActivation(EndToEndTester $I): void
     {
         $I->loginAsAdmin();
         $I->amOnPluginsPage();

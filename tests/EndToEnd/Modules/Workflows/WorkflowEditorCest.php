@@ -25,7 +25,7 @@ class WorkflowEditorCest
         $I->click('.react-flow__node-triggerPlaceholderNode');
         $I->click('Post is saved');
         $I->click('Save draft');
-        $I->see('Saving', '.editor-header__settings');
+        $I->see('Saving', '.editor-header__settings button');
         $I->wait(2);
         $I->see('Workflow saved as draft.');
         $I->wait(1);
