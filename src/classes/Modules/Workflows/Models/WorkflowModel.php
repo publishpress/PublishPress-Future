@@ -187,9 +187,10 @@ class WorkflowModel implements WorkflowModelInterface
         if (is_null($this->allNodeTypes)) {
             // FIXME: Use dependency injection
             $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
+            $settingsModel = Container::getInstance()->get(ServicesAbstract::MODEL_SETTINGS);
 
             // Ensure the flow is updated with the latest node types
-            $nodeTypesModel = new NodeTypesModel($hooks);
+            $nodeTypesModel = new NodeTypesModel($hooks, $settingsModel);
             $this->allNodeTypes = $nodeTypesModel->getAllNodeTypesIndexedByName();
         }
 

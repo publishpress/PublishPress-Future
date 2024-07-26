@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows;
 use Closure;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
@@ -37,18 +38,25 @@ class Module implements InitializableInterface
      */
     private $workflowEngine;
 
+    /**
+     * @var SettingsModel
+     */
+    private $settingsModel;
+
     public function __construct(
         HookableInterface $hooksFacade,
         RestApiManagerInterface $restApiManager,
         NodeTypesModelInterface $nodeTypesModel,
         CronSchedulesModelInterface $cronSchedulesModel,
-        WorkflowEngineInterface $workflowEngine
+        WorkflowEngineInterface $workflowEngine,
+        SettingsModel $settingsModel
     ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->workflowEngine = $workflowEngine;
+        $this->settingsModel = $settingsModel;
 
         /*
          * We initialize the engine in the constructor because it requires
@@ -67,7 +75,12 @@ class Module implements InitializableInterface
         $controllers = [
             new Controllers\PostType($this->hooks),
             new Controllers\WorkflowsList($this->hooks, $this->nodeTypesModel),
-            new Controllers\WorkflowEditor($this->hooks, $this->nodeTypesModel, $this->cronSchedulesModel),
+            new Controllers\WorkflowEditor(
+                $this->hooks,
+                $this->nodeTypesModel,
+                $this->cronSchedulesModel,
+                $this->settingsModel
+            ),
             new Controllers\RestApi($this->hooks, $this->restApiManager),
             new Controllers\FutureLegacyAction($this->hooks),
             new Controllers\ManualPostTrigger($this->hooks),

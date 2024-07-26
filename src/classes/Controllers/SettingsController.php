@@ -429,5 +429,10 @@ class SettingsController implements ModuleInterface
         $baseDate = $baseDate === 'publishing' ? 'publishing' : 'current';
 
         $this->settingsModel->setBaseDate($baseDate);
+
+        $experimentalFeaturesStatus = isset($_POST['future-experimental-features']) ? 1 : 0;
+        $experimentalFeaturesStatus = $experimentalFeaturesStatus;
+
+        $this->settingsModel->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
     }
 }

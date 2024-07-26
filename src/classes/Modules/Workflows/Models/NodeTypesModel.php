@@ -4,6 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
+use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete;
@@ -48,9 +49,15 @@ class NodeTypesModel implements NodeTypesModelInterface
 
     private $advancedNodes = [];
 
-    public function __construct(HooksFacade $hooks)
+    /**
+     * @var SettingsModel
+     */
+    private $settingsModel;
+
+    public function __construct(HooksFacade $hooks, SettingsModel $settingsModel)
     {
         $this->hooks = $hooks;
+        $this->settingsModel = $settingsModel;
     }
 
     private function getDefaultCategories()
@@ -177,7 +184,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
         ];
 
-        if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL) {
+        if ($this->settingsModel->getExperimentalFeaturesStatus()) {
             $nodesInstances[CoreOnInit::getNodeTypeName()] = new CoreOnInit();
             $nodesInstances[CoreOnAdminInit::getNodeTypeName()] = new CoreOnAdminInit();
         }

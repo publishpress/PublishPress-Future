@@ -26,6 +26,8 @@ class SettingsModel
 
     public const OPTION_METADATA_MAPPING = 'ppfuturepro_metadata_mapping';
 
+    public const OPTION_EXPERIMENTAL_ENABLED = 'ppfuturepro_experimental_enabled';
+
     public const BASE_DATE_CURRENT = 'current';
 
     public const BASE_DATE_PUBLISHING = 'publishing';
@@ -60,6 +62,7 @@ class SettingsModel
             'metadataMappingStatus' => $this->getMetadataMappingStatus(),
             'metadataMapping' => $this->getMetadataMapping(),
             'metadataHideMetabox' => $this->getMetaboxHideStatus(),
+            'experimentalFeaturesStatus' => $this->getExperimentalFeaturesStatus(),
         ];
     }
 
@@ -250,6 +253,18 @@ class SettingsModel
         }, $statuses);
 
         return $statuses;
+    }
+
+    public function getExperimentalFeaturesStatus(): bool
+    {
+        $value = (bool)$this->options->getOption(self::OPTION_EXPERIMENTAL_ENABLED, false);
+        return $value && PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL;
+    }
+
+    public function setExperimentalFeaturesStatus(bool $value): void
+    {
+        $value = $value && PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL;
+        $this->options->updateOption(self::OPTION_EXPERIMENTAL_ENABLED, $value);
     }
 
     public function setMetadataMapping(array $mapping): void

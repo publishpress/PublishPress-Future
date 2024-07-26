@@ -205,7 +205,8 @@ return [
             $container->get(ServicesAbstract::WORKFLOWS_REST_API_MANAGER),
             $container->get(ServicesAbstract::NODE_TYPES_MODEL),
             $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
-            $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+            $container->get(ServicesAbstract::WORKFLOW_ENGINE),
+            $container->get(ServicesAbstract::MODEL_SETTINGS)
         );
     },
 
@@ -255,7 +256,8 @@ return [
 
     ServicesAbstract::NODE_TYPES_MODEL => static function (ContainerInterface $container) {
         return new NodeTypesModel(
-            $container->get(ServicesAbstract::HOOKS)
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::MODEL_SETTINGS)
         );
     },
 
@@ -295,10 +297,12 @@ return [
         return function ($nodeName) use ($container) {
             $nodeRunner = null;
 
+            $settingsModel = $container->get(ServicesAbstract::MODEL_SETTINGS);
+
             switch ($nodeName) {
                 // Triggers
                 case CoreOnInit::getNodeTypeName():
-                    if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL) {
+                    if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $nodeRunner = new CoreOnInit(
                             $container->get(ServicesAbstract::HOOKS),
                             $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
@@ -307,7 +311,7 @@ return [
                     break;
 
                 case CoreOnAdminInit::getNodeTypeName():
-                    if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL) {
+                    if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $nodeRunner = new CoreOnAdminInit(
                             $container->get(ServicesAbstract::HOOKS),
                             $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)

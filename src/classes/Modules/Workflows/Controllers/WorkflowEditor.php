@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Controllers;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
@@ -31,14 +32,21 @@ class WorkflowEditor implements InitializableInterface
      */
     private $cronSchedulesModel;
 
+    /**
+     * @var SettingsModel
+     */
+    private $settingsModel;
+
     public function __construct(
         HookableInterface $hooks,
         NodeTypesModelInterface $nodeTypesModel,
-        CronSchedulesModelInterface $cronSchedulesModel
+        CronSchedulesModelInterface $cronSchedulesModel,
+        SettingsModel $settingsModel
     ) {
         $this->hooks = $hooks;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->cronSchedulesModel = $cronSchedulesModel;
+        $this->settingsModel = $settingsModel;
     }
 
     public function initialize()
@@ -217,7 +225,7 @@ class WorkflowEditor implements InitializableInterface
                 "postStatuses" => $postStatuses,
                 "taxonomies" => $taxonomies,
                 "welcomeGuidePages" => $this->getWelcomeGuidePages(),
-                "isExperimentalFeaturesEnabled" => PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL,
+                "isExperimentalFeaturesEnabled" => $this->settingsModel->getExperimentalFeaturesStatus(),
             ]
         );
     }
