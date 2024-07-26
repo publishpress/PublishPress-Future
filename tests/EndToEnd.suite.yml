@@ -10,6 +10,7 @@ modules:
         - lucatume\WPBrowser\Module\WPDb
         - lucatume\WPBrowser\Module\WPFilesystem
         - lucatume\WPBrowser\Module\WPLoader
+        - Asserts
     config:
         lucatume\WPBrowser\Module\WPWebDriver:
             url: '%WORDPRESS_URL%'

@@ -180,14 +180,19 @@ class WorkflowsList implements InitializableInterface
             return;
         }
 
-        $screenshot = get_the_post_thumbnail_url($postId, "thumbnail");
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($postId);
 
-        if (empty($screenshot)) {
+        $workflowModel->convertLegacyScreenshots();
+
+        $screenshot = $workflowModel->getScreenshotUrl('thumbnail');
+        $screenshotFull = $workflowModel->getScreenshotUrl();
+
+        if (empty($screenshotFull)) {
             esc_html_e("No screenshot", "publishpress-future-pro");
-        } else {
-            $screenshotFull = get_the_post_thumbnail_url($postId, "full");
-
-            require __DIR__ . "/../Views/preview-column.html.php";
+            return;
         }
+
+        require __DIR__ . "/../Views/preview-column.html.php";
     }
 }

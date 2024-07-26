@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Tests\EndToEnd\Regression\WorkflowEditor;
+namespace Tests\EndToEnd\Regression;
 
 use Tests\Support\EndToEndTester;
 
 class Issue789_TermsNotLoadingCest
 {
-    public function test_terms_are_loaded_when_node_is_selected(EndToEndTester $I)
+    public function testTermsAreLoadedWhenNodeIsSelected(EndToEndTester $I)
     {
         $I->loginAsAdmin();
 
@@ -18,8 +18,11 @@ class Issue789_TermsNotLoadingCest
         );
 
         $I->amOnWorkflowEditorPage($postId);
-        $I->selectWorkflowStep('addPostTerms_fv6u7vv');
         $I->wait(1);
+        $I->pressKey('body', 'Escape');
+        $I->makeScreenshot('after-escape');
+        $I->selectWorkflowStep('addPostTerms_fv6u7vv');
+        $I->wait(2);
         $I->see('Uncategorized', '.edit-post-sidebar__panel .future-taxonomy-terms');
     }
 }

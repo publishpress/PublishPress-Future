@@ -61,4 +61,8 @@ interface WorkflowModelInterface
     public function incrementNodeExecutionCount(string $nodeId): int;
 
     public function getNodeExecutionCount(string $nodeId): int;
+
+    public function getScreenshotUrl($size = 'full'): string;
+
+    public function convertLegacyScreenshots(): void;
 }

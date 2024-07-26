@@ -9,7 +9,7 @@ use WP_Query;
 
 class WorkflowsModel implements WorkflowsModelInterface
 {
-    private const OPTION_SAMPLE_WORKFLOWS_CREATED = 'publishpress_future_workflow_samples_created';
+    public const OPTION_SAMPLE_WORKFLOWS_CREATED = 'publishpress_future_workflow_samples_created';
 
     public function getPublishedWorkflowsIds($limit = -1): array
     {

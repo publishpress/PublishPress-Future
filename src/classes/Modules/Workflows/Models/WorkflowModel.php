@@ -342,13 +342,125 @@ class WorkflowModel implements WorkflowModelInterface
         return $id;
     }
 
-    public function setScreenshotFromBase64(string $dataImage)
+    private function getScreenshotsFolder()
     {
-        // Delete existing screenshot files
+        $uploadDir = wp_get_upload_dir();
+        $uploadDir = $uploadDir['basedir'];
+
+        return $uploadDir . '/publishpress-future/workflows/';
+    }
+
+    private function prepareScreenshotsFolder()
+    {
+        $screenshotDir = $this->getScreenshotsFolder();
+
+        if (!file_exists($screenshotDir)) {
+            // WordPress VIP false positive, since we are making the directory in the uploads folder
+            // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.directory_mkdir
+            mkdir($screenshotDir, 0777, true);
+        }
+
+        return $screenshotDir;
+    }
+
+    private function getScreenshotFileName(): string
+    {
+        return 'workflow-screenshot-' . $this->post->ID . '.png';
+    }
+
+    private function deleteScreenshotFile()
+    {
+        $screenshotDir = $this->getScreenshotsFolder();
+        $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
+
+        if (file_exists($screenshotFile)) {
+            // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_unlink
+            unlink($screenshotFile);
+        }
+    }
+
+    private function deleteLegacyScreenshotFile()
+    {
         $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
+
         if ($existingScreenshotId) {
             wp_delete_attachment($existingScreenshotId, true);
         }
+    }
+
+    public function convertLegacyScreenshots(): void
+    {
+        $existingScreenshotId = get_post_thumbnail_id($this->post->ID);
+
+        if ($existingScreenshotId) {
+            $existingScreenshotFile = get_attached_file($existingScreenshotId);
+
+            if ($existingScreenshotFile) {
+                $screenshotDir = $this->getScreenshotsFolder();
+                $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
+
+                if (file_exists($existingScreenshotFile)) {
+                    // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_rename
+                    rename($existingScreenshotFile, $screenshotFile);
+                }
+
+                $this->deleteLegacyScreenshotFile();
+                $this->createScreenshotThumbnails($screenshotFile);
+            }
+        }
+    }
+
+    private function createScreenshotThumbnails($screenshotFile)
+    {
+        if (!file_exists($screenshotFile)) {
+            return;
+        }
+
+        if (! function_exists('image_make_intermediate_size')) {
+            require_once ABSPATH . 'wp-admin/includes/image.php';
+        }
+
+        // Create 4 versions of the screenshot: 150x150, 258x300, 768x892, 882x1024
+        $sizes = [
+            $this->getImageDimensionsBySize('thumbnail'),
+            $this->getImageDimensionsBySize('medium'),
+            $this->getImageDimensionsBySize('large'),
+            $this->getImageDimensionsBySize('full'),
+        ];
+
+        foreach ($sizes as $size) {
+            $thumbnail = image_make_intermediate_size($screenshotFile, $size[0], $size[1], true);
+
+            if ($thumbnail) {
+                // Move the thumbnail to the uploads dir
+                $thumbnailDir = $this->getScreenshotsFolder();
+                $thumbnailFile = $thumbnailDir . basename($thumbnail['file']);
+
+                if (file_exists($thumbnail['file'])) {
+                    // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_rename
+                    rename($thumbnail['file'], $thumbnailFile);
+                }
+            }
+        }
+    }
+
+    private function getImageDimensionsBySize($size)
+    {
+        $sizes = [
+            'full' => [882, 1024],
+            'large' => [768, 892],
+            'medium' => [258, 300],
+            'thumbnail' => [150, 150],
+        ];
+
+        return $sizes[$size] ?? $sizes['full'];
+    }
+
+    public function setScreenshotFromBase64(string $dataImage)
+    {
+        $this->deleteLegacyScreenshotFile();
+        $this->prepareScreenshotsFolder();
+        $this->deleteScreenshotFile();
 
         // Sanitize the baseurl to make sure it has data:image/png;base64
         if (strpos($dataImage, 'data:image/png;base64') !== 0) {
@@ -356,26 +468,23 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-        $image_data = file_get_contents($dataImage);
+        $imageData = file_get_contents($dataImage);
 
-        if ($image_data !== false) {
+        if ($imageData !== false) {
             $imageFileName = 'workflow-screenshot-' . $this->post->ID . '.png';
 
-            $upload = wp_upload_bits($imageFileName, null, $image_data);
+            $upload = wp_upload_bits($imageFileName, null, $imageData);
             if ($upload['error'] === false) {
-                $attachment = [
-                    'post_mime_type' => $upload['type'],
-                    'post_title' => basename($upload['file']),
-                    'post_content' => '',
-                    'post_status' => 'inherit'
-                ];
-                $attach_id = wp_insert_attachment($attachment, $upload['file']);
-                if (!is_wp_error($attach_id)) {
-                    require_once(ABSPATH . 'wp-admin/includes/image.php');
-                    $attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
-                    wp_update_attachment_metadata($attach_id, $attach_data);
-                    set_post_thumbnail($this->post->ID, $attach_id);
+                // Put the uploaded file into the screenshots dir
+                $screenshotDir = $this->getScreenshotsFolder();
+                $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
+
+                if (file_exists($upload['file'])) {
+                    // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.file_ops_rename
+                    rename($upload['file'], $screenshotFile);
                 }
+
+                $this->createScreenshotThumbnails($screenshotFile);
             }
         }
     }
@@ -386,6 +495,24 @@ class WorkflowModel implements WorkflowModelInterface
         $dataImage = 'data:image/png;base64,' . base64_encode(file_get_contents($filePath));
 
         $this->setScreenshotFromBase64($dataImage);
+    }
+
+    public function getScreenshotUrl($size = 'full'): string
+    {
+        $screenshotDir = $this->getScreenshotsFolder();
+        $screenshotFile = $screenshotDir . $this->getScreenshotFileName();
+
+        if (!file_exists($screenshotFile)) {
+            return '';
+        }
+
+        $dimensions = $this->getImageDimensionsBySize($size);
+        $dimensions = $dimensions[0] . 'x' . $dimensions[1];
+        $screenshotFile = $screenshotDir . basename($screenshotFile, '.png') . '-' . $dimensions . '.png';
+
+        $screenshotUrl = str_replace(ABSPATH, site_url('/'), $screenshotFile);
+
+        return $screenshotUrl;
     }
 
     public function getTriggerNodes(): array
