@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\EndToEnd\Regression;
+namespace Tests\EndToEnd\Modules\Worflows;
 
 use Tests\Support\EndToEndTester;
 
