@@ -11,14 +11,14 @@ Feature: Actions workflow editor
     When I go to the workflow editor page for creating a new workflow
       And I fill in workflow title as "Test Workflow"
       And I click "Save draft"
-    Then I should see the message "Workflow saved as draft." in the snackbar
+    Then I wait until I see the message "Workflow saved as draft." in the snackbar
       And I should see the workflow "Test Workflow" in the list of workflows as "Draft"
 
   Scenario: Create a new action workflow saving as published
     When I go to the workflow editor page for creating a new workflow
       And I fill in workflow title as "Test Workflow for publishing"
       And I click "Publish"
-    Then I should see the message "Workflow published." in the snackbar
+    Then I wait until I see the message "Workflow published." in the snackbar
       And I should see the workflow "Test Workflow for publishing" in the list of workflows as "Published"
 
   Scenario: Edit an existing action workflow
