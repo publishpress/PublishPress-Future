@@ -4,10 +4,12 @@ namespace PublishPress\FuturePro\Controllers;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
+use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\FuturePro\Core\HooksAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\Module as WorkflowsModule;
 
 use function current_user_can;
 use function wp_die;
@@ -138,6 +140,11 @@ class SettingsController implements ModuleInterface
         $this->hooks->addAction(
             HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE,
             [$this, 'settingsTabAdvancedBefore']
+        );
+
+        $this->hooks->addFilter(
+            ExpiratorHooksAbstract::FILTER_SUPPORTED_POST_TYPES,
+            [$this, 'hideActionWorkflowsFromSettings']
         );
     }
 
@@ -434,5 +441,14 @@ class SettingsController implements ModuleInterface
         $experimentalFeaturesStatus = $experimentalFeaturesStatus;
 
         $this->settingsModel->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
+    }
+
+    public function hideActionWorkflowsFromSettings($postTypes)
+    {
+        if (in_array(WorkflowsModule::POST_TYPE_WORKFLOW, $postTypes, true)) {
+            $postTypes = array_diff($postTypes, [WorkflowsModule::POST_TYPE_WORKFLOW]);
+        }
+
+        return $postTypes;
     }
 }
