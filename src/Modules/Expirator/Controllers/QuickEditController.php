@@ -175,6 +175,11 @@ class QuickEditController implements InitializableInterface
 
     public function enqueueScripts()
     {
+        $currentScreen = get_current_screen();
+
+        if ($currentScreen->base !== 'edit') {
+            return;
+        }
         wp_enqueue_script("wp-components");
         wp_enqueue_script("wp-plugins");
         wp_enqueue_script("wp-element");
