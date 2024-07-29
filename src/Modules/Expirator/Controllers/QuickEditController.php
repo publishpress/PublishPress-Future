@@ -14,6 +14,7 @@ use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
+use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -180,6 +181,23 @@ class QuickEditController implements InitializableInterface
         if ($currentScreen->base !== 'edit') {
             return;
         }
+
+        $container = Container::getInstance();
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+        $postType = $currentScreen->post_type;
+
+        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
+
+        if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
+            return;
+        }
+
+        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+        if ($hideMetabox) {
+            return;
+        }
+
         wp_enqueue_script("wp-components");
         wp_enqueue_script("wp-plugins");
         wp_enqueue_script("wp-element");
