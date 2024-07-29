@@ -18119,6 +18119,10 @@ var FlowEditor = function FlowEditor(props) {
     }
   });
   var onAutoLayout = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(function () {
+    createSuccessNotice((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_15__.__)('Applying auto layout.', 'publishpress-future-pro'), {
+      isDismissible: true,
+      type: 'snackbar'
+    });
     Promise.all(/*! import() */[__webpack_require__.e("vendors-node_modules_elkjs_lib_main_js"), __webpack_require__.e("src_assets_jsx_workflow-editor_components_flow-editor_auto-layout_elk_jsx")]).then(__webpack_require__.bind(__webpack_require__, /*! ./auto-layout/elk */ "./src/assets/jsx/workflow-editor/components/flow-editor/auto-layout/elk.jsx")).then(function (_ref3) {
       var useLayoutedElements = _ref3.useLayoutedElements;
       var applyLayout = useLayoutedElements({
