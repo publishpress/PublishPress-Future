@@ -7,6 +7,7 @@ use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
+use PublishPress\Future\Framework\WordPress\Facade\NoticeInterface;
 use stdClass;
 
 class PluginTest extends \lucatume\WPBrowser\TestCase\WPTestCase
@@ -55,5 +56,74 @@ class PluginTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $plugin->initialize();
 
         $this->assertTrue(in_array(HooksAbstract::ACTION_INIT_PLUGIN, $testInitializeTriggersActionInitPluginActions));
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testInitializeRegisterDeactivationHook()
+    {
+        $modules = [];
+
+        $hooksFacade = $this->makeEmpty(
+            HooksFacade::class,
+            [
+                'registerDeactivationHook' => Expected::atLeastOnce(),
+            ]
+        );
+
+        $legacyPlugin = $this->makeEmpty(stdClass::class);
+        $noticesFacade = $this->makeEmpty(NoticeFacade::class);
+
+        $basePath = '/tmp';
+        $pluginSlug = 'post-expirator';
+
+        $plugin = $this->construct(
+            Plugin::class,
+            [
+                $modules,
+                $legacyPlugin,
+                $hooksFacade,
+                $basePath,
+                $pluginSlug,
+                $noticesFacade
+            ]
+        );
+
+        $plugin->initialize();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testDeactivatePluginDoActionDeactivatePlugin()
+    {
+        global $testDeactivatePluginDoActionDeactivatePluginActions;
+        $testDeactivatePluginDoActionDeactivatePluginActions = [];
+
+        $hooksFacade = $this->makeEmpty(
+            HooksFacade::class,
+            [
+                'doAction' => Expected::atLeastOnce(
+                    function ($action) use (&$testDeactivatePluginDoActionDeactivatePluginActions) {
+                        $testDeactivatePluginDoActionDeactivatePluginActions[] = $action;
+                    }
+                )
+            ]
+        );
+
+        $plugin = $this->makeEmptyExcept(
+            Plugin::class,
+            'onDeactivate',
+            [
+                'hooks' => $hooksFacade,
+            ]
+        );
+
+        $plugin->onDeactivate();
+
+        $this->assertTrue(
+            in_array(HooksAbstract::ACTION_DEACTIVATE_PLUGIN, $testDeactivatePluginDoActionDeactivatePluginActions)
+        );
     }
 }

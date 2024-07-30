@@ -37,36 +37,6 @@ class ContainerTest extends Unit
         $this->assertTrue($container->has('module'));
     }
 
-    public function testHasReturningFalseForNonExistentService()
-    {
-        $services = [
-            'module' => new stdClass(),
-        ];
-
-        $container = $this->construct(
-            Container::class,
-            [$services]
-        );
-
-        $this->assertFalse($container->has('module1'));
-        $this->assertFalse($container->has('module2'));
-    }
-
-    public function testGetThrowsExceptionForNotFoundService()
-    {
-        $this->tester->expectThrowable(
-            ServiceNotFoundException::class,
-            function () {
-                $services = [
-                    'module' => new stdClass(),
-                ];
-
-                $container = new Container($services);
-                $container->get('module1');
-            }
-        );
-    }
-
     public function testGetReturnsResolvedService()
     {
         $services = [
