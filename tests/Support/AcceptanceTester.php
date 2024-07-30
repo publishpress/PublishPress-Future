@@ -4,17 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Support;
 
-use Codeception\Actor;
-use Steps\Cli;
-use Steps\Debug;
-use Steps\Menu;
-use Steps\Options;
-use Steps\Plugins;
-use Steps\Post;
-use Steps\PostClassicEditor;
-use Steps\PostGutenberg;
-use Steps\Settings;
-use Steps\Users;
 
 /**
  * Inherited Methods
@@ -38,14 +27,14 @@ class AcceptanceTester extends \Codeception\Actor
     /**
      * Define custom actions here
      */
-    use Users;
-    use Menu;
-    use Plugins;
-    use Post;
-    use PostGutenberg;
-    use PostClassicEditor;
-    use Settings;
-    use Options;
-    use Debug;
-    use Cli;
+    use GherkinSteps\Users;
+    use GherkinSteps\Menu;
+    use GherkinSteps\Plugins;
+    use GherkinSteps\Post;
+    use GherkinSteps\PostGutenberg;
+    use GherkinSteps\PostClassicEditor;
+    use GherkinSteps\Settings;
+    use GherkinSteps\Options;
+    use GherkinSteps\Debug;
+    use GherkinSteps\Cli;
 }

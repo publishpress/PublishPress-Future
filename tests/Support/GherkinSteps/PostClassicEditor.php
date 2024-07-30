@@ -1,8 +1,6 @@
 <?php
 
-namespace Steps;
-
-use function sq;
+namespace Tests\Support\GherkinSteps;
 
 trait PostClassicEditor
 {

@@ -16,3 +16,61 @@ services:
             - ../.cache/.oh-my-zsh/log:/root/.oh-my-zsh/log
             - ../.cache/.composer/cache:/root/.composer/cache
             - ../.cache/.composer/auth.json:/root/.composer/auth.json
+    wordpress:
+        image: wordpress:6.6
+        container_name: ${COMPOSE_PROJECT_NAME}_tests_wordpress
+        restart: always
+        ports:
+          - "60802:80"
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: testuser
+            WORDPRESS_DB_PASSWORD: testpass
+            WORDPRESS_DB_NAME: testdb
+        volumes:
+          - ../.cache/wordpress:/var/www/html/
+          - ../../:/var/www/html/wp-content/plugins/post-expirator
+        depends_on:
+            db:
+                condition: service_healthy
+    db:
+        image: mysql:8.0
+        container_name: ${COMPOSE_PROJECT_NAME}_tests_db
+        restart: always
+        environment:
+            MYSQL_DATABASE: testdb
+            MYSQL_USER: testuser
+            MYSQL_PASSWORD: testpass
+            MYSQL_RANDOM_ROOT_PASSWORD: '1'
+        ports:
+          - "60902:3306"
+        volumes:
+            - ../.cache/mysql:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    wp-cli:
+        build: ./wpcli
+        container_name: ${COMPOSE_PROJECT_NAME}_tests_wpcli
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: testuser
+            WORDPRESS_DB_PASSWORD: testpass
+            WORDPRESS_DB_NAME: testdb
+        volumes:
+            - ../.cache/wordpress:/var/www/html/
+            - ../../:/var/www/html/wp-content/plugins/post-expirator
+        depends_on:
+            - wordpress
+        links:
+          - wordpress
+          - db
+        working_dir: /var/www/html
+        command: >
+            sh -c '
+            sleep 10;
+            wp core install --url="http://localhost:60802" --title="Test Site" --admin_user="admin" --admin_password="admin" --admin_email="info@example.com" --skip-email;
+            '

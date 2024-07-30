@@ -26,11 +26,6 @@
         },
         "process-timeout": 0
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/codeception/"
-        }
-    },
     "prefer-stable": true,
     "minimum-stability": "stable",
     "require": {
@@ -64,9 +59,7 @@
         "automattic/vipwpcs": "^3",
         "publishpress/publishpress-phpcs-standards": "dev-main",
         "spatie/ray": "^1.41",
-        "rector/rector": "dev-main",
-        "ext-pdo": "*",
-        "ext-yaml": "*"
+        "rector/rector": "dev-main"
     },
     "scripts": {
         "build": "pbuild build",
