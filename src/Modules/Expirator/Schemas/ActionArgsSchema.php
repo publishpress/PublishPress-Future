@@ -5,62 +5,28 @@ namespace PublishPress\Future\Modules\Expirator\Schemas;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\TableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-abstract class ActionArgsSchema
+abstract class ActionArgsSchema implements TableSchemaInterface
 {
     const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 1;
     const HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED = 2;
 
     public static $schemaErrors = [];
 
-    /**
-     * @return string
-     */
-    public static function getTableName()
+    public static function getTableName(): string
     {
         global $wpdb;
         return $wpdb->prefix . 'ppfuture_actions_args';
     }
 
-    /**
-     * @deprecated 3.1.4 Use healthCheckTableExists() instead.
-     */
-    public static function tableExists()
-    {
-        return self::healthCheckTableExists();
-    }
-
-    public static function healthCheckTableExists()
-    {
-        $tableName = self::getTableName();
-
-        global $wpdb;
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
-        $table = $wpdb->get_var("SHOW TABLES LIKE '$tableName'");
-
-        return $table === $tableName;
-    }
-
-    public static function healthCheckColumnArgsLengthIsUpdated()
-    {
-        global $wpdb;
-
-        $tableName = self::getTableName();
-        $dbName = DB_NAME;
-
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
-        $columnLength = (int)$wpdb->get_var("SELECT CHARACTER_MAXIMUM_LENGTH FROM information_schema.`COLUMNS` WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName' AND COLUMN_NAME = 'args'");
-
-        return $columnLength === 1000;
-    }
-
-    public static function checkSchemaHealth(): bool
+    public static function isTableSchemaHealthy(): bool
     {
         static::$schemaErrors = [];
 
-        if (! self::healthCheckTableExists()) {
+        if (! self::isTableExistent()) {
             static::$schemaErrors[] = self::HEALTH_ERROR_TABLE_DOES_NOT_EXIST;
         }
 
@@ -71,17 +37,38 @@ abstract class ActionArgsSchema
         return empty(static::$schemaErrors);
     }
 
+    public static function isTableExistent(): bool
+    {
+        $tableName = self::getTableName();
+
+        global $wpdb;
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
+        $table = $wpdb->get_var("SHOW TABLES LIKE '$tableName'");
+
+        return $table === $tableName;
+    }
+
+    public static function fixTableSchema(): void
+    {
+        if (! self::isTableExistent()) {
+            self::createTable();
+        }
+
+        if (self::healthCheckColumnArgsLengthIsUpdated()) {
+            return;
+        }
+
+        $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
+        $hooks->doAction(ExpiratorHooksAbstract::ACTION_MIGRATE_ARGS_LENGTH);
+    }
+
     public static function getSchemaHealthErrors(): array
     {
         return static::$schemaErrors;
     }
 
-    public static function createTableIfNotExists()
+    public static function createTable(): void
     {
-        if (self::healthCheckTableExists()) {
-            return;
-        }
-
         global $wpdb;
 
         $charsetCollate = $wpdb->get_charset_collate();
@@ -117,9 +104,22 @@ abstract class ActionArgsSchema
         }
     }
 
-    public static function dropTableIfExists()
+    protected static function healthCheckColumnArgsLengthIsUpdated()
     {
-        if (! self::healthCheckTableExists()) {
+        global $wpdb;
+
+        $tableName = self::getTableName();
+        $dbName = DB_NAME;
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
+        $columnLength = (int)$wpdb->get_var("SELECT CHARACTER_MAXIMUM_LENGTH FROM information_schema.`COLUMNS` WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName' AND COLUMN_NAME = 'args'");
+
+        return $columnLength === 1000;
+    }
+
+    protected static function dropTableIfExists()
+    {
+        if (! self::isTableExistent()) {
             return;
         }
 
@@ -129,15 +129,49 @@ abstract class ActionArgsSchema
         $wpdb->query("DROP TABLE " . self::getTableName());
     }
 
-    public static function fixSchema()
-    {
-        self::createTableIfNotExists();
+    // Deprecated methods
 
-        if (self::healthCheckColumnArgsLengthIsUpdated()) {
+    /**
+     * @deprecated 3.1.4 Use isTableExistent() instead.
+     */
+    public static function tableExists()
+    {
+        return self::isTableExistent();
+    }
+
+    /**
+     * @deprecated 3.4.3 Use isTableSchemaHealthy() instead.
+     */
+    public static function healthCheckTableExists(): bool
+    {
+        return self::isTableExistent();
+    }
+
+    /**
+     * @deprecated 3.4.3 Use isHealthy() instead.
+     */
+    public static function checkSchemaHealth(): bool
+    {
+        return self::isTableSchemaHealthy();
+    }
+
+    /**
+     * @deprecated 3.4.3 Use isTableExistent and createTable() instead.
+     */
+    public static function createTableIfNotExists()
+    {
+        if (self::isTableExistent()) {
             return;
         }
 
-        $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
-        $hooks->doAction(ExpiratorHooksAbstract::ACTION_MIGRATE_ARGS_LENGTH);
+        self::createTable();
+    }
+
+    /**
+     * @deprecated 3.4
+     */
+    public static function fixSchema()
+    {
+        self::fixTableSchema();
     }
 }
