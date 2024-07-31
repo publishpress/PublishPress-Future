@@ -46,7 +46,9 @@ class V30000ActionArgsSchema implements MigrationInterface
 
     public function migrate()
     {
-        ActionArgsSchema::createTableIfNotExists();
+        if (!ActionArgsSchema::isTableExistent()) {
+            ActionArgsSchema::createTable();
+        }
     }
 
     /**

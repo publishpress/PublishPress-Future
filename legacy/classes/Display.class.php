@@ -219,10 +219,10 @@ class PostExpirator_Display
                 );
                 echo '</p></div>';
             } elseif (isset($_POST['fix-db-schema'])) {
-                ActionArgsSchema::fixSchema();
+                ActionArgsSchema::fixTable();
 
                 echo "<div id='message' class='updated fade'><p>";
-                if (ActionArgsSchema::tableExists()) {
+                if (ActionArgsSchema::isTableExistent()) {
                     esc_html_e(
                         'The database schema was fixed.',
                         'post-expirator'

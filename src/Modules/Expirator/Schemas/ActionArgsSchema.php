@@ -22,7 +22,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         return $wpdb->prefix . 'ppfuture_actions_args';
     }
 
-    public static function isTableSchemaHealthy(): bool
+    public static function isTableHealthy(): bool
     {
         static::$schemaErrors = [];
 
@@ -48,7 +48,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         return $table === $tableName;
     }
 
-    public static function fixTableSchema(): void
+    public static function fixTable(): void
     {
         if (! self::isTableExistent()) {
             self::createTable();
@@ -62,7 +62,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         $hooks->doAction(ExpiratorHooksAbstract::ACTION_MIGRATE_ARGS_LENGTH);
     }
 
-    public static function getSchemaHealthErrors(): array
+    public static function getErrors(): array
     {
         return static::$schemaErrors;
     }
@@ -140,7 +140,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
     }
 
     /**
-     * @deprecated 3.4.3 Use isTableSchemaHealthy() instead.
+     * @deprecated 3.4.3 Use isTableHealthy() instead.
      */
     public static function healthCheckTableExists(): bool
     {
@@ -152,7 +152,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
      */
     public static function checkSchemaHealth(): bool
     {
-        return self::isTableSchemaHealthy();
+        return self::isTableHealthy();
     }
 
     /**
@@ -172,6 +172,14 @@ abstract class ActionArgsSchema implements TableSchemaInterface
      */
     public static function fixSchema()
     {
-        self::fixTableSchema();
+        self::fixTable();
+    }
+
+    /**
+     * @deprecated 3.4.3 Use getErrors() instead.
+     */
+    public static function getSchemaHealthErrors(): array
+    {
+        return self::getErrors();
     }
 }

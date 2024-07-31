@@ -13,8 +13,8 @@ $container = PublishPress\Future\Core\DI\Container::getInstance();
 $debug = $container->get(ServicesAbstract::DEBUG);
 $hooks = $container->get(ServicesAbstract::HOOKS);
 
-$isSchemaHealthOk = ActionArgsSchema::checkSchemaHealth();
-$schemaHealthErrors = ActionArgsSchema::getSchemaHealthErrors();
+$isSchemaHealthOk = ActionArgsSchema::isTableHealthy();
+$schemaHealthErrors = ActionArgsSchema::getErrors();
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
