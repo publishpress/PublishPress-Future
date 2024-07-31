@@ -30,6 +30,8 @@ services:
         volumes:
           - ../.cache/wordpress:/var/www/html/
           - ../../:/var/www/html/wp-content/plugins/post-expirator
+          - ../../tests/Support/Data/plugins/pre-tests:/var/www/html/wp-content/plugins/pre-tests
+          - ../../tests/Support/Data/plugins/classic-editor-v1.6.2:/var/www/html/wp-content/plugins/classic-editor
         depends_on:
             db:
                 condition: service_healthy
@@ -63,6 +65,8 @@ services:
         volumes:
             - ../.cache/wordpress:/var/www/html/
             - ../../:/var/www/html/wp-content/plugins/post-expirator
+            - ../../tests/Support/Data/plugins/pre-tests:/var/www/html/wp-content/plugins/pre-tests
+            - ../../tests/Support/Data/plugins/classic-editor-v1.6.2:/var/www/html/wp-content/plugins/classic-editor
         depends_on:
             - wordpress
         links:

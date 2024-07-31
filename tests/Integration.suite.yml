@@ -23,9 +23,5 @@ modules:
            theme: ''
            plugins:
                 - ./post-expirator.php
-                - pre-tests/pre-tests.php
-                - ray-future/ray-future.php
            activatePlugins:
                 - ./post-expirator.php
-                - pre-tests/pre-tests.php
-                - ray-future/ray-future.php
