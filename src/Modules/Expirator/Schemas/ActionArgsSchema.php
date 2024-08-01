@@ -11,14 +11,15 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 abstract class ActionArgsSchema implements TableSchemaInterface
 {
-    const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 1;
-    const HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED = 2;
+    const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 'table_does_not_exist';
+    const HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED = 'column_args_length_not_updated';
 
     public static $schemaErrors = [];
 
     public static function getTableName(): string
     {
         global $wpdb;
+
         return $wpdb->prefix . 'ppfuture_actions_args';
     }
 
