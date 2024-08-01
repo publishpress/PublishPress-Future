@@ -28,11 +28,17 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         static::$schemaErrors = [];
 
         if (! self::isTableExistent()) {
-            static::$schemaErrors[] = self::HEALTH_ERROR_TABLE_DOES_NOT_EXIST;
+            static::$schemaErrors[self::HEALTH_ERROR_TABLE_DOES_NOT_EXIST] = __(
+                'The table _ppfuture_actions_args does not exist.',
+                'post-expirator'
+            );
         }
 
         if (! self::healthCheckColumnArgsLengthIsUpdated()) {
-            static::$schemaErrors[] = self::HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED;
+            static::$schemaErrors[self::HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED] = __(
+                'The column args length was not updated to 1000.',
+                'post-expirator'
+            );
         }
 
         return empty(static::$schemaErrors);

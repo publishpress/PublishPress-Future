@@ -59,24 +59,7 @@ $schemaHealthErrors = ActionArgsSchema::getErrors();
 
                             <ul>
                             <?php foreach ($schemaHealthErrors as $error) : ?>
-                                <li>
-                                    <?php
-                                    switch ($error) :
-                                        case ActionArgsSchema::HEALTH_ERROR_TABLE_DOES_NOT_EXIST:
-                                            esc_html_e(
-                                                'The table _ppfuture_actions_args does not exist.',
-                                                'post-expirator'
-                                            );
-                                            break;
-                                        case ActionArgsSchema::HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED:
-                                            esc_html_e(
-                                                'The column args length was not updated to 1000.',
-                                                'post-expirator'
-                                            );
-                                            break;
-                                    endswitch
-                                    ?>
-                                </li>
+                                <li><?php echo esc_html($error); ?></li>
                             <?php endforeach; ?>
                             </ul>
 
