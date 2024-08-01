@@ -67,7 +67,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         return static::$schemaErrors;
     }
 
-    public static function createTable(): void
+    public static function createTable(): bool
     {
         global $wpdb;
 
@@ -98,10 +98,13 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         $result = dbDelta($sql);
         $wpdb->suppress_errors($suppressErrors);
 
-        if (! empty($result)) {
-            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
-            error_log('PUBLISHPRESS FUTURE: Result of creating table ' . self::getTableName() . ': ' . implode("\n", $result));
+        if (empty($result)) {
+            return false;
         }
+
+        return isset($result[self::getTableName()])
+            && $result[self::getTableName()] === "Created table " . self::getTableName();
+    }
     }
 
     protected static function healthCheckColumnArgsLengthIsUpdated()
