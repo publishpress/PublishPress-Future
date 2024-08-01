@@ -34,7 +34,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
             );
         }
 
-        if (! self::healthCheckColumnArgsLengthIsUpdated()) {
+        if (! self::checkColumnArgsLengthIs1000()) {
             static::$schemaErrors[self::HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED] = __(
                 'The column args length was not updated to 1000.',
                 'post-expirator'
@@ -61,12 +61,11 @@ abstract class ActionArgsSchema implements TableSchemaInterface
             self::createTable();
         }
 
-        if (self::healthCheckColumnArgsLengthIsUpdated()) {
-            return;
+        if (! self::checkColumnArgsLengthIs1000()) {
+            // FIXME: Use DI here
+            $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
+            $hooks->doAction(ExpiratorHooksAbstract::ACTION_MIGRATE_ARGS_LENGTH);
         }
-
-        $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
-        $hooks->doAction(ExpiratorHooksAbstract::ACTION_MIGRATE_ARGS_LENGTH);
     }
 
     public static function getErrors(): array
@@ -122,7 +121,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         return (bool)$result;
     }
 
-    protected static function healthCheckColumnArgsLengthIsUpdated()
+    protected static function  checkColumnArgsLengthIs1000()
     {
         global $wpdb;
 
