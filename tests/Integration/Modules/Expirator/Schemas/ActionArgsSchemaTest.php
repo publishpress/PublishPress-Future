@@ -116,4 +116,14 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
         global $wpdb;
         $this->assertNull($wpdb->get_var("SHOW TABLES LIKE '" . ActionArgsSchema::getTableName() . "'"));
     }
+
+    public function testGetErrors() :void
+    {
+        $this->ensureTableDoesNotExist();
+        $this->assertFalse(ActionArgsSchema::isTableHealthy());
+
+        $errors = ActionArgsSchema::getErrors();
+
+        $this->assertArrayHasKey(ActionArgsSchema::HEALTH_ERROR_TABLE_DOES_NOT_EXIST, $errors);
+    }
 }
