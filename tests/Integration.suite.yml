@@ -10,18 +10,19 @@ modules:
         - Sequence
     config:
         lucatume\WPBrowser\Module\WPLoader:
-           wpRootFolder: "%WORDPRESS_ROOT_DIR%"
-           dbHost: "%WORDPRESS_DB_HOST%"
-           dbName: "%WORDPRESS_DB_NAME%"
-           dbUser: "%WORDPRESS_DB_USER%"
-           dbPassword: "%WORDPRESS_DB_PASSWORD%"
-           wpDebug: true
-           tablePrefix: '%TEST_TABLE_PREFIX%'
-           domain: '%WORDPRESS_DOMAIN%'
-           adminEmail: 'admin@%WORDPRESS_DOMAIN%'
-           title: 'Integration Tests'
-           theme: ''
-           plugins:
+            wpRootFolder: "%WORDPRESS_ROOT_DIR%"
+            dbHost: "%WORDPRESS_DB_HOST%"
+            dbName: "%WORDPRESS_DB_NAME%"
+            dbUser: "%WORDPRESS_DB_USER%"
+            dbPassword: "%WORDPRESS_DB_PASSWORD%"
+            wpDebug: true
+            tablePrefix: '%TEST_TABLE_PREFIX%'
+            domain: '%WORDPRESS_DOMAIN%'
+            adminEmail: 'admin@%WORDPRESS_DOMAIN%'
+            dump: 'tests/Support/Data/dump.sql'
+            title: 'Integration Tests'
+            theme: ''
+            plugins:
                 - ./post-expirator.php
-           activatePlugins:
+            activatePlugins:
                 - ./post-expirator.php

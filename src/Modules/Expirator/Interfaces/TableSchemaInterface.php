@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
@@ -18,7 +17,9 @@ interface TableSchemaInterface
 
     public static function fixTable(): void;
 
-    public static function createTable(): void;
+    public static function createTable(): bool;
+
+    public static function dropTable(): bool;
 
     public static function getErrors(): array;
 }

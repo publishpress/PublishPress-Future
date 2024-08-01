@@ -136,7 +136,12 @@
         "tests:up": "bash dev-workspace/scripts/tests-env.sh up",
         "tests:down": "bash dev-workspace/scripts/tests-env.sh down",
         "tests:stop": "bash dev-workspace/scripts/tests-env.sh stop",
-        "tests:clean": "bash dev-workspace/scripts/tests-env.sh cleanup",
+        "tests:clean": [
+            "bash dev-workspace/scripts/tests-env.sh cleanup",
+            "@tests:clean-logs"
+        ],
+        "tests:clean-logs": "rm -f dev-workspace/cache/logs/*",
+        "tests:db-logs": "bash dev-workspace/scripts/tests-db-logs.sh $@",
         "tests:info": "bash dev-workspace/scripts/tests-env.sh info",
         "tests:refresh": "bash dev-workspace/scripts/tests-env.sh refresh",
         "tests:snippets": "composer codecept gherkin:snippets $@",

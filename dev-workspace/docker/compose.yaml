@@ -43,11 +43,13 @@ services:
             MYSQL_DATABASE: testdb
             MYSQL_USER: testuser
             MYSQL_PASSWORD: testpass
-            MYSQL_RANDOM_ROOT_PASSWORD: '1'
+            MYSQL_ROOT_PASSWORD: rootpass
         ports:
           - "60902:3306"
         volumes:
             - ../.cache/mysql:/var/lib/mysql
+            - ../.cache/logs/mysql:/var/log/mysql
+            - ../docker/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
             interval: 10s

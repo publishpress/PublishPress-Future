@@ -117,18 +117,6 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         return $columnLength === 1000;
     }
 
-    protected static function dropTableIfExists()
-    {
-        if (! self::isTableExistent()) {
-            return;
-        }
-
-        global $wpdb;
-
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
-        $wpdb->query("DROP TABLE " . self::getTableName());
-    }
-
     // Deprecated methods
 
     /**

@@ -10,3 +10,7 @@
  * If you need to load one or more database dump file(s) to set up the test database, add the path to the dump file to
  * the "modules.config.WPLoader.dump" setting.
  */
+
+ if (! class_exists('Tests\NoTransactionWPTestCase')) {
+    require_once __DIR__ . '/NoTransactionWPTestCase.php';
+}
