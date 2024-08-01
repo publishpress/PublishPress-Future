@@ -105,6 +105,14 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         return isset($result[self::getTableName()])
             && $result[self::getTableName()] === "Created table " . self::getTableName();
     }
+
+    public static function dropTable(): bool
+    {
+        global $wpdb;
+
+        $result = $wpdb->query("DROP TABLE " . self::getTableName());
+
+        return (bool)$result;
     }
 
     protected static function healthCheckColumnArgsLengthIsUpdated()
