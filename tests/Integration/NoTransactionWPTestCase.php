@@ -128,4 +128,54 @@ class NoTransactionWPTestCase extends \lucatume\WPBrowser\TestCase\WPTestCase
 
 		$wpdb->query('ROLLBACK');
 	}
+
+	// Custom methods to test the database schema
+	protected function ensureTableDoesNotExist($tableName): void
+    {
+        global $wpdb;
+        $wpdb->query('DROP TABLE IF EXISTS `' . $tableName . '`');
+    }
+
+	protected function getTablePrefix(): string
+    {
+        $loaderConfig = $this->getModule('lucatume\WPBrowser\Module\WPLoader')->_getConfig();
+
+        return $loaderConfig['tablePrefix'];
+    }
+
+	protected function dropTableIndex($tableName, $indexName): void
+	{
+		global $wpdb;
+		$wpdb->query("ALTER TABLE `$tableName` DROP INDEX `$indexName`");
+	}
+
+	protected function createTableIndex($tableName, $indexName, $columns): void
+	{
+		global $wpdb;
+		$columns = implode(', ', $columns);
+		$wpdb->query("ALTER TABLE `$tableName` ADD INDEX `$indexName` ($columns)");
+	}
+
+	protected function assertTableDoesNotExists($tableName): void
+	{
+		global $wpdb;
+		$tables = $wpdb->get_results('SHOW TABLES');
+		$tables = array_map('current', $tables);
+
+		$this->assertNotContains($tableName, $tables);
+	}
+
+	protected function assertTableExists($tableName): void
+	{
+		global $wpdb;
+		$tables = $wpdb->get_results('SHOW TABLES');
+		$tables = array_map('current', $tables);
+
+		$this->assertContains($tableName, $tables);
+	}
+
+	protected function assertClassMethodExists($className, $methodName): void
+	{
+		$this->assertTrue(method_exists($className, $methodName));
+	}
 }

@@ -13,32 +13,22 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
      */
     protected $tester;
 
+    protected $tableName;
+
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->tableName = ActionArgsSchema::getTableName();
         $this->resetTable();
     }
 
     protected function resetTable(): void
     {
         global $wpdb;
-        $wpdb->query('DROP TABLE IF EXISTS ' . ActionArgsSchema::getTableName());
+        $wpdb->query("DROP TABLE IF EXISTS `{$this->tableName}`");
 
         ActionArgsSchema::createTable();
-    }
-
-    protected function ensureTableDoesNotExist(): void
-    {
-        global $wpdb;
-        $wpdb->query('DROP TABLE IF EXISTS ' . ActionArgsSchema::getTableName());
-    }
-
-    protected function getTablePrefix(): string
-    {
-        $loaderConfig = $this->getModule('lucatume\WPBrowser\Module\WPLoader')->_getConfig();
-
-        return $loaderConfig['tablePrefix'];
     }
 
     public function testGetTableName(): void
@@ -52,13 +42,13 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testCreateTable(): void
     {
-        $this->ensureTableDoesNotExist();
+        $this->ensureTableDoesNotExist($this->tableName);
         $this->assertTrue(ActionArgsSchema::createTable());
     }
 
     public function testTableExistsReturnsFalseIfTableDoesNotExist(): void
     {
-        $this->ensureTableDoesNotExist();
+        $this->ensureTableDoesNotExist($this->tableName);
         $this->assertFalse(ActionArgsSchema::isTableExistent());
     }
 
@@ -75,44 +65,38 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testIsTableHealthyReturnsFalseIfTableDoesNotExist(): void
     {
-        $this->ensureTableDoesNotExist();
+        $this->ensureTableDoesNotExist($this->tableName);
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
     }
 
     public function testIsTableHealthyReturnsFalseIfIndexesAreMissing(): void
     {
-        global $wpdb;
-        $wpdb->query('ALTER TABLE ' . ActionArgsSchema::getTableName() . ' DROP INDEX `cron_action_id`');
-
+        $this->dropTableIndex($this->tableName, 'cron_action_id');
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
     }
 
     public function testIsTableHealthyReturnsFalseIfIndexesExistsButIsDifferent(): void
     {
-        global $wpdb;
-
-        $tableName = ActionArgsSchema::getTableName();
-
-        $wpdb->query("DROP INDEX `cron_action_id` on `$tableName`");
-        $wpdb->query("CREATE INDEX `cron_action_id` on `$tableName` (`post_id`)");
+        $this->dropTableIndex($this->tableName, 'cron_action_id');
+        $this->createTableIndex($this->tableName, 'cron_action_id', ['post_id']);
 
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
 
         // To fix the index for next tests
-        $this->ensureTableDoesNotExist();
+        $this->ensureTableDoesNotExist($this->tableName);
     }
 
     public function testIsTableHealthyReturnsFalseIfColumnArgsLengthIsNotUpdated(): void
     {
         global $wpdb;
-        $wpdb->query('ALTER TABLE ' . ActionArgsSchema::getTableName() . ' MODIFY COLUMN args VARCHAR(255)');
+        $wpdb->query('ALTER TABLE ' . $this->tableName . ' MODIFY COLUMN args VARCHAR(255)');
 
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
     }
 
     public function testFixTableCreatesTableIfItDoesNotExist(): void
     {
-        $this->ensureTableDoesNotExist();
+        $this->ensureTableDoesNotExist($this->tableName);
         ActionArgsSchema::fixTable();
 
         $this->assertTrue(ActionArgsSchema::isTableExistent());
@@ -121,7 +105,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
     public function testFixTableUpdatesColumnArgsLengthIfItIsNotUpdated(): void
     {
         global $wpdb;
-        $wpdb->query('ALTER TABLE ' . ActionArgsSchema::getTableName() . ' MODIFY COLUMN args VARCHAR(255)');
+        $wpdb->query('ALTER TABLE ' . $this->tableName . ' MODIFY COLUMN args VARCHAR(255)');
 
         ActionArgsSchema::fixTable();
 
@@ -130,25 +114,18 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testFixTableCreatesIndexesIfTheyAreMissing(): void
     {
-        global $wpdb;
-        $tableName = ActionArgsSchema::getTableName();
-
-        $wpdb->query("DROP INDEX `post_id` on $tableName");
+        $this->dropTableIndex($this->tableName, 'post_id');
 
         ActionArgsSchema::fixTable();
 
         $isHealthy = ActionArgsSchema::isTableHealthy();
-        ray(ActionArgsSchema::getErrors());
         $this->assertTrue($isHealthy);
     }
 
     public function testFixTableCreatesIndexesIfColumnsAreDifferent(): void
     {
-        global $wpdb;
-        $tableName = ActionArgsSchema::getTableName();
-
-        $wpdb->query("DROP INDEX `cron_action_id` on `$tableName`");
-        $wpdb->query("CREATE INDEX `cron_action_id` on `$tableName` (`post_id`)");
+        $this->dropTableIndex($this->tableName, 'cron_action_id');
+        $this->createTableIndex($this->tableName, 'cron_action_id', ['post_id']);
 
         ActionArgsSchema::fixTable();
 
@@ -157,15 +134,14 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testDropTable(): void
     {
+        $this->assertTableExists($this->tableName);
         ActionArgsSchema::dropTable();
-
-        global $wpdb;
-        $this->assertNull($wpdb->get_var("SHOW TABLES LIKE '" . ActionArgsSchema::getTableName() . "'"));
+        $this->assertTableDoesNotExists($this->tableName);
     }
 
     public function testGetErrors(): void
     {
-        $this->ensureTableDoesNotExist();
+        $this->ensureTableDoesNotExist($this->tableName);
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
 
         $errors = ActionArgsSchema::getErrors();
@@ -175,11 +151,11 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testDeprecatedMethodsExists(): void
     {
-        $this->assertTrue(method_exists(ActionArgsSchema::class, 'tableExists'));
-        $this->assertTrue(method_exists(ActionArgsSchema::class, 'healthCheckTableExists'));
-        $this->assertTrue(method_exists(ActionArgsSchema::class, 'checkSchemaHealth'));
-        $this->assertTrue(method_exists(ActionArgsSchema::class, 'createTableIfNotExists'));
-        $this->assertTrue(method_exists(ActionArgsSchema::class, 'fixSchema'));
-        $this->assertTrue(method_exists(ActionArgsSchema::class, 'getSchemaHealthErrors'));
+        $this->assertClassMethodExists(ActionArgsSchema::class, 'tableExists');
+        $this->assertClassMethodExists(ActionArgsSchema::class, 'healthCheckTableExists');
+        $this->assertClassMethodExists(ActionArgsSchema::class, 'checkSchemaHealth');
+        $this->assertClassMethodExists(ActionArgsSchema::class, 'createTableIfNotExists');
+        $this->assertClassMethodExists(ActionArgsSchema::class, 'fixSchema');
+        $this->assertClassMethodExists(ActionArgsSchema::class, 'getSchemaHealthErrors');
     }
 }
