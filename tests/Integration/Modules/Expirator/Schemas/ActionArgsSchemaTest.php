@@ -172,4 +172,14 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
         $this->assertArrayHasKey(ActionArgsSchema::HEALTH_ERROR_TABLE_DOES_NOT_EXIST, $errors);
     }
+
+    public function testDeprecatedMethodsExists(): void
+    {
+        $this->assertTrue(method_exists(ActionArgsSchema::class, 'tableExists'));
+        $this->assertTrue(method_exists(ActionArgsSchema::class, 'healthCheckTableExists'));
+        $this->assertTrue(method_exists(ActionArgsSchema::class, 'checkSchemaHealth'));
+        $this->assertTrue(method_exists(ActionArgsSchema::class, 'createTableIfNotExists'));
+        $this->assertTrue(method_exists(ActionArgsSchema::class, 'fixSchema'));
+        $this->assertTrue(method_exists(ActionArgsSchema::class, 'getSchemaHealthErrors'));
+    }
 }
