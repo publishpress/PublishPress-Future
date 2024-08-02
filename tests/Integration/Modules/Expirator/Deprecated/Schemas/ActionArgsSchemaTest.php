@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Modules\Expirator\Schemas;
+namespace Tests\Modules\Expirator\Deprecated\Schemas;
 
-use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
-use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Modules\Expirator\Deprecated\Schemas\ActionArgsSchema;
 use Tests\NoTransactionWPTestCase;
 
 class ActionArgsSchemaTest extends NoTransactionWPTestCase

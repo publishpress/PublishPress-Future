@@ -333,6 +333,11 @@ class_alias(
 );
 
 class_alias(
+    \PublishPress\Future\Modules\Expirator\Deprecated\Schemas\ActionArgsSchema::class,
+    'PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema'
+);
+
+class_alias(
     'PublishPress\\Future\\Modules\\Expirator\\Schemas\\ActionArgsSchema',
     'PublishPressFuture\\Modules\\Expirator\\Schemas\\ActionArgsSchema'
 );

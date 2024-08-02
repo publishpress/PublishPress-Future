@@ -7,7 +7,10 @@ namespace PublishPress\Future\Modules\Expirator\Interfaces;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-interface TableSchemaInterface
+/**
+ * @deprecated version 3.4.3 Use the TableSchemaInterface interface instead.
+ */
+interface AbstractTableSchemaInterface
 {
     public static function getTableName(): string;
 

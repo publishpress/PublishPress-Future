@@ -13,6 +13,7 @@ use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
+use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -78,6 +79,11 @@ class Module implements ModuleInterface
      */
     private $noticesFacade;
 
+    /**
+     * @var DBTableSchemaInterface
+     */
+    private $actionArgsSchema;
+
 
     public function __construct(
         \PublishPress\Future\Core\HookableInterface $hooks,
@@ -90,7 +96,8 @@ class Module implements ModuleInterface
         $request,
         \Closure $actionArgsModelFactory,
         \Closure $scheduledActionsTableFactory,
-        NoticeFacade $noticesFacade
+        NoticeFacade $noticesFacade,
+        DBTableSchemaInterface $actionArgsSchema
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -103,6 +110,7 @@ class Module implements ModuleInterface
         $this->actionArgsModelFactory = $actionArgsModelFactory;
         $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
         $this->noticesFacade = $noticesFacade;
+        $this->actionArgsSchema = $actionArgsSchema;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['quick_edit'] = $this->factoryQuickEditController();
@@ -191,7 +199,10 @@ class Module implements ModuleInterface
 
     private function factoryPostsListController()
     {
-        return new Controllers\PostListController($this->hooks);
+        return new Controllers\PostListController(
+            $this->hooks,
+            $this->actionArgsSchema
+        );
     }
 
     private function factoryContentController()

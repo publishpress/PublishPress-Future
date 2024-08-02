@@ -4,17 +4,16 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Debug\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
-use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable;
-use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = PublishPress\Future\Core\DI\Container::getInstance();
 $debug = $container->get(ServicesAbstract::DEBUG);
 $hooks = $container->get(ServicesAbstract::HOOKS);
+$actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA);
 
-$isSchemaHealthOk = ActionArgsSchema::isTableHealthy();
-$schemaHealthErrors = ActionArgsSchema::getErrors();
+$isSchemaHealthOk = $actionArgsSchema->isTableHealthy();
+$schemaHealthErrors = $actionArgsSchema->getErrors();
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">

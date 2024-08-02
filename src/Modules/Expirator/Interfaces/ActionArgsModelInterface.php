@@ -11,8 +11,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 interface ActionArgsModelInterface
 {
-    public function __construct(ExpirationActionsModel $expirationActionsModel);
-
     public function load(int $id): bool;
 
     public function loadByActionId(int $actionId): bool;

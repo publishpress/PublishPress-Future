@@ -184,4 +184,16 @@ class NoTransactionWPTestCase extends \lucatume\WPBrowser\TestCase\WPTestCase
 		global $wpdb;
 		$wpdb->query("ALTER TABLE `$tableName` MODIFY COLUMN `$columnName` $columnType");
 	}
+
+	public function createTable(string $tableName, string $tableStructure): void
+	{
+		global $wpdb;
+		$charsetCollate = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE `$tableName` (
+			$tableStructure
+		) $charsetCollate;";
+
+		$wpdb->query($sql);
+	}
 }

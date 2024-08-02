@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -33,6 +34,11 @@ class PostExpirator_Display
     private $hooks;
 
     /**
+     * @var DBTableSchemaInterface
+     */
+    private $actionArgsSchema;
+
+    /**
      * Constructor.
      */
     private function __construct()
@@ -41,6 +47,7 @@ class PostExpirator_Display
 
         $this->cron = $container->get(ServicesAbstract::CRON);
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
+        $this->actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA);
 
         $this->hooks();
     }
@@ -219,10 +226,10 @@ class PostExpirator_Display
                 );
                 echo '</p></div>';
             } elseif (isset($_POST['fix-db-schema'])) {
-                ActionArgsSchema::fixTable();
+                $this->actionArgsSchema->fixTable();
 
                 echo "<div id='message' class='updated fade'><p>";
-                if (ActionArgsSchema::isTableExistent()) {
+                if ($this->actionArgsSchema->isTableExistent()) {
                     esc_html_e(
                         'The database schema was fixed.',
                         'post-expirator'
