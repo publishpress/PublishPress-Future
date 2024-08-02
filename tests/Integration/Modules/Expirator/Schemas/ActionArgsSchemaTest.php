@@ -85,9 +85,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testIsTableHealthyReturnsFalseIfColumnArgsLengthIsNotUpdated(): void
     {
-        global $wpdb;
-        $wpdb->query('ALTER TABLE ' . $this->tableName . ' MODIFY COLUMN args VARCHAR(255)');
-
+        $this->modifyColumnTable($this->tableName, 'args', 'VARCHAR(255)');
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
     }
 
@@ -101,8 +99,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testFixTableUpdatesColumnArgsLengthIfItIsNotUpdated(): void
     {
-        global $wpdb;
-        $wpdb->query('ALTER TABLE ' . $this->tableName . ' MODIFY COLUMN args VARCHAR(255)');
+        $this->modifyColumnTable($this->tableName, 'args', 'VARCHAR(255)');
 
         ActionArgsSchema::fixTable();
 

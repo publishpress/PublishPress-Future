@@ -178,4 +178,10 @@ class NoTransactionWPTestCase extends \lucatume\WPBrowser\TestCase\WPTestCase
 	{
 		$this->assertTrue(method_exists($className, $methodName));
 	}
+
+	protected function modifyColumnTable($tableName, $columnName, $columnType): void
+	{
+		global $wpdb;
+		$wpdb->query("ALTER TABLE `$tableName` MODIFY COLUMN `$columnName` $columnType");
+	}
 }
