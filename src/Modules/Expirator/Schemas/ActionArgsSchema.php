@@ -41,6 +41,14 @@ abstract class ActionArgsSchema implements TableSchemaInterface
             );
         }
 
+        $indexesErrors = self::checkTableIndexes();
+        if (! empty($indexesErrors)) {
+            static::$schemaErrors['missing_indexes'] = __(
+                'The table indexes are different from the expected: ',
+                'post-expirator'
+            ) . implode('; ', $indexesErrors);
+        }
+
         return empty(static::$schemaErrors);
     }
 
@@ -65,6 +73,10 @@ abstract class ActionArgsSchema implements TableSchemaInterface
             // FIXME: Use DI here
             $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
             $hooks->doAction(ExpiratorHooksAbstract::ACTION_MIGRATE_ARGS_LENGTH);
+        }
+
+        if (! empty(self::checkTableIndexes())) {
+            self::fixMissedIndexes();
         }
     }
 
@@ -121,7 +133,7 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         return (bool)$result;
     }
 
-    protected static function  checkColumnArgsLengthIs1000()
+    private static function checkColumnArgsLengthIs1000()
     {
         global $wpdb;
 
@@ -132,6 +144,101 @@ abstract class ActionArgsSchema implements TableSchemaInterface
         $columnLength = (int)$wpdb->get_var("SELECT CHARACTER_MAXIMUM_LENGTH FROM information_schema.`COLUMNS` WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName' AND COLUMN_NAME = 'args'");
 
         return $columnLength === 1000;
+    }
+
+    private static function getTableIndexes()
+    {
+        global $wpdb;
+
+        $tableName = self::getTableName();
+        $dbName = DB_NAME;
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
+        $indexes = $wpdb->get_results("SELECT * FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = '$dbName' AND TABLE_NAME = '$tableName'");
+        $mappedIndexes = [];
+
+        foreach ($indexes as $index) {
+            $indexName = $index->INDEX_NAME;
+            $columnName = $index->COLUMN_NAME;
+
+            if (! isset($mappedIndexes[$indexName])) {
+                $mappedIndexes[$indexName] = [];
+            }
+
+            $mappedIndexes[$indexName][] = $columnName;
+        }
+
+        return $mappedIndexes;
+    }
+
+    private static function getExpectedTableIndexes()
+    {
+        return [
+            'PRIMARY' => ['id'],
+            'post_id' => ['post_id', 'id'],
+            'enabled_post_id' => ['post_id', 'enabled', 'id'],
+            'cron_action_id' => ['cron_action_id', 'id'],
+            'enabled_cron_action_id' => ['cron_action_id', 'enabled', 'id'],
+        ];
+    }
+
+    private static function checkTableIndexes(): array
+    {
+        global $wpdb;
+
+        $errors = [];
+
+        $indexes = self::getTableIndexes();
+        $expectedIndexes = self::getExpectedTableIndexes();
+
+        foreach ($expectedIndexes as $indexName => $expectedColumns) {
+            if (! isset($indexes[$indexName])) {
+                $errors[] = 'Missed index: ' . $indexName;
+
+                continue;
+            }
+
+            $expectedColumnsString = implode(', ', $expectedColumns);
+            $columnsString = implode(', ', $indexes[$indexName]);
+
+            if ($columnsString !== $expectedColumnsString) {
+                $errors[] = 'Index ' . $indexName . ' has different columns: [' . $columnsString . ']. Expected: [' . $expectedColumnsString . ']';
+            }
+        }
+
+        return $errors;
+    }
+
+    private static function fixMissedIndexes()
+    {
+        global $wpdb;
+
+        $indexes = self::getTableIndexes();
+        $expectedIndexes = self::getExpectedTableIndexes();
+        $wpdb->query("SET foreign_key_checks = 0");
+
+        foreach ($expectedIndexes as $indexName => $expectedColumns) {
+            $indexExists = array_key_exists($indexName, $indexes);
+            $columns = $indexes[$indexName] ?? [];
+
+            if ($indexExists) {
+                $expectedColumnsString = implode(', ', $expectedColumns);
+                $columnsString = implode(', ', $columns);
+
+                if ($columnsString !== $expectedColumnsString) {
+                    // Drop the index for recreation
+                    $wpdb->query("DROP INDEX `$indexName` ON " . self::getTableName());
+                    $indexExists = false;
+                }
+            }
+
+            if (! $indexExists) {
+                $columns = implode(', ', $expectedColumns);
+                $unique = $indexName === 'PRIMARY' ? 'UNIQUE' : '';
+                $wpdb->query("CREATE $unique INDEX `$indexName` ON " . self::getTableName() . " ($columns)");
+            }
+        }
+        $wpdb->query("SET foreign_key_checks = 1");
     }
 
     // Deprecated methods
