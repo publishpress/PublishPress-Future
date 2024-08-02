@@ -130,18 +130,18 @@ class NoTransactionWPTestCase extends \lucatume\WPBrowser\TestCase\WPTestCase
 	}
 
 	// Custom methods to test the database schema
-	protected function ensureTableDoesNotExist($tableName): void
-    {
-        global $wpdb;
-        $wpdb->query('DROP TABLE IF EXISTS `' . $tableName . '`');
-    }
-
 	protected function getTablePrefix(): string
     {
         $loaderConfig = $this->getModule('lucatume\WPBrowser\Module\WPLoader')->_getConfig();
 
         return $loaderConfig['tablePrefix'];
     }
+
+	protected function dropTable($tableName): void
+	{
+		global $wpdb;
+		$wpdb->query('DROP TABLE IF EXISTS `' . $tableName . '`');
+	}
 
 	protected function dropTableIndex($tableName, $indexName): void
 	{

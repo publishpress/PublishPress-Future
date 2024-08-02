@@ -25,9 +25,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     protected function resetTable(): void
     {
-        global $wpdb;
-        $wpdb->query("DROP TABLE IF EXISTS `{$this->tableName}`");
-
+        $this->dropTable($this->tableName);
         ActionArgsSchema::createTable();
     }
 
@@ -36,19 +34,18 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
         $tableName = ActionArgsSchema::getTableName();
         $prefix = $this->getTablePrefix();
 
-        $this->assertStringStartsWith($prefix, $tableName);
         $this->assertEquals($prefix . 'ppfuture_actions_args', $tableName);
     }
 
     public function testCreateTable(): void
     {
-        $this->ensureTableDoesNotExist($this->tableName);
+        $this->dropTable($this->tableName);
         $this->assertTrue(ActionArgsSchema::createTable());
     }
 
     public function testTableExistsReturnsFalseIfTableDoesNotExist(): void
     {
-        $this->ensureTableDoesNotExist($this->tableName);
+        $this->dropTable($this->tableName);
         $this->assertFalse(ActionArgsSchema::isTableExistent());
     }
 
@@ -65,7 +62,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testIsTableHealthyReturnsFalseIfTableDoesNotExist(): void
     {
-        $this->ensureTableDoesNotExist($this->tableName);
+        $this->dropTable($this->tableName);
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
     }
 
@@ -83,7 +80,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
 
         // To fix the index for next tests
-        $this->ensureTableDoesNotExist($this->tableName);
+        $this->dropTable($this->tableName);
     }
 
     public function testIsTableHealthyReturnsFalseIfColumnArgsLengthIsNotUpdated(): void
@@ -96,7 +93,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testFixTableCreatesTableIfItDoesNotExist(): void
     {
-        $this->ensureTableDoesNotExist($this->tableName);
+        $this->dropTable($this->tableName);
         ActionArgsSchema::fixTable();
 
         $this->assertTrue(ActionArgsSchema::isTableExistent());
@@ -141,7 +138,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testGetErrors(): void
     {
-        $this->ensureTableDoesNotExist($this->tableName);
+        $this->dropTable($this->tableName);
         $this->assertFalse(ActionArgsSchema::isTableHealthy());
 
         $errors = ActionArgsSchema::getErrors();
