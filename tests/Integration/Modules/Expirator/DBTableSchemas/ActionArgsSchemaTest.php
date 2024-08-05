@@ -81,6 +81,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
     public function testDropTable(): void
     {
         $schema = $this->getSchema();
+        $this->assertTableExists($schema->getTableName());
         $this->assertTrue($schema->dropTable());
         $this->assertTableDoesNotExists($schema->getTableName());
     }
