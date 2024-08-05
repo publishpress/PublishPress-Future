@@ -2,8 +2,8 @@
 
 namespace Tests\Modules\Expirator\Schemas;
 
-use PublishPress\Future\Modules\Expirator\DBTableSchemaHandler;
-use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaHandlerInterface;
+use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use Tests\NoTransactionWPTestCase;
 

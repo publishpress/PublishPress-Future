@@ -13,7 +13,7 @@ use PublishPress\Future\Framework\WordPress\Facade\SiteFacade;
 use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
-use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 

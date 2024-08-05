@@ -13,7 +13,7 @@ use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
-use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 

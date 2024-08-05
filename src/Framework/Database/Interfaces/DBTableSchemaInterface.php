@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace PublishPress\Future\Modules\Expirator\Interfaces;
+namespace PublishPress\Future\Framework\Database\Interfaces;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 

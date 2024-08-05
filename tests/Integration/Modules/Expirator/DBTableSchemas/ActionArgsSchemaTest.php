@@ -3,10 +3,10 @@
 namespace Tests\Modules\Expirator\Schemas;
 
 use Codeception\Stub;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
+use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\Future\Modules\Expirator\DBTableSchemaHandler;
 use PublishPress\Future\Modules\Expirator\DBTableSchemas\ActionArgsSchema;
-use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaHandlerInterface;
 use Tests\NoTransactionWPTestCase;
 
 class ActionArgsSchemaTest extends NoTransactionWPTestCase

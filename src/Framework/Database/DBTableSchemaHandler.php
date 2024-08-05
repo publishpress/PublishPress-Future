@@ -1,8 +1,8 @@
 <?php
 
-namespace PublishPress\Future\Modules\Expirator;
+namespace PublishPress\Future\Framework\Database;
 
-use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaHandlerInterface;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
 use \wpdb;
 
 defined('ABSPATH') or die('Direct access not allowed.');

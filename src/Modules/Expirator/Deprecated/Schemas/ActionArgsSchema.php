@@ -2,11 +2,10 @@
 
 namespace PublishPress\Future\Modules\Expirator\Deprecated\Schemas;
 
-use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\AbstractTableSchemaInterface;
-use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 

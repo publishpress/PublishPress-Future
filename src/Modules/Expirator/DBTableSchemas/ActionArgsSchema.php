@@ -3,9 +3,8 @@
 namespace PublishPress\Future\Modules\Expirator\DBTableSchemas;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Modules\Expirator\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaHandlerInterface;
-use PublishPress\Future\Modules\Expirator\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
