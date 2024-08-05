@@ -188,7 +188,9 @@ return [
      * @return DatabaseFacade
      */
     ServicesAbstract::DB => static function (ContainerInterface $container) {
-        return new DatabaseFacade();
+        return new DatabaseFacade(
+            $container->get(ServicesAbstract::WPDB)
+        );
     },
 
     /**
