@@ -82,13 +82,13 @@ trait PostGutenberg
      */
     public function iSetTheExpirationDateToYesterdayAsDraftOnGutenberg()
     {
-        $yesterday = date('U',strtotime("-1 days"));
+        $yesterday = date('U', strtotime("-1 days"));
         $this->executeJS('wp.data.dispatch(\'core/editor\').editPost({meta: {\'_expiration-date\': \'' . $yesterday . '\'}});');
     }
 
-   /**
-    * @Then I publish the post on Gutenberg
-    */
+    /**
+     * @Then I publish the post on Gutenberg
+     */
     public function iPublishThePostOnGutenberg()
     {
         $this->executeJS('wp.data.dispatch(\'core/editor\').editPost({status: \'publish\'});');

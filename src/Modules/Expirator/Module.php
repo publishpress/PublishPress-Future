@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -167,7 +168,7 @@ class Module implements ModuleInterface
 
     private function factoryScheduledActionsController()
     {
-        return new Controllers\ScheduledActionsController (
+        return new Controllers\ScheduledActionsController(
             $this->hooks,
             $this->actionArgsModelFactory,
             $this->scheduledActionsTableFactory

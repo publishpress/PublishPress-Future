@@ -13,7 +13,7 @@ class PostCategoryAdd implements ExpirationActionInterface
 {
     use TaxonomyRelatedTrait;
 
-    const SERVICE_NAME = 'expiration.actions.post_category_add';
+    public const SERVICE_NAME = 'expiration.actions.post_category_add';
 
     /**
      * @var ExpirablePostModel

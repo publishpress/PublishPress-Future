@@ -10,9 +10,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ActionArgsSchema implements DBTableSchemaInterface
 {
-    const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 'table_does_not_exist';
-    const HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED = 'column_args_length_not_updated';
-    const HEALTH_ERROR_INVALID_INDEX = 'invalid_index';
+    public const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 'table_does_not_exist';
+    public const HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED = 'column_args_length_not_updated';
+    public const HEALTH_ERROR_INVALID_INDEX = 'invalid_index';
 
     /**
      * @var DBTableSchemaHandlerInterface
@@ -100,7 +100,7 @@ class ActionArgsSchema implements DBTableSchemaInterface
             );
         }
 
-        $indexesErrors = $this->handler->checkTableIndexes($this->getIndexes()  );
+        $indexesErrors = $this->handler->checkTableIndexes($this->getIndexes());
         if (! empty($indexesErrors)) {
             $this->handler->registerError(
                 self::HEALTH_ERROR_INVALID_INDEX,

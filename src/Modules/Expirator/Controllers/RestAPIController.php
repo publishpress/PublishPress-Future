@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -68,7 +69,7 @@ class RestAPIController implements InitializableInterface
     {
         $apiNamespace = 'publishpress-future/v1';
 
-        register_rest_route( $apiNamespace, '/post-expiration/(?P<postId>\d+)', [
+        register_rest_route($apiNamespace, '/post-expiration/(?P<postId>\d+)', [
             'methods' => 'GET',
             'callback' => [$this, 'getFutureActionData'],
             'permission_callback' => function () {
@@ -144,7 +145,7 @@ class RestAPIController implements InitializableInterface
             ]
         ]);
 
-        register_rest_route( $apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
+        register_rest_route($apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
             'methods' => 'GET',
             'callback' => [$this, 'getPostTypeTaxonomies'],
             'permission_callback' => function () {
@@ -414,7 +415,7 @@ class RestAPIController implements InitializableInterface
         $data = $expirablePostModel->getExpirationDataAsArray();
 
         // return the data as a JSON response
-        return rest_ensure_response( $data );
+        return rest_ensure_response($data);
     }
 
     public function saveFutureActionData(WP_REST_Request $request)

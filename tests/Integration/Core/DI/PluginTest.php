@@ -17,7 +17,7 @@ class PluginTest extends \lucatume\WPBrowser\TestCase\WPTestCase
      */
     protected $tester;
 
-    public function testInitializeTriggersActionInitPlugin() :void
+    public function testInitializeTriggersActionInitPlugin(): void
     {
         $modules = [];
 

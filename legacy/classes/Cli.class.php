@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -10,7 +11,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 class PostExpirator_Cli
 {
-    const CLI_COMMAND = 'publishpress-future';
+    public const CLI_COMMAND = 'publishpress-future';
 
     private static $instance;
 

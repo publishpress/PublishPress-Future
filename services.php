@@ -531,7 +531,7 @@ return [
     },
 
     ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY => static function (ContainerInterface $container) {
-        return function() use ($container) {
+        return function () use ($container) {
             return new ScheduledActionsTable(
                 $container->get(ServicesAbstract::ACTION_SCHEDULER_STORE),
                 $container->get(ServicesAbstract::ACTION_SCHEDULER_LOGGER),

@@ -18,8 +18,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
         </div>
     </div>
 <?php
-    if ($showSideBar) {
-        include __DIR__ . '/ad-banner-right-sidebar.php';
-    }
+if ($showSideBar) {
+    include __DIR__ . '/ad-banner-right-sidebar.php';
+}
 ?>
 </div>

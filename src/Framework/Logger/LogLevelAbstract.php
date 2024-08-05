@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -12,12 +13,12 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 abstract class LogLevelAbstract
 {
-    const EMERGENCY = 'emergency';
-    const ALERT = 'alert';
-    const CRITICAL = 'critical';
-    const ERROR = 'error';
-    const WARNING = 'warning';
-    const NOTICE = 'notice';
-    const INFO = 'info';
-    const DEBUG = 'debug';
+    public const EMERGENCY = 'emergency';
+    public const ALERT = 'alert';
+    public const CRITICAL = 'critical';
+    public const ERROR = 'error';
+    public const WARNING = 'warning';
+    public const NOTICE = 'notice';
+    public const INFO = 'info';
+    public const DEBUG = 'debug';
 }

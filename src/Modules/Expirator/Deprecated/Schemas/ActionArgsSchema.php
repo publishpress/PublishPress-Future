@@ -14,8 +14,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 abstract class ActionArgsSchema implements AbstractTableSchemaInterface
 {
-    const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 'table_does_not_exist';
-    const HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED = 'column_args_length_not_updated';
+    public const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 'table_does_not_exist';
+    public const HEALTH_ERROR_COLUMN_ARGS_LENGTH_NOT_UPDATED = 'column_args_length_not_updated';
 
     private static $schemaErrors = [];
 

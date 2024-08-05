@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -112,7 +113,7 @@ class ClassicEditorController implements InitializableInterface
     {
         // Only show the metabox if the block editor is not enabled for the post type
         if (! empty($post) && $this->isGutenbergAvailableForThePost($post)) {
-            if (! $this->classicEditorIsActiveForCurrentSession() ) {
+            if (! $this->classicEditorIsActiveForCurrentSession()) {
                 return;
             }
         }
@@ -166,7 +167,8 @@ class ClassicEditorController implements InitializableInterface
         ];
 
         PostExpirator_Display::getInstance()->render_template(
-            'classic-editor', [
+            'classic-editor',
+            [
                 'post' => $post,
                 'enabled' => $data['enabled'],
                 'action' => $data['action'],
@@ -309,7 +311,7 @@ class ClassicEditorController implements InitializableInterface
 
         $debug = $container->get(ServicesAbstract::DEBUG);
 
-        $taxonomyPluralName= '';
+        $taxonomyPluralName = '';
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
             $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
             $taxonomyPluralName = $taxonomy->label;

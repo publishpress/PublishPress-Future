@@ -1,4 +1,5 @@
 <?php
+
 // Save this in a file called "ray.php"
 
 return [

@@ -3,7 +3,7 @@
 namespace PublishPress\Future\Framework\Database;
 
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
-use \wpdb;
+use wpdb;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 

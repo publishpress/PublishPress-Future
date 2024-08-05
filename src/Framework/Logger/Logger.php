@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -40,7 +41,7 @@ class Logger implements LoggerInterface
         $this->site = $siteFacade;
         $this->settings = $settingsFacade;
 
-         // FIXME: Rename the table to something like ppfuture_debug_log.
+        // FIXME: Rename the table to something like ppfuture_debug_log.
         $this->dbTableName = $this->db->getTablePrefix() . 'postexpirator_debug';
 
         $this->initialize();

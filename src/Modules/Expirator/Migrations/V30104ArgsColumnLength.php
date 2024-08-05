@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
@@ -16,7 +17,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class V30104ArgsColumnLength implements MigrationInterface
 {
-    const HOOK = ExpiratorHooks::ACTION_MIGRATE_ARGS_LENGTH;
+    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_ARGS_LENGTH;
 
     private $hooksFacade;
 

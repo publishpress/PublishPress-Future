@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -317,7 +318,7 @@ class Controller implements InitializableInterface
         $taxonomiesModel = $taxonomiesModelFactory();
 
         $terms = explode(',', $terms);
-        $terms = array_map(function($term) use ($taxonomy, $taxonomiesModel) {
+        $terms = array_map(function ($term) use ($taxonomy, $taxonomiesModel) {
             $term = \sanitize_text_field($term);
             $termId = $taxonomiesModel->getTermIdByName($taxonomy, $term);
 
@@ -342,10 +343,12 @@ class Controller implements InitializableInterface
         $postTypes = $settingsModel->getPostTypes();
 
         if (isset($_POST['expirationdateSaveDefaults'])) {
-            if (! isset($_POST['_postExpiratorMenuDefaults_nonce']) || ! \wp_verify_nonce(
+            if (
+                ! isset($_POST['_postExpiratorMenuDefaults_nonce']) || ! \wp_verify_nonce(
                     \sanitize_key($_POST['_postExpiratorMenuDefaults_nonce']),
                     'postexpirator_menu_defaults'
-                )) {
+                )
+            ) {
                 wp_die(esc_html__('Form Validation Failure: Sorry, your nonce did not verify.', 'post-expirator'));
             }
 

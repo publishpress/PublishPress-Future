@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -40,7 +41,7 @@ class Container implements ContainerInterface
 
     public function __construct($services = [])
     {
-        if ( ! empty($services)) {
+        if (! empty($services)) {
             $this->registerServices($services);
         }
 
@@ -76,7 +77,7 @@ class Container implements ContainerInterface
      */
     public function get(string $id)
     {
-        if ( ! $this->has($id)) {
+        if (! $this->has($id)) {
             throw new ServiceNotFoundException(esc_html($id));
         }
 

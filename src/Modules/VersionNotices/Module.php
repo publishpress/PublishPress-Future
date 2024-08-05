@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
 namespace PublishPress\Future\Modules\VersionNotices;
-
 
 use PublishPress\Future\Core\Paths;
 use PublishPress\Future\Core\DI\Container;
@@ -38,8 +38,8 @@ class Module implements ModuleInterface
     {
         if (
             defined('PP_VERSION_NOTICES_VERSION')
-            && version_compare(PP_VERSION_NOTICES_VERSION, '2.1.1', '<')) {
-
+            && version_compare(PP_VERSION_NOTICES_VERSION, '2.1.1', '<')
+        ) {
             // Only log this error once in an hour to avoid flooding the log.
             if (! get_transient('pp_future_version_notices_version_error')) {
                 set_transient('pp_future_version_notices_version_error', true, HOUR_IN_SECONDS);
@@ -71,14 +71,14 @@ class Module implements ModuleInterface
 
         // This comes after version check, because the class is not available on older versions,
         // generating false positive.
-        if(! $this->checkLibraryIsLoaded()) {
+        if (! $this->checkLibraryIsLoaded()) {
             return;
         }
 
         if (is_admin() && ! defined('PUBLISHPRESS_FUTURE_SKIP_VERSION_NOTICES')) {
             if (! defined('PP_VERSION_NOTICES_LOADED')) {
                 $includesPath = $this->paths->getVendorDirPath(
-                    ) . '/publishpress/wordpress-version-notices/includes.php';
+                ) . '/publishpress/wordpress-version-notices/includes.php';
 
                 if (is_file($includesPath) && is_readable($includesPath)) {
                     // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable

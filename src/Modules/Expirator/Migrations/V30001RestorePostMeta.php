@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
@@ -23,7 +24,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class V30001RestorePostMeta implements MigrationInterface
 {
-    const HOOK = ExpiratorHooks::ACTION_MIGRATE_RESTORE_POST_META;
+    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_RESTORE_POST_META;
 
     /**
      * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface

@@ -9,8 +9,8 @@ trait Settings
     /**
      * @Given expiration metabox is enabled for :postType
      */
-     public function expirationMetaboxIsEnabledForPostType($postType)
-     {
+    public function expirationMetaboxIsEnabledForPostType($postType)
+    {
         $this->haveOptionInDatabase(
             'expirationdateDefaults' . strtoupper($postType),
             [
@@ -22,24 +22,24 @@ trait Settings
                 'default-custom-date' => '',
             ]
         );
-     }
+    }
 
-     /**
-     * @Given expiration metabox is disabled for :postType
-     */
+    /**
+    * @Given expiration metabox is disabled for :postType
+    */
     public function expirationMetaboxIsDisabledForPostType($postType)
     {
-       $this->haveOptionInDatabase(
-           'expirationdateDefaults' . strtoupper($postType),
-           [
-               'expireType' => 'draft',
-               'autoEnable' => '0',
-               'activeMetaBox' => 'inactive',
-               'emailnotification' => '',
-               'default-expire-type' => '',
-               'default-custom-date' => '',
-           ]
-       );
+        $this->haveOptionInDatabase(
+            'expirationdateDefaults' . strtoupper($postType),
+            [
+                'expireType' => 'draft',
+                'autoEnable' => '0',
+                'activeMetaBox' => 'inactive',
+                'emailnotification' => '',
+                'default-expire-type' => '',
+                'default-custom-date' => '',
+            ]
+        );
     }
 
     /**
@@ -102,25 +102,25 @@ trait Settings
         $this->amOnAdminPage('admin.php?page=publishpress-future&tab=general');
     }
 
-   /**
-    * @When /I change the default taxonomy to ([a-z_0-9]+) for ([a-z_0-9]+)/
-    */
+    /**
+     * @When /I change the default taxonomy to ([a-z_0-9]+) for ([a-z_0-9]+)/
+     */
     public function iChangeTheDefaultTaxonomyToFor($taxonomy, $postType)
     {
         $this->selectOption('#expirationdate_taxonomy-' . $postType, $taxonomy);
     }
 
-   /**
-    * @When I save the changes
-    */
+    /**
+     * @When I save the changes
+     */
     public function iSaveTheChanges()
     {
         $this->click('Save Changes');
     }
 
-   /**
-    * @Then /I see the taxonomy ([a-z_0-9]+) as the default one for ([a-z_0-9]+)/
-    */
+    /**
+     * @Then /I see the taxonomy ([a-z_0-9]+) as the default one for ([a-z_0-9]+)/
+     */
     public function iSeeTheTaxonomyAsTheDefaultOneFor($taxonomy, $postType)
     {
         $this->seeOptionIsSelected('#expirationdate_taxonomy-' . $postType, $taxonomy);
@@ -134,9 +134,9 @@ trait Settings
         $this->selectOption('input[name="expirationdate_activemeta-'  . $postType . '"]', $value);
     }
 
-   /**
-    * @When /I see the field Active has value (inactive|active) for ([a-z_0-9]+)/
-    */
+    /**
+     * @When /I see the field Active has value (inactive|active) for ([a-z_0-9]+)/
+     */
     public function iSeeTheFieldActiveHasValueFor($value, $postType)
     {
         $this->seeOptionIsSelected('input[name="expirationdate_activemeta-'  . $postType . '"]', ucfirst($value));
@@ -159,9 +159,9 @@ trait Settings
         // $this->wait(30);
     }
 
-   /**
-    * @Then I see auto-enable is selected for :postType
-    */
+    /**
+     * @Then I see auto-enable is selected for :postType
+     */
     public function iSeeAutoenableIsSelectedForPost($postType)
     {
         $this->seeOptionIsSelected("input[name=expirationdate_autoenable-{$postType}]", 'Enabled');
@@ -203,9 +203,9 @@ trait Settings
         }
     }
 
-   /**
-    * @Then I see the field Auto-Enable has value :value for :postType
-    */
+    /**
+     * @Then I see the field Auto-Enable has value :value for :postType
+     */
     public function iSeeTheFieldAutoEnableHasValueFor($value, $postType)
     {
         $this->seeOptionIsSelected("input[name=expirationdate_autoenable-{$postType}]", $value);
@@ -219,9 +219,9 @@ trait Settings
         $this->selectOption('#expirationdate_taxonomy-' . $postType, $value);
     }
 
-   /**
-    * @Then I see the field Taxonomy has value :value for :postType
-    */
+    /**
+     * @Then I see the field Taxonomy has value :value for :postType
+     */
     public function iSeeTheFieldTaxonomyHasValueFor($value, $postType)
     {
         $this->seeOptionIsSelected("#expirationdate_taxonomy-" . $postType, $value);
@@ -235,9 +235,9 @@ trait Settings
         $this->fillField('#expirationdate_emailnotification-' . $postType, $value);
     }
 
-   /**
-    * @Then I see the field Who to Notify has value :value for :postType
-    */
+    /**
+     * @Then I see the field Who to Notify has value :value for :postType
+     */
     public function iSeeTheFieldWhoToNotifyHasValueFor($value, $postType)
     {
         $this->seeInField('#expirationdate_emailnotification-' . $postType, $value);
@@ -257,9 +257,9 @@ trait Settings
         }
     }
 
-   /**
-    * @Then I see the field Default Date has value :value for :postType
-    */
+    /**
+     * @Then I see the field Default Date has value :value for :postType
+     */
     public function iSeeTheFieldDefaultDateHasValueFor($value, $postType)
     {
         $value = explode(':', $value);
@@ -343,9 +343,9 @@ trait Settings
         $this->see($date, '.entry-content p');
     }
 
-     /**
-     * @Then I see the expiration time in the footer content
-     */
+    /**
+    * @Then I see the expiration time in the footer content
+    */
     public function iSeeTheTimeInTheFooterContent()
     {
         global $currentExpirationDate;
@@ -365,9 +365,9 @@ trait Settings
         $this->fillField('#expired-footer-style', $customStyle);
     }
 
-   /**
-    * @Then I see the custom footer content :content with style :style
-    */
+    /**
+     * @Then I see the custom footer content :content with style :style
+     */
     public function iSeeTheCustomFooterConstentWithStyle($content, $style)
     {
         $this->seeInSource('<p style="' . $style . '">' . $content . '</p>');
@@ -389,9 +389,9 @@ trait Settings
         $this->fillField('#expired-default-date-format', $dateFormat);
     }
 
-   /**
-    * @Then I see the expiration date in the post footer with format :dateFormat
-    */
+    /**
+     * @Then I see the expiration date in the post footer with format :dateFormat
+     */
     public function iSeeTheExpirationDateInThePostFooterWithFormat($dateFormat)
     {
         global $currentExpirationDate;
@@ -418,9 +418,9 @@ trait Settings
         $this->fillField('#expired-default-time-format', $timeFormat);
     }
 
-   /**
-    * @Then I see the expiration time in the post footer with format :timeFormat
-    */
+    /**
+     * @Then I see the expiration time in the post footer with format :timeFormat
+     */
     public function iSeeTheExpirationTimeInThePostFooterWithFormat($timeFormat)
     {
         global $currentExpirationDate;

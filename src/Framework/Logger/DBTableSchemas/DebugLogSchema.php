@@ -10,8 +10,8 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class DebugLogSchema implements DBTableSchemaInterface
 {
-    const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 'table_does_not_exist';
-    const HEALTH_ERROR_INVALID_INDEX = 'invalid_index';
+    public const HEALTH_ERROR_TABLE_DOES_NOT_EXIST = 'table_does_not_exist';
+    public const HEALTH_ERROR_INVALID_INDEX = 'invalid_index';
 
     /**
      * @var DBTableSchemaHandlerInterface

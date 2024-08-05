@@ -59,13 +59,13 @@ $schemaHealthErrors = [
                         <?php else : ?>
                             <i class="dashicons dashicons-no pe-status pe-status-disabled"></i>
                             <span><?php echo esc_html(
-                                            _n(
-                                                'Error found on the database schema:',
-                                                'Errors found on the database schema:',
-                                                count($schemaHealthErrors),
-                                                'post-expirator'
-                                            )
-                                        ); ?>
+                                _n(
+                                    'Error found on the database schema:',
+                                    'Errors found on the database schema:',
+                                    count($schemaHealthErrors),
+                                    'post-expirator'
+                                )
+                                  ); ?>
                             </span>
                             <?php foreach ($schemaHealthErrors as $tableName => $errors) : ?>
                                 <?php if (empty($errors)) {
@@ -108,19 +108,19 @@ $schemaHealthErrors = [
 
                             <?php
                             echo '<a href="' . esc_url(
-                                    admin_url(
-                                        'admin.php?page=publishpress-future&tab=viewdebug'
-                                    )
-                                ) . '">' . esc_html__('View Debug Logs', 'post-expirator') . '</a>'; ?>
+                                admin_url(
+                                    'admin.php?page=publishpress-future&tab=viewdebug'
+                                )
+                            ) . '">' . esc_html__('View Debug Logs', 'post-expirator') . '</a>'; ?>
                         <?php else : ?>
                             <i class="dashicons dashicons-no-alt pe-status pe-status-disabled"></i> <span><?php
-                                esc_html_e('Disabled', 'post-expirator'); ?></span>
+                            esc_html_e('Disabled', 'post-expirator'); ?></span>
                             <?php
                             echo '<input type="submit" class="button" name="debugging-enable" id="debugging-enable" value=" '
-                                . esc_html__(
-                                    'Enable Debugging',
-                                    'post-expirator'
-                                ) . '" />'; ?>
+                            . esc_html__(
+                                'Enable Debugging',
+                                'post-expirator'
+                            ) . '" />'; ?>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -174,12 +174,12 @@ $schemaHealthErrors = [
 
                             ?>
                             <p><?php
-                                // phpcs:disable Generic.Files.LineLength.TooLong
-                                esc_html_e(
-                                    'The below table will show all currently scheduled cron events for the plugin with the next run time.',
-                                    'post-expirator'
-                                );
-                                // phpcs:enable
+                        // phpcs:disable Generic.Files.LineLength.TooLong
+                            esc_html_e(
+                                'The below table will show all currently scheduled cron events for the plugin with the next run time.',
+                                'post-expirator'
+                               );
+                    // phpcs:enable
                                 ?></p>
 
                             <div>
@@ -199,51 +199,51 @@ $schemaHealthErrors = [
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $printPostEvent = function ($post) {
-                                                echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
+                                        $printPostEvent = function ($post) {
+                                            echo esc_html("$post->ID: $post->post_title (status: $post->post_status)");
 
-                                                $container = Container::getInstance();
-                                                $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
-                                                $postModel = $factory($post->ID);
-                                                $attributes = $postModel->getExpirationDataAsArray();
+                                            $container = Container::getInstance();
+                                            $factory = $container->get(ServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY);
+                                            $postModel = $factory($post->ID);
+                                            $attributes = $postModel->getExpirationDataAsArray();
 
-                                                echo ': <span class="post-expiration-attributes">';
-                                                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
-                                                print_r($attributes);
-                                                echo '</span>';
-                                            };
+                                            echo ': <span class="post-expiration-attributes">';
+                                            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+                                            print_r($attributes);
+                                            echo '</span>';
+                                        };
 
-                                            // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
-                                            foreach ($cron as $time => $value) {
-                                                foreach ($value as $eventKey => $eventValue) {
-                                                    echo '<tr class="pe-event">';
-                                                    echo '<td>' . esc_html(PostExpirator_Util::get_wp_date('r', $time))
-                                                        . '</td>';
-                                                    echo '<td>' . esc_html($eventKey) . '</td>';
-                                                    $eventValueKeys = array_keys($eventValue);
-                                                    echo '<td>';
-                                                    foreach ($eventValueKeys as $eventGUID) {
-                                                        if (false === empty($eventValue[$eventGUID]['args'])) {
-                                                            echo '<div class="pe-event-post" title="' . esc_attr($eventGUID) . '">';
-                                                            foreach ($eventValue[$eventGUID]['args'] as $value) {
-                                                                $eventPost = get_post((int)$value);
+                    // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact
+                    foreach ($cron as $time => $value) {
+        foreach ($value as $eventKey => $eventValue) {
+            echo '<tr class="pe-event">';
+            echo '<td>' . esc_html(PostExpirator_Util::get_wp_date('r', $time))
+                . '</td>';
+            echo '<td>' . esc_html($eventKey) . '</td>';
+            $eventValueKeys = array_keys($eventValue);
+            echo '<td>';
+            foreach ($eventValueKeys as $eventGUID) {
+                if (false === empty($eventValue[$eventGUID]['args'])) {
+                    echo '<div class="pe-event-post" title="' . esc_attr($eventGUID) . '">';
+                    foreach ($eventValue[$eventGUID]['args'] as $value) {
+                        $eventPost = get_post((int)$value);
 
-                                                                if (
-                                                                    false === empty($eventPost)
-                                                                    && false === is_wp_error($eventPost)
-                                                                    && is_object($eventPost)
-                                                                ) {
-                                                                    $printPostEvent($eventPost);
-                                                                }
-                                                            }
-                                                            echo '</div>';
-                                                        }
-                                                    }
-                                                    echo '</td>';
-                                                    echo '</tr>';
-                                                }
-                                            }
-                                        // phpcs:enable ?>
+                        if (
+                            false === empty($eventPost)
+                            && false === is_wp_error($eventPost)
+                            && is_object($eventPost)
+                        ) {
+                            $printPostEvent($eventPost);
+                        }
+                    }
+                    echo '</div>';
+                }
+            }
+            echo '</td>';
+            echo '</tr>';
+        }
+                    }
+                    // phpcs:enable?>
                                     </tbody>
                                 </table>
                             </div>
@@ -253,7 +253,7 @@ $schemaHealthErrors = [
                                     'This is a legacy feature and will be removed in a future version.',
                                     'post-expirator'
                                 );
-                                // phpcs:enable
+                    // phpcs:enable
                                 ?></p>
                         </td>
                     </tr>

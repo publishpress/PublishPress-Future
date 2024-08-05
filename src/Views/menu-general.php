@@ -105,17 +105,17 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                             <input type="radio" name="expired-email-notification" id="expired-email-notification-true"
                                 value="1" <?php
                             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                            echo $expiredemailnotificationenabled; ?>/> <label
+                                echo $expiredemailnotificationenabled; ?>/> <label
                                     for="expired-email-notification-true"><?php
-                                esc_html_e('Enabled', 'post-expirator'); ?></label>
+                                    esc_html_e('Enabled', 'post-expirator'); ?></label>
                         </div>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-email-notification" id="expired-email-notification-false"
                                 value="0" <?php
                             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                            echo $expiredemailnotificationdisabled; ?>/> <label
+                                echo $expiredemailnotificationdisabled; ?>/> <label
                                     for="expired-email-notification-false"><?php
-                                esc_html_e('Disabled', 'post-expirator'); ?></label>
+                                    esc_html_e('Disabled', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php
                             esc_html_e(
@@ -133,18 +133,18 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                                 id="expired-email-notification-admins-true"
                                 value="1" <?php
                             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                            echo $expiredemailnotificationadminsenabled; ?>/> <label
+                                echo $expiredemailnotificationadminsenabled; ?>/> <label
                                     for="expired-email-notification-admins-true"><?php
-                                esc_html_e('Enabled', 'post-expirator'); ?></label>
+                                    esc_html_e('Enabled', 'post-expirator'); ?></label>
                         </div>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="expired-email-notification-admins"
                                 id="expired-email-notification-admins-false"
                                 value="0" <?php
                             // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-                            echo $expiredemailnotificationadminsdisabled; ?>/> <label
+                                echo $expiredemailnotificationadminsdisabled; ?>/> <label
                                     for="expired-email-notification-admins-false"><?php
-                                esc_html_e('Disabled', 'post-expirator'); ?></label>
+                                    esc_html_e('Disabled', 'post-expirator'); ?></label>
                         </div>
                         <p class="description"><?php
                             esc_html_e(
@@ -156,12 +156,12 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                 <tr valign="top">
                     <th scope="row"><label
                                 for="expired-email-notification-list"><?php
-                            esc_html_e('Who to Notify', 'post-expirator'); ?></label>
+                                esc_html_e('Who to Notify', 'post-expirator'); ?></label>
                     </th>
                     <td>
                         <input class="large-text" type="text" name="expired-email-notification-list"
                                id="expired-email-notification-list" value="<?php
-                        echo esc_attr($expiredemailnotificationlist); ?>"/>
+                                echo esc_attr($expiredemailnotificationlist); ?>"/>
                         <p class="description"><?php
                             esc_html_e(
                                 'Enter a comma separate list of emails that you would like to be notified when the action runs.  This will be applied to ALL post types.  You can set post type specific emails on the Defaults tab.',
@@ -174,7 +174,7 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             <p class="submit">
                 <input type="submit" name="expirationdateSave" class="button-primary"
                        value="<?php
-                       esc_attr_e('Save Changes', 'post-expirator'); ?>"/>
+                        esc_attr_e('Save Changes', 'post-expirator'); ?>"/>
             </p>
         </form>
     </div>

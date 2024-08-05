@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -63,12 +64,14 @@ class PostListController implements InitializableInterface
         $defaults = $settingsFacade->getPostTypeDefaults($postType);
 
         // If settings are not configured, show the metabox by default only for posts and pages
-        if ((! isset($defaults['activeMetaBox']) && in_array($postType, array(
+        if (
+            (! isset($defaults['activeMetaBox']) && in_array($postType, array(
                     'post',
                     'page'
                 ), true)) || (is_array(
                     $defaults
-                ) && in_array((string)$defaults['activeMetaBox'], ['active', '1']))) {
+                ) && in_array((string)$defaults['activeMetaBox'], ['active', '1']))
+        ) {
             $columns['expirationdate'] = __('Future Action', 'post-expirator');
         }
 
@@ -133,10 +136,12 @@ class PostListController implements InitializableInterface
         if ('expirationdate' === $query->get('orderby')) {
             $order = strtoupper($query->get('order'));
 
-            if (! in_array($order, [
+            if (
+                ! in_array($order, [
                 'ASC',
                 'DESC'
-            ], true)) {
+                ], true)
+            ) {
                 $order = 'ASC';
             }
 

@@ -11,6 +11,6 @@
  * the "modules.config.WPLoader.dump" setting.
  */
 
- if (! class_exists('Tests\NoTransactionWPTestCase')) {
+if (! class_exists('Tests\NoTransactionWPTestCase')) {
     require_once __DIR__ . '/NoTransactionWPTestCase.php';
 }
