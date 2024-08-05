@@ -3,17 +3,29 @@
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Modules\Debug\HooksAbstract;
-use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
 $container = PublishPress\Future\Core\DI\Container::getInstance();
 $debug = $container->get(ServicesAbstract::DEBUG);
 $hooks = $container->get(ServicesAbstract::HOOKS);
+
+/**
+ * @var DBTableSchemaInterface $actionArgsSchema
+ */
 $actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA);
 
-$isSchemaHealthOk = $actionArgsSchema->isTableHealthy();
-$schemaHealthErrors = $actionArgsSchema->getErrors();
+/**
+ * @var DBTableSchemaInterface $debugLogSchema
+ */
+$debugLogSchema = $container->get(ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA);
+
+$isSchemaHealthOk = $actionArgsSchema->isTableHealthy() && $debugLogSchema->isTableHealthy();
+$schemaHealthErrors = [
+    $actionArgsSchema->getTableName() => $actionArgsSchema->getErrors(),
+    $debugLogSchema->getTableName() => $debugLogSchema->getErrors(),
+];
 ?>
 
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
@@ -55,15 +67,21 @@ $schemaHealthErrors = $actionArgsSchema->getErrors();
                                             )
                                         ); ?>
                             </span>
+                            <?php foreach ($schemaHealthErrors as $tableName => $errors) : ?>
+                                <?php if (empty($errors)) {
+                                    continue;
+                                } ?>
 
-                            <ul>
-                            <?php foreach ($schemaHealthErrors as $error) : ?>
-                                <li><?php echo esc_html($error); ?></li>
+                                <h4><?php echo esc_html($tableName); ?></h4>
+                                <ul>
+                                    <?php foreach ($errors as $error) : ?>
+                                        <li><?php echo esc_html($error); ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
                             <?php endforeach; ?>
-                            </ul>
 
                             <input type="submit" class="button" name="fix-db-schema" id="fix-db-schema" value="<?php
-                            esc_attr_e('Fix Database', 'post-expirator'); ?>"/>
+                            esc_attr_e('Try to Fix Database', 'post-expirator'); ?>"/>
                         <?php endif; ?>
                     </td>
                 </tr>

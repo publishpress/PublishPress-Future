@@ -7,6 +7,7 @@ use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Paths;
 use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
+use PublishPress\Future\Framework\Logger\DBTableSchemas\DebugLogSchema;
 use PublishPress\Future\Framework\Logger\Logger;
 use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
@@ -616,5 +617,15 @@ return [
             $schemaHandler,
             $container->get(ServicesAbstract::HOOKS)
         );
-    }
+    },
+
+    ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA => static function (ContainerInterface $container) {
+        $schemaHandler = $container->get(ServicesAbstract::DB_TABLE_SCHEMA_HANDLER_FACTORY);
+        $schemaHandler = $schemaHandler();
+
+        return new DebugLogSchema(
+            $schemaHandler,
+            $container->get(ServicesAbstract::HOOKS)
+        );
+    },
 ];

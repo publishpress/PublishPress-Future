@@ -70,5 +70,6 @@ abstract class ServicesAbstract
     const NOTICES = 'future.free/notices-facade';
     const DB_TABLE_SCHEMA_HANDLER_FACTORY = 'future.free/db-table-schema/handler-factory';
     const DB_TABLE_ACTION_ARGS_SCHEMA = 'future.free/db-table-schema/action-args-schema';
+    const DB_TABLE_DEBUG_LOG_SCHEMA = 'future.free/db-table-schema/debug-log-schema';
     const WPDB = 'future.free/wpdb';
 }

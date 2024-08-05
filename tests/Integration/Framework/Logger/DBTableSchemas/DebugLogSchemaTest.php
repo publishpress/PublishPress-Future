@@ -3,13 +3,13 @@
 namespace Tests\Modules\Expirator\Schemas;
 
 use Codeception\Stub;
-use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
-use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
+use PublishPress\Future\Framework\Logger\DBTableSchemas\DebugLogSchema;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\Future\Modules\Expirator\DBTableSchemas\ActionArgsSchema;
+use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
 use Tests\NoTransactionWPTestCase;
 
-class ActionArgsSchemaTest extends NoTransactionWPTestCase
+class DebugLogSchemaTest extends NoTransactionWPTestCase
 {
     /**
      * @var \IntegrationTester
@@ -58,7 +58,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     protected function getSchema()
     {
-        return new ActionArgsSchema($this->getHandler(), $this->getHooks());
+        return new DebugLogSchema($this->getHandler(), $this->getHooks());
     }
 
     public function testGetTableName(): void
@@ -66,7 +66,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
         $schema = $this->getSchema();
         $prefix = $this->getTablePrefix();
 
-        $this->assertEquals($prefix . 'ppfuture_actions_args', $schema->getTableName());
+        $this->assertEquals($prefix . 'postexpirator_debug', $schema->getTableName());
     }
 
     public function testCreateTable(): void
@@ -86,7 +86,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
         $this->assertTableDoesNotExists($schema->getTableName());
     }
 
-    public function testIsTableHealthy(): void
+    public function testIsTableHealthyReturnsTrueWhenIsHealthy(): void
     {
         $schema = $this->getSchema();
         $this->assertTrue($schema->isTableHealthy());
@@ -101,25 +101,10 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
         $this->assertFalse($schema->isTableHealthy());
     }
 
-    public function testIsTableHealthyReturnsFalseWhenIndexesAreMissing(): void
-    {
-        $schema = $this->getSchema();
-        $this->dropTableIndex($schema->getTableName(), 'cron_action_id');
-        $this->assertFalse($schema->isTableHealthy());
-    }
-
     public function testIsTableHealthyReturnsFalseWhenIndexesAreDifferent(): void
     {
         $schema = $this->getSchema();
-        $this->dropTableIndex($schema->getTableName(), 'cron_action_id');
-        $this->createTableIndex($schema->getTableName(), 'cron_action_id', ['post_id']);
-        $this->assertFalse($schema->isTableHealthy());
-    }
-
-    public function testIsTableHealthyReturnsFalseWhenArgsColumnIsOutdated(): void
-    {
-        $schema = $this->getSchema();
-        $this->modifyColumnTable($schema->getTableName(), 'args', 'varchar(255) NOT NULL');
+        $this->createTableIndex($schema->getTableName(), 'blog', ['blog']);
         $this->assertFalse($schema->isTableHealthy());
     }
 
@@ -145,16 +130,6 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
         $this->assertEmpty($schema->getErrors());
     }
 
-    public function testGetErrorsReturnsErrorsWhenTableIsNotHealthy(): void
-    {
-        $schema = $this->getSchema();
-        $this->dropTableIndex($schema->getTableName(), 'cron_action_id');
-        $this->assertFalse($schema->isTableHealthy());
-
-        $errors = $schema->getErrors();
-        $this->assertNotEmpty($errors);
-    }
-
     public function testFixTableWhenTableDoesntExists(): void
     {
         $schema = $this->getSchema();
@@ -165,31 +140,10 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
         $this->assertTrue($schema->isTableExistent());
     }
 
-    public function testFixTableWhenIndexesAreMissing(): void
-    {
-        $schema = $this->getSchema();
-        $this->dropTableIndex($schema->getTableName(), 'cron_action_id');
-        $this->assertFalse($schema->isTableHealthy());
-
-        $schema->fixTable();
-        $this->assertTrue($schema->isTableHealthy());
-    }
-
     public function testFixTableWhenIndexesAreDifferent(): void
     {
         $schema = $this->getSchema();
-        $this->dropTableIndex($schema->getTableName(), 'cron_action_id');
-        $this->createTableIndex($schema->getTableName(), 'cron_action_id', ['post_id']);
-        $this->assertFalse($schema->isTableHealthy());
-
-        $schema->fixTable();
-        $this->assertTrue($schema->isTableHealthy());
-    }
-
-    public function testFixTableWhenArgsColumnIsOutdated(): void
-    {
-        $schema = $this->getSchema();
-        $this->modifyColumnTable($schema->getTableName(), 'args', 'varchar(255) NOT NULL');
+        $this->createTableIndex($schema->getTableName(), 'blog', ['blog']);
         $this->assertFalse($schema->isTableHealthy());
 
         $schema->fixTable();
@@ -199,7 +153,7 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
     public function testFixTableMultipleTimes(): void
     {
         $schema = $this->getSchema();
-        $this->createTableIndex($schema->getTableName(), 'args', ['args']);
+        $this->createTableIndex($schema->getTableName(), 'blog', ['blog']);
         $this->assertFalse($schema->isTableHealthy());
 
         $schema->fixTable();

@@ -39,6 +39,11 @@ class PostExpirator_Display
     private $actionArgsSchema;
 
     /**
+     * @var DBTableSchemaInterface
+     */
+    private $debugLogSchema;
+
+    /**
      * Constructor.
      */
     private function __construct()
@@ -48,6 +53,7 @@ class PostExpirator_Display
         $this->cron = $container->get(ServicesAbstract::CRON);
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
         $this->actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA);
+        $this->debugLogSchema = $container->get(ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA);
 
         $this->hooks();
     }
@@ -227,9 +233,10 @@ class PostExpirator_Display
                 echo '</p></div>';
             } elseif (isset($_POST['fix-db-schema'])) {
                 $this->actionArgsSchema->fixTable();
+                $this->debugLogSchema->fixTable();
 
                 echo "<div id='message' class='updated fade'><p>";
-                if ($this->actionArgsSchema->isTableExistent()) {
+                if ($this->actionArgsSchema->isTableHealthy() && $this->debugLogSchema->isTableHealthy()) {
                     esc_html_e(
                         'The database schema was fixed.',
                         'post-expirator'
