@@ -166,6 +166,10 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
             }
         }
 
+        if (count($indexes) !== count($expectedIndexes)) {
+            $errors[] = 'There are more indexes than expected';
+        }
+
         return $errors;
     }
 
@@ -215,6 +219,14 @@ class DBTableSchemaHandler implements DBTableSchemaHandlerInterface
                 $this->wpdb->query("CREATE $unique INDEX `$indexName` ON " . self::getTableName() . " ($columns)");
             }
         }
+
+        // Drop extra indexes
+        foreach ($indexes as $indexName => $columns) {
+            if (! array_key_exists($indexName, $expectedIndexes)) {
+                $this->wpdb->query("DROP INDEX `$indexName` ON " . self::getTableName());
+            }
+        }
+
         $this->wpdb->query("SET foreign_key_checks = 1");
     }
 

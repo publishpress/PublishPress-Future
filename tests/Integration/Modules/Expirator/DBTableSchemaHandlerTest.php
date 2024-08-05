@@ -142,6 +142,21 @@ class DBTableSchemaHandlerTest extends NoTransactionWPTestCase
         $this->assertNotEmpty($handler->checkTableIndexes($indexes));
     }
 
+    public function testCheckTableIndexesReturnsFalseForExtraIndexes(): void
+    {
+        $handler = $this->getHandler('users');
+
+        $indexes = [
+            'PRIMARY' => ['ID'],
+            'user_login_key' => ['user_login'],
+            'user_nicename' => ['user_nicename'],
+            'user_email' => ['user_email'],
+            'extra_index' => ['ID'],
+        ];
+
+        $this->assertNotEmpty($handler->checkTableIndexes($indexes));
+    }
+
     public function testRegisterAndGetError(): void
     {
         $handler = $this->getHandler('users');
@@ -206,6 +221,25 @@ class DBTableSchemaHandlerTest extends NoTransactionWPTestCase
         $this->createTable(
             'wp_new_custom_table_name',
             'id INT(11) NOT NULL AUTO_INCREMENT, name VARCHAR(255) NOT NULL, age INT(11) NOT NULL, PRIMARY KEY (id), KEY age (age)'
+        );
+        $handler = $this->getHandler('new_custom_table_name');
+
+        $indexes = [
+            'PRIMARY' => ['id'],
+            'age' => ['id', 'age'],
+        ];
+
+        $handler->fixIndexes($indexes);
+
+        $this->assertEmpty($handler->checkTableIndexes($indexes));
+    }
+
+    public function testFixIndexesForExtraIndixes(): void
+    {
+        $this->dropTable('wp_new_custom_table_name');
+        $this->createTable(
+            'wp_new_custom_table_name',
+            'id INT(11) NOT NULL AUTO_INCREMENT, name VARCHAR(255) NOT NULL, age INT(11) NOT NULL, PRIMARY KEY (id), KEY age (age), KEY name (name)'
         );
         $handler = $this->getHandler('new_custom_table_name');
 
