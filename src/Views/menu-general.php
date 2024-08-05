@@ -1,9 +1,8 @@
 <?php
 
-use PublishPress\WordPressBanners\BannersMain;
-use PublishPress\Future\Modules\Settings\HooksAbstract;
-
 defined('ABSPATH') or die('Direct access not allowed.');
+
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 // Get Option
 $expirationdateDefaultDateFormat = get_option('expirationdateDefaultDateFormat', POSTEXPIRATOR_DATEFORMAT);
@@ -185,3 +184,5 @@ $plugin_facade = PostExpirator_Facade::getInstance();
     }
     ?>
 </div>
+<?php
+// phpcs:enable

@@ -252,7 +252,9 @@ class RestAPIController implements InitializableInterface
                         $taxonomy = $postModel->getExpirationTaxonomy();
 
                         if (empty($date)) {
-                            $defaultDataModelFactory = Container::getInstance()->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+                            $defaultDataModelFactory = Container::getInstance()->get(
+                                ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY
+                            );
                             $defaultDataModel = $defaultDataModelFactory->create($post['post_type']);
 
                             $defaultExpirationDate = $defaultDataModel->getActionDateParts($post['id']);
@@ -431,7 +433,12 @@ class RestAPIController implements InitializableInterface
                 'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy'))
             ];
 
-            $this->hooks->doAction(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, absint($request->get_param('date')), $opts);
+            $this->hooks->doAction(
+                HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
+                $postId,
+                absint($request->get_param('date')),
+                $opts
+            );
         } else {
             $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
         }

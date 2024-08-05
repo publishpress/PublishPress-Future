@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 // Get Option
 $preserveData = (bool)get_option('expirationdatePreserveData', true);
 
@@ -35,10 +37,10 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
 
                 <tr valign="top">
                     <th scope="row"><?php
-                                        esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
+                                                                                                                        esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
                     <td>
                         <?php
-                                        $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
+                                                                                                                        $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
                         ?>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="future-action-column-style"
@@ -122,19 +124,19 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
                                                             endif; ?>
                                        value="<?php
                                         echo esc_attr($role_name); ?>"
-                                                               <?php
-                                                                if (
-                                                                    $plugin_facade->user_role_can_expire_posts(
-                                                                        $role_name
-                                                                    )
-                                                                ) :
-                                                                    ?>checked="checked"<?php
-                                                                endif; ?>
+                                                                                       <?php
+                                                                                        if (
+                                                                                            $plugin_facade->user_role_can_expire_posts(
+                                                                                                $role_name
+                                                                                            )
+                                                                                        ) :
+                                                                                            ?>checked="checked"<?php
+                                                                                        endif; ?>
                                 />
-                                <?php
-                                echo esc_html($role_label); ?>
+                                                                                <?php
+                                                                                echo esc_html($role_label); ?>
                             </label>
-                                                    <?php
+                                                                                                                            <?php
                         endforeach; ?>
                     </td>
                 </tr>
@@ -188,3 +190,5 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
     }
     ?>
 </div>
+<?php
+// phpcs:enable

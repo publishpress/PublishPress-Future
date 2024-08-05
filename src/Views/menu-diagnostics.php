@@ -7,6 +7,8 @@ use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 $container = PublishPress\Future\Core\DI\Container::getInstance();
 $debug = $container->get(ServicesAbstract::DEBUG);
 $hooks = $container->get(ServicesAbstract::HOOKS);
@@ -65,7 +67,7 @@ $schemaHealthErrors = [
                                     count($schemaHealthErrors),
                                     'post-expirator'
                                 )
-                                  ); ?>
+                                  ); // phpcs:ignore PSR2.Methods.FunctionCallSignature.Indent?>
                             </span>
                             <?php foreach ($schemaHealthErrors as $tableName => $errors) : ?>
                                 <?php if (empty($errors)) {
@@ -174,10 +176,10 @@ $schemaHealthErrors = [
 
                             ?>
                             <p><?php
-                        // phpcs:disable Generic.Files.LineLength.TooLong
+                        // phpcs:disable Generic.Files.LineLength.TooLong, PSR2.Methods.FunctionCallSignature.Indent
                             esc_html_e(
-                                'The below table will show all currently scheduled cron events for the plugin with the next run time.',
-                                'post-expirator'
+                            'The below table will show all currently scheduled cron events for the plugin with the next run time.',
+                            'post-expirator'
                                );
                     // phpcs:enable
                                 ?></p>
@@ -269,3 +271,5 @@ $schemaHealthErrors = [
     ?>
 </div>
 <?php
+
+// phpcs:enable

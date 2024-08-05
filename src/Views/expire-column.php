@@ -52,6 +52,7 @@ if ($columnStyle === 'simple') {
     echo esc_html($formatedDate);
 } else {
     echo sprintf(
+    // phpcs:ignore Generic.Files.LineLength.TooLong
     // translators: %1$s opens a span tag, %2$s is the action name, %3$s ends a span tag, %4$s is the a span tag, %5$s is the a span tag, %6$s is the a span tag
         esc_html__('%1$s%2$s%3$s on %5$s%4$s%6$s', 'post-expirator'),
         '<span class="future-action-action-name">',
@@ -88,8 +89,13 @@ if ($columnStyle === 'simple') {
     }
 }
         } else {
-            ?><span class="dashicons dashicons-warning icon-missed" aria-hidden="true"></span> <?php
-        echo esc_html__('Action was not scheduled due to a configuration issue. Please attempt to schedule it again.', 'post-expirator');
+            ?>
+            <span class="dashicons dashicons-warning icon-missed" aria-hidden="true"></span>
+            <?php
+            echo esc_html__(
+                'Action was not scheduled due to a configuration issue. Please attempt to schedule it again.',
+                'post-expirator'
+            );
         }
     } else {
         ?>
