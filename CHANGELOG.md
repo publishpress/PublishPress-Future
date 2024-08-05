@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.3] - UNRELEASED
+
+### Changed
+
+- Remove icon from the Future metabox in the block editor, #821
+
+### Fixed
+
+- Update translation files
+- Only load the quick-edit script if in the post list screen
+- Fix quick edit action box to use the filter to hide action box when deactivated for the post type, #884
+- Fixed the database schema check to also check the debug log table, #887
+- Fixed the database schema check to check the table indexes, #887
+
 ## [3.4.2] - 15 Jul, 2024
 
 ### Added

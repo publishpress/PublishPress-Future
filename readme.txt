@@ -173,6 +173,20 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
+## [3.4.3] - UNRELEASED
+
+### Changed
+
+- Remove icon from the Future metabox in the block editor, #821
+
+### Fixed
+
+- Update translation files
+- Only load the quick-edit script if in the post list screen
+- Fix quick edit action box to use the filter to hide action box when deactivated for the post type, #884
+- Fixed the database schema check to also check the debug log table, #887
+- Fixed the database schema check to check the table indexes, #887
+
 ## [3.4.2] - 15 Jul, 2024
 
 ### Added
