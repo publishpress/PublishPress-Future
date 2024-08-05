@@ -4,7 +4,7 @@ namespace PublishPress\Future\Modules\Expirator\ExpirationActions;
 
 use PublishPress\Future\Framework\WordPress\Models\TermsModel;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
-use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterfa;
+use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
 use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
