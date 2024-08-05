@@ -13,7 +13,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 class PostStatusToDraft implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.post_status_to_draft';
+    public const SERVICE_NAME = 'expiration.actions.post_status_to_draft';
 
     /**
      * @var ExpirablePostModel

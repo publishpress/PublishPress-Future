@@ -7,6 +7,7 @@ use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\Future\Framework\WordPress\Facade\NoticeFacade;
+use PublishPress\Future\Framework\WordPress\Facade\NoticeInterface;
 use stdClass;
 
 class PluginTest extends \lucatume\WPBrowser\TestCase\WPTestCase
@@ -16,7 +17,7 @@ class PluginTest extends \lucatume\WPBrowser\TestCase\WPTestCase
      */
     protected $tester;
 
-    public function testInitializeTriggersActionInitPlugin() :void
+    public function testInitializeTriggersActionInitPlugin(): void
     {
         $modules = [];
 

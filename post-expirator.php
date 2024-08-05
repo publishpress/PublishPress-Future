@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: PublishPress Future
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
@@ -69,7 +70,8 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         }
 
         $autoloadFilePath = PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/autoload.php';
-        if (! class_exists('ComposerAutoloaderInitPublishPressFuture')
+        if (
+            ! class_exists('ComposerAutoloaderInitPublishPressFuture')
             && is_file($autoloadFilePath)
             && is_readable($autoloadFilePath)
         ) {

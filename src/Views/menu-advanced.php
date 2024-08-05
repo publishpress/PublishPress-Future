@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Settings\HooksAbstract;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 // Get Option
 $preserveData = (bool)get_option('expirationdatePreserveData', true);
 
@@ -35,18 +37,18 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
 
                 <tr valign="top">
                     <th scope="row"><?php
-                        esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
+                                                                                                                        esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
                     <td>
                         <?php
-                        $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
+                                                                                                                        $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
                         ?>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="future-action-column-style"
                                 id="future-action-column-style-verbose"
                                 value="verbose" <?php
-                            echo $columnStyle === 'verbose' ? 'checked' : ''; ?>/>
+                                echo $columnStyle === 'verbose' ? 'checked' : ''; ?>/>
                             <label for="future-action-column-style-verbose"><?php
-                                esc_html_e('Detailed', 'post-expirator'); ?></label>
+                            esc_html_e('Detailed', 'post-expirator'); ?></label>
                             <p class="description offset"><?php
                             esc_html_e(
                                 'Displays all information in the Future Action column.',
@@ -58,9 +60,9 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
                             <input type="radio" name="future-action-column-style"
                                 id="future-action-column-style-simple"
                                 value="simple" <?php
-                            echo $columnStyle === 'simple' ? 'checked' : ''; ?>/>
+                                echo $columnStyle === 'simple' ? 'checked' : ''; ?>/>
                             <label for="future-action-column-style-simple"><?php
-                                esc_html_e('Simplified', 'post-expirator'); ?></label>
+                            esc_html_e('Simplified', 'post-expirator'); ?></label>
                             <p class="description offset"><?php
                             esc_html_e(
                                 'Displays only the icon and date/time.',
@@ -80,25 +82,25 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
                             <input type="radio" name="future-action-time-format"
                                 id="future-action-time-format-inherited"
                                 value="inherited" <?php
-                            echo $timeFormat === 'inherited' ? 'checked' : ''; ?>/>
+                                echo $timeFormat === 'inherited' ? 'checked' : ''; ?>/>
                             <label for="future-action-time-format-inherited"><?php
-                                esc_html_e('Inherit from Site Settings', 'post-expirator'); ?></label>
+                            esc_html_e('Inherit from Site Settings', 'post-expirator'); ?></label>
                         </div>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="future-action-time-format"
                                 id="future-action-time-format-24h"
                                 value="24h" <?php
-                            echo $timeFormat === '24h' ? 'checked' : ''; ?>/>
+                                echo $timeFormat === '24h' ? 'checked' : ''; ?>/>
                             <label for="future-action-time-format-24h"><?php
-                                esc_html_e('24 hours', 'post-expirator'); ?></label>
+                            esc_html_e('24 hours', 'post-expirator'); ?></label>
                         </div>
                         <div class="pp-settings-field-row">
                             <input type="radio" name="future-action-time-format"
                                 id="future-action-time-format-12h"
                                 value="12h" <?php
-                            echo $timeFormat === '12h' ? 'checked' : ''; ?>/>
+                                echo $timeFormat === '12h' ? 'checked' : ''; ?>/>
                             <label for="future-action-time-format-12h"><?php
-                                esc_html_e('AM/PM', 'post-expirator'); ?></label>
+                            esc_html_e('AM/PM', 'post-expirator'); ?></label>
                         </div>
                     </td>
                 </tr>
@@ -114,22 +116,27 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
                             echo esc_attr($role_name); ?>">
                                 <input type="checkbox"
                                        id="allow-user-role-<?php
-                                       echo esc_attr($role_name); ?>"
+                                        echo esc_attr($role_name); ?>"
                                        name="allow-user-roles[]"
-                                    <?php
-                                    if ('administrator' === $role_name) : echo 'disabled="disabled"'; endif; ?>
+                                                            <?php
+                                                            if ('administrator' === $role_name) :
+                                                                echo 'disabled="disabled"';
+                                                            endif; ?>
                                        value="<?php
-                                       echo esc_attr($role_name); ?>"
-                                       <?php
-                                       if ($plugin_facade->user_role_can_expire_posts(
-                                           $role_name
-                                       )) : ?>checked="checked"<?php
-                                endif; ?>
+                                        echo esc_attr($role_name); ?>"
+                                                                                       <?php
+                                                                                        if (
+                                                                                            $plugin_facade->user_role_can_expire_posts(
+                                                                                                $role_name
+                                                                                            )
+                                                                                        ) :
+                                                                                            ?>checked="checked"<?php
+                                                                                        endif; ?>
                                 />
-                                <?php
-                                echo esc_html($role_label); ?>
+                                                                                <?php
+                                                                                echo esc_html($role_label); ?>
                             </label>
-                        <?php
+                                                                                                                            <?php
                         endforeach; ?>
                     </td>
                 </tr>
@@ -143,7 +150,7 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
                             <input type="radio" name="expired-preserve-data-deactivating"
                                 id="expired-preserve-data-deactivating-true"
                                 value="1" <?php
-                            echo $preserveData ? ' checked="checked"' : ''; ?>/>
+                                echo $preserveData ? ' checked="checked"' : ''; ?>/>
                             <label for="expired-preserve-data-deactivating-true">
                                 <?php
                                 esc_html_e('Preserve data', 'post-expirator'); ?>
@@ -153,7 +160,7 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
                             <input type="radio" name="expired-preserve-data-deactivating"
                                 id="expired-preserve-data-deactivating-false"
                                 value="0" <?php
-                            echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
+                                echo ! $preserveData ? ' checked="checked"' : ''; ?>/>
                             <label for="expired-preserve-data-deactivating-false">
                                 <?php
                                 esc_html_e('Delete data', 'post-expirator'); ?>
@@ -183,3 +190,5 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
     }
     ?>
 </div>
+<?php
+// phpcs:enable

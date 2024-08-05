@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -100,10 +101,10 @@ class BulkEditController implements InitializableInterface
 
         wp_enqueue_script(
             'postexpirator-bulk-edit',
-             POSTEXPIRATOR_BASEURL . '/assets/js/bulk-edit.js',
-             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
-             POSTEXPIRATOR_VERSION,
-             true
+            POSTEXPIRATOR_BASEURL . '/assets/js/bulk-edit.js',
+            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
+            POSTEXPIRATOR_VERSION,
+            true
         );
 
         wp_enqueue_style('wp-components');
@@ -211,8 +212,7 @@ class BulkEditController implements InitializableInterface
         if (
             ($columnName !== 'expirationdate')
             || (! $facade->current_user_can_expire_posts())
-        )
-        {
+        ) {
             return;
         }
 

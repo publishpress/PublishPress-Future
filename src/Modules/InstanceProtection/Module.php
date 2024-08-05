@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
 namespace PublishPress\Future\Modules\InstanceProtection;
-
 
 use PublishPress\Future\Core\Paths;
 use PublishPress\Future\Framework\ModuleInterface;

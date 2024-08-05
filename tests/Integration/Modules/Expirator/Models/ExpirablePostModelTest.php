@@ -8,8 +8,8 @@ class ExpirablePostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
      * @var \IntegrationTester
      */
     protected $tester;
-    
-    public function setUp() :void
+
+    public function setUp(): void
     {
         // Before...
         parent::setUp();
@@ -17,7 +17,7 @@ class ExpirablePostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         // Your set up methods here.
     }
 
-    public function tearDown() :void
+    public function tearDown(): void
     {
         // Your tear down methods here.
 
@@ -26,10 +26,10 @@ class ExpirablePostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
     }
 
     // Tests
-    public function test_factory() :void
+    public function test_factory(): void
     {
         $post = static::factory()->post->create_and_get();
-        
+
         $this->assertInstanceOf(\WP_Post::class, $post);
     }
 }

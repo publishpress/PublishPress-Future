@@ -13,7 +13,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 class PostStatusToPrivate implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.post_status_to_private';
+    public const SERVICE_NAME = 'expiration.actions.post_status_to_private';
 
     /**
      * @var ExpirablePostModel

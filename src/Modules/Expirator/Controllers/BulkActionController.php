@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -10,7 +11,6 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Models\PostTypesModel;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
-
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -120,7 +120,7 @@ class BulkActionController implements InitializableInterface
     public function syncSchedulerWithPostMeta()
     {
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        if ( ! isset($_REQUEST['action']) || $_REQUEST['action'] !== self::BULK_ACTION_SYNC) {
+        if (! isset($_REQUEST['action']) || $_REQUEST['action'] !== self::BULK_ACTION_SYNC) {
             return;
         }
 

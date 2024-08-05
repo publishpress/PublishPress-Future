@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -90,7 +91,7 @@ class ExpirationScheduler implements SchedulerInterface
         $this->expirationActionsModel = $expirationActionsModel;
     }
 
-    private function convertLocalTimeToUtc($timestamp):int
+    private function convertLocalTimeToUtc($timestamp): int
     {
         // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         return (int)get_gmt_from_date(date('Y-m-d H:i:s', $timestamp), 'U');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Steps;
+namespace Tests\Support\GherkinSteps;
 
 trait Debug
 {

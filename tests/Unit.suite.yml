@@ -2,6 +2,5 @@ actor: UnitTester
 suite_namespace: Tests\Unit
 modules:
     enabled:
-        - Tests\Support\Helper\Unit
         - Asserts
-bootstrap: bootstrap.php
+bootstrap: _bootstrap.php

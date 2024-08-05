@@ -11,8 +11,9 @@ add_action('admin_head', 'dwat_hide_popovers');
 /**
  * Inspired by https://orbisius.com/p4620
  */
-function dwat_hide_popovers() {
-	?>
+function dwat_hide_popovers()
+{
+    ?>
 	<style>
 		.wp-admin .components-popover.nux-dot-tip {
 			display: none !important;

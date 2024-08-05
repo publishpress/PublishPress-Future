@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -74,7 +75,13 @@ class ShortcodeController implements InitializableInterface
 
             if ($debugIsEnabled) {
                 // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error
-                trigger_error(esc_html__('The shortcode [futureaction] must be used inside the loop or with the post_id attribute.', 'post-expirator'), E_USER_WARNING);
+                trigger_error(
+                    esc_html__(
+                        'The shortcode [futureaction] must be used inside the loop or with the post_id attribute.',
+                        'post-expirator'
+                    ),
+                    E_USER_WARNING
+                );
             }
 
             return '';

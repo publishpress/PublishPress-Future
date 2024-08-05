@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -7,7 +8,7 @@ namespace PublishPress\Future\Modules\Expirator\Models;
 
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface;
-use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -60,11 +61,19 @@ class ActionArgsModel implements ActionArgsModelInterface
      */
     private $expirationActionsModel;
 
-    public function __construct(ExpirationActionsModel $expirationActionsModel)
-    {
-        $this->tableName = ActionArgsSchema::getTableName();
+    /**
+     * @var DBTableSchemaInterface
+     */
+    private $tableSchema;
 
+    public function __construct(
+        ExpirationActionsModel $expirationActionsModel,
+        DBTableSchemaInterface $tableSchema
+    ) {
         $this->expirationActionsModel = $expirationActionsModel;
+        $this->tableSchema = $tableSchema;
+
+        $this->tableName = $this->tableSchema->getTableName();
     }
 
     private function setAttributesFromRow($row)
