@@ -24,7 +24,7 @@ $schemaHealthErrors = $actionArgsSchema->getErrors();
             <h3><?php
                 esc_html_e('Advanced Diagnostics and Tools', 'post-expirator'); ?></h3>
             <table class="form-table">
-                <tr>
+                <tr id="diagnostics-cron-check">
                     <th scope="row"><?php
                         esc_html_e('WP-Cron Status Check', 'post-expirator'); ?></th>
                     <td>
@@ -37,7 +37,7 @@ $schemaHealthErrors = $actionArgsSchema->getErrors();
                         <?php endif; ?>
                     </td>
                 </tr>
-                <tr>
+                <tr id="diagnostics-database-schema-check">
                     <th scope="row"><?php
                         esc_html_e('Database Schema Check', 'post-expirator'); ?></th>
                     <td>
@@ -70,7 +70,7 @@ $schemaHealthErrors = $actionArgsSchema->getErrors();
 
                 <tr><td colspan="2"><hr></td></tr>
 
-                <tr>
+                <tr id="debug-logging">
                     <th scope="row"><label for="postexpirator-log"><?php
                             esc_html_e('Debug Logging', 'post-expirator'); ?></label></th>
                     <td>
@@ -110,7 +110,7 @@ $schemaHealthErrors = $actionArgsSchema->getErrors();
 
                 <tr><td colspan="2"><hr></td></tr>
 
-                <tr>
+                <tr id="tools-migrate-legacy-future-actions">
                     <th scope="row"><?php
                         esc_html_e('Migrate Legacy Future Actions', 'post-expirator'); ?>
                     </th>
@@ -127,7 +127,7 @@ $schemaHealthErrors = $actionArgsSchema->getErrors();
                     </td>
                 </tr>
 
-                <tr>
+                <tr id="tools-restore-legacy-action-arguments">
                     <th scope="row"><?php
                         esc_html_e('Restore Legacy Action Arguments', 'post-expirator'); ?>
                     </th>
@@ -147,7 +147,7 @@ $schemaHealthErrors = $actionArgsSchema->getErrors();
                 <?php if (! empty($cron)) : ?>
                     <tr><td colspan="2"><hr></td></tr>
 
-                    <tr>
+                    <tr id="tools-legacy-cron-schedule">
                         <th scope="row"><label for="cron-schedule"><?php
                                 esc_html_e('Legacy Cron Schedule', 'post-expirator'); ?></label></th>
                         <td>

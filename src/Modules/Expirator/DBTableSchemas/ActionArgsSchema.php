@@ -77,12 +77,16 @@ class ActionArgsSchema implements DBTableSchemaInterface
         $this->handler->resetErrors();
 
         if (! $this->isTableExistent()) {
+            $tablePrefix = $this->handler->getTablePrefix();
 
             $this->handler->registerError(
                 self::HEALTH_ERROR_TABLE_DOES_NOT_EXIST,
-                __(
-                    'The table _ppfuture_actions_args does not exist.',
-                    'post-expirator'
+                sprintf(
+                    __(
+                        'The table %s does not exist.',
+                        'post-expirator'
+                    ),
+                    $tablePrefix . 'ppfuture_actions_args'
                 )
             );
         }
