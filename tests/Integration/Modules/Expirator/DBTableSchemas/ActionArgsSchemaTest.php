@@ -80,13 +80,6 @@ class ActionArgsSchemaTest extends NoTransactionWPTestCase
 
     public function testDropTable(): void
     {
-        $this->dropTable('wp_custom_table');
-        $this->createTable(
-            'wp_custom_table',
-            'id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)'
-        );
-        $this->assertTableExists('wp_custom_table');
-
         $schema = $this->getSchema();
         $this->assertTrue($schema->dropTable());
         $this->assertTableDoesNotExists($schema->getTableName());
