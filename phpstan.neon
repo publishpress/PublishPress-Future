@@ -19,3 +19,5 @@ parameters:
         - dev-workspace
         - cache
         - .cache
+rules:
+    - Spatie\Ray\PHPStan\RemainingRayCallRule
