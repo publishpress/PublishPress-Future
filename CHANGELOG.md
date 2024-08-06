@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.4.3] - UNRELEASED
+## [3.4.3] - 06 Aug, 2024
 
 ### Changed
 
