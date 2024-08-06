@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
@@ -75,40 +76,39 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
             array(
                 'seconds' => YEAR_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s year', '%s years', 'post-expirator' ),
+                'names'   => _n_noop('%s year', '%s years', 'post-expirator'),
             ),
             array(
                 'seconds' => MONTH_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s month', '%s months', 'post-expirator' ),
+                'names'   => _n_noop('%s month', '%s months', 'post-expirator'),
             ),
             array(
                 'seconds' => WEEK_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s week', '%s weeks', 'post-expirator' ),
+                'names'   => _n_noop('%s week', '%s weeks', 'post-expirator'),
             ),
             array(
                 'seconds' => DAY_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s day', '%s days', 'post-expirator' ),
+                'names'   => _n_noop('%s day', '%s days', 'post-expirator'),
             ),
             array(
                 'seconds' => HOUR_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s hour', '%s hours', 'post-expirator' ),
+                'names'   => _n_noop('%s hour', '%s hours', 'post-expirator'),
             ),
             array(
                 'seconds' => MINUTE_IN_SECONDS,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s minute', '%s minutes', 'post-expirator' ),
+                'names'   => _n_noop('%s minute', '%s minutes', 'post-expirator'),
             ),
             array(
                 'seconds' => 1,
                 /* translators: %s: amount of time */
-                'names'   => _n_noop( '%s second', '%s seconds', 'post-expirator' ),
+                'names'   => _n_noop('%s second', '%s seconds', 'post-expirator'),
             ),
         );
-
     }
 
     public function enqueueScripts()
@@ -221,7 +221,7 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     {
         $extra_actions = array();
 
-        $pastdue_action_counts = ( int )$this->store->query_actions([
+        $pastdue_action_counts = (int)$this->store->query_actions([
             'status' => \ActionScheduler_Store::STATUS_PENDING,
             'date' => as_get_datetime_object(),
             'group' => CronToWooActionSchedulerAdapter::SCHEDULED_ACTION_GROUP,
@@ -310,9 +310,10 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
         }
     }
 
-    protected function get_search_box_button_text() {
-		return __( 'Search hook, args and claim ID', 'post-expirator' );
-	}
+    protected function get_search_box_button_text()
+    {
+        return __('Search hook, args and claim ID', 'post-expirator');
+    }
 
     public function column_action(array $row)
     {
@@ -592,9 +593,9 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         if ($userLogFormat === 'popup') {
             $html = '<a href="javascript:void(0);" class="publishpres-future-view-log" data-id="' . $row['ID'] . '">' . esc_html__(
-                    'View log',
-                    'post-expirator'
-                ) . '</a>';
+                'View log',
+                'post-expirator'
+            ) . '</a>';
             $html .= '<div class="publishpress-future-log-entries-popup publishpress-future-log-' . $row['ID'] . '" style="display: none;">';
             $html .= '<div>';
 
@@ -603,26 +604,26 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
             $html .= '<tr>';
             $html .= '<td>' . esc_html__('Action: ', 'post-expirator') . '</td><td>' . $this->column_hook(
-                    $row
-                ) . '</td>';
+                $row
+            ) . '</td>';
             $html .= '</tr>';
 
             $html .= '<tr>';
             $html .= '<td>' . esc_html__('Status: ', 'post-expirator') . '</td><td>' . $this->column_status(
-                    $row
-                ) . '</td>';
+                $row
+            ) . '</td>';
             $html .= '</tr>';
 
             $html .= '<tr>';
             $html .= '<td>' . esc_html__('Arguments: ', 'post-expirator') . '</td><td>' . $this->column_args(
-                    $row
-                ) . '</td>';
+                $row
+            ) . '</td>';
             $html .= '</tr>';
 
             $html .= '<tr>';
             $html .= '<td>' . esc_html__('Scheduled date: ', 'post-expirator') . '</td><td>' . $this->column_schedule(
-                    $row
-                ) . '</td>';
+                $row
+            ) . '</td>';
             $html .= '</tr>';
 
             $html .= '</tbody>';
@@ -723,8 +724,8 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
 
         for (
             $time_period_index = 0, $periods_included = 0, $seconds_remaining = $interval; $time_period_index < count(
-            self::$time_periods
-        ) && $seconds_remaining > 0 && $periods_included < $periods_to_include; $time_period_index++
+                self::$time_periods
+            ) && $seconds_remaining > 0 && $periods_included < $periods_to_include; $time_period_index++
         ) {
             $periods_in_interval = floor($seconds_remaining / self::$time_periods[$time_period_index]['seconds']);
 
@@ -752,34 +753,36 @@ class ScheduledActionsTable extends \ActionScheduler_ListTable
     }
 
     /**
-	 * Returns the recurrence of an action or 'Non-repeating'. The output is human readable.
-	 *
-	 * @param ActionScheduler_Action $action
-	 *
-	 * @return string
-	 */
-	protected function get_recurrence( $action ) {
-		$schedule = $action->get_schedule();
-		if ( $schedule->is_recurring() && method_exists( $schedule, 'get_recurrence' ) ) {
-			$recurrence = $schedule->get_recurrence();
+     * Returns the recurrence of an action or 'Non-repeating'. The output is human readable.
+     *
+     * @param ActionScheduler_Action $action
+     *
+     * @return string
+     */
+    protected function get_recurrence($action)
+    {
+        $schedule = $action->get_schedule();
+        if ($schedule->is_recurring() && method_exists($schedule, 'get_recurrence')) {
+            $recurrence = $schedule->get_recurrence();
 
-			if ( is_numeric( $recurrence ) ) {
-				/* translators: %s: time interval */
-				return sprintf( __( 'Every %s', 'post-expirator' ), self::human_interval( $recurrence ) );
-			} else {
-				return $recurrence;
-			}
-		}
+            if (is_numeric($recurrence)) {
+                /* translators: %s: time interval */
+                return sprintf(__('Every %s', 'post-expirator'), self::human_interval($recurrence));
+            } else {
+                return $recurrence;
+            }
+        }
 
-		return __( 'Non-repeating', 'post-expirator' );
-	}
+        return __('Non-repeating', 'post-expirator');
+    }
 
     /**
-	 * Message to be displayed when there are no items
-	 *
-	 * @since 3.1.0
-	 */
-	public function no_items() {
+     * Message to be displayed when there are no items
+     *
+     * @since 3.1.0
+     */
+    public function no_items()
+    {
         echo esc_html__('No Scheduled Actions.', 'post-expirator');
     }
 }

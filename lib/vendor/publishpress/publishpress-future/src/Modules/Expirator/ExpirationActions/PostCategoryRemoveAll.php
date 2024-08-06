@@ -13,7 +13,7 @@ class PostCategoryRemoveAll implements ExpirationActionInterface
 {
     use TaxonomyRelatedTrait;
 
-    const SERVICE_NAME = 'expiration.actions.post_category_remove_all';
+    public const SERVICE_NAME = 'expiration.actions.post_category_remove_all';
 
     /**
      * @var ExpirablePostModel

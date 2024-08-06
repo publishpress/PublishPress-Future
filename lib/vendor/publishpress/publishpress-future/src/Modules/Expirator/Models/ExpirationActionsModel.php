@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
@@ -25,9 +26,9 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ExpirationActionsModel
 {
-    const ACTION_NAME_ATTRIBUTE = 'name';
+    public const ACTION_NAME_ATTRIBUTE = 'name';
 
-    const ACTION_LABEL_ATTRIBUTE = 'label';
+    public const ACTION_LABEL_ATTRIBUTE = 'label';
 
     /**
      * @var \PublishPress\Future\Core\HookableInterface

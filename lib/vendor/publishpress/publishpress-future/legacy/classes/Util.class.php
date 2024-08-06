@@ -10,7 +10,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 class PostExpirator_Util
 {
-
     /**
      * Check if Block Editor is active.
      * Must only be used after plugins_loaded action is fired.

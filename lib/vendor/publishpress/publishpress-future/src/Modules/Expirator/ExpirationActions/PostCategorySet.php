@@ -15,7 +15,7 @@ class PostCategorySet implements ExpirationActionInterface
 {
     use TaxonomyRelatedTrait;
 
-    const SERVICE_NAME = 'expiration.actions.post_category_set';
+    public const SERVICE_NAME = 'expiration.actions.post_category_set';
 
     /**
      * @var ExpirablePostModel

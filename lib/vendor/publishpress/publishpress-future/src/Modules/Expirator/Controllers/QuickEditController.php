@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -205,10 +206,10 @@ class QuickEditController implements InitializableInterface
 
         wp_enqueue_script(
             'postexpirator-quick-edit',
-             POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
-             ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
-             POSTEXPIRATOR_VERSION,
-             true
+            POSTEXPIRATOR_BASEURL . '/assets/js/quick-edit.js',
+            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
+            POSTEXPIRATOR_VERSION,
+            true
         );
 
         wp_enqueue_style('wp-components');
@@ -227,7 +228,7 @@ class QuickEditController implements InitializableInterface
 
         $debug = $container->get(ServicesAbstract::DEBUG);
 
-        $taxonomyPluralName= '';
+        $taxonomyPluralName = '';
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
             $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
 

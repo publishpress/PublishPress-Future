@@ -10,7 +10,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class ChangePostStatus implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.change_post_status';
+    public const SERVICE_NAME = 'expiration.actions.change_post_status';
 
     /**
      * @var ExpirablePostModel

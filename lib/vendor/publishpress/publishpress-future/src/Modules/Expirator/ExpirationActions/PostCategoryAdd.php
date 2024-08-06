@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Expirator\ExpirationActions;
 use PublishPress\Future\Framework\WordPress\Models\TermsModel;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\ExpirationActionInterface;
+use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -13,7 +14,7 @@ class PostCategoryAdd implements ExpirationActionInterface
 {
     use TaxonomyRelatedTrait;
 
-    const SERVICE_NAME = 'expiration.actions.post_category_add';
+    public const SERVICE_NAME = 'expiration.actions.post_category_add';
 
     /**
      * @var ExpirablePostModel
@@ -38,7 +39,7 @@ class PostCategoryAdd implements ExpirationActionInterface
     /**
      * @param ExpirablePostModel $postModel
      * @param \PublishPress\Future\Framework\WordPress\Facade\ErrorFacade $errorFacade
-     * @param \PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory $postTypeDefaultDataModelFactory
+     * @param PostTypeDefaultDataModelFactory $postTypeDefaultDataModelFactory
      */
     public function __construct($postModel, $errorFacade, $postTypeDefaultDataModelFactory)
     {
@@ -71,9 +72,10 @@ class PostCategoryAdd implements ExpirationActionInterface
         $termsModel = new TermsModel();
 
         return sprintf(
+            // phpcs:ignore Generic.Files.LineLength.TooLong
             // translators: %1$s is the taxonomy label, %2$s is the post type singular label, %3$s is the list of terms added, %4$s is the list of terms on the post
             __(
-                'The following terms (%1$s) were added to the %2$s: "%3$s". The full list of terms on the post is: %4$s.',
+                'The following terms (%1$s) were added to the %2$s: "%3$s". The full list of terms on the post is: %4$s.', // phpcs:ignore Generic.Files.LineLength.TooLong
                 'post-expirator'
             ),
             $this->log['expiration_taxonomy'],

@@ -10,7 +10,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class StickPost implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.stick_post';
+    public const SERVICE_NAME = 'expiration.actions.stick_post';
 
     /**
      * @var ExpirablePostModel

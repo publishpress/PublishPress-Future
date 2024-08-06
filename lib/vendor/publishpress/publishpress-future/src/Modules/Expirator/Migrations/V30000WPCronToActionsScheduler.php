@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
@@ -16,7 +17,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class V30000WPCronToActionsScheduler implements MigrationInterface
 {
-    const HOOK = ExpiratorHooks::ACTION_MIGRATE_WPCRON_EXPIRATIONS;
+    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_WPCRON_EXPIRATIONS;
 
     /**
      * @var \PublishPress\Future\Modules\Expirator\Interfaces\CronInterface

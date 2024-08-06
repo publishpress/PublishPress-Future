@@ -1,5 +1,8 @@
 <?php
+
 defined('ABSPATH') or die('Direct access not allowed.');
+
+// phpcs:disable Generic.Files.LineLength.TooLong
 
 echo '<select name="' . esc_attr($name) . '" id="' . esc_attr($id) . '"' . ($disabled === true ? ' disabled="disabled"' : '') . ' onchange="' . esc_attr($onchange) . '">';
 
@@ -9,6 +12,8 @@ foreach ($taxonomies as $taxonomy) {
 
 echo '</select>';
 echo '<p class="description">' . esc_html__(
-        'Select the taxonomy to be used for actions.',
-        'post-expirator'
-    ) . '</p>';
+    'Select the taxonomy to be used for actions.',
+    'post-expirator'
+) . '</p>';
+
+// phpcs:enable

@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
 namespace PublishPress\Future\Framework\WordPress\Models;
-
 
 use PublishPress\Future\Framework\WordPress\Exceptions\NonexistentTermException;
 

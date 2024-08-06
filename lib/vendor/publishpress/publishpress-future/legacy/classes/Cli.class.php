@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -8,9 +9,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
 /**
  * Utility functions.
  */
+// phpcs:ignore PSR1.Classes.ClassDeclaration.MissingNamespace, Squiz.Classes.ValidClassName.NotCamelCaps
 class PostExpirator_Cli
 {
-    const CLI_COMMAND = 'publishpress-future';
+    public const CLI_COMMAND = 'publishpress-future';
 
     private static $instance;
 

@@ -146,3 +146,10 @@ div.pe-qe-fields > div {
 .future-action-panel .notice .dashicons {
     line-height: 30px;
 }
+
+
+/* Fix style on checkbox on WP 6.6 */
+body.branch-6-6.edit-php .components-checkbox-control__input-container {
+    padding-top: 9px;
+    line-height: 2.2em;
+}

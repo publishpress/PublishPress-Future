@@ -1,6 +1,6 @@
 <?php
 
-use \PublishPress\Future\Modules\Settings\HooksAbstract;
+use PublishPress\Future\Modules\Settings\HooksAbstract;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 
@@ -62,7 +62,7 @@ $tabs = $hooks->applyFilters(HooksAbstract::FILTER_SETTINGS_TABS, $tabs);
             <?php foreach ($tabs as $tab) : ?>
                 <a href="<?php echo esc_url($tab['link']); ?>"
                    class="pe-tab nav-tab <?php
-                   echo ($current_tab === $tab['slug'] ? 'nav-tab-active' : ''); ?>"
+                    echo($current_tab === $tab['slug'] ? 'nav-tab-active' : ''); ?>"
                 >
                     <?php echo esc_html($tab['title']); ?>
                 </a>

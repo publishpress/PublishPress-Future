@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd294a605a677db5f5df0191cdc55546",
+    "content-hash": "eef331f23b580d3263dcfe324412c86c",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-develop",
+            "version": "3.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "ddcdf59efb394b2f2ac8c94221f1a1301916fec6"
+                "reference": "846f6718006147c737441cccec8f77d714c2ad3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/ddcdf59efb394b2f2ac8c94221f1a1301916fec6",
-                "reference": "ddcdf59efb394b2f2ac8c94221f1a1301916fec6",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/846f6718006147c737441cccec8f77d714c2ad3a",
+                "reference": "846f6718006147c737441cccec8f77d714c2ad3a",
                 "shasum": ""
             },
             "require": {
@@ -327,8 +327,6 @@
                 "codeception/module-webdriver": "^3",
                 "codeception/util-universalframework": "^1",
                 "dealerdirect/phpcodesniffer-composer-installer": "^1",
-                "ext-pdo": "*",
-                "ext-yaml": "*",
                 "friendsofphp/php-cs-fixer": "^3.49",
                 "lucatume/wp-browser": "^4",
                 "overtrue/phplint": "^9.1",
@@ -337,6 +335,8 @@
                 "phpstan/extension-installer": "^1.3",
                 "phpstan/phpstan": "^1.10",
                 "publishpress/publishpress-phpcs-standards": "dev-main",
+                "rector/rector": "dev-main",
+                "spatie/ray": "^1.41",
                 "squizlabs/php_codesniffer": "^3.8",
                 "szepeviktor/phpstan-wordpress": "^1.3",
                 "wp-cli/i18n-command": "^2.6",
@@ -347,12 +347,8 @@
             "extra": {
                 "plugin-slug": "post-expirator",
                 "plugin-name": "publishpress-future",
-                "plugin-folder": "post-expirator"
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests/codeception/"
-                }
+                "plugin-folder": "post-expirator",
+                "version-constant": "PUBLISHPRESS_FUTURE_VERSION"
             },
             "scripts": {
                 "build": [
@@ -482,47 +478,66 @@
                 "dbox:unlink": [
                     "pdropbox unlink"
                 ],
-                "tests:wp": [
-                    "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" \"$@\""
-                ],
-                "tests:clean": [
-                    "vendor/bin/codecept clean"
-                ],
-                "tests:link": [
-                    "source ./tests/.env && if [ ! -L \"$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG\" ]; then ln -s \"$PWD\" \"$WORDPRESS_ROOT_DIR/wp-content/plugins/$PLUGIN_SLUG\"; fi"
-                ],
-                "tests:activate": [
-                    "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" plugin activate $PLUGIN_SLUG/${PLUGIN_SLUG}.php"
-                ],
-                "tests:db-export": [
-                    "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db export ./tests/Support/Data/dump.sql"
-                ],
-                "tests:db-import": [
-                    "source ./tests/.env && wp --path=\"$WORDPRESS_ROOT_DIR\" db import ./tests/Support/Data/dump.sql"
+                "tests:env": [
+                    "bash dev-workspace/scripts/tests-env.sh bootstrap"
                 ],
                 "tests:chromedriver": [
                     "source ./tests/.env && $CHROMEDRIVER_BINARY --port=$CHROMEDRIVER_PORT"
                 ],
-                "tests:all": [
-                    "./vendor/bin/codecept run"
+                "tests:wp": [
+                    "bash dev-workspace/scripts/tests-wp-cli.sh $@"
                 ],
-                "tests:integration": [
-                    "./vendor/bin/codecept run Integration"
+                "tests:activate": [
+                    "bash dev-workspace/scripts/tests-activate-plugin.sh $@"
                 ],
-                "tests:e2e": [
-                    "./vendor/bin/codecept run EndToEnd"
+                "tests:db-export": [
+                    "bash dev-workspace/scripts/tests-db-export.sh $@"
                 ],
-                "tests:unit": [
-                    "./vendor/bin/codecept run Unit"
+                "tests:db-import": [
+                    "bash dev-workspace/scripts/tests-db-import.sh $@"
+                ],
+                "tests:up": [
+                    "bash dev-workspace/scripts/tests-env.sh up"
+                ],
+                "tests:down": [
+                    "bash dev-workspace/scripts/tests-env.sh down"
+                ],
+                "tests:stop": [
+                    "bash dev-workspace/scripts/tests-env.sh stop"
+                ],
+                "tests:clean": [
+                    "bash dev-workspace/scripts/tests-env.sh cleanup",
+                    "@tests:clean-logs"
+                ],
+                "tests:clean-logs": [
+                    "rm -f dev-workspace/cache/logs/*"
+                ],
+                "tests:db-logs": [
+                    "bash dev-workspace/scripts/tests-db-logs.sh $@"
+                ],
+                "tests:info": [
+                    "bash dev-workspace/scripts/tests-env.sh info"
+                ],
+                "tests:refresh": [
+                    "bash dev-workspace/scripts/tests-env.sh refresh"
+                ],
+                "tests:snippets": [
+                    "composer codecept gherkin:snippets $@"
+                ],
+                "tests:steps": [
+                    "composer codecept gherkin:steps $@"
                 ],
                 "test": [
                     "./vendor/bin/codecept run $@"
                 ],
-                "codeception": [
+                "codecept": [
                     "./vendor/bin/codecept $@"
                 ],
                 "docker:cleanup": [
                     "docker system prune -f"
+                ],
+                "ray:cleanup": [
+                    "vendor/bin/rector process post-expirator.php src legacy tests/Acceptance tests/EndToEnd tests/Integration tests/Unit --config vendor/spatie/ray/remove-ray-rector.php"
                 ],
                 "info:versions": [
                     "bash ./dev-workspace/scripts/info-versions.sh"
@@ -565,10 +580,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.4.3",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-07-29T22:04:02+00:00"
+            "time": "2024-08-06T15:50:50+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -868,9 +883,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "publishpress/publishpress-future": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

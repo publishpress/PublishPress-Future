@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -38,9 +39,9 @@ class SettingsFacade
     /**
      * @deprecated version 3.2.0 Use self::DEFAULT_CUSTOM_DATE_OFFSET instead.
      */
-    const DEFAULT_CUSTOM_DATE = '+1 week';
+    public const DEFAULT_CUSTOM_DATE = '+1 week';
 
-    const DEFAULT_CUSTOM_DATE_OFFSET = '+1 week';
+    public const DEFAULT_CUSTOM_DATE_OFFSET = '+1 week';
 
     /**
      * @param HookableInterface $hooks

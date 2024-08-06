@@ -10,9 +10,9 @@ $hooks = $container->get(ServicesAbstract::HOOKS);
 defined('ABSPATH') or die('Direct access not allowed.');
 
 print '<p>' . esc_html__(
-        'Below is a dump of the debugging table, this should be useful for troubleshooting.',
-        'post-expirator'
-    ) . '</p>';
+    'Below is a dump of the debugging table, this should be useful for troubleshooting.',
+    'post-expirator'
+) . '</p>';
 
 $showSideBar = $hooks->applyFilters(
     HooksAbstract::FILTER_SHOW_PRO_BANNER,

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -112,7 +113,7 @@ class ClassicEditorController implements InitializableInterface
     {
         // Only show the metabox if the block editor is not enabled for the post type
         if (! empty($post) && $this->isGutenbergAvailableForThePost($post)) {
-            if (! $this->classicEditorIsActiveForCurrentSession() ) {
+            if (! $this->classicEditorIsActiveForCurrentSession()) {
                 return;
             }
         }
@@ -166,7 +167,8 @@ class ClassicEditorController implements InitializableInterface
         ];
 
         PostExpirator_Display::getInstance()->render_template(
-            'classic-editor', [
+            'classic-editor',
+            [
                 'post' => $post,
                 'enabled' => $data['enabled'],
                 'action' => $data['action'],
@@ -195,7 +197,8 @@ class ClassicEditorController implements InitializableInterface
             return;
         }
 
-        // Don't run if was triggered by block editor. It is processed on the method "ExpirationController::handleRestAPIInit".
+        // Don't run if was triggered by block editor.
+        // It is processed on the method "ExpirationController::handleRestAPIInit".
         if (empty($_POST['future_action_view'])) {
             return;
         }
@@ -213,7 +216,8 @@ class ClassicEditorController implements InitializableInterface
         }
 
         $expireType = isset($_POST['future_action_action']) ? sanitize_text_field($_POST['future_action_action']) : '';
-        $newStatus = isset($_POST['future_action_new_status']) ? sanitize_text_field($_POST['future_action_new_status']) : 'draft';
+        $newStatus = isset($_POST['future_action_new_status'])
+            ? sanitize_text_field($_POST['future_action_new_status']) : 'draft';
 
         if ($expireType === ExpirationActionsAbstract::POST_STATUS_TO_DRAFT) {
             $expireType = ExpirationActionsAbstract::CHANGE_POST_STATUS;
@@ -233,8 +237,10 @@ class ClassicEditorController implements InitializableInterface
         $opts = [
             'expireType' => $expireType,
             'newStatus' => $newStatus,
-            'category' => isset($_POST['future_action_terms']) ? sanitize_text_field($_POST['future_action_terms']) : '',
-            'categoryTaxonomy' => isset($_POST['future_action_taxonomy']) ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
+            'category' => isset($_POST['future_action_terms'])
+                ? sanitize_text_field($_POST['future_action_terms']) : '',
+            'categoryTaxonomy' => isset($_POST['future_action_taxonomy'])
+                ? sanitize_text_field($_POST['future_action_taxonomy']) : '',
         ];
 
         if (! empty($opts['category'])) {
@@ -262,7 +268,7 @@ class ClassicEditorController implements InitializableInterface
         }
 
         $isNewPostPage = $currentScreen->action === 'add';
-        $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $isEditPostPage = ! empty($_GET['action']) && ($_GET['action'] === 'edit'); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, Generic.Files.LineLength.TooLong
 
         if (! $isEditPostPage && ! $isNewPostPage) {
             return;
@@ -292,7 +298,17 @@ class ClassicEditorController implements InitializableInterface
         wp_enqueue_script(
             'publishpress-future-classic-editor',
             POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
-            ['wp-i18n', 'wp-components', 'wp-url', 'wp-data', 'wp-api-fetch', 'wp-element', 'inline-edit-post', 'wp-html-entities', 'wp-plugins'],
+            [
+                'wp-i18n',
+                'wp-components',
+                'wp-url',
+                'wp-data',
+                'wp-api-fetch',
+                'wp-element',
+                'inline-edit-post',
+                'wp-html-entities',
+                'wp-plugins'
+            ],
             PUBLISHPRESS_FUTURE_VERSION,
             true
         );
@@ -309,7 +325,7 @@ class ClassicEditorController implements InitializableInterface
 
         $debug = $container->get(ServicesAbstract::DEBUG);
 
-        $taxonomyPluralName= '';
+        $taxonomyPluralName = '';
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
             $taxonomy = get_taxonomy($postTypeDefaultConfig['taxonomy']);
             $taxonomyPluralName = $taxonomy->label;
@@ -350,14 +366,20 @@ class ClassicEditorController implements InitializableInterface
                     'hideCalendar' => __('Hide Calendar', 'post-expirator'),
                     'loading' => __('Loading', 'post-expirator'),
                     // translators: the text between {{}} is the link to the settings page.
-                    'timezoneSettingsHelp' => __('Timezone is controlled by the {WordPress Settings}.', 'post-expirator'),
+                    'timezoneSettingsHelp' => __(
+                        'Timezone is controlled by the {WordPress Settings}.',
+                        'post-expirator'
+                    ),
                     // translators: %s is the name of the taxonomy in plural form.
                     'noTermsFound' => sprintf(
                         // translators: %s is the name of the taxonomy in plural form.
                         __('No %s found.', 'post-expirator'),
                         strtolower($taxonomyPluralName)
                     ),
-                    'noTaxonomyFound' => __('You must assign a taxonomy to this post type to use this feature.', 'post-expirator'),
+                    'noTaxonomyFound' => __(
+                        'You must assign a taxonomy to this post type to use this feature.',
+                        'post-expirator'
+                    ),
                     // translators: %s is the name of the taxonomy in plural form.
                     'newTerms' => __('New %s', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in plural form.
@@ -365,7 +387,10 @@ class ClassicEditorController implements InitializableInterface
                     // translators: %s is the name of the taxonomy in plural form.
                     'addTerms' => __('%s to add', 'post-expirator'),
                     // translators: %s is the name of the taxonomy in singular form.
-                    'addTermsPlaceholder' => sprintf(__('Search for %s', 'post-expirator'), strtolower($taxonomyPluralName)),
+                    'addTermsPlaceholder' => sprintf(
+                        __('Search for %s', 'post-expirator'),
+                        strtolower($taxonomyPluralName)
+                    ),
                     'errorActionRequired' => __('Select an action', 'post-expirator'),
                     'errorDateRequired' => __('Select a date', 'post-expirator'),
                     'errorDateInPast' => __('Date cannot be in the past', 'post-expirator'),

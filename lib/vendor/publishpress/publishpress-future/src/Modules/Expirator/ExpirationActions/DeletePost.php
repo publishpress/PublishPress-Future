@@ -10,7 +10,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class DeletePost implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.delete_post';
+    public const SERVICE_NAME = 'expiration.actions.delete_post';
 
     /**
      * @var ExpirablePostModel

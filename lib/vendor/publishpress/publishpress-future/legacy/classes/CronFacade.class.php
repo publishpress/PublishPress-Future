@@ -6,6 +6,8 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace, Squiz.Classes.ValidClassName.NotCamelCaps, PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+
 /**
  * Utility functions.
  */
@@ -40,3 +42,5 @@ class PostExpirator_CronFacade
         return $cron->postHasScheduledActions($post_id);
     }
 }
+
+// phpcs:enable

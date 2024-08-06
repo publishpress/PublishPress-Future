@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
@@ -14,7 +15,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class V30000ReplaceFooterPlaceholders implements MigrationInterface
 {
-    const HOOK = ExpiratorHooks::ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS;
+    public const HOOK = ExpiratorHooks::ACTION_MIGRATE_REPLACE_FOOTER_PLACEHOLDERS;
 
     private $hooksFacade;
     /**

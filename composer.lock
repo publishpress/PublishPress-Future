@@ -2168,12 +2168,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "7bb9c2654c2dbcdb36def44ac182a0ec73fa3a8b"
+                "reference": "d61006b658e21190f47b67cf89501fdc4c17072c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7bb9c2654c2dbcdb36def44ac182a0ec73fa3a8b",
-                "reference": "7bb9c2654c2dbcdb36def44ac182a0ec73fa3a8b",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/d61006b658e21190f47b67cf89501fdc4c17072c",
+                "reference": "d61006b658e21190f47b67cf89501fdc4c17072c",
                 "shasum": ""
             },
             "require": {
@@ -2264,7 +2264,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-29T08:00:10+00:00"
+            "time": "2024-08-01T12:00:58+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -4167,16 +4167,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.11.8",
+            "version": "1.11.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "6adbd118e6c0515dd2f36b06cde1d6da40f1b8ec"
+                "reference": "e370bcddadaede0c1716338b262346f40d296f82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6adbd118e6c0515dd2f36b06cde1d6da40f1b8ec",
-                "reference": "6adbd118e6c0515dd2f36b06cde1d6da40f1b8ec",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e370bcddadaede0c1716338b262346f40d296f82",
+                "reference": "e370bcddadaede0c1716338b262346f40d296f82",
                 "shasum": ""
             },
             "require": {
@@ -4221,7 +4221,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-24T07:01:22+00:00"
+            "time": "2024-08-01T16:25:18+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5894,12 +5894,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "d8888509ca4bb7f6e75d1e881e7d810aa1051e5f"
+                "reference": "d40c7c43014c3c24135fdccb5600b69ca7e46c23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/d8888509ca4bb7f6e75d1e881e7d810aa1051e5f",
-                "reference": "d8888509ca4bb7f6e75d1e881e7d810aa1051e5f",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/d40c7c43014c3c24135fdccb5600b69ca7e46c23",
+                "reference": "d40c7c43014c3c24135fdccb5600b69ca7e46c23",
                 "shasum": ""
             },
             "require": {
@@ -5946,7 +5946,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-28T22:26:23+00:00"
+            "time": "2024-08-06T14:21:15+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -9998,16 +9998,16 @@
         },
         {
             "name": "wp-cli/config-command",
-            "version": "v2.3.5",
+            "version": "v2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/config-command.git",
-                "reference": "a4ae2c73a03706b7f5b8c74426a44b4df198352c"
+                "reference": "82a64ae0dbd8bc91e2bf0446666ae24650223775"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/config-command/zipball/a4ae2c73a03706b7f5b8c74426a44b4df198352c",
-                "reference": "a4ae2c73a03706b7f5b8c74426a44b4df198352c",
+                "url": "https://api.github.com/repos/wp-cli/config-command/zipball/82a64ae0dbd8bc91e2bf0446666ae24650223775",
+                "reference": "82a64ae0dbd8bc91e2bf0446666ae24650223775",
                 "shasum": ""
             },
             "require": {
@@ -10066,9 +10066,9 @@
             "homepage": "https://github.com/wp-cli/config-command",
             "support": {
                 "issues": "https://github.com/wp-cli/config-command/issues",
-                "source": "https://github.com/wp-cli/config-command/tree/v2.3.5"
+                "source": "https://github.com/wp-cli/config-command/tree/v2.3.6"
             },
-            "time": "2024-07-22T10:31:46+00:00"
+            "time": "2024-08-05T13:34:06+00:00"
         },
         {
             "name": "wp-cli/core-command",

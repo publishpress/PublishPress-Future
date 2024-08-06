@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022-2023. PublishPress, All rights reserved.
  */
@@ -63,7 +64,7 @@ class TaxonomiesModel
 
     public function normalizeTermsCreatingIfNecessary($taxonomy, $terms)
     {
-        $newTerms = array_filter($terms, function($item) {
+        $newTerms = array_filter($terms, function ($item) {
             return ! is_numeric($item);
         });
 
@@ -72,7 +73,7 @@ class TaxonomiesModel
 
             $newTerms = array_values(array_map('sanitize_text_field', $newTerms));
 
-            $newTerms = array_map(function($newTerm) use ($taxonomy) {
+            $newTerms = array_map(function ($newTerm) use ($taxonomy) {
                 $newTerm = wp_insert_term($newTerm, $taxonomy);
 
                 if (is_wp_error($newTerm) && $newTerm->get_error_code() === 'term_exists') {

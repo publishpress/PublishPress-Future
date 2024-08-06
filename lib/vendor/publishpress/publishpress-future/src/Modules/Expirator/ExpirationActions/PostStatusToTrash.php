@@ -13,7 +13,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 class PostStatusToTrash implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.post_status_to_trash';
+    public const SERVICE_NAME = 'expiration.actions.post_status_to_trash';
 
     /**
      * @var ExpirablePostModel

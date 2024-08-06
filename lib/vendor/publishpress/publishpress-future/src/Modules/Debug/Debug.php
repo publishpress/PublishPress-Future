@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
 namespace PublishPress\Future\Modules\Debug;
-
 
 use PublishPress\Future\Framework\Logger\LoggerInterface;
 

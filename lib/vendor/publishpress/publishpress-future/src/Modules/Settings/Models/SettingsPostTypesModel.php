@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022-2023. PublishPress, All rights reserved.
  */
@@ -57,8 +58,10 @@ class SettingsPostTypesModel
                 $terms = explode(',', $terms);
             }
             $terms = array_map('intval', $terms);
-            $terms = array_filter($terms, function($value) {return (int)$value > 0;});
-            $termsName = array_map(function($termId) {
+            $terms = array_filter($terms, function ($value) {
+                return (int)$value > 0;
+            });
+            $termsName = array_map(function ($termId) {
                 $term = get_term($termId);
 
                 if (! $term instanceof \WP_Term) {

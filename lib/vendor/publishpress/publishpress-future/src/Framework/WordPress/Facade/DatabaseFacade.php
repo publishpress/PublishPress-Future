@@ -1,22 +1,33 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
 namespace PublishPress\Future\Framework\WordPress\Facade;
 
+use wpdb;
+
 defined('ABSPATH') or die('Direct access not allowed.');
 
 class DatabaseFacade
 {
     /**
+     * @var wpdb
+     */
+    private $wpdb;
+
+    public function __construct(wpdb $wpdb)
+    {
+        $this->wpdb = $wpdb;
+    }
+
+    /**
      * @return string
      */
     public function getTablePrefix()
     {
-        global $wpdb;
-
-        return $wpdb->prefix;
+        return $this->wpdb->prefix;
     }
 
     /**
@@ -28,10 +39,8 @@ class DatabaseFacade
      */
     public function getVar($query = null, $x = 0, $y = 0)
     {
-        global $wpdb;
-
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
-        return $wpdb->get_var($query, $x, $y);
+        return $this->wpdb->get_var($query, $x, $y);
     }
 
     /**
@@ -41,11 +50,9 @@ class DatabaseFacade
      */
     public function prepare($query, ...$args)
     {
-        global $wpdb;
-
         $functionArgs = func_get_args();
 
-        return call_user_func_array([$wpdb, 'prepare'], $functionArgs);
+        return call_user_func_array([$this->wpdb, 'prepare'], $functionArgs);
     }
 
     public function escape($data)
@@ -75,10 +82,8 @@ class DatabaseFacade
      */
     public function getResults($query = null, $output = 'OBJECT')
     {
-        global $wpdb;
-
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
-        return $wpdb->get_results($query, $output);
+        return $this->wpdb->get_results($query, $output);
     }
 
     /**
@@ -88,10 +93,8 @@ class DatabaseFacade
      */
     public function dropTable($tableName)
     {
-        global $wpdb;
-
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
-        $wpdb->query('DROP TABLE IF EXISTS `' . esc_sql($tableName) . '`');
+        $this->wpdb->query('DROP TABLE IF EXISTS `' . esc_sql($tableName) . '`');
     }
 
     /**
@@ -101,9 +104,7 @@ class DatabaseFacade
      */
     public function query($query)
     {
-        global $wpdb;
-
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
-        return $wpdb->query($query);
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery
+        return $this->wpdb->query($query);
     }
 }

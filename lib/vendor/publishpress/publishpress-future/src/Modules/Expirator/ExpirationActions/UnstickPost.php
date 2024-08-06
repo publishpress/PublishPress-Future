@@ -10,7 +10,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
 
 class UnstickPost implements ExpirationActionInterface
 {
-    const SERVICE_NAME = 'expiration.actions.unstick_post';
+    public const SERVICE_NAME = 'expiration.actions.unstick_post';
 
     /**
      * @var ExpirablePostModel

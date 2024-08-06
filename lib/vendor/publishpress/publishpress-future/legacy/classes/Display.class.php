@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Schemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Settings\HooksAbstract as SettingsHooksAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooksAbstract;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -16,7 +17,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
  */
 class PostExpirator_Display
 {
-
     /**
      * The singleton instance.
      */
@@ -33,6 +33,16 @@ class PostExpirator_Display
     private $hooks;
 
     /**
+     * @var DBTableSchemaInterface
+     */
+    private $actionArgsSchema;
+
+    /**
+     * @var DBTableSchemaInterface
+     */
+    private $debugLogSchema;
+
+    /**
      * Constructor.
      */
     private function __construct()
@@ -41,6 +51,8 @@ class PostExpirator_Display
 
         $this->cron = $container->get(ServicesAbstract::CRON);
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
+        $this->actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA);
+        $this->debugLogSchema = $container->get(ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA);
 
         $this->hooks();
     }
@@ -141,10 +153,12 @@ class PostExpirator_Display
     {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
         if (isset($_POST['expirationdateSaveDisplay']) && sanitize_key($_POST['expirationdateSaveDisplay'])) {
-            if (! isset($_POST['_postExpiratorMenuDisplay_nonce']) || ! wp_verify_nonce(
+            if (
+                ! isset($_POST['_postExpiratorMenuDisplay_nonce']) || ! wp_verify_nonce(
                     sanitize_key($_POST['_postExpiratorMenuDisplay_nonce']),
                     'postexpirator_menu_display'
-                )) {
+                )
+            ) {
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             } else {
@@ -175,10 +189,12 @@ class PostExpirator_Display
     {
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (! isset($_POST['_postExpiratorMenuDiagnostics_nonce']) || ! wp_verify_nonce(
+            if (
+                ! isset($_POST['_postExpiratorMenuDiagnostics_nonce']) || ! wp_verify_nonce(
                     sanitize_key($_POST['_postExpiratorMenuDiagnostics_nonce']),
                     'postexpirator_menu_diagnostics'
-                )) {
+                )
+            ) {
                 print 'Form Validation Failure: Sorry, your nonce did not verify.';
                 exit;
             }
@@ -219,10 +235,11 @@ class PostExpirator_Display
                 );
                 echo '</p></div>';
             } elseif (isset($_POST['fix-db-schema'])) {
-                ActionArgsSchema::fixSchema();
+                $this->actionArgsSchema->fixTable();
+                $this->debugLogSchema->fixTable();
 
                 echo "<div id='message' class='updated fade'><p>";
-                if (ActionArgsSchema::tableExists()) {
+                if ($this->actionArgsSchema->isTableHealthy() && $this->debugLogSchema->isTableHealthy()) {
                     esc_html_e(
                         'The database schema was fixed.',
                         'post-expirator'
@@ -478,7 +495,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/future/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           esc_attr_e('About PublishPress Future', 'post-expirator'); ?>">
+                            esc_attr_e('About PublishPress Future', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('About', 'post-expirator'); ?>
                         </a>
@@ -486,7 +503,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/knowledge-base/future-introduction/" target="_blank"
                            rel="noopener noreferrer" title="<?php
-                        esc_attr_e('Future Documentation', 'post-expirator'); ?>">
+                            esc_attr_e('Future Documentation', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('Documentation', 'post-expirator'); ?>
                         </a>
@@ -494,7 +511,7 @@ class PostExpirator_Display
                     <li>
                         <a href="https://publishpress.com/publishpress-support/" target="_blank" rel="noopener noreferrer"
                            title="<?php
-                           esc_attr_e('Contact the PublishPress team', 'post-expirator'); ?>">
+                            esc_attr_e('Contact the PublishPress team', 'post-expirator'); ?>">
                             <?php
                             esc_html_e('Contact', 'post-expirator'); ?>
                         </a>

@@ -342,3 +342,12 @@ p.description,
     border-color: #deb2ba;
     color: #a94442;
 }
+
+#diagnostics-database-schema-check ul {
+    padding-left: 0;
+    margin-left: 44px;
+}
+
+#diagnostics-database-schema-check ul li {
+    list-style-type: disc;
+}

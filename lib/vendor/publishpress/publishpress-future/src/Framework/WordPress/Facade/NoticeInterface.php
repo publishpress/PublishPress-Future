@@ -16,4 +16,3 @@ interface NoticeInterface
 
     public function renderNotices();
 }
-
