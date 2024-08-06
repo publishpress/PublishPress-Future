@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58052dec019f405a267212c383f7d718",
+    "content-hash": "eb5b1198defeea19b8b8a16a4d6e0a7e",
     "packages": [],
     "packages-dev": [
         {
@@ -4217,16 +4217,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.11.8",
+            "version": "1.11.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "6adbd118e6c0515dd2f36b06cde1d6da40f1b8ec"
+                "reference": "e370bcddadaede0c1716338b262346f40d296f82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/6adbd118e6c0515dd2f36b06cde1d6da40f1b8ec",
-                "reference": "6adbd118e6c0515dd2f36b06cde1d6da40f1b8ec",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e370bcddadaede0c1716338b262346f40d296f82",
+                "reference": "e370bcddadaede0c1716338b262346f40d296f82",
                 "shasum": ""
             },
             "require": {
@@ -4271,7 +4271,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-24T07:01:22+00:00"
+            "time": "2024-08-01T16:25:18+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5944,12 +5944,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "baf6792e1e5880cc9b6ec77d815b504d2b6d2e19"
+                "reference": "ea37cb5b5eafaeb4f293819e4eb09822f3b60bdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/baf6792e1e5880cc9b6ec77d815b504d2b6d2e19",
-                "reference": "baf6792e1e5880cc9b6ec77d815b504d2b6d2e19",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/ea37cb5b5eafaeb4f293819e4eb09822f3b60bdf",
+                "reference": "ea37cb5b5eafaeb4f293819e4eb09822f3b60bdf",
                 "shasum": ""
             },
             "require": {
@@ -5996,7 +5996,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-07-31T15:16:44+00:00"
+            "time": "2024-08-05T20:48:53+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -10158,16 +10158,16 @@
         },
         {
             "name": "wp-cli/config-command",
-            "version": "v2.3.5",
+            "version": "v2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/config-command.git",
-                "reference": "a4ae2c73a03706b7f5b8c74426a44b4df198352c"
+                "reference": "82a64ae0dbd8bc91e2bf0446666ae24650223775"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/config-command/zipball/a4ae2c73a03706b7f5b8c74426a44b4df198352c",
-                "reference": "a4ae2c73a03706b7f5b8c74426a44b4df198352c",
+                "url": "https://api.github.com/repos/wp-cli/config-command/zipball/82a64ae0dbd8bc91e2bf0446666ae24650223775",
+                "reference": "82a64ae0dbd8bc91e2bf0446666ae24650223775",
                 "shasum": ""
             },
             "require": {
@@ -10226,9 +10226,9 @@
             "homepage": "https://github.com/wp-cli/config-command",
             "support": {
                 "issues": "https://github.com/wp-cli/config-command/issues",
-                "source": "https://github.com/wp-cli/config-command/tree/v2.3.5"
+                "source": "https://github.com/wp-cli/config-command/tree/v2.3.6"
             },
-            "time": "2024-07-22T10:31:46+00:00"
+            "time": "2024-08-05T13:34:06+00:00"
         },
         {
             "name": "wp-cli/core-command",
