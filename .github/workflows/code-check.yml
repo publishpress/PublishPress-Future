@@ -43,4 +43,6 @@ jobs:
 
       - name: Run code checks inside dev-workspace
         run: |
-          $GITHUB_WORKSPACE/dev-workspace/run composer check
+          $GITHUB_WORKSPACE/dev-workspace/run composer check:php
+          $GITHUB_WORKSPACE/dev-workspace/run composer check:lint
+          $GITHUB_WORKSPACE/dev-workspace/run composer check:longpath
