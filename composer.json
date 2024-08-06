@@ -153,7 +153,7 @@
         "test": ".\/vendor\/bin\/codecept run $@",
         "codecept": ".\/vendor\/bin\/codecept $@",
         "docker:cleanup": "docker system prune -f",
-        "ray:cleanup": "vendor/bin/rector process publishpress-future-pro.php src tests/EndToEnd tests/Integration tests/Unit --config vendor/spatie/ray/remove-ray-rector.php",
+        "ray:cleanup": "vendor/bin/rector process publishpress-future-pro.php src tests/Acceptance tests/EndToEnd tests/Integration tests/Unit --config vendor/spatie/ray/remove-ray-rector.php",
         "info:versions": "bash .\/dev-workspace\/scripts\/info-versions.sh",
         "set:version": "php .\/dev-workspace\/scripts\/bump-version.php \"$@\"",
         "config:phpcs": "phpcs --config-set installed_paths \"..\/..\/phpcsstandards\/phpcsutils,..\/..\/phpcsstandards\/phpcsextra,..\/..\/automattic\/vipwpcs,..\/..\/phpcompatibility\/php-compatibility,..\/..\/sirbrillig\/phpcs-variable-analysis,..\/..\/publishpress\/publishpress-phpcs-standards\/standards,..\/..\/wp-coding-standards\/wpcs\"",
