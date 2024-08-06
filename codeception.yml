@@ -12,12 +12,6 @@ params:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
-        - lucatume\WPBrowser\Extension\ChromeDriverController
-    config:
-        lucatume\WPBrowser\Extension\ChromeDriverController:
-            port: '%CHROMEDRIVER_PORT%'
-            binary: '%CHROMEDRIVER_BINARY%'
-            suites: ['EndToEnd']
     commands:
         - lucatume\WPBrowser\Command\RunOriginal
         - lucatume\WPBrowser\Command\RunAll

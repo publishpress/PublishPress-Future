@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -68,7 +69,7 @@ class RestAPIController implements InitializableInterface
     {
         $apiNamespace = 'publishpress-future/v1';
 
-        register_rest_route( $apiNamespace, '/post-expiration/(?P<postId>\d+)', [
+        register_rest_route($apiNamespace, '/post-expiration/(?P<postId>\d+)', [
             'methods' => 'GET',
             'callback' => [$this, 'getFutureActionData'],
             'permission_callback' => function () {
@@ -144,7 +145,7 @@ class RestAPIController implements InitializableInterface
             ]
         ]);
 
-        register_rest_route( $apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
+        register_rest_route($apiNamespace, '/taxonomies/(?P<postType>[a-z\-_0-9A-Z]+)', [
             'methods' => 'GET',
             'callback' => [$this, 'getPostTypeTaxonomies'],
             'permission_callback' => function () {
@@ -251,7 +252,9 @@ class RestAPIController implements InitializableInterface
                         $taxonomy = $postModel->getExpirationTaxonomy();
 
                         if (empty($date)) {
-                            $defaultDataModelFactory = Container::getInstance()->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+                            $defaultDataModelFactory = Container::getInstance()->get(
+                                ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY
+                            );
                             $defaultDataModel = $defaultDataModelFactory->create($post['post_type']);
 
                             $defaultExpirationDate = $defaultDataModel->getActionDateParts($post['id']);
@@ -414,7 +417,7 @@ class RestAPIController implements InitializableInterface
         $data = $expirablePostModel->getExpirationDataAsArray();
 
         // return the data as a JSON response
-        return rest_ensure_response( $data );
+        return rest_ensure_response($data);
     }
 
     public function saveFutureActionData(WP_REST_Request $request)
@@ -430,7 +433,12 @@ class RestAPIController implements InitializableInterface
                 'categoryTaxonomy' => sanitize_key($request->get_param('taxonomy'))
             ];
 
-            $this->hooks->doAction(HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION, $postId, absint($request->get_param('date')), $opts);
+            $this->hooks->doAction(
+                HooksAbstract::ACTION_SCHEDULE_POST_EXPIRATION,
+                $postId,
+                absint($request->get_param('date')),
+                $opts
+            );
         } else {
             $this->hooks->doAction(HooksAbstract::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
         }

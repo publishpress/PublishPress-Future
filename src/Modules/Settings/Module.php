@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
 namespace PublishPress\Future\Modules\Settings;
-
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\ModuleInterface;
@@ -66,8 +66,7 @@ class Module implements ModuleInterface
         $taxonomiesModelFactory,
         $actionsModel,
         $migrationsFactoy
-    )
-    {
+    ) {
         $this->hooks = $hooks;
         $this->settings = $settings;
         $this->settingsPostTypesModelFactory = $settingsPostTypesModelFactory;

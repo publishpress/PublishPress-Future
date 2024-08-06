@@ -6,32 +6,23 @@ actor: IntegrationTester
 bootstrap: _bootstrap.php
 modules:
     enabled:
-        - Tests\Support\Helper\Wpunit
         - lucatume\WPBrowser\Module\WPLoader
-        - WPDb
         - Sequence
     config:
-        WPDb:
-            dump: "tests/codeception/_data/sql/dump.sql"
-            populate: true
-            cleanup: false
-            urlReplacement: true
-            letAdminEmailVerification: false
-            letCron: false
         lucatume\WPBrowser\Module\WPLoader:
-           wpRootFolder: "%WORDPRESS_ROOT_DIR%"
-           dbUrl: '%WORDPRESS_DB_URL%'
-           wpDebug: true
-           tablePrefix: '%TEST_TABLE_PREFIX%'
-           domain: '%WORDPRESS_DOMAIN%'
-           adminEmail: 'admin@%WORDPRESS_DOMAIN%'
-           title: 'Integration Tests'
-           plugins:
+            wpRootFolder: "%WORDPRESS_ROOT_DIR%"
+            dbHost: "%WORDPRESS_DB_HOST%"
+            dbName: "%WORDPRESS_DB_NAME%"
+            dbUser: "%WORDPRESS_DB_USER%"
+            dbPassword: "%WORDPRESS_DB_PASSWORD%"
+            wpDebug: true
+            tablePrefix: '%TEST_TABLE_PREFIX%'
+            domain: '%WORDPRESS_DOMAIN%'
+            adminEmail: 'admin@%WORDPRESS_DOMAIN%'
+            dump: 'tests/Support/Data/dump.sql'
+            title: 'Integration Tests'
+            theme: ''
+            plugins:
                 - ./post-expirator.php
-                - pre-tests/pre-tests.php
-                - ray-future/ray-future.php
-           activatePlugins:
+            activatePlugins:
                 - ./post-expirator.php
-                - pre-tests/pre-tests.php
-                - ray-future/ray-future.php
-bootstrap: bootstrap.php

@@ -2,6 +2,8 @@
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
+// phpcs:disable Generic.Files.LineLength.TooLong
+
 ?>
 <div class="pp-columns-wrapper<?php echo $showSideBar ? ' pp-enable-sidebar' : ''; ?>">
     <div class="pp-column-left">
@@ -18,8 +20,10 @@ defined('ABSPATH') or die('Direct access not allowed.');
         </div>
     </div>
 <?php
-    if ($showSideBar) {
-        include __DIR__ . '/ad-banner-right-sidebar.php';
-    }
+if ($showSideBar) {
+    include __DIR__ . '/ad-banner-right-sidebar.php';
+}
 ?>
 </div>
+<?php
+// phpcs:enable

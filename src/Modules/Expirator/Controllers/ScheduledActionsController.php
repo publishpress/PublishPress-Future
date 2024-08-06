@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
@@ -106,7 +107,7 @@ class ScheduledActionsController implements InitializableInterface
             'publishpress-future-scheduled-actions',
             [$this, 'renderScheduledActionsTemplate']
         );
-        add_action( 'load-' . $hook_suffix , [$this, 'processAdminUi']);
+        add_action('load-' . $hook_suffix, [$this, 'processAdminUi']);
     }
 
     public function renderScheduledActionsTemplate()
@@ -173,19 +174,19 @@ class ScheduledActionsController implements InitializableInterface
         $screenSettings .= '<legend>' . esc_html__('Log format', 'post-expirator') . '</legend>';
         $screenSettings .= '<label for="' . $screen->id . '_log_format_list">';
         $screenSettings .= '<input type="radio" id="' . $screen->id . '_log_format_list" name="publishpressfuture_actions_log_format" value="list" ' . checked(
-                $userLogFormat,
-                'list',
-                false
-            ) . '>';
+            $userLogFormat,
+            'list',
+            false
+        ) . '>';
         $screenSettings .= esc_html__('List', 'post-expirator');
         $screenSettings .= '</label>';
         $screenSettings .= '&nbsp;';
         $screenSettings .= '<label for="' . $screen->id . '_log_format_popup">';
         $screenSettings .= '<input type="radio" id="' . $screen->id . '_log_format_popup" name="publishpressfuture_actions_log_format" value="popup" ' . checked(
-                $userLogFormat,
-                'popup',
-                false
-            ) . '>';
+            $userLogFormat,
+            'popup',
+            false
+        ) . '>';
         $screenSettings .= esc_html__('Popup', 'post-expirator');
         $screenSettings .= '</label>';
 
@@ -196,10 +197,12 @@ class ScheduledActionsController implements InitializableInterface
 
     public function filterSetScreenOption($status)
     {
-        if (! isset($_POST['publishpressfuture_actions_log_format_nonce']) || ! wp_verify_nonce(
+        if (
+            ! isset($_POST['publishpressfuture_actions_log_format_nonce']) || ! wp_verify_nonce(
                 sanitize_key($_POST['publishpressfuture_actions_log_format_nonce']),
                 'publishpressfuture_actions_log_format'
-            )) {
+            )
+        ) {
             return $status;
         }
 
@@ -216,7 +219,7 @@ class ScheduledActionsController implements InitializableInterface
         return $status;
     }
 
-    function enqueueScripts($screenId)
+    public function enqueueScripts($screenId)
     {
         if ('future_page_publishpress-future-scheduled-actions' === $screenId) {
             wp_enqueue_style(

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-
-source ./lang-constants.sh
+source /project/dev-workspace/scripts/lang-constants.sh
 
 for locale in $LANG_LOCALES
 do

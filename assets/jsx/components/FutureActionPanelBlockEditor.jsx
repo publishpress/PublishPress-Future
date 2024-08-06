@@ -54,7 +54,6 @@ export const FutureActionPanelBlockEditor = (props) => {
         <PluginDocumentSettingPanel
             name={'publishpress-future-action-panel'}
             title={props.strings.panelTitle}
-            icon="calendar"
             initialOpen={props.postTypeDefaultConfig.autoEnable}
             className={'post-expirator-panel'}>
             <div id='publishpress-future-block-editor'>

@@ -34,7 +34,12 @@ jobs:
 
       - name: Prepare composer
         run: |
-          $GITHUB_WORKSPACE/dev-workspace/run composer validate && composer install
+          $GITHUB_WORKSPACE/dev-workspace/run composer validate
+          $GITHUB_WORKSPACE/dev-workspace/run composer install
+
+      - name: Show version of tools inside the dev-workspace
+        run: |
+          $GITHUB_WORKSPACE/dev-workspace/run composer info:versions
 
       - name: Run code checks inside dev-workspace
         run: |

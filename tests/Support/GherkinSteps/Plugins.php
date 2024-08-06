@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace Steps;
+namespace Tests\Support\GherkinSteps;
 
 trait Plugins
 {
@@ -18,7 +18,7 @@ trait Plugins
             $item = $plugin;
 
             if (substr_count($plugin, '/') === 0) {
-                 $item .= '/' . $plugin . '.php';
+                $item .= '/' . $plugin . '.php';
             }
 
             $current[] = $item;
@@ -43,7 +43,7 @@ trait Plugins
      */
     public function pluginsAreActive($plugins)
     {
-       $this->activatePlugins($plugins, false);
+        $this->activatePlugins($plugins, false);
     }
 
     /**

@@ -4,7 +4,6 @@
  * Autoloads the classes.
  */
 
-
 namespace PublishPress\Future\Core;
 
 defined('ABSPATH') or die('Direct access not allowed.');

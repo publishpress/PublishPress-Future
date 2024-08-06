@@ -6,6 +6,8 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Core\Paths;
 use PublishPress\Future\Core\Plugin;
+use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
+use PublishPress\Future\Framework\Logger\DBTableSchemas\DebugLogSchema;
 use PublishPress\Future\Framework\Logger\Logger;
 use PublishPress\Future\Framework\WordPress\Facade\DatabaseFacade;
 use PublishPress\Future\Framework\WordPress\Facade\DateTimeFacade;
@@ -23,6 +25,7 @@ use PublishPress\Future\Framework\WordPress\Models\TermModel;
 use PublishPress\Future\Framework\WordPress\Models\UserModel;
 use PublishPress\Future\Modules\Debug\Module as ModuleDebug;
 use PublishPress\Future\Modules\Expirator\Adapters\CronToWooActionSchedulerAdapter;
+use PublishPress\Future\Modules\Expirator\DBTableSchemas\ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\ChangePostStatus;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\DeletePost;
 use PublishPress\Future\Modules\Expirator\ExpirationActions\PostCategoryAdd;
@@ -37,27 +40,27 @@ use PublishPress\Future\Modules\Expirator\ExpirationActions\UnstickPost;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\ExpirationScheduler;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpirationHooksAbstract;
+use PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface;
+use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000ReplaceFooterPlaceholders;
 use PublishPress\Future\Modules\Expirator\Migrations\V30000WPCronToActionsScheduler;
 use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
+use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\Models\ActionArgsModel;
-use PublishPress\Future\Modules\Expirator\Interfaces\ActionArgsModelInterface;
 use PublishPress\Future\Modules\Expirator\Models\CurrentUserModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Models\ExpirationActionsModel;
+use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
 use PublishPress\Future\Modules\Expirator\Module as ModuleExpirator;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable;
 use PublishPress\Future\Modules\InstanceProtection\Module as ModuleInstanceProtection;
+use PublishPress\Future\Modules\ProFeaturesAds\Module as ProFeaturesAdsModule;
 use PublishPress\Future\Modules\Settings\Models\SettingsPostTypesModel;
 use PublishPress\Future\Modules\Settings\Models\TaxonomiesModel;
 use PublishPress\Future\Modules\Settings\Module as ModuleSettings;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\VersionNotices\Module as ModuleVersionNotices;
 use PublishPress\Future\Modules\WooCommerce\Module as ModuleWooCommerce;
-use PublishPress\Future\Modules\Expirator\Migrations\V30000ActionArgsSchema;
-use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
-use PublishPress\Future\Modules\Expirator\Models\PostTypeDefaultDataModelFactory;
-use PublishPress\Future\Modules\ProFeaturesAds\Module as ProFeaturesAdsModule;
 use PublishPress\Psr\Container\ContainerInterface;
 
 return [
@@ -186,7 +189,9 @@ return [
      * @return DatabaseFacade
      */
     ServicesAbstract::DB => static function (ContainerInterface $container) {
-        return new DatabaseFacade();
+        return new DatabaseFacade(
+            $container->get(ServicesAbstract::WPDB)
+        );
     },
 
     /**
@@ -346,7 +351,8 @@ return [
             $container->get(ServicesAbstract::REQUEST),
             $container->get(ServicesAbstract::ACTION_ARGS_MODEL_FACTORY),
             $container->get(ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY),
-            $container->get(ServicesAbstract::NOTICES)
+            $container->get(ServicesAbstract::NOTICES),
+            $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA)
         );
     },
 
@@ -525,7 +531,7 @@ return [
     },
 
     ServicesAbstract::SCHEDULED_ACTIONS_TABLE_FACTORY => static function (ContainerInterface $container) {
-        return function() use ($container) {
+        return function () use ($container) {
             return new ScheduledActionsTable(
                 $container->get(ServicesAbstract::ACTION_SCHEDULER_STORE),
                 $container->get(ServicesAbstract::ACTION_SCHEDULER_LOGGER),
@@ -538,7 +544,8 @@ return [
     ServicesAbstract::ACTION_ARGS_MODEL_FACTORY => static function (ContainerInterface $container): Closure {
         return function () use ($container): ActionArgsModelInterface {
             return new ActionArgsModel(
-                $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL)
+                $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL),
+                $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA)
             );
         };
     },
@@ -559,8 +566,8 @@ return [
         return function () use ($container) {
             return [
                 new V30000ActionArgsSchema(
-                    $container->get(ServicesAbstract::CRON),
-                    $container->get(ServicesAbstract::HOOKS)
+                    $container->get(ServicesAbstract::HOOKS),
+                    $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA)
                 ),
                 new V30000WPCronToActionsScheduler(
                     $container->get(ServicesAbstract::CRON),
@@ -579,9 +586,46 @@ return [
                     $container->get(ServicesAbstract::ACTION_SCHEDULER_STORE)
                 ),
                 new V30104ArgsColumnLength(
-                    $container->get(ServicesAbstract::HOOKS)
+                    $container->get(ServicesAbstract::HOOKS),
+                    $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA)
                 )
             ];
         };
+    },
+
+    ServicesAbstract::WPDB => static function (ContainerInterface $container) {
+        global $wpdb;
+
+        return $wpdb;
+    },
+
+    ServicesAbstract::DB_TABLE_SCHEMA_HANDLER_FACTORY => static function (ContainerInterface $container) {
+        return function () use ($container) {
+            $handler = new DBTableSchemaHandler(
+                $container->get(ServicesAbstract::WPDB)
+            );
+
+            return $handler;
+        };
+    },
+
+    ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA => static function (ContainerInterface $container) {
+        $schemaHandler = $container->get(ServicesAbstract::DB_TABLE_SCHEMA_HANDLER_FACTORY);
+        $schemaHandler = $schemaHandler();
+
+        return new ActionArgsSchema(
+            $schemaHandler,
+            $container->get(ServicesAbstract::HOOKS)
+        );
+    },
+
+    ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA => static function (ContainerInterface $container) {
+        $schemaHandler = $container->get(ServicesAbstract::DB_TABLE_SCHEMA_HANDLER_FACTORY);
+        $schemaHandler = $schemaHandler();
+
+        return new DebugLogSchema(
+            $schemaHandler,
+            $container->get(ServicesAbstract::HOOKS)
+        );
     },
 ];

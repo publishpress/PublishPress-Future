@@ -1,10 +1,6 @@
 <?php
 
-namespace Steps;
-
-use PostExpirator_Util;
-use DateTime;
-use Exception;
+namespace Tests\Support\GherkinSteps;
 
 use function sq;
 

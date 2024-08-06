@@ -13,7 +13,6 @@ use PublishPress\Future\Core\DI\ServicesAbstract;
  */
 class Walker_PostExpirator_Category_Checklist extends Walker
 {
-
     /**
      * What the class handles.
      *
@@ -100,12 +99,12 @@ class Walker_PostExpirator_Category_Checklist extends Walker
 
         $class = in_array($data_object->term_id, $popular_cats, true) ? ' class="expirator-category"' : '';
         $output .= "\n<li id='expirator-{$taxonomy}-{$data_object->term_id}'$class>" . '<label class="selectit"><input value="' . $data_object->term_id . '" type="checkbox" name="' . $name . '[]" id="expirator-in-' . $taxonomy . '-' . $data_object->term_id . '"' . checked(
-                in_array($data_object->term_id, $selected_cats, true),
-                true,
-                false
-            ) . disabled(empty($args['disabled']), false, false) . ' ' . $this->disabled . '/> ' . esc_html(
-                $hooks->applyFilters('the_category', $data_object->name)
-            ) . '</label>';
+            in_array($data_object->term_id, $selected_cats, true),
+            true,
+            false
+        ) . disabled(empty($args['disabled']), false, false) . ' ' . $this->disabled . '/> ' . esc_html(
+            $hooks->applyFilters('the_category', $data_object->name)
+        ) . '</label>';
     }
 
     /**

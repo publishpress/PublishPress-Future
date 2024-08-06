@@ -29,7 +29,9 @@ $actions = $actionsModel->getActionsAsOptions($opts['type']);
     <?php
     foreach ($actions as $action) {
         ?>
-        <option value="<?php echo esc_attr($action['value']); ?>" <?php selected($opts['selected'], $action['value'], true); ?>>
+        <option value="<?php echo esc_attr($action['value']); ?>"
+            <?php selected($opts['selected'], $action['value'], true); ?>
+        >
             <?php echo esc_html($action['label']); ?>
         </option>
         <?php

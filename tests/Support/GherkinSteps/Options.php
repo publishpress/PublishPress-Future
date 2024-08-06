@@ -3,7 +3,7 @@
  * Copyright (c) 2022. PublishPress, All rights reserved.
  */
 
-namespace Steps;
+namespace Tests\Support\GherkinSteps;
 
 trait Options
 {

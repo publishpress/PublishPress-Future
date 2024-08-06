@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (c) 2023. PublishPress, All rights reserved.
  */
