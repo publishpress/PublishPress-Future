@@ -39,6 +39,7 @@ jobs:
 
       - name: Prepare composer
         run: |
+          composer config --global github-oauth.github.com ${{ secrets.ACCESS_TOKEN }}
           $GITHUB_WORKSPACE/dev-workspace/run composer validate
           $GITHUB_WORKSPACE/dev-workspace/run composer install
 
