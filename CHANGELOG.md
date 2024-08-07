@@ -3,17 +3,34 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.4.3] - UNRELEASED
+## [3.4.3] - 06 Aug, 2024
+
+### Added
+
+- Add new date source for using the current step running time, #39
+- Add notice when auto layout starts, #41
+- Add option to enable experimental features in the settings (requires a constant to be defined)
+- Improve debugging by adding support to send queries, emails, and errors to Ray after the trigger is called
 
 ### Changed
 
 - Removed icon from the "PublishPress Future" metabox in the block editor, #821
 - Changed the title of the "Workflow Manual Trigger" metabox to "Action Workflows", #821
+- Remove workflow screenshots from post attachments, #42
 
 ### Fixed
 
-- Cetegories sometimes appears as number in the workflow editor, #789
+- Categories sometimes appears as number in the workflow editor, #789
 - Custom code to move posts to a custom status do not work using legacy expireType, #877
+- Fix legacy expireType param values for custom statuses when using custom code to schedule actions, #38
+- Unselect any previously selected steps in the workflow editor when loading a workflow
+- Fix the source of the date used in the Schedule step by utilizing the value stored in the global variables. This enhancement enables referencing the original trigger date, #39
+- Remove the workflow post type from the Post Types settings tab, #838
+- Update translation files
+- Only load the quick-edit script if in the post list screen
+- Fix quick edit action box to use the filter to hide action box when deactivated for the post type, #884
+- Fixed the database schema check to also check the debug log table, #887
+- Fixed the database schema check to check the table indexes, #887
 
 ## [3.4.2] - 15 Jul, 2024
 

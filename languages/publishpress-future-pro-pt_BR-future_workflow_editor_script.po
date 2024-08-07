@@ -657,7 +657,7 @@ msgstr ""
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
 msgstr ""
 
-#: components/flow-editor/index.jsx:334
+#: components/flow-editor/index.jsx:342
 msgid "Auto layout applied."
 msgstr ""
 
@@ -756,4 +756,8 @@ msgstr ""
 
 #: components/workflow-debug-ray-panel/index.jsx:70
 msgid "Show WordPress Errors"
+msgstr ""
+
+#: components/flow-editor/index.jsx:317
+msgid "Applying auto layout."
 msgstr ""

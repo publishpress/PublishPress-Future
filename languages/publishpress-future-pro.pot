@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future Pro 3.4.3-beta.1\n"
+"Project-Id-Version: PublishPress Future Pro 3.4.3-beta.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-07-25T16:38:47+00:00\n"
+"POT-Creation-Date: 2024-08-06T16:59:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: publishpress-future-pro\n"
@@ -76,123 +76,123 @@ msgstr ""
 msgid "Action date"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:197
+#: src/classes/Controllers/SettingsController.php:204
 msgid "Custom statuses"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:198
+#: src/classes/Controllers/SettingsController.php:205
 msgid "Enable custom statuses for the post type."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:202
+#: src/classes/Controllers/SettingsController.php:209
 msgid "Enabled"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:203
+#: src/classes/Controllers/SettingsController.php:210
 msgid "Disabled"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:204
+#: src/classes/Controllers/SettingsController.php:211
 msgid "Select all"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:205
+#: src/classes/Controllers/SettingsController.php:212
 msgid "Unselect all"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:206
+#: src/classes/Controllers/SettingsController.php:213
 msgid "Enable Metadata Scheduling"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:207
+#: src/classes/Controllers/SettingsController.php:214
 msgid "Enable metadata scheduling for the post type"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:211
+#: src/classes/Controllers/SettingsController.php:218
 msgid "Checking this option will allow you to use the post metadata to control the scheduling of Future actions in your content."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:215
+#: src/classes/Controllers/SettingsController.php:222
 msgid "Metadata Mapping"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:216
+#: src/classes/Controllers/SettingsController.php:223
 msgid "To use the default mapping, please leave the fields empty."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:220
+#: src/classes/Controllers/SettingsController.php:227
 msgid "Read more about metadata mapping."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:225
+#: src/classes/Controllers/SettingsController.php:232
 msgid "Original Metakey"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:226
+#: src/classes/Controllers/SettingsController.php:233
 msgid "New Metakey"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:227
+#: src/classes/Controllers/SettingsController.php:234
 msgid "Description"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:228
+#: src/classes/Controllers/SettingsController.php:235
 msgid "Hide Future metabox for this post type"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:229
+#: src/classes/Controllers/SettingsController.php:236
 msgid "Checking this option will disable the PublishPress Future metabox. This can prevent conflicts if you're using Metadata Scheduling with plugins such as ACF or Pods."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:241
+#: src/classes/Controllers/SettingsController.php:248
 msgid "Action Date (Required)"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:242
+#: src/classes/Controllers/SettingsController.php:249
 msgid "The date used for scheduling the action. The date must be a unix time stamp or in the 'Y-m-d H:i:s' format."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:250
+#: src/classes/Controllers/SettingsController.php:257
 msgid "Action Type"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:251
+#: src/classes/Controllers/SettingsController.php:258
 msgid "The type of action to be performed."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:259
+#: src/classes/Controllers/SettingsController.php:266
 msgid "New Post Status"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:260
+#: src/classes/Controllers/SettingsController.php:267
 msgid "The new post status to be applied to the post."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:268
+#: src/classes/Controllers/SettingsController.php:275
 msgid "Action Status"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:269
+#: src/classes/Controllers/SettingsController.php:276
 msgid "The status for the action. Anything different than 'saved' will be considered as not active."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:277
+#: src/classes/Controllers/SettingsController.php:284
 msgid "Taxonomy Name"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:278
+#: src/classes/Controllers/SettingsController.php:285
 msgid "The taxonomy used for scheduling the action."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:286
+#: src/classes/Controllers/SettingsController.php:293
 msgid "Taxonomy Terms"
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:287
+#: src/classes/Controllers/SettingsController.php:294
 msgid "The terms used for scheduling the action."
 msgstr ""
 
-#: src/classes/Controllers/SettingsController.php:347
+#: src/classes/Controllers/SettingsController.php:354
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
@@ -229,7 +229,7 @@ msgid "Edit Workflow"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Controllers/PostType.php:42
-#: src/classes/Modules/Workflows/Models/WorkflowModel.php:320
+#: src/classes/Modules/Workflows/Models/WorkflowModel.php:333
 msgid "New Workflow"
 msgstr ""
 
@@ -362,75 +362,75 @@ msgstr ""
 msgid "Workflow recurring scheduled action"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:230
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:238
 msgid "Welcome to the workflow editor"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:231
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:239
 msgid "In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:235
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:243
 msgid "Use your imagination"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:236
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:244
 msgid "You're free to create very distinct workflows in your site, according to your needs."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:240
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:248
 msgid "A basic workflow"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:241
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:249
 msgid "Every workflow requires at least two steps connected to each other: one trigger and one action."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:245
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:253
 msgid "Add steps to your workflow"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:246
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:254
 msgid "Drag and drop steps to add them to your workflow. Connect the steps to create a workflow."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:250
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:258
 msgid "Output and input"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:251
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:259
 msgid "Linked steps can pass data forward as input to the next step."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:255
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:263
 msgid "Customize the workflow"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:256
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:264
 msgid "Click on a step to customize it. You can change the step's settings in the right sidebar."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:260
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:268
 msgid "Workflow validation"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:261
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:269
 msgid "Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:265
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:273
 msgid "Publish your workflow"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:266
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:274
 msgid "When you're ready, click the publish button to make your workflow live."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:270
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:278
 msgid "Need help?"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:271
+#: src/classes/Modules/Workflows/Controllers/WorkflowEditor.php:279
 msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
 msgstr ""
 
@@ -446,7 +446,7 @@ msgstr ""
 msgid "—"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:186
+#: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:192
 msgid "No screenshot"
 msgstr ""
 
@@ -503,7 +503,7 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:70
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:64
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:70
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:61
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:68
 msgid "Post"
 msgstr ""
 
@@ -947,31 +947,31 @@ msgstr ""
 msgid "The post that was saved triggering the action."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:70
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:77
 msgid "PublishPress Future"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:79
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:86
 msgid "Site"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:88
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:95
 msgid "Conditional"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:97
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:104
 msgid "Asynchronous"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:106
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:113
 msgid "Debug"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:115
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:122
 msgid "Data Query"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:124
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:131
 msgid "Messages"
 msgstr ""
 
@@ -1021,6 +1021,18 @@ msgstr ""
 
 #: src/templates/settings-tab-advanced.html.php:38
 msgid "Calculates the future action date from the post's original publish date."
+msgstr ""
+
+#: src/templates/settings-tab-advanced.html.php:50
+msgid "Experimental Features"
+msgstr ""
+
+#: src/templates/settings-tab-advanced.html.php:59
+msgid "Enable experimental features"
+msgstr ""
+
+#: src/templates/settings-tab-advanced.html.php:61
+msgid "Enable experimental features that are still in development and may not be fully functional."
 msgstr ""
 
 #: src/templates/settings-tab-license.html.php:11

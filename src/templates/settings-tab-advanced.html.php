@@ -44,7 +44,7 @@ use PublishPress\FuturePro\Models\SettingsModel;
     </td>
 </tr>
 <!-- Enable experimental features -->
-<?php if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL): ?>
+<?php if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL) : ?>
     <tr valign="top">
         <th scope="row">
             <?php esc_html_e('Experimental Features', 'publishpress-future-pro'); ?>
@@ -57,10 +57,12 @@ use PublishPress\FuturePro\Models\SettingsModel;
                         <?php echo $this->settingsModel->getExperimentalFeaturesStatus() ? 'checked' : ''; ?> />
                 <label for="future-experimental-features"><?php
                     esc_html_e('Enable experimental features', 'publishpress-future-pro'); ?></label>
-                <p class="description offset"><?php esc_html_e(
-                    'Enable experimental features that are still in development and may not be fully functional.',
-                    'publishpress-future-pro'
-                ); ?></p>
+                <p class="description offset">
+                    <?php esc_html_e(
+                        'Enable experimental features that are still in development and may not be fully functional.',
+                        'publishpress-future-pro'
+                    ); ?>
+                </p>
             </div>
         </td>
     </tr>

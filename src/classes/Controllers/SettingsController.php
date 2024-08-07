@@ -437,6 +437,7 @@ class SettingsController implements ModuleInterface
 
         $this->settingsModel->setBaseDate($baseDate);
 
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
         $experimentalFeaturesStatus = isset($_POST['future-experimental-features']) ? 1 : 0;
         $experimentalFeaturesStatus = $experimentalFeaturesStatus;
 

@@ -657,7 +657,7 @@ msgstr "Si se activa, el paso evitará que se programe accidentalmente varias ve
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
 msgstr "Establece la prioridad de ejecución del paso programado. Los números más bajos indican mayor prioridad y se ejecutan primero."
 
-#: components/flow-editor/index.jsx:334
+#: components/flow-editor/index.jsx:342
 msgid "Auto layout applied."
 msgstr "Diseño automático aplicado."
 
@@ -756,4 +756,8 @@ msgstr ""
 
 #: components/workflow-debug-ray-panel/index.jsx:70
 msgid "Show WordPress Errors"
+msgstr ""
+
+#: components/flow-editor/index.jsx:317
+msgid "Applying auto layout."
 msgstr ""
