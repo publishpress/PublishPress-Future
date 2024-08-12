@@ -507,16 +507,16 @@ msgid "Unstick"
 msgstr "Rimuovi in evidenza"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:463
-msgid "Email is disabled"
-msgstr "L'email è disabilitata"
+msgid "Email is disabled."
+msgstr "L'email è disabilitata."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:467
-msgid "Email sent"
-msgstr "Email inviata"
+msgid "Email sent."
+msgstr "Email inviata."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:467
-msgid "Email not sent"
-msgstr "Email non inviata"
+msgid "Email not sent."
+msgstr "Email non inviata."
 
 #. translators: %1$s: post title placeholder, %2$s: notification text, %3$s: action date placeholder, %4$s: post link placeholder
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:617

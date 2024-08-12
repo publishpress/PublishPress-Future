@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.4.2\n"
+"Project-Id-Version: PublishPress Future 3.4.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-05T20:36:02+00:00\n"
+"POT-Creation-Date: 2024-08-12T19:33:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: post-expirator\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:144
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:362
 #: src/Modules/Expirator/Controllers/QuickEditController.php:270
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:85
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:93
 msgid "PublishPress Future"
 msgstr ""
 
@@ -332,32 +332,36 @@ msgstr ""
 msgid "Invalid date time offset."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:86
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:94
 msgid "Future"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:95
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:96
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:103
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:104
 #: src/Views/tabs.php:59
 msgid "Action Settings"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:104
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:105
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:112
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:113
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:43
 msgid "Scheduled Actions"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:174
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:182
 msgid "Log format"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:181
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:189
 msgid "List"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:190
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:198
 msgid "Popup"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:266
+msgid "Successfully executed action: %s"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/ShortcodeController.php:79
@@ -489,29 +493,29 @@ msgid "Unstick"
 msgstr ""
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:464
-msgid "Email is disabled"
+msgid "Email is disabled."
 msgstr ""
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:468
-msgid "Email sent"
+msgid "Email sent."
 msgstr ""
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:468
-msgid "Email not sent"
+msgid "Email not sent."
 msgstr ""
 
 #. translators: %1$s: post title placeholder, %2$s: notification text, %3$s: action date placeholder, %4$s: post link placeholder
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:618
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:619
 msgid "%1$s. %2$s on %3$s. The post link is %4$s"
 msgstr ""
 
 #. translators: %s is the post title
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:636
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:637
 msgid "Future Action Complete \"%s\""
 msgstr ""
 
 #. translators: 1: is the blog name, 2: the email subject
-#: src/Modules/Expirator/Models/ExpirablePostModel.php:640
+#: src/Modules/Expirator/Models/ExpirablePostModel.php:641
 msgid "[%1$s] %2$s"
 msgstr ""
 
