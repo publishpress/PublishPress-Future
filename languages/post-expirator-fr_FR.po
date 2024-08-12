@@ -516,16 +516,16 @@ msgid "Unstick"
 msgstr "Ne plus épingler"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:463
-msgid "Email is disabled"
-msgstr "L’e-mail est désactivé"
+msgid "Email is disabled."
+msgstr "L’e-mail est désactivé."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:467
-msgid "Email sent"
-msgstr "L’e-mail a été envoyé"
+msgid "Email sent."
+msgstr "L’e-mail a été envoyé."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:467
-msgid "Email not sent"
-msgstr "L’e-mail n’a pas été envoyé"
+msgid "Email not sent."
+msgstr "L’e-mail n’a pas été envoyé."
 
 #. translators: %1$s: post title placeholder, %2$s: notification text, %3$s: action date placeholder, %4$s: post link placeholder
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:617
