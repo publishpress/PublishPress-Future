@@ -352,8 +352,10 @@ export const PostTypeSettingsPanel = function (props) {
 
     settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);
 
+    const fieldSetClassNames = props.isVisible ? 'pe-settings-fieldset' : 'pe-settings-fieldset hidden';
+
     return (
-        <SettingsFieldset legend={props.legend}>
+        <div className={fieldSetClassNames}>
             <SettingsTable bodyChildren={settingsRows} />
 
             {! hasValidData && (
@@ -363,6 +365,6 @@ export const PostTypeSettingsPanel = function (props) {
                     </div>
                 </PanelRow>
             )}
-        </SettingsFieldset>
+        </div>
     );
 }
