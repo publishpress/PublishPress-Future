@@ -2763,289 +2763,6 @@ Object.defineProperty(exports, "DateOffsetPreview", ({
 
 /***/ }),
 
-/***/ "./assets/jsx/data.jsx":
-/*!*****************************!*\
-  !*** ./assets/jsx/data.jsx ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-Object.defineProperty(exports, "__esModule", ({
-    value: true
-}));
-exports.createStore = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _time = __webpack_require__(/*! ./time */ "./assets/jsx/time.jsx");
-
-var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
-
-var _data = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var createStore = exports.createStore = function createStore(props) {
-    if (props.defaultState.terms && typeof props.defaultState.terms === 'string') {
-        props.defaultState.terms = props.defaultState.terms.split(',').map(function (term) {
-            return parseInt(term);
-        });
-    }
-
-    var defaultState = {
-        action: props.defaultState.action,
-        date: props.defaultState.date ? props.defaultState.date : (0, _time.getCurrentTimeAsTimestamp)(),
-        enabled: props.defaultState.autoEnable,
-        terms: props.defaultState.terms ? props.defaultState.terms : [],
-        taxonomy: props.defaultState.taxonomy ? props.defaultState.taxonomy : null,
-        newStatus: props.defaultState.newStatus ? props.defaultState.newStatus : 'draft',
-        termsListByName: null,
-        termsListById: null,
-        taxonomyName: null,
-        isFetchingTerms: false,
-        changeAction: 'no-change',
-        calendarIsVisible: true,
-        hasValidData: true,
-        extraData: props.defaultState.extraData ? props.defaultState.extraData : {}
-    };
-
-    var store = (0, _data.createReduxStore)(props.name, {
-        reducer: function reducer() {
-            var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
-            var action = arguments[1];
-
-            switch (action.type) {
-                case 'SET_ACTION':
-                    return _extends({}, state, {
-                        action: action.action
-                    });
-                case 'SET_NEW_STATUS':
-                    return _extends({}, state, {
-                        newStatus: action.newStatus
-                    });
-                case 'SET_DATE':
-                    // Make sure the date is a number, if it is a string with only numbers
-                    if (typeof action.date !== 'number' && (0, _utils.isNumber)(action.date)) {
-                        action.date = parseInt(action.date);
-                    }
-
-                    // If string, convert to unix time
-                    if (typeof action.date === 'string') {
-                        action.date = new Date(action.date).getTime();
-                    }
-
-                    // Make sure the time is always in seconds
-                    action.date = (0, _time.normalizeUnixTimeToSeconds)(action.date);
-
-                    // Convert to formated string format, considering it is in the site's timezone
-                    action.date = (0, _time.formatUnixTimeToTimestamp)(action.date);
-
-                    return _extends({}, state, {
-                        date: action.date
-                    });
-                case 'SET_ENABLED':
-                    return _extends({}, state, {
-                        enabled: action.enabled
-                    });
-                case 'SET_TERMS':
-                    return _extends({}, state, {
-                        terms: action.terms
-                    });
-                case 'SET_TAXONOMY':
-                    return _extends({}, state, {
-                        taxonomy: action.taxonomy
-                    });
-                case 'SET_TERMS_LIST_BY_NAME':
-                    return _extends({}, state, {
-                        termsListByName: action.termsListByName
-                    });
-                case 'SET_TERMS_LIST_BY_ID':
-                    return _extends({}, state, {
-                        termsListById: action.termsListById
-                    });
-                case 'SET_TAXONOMY_NAME':
-                    return _extends({}, state, {
-                        taxonomyName: action.taxonomyName
-                    });
-                case 'SET_CHANGE_ACTION':
-                    return _extends({}, state, {
-                        changeAction: action.changeAction
-                    });
-                case 'SET_CALENDAR_IS_VISIBLE':
-                    return _extends({}, state, {
-                        calendarIsVisible: action.calendarIsVisible
-                    });
-                case 'SET_HAS_VALID_DATA':
-                    return _extends({}, state, {
-                        hasValidData: action.hasValidData
-                    });
-
-                case 'SET_EXTRA_DATA':
-                    return _extends({}, state, {
-                        extraData: _extends({}, action.extraData)
-                    });
-
-                case 'SET_EXTRA_DATA_BY_NAME':
-                    var extraData = _extends({}, state.extraData, _defineProperty({}, action.name, action.value));
-
-                    return _extends({}, state, {
-                        extraData: _extends({}, extraData)
-                    });
-            }
-
-            return state;
-        },
-
-        actions: {
-            setAction: function setAction(action) {
-                return {
-                    type: 'SET_ACTION',
-                    action: action
-                };
-            },
-            setNewStatus: function setNewStatus(newStatus) {
-                return {
-                    type: 'SET_NEW_STATUS',
-                    newStatus: newStatus
-                };
-            },
-            setDate: function setDate(date) {
-                return {
-                    type: 'SET_DATE',
-                    date: date
-                };
-            },
-            setEnabled: function setEnabled(enabled) {
-                return {
-                    type: 'SET_ENABLED',
-                    enabled: enabled
-                };
-            },
-            setTerms: function setTerms(terms) {
-                return {
-                    type: 'SET_TERMS',
-                    terms: terms
-                };
-            },
-            setTaxonomy: function setTaxonomy(taxonomy) {
-                return {
-                    type: 'SET_TAXONOMY',
-                    taxonomy: taxonomy
-                };
-            },
-            setTermsListByName: function setTermsListByName(termsListByName) {
-                return {
-                    type: 'SET_TERMS_LIST_BY_NAME',
-                    termsListByName: termsListByName
-                };
-            },
-            setTermsListById: function setTermsListById(termsListById) {
-                return {
-                    type: 'SET_TERMS_LIST_BY_ID',
-                    termsListById: termsListById
-                };
-            },
-            setTaxonomyName: function setTaxonomyName(taxonomyName) {
-                return {
-                    type: 'SET_TAXONOMY_NAME',
-                    taxonomyName: taxonomyName
-                };
-            },
-            setIsFetchingTerms: function setIsFetchingTerms(isFetchingTerms) {
-                return {
-                    type: 'SET_IS_FETCHING_TERMS',
-                    isFetchingTerms: isFetchingTerms
-                };
-            },
-            setChangeAction: function setChangeAction(changeAction) {
-                return {
-                    type: 'SET_CHANGE_ACTION',
-                    changeAction: changeAction
-                };
-            },
-            setCalendarIsVisible: function setCalendarIsVisible(calendarIsVisible) {
-                return {
-                    type: 'SET_CALENDAR_IS_VISIBLE',
-                    calendarIsVisible: calendarIsVisible
-                };
-            },
-            setHasValidData: function setHasValidData(hasValidData) {
-                return {
-                    type: 'SET_HAS_VALID_DATA',
-                    hasValidData: hasValidData
-                };
-            },
-            setExtraData: function setExtraData(extraData) {
-                return {
-                    type: 'SET_EXTRA_DATA',
-                    extraData: extraData
-                };
-            },
-            setExtraDataByName: function setExtraDataByName(name, value) {
-                return {
-                    type: 'SET_EXTRA_DATA_BY_NAME',
-                    name: name,
-                    value: value
-                };
-            }
-        },
-        selectors: {
-            getAction: function getAction(state) {
-                return state.action;
-            },
-            getNewStatus: function getNewStatus(state) {
-                return state.newStatus;
-            },
-            getDate: function getDate(state) {
-                return state.date;
-            },
-            getEnabled: function getEnabled(state) {
-                return state.enabled;
-            },
-            getTerms: function getTerms(state) {
-                return state.terms;
-            },
-            getTaxonomy: function getTaxonomy(state) {
-                return state.taxonomy;
-            },
-            getTermsListByName: function getTermsListByName(state) {
-                return state.termsListByName;
-            },
-            getTermsListById: function getTermsListById(state) {
-                return state.termsListById;
-            },
-            getTaxonomyName: function getTaxonomyName(state) {
-                return state.taxonomyName;
-            },
-            getIsFetchingTerms: function getIsFetchingTerms(state) {
-                return state.isFetchingTerms;
-            },
-            getChangeAction: function getChangeAction(state) {
-                return state.changeAction;
-            },
-            getCalendarIsVisible: function getCalendarIsVisible(state) {
-                return state.calendarIsVisible;
-            },
-            getHasValidData: function getHasValidData(state) {
-                return state.hasValidData;
-            },
-            getExtraData: function getExtraData(state) {
-                return state.extraData;
-            },
-            getExtraDataByName: function getExtraDataByName(state, name) {
-                return state.extraData[name] || null;
-            }
-        }
-    });
-
-    (0, _data.register)(store);
-
-    return store;
-};
-
-/***/ }),
-
 /***/ "./assets/jsx/time.jsx":
 /*!*****************************!*\
   !*** ./assets/jsx/time.jsx ***!
@@ -3222,23 +2939,13 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
-/***/ "react-dom":
-/*!***************************!*\
-  !*** external "ReactDOM" ***!
-  \***************************/
+/***/ "&config.settings-general":
+/*!**********************************************************!*\
+  !*** external "publishpressFutureSettingsGeneralConfig" ***!
+  \**********************************************************/
 /***/ ((module) => {
 
-module.exports = ReactDOM;
-
-/***/ }),
-
-/***/ "&config.classic-editor":
-/*!********************************************************!*\
-  !*** external "publishpressFutureClassicEditorConfig" ***!
-  \********************************************************/
-/***/ ((module) => {
-
-module.exports = publishpressFutureClassicEditorConfig;
+module.exports = publishpressFutureSettingsGeneralConfig;
 
 /***/ }),
 
@@ -3340,58 +3047,99 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-/*!***************************************!*\
-  !*** ./assets/jsx/classic-editor.jsx ***!
-  \***************************************/
+/*!*****************************************!*\
+  !*** ./assets/jsx/settings-general.jsx ***!
+  \*****************************************/
 
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          * Copyright (c) 2023. PublishPress, All rights reserved.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          */
 
 var _components = __webpack_require__(/*! ./components */ "./assets/jsx/components/index.jsx");
 
-var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
-
-var _utils = __webpack_require__(/*! ./utils */ "./assets/jsx/utils.jsx");
-
 var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 
-var _data2 = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+var _config = __webpack_require__(/*! &config.settings-general */ "&config.settings-general");
 
-var _config = __webpack_require__(/*! &config.classic-editor */ "&config.classic-editor");
+var SettingsFormPanel = function SettingsFormPanel(props) {
+    var _useState = (0, _element.useState)(true),
+        _useState2 = _slicedToArray(_useState, 2),
+        isValidForm = _useState2[0],
+        setIsValidForm = _useState2[1];
 
-var _reactDom = __webpack_require__(/*! react-dom */ "react-dom");
+    var _useState3 = (0, _element.useState)(''),
+        _useState4 = _slicedToArray(_useState3, 2),
+        validationError = _useState4[0],
+        setValidationError = _useState4[1];
 
-if (!(0, _utils.isGutenbergEnabled)()) {
-    var storeName = 'publishpress-future/future-action';
+    var _useState5 = (0, _element.useState)(false),
+        _useState6 = _slicedToArray(_useState5, 2),
+        hasPendingValidation = _useState6[0],
+        setHasPendingValidation = _useState6[1];
 
-    if (!(0, _data2.select)(storeName)) {
-        (0, _data.createStore)({
-            name: storeName,
-            defaultState: {
-                autoEnable: _config.postTypeDefaultConfig.autoEnable,
-                action: _config.postTypeDefaultConfig.expireType,
-                newStatus: _config.postTypeDefaultConfig.newStatus,
-                date: _config.defaultDate,
-                taxonomy: _config.postTypeDefaultConfig.taxonomy,
-                terms: _config.postTypeDefaultConfig.terms
-            }
+    var _useState7 = (0, _element.useState)(''),
+        _useState8 = _slicedToArray(_useState7, 2),
+        offset = _useState8[0],
+        setOffset = _useState8[1];
+
+    var onHasValidationError = function onHasValidationError(errorMessage) {
+        if (errorMessage) {
+            setIsValidForm(false);
+            setValidationError(errorMessage);
+        } else {
+            setIsValidForm(true);
+            setValidationError('');
+        }
+    };
+
+    var onValidationStarted = function onValidationStarted(inProgress) {
+        setHasPendingValidation(inProgress);
+    };
+
+    var onValidationFinished = function onValidationFinished(isValid) {
+        setHasPendingValidation(false);
+        setIsValidForm(isValid);
+    };
+
+    (0, _element.useEffect)(function () {
+        jQuery('#expired-custom-expiration-date').on('keyup', function () {
+            setOffset(jQuery(this).val());
         });
-    }
 
-    var container = document.getElementById("publishpress-future-classic-editor");
-    var component = React.createElement(_components.FutureActionPanelClassicEditor, {
-        storeName: storeName,
-        postType: _config.postType,
-        isNewPost: _config.isNewPost,
-        actionsSelectOptions: _config.actionsSelectOptions,
-        statusesSelectOptions: _config.statusesSelectOptions,
-        is12Hour: _config.is12Hour,
-        timeFormat: _config.timeFormat,
-        startOfWeek: _config.startOfWeek,
-        strings: _config.strings,
-        taxonomyName: _config.taxonomyName
-    });
+        setOffset(jQuery('#expired-custom-expiration-date').val());
+    }, []);
 
-    (0, _element.createRoot)(container).render(component);
-}
+    return React.createElement(
+        _element.StrictMode,
+        null,
+        React.createElement(_components.DateOffsetPreview, {
+            offset: offset,
+            label: _config.text.datePreview,
+            labelDatePreview: _config.text.datePreviewCurrent,
+            labelOffsetPreview: _config.text.datePreviewComputed,
+            setValidationErrorCallback: onHasValidationError,
+            setHasPendingValidationCallback: onValidationStarted,
+            setHasValidDataCallback: onValidationFinished
+        }),
+        !isValidForm && validationError && React.createElement(
+            "div",
+            { className: "publishpress-future-notice publishpress-future-notice-error" },
+            React.createElement(
+                "p",
+                null,
+                _config.text.error,
+                ": ",
+                validationError
+            )
+        )
+    );
+};
+
+var container = document.getElementById("expiration-date-preview");
+var component = React.createElement(SettingsFormPanel, null);
+
+(0, _element.createRoot)(container).render(component);
 /******/ })()
 ;
-//# sourceMappingURL=classic-editor.js.map
+//# sourceMappingURL=settings-general.js.map

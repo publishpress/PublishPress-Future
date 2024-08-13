@@ -43,6 +43,45 @@ module.exports = [
     },
     {
         entry: glob.sync(
+            "./assets/jsx/settings-general.jsx",
+        ),
+        devtool: 'source-map',
+        output: {
+            path: path.join(__dirname, "assets", "js"),
+            filename: "settings-general.js"
+        },
+        resolve: {
+            extensions: ['.jsx', '.js']
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                }
+            ]
+        },
+        resolve: {
+            extensions: ['.js', '.jsx']
+        },
+        externals: {
+            "react": "React",
+            "react-dom": "ReactDOM",
+            "&wp": "wp",
+            "@wordpress/element": "wp.element",
+            "@wordpress/components": "wp.components",
+            "@wordpress/data": "wp.data",
+            "@wordpress/plugins": "wp.plugins",
+            "@wordpress/hooks": "wp.hooks",
+            "@wordpress/url": "wp.url",
+            "&config.settings-general": "publishpressFutureSettingsGeneralConfig"
+        }
+    },
+    {
+        entry: glob.sync(
             "./assets/jsx/block-editor.jsx",
         ),
         devtool: 'source-map',

@@ -83,6 +83,8 @@ $plugin_facade = PostExpirator_Facade::getInstance();
                                     '<code>',
                                     '</code>'
                                 ); ?></p>
+
+                                <div id="expiration-date-preview"></div>
                         </div>
                     </td>
                 </tr>
