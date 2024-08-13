@@ -2939,23 +2939,13 @@ var isNumber = exports.isNumber = function isNumber(value) {
 
 /***/ }),
 
-/***/ "react-dom":
-/*!***************************!*\
-  !*** external "ReactDOM" ***!
-  \***************************/
+/***/ "&config.settings-general":
+/*!**********************************************************!*\
+  !*** external "publishpressFutureSettingsGeneralConfig" ***!
+  \**********************************************************/
 /***/ ((module) => {
 
-module.exports = ReactDOM;
-
-/***/ }),
-
-/***/ "&config.settings-post-types":
-/*!***************************************************!*\
-  !*** external "publishpressFutureSettingsConfig" ***!
-  \***************************************************/
-/***/ ((module) => {
-
-module.exports = publishpressFutureSettingsConfig;
+module.exports = publishpressFutureSettingsGeneralConfig;
 
 /***/ }),
 
@@ -3057,12 +3047,10 @@ module.exports = wp.url;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-/*!********************************************!*\
-  !*** ./assets/jsx/settings-post-types.jsx ***!
-  \********************************************/
+/*!*****************************************!*\
+  !*** ./assets/jsx/settings-general.jsx ***!
+  \*****************************************/
 
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }(); /*
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           * Copyright (c) 2023. PublishPress, All rights reserved.
@@ -3072,177 +3060,86 @@ var _components = __webpack_require__(/*! ./components */ "./assets/jsx/componen
 
 var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 
-var _config = __webpack_require__(/*! &config.settings-post-types */ "&config.settings-post-types");
-
-var _reactDom = __webpack_require__(/*! react-dom */ "react-dom");
+var _config = __webpack_require__(/*! &config.settings-general */ "&config.settings-general");
 
 var SettingsFormPanel = function SettingsFormPanel(props) {
-    var _useState = (0, _element.useState)({}),
+    var _useState = (0, _element.useState)(true),
         _useState2 = _slicedToArray(_useState, 2),
-        formValidationStatusPerPostType = _useState2[0],
-        setFormValidationStatusPerPostType = _useState2[1];
+        isValidForm = _useState2[0],
+        setIsValidForm = _useState2[1];
 
-    var _useState3 = (0, _element.useState)({}),
+    var _useState3 = (0, _element.useState)(''),
         _useState4 = _slicedToArray(_useState3, 2),
-        pendingValidationPerPostType = _useState4[0],
-        setPendingValidationPerPostType = _useState4[1];
+        validationError = _useState4[0],
+        setValidationError = _useState4[1];
 
-    var _useState5 = (0, _element.useState)(true),
+    var _useState5 = (0, _element.useState)(false),
         _useState6 = _slicedToArray(_useState5, 2),
-        allValid = _useState6[0],
-        setAllValid = _useState6[1];
+        hasPendingValidation = _useState6[0],
+        setHasPendingValidation = _useState6[1];
 
-    var _useState7 = (0, _element.useState)(true),
+    var _useState7 = (0, _element.useState)(''),
         _useState8 = _slicedToArray(_useState7, 2),
-        hasNoPendingValidation = _useState8[0],
-        setHasNoPendingValidation = _useState8[1];
+        offset = _useState8[0],
+        setOffset = _useState8[1];
+
+    var onHasValidationError = function onHasValidationError(errorMessage) {
+        if (errorMessage) {
+            setIsValidForm(false);
+            setValidationError(errorMessage);
+        } else {
+            setIsValidForm(true);
+            setValidationError('');
+        }
+    };
+
+    var onValidationStarted = function onValidationStarted(inProgress) {
+        setHasPendingValidation(inProgress);
+    };
+
+    var onValidationFinished = function onValidationFinished(isValid) {
+        setHasPendingValidation(false);
+        setIsValidForm(isValid);
+    };
 
     (0, _element.useEffect)(function () {
-        var allFormsAreValid = true;
+        jQuery('#expired-custom-expiration-date').on('keyup', function () {
+            setOffset(jQuery(this).val());
+        });
 
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-            for (var _iterator = Object.entries(formValidationStatusPerPostType)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var _ref = _step.value;
-
-                var _ref2 = _slicedToArray(_ref, 2);
-
-                var postType = _ref2[0];
-                var isValidForPostType = _ref2[1];
-
-                if (!isValidForPostType) {
-                    allFormsAreValid = false;
-                    break;
-                }
-            }
-        } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
-                }
-            } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
-                }
-            }
-        }
-
-        setAllValid(allFormsAreValid);
-    }, [formValidationStatusPerPostType]);
-
-    (0, _element.useEffect)(function () {
-        var hasNoPendingValidation = true;
-
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-            for (var _iterator2 = Object.entries(pendingValidationPerPostType)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                var _ref3 = _step2.value;
-
-                var _ref4 = _slicedToArray(_ref3, 2);
-
-                var postType = _ref4[0];
-                var hasPending = _ref4[1];
-
-                if (hasPending) {
-                    hasNoPendingValidation = false;
-                    break;
-                }
-            }
-        } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                    _iterator2.return();
-                }
-            } finally {
-                if (_didIteratorError2) {
-                    throw _iteratorError2;
-                }
-            }
-        }
-
-        setHasNoPendingValidation(hasNoPendingValidation);
-    }, [pendingValidationPerPostType]);
-
-    var onDataIsValid = function onDataIsValid(postType) {
-        formValidationStatusPerPostType[postType] = true;
-        setFormValidationStatusPerPostType(_extends({}, formValidationStatusPerPostType));
-    };
-
-    var onDataIsInvalid = function onDataIsInvalid(postType) {
-        formValidationStatusPerPostType[postType] = false;
-        setFormValidationStatusPerPostType(_extends({}, formValidationStatusPerPostType));
-    };
-
-    var onValidationStarted = function onValidationStarted(postType) {
-        pendingValidationPerPostType[postType] = true;
-        setPendingValidationPerPostType(_extends({}, pendingValidationPerPostType));
-    };
-
-    var onValidationFinished = function onValidationFinished(postType) {
-        pendingValidationPerPostType[postType] = false;
-        setPendingValidationPerPostType(_extends({}, pendingValidationPerPostType));
-    };
-
-    var saveButtonText = hasNoPendingValidation ? _config.text.saveChanges : _config.text.saveChangesPendingValidation;
+        setOffset(jQuery('#expired-custom-expiration-date').val());
+    }, []);
 
     return React.createElement(
         _element.StrictMode,
         null,
-        React.createElement(
-            _components.SettingsForm,
-            null,
-            React.createElement(_components.NonceControl, {
-                name: "_postExpiratorMenuDefaults_nonce",
-                nonce: _config.nonce,
-                referrer: _config.referrer
-            }),
+        React.createElement(_components.DateOffsetPreview, {
+            offset: offset,
+            label: _config.text.datePreview,
+            labelDatePreview: _config.text.datePreviewCurrent,
+            labelOffsetPreview: _config.text.datePreviewComputed,
+            setValidationErrorCallback: onHasValidationError,
+            setHasPendingValidationCallback: onValidationStarted,
+            setHasValidDataCallback: onValidationFinished
+        }),
+        !isValidForm && validationError && React.createElement(
+            "div",
+            { className: "publishpress-future-notice publishpress-future-notice-error" },
             React.createElement(
-                _components.SettingsSection,
-                {
-                    title: _config.text.settingsSectionTitle,
-                    description: _config.text.settingsSectionDescription },
-                React.createElement(_components.PostTypesSettingsPanels, {
-                    settings: _config.settings,
-                    text: _config.text,
-                    expireTypeList: _config.expireTypeList,
-                    taxonomiesList: _config.taxonomiesList,
-                    statusesList: _config.statusesList,
-                    onDataIsValid: onDataIsValid,
-                    onDataIsInvalid: onDataIsInvalid,
-                    onValidationStarted: onValidationStarted,
-                    onValidationFinished: onValidationFinished
-                })
-            ),
-            React.createElement(
-                _components.ButtonsPanel,
+                "p",
                 null,
-                React.createElement(_components.SubmitButton, {
-                    id: "expirationdateSaveDefaults",
-                    name: "expirationdateSaveDefaults",
-                    disabled: !allValid || !hasNoPendingValidation,
-                    text: saveButtonText
-                })
+                _config.text.error,
+                ": ",
+                validationError
             )
         )
     );
 };
 
-var container = document.getElementById("publishpress-future-settings-post-types");
+var container = document.getElementById("expiration-date-preview");
 var component = React.createElement(SettingsFormPanel, null);
 
 (0, _element.createRoot)(container).render(component);
 /******/ })()
 ;
-//# sourceMappingURL=settings-post-types.js.map
+//# sourceMappingURL=settings-general.js.map
