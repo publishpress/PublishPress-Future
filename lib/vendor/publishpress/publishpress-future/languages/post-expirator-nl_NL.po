@@ -336,16 +336,16 @@ msgid "Unstick"
 msgstr "Unstick"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:449
-msgid "Email is disabled"
-msgstr "E-mail is uitgeschakeld"
+msgid "Email is disabled."
+msgstr "E-mail is uitgeschakeld."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:453
-msgid "Email sent"
-msgstr "E-mail verzonden"
+msgid "Email sent."
+msgstr "E-mail verzonden."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:453
-msgid "Email not sent"
-msgstr "E-mail niet verzonden"
+msgid "Email not sent."
+msgstr "E-mail niet verzonden."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:524
 msgid "%s. %s on %s. The post link is %s"

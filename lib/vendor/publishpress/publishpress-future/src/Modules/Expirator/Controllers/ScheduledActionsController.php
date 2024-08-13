@@ -10,6 +10,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
+use PublishPress\Future\Modules\Expirator\Models\ExpirablePostModel;
 use PublishPress\Future\Modules\Expirator\Tables\ScheduledActionsTable as ScheduledActionsTable;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -76,6 +77,13 @@ class ScheduledActionsController implements InitializableInterface
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS,
             [$this, 'enqueueScripts']
+        );
+
+        $this->hooks->addFilter(
+            HooksAbstract::FILTER_ACTION_SCHEDULER_ADMIN_NOTICE,
+            [$this, 'filterActionSchedulerAdminNotice'],
+            10,
+            3
         );
     }
 
@@ -236,5 +244,31 @@ class ScheduledActionsController implements InitializableInterface
                 POSTEXPIRATOR_VERSION
             );
         }
+    }
+
+    public function filterActionSchedulerAdminNotice($html, $action, $notification)
+    {
+        if ($action->get_group() !== 'publishpress-future') {
+            return $html;
+        }
+
+        if ($action->get_hook() === 'publishpressfuture_run_workflow') {
+            $args = $action->get_args();
+
+            if (isset($args['postId']) && isset($args['workflow']) && 'expire' === $args['workflow']) {
+
+                $transientName = 'post-expirator-notice-' . (int) $args['postId'];
+                $noticeMessage = get_transient($transientName);
+                delete_transient($transientName);
+
+                // translators: %s is the action description
+                $html = sprintf(
+                    __('Successfully executed action: %s', 'post-expirator'),
+                    $noticeMessage
+                );
+            }
+        }
+
+        return $html;
     }
 }

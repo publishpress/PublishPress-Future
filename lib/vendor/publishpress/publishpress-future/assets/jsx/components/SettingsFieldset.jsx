@@ -4,7 +4,7 @@
 
 export const SettingsFieldset = function (props) {
     return (
-        <fieldset>
+        <fieldset className={props.className}>
                 <legend>{props.legend}</legend>
                 {props.children}
         </fieldset>

@@ -387,16 +387,16 @@ msgid "Unstick"
 msgstr "Desafixar"
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:418
-msgid "Email is disabled"
-msgstr "O e-mail está desativado"
+msgid "Email is disabled."
+msgstr "O e-mail está desativado."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:422
-msgid "Email sent"
-msgstr "Email enviado"
+msgid "Email sent."
+msgstr "Email enviado."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:422
-msgid "Email not sent"
-msgstr "E-mail não enviado"
+msgid "Email not sent."
+msgstr "E-mail não enviado."
 
 #: src/Modules/Expirator/Models/ExpirablePostModel.php:564
 msgid "%s. %s on %s. The post link is %s"

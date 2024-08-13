@@ -3,8 +3,11 @@
  */
 
 import { PostTypeSettingsPanel } from "./";
+import { useState } from "@wordpress/element";
 
 export const PostTypesSettingsPanels = function (props) {
+    const [currentTab, setCurrentTab] = useState(Object.keys(props.settings)[0]);
+
     let panels = [];
 
     for (const [postType, postTypeSettings] of Object.entries(props.settings)) {
@@ -22,9 +25,39 @@ export const PostTypesSettingsPanels = function (props) {
                 onDataIsInvalid={props.onDataIsInvalid}
                 onValidationStarted={props.onValidationStarted}
                 onValidationFinished={props.onValidationFinished}
+                isVisible={currentTab === postType}
             />
         );
     }
 
-    return (panels);
+    const onSelectTab = (event) => {
+        event.preventDefault();
+        setCurrentTab(event.target.hash.replace('#', '').replace('-panel', ''));
+    }
+
+    let tabs = [];
+    let selected = false;
+
+    for (const [postType, postTypeSettings] of Object.entries(props.settings)) {
+        selected = currentTab === postType;
+        tabs.push(
+            <a href={`#${postType}-panel`}
+                className={"nav-tab " + (selected ? 'nav-tab-active':'')}
+                key={`${postType}-tab`}
+                onClick={onSelectTab}
+            >
+                {postTypeSettings.label}
+            </a>
+        );
+    }
+
+    return (
+        <div>
+            <nav className="nav-tab-wrapper">
+                {tabs}
+            </nav>
+            {panels}
+        </div>
+    );
 }
+

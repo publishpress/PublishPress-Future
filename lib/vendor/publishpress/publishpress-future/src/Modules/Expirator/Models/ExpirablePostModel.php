@@ -461,14 +461,15 @@ class ExpirablePostModel extends PostModel
         $expirationLog = $expirationAction->getNotificationText() . ' ';
 
         if (! $this->expirationEmailIsEnabled()) {
-            $expirationLog .= __('Email is disabled', 'post-expirator');
+            $expirationLog .= __('Email is disabled.', 'post-expirator');
         } else {
             $emailSent = $this->sendEmail($expirationAction);
             $expirationLog .= $emailSent
-                ? __('Email sent', 'post-expirator') : __('Email not sent', 'post-expirator');
+                ? __('Email sent.', 'post-expirator') : __('Email not sent.', 'post-expirator');
         }
 
         $this->logOnAction($expirationLog);
+        $this->registerNoticeMessage($postId, $expirationLog);
 
         $this->hooks->doAction(HooksAbstract::ACTION_POST_EXPIRED, $postId, $expirationLog);
 
@@ -929,5 +930,10 @@ class ExpirablePostModel extends PostModel
     private function removeLegacyMetadataHash()
     {
         $this->deleteMeta(self::LEGACY_FLAG_METADATA_HASH);
+    }
+
+    private function registerNoticeMessage($postId, $message)
+    {
+        set_transient('post-expirator-notice-' . $postId, $message, MINUTE_IN_SECONDS);
     }
 }
