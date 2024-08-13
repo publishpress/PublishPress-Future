@@ -93,6 +93,159 @@ var CheckboxControl = exports.CheckboxControl = function CheckboxControl(props) 
 
 /***/ }),
 
+/***/ "./assets/jsx/components/DateOffsetPreview.jsx":
+/*!*****************************************************!*\
+  !*** ./assets/jsx/components/DateOffsetPreview.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+    value: true
+}));
+exports.DateOffsetPreview = undefined;
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+
+var _url = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
+
+var _wp = __webpack_require__(/*! &wp */ "&wp");
+
+var DateOffsetPreview = exports.DateOffsetPreview = function DateOffsetPreview(_ref) {
+    var offset = _ref.offset,
+        label = _ref.label,
+        labelDatePreview = _ref.labelDatePreview,
+        labelOffsetPreview = _ref.labelOffsetPreview,
+        setValidationErrorCallback = _ref.setValidationErrorCallback,
+        setHasPendingValidationCallback = _ref.setHasPendingValidationCallback,
+        setHasValidDataCallback = _ref.setHasValidDataCallback;
+
+    var _useState = (0, _element.useState)(''),
+        _useState2 = _slicedToArray(_useState, 2),
+        offsetPreview = _useState2[0],
+        setOffsetPreview = _useState2[1];
+
+    var _useState3 = (0, _element.useState)(),
+        _useState4 = _slicedToArray(_useState3, 2),
+        currentTime = _useState4[0],
+        setCurrentTime = _useState4[1];
+
+    var apiRequestControllerRef = (0, _element.useRef)(new AbortController());
+
+    var validateDateOffset = function validateDateOffset() {
+        if (offset) {
+            var controller = apiRequestControllerRef.current;
+
+            if (controller) {
+                controller.abort();
+            }
+
+            apiRequestControllerRef.current = new AbortController();
+            var signal = apiRequestControllerRef.current.signal;
+
+
+            setHasPendingValidationCallback(true);
+
+            (0, _wp.apiFetch)({
+                path: (0, _url.addQueryArgs)('publishpress-future/v1/settings/validate-expire-offset'),
+                method: 'POST',
+                data: {
+                    offset: offset
+                },
+                signal: signal
+            }).then(function (result) {
+                setHasPendingValidationCallback(false);
+
+                setHasValidDataCallback(result.isValid);
+                setValidationErrorCallback(result.message);
+
+                if (result.isValid) {
+                    setOffsetPreview(result.preview);
+                    setCurrentTime(result.currentTime);
+                } else {
+                    setOffsetPreview('');
+                }
+            }).catch(function (error) {
+                if (error.name === 'AbortError') {
+                    return;
+                }
+
+                setHasPendingValidationCallback(false);
+                setHasValidDataCallback(false);
+                setValidationErrorCallback(error.message);
+                setOffsetPreview('');
+            });
+        }
+    };
+
+    (0, _element.useEffect)(function () {
+        validateDateOffset();
+    }, [offset]);
+
+    return React.createElement(
+        _element.Fragment,
+        null,
+        offset && React.createElement(
+            _element.Fragment,
+            null,
+            React.createElement(
+                'h4',
+                null,
+                label
+            ),
+            React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'span',
+                        null,
+                        labelDatePreview,
+                        ': '
+                    ),
+                    React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'code',
+                            null,
+                            currentTime
+                        )
+                    )
+                ),
+                React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                        'span',
+                        null,
+                        labelOffsetPreview,
+                        ': '
+                    ),
+                    React.createElement(
+                        'span',
+                        null,
+                        React.createElement(
+                            'code',
+                            null,
+                            offsetPreview
+                        )
+                    )
+                )
+            )
+        )
+    );
+};
+
+exports["default"] = DateOffsetPreview;
+
+/***/ }),
+
 /***/ "./assets/jsx/components/DateTimePicker.jsx":
 /*!**************************************************!*\
   !*** ./assets/jsx/components/DateTimePicker.jsx ***!
@@ -1302,9 +1455,13 @@ var _hooks = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
 
 var _wp = __webpack_require__(/*! &wp */ "&wp");
 
-var _wp$components = wp.components,
-    PanelRow = _wp$components.PanelRow,
-    BaseControl = _wp$components.BaseControl;
+var _DateOffsetPreview = __webpack_require__(/*! ./DateOffsetPreview */ "./assets/jsx/components/DateOffsetPreview.jsx");
+
+var _DateOffsetPreview2 = _interopRequireDefault(_DateOffsetPreview);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PanelRow = wp.components.PanelRow;
 var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     var originalExpireTypeList = props.expireTypeList[props.postType];
 
@@ -1383,17 +1540,7 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
         hasPendingValidation = _useState30[0],
         setHasPendingValidation = _useState30[1];
 
-    var _useState31 = (0, _element.useState)(''),
-        _useState32 = _slicedToArray(_useState31, 2),
-        offsetPreview = _useState32[0],
-        setOffsetPreview = _useState32[1];
-
-    var _useState33 = (0, _element.useState)(),
-        _useState34 = _slicedToArray(_useState33, 2),
-        currentTime = _useState34[0],
-        setCurrentTime = _useState34[1];
-
-    var apiRequestControllerRef = (0, _element.useRef)(new AbortController());
+    var offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
 
     var taxonomyRelatedActions = ['category', 'category-add', 'category-remove', 'category-remove-all'];
 
@@ -1423,62 +1570,6 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
 
     var onChangeAutoEnabled = function onChangeAutoEnabled(value) {
         setIsAutoEnabled(value);
-    };
-
-    var validateData = function validateData() {
-        if (!isActive) {
-            setValidationError('');
-            return true;
-        }
-
-        var offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
-
-        if (offset) {
-            var controller = apiRequestControllerRef.current;
-
-            if (controller) {
-                controller.abort();
-            }
-
-            apiRequestControllerRef.current = new AbortController();
-            var signal = apiRequestControllerRef.current.signal;
-
-
-            setHasPendingValidation(true);
-
-            (0, _wp.apiFetch)({
-                path: (0, _url.addQueryArgs)('publishpress-future/v1/settings/validate-expire-offset'),
-                method: 'POST',
-                data: {
-                    offset: offset
-                },
-                signal: signal
-            }).then(function (result) {
-                setHasPendingValidation(false);
-
-                setHasValidData(result.isValid);
-                setValidationError(result.message);
-
-                if (result.isValid) {
-                    setOffsetPreview(result.preview);
-                    setCurrentTime(result.currentTime);
-                } else {
-                    setOffsetPreview('');
-                }
-            }).catch(function (error) {
-                if (error.name === 'AbortError') {
-                    return;
-                }
-
-                setHasPendingValidation(false);
-                setHasValidData(false);
-                setValidationError(error.message);
-                setOffsetPreview('');
-            });
-        }
-
-        setValidationError('');
-        return true;
     };
 
     (0, _element.useEffect)(function () {
@@ -1532,10 +1623,6 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
             }
         });
     }, [postTypeTaxonomy]);
-
-    (0, _element.useEffect)(function () {
-        setHasValidData(validateData());
-    }, [isActive, expireOffset]);
 
     (0, _element.useEffect)(function () {
         if (!taxonomyLabel) {
@@ -1665,57 +1752,15 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
                 unescapedDescription: true,
                 onChange: onChangeExpireOffset
             }),
-            offsetPreview && React.createElement(
-                _element.Fragment,
-                null,
-                React.createElement(
-                    'h4',
-                    null,
-                    props.text.datePreview
-                ),
-                React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                        'div',
-                        null,
-                        React.createElement(
-                            'span',
-                            null,
-                            props.text.datePreviewCurrent,
-                            ': '
-                        ),
-                        React.createElement(
-                            'span',
-                            null,
-                            React.createElement(
-                                'code',
-                                null,
-                                currentTime
-                            )
-                        )
-                    ),
-                    React.createElement(
-                        'div',
-                        null,
-                        React.createElement(
-                            'span',
-                            null,
-                            props.text.datePreviewComputed,
-                            ': '
-                        ),
-                        React.createElement(
-                            'span',
-                            null,
-                            React.createElement(
-                                'code',
-                                null,
-                                offsetPreview
-                            )
-                        )
-                    )
-                )
-            )
+            React.createElement(_DateOffsetPreview2.default, {
+                offset: offset,
+                label: props.text.datePreview,
+                labelDatePreview: props.text.datePreviewCurrent,
+                labelOffsetPreview: props.text.datePreviewComputed,
+                setValidationErrorCallback: setValidationError,
+                setHasPendingValidationCallback: setHasPendingValidation,
+                setHasValidDataCallback: setHasValidData
+            })
         ));
 
         settingsRows.push(React.createElement(
@@ -1733,9 +1778,11 @@ var PostTypeSettingsPanel = exports.PostTypeSettingsPanel = function PostTypeSet
 
     settingsRows = (0, _hooks.applyFilters)('expirationdate_settings_posttype', settingsRows, props, isActive, _element.useState);
 
+    var fieldSetClassNames = props.isVisible ? 'pe-settings-fieldset' : 'pe-settings-fieldset hidden';
+
     return React.createElement(
-        _.SettingsFieldset,
-        { legend: props.legend },
+        'div',
+        { className: fieldSetClassNames },
         React.createElement(_.SettingsTable, { bodyChildren: settingsRows }),
         !hasValidData && React.createElement(
             PanelRow,
@@ -1777,7 +1824,14 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _ = __webpack_require__(/*! ./ */ "./assets/jsx/components/index.jsx");
 
+var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+
 var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTypesSettingsPanels(props) {
+    var _useState = (0, _element.useState)(Object.keys(props.settings)[0]),
+        _useState2 = _slicedToArray(_useState, 2),
+        currentTab = _useState2[0],
+        setCurrentTab = _useState2[1];
+
     var panels = [];
 
     var _iteratorNormalCompletion = true;
@@ -1805,7 +1859,8 @@ var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTyp
                 onDataIsValid: props.onDataIsValid,
                 onDataIsInvalid: props.onDataIsInvalid,
                 onValidationStarted: props.onValidationStarted,
-                onValidationFinished: props.onValidationFinished
+                onValidationFinished: props.onValidationFinished,
+                isVisible: currentTab === postType
             }));
         }
     } catch (err) {
@@ -1823,7 +1878,63 @@ var PostTypesSettingsPanels = exports.PostTypesSettingsPanels = function PostTyp
         }
     }
 
-    return panels;
+    var onSelectTab = function onSelectTab(event) {
+        event.preventDefault();
+        setCurrentTab(event.target.hash.replace('#', '').replace('-panel', ''));
+    };
+
+    var tabs = [];
+    var selected = false;
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = Object.entries(props.settings)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var _ref3 = _step2.value;
+
+            var _ref4 = _slicedToArray(_ref3, 2);
+
+            var _postType = _ref4[0];
+            var _postTypeSettings = _ref4[1];
+
+            selected = currentTab === _postType;
+            tabs.push(React.createElement(
+                "a",
+                { href: "#" + _postType + "-panel",
+                    className: "nav-tab " + (selected ? 'nav-tab-active' : ''),
+                    key: _postType + "-tab",
+                    onClick: onSelectTab
+                },
+                _postTypeSettings.label
+            ));
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
+    }
+
+    return React.createElement(
+        "div",
+        null,
+        React.createElement(
+            "nav",
+            { className: "nav-tab-wrapper" },
+            tabs
+        ),
+        panels
+    );
 };
 
 /***/ }),
@@ -1940,7 +2051,7 @@ Object.defineProperty(exports, "__esModule", ({
 var SettingsFieldset = exports.SettingsFieldset = function SettingsFieldset(props) {
     return React.createElement(
         "fieldset",
-        null,
+        { className: props.className },
         React.createElement(
             "legend",
             null,
@@ -2638,6 +2749,15 @@ Object.defineProperty(exports, "Spinner", ({
   enumerable: true,
   get: function get() {
     return _Spinner.Spinner;
+  }
+}));
+
+var _DateOffsetPreview = __webpack_require__(/*! ./DateOffsetPreview */ "./assets/jsx/components/DateOffsetPreview.jsx");
+
+Object.defineProperty(exports, "DateOffsetPreview", ({
+  enumerable: true,
+  get: function get() {
+    return _DateOffsetPreview.DateOffsetPreview;
   }
 }));
 
