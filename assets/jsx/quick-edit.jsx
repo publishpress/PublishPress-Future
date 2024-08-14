@@ -14,7 +14,8 @@ import {
     strings,
     taxonomyName,
     nonce,
-    statusesSelectOptions
+    statusesSelectOptions,
+    hideCalendarByDefault
 } from "&config.quick-edit";
 
 const storeName = 'publishpress-future/future-action-quick-edit';
@@ -115,6 +116,7 @@ inlineEditPost.edit = function (button, id) {
             strings={strings}
             taxonomyName={taxonomyName}
             nonce={nonce}
+            hideCalendarByDefault={hideCalendarByDefault}
         />
     );
 

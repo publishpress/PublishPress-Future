@@ -312,6 +312,9 @@ class PostExpirator_Display
                 $customExpirationDate = preg_replace('/["\'`]/', '', $customExpirationDate);
 
                 update_option('expirationdateDefaultDateCustom', trim($customExpirationDate));
+
+                $hideCalendarByDefault = isset($_POST['expired-hide-calendar-by-default']) && $_POST['expired-hide-calendar-by-default'] == '1' ? 1 : 0;
+                update_option('expirationdateHideCalendarByDefault', $hideCalendarByDefault);
                 // phpcs:enable
 
                 if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {

@@ -357,6 +357,7 @@ class ClassicEditorController implements InitializableInterface
                 'taxonomyTerms' => $taxonomyTerms,
                 'postType' => $currentScreen->post_type,
                 'isNewPost' => $isNewPostPage,
+                'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                 'strings' => [
                     'category' => __('Category', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
