@@ -15,7 +15,8 @@ import {
     strings,
     taxonomyName,
     nonce,
-    statusesSelectOptions
+    statusesSelectOptions,
+    hideCalendarByDefault
 } from "&config.bulk-edit";
 
 const storeName = 'publishpress-future/future-action-bulk-edit';
@@ -92,6 +93,7 @@ inlineEditPost.setBulk = function (id) {
             strings={strings}
             taxonomyName={taxonomyName}
             nonce={nonce}
+            hideCalendarByDefault={hideCalendarByDefault}
         />
     );
 

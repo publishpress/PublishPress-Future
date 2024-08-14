@@ -49,6 +49,7 @@ export const FutureActionPanelQuickEdit = (props) => {
                 storeName={props.storeName}
                 strings={props.strings}
                 onDataIsValid={onDataIsValid}
+                hideCalendarByDefault={props.hideCalendarByDefault}
                 onDataIsInvalid={onDataIsInvalid} />
 
             {/* Quick edit JS code will save only fields with name inside the edit row */}

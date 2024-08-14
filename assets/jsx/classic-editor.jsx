@@ -14,7 +14,8 @@ import {
     taxonomyName,
     postTypeDefaultConfig,
     defaultDate,
-    statusesSelectOptions
+    statusesSelectOptions,
+    hideCalendarByDefault
 } from "&config.classic-editor";
 import { render } from "react-dom";
 
@@ -48,6 +49,7 @@ if (! isGutenbergEnabled()) {
             startOfWeek={startOfWeek}
             strings={strings}
             taxonomyName={taxonomyName}
+            hideCalendarByDefault={hideCalendarByDefault}
         />
     );
 
