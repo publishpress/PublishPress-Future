@@ -264,10 +264,7 @@ class Controller implements InitializableInterface
         // phpcs:disable WordPress.Security.NonceVerification.Recommended
         if (
             (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
-            && (
-                (! isset($_GET['tab']) || empty($_GET['tab']))
-                || (isset($_GET['tab']) && $_GET['tab'] === 'general')
-            )
+            && (isset($_GET['tab']) && $_GET['tab'] === 'general')
         ) {
             //phpcs:enable WordPress.Security.NonceVerification.Recommended
             wp_enqueue_script(
