@@ -7,6 +7,8 @@ import {
 import { addQueryArgs } from '@wordpress/url';
 import { apiFetch } from '&wp';
 
+require('./css/dateOffsetPreview.css');
+
 export const DateOffsetPreview = ({
     offset,
     label,
@@ -15,6 +17,7 @@ export const DateOffsetPreview = ({
     setValidationErrorCallback,
     setHasPendingValidationCallback,
     setHasValidDataCallback,
+    compactView = false
 }) => {
     const [offsetPreview, setOffsetPreview] = useState('');
     const [currentTime, setCurrentTime] = useState();
@@ -70,22 +73,24 @@ export const DateOffsetPreview = ({
         validateDateOffset();
     }, [offset]);
 
+    const compactClass = compactView ? ' compact' : '';
+
     return (
         <Fragment>
             { offset && (
-                <Fragment>
+                <div className={'publishpress-future-date-preview' + compactClass}>
                     <h4>{ label }</h4>
-                    <div>
+                    <div className="publishpress-future-date-preview-body">
                         <div>
-                            <span>{ labelDatePreview }: </span>
-                            <span><code>{currentTime}</code></span>
+                            <span className="publishpress-future-date-preview-label">{ labelDatePreview }: </span>
+                            <span className="publishpress-future-date-preview-value">{currentTime}</span>
                         </div>
                         <div>
-                            <span>{ labelOffsetPreview }: </span>
-                            <span><code>{offsetPreview}</code></span>
+                            <span className="publishpress-future-date-preview-label">{ labelOffsetPreview }: </span>
+                            <span className="publishpress-future-date-preview-value">{offsetPreview}</span>
                         </div>
                     </div>
-                </Fragment>
+                </div>
             )}
         </Fragment>
     )

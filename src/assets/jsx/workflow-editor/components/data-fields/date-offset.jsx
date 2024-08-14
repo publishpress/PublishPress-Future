@@ -15,6 +15,8 @@ import { useSelect } from "@wordpress/data";
 import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
 import { filterVariableOptionsByDataType } from "../../utils";
+import { DateOffsetPreview } from "../../../../../../lib/vendor/publishpress/publishpress-future/assets/jsx/components/DateOffsetPreview";
+import { Icon } from "@wordpress/components";
 
 /**
  *  When to execute:
@@ -111,9 +113,32 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     }
 
     const [isHelpVisible, setIsHelpVisible] = useState(false);
+    const [isPreviewVisible, setIsPreviewVisible] = useState(false);
+    const [isPreviewValid, setIsPreviewValid] = useState(true);
+    const [previewMessage, setPreviewMessage] = useState('');
     const toggleHelp = () => setIsHelpVisible((state) => !state);
     const hideHelp = () => setIsHelpVisible(false);
 
+    const onHasValidationError = (errorMessage) => {
+        if (errorMessage) {
+            setPreviewMessage(errorMessage);
+            setIsPreviewValid(false);
+        } else {
+            setPreviewMessage('');
+            setIsPreviewValid(true);
+        }
+    }
+
+    const onValidationStarted = () => {
+    }
+
+    const onValidationFinished = (isValid) => {
+        setIsPreviewValid(isValid);
+
+        if (isValid) {
+            setPreviewMessage('');
+        }
+    }
 
     return (
         <>
@@ -148,13 +173,30 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                                     value={defaultValue.dateOffset}
                                     onChange={(value) => onChangeSetting({ settingName: "dateOffset", value })}
                                 />
+
+                                <DateOffsetPreview
+                                    offset={defaultValue.dateOffset}
+                                    label={__("Date Preview", "publishpress-future-pro")}
+                                    labelDatePreview={__("Current Date", "publishpress-future-pro")}
+                                    labelOffsetPreview={__("Computed Date", "publishpress-future-pro")}
+                                    setValidationErrorCallback={onHasValidationError}
+                                    setHasPendingValidationCallback={onValidationStarted}
+                                    setHasValidDataCallback={onValidationFinished}
+                                    compactView={true}
+                                />
+
+                                {! isPreviewValid && (
+                                    <div className="publishpress-future-notice publishpress-future-notice-error">
+                                        {__("Error: ", "publishpress-future-pro")} {previewMessage}
+                                    </div>
+                                )}
+
                                 <Button variant="link" onClick={toggleHelp}>
-                                    {__("Click for more information")}
+                                    {__("Click for more information", "publishpress-future-pro")}
                                     {isHelpVisible && (
                                         <Popover>
                                             <div className="settings-field-help-popover">
-                                                <Button variant="tertiary" icon={'no-alt'} onClick={hideHelp}>
-                                                </Button>
+                                                <Button variant="tertiary" icon={'no-alt'} />
 
                                                 <div dangerouslySetInnerHTML={{
                                                     __html: sprintf(

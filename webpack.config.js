@@ -21,6 +21,10 @@ module.exports = [
                     exclude: [
                         /(node_modules|bower_components)/,
                     ]// JavaScript files to be ignored.
+                },
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader", "css-loader", "postcss-loader"],
                 }
             ]
         },
@@ -45,7 +49,8 @@ module.exports = [
             "@wordpress/hooks": "wp.hooks",
             "@wordpress/element": "wp.element",
             "&config.classic-editor": "publishpressFutureClassicEditorConfig",
-            "&config.pro-settings": "publishpressFutureProSettings"
+            "&config.pro-settings": "publishpressFutureProSettings",
+            '&wp': 'wp',
         },
     },
     {
@@ -65,6 +70,10 @@ module.exports = [
                     exclude: [
                         /(node_modules|bower_components)/,
                     ]// JavaScript files to be ignored.
+                },
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader", "css-loader", "postcss-loader"],
                 }
             ]
         },
@@ -82,6 +91,7 @@ module.exports = [
             'react': 'React',
             'react-dom': 'ReactDOM',
             '@wordpress/blocks': 'wp.blocks',
+            '&wp': 'wp',
         }
     },
     {
@@ -129,6 +139,7 @@ module.exports = [
             '@wordpress/plugins': 'wp.plugins',
             'future-workflow-editor': 'futureWorkflowEditor',
             'jquery': 'jQuery',
+            '&wp': 'wp',
         }
     },
     {
@@ -171,6 +182,7 @@ module.exports = [
             '@wordpress/i18n': 'wp.i18n',
             '@wordpress/plugins': 'wp.plugins',
             'future-workflow-editor': 'futureWorkflowEditor',
+            '&wp': 'wp',
         }
     },
     {
@@ -213,6 +225,7 @@ module.exports = [
             '@wordpress/i18n': 'wp.i18n',
             '@wordpress/plugins': 'wp.plugins',
             'future-workflow-editor': 'futureWorkflowEditor',
+            '&wp': 'wp',
         }
     },
     {
@@ -255,6 +268,7 @@ module.exports = [
             '@wordpress/i18n': 'wp.i18n',
             '@wordpress/plugins': 'wp.plugins',
             'future-workflow-editor': 'futureWorkflowEditor',
+            '&wp': 'wp',
         }
     },
     {
@@ -297,6 +311,7 @@ module.exports = [
             '@wordpress/i18n': 'wp.i18n',
             '@wordpress/plugins': 'wp.plugins',
             'future-workflow-editor': 'futureWorkflowEditor',
+            '&wp': 'wp',
         }
     }
 ];
