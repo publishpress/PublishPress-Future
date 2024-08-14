@@ -39,6 +39,7 @@ abstract class ServicesAbstract
     public const LICENSE_STATUS = 'future.pro/license-status';
     public const MODULES = 'future.pro/modules';
     public const MODULE_WORKFLOWS = 'future.pro/module-workflows';
+    public const MODULE_WPFORMS = 'future.pro/module-wpforms';
     public const WORKFLOWS_REST_API_MANAGER = 'future.pro/workflows-rest-api-manager';
     public const NODE_TYPES_MODEL = 'future.pro/node-types-model';
     public const CRON_SCHEDULES_MODEL = 'future.pro/cron-schedules-model';

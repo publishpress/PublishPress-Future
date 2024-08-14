@@ -86,6 +86,7 @@ return [
     ServicesAbstract::MODULES => static function (ContainerInterface $container) {
         $modulesServicesList = [
             ServicesAbstract::MODULE_WORKFLOWS,
+            ServicesAbstract::MODULE_WPFORMS,
         ];
 
         $modules = [];
@@ -207,6 +208,12 @@ return [
             $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
             $container->get(ServicesAbstract::MODEL_SETTINGS)
+        );
+    },
+
+    ServicesAbstract::MODULE_WPFORMS => static function (ContainerInterface $container) {
+        return new \PublishPress\FuturePro\Modules\Wpforms\Module(
+            $container->get(ServicesAbstract::HOOKS)
         );
     },
 
