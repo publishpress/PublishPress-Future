@@ -19,6 +19,11 @@ class ManualPostTrigger implements InitializableInterface
      */
     private $hooks;
 
+    /**
+     * @var boolean
+     */
+    private $isBlockEditor = false;
+
     public function __construct(HookableInterface $hooks)
     {
         $this->hooks = $hooks;
@@ -177,6 +182,8 @@ class ManualPostTrigger implements InitializableInterface
             return;
         }
 
+        $this->isBlockEditor = true;
+
         $postModel = new PostModel();
         $postModel->load($post->ID);
 
@@ -277,6 +284,10 @@ class ManualPostTrigger implements InitializableInterface
 
     public function registerClassicEditorMetabox($postType, $post)
     {
+        if ($this->isBlockEditor) {
+            return;
+        }
+
         $postModel = new PostModel();
         $postModel->load($post->ID);
 
