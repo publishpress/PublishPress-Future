@@ -3109,6 +3109,38 @@ module.exports = function (item) {
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var m = __webpack_require__(/*! react-dom */ "react-dom");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./assets/jsx/components/css/dateOffsetPreview.css":
 /*!*********************************************************!*\
   !*** ./assets/jsx/components/css/dateOffsetPreview.css ***!
@@ -3607,6 +3639,8 @@ var _components = __webpack_require__(/*! ./components */ "./assets/jsx/componen
 
 var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 
+var _client = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+
 var _config = __webpack_require__(/*! &config.settings-post-types */ "&config.settings-post-types");
 
 var _reactDom = __webpack_require__(/*! react-dom */ "react-dom");
@@ -3777,7 +3811,7 @@ var SettingsFormPanel = function SettingsFormPanel(props) {
 var container = document.getElementById("publishpress-future-settings-post-types");
 var component = React.createElement(SettingsFormPanel, null);
 
-(0, _element.createRoot)(container).render(component);
+(0, _client.createRoot)(container).render(component);
 /******/ })()
 ;
 //# sourceMappingURL=settings-post-types.js.map

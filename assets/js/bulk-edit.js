@@ -3392,6 +3392,38 @@ module.exports = function (item) {
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var m = __webpack_require__(/*! react-dom */ "react-dom");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./assets/jsx/components/css/dateOffsetPreview.css":
 /*!*********************************************************!*\
   !*** ./assets/jsx/components/css/dateOffsetPreview.css ***!
@@ -3711,6 +3743,16 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "react-dom":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = ReactDOM;
+
+/***/ }),
+
 /***/ "&config.bulk-edit":
 /*!***************************************************!*\
   !*** external "publishpressFutureBulkEditConfig" ***!
@@ -3884,7 +3926,7 @@ var _components = __webpack_require__(/*! ./components */ "./assets/jsx/componen
 
 var _data = __webpack_require__(/*! ./data */ "./assets/jsx/data.jsx");
 
-var _element = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+var _client = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 
 var _data2 = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 
@@ -3942,7 +3984,7 @@ _window.inlineEditPost.setBulk = function (id) {
     }
 
     var container = document.getElementById("publishpress-future-bulk-edit");
-    var root = (0, _element.createRoot)(container);
+    var root = (0, _client.createRoot)(container);
 
     var saveButton = document.querySelector('#bulk_edit');
     if (saveButton) {
