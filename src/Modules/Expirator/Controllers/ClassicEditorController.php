@@ -263,7 +263,11 @@ class ClassicEditorController implements InitializableInterface
     {
         $currentScreen = get_current_screen();
 
-        if ($currentScreen->base !== 'post') {
+        if (
+            $currentScreen->base !== 'post'
+            // Add support to the Event Espresso plugin
+            && $currentScreen->id !== 'espresso_events'
+        ) {
             return;
         }
 
