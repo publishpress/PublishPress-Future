@@ -73,6 +73,10 @@ class QuickEditController implements InitializableInterface
             return;
         }
 
+        if (! $this->isEnabledForPostType($postType)) {
+            return;
+        }
+
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
 
@@ -175,6 +179,26 @@ class QuickEditController implements InitializableInterface
         $this->hooks->doAction(ExpiratorHooks::ACTION_UNSCHEDULE_POST_EXPIRATION, $postId);
     }
 
+    private function isEnabledForPostType($postType)
+    {
+        $container = Container::getInstance();
+        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
+        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
+
+        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
+
+        if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
+            return false;
+        }
+
+        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
+        if ($hideMetabox) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function enqueueScripts()
     {
         $currentScreen = get_current_screen();
@@ -183,19 +207,9 @@ class QuickEditController implements InitializableInterface
             return;
         }
 
-        $container = Container::getInstance();
-        $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
-        $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
         $postType = $currentScreen->post_type;
 
-        $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
-
-        if (! in_array((string)$postTypeDefaultConfig['activeMetaBox'], ['active', '1', true])) {
-            return;
-        }
-
-        $hideMetabox = (bool)$this->hooks->applyFilters(HooksAbstract::FILTER_HIDE_METABOX, false, $postType);
-        if ($hideMetabox) {
+        if (! $this->isEnabledForPostType($postType)) {
             return;
         }
 
@@ -214,19 +228,14 @@ class QuickEditController implements InitializableInterface
 
         wp_enqueue_style('wp-components');
 
-        $currentScreen = get_current_screen();
         $container = Container::getInstance();
         $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
         $actionsModel = $container->get(ServicesAbstract::EXPIRATION_ACTIONS_MODEL);
-        $postType = $currentScreen->post_type;
+        $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
+        $debug = $container->get(ServicesAbstract::DEBUG);
 
         $postTypeDefaultConfig = $settingsFacade->getPostTypeDefaults($postType);
-
-
-        $defaultDataModelFactory = $container->get(ServicesAbstract::POST_TYPE_DEFAULT_DATA_MODEL_FACTORY);
         $defaultDataModel = $defaultDataModelFactory->create($postType);
-
-        $debug = $container->get(ServicesAbstract::DEBUG);
 
         $taxonomyPluralName = '';
         if (! empty($postTypeDefaultConfig['taxonomy'])) {
