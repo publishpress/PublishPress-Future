@@ -153,3 +153,16 @@ body.branch-6-6.edit-php .components-checkbox-control__input-container {
     padding-top: 9px;
     line-height: 2.2em;
 }
+
+/* Fix style on Event Espresso plugin */
+body.espresso-admin #publishpress-future-classic-editor .components-checkbox-control__input-container svg,
+body.espresso-admin #publishpress-future-classic-editor .components-input-control__suffix
+{
+    visibility: hidden;
+}
+
+body.espresso-admin #publishpress-future-classic-editor .components-input-control__container .components-input-control__input {
+    border: 0;
+    min-width: 30px;
+    padding: 0 4px;
+}

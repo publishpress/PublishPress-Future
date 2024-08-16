@@ -160,6 +160,7 @@ class BulkEditController implements InitializableInterface
                 'postType' => $currentScreen->post_type,
                 'isNewPost' => false,
                 'nonce' => $nonce,
+                'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                 'strings' => [
                     'category' => __('Categories', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),

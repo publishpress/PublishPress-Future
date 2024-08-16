@@ -274,4 +274,9 @@ class SettingsFacade
     {
         return $this->options->getOption('expirationdateTimeFormatForDatePicker', 'inherited');
     }
+
+    public function getHideCalendarByDefault()
+    {
+        return (bool)$this->options->getOption('expirationdateHideCalendarByDefault', false);
+    }
 }

@@ -124,6 +124,7 @@ class BlockEditorController implements InitializableInterface
                     'isDebugEnabled' => $container->get(ServicesAbstract::DEBUG)->isEnabled(),
                     'taxonomyName' => $taxonomyPluralName,
                     'taxonomyTerms' => $taxonomyTerms,
+                    'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                     'strings' => [
                         'category' => __('Categories', 'post-expirator'),
                         'panelTitle' => __('PublishPress Future', 'post-expirator'),

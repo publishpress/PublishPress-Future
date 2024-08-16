@@ -11,7 +11,8 @@ import {
     taxonomyName,
     postTypeDefaultConfig,
     defaultDate,
-    statusesSelectOptions
+    statusesSelectOptions,
+    hideCalendarByDefault
 } from "&config.block-editor";
 
 const storeName = 'publishpress-future/future-action';
@@ -41,7 +42,9 @@ const BlockEditorFutureActionPlugin = () => {
             storeName={storeName}
             strings={strings}
             taxonomyName={taxonomyName}
-            postTypeDefaultConfig={postTypeDefaultConfig} />
+            postTypeDefaultConfig={postTypeDefaultConfig}
+            hideCalendarByDefault={hideCalendarByDefault}
+        />
     );
 }
 

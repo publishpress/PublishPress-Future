@@ -50,6 +50,8 @@ if ($expiredemailnotificationadmins == 0) {
     $expiredemailnotificationadminsenabled = 'checked="checked"';
 }
 
+$calendarHiddenByDefault = (bool) get_option('expirationdateHideCalendarByDefault', false);
+
 $user_roles = wp_roles()->get_names();
 $plugin_facade = PostExpirator_Facade::getInstance();
 ?>
@@ -86,6 +88,25 @@ $plugin_facade = PostExpirator_Facade::getInstance();
 
                                 <div id="expiration-date-preview"></div>
                         </div>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><label for="expired-hide-calendar-by-default"><?php
+                            esc_html_e('Hide the Calendar by Default', 'post-expirator'); ?></label></th>
+                    <td>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-hide-calendar-by-default" id="expired-hide-calendar-by-default-false"
+                                value="0" <?php echo $calendarHiddenByDefault ? '' : 'checked="checked"'; ?>/> <label
+                                    for="expired-hide-calendar-by-default-false"><?php
+                                    esc_html_e('Disabled', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="expired-hide-calendar-by-default" id="expired-hide-calendar-by-default-true"
+                                value="1" <?php echo $calendarHiddenByDefault ? 'checked="checked"' : ''; ?>/> <label
+                                    for="expired-hide-calendar-by-default-true"><?php
+                                    esc_html_e('Enabled', 'post-expirator'); ?></label>
+                        </div>
+                        <p class="description"><?php esc_html_e('This will hide the calendar by default in the Future Action box.', 'post-expirator'); ?></p>
                     </td>
                 </tr>
             </table>
