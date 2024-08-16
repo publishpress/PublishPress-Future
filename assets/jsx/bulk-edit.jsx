@@ -1,6 +1,6 @@
 import { FutureActionPanelBulkEdit } from './components';
 import { createStore } from './data';
-import { createRoot } from '@wordpress/element';
+import { createRoot } from 'react-dom/client';
 import { select, dispatch } from '@wordpress/data';
 import { inlineEditPost } from "&window";
 import {
