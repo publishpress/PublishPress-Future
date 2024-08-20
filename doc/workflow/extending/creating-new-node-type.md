@@ -9,6 +9,10 @@ A "Node Type" definition class is used at design time and runtime. It specifies 
 - handle schema
 - output schema
 
+## Defining a Node Type
+
+Create the class and add it to the `NodeTypesModel` class. This class is used to manage the node types in the plugin.
+
 ## Node Elementary Types
 
 There are three elementary types used to separate different types of nodes.

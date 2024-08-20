@@ -7,10 +7,10 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
-use PublishPress\Future\Modules\Expirator\Models\PostTypeModel;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Models\PostModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\PostTypesModel;
+use PublishPress\FuturePro\Modules\Workflows\Module;
 
 class ManualPostTrigger implements InitializableInterface
 {
@@ -81,9 +81,13 @@ class ManualPostTrigger implements InitializableInterface
 
     public function registerQuickEditCustomBox($columnName, $postType)
     {
+        if ($columnName !== 'expirationdate' || Module::POST_TYPE_WORKFLOW === $postType) {
+            return;
+        }
+
         // Check there are workflows with the manual post trigger
         $workflowsModel = new WorkflowsModel();
-        $workflows = $workflowsModel->getPublishedWorkflowsWithManualTrigger();
+        $workflows = $workflowsModel->getPublishedWorkflowsWithManualTrigger($postType);
 
         if (empty($workflows)) {
             return;

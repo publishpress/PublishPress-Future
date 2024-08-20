@@ -1,4 +1,4 @@
-import { createRoot } from '@wordpress/element';
+import { createRoot } from 'react-dom/client';
 import { Fieldset } from '../fieldset';
 
 import './css/style.css';
@@ -6,6 +6,7 @@ import './css/style.css';
 // We create a copy of the WP inline edit post function
 const wpInlineEditPro = window.inlineEditPost.edit;
 const wpInlineEditProRevert = window.inlineEditPost.revert;
+const delayToUnmountAfterSaving = 1000;
 
 const getPostIdFromButton = (id) => {
     // If id is a string or a number, return it directly

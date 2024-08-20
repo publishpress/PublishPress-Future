@@ -2,14 +2,12 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows;
 
-use Closure;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\RestApiManagerInterface;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\ScheduledActionsModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 class Module implements InitializableInterface
@@ -86,6 +84,7 @@ class Module implements InitializableInterface
             new Controllers\ManualPostTrigger($this->hooks),
             new Controllers\ScheduledActions($this->hooks, $this->nodeTypesModel),
             new Controllers\SampleWorkflows(),
+            new Controllers\PostsList($this->hooks),
         ];
 
         foreach ($controllers as $controller) {

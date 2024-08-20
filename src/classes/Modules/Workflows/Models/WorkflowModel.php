@@ -185,12 +185,9 @@ class WorkflowModel implements WorkflowModelInterface
     private function getAllNodeTypes(): array
     {
         if (is_null($this->allNodeTypes)) {
-            // FIXME: Use dependency injection
-            $hooks = Container::getInstance()->get(ServicesAbstract::HOOKS);
-            $settingsModel = Container::getInstance()->get(ServicesAbstract::MODEL_SETTINGS);
-
             // Ensure the flow is updated with the latest node types
-            $nodeTypesModel = new NodeTypesModel($hooks, $settingsModel);
+            // FIXME: Use dependency injection
+            $nodeTypesModel = Container::getInstance()->get(ServicesAbstract::NODE_TYPES_MODEL);
             $this->allNodeTypes = $nodeTypesModel->getAllNodeTypesIndexedByName();
         }
 
@@ -739,5 +736,32 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         return $this->debugRayShowWordPressErrors;
+    }
+
+    private function getManualSelectionTrigger()
+    {
+        $workflowTriggers = $this->getTriggerNodes();
+
+        foreach ($workflowTriggers as $triggerNode) {
+            if (
+                $triggerNode['data']['elementaryType'] === NodeTypesModel::NODE_TYPE_TRIGGER
+                && $triggerNode['data']['name'] === CoreOnManuallyEnabledForPost::getNodeTypeName()
+            ) {
+                return $triggerNode;
+            }
+        }
+
+        return null;
+    }
+
+    public function getManualSelectionLabel(): string
+    {
+        $manualSelectionTrigger = $this->getManualSelectionTrigger();
+
+        if (empty($manualSelectionTrigger)) {
+            return $this->getTitle();
+        }
+
+        return $manualSelectionTrigger['data']['settings']['checkboxLabel'] ?? $this->getTitle();
     }
 }

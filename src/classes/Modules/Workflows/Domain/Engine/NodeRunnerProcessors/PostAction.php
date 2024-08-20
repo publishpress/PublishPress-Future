@@ -64,7 +64,7 @@ class PostAction implements NodeRunnerProcessorInterface
                     $postId = intval($post);
                 }
 
-                call_user_func($actionCallback, $postId, $nodeSettings);
+                call_user_func($actionCallback, $postId, $nodeSettings, $step, $contextVariables);
             }
 
             $this->runNextSteps($step, $contextVariables);

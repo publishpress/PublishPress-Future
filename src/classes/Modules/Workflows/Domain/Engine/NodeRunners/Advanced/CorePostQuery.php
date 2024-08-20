@@ -67,7 +67,7 @@ class CorePostQuery implements NodeRunnerInterface
         }
     }
 
-    public function actionCallback(int $postId, array $nodeSettings)
+    public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
     {
         // TODO: Do we need anything here? Maybe something for debugging or logging?
     }

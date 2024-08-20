@@ -1,5 +1,5 @@
 import { select, dispatch } from '@wordpress/data';
-import { createRoot } from '@wordpress/element';
+import { createRoot } from 'react-dom/client';
 import { store } from '../store';
 import { Fieldset } from '../fieldset';
 import apiFetch from '@wordpress/api-fetch';
@@ -9,6 +9,8 @@ const container = document.getElementById("publishpress-future-pro-classic-edito
 const root = createRoot(container);
 
 const saveButton = document.querySelector('.inline-edit-save .save');
+const delayToUnmountAfterSaving = 1000;
+
 if (saveButton) {
     saveButton.onclick = function() {
         setTimeout(() => {

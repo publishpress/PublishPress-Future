@@ -66,6 +66,7 @@ export const NodeSettingsPanel = ({ node }) => {
                                     onChange={onChangeSetting}
                                     variables={variableListOptions}
                                     settings={field?.settings}
+                                    settingsSchema={settingsSchema}
                                 />
                             </PanelRow>
                         );

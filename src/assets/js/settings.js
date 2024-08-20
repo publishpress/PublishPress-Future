@@ -278,42 +278,34 @@ var _wp$data = wp.data,
 var _wp = wp,
   apiFetch = _wp.apiFetch;
 var FutureActionPanel = function FutureActionPanel(props) {
-  var action = useSelect(function (select) {
-    return select(props.storeName).getAction();
-  }, []);
-  var date = useSelect(function (select) {
-    return select(props.storeName).getDate();
-  }, []);
-  var enabled = useSelect(function (select) {
-    return select(props.storeName).getEnabled();
-  }, []);
-  var terms = useSelect(function (select) {
-    return select(props.storeName).getTerms();
-  }, []);
-  var taxonomy = useSelect(function (select) {
-    return select(props.storeName).getTaxonomy();
-  }, []);
-  var taxonomyName = useSelect(function (select) {
-    return select(props.storeName).getTaxonomyName();
-  }, []);
-  var termsListByName = useSelect(function (select) {
-    return select(props.storeName).getTermsListByName();
-  }, []);
-  var termsListById = useSelect(function (select) {
-    return select(props.storeName).getTermsListById();
-  }, []);
-  var isFetchingTerms = useSelect(function (select) {
-    return select(props.storeName).getIsFetchingTerms();
-  }, []);
-  var calendarIsVisible = useSelect(function (select) {
-    return select(props.storeName).getCalendarIsVisible();
-  }, []);
-  var hasValidData = useSelect(function (select) {
-    return select(props.storeName).getHasValidData();
-  }, []);
-  var newStatus = useSelect(function (select) {
-    return select(props.storeName).getNewStatus();
-  }, []);
+  var _useSelect = useSelect(function (select) {
+      return {
+        action: select(props.storeName).getAction(),
+        date: select(props.storeName).getDate(),
+        enabled: select(props.storeName).getEnabled(),
+        terms: select(props.storeName).getTerms(),
+        taxonomy: select(props.storeName).getTaxonomy(),
+        taxonomyName: select(props.storeName).getTaxonomyName(),
+        termsListByName: select(props.storeName).getTermsListByName(),
+        termsListById: select(props.storeName).getTermsListById(),
+        isFetchingTerms: select(props.storeName).getIsFetchingTerms(),
+        calendarIsVisible: select(props.storeName).getCalendarIsVisible(),
+        hasValidData: select(props.storeName).getHasValidData(),
+        newStatus: select(props.storeName).getNewStatus()
+      };
+    }),
+    action = _useSelect.action,
+    date = _useSelect.date,
+    enabled = _useSelect.enabled,
+    terms = _useSelect.terms,
+    taxonomy = _useSelect.taxonomy,
+    taxonomyName = _useSelect.taxonomyName,
+    termsListByName = _useSelect.termsListByName,
+    termsListById = _useSelect.termsListById,
+    isFetchingTerms = _useSelect.isFetchingTerms,
+    calendarIsVisible = _useSelect.calendarIsVisible,
+    hasValidData = _useSelect.hasValidData,
+    newStatus = _useSelect.newStatus;
   var _useState = useState(''),
     _useState2 = _slicedToArray(_useState, 2),
     validationError = _useState2[0],
@@ -440,7 +432,7 @@ var FutureActionPanel = function FutureActionPanel(props) {
     if (getCalendarIsVisibleFromStorage() === null) {
       setCalendarIsVisible(props.calendarIsVisible);
     } else {
-      setCalendarIsVisible(getCalendarIsVisibleFromStorage() === '1');
+      setCalendarIsVisible(getCalendarIsVisibleFromStorage() === '1' && !props.hideCalendarByDefault);
     }
 
     // We need to get the value directly from the props because the value from the store is not updated yet
@@ -783,6 +775,7 @@ var FutureActionPanelBlockEditor = function FutureActionPanelBlockEditor(props) 
     storeName: props.storeName,
     strings: props.strings,
     onDataIsValid: onDataIsValid,
+    hideCalendarByDefault: props.hideCalendarByDefault,
     onDataIsInvalid: onDataIsInvalid
   })));
 };
@@ -905,6 +898,7 @@ var FutureActionPanelBulkEdit = function FutureActionPanelBulkEdit(props) {
     timeFormat: props.timeFormat,
     startOfWeek: props.startOfWeek,
     storeName: props.storeName,
+    hideCalendarByDefault: props.hideCalendarByDefault,
     strings: props.strings
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
@@ -1032,6 +1026,7 @@ var FutureActionPanelClassicEditor = function FutureActionPanelClassicEditor(pro
     storeName: props.storeName,
     strings: props.strings,
     onDataIsValid: onDataIsValid,
+    hideCalendarByDefault: props.hideCalendarByDefault,
     onDataIsInvalid: onDataIsInvalid
   }));
 };
@@ -1113,6 +1108,7 @@ var FutureActionPanelQuickEdit = function FutureActionPanelQuickEdit(props) {
     storeName: props.storeName,
     strings: props.strings,
     onDataIsValid: onDataIsValid,
+    hideCalendarByDefault: props.hideCalendarByDefault,
     onDataIsInvalid: onDataIsInvalid
   }), /*#__PURE__*/React.createElement("input", {
     type: "hidden",
@@ -1294,7 +1290,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
     _useState18 = _slicedToArray(_useState17, 2),
     isAutoEnabled = _useState18[0],
     setIsAutoEnabled = _useState18[1];
-  var _useState19 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState19 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
     _useState20 = _slicedToArray(_useState19, 2),
     hasValidData = _useState20[0],
     setHasValidData = _useState20[1];

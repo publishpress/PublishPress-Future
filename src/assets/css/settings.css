@@ -48,3 +48,13 @@
 .publishpress-settings-field-row {
     margin-bottom: 20px;
 }
+
+/* Fix style on checkbox on WP 6.6 */
+body.branch-6-6.edit-php .components-checkbox-control__input-container {
+    padding-top: 9px;
+    line-height: 2.2em;
+}
+
+.post-expire-col {
+    margin-bottom: 5px;
+}

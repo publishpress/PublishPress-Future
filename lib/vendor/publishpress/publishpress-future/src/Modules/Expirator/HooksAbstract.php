@@ -66,6 +66,7 @@ abstract class HooksAbstract
     public const FILTER_EXPIRATION_STATUSES = 'publishpressfuture_expiration_statuses';
     public const FILTER_PREPARE_POST_EXPIRATION_OPTS = 'publishpressfuture_prepare_post_expiration_opts';
     public const FILTER_ACTION_SCHEDULER_ADMIN_NOTICE = 'action_scheduler_admin_notice_html';
+    public const FILTER_POSTS_FUTURE_ACTION_COLUMN_OUTPUT = 'publishpressfuture_posts_future_action_column_output';
 
 
     public static function getActionLegacyMultisiteDelete($blogId)

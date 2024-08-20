@@ -2,6 +2,10 @@
 
 The "Node Rnuner" is the class containing the logic executed by the specific node. It is only used at runtime. The workflow engine instantiates the specific runner for the node type of the step in execution.
 
+## Adding a Node Runner
+
+Create a class that implements the `NodeRunnerInterface` interface and add it to the `services.php` file in the node types runner factory service.
+
 ## Node Runner Interface
 
 A node runner must implement the interface `PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface`.

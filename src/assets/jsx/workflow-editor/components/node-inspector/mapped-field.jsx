@@ -9,6 +9,8 @@ import PostStatus from "../data-fields/post-status";
 import EmailRecipient from "../data-fields/email-recipient";
 import Textarea from "../data-fields/textarea";
 import PostInput from "../data-fields/post-input";
+import ManualWorkflowInput from "../data-fields/manual-workflow-input";
+import List from "../data-fields/list";
 
 export const MappedField = (props) => {
     switch (props.type) {
@@ -51,6 +53,14 @@ export const MappedField = (props) => {
         case "postInput":
             return (
                 <PostInput {...props} />
+            );
+        case "manualWorkflowInput":
+            return (
+                <ManualWorkflowInput {...props} />
+            );
+        case "list":
+            return (
+                <List {...props} />
             );
     }
 

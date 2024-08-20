@@ -30,7 +30,7 @@ class WorkflowsModel implements WorkflowsModelInterface
         return $this->getPublishedWorkflowsWithMetadataAsOptions(WorkflowModel::META_KEY_HAS_LEGACY_TRIGGER, 1);
     }
 
-    public function getPublishedWorkflowsWithManualTrigger(): array
+    public function getPublishedWorkflowsWithManualTrigger($postType = null): array
     {
         $workflows = $this->getPublishedWorkflowsWithMetadataAsOptions(WorkflowModel::META_KEY_HAS_MANUAL_TRIGGER, 1);
 
@@ -46,12 +46,26 @@ class WorkflowsModel implements WorkflowsModelInterface
                 'label' => $workflow['label'],
             ];
 
+            $selectedPostTypes = [];
+
             foreach ($triggers as $trigger) {
                 if ($trigger['data']['name'] !== CoreOnManuallyEnabledForPost::getNodeTypeName()) {
                     continue;
                 }
 
+                if (!empty($trigger['data']['settings']['postQuery']['postType'])) {
+                    $selectedPostTypes = array_merge(
+                        $selectedPostTypes,
+                        $trigger['data']['settings']['postQuery']['postType']
+                    );
+                }
+
                 $resultItem['label'] = $trigger['data']['settings']['checkboxLabel'] ?? $workflow['label'];
+            }
+
+            // Filter by post type
+            if (!empty($postType) && !in_array($postType, $selectedPostTypes)) {
+                continue;
             }
 
             $result[] = $resultItem;

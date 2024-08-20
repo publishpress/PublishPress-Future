@@ -1,8 +1,8 @@
 import { ListInput } from "./list-input";
 import { filterVariableOptionsByDataType } from "../../utils";
 
-export function PostInput({ name, label, defaultValue, onChange, variables}) {
-    variables = filterVariableOptionsByDataType(variables, ['post', 'array:integer']);
+export function ManualWorkflowInput({ name, label, defaultValue, onChange, variables}) {
+    variables = filterVariableOptionsByDataType(variables, ['workflow', 'array:integer']);
 
     const tree = [
         {
@@ -24,4 +24,4 @@ export function PostInput({ name, label, defaultValue, onChange, variables}) {
     );
 }
 
-export default PostInput;
+export default ManualWorkflowInput;

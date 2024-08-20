@@ -53,7 +53,7 @@ class CorePostTermsRemove implements NodeRunnerInterface
         $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback'], $contextVariables);
     }
 
-    public function actionCallback(int $postId, array $nodeSettings)
+    public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
     {
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
 

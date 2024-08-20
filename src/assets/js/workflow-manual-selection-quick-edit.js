@@ -4124,6 +4124,38 @@ module.exports = function (item) {
 
 /***/ }),
 
+/***/ "./node_modules/react-dom/client.js":
+/*!******************************************!*\
+  !*** ./node_modules/react-dom/client.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var m = __webpack_require__(/*! react-dom */ "react-dom");
+if (false) {} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./src/assets/jsx/workflow-manual-selection/quick-edit/css/style.css":
 /*!***************************************************************************!*\
   !*** ./src/assets/jsx/workflow-manual-selection/quick-edit/css/style.css ***!
@@ -4445,6 +4477,16 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "react-dom":
+/*!***************************!*\
+  !*** external "ReactDOM" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = ReactDOM;
+
+/***/ }),
+
 /***/ "@wordpress/components":
 /*!********************************!*\
   !*** external "wp.components" ***!
@@ -4563,8 +4605,7 @@ var __webpack_exports__ = {};
   !*** ./src/assets/jsx/workflow-manual-selection/quick-edit/index.jsx ***!
   \***********************************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var _fieldset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../fieldset */ "./src/assets/jsx/workflow-manual-selection/fieldset/index.jsx");
 /* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/style.css */ "./src/assets/jsx/workflow-manual-selection/quick-edit/css/style.css");
 
@@ -4574,6 +4615,7 @@ __webpack_require__.r(__webpack_exports__);
 // We create a copy of the WP inline edit post function
 var wpInlineEditPro = window.inlineEditPost.edit;
 var wpInlineEditProRevert = window.inlineEditPost.revert;
+var delayToUnmountAfterSaving = 1000;
 var getPostIdFromButton = function getPostIdFromButton(id) {
   // If id is a string or a number, return it directly
   if (typeof id === 'string' || typeof id === 'number') {
@@ -4596,7 +4638,7 @@ window.inlineEditPost.edit = function (button, id) {
   wpInlineEditPro.apply(this, arguments);
   var postId = getPostIdFromButton(button);
   var container = document.getElementById("publishpress-future-pro-quick-edit");
-  var root = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createRoot)(container);
+  var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(container);
   var saveButton = document.querySelector('.inline-edit-save .save');
   if (saveButton) {
     saveButton.onclick = function () {
