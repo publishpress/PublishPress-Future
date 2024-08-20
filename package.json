@@ -43,6 +43,6 @@
     "webpack": "^5.90.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4",
-    "axios": "^1.6.0"
+    "axios": "^1.7.4"
   }
 }
