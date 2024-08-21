@@ -110,6 +110,7 @@ A full changelog is available in the plugin's GitHub repository.
 - Added option to hide the calendar by default in the future action panel (PR #899).
 - Added new filter `publishpressfuture_posts_future_action_column_output` to the Future Action column.
 - Added date preview to the Date Offset setting field on workflows (PRO PR #47).
+- Added new workflow step "Change Workflow Status for Post".
 
 ## [3.4.3] - 06 Aug, 2024
 
