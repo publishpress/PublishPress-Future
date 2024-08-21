@@ -5,11 +5,11 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CorePostChangeWorkflowStatus implements NodeTypeInterface
+class CorePostDeactivateWorkflow implements NodeTypeInterface
 {
     public static function getNodeTypeName(): string
     {
-        return "action/core.post-change-workflow-status";
+        return "action/core.post-deactivate-workflow";
     }
 
     public function getElementaryType(): string
@@ -24,18 +24,18 @@ class CorePostChangeWorkflowStatus implements NodeTypeInterface
 
     public function getBaseSlug(): string
     {
-        return "enableWorkflowForPost";
+        return "deactivateWorkflowForPost";
     }
 
     public function getLabel(): string
     {
-        return __("Change Workflow Status for Post", "publishpress-future-pro");
+        return __("Deactivate Workflow for Post", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
         return __(
-            "This step enables/disables \"Manually enabled via checkbox\" workflow on posts.",
+            "This step enables you to deactivate the \"Manually enabled via checkbox\" workflow after use.",
             "publishpress-future-pro"
         );
     }
@@ -84,29 +84,6 @@ class CorePostChangeWorkflowStatus implements NodeTypeInterface
                             "publishpress-future-pro"
                         ),
                     ],
-                    [
-                        "name" => "status",
-                        "type" => "list",
-                        "label" => __("New status", "publishpress-future-pro"),
-                        "description" => __("The new status for the workflow", "publishpress-future-pro"),
-                        "default" => [
-                            "variable" => "disable",
-                        ],
-                        "options" => [
-                            [
-                                "value" => "enable",
-                                "label" => __("Enable", "publishpress-future-pro"),
-                            ],
-                            [
-                                "value" => "disable",
-                                "label" => __("Disable", "publishpress-future-pro"),
-                            ],
-                            [
-                                "value" => "toggle",
-                                "label" => __("Toggle", "publishpress-future-pro"),
-                            ]
-                        ],
-                    ]
                 ],
             ],
         ];

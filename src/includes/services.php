@@ -21,7 +21,7 @@ use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\GeneralAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\PostAction;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeWorkflowStatus;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDeactivateWorkflow;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDelete;
@@ -427,8 +427,8 @@ return [
                     );
                     break;
 
-                case CorePostChangeWorkflowStatus::getNodeTypeName():
-                    $nodeRunner = new CorePostChangeWorkflowStatus(
+                case CorePostDeactivateWorkflow::getNodeTypeName():
+                    $nodeRunner = new CorePostDeactivateWorkflow(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR)
                     );

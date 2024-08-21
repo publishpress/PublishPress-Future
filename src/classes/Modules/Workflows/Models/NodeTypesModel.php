@@ -5,7 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Models;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Models\SettingsModel;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeWorkflowStatus;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDeactivateWorkflow;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsAdd;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDelete;
@@ -204,7 +204,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CorePostTermsRemove::getNodeTypeName() => new CorePostTermsRemove(),
             CorePostChangeStatus::getNodeTypeName() => new CorePostChangeStatus(),
             CoreSendEmail::getNodeTypeName() => new CoreSendEmail(),
-            CorePostChangeWorkflowStatus::getNodeTypeName() => new CorePostChangeWorkflowStatus(),
+            CorePostDeactivateWorkflow::getNodeTypeName() => new CorePostDeactivateWorkflow(),
         ];
 
         return $nodesInstances;

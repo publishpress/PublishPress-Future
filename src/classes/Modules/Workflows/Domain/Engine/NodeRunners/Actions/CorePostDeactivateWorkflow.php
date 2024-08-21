@@ -4,13 +4,13 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeWorkflowStatus as NodeType;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostDeactivateWorkflow as NodeType;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\PostModel;
 
-class CorePostChangeWorkflowStatus implements NodeRunnerInterface
+class CorePostDeactivateWorkflow implements NodeRunnerInterface
 {
     /**
      * @var HookableInterface
@@ -51,27 +51,6 @@ class CorePostChangeWorkflowStatus implements NodeRunnerInterface
         );
         $workflowId = $workflowResolver->getValue('id');
 
-        $newStatus = $nodeSettings['status']['variable'];
-
-        if ($newStatus === 'toggle') {
-            $enabledWorkflows = $postModel->getManuallyEnabledWorkflows();
-
-            if (in_array($workflowId, $enabledWorkflows)) {
-                $newStatus = 'disable';
-            } else {
-                $newStatus = 'enable';
-            }
-        }
-
-        if (!in_array($newStatus, ['enable', 'disable'])) {
-            throw new Exception('Invalid status');
-        }
-
-        if ($newStatus === 'enable') {
-            $postModel->addManuallyEnabledWorkflow($workflowId);
-            $this->hooks->doAction(HooksAbstract::ACTION_MANUALLY_TRIGGERED_WORKFLOW, $postId, $workflowId);
-        } else {
-            $postModel->removeManuallyEnabledWorkflow($workflowId);
-        }
+        $postModel->removeManuallyEnabledWorkflow($workflowId);
     }
 }
