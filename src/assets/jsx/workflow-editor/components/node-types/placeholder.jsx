@@ -107,6 +107,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
             let newEdgeParams;
 
             if (draggingFromHandle.handleType === HANDLE_TYPE_SOURCE) {
+                // When dragging from a source handle we are connecting to a lower level handle, to the target handle.
                 firstTargetHandleId = nodeType.handleSchema.target[0].id;
                 newEdgeParams = {
                     source: draggingFromHandle.sourceId,
@@ -120,6 +121,7 @@ export const Placeholder = memo(({id, label, popoverIsOpen = false, searchLabel,
                     },
                 };
             } else {
+                // When dragging from a target handle we are connecting to a higher level handle, to the source handle.
                 firstTargetHandleId = nodeType.handleSchema.source[0].id;
                 newEdgeParams = {
                     source: newNode.id,
