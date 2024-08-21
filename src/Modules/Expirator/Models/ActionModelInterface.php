@@ -1,5 +1,7 @@
 <?php
 
+namespace PublishPress\Future\Modules\Expirator\Models;
+
 interface ActionModelInterface
 {
     public function getPostId(): int;
