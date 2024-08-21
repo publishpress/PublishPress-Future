@@ -104,6 +104,7 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "post.variable",
+                        "label" => __("Post", "publishpress-future-pro"),
                     ],
                     [
                         "rule" => "required",
