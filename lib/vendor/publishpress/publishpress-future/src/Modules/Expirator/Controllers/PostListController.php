@@ -110,6 +110,7 @@ class PostListController implements InitializableInterface
         ]);
         $output = ob_get_clean();
 
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $this->hooks->applyFilters(ExpiratorHooks::FILTER_POSTS_FUTURE_ACTION_COLUMN_OUTPUT, $output);
     }
 
