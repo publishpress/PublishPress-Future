@@ -7,100 +7,120 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-06T16:59:48+00:00\n"
+"POT-Creation-Date: 2024-08-21T02:27:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: publishpress-future-pro\n"
 
-#: components/data-fields/date-offset.jsx:70
+#: components/data-fields/date-offset.jsx:72
 msgid "As soon as possible"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:71
+#: components/data-fields/date-offset.jsx:73
 msgid "On a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:72
+#: components/data-fields/date-offset.jsx:74
 msgid "Relative to a specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:77
+#: components/data-fields/date-offset.jsx:79
 msgid "Selected in the calendar"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:78
+#: components/data-fields/date-offset.jsx:80
 msgid "When the trigger is activated"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:79
+#: components/data-fields/date-offset.jsx:81
 msgid "When the step is activated"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:92
+#: components/data-fields/date-offset.jsx:94
 msgid "Non-repeating"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:93
+#: components/data-fields/date-offset.jsx:95
 msgid "Custom interval in seconds"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:98
+#: components/data-fields/date-offset.jsx:100
 msgid "Forever"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:99
+#: components/data-fields/date-offset.jsx:101
 msgid "Specific date"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:100
+#: components/data-fields/date-offset.jsx:102
 msgid "For a number of times"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:122
+#: components/data-fields/date-offset.jsx:147
 msgid "When to run"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:131
+#: components/data-fields/date-offset.jsx:156
 msgid "Date source"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:147
+#: components/data-fields/date-offset.jsx:172
 msgid "Offset"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:161
-msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
+#: components/data-fields/date-offset.jsx:179
+msgid "Date Preview"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:182
-msgid "Repeating Action"
+#: components/data-fields/date-offset.jsx:180
+msgid "Current Date"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:181
+msgid "Computed Date"
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:190
-msgid "Interval in seconds"
+msgid "Error: "
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:199
-msgid "Repeat until"
+#: components/data-fields/date-offset.jsx:195
+msgid "Click for more information"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:207
-msgid "Times to repeat"
+#: components/data-fields/date-offset.jsx:203
+msgid "For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English."
 msgstr ""
 
 #: components/data-fields/date-offset.jsx:224
+msgid "Repeating Action"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:232
+msgid "Interval in seconds"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:241
+msgid "Repeat until"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:249
+msgid "Times to repeat"
+msgstr ""
+
+#: components/data-fields/date-offset.jsx:266
 msgid "Prevent duplicate scheduling"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:227
+#: components/data-fields/date-offset.jsx:269
 msgid "If enabled, the step will prevent the step from being accidentally scheduled multiple times."
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:233
+#: components/data-fields/date-offset.jsx:275
 msgid "Priority"
 msgstr ""
 
-#: components/data-fields/date-offset.jsx:236
+#: components/data-fields/date-offset.jsx:278
 msgid "Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first."
 msgstr ""
 

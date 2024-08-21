@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the PublishPress Future Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future Pro 3.4.3-beta.2\n"
+"Project-Id-Version: PublishPress Future Pro 3.4.4-beta.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-06T16:59:45+00:00\n"
+"POT-Creation-Date: 2024-08-21T02:26:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: publishpress-future-pro\n"
 
 #. Plugin Name of the plugin
@@ -205,7 +205,7 @@ msgstr ""
 msgid "Change status to %s"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Controllers/ManualPostTrigger.php:291
+#: src/classes/Modules/Workflows/Controllers/ManualPostTrigger.php:306
 #: src/classes/Modules/Workflows/Controllers/PostType.php:34
 #: src/classes/Modules/Workflows/Controllers/WorkflowsList.php:79
 #: src/classes/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:8
@@ -229,7 +229,7 @@ msgid "Edit Workflow"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Controllers/PostType.php:42
-#: src/classes/Modules/Workflows/Models/WorkflowModel.php:333
+#: src/classes/Modules/Workflows/Models/WorkflowModel.php:330
 msgid "New Workflow"
 msgstr ""
 
@@ -491,6 +491,7 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:64
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:70
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:72
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:64
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:70
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:64
@@ -503,7 +504,7 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:70
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:64
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:70
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:68
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:69
 msgid "Post"
 msgstr ""
 
@@ -518,6 +519,7 @@ msgid "The post to update."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:71
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:73
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:71
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:71
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:71
@@ -529,6 +531,7 @@ msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:79
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:85
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:90
 msgid "New status"
 msgstr ""
 
@@ -538,6 +541,7 @@ msgid "The new status that the post will be moved to."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:123
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:147
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:108
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:116
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:125
@@ -553,6 +557,7 @@ msgid "Step input"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:124
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:148
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:109
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:117
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:126
@@ -568,6 +573,7 @@ msgid "The input data for this step."
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:147
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:171
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:132
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:140
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:149
@@ -585,6 +591,44 @@ msgstr ""
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:150
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:127
 msgid "Next"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:32
+msgid "Change Workflow Status for Post"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:37
+msgid "This step enables/disables \"Manually enabled via checkbox\" workflow on posts."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:67
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:67
+msgid "Settings"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:81
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:134
+msgid "Workflow"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:82
+msgid "Select the manually enabling workflow that will be enabled for the selected post."
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:91
+msgid "The new status for the workflow"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:98
+msgid "Enable"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:102
+msgid "Disable"
+msgstr ""
+
+#: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeWorkflowStatus.php:106
+msgid "Toggle"
 msgstr ""
 
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:32
@@ -864,10 +908,6 @@ msgstr ""
 msgid "This trigger activates when the option is manually enabled. It can be enabled via the post editing screen or the Quick Edit panel."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:67
-msgid "Settings"
-msgstr ""
-
 #: src/classes/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:68
 msgid "Settings for the trigger."
 msgstr ""
@@ -947,31 +987,31 @@ msgstr ""
 msgid "The post that was saved triggering the action."
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:77
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:78
 msgid "PublishPress Future"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:86
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:87
 msgid "Site"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:95
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:96
 msgid "Conditional"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:104
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:105
 msgid "Asynchronous"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:113
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:114
 msgid "Debug"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:122
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:123
 msgid "Data Query"
 msgstr ""
 
-#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:131
+#: src/classes/Modules/Workflows/Models/NodeTypesModel.php:132
 msgid "Messages"
 msgstr ""
 
