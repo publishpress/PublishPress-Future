@@ -260,6 +260,45 @@ class Controller implements InitializableInterface
                 ]
             );
         }
+
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        if (
+            (isset($_GET['page']) && $_GET['page'] === 'publishpress-future')
+            && (isset($_GET['tab']) && $_GET['tab'] === 'general')
+        ) {
+            //phpcs:enable WordPress.Security.NonceVerification.Recommended
+            wp_enqueue_script(
+                'publishpressfuture-settings-general-panel',
+                POSTEXPIRATOR_BASEURL . 'assets/js/settings-general.js',
+                [
+                    'wp-i18n',
+                    'wp-components',
+                    'wp-url',
+                    'wp-data',
+                    'wp-element',
+                    'wp-hooks',
+                    'wp-api-fetch',
+                    'wp-html-entities'
+                ],
+                POSTEXPIRATOR_VERSION,
+                true
+            );
+
+            wp_enqueue_style('wp-components');
+
+            wp_localize_script(
+                'publishpressfuture-settings-general-panel',
+                'publishpressFutureSettingsGeneralConfig',
+                [
+                    'text' => [
+                        'datePreview' => __('Date Preview', 'post-expirator'),
+                        'datePreviewCurrent' => __('Current Date', 'post-expirator'),
+                        'datePreviewComputed' => __('Computed Date', 'post-expirator'),
+                        'error' => __('Error', 'post-expirator'),
+                    ],
+                ]
+            );
+        }
     }
 
     private function getCurrentTab()

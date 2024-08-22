@@ -16,18 +16,35 @@ const {
 const { apiFetch } = wp;
 
 export const FutureActionPanel = (props) => {
-    const action = useSelect((select) => select(props.storeName).getAction(), []);
-    const date = useSelect((select) => select(props.storeName).getDate(), []);
-    const enabled = useSelect((select) => select(props.storeName).getEnabled(), []);
-    const terms = useSelect((select) => select(props.storeName).getTerms(), []);
-    const taxonomy = useSelect((select) => select(props.storeName).getTaxonomy(), []);
-    const taxonomyName = useSelect((select) => select(props.storeName).getTaxonomyName(), []);
-    const termsListByName = useSelect((select) => select(props.storeName).getTermsListByName(), []);
-    const termsListById = useSelect((select) => select(props.storeName).getTermsListById(), []);
-    const isFetchingTerms = useSelect((select) => select(props.storeName).getIsFetchingTerms(), []);
-    const calendarIsVisible = useSelect((select) => select(props.storeName).getCalendarIsVisible(), []);
-    const hasValidData = useSelect((select) => select(props.storeName).getHasValidData(), []);
-    const newStatus = useSelect((select) => select(props.storeName).getNewStatus(), []);
+    const {
+        action,
+        date,
+        enabled,
+        terms,
+        taxonomy,
+        taxonomyName,
+        termsListByName,
+        termsListById,
+        isFetchingTerms,
+        calendarIsVisible,
+        hasValidData,
+        newStatus,
+    } = useSelect((select) => {
+        return {
+            action: select(props.storeName).getAction(),
+            date: select(props.storeName).getDate(),
+            enabled: select(props.storeName).getEnabled(),
+            terms: select(props.storeName).getTerms(),
+            taxonomy: select(props.storeName).getTaxonomy(),
+            taxonomyName: select(props.storeName).getTaxonomyName(),
+            termsListByName: select(props.storeName).getTermsListByName(),
+            termsListById: select(props.storeName).getTermsListById(),
+            isFetchingTerms: select(props.storeName).getIsFetchingTerms(),
+            calendarIsVisible: select(props.storeName).getCalendarIsVisible(),
+            hasValidData: select(props.storeName).getHasValidData(),
+            newStatus: select(props.storeName).getNewStatus(),
+        };
+    });
 
     const [validationError, setValidationError] = useState('');
 
@@ -178,7 +195,7 @@ export const FutureActionPanel = (props) => {
         if (getCalendarIsVisibleFromStorage() === null) {
             setCalendarIsVisible(props.calendarIsVisible);
         } else {
-            setCalendarIsVisible(getCalendarIsVisibleFromStorage() === '1');
+            setCalendarIsVisible(getCalendarIsVisibleFromStorage() === '1' && ! props.hideCalendarByDefault);
         }
 
         // We need to get the value directly from the props because the value from the store is not updated yet
@@ -347,6 +364,7 @@ export const FutureActionPanel = (props) => {
                             label={props.strings.enablePostExpiration}
                             checked={enabled || false}
                             onChange={handleEnabledChange}
+                            className="future-action-enable-checkbox"
                         />
                     </PanelRow>
                 )}
@@ -359,6 +377,7 @@ export const FutureActionPanel = (props) => {
                                 value={action}
                                 options={actionsSelectOptions}
                                 onChange={handleActionChange}
+                                className="future-action-select-action"
                             />
                         </PanelRow>
 
@@ -371,6 +390,7 @@ export const FutureActionPanel = (props) => {
                                     options={props.statusesSelectOptions}
                                     value={newStatus}
                                     onChange={handleNewStatusChange}
+                                    className="future-action-select-new-status"
                                 />
                             </PanelRow>
                         }
@@ -413,6 +433,7 @@ export const FutureActionPanel = (props) => {
                                                         suggestions={termsListByNameKeys}
                                                         onChange={handleTermsChange}
                                                         placeholder={props.strings.addTermsPlaceholder}
+                                                        className="future-action-terms"
                                                         maxSuggestions={1000}
                                                         onFocus={forceIgnoreAutoSubmitOnEnter}
                                                         __experimentalExpandOnFocus={true}

@@ -19,7 +19,8 @@
     "@wordpress/api-fetch": "^6.22.0",
     "@wordpress/hooks": "^3.27.0",
     "@wordpress/url": "^3.28.0",
-    "react-select": "^5.7.0"
+    "react-select": "^5.7.0",
+    "postcss-loader": "^7"
   },
   "devDependencies": {
     "@wordpress/scripts": "^25.2.0",
@@ -34,6 +35,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "@babel/traverse": "^7.24.7",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
     "braces": "^3.0.3",
     "child_process": "^1.0.2",
     "inquirer": "^9.1.5",

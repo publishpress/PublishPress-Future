@@ -4,19 +4,19 @@
 
 import {
     SettingRow,
-    SettingsFieldset,
     SettingsTable,
     SelectControl,
     TextControl,
     TokensControl,
     CheckboxControl
 } from './';
-import { useEffect, useState, Fragment, useRef } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { applyFilters } from '@wordpress/hooks';
 import { apiFetch } from '&wp';
+import DateOffsetPreview from './DateOffsetPreview';
 
-const { PanelRow, BaseControl } = wp.components;
+const { PanelRow } = wp.components;
 
 export const PostTypeSettingsPanel = function (props) {
     const originalExpireTypeList = props.expireTypeList[props.postType];
@@ -30,15 +30,14 @@ export const PostTypeSettingsPanel = function (props) {
     const [expireOffset, setExpireOffset] = useState(props.settings.defaultExpireOffset);
     const [emailNotification, setEmailNotification] = useState(props.settings.emailNotification);
     const [isAutoEnabled, setIsAutoEnabled] = useState(props.settings.autoEnabled);
-    const [hasValidData, setHasValidData] = useState(false);
+    const [hasValidData, setHasValidData] = useState(true);
     const [validationError, setValidationError] = useState('');
     const [taxonomyLabel, setTaxonomyLabel] = useState('');
     const [howToExpireList, setHowToExpireList] = useState(originalExpireTypeList);
     const [newStatus, setNewStatus] = useState(props.settings.newStatus);
     const [hasPendingValidation, setHasPendingValidation] = useState(false);
-    const [offsetPreview, setOffsetPreview] = useState('');
-    const [currentTime, setCurrentTime] = useState();
-    const apiRequestControllerRef = useRef(new AbortController());
+
+    const offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
 
     const taxonomyRelatedActions = [
         'category',
@@ -73,61 +72,6 @@ export const PostTypeSettingsPanel = function (props) {
 
     const onChangeAutoEnabled = (value) => {
         setIsAutoEnabled(value);
-    }
-
-    const validateData = () => {
-        if (! isActive) {
-            setValidationError('');
-            return true;
-        }
-
-        const offset = expireOffset ? expireOffset : props.settings.globalDefaultExpireOffset;
-
-        if (offset) {
-            const controller = apiRequestControllerRef.current;
-
-            if (controller) {
-                controller.abort();
-            }
-
-            apiRequestControllerRef.current = new AbortController();
-            const { signal } = apiRequestControllerRef.current;
-
-            setHasPendingValidation(true);
-
-            apiFetch({
-                path: addQueryArgs(`publishpress-future/v1/settings/validate-expire-offset`),
-                method: 'POST',
-                data: {
-                    offset
-                },
-                signal,
-            }).then((result) => {
-                setHasPendingValidation(false);
-
-                setHasValidData(result.isValid);
-                setValidationError(result.message);
-
-                if (result.isValid) {
-                    setOffsetPreview(result.preview);
-                    setCurrentTime(result.currentTime);
-                } else {
-                    setOffsetPreview('');
-                }
-            }).catch((error) => {
-                if (error.name === 'AbortError') {
-                    return;
-                }
-
-                setHasPendingValidation(false);
-                setHasValidData(false);
-                setValidationError(error.message);
-                setOffsetPreview('');
-            });
-        }
-
-        setValidationError('');
-        return true;
     }
 
     useEffect(() => {
@@ -181,10 +125,6 @@ export const PostTypeSettingsPanel = function (props) {
             }
         });
     }, [postTypeTaxonomy]);
-
-    useEffect(() => {
-        setHasValidData(validateData());
-    }, [isActive, expireOffset]);
 
     useEffect(() => {
         if (!taxonomyLabel) {
@@ -319,21 +259,15 @@ export const PostTypeSettingsPanel = function (props) {
                     onChange={onChangeExpireOffset}
                 />
 
-                {offsetPreview && (
-                    <Fragment>
-                        <h4>{props.text.datePreview}</h4>
-                        <div>
-                            <div>
-                                <span>{props.text.datePreviewCurrent}: </span>
-                                <span><code>{currentTime}</code></span>
-                            </div>
-                            <div>
-                                <span>{props.text.datePreviewComputed}: </span>
-                                <span><code>{offsetPreview}</code></span>
-                            </div>
-                        </div>
-                    </Fragment>
-                )}
+                <DateOffsetPreview
+                    offset={offset}
+                    label={props.text.datePreview}
+                    labelDatePreview={props.text.datePreviewCurrent}
+                    labelOffsetPreview={props.text.datePreviewComputed}
+                    setValidationErrorCallback={setValidationError}
+                    setHasPendingValidationCallback={setHasPendingValidation}
+                    setHasValidDataCallback={setHasValidData}
+                />
             </SettingRow>
         );
 
@@ -352,8 +286,10 @@ export const PostTypeSettingsPanel = function (props) {
 
     settingsRows = applyFilters('expirationdate_settings_posttype', settingsRows, props, isActive, useState);
 
+    const fieldSetClassNames = props.isVisible ? 'pe-settings-fieldset' : 'pe-settings-fieldset hidden';
+
     return (
-        <SettingsFieldset legend={props.legend}>
+        <div className={fieldSetClassNames}>
             <SettingsTable bodyChildren={settingsRows} />
 
             {! hasValidData && (
@@ -363,6 +299,6 @@ export const PostTypeSettingsPanel = function (props) {
                     </div>
                 </PanelRow>
             )}
-        </SettingsFieldset>
+        </div>
     );
 }

@@ -18,8 +18,7 @@ To release the Free plugin, ensure you complete all the tasks below.
 - [ ] Review updated packages and mention any production library updates in the changelog.
 - [ ] Inspect GitHub’s Dependabot warnings or Pull Requests. Resolve any false positives, then fix and commit the remaining issues.
 - [ ] If needed, build JS files for production using `composer build:js` and commit changes.
-- [ ] Run `composer build:dir` to prepare the plugin for quality checks.
-- [ ] Run a WP VIP scan with `composer check:phpcs` to ensure no warnings or errors greater than 5 exist.
+- [ ] Run a code quality check with `composer check` and fix the highlighted issues.
 - [ ] Update the language files with `composer gen:lang` and note this in the changelog.
 - [ ] For minor and patch releases, maintain backward compatibility (e.g., renamed or moved classes, namespaces, functions). Include deprecation comments and note this in the changelog. Major releases may remove deprecated code; always note this in the changelog.
 - [ ] Update the changelog in `/CHANGELOG.md` with a user-friendly description and correct release date.

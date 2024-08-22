@@ -102,11 +102,16 @@ class PostListController implements InitializableInterface
         $container = Container::getInstance();
         $settings = $container->get(ServicesAbstract::SETTINGS);
 
+        ob_start();
         PostExpirator_Display::getInstance()->render_template('expire-column', [
             'id' => $post->ID,
             'postType' => $post->post_type,
             'columnStyle' => $settings->getColumnStyle(),
         ]);
+        $output = ob_get_clean();
+
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        echo $this->hooks->applyFilters(ExpiratorHooks::FILTER_POSTS_FUTURE_ACTION_COLUMN_OUTPUT, $output);
     }
 
     public function manageSortableColumns()

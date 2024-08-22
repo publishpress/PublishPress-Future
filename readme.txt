@@ -7,7 +7,7 @@ Requires at least: 6.1
 Requires PHP: 7.2.5
 Tested up to: 6.6
 License: GPLv2 or later
-Stable tag: 3.4.3
+Stable tag: 3.4.4
 
 PublishPress Future can make scheduled changes to your content. You can unpublish posts, move posts to a new status, update the categories, and more.
 
@@ -173,6 +173,26 @@ Yes, the PublishPress Future plugin allows you to schedule automatic changes to 
 
 The full changelog can be found on [GitHub](https://github.com/publishpress/PublishPress-Future/blob/main/CHANGELOG.md).
 
+## [3.4.4] - 21 Aug, 2024
+
+### Fixed
+
+- Improve notice message when scheduled action runs after pressing "run" (PR #896).
+- Fixed support for the Event Espresso plugin (PR #900).
+- Fixed React warning about createRoot being deprecated.
+- Fixed empty fieldset displayed when the bos is disabled for the post type (Issue #792).
+- Update language files.
+
+### Changed
+
+- Add tabs for post types in the post types settings page (PR #895).
+
+### Added
+
+- Added computed date preview to the general settings page (PR #897).
+- Added option to hide the calendar by default in the future action panel (PR #899).
+- Added new filter `publishpressfuture_posts_future_action_column_output` to the Future Action column.
+
 ## [3.4.3] - 06 Aug, 2024
 
 ### Changed
@@ -276,30 +296,3 @@ The full changelog can be found on [GitHub](https://github.com/publishpress/Publ
 - Redirects to the settings page after activating the plugin, #764
 - Fix access to the View Debug settings tab when debug is disabled
 - Fix the position of the "Upgrade to Pro" and "Settings" menu items in the admin bar
-
-## [3.3.1] - 19 Mar, 2024
-
-### Added
-
-- Add validation for the date and time offset in the settings page, #683
-- Add form validation to the settings panel
-- Add form validation to the metabox panel
-- Add a date preview to the date/time offset setting field
-
-### Changed
-
-- The actions to move posts to another status where grouped in a single action, with a dropdown to select the status, #668
-- The actions "draft", "private" and "trash" are deprecated in favor of "change-status", #668
-- The metadata hash key has now a prefix "_" marking it as a private key, #695
-- Improved the name of some actions
-- Change the label of the field to select terms when "Replace all terms" is selected, #664
-
-### Fixed
-
-- Make it impossible to choose dates in the past, #443
-- Enter key submits quick-edit panel when selecting a taxonomy term, #586
-- The name of the taxonomy in the actions field is now updated in the settings panel when the taxonomy is changed, #676
-- Possible to add an action using an empty category setting, #587
-- Fix language files for ES, IT, FR, #685
-- Fix inconsistent text in the filter for "Pending" actions, #673
-- Improve the message when no actions are found: "No Future Actions", #666

@@ -1,191 +1,131 @@
 const glob = require("glob");
 const path = require("path");
 
+const defaultExternals = {
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "&wp": "wp",
+    "@wordpress/element": "wp.element",
+    "@wordpress/components": "wp.components",
+    "@wordpress/data": "wp.data",
+    "@wordpress/plugins": "wp.plugins",
+    "@wordpress/hooks": "wp.hooks",
+    "@wordpress/url": "wp.url",
+};
+
+const defaultRules = [
+    {
+        test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+        use: {loader: "babel-loader"}, //
+        exclude: [
+            /(node_modules|bower_components)/,
+        ]// JavaScript files to be ignored.
+    },
+    {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader", "postcss-loader"],
+    }
+];
+
+const defaultResolve = {
+    extensions: ['.js', '.jsx']
+};
+
+const defaultModule = {
+    rules: [
+        ...defaultRules,
+    ]
+};
+
+const defaultOutput = {
+    path: path.join(__dirname, "assets", "js"),
+}
+
+const defaultExports = {
+    devtool: 'source-map',
+    resolve: {...defaultResolve},
+    module: {...defaultModule},
+}
+
 module.exports = [
     {
-        entry: glob.sync(
-            "./assets/jsx/settings-post-types.jsx",
-        ),
-        devtool: 'source-map',
-        output: {
-            path: path.join(__dirname, "assets", "js"),
-            filename: "settings-post-types.js"
-        },
-        resolve: {
-            extensions: ['.jsx', '.js']
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
-                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
-                    exclude: [
-                        /(node_modules|bower_components)/,
-                    ]// JavaScript files to be ignored.
-                }
-            ]
-        },
-        resolve: {
-            extensions: ['.js', '.jsx']
-        },
+        ...defaultExports,
+        entry: glob.sync("./assets/jsx/settings-post-types.jsx",),
+        output: {...defaultOutput, filename: "settings-post-types.js"},
         externals: {
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "&wp": "wp",
-            "@wordpress/element": "wp.element",
-            "@wordpress/components": "wp.components",
-            "@wordpress/data": "wp.data",
-            "@wordpress/plugins": "wp.plugins",
-            "@wordpress/hooks": "wp.hooks",
-            "@wordpress/url": "wp.url",
+            ...defaultExternals,
             "&config.settings-post-types": "publishpressFutureSettingsConfig"
         }
     },
     {
+        ...defaultExports,
+        entry: glob.sync("./assets/jsx/settings-general.jsx",),
+        output: {
+            ...defaultOutput,
+            filename: "settings-general.js"
+        },
+        externals: {
+            ...defaultExternals,
+            "&config.settings-general": "publishpressFutureSettingsGeneralConfig"
+        }
+    },
+    {
+        ...defaultExports,
         entry: glob.sync(
             "./assets/jsx/block-editor.jsx",
         ),
-        devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "js"),
+            ...defaultOutput,
             filename: "block-editor.js"
         },
-        resolve: {
-            extensions: ['.jsx', '.js']
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
-                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
-                    exclude: [
-                        /(node_modules|bower_components)/,
-                    ]// JavaScript files to be ignored.
-                }
-            ]
-        },
         externals: {
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "&wp": "wp",
-            "@wordpress/element": "wp.element",
-            "@wordpress/components": "wp.components",
-            "@wordpress/data": "wp.data",
-            "@wordpress/plugins": "wp.plugins",
-            "@wordpress/hooks": "wp.hooks",
+            ...defaultExternals,
             "&window": "window",
-            "@wordpress/url": "wp.url",
             "&config.block-editor": "publishpressFutureBlockEditorConfig"
         }
     },
     {
+        ...defaultExports,
         entry: glob.sync(
             "./assets/jsx/classic-editor.jsx",
         ),
-        devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "js"),
+            ...defaultOutput,
             filename: "classic-editor.js"
         },
-        resolve: {
-            extensions: ['.jsx', '.js']
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
-                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
-                    exclude: [
-                        /(node_modules|bower_components)/,
-                    ]// JavaScript files to be ignored.
-                }
-            ]
-        },
         externals: {
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "&wp": "wp",
-            "@wordpress/element": "wp.element",
-            "@wordpress/components": "wp.components",
-            "@wordpress/data": "wp.data",
-            "@wordpress/plugins": "wp.plugins",
-            "@wordpress/hooks": "wp.hooks",
-            "@wordpress/url": "wp.url",
+            ...defaultExternals,
             "&config.classic-editor": "publishpressFutureClassicEditorConfig"
         }
     },
     {
+        ...defaultExports,
         entry: glob.sync(
             "./assets/jsx/quick-edit.jsx",
         ),
-        devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "js"),
+            ...defaultOutput,
             filename: "quick-edit.js"
         },
-        resolve: {
-            extensions: ['.jsx', '.js']
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
-                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
-                    exclude: [
-                        /(node_modules|bower_components)/,
-                    ]// JavaScript files to be ignored.
-                }
-            ]
-        },
         externals: {
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "&wp": "wp",
-            "@wordpress/element": "wp.element",
-            "@wordpress/components": "wp.components",
-            "@wordpress/data": "wp.data",
-            "@wordpress/plugins": "wp.plugins",
-            "@wordpress/hooks": "wp.hooks",
+            ...defaultExternals,
             "&config.quick-edit": "publishpressFutureQuickEditConfig",
             "&window": "window",
-            "@wordpress/url": "wp.url"
         }
     },
     {
+        ...defaultExports,
         entry: glob.sync(
             "./assets/jsx/bulk-edit.jsx",
         ),
-        devtool: 'source-map',
         output: {
-            path: path.join(__dirname, "assets", "js"),
+            ...defaultOutput,
             filename: "bulk-edit.js"
         },
-        resolve: {
-            extensions: ['.jsx', '.js']
-        },
-        module: {
-            rules: [
-                {
-                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
-                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
-                    exclude: [
-                        /(node_modules|bower_components)/,
-                    ]// JavaScript files to be ignored.
-                }
-            ]
-        },
         externals: {
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "&wp": "wp",
-            "@wordpress/element": "wp.element",
-            "@wordpress/components": "wp.components",
-            "@wordpress/data": "wp.data",
-            '@wordpress/plugins': 'wp.plugins',
-            "@wordpress/hooks": "wp.hooks",
+            ...defaultExternals,
             "&config.bulk-edit": "publishpressFutureBulkEditConfig",
             "&window": "window",
-            "@wordpress/url": "wp.url"
         }
     }
 ];

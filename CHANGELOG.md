@@ -3,6 +3,26 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.4] - 21 Aug, 2024
+
+### Fixed
+
+- Improve notice message when scheduled action runs after pressing "run" (PR #896).
+- Fixed support for the Event Espresso plugin (PR #900).
+- Fixed React warning about createRoot being deprecated.
+- Fixed empty fieldset displayed when the bos is disabled for the post type (Issue #792).
+- Update language files.
+
+### Changed
+
+- Add tabs for post types in the post types settings page (PR #895).
+
+### Added
+
+- Added computed date preview to the general settings page (PR #897).
+- Added option to hide the calendar by default in the future action panel (PR #899).
+- Added new filter `publishpressfuture_posts_future_action_column_output` to the Future Action column.
+
 ## [3.4.3] - 06 Aug, 2024
 
 ### Changed

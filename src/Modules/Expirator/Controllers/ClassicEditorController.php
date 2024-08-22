@@ -263,7 +263,11 @@ class ClassicEditorController implements InitializableInterface
     {
         $currentScreen = get_current_screen();
 
-        if ($currentScreen->base !== 'post') {
+        if (
+            $currentScreen->base !== 'post'
+            // Add support to the Event Espresso plugin
+            && $currentScreen->id !== 'espresso_events'
+        ) {
             return;
         }
 
@@ -357,6 +361,7 @@ class ClassicEditorController implements InitializableInterface
                 'taxonomyTerms' => $taxonomyTerms,
                 'postType' => $currentScreen->post_type,
                 'isNewPost' => $isNewPostPage,
+                'hideCalendarByDefault' => $settingsFacade->getHideCalendarByDefault(),
                 'strings' => [
                     'category' => __('Category', 'post-expirator'),
                     'panelTitle' => __('PublishPress Future', 'post-expirator'),
