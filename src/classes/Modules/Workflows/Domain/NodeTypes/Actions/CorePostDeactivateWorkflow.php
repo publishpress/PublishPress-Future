@@ -78,9 +78,12 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
                     [
                         "name" => "workflow",
                         "type" => "manualWorkflowInput",
+                        "default" => [
+                            "variable" => "global.workflow",
+                        ],
                         "label" => __("Workflow", "publishpress-future-pro"),
                         "description" => __(
-                            "Select the manually enabling workflow that will be enabled for the selected post.", // phpcs:ignore Generic.Files.LineLength.TooLong
+                            "Select the manually enabling workflow that will be deactivated for the selected post.", // phpcs:ignore Generic.Files.LineLength.TooLong
                             "publishpress-future-pro"
                         ),
                     ],
