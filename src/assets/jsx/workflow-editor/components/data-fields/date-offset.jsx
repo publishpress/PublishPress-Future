@@ -20,7 +20,7 @@ import { Icon } from "@wordpress/components";
 
 /**
  *  When to execute:
- *   - event - As soon as possible after event
+ *   - now - As soon as possible after event
  *   - date - At a specific date
  *   - offset - After a specific date
  *
@@ -46,7 +46,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     defaultRepeatDate.setDate(defaultRepeatDate.getDate() + 7);
 
     defaultValue = {
-        whenToRun: "event",
+        whenToRun: "now",
         dateSource: "calendar",
         recurrence: "single",
         repeatUntil: "forever",
@@ -73,7 +73,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         { name: __("On a specific date", "publishpress-future-pro"), id: "date" },
         { name: __("Relative to a specific date", "publishpress-future-pro"), id: "offset" },
     ];
-
 
     const dateSourceOptions = [
         { name: __("Selected in the calendar", "publishpress-future-pro"), id: "calendar" },

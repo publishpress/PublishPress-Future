@@ -30,6 +30,32 @@ class CoreSchedule implements NodeRunnerInterface
 {
     public const DEFAULT_REPEAT_UNTIL_TIMES = 99999;
 
+    public const WHEN_TO_RUN_NOW = 'now';
+
+    /**
+     * @deprecated version 4.0.0
+     */
+    public const WHEN_TO_RUN_EVENT = 'event';
+
+    public const WHEN_TO_RUN_DATE = 'date';
+
+    public const WHEN_TO_RUN_OFFSET = 'offset';
+
+    public const DATE_SOURCE_CALENDAR = 'calendar';
+
+    public const DATE_SOURCE_EVENT = 'event';
+
+    public const DATE_SOURCE_STEP = 'step';
+
+    public const SCHEDULE_RECURRENCE_SINGLE = 'single';
+
+    public const SCHEDULE_RECURRENCE_CUSTOM = 'custom';
+
+    public const REPEAT_UNTIL_DATE = 'date';
+
+    public const REPEAT_UNTIL_TIMES = 'times';
+
+
     /**
      * @var HookableInterface
      */
@@ -97,11 +123,11 @@ class CoreSchedule implements NodeRunnerInterface
             $nodeSettings['schedule'] = [];
         }
 
-        $recurrence = $nodeSettings['schedule']['recurrence'] ?? 'single';
-        $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? 'now';
+        $recurrence = $nodeSettings['schedule']['recurrence'] ?? self::SCHEDULE_RECURRENCE_SINGLE;
+        $whenToRun = $nodeSettings['schedule']['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
 
         // Schedule
-        if ('single' === $recurrence && 'now' === $whenToRun) {
+        if (self::SCHEDULE_RECURRENCE_SINGLE === $recurrence && self::WHEN_TO_RUN_NOW === $whenToRun) {
             $timestamp = 0;
         } else {
             $timestamp = $this->getSchedulingTimestamp($nodeSettings, $contextVariables);
@@ -123,8 +149,8 @@ class CoreSchedule implements NodeRunnerInterface
 
         $actionArgs = [$this->compactArguments($step, $contextVariables)];
 
-        if ('single' === $recurrence) {
-            if ($whenToRun === 'now') {
+        if (self::SCHEDULE_RECURRENCE_SINGLE === $recurrence) {
+            if (self::WHEN_TO_RUN_NOW === $whenToRun) {
                 $this->cron->scheduleAsyncAction(
                     HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
                     $actionArgs,
@@ -141,7 +167,7 @@ class CoreSchedule implements NodeRunnerInterface
                 );
             }
         } else {
-            if ($recurrence === 'custom') {
+            if (self::SCHEDULE_RECURRENCE_CUSTOM === $recurrence) {
                 $interval = (int)$nodeSettings['schedule']['repeatInterval'] ?? 0;
             } else {
                 $recurrence = preg_replace('/^cron_/', '', $recurrence);
@@ -197,24 +223,25 @@ class CoreSchedule implements NodeRunnerInterface
     {
         $scheduleSettings = $nodeSettings['schedule'];
 
-        $whenToRun = $scheduleSettings['whenToRun'] ?? 'now';
-        $dateSource = $scheduleSettings['dateSource'] ?? 'calendar';
+        $whenToRun = $scheduleSettings['whenToRun'] ?? self::WHEN_TO_RUN_NOW;
+        $dateSource = $scheduleSettings['dateSource'] ?? self::DATE_SOURCE_CALENDAR;
 
         $timestamp = 0;
         switch ($whenToRun) {
-            case 'now':
+            case self::WHEN_TO_RUN_NOW:
+            case self::WHEN_TO_RUN_EVENT:
                 $timestamp = time();
                 break;
-            case 'date':
-            case 'offset':
-                if ($dateSource === 'calendar') {
+            case self::WHEN_TO_RUN_DATE:
+            case self::WHEN_TO_RUN_OFFSET:
+                if (self::DATE_SOURCE_CALENDAR === $dateSource) {
                     $timestamp = strtotime($scheduleSettings['specificDate']);
-                } elseif ($dateSource === 'event') {
+                } elseif (self::DATE_SOURCE_EVENT === $dateSource) {
                     $timestamp = $this->variablesHandler->parseNestedVariableValue(
                         'global.trigger.activation_timestamp',
                         $contextVariables
                     );
-                } elseif ($dateSource === 'step') {
+                } elseif (self::DATE_SOURCE_STEP === $dateSource) {
                     $timestamp = time();
                 } else {
                     $timestamp = $this->variablesHandler->parseNestedVariableValue(
@@ -240,7 +267,7 @@ class CoreSchedule implements NodeRunnerInterface
             return null;
         }
 
-        if ($whenToRun === 'offset') {
+        if (self::WHEN_TO_RUN_OFFSET === $whenToRun) {
             $offset = $scheduleSettings['dateOffset'] ?? '';
             if (! empty($offset)) {
                 $timestamp = strtotime($offset, (int)$timestamp);
@@ -425,6 +452,7 @@ class CoreSchedule implements NodeRunnerInterface
                     $type = $value['type'] ?? 'unknown';
                 }
 
+                // FIXME: This should be moved to a variable resolver factory
                 $resolversMap = [
                     'array' => ArrayResolver::class,
                     'boolean' => BooleanResolver::class,
@@ -529,9 +557,9 @@ class CoreSchedule implements NodeRunnerInterface
         $nodeId = $args['step']['node']['id'];
         $nodeSettings = $args['step']['node']['data']['settings'] ?? [];
         $scheduleSettings = $nodeSettings['schedule'] ?? [];
-        $recurrence = $scheduleSettings['recurrence'] ?? 'single';
+        $recurrence = $scheduleSettings['recurrence'] ?? self::SCHEDULE_RECURRENCE_SINGLE;
 
-        $isRecurrent = $recurrence !== 'single';
+        $isRecurrent = $recurrence !== self::SCHEDULE_RECURRENCE_SINGLE;
         $unscheduleRecurringAction = false;
 
         if ($isRecurrent) {
