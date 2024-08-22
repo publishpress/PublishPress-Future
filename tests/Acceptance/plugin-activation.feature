@@ -24,4 +24,4 @@ Feature: Plugin activation
       And I deactivate the plugin "publishpress-future-pro"
       And I see the plugin "publishpress-future-pro" is deactivated
     When I activate the plugin "publishpress-future-pro"
-    Then I show be on the settings page for the plugin
+    Then I should be on the settings page for the plugin
