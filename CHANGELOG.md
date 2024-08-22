@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.4.4] - 21 Aug, 2024
+## [3.4.4] - 22 Aug, 2024
 
 ### Fixed
 
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed support for the WPForms' Post Submission addon (PRO PR #48).
 - Fixed duplicated action workflow panels (PRO PR #49).
 - Fixed workflow and future action checkboxes allowing to disable the future action checkbox (PRO PR #44).
+- Fixed the Trigger Workflow legacy action to not be displayed if no workflows are available (Issue #910).
 
 ### Changed
 
@@ -26,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added option to hide the calendar by default in the future action panel (PR #899).
 - Added new filter `publishpressfuture_posts_future_action_column_output` to the Future Action column.
 - Added date preview to the Date Offset setting field on workflows (PRO PR #47).
-- Added new workflow step "Change Workflow Status for Post".
+- Added new workflow step "Deactivate Workflow for Post".
 
 ## [3.4.3] - 06 Aug, 2024
 
