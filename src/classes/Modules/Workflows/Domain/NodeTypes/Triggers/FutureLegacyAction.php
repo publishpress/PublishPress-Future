@@ -7,6 +7,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
 
 class FutureLegacyAction implements NodeTypeInterface
 {
@@ -132,7 +133,12 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function addExpirationAction(array $actions): array
     {
-        $actions[TriggerWorkflow::ACTION_NAME] = TriggerWorkflow::getLabel();
+        $workflowsModel = new WorkflowsModel();
+        $workflows = $workflowsModel->getPublishedWorkflowsWithLegacyTriggerAsOptions();
+
+        if (! empty($workflows)) {
+            $actions[TriggerWorkflow::ACTION_NAME] = TriggerWorkflow::getLabel();
+        }
 
         return $actions;
     }

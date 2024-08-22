@@ -41,6 +41,7 @@ const Fields = ({ storeName }) => {
                         value={workflow}
                         options={workflowsOptions}
                         onChange={handleActionChange}
+                        className='future-action-workflow'
                     />
                     <input type='hidden' name='future_action_pro_workflow' value={workflow} />
                 </PanelRow>

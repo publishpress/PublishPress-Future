@@ -73,7 +73,7 @@ class TriggerWorkflow implements ExpirationActionInterface
 
     public static function getLabel(string $postType = ''): string
     {
-        return __("Trigger Workflow", 'publishpress-future-pro');
+        return __("Trigger workflow", 'publishpress-future-pro');
     }
 
     /**
