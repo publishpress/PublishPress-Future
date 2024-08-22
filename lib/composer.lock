@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd294a605a677db5f5df0191cdc55546",
+    "content-hash": "c0287a7326bc63f4843cfd64dc801fde",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-develop",
+            "version": "3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "b9cef23092c8521b3a53dfb45c49e132e0c4aab3"
+                "reference": "8d9d43609b70427c4ae86990b19ffab1429b7e51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/b9cef23092c8521b3a53dfb45c49e132e0c4aab3",
-                "reference": "b9cef23092c8521b3a53dfb45c49e132e0c4aab3",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/8d9d43609b70427c4ae86990b19ffab1429b7e51",
+                "reference": "8d9d43609b70427c4ae86990b19ffab1429b7e51",
                 "shasum": ""
             },
             "require": {
@@ -466,6 +466,10 @@
                     "php-cs-fixer fix .",
                     "@fix:cs"
                 ],
+                "prepare": [
+                    "@gen:lang",
+                    "@build:js"
+                ],
                 "dbox:up": [
                     "pdropbox upload && pdropbox share"
                 ],
@@ -580,10 +584,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.4.4",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-08-22T15:09:32+00:00"
+            "time": "2024-08-22T17:24:56+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -883,9 +887,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "publishpress/publishpress-future": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

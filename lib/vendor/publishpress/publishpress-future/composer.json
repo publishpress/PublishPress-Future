@@ -123,6 +123,10 @@
             "php-cs-fixer fix .",
             "@fix:cs"
         ],
+        "prepare": [
+            "@gen:lang",
+            "@build:js"
+        ],
         "dbox:up": "pdropbox upload && pdropbox share",
         "dbox:list": "pdropbox list",
         "dbox:remove": "pdropbox remove",

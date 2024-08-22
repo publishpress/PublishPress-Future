@@ -304,17 +304,17 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-develop",
-            "version_normalized": "dev-develop",
+            "version": "3.4.4",
+            "version_normalized": "3.4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "b9cef23092c8521b3a53dfb45c49e132e0c4aab3"
+                "reference": "8d9d43609b70427c4ae86990b19ffab1429b7e51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/b9cef23092c8521b3a53dfb45c49e132e0c4aab3",
-                "reference": "b9cef23092c8521b3a53dfb45c49e132e0c4aab3",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/8d9d43609b70427c4ae86990b19ffab1429b7e51",
+                "reference": "8d9d43609b70427c4ae86990b19ffab1429b7e51",
                 "shasum": ""
             },
             "require": {
@@ -350,7 +350,7 @@
                 "wp-cli/wp-cli-bundle": "^2.10",
                 "wp-coding-standards/wpcs": "^3"
             },
-            "time": "2024-08-22T15:09:32+00:00",
+            "time": "2024-08-22T17:24:56+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -475,6 +475,10 @@
                     "php-cs-fixer fix .",
                     "@fix:cs"
                 ],
+                "prepare": [
+                    "@gen:lang",
+                    "@build:js"
+                ],
                 "dbox:up": [
                     "pdropbox upload && pdropbox share"
                 ],
@@ -589,7 +593,7 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.4.4",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "install-path": "../publishpress/publishpress-future"
