@@ -364,6 +364,7 @@ export const FutureActionPanel = (props) => {
                             label={props.strings.enablePostExpiration}
                             checked={enabled || false}
                             onChange={handleEnabledChange}
+                            className="future-action-enable-checkbox"
                         />
                     </PanelRow>
                 )}
@@ -376,6 +377,7 @@ export const FutureActionPanel = (props) => {
                                 value={action}
                                 options={actionsSelectOptions}
                                 onChange={handleActionChange}
+                                className="future-action-select-action"
                             />
                         </PanelRow>
 
@@ -388,6 +390,7 @@ export const FutureActionPanel = (props) => {
                                     options={props.statusesSelectOptions}
                                     value={newStatus}
                                     onChange={handleNewStatusChange}
+                                    className="future-action-select-new-status"
                                 />
                             </PanelRow>
                         }
@@ -430,6 +433,7 @@ export const FutureActionPanel = (props) => {
                                                         suggestions={termsListByNameKeys}
                                                         onChange={handleTermsChange}
                                                         placeholder={props.strings.addTermsPlaceholder}
+                                                        className="future-action-terms"
                                                         maxSuggestions={1000}
                                                         onFocus={forceIgnoreAutoSubmitOnEnter}
                                                         __experimentalExpandOnFocus={true}
