@@ -1,48 +1,45 @@
 <?php
 
-namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced;
+namespace PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers;
 
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypeInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 
-class CoreSchedule implements NodeTypeInterface
+class CoreOnCronSchedule implements NodeTypeInterface
 {
     public static function getNodeTypeName(): string
     {
-        return "advanced/core.schedule";
+        return "trigger/core.cron-schedule";
     }
 
     public function getElementaryType(): string
     {
-        return NodeTypesModel::NODE_TYPE_ADVANCED;
+        return NodeTypesModel::NODE_TYPE_TRIGGER;
     }
 
     public function getReactFlowNodeType(): string
     {
-        return "generic";
+        return "trigger";
     }
 
     public function getBaseSlug(): string
     {
-        return "schedule";
+        return "onCronSchedule";
     }
 
     public function getLabel(): string
     {
-        return __("Schedule", "publishpress-future-pro");
+        return __("On cron schedule", "publishpress-future-pro");
     }
 
     public function getDescription(): string
     {
-        return __(
-            "This step enables actions to be scheduled. You can choose when to run the next step.", // phpcs:ignore Generic.Files.LineLength.TooLong
-            "publishpress-future-pro"
-        );
+        return __("This trigger activates upon a cron schedule, allowing recurrency.", "publishpress-future-pro");
     }
 
     public function getIcon(): string
     {
-        return "schedule";
+        return "media-document";
     }
 
     public function getFrecency(): int
@@ -65,12 +62,19 @@ class CoreSchedule implements NodeTypeInterface
         return [
             [
                 "label" => __("Schedule", "publishpress-future-pro"),
-                "description" => __("A scheduled delay between steps.", "publishpress-future-pro"),
+                "description" => __("A schedule to activate the workflow.", "publishpress-future-pro"),
                 "fields" => [
                     [
                         "name" => "schedule",
                         "type" => "dateOffset",
                         "label" => __("Date offset", "publishpress-future-pro"),
+                        "settings" => [
+                            "hideDateSources" => [
+                                "event",
+                                "step",
+                                "global.user.user_registered",
+                            ],
+                        ]
                     ],
                 ],
             ],
@@ -83,9 +87,6 @@ class CoreSchedule implements NodeTypeInterface
             "connections" => [
                 "rules" => [
                     [
-                        "rule" => "hasIncomingConnection",
-                    ],
-                    [
                         "rule" => "hasOutgoingConnection",
                     ],
                 ]
@@ -95,30 +96,18 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getOutputSchema(): array
     {
-        return [
-            [
-                "name" => "input",
-                "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
-            ],
-        ];
+        return [];
     }
 
     public function getCSSClass(): string
     {
-        return "react-flow__node-genericAdvanced";
+        return "react-flow__node-genericTrigger";
     }
 
     public function getHandleSchema(): array
     {
         return [
-            "target" => [
-                [
-                    "id" => "input",
-                    "left" => "50%",
-                ]
-            ],
+            "target" => [],
             "source" => [
                 [
                     "id" => "output",

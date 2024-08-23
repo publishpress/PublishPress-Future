@@ -15785,7 +15785,8 @@ function DateOffset(_ref) {
     defaultValue = _ref.defaultValue,
     onChange = _ref.onChange,
     _ref$variables = _ref.variables,
-    variables = _ref$variables === void 0 ? [] : _ref$variables;
+    variables = _ref$variables === void 0 ? [] : _ref$variables,
+    settings = _ref.settings;
   variables = (0,_utils__WEBPACK_IMPORTED_MODULE_7__.filterVariableOptionsByDataType)(variables, ['datetime']);
   var defaultSpecificDate = new Date();
   defaultSpecificDate.setDate(defaultSpecificDate.getDate() + 3);
@@ -15830,6 +15831,13 @@ function DateOffset(_ref) {
     name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("When the step is activated", "publishpress-future-pro"),
     id: "step"
   }].concat(_toConsumableArray(variables));
+
+  // Filter out hidden date sources
+  if (settings && settings !== null && settings !== void 0 && settings.hideDateSources) {
+    dateSourceOptions = dateSourceOptions.filter(function (option) {
+      return !settings.hideDateSources.includes(option.id);
+    });
+  }
   var cronScheduleOptions = futureWorkflowEditor.cronSchedules;
   cronScheduleOptions = cronScheduleOptions.map(function (schedule) {
     return {

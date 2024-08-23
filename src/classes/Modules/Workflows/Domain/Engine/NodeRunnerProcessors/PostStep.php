@@ -6,7 +6,7 @@ use Exception;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
-class PostAction implements NodeRunnerProcessorInterface
+class PostStep implements NodeRunnerProcessorInterface
 {
     /**
      * @var HooksFacade

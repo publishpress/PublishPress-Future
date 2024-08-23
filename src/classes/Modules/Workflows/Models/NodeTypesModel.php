@@ -18,6 +18,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQ
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\RayDebug;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Advanced\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnPostUpdated;
@@ -183,6 +184,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             CoreOnPostUpdated::getNodeTypeName() => new CoreOnPostUpdated(),
             CoreOnManuallyEnabledForPost::getNodeTypeName() => new CoreOnManuallyEnabledForPost(),
             FutureLegacyAction::getNodeTypeName() => new FutureLegacyAction($this->hooks),
+            CoreOnCronSchedule::getNodeTypeName() => new CoreOnCronSchedule(),
         ];
 
         if ($this->settingsModel->getExperimentalFeaturesStatus()) {

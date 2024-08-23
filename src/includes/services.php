@@ -19,8 +19,10 @@ use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\GeneralAction;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\PostAction;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\CronAction;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\CronStep;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\GeneralStep;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\PostStep;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDeactivateWorkflow;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostTermsAdd;
@@ -35,6 +37,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CoreSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\IfElse;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnCronSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnPostUpdated;
@@ -43,6 +46,8 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowEngine;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowVariablesHandler;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
+use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\CronSchedulesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
@@ -287,17 +292,32 @@ return [
         );
     },
 
-    ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR => static function (ContainerInterface $container) {
-        return new GeneralAction(
+    ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR =>
+    static function (ContainerInterface $container): NodeRunnerProcessorInterface {
+        return new GeneralStep(
             $container->get(ServicesAbstract::HOOKS),
             $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
         );
     },
 
-    ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR => static function (ContainerInterface $container) {
-        return new PostAction(
+    ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR =>
+    static function (ContainerInterface $container): NodeRunnerProcessorInterface {
+        return new PostStep(
             $container->get(ServicesAbstract::HOOKS),
-            $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+        );
+    },
+
+    ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR =>
+    static function (ContainerInterface $container): AsyncNodeRunnerProcessorInterface {
+        return new CronStep(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+            $container->get(FreeServicesAbstract::CRON),
+            $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
+            $container->get(ServicesAbstract::NODE_TYPES_MODEL),
+            $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
+            $container->get(ServicesAbstract::PLUGIN_VERSION)
         );
     },
 
@@ -313,7 +333,7 @@ return [
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $nodeRunner = new CoreOnInit(
                             $container->get(ServicesAbstract::HOOKS),
-                            $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
                         );
                     }
                     break;
@@ -322,7 +342,7 @@ return [
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $nodeRunner = new CoreOnAdminInit(
                             $container->get(ServicesAbstract::HOOKS),
-                            $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
                         );
                     }
                     break;
@@ -330,7 +350,7 @@ return [
                 case CoreOnSavePost::getNodeTypeName():
                     $nodeRunner = new CoreOnSavePost(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY)
                     );
                     break;
@@ -338,7 +358,7 @@ return [
                 case CoreOnPostUpdated::getNodeTypeName():
                     $nodeRunner = new CoreOnPostUpdated(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY)
                     );
                     break;
@@ -346,7 +366,7 @@ return [
                 case CoreOnManuallyEnabledForPost::getNodeTypeName():
                     $nodeRunner = new CoreOnManuallyEnabledForPost(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(ServicesAbstract::INPUT_VALIDATOR_POST_QUERY)
                     );
                     break;
@@ -354,91 +374,14 @@ return [
                 case FutureLegacyAction::getNodeTypeName():
                     $nodeRunner = new FutureLegacyAction(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
                     );
                     break;
 
-                // Actions
-                case CorePostDelete::getNodeTypeName():
-                    $nodeRunner = new CorePostDelete(
+                case CoreOnCronSchedule::getNodeTypeName():
+                    $nodeRunner = new CoreOnCronSchedule(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
-                    );
-                    break;
-
-                case CorePostStick::getNodeTypeName():
-                    $nodeRunner = new CorePostStick(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
-                    );
-                    break;
-
-                case CorePostUnstick::getNodeTypeName():
-                    $nodeRunner = new CorePostUnstick(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
-                    );
-                    break;
-
-                case CorePostTermsAdd::getNodeTypeName():
-                    $nodeRunner = new CorePostTermsAdd(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-                        $container->get(FreeServicesAbstract::ERROR)
-                    );
-                    break;
-
-                case CorePostTermsSet::getNodeTypeName():
-                    $nodeRunner = new CorePostTermsSet(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-                        $container->get(FreeServicesAbstract::ERROR)
-                    );
-                    break;
-
-                case CorePostTermsRemove::getNodeTypeName():
-                    $nodeRunner = new CorePostTermsRemove(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
-                        $container->get(FreeServicesAbstract::ERROR)
-                    );
-                    break;
-
-                case CorePostChangeStatus::getNodeTypeName():
-                    $nodeRunner = new CorePostChangeStatus(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
-                    );
-                    break;
-
-                case CoreSendEmail::getNodeTypeName():
-                    $nodeRunner = new CoreSendEmail(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EMAIL),
-                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
-                    );
-                    break;
-
-                case CorePostDeactivateWorkflow::getNodeTypeName():
-                    $nodeRunner = new CorePostDeactivateWorkflow(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::POST_ACTION_NODE_RUNNER_PROCESSOR)
-                    );
-                    break;
-
-                // Advanced
-                case CoreSchedule::getNodeTypeName():
-                    $nodeRunner = new CoreSchedule(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(FreeServicesAbstract::CRON),
                         $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
                         $container->get(ServicesAbstract::NODE_TYPES_MODEL),
@@ -447,24 +390,107 @@ return [
                     );
                     break;
 
+                    // Actions
+                case CorePostDelete::getNodeTypeName():
+                    $nodeRunner = new CorePostDelete(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                    );
+                    break;
+
+                case CorePostStick::getNodeTypeName():
+                    $nodeRunner = new CorePostStick(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                    );
+                    break;
+
+                case CorePostUnstick::getNodeTypeName():
+                    $nodeRunner = new CorePostUnstick(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                    );
+                    break;
+
+                case CorePostTermsAdd::getNodeTypeName():
+                    $nodeRunner = new CorePostTermsAdd(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(FreeServicesAbstract::ERROR)
+                    );
+                    break;
+
+                case CorePostTermsSet::getNodeTypeName():
+                    $nodeRunner = new CorePostTermsSet(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(FreeServicesAbstract::ERROR)
+                    );
+                    break;
+
+                case CorePostTermsRemove::getNodeTypeName():
+                    $nodeRunner = new CorePostTermsRemove(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(FreeServicesAbstract::ERROR)
+                    );
+                    break;
+
+                case CorePostChangeStatus::getNodeTypeName():
+                    $nodeRunner = new CorePostChangeStatus(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                    );
+                    break;
+
+                case CoreSendEmail::getNodeTypeName():
+                    $nodeRunner = new CoreSendEmail(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EMAIL),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+                    );
+                    break;
+
+                case CorePostDeactivateWorkflow::getNodeTypeName():
+                    $nodeRunner = new CorePostDeactivateWorkflow(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR)
+                    );
+                    break;
+
+                    // Advanced
+                case CoreSchedule::getNodeTypeName():
+                    $nodeRunner = new CoreSchedule(
+                        $container->get(ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR)
+                    );
+                    break;
+
                 case IfElse::getNodeTypeName():
                     $nodeRunner = new IfElse(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
                     );
                     break;
 
                 case CorePostQuery::getNodeTypeName():
                     $nodeRunner = new CorePostQuery(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
                     );
                     break;
 
                 case RayDebug::getNodeTypeName():
                     $nodeRunner = new RayDebug(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_ACTION_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
                     );
                     break;
             }

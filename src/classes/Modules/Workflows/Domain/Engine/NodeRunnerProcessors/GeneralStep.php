@@ -10,7 +10,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
 
 use function PublishPress\FuturePro\logError;
 
-class GeneralAction implements NodeRunnerProcessorInterface
+class GeneralStep implements NodeRunnerProcessorInterface
 {
     /**
      * @var HooksFacade

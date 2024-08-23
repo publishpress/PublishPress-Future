@@ -36,7 +36,7 @@ import { Icon } from "@wordpress/components";
  *   - For a number of times
  *
  */
-export function DateOffset({ name, label, defaultValue, onChange, variables = [] }) {
+export function DateOffset({ name, label, defaultValue, onChange, variables = [], settings }) {
     variables = filterVariableOptionsByDataType(variables, ['datetime']);
 
     const defaultSpecificDate = new Date();
@@ -74,12 +74,19 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         { name: __("Relative to a specific date", "publishpress-future-pro"), id: "offset" },
     ];
 
-    const dateSourceOptions = [
+    let dateSourceOptions = [
         { name: __("Selected in the calendar", "publishpress-future-pro"), id: "calendar" },
         { name: __("When the trigger is activated", "publishpress-future-pro"), id: "event"},
         { name: __("When the step is activated", "publishpress-future-pro"), id: "step"},
         ...variables
     ];
+
+    // Filter out hidden date sources
+    if (settings && settings?.hideDateSources) {
+        dateSourceOptions = dateSourceOptions.filter((option) => {
+            return !settings.hideDateSources.includes(option.id);
+        });
+    }
 
     let cronScheduleOptions = futureWorkflowEditor.cronSchedules;
     cronScheduleOptions = cronScheduleOptions.map((schedule) => {
