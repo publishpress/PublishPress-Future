@@ -434,7 +434,7 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             new HooksFacade()
         );
 
-        $postModel->setPostStatus('publish');
+        $postModel->publish();
 
         $this->assertEquals('publish', get_post_status($post->ID));
     }
