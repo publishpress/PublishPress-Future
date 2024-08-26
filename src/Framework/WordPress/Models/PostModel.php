@@ -75,13 +75,16 @@ class PostModel
      */
     public function setPostStatus($newPostStatus)
     {
-        $post = $this->getPostInstance();
+        $postData = [
+            'post_status' => $newPostStatus,
+        ];
 
-        return $this->update(
-            [
-                'post_status' => $newPostStatus,
-            ]
-        );
+        if ($newPostStatus === 'publish') {
+            $postData['post_date'] = current_time('mysql');
+            $postData['post_date_gmt'] = current_time('mysql', true);
+        }
+
+        return $this->update($postData);
     }
 
     /**
