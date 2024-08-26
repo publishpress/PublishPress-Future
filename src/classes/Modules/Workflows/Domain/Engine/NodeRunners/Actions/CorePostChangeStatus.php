@@ -5,6 +5,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Act
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChangeStatus as NodeType;
+use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
@@ -47,10 +48,18 @@ class CorePostChangeStatus implements NodeRunnerInterface
 
     public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
     {
+        $this->hooks->addFilter(HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT, '__return_true', 10);
+
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
 
         $newStatus = $nodeSettings['newStatus']['status'];
 
-        $postModel->setPostStatus($newStatus);
+        if ('publish' === $newStatus) {
+            $postModel->publish();
+        } else {
+            $postModel->setPostStatus($newStatus);
+        }
+
+        $this->hooks->removeFilter(HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT, '__return_true', 10);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0287a7326bc63f4843cfd64dc801fde",
+    "content-hash": "bd294a605a677db5f5df0191cdc55546",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "3.4.4",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "8d9d43609b70427c4ae86990b19ffab1429b7e51"
+                "reference": "d88860f39ab2f145baa05d07f26bf81a548b484d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/8d9d43609b70427c4ae86990b19ffab1429b7e51",
-                "reference": "8d9d43609b70427c4ae86990b19ffab1429b7e51",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/d88860f39ab2f145baa05d07f26bf81a548b484d",
+                "reference": "d88860f39ab2f145baa05d07f26bf81a548b484d",
                 "shasum": ""
             },
             "require": {
@@ -584,10 +584,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/3.4.4",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-08-22T17:24:56+00:00"
+            "time": "2024-08-26T21:18:36+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
@@ -887,7 +887,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "publishpress/publishpress-future": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -895,5 +897,5 @@
         "php": ">=7.2.5"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }

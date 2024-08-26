@@ -75,13 +75,32 @@ class PostModel
      */
     public function setPostStatus($newPostStatus)
     {
-        $post = $this->getPostInstance();
+        $postData = [
+            'post_status' => $newPostStatus,
+        ];
 
-        return $this->update(
-            [
-                'post_status' => $newPostStatus,
-            ]
-        );
+        return $this->update($postData);
+    }
+
+    /**
+     * @param bool $updateDateInFuture
+     *
+     * @return bool
+     * @throws \PublishPress\Future\Framework\WordPress\Exceptions\NonexistentPostException
+     */
+    public function publish($updateDateInFuture = true)
+    {
+        $postData = ['post_status' => 'publish'];
+
+        if ($updateDateInFuture) {
+            $currentPostDate = get_post_field('post_date', $this->getPostId());
+            if (strtotime($currentPostDate) > current_time('timestamp')) {
+                $postData['post_date'] = current_time('mysql');
+                $postData['post_date_gmt'] = current_time('mysql', true);
+            }
+        }
+
+        return $this->update($postData);
     }
 
     /**

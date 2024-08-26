@@ -24,4 +24,5 @@ abstract class HooksAbstract
     public const ACTION_RENDER_WORKFLOW_EDITOR_PAGE = 'publishpressfuturepro_render_workflow_editor_page';
     public const ACTION_MANUALLY_TRIGGERED_WORKFLOW = 'publishpressfuturepro_manually_triggered_workflow';
     public const FILTER_ACTION_SCHEDULER_LIST_COLUMN_ARGS = 'action_scheduler_list_table_column_args';
+    public const FILTER_IGNORE_SAVE_POST_EVENT = 'publishpressfuturepro_ignore_save_post_event';
 }

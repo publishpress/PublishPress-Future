@@ -74,6 +74,17 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
 
     public function triggerCallback($postId, $post, $update)
     {
+        if (
+            $this->hooks->applyFilters(
+                HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT,
+                false,
+                self::getNodeTypeName(),
+                $this->step
+            )
+        ) {
+            return;
+        }
+
         if ($this->isInfinityLoopDetected($this->workflowId, $this->step)) {
             return;
         }
