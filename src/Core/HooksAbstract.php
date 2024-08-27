@@ -33,4 +33,5 @@ abstract class HooksAbstract
     public const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';
     public const FILTER_PLUGIN_ACTION_LINKS = 'plugin_action_links';
     public const FILTER_MIGRATIONS = 'publishpressfuture_migrations';
+    public const ACTION_UPGRADE_PLUGIN = 'publishpressfuture_upgrade_plugin';
 }
