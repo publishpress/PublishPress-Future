@@ -237,9 +237,13 @@ class PostExpirator_Display
             } elseif (isset($_POST['fix-db-schema'])) {
                 $this->actionArgsSchema->fixTable();
                 $this->debugLogSchema->fixTable();
+                $this->hooks->doAction(SettingsHooksAbstract::ACTION_FIX_DB_SCHEMA);
+
+                $schemaIsHealthy = $this->actionArgsSchema->isTableHealthy() && $this->debugLogSchema->isTableHealthy();
+                $schemaIsHealthy = $this->hooks->applyFilters(SettingsHooksAbstract::FILTER_SCHEMA_IS_HEALTHY, $schemaIsHealthy);
 
                 echo "<div id='message' class='updated fade'><p>";
-                if ($this->actionArgsSchema->isTableHealthy() && $this->debugLogSchema->isTableHealthy()) {
+                if ($schemaIsHealthy) {
                     esc_html_e(
                         'The database schema was fixed.',
                         'post-expirator'
@@ -250,6 +254,7 @@ class PostExpirator_Display
                         'post-expirator'
                     );
                 }
+
                 echo '</p></div>';
             }
         }
