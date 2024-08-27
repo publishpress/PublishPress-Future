@@ -20,6 +20,10 @@ interface WorkflowModelInterface
 
     public function setStatus(string $status);
 
+    public function publish();
+
+    public function unpublish();
+
     public function isActive(): bool;
 
     public function getModifiedAt(): string;

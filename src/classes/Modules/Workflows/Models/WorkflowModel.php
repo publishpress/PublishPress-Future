@@ -115,6 +115,20 @@ class WorkflowModel implements WorkflowModelInterface
         $this->post->post_status = sanitize_key($status);
     }
 
+    public function publish()
+    {
+        $this->setStatus(self::STATUS_ENABLED);
+        $this->post->post_date = current_time('mysql');
+        $this->post->post_date_gmt = current_time('mysql');
+        $this->save();
+    }
+
+    public function unpublish()
+    {
+        $this->setStatus(self::STATUS_DISABLED);
+        $this->save();
+    }
+
     public function isActive(): bool
     {
         return $this->post->post_status === self::STATUS_ENABLED;
