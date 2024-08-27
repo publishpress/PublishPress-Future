@@ -32,4 +32,5 @@ abstract class HooksAbstract
     public const ACTION_ADMIN_ENQUEUE_SCRIPTS = 'admin_enqueue_scripts';
     public const FILTER_MODULES_LIST = 'publishpressfuture_list_modules';
     public const FILTER_PLUGIN_ACTION_LINKS = 'plugin_action_links';
+    public const FILTER_MIGRATIONS = 'publishpressfuture_migrations';
 }
