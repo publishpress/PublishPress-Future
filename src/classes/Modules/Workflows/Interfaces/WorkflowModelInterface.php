@@ -60,12 +60,6 @@ interface WorkflowModelInterface
 
     public function getRoutineTree(array $nodeTypes): array;
 
-    public function resetNodeExecutionCount(string $nodeId);
-
-    public function incrementNodeExecutionCount(string $nodeId): int;
-
-    public function getNodeExecutionCount(string $nodeId): int;
-
     public function getScreenshotUrl($size = 'full'): string;
 
     public function convertLegacyScreenshots(): void;

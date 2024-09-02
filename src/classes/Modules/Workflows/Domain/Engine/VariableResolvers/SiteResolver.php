@@ -14,6 +14,10 @@ class SiteResolver implements VariableResolverInterface
 
     public function getValue(string $propertyName = '')
     {
+        if (empty($propertyName)) {
+            $propertyName = 'name';
+        }
+
         switch ($propertyName) {
             case 'name':
                 return $this->getSiteName();

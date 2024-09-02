@@ -3,7 +3,9 @@
 namespace PublishPress\FuturePro\Modules\Workflows;
 
 use PublishPress\Future\Core\HookableInterface;
+use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\Future\Framework\InitializableInterface;
+use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
@@ -41,13 +43,37 @@ class Module implements InitializableInterface
      */
     private $settingsModel;
 
+    /**
+     * @var DBTableSchemaInterface
+     */
+    private $workflowScheduledStepsSchema;
+
+    /**
+     * @var \Closure
+     */
+    private $migrationsFactory;
+
+    /**
+     * @var string
+     */
+    private $pluginVersion;
+
+    /**
+     * @var CronInterface
+     */
+    private $cron;
+
     public function __construct(
         HookableInterface $hooksFacade,
         RestApiManagerInterface $restApiManager,
         NodeTypesModelInterface $nodeTypesModel,
         CronSchedulesModelInterface $cronSchedulesModel,
         WorkflowEngineInterface $workflowEngine,
-        SettingsModel $settingsModel
+        SettingsModel $settingsModel,
+        DBTableSchemaInterface $workflowScheduledStepsSchema,
+        \Closure $migrationsFactory,
+        string $pluginVersion,
+        CronInterface $cron
     ) {
         $this->hooks = $hooksFacade;
         $this->restApiManager = $restApiManager;
@@ -55,7 +81,10 @@ class Module implements InitializableInterface
         $this->cronSchedulesModel = $cronSchedulesModel;
         $this->workflowEngine = $workflowEngine;
         $this->settingsModel = $settingsModel;
-
+        $this->workflowScheduledStepsSchema = $workflowScheduledStepsSchema;
+        $this->migrationsFactory = $migrationsFactory;
+        $this->pluginVersion = $pluginVersion;
+        $this->cron = $cron;
         /*
          * We initialize the engine in the constructor because it requires
          * the init hook has not been fired yet. The initialize method runs in the init hook.
@@ -72,7 +101,11 @@ class Module implements InitializableInterface
     {
         $controllers = [
             new Controllers\PostType($this->hooks),
-            new Controllers\WorkflowsList($this->hooks, $this->nodeTypesModel),
+            new Controllers\WorkflowsList(
+                $this->hooks,
+                $this->nodeTypesModel,
+                $this->workflowScheduledStepsSchema
+            ),
             new Controllers\WorkflowEditor(
                 $this->hooks,
                 $this->nodeTypesModel,
@@ -82,9 +115,18 @@ class Module implements InitializableInterface
             new Controllers\RestApi($this->hooks, $this->restApiManager),
             new Controllers\FutureLegacyAction($this->hooks),
             new Controllers\ManualPostTrigger($this->hooks),
-            new Controllers\ScheduledActions($this->hooks, $this->nodeTypesModel),
+            new Controllers\ScheduledActions(
+                $this->hooks,
+                $this->nodeTypesModel,
+                $this->cron
+            ),
             new Controllers\SampleWorkflows(),
             new Controllers\PostsList($this->hooks),
+            new Controllers\Migrations(
+                $this->hooks,
+                $this->migrationsFactory,
+                $this->pluginVersion
+            ),
         ];
 
         foreach ($controllers as $controller) {

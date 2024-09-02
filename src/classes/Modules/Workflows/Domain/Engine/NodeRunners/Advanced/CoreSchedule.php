@@ -25,11 +25,11 @@ class CoreSchedule implements AsyncNodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerProcessor->setup($step, [], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, '__return_true', $contextVariables);
     }
 
-    public function actionCallback(array $compactedArgs)
+    public function actionCallback(array $expandedArgs, array $originalArgs)
     {
-        $this->nodeRunnerProcessor->actionCallback($compactedArgs);
+        $this->nodeRunnerProcessor->actionCallback($expandedArgs, $originalArgs);
     }
 }

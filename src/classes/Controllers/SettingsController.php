@@ -438,10 +438,18 @@ class SettingsController implements ModuleInterface
         $this->settingsModel->setBaseDate($baseDate);
 
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-        $experimentalFeaturesStatus = isset($_POST['future-experimental-features']) ? 1 : 0;
-        $experimentalFeaturesStatus = $experimentalFeaturesStatus;
-
+        $experimentalFeaturesStatus = isset($_POST['future-experimental-features'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-experimental-features']
+            : 0;
         $this->settingsModel->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCompressedArgsStatus = isset($_POST['future-step-schedule-compressed-args'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-step-schedule-compressed-args']
+            : 0;
+        $this->settingsModel->setStepScheduleCompressedArgsStatus($stepScheduleCompressedArgsStatus);
     }
 
     public function hideActionWorkflowsFromSettings($postTypes)

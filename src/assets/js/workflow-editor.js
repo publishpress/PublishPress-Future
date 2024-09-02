@@ -257,6 +257,908 @@ function speak(message, ariaLive) {
 
 /***/ }),
 
+/***/ "./node_modules/@wordpress/api-fetch/build-module/index.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/index.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _middlewares_nonce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middlewares/nonce */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/nonce.js");
+/* harmony import */ var _middlewares_root_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./middlewares/root-url */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/root-url.js");
+/* harmony import */ var _middlewares_preloading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./middlewares/preloading */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/preloading.js");
+/* harmony import */ var _middlewares_fetch_all_middleware__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./middlewares/fetch-all-middleware */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/fetch-all-middleware.js");
+/* harmony import */ var _middlewares_namespace_endpoint__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./middlewares/namespace-endpoint */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/namespace-endpoint.js");
+/* harmony import */ var _middlewares_http_v1__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./middlewares/http-v1 */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/http-v1.js");
+/* harmony import */ var _middlewares_user_locale__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./middlewares/user-locale */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/user-locale.js");
+/* harmony import */ var _middlewares_media_upload__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./middlewares/media-upload */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/media-upload.js");
+/* harmony import */ var _middlewares_theme_preview__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./middlewares/theme-preview */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/theme-preview.js");
+/* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils/response */ "./node_modules/@wordpress/api-fetch/build-module/utils/response.js");
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Default set of header values which should be sent with every request unless
+ * explicitly provided through apiFetch options.
+ *
+ * @type {Record<string, string>}
+ */
+const DEFAULT_HEADERS = {
+  // The backend uses the Accept header as a condition for considering an
+  // incoming request as a REST request.
+  //
+  // See: https://core.trac.wordpress.org/ticket/44534
+  Accept: 'application/json, */*;q=0.1'
+};
+
+/**
+ * Default set of fetch option values which should be sent with every request
+ * unless explicitly provided through apiFetch options.
+ *
+ * @type {Object}
+ */
+const DEFAULT_OPTIONS = {
+  credentials: 'include'
+};
+
+/** @typedef {import('./types').APIFetchMiddleware} APIFetchMiddleware */
+/** @typedef {import('./types').APIFetchOptions} APIFetchOptions */
+
+/**
+ * @type {import('./types').APIFetchMiddleware[]}
+ */
+const middlewares = [_middlewares_user_locale__WEBPACK_IMPORTED_MODULE_7__["default"], _middlewares_namespace_endpoint__WEBPACK_IMPORTED_MODULE_5__["default"], _middlewares_http_v1__WEBPACK_IMPORTED_MODULE_6__["default"], _middlewares_fetch_all_middleware__WEBPACK_IMPORTED_MODULE_4__["default"]];
+
+/**
+ * Register a middleware
+ *
+ * @param {import('./types').APIFetchMiddleware} middleware
+ */
+function registerMiddleware(middleware) {
+  middlewares.unshift(middleware);
+}
+
+/**
+ * Checks the status of a response, throwing the Response as an error if
+ * it is outside the 200 range.
+ *
+ * @param {Response} response
+ * @return {Response} The response if the status is in the 200 range.
+ */
+const checkStatus = response => {
+  if (response.status >= 200 && response.status < 300) {
+    return response;
+  }
+  throw response;
+};
+
+/** @typedef {(options: import('./types').APIFetchOptions) => Promise<any>} FetchHandler*/
+
+/**
+ * @type {FetchHandler}
+ */
+const defaultFetchHandler = nextOptions => {
+  const {
+    url,
+    path,
+    data,
+    parse = true,
+    ...remainingOptions
+  } = nextOptions;
+  let {
+    body,
+    headers
+  } = nextOptions;
+
+  // Merge explicitly-provided headers with default values.
+  headers = {
+    ...DEFAULT_HEADERS,
+    ...headers
+  };
+
+  // The `data` property is a shorthand for sending a JSON body.
+  if (data) {
+    body = JSON.stringify(data);
+    headers['Content-Type'] = 'application/json';
+  }
+  const responsePromise = window.fetch(
+  // Fall back to explicitly passing `window.location` which is the behavior if `undefined` is passed.
+  url || path || window.location.href, {
+    ...DEFAULT_OPTIONS,
+    ...remainingOptions,
+    body,
+    headers
+  });
+  return responsePromise.then(value => Promise.resolve(value).then(checkStatus).catch(response => (0,_utils_response__WEBPACK_IMPORTED_MODULE_10__.parseAndThrowError)(response, parse)).then(response => (0,_utils_response__WEBPACK_IMPORTED_MODULE_10__.parseResponseAndNormalizeError)(response, parse)), err => {
+    // Re-throw AbortError for the users to handle it themselves.
+    if (err && err.name === 'AbortError') {
+      throw err;
+    }
+
+    // Otherwise, there is most likely no network connection.
+    // Unfortunately the message might depend on the browser.
+    throw {
+      code: 'fetch_error',
+      message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You are probably offline.')
+    };
+  });
+};
+
+/** @type {FetchHandler} */
+let fetchHandler = defaultFetchHandler;
+
+/**
+ * Defines a custom fetch handler for making the requests that will override
+ * the default one using window.fetch
+ *
+ * @param {FetchHandler} newFetchHandler The new fetch handler
+ */
+function setFetchHandler(newFetchHandler) {
+  fetchHandler = newFetchHandler;
+}
+
+/**
+ * @template T
+ * @param {import('./types').APIFetchOptions} options
+ * @return {Promise<T>} A promise representing the request processed via the registered middlewares.
+ */
+function apiFetch(options) {
+  // creates a nested function chain that calls all middlewares and finally the `fetchHandler`,
+  // converting `middlewares = [ m1, m2, m3 ]` into:
+  // ```
+  // opts1 => m1( opts1, opts2 => m2( opts2, opts3 => m3( opts3, fetchHandler ) ) );
+  // ```
+  const enhancedHandler = middlewares.reduceRight(( /** @type {FetchHandler} */next, middleware) => {
+    return workingOptions => middleware(workingOptions, next);
+  }, fetchHandler);
+  return enhancedHandler(options).catch(error => {
+    if (error.code !== 'rest_cookie_invalid_nonce') {
+      return Promise.reject(error);
+    }
+
+    // If the nonce is invalid, refresh it and try again.
+    return window
+    // @ts-ignore
+    .fetch(apiFetch.nonceEndpoint).then(checkStatus).then(data => data.text()).then(text => {
+      // @ts-ignore
+      apiFetch.nonceMiddleware.nonce = text;
+      return apiFetch(options);
+    });
+  });
+}
+apiFetch.use = registerMiddleware;
+apiFetch.setFetchHandler = setFetchHandler;
+apiFetch.createNonceMiddleware = _middlewares_nonce__WEBPACK_IMPORTED_MODULE_1__["default"];
+apiFetch.createPreloadingMiddleware = _middlewares_preloading__WEBPACK_IMPORTED_MODULE_3__["default"];
+apiFetch.createRootURLMiddleware = _middlewares_root_url__WEBPACK_IMPORTED_MODULE_2__["default"];
+apiFetch.fetchAllMiddleware = _middlewares_fetch_all_middleware__WEBPACK_IMPORTED_MODULE_4__["default"];
+apiFetch.mediaUploadMiddleware = _middlewares_media_upload__WEBPACK_IMPORTED_MODULE_8__["default"];
+apiFetch.createThemePreviewMiddleware = _middlewares_theme_preview__WEBPACK_IMPORTED_MODULE_9__["default"];
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (apiFetch);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/fetch-all-middleware.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/fetch-all-middleware.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/add-query-args.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./node_modules/@wordpress/api-fetch/build-module/index.js");
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Apply query arguments to both URL and Path, whichever is present.
+ *
+ * @param {import('../types').APIFetchOptions} props
+ * @param {Record<string, string | number>}    queryArgs
+ * @return {import('../types').APIFetchOptions} The request with the modified query args
+ */
+const modifyQuery = ({
+  path,
+  url,
+  ...options
+}, queryArgs) => ({
+  ...options,
+  url: url && (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(url, queryArgs),
+  path: path && (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(path, queryArgs)
+});
+
+/**
+ * Duplicates parsing functionality from apiFetch.
+ *
+ * @param {Response} response
+ * @return {Promise<any>} Parsed response json.
+ */
+const parseResponse = response => response.json ? response.json() : Promise.reject(response);
+
+/**
+ * @param {string | null} linkHeader
+ * @return {{ next?: string }} The parsed link header.
+ */
+const parseLinkHeader = linkHeader => {
+  if (!linkHeader) {
+    return {};
+  }
+  const match = linkHeader.match(/<([^>]+)>; rel="next"/);
+  return match ? {
+    next: match[1]
+  } : {};
+};
+
+/**
+ * @param {Response} response
+ * @return {string | undefined} The next page URL.
+ */
+const getNextPageUrl = response => {
+  const {
+    next
+  } = parseLinkHeader(response.headers.get('link'));
+  return next;
+};
+
+/**
+ * @param {import('../types').APIFetchOptions} options
+ * @return {boolean} True if the request contains an unbounded query.
+ */
+const requestContainsUnboundedQuery = options => {
+  const pathIsUnbounded = !!options.path && options.path.indexOf('per_page=-1') !== -1;
+  const urlIsUnbounded = !!options.url && options.url.indexOf('per_page=-1') !== -1;
+  return pathIsUnbounded || urlIsUnbounded;
+};
+
+/**
+ * The REST API enforces an upper limit on the per_page option. To handle large
+ * collections, apiFetch consumers can pass `per_page=-1`; this middleware will
+ * then recursively assemble a full response array from all available pages.
+ *
+ * @type {import('../types').APIFetchMiddleware}
+ */
+const fetchAllMiddleware = async (options, next) => {
+  if (options.parse === false) {
+    // If a consumer has opted out of parsing, do not apply middleware.
+    return next(options);
+  }
+  if (!requestContainsUnboundedQuery(options)) {
+    // If neither url nor path is requesting all items, do not apply middleware.
+    return next(options);
+  }
+
+  // Retrieve requested page of results.
+  const response = await (0,___WEBPACK_IMPORTED_MODULE_0__["default"])({
+    ...modifyQuery(options, {
+      per_page: 100
+    }),
+    // Ensure headers are returned for page 1.
+    parse: false
+  });
+  const results = await parseResponse(response);
+  if (!Array.isArray(results)) {
+    // We have no reliable way of merging non-array results.
+    return results;
+  }
+  let nextPage = getNextPageUrl(response);
+  if (!nextPage) {
+    // There are no further pages to request.
+    return results;
+  }
+
+  // Iteratively fetch all remaining pages until no "next" header is found.
+  let mergedResults = /** @type {any[]} */[].concat(results);
+  while (nextPage) {
+    const nextResponse = await (0,___WEBPACK_IMPORTED_MODULE_0__["default"])({
+      ...options,
+      // Ensure the URL for the next page is used instead of any provided path.
+      path: undefined,
+      url: nextPage,
+      // Ensure we still get headers so we can identify the next page.
+      parse: false
+    });
+    const nextResults = await parseResponse(nextResponse);
+    mergedResults = mergedResults.concat(nextResults);
+    nextPage = getNextPageUrl(nextResponse);
+  }
+  return mergedResults;
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fetchAllMiddleware);
+//# sourceMappingURL=fetch-all-middleware.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/http-v1.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/http-v1.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * Set of HTTP methods which are eligible to be overridden.
+ *
+ * @type {Set<string>}
+ */
+const OVERRIDE_METHODS = new Set(['PATCH', 'PUT', 'DELETE']);
+
+/**
+ * Default request method.
+ *
+ * "A request has an associated method (a method). Unless stated otherwise it
+ * is `GET`."
+ *
+ * @see  https://fetch.spec.whatwg.org/#requests
+ *
+ * @type {string}
+ */
+const DEFAULT_METHOD = 'GET';
+
+/**
+ * API Fetch middleware which overrides the request method for HTTP v1
+ * compatibility leveraging the REST API X-HTTP-Method-Override header.
+ *
+ * @type {import('../types').APIFetchMiddleware}
+ */
+const httpV1Middleware = (options, next) => {
+  const {
+    method = DEFAULT_METHOD
+  } = options;
+  if (OVERRIDE_METHODS.has(method.toUpperCase())) {
+    options = {
+      ...options,
+      headers: {
+        ...options.headers,
+        'X-HTTP-Method-Override': method,
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    };
+  }
+  return next(options);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (httpV1Middleware);
+//# sourceMappingURL=http-v1.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/media-upload.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/media-upload.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/response */ "./node_modules/@wordpress/api-fetch/build-module/utils/response.js");
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * @param {import('../types').APIFetchOptions} options
+ * @return {boolean} True if the request is for media upload.
+ */
+function isMediaUploadRequest(options) {
+  const isCreateMethod = !!options.method && options.method === 'POST';
+  const isMediaEndpoint = !!options.path && options.path.indexOf('/wp/v2/media') !== -1 || !!options.url && options.url.indexOf('/wp/v2/media') !== -1;
+  return isMediaEndpoint && isCreateMethod;
+}
+
+/**
+ * Middleware handling media upload failures and retries.
+ *
+ * @type {import('../types').APIFetchMiddleware}
+ */
+const mediaUploadMiddleware = (options, next) => {
+  if (!isMediaUploadRequest(options)) {
+    return next(options);
+  }
+  let retries = 0;
+  const maxRetries = 5;
+
+  /**
+   * @param {string} attachmentId
+   * @return {Promise<any>} Processed post response.
+   */
+  const postProcess = attachmentId => {
+    retries++;
+    return next({
+      path: `/wp/v2/media/${attachmentId}/post-process`,
+      method: 'POST',
+      data: {
+        action: 'create-image-subsizes'
+      },
+      parse: false
+    }).catch(() => {
+      if (retries < maxRetries) {
+        return postProcess(attachmentId);
+      }
+      next({
+        path: `/wp/v2/media/${attachmentId}?force=true`,
+        method: 'DELETE'
+      });
+      return Promise.reject();
+    });
+  };
+  return next({
+    ...options,
+    parse: false
+  }).catch(response => {
+    const attachmentId = response.headers.get('x-wp-upload-attachment-id');
+    if (response.status >= 500 && response.status < 600 && attachmentId) {
+      return postProcess(attachmentId).catch(() => {
+        if (options.parse !== false) {
+          return Promise.reject({
+            code: 'post_process',
+            message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Media upload failed. If this is a photo or a large image, please scale it down and try again.')
+          });
+        }
+        return Promise.reject(response);
+      });
+    }
+    return (0,_utils_response__WEBPACK_IMPORTED_MODULE_1__.parseAndThrowError)(response, options.parse);
+  }).then(response => (0,_utils_response__WEBPACK_IMPORTED_MODULE_1__.parseResponseAndNormalizeError)(response, options.parse));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mediaUploadMiddleware);
+//# sourceMappingURL=media-upload.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/namespace-endpoint.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/namespace-endpoint.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * @type {import('../types').APIFetchMiddleware}
+ */
+const namespaceAndEndpointMiddleware = (options, next) => {
+  let path = options.path;
+  let namespaceTrimmed, endpointTrimmed;
+  if (typeof options.namespace === 'string' && typeof options.endpoint === 'string') {
+    namespaceTrimmed = options.namespace.replace(/^\/|\/$/g, '');
+    endpointTrimmed = options.endpoint.replace(/^\//, '');
+    if (endpointTrimmed) {
+      path = namespaceTrimmed + '/' + endpointTrimmed;
+    } else {
+      path = namespaceTrimmed;
+    }
+  }
+  delete options.namespace;
+  delete options.endpoint;
+  return next({
+    ...options,
+    path
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (namespaceAndEndpointMiddleware);
+//# sourceMappingURL=namespace-endpoint.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/nonce.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/nonce.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * @param {string} nonce
+ * @return {import('../types').APIFetchMiddleware & { nonce: string }} A middleware to enhance a request with a nonce.
+ */
+function createNonceMiddleware(nonce) {
+  /**
+   * @type {import('../types').APIFetchMiddleware & { nonce: string }}
+   */
+  const middleware = (options, next) => {
+    const {
+      headers = {}
+    } = options;
+
+    // If an 'X-WP-Nonce' header (or any case-insensitive variation
+    // thereof) was specified, no need to add a nonce header.
+    for (const headerName in headers) {
+      if (headerName.toLowerCase() === 'x-wp-nonce' && headers[headerName] === middleware.nonce) {
+        return next(options);
+      }
+    }
+    return next({
+      ...options,
+      headers: {
+        ...headers,
+        'X-WP-Nonce': middleware.nonce
+      }
+    });
+  };
+  middleware.nonce = nonce;
+  return middleware;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createNonceMiddleware);
+//# sourceMappingURL=nonce.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/preloading.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/preloading.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/normalize-path.js");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/get-query-args.js");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/add-query-args.js");
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * @param {Record<string, any>} preloadedData
+ * @return {import('../types').APIFetchMiddleware} Preloading middleware.
+ */
+function createPreloadingMiddleware(preloadedData) {
+  const cache = Object.fromEntries(Object.entries(preloadedData).map(([path, data]) => [(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.normalizePath)(path), data]));
+  return (options, next) => {
+    const {
+      parse = true
+    } = options;
+    /** @type {string | void} */
+    let rawPath = options.path;
+    if (!rawPath && options.url) {
+      const {
+        rest_route: pathFromQuery,
+        ...queryArgs
+      } = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.getQueryArgs)(options.url);
+      if (typeof pathFromQuery === 'string') {
+        rawPath = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.addQueryArgs)(pathFromQuery, queryArgs);
+      }
+    }
+    if (typeof rawPath !== 'string') {
+      return next(options);
+    }
+    const method = options.method || 'GET';
+    const path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.normalizePath)(rawPath);
+    if ('GET' === method && cache[path]) {
+      const cacheData = cache[path];
+
+      // Unsetting the cache key ensures that the data is only used a single time.
+      delete cache[path];
+      return prepareResponse(cacheData, !!parse);
+    } else if ('OPTIONS' === method && cache[method] && cache[method][path]) {
+      const cacheData = cache[method][path];
+
+      // Unsetting the cache key ensures that the data is only used a single time.
+      delete cache[method][path];
+      return prepareResponse(cacheData, !!parse);
+    }
+    return next(options);
+  };
+}
+
+/**
+ * This is a helper function that sends a success response.
+ *
+ * @param {Record<string, any>} responseData
+ * @param {boolean}             parse
+ * @return {Promise<any>} Promise with the response.
+ */
+function prepareResponse(responseData, parse) {
+  return Promise.resolve(parse ? responseData.body : new window.Response(JSON.stringify(responseData.body), {
+    status: 200,
+    statusText: 'OK',
+    headers: responseData.headers
+  }));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createPreloadingMiddleware);
+//# sourceMappingURL=preloading.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/root-url.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/root-url.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _namespace_endpoint__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./namespace-endpoint */ "./node_modules/@wordpress/api-fetch/build-module/middlewares/namespace-endpoint.js");
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * @param {string} rootURL
+ * @return {import('../types').APIFetchMiddleware} Root URL middleware.
+ */
+const createRootURLMiddleware = rootURL => (options, next) => {
+  return (0,_namespace_endpoint__WEBPACK_IMPORTED_MODULE_0__["default"])(options, optionsWithPath => {
+    let url = optionsWithPath.url;
+    let path = optionsWithPath.path;
+    let apiRoot;
+    if (typeof path === 'string') {
+      apiRoot = rootURL;
+      if (-1 !== rootURL.indexOf('?')) {
+        path = path.replace('?', '&');
+      }
+      path = path.replace(/^\//, '');
+
+      // API root may already include query parameter prefix if site is
+      // configured to use plain permalinks.
+      if ('string' === typeof apiRoot && -1 !== apiRoot.indexOf('?')) {
+        path = path.replace('?', '&');
+      }
+      url = apiRoot + path;
+    }
+    return next({
+      ...optionsWithPath,
+      url
+    });
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createRootURLMiddleware);
+//# sourceMappingURL=root-url.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/theme-preview.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/theme-preview.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/get-query-arg.js");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/add-query-args.js");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/remove-query-args.js");
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * This appends a `wp_theme_preview` parameter to the REST API request URL if
+ * the admin URL contains a `theme` GET parameter.
+ *
+ * If the REST API request URL has contained the `wp_theme_preview` parameter as `''`,
+ * then bypass this middleware.
+ *
+ * @param {Record<string, any>} themePath
+ * @return {import('../types').APIFetchMiddleware} Preloading middleware.
+ */
+const createThemePreviewMiddleware = themePath => (options, next) => {
+  if (typeof options.url === 'string') {
+    const wpThemePreview = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.getQueryArg)(options.url, 'wp_theme_preview');
+    if (wpThemePreview === undefined) {
+      options.url = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(options.url, {
+        wp_theme_preview: themePath
+      });
+    } else if (wpThemePreview === '') {
+      options.url = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.removeQueryArgs)(options.url, 'wp_theme_preview');
+    }
+  }
+  if (typeof options.path === 'string') {
+    const wpThemePreview = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.getQueryArg)(options.path, 'wp_theme_preview');
+    if (wpThemePreview === undefined) {
+      options.path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(options.path, {
+        wp_theme_preview: themePath
+      });
+    } else if (wpThemePreview === '') {
+      options.path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.removeQueryArgs)(options.path, 'wp_theme_preview');
+    }
+  }
+  return next(options);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createThemePreviewMiddleware);
+//# sourceMappingURL=theme-preview.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/middlewares/user-locale.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/middlewares/user-locale.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/has-query-arg.js");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/url/build-module/add-query-args.js");
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * @type {import('../types').APIFetchMiddleware}
+ */
+const userLocaleMiddleware = (options, next) => {
+  if (typeof options.url === 'string' && !(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.hasQueryArg)(options.url, '_locale')) {
+    options.url = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(options.url, {
+      _locale: 'user'
+    });
+  }
+  if (typeof options.path === 'string' && !(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.hasQueryArg)(options.path, '_locale')) {
+    options.path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(options.path, {
+      _locale: 'user'
+    });
+  }
+  return next(options);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (userLocaleMiddleware);
+//# sourceMappingURL=user-locale.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/api-fetch/build-module/utils/response.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@wordpress/api-fetch/build-module/utils/response.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   parseAndThrowError: () => (/* binding */ parseAndThrowError),
+/* harmony export */   parseResponseAndNormalizeError: () => (/* binding */ parseResponseAndNormalizeError)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Parses the apiFetch response.
+ *
+ * @param {Response} response
+ * @param {boolean}  shouldParseResponse
+ *
+ * @return {Promise<any> | null | Response} Parsed response.
+ */
+const parseResponse = (response, shouldParseResponse = true) => {
+  if (shouldParseResponse) {
+    if (response.status === 204) {
+      return null;
+    }
+    return response.json ? response.json() : Promise.reject(response);
+  }
+  return response;
+};
+
+/**
+ * Calls the `json` function on the Response, throwing an error if the response
+ * doesn't have a json function or if parsing the json itself fails.
+ *
+ * @param {Response} response
+ * @return {Promise<any>} Parsed response.
+ */
+const parseJsonAndNormalizeError = response => {
+  const invalidJsonError = {
+    code: 'invalid_json',
+    message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('The response is not a valid JSON response.')
+  };
+  if (!response || !response.json) {
+    throw invalidJsonError;
+  }
+  return response.json().catch(() => {
+    throw invalidJsonError;
+  });
+};
+
+/**
+ * Parses the apiFetch response properly and normalize response errors.
+ *
+ * @param {Response} response
+ * @param {boolean}  shouldParseResponse
+ *
+ * @return {Promise<any>} Parsed response.
+ */
+const parseResponseAndNormalizeError = (response, shouldParseResponse = true) => {
+  return Promise.resolve(parseResponse(response, shouldParseResponse)).catch(res => parseAndThrowError(res, shouldParseResponse));
+};
+
+/**
+ * Parses a response, throwing an error if parsing the response fails.
+ *
+ * @param {Response} response
+ * @param {boolean}  shouldParseResponse
+ * @return {Promise<any>} Parsed response.
+ */
+function parseAndThrowError(response, shouldParseResponse = true) {
+  if (!shouldParseResponse) {
+    throw response;
+  }
+  return parseJsonAndNormalizeError(response).then(error => {
+    const unknownError = {
+      code: 'unknown_error',
+      message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('An unknown error occurred.')
+    };
+    throw error || unknownError;
+  });
+}
+//# sourceMappingURL=response.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@wordpress/compose/build-module/hooks/use-async-list/index.js":
 /*!************************************************************************************!*\
   !*** ./node_modules/@wordpress/compose/build-module/hooks/use-async-list/index.js ***!
@@ -270,7 +1172,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_priority_queue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/priority-queue */ "./node_modules/@wordpress/compose/node_modules/@wordpress/priority-queue/build-module/index.js");
+/* harmony import */ var _wordpress_priority_queue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/priority-queue */ "./node_modules/@wordpress/priority-queue/build-module/index.js");
 /**
  * WordPress dependencies
  */
@@ -1617,237 +2519,6 @@ const debounce = (func, wait, options) => {
 
 /***/ }),
 
-/***/ "./node_modules/@wordpress/compose/node_modules/@wordpress/priority-queue/build-module/index.js":
-/*!******************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/compose/node_modules/@wordpress/priority-queue/build-module/index.js ***!
-  \******************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createQueue: () => (/* binding */ createQueue)
-/* harmony export */ });
-/* harmony import */ var _request_idle_callback__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./request-idle-callback */ "./node_modules/@wordpress/compose/node_modules/@wordpress/priority-queue/build-module/request-idle-callback.js");
-/**
- * Internal dependencies
- */
-
-
-/**
- * Enqueued callback to invoke once idle time permits.
- *
- * @typedef {()=>void} WPPriorityQueueCallback
- */
-
-/**
- * An object used to associate callbacks in a particular context grouping.
- *
- * @typedef {{}} WPPriorityQueueContext
- */
-
-/**
- * Function to add callback to priority queue.
- *
- * @typedef {(element:WPPriorityQueueContext,item:WPPriorityQueueCallback)=>void} WPPriorityQueueAdd
- */
-
-/**
- * Function to flush callbacks from priority queue.
- *
- * @typedef {(element:WPPriorityQueueContext)=>boolean} WPPriorityQueueFlush
- */
-
-/**
- * Reset the queue.
- *
- * @typedef {()=>void} WPPriorityQueueReset
- */
-
-/**
- * Priority queue instance.
- *
- * @typedef {Object} WPPriorityQueue
- *
- * @property {WPPriorityQueueAdd}   add    Add callback to queue for context.
- * @property {WPPriorityQueueFlush} flush  Flush queue for context.
- * @property {WPPriorityQueueFlush} cancel Clear queue for context.
- * @property {WPPriorityQueueReset} reset  Reset queue.
- */
-
-/**
- * Creates a context-aware queue that only executes
- * the last task of a given context.
- *
- * @example
- *```js
- * import { createQueue } from '@wordpress/priority-queue';
- *
- * const queue = createQueue();
- *
- * // Context objects.
- * const ctx1 = {};
- * const ctx2 = {};
- *
- * // For a given context in the queue, only the last callback is executed.
- * queue.add( ctx1, () => console.log( 'This will be printed first' ) );
- * queue.add( ctx2, () => console.log( 'This won\'t be printed' ) );
- * queue.add( ctx2, () => console.log( 'This will be printed second' ) );
- *```
- *
- * @return {WPPriorityQueue} Queue object with `add`, `flush` and `reset` methods.
- */
-const createQueue = () => {
-  /** @type {Map<WPPriorityQueueContext, WPPriorityQueueCallback>} */
-  const waitingList = new Map();
-  let isRunning = false;
-
-  /**
-   * Callback to process as much queue as time permits.
-   *
-   * Map Iteration follows the original insertion order. This means that here
-   * we can iterate the queue and know that the first contexts which were
-   * added will be run first. On the other hand, if anyone adds a new callback
-   * for an existing context it will supplant the previously-set callback for
-   * that context because we reassigned that map key's value.
-   *
-   * In the case that a callback adds a new callback to its own context then
-   * the callback it adds will appear at the end of the iteration and will be
-   * run only after all other existing contexts have finished executing.
-   *
-   * @param {IdleDeadline|number} deadline Idle callback deadline object, or
-   *                                       animation frame timestamp.
-   */
-  const runWaitingList = deadline => {
-    for (const [nextElement, callback] of waitingList) {
-      waitingList.delete(nextElement);
-      callback();
-      if ('number' === typeof deadline || deadline.timeRemaining() <= 0) {
-        break;
-      }
-    }
-    if (waitingList.size === 0) {
-      isRunning = false;
-      return;
-    }
-    (0,_request_idle_callback__WEBPACK_IMPORTED_MODULE_0__["default"])(runWaitingList);
-  };
-
-  /**
-   * Add a callback to the queue for a given context.
-   *
-   * If errors with undefined callbacks are encountered double check that
-   * all of your useSelect calls have the right dependencies set correctly
-   * in their second parameter. Missing dependencies can cause unexpected
-   * loops and race conditions in the queue.
-   *
-   * @type {WPPriorityQueueAdd}
-   *
-   * @param {WPPriorityQueueContext}  element Context object.
-   * @param {WPPriorityQueueCallback} item    Callback function.
-   */
-  const add = (element, item) => {
-    waitingList.set(element, item);
-    if (!isRunning) {
-      isRunning = true;
-      (0,_request_idle_callback__WEBPACK_IMPORTED_MODULE_0__["default"])(runWaitingList);
-    }
-  };
-
-  /**
-   * Flushes queue for a given context, returning true if the flush was
-   * performed, or false if there is no queue for the given context.
-   *
-   * @type {WPPriorityQueueFlush}
-   *
-   * @param {WPPriorityQueueContext} element Context object.
-   *
-   * @return {boolean} Whether flush was performed.
-   */
-  const flush = element => {
-    const callback = waitingList.get(element);
-    if (undefined === callback) {
-      return false;
-    }
-    waitingList.delete(element);
-    callback();
-    return true;
-  };
-
-  /**
-   * Clears the queue for a given context, cancelling the callbacks without
-   * executing them. Returns `true` if there were scheduled callbacks to cancel,
-   * or `false` if there was is no queue for the given context.
-   *
-   * @type {WPPriorityQueueFlush}
-   *
-   * @param {WPPriorityQueueContext} element Context object.
-   *
-   * @return {boolean} Whether any callbacks got cancelled.
-   */
-  const cancel = element => {
-    return waitingList.delete(element);
-  };
-
-  /**
-   * Reset the queue without running the pending callbacks.
-   *
-   * @type {WPPriorityQueueReset}
-   */
-  const reset = () => {
-    waitingList.clear();
-    isRunning = false;
-  };
-  return {
-    add,
-    flush,
-    cancel,
-    reset
-  };
-};
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/compose/node_modules/@wordpress/priority-queue/build-module/request-idle-callback.js":
-/*!**********************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/compose/node_modules/@wordpress/priority-queue/build-module/request-idle-callback.js ***!
-  \**********************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createRequestIdleCallback: () => (/* binding */ createRequestIdleCallback),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var requestidlecallback__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! requestidlecallback */ "./node_modules/requestidlecallback/index.js");
-/* harmony import */ var requestidlecallback__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(requestidlecallback__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * External dependencies
- */
-
-
-/**
- * @typedef {( timeOrDeadline: IdleDeadline | number ) => void} Callback
- */
-
-/**
- * @return {(callback: Callback) => void} RequestIdleCallback
- */
-function createRequestIdleCallback() {
-  if (typeof window === 'undefined') {
-    return callback => {
-      setTimeout(() => callback(Date.now()), 0);
-    };
-  }
-  return window.requestIdleCallback;
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createRequestIdleCallback());
-//# sourceMappingURL=request-idle-callback.js.map
-
-/***/ }),
-
 /***/ "./node_modules/@wordpress/data-controls/build-module/index.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@wordpress/data-controls/build-module/index.js ***!
@@ -1864,10 +2535,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   select: () => (/* binding */ select),
 /* harmony export */   syncSelect: () => (/* binding */ syncSelect)
 /* harmony export */ });
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/api-fetch */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/index.js");
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/api-fetch */ "./node_modules/@wordpress/api-fetch/build-module/index.js");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_deprecated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/deprecated */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/deprecated/build-module/index.js");
+/* harmony import */ var _wordpress_deprecated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/deprecated */ "./node_modules/@wordpress/deprecated/build-module/index.js");
 /**
  * WordPress dependencies
  */
@@ -2012,2191 +2683,6 @@ const controls = {
   }
 };
 //# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/index.js":
-/*!*******************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/index.js ***!
-  \*******************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _middlewares_nonce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./middlewares/nonce */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/nonce.js");
-/* harmony import */ var _middlewares_root_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./middlewares/root-url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/root-url.js");
-/* harmony import */ var _middlewares_preloading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./middlewares/preloading */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/preloading.js");
-/* harmony import */ var _middlewares_fetch_all_middleware__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./middlewares/fetch-all-middleware */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/fetch-all-middleware.js");
-/* harmony import */ var _middlewares_namespace_endpoint__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./middlewares/namespace-endpoint */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/namespace-endpoint.js");
-/* harmony import */ var _middlewares_http_v1__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./middlewares/http-v1 */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/http-v1.js");
-/* harmony import */ var _middlewares_user_locale__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./middlewares/user-locale */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/user-locale.js");
-/* harmony import */ var _middlewares_media_upload__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./middlewares/media-upload */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/media-upload.js");
-/* harmony import */ var _middlewares_theme_preview__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./middlewares/theme-preview */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/theme-preview.js");
-/* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utils/response */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/utils/response.js");
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-
-
-
-/**
- * Default set of header values which should be sent with every request unless
- * explicitly provided through apiFetch options.
- *
- * @type {Record<string, string>}
- */
-const DEFAULT_HEADERS = {
-  // The backend uses the Accept header as a condition for considering an
-  // incoming request as a REST request.
-  //
-  // See: https://core.trac.wordpress.org/ticket/44534
-  Accept: 'application/json, */*;q=0.1'
-};
-
-/**
- * Default set of fetch option values which should be sent with every request
- * unless explicitly provided through apiFetch options.
- *
- * @type {Object}
- */
-const DEFAULT_OPTIONS = {
-  credentials: 'include'
-};
-
-/** @typedef {import('./types').APIFetchMiddleware} APIFetchMiddleware */
-/** @typedef {import('./types').APIFetchOptions} APIFetchOptions */
-
-/**
- * @type {import('./types').APIFetchMiddleware[]}
- */
-const middlewares = [_middlewares_user_locale__WEBPACK_IMPORTED_MODULE_7__["default"], _middlewares_namespace_endpoint__WEBPACK_IMPORTED_MODULE_5__["default"], _middlewares_http_v1__WEBPACK_IMPORTED_MODULE_6__["default"], _middlewares_fetch_all_middleware__WEBPACK_IMPORTED_MODULE_4__["default"]];
-
-/**
- * Register a middleware
- *
- * @param {import('./types').APIFetchMiddleware} middleware
- */
-function registerMiddleware(middleware) {
-  middlewares.unshift(middleware);
-}
-
-/**
- * Checks the status of a response, throwing the Response as an error if
- * it is outside the 200 range.
- *
- * @param {Response} response
- * @return {Response} The response if the status is in the 200 range.
- */
-const checkStatus = response => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
-  throw response;
-};
-
-/** @typedef {(options: import('./types').APIFetchOptions) => Promise<any>} FetchHandler*/
-
-/**
- * @type {FetchHandler}
- */
-const defaultFetchHandler = nextOptions => {
-  const {
-    url,
-    path,
-    data,
-    parse = true,
-    ...remainingOptions
-  } = nextOptions;
-  let {
-    body,
-    headers
-  } = nextOptions;
-
-  // Merge explicitly-provided headers with default values.
-  headers = {
-    ...DEFAULT_HEADERS,
-    ...headers
-  };
-
-  // The `data` property is a shorthand for sending a JSON body.
-  if (data) {
-    body = JSON.stringify(data);
-    headers['Content-Type'] = 'application/json';
-  }
-  const responsePromise = window.fetch(
-  // Fall back to explicitly passing `window.location` which is the behavior if `undefined` is passed.
-  url || path || window.location.href, {
-    ...DEFAULT_OPTIONS,
-    ...remainingOptions,
-    body,
-    headers
-  });
-  return responsePromise.then(value => Promise.resolve(value).then(checkStatus).catch(response => (0,_utils_response__WEBPACK_IMPORTED_MODULE_10__.parseAndThrowError)(response, parse)).then(response => (0,_utils_response__WEBPACK_IMPORTED_MODULE_10__.parseResponseAndNormalizeError)(response, parse)), err => {
-    // Re-throw AbortError for the users to handle it themselves.
-    if (err && err.name === 'AbortError') {
-      throw err;
-    }
-
-    // Otherwise, there is most likely no network connection.
-    // Unfortunately the message might depend on the browser.
-    throw {
-      code: 'fetch_error',
-      message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('You are probably offline.')
-    };
-  });
-};
-
-/** @type {FetchHandler} */
-let fetchHandler = defaultFetchHandler;
-
-/**
- * Defines a custom fetch handler for making the requests that will override
- * the default one using window.fetch
- *
- * @param {FetchHandler} newFetchHandler The new fetch handler
- */
-function setFetchHandler(newFetchHandler) {
-  fetchHandler = newFetchHandler;
-}
-
-/**
- * @template T
- * @param {import('./types').APIFetchOptions} options
- * @return {Promise<T>} A promise representing the request processed via the registered middlewares.
- */
-function apiFetch(options) {
-  // creates a nested function chain that calls all middlewares and finally the `fetchHandler`,
-  // converting `middlewares = [ m1, m2, m3 ]` into:
-  // ```
-  // opts1 => m1( opts1, opts2 => m2( opts2, opts3 => m3( opts3, fetchHandler ) ) );
-  // ```
-  const enhancedHandler = middlewares.reduceRight(( /** @type {FetchHandler} */next, middleware) => {
-    return workingOptions => middleware(workingOptions, next);
-  }, fetchHandler);
-  return enhancedHandler(options).catch(error => {
-    if (error.code !== 'rest_cookie_invalid_nonce') {
-      return Promise.reject(error);
-    }
-
-    // If the nonce is invalid, refresh it and try again.
-    return window
-    // @ts-ignore
-    .fetch(apiFetch.nonceEndpoint).then(checkStatus).then(data => data.text()).then(text => {
-      // @ts-ignore
-      apiFetch.nonceMiddleware.nonce = text;
-      return apiFetch(options);
-    });
-  });
-}
-apiFetch.use = registerMiddleware;
-apiFetch.setFetchHandler = setFetchHandler;
-apiFetch.createNonceMiddleware = _middlewares_nonce__WEBPACK_IMPORTED_MODULE_1__["default"];
-apiFetch.createPreloadingMiddleware = _middlewares_preloading__WEBPACK_IMPORTED_MODULE_3__["default"];
-apiFetch.createRootURLMiddleware = _middlewares_root_url__WEBPACK_IMPORTED_MODULE_2__["default"];
-apiFetch.fetchAllMiddleware = _middlewares_fetch_all_middleware__WEBPACK_IMPORTED_MODULE_4__["default"];
-apiFetch.mediaUploadMiddleware = _middlewares_media_upload__WEBPACK_IMPORTED_MODULE_8__["default"];
-apiFetch.createThemePreviewMiddleware = _middlewares_theme_preview__WEBPACK_IMPORTED_MODULE_9__["default"];
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (apiFetch);
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/fetch-all-middleware.js":
-/*!**********************************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/fetch-all-middleware.js ***!
-  \**********************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/add-query-args.js");
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! .. */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/index.js");
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Apply query arguments to both URL and Path, whichever is present.
- *
- * @param {import('../types').APIFetchOptions} props
- * @param {Record<string, string | number>}    queryArgs
- * @return {import('../types').APIFetchOptions} The request with the modified query args
- */
-const modifyQuery = ({
-  path,
-  url,
-  ...options
-}, queryArgs) => ({
-  ...options,
-  url: url && (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(url, queryArgs),
-  path: path && (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(path, queryArgs)
-});
-
-/**
- * Duplicates parsing functionality from apiFetch.
- *
- * @param {Response} response
- * @return {Promise<any>} Parsed response json.
- */
-const parseResponse = response => response.json ? response.json() : Promise.reject(response);
-
-/**
- * @param {string | null} linkHeader
- * @return {{ next?: string }} The parsed link header.
- */
-const parseLinkHeader = linkHeader => {
-  if (!linkHeader) {
-    return {};
-  }
-  const match = linkHeader.match(/<([^>]+)>; rel="next"/);
-  return match ? {
-    next: match[1]
-  } : {};
-};
-
-/**
- * @param {Response} response
- * @return {string | undefined} The next page URL.
- */
-const getNextPageUrl = response => {
-  const {
-    next
-  } = parseLinkHeader(response.headers.get('link'));
-  return next;
-};
-
-/**
- * @param {import('../types').APIFetchOptions} options
- * @return {boolean} True if the request contains an unbounded query.
- */
-const requestContainsUnboundedQuery = options => {
-  const pathIsUnbounded = !!options.path && options.path.indexOf('per_page=-1') !== -1;
-  const urlIsUnbounded = !!options.url && options.url.indexOf('per_page=-1') !== -1;
-  return pathIsUnbounded || urlIsUnbounded;
-};
-
-/**
- * The REST API enforces an upper limit on the per_page option. To handle large
- * collections, apiFetch consumers can pass `per_page=-1`; this middleware will
- * then recursively assemble a full response array from all available pages.
- *
- * @type {import('../types').APIFetchMiddleware}
- */
-const fetchAllMiddleware = async (options, next) => {
-  if (options.parse === false) {
-    // If a consumer has opted out of parsing, do not apply middleware.
-    return next(options);
-  }
-  if (!requestContainsUnboundedQuery(options)) {
-    // If neither url nor path is requesting all items, do not apply middleware.
-    return next(options);
-  }
-
-  // Retrieve requested page of results.
-  const response = await (0,___WEBPACK_IMPORTED_MODULE_0__["default"])({
-    ...modifyQuery(options, {
-      per_page: 100
-    }),
-    // Ensure headers are returned for page 1.
-    parse: false
-  });
-  const results = await parseResponse(response);
-  if (!Array.isArray(results)) {
-    // We have no reliable way of merging non-array results.
-    return results;
-  }
-  let nextPage = getNextPageUrl(response);
-  if (!nextPage) {
-    // There are no further pages to request.
-    return results;
-  }
-
-  // Iteratively fetch all remaining pages until no "next" header is found.
-  let mergedResults = /** @type {any[]} */[].concat(results);
-  while (nextPage) {
-    const nextResponse = await (0,___WEBPACK_IMPORTED_MODULE_0__["default"])({
-      ...options,
-      // Ensure the URL for the next page is used instead of any provided path.
-      path: undefined,
-      url: nextPage,
-      // Ensure we still get headers so we can identify the next page.
-      parse: false
-    });
-    const nextResults = await parseResponse(nextResponse);
-    mergedResults = mergedResults.concat(nextResults);
-    nextPage = getNextPageUrl(nextResponse);
-  }
-  return mergedResults;
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fetchAllMiddleware);
-//# sourceMappingURL=fetch-all-middleware.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/http-v1.js":
-/*!*********************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/http-v1.js ***!
-  \*********************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * Set of HTTP methods which are eligible to be overridden.
- *
- * @type {Set<string>}
- */
-const OVERRIDE_METHODS = new Set(['PATCH', 'PUT', 'DELETE']);
-
-/**
- * Default request method.
- *
- * "A request has an associated method (a method). Unless stated otherwise it
- * is `GET`."
- *
- * @see  https://fetch.spec.whatwg.org/#requests
- *
- * @type {string}
- */
-const DEFAULT_METHOD = 'GET';
-
-/**
- * API Fetch middleware which overrides the request method for HTTP v1
- * compatibility leveraging the REST API X-HTTP-Method-Override header.
- *
- * @type {import('../types').APIFetchMiddleware}
- */
-const httpV1Middleware = (options, next) => {
-  const {
-    method = DEFAULT_METHOD
-  } = options;
-  if (OVERRIDE_METHODS.has(method.toUpperCase())) {
-    options = {
-      ...options,
-      headers: {
-        ...options.headers,
-        'X-HTTP-Method-Override': method,
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    };
-  }
-  return next(options);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (httpV1Middleware);
-//# sourceMappingURL=http-v1.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/media-upload.js":
-/*!**************************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/media-upload.js ***!
-  \**************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_response__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/response */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/utils/response.js");
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * @param {import('../types').APIFetchOptions} options
- * @return {boolean} True if the request is for media upload.
- */
-function isMediaUploadRequest(options) {
-  const isCreateMethod = !!options.method && options.method === 'POST';
-  const isMediaEndpoint = !!options.path && options.path.indexOf('/wp/v2/media') !== -1 || !!options.url && options.url.indexOf('/wp/v2/media') !== -1;
-  return isMediaEndpoint && isCreateMethod;
-}
-
-/**
- * Middleware handling media upload failures and retries.
- *
- * @type {import('../types').APIFetchMiddleware}
- */
-const mediaUploadMiddleware = (options, next) => {
-  if (!isMediaUploadRequest(options)) {
-    return next(options);
-  }
-  let retries = 0;
-  const maxRetries = 5;
-
-  /**
-   * @param {string} attachmentId
-   * @return {Promise<any>} Processed post response.
-   */
-  const postProcess = attachmentId => {
-    retries++;
-    return next({
-      path: `/wp/v2/media/${attachmentId}/post-process`,
-      method: 'POST',
-      data: {
-        action: 'create-image-subsizes'
-      },
-      parse: false
-    }).catch(() => {
-      if (retries < maxRetries) {
-        return postProcess(attachmentId);
-      }
-      next({
-        path: `/wp/v2/media/${attachmentId}?force=true`,
-        method: 'DELETE'
-      });
-      return Promise.reject();
-    });
-  };
-  return next({
-    ...options,
-    parse: false
-  }).catch(response => {
-    const attachmentId = response.headers.get('x-wp-upload-attachment-id');
-    if (response.status >= 500 && response.status < 600 && attachmentId) {
-      return postProcess(attachmentId).catch(() => {
-        if (options.parse !== false) {
-          return Promise.reject({
-            code: 'post_process',
-            message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Media upload failed. If this is a photo or a large image, please scale it down and try again.')
-          });
-        }
-        return Promise.reject(response);
-      });
-    }
-    return (0,_utils_response__WEBPACK_IMPORTED_MODULE_1__.parseAndThrowError)(response, options.parse);
-  }).then(response => (0,_utils_response__WEBPACK_IMPORTED_MODULE_1__.parseResponseAndNormalizeError)(response, options.parse));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mediaUploadMiddleware);
-//# sourceMappingURL=media-upload.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/namespace-endpoint.js":
-/*!********************************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/namespace-endpoint.js ***!
-  \********************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * @type {import('../types').APIFetchMiddleware}
- */
-const namespaceAndEndpointMiddleware = (options, next) => {
-  let path = options.path;
-  let namespaceTrimmed, endpointTrimmed;
-  if (typeof options.namespace === 'string' && typeof options.endpoint === 'string') {
-    namespaceTrimmed = options.namespace.replace(/^\/|\/$/g, '');
-    endpointTrimmed = options.endpoint.replace(/^\//, '');
-    if (endpointTrimmed) {
-      path = namespaceTrimmed + '/' + endpointTrimmed;
-    } else {
-      path = namespaceTrimmed;
-    }
-  }
-  delete options.namespace;
-  delete options.endpoint;
-  return next({
-    ...options,
-    path
-  });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (namespaceAndEndpointMiddleware);
-//# sourceMappingURL=namespace-endpoint.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/nonce.js":
-/*!*******************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/nonce.js ***!
-  \*******************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * @param {string} nonce
- * @return {import('../types').APIFetchMiddleware & { nonce: string }} A middleware to enhance a request with a nonce.
- */
-function createNonceMiddleware(nonce) {
-  /**
-   * @type {import('../types').APIFetchMiddleware & { nonce: string }}
-   */
-  const middleware = (options, next) => {
-    const {
-      headers = {}
-    } = options;
-
-    // If an 'X-WP-Nonce' header (or any case-insensitive variation
-    // thereof) was specified, no need to add a nonce header.
-    for (const headerName in headers) {
-      if (headerName.toLowerCase() === 'x-wp-nonce' && headers[headerName] === middleware.nonce) {
-        return next(options);
-      }
-    }
-    return next({
-      ...options,
-      headers: {
-        ...headers,
-        'X-WP-Nonce': middleware.nonce
-      }
-    });
-  };
-  middleware.nonce = nonce;
-  return middleware;
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createNonceMiddleware);
-//# sourceMappingURL=nonce.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/preloading.js":
-/*!************************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/preloading.js ***!
-  \************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/normalize-path.js");
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-args.js");
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/add-query-args.js");
-/**
- * WordPress dependencies
- */
-
-
-/**
- * @param {Record<string, any>} preloadedData
- * @return {import('../types').APIFetchMiddleware} Preloading middleware.
- */
-function createPreloadingMiddleware(preloadedData) {
-  const cache = Object.fromEntries(Object.entries(preloadedData).map(([path, data]) => [(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.normalizePath)(path), data]));
-  return (options, next) => {
-    const {
-      parse = true
-    } = options;
-    /** @type {string | void} */
-    let rawPath = options.path;
-    if (!rawPath && options.url) {
-      const {
-        rest_route: pathFromQuery,
-        ...queryArgs
-      } = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.getQueryArgs)(options.url);
-      if (typeof pathFromQuery === 'string') {
-        rawPath = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.addQueryArgs)(pathFromQuery, queryArgs);
-      }
-    }
-    if (typeof rawPath !== 'string') {
-      return next(options);
-    }
-    const method = options.method || 'GET';
-    const path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.normalizePath)(rawPath);
-    if ('GET' === method && cache[path]) {
-      const cacheData = cache[path];
-
-      // Unsetting the cache key ensures that the data is only used a single time.
-      delete cache[path];
-      return prepareResponse(cacheData, !!parse);
-    } else if ('OPTIONS' === method && cache[method] && cache[method][path]) {
-      const cacheData = cache[method][path];
-
-      // Unsetting the cache key ensures that the data is only used a single time.
-      delete cache[method][path];
-      return prepareResponse(cacheData, !!parse);
-    }
-    return next(options);
-  };
-}
-
-/**
- * This is a helper function that sends a success response.
- *
- * @param {Record<string, any>} responseData
- * @param {boolean}             parse
- * @return {Promise<any>} Promise with the response.
- */
-function prepareResponse(responseData, parse) {
-  return Promise.resolve(parse ? responseData.body : new window.Response(JSON.stringify(responseData.body), {
-    status: 200,
-    statusText: 'OK',
-    headers: responseData.headers
-  }));
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createPreloadingMiddleware);
-//# sourceMappingURL=preloading.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/root-url.js":
-/*!**********************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/root-url.js ***!
-  \**********************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _namespace_endpoint__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./namespace-endpoint */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/namespace-endpoint.js");
-/**
- * Internal dependencies
- */
-
-
-/**
- * @param {string} rootURL
- * @return {import('../types').APIFetchMiddleware} Root URL middleware.
- */
-const createRootURLMiddleware = rootURL => (options, next) => {
-  return (0,_namespace_endpoint__WEBPACK_IMPORTED_MODULE_0__["default"])(options, optionsWithPath => {
-    let url = optionsWithPath.url;
-    let path = optionsWithPath.path;
-    let apiRoot;
-    if (typeof path === 'string') {
-      apiRoot = rootURL;
-      if (-1 !== rootURL.indexOf('?')) {
-        path = path.replace('?', '&');
-      }
-      path = path.replace(/^\//, '');
-
-      // API root may already include query parameter prefix if site is
-      // configured to use plain permalinks.
-      if ('string' === typeof apiRoot && -1 !== apiRoot.indexOf('?')) {
-        path = path.replace('?', '&');
-      }
-      url = apiRoot + path;
-    }
-    return next({
-      ...optionsWithPath,
-      url
-    });
-  });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createRootURLMiddleware);
-//# sourceMappingURL=root-url.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/theme-preview.js":
-/*!***************************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/theme-preview.js ***!
-  \***************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-arg.js");
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/add-query-args.js");
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/remove-query-args.js");
-/**
- * WordPress dependencies
- */
-
-
-/**
- * This appends a `wp_theme_preview` parameter to the REST API request URL if
- * the admin URL contains a `theme` GET parameter.
- *
- * If the REST API request URL has contained the `wp_theme_preview` parameter as `''`,
- * then bypass this middleware.
- *
- * @param {Record<string, any>} themePath
- * @return {import('../types').APIFetchMiddleware} Preloading middleware.
- */
-const createThemePreviewMiddleware = themePath => (options, next) => {
-  if (typeof options.url === 'string') {
-    const wpThemePreview = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.getQueryArg)(options.url, 'wp_theme_preview');
-    if (wpThemePreview === undefined) {
-      options.url = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(options.url, {
-        wp_theme_preview: themePath
-      });
-    } else if (wpThemePreview === '') {
-      options.url = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.removeQueryArgs)(options.url, 'wp_theme_preview');
-    }
-  }
-  if (typeof options.path === 'string') {
-    const wpThemePreview = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.getQueryArg)(options.path, 'wp_theme_preview');
-    if (wpThemePreview === undefined) {
-      options.path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(options.path, {
-        wp_theme_preview: themePath
-      });
-    } else if (wpThemePreview === '') {
-      options.path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.removeQueryArgs)(options.path, 'wp_theme_preview');
-    }
-  }
-  return next(options);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createThemePreviewMiddleware);
-//# sourceMappingURL=theme-preview.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/user-locale.js":
-/*!*************************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/middlewares/user-locale.js ***!
-  \*************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/has-query-arg.js");
-/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/add-query-args.js");
-/**
- * WordPress dependencies
- */
-
-
-/**
- * @type {import('../types').APIFetchMiddleware}
- */
-const userLocaleMiddleware = (options, next) => {
-  if (typeof options.url === 'string' && !(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.hasQueryArg)(options.url, '_locale')) {
-    options.url = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(options.url, {
-      _locale: 'user'
-    });
-  }
-  if (typeof options.path === 'string' && !(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.hasQueryArg)(options.path, '_locale')) {
-    options.path = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)(options.path, {
-      _locale: 'user'
-    });
-  }
-  return next(options);
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (userLocaleMiddleware);
-//# sourceMappingURL=user-locale.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/utils/response.js":
-/*!****************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/api-fetch/build-module/utils/response.js ***!
-  \****************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   parseAndThrowError: () => (/* binding */ parseAndThrowError),
-/* harmony export */   parseResponseAndNormalizeError: () => (/* binding */ parseResponseAndNormalizeError)
-/* harmony export */ });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Parses the apiFetch response.
- *
- * @param {Response} response
- * @param {boolean}  shouldParseResponse
- *
- * @return {Promise<any> | null | Response} Parsed response.
- */
-const parseResponse = (response, shouldParseResponse = true) => {
-  if (shouldParseResponse) {
-    if (response.status === 204) {
-      return null;
-    }
-    return response.json ? response.json() : Promise.reject(response);
-  }
-  return response;
-};
-
-/**
- * Calls the `json` function on the Response, throwing an error if the response
- * doesn't have a json function or if parsing the json itself fails.
- *
- * @param {Response} response
- * @return {Promise<any>} Parsed response.
- */
-const parseJsonAndNormalizeError = response => {
-  const invalidJsonError = {
-    code: 'invalid_json',
-    message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('The response is not a valid JSON response.')
-  };
-  if (!response || !response.json) {
-    throw invalidJsonError;
-  }
-  return response.json().catch(() => {
-    throw invalidJsonError;
-  });
-};
-
-/**
- * Parses the apiFetch response properly and normalize response errors.
- *
- * @param {Response} response
- * @param {boolean}  shouldParseResponse
- *
- * @return {Promise<any>} Parsed response.
- */
-const parseResponseAndNormalizeError = (response, shouldParseResponse = true) => {
-  return Promise.resolve(parseResponse(response, shouldParseResponse)).catch(res => parseAndThrowError(res, shouldParseResponse));
-};
-
-/**
- * Parses a response, throwing an error if parsing the response fails.
- *
- * @param {Response} response
- * @param {boolean}  shouldParseResponse
- * @return {Promise<any>} Parsed response.
- */
-function parseAndThrowError(response, shouldParseResponse = true) {
-  if (!shouldParseResponse) {
-    throw response;
-  }
-  return parseJsonAndNormalizeError(response).then(error => {
-    const unknownError = {
-      code: 'unknown_error',
-      message: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('An unknown error occurred.')
-    };
-    throw error || unknownError;
-  });
-}
-//# sourceMappingURL=response.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/deprecated/build-module/index.js":
-/*!********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/deprecated/build-module/index.js ***!
-  \********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ deprecated),
-/* harmony export */   logged: () => (/* binding */ logged)
-/* harmony export */ });
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/hooks */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/index.js");
-/**
- * WordPress dependencies
- */
-
-
-/**
- * Object map tracking messages which have been logged, for use in ensuring a
- * message is only logged once.
- *
- * @type {Record<string, true | undefined>}
- */
-const logged = Object.create(null);
-
-/**
- * Logs a message to notify developers about a deprecated feature.
- *
- * @param {string} feature               Name of the deprecated feature.
- * @param {Object} [options]             Personalisation options
- * @param {string} [options.since]       Version in which the feature was deprecated.
- * @param {string} [options.version]     Version in which the feature will be removed.
- * @param {string} [options.alternative] Feature to use instead
- * @param {string} [options.plugin]      Plugin name if it's a plugin feature
- * @param {string} [options.link]        Link to documentation
- * @param {string} [options.hint]        Additional message to help transition away from the deprecated feature.
- *
- * @example
- * ```js
- * import deprecated from '@wordpress/deprecated';
- *
- * deprecated( 'Eating meat', {
- * 	since: '2019.01.01'
- * 	version: '2020.01.01',
- * 	alternative: 'vegetables',
- * 	plugin: 'the earth',
- * 	hint: 'You may find it beneficial to transition gradually.',
- * } );
- *
- * // Logs: 'Eating meat is deprecated since version 2019.01.01 and will be removed from the earth in version 2020.01.01. Please use vegetables instead. Note: You may find it beneficial to transition gradually.'
- * ```
- */
-function deprecated(feature, options = {}) {
-  const {
-    since,
-    version,
-    alternative,
-    plugin,
-    link,
-    hint
-  } = options;
-  const pluginMessage = plugin ? ` from ${plugin}` : '';
-  const sinceMessage = since ? ` since version ${since}` : '';
-  const versionMessage = version ? ` and will be removed${pluginMessage} in version ${version}` : '';
-  const useInsteadMessage = alternative ? ` Please use ${alternative} instead.` : '';
-  const linkMessage = link ? ` See: ${link}` : '';
-  const hintMessage = hint ? ` Note: ${hint}` : '';
-  const message = `${feature} is deprecated${sinceMessage}${versionMessage}.${useInsteadMessage}${linkMessage}${hintMessage}`;
-
-  // Skip if already logged.
-  if (message in logged) {
-    return;
-  }
-
-  /**
-   * Fires whenever a deprecated feature is encountered
-   *
-   * @param {string}  feature             Name of the deprecated feature.
-   * @param {?Object} options             Personalisation options
-   * @param {string}  options.since       Version in which the feature was deprecated.
-   * @param {?string} options.version     Version in which the feature will be removed.
-   * @param {?string} options.alternative Feature to use instead
-   * @param {?string} options.plugin      Plugin name if it's a plugin feature
-   * @param {?string} options.link        Link to documentation
-   * @param {?string} options.hint        Additional message to help transition away from the deprecated feature.
-   * @param {?string} message             Message sent to console.warn
-   */
-  (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__.doAction)('deprecated', feature, options, message);
-
-  // eslint-disable-next-line no-console
-  console.warn(message);
-  logged[message] = true;
-}
-
-/** @typedef {import('utility-types').NonUndefined<Parameters<typeof deprecated>[1]>} DeprecatedOptions */
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createAddHook.js":
-/*!***********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createAddHook.js ***!
-  \***********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _validateNamespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validateNamespace.js */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateNamespace.js");
-/* harmony import */ var _validateHookName_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./validateHookName.js */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateHookName.js");
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * @callback AddHook
- *
- * Adds the hook to the appropriate hooks container.
- *
- * @param {string}               hookName      Name of hook to add
- * @param {string}               namespace     The unique namespace identifying the callback in the form `vendor/plugin/function`.
- * @param {import('.').Callback} callback      Function to call when the hook is run
- * @param {number}               [priority=10] Priority of this hook
- */
-
-/**
- * Returns a function which, when invoked, will add a hook.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {AddHook} Function that adds a new hook.
- */
-function createAddHook(hooks, storeKey) {
-  return function addHook(hookName, namespace, callback, priority = 10) {
-    const hooksStore = hooks[storeKey];
-    if (!(0,_validateHookName_js__WEBPACK_IMPORTED_MODULE_1__["default"])(hookName)) {
-      return;
-    }
-    if (!(0,_validateNamespace_js__WEBPACK_IMPORTED_MODULE_0__["default"])(namespace)) {
-      return;
-    }
-    if ('function' !== typeof callback) {
-      // eslint-disable-next-line no-console
-      console.error('The hook callback must be a function.');
-      return;
-    }
-
-    // Validate numeric priority
-    if ('number' !== typeof priority) {
-      // eslint-disable-next-line no-console
-      console.error('If specified, the hook priority must be a number.');
-      return;
-    }
-    const handler = {
-      callback,
-      priority,
-      namespace
-    };
-    if (hooksStore[hookName]) {
-      // Find the correct insert index of the new hook.
-      const handlers = hooksStore[hookName].handlers;
-
-      /** @type {number} */
-      let i;
-      for (i = handlers.length; i > 0; i--) {
-        if (priority >= handlers[i - 1].priority) {
-          break;
-        }
-      }
-      if (i === handlers.length) {
-        // If append, operate via direct assignment.
-        handlers[i] = handler;
-      } else {
-        // Otherwise, insert before index via splice.
-        handlers.splice(i, 0, handler);
-      }
-
-      // We may also be currently executing this hook.  If the callback
-      // we're adding would come after the current callback, there's no
-      // problem; otherwise we need to increase the execution index of
-      // any other runs by 1 to account for the added element.
-      hooksStore.__current.forEach(hookInfo => {
-        if (hookInfo.name === hookName && hookInfo.currentIndex >= i) {
-          hookInfo.currentIndex++;
-        }
-      });
-    } else {
-      // This is the first hook of its type.
-      hooksStore[hookName] = {
-        handlers: [handler],
-        runs: 0
-      };
-    }
-    if (hookName !== 'hookAdded') {
-      hooks.doAction('hookAdded', hookName, namespace, callback, priority);
-    }
-  };
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createAddHook);
-//# sourceMappingURL=createAddHook.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createCurrentHook.js":
-/*!***************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createCurrentHook.js ***!
-  \***************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * Returns a function which, when invoked, will return the name of the
- * currently running hook, or `null` if no hook of the given type is currently
- * running.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {() => string | null} Function that returns the current hook name or null.
- */
-function createCurrentHook(hooks, storeKey) {
-  return function currentHook() {
-    var _hooksStore$__current;
-    const hooksStore = hooks[storeKey];
-    return (_hooksStore$__current = hooksStore.__current[hooksStore.__current.length - 1]?.name) !== null && _hooksStore$__current !== void 0 ? _hooksStore$__current : null;
-  };
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createCurrentHook);
-//# sourceMappingURL=createCurrentHook.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createDidHook.js":
-/*!***********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createDidHook.js ***!
-  \***********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _validateHookName_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validateHookName.js */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateHookName.js");
-/**
- * Internal dependencies
- */
-
-
-/**
- * @callback DidHook
- *
- * Returns the number of times an action has been fired.
- *
- * @param {string} hookName The hook name to check.
- *
- * @return {number | undefined} The number of times the hook has run.
- */
-
-/**
- * Returns a function which, when invoked, will return the number of times a
- * hook has been called.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {DidHook} Function that returns a hook's call count.
- */
-function createDidHook(hooks, storeKey) {
-  return function didHook(hookName) {
-    const hooksStore = hooks[storeKey];
-    if (!(0,_validateHookName_js__WEBPACK_IMPORTED_MODULE_0__["default"])(hookName)) {
-      return;
-    }
-    return hooksStore[hookName] && hooksStore[hookName].runs ? hooksStore[hookName].runs : 0;
-  };
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createDidHook);
-//# sourceMappingURL=createDidHook.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createDoingHook.js":
-/*!*************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createDoingHook.js ***!
-  \*************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * @callback DoingHook
- * Returns whether a hook is currently being executed.
- *
- * @param {string} [hookName] The name of the hook to check for.  If
- *                            omitted, will check for any hook being executed.
- *
- * @return {boolean} Whether the hook is being executed.
- */
-
-/**
- * Returns a function which, when invoked, will return whether a hook is
- * currently being executed.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {DoingHook} Function that returns whether a hook is currently
- *                     being executed.
- */
-function createDoingHook(hooks, storeKey) {
-  return function doingHook(hookName) {
-    const hooksStore = hooks[storeKey];
-
-    // If the hookName was not passed, check for any current hook.
-    if ('undefined' === typeof hookName) {
-      return 'undefined' !== typeof hooksStore.__current[0];
-    }
-
-    // Return the __current hook.
-    return hooksStore.__current[0] ? hookName === hooksStore.__current[0].name : false;
-  };
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createDoingHook);
-//# sourceMappingURL=createDoingHook.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createHasHook.js":
-/*!***********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createHasHook.js ***!
-  \***********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * @callback HasHook
- *
- * Returns whether any handlers are attached for the given hookName and optional namespace.
- *
- * @param {string} hookName    The name of the hook to check for.
- * @param {string} [namespace] Optional. The unique namespace identifying the callback
- *                             in the form `vendor/plugin/function`.
- *
- * @return {boolean} Whether there are handlers that are attached to the given hook.
- */
-/**
- * Returns a function which, when invoked, will return whether any handlers are
- * attached to a particular hook.
- *
- * @param {import('.').Hooks}    hooks    Hooks instance.
- * @param {import('.').StoreKey} storeKey
- *
- * @return {HasHook} Function that returns whether any handlers are
- *                   attached to a particular hook and optional namespace.
- */
-function createHasHook(hooks, storeKey) {
-  return function hasHook(hookName, namespace) {
-    const hooksStore = hooks[storeKey];
-
-    // Use the namespace if provided.
-    if ('undefined' !== typeof namespace) {
-      return hookName in hooksStore && hooksStore[hookName].handlers.some(hook => hook.namespace === namespace);
-    }
-    return hookName in hooksStore;
-  };
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createHasHook);
-//# sourceMappingURL=createHasHook.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createHooks.js":
-/*!*********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createHooks.js ***!
-  \*********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   _Hooks: () => (/* binding */ _Hooks),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _createAddHook__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createAddHook */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createAddHook.js");
-/* harmony import */ var _createRemoveHook__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createRemoveHook */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createRemoveHook.js");
-/* harmony import */ var _createHasHook__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createHasHook */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createHasHook.js");
-/* harmony import */ var _createRunHook__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./createRunHook */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createRunHook.js");
-/* harmony import */ var _createCurrentHook__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./createCurrentHook */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createCurrentHook.js");
-/* harmony import */ var _createDoingHook__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./createDoingHook */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createDoingHook.js");
-/* harmony import */ var _createDidHook__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./createDidHook */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createDidHook.js");
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-/**
- * Internal class for constructing hooks. Use `createHooks()` function
- *
- * Note, it is necessary to expose this class to make its type public.
- *
- * @private
- */
-class _Hooks {
-  constructor() {
-    /** @type {import('.').Store} actions */
-    this.actions = Object.create(null);
-    this.actions.__current = [];
-
-    /** @type {import('.').Store} filters */
-    this.filters = Object.create(null);
-    this.filters.__current = [];
-    this.addAction = (0,_createAddHook__WEBPACK_IMPORTED_MODULE_0__["default"])(this, 'actions');
-    this.addFilter = (0,_createAddHook__WEBPACK_IMPORTED_MODULE_0__["default"])(this, 'filters');
-    this.removeAction = (0,_createRemoveHook__WEBPACK_IMPORTED_MODULE_1__["default"])(this, 'actions');
-    this.removeFilter = (0,_createRemoveHook__WEBPACK_IMPORTED_MODULE_1__["default"])(this, 'filters');
-    this.hasAction = (0,_createHasHook__WEBPACK_IMPORTED_MODULE_2__["default"])(this, 'actions');
-    this.hasFilter = (0,_createHasHook__WEBPACK_IMPORTED_MODULE_2__["default"])(this, 'filters');
-    this.removeAllActions = (0,_createRemoveHook__WEBPACK_IMPORTED_MODULE_1__["default"])(this, 'actions', true);
-    this.removeAllFilters = (0,_createRemoveHook__WEBPACK_IMPORTED_MODULE_1__["default"])(this, 'filters', true);
-    this.doAction = (0,_createRunHook__WEBPACK_IMPORTED_MODULE_3__["default"])(this, 'actions');
-    this.applyFilters = (0,_createRunHook__WEBPACK_IMPORTED_MODULE_3__["default"])(this, 'filters', true);
-    this.currentAction = (0,_createCurrentHook__WEBPACK_IMPORTED_MODULE_4__["default"])(this, 'actions');
-    this.currentFilter = (0,_createCurrentHook__WEBPACK_IMPORTED_MODULE_4__["default"])(this, 'filters');
-    this.doingAction = (0,_createDoingHook__WEBPACK_IMPORTED_MODULE_5__["default"])(this, 'actions');
-    this.doingFilter = (0,_createDoingHook__WEBPACK_IMPORTED_MODULE_5__["default"])(this, 'filters');
-    this.didAction = (0,_createDidHook__WEBPACK_IMPORTED_MODULE_6__["default"])(this, 'actions');
-    this.didFilter = (0,_createDidHook__WEBPACK_IMPORTED_MODULE_6__["default"])(this, 'filters');
-  }
-}
-
-/** @typedef {_Hooks} Hooks */
-
-/**
- * Returns an instance of the hooks object.
- *
- * @return {Hooks} A Hooks instance.
- */
-function createHooks() {
-  return new _Hooks();
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createHooks);
-//# sourceMappingURL=createHooks.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createRemoveHook.js":
-/*!**************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createRemoveHook.js ***!
-  \**************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _validateNamespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validateNamespace.js */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateNamespace.js");
-/* harmony import */ var _validateHookName_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./validateHookName.js */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateHookName.js");
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * @callback RemoveHook
- * Removes the specified callback (or all callbacks) from the hook with a given hookName
- * and namespace.
- *
- * @param {string} hookName  The name of the hook to modify.
- * @param {string} namespace The unique namespace identifying the callback in the
- *                           form `vendor/plugin/function`.
- *
- * @return {number | undefined} The number of callbacks removed.
- */
-
-/**
- * Returns a function which, when invoked, will remove a specified hook or all
- * hooks by the given name.
- *
- * @param {import('.').Hooks}    hooks             Hooks instance.
- * @param {import('.').StoreKey} storeKey
- * @param {boolean}              [removeAll=false] Whether to remove all callbacks for a hookName,
- *                                                 without regard to namespace. Used to create
- *                                                 `removeAll*` functions.
- *
- * @return {RemoveHook} Function that removes hooks.
- */
-function createRemoveHook(hooks, storeKey, removeAll = false) {
-  return function removeHook(hookName, namespace) {
-    const hooksStore = hooks[storeKey];
-    if (!(0,_validateHookName_js__WEBPACK_IMPORTED_MODULE_1__["default"])(hookName)) {
-      return;
-    }
-    if (!removeAll && !(0,_validateNamespace_js__WEBPACK_IMPORTED_MODULE_0__["default"])(namespace)) {
-      return;
-    }
-
-    // Bail if no hooks exist by this name.
-    if (!hooksStore[hookName]) {
-      return 0;
-    }
-    let handlersRemoved = 0;
-    if (removeAll) {
-      handlersRemoved = hooksStore[hookName].handlers.length;
-      hooksStore[hookName] = {
-        runs: hooksStore[hookName].runs,
-        handlers: []
-      };
-    } else {
-      // Try to find the specified callback to remove.
-      const handlers = hooksStore[hookName].handlers;
-      for (let i = handlers.length - 1; i >= 0; i--) {
-        if (handlers[i].namespace === namespace) {
-          handlers.splice(i, 1);
-          handlersRemoved++;
-          // This callback may also be part of a hook that is
-          // currently executing.  If the callback we're removing
-          // comes after the current callback, there's no problem;
-          // otherwise we need to decrease the execution index of any
-          // other runs by 1 to account for the removed element.
-          hooksStore.__current.forEach(hookInfo => {
-            if (hookInfo.name === hookName && hookInfo.currentIndex >= i) {
-              hookInfo.currentIndex--;
-            }
-          });
-        }
-      }
-    }
-    if (hookName !== 'hookRemoved') {
-      hooks.doAction('hookRemoved', hookName, namespace);
-    }
-    return handlersRemoved;
-  };
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createRemoveHook);
-//# sourceMappingURL=createRemoveHook.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createRunHook.js":
-/*!***********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createRunHook.js ***!
-  \***********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * Returns a function which, when invoked, will execute all callbacks
- * registered to a hook of the specified type, optionally returning the final
- * value of the call chain.
- *
- * @param {import('.').Hooks}    hooks                  Hooks instance.
- * @param {import('.').StoreKey} storeKey
- * @param {boolean}              [returnFirstArg=false] Whether each hook callback is expected to
- *                                                      return its first argument.
- *
- * @return {(hookName:string, ...args: unknown[]) => undefined|unknown} Function that runs hook callbacks.
- */
-function createRunHook(hooks, storeKey, returnFirstArg = false) {
-  return function runHooks(hookName, ...args) {
-    const hooksStore = hooks[storeKey];
-    if (!hooksStore[hookName]) {
-      hooksStore[hookName] = {
-        handlers: [],
-        runs: 0
-      };
-    }
-    hooksStore[hookName].runs++;
-    const handlers = hooksStore[hookName].handlers;
-
-    // The following code is stripped from production builds.
-    if (true) {
-      // Handle any 'all' hooks registered.
-      if ('hookAdded' !== hookName && hooksStore.all) {
-        handlers.push(...hooksStore.all.handlers);
-      }
-    }
-    if (!handlers || !handlers.length) {
-      return returnFirstArg ? args[0] : undefined;
-    }
-    const hookInfo = {
-      name: hookName,
-      currentIndex: 0
-    };
-    hooksStore.__current.push(hookInfo);
-    while (hookInfo.currentIndex < handlers.length) {
-      const handler = handlers[hookInfo.currentIndex];
-      const result = handler.callback.apply(null, args);
-      if (returnFirstArg) {
-        args[0] = result;
-      }
-      hookInfo.currentIndex++;
-    }
-    hooksStore.__current.pop();
-    if (returnFirstArg) {
-      return args[0];
-    }
-    return undefined;
-  };
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createRunHook);
-//# sourceMappingURL=createRunHook.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/index.js":
-/*!***************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/index.js ***!
-  \***************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   actions: () => (/* binding */ actions),
-/* harmony export */   addAction: () => (/* binding */ addAction),
-/* harmony export */   addFilter: () => (/* binding */ addFilter),
-/* harmony export */   applyFilters: () => (/* binding */ applyFilters),
-/* harmony export */   createHooks: () => (/* reexport safe */ _createHooks__WEBPACK_IMPORTED_MODULE_0__["default"]),
-/* harmony export */   currentAction: () => (/* binding */ currentAction),
-/* harmony export */   currentFilter: () => (/* binding */ currentFilter),
-/* harmony export */   defaultHooks: () => (/* binding */ defaultHooks),
-/* harmony export */   didAction: () => (/* binding */ didAction),
-/* harmony export */   didFilter: () => (/* binding */ didFilter),
-/* harmony export */   doAction: () => (/* binding */ doAction),
-/* harmony export */   doingAction: () => (/* binding */ doingAction),
-/* harmony export */   doingFilter: () => (/* binding */ doingFilter),
-/* harmony export */   filters: () => (/* binding */ filters),
-/* harmony export */   hasAction: () => (/* binding */ hasAction),
-/* harmony export */   hasFilter: () => (/* binding */ hasFilter),
-/* harmony export */   removeAction: () => (/* binding */ removeAction),
-/* harmony export */   removeAllActions: () => (/* binding */ removeAllActions),
-/* harmony export */   removeAllFilters: () => (/* binding */ removeAllFilters),
-/* harmony export */   removeFilter: () => (/* binding */ removeFilter)
-/* harmony export */ });
-/* harmony import */ var _createHooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createHooks */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/createHooks.js");
-/**
- * Internal dependencies
- */
-
-
-/** @typedef {(...args: any[])=>any} Callback */
-
-/**
- * @typedef Handler
- * @property {Callback} callback  The callback
- * @property {string}   namespace The namespace
- * @property {number}   priority  The namespace
- */
-
-/**
- * @typedef Hook
- * @property {Handler[]} handlers Array of handlers
- * @property {number}    runs     Run counter
- */
-
-/**
- * @typedef Current
- * @property {string} name         Hook name
- * @property {number} currentIndex The index
- */
-
-/**
- * @typedef {Record<string, Hook> & {__current: Current[]}} Store
- */
-
-/**
- * @typedef {'actions' | 'filters'} StoreKey
- */
-
-/**
- * @typedef {import('./createHooks').Hooks} Hooks
- */
-
-const defaultHooks = (0,_createHooks__WEBPACK_IMPORTED_MODULE_0__["default"])();
-const {
-  addAction,
-  addFilter,
-  removeAction,
-  removeFilter,
-  hasAction,
-  hasFilter,
-  removeAllActions,
-  removeAllFilters,
-  doAction,
-  applyFilters,
-  currentAction,
-  currentFilter,
-  doingAction,
-  doingFilter,
-  didAction,
-  didFilter,
-  actions,
-  filters
-} = defaultHooks;
-
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateHookName.js":
-/*!**************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateHookName.js ***!
-  \**************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * Validate a hookName string.
- *
- * @param {string} hookName The hook name to validate. Should be a non empty string containing
- *                          only numbers, letters, dashes, periods and underscores. Also,
- *                          the hook name cannot begin with `__`.
- *
- * @return {boolean} Whether the hook name is valid.
- */
-function validateHookName(hookName) {
-  if ('string' !== typeof hookName || '' === hookName) {
-    // eslint-disable-next-line no-console
-    console.error('The hook name must be a non-empty string.');
-    return false;
-  }
-  if (/^__/.test(hookName)) {
-    // eslint-disable-next-line no-console
-    console.error('The hook name cannot begin with `__`.');
-    return false;
-  }
-  if (!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(hookName)) {
-    // eslint-disable-next-line no-console
-    console.error('The hook name can only contain numbers, letters, dashes, periods and underscores.');
-    return false;
-  }
-  return true;
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validateHookName);
-//# sourceMappingURL=validateHookName.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateNamespace.js":
-/*!***************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/hooks/build-module/validateNamespace.js ***!
-  \***************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * Validate a namespace string.
- *
- * @param {string} namespace The namespace to validate - should take the form
- *                           `vendor/plugin/function`.
- *
- * @return {boolean} Whether the namespace is valid.
- */
-function validateNamespace(namespace) {
-  if ('string' !== typeof namespace || '' === namespace) {
-    // eslint-disable-next-line no-console
-    console.error('The namespace must be a non-empty string.');
-    return false;
-  }
-  if (!/^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(namespace)) {
-    // eslint-disable-next-line no-console
-    console.error('The namespace can only contain numbers, letters, dashes, periods, underscores and slashes.');
-    return false;
-  }
-  return true;
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validateNamespace);
-//# sourceMappingURL=validateNamespace.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/add-query-args.js":
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/add-query-args.js ***!
-  \**********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   addQueryArgs: () => (/* binding */ addQueryArgs)
-/* harmony export */ });
-/* harmony import */ var _get_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-query-args */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-args.js");
-/* harmony import */ var _build_query_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./build-query-string */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/build-query-string.js");
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Appends arguments as querystring to the provided URL. If the URL already
- * includes query arguments, the arguments are merged with (and take precedent
- * over) the existing set.
- *
- * @param {string} [url=''] URL to which arguments should be appended. If omitted,
- *                          only the resulting querystring is returned.
- * @param {Object} [args]   Query arguments to apply to URL.
- *
- * @example
- * ```js
- * const newURL = addQueryArgs( 'https://google.com', { q: 'test' } ); // https://google.com/?q=test
- * ```
- *
- * @return {string} URL with arguments applied.
- */
-function addQueryArgs(url = '', args) {
-  // If no arguments are to be appended, return original URL.
-  if (!args || !Object.keys(args).length) {
-    return url;
-  }
-  let baseUrl = url;
-
-  // Determine whether URL already had query arguments.
-  const queryStringIndex = url.indexOf('?');
-  if (queryStringIndex !== -1) {
-    // Merge into existing query arguments.
-    args = Object.assign((0,_get_query_args__WEBPACK_IMPORTED_MODULE_0__.getQueryArgs)(url), args);
-
-    // Change working base URL to omit previous query arguments.
-    baseUrl = baseUrl.substr(0, queryStringIndex);
-  }
-  return baseUrl + '?' + (0,_build_query_string__WEBPACK_IMPORTED_MODULE_1__.buildQueryString)(args);
-}
-//# sourceMappingURL=add-query-args.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/build-query-string.js":
-/*!**************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/build-query-string.js ***!
-  \**************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   buildQueryString: () => (/* binding */ buildQueryString)
-/* harmony export */ });
-/**
- * Generates URL-encoded query string using input query data.
- *
- * It is intended to behave equivalent as PHP's `http_build_query`, configured
- * with encoding type PHP_QUERY_RFC3986 (spaces as `%20`).
- *
- * @example
- * ```js
- * const queryString = buildQueryString( {
- *    simple: 'is ok',
- *    arrays: [ 'are', 'fine', 'too' ],
- *    objects: {
- *       evenNested: {
- *          ok: 'yes',
- *       },
- *    },
- * } );
- * // "simple=is%20ok&arrays%5B0%5D=are&arrays%5B1%5D=fine&arrays%5B2%5D=too&objects%5BevenNested%5D%5Bok%5D=yes"
- * ```
- *
- * @param {Record<string,*>} data Data to encode.
- *
- * @return {string} Query string.
- */
-function buildQueryString(data) {
-  let string = '';
-  const stack = Object.entries(data);
-  let pair;
-  while (pair = stack.shift()) {
-    let [key, value] = pair;
-
-    // Support building deeply nested data, from array or object values.
-    const hasNestedData = Array.isArray(value) || value && value.constructor === Object;
-    if (hasNestedData) {
-      // Push array or object values onto the stack as composed of their
-      // original key and nested index or key, retaining order by a
-      // combination of Array#reverse and Array#unshift onto the stack.
-      const valuePairs = Object.entries(value).reverse();
-      for (const [member, memberValue] of valuePairs) {
-        stack.unshift([`${key}[${member}]`, memberValue]);
-      }
-    } else if (value !== undefined) {
-      // Null is treated as special case, equivalent to empty string.
-      if (value === null) {
-        value = '';
-      }
-      string += '&' + [key, value].map(encodeURIComponent).join('=');
-    }
-  }
-
-  // Loop will concatenate with leading `&`, but it's only expected for all
-  // but the first query parameter. This strips the leading `&`, while still
-  // accounting for the case that the string may in-fact be empty.
-  return string.substr(1);
-}
-//# sourceMappingURL=build-query-string.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-arg.js":
-/*!*********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-arg.js ***!
-  \*********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getQueryArg: () => (/* binding */ getQueryArg)
-/* harmony export */ });
-/* harmony import */ var _get_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-query-args */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-args.js");
-/**
- * Internal dependencies
- */
-
-
-/**
- * @typedef {{[key: string]: QueryArgParsed}} QueryArgObject
- */
-
-/**
- * @typedef {string|string[]|QueryArgObject} QueryArgParsed
- */
-
-/**
- * Returns a single query argument of the url
- *
- * @param {string} url URL.
- * @param {string} arg Query arg name.
- *
- * @example
- * ```js
- * const foo = getQueryArg( 'https://wordpress.org?foo=bar&bar=baz', 'foo' ); // bar
- * ```
- *
- * @return {QueryArgParsed|void} Query arg value.
- */
-function getQueryArg(url, arg) {
-  return (0,_get_query_args__WEBPACK_IMPORTED_MODULE_0__.getQueryArgs)(url)[arg];
-}
-//# sourceMappingURL=get-query-arg.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-args.js":
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-args.js ***!
-  \**********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getQueryArgs: () => (/* binding */ getQueryArgs)
-/* harmony export */ });
-/* harmony import */ var _safe_decode_uri_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./safe-decode-uri-component */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/safe-decode-uri-component.js");
-/* harmony import */ var _get_query_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-query-string */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-string.js");
-/**
- * Internal dependencies
- */
-
-
-
-/** @typedef {import('./get-query-arg').QueryArgParsed} QueryArgParsed */
-
-/**
- * @typedef {Record<string,QueryArgParsed>} QueryArgs
- */
-
-/**
- * Sets a value in object deeply by a given array of path segments. Mutates the
- * object reference.
- *
- * @param {Record<string,*>} object Object in which to assign.
- * @param {string[]}         path   Path segment at which to set value.
- * @param {*}                value  Value to set.
- */
-function setPath(object, path, value) {
-  const length = path.length;
-  const lastIndex = length - 1;
-  for (let i = 0; i < length; i++) {
-    let key = path[i];
-    if (!key && Array.isArray(object)) {
-      // If key is empty string and next value is array, derive key from
-      // the current length of the array.
-      key = object.length.toString();
-    }
-    key = ['__proto__', 'constructor', 'prototype'].includes(key) ? key.toUpperCase() : key;
-
-    // If the next key in the path is numeric (or empty string), it will be
-    // created as an array. Otherwise, it will be created as an object.
-    const isNextKeyArrayIndex = !isNaN(Number(path[i + 1]));
-    object[key] = i === lastIndex ?
-    // If at end of path, assign the intended value.
-    value :
-    // Otherwise, advance to the next object in the path, creating
-    // it if it does not yet exist.
-    object[key] || (isNextKeyArrayIndex ? [] : {});
-    if (Array.isArray(object[key]) && !isNextKeyArrayIndex) {
-      // If we current key is non-numeric, but the next value is an
-      // array, coerce the value to an object.
-      object[key] = {
-        ...object[key]
-      };
-    }
-
-    // Update working reference object to the next in the path.
-    object = object[key];
-  }
-}
-
-/**
- * Returns an object of query arguments of the given URL. If the given URL is
- * invalid or has no querystring, an empty object is returned.
- *
- * @param {string} url URL.
- *
- * @example
- * ```js
- * const foo = getQueryArgs( 'https://wordpress.org?foo=bar&bar=baz' );
- * // { "foo": "bar", "bar": "baz" }
- * ```
- *
- * @return {QueryArgs} Query args object.
- */
-function getQueryArgs(url) {
-  return ((0,_get_query_string__WEBPACK_IMPORTED_MODULE_0__.getQueryString)(url) || ''
-  // Normalize space encoding, accounting for PHP URL encoding
-  // corresponding to `application/x-www-form-urlencoded`.
-  //
-  // See: https://tools.ietf.org/html/rfc1866#section-8.2.1
-  ).replace(/\+/g, '%20').split('&').reduce((accumulator, keyValue) => {
-    const [key, value = ''] = keyValue.split('=')
-    // Filtering avoids decoding as `undefined` for value, where
-    // default is restored in destructuring assignment.
-    .filter(Boolean).map(_safe_decode_uri_component__WEBPACK_IMPORTED_MODULE_1__.safeDecodeURIComponent);
-    if (key) {
-      const segments = key.replace(/\]/g, '').split('[');
-      setPath(accumulator, segments, value);
-    }
-    return accumulator;
-  }, Object.create(null));
-}
-//# sourceMappingURL=get-query-args.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-string.js":
-/*!************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-string.js ***!
-  \************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getQueryString: () => (/* binding */ getQueryString)
-/* harmony export */ });
-/**
- * Returns the query string part of the URL.
- *
- * @param {string} url The full URL.
- *
- * @example
- * ```js
- * const queryString = getQueryString( 'http://localhost:8080/this/is/a/test?query=true#fragment' ); // 'query=true'
- * ```
- *
- * @return {string|void} The query string part of the URL.
- */
-function getQueryString(url) {
-  let query;
-  try {
-    query = new URL(url, 'http://example.com').search.substring(1);
-  } catch (error) {}
-  if (query) {
-    return query;
-  }
-}
-//# sourceMappingURL=get-query-string.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/has-query-arg.js":
-/*!*********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/has-query-arg.js ***!
-  \*********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   hasQueryArg: () => (/* binding */ hasQueryArg)
-/* harmony export */ });
-/* harmony import */ var _get_query_arg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-query-arg */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-arg.js");
-/**
- * Internal dependencies
- */
-
-
-/**
- * Determines whether the URL contains a given query arg.
- *
- * @param {string} url URL.
- * @param {string} arg Query arg name.
- *
- * @example
- * ```js
- * const hasBar = hasQueryArg( 'https://wordpress.org?foo=bar&bar=baz', 'bar' ); // true
- * ```
- *
- * @return {boolean} Whether or not the URL contains the query arg.
- */
-function hasQueryArg(url, arg) {
-  return (0,_get_query_arg__WEBPACK_IMPORTED_MODULE_0__.getQueryArg)(url, arg) !== undefined;
-}
-//# sourceMappingURL=has-query-arg.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/normalize-path.js":
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/normalize-path.js ***!
-  \**********************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   normalizePath: () => (/* binding */ normalizePath)
-/* harmony export */ });
-/**
- * Given a path, returns a normalized path where equal query parameter values
- * will be treated as identical, regardless of order they appear in the original
- * text.
- *
- * @param {string} path Original path.
- *
- * @return {string} Normalized path.
- */
-function normalizePath(path) {
-  const splitted = path.split('?');
-  const query = splitted[1];
-  const base = splitted[0];
-  if (!query) {
-    return base;
-  }
-
-  // 'b=1%2C2&c=2&a=5'
-  return base + '?' + query
-  // [ 'b=1%2C2', 'c=2', 'a=5' ]
-  .split('&')
-  // [ [ 'b, '1%2C2' ], [ 'c', '2' ], [ 'a', '5' ] ]
-  .map(entry => entry.split('='))
-  // [ [ 'b', '1,2' ], [ 'c', '2' ], [ 'a', '5' ] ]
-  .map(pair => pair.map(decodeURIComponent))
-  // [ [ 'a', '5' ], [ 'b, '1,2' ], [ 'c', '2' ] ]
-  .sort((a, b) => a[0].localeCompare(b[0]))
-  // [ [ 'a', '5' ], [ 'b, '1%2C2' ], [ 'c', '2' ] ]
-  .map(pair => pair.map(encodeURIComponent))
-  // [ 'a=5', 'b=1%2C2', 'c=2' ]
-  .map(pair => pair.join('='))
-  // 'a=5&b=1%2C2&c=2'
-  .join('&');
-}
-//# sourceMappingURL=normalize-path.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/remove-query-args.js":
-/*!*************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/remove-query-args.js ***!
-  \*************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   removeQueryArgs: () => (/* binding */ removeQueryArgs)
-/* harmony export */ });
-/* harmony import */ var _get_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-query-args */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/get-query-args.js");
-/* harmony import */ var _build_query_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./build-query-string */ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/build-query-string.js");
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Removes arguments from the query string of the url
- *
- * @param {string}    url  URL.
- * @param {...string} args Query Args.
- *
- * @example
- * ```js
- * const newUrl = removeQueryArgs( 'https://wordpress.org?foo=bar&bar=baz&baz=foobar', 'foo', 'bar' ); // https://wordpress.org?baz=foobar
- * ```
- *
- * @return {string} Updated URL.
- */
-function removeQueryArgs(url, ...args) {
-  const queryStringIndex = url.indexOf('?');
-  if (queryStringIndex === -1) {
-    return url;
-  }
-  const query = (0,_get_query_args__WEBPACK_IMPORTED_MODULE_0__.getQueryArgs)(url);
-  const baseURL = url.substr(0, queryStringIndex);
-  args.forEach(arg => delete query[arg]);
-  const queryString = (0,_build_query_string__WEBPACK_IMPORTED_MODULE_1__.buildQueryString)(query);
-  return queryString ? baseURL + '?' + queryString : baseURL;
-}
-//# sourceMappingURL=remove-query-args.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/safe-decode-uri-component.js":
-/*!*********************************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/data-controls/node_modules/@wordpress/url/build-module/safe-decode-uri-component.js ***!
-  \*********************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   safeDecodeURIComponent: () => (/* binding */ safeDecodeURIComponent)
-/* harmony export */ });
-/**
- * Safely decodes a URI component with `decodeURIComponent`. Returns the URI component unmodified if
- * `decodeURIComponent` throws an error.
- *
- * @param {string} uriComponent URI component to decode.
- *
- * @return {string} Decoded URI component if possible.
- */
-function safeDecodeURIComponent(uriComponent) {
-  try {
-    return decodeURIComponent(uriComponent);
-  } catch (uriComponentError) {
-    return uriComponent;
-  }
-}
-//# sourceMappingURL=safe-decode-uri-component.js.map
 
 /***/ }),
 
@@ -7783,7 +6269,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -7813,7 +6299,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -7843,7 +6329,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -7873,7 +6359,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -7903,7 +6389,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -7933,7 +6419,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -7965,7 +6451,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -7995,7 +6481,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -8025,7 +6511,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -8055,7 +6541,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -8085,7 +6571,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -8115,7 +6601,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/primitives */ "./node_modules/@wordpress/primitives/build-module/svg/index.js");
 
 /**
  * WordPress dependencies
@@ -8129,146 +6615,6 @@ const wordpress = (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpres
 }));
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (wordpress);
 //# sourceMappingURL=wordpress.js.map
-
-/***/ }),
-
-/***/ "./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js":
-/*!****************************************************************************************************!*\
-  !*** ./node_modules/@wordpress/icons/node_modules/@wordpress/primitives/build-module/svg/index.js ***!
-  \****************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Circle: () => (/* binding */ Circle),
-/* harmony export */   Defs: () => (/* binding */ Defs),
-/* harmony export */   G: () => (/* binding */ G),
-/* harmony export */   Line: () => (/* binding */ Line),
-/* harmony export */   LinearGradient: () => (/* binding */ LinearGradient),
-/* harmony export */   Path: () => (/* binding */ Path),
-/* harmony export */   Polygon: () => (/* binding */ Polygon),
-/* harmony export */   RadialGradient: () => (/* binding */ RadialGradient),
-/* harmony export */   Rect: () => (/* binding */ Rect),
-/* harmony export */   SVG: () => (/* binding */ SVG),
-/* harmony export */   Stop: () => (/* binding */ Stop)
-/* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
-/**
- * External dependencies
- */
-
-
-/**
- * WordPress dependencies
- */
-
-
-/** @typedef {{isPressed?: boolean} & import('react').ComponentPropsWithoutRef<'svg'>} SVGProps */
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'circle'>} props
- *
- * @return {JSX.Element} Circle component
- */
-const Circle = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('circle', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'g'>} props
- *
- * @return {JSX.Element} G component
- */
-const G = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('g', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'line'>} props
- *
- * @return {JSX.Element} Path component
- */
-const Line = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('line', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'path'>} props
- *
- * @return {JSX.Element} Path component
- */
-const Path = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('path', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'polygon'>} props
- *
- * @return {JSX.Element} Polygon component
- */
-const Polygon = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('polygon', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'rect'>} props
- *
- * @return {JSX.Element} Rect component
- */
-const Rect = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('rect', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'defs'>} props
- *
- * @return {JSX.Element} Defs component
- */
-const Defs = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('defs', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'radialGradient'>} props
- *
- * @return {JSX.Element} RadialGradient component
- */
-const RadialGradient = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('radialGradient', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'linearGradient'>} props
- *
- * @return {JSX.Element} LinearGradient component
- */
-const LinearGradient = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('linearGradient', props);
-
-/**
- * @param {import('react').ComponentPropsWithoutRef<'stop'>} props
- *
- * @return {JSX.Element} Stop component
- */
-const Stop = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('stop', props);
-const SVG = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(
-/**
- * @param {SVGProps}                                    props isPressed indicates whether the SVG should appear as pressed.
- *                                                            Other props will be passed through to svg component.
- * @param {import('react').ForwardedRef<SVGSVGElement>} ref   The forwarded ref to the SVG element.
- *
- * @return {JSX.Element} Stop component
- */
-({
-  className,
-  isPressed,
-  ...props
-}, ref) => {
-  const appliedProps = {
-    ...props,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, {
-      'is-pressed': isPressed
-    }) || undefined,
-    'aria-hidden': true,
-    focusable: false
-  };
-
-  // Disable reason: We need to have a way to render HTML tag for web.
-  // eslint-disable-next-line react/forbid-elements
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("svg", {
-    ...appliedProps,
-    ref: ref
-  });
-});
-SVG.displayName = 'SVG';
-//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -14036,6 +12382,376 @@ function validateNamespace(namespace) {
 
 /***/ }),
 
+/***/ "./node_modules/@wordpress/primitives/build-module/svg/index.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@wordpress/primitives/build-module/svg/index.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Circle: () => (/* binding */ Circle),
+/* harmony export */   Defs: () => (/* binding */ Defs),
+/* harmony export */   G: () => (/* binding */ G),
+/* harmony export */   Line: () => (/* binding */ Line),
+/* harmony export */   LinearGradient: () => (/* binding */ LinearGradient),
+/* harmony export */   Path: () => (/* binding */ Path),
+/* harmony export */   Polygon: () => (/* binding */ Polygon),
+/* harmony export */   RadialGradient: () => (/* binding */ RadialGradient),
+/* harmony export */   Rect: () => (/* binding */ Rect),
+/* harmony export */   SVG: () => (/* binding */ SVG),
+/* harmony export */   Stop: () => (/* binding */ Stop)
+/* harmony export */ });
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/**
+ * External dependencies
+ */
+
+
+/**
+ * WordPress dependencies
+ */
+
+
+/** @typedef {{isPressed?: boolean} & import('react').ComponentPropsWithoutRef<'svg'>} SVGProps */
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'circle'>} props
+ *
+ * @return {JSX.Element} Circle component
+ */
+const Circle = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('circle', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'g'>} props
+ *
+ * @return {JSX.Element} G component
+ */
+const G = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('g', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'line'>} props
+ *
+ * @return {JSX.Element} Path component
+ */
+const Line = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('line', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'path'>} props
+ *
+ * @return {JSX.Element} Path component
+ */
+const Path = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('path', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'polygon'>} props
+ *
+ * @return {JSX.Element} Polygon component
+ */
+const Polygon = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('polygon', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'rect'>} props
+ *
+ * @return {JSX.Element} Rect component
+ */
+const Rect = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('rect', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'defs'>} props
+ *
+ * @return {JSX.Element} Defs component
+ */
+const Defs = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('defs', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'radialGradient'>} props
+ *
+ * @return {JSX.Element} RadialGradient component
+ */
+const RadialGradient = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('radialGradient', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'linearGradient'>} props
+ *
+ * @return {JSX.Element} LinearGradient component
+ */
+const LinearGradient = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('linearGradient', props);
+
+/**
+ * @param {import('react').ComponentPropsWithoutRef<'stop'>} props
+ *
+ * @return {JSX.Element} Stop component
+ */
+const Stop = props => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)('stop', props);
+const SVG = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(
+/**
+ * @param {SVGProps}                                    props isPressed indicates whether the SVG should appear as pressed.
+ *                                                            Other props will be passed through to svg component.
+ * @param {import('react').ForwardedRef<SVGSVGElement>} ref   The forwarded ref to the SVG element.
+ *
+ * @return {JSX.Element} Stop component
+ */
+({
+  className,
+  isPressed,
+  ...props
+}, ref) => {
+  const appliedProps = {
+    ...props,
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_0__["default"])(className, {
+      'is-pressed': isPressed
+    }) || undefined,
+    'aria-hidden': true,
+    focusable: false
+  };
+
+  // Disable reason: We need to have a way to render HTML tag for web.
+  // eslint-disable-next-line react/forbid-elements
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("svg", {
+    ...appliedProps,
+    ref: ref
+  });
+});
+SVG.displayName = 'SVG';
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/priority-queue/build-module/index.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@wordpress/priority-queue/build-module/index.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createQueue: () => (/* binding */ createQueue)
+/* harmony export */ });
+/* harmony import */ var _request_idle_callback__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./request-idle-callback */ "./node_modules/@wordpress/priority-queue/build-module/request-idle-callback.js");
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Enqueued callback to invoke once idle time permits.
+ *
+ * @typedef {()=>void} WPPriorityQueueCallback
+ */
+
+/**
+ * An object used to associate callbacks in a particular context grouping.
+ *
+ * @typedef {{}} WPPriorityQueueContext
+ */
+
+/**
+ * Function to add callback to priority queue.
+ *
+ * @typedef {(element:WPPriorityQueueContext,item:WPPriorityQueueCallback)=>void} WPPriorityQueueAdd
+ */
+
+/**
+ * Function to flush callbacks from priority queue.
+ *
+ * @typedef {(element:WPPriorityQueueContext)=>boolean} WPPriorityQueueFlush
+ */
+
+/**
+ * Reset the queue.
+ *
+ * @typedef {()=>void} WPPriorityQueueReset
+ */
+
+/**
+ * Priority queue instance.
+ *
+ * @typedef {Object} WPPriorityQueue
+ *
+ * @property {WPPriorityQueueAdd}   add    Add callback to queue for context.
+ * @property {WPPriorityQueueFlush} flush  Flush queue for context.
+ * @property {WPPriorityQueueFlush} cancel Clear queue for context.
+ * @property {WPPriorityQueueReset} reset  Reset queue.
+ */
+
+/**
+ * Creates a context-aware queue that only executes
+ * the last task of a given context.
+ *
+ * @example
+ *```js
+ * import { createQueue } from '@wordpress/priority-queue';
+ *
+ * const queue = createQueue();
+ *
+ * // Context objects.
+ * const ctx1 = {};
+ * const ctx2 = {};
+ *
+ * // For a given context in the queue, only the last callback is executed.
+ * queue.add( ctx1, () => console.log( 'This will be printed first' ) );
+ * queue.add( ctx2, () => console.log( 'This won\'t be printed' ) );
+ * queue.add( ctx2, () => console.log( 'This will be printed second' ) );
+ *```
+ *
+ * @return {WPPriorityQueue} Queue object with `add`, `flush` and `reset` methods.
+ */
+const createQueue = () => {
+  /** @type {Map<WPPriorityQueueContext, WPPriorityQueueCallback>} */
+  const waitingList = new Map();
+  let isRunning = false;
+
+  /**
+   * Callback to process as much queue as time permits.
+   *
+   * Map Iteration follows the original insertion order. This means that here
+   * we can iterate the queue and know that the first contexts which were
+   * added will be run first. On the other hand, if anyone adds a new callback
+   * for an existing context it will supplant the previously-set callback for
+   * that context because we reassigned that map key's value.
+   *
+   * In the case that a callback adds a new callback to its own context then
+   * the callback it adds will appear at the end of the iteration and will be
+   * run only after all other existing contexts have finished executing.
+   *
+   * @param {IdleDeadline|number} deadline Idle callback deadline object, or
+   *                                       animation frame timestamp.
+   */
+  const runWaitingList = deadline => {
+    for (const [nextElement, callback] of waitingList) {
+      waitingList.delete(nextElement);
+      callback();
+      if ('number' === typeof deadline || deadline.timeRemaining() <= 0) {
+        break;
+      }
+    }
+    if (waitingList.size === 0) {
+      isRunning = false;
+      return;
+    }
+    (0,_request_idle_callback__WEBPACK_IMPORTED_MODULE_0__["default"])(runWaitingList);
+  };
+
+  /**
+   * Add a callback to the queue for a given context.
+   *
+   * If errors with undefined callbacks are encountered double check that
+   * all of your useSelect calls have the right dependencies set correctly
+   * in their second parameter. Missing dependencies can cause unexpected
+   * loops and race conditions in the queue.
+   *
+   * @type {WPPriorityQueueAdd}
+   *
+   * @param {WPPriorityQueueContext}  element Context object.
+   * @param {WPPriorityQueueCallback} item    Callback function.
+   */
+  const add = (element, item) => {
+    waitingList.set(element, item);
+    if (!isRunning) {
+      isRunning = true;
+      (0,_request_idle_callback__WEBPACK_IMPORTED_MODULE_0__["default"])(runWaitingList);
+    }
+  };
+
+  /**
+   * Flushes queue for a given context, returning true if the flush was
+   * performed, or false if there is no queue for the given context.
+   *
+   * @type {WPPriorityQueueFlush}
+   *
+   * @param {WPPriorityQueueContext} element Context object.
+   *
+   * @return {boolean} Whether flush was performed.
+   */
+  const flush = element => {
+    const callback = waitingList.get(element);
+    if (undefined === callback) {
+      return false;
+    }
+    waitingList.delete(element);
+    callback();
+    return true;
+  };
+
+  /**
+   * Clears the queue for a given context, cancelling the callbacks without
+   * executing them. Returns `true` if there were scheduled callbacks to cancel,
+   * or `false` if there was is no queue for the given context.
+   *
+   * @type {WPPriorityQueueFlush}
+   *
+   * @param {WPPriorityQueueContext} element Context object.
+   *
+   * @return {boolean} Whether any callbacks got cancelled.
+   */
+  const cancel = element => {
+    return waitingList.delete(element);
+  };
+
+  /**
+   * Reset the queue without running the pending callbacks.
+   *
+   * @type {WPPriorityQueueReset}
+   */
+  const reset = () => {
+    waitingList.clear();
+    isRunning = false;
+  };
+  return {
+    add,
+    flush,
+    cancel,
+    reset
+  };
+};
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/priority-queue/build-module/request-idle-callback.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@wordpress/priority-queue/build-module/request-idle-callback.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createRequestIdleCallback: () => (/* binding */ createRequestIdleCallback),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var requestidlecallback__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! requestidlecallback */ "./node_modules/requestidlecallback/index.js");
+/* harmony import */ var requestidlecallback__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(requestidlecallback__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * External dependencies
+ */
+
+
+/**
+ * @typedef {( timeOrDeadline: IdleDeadline | number ) => void} Callback
+ */
+
+/**
+ * @return {(callback: Callback) => void} RequestIdleCallback
+ */
+function createRequestIdleCallback() {
+  if (typeof window === 'undefined') {
+    return callback => {
+      setTimeout(() => callback(Date.now()), 0);
+    };
+  }
+  return window.requestIdleCallback;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createRequestIdleCallback());
+//# sourceMappingURL=request-idle-callback.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@wordpress/url/build-module/add-query-args.js":
 /*!********************************************************************!*\
   !*** ./node_modules/@wordpress/url/build-module/add-query-args.js ***!
@@ -14160,6 +12876,51 @@ function buildQueryString(data) {
   return string.substr(1);
 }
 //# sourceMappingURL=build-query-string.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/url/build-module/get-query-arg.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@wordpress/url/build-module/get-query-arg.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getQueryArg: () => (/* binding */ getQueryArg)
+/* harmony export */ });
+/* harmony import */ var _get_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-query-args */ "./node_modules/@wordpress/url/build-module/get-query-args.js");
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * @typedef {{[key: string]: QueryArgParsed}} QueryArgObject
+ */
+
+/**
+ * @typedef {string|string[]|QueryArgObject} QueryArgParsed
+ */
+
+/**
+ * Returns a single query argument of the url
+ *
+ * @param {string} url URL.
+ * @param {string} arg Query arg name.
+ *
+ * @example
+ * ```js
+ * const foo = getQueryArg( 'https://wordpress.org?foo=bar&bar=baz', 'foo' ); // bar
+ * ```
+ *
+ * @return {QueryArgParsed|void} Query arg value.
+ */
+function getQueryArg(url, arg) {
+  return (0,_get_query_args__WEBPACK_IMPORTED_MODULE_0__.getQueryArgs)(url)[arg];
+}
+//# sourceMappingURL=get-query-arg.js.map
 
 /***/ }),
 
@@ -14299,6 +13060,139 @@ function getQueryString(url) {
   }
 }
 //# sourceMappingURL=get-query-string.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/url/build-module/has-query-arg.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@wordpress/url/build-module/has-query-arg.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   hasQueryArg: () => (/* binding */ hasQueryArg)
+/* harmony export */ });
+/* harmony import */ var _get_query_arg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-query-arg */ "./node_modules/@wordpress/url/build-module/get-query-arg.js");
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Determines whether the URL contains a given query arg.
+ *
+ * @param {string} url URL.
+ * @param {string} arg Query arg name.
+ *
+ * @example
+ * ```js
+ * const hasBar = hasQueryArg( 'https://wordpress.org?foo=bar&bar=baz', 'bar' ); // true
+ * ```
+ *
+ * @return {boolean} Whether or not the URL contains the query arg.
+ */
+function hasQueryArg(url, arg) {
+  return (0,_get_query_arg__WEBPACK_IMPORTED_MODULE_0__.getQueryArg)(url, arg) !== undefined;
+}
+//# sourceMappingURL=has-query-arg.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/url/build-module/normalize-path.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@wordpress/url/build-module/normalize-path.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   normalizePath: () => (/* binding */ normalizePath)
+/* harmony export */ });
+/**
+ * Given a path, returns a normalized path where equal query parameter values
+ * will be treated as identical, regardless of order they appear in the original
+ * text.
+ *
+ * @param {string} path Original path.
+ *
+ * @return {string} Normalized path.
+ */
+function normalizePath(path) {
+  const splitted = path.split('?');
+  const query = splitted[1];
+  const base = splitted[0];
+  if (!query) {
+    return base;
+  }
+
+  // 'b=1%2C2&c=2&a=5'
+  return base + '?' + query
+  // [ 'b=1%2C2', 'c=2', 'a=5' ]
+  .split('&')
+  // [ [ 'b, '1%2C2' ], [ 'c', '2' ], [ 'a', '5' ] ]
+  .map(entry => entry.split('='))
+  // [ [ 'b', '1,2' ], [ 'c', '2' ], [ 'a', '5' ] ]
+  .map(pair => pair.map(decodeURIComponent))
+  // [ [ 'a', '5' ], [ 'b, '1,2' ], [ 'c', '2' ] ]
+  .sort((a, b) => a[0].localeCompare(b[0]))
+  // [ [ 'a', '5' ], [ 'b, '1%2C2' ], [ 'c', '2' ] ]
+  .map(pair => pair.map(encodeURIComponent))
+  // [ 'a=5', 'b=1%2C2', 'c=2' ]
+  .map(pair => pair.join('='))
+  // 'a=5&b=1%2C2&c=2'
+  .join('&');
+}
+//# sourceMappingURL=normalize-path.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/url/build-module/remove-query-args.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@wordpress/url/build-module/remove-query-args.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   removeQueryArgs: () => (/* binding */ removeQueryArgs)
+/* harmony export */ });
+/* harmony import */ var _get_query_args__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-query-args */ "./node_modules/@wordpress/url/build-module/get-query-args.js");
+/* harmony import */ var _build_query_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./build-query-string */ "./node_modules/@wordpress/url/build-module/build-query-string.js");
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Removes arguments from the query string of the url
+ *
+ * @param {string}    url  URL.
+ * @param {...string} args Query Args.
+ *
+ * @example
+ * ```js
+ * const newUrl = removeQueryArgs( 'https://wordpress.org?foo=bar&bar=baz&baz=foobar', 'foo', 'bar' ); // https://wordpress.org?baz=foobar
+ * ```
+ *
+ * @return {string} Updated URL.
+ */
+function removeQueryArgs(url, ...args) {
+  const queryStringIndex = url.indexOf('?');
+  if (queryStringIndex === -1) {
+    return url;
+  }
+  const query = (0,_get_query_args__WEBPACK_IMPORTED_MODULE_0__.getQueryArgs)(url);
+  const baseURL = url.substr(0, queryStringIndex);
+  args.forEach(arg => delete query[arg]);
+  const queryString = (0,_build_query_string__WEBPACK_IMPORTED_MODULE_1__.buildQueryString)(query);
+  return queryString ? baseURL + '?' + queryString : baseURL;
+}
+//# sourceMappingURL=remove-query-args.js.map
 
 /***/ }),
 
@@ -15911,6 +14805,7 @@ function DateOffset(_ref) {
       setPreviewMessage('');
     }
   };
+  var hidePreventDuplicateScheduling = settings === null || settings === void 0 ? void 0 : settings.hidePreventDuplicateScheduling;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TreeSelect, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("When to run", "publishpress-future-pro"),
     tree: whenToRunOptions,
@@ -16017,17 +14912,17 @@ function DateOffset(_ref) {
         value: value
       });
     }
-  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Prevent duplicate scheduling", "publishpress-future-pro"),
-    checked: defaultValue.unique || false,
+  })), isAdvancedSettingsEnabled && /*#__PURE__*/React.createElement(React.Fragment, null, !hidePreventDuplicateScheduling && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Unique ID Expression", "publishpress-future-pro"),
+    value: defaultValue.uniqueIdExpression,
     onChange: function onChange(value) {
       return onChangeSetting({
-        settingName: "unique",
+        settingName: "uniqueIdExpression",
         value: value
       });
     },
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("If enabled, the step will prevent the step from being accidentally scheduled multiple times.", "publishpress-future-pro") // phpcs:ignore Generic.Files.LineLength.TooLong
-  })), isAdvancedSettingsEnabled && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique.", "publishpress-future-pro")
+  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Priority", "publishpress-future-pro"),
     value: defaultValue.priority,
     onChange: function onChange(value) {
@@ -16037,7 +14932,7 @@ function DateOffset(_ref) {
       });
     },
     help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "publishpress-future-pro") // phpcs:ignore Generic.Files.LineLength.TooLong
-  })));
+  }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DateOffset);
 
@@ -19139,6 +18034,60 @@ function WarningIcon(_ref) {
 
 /***/ }),
 
+/***/ "./src/assets/jsx/workflow-editor/components/icons/website.jsx":
+/*!*********************************************************************!*\
+  !*** ./src/assets/jsx/workflow-editor/components/icons/website.jsx ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ WebsiteIcon)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./src/assets/jsx/workflow-editor/components/icons/base.jsx");
+
+
+/**
+ * Icon CgWebsite from 'react-icons/cg'.
+ */
+function WebsiteIcon(_ref) {
+  var _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 24 : _ref$size;
+  return /*#__PURE__*/React.createElement(_base__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    size: size
+  }, /*#__PURE__*/React.createElement("svg", {
+    stroke: "currentColor",
+    fill: "none",
+    strokeWidth: "0",
+    viewBox: "0 0 24 24",
+    height: "100%",
+    width: "100%",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React.createElement("path", {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M14 7C13.4477 7 13 7.44772 13 8V16C13 16.5523 13.4477 17 14 17H18C18.5523 17 19 16.5523 19 16V8C19 7.44772 18.5523 7 18 7H14ZM17 9H15V15H17V9Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M6 7C5.44772 7 5 7.44772 5 8C5 8.55228 5.44772 9 6 9H10C10.5523 9 11 8.55228 11 8C11 7.44772 10.5523 7 10 7H6Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M6 11C5.44772 11 5 11.4477 5 12C5 12.5523 5.44772 13 6 13H10C10.5523 13 11 12.5523 11 12C11 11.4477 10.5523 11 10 11H6Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M5 16C5 15.4477 5.44772 15 6 15H10C10.5523 15 11 15.4477 11 16C11 16.5523 10.5523 17 10 17H6C5.44772 17 5 16.5523 5 16Z",
+    fill: "currentColor"
+  }), /*#__PURE__*/React.createElement("path", {
+    fillRule: "evenodd",
+    clipRule: "evenodd",
+    d: "M4 3C2.34315 3 1 4.34315 1 6V18C1 19.6569 2.34315 21 4 21H20C21.6569 21 23 19.6569 23 18V6C23 4.34315 21.6569 3 20 3H4ZM20 5H4C3.44772 5 3 5.44772 3 6V18C3 18.5523 3.44772 19 4 19H20C20.5523 19 21 18.5523 21 18V6C21 5.44772 20.5523 5 20 5Z",
+    fill: "currentColor"
+  })));
+}
+
+/***/ }),
+
 /***/ "./src/assets/jsx/workflow-editor/components/icons/woo.jsx":
 /*!*****************************************************************!*\
   !*** ./src/assets/jsx/workflow-editor/components/icons/woo.jsx ***!
@@ -20458,7 +19407,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/block-default.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/block-default.js");
 /* harmony import */ var _icons_woo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons/woo */ "./src/assets/jsx/workflow-editor/components/icons/woo.jsx");
 /* harmony import */ var _icons_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons/user */ "./src/assets/jsx/workflow-editor/components/icons/user.jsx");
 /* harmony import */ var _icons_bug__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icons/bug */ "./src/assets/jsx/workflow-editor/components/icons/bug.jsx");
@@ -20469,6 +19418,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_warning__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./icons/warning */ "./src/assets/jsx/workflow-editor/components/icons/warning.jsx");
 /* harmony import */ var _icons_schedule__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./icons/schedule */ "./src/assets/jsx/workflow-editor/components/icons/schedule.jsx");
 /* harmony import */ var _icons_document_text__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./icons/document-text */ "./src/assets/jsx/workflow-editor/components/icons/document-text.jsx");
+/* harmony import */ var _icons_website__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./icons/website */ "./src/assets/jsx/workflow-editor/components/icons/website.jsx");
 /**
  * External dependencies
  */
@@ -20477,6 +19427,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -20501,7 +19452,7 @@ function NodeIcon(_ref) {
   switch (iconSrc) {
     case 'block-default':
       icon = {
-        src: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"]
+        src: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__["default"]
       };
       break;
     case 'document':
@@ -20568,6 +19519,11 @@ function NodeIcon(_ref) {
     case 'arrow-down':
       icon = {
         src: 'arrow-down'
+      };
+      break;
+    case 'website':
+      icon = {
+        src: _icons_website__WEBPACK_IMPORTED_MODULE_12__["default"]
       };
       break;
   }

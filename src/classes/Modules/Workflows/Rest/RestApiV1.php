@@ -194,6 +194,9 @@ class RestApiV1 implements RestApiManagerInterface
             );
         }
 
+        $isPublishing = $workflowModel->getStatus() !== 'publish' && $request['status'] === 'publish';
+        $isUnpublishing = $workflowModel->getStatus() === 'publish' && $request['status'] !== 'publish';
+
         if (isset($request['title'])) {
             $workflowModel->setTitle($request['title']);
         }
@@ -226,7 +229,13 @@ class RestApiV1 implements RestApiManagerInterface
             $workflowModel->setDebugRayShowWordPressErrors($request['debugRayShowWordPressErrors']);
         }
 
-        $workflowModel->save();
+        if ($isPublishing) {
+            $workflowModel->publish();
+        } elseif ($isUnpublishing) {
+            $workflowModel->unpublish();
+        } else {
+            $workflowModel->save();
+        }
 
         return rest_ensure_response($this->getWorkflowForResponse($workflowModel));
     }

@@ -135,9 +135,11 @@ class PostModel implements PostModelInterface
 
             $workflowModel->load($workflowId);
 
-            $query = "SELECT scheduled_date_gmt, extended_args
+            // FIXME: Fix this for the new args table
+            $query = "SELECT scheduled_date_gmt, args, extended_args
                 FROM {$wpdb->prefix}actionscheduler_actions
-                WHERE extended_args->'$[0].contextVariables.global.trigger.value.name' = %s
+                WHERE (extended_args->'$[0].contextVariables.global.trigger.value.name' = %s)
+                    OR (args->'$[0].contextVariables.global.trigger.value.name' = %s)
                 AND status = 'pending'
                 AND hook = %s
             ";

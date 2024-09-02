@@ -23,6 +23,10 @@ class PostResolver implements VariableResolverInterface
 
     public function getValue(string $property = '')
     {
+        if (empty($property)) {
+            $property = 'ID';
+        }
+
         switch ($property) {
             case 'ID':
             case 'id':

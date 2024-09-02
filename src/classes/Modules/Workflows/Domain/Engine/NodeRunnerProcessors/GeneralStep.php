@@ -139,7 +139,7 @@ class GeneralStep implements NodeRunnerProcessorInterface
             return;
         }
 
-        $workflowId = $this->variablesHandler->parseNestedVariableValue('global.workflow.id', $contextVariables);
+        $workflowId = $this->getWorkflowIdFromContextVariables($contextVariables);
 
         $workflowModel = new WorkflowModel();
         $workflowModel->load($workflowId);

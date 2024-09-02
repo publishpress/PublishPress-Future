@@ -39,7 +39,7 @@ class CoreOnCronSchedule implements NodeTypeInterface
 
     public function getIcon(): string
     {
-        return "media-document";
+        return "schedule";
     }
 
     public function getFrecency(): int
@@ -74,6 +74,7 @@ class CoreOnCronSchedule implements NodeTypeInterface
                                 "step",
                                 "global.user.user_registered",
                             ],
+                            "hidePreventDuplicateScheduling" => true,
                         ]
                     ],
                 ],

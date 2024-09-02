@@ -4,7 +4,7 @@ namespace PublishPress\FuturePro\Modules\Workflows\Interfaces;
 
 interface ScheduledActionsModelInterface
 {
-    public function load(int $id);
+    public function deleteOrphanWorkflowArgs(): void;
 
-    public function getHook(): string;
+    public function cancelWorkflowScheduledActions(int $workflowId): void;
 }

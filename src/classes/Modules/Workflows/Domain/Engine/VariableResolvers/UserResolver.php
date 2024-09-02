@@ -33,6 +33,10 @@ class UserResolver implements VariableResolverInterface
             return '';
         }
 
+        if (empty($property)) {
+            $property = 'ID';
+        }
+
         switch ($property) {
             case 'id':
             case 'ID':

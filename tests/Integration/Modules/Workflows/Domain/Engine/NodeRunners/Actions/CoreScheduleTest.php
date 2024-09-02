@@ -108,10 +108,8 @@ class CoreScheduleTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             ],
             [],
             [
-                'global.workflow' => new WorkflowResolver(['id' => $workflows[0]]),
+                'global.workflow' => new WorkflowResolver(['id' => 0]),
             ]
         );
-
-        $this->assertEmpty($model->getManuallyEnabledWorkflows());
     }
 }

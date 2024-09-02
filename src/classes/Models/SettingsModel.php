@@ -28,6 +28,8 @@ class SettingsModel
 
     public const OPTION_EXPERIMENTAL_ENABLED = 'ppfuturepro_experimental_enabled';
 
+    public const OPTION_STEP_SCHEDULE_COMPRESSED_ARGS = 'ppfuturepro_step_schedule_compressed_args';
+
     public const BASE_DATE_CURRENT = 'current';
 
     public const BASE_DATE_PUBLISHING = 'publishing';
@@ -63,6 +65,7 @@ class SettingsModel
             'metadataMapping' => $this->getMetadataMapping(),
             'metadataHideMetabox' => $this->getMetaboxHideStatus(),
             'experimentalFeaturesStatus' => $this->getExperimentalFeaturesStatus(),
+            'stepScheduleCompressedArgsStatus' => $this->getStepScheduleCompressedArgsStatus(),
         ];
     }
 
@@ -201,6 +204,7 @@ class SettingsModel
         $this->options->deleteOption(self::OPTION_METADATA_MAPPING_STATUS);
         $this->options->deleteOption(self::OPTION_HIDE_METABOX);
         $this->options->deleteOption(self::OPTION_METADATA_MAPPING);
+        $this->options->deleteOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS);
     }
 
     public function setMetadataMappingStatus($statuses): void
@@ -290,5 +294,15 @@ class SettingsModel
     public function getMetadataMapping(): array
     {
         return (array)$this->options->getOption(self::OPTION_METADATA_MAPPING, []);
+    }
+
+    public function getStepScheduleCompressedArgsStatus(): bool
+    {
+        return (bool)$this->options->getOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, false);
+    }
+
+    public function setStepScheduleCompressedArgsStatus(bool $value): void
+    {
+        $this->options->updateOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, $value);
     }
 }

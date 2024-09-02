@@ -59,4 +59,6 @@ abstract class ServicesAbstract
     public const CRON_STEP_NODE_RUNNER_PROCESSOR = 'future.pro/cron-step-node-runner-processor';
     public const NODE_RUNNER_FACTORY = 'future.pro/node-runner-factory';
     public const INPUT_VALIDATOR_POST_QUERY = 'future.pro/input-validator-post-query';
+    public const DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA = 'future.pro/db-table-workflow-scheduled-steps-schema';
+    public const MIGRATIONS_FACTORY = 'future.pro/migrations-factory';
 }

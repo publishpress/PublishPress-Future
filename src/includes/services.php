@@ -18,6 +18,7 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\DBTableSchemas\WorkflowScheduledStepsSchema;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\InputValidators\PostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\CronAction;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors\CronStep;
@@ -48,6 +49,7 @@ use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowVariablesHand
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\FuturePro\Modules\Workflows\Migrations\V40000WorkflowScheduledStepsSchema;
 use PublishPress\FuturePro\Modules\Workflows\Models\CronSchedulesModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\NodeTypesModel;
 use PublishPress\FuturePro\Modules\Workflows\Module;
@@ -213,7 +215,11 @@ return [
             $container->get(ServicesAbstract::NODE_TYPES_MODEL),
             $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
             $container->get(ServicesAbstract::WORKFLOW_ENGINE),
-            $container->get(ServicesAbstract::MODEL_SETTINGS)
+            $container->get(ServicesAbstract::MODEL_SETTINGS),
+            $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA),
+            $container->get(ServicesAbstract::MIGRATIONS_FACTORY),
+            $container->get(ServicesAbstract::PLUGIN_VERSION),
+            $container->get(FreeServicesAbstract::CRON)
         );
     },
 
@@ -317,8 +323,31 @@ return [
             $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
             $container->get(ServicesAbstract::NODE_TYPES_MODEL),
             $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-            $container->get(ServicesAbstract::PLUGIN_VERSION)
+            $container->get(ServicesAbstract::PLUGIN_VERSION),
+            $container->get(ServicesAbstract::MODEL_SETTINGS),
+            $container->get(ServicesAbstract::WORKFLOW_ENGINE)
         );
+    },
+
+    ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA => static function (ContainerInterface $container) {
+        $schemaHandler = $container->get(FreeServicesAbstract::DB_TABLE_SCHEMA_HANDLER_FACTORY);
+        $schemaHandler = $schemaHandler();
+
+        return new WorkflowScheduledStepsSchema(
+            $schemaHandler,
+            $container->get(ServicesAbstract::HOOKS)
+        );
+    },
+
+    ServicesAbstract::MIGRATIONS_FACTORY => static function (ContainerInterface $container) {
+        return function () use ($container) {
+            return [
+                new V40000WorkflowScheduledStepsSchema(
+                    $container->get(ServicesAbstract::HOOKS),
+                    $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA)
+                )
+            ];
+        };
     },
 
     ServicesAbstract::NODE_RUNNER_FACTORY => static function (ContainerInterface $container) {

@@ -146,6 +146,8 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         }
     }
 
+    const hidePreventDuplicateScheduling = settings?.hidePreventDuplicateScheduling;
+
     return (
         <>
             <VStack>
@@ -267,22 +269,26 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
 
-                <PanelRow>
-                    <ToggleControl
-                        label={__("Prevent duplicate scheduling", "publishpress-future-pro")}
-                        checked={defaultValue.unique || false}
-                        onChange={(value) => onChangeSetting({ settingName: "unique", value })}
-                        help={__("If enabled, the step will prevent the step from being accidentally scheduled multiple times.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
-                    />
-                </PanelRow>
-
                 {isAdvancedSettingsEnabled && (
-                    <TextControl
-                        label={__("Priority", "publishpress-future-pro")}
-                        value={defaultValue.priority}
-                        onChange={(value) => onChangeSetting({ settingName: "priority", value })}
-                        help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
-                    />
+                    <>
+                        {!hidePreventDuplicateScheduling && (
+                            <PanelRow>
+                                <TextControl
+                                    label={__("Unique ID Expression", "publishpress-future-pro")}
+                                    value={defaultValue.uniqueIdExpression}
+                                    onChange={(value) => onChangeSetting({ settingName: "uniqueIdExpression", value })}
+                                    help={__("Define a custom expression for a unique task ID. Use placeholders like {{onSavePost1.post.ID}} or {{global.user.ID}} to make sure the ID is unique.", "publishpress-future-pro")}
+                                />
+                            </PanelRow>
+                        )}
+
+                        <TextControl
+                            label={__("Priority", "publishpress-future-pro")}
+                            value={defaultValue.priority}
+                            onChange={(value) => onChangeSetting({ settingName: "priority", value })}
+                            help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "publishpress-future-pro")} // phpcs:ignore Generic.Files.LineLength.TooLong
+                        />
+                    </>
                 )}
             </VStack>
         </>

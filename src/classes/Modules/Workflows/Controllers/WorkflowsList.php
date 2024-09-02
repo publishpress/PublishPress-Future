@@ -50,6 +50,13 @@ class WorkflowsList implements InitializableInterface
         );
 
         $this->hooks->addAction(
+            "post_row_actions",
+            [$this, "renderStatusAction"],
+            10,
+            2
+        );
+
+        $this->hooks->addAction(
             "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
             [$this, "renderTriggersColumn"],
             10,
@@ -64,15 +71,15 @@ class WorkflowsList implements InitializableInterface
         );
 
         $this->hooks->addAction(
-            "manage_" . Module::POST_TYPE_WORKFLOW . "_posts_custom_column",
-            [$this, "renderStatusColumn"],
-            10,
-            2
+            FutureCoreHooksAbstract::ACTION_ADMIN_INIT,
+            [$this, "updateWorkflowStatus"]
         );
 
         $this->hooks->addAction(
-            FutureCoreHooksAbstract::ACTION_ADMIN_INIT,
-            [$this, "updateWorkflowStatus"]
+            'the_title',
+            [$this, "addWorkflowStatusToTitle"],
+            10,
+            2
         );
     }
 
@@ -137,7 +144,6 @@ class WorkflowsList implements InitializableInterface
 
     public function addCustomColumns($columns)
     {
-        $columns["workflow_status"] = __("Status", "publishpress-future-pro");
         $columns["workflow_triggers"] = __(
             "Triggers",
             "publishpress-future-pro"
@@ -210,44 +216,6 @@ class WorkflowsList implements InitializableInterface
         require __DIR__ . "/../Views/preview-column.html.php";
     }
 
-    public function renderStatusColumn($column, $postId)
-    {
-        if ("workflow_status" !== $column) {
-            return;
-        }
-
-        $workflowModel = new WorkflowModel();
-        $workflowModel->load($postId);
-
-        $workflowStatus = $workflowModel->getStatus();
-
-        $toggleUrl = wp_nonce_url(
-            add_query_arg(
-                [
-                    'pp_action' => 'change_workflow_status',
-                    'workflow_id' => $postId,
-                    'status' => ('draft' === $workflowStatus) ? 'publish' : 'draft'
-                ],
-                admin_url('edit.php?post_type=' . Module::POST_TYPE_WORKFLOW)
-            ),
-            'change_workflow_status_' . $postId
-        );
-
-        $buttonClass = ('draft' === $workflowStatus) ? 'status-draft' : 'status-published';
-        $buttonText = ('draft' === $workflowStatus) ? __("Deactivated", "publishpress-future-pro") : __("Activated", "publishpress-future-pro");
-
-        $icon = ('draft' === $workflowStatus) ? '<span class="dashicons dashicons-no"></span>' : '<span class="dashicons dashicons-yes"></span>'; // X for draft, checkmark for published
-        $title = ('draft' === $workflowStatus) ? __('Click to activate this workflow', 'publishpress-future-pro') : __('Click to deactivate this workflow', 'publishpress-future-pro');
-
-        printf(
-            '<a href="%s" class="button %s change-workflow-status" title="%s">%s <span class="change-workflow-status-text">%s</span></a>',
-            esc_url($toggleUrl),
-            esc_attr($buttonClass),
-            esc_attr($title),
-            $icon,
-            esc_html($buttonText)
-        );
-    }
 
     public function updateWorkflowStatus()
     {
@@ -267,7 +235,7 @@ class WorkflowsList implements InitializableInterface
             return;
         }
 
-        if (!wp_verify_nonce($_GET['_wpnonce'], 'change_workflow_status_' . $_GET['workflow_id'])) {
+        if (!wp_verify_nonce(sanitize_key($_GET['_wpnonce']), 'change_workflow_status_' . (int) $_GET['workflow_id'])) {
             return;
         }
 
@@ -293,5 +261,98 @@ class WorkflowsList implements InitializableInterface
             )
         );
         exit;
+    }
+
+    public function renderStatusAction($actions, $post)
+    {
+        if (Module::POST_TYPE_WORKFLOW !== $post->post_type) {
+            return $actions;
+        }
+
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($post->ID);
+
+        $workflowStatus = $workflowModel->getStatus();
+
+        $toggleUrl = wp_nonce_url(
+            add_query_arg(
+                [
+                    'pp_action' => 'change_workflow_status',
+                    'workflow_id' => $post->ID,
+                    'status' => ('draft' === $workflowStatus) ? 'publish' : 'draft'
+                ],
+                admin_url('edit.php?post_type=' . Module::POST_TYPE_WORKFLOW)
+            ),
+            'change_workflow_status_' . $post->ID
+        );
+
+        $statuses = [
+            'draft' => [
+                'action' => 'activate',
+                'text' => __('Activate', 'publishpress-future-pro'),
+                'title' => __('Activate', 'publishpress-future-pro'),
+                'status' => 'publish',
+            ],
+            'publish' => [
+                'action' => 'deactivate',
+                'text' => __('Deactivate', 'publishpress-future-pro'),
+                'title' => __('Deactivate', 'publishpress-future-pro'),
+                'status' => 'draft',
+            ]
+        ];
+
+        $statusData = isset($statuses[$workflowStatus]) ? $statuses[$workflowStatus] : [];
+
+        if (empty($statusData)) {
+            return $actions;
+        }
+
+        $actions = [
+            $statusData['action'] => sprintf(
+                '<a href="%s" class="pp-future-pro-workflow-%s-inline" title="%s">%s</a>',
+                esc_url(
+                    wp_nonce_url(
+                        add_query_arg(
+                            [
+                                'pp_action' => 'change_workflow_status',
+                                'workflow_id' => $post->ID,
+                                'status' => $statusData['status']
+                            ],
+                            admin_url('edit.php?post_type=' . Module::POST_TYPE_WORKFLOW)
+                        ),
+                        'change_workflow_status_' . $post->ID
+                    )
+                ),
+                $statusData['action'],
+                $statusData['text'],
+                $statusData['title']
+            ),
+        ] + $actions;
+
+        return $actions;
+    }
+
+    public function addWorkflowStatusToTitle($title, $id)
+    {
+        if (
+            !is_admin() || (
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            (!isset($_GET['post_type']) || $_GET['post_type'] !== Module::POST_TYPE_WORKFLOW) &&
+                (get_current_screen()->id !== 'edit-' . Module::POST_TYPE_WORKFLOW)
+            )
+        ) {
+            return $title;
+        }
+
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($id);
+
+        $workflowStatus = $workflowModel->getStatus();
+
+        if ('publish' === $workflowStatus) {
+            $title = ' ▶ ' . $title;
+        }
+
+        return $title;
     }
 }

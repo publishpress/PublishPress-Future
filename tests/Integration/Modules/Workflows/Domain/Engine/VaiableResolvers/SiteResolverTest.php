@@ -51,11 +51,12 @@ class SiteResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
         $this->assertEquals('', $resolver->getValueAsString('non_existent_key'));
     }
 
-    public function testGetValueAsStringReturnsEmptyStringWhenPropertyIsEmpty(): void
+    public function testGetValueAsStringReturnsSiteNameWhenPropertyIsEmpty(): void
     {
         $resolver = Stub::make(SiteResolver::class, ['getSiteName' => 'Site Name']);
 
-        $this->assertEquals('', $resolver->getValueAsString(''));
+        $this->assertEquals('Site Name', $resolver->getValueAsString());
+        $this->assertEquals('Site Name', $resolver->getValueAsString(''));
     }
 
     public function testIssetReturnsTrueWhenPropertyExists(): void

@@ -6,9 +6,12 @@ use PublishPress\FuturePro\Modules\Workflows\Module;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use Exception;
 use PublishPress\Future\Core\DI\Container;
+use PublishPress\Future\Core\HookableInterface;
+use PublishPress\FuturePro\Core\HooksAbstract;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
+use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use WP_Post;
 use WP_Query;
 
@@ -18,8 +21,6 @@ use function get_post;
 
 class WorkflowModel implements WorkflowModelInterface
 {
-    public const META_KEY_PREFIX_NODE_EXECUTION_COUNT = '_pp_workflow_node_execution_count_';
-
     public const META_KEY_HAS_LEGACY_TRIGGER = '_pp_workflow_has_legacy_trigger';
 
     public const META_KEY_HAS_MANUAL_TRIGGER = '_pp_workflow_has_manual_trigger';
@@ -52,6 +53,19 @@ class WorkflowModel implements WorkflowModelInterface
     private $debugRayShowEmails = null;
 
     private $debugRayShowWordPressErrors = null;
+
+    /**
+     * @var HookableInterface
+     */
+    private $hooks;
+
+    public function __construct()
+    {
+        $container = Container::getInstance();
+
+        // FIXME: Use dependency injection
+        $this->hooks = $container->get(ServicesAbstract::HOOKS);
+    }
 
     public function load(int $id): bool
     {
@@ -192,8 +206,12 @@ class WorkflowModel implements WorkflowModelInterface
     public function delete()
     {
         wp_delete_post($this->post->ID);
-
         $this->reset();
+
+        /**
+         * @param int $workflowId
+         */
+        $this->hooks->doAction(WorkflowsHooksAbstract::ACTION_WORKFLOW_DELETED, $this->post->ID);
     }
 
     private function getAllNodeTypes(): array
@@ -676,26 +694,6 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         return get_post_meta($this->post->ID, self::META_KEY_HAS_LEGACY_TRIGGER, true) === '1';
-    }
-
-    public function resetNodeExecutionCount(string $nodeId)
-    {
-        delete_post_meta($this->post->ID, self::META_KEY_PREFIX_NODE_EXECUTION_COUNT . $nodeId);
-    }
-
-    public function incrementNodeExecutionCount(string $nodeId): int
-    {
-        $executionCount = $this->getNodeExecutionCount($nodeId);
-        $executionCount++;
-
-        update_post_meta($this->post->ID, self::META_KEY_PREFIX_NODE_EXECUTION_COUNT . $nodeId, $executionCount);
-
-        return $executionCount;
-    }
-
-    public function getNodeExecutionCount(string $nodeId): int
-    {
-        return (int) get_post_meta($this->post->ID, self::META_KEY_PREFIX_NODE_EXECUTION_COUNT . $nodeId, true);
     }
 
     public function setDebugRayShowQueries(bool $debugRayShowQueries)

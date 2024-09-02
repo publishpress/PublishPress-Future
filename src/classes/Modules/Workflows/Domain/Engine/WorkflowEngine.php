@@ -2,6 +2,7 @@
 
 namespace PublishPress\FuturePro\Modules\Workflows\Domain\Engine;
 
+use Druidfi\Mysqldump\Compress\CompressGzip;
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
@@ -10,8 +11,12 @@ use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
+use PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionsModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowModel;
+use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowsModel;
+use PublishPress\FuturePro\Modules\Workflows\Module;
 
 use function PublishPress\FuturePro\logError;
 
@@ -42,6 +47,11 @@ class WorkflowEngine implements WorkflowEngineInterface
      */
     private $variablesHandler;
 
+    /**
+     * @var int
+     */
+    private $currentAsyncActionId;
+
     public function __construct(
         HookableInterface $hooks,
         CronInterface $cron,
@@ -56,22 +66,37 @@ class WorkflowEngine implements WorkflowEngineInterface
         $this->variablesHandler = $variablesHandler;
 
         $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_LOAD);
+
         $this->hooks->addAction(
             HooksAbstract::ACTION_EXECUTE_NODE,
             [$this, 'executeNodeRoutine'],
             10,
             3
         );
+
         $this->hooks->addAction(
             HooksAbstract::ACTION_ASYNC_EXECUTE_NODE,
             [$this, "executeAsyncNodeRoutine"],
             10
         );
+
         $this->hooks->addAction(
             HooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION,
             [$this, "unscheduleRecurringNodeAction"],
             10,
             2
+        );
+
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_SCHEDULER_BEGIN_EXECUTE,
+            [$this, "setCurrentAsyncActionId"]
+        );
+
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_POST_UPDATED,
+            [$this, "onWorkflowUpdated"],
+            10,
+            3
         );
     }
 
@@ -149,7 +174,15 @@ class WorkflowEngine implements WorkflowEngineInterface
         }
     }
 
+    public function setCurrentAsyncActionId($actionId)
+    {
+        $this->currentAsyncActionId = $actionId;
+    }
 
+    public function getCurrentAsyncActionId(): int
+    {
+        return (int) $this->currentAsyncActionId;
+    }
 
     public function executeNodeRoutine($step, $contextVariables)
     {
@@ -171,17 +204,62 @@ class WorkflowEngine implements WorkflowEngineInterface
 
     public function executeAsyncNodeRoutine($args)
     {
+        $originalArgs = $args;
+
         try {
-            $nodeRunner = call_user_func($this->nodeRunnerFactory, $args['step']['node']['data']['name']);
-            $nodeRunner->actionCallback($args);
+            if (ScheduledActionModel::argsAreOnNewFormat($args)) {
+                // New format, when the args are saved in the wp_ppfuture_workflow_scheduled_steps table.
+                $nodeName = $args['stepName'];
+                $scheduledStepModel = new WorkflowScheduledStepModel();
+                $scheduledStepModel->loadByActionId($this->currentAsyncActionId);
+                $args = $scheduledStepModel->getArgs();
+            } else {
+                // Old format, when the args were saved directly in the actionsscheduler_actions table.
+                $nodeName = $args['step']['node']['data']['name'];
+            }
+            $args['actionId'] = $this->currentAsyncActionId;
+
+            $nodeRunner = call_user_func($this->nodeRunnerFactory, $nodeName);
+            $nodeRunner->actionCallback($args, $originalArgs);
         } catch (Exception $e) {
             logError("Async node runner error", $e);
         }
     }
 
-    public function unscheduleRecurringNodeAction($hook, $args)
+    public function onWorkflowUpdated($workflowId, $newPost, $oldPost)
     {
-        $this->cron->clearScheduledAction($hook, [$args]);
+        if ($newPost->post_type !== Module::POST_TYPE_WORKFLOW) {
+            return;
+        }
+
+        // Ignore if the status is the same
+        if ($oldPost->post_status === $newPost->post_status) {
+            return;
+        }
+
+        if ($newPost->post_status === 'publish') {
+            $this->onWorkflowPublished($workflowId);
+        } else {
+            $this->onWorkflowUnpublished($workflowId);
+        }
+    }
+
+    public function onWorkflowPublished($workflowId)
+    {
+        $scheduledActionsModel = new ScheduledActionsModel();
+        $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
+    }
+
+    public function onWorkflowUnpublished($workflowId)
+    {
+        $scheduledActionsModel = new ScheduledActionsModel();
+        $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
+    }
+
+    public function unscheduleRecurringNodeAction($workflowId, $stepId)
+    {
+        $scheduledActionsModel = new ScheduledActionsModel();
+        $scheduledActionsModel->cancelRecurringScheduledActions($workflowId, $stepId);
     }
 
     public function getVariablesHandler(): WorkflowVariablesHandlerInterface

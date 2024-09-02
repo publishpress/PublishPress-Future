@@ -18,6 +18,7 @@ import MessageIcon from './icons/message';
 import WarningIcon from './icons/warning';
 import ScheduleIcon from './icons/schedule';
 import DocumentTextIcon from './icons/document-text';
+import WebsiteIcon from './icons/website';
 
 export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	const iconSrc = icon?.src || icon;
@@ -94,6 +95,11 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 				src: 'arrow-down',
 			};
 			break;
+		case 'website':
+			icon = {
+				src: WebsiteIcon,
+			};
+			break;
 	}
 
 	const mergedClassName = classnames(className, 'node-icon', {
@@ -109,10 +115,7 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 		: {};
 
 	return (
-		<span
-			style={style}
-			className={mergedClassName}
-		>
+		<span style={style} className={mergedClassName}>
 			{renderedIcon}
 		</span>
 	);

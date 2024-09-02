@@ -51,12 +51,12 @@ use PublishPress\FuturePro\Models\SettingsModel;
         </th>
         <td>
             <div class="pp-settings-field-row">
-                <input type="checkbox" name="future-experimental-features"
-                        id="future-experimental-features"
+                <input type="radio" name="future-experimental-features"
+                        id="future-experimental-features-enabled"
                         value="1"
                         <?php echo $this->settingsModel->getExperimentalFeaturesStatus() ? 'checked' : ''; ?> />
-                <label for="future-experimental-features"><?php
-                    esc_html_e('Enable experimental features', 'publishpress-future-pro'); ?></label>
+                <label for="future-experimental-features-enabled"><?php
+                    esc_html_e('Enabled', 'publishpress-future-pro'); ?></label>
                 <p class="description offset">
                     <?php esc_html_e(
                         'Enable experimental features that are still in development and may not be fully functional.',
@@ -64,6 +64,56 @@ use PublishPress\FuturePro\Models\SettingsModel;
                     ); ?>
                 </p>
             </div>
+            <div class="pp-settings-field-row">
+                <input type="radio" name="future-experimental-features"
+                        id="future-experimental-features-disabled"
+                        value="0"
+                        <?php echo !$this->settingsModel->getExperimentalFeaturesStatus() ? 'checked' : ''; ?> />
+                <label for="future-experimental-features-disabled"><?php
+                    esc_html_e('Disabled', 'publishpress-future-pro'); ?></label>
+                <p class="description offset">
+                    <?php esc_html_e(
+                        'Disable all experimental features.',
+                        'publishpress-future-pro'
+                    ); ?>
+                </p>
+            </div>
         </td>
     </tr>
 <?php endif; ?>
+<!-- Enable step schedule's compressed args -->
+<tr valign="top">
+    <th scope="row">
+        <?php esc_html_e('Workfllow Step Schedule\'s Arguments Compression', 'publishpress-future-pro'); ?>
+    </th>
+    <td>
+        <div class="pp-settings-field-row">
+            <input type="radio" name="future-step-schedule-compressed-args"
+                id="future-step-schedule-compressed-args-enabled"
+                value="1"
+                <?php echo $this->settingsModel->getStepScheduleCompressedArgsStatus() ? 'checked' : ''; ?> />
+            <label for="future-step-schedule-compressed-args-enabled"><?php
+                esc_html_e('Compress the arguments', 'publishpress-future-pro'); ?></label>
+            <p class="description offset">
+                <?php esc_html_e(
+                    'Compress the arguments of the step schedule to save memory in the database, saving them as binary data.', // phpcs:ignore Generic.Files.LineLength.TooLong
+                    'publishpress-future-pro'
+                ); ?>
+            </p>
+        </div>
+        <div class="pp-settings-field-row">
+            <input type="radio" name="future-step-schedule-compressed-args"
+                id="future-step-schedule-compressed-args-disabled"
+                value="0"
+                <?php echo !$this->settingsModel->getStepScheduleCompressedArgsStatus() ? 'checked' : ''; ?> />
+            <label for="future-step-schedule-compressed-args-disabled"><?php
+                esc_html_e('Do not compress the arguments', 'publishpress-future-pro'); ?></label>
+            <p class="description offset">
+                <?php esc_html_e(
+                    'Do not compress the arguments of the step schedule, storing them as plain text.',
+                    'publishpress-future-pro'
+                ); ?>
+            </p>
+        </div>
+    </td>
+</tr>

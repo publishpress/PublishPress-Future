@@ -40,7 +40,7 @@ class CoreOnAdminInit implements NodeTypeInterface
 
     public function getIcon(): string
     {
-        return "media-document";
+        return "website";
     }
 
     public function getFrecency(): int

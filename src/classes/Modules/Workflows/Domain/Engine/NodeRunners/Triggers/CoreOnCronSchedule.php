@@ -11,6 +11,13 @@ use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTriggerRunnerInterfa
 class CoreOnCronSchedule implements NodeTriggerRunnerInterface
 {
     /**
+     * The default interval in seconds that the setup should be skipped.
+     *
+     * @var int
+     */
+    public const DEFAULT_SETUP_INTERVAL = 5;
+
+    /**
      * @var HookableInterface
      */
     private $hooks;
@@ -24,6 +31,11 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
      * @var array
      */
     private $contextVariables;
+
+    /**
+     * @var int
+     */
+    private $workflowId;
 
     /**
      * @var AsyncNodeRunnerProcessorInterface
@@ -47,18 +59,54 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
     {
         $this->step = $step;
         $this->contextVariables = $contextVariables;
+        $this->workflowId = $workflowId;
 
-        $this->hooks->addAction(HooksAbstract::ACTION_INIT, [$this, 'triggerCallback'], 13);
+        if ($this->shouldSetup()) {
+            $this->nodeRunnerProcessor->setup($this->step, '__return_true', $this->contextVariables);
+        }
     }
 
-    public function triggerCallback()
+    /**
+     * Check if the setup should be skipped, to avoid checking this on every request.
+     *
+     * @return bool
+     */
+    private function shouldSetup(): bool
     {
-        $this->nodeRunnerProcessor->setup($this->step, [], $this->contextVariables);
+        $transientKey = 'publishpressfuture_coreoncronschedule_setup_'
+            . $this->workflowId
+            . '_'
+            . $this->step['node']['id'];
+
+        /**
+         * @param int $defaultTimeout
+         *
+         * @return int
+         */
+        $transientTimeout = apply_filters(
+            HooksAbstract::FILTER_CRON_SCHEDULE_RUNNER_TRANSIENT_TIMEOUT,
+            self::DEFAULT_SETUP_INTERVAL
+        );
+
+        if (get_transient($transientKey)) {
+            return false;
+        }
+
+        set_transient($transientKey, true, $transientTimeout);
+
+        return true;
     }
 
-    public function actionCallback(array $compactedArgs)
+    public function actionCallback(array $compactedArgs, array $originalArgs)
     {
+        $expandedArgs = $this->nodeRunnerProcessor->expandArguments($compactedArgs);
+
+        $this->step = $expandedArgs['step'];
+        $this->contextVariables = $expandedArgs['contextVariables'];
+        $this->workflowId = $this->nodeRunnerProcessor->getWorkflowIdFromContextVariables($this->contextVariables);
+
+
         $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
-        $this->nodeRunnerProcessor->actionCallback($compactedArgs);
+        $this->nodeRunnerProcessor->actionCallback($compactedArgs, $originalArgs);
     }
 }

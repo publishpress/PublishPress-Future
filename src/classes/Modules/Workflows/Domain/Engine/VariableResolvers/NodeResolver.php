@@ -10,13 +10,17 @@ use function wp_json_encode;
 class NodeResolver implements VariableResolverInterface
 {
     /**
-     * @var array
+     * @var array|object
      */
     private $node;
 
-    public function __construct(array $node)
+    public function __construct($node)
     {
-        $this->node = $node;
+        if (is_object($node)) {
+            $this->node = $node->getVariable();
+        } else {
+            $this->node = (array)$node;
+        }
     }
 
     public function getType(): string
