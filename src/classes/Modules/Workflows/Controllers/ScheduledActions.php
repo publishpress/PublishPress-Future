@@ -8,6 +8,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\FuturePro\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionModel;
@@ -32,14 +33,21 @@ class ScheduledActions implements InitializableInterface
      */
     private $cron;
 
+    /**
+     * @var SettingsModel
+     */
+    private $settingsModel;
+
     public function __construct(
         HookableInterface $hooks,
         NodeTypesModelInterface $nodeTypesModel,
-        CronInterface $cron
+        CronInterface $cron,
+        SettingsModel $settingsModel
     ) {
         $this->hooks = $hooks;
         $this->nodeTypesModel = $nodeTypesModel;
         $this->cron = $cron;
+        $this->settingsModel = $settingsModel;
     }
 
     public function initialize()
@@ -68,6 +76,12 @@ class ScheduledActions implements InitializableInterface
         $this->hooks->addAction(
             WorkflowsHooksAbstract::ACTION_INIT,
             [$this, 'scheduleOrphanWorkflowArgsCleanup'],
+            21
+        );
+
+        $this->hooks->addAction(
+            WorkflowsHooksAbstract::ACTION_INIT,
+            [$this, 'scheduleFinishedScheduledStepsCleanup'],
             20
         );
 
@@ -96,6 +110,13 @@ class ScheduledActions implements InitializableInterface
 
             case WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS:
                 $title = __('Cleanup orphan workflow scheduled step arguments', 'publishpress-future-pro');
+                break;
+
+            case WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS:
+                $title = sprintf(
+                    __('Clean up completed scheduled steps older than %d days', 'publishpress-future-pro'),
+                    $this->settingsModel->getScheduledWorkflowStepsCleanupRetention()
+                );
                 break;
         }
 
@@ -283,6 +304,31 @@ class ScheduledActions implements InitializableInterface
         );
     }
 
+    public function scheduleFinishedScheduledStepsCleanup()
+    {
+        $this->hooks->addAction(
+            WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
+            [$this, 'deleteExpiredScheduledSteps']
+        );
+
+        /**
+         * @param int $interval
+         * @return int
+         */
+        $interval = $this->hooks->applyFilters(
+            WorkflowsHooksAbstract::FILTER_FINISHED_SCHEDULED_STEPS_CLEANUP_INTERVAL,
+            DAY_IN_SECONDS
+        );
+
+        $this->cron->scheduleRecurringActionInSeconds(
+            time() + $interval,
+            $interval,
+            WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
+            [],
+            true
+        );
+    }
+
     /**
      * Delete orphan workflow args.
      *
@@ -291,6 +337,11 @@ class ScheduledActions implements InitializableInterface
     public function deleteOrphanWorkflowArgs()
     {
         (new ScheduledActionsModel())->deleteOrphanWorkflowArgs();
+    }
+
+    public function deleteExpiredScheduledSteps()
+    {
+        (new ScheduledActionsModel())->deleteExpiredScheduledSteps();
     }
 
     /*

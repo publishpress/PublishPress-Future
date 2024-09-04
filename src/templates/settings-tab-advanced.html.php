@@ -117,3 +117,7 @@ use PublishPress\FuturePro\Models\SettingsModel;
         </div>
     </td>
 </tr>
+<!-- Configure the Scheduled Workflow's Cron Cleanup Rules -->
+<tr id="scheduled-steps-cleanup-settings">
+    <!-- React component -->
+</tr>

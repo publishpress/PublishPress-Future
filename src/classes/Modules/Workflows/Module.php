@@ -118,7 +118,8 @@ class Module implements InitializableInterface
             new Controllers\ScheduledActions(
                 $this->hooks,
                 $this->nodeTypesModel,
-                $this->cron
+                $this->cron,
+                $this->settingsModel
             ),
             new Controllers\SampleWorkflows(),
             new Controllers\PostsList($this->hooks),

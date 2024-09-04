@@ -31,6 +31,33 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         );
     }
 
+    public function deleteExpiredScheduledSteps(): void
+    {
+        global $wpdb;
+
+        $container = Container::getInstance();
+
+        /**
+         * @var SettingsModelInterface $settingsModel
+         */
+        $settingsModel = $container->get(ServicesAbstract::MODEL_SETTINGS);
+
+        $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
+
+        $retention = $settingsModel->getScheduledWorkflowStepsCleanupRetention();
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE FROM %i WHERE scheduled_date_gmt < %s",
+                $tableSchema,
+                gmdate('Y-m-d H:i:s', time() - ($retention * DAY_IN_SECONDS))
+            )
+        );
+
+        $this->deleteOrphanWorkflowArgs();
+    }
+
     public function hasRowWithActionUIDHash(string $actionUIDHash): bool
     {
         global $wpdb;

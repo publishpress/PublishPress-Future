@@ -180,7 +180,7 @@ class SettingsController implements ModuleInterface
             return;
         }
 
-        if (! isset($_GET['tab']) || $_GET['tab'] === 'defaults') {
+        if (! isset($_GET['tab']) || $_GET['tab'] === 'defaults' || $_GET['tab'] === 'advanced') {
             wp_enqueue_script(
                 'publishpress-future-pro-settings-panel',
                 $this->assetsUrl . '/js/settings.js',
@@ -237,9 +237,32 @@ class SettingsController implements ModuleInterface
                             'Checking this option will disable the PublishPress Future metabox. This can prevent conflicts if you\'re using Metadata Scheduling with plugins such as ACF or Pods.', // phpcs:ignore Generic.Files.LineLength.TooLong
                             'publishpress-future-pro'
                         ),
-
+                        'scheduledStepsCleanup' => __('Scheduled Workflow Steps Cleanup', 'publishpress-future-pro'),
+                        'scheduledStepsCleanupEnable' => __(
+                            'Automatically remove scheduled workflow steps',
+                            'publishpress-future-pro'
+                        ),
+                        'scheduledStepsCleanupEnableDesc' => __(
+                            'Automatically remove scheduled workflow steps that have been marked as failed, completed, or cancelled.',
+                            'publishpress-future-pro'
+                        ),
+                        'scheduledStepsCleanupDisable' => __(
+                            'Retain all scheduled workflow steps',
+                            'publishpress-future-pro'
+                        ),
+                        'scheduledStepsCleanupDisableDesc' => __(
+                            'Retain all scheduled workflow steps indefinitely, including those marked as failed, completed, or cancelled. This may impact database performance over time.',
+                            'publishpress-future-pro'
+                        ),
+                        'scheduledStepsCleanupRetention' => __('Retention', 'publishpress-future-pro'),
+                        'scheduledStepsCleanupRetentionDesc' => __(
+                            'The duration, in days, for which completed, failed, and canceled scheduled workflow steps will be preserved before automatic removal.',
+                            'publishpress-future-pro'
+                        ),
+                        'days' => __('days', 'publishpress-future-pro'),
                     ],
                     'settings' => $this->settingsModel->getSettings(),
+                    'settingsTab' => $_GET['tab'] ?? 'defaults',
                     'customPostStatuses' => $this->customStatusesModel->getCustomStatusesAsOptions(),
                     'metadataFields' => [
                         [
@@ -450,6 +473,20 @@ class SettingsController implements ModuleInterface
             ? (int) $_POST['future-step-schedule-compressed-args']
             : 0;
         $this->settingsModel->setStepScheduleCompressedArgsStatus($stepScheduleCompressedArgsStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCleanupStatus = isset($_POST['future-step-schedule-cleanup'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (bool) $_POST['future-step-schedule-cleanup']
+            : false;
+        $this->settingsModel->setScheduledWorkflowStepsCleanupStatus($stepScheduleCleanupStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCleanupRetention = isset($_POST['future-step-schedule-cleanup-retention'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-step-schedule-cleanup-retention']
+            : 30;
+        $this->settingsModel->setScheduledWorkflowStepsCleanupRetention($stepScheduleCleanupRetention);
     }
 
     public function hideActionWorkflowsFromSettings($postTypes)

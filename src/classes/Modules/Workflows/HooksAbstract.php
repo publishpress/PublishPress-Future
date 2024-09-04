@@ -22,6 +22,7 @@ abstract class HooksAbstract
     public const ACTION_MIGRATE_WORKFLOW_SCHEDULED_STEPS_SCHEMA =
         'publishpressfuturepro_migrate_workflow_scheduled_steps_schema';
     public const ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS = 'publishpressfuturepro_cleanup_orphan_workflow_args';
+    public const ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS = 'publishpressfuturepro_cleanup_finished_scheduled_steps';
     public const ACTION_SCHEDULER_STORED_ACTION = 'action_scheduler_stored_action';
     public const ACTION_SCHEDULER_BEGIN_EXECUTE = 'action_scheduler_begin_execute';
     public const ACTION_WORKFLOW_SAVED = 'publishpressfuture_workflow_saved';
@@ -39,6 +40,8 @@ abstract class HooksAbstract
     public const FILTER_IGNORE_SAVE_POST_EVENT = 'publishpressfuturepro_ignore_save_post_event';
     public const FILTER_ORPHAN_WORKFLOW_ARGS_CLEANUP_INTERVAL =
         'publishpressfuturepro_orphan_workflow_args_cleanup_interval';
+    public const FILTER_FINISHED_SCHEDULED_STEPS_CLEANUP_INTERVAL =
+        'publishpressfuturepro_finished_scheduled_steps_cleanup_interval';
     public const FILTER_CRON_SCHEDULE_RUNNER_TRANSIENT_TIMEOUT =
         'publishpressfuturepro_cron_schedule_runner_transient_timeout';
 }
