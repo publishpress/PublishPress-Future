@@ -3420,6 +3420,7 @@ module.exports = wp.url;
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	__webpack_require__("./src/assets/jsx/settings/custom-statuses.jsx");
 /******/ 	__webpack_require__("./src/assets/jsx/settings/metadata-map.jsx");
+/******/ 	__webpack_require__("./src/assets/jsx/settings/scheduled-steps-cleanup.jsx");
 /******/ 	var __webpack_exports__ = __webpack_require__("./src/assets/jsx/settings/settings.jsx");
 /******/ 	
 /******/ })()
