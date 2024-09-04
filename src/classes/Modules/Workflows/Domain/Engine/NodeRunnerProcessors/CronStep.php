@@ -29,7 +29,7 @@ use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowScheduledStepModel;
 
 class CronStep implements AsyncNodeRunnerProcessorInterface
 {
-    public const DEFAULT_REPEAT_UNTIL_TIMES =   99999999999;
+    public const DEFAULT_REPEAT_UNTIL_TIMES = 99999999999;
 
     public const WHEN_TO_RUN_NOW = 'now';
 
@@ -354,7 +354,9 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
     {
         $compactedArgs = [
             'pluginVersion' => $this->pluginVersion,
-            'step' => $step,
+            'step' => [
+                'nodeId' => $step['node']['id'],
+            ],
             'contextVariables' => $contextVariables,
         ];
 
@@ -363,6 +365,7 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
                 foreach ($variables as &$variableResolver) {
                     if (is_object($variableResolver)) {
                         $diff = null;
+                        // TODO: Each variable resolver should have a method to compact itself and check diff, etc.
                         if ($variableResolver->getType() === 'post') {
                             $diff = $this->getPostDifferences(
                                 $variableResolver->getVariable(),
@@ -400,8 +403,19 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
 
     public function expandArguments(array $compactArguments): array
     {
+        if (isset($compactArguments['step']['nodeId'])) {
+            // New format where the step is compacted
+            $nodeId = $compactArguments['step']['nodeId'];
+            $workflowId = $compactArguments['contextVariables']['global']['workflow']['value'];
+
+            $step = $this->getStepFromNodeId($workflowId, $nodeId);
+        } else {
+            // Old format, where the step is not compacted
+            $step = $compactArguments['step'];
+        }
+
         $expandedArgs = [
-            'step' => $compactArguments['step'],
+            'step' => $step,
             'contextVariables' => [],
         ];
 
@@ -768,5 +782,14 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
     {
         $scheduledActionsModel = new ScheduledActionsModel();
         $scheduledActionsModel->cancelWorkflowScheduledActions($workflowId);
+    }
+
+    private function getStepFromNodeId(int $workflowId, string $nodeId): array
+    {
+        $workflowModel = new WorkflowModel();
+        $workflowModel->load($workflowId);
+        $routineTree = $workflowModel->getPartialRoutineTreeFromNodeId($nodeId);
+
+        return $routineTree;
     }
 }

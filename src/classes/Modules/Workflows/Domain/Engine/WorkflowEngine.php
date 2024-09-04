@@ -108,11 +108,7 @@ class WorkflowEngine implements WorkflowEngineInterface
             $workflowsModel = new WorkflowsModel();
             $workflows = $workflowsModel->getPublishedWorkflowsIds();
 
-            $nodeTypes = [
-                "action" => $this->nodeTypesModel->getActionNodes(),
-                "trigger" => $this->nodeTypesModel->getTriggerNodes(),
-                "advanced" => $this->nodeTypesModel->getAdvancedNodes(),
-            ];
+            $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
 
             // Setup the workflow triggers
             foreach ($workflows as $workflowId) {

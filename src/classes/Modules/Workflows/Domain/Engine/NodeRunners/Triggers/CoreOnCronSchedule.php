@@ -73,6 +73,10 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
      */
     private function shouldSetup(): bool
     {
+        if (empty($this->step)) {
+            return false;
+        }
+
         $transientKey = 'publishpressfuture_coreoncronschedule_setup_'
             . $this->workflowId
             . '_'

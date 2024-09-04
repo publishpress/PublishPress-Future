@@ -9,6 +9,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\FuturePro\Core\HooksAbstract;
 use PublishPress\FuturePro\Core\ServicesAbstract;
+use PublishPress\FuturePro\Models\SettingsModel;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnManuallyEnabledForPost;
 use PublishPress\FuturePro\Modules\Workflows\Domain\NodeTypes\Triggers\FutureLegacyAction;
 use PublishPress\FuturePro\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
@@ -55,6 +56,11 @@ class WorkflowModel implements WorkflowModelInterface
     private $debugRayShowWordPressErrors = null;
 
     /**
+     * @var NodeTypesModelInterface
+     */
+    private $nodeTypesModel;
+
+    /**
      * @var HookableInterface
      */
     private $hooks;
@@ -65,6 +71,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         // FIXME: Use dependency injection
         $this->hooks = $container->get(ServicesAbstract::HOOKS);
+        $this->nodeTypesModel = $container->get(ServicesAbstract::NODE_TYPES_MODEL);
     }
 
     public function load(int $id): bool
@@ -214,7 +221,7 @@ class WorkflowModel implements WorkflowModelInterface
         $this->hooks->doAction(WorkflowsHooksAbstract::ACTION_WORKFLOW_DELETED, $this->post->ID);
     }
 
-    private function getAllNodeTypes(): array
+    private function getAllNodeTypesByType(): array
     {
         if (is_null($this->allNodeTypes)) {
             // Ensure the flow is updated with the latest node types
@@ -266,7 +273,7 @@ class WorkflowModel implements WorkflowModelInterface
 
     private function getNodeTypeByname(string $name)
     {
-        $nodeTypes = $this->getAllNodeTypes();
+        $nodeTypes = $this->getAllNodeTypesByType();
 
         $nodeType = $nodeTypes[$name] ?? null;
 
@@ -775,5 +782,31 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         return $manualSelectionTrigger['data']['settings']['checkboxLabel'] ?? $this->getTitle();
+    }
+
+    public function getPartialRoutineTreeFromNodeId(string $nodeId): array
+    {
+        $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
+        $routineTree = $this->getRoutineTree($nodeTypes);
+
+        return $this->getStepFromRoutineTreeRecursively($routineTree, $nodeId);
+    }
+
+    private function getStepFromRoutineTreeRecursively(array $routineTree, string $nodeId): array
+    {
+        foreach ($routineTree as $node) {
+            if ($node['node']['id'] === $nodeId) {
+                return $node;
+            }
+
+            if (isset($node['next'])) {
+                foreach ($node['next'] as $nextNode) {
+                    $step = $this->getStepFromRoutineTreeRecursively($nextNode, $nodeId);
+                    if (! empty($step)) {
+                        return $step;
+                    }
+                }
+            }
+        }
     }
 }

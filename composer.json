@@ -157,6 +157,7 @@
         "info:versions": "bash .\/dev-workspace\/scripts\/info-versions.sh",
         "set:version": "php .\/dev-workspace\/scripts\/bump-version.php \"$@\"",
         "config:phpcs": "phpcs --config-set installed_paths \"..\/..\/phpcsstandards\/phpcsutils,..\/..\/phpcsstandards\/phpcsextra,..\/..\/automattic\/vipwpcs,..\/..\/phpcompatibility\/php-compatibility,..\/..\/sirbrillig\/phpcs-variable-analysis,..\/..\/publishpress\/publishpress-phpcs-standards\/standards,..\/..\/wp-coding-standards\/wpcs\"",
+        "cron:run": "while true; do wp cron event run --due-now; date; echo \"\n\"; sleep 2; done",
         "post-install-cmd": [
             "@config:phpcs"
         ],

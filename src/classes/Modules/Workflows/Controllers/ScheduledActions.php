@@ -147,9 +147,18 @@ class ScheduledActions implements InitializableInterface
                     $workflowModel->load($workflowId);
 
                     $workflowTitle = $workflowModel->getTitle();
-                    $next = $args['step']['next'] ?? [];
+                    $stepIsCompact = ! isset($args['step']['next']);
 
-                    $nodeType = $this->nodeTypesModel->getNodeType($args['step']['node']['data']['name']);
+                    $step = null;
+                    if ($stepIsCompact) {
+                        $step = $workflowModel->getPartialRoutineTreeFromNodeId($args['step']['nodeId']);
+                    } else {
+                        $step = $args['step'];
+                    }
+
+                    $next = $step['next'] ?? [];
+
+                    $nodeType = $this->nodeTypesModel->getNodeType($step['node']['data']['name']);
 
                     $sourceHandles = [];
                     if (! is_null($nodeType)) {

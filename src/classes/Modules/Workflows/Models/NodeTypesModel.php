@@ -316,11 +316,7 @@ class NodeTypesModel implements NodeTypesModelInterface
 
     public function getAllNodeTypesIndexedByName(): array
     {
-        $nodeTypes = array_merge(
-            $this->getTriggerNodes(),
-            $this->getActionNodes(),
-            $this->getAdvancedNodes()
-        );
+        $nodeTypes = $this->getAllNodeTypes();
 
         $indexed = [];
 
@@ -354,5 +350,23 @@ class NodeTypesModel implements NodeTypesModelInterface
         }
 
         return $strings;
+    }
+
+    public function getAllNodeTypes(): array
+    {
+        return array_merge(
+            $this->getTriggerNodes(),
+            $this->getActionNodes(),
+            $this->getAdvancedNodes()
+        );
+    }
+
+    public function getAllNodeTypesByType(): array
+    {
+        return [
+            "action" => $this->getActionNodes(),
+            "trigger" => $this->getTriggerNodes(),
+            "advanced" => $this->getAdvancedNodes(),
+        ];
     }
 }
