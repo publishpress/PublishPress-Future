@@ -13,7 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   ButtonsPanel: () => (/* binding */ ButtonsPanel)
 /* harmony export */ });
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var ButtonsPanel = function ButtonsPanel(props) {
@@ -43,7 +43,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 
@@ -1195,7 +1195,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var NonceControl = function NonceControl(props) {
@@ -1246,7 +1246,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 
@@ -1545,7 +1545,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 
@@ -1616,7 +1616,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 
@@ -1653,7 +1653,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var SettingRow = function SettingRow(props) {
@@ -1679,7 +1679,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SettingsFieldset: () => (/* binding */ SettingsFieldset)
 /* harmony export */ });
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var SettingsFieldset = function SettingsFieldset(props) {
@@ -1701,7 +1701,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SettingsForm: () => (/* binding */ SettingsForm)
 /* harmony export */ });
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var SettingsForm = function SettingsForm(props) {
@@ -1725,7 +1725,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var SettingsSection = function SettingsSection(props) {
@@ -1745,7 +1745,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SettingsTable: () => (/* binding */ SettingsTable)
 /* harmony export */ });
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var SettingsTable = function SettingsTable(props) {
@@ -1767,7 +1767,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   Spinner: () => (/* binding */ Spinner)
 /* harmony export */ });
 /*
- * Copyright (c) 2024. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 var Spinner = function Spinner(props) {
   return /*#__PURE__*/React.createElement("span", {
@@ -1788,7 +1788,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   SubmitButton: () => (/* binding */ SubmitButton)
 /* harmony export */ });
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var SubmitButton = function SubmitButton(props) {
@@ -1819,7 +1819,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 
@@ -1984,7 +1984,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 
@@ -2054,7 +2054,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   TrueFalseControl: () => (/* binding */ TrueFalseControl)
 /* harmony export */ });
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 var TrueFalseControl = function TrueFalseControl(props) {
@@ -2349,7 +2349,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 
@@ -2455,7 +2455,7 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024 Ramble Ventures
  */
 
 
@@ -2954,15 +2954,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_dateOffsetPreview_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../../../../../node_modules/css-loader/dist/cjs.js!../../../../../../../../node_modules/postcss-loader/dist/cjs.js!./dateOffsetPreview.css */ "./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./lib/vendor/publishpress/publishpress-future/assets/jsx/components/css/dateOffsetPreview.css");
 
-      
-      
-      
-      
-      
-      
-      
-      
-      
+
+
+
+
+
+
+
+
+
 
 var options = {};
 
@@ -2970,7 +2970,7 @@ options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTra
 options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
 
       options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
+
 options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
 options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
 
@@ -3345,7 +3345,7 @@ module.exports = wp.url;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -3359,14 +3359,14 @@ module.exports = wp.url;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -3379,7 +3379,7 @@ module.exports = wp.url;
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -3391,12 +3391,12 @@ module.exports = wp.url;
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -3407,14 +3407,14 @@ module.exports = wp.url;
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/nonce */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nc = undefined;
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
@@ -3422,7 +3422,7 @@ module.exports = wp.url;
 /******/ 	__webpack_require__("./src/assets/jsx/settings/metadata-map.jsx");
 /******/ 	__webpack_require__("./src/assets/jsx/settings/scheduled-steps-cleanup.jsx");
 /******/ 	var __webpack_exports__ = __webpack_require__("./src/assets/jsx/settings/settings.jsx");
-/******/ 	
+/******/
 /******/ })()
 ;
 //# sourceMappingURL=settings.js.map
