@@ -19,7 +19,7 @@
  * `vendor/bin/codecept wp:db:export tests/_wordpress tests/Support/Data/dump.sql` to update the dump file.
  */
 
-define('ABSPATH', __DIR__);
+ define('ABSPATH', __DIR__ . '/../../dev-workspace/.cache/wordpress/');
 
 class Autoloader
 {
@@ -47,3 +47,9 @@ class Autoloader
 }
 
 spl_autoload_register([new Autoloader(), 'autoload']);
+
+// Make sure the environment variables are set (getenv inside wp-config.php is not enough, it seems)
+putenv('WORDPRESS_DB_NAME=' . $_ENV['WORDPRESS_DB_NAME']);
+putenv('WORDPRESS_DB_USER=' . $_ENV['WORDPRESS_DB_USER']);
+putenv('WORDPRESS_DB_PASSWORD=' . $_ENV['WORDPRESS_DB_PASSWORD']);
+putenv('WORDPRESS_DB_HOST=' . $_ENV['WORDPRESS_DB_HOST']);
