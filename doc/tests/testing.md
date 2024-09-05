@@ -16,6 +16,8 @@ Install ChromeDriver on your machine. You can do this by downloading directly fr
 https://googlechromelabs.github.io/chrome-for-testing/#stable according to your current platform, and extracting the binary to a known path in your system.
 Or if you prefer you can install it using `apt` or `brew`.
 
+Note: Always you update the Chrome browser, you need to update the ChromeDriver binary.
+
 ## Configuring
 
 It is required to have `tests/.env` file. Create it running the following content:
@@ -210,3 +212,46 @@ That happens for different reasons:
 1. The database container is not running or is not ready. You can check it by running `composer tests:info`.
 2. The database connection information is incorrect. You can manually check the connection information in the `tests/.env` file, or delete it and recreate the file by running `composer tests:env`.
 3. You're running the tests commands inside the `dev-workspace` terminal. You should run the tests commands outside the `dev-workspace` terminal.
+
+### ChromeDriver version
+
+If you see the following error:
+
+```text
+[Facebook\WebDriver\Exception\SessionNotCreatedException] session not created: This version of ChromeDriver only supports Chrome version 126
+```
+
+This means that the ChromeDriver version is not compatible with the current version of Chrome.
+
+You can solve this by updating the ChromeDriver binary.
+
+#### Linux
+
+1. Open the Chrome browser and navigate to `chrome://settings/help`.
+2. Scroll down to the "About Google Chrome" section and note the version number.
+3. Download the appropriate ChromeDriver version from the following URL: https://googlechromelabs.github.io/chrome-for-testing/#stable
+4. Extract the downloaded file and copy the `chromedriver` binary to the `/usr/local/bin` directory.
+5. Update the `tests/.env` file with the new ChromeDriver binary path.
+
+#### MacOS
+
+Considering you installed ChromeDriver using Homebrew, you need to update the binary with the new version.
+
+```bash
+brew update
+brew upgrade chromedriver
+```
+
+After updating the binary, you need to navigate to the directory where the ChromeDriver binary is located and click with
+the right button of the mouse to open the context menu, then select `Open`.
+
+Then it might ask you to confirm since this is an app from an unidentified developer. Click on `Open` again to confirm.
+Then you wait a few seconds and chromedriver should run successfully. You can close the terminal window.
+
+Then you need to navigate to the `tests` directory and run the following command:
+
+```bash
+composer tests:chromedriver
+```
+
+This will run chromedriver and the tests should run successfully.
