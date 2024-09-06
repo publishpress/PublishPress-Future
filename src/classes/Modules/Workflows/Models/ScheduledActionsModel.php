@@ -6,6 +6,7 @@ use Exception;
 use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
 use PublishPress\FuturePro\Core\ServicesAbstract;
+use PublishPress\FuturePro\Modules\Workflows\HooksAbstract;
 use PublishPress\FuturePro\Modules\Workflows\Interfaces\ScheduledActionsModelInterface;
 
 class ScheduledActionsModel implements ScheduledActionsModelInterface
@@ -44,7 +45,7 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         try {
             /**
              * @var SettingsModelInterface $settingsModel
-            */
+             */
             $settingsModel = $container->get(ServicesAbstract::MODEL_SETTINGS);
 
             $tableSchema = $wpdb->prefix . 'actionscheduler_actions';

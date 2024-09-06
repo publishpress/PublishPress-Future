@@ -19,6 +19,13 @@ use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowScheduledStepModel;
 class ScheduledActions implements InitializableInterface
 {
     /**
+     * The default interval in seconds that the setup should be skipped.
+     *
+     * @var int
+     */
+    public const DEFAULT_SETUP_INTERVAL = 5;
+
+    /**
      * @var HookableInterface
      */
     private $hooks;
@@ -82,7 +89,18 @@ class ScheduledActions implements InitializableInterface
         $this->hooks->addAction(
             WorkflowsHooksAbstract::ACTION_INIT,
             [$this, 'scheduleFinishedScheduledStepsCleanup'],
-            20
+            21
+        );
+
+
+        $this->hooks->addAction(
+            WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS,
+            [$this, 'deleteOrphanWorkflowArgs']
+        );
+
+        $this->hooks->addAction(
+            WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
+            [$this, 'deleteExpiredScheduledSteps']
         );
 
         $this->hooks->addAction(
@@ -281,11 +299,6 @@ class ScheduledActions implements InitializableInterface
 
     public function scheduleOrphanWorkflowArgsCleanup()
     {
-        $this->hooks->addAction(
-            WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS,
-            [$this, 'deleteOrphanWorkflowArgs']
-        );
-
         /**
          * @param int $interval
          * @return int
@@ -293,6 +306,16 @@ class ScheduledActions implements InitializableInterface
         $interval = $this->hooks->applyFilters(
             WorkflowsHooksAbstract::FILTER_ORPHAN_WORKFLOW_ARGS_CLEANUP_INTERVAL,
             DAY_IN_SECONDS
+        );
+
+        if (! $this->verifyOperationTimeout('orphan_workflow_args_cleanup', $interval)) {
+            return;
+        }
+
+        $this->cron->clearScheduledAction(
+            WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS,
+            [],
+            false
         );
 
         $this->cron->scheduleRecurringActionInSeconds(
@@ -306,11 +329,6 @@ class ScheduledActions implements InitializableInterface
 
     public function scheduleFinishedScheduledStepsCleanup()
     {
-        $this->hooks->addAction(
-            WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
-            [$this, 'deleteExpiredScheduledSteps']
-        );
-
         /**
          * @param int $interval
          * @return int
@@ -318,6 +336,16 @@ class ScheduledActions implements InitializableInterface
         $interval = $this->hooks->applyFilters(
             WorkflowsHooksAbstract::FILTER_FINISHED_SCHEDULED_STEPS_CLEANUP_INTERVAL,
             DAY_IN_SECONDS
+        );
+
+        if (! $this->verifyOperationTimeout('finished_scheduled_steps_cleanup', $interval)) {
+            return;
+        }
+
+        $this->cron->clearScheduledAction(
+            WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS,
+            [],
+            false
         );
 
         $this->cron->scheduleRecurringActionInSeconds(
@@ -393,5 +421,32 @@ class ScheduledActions implements InitializableInterface
         $newScheduledStepModel->setRepeatTimes($oldScheduledStepModel->getRepeatTimes());
         $newScheduledStepModel->setRepeatUntil($oldScheduledStepModel->getRepeatUntil());
         $newScheduledStepModel->insert();
+    }
+
+    private function verifyOperationTimeout(string $actionUid, int $timeout = null): bool
+    {
+        $transientKey = 'publishpressfuture_' . $actionUid;
+
+        if (is_null($timeout)) {
+            $timeout = self::DEFAULT_SETUP_INTERVAL;
+        }
+
+        /**
+         * @param int $defaultTimeout
+         *
+         * @return int
+         */
+        $transientTimeout = $this->hooks->applyFilters(
+            WorkflowsHooksAbstract::FILTER_CLEANUP_SCHEDULED_TRANSIENT_TIMEOUT,
+            $timeout
+        );
+
+        if (get_transient($transientKey)) {
+            return false;
+        }
+
+        set_transient($transientKey, true, $transientTimeout);
+
+        return true;
     }
 }

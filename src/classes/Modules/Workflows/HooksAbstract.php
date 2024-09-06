@@ -44,4 +44,6 @@ abstract class HooksAbstract
         'publishpressfuturepro_finished_scheduled_steps_cleanup_interval';
     public const FILTER_CRON_SCHEDULE_RUNNER_TRANSIENT_TIMEOUT =
         'publishpressfuturepro_cron_schedule_runner_transient_timeout';
+    public const FILTER_CLEANUP_SCHEDULED_TRANSIENT_TIMEOUT =
+        'publishpressfuturepro_cleanup_scheduled_transient_timeout';
 }
