@@ -26,14 +26,6 @@ class SettingsModel
 
     public const OPTION_METADATA_MAPPING = 'ppfuturepro_metadata_mapping';
 
-    public const OPTION_EXPERIMENTAL_ENABLED = 'ppfuturepro_experimental_enabled';
-
-    public const OPTION_STEP_SCHEDULE_COMPRESSED_ARGS = 'ppfuturepro_step_schedule_compressed_args';
-
-    public const OPTION_SCHEDULED_STEP_CLEANUP_STATUS = 'ppfuturepro_step_schedule_cleanup_status';
-
-    public const OPTION_FINISHED_SCHEDULED_STEP_RETENTION = 'ppfuturepro_finished_scheduled_step_retention';
-
     public const BASE_DATE_CURRENT = 'current';
 
     public const BASE_DATE_PUBLISHING = 'publishing';
@@ -68,10 +60,6 @@ class SettingsModel
             'metadataMappingStatus' => $this->getMetadataMappingStatus(),
             'metadataMapping' => $this->getMetadataMapping(),
             'metadataHideMetabox' => $this->getMetaboxHideStatus(),
-            'experimentalFeaturesStatus' => $this->getExperimentalFeaturesStatus(),
-            'stepScheduleCompressedArgsStatus' => $this->getStepScheduleCompressedArgsStatus(),
-            'scheduledStepsCleanupStatus' => $this->getScheduledWorkflowStepsCleanupStatus(),
-            'scheduledStepsCleanupRetention' => $this->getScheduledWorkflowStepsCleanupRetention(),
         ];
     }
 
@@ -210,7 +198,6 @@ class SettingsModel
         $this->options->deleteOption(self::OPTION_METADATA_MAPPING_STATUS);
         $this->options->deleteOption(self::OPTION_HIDE_METABOX);
         $this->options->deleteOption(self::OPTION_METADATA_MAPPING);
-        $this->options->deleteOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS);
     }
 
     public function setMetadataMappingStatus($statuses): void
@@ -265,18 +252,6 @@ class SettingsModel
         return $statuses;
     }
 
-    public function getExperimentalFeaturesStatus(): bool
-    {
-        $value = (bool)$this->options->getOption(self::OPTION_EXPERIMENTAL_ENABLED, false);
-        return $value && PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL;
-    }
-
-    public function setExperimentalFeaturesStatus(bool $value): void
-    {
-        $value = $value && PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL;
-        $this->options->updateOption(self::OPTION_EXPERIMENTAL_ENABLED, $value);
-    }
-
     public function setMetadataMapping(array $mapping): void
     {
         $newMapping = [];
@@ -301,35 +276,4 @@ class SettingsModel
     {
         return (array)$this->options->getOption(self::OPTION_METADATA_MAPPING, []);
     }
-
-    public function getStepScheduleCompressedArgsStatus(): bool
-    {
-        return (bool)$this->options->getOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, false);
-    }
-
-    public function setStepScheduleCompressedArgsStatus(bool $value): void
-    {
-        $this->options->updateOption(self::OPTION_STEP_SCHEDULE_COMPRESSED_ARGS, $value);
-    }
-
-    public function getScheduledWorkflowStepsCleanupStatus(): bool
-    {
-        return (bool)$this->options->getOption(self::OPTION_SCHEDULED_STEP_CLEANUP_STATUS, true);
-    }
-
-    public function setScheduledWorkflowStepsCleanupStatus(bool $value): void
-    {
-        $this->options->updateOption(self::OPTION_SCHEDULED_STEP_CLEANUP_STATUS, $value);
-    }
-
-    public function getScheduledWorkflowStepsCleanupRetention(): int
-    {
-        return (int)$this->options->getOption(self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION, 30);
-    }
-
-    public function setScheduledWorkflowStepsCleanupRetention(int $value): void
-    {
-        $this->options->updateOption(self::OPTION_FINISHED_SCHEDULED_STEP_RETENTION, $value);
-    }
-
 }

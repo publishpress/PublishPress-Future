@@ -41,8 +41,8 @@ class Module implements ModuleInterface
      */
     public function initialize()
     {
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS, [$this, 'enqueueScripts']);
+        // $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
+        // $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS, [$this, 'enqueueScripts']);
     }
 
     public function adminMenu()

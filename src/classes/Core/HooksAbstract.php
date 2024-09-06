@@ -68,8 +68,4 @@ abstract class HooksAbstract
     public const ACTION_SAVE_POST = 'save_post';
 
     public const ACTION_REST_API_INIT = 'rest_api_init';
-
-    public const ACTION_LOAD_POST_PHP = 'load-post.php';
-
-    public const ACTION_LOAD_POST_NEW_PHP = 'load-post-new.php';
 }

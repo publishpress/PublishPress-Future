@@ -3,7 +3,7 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\EmailResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\EmailResolver;
 use Tests\Support\UnitTester;
 
 class EmailResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase

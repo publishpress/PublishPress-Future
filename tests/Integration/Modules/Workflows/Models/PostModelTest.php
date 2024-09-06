@@ -2,7 +2,7 @@
 
 namespace Tests\Modules\Workflows\Models;
 
-use PublishPress\FuturePro\Modules\Workflows\Models\PostModel;
+use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
 
 class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase

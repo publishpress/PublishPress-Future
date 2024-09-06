@@ -3,8 +3,8 @@
 namespace Tests\Modules\Workflows\Models;
 
 use Exception;
-use PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionModel;
-use PublishPress\FuturePro\Modules\Workflows\Models\WorkflowScheduledStepModel;
+use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
+use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 
 class ScheduledActionModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {

@@ -3,8 +3,8 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
 use stdClass;
 use Tests\Support\UnitTester;
 

@@ -3,8 +3,8 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\NodeResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use Tests\Support\UnitTester;
 
 class WorkflowResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase

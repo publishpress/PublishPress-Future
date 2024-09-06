@@ -40,7 +40,6 @@ class DeprecatedTest extends \lucatume\WPBrowser\TestCase\WPTestCase
             'PublishPress\\FuturePro\\Modules\\Workflows\\Controllers\\PostsList',
             'PublishPress\\FuturePro\\Modules\\Workflows\\Controllers\\PostType',
             'PublishPress\\FuturePro\\Modules\\Workflows\\Controllers\\RestApi',
-            'PublishPress\\FuturePro\\Modules\\Workflows\\Controllers\\Migrations',
             'PublishPress\\FuturePro\\Modules\\Workflows\\Controllers\\ManualPostTrigger',
             'PublishPress\\FuturePro\\Modules\\Workflows\\Controllers\\FutureLegacyAction',
             'PublishPress\\FuturePro\\Modules\\Workflows\\DBTableSchemas\\WorkflowScheduledStepsSchema',

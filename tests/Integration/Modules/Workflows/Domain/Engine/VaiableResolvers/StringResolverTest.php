@@ -3,7 +3,7 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\StringResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\StringResolver;
 use Tests\Support\UnitTester;
 
 class StringResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase

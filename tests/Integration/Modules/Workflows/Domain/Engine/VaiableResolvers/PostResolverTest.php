@@ -3,7 +3,7 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
 use stdClass;
 use Tests\Support\UnitTester;
 

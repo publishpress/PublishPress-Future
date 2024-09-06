@@ -3,7 +3,7 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
 use Tests\Support\UnitTester;
 
 class IntegerResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase

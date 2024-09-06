@@ -141,11 +141,6 @@ class SettingsController implements ModuleInterface
             HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE,
             [$this, 'settingsTabAdvancedBefore']
         );
-
-        $this->hooks->addFilter(
-            ExpiratorHooksAbstract::FILTER_SUPPORTED_POST_TYPES,
-            [$this, 'hideActionWorkflowsFromSettings']
-        );
     }
 
     public function routeActions()
@@ -459,42 +454,5 @@ class SettingsController implements ModuleInterface
         $baseDate = $baseDate === 'publishing' ? 'publishing' : 'current';
 
         $this->settingsModel->setBaseDate($baseDate);
-
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-        $experimentalFeaturesStatus = isset($_POST['future-experimental-features'])
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            ? (int) $_POST['future-experimental-features']
-            : 0;
-        $this->settingsModel->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
-
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-        $stepScheduleCompressedArgsStatus = isset($_POST['future-step-schedule-compressed-args'])
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            ? (int) $_POST['future-step-schedule-compressed-args']
-            : 0;
-        $this->settingsModel->setStepScheduleCompressedArgsStatus($stepScheduleCompressedArgsStatus);
-
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-        $stepScheduleCleanupStatus = isset($_POST['future-step-schedule-cleanup'])
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            ? (bool) $_POST['future-step-schedule-cleanup']
-            : false;
-        $this->settingsModel->setScheduledWorkflowStepsCleanupStatus($stepScheduleCleanupStatus);
-
-        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
-        $stepScheduleCleanupRetention = isset($_POST['future-step-schedule-cleanup-retention'])
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
-            ? (int) $_POST['future-step-schedule-cleanup-retention']
-            : 30;
-        $this->settingsModel->setScheduledWorkflowStepsCleanupRetention($stepScheduleCleanupRetention);
-    }
-
-    public function hideActionWorkflowsFromSettings($postTypes)
-    {
-        if (in_array(WorkflowsModule::POST_TYPE_WORKFLOW, $postTypes, true)) {
-            $postTypes = array_diff($postTypes, [WorkflowsModule::POST_TYPE_WORKFLOW]);
-        }
-
-        return $postTypes;
     }
 }

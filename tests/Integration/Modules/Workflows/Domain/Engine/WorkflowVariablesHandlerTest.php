@@ -3,12 +3,12 @@
 namespace Tests\Modules\Workflows\Domain\Engine;
 
 use Codeception\Stub;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\StringResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowVariablesHandler;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\IntegerResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\PostResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\StringResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\WorkflowVariablesHandler;
 use stdClass;
 
 

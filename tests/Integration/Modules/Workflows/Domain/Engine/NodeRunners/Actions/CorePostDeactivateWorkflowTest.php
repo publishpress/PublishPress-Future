@@ -3,10 +3,10 @@
 namespace Tests\Modules\Workflows\Domain\Engine\NodeRunners\Actions;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDeactivateWorkflow;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
-use PublishPress\FuturePro\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
-use PublishPress\FuturePro\Modules\Workflows\Models\PostModel;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostDeactivateWorkflow;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
+use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Models\PostModel;
 
 
 class CorePostDeactivateWorkflowTest extends \lucatume\WPBrowser\TestCase\WPTestCase

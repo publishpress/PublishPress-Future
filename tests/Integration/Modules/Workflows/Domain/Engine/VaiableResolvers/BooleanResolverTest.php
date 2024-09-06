@@ -3,7 +3,7 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\BooleanResolver;
 use Tests\Support\UnitTester;
 
 class BooleanResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase

@@ -4,7 +4,7 @@
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
 use Codeception\Stub;
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteResolver;
 use Tests\Support\UnitTester;
 
 class SiteResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase

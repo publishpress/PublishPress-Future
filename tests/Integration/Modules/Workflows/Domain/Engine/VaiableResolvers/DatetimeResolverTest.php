@@ -3,7 +3,7 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VariableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\DatetimeResolver;
 use Tests\Support\UnitTester;
 
 class DatetimeResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase

@@ -468,4 +468,35 @@ class Controller implements InitializableInterface
 
         $this->hooks->doAction(CoreAbstractHooks::ACTION_PURGE_PLUGIN_CACHE);
     }
+
+    public function saveTabAdvanced()
+    {
+         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+         $experimentalFeaturesStatus = isset($_POST['future-experimental-features'])
+         // phpcs:ignore WordPress.Security.NonceVerification.Missing
+         ? (int) $_POST['future-experimental-features']
+         : 0;
+        $this->settings->setExperimentalFeaturesStatus($experimentalFeaturesStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCompressedArgsStatus = isset($_POST['future-step-schedule-compressed-args'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-step-schedule-compressed-args']
+            : 0;
+        $this->settings->setStepScheduleCompressedArgsStatus($stepScheduleCompressedArgsStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCleanupStatus = isset($_POST['future-step-schedule-cleanup'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (bool) $_POST['future-step-schedule-cleanup']
+            : false;
+        $this->settings->setScheduledWorkflowStepsCleanupStatus($stepScheduleCleanupStatus);
+
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing
+        $stepScheduleCleanupRetention = isset($_POST['future-step-schedule-cleanup-retention'])
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            ? (int) $_POST['future-step-schedule-cleanup-retention']
+            : 30;
+        $this->settings->setScheduledWorkflowStepsCleanupRetention($stepScheduleCleanupRetention);
+    }
 }

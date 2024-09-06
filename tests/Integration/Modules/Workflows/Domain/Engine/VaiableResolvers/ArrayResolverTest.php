@@ -2,7 +2,7 @@
 
 namespace Tests\Modules\Workflows\Domain\Engine\VaiableResolvers;
 
-use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
+use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\ArrayResolver;
 
 class ArrayResolverTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 {

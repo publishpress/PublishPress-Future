@@ -6,7 +6,7 @@ use Codeception\Stub;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaHandlerInterface;
 use PublishPress\Future\Framework\Database\DBTableSchemaHandler;
 use PublishPress\Future\Framework\WordPress\Facade\HooksFacade;
-use PublishPress\FuturePro\Modules\Workflows\DBTableSchemas\WorkflowScheduledStepsSchema;
+use PublishPress\Future\Modules\Workflows\DBTableSchemas\WorkflowScheduledStepsSchema;
 use Tests\NoTransactionWPTestCase;
 
 class WorkflowScheduledStepsSchemaTest extends NoTransactionWPTestCase
