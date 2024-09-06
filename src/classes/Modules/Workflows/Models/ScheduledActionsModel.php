@@ -16,19 +16,23 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
 
         $container = Container::getInstance();
 
-        /**
-         * @var DBTableSchemaInterface $tableSchema
-         */
-        $tableSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
+        try {
+            /**
+             * @var DBTableSchemaInterface $tableSchema
+             */
+            $tableSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM %i AS ssa WHERE ssa.action_id NOT IN (SELECT asa.action_id FROM %i AS asa)",
-                $tableSchema->getTableName(),
-                $wpdb->prefix . 'actionscheduler_actions'
-            )
-        );
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+            $wpdb->query(
+                $wpdb->prepare(
+                    "DELETE FROM %i AS ssa WHERE ssa.action_id NOT IN (SELECT asa.action_id FROM %i AS asa)",
+                    $tableSchema->getTableName(),
+                    $wpdb->prefix . 'actionscheduler_actions'
+                )
+            );
+        } catch (Exception $e) {
+            // TODO: Log error
+        }
     }
 
     public function deleteExpiredScheduledSteps(): void
@@ -37,25 +41,29 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
 
         $container = Container::getInstance();
 
-        /**
-         * @var SettingsModelInterface $settingsModel
-         */
-        $settingsModel = $container->get(ServicesAbstract::MODEL_SETTINGS);
+        try {
+            /**
+             * @var SettingsModelInterface $settingsModel
+            */
+            $settingsModel = $container->get(ServicesAbstract::MODEL_SETTINGS);
 
-        $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
+            $tableSchema = $wpdb->prefix . 'actionscheduler_actions';
 
-        $retention = $settingsModel->getScheduledWorkflowStepsCleanupRetention();
+            $retention = $settingsModel->getScheduledWorkflowStepsCleanupRetention();
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
-        $wpdb->query(
-            $wpdb->prepare(
-                "DELETE FROM %i WHERE scheduled_date_gmt < %s",
-                $tableSchema,
-                gmdate('Y-m-d H:i:s', time() - ($retention * DAY_IN_SECONDS))
-            )
-        );
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+            $wpdb->query(
+                $wpdb->prepare(
+                    "DELETE FROM %i WHERE scheduled_date_gmt < %s",
+                    $tableSchema,
+                    gmdate('Y-m-d H:i:s', time() - ($retention * DAY_IN_SECONDS))
+                )
+            );
 
-        $this->deleteOrphanWorkflowArgs();
+            $this->deleteOrphanWorkflowArgs();
+        } catch (Exception $e) {
+            // TODO: Log error
+        }
     }
 
     public function hasRowWithActionUIDHash(string $actionUIDHash): bool
