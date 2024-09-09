@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 export const SettingsTable = function (props) {

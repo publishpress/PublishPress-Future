@@ -2,7 +2,7 @@
 
 /**
  * @author PublishPress
- * @copyright Copyright (c) 2023, PublishPress
+ * @copyright Copyright (c) 2024, Ramble Ventures
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  * @package PublishPressFuturePro
  */
