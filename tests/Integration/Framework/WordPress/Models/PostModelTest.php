@@ -415,4 +415,27 @@ class PostModelTest extends \lucatume\WPBrowser\TestCase\WPTestCase
 
         $this->assertFalse($postModel->metadataExists($metaKey));
     }
+
+    public function testSetPostStatusSetsPostStatusToPublish(): void
+    {
+        $post = static::factory()->post->create_and_get();
+        $post->post_status = 'draft';
+        $post->post_date = '2034-01-01 00:00:00';
+        wp_update_post($post);
+
+        $this->assertEquals('draft', get_post_status($post->ID));
+
+        $postModel = new PostModel(
+            $post->ID,
+            function () {
+                return null;
+            },
+            $this->createStub(\PublishPress\Future\Modules\Debug\DebugInterface::class),
+            new HooksFacade()
+        );
+
+        $postModel->publish();
+
+        $this->assertEquals('publish', get_post_status($post->ID));
+    }
 }

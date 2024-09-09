@@ -255,6 +255,8 @@ class Plugin implements InitializableInterface
             }
         }
 
+        $this->hooks->doAction(HooksAbstract::ACTION_UPGRADE_PLUGIN, $version);
+
         $currentVersion = $container->get(ServicesAbstract::PLUGIN_VERSION);
         if ($version !== $currentVersion) {
             update_option('postexpiratorVersion', $currentVersion);

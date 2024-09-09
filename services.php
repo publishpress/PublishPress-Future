@@ -564,7 +564,7 @@ return [
 
     ServicesAbstract::MIGRATIONS_FACTORY => static function (ContainerInterface $container) {
         return function () use ($container) {
-            return [
+            $migrations = [
                 new V30000ActionArgsSchema(
                     $container->get(ServicesAbstract::HOOKS),
                     $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA)
@@ -590,6 +590,13 @@ return [
                     $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEMA)
                 )
             ];
+
+            $migrations = $container->get(ServicesAbstract::HOOKS)->applyFilters(
+                HooksAbstract::FILTER_MIGRATIONS,
+                $migrations
+            );
+
+            return $migrations;
         };
     },
 

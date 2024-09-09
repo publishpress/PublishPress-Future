@@ -69,7 +69,7 @@ interface CronInterface
      * @param array $args
      * @param boolean $unique
      * @param integer $priority
-     * @return void
+     * @return int
      */
     public function scheduleRecurringAction(
         $timestamp,
@@ -85,7 +85,7 @@ interface CronInterface
      * @param array $args
      * @param boolean $unique
      * @param integer $priority
-     * @return void
+     * @return int
      */
     public function scheduleAsyncAction(
         $hook,
