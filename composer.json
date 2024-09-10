@@ -88,11 +88,13 @@
             "@gen:pot-php",
             "@gen:pot-js"
         ],
+        "gen:l10n-php": "wp i18n make-php ./languages --allow-root",
         "gen:lang": [
             "@gen:pot",
             "@gen:mo",
             "@gen:po-scripts",
             "@gen:po-json",
+            "@gen:l10n-php",
             "@cleanup:js-mo"
         ],
         "cleanup:js-mo": "bash .\/dev-workspace\/scripts\/lang-cleanup.sh",
@@ -210,6 +212,7 @@
         "gen:pot-js": "Generates the JavaScript POT file for translations.",
         "gen:pot-php": "Generates the PHP POT file for translations.",
         "gen:pot": "Generates the POT files for translations.",
+        "gen:l10n-php": "Generates the PHP language files for performant translations (WP 6.5+).",
         "get:version": "Gets the version of the plugin.",
         "info:versions": "Gets the version of the main tools available.",
         "profile:js": "Generates a profile of the JavaScript build.",
