@@ -8,10 +8,7 @@ namespace PublishPress\Future\Framework;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
-interface ModuleInterface
+interface ModuleInterface extends InitializableInterface
 {
-    /**
-     * @return void
-     */
-    public function initialize();
+
 }

@@ -1,0 +1,14 @@
+.edit-post-editor__inserter-panel-header {
+    display: flex;
+	justify-content: flex-end;
+}
+
+@media (min-width: 600px) {
+    .edit-post-editor__inserter-panel-header {
+        display: none;
+    }
+}
+
+.edit-post-header-toolbar .editor-document-tools__left > .edit-post-header-toolbar__inserter-toggle.is-pressed svg {
+    transform: rotate(45deg);
+}

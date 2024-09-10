@@ -7,7 +7,6 @@
 namespace PublishPress\Future\Modules\ProFeaturesAds;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Framework\ModuleInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -41,8 +40,8 @@ class Module implements ModuleInterface
      */
     public function initialize()
     {
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
-        $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS, [$this, 'enqueueScripts']);
+        // $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_MENU, [$this, 'adminMenu']);
+        // $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPTS, [$this, 'enqueueScripts']);
     }
 
     public function adminMenu()

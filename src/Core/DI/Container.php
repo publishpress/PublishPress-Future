@@ -15,7 +15,7 @@ defined('ABSPATH') or die('Direct access not allowed.');
  * Based on code from https://dev.to/fadymr/php-create-dependency-injection-container-psr-11-like-php-di-or-pimple-128i
  *
  * @copyright 2019 F.R Michel
- * @copyright 2022 PublishPress
+ * @copyright 2024 PublishPress
  */
 class Container implements ContainerInterface
 {
