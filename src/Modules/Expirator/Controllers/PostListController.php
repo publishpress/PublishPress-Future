@@ -99,16 +99,20 @@ class PostListController implements InitializableInterface
     {
         global $post;
 
-        $container = Container::getInstance();
-        $settings = $container->get(ServicesAbstract::SETTINGS);
+        $output = '';
 
-        ob_start();
-        PostExpirator_Display::getInstance()->render_template('expire-column', [
-            'id' => $post->ID,
-            'postType' => $post->post_type,
-            'columnStyle' => $settings->getColumnStyle(),
-        ]);
-        $output = ob_get_clean();
+        if (! empty($post) && isset($post->ID) && $post->ID > 0) {
+            $container = Container::getInstance();
+            $settings = $container->get(ServicesAbstract::SETTINGS);
+
+            ob_start();
+            PostExpirator_Display::getInstance()->render_template('expire-column', [
+                'id' => $post->ID,
+                'postType' => $post->post_type,
+                'columnStyle' => $settings->getColumnStyle(),
+            ]);
+            $output = ob_get_clean();
+        }
 
         // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $this->hooks->applyFilters(ExpiratorHooks::FILTER_POSTS_FUTURE_ACTION_COLUMN_OUTPUT, $output);
