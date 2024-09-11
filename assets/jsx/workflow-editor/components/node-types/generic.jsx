@@ -161,7 +161,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                                 <div className='react-flow__node-pro-badge'
                                     title={__('Upgrade to Pro to unlock this feature', 'post-expirator')}
                                 >
-                                    <NodeIcon icon={'lock'} size={12} />
+                                    <NodeIcon icon={'lock'} size={8} />
                                 </div>
                             )}
 
@@ -169,7 +169,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                                 <div className='react-flow__node-error'
                                     title={__('This node has errors', 'post-expirator')}
                                 >
-                                    <NodeIcon icon={'error'} size={16} />
+                                    <NodeIcon icon={'exclamation'} size={8} />
                                 </div>
                             )}
 

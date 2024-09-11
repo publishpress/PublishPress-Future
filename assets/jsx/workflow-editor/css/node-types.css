@@ -339,23 +339,6 @@
     border-left: 0;
 }
 
-/* Node Markers */
-.react-flow__node-marker-wrapper {
-    position: absolute;
-    top: -16px;
-    right: 0;
-    display: flex;
-    flex-direction: row;
-    gap: 2px;
-    justify-content: right;
-}
-
-/* Error mark */
-.react-flow__node-error {
-    color: #d90f0f;
-    display: inline-block;
-}
-
 /* Node Content */
 .react-flow__node-content {
     font-size: 6px;
@@ -378,16 +361,48 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Pro Badge */
+/* Node Markers */
+.react-flow__node-marker-wrapper {
+    position: absolute;
+    top: -17px;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    justify-content: right;
+}
+
+.react-flow__node-error,
 .react-flow__node-pro-badge {
-    background-color: #ffb200;
-    color: #000;
-    display: inline-block;
+    display: flex;
     border-radius: 100%;
     width: 14px;
     height: 14px;
-    padding-top: 1px;
-    padding-left: 1px;
-    margin-top: 1px;
     box-sizing: border-box;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+.react-flow__node-pro-badge {
+    background-color: #ffb200;
+    color: #000;
+}
+
+.react-flow__node-pro-badge .node-icon {
+    margin-top: -2px;
+}
+
+.react-flow__node-error {
+    background-color: #d90f0f;
+    color: #fff;
+    font-size: 10px;
+    text-align: center;
+    line-height: 12px;
+    font-family: monospace;
+    font-weight: 900;
+    padding-left: 0px;
+}
+
+.react-flow__node-error .node-icon {
+    margin-top: 2px;
 }

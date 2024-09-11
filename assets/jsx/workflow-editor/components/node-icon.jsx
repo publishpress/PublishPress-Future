@@ -19,6 +19,9 @@ import WarningIcon from './icons/warning';
 import ScheduleIcon from './icons/schedule';
 import DocumentTextIcon from './icons/document-text';
 import WebsiteIcon from './icons/website';
+import ExclamationIcon from './icons/exclamation';
+import LockIcon from './icons/lock';
+import ShopIcon from './icons/shop';
 
 export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 	const iconSrc = icon?.src || icon;
@@ -98,6 +101,21 @@ export function NodeIcon({ icon, showColors = false, className, size = 20}) {
 		case 'website':
 			icon = {
 				src: WebsiteIcon,
+			};
+			break;
+		case 'exclamation':
+			icon = {
+				src: ExclamationIcon,
+			};
+			break;
+		case 'lock':
+			icon = {
+				src: LockIcon,
+			};
+			break;
+		case 'shop':
+			icon = {
+				src: ShopIcon,
 			};
 			break;
 	}

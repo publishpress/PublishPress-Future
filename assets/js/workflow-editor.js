@@ -16636,6 +16636,43 @@ function EnergyIcon(_ref) {
 
 /***/ }),
 
+/***/ "./assets/jsx/workflow-editor/components/icons/exclamation.jsx":
+/*!*********************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/icons/exclamation.jsx ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ExclamationIcon)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./assets/jsx/workflow-editor/components/icons/base.jsx");
+
+
+/**
+ * Icon FaExclamation from 'react-icons/fa'.
+ */
+function ExclamationIcon(_ref) {
+  var _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 24 : _ref$size;
+  return /*#__PURE__*/React.createElement(_base__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    size: size
+  }, /*#__PURE__*/React.createElement("svg", {
+    stroke: "currentColor",
+    fill: "currentColor",
+    strokeWidth: "0",
+    viewBox: "0 0 192 512",
+    height: "100%",
+    width: "100%",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M176 432c0 44.112-35.888 80-80 80s-80-35.888-80-80 35.888-80 80-80 80 35.888 80 80zM25.26 25.199l13.6 272C39.499 309.972 50.041 320 62.83 320h66.34c12.789 0 23.331-10.028 23.97-22.801l13.6-272C167.425 11.49 156.496 0 142.77 0H49.23C35.504 0 24.575 11.49 25.26 25.199z"
+  })));
+}
+
+/***/ }),
+
 /***/ "./assets/jsx/workflow-editor/components/icons/lines-leaning.jsx":
 /*!***********************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/icons/lines-leaning.jsx ***!
@@ -16668,6 +16705,43 @@ function LinesLeaningIcon(_ref) {
     xmlns: "http://www.w3.org/2000/svg"
   }, /*#__PURE__*/React.createElement("path", {
     d: "M190.4 74.1c5.6-16.8-3.5-34.9-20.2-40.5s-34.9 3.5-40.5 20.2l-128 384c-5.6 16.8 3.5 34.9 20.2 40.5s34.9-3.5 40.5-20.2l128-384zm70.9-41.7c-17.4-2.9-33.9 8.9-36.8 26.3l-64 384c-2.9 17.4 8.9 33.9 26.3 36.8s33.9-8.9 36.8-26.3l64-384c2.9-17.4-8.9-33.9-26.3-36.8zM352 32c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32z"
+  })));
+}
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/icons/lock.jsx":
+/*!**************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/icons/lock.jsx ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LockIcon)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./assets/jsx/workflow-editor/components/icons/base.jsx");
+
+
+/**
+ * Icon FaLock from 'react-icons/fa'.
+ */
+function LockIcon(_ref) {
+  var _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 24 : _ref$size;
+  return /*#__PURE__*/React.createElement(_base__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    size: size
+  }, /*#__PURE__*/React.createElement("svg", {
+    stroke: "currentColor",
+    fill: "currentColor",
+    strokeWidth: "0",
+    viewBox: "0 0 448 512",
+    height: "100%",
+    width: "100%",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
   })));
 }
 
@@ -18465,7 +18539,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/block-default.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/block-default.js");
 /* harmony import */ var _icons_woo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons/woo */ "./assets/jsx/workflow-editor/components/icons/woo.jsx");
 /* harmony import */ var _icons_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons/user */ "./assets/jsx/workflow-editor/components/icons/user.jsx");
 /* harmony import */ var _icons_bug__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icons/bug */ "./assets/jsx/workflow-editor/components/icons/bug.jsx");
@@ -18477,6 +18551,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_schedule__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./icons/schedule */ "./assets/jsx/workflow-editor/components/icons/schedule.jsx");
 /* harmony import */ var _icons_document_text__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./icons/document-text */ "./assets/jsx/workflow-editor/components/icons/document-text.jsx");
 /* harmony import */ var _icons_website__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./icons/website */ "./assets/jsx/workflow-editor/components/icons/website.jsx");
+/* harmony import */ var _icons_exclamation__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./icons/exclamation */ "./assets/jsx/workflow-editor/components/icons/exclamation.jsx");
+/* harmony import */ var _icons_lock__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./icons/lock */ "./assets/jsx/workflow-editor/components/icons/lock.jsx");
+/* harmony import */ var _icons_shop__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./icons/shop */ "./assets/jsx/workflow-editor/components/icons/shop.jsx");
 /**
  * External dependencies
  */
@@ -18485,6 +18562,9 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * WordPress dependencies
  */
+
+
+
 
 
 
@@ -18510,7 +18590,7 @@ function NodeIcon(_ref) {
   switch (iconSrc) {
     case 'block-default':
       icon = {
-        src: _wordpress_icons__WEBPACK_IMPORTED_MODULE_13__["default"]
+        src: _wordpress_icons__WEBPACK_IMPORTED_MODULE_16__["default"]
       };
       break;
     case 'document':
@@ -18582,6 +18662,21 @@ function NodeIcon(_ref) {
     case 'website':
       icon = {
         src: _icons_website__WEBPACK_IMPORTED_MODULE_12__["default"]
+      };
+      break;
+    case 'exclamation':
+      icon = {
+        src: _icons_exclamation__WEBPACK_IMPORTED_MODULE_13__["default"]
+      };
+      break;
+    case 'lock':
+      icon = {
+        src: _icons_lock__WEBPACK_IMPORTED_MODULE_14__["default"]
+      };
+      break;
+    case 'shop':
+      icon = {
+        src: _icons_shop__WEBPACK_IMPORTED_MODULE_15__["default"]
       };
       break;
   }
@@ -19271,13 +19366,13 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Upgrade to Pro to unlock this feature', 'post-expirator')
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
     icon: 'lock',
-    size: 12
+    size: 8
   })), nodeHasErrors && /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-error",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('This node has errors', 'post-expirator')
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    icon: 'error',
-    size: 16
+    icon: 'exclamation',
+    size: 8
   }))), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-header"
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -25687,23 +25782,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     border-left: 0;
 }
 
-/* Node Markers */
-.react-flow__node-marker-wrapper {
-    position: absolute;
-    top: -16px;
-    right: 0;
-    display: flex;
-    flex-direction: row;
-    gap: 2px;
-    justify-content: right;
-}
-
-/* Error mark */
-.react-flow__node-error {
-    color: #d90f0f;
-    display: inline-block;
-}
-
 /* Node Content */
 .react-flow__node-content {
     font-size: 6px;
@@ -25726,20 +25804,52 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Pro Badge */
+/* Node Markers */
+.react-flow__node-marker-wrapper {
+    position: absolute;
+    top: -17px;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    justify-content: right;
+}
+
+.react-flow__node-error,
 .react-flow__node-pro-badge {
-    background-color: #ffb200;
-    color: #000;
-    display: inline-block;
+    display: flex;
     border-radius: 100%;
     width: 14px;
     height: 14px;
-    padding-top: 1px;
-    padding-left: 1px;
-    margin-top: 1px;
     box-sizing: border-box;
+    justify-content: center;
+    vertical-align: middle;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/node-types.css"],"names":[],"mappings":"AAAA;IACI,gBAAgB;AACpB;;AAEA;IACI,kBAAkB;IAClB,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,sBAAsB;IACtB,6BAA6B;IAC7B,eAAe;AACnB;;AAEA;IACI,YAAY;IACZ,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,WAAW;IACX,kBAAkB;IAClB,gBAAgB;AACpB;;AAEA;IACI,iBAAiB;AACrB;;AAEA;IACI,iBAAiB;IACjB,kBAAkB;IAClB,SAAS;IACT,QAAQ;AACZ;;AAEA;IACI,iBAAiB;IACjB,kBAAkB;IAClB,QAAQ;IACR,SAAS;AACb;;AAEA;IACI,cAAc;IACd,qBAAqB;IACrB,WAAW;IACX,gBAAgB;IAChB,YAAY;IACZ,kBAAkB;IAClB,SAAS;IACT,UAAU;AACd;;AAEA;IACI,qBAAqB;IACrB,sBAAsB;IACtB,sBAAsB;AAC1B;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI,oBAAoB;AACxB;;AAEA;IACI,cAAc;IACd,cAAc;IACd,2BAA2B;IAC3B,4BAA4B;IAC5B,+BAA+B;IAC/B,kBAAkB;IAClB,kBAAkB;AACtB;;AAEA;IACI,iBAAiB;IACjB,kBAAkB;IAClB,QAAQ;IACR,SAAS;AACb;;AAEA,+BAA+B;AAC/B;IACI,sBAAsB;IACtB,0BAA0B;IAC1B,eAAe;AACnB;;AAEA;IACI,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,WAAW;IACX,yBAAyB;IACzB,YAAY;IACZ,qBAAqB;IACrB,WAAW;IACX,YAAY;IACZ,sBAAsB;IACtB,kBAAkB;IAClB,kBAAkB;IAClB,iBAAiB;AACrB;;AAEA;IACI,kBAAkB;IAClB,QAAQ;IACR,SAAS;IACT,gCAAgC;IAChC,WAAW;IACX,YAAY;AAChB;;AAEA;IACI;AACJ;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,0BAA0B;AAC9B;;AAEA;IACI,yBAAyB;AAC7B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,YAAY;AAChB;;AAEA;IACI,aAAa;IACb,sBAAsB;IACtB,kBAAkB;AACtB;;AAEA;IACI,YAAY;IACZ,gBAAgB;IAChB,aAAa;AACjB;;AAEA;IACI,eAAe;IACf,sBAAsB;IACtB,WAAW;IACX,cAAc;IACd,WAAW;IACX,YAAY;IACZ,YAAY;AAChB;;AAEA;IACI,QAAQ;AACZ;;AAEA,iBAAiB;;AAEjB;IACI,yBAAyB;IACzB,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,gCAAgC;AACpC;;AAEA;IACI,cAAc;AAClB;;AAEA,YAAY;;AAEZ;IACI,yBAAyB;IACzB,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,gCAAgC;AACpC;;AAEA;IACI,cAAc;AAClB;;AAEA,mBAAmB;;AAEnB;IACI,yBAAyB;IACzB,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,gCAAgC;AACpC;;AAEA;IACI,cAAc;AAClB;;AAEA,qBAAqB;;AAErB;IACI,yBAAyB;IACzB,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,gCAAgC;AACpC;;AAEA;IACI,cAAc;AAClB;;AAEA,iBAAiB;;AAEjB;IACI,yBAAyB;IACzB,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,gCAAgC;AACpC;;AAEA;IACI,yBAAyB;AAC7B;;AAEA,iBAAiB;;AAEjB;IACI,yBAAyB;IACzB,yBAAyB;AAC7B;;AAEA;IACI,sBAAsB;IACtB,yBAAyB;AAC7B;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,gCAAgC;AACpC;;;AAGA,mBAAmB;;AAEnB;IACI,sBAAsB;AAC1B;;AAEA;IACI,cAAc;AAClB;;AAEA,gBAAgB;;AAEhB;IACI,cAAc;IACd,sBAAsB;IACtB,8BAA8B;IAC9B,+BAA+B;IAC/B,aAAa;IACb,mBAAmB;AACvB;;AAEA;IACI,YAAY;IACZ,mBAAmB;IACnB,kBAAkB;IAClB,iBAAiB;IACjB,OAAO;IACP,6BAA6B;AACjC;;AAEA;IACI,cAAc;AAClB;;AAEA,iBAAiB;AACjB;IACI,kBAAkB;IAClB,UAAU;IACV,QAAQ;IACR,aAAa;IACb,mBAAmB;IACnB,QAAQ;IACR,sBAAsB;AAC1B;;AAEA,eAAe;AACf;IACI,cAAc;IACd,qBAAqB;AACzB;;AAEA,iBAAiB;AACjB;IACI,cAAc;IACd,eAAe;AACnB;;AAEA;IACI,iBAAiB;IACjB,WAAW;AACf;;AAEA;IACI,gBAAgB;AACpB;;AAEA;;IAEI,cAAc;IACd,cAAc;IACd,oCAAoC;AACxC;;AAEA,cAAc;AACd;IACI,yBAAyB;IACzB,WAAW;IACX,qBAAqB;IACrB,mBAAmB;IACnB,WAAW;IACX,YAAY;IACZ,gBAAgB;IAChB,iBAAiB;IACjB,eAAe;IACf,sBAAsB;AAC1B","sourcesContent":[".react-flow__node {\n    max-width: 170px;\n}\n\n.react-flow__node-body {\n    border-radius: 8px;\n    color: #171717;\n    font-size: 10px;\n    min-width: 140px;\n    box-sizing: border-box;\n    border: 1px solid transparent;\n    cursor: pointer;\n}\n\n.react-flow__node-inner-body {\n    padding: 6px;\n    box-sizing: border-box;\n}\n\n.react-flow__node-header {\n    text-align: center;\n    width: 100%;\n    position: relative;\n    text-align: left;\n}\n\n.react-flow__node-header .react-flow__node-label {\n    margin-left: 22px;\n}\n\n.react-flow__node-header .dashicon {\n    margin-right: 4px;\n    position: absolute;\n    left: 2px;\n    top: 2px;\n}\n\n.react-flow__node-header .node-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 2px;\n}\n\n.react-flow__node-slug {\n    font-size: 8px;\n    display: inline-block;\n    height: 6px;\n    line-height: 6px;\n    padding: 2px;\n    position: absolute;\n    top: 45px;\n    left: 27px;\n}\n\n.react-flow__handle {\n    width: 8px !important;\n    height: 8px !important;\n    box-sizing: border-box;\n}\n\n.react-flow__handle.react-flow__handle-bottom {\n    bottom: -4px !important;\n}\n\n.react-flow__handle.react-flow__handle-top {\n    top: -4px !important;\n}\n\n.react-flow__node-top {\n    font-size: 8px;\n    padding: 0 8px;\n    border-top-left-radius: 8px;\n    border-top-right-radius: 8px;\n    border-bottom: 1px solid silver;\n    position: relative;\n    padding-left: 18px;\n}\n\n.react-flow__node-top .publishpress-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 8px;\n}\n\n/* PLACEHOLDER FOR EMPTY FLOW */\n.react-flow__node-triggerPlaceholderNode {\n    background-color: #fff;\n    border: 1px dashed #d2d2d2;\n    cursor: pointer;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    display: flex;\n    align-items: center;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {\n    color: #fff;\n    background-color: #d2d2d2;\n    padding: 2px;\n    display: inline-block;\n    width: 12px;\n    height: 12px;\n    box-sizing: border-box;\n    position: relative;\n    border-radius: 1px;\n    margin-right: 6px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 12px;\n    height: 12px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {\n    color: #d2d2d2\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    padding-left: 0;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover {\n    border: 1px dashed #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {\n    background-color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {\n    color: #aeaeae;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    width: 350px;\n}\n\n.react-flow__node-inserter-popover {\n    display: flex;\n    flex-direction: column;\n    position: relative;\n}\n\n.react-flow__node-inserter-popover-content {\n    height: 100%;\n    overflow-y: auto;\n    height: 340px;\n}\n\n.react-flow__node-inserter-popover-close {\n    cursor: pointer;\n    background-color: #000;\n    color: #fff;\n    display: block;\n    width: 100%;\n    padding: 6px;\n    height: 44px;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    height: ;\n}\n\n/* GENERIC NODE */\n\n.react-flow__node-genericNode {\n    background-color: #b2b2c9;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-top {\n    border-bottom: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* TRIGGER */\n\n.react-flow__node-genericTrigger {\n    background-color: #dce5df;\n    border: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #B594B6;\n}\n\n.react-flow__node-genericTrigger  .react-flow__node-slug {\n    color: #939895;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-top {\n    border-bottom: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-slug {\n    color: #808882;\n}\n\n/* GENERIC ACTION */\n\n.react-flow__node-genericAction {\n    background-color: #89bae4;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #8a62be;\n}\n\n.react-flow__node-genericAction .react-flow__node-top {\n    border-bottom: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #526e87;\n}\n\n/* GENERIC ADVANCED */\n\n.react-flow__node-genericAdvanced {\n    background-color: #f8ddad;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #b19f80;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-top {\n    border-bottom: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #908065;\n}\n\n/* QUERY ACTION */\n\n.react-flow__node-queryAction {\n    background-color: #d8b6f2;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: #9079a1;\n}\n\n.react-flow__node-queryAction .react-flow__node-top {\n    border-bottom: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: rgb(110, 110, 125);\n}\n\n/* DEBUG ACTION */\n\n.react-flow__node-debugAction {\n    background-color: #f0aec6;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-slug {\n    color: #916877;\n}\n\n.react-flow__node-debugAction .react-flow__node-top {\n    border-bottom: 1px solid #cf96ab;\n}\n\n\n/* SELECTED NODES */\n\n.react-flow__node.selected .react-flow__node-body {\n    border: 1px solid #555;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* HANDLE AREA */\n\n.react-flow__node-handle-area {\n    font-size: 6px;\n    background-color: #fff;\n    border-bottom-left-radius: 8px;\n    border-bottom-right-radius: 8px;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-flow__node-handle-name {\n    padding: 2px;\n    padding-bottom: 6px;\n    text-align: center;\n    line-height: 100%;\n    flex: 1;\n    border-left: 1px solid silver;\n}\n\n.react-flow__node-handle-name:first-child {\n    border-left: 0;\n}\n\n/* Node Markers */\n.react-flow__node-marker-wrapper {\n    position: absolute;\n    top: -16px;\n    right: 0;\n    display: flex;\n    flex-direction: row;\n    gap: 2px;\n    justify-content: right;\n}\n\n/* Error mark */\n.react-flow__node-error {\n    color: #d90f0f;\n    display: inline-block;\n}\n\n/* Node Content */\n.react-flow__node-content {\n    font-size: 6px;\n    margin-top: 6px;\n}\n\n.react-flow__node-content table {\n    border-spacing: 0;\n    width: 100%;\n}\n\n.react-flow__node-content table th {\n    text-align: left;\n}\n\n.react-flow__node-content table th,\n.react-flow__node-content table td {\n    padding: 0 6px;\n    font-size: 6px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n}\n\n/* Pro Badge */\n.react-flow__node-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    display: inline-block;\n    border-radius: 100%;\n    width: 14px;\n    height: 14px;\n    padding-top: 1px;\n    padding-left: 1px;\n    margin-top: 1px;\n    box-sizing: border-box;\n}\n"],"sourceRoot":""}]);
+
+.react-flow__node-pro-badge {
+    background-color: #ffb200;
+    color: #000;
+}
+
+.react-flow__node-pro-badge .node-icon {
+    margin-top: -2px;
+}
+
+.react-flow__node-error {
+    background-color: #d90f0f;
+    color: #fff;
+    font-size: 10px;
+    text-align: center;
+    line-height: 12px;
+    font-family: monospace;
+    font-weight: 900;
+    padding-left: 0px;
+}
+
+.react-flow__node-error .node-icon {
+    margin-top: 2px;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/node-types.css"],"names":[],"mappings":"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","sourcesContent":[".react-flow__node {\n    max-width: 170px;\n}\n\n.react-flow__node-body {\n    border-radius: 8px;\n    color: #171717;\n    font-size: 10px;\n    min-width: 140px;\n    box-sizing: border-box;\n    border: 1px solid transparent;\n    cursor: pointer;\n}\n\n.react-flow__node-inner-body {\n    padding: 6px;\n    box-sizing: border-box;\n}\n\n.react-flow__node-header {\n    text-align: center;\n    width: 100%;\n    position: relative;\n    text-align: left;\n}\n\n.react-flow__node-header .react-flow__node-label {\n    margin-left: 22px;\n}\n\n.react-flow__node-header .dashicon {\n    margin-right: 4px;\n    position: absolute;\n    left: 2px;\n    top: 2px;\n}\n\n.react-flow__node-header .node-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 2px;\n}\n\n.react-flow__node-slug {\n    font-size: 8px;\n    display: inline-block;\n    height: 6px;\n    line-height: 6px;\n    padding: 2px;\n    position: absolute;\n    top: 45px;\n    left: 27px;\n}\n\n.react-flow__handle {\n    width: 8px !important;\n    height: 8px !important;\n    box-sizing: border-box;\n}\n\n.react-flow__handle.react-flow__handle-bottom {\n    bottom: -4px !important;\n}\n\n.react-flow__handle.react-flow__handle-top {\n    top: -4px !important;\n}\n\n.react-flow__node-top {\n    font-size: 8px;\n    padding: 0 8px;\n    border-top-left-radius: 8px;\n    border-top-right-radius: 8px;\n    border-bottom: 1px solid silver;\n    position: relative;\n    padding-left: 18px;\n}\n\n.react-flow__node-top .publishpress-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 8px;\n}\n\n/* PLACEHOLDER FOR EMPTY FLOW */\n.react-flow__node-triggerPlaceholderNode {\n    background-color: #fff;\n    border: 1px dashed #d2d2d2;\n    cursor: pointer;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    display: flex;\n    align-items: center;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {\n    color: #fff;\n    background-color: #d2d2d2;\n    padding: 2px;\n    display: inline-block;\n    width: 12px;\n    height: 12px;\n    box-sizing: border-box;\n    position: relative;\n    border-radius: 1px;\n    margin-right: 6px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 12px;\n    height: 12px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {\n    color: #d2d2d2\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    padding-left: 0;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover {\n    border: 1px dashed #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {\n    background-color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {\n    color: #aeaeae;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    width: 350px;\n}\n\n.react-flow__node-inserter-popover {\n    display: flex;\n    flex-direction: column;\n    position: relative;\n}\n\n.react-flow__node-inserter-popover-content {\n    height: 100%;\n    overflow-y: auto;\n    height: 340px;\n}\n\n.react-flow__node-inserter-popover-close {\n    cursor: pointer;\n    background-color: #000;\n    color: #fff;\n    display: block;\n    width: 100%;\n    padding: 6px;\n    height: 44px;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    height: ;\n}\n\n/* GENERIC NODE */\n\n.react-flow__node-genericNode {\n    background-color: #b2b2c9;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-top {\n    border-bottom: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* TRIGGER */\n\n.react-flow__node-genericTrigger {\n    background-color: #dce5df;\n    border: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #B594B6;\n}\n\n.react-flow__node-genericTrigger  .react-flow__node-slug {\n    color: #939895;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-top {\n    border-bottom: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-slug {\n    color: #808882;\n}\n\n/* GENERIC ACTION */\n\n.react-flow__node-genericAction {\n    background-color: #89bae4;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #8a62be;\n}\n\n.react-flow__node-genericAction .react-flow__node-top {\n    border-bottom: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #526e87;\n}\n\n/* GENERIC ADVANCED */\n\n.react-flow__node-genericAdvanced {\n    background-color: #f8ddad;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #b19f80;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-top {\n    border-bottom: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #908065;\n}\n\n/* QUERY ACTION */\n\n.react-flow__node-queryAction {\n    background-color: #d8b6f2;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: #9079a1;\n}\n\n.react-flow__node-queryAction .react-flow__node-top {\n    border-bottom: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: rgb(110, 110, 125);\n}\n\n/* DEBUG ACTION */\n\n.react-flow__node-debugAction {\n    background-color: #f0aec6;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-slug {\n    color: #916877;\n}\n\n.react-flow__node-debugAction .react-flow__node-top {\n    border-bottom: 1px solid #cf96ab;\n}\n\n\n/* SELECTED NODES */\n\n.react-flow__node.selected .react-flow__node-body {\n    border: 1px solid #555;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* HANDLE AREA */\n\n.react-flow__node-handle-area {\n    font-size: 6px;\n    background-color: #fff;\n    border-bottom-left-radius: 8px;\n    border-bottom-right-radius: 8px;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-flow__node-handle-name {\n    padding: 2px;\n    padding-bottom: 6px;\n    text-align: center;\n    line-height: 100%;\n    flex: 1;\n    border-left: 1px solid silver;\n}\n\n.react-flow__node-handle-name:first-child {\n    border-left: 0;\n}\n\n/* Node Content */\n.react-flow__node-content {\n    font-size: 6px;\n    margin-top: 6px;\n}\n\n.react-flow__node-content table {\n    border-spacing: 0;\n    width: 100%;\n}\n\n.react-flow__node-content table th {\n    text-align: left;\n}\n\n.react-flow__node-content table th,\n.react-flow__node-content table td {\n    padding: 0 6px;\n    font-size: 6px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n}\n\n/* Node Markers */\n.react-flow__node-marker-wrapper {\n    position: absolute;\n    top: -17px;\n    right: 0;\n    display: flex;\n    flex-direction: row;\n    gap: 2px;\n    justify-content: right;\n}\n\n.react-flow__node-error,\n.react-flow__node-pro-badge {\n    display: flex;\n    border-radius: 100%;\n    width: 14px;\n    height: 14px;\n    box-sizing: border-box;\n    justify-content: center;\n    vertical-align: middle;\n}\n\n.react-flow__node-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n}\n\n.react-flow__node-pro-badge .node-icon {\n    margin-top: -2px;\n}\n\n.react-flow__node-error {\n    background-color: #d90f0f;\n    color: #fff;\n    font-size: 10px;\n    text-align: center;\n    line-height: 12px;\n    font-family: monospace;\n    font-weight: 900;\n    padding-left: 0px;\n}\n\n.react-flow__node-error .node-icon {\n    margin-top: 2px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
