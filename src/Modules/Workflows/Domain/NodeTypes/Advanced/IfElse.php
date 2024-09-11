@@ -123,4 +123,9 @@ class IfElse implements NodeTypeInterface
             ]
         ];
     }
+
+    public function isProFeature(): bool
+    {
+        return false;
+    }
 }

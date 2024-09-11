@@ -17,6 +17,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         isAdvancedSettingsEnabled,
         isSingularElementSelected,
         getNodeTypeByName,
+        isPro,
     } = useSelect((select) => {
         const nodeErrors = select(workflowStore).getNodeErrors(id);
         const selectedElementsCount = select(workflowStore).getSelectedElementsCount();
@@ -27,6 +28,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
             isAdvancedSettingsEnabled: true,
             isSingularElementSelected: selectedElementsCount === 1,
             getNodeTypeByName: select(editorStore).getNodeTypeByName,
+            isPro: select(editorStore).isPro(),
         }
     });
 
@@ -39,7 +41,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
     } = useDispatch(editorStore);
 
     const nodeType = getNodeTypeByName(data.name);
-    const nodeLabel = nodeType.label || data.label || __('Node', 'post-expirator');
+    const nodeLabel = nodeType.label || data.label || __('Node', 'publishpress-future-pro');
     const nodeClassName = nodeType?.className || 'react-flow__node-genericNode';
 
     let targetHandles = null;
@@ -90,24 +92,24 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
         }
     }
 
-    let topText = __('Step', 'post-expirator');
+    let topText = __('Step', 'publishpress-future-pro');
     if (data.elementaryType === 'action') {
-        topText = __('Action', 'post-expirator');
+        topText = __('Action', 'publishpress-future-pro');
     } else if (data.elementaryType === 'advanced') {
-        topText = __('Advanced', 'post-expirator');
+        topText = __('Advanced', 'publishpress-future-pro');
     } else if (data.elementaryType === 'trigger') {
-        topText = __('Trigger', 'post-expirator');
+        topText = __('Trigger', 'publishpress-future-pro');
     }
 
     const nodeAttributes = [
         // {
         //     id: 'id',
-        //     label: __('ID', 'post-expirator'),
+        //     label: __('ID', 'publishpress-future-pro'),
         //     value: id,
         // },
         // {
         //     id: 'slug',
-        //     label: __('Slug', 'post-expirator'),
+        //     label: __('Slug', 'publishpress-future-pro'),
         //     value: data.slug,
         // },
     ];
@@ -135,7 +137,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                             <ToolbarGroup>
                                 <ToolbarButton
                                     icon={'trash'}
-                                    label={__('Delete', 'post-expirator')}
+                                    label={__('Delete', 'publishpress-future-pro')}
                                     onClick={onClickDeleteNode}
                                 />
                             </ToolbarGroup>
@@ -152,11 +154,28 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                 </div>
 
                 <div className='react-flow__node-inner-body'>
-                    {nodeHasErrors && (
-                        <div className='react-flow__node-error'>
-                            <NodeIcon icon={'error'} size={16} />
+
+                    {(nodeHasErrors || (nodeType.isProFeature && !isPro)) && (
+                        <div className='react-flow__node-marker-wrapper'>
+                            {nodeType.isProFeature && !isPro && (
+                                <div className='react-flow__node-pro-badge'
+                                    title={__('Upgrade to Pro to unlock this feature', 'post-expirator')}
+                                >
+                                    <NodeIcon icon={'lock'} size={12} />
+                                </div>
+                            )}
+
+                            {nodeHasErrors && (
+                                <div className='react-flow__node-error'
+                                    title={__('This node has errors', 'post-expirator')}
+                                >
+                                    <NodeIcon icon={'error'} size={16} />
+                                </div>
+                            )}
+
                         </div>
                     )}
+
                     <div className='react-flow__node-header'>
                         <NodeIcon icon={nodeType.icon.src} size={14} />
                         <div className="react-flow__node-label">{nodeLabel}</div>

@@ -149,4 +149,9 @@ class CorePostChangeStatus implements NodeTypeInterface
             ]
         ];
     }
+
+    public function isProFeature(): bool
+    {
+        return true;
+    }
 }

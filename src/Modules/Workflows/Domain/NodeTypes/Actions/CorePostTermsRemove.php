@@ -158,4 +158,9 @@ class CorePostTermsRemove implements NodeTypeInterface
             ]
         ];
     }
+
+    public function isProFeature(): bool
+    {
+        return false;
+    }
 }

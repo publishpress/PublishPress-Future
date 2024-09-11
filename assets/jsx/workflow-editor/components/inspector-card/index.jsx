@@ -4,15 +4,17 @@ import {
     FEATURE_DEVELOPER_MODE,
     FEATURE_ADVANCED_SETTINGS,
 } from "../../constants";
-
-export const InspectorCard = ({ title, description, icon, id, slug }) => {
+import { __ } from "@wordpress/i18n";
+export const InspectorCard = ({ title, description, icon, id, slug, isProFeature }) => {
     const {
         isDeveloperModeEnabled,
         isAdvancedSettingsEnabled,
+        isPro
     } = useSelect((select) => {
         return {
             isDeveloperModeEnabled: select(editorStore).isFeatureActive(FEATURE_DEVELOPER_MODE),
             isAdvancedSettingsEnabled: select(editorStore).isFeatureActive(FEATURE_ADVANCED_SETTINGS),
+            isPro: select(editorStore).isPro(),
         };
     });
 
@@ -41,10 +43,24 @@ export const InspectorCard = ({ title, description, icon, id, slug }) => {
             <div className="workflow-editor-inspector-card__content">
                 <h2 className="workflow-editor-inspector-card__title">
                     {title}
+                    {isProFeature && !isPro && (
+                        <span className="workflow-editor-inspector-card__pro-badge">
+                            {__("Pro", "post-expirator")}
+                        </span>
+                    )}
                 </h2>
                 <div className="workflow-editor-inspector-card__description">
                     {description}
                 </div>
+
+                {isProFeature && !isPro && (
+                    <div className="workflow-editor-inspector-card__pro-instructions">
+                        <a href="https://publishpress.com/links/future-workflow-inspector" target="_blank">
+                            {__("Upgrade to Pro to unlock this feature.", "post-expirator")}
+                        </a>
+                    </div>
+                )}
+
                 {nodeAttributes.length > 0 && (
                     <>
                         <table>

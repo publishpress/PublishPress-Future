@@ -7,6 +7,7 @@
 @import url('guide.css');
 @import url('toolbar.css');
 @import url('notices.css');
+@import url('pro-features.css');
 
 .reactflow-wrapper {
     height: 100%;

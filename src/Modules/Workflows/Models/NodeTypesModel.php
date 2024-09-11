@@ -145,6 +145,9 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         $instancesCopy = $instances;
 
+        /**
+         * @var NodeTypeInterface $instance
+         */
         foreach ($instancesCopy as &$instance) {
             $instanceClass = get_class($instance);
 
@@ -169,6 +172,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "outputSchema" => $instance->getOutputSchema(),
                     "handleSchema" => $instance->getHandleSchema(),
                     "baseSlug" => $instance->getBaseSlug(),
+                    "isProFeature" => $instance->isProFeature(),
                 ],
                 $type
             );

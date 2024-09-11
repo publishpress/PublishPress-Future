@@ -151,4 +151,9 @@ class FutureLegacyAction implements NodeTypeInterface
 
         return $action;
     }
+
+    public function isProFeature(): bool
+    {
+        return false;
+    }
 }

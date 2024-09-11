@@ -184,6 +184,8 @@ class WorkflowEditor implements InitializableInterface
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $workflowId = (int)($_GET["workflow"] ?? 0);
 
+        $isPro = $this->hooks->applyFilters(HooksAbstract::FILTER_IS_PRO, false);
+
         wp_localize_script(
             "future_workflow_editor_script",
             "futureWorkflowEditor",
@@ -226,6 +228,7 @@ class WorkflowEditor implements InitializableInterface
                 "taxonomies" => $taxonomies,
                 "welcomeGuidePages" => $this->getWelcomeGuidePages(),
                 "isExperimentalFeaturesEnabled" => $this->settingsFacade->getExperimentalFeaturesStatus(),
+                "isPro" => $isPro,
             ]
         );
     }

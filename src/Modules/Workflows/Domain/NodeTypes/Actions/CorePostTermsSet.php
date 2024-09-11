@@ -154,4 +154,9 @@ class CorePostTermsSet implements NodeTypeInterface
             ]
         ];
     }
+
+    public function isProFeature(): bool
+    {
+        return false;
+    }
 }

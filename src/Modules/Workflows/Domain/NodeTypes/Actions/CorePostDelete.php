@@ -134,4 +134,9 @@ class CorePostDelete implements NodeTypeInterface
             ]
         ];
     }
+
+    public function isProFeature(): bool
+    {
+        return false;
+    }
 }

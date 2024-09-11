@@ -19,6 +19,8 @@ import {
 } from "../../constants";
 import { STORE_NAME } from "./constants";
 
+const isPro = futureWorkflowEditor.isPro || false;
+
 export const storeConfig = {
     activeFeatures: [],
     currentInserterTab: INSERTER_TAB_TRIGGERS,
@@ -31,6 +33,7 @@ export const storeConfig = {
     activeSidebarName: null,
     hoveredItem: null,
     panelBodyStates: {},
+    isPro: isPro,
 };
 
 export const store = createReduxStore(STORE_NAME, {
@@ -370,6 +373,9 @@ export const store = createReduxStore(STORE_NAME, {
         },
         isRayDebugInstalled(state) {
             return state.advancedNodes.some((node) => node.name === "advanced/ray.debug");
+        },
+        isPro(state) {
+            return state.isPro;
         }
     },
 });

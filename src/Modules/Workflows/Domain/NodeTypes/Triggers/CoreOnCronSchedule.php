@@ -118,4 +118,9 @@ class CoreOnCronSchedule implements NodeTypeInterface
             ]
         ];
     }
+
+    public function isProFeature(): bool
+    {
+        return true;
+    }
 }

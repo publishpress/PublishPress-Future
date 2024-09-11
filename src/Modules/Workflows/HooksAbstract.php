@@ -4,6 +4,8 @@ namespace PublishPress\Future\Modules\Workflows;
 
 abstract class HooksAbstract
 {
+    public const FILTER_IS_PRO = 'publishpressfuture_is_pro';
+
     public const ACTION_WORKFLOW_ENGINE_LOAD = 'publishpressfuture_workflow_engine_load';
 
     public const ACTION_WORKFLOW_ENGINE_START = 'publishpressfuture_workflow_engine_start';

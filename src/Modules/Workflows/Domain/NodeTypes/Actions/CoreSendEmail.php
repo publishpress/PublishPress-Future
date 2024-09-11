@@ -176,4 +176,9 @@ class CoreSendEmail implements NodeTypeInterface
             ]
         ];
     }
+
+    public function isProFeature(): bool
+    {
+        return true;
+    }
 }

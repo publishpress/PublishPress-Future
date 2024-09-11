@@ -41,6 +41,17 @@ function InserterListItem({
         return item;
     }, [item.id, item.label, item.icon, item.disabled]);
 
+    const { isPro } = useSelect((select) => {
+        return {
+            isPro: select(editorStore).isPro(),
+        }
+    });
+
+    const classes = classnames(
+        'block-editor-block-types-list__list-item',
+        item.isProFeature && !isPro ? 'is-pro-feature' : '',
+    );
+
     return (
         <InserterDraggableNodes
             isEnabled={isDraggable && !item.disabled}
@@ -49,7 +60,7 @@ function InserterListItem({
         >
             {({ draggable, onDragStart, onDragEnd }) => (
                 <div
-                    className="block-editor-block-types-list__list-item"
+                    className={classes}
                     draggable={draggable}
                     onDragStart={(event) => {
                         isDragging.current = true;
@@ -116,6 +127,13 @@ function InserterListItem({
                         >
                             <NodeIcon icon={item.icon} showColors />
                         </span>
+
+                        {item.isProFeature && !isPro && (
+                            <span className="block-editor-block-types-list__item-pro-badge">
+                                Pro
+                            </span>
+                        )}
+
                         <span className="block-editor-block-types-list__item-title">
                             {item.label}
                         </span>

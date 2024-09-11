@@ -142,4 +142,9 @@ class CorePostUnstick implements NodeTypeInterface
             ]
         ];
     }
+
+    public function isProFeature(): bool
+    {
+        return false;
+    }
 }

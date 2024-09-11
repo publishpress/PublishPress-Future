@@ -15531,6 +15531,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
  */
 
 
+var isPro = futureWorkflowEditor.isPro || false;
 var storeConfig = {
   activeFeatures: [],
   currentInserterTab: _constants__WEBPACK_IMPORTED_MODULE_1__.INSERTER_TAB_TRIGGERS,
@@ -15542,7 +15543,8 @@ var storeConfig = {
   advancedNodes: [],
   activeSidebarName: null,
   hoveredItem: null,
-  panelBodyStates: {}
+  panelBodyStates: {},
+  isPro: isPro
 };
 var store = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(_constants__WEBPACK_IMPORTED_MODULE_2__.STORE_NAME, {
   reducer: function reducer() {
@@ -15835,6 +15837,9 @@ var store = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.createReduxStore)(_c
       return state.advancedNodes.some(function (node) {
         return node.name === "advanced/ray.debug";
       });
+    },
+    isPro: function isPro(state) {
+      return state.isPro;
     }
   }
 });
@@ -16956,6 +16961,43 @@ function ScheduleIcon(_ref) {
 
 /***/ }),
 
+/***/ "./assets/jsx/workflow-editor/components/icons/shop.jsx":
+/*!**************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/icons/shop.jsx ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ShopIcon)
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./assets/jsx/workflow-editor/components/icons/base.jsx");
+
+
+/**
+ * Icon FaShoppingCart from 'react-icons/fa'.
+ */
+function ShopIcon(_ref) {
+  var _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 24 : _ref$size;
+  return /*#__PURE__*/React.createElement(_base__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    size: size
+  }, /*#__PURE__*/React.createElement("svg", {
+    stroke: "currentColor",
+    fill: "currentColor",
+    strokeWidth: "0",
+    viewBox: "0 0 576 512",
+    height: "100%",
+    width: "100%",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"
+  })));
+}
+
+/***/ }),
+
 /***/ "./assets/jsx/workflow-editor/components/icons/user.jsx":
 /*!**************************************************************!*\
   !*** ./assets/jsx/workflow-editor/components/icons/user.jsx ***!
@@ -17232,6 +17274,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+
 
 
 
@@ -17240,15 +17284,18 @@ var InspectorCard = function InspectorCard(_ref) {
     description = _ref.description,
     icon = _ref.icon,
     id = _ref.id,
-    slug = _ref.slug;
+    slug = _ref.slug,
+    isProFeature = _ref.isProFeature;
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useSelect)(function (select) {
       return {
         isDeveloperModeEnabled: select(_editor_store__WEBPACK_IMPORTED_MODULE_1__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_2__.FEATURE_DEVELOPER_MODE),
-        isAdvancedSettingsEnabled: select(_editor_store__WEBPACK_IMPORTED_MODULE_1__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_2__.FEATURE_ADVANCED_SETTINGS)
+        isAdvancedSettingsEnabled: select(_editor_store__WEBPACK_IMPORTED_MODULE_1__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_2__.FEATURE_ADVANCED_SETTINGS),
+        isPro: select(_editor_store__WEBPACK_IMPORTED_MODULE_1__.store).isPro()
       };
     }),
     isDeveloperModeEnabled = _useSelect.isDeveloperModeEnabled,
-    isAdvancedSettingsEnabled = _useSelect.isAdvancedSettingsEnabled;
+    isAdvancedSettingsEnabled = _useSelect.isAdvancedSettingsEnabled,
+    isPro = _useSelect.isPro;
   var nodeAttributes = [];
   if (isDeveloperModeEnabled) {
     nodeAttributes.push({
@@ -17272,9 +17319,16 @@ var InspectorCard = function InspectorCard(_ref) {
     className: "workflow-editor-inspector-card__content"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "workflow-editor-inspector-card__title"
-  }, title), /*#__PURE__*/React.createElement("div", {
+  }, title, isProFeature && !isPro && /*#__PURE__*/React.createElement("span", {
+    className: "workflow-editor-inspector-card__pro-badge"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Pro", "post-expirator"))), /*#__PURE__*/React.createElement("div", {
     className: "workflow-editor-inspector-card__description"
-  }, description), nodeAttributes.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, nodeAttributes.map(function (attribute) {
+  }, description), isProFeature && !isPro && /*#__PURE__*/React.createElement("div", {
+    className: "workflow-editor-inspector-card__pro-instructions"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "https://publishpress.com/links/future-workflow-inspector",
+    target: "_blank"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Upgrade to Pro to unlock this feature.", "post-expirator"))), nodeAttributes.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, nodeAttributes.map(function (attribute) {
     return /*#__PURE__*/React.createElement("tr", {
       key: "attribute_" + attribute.id
     }, /*#__PURE__*/React.createElement("th", null, attribute.label), /*#__PURE__*/React.createElement("td", null, attribute.value));
@@ -17516,12 +17570,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_interface__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/interface */ "./node_modules/@wordpress/interface/build-module/index.js");
-/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @wordpress/compose */ "./node_modules/@wordpress/compose/build-module/hooks/use-viewport-match/index.js");
+/* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @wordpress/compose */ "./node_modules/@wordpress/compose/build-module/hooks/use-viewport-match/index.js");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/plus.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/layout.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/plus.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/layout.js");
 /* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
 /* harmony import */ var _workflow_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../workflow-store */ "./assets/jsx/workflow-editor/components/workflow-store/index.jsx");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
@@ -17531,12 +17585,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _left_toolbar_toolbar__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../left-toolbar/toolbar */ "./assets/jsx/workflow-editor/components/left-toolbar/toolbar.jsx");
 /* harmony import */ var _left_toolbar_undo__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../left-toolbar/undo */ "./assets/jsx/workflow-editor/components/left-toolbar/undo.jsx");
 /* harmony import */ var _left_toolbar_redo__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../left-toolbar/redo */ "./assets/jsx/workflow-editor/components/left-toolbar/redo.jsx");
-/* harmony import */ var _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @wordpress/keycodes */ "./node_modules/@wordpress/keycodes/build-module/index.js");
+/* harmony import */ var _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @wordpress/keycodes */ "./node_modules/@wordpress/keycodes/build-module/index.js");
 /* harmony import */ var _workflow_save_draft_button__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../workflow-save-draft-button */ "./assets/jsx/workflow-editor/components/workflow-save-draft-button/index.jsx");
 /* harmony import */ var future_workflow_editor__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! future-workflow-editor */ "future-workflow-editor");
 /* harmony import */ var future_workflow_editor__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(future_workflow_editor__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _workflow_publish_button__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../workflow-publish-button */ "./assets/jsx/workflow-editor/components/workflow-publish-button/index.jsx");
 /* harmony import */ var _flow_editor_auto_layout_hooks__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../flow-editor/auto-layout/hooks */ "./assets/jsx/workflow-editor/components/flow-editor/auto-layout/hooks.jsx");
+/* harmony import */ var _icons_shop__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../icons/shop */ "./assets/jsx/workflow-editor/components/icons/shop.jsx");
+
 
 
 
@@ -17570,7 +17626,8 @@ var LayoutHeader = function LayoutHeader() {
         showIconLabels: select(_editor_store__WEBPACK_IMPORTED_MODULE_5__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_7__.FEATURE_SHOW_ICON_LABELS),
         isLoadingWorkflow: select(_workflow_store__WEBPACK_IMPORTED_MODULE_6__.store).isLoadingWorkflow(),
         isEditedWorkflowDirty: select(_workflow_store__WEBPACK_IMPORTED_MODULE_6__.store).isEditedWorkflowDirty(),
-        takeScreenshot: select(_workflow_store__WEBPACK_IMPORTED_MODULE_6__.store).takeScreenshot
+        takeScreenshot: select(_workflow_store__WEBPACK_IMPORTED_MODULE_6__.store).takeScreenshot,
+        isPro: select(_editor_store__WEBPACK_IMPORTED_MODULE_5__.store).isPro()
       };
     }),
     isFullscreenActive = _useSelect.isFullscreenActive,
@@ -17579,12 +17636,13 @@ var LayoutHeader = function LayoutHeader() {
     showIconLabels = _useSelect.showIconLabels,
     isLoadingWorkflow = _useSelect.isLoadingWorkflow,
     isEditedWorkflowDirty = _useSelect.isEditedWorkflowDirty,
-    takeScreenshot = _useSelect.takeScreenshot;
+    takeScreenshot = _useSelect.takeScreenshot,
+    isPro = _useSelect.isPro;
   var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.useDispatch)(_editor_store__WEBPACK_IMPORTED_MODULE_5__.store),
     enableFeature = _useDispatch.enableFeature,
     disableFeature = _useDispatch.disableFeature;
   var headerClasses = 'edit-post-header editor-header ' + (hasReducedUI ? 'has-reduced-ui' : '');
-  var isWideViewport = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_18__["default"])('wide');
+  var isWideViewport = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_19__["default"])('wide');
   var inserterButton = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useRef)();
   var openInserter = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useCallback)(function () {
     if (isInserterOpened) {
@@ -17605,6 +17663,10 @@ var LayoutHeader = function LayoutHeader() {
       direction: _flow_editor_auto_layout_constants__WEBPACK_IMPORTED_MODULE_8__.AUTO_LAYOUT_DIRECTION_DOWN
     });
   });
+  var onBuyProClick = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useCallback)(function (event) {
+    event.preventDefault();
+    window.open('https://publishpress.com/links/future-workflow-toolbar', '_blank');
+  });
   var toolbarLeftClassName = future_workflow_editor__WEBPACK_IMPORTED_MODULE_15__.isWP65OrLater ? 'editor-document-tools__left' : 'edit-post-header-toolbar__left';
   return /*#__PURE__*/React.createElement("div", {
     className: headerClasses
@@ -17623,8 +17685,8 @@ var LayoutHeader = function LayoutHeader() {
     isPressed: isInserterOpened,
     onMouseDown: preventDefault,
     onClick: openInserter,
-    shortcut: _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_19__.displayShortcut.secondary('i'),
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_20__["default"]
+    shortcut: _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_20__.displayShortcut.secondary('i'),
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__["default"]
     /* translators: button label text should, if possible, be under 16
     characters. */,
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__._x)('Toggle block inserter', 'Generic label for block inserter button'),
@@ -17634,13 +17696,22 @@ var LayoutHeader = function LayoutHeader() {
     className: "edit-post-header-toolbar__autolayout-down",
     onMouseDown: preventDefault,
     onClick: onAutoLayoutClick,
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_21__["default"],
-    shortcut: _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_19__.displayShortcut.secondary('l')
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_22__["default"],
+    shortcut: _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_20__.displayShortcut.secondary('l')
     /* translators: button label text should, if possible, be under 16 characters. */,
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Auto Layout', 'post-expirator'),
     showTooltip: !showIconLabels,
     disabled: isLoadingWorkflow
-  }, showIconLabels && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Auto Layout', 'post-expirator'))))), /*#__PURE__*/React.createElement("div", {
+  }, showIconLabels && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Auto Layout', 'post-expirator')), !isPro && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarItem, {
+    as: _wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button,
+    className: "edit-post-header-toolbar__buy-pro",
+    onMouseDown: preventDefault,
+    onClick: onBuyProClick,
+    icon: _icons_shop__WEBPACK_IMPORTED_MODULE_18__["default"]
+    /* translators: button label text should, if possible, be under 16 characters. */,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Upgrade to Pro and unlock more features', 'post-expirator'),
+    showTooltip: !showIconLabels
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Upgrade to Pro', 'post-expirator'))))), /*#__PURE__*/React.createElement("div", {
     className: "edit-post-header__settings editor-header__settings"
   }, /*#__PURE__*/React.createElement(_workflow_save_draft_button__WEBPACK_IMPORTED_MODULE_14__.WorkflowSaveDraftButton, null), /*#__PURE__*/React.createElement(_workflow_publish_button__WEBPACK_IMPORTED_MODULE_16__["default"], null), /*#__PURE__*/React.createElement(_wordpress_interface__WEBPACK_IMPORTED_MODULE_2__.PinnedItems.Slot, {
     scope: _constants__WEBPACK_IMPORTED_MODULE_7__.SLOT_SCOPE_WORKFLOW_EDITOR
@@ -18343,7 +18414,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 
 
 var ReactJson = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.lazy)(function () {
-  return Promise.resolve().then(function webpackMissingModule() { var e = new Error("Cannot find module '@microlink/react-json-view'"); e.code = 'MODULE_NOT_FOUND'; throw e; });
+  return __webpack_require__.e(/*! import() */ "vendors-node_modules_microlink_react-json-view_dist_main_js").then(__webpack_require__.t.bind(__webpack_require__, /*! @microlink/react-json-view */ "./node_modules/@microlink/react-json-view/dist/main.js", 23));
 });
 function NodeDevInfoPanel(_ref) {
   var node = _ref.node,
@@ -18933,7 +19004,8 @@ var NodeInspectorCard = function NodeInspectorCard(_ref) {
     description: nodeDescription,
     id: nodeId,
     icon: Icon,
-    slug: nodeSlug
+    slug: nodeSlug,
+    isProFeature: nodeType.isProFeature
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NodeInspectorCard);
@@ -19085,20 +19157,22 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
         nodeHasErrors: Object.keys(nodeErrors).length > 0,
         isAdvancedSettingsEnabled: true,
         isSingularElementSelected: selectedElementsCount === 1,
-        getNodeTypeByName: select(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store).getNodeTypeByName
+        getNodeTypeByName: select(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store).getNodeTypeByName,
+        isPro: select(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store).isPro()
       };
     }),
     nodeErrors = _useSelect.nodeErrors,
     nodeHasErrors = _useSelect.nodeHasErrors,
     isAdvancedSettingsEnabled = _useSelect.isAdvancedSettingsEnabled,
     isSingularElementSelected = _useSelect.isSingularElementSelected,
-    getNodeTypeByName = _useSelect.getNodeTypeByName;
+    getNodeTypeByName = _useSelect.getNodeTypeByName,
+    isPro = _useSelect.isPro;
   var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_workflow_store__WEBPACK_IMPORTED_MODULE_3__.store),
     removeNode = _useDispatch.removeNode;
   var _useDispatch2 = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_editor_store__WEBPACK_IMPORTED_MODULE_4__.store),
     openGeneralSidebar = _useDispatch2.openGeneralSidebar;
   var nodeType = getNodeTypeByName(data.name);
-  var nodeLabel = nodeType.label || data.label || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Node', 'post-expirator');
+  var nodeLabel = nodeType.label || data.label || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Node', 'publishpress-future-pro');
   var nodeClassName = (nodeType === null || nodeType === void 0 ? void 0 : nodeType.className) || 'react-flow__node-genericNode';
   var targetHandles = null;
   if (nodeType.handleSchema) {
@@ -19141,23 +19215,23 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
       });
     }
   }
-  var topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Step', 'post-expirator');
+  var topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Step', 'publishpress-future-pro');
   if (data.elementaryType === 'action') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Action', 'post-expirator');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Action', 'publishpress-future-pro');
   } else if (data.elementaryType === 'advanced') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Advanced', 'post-expirator');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Advanced', 'publishpress-future-pro');
   } else if (data.elementaryType === 'trigger') {
-    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Trigger', 'post-expirator');
+    topText = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Trigger', 'publishpress-future-pro');
   }
   var nodeAttributes = [
     // {
     //     id: 'id',
-    //     label: __('ID', 'post-expirator'),
+    //     label: __('ID', 'publishpress-future-pro'),
     //     value: id,
     // },
     // {
     //     id: 'slug',
-    //     label: __('Slug', 'post-expirator'),
+    //     label: __('Slug', 'publishpress-future-pro'),
     //     value: data.slug,
     // },
   ];
@@ -19181,7 +19255,7 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
     className: "components-accessible-toolbar block-editor-block-contextual-toolbar react-flow__node-toolbar"
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarGroup, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.ToolbarButton, {
     icon: 'trash',
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Delete', 'post-expirator'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Delete', 'publishpress-future-pro'),
     onClick: onClickDeleteNode
   }))))), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-body " + nodeClassName,
@@ -19190,12 +19264,21 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
     className: "react-flow__node-top"
   }, nodeTypeIcon, topText), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-inner-body"
-  }, nodeHasErrors && /*#__PURE__*/React.createElement("div", {
-    className: "react-flow__node-error"
+  }, (nodeHasErrors || nodeType.isProFeature && !isPro) && /*#__PURE__*/React.createElement("div", {
+    className: "react-flow__node-marker-wrapper"
+  }, nodeType.isProFeature && !isPro && /*#__PURE__*/React.createElement("div", {
+    className: "react-flow__node-pro-badge",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Upgrade to Pro to unlock this feature', 'post-expirator')
+  }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    icon: 'lock',
+    size: 12
+  })), nodeHasErrors && /*#__PURE__*/React.createElement("div", {
+    className: "react-flow__node-error",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('This node has errors', 'post-expirator')
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
     icon: 'error',
     size: 16
-  })), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "react-flow__node-header"
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
     icon: nodeType.icon.src,
@@ -20009,6 +20092,13 @@ function InserterListItem(_ref) {
   var node = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
     return item;
   }, [item.id, item.label, item.icon, item.disabled]);
+  var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(function (select) {
+      return {
+        isPro: select(_editor_store__WEBPACK_IMPORTED_MODULE_7__.store).isPro()
+      };
+    }),
+    isPro = _useSelect.isPro;
+  var classes = classnames__WEBPACK_IMPORTED_MODULE_0___default()('block-editor-block-types-list__list-item', item.isProFeature && !isPro ? 'is-pro-feature' : '');
   return /*#__PURE__*/React.createElement(_inserter_draggable_nodes__WEBPACK_IMPORTED_MODULE_5__["default"], {
     isEnabled: isDraggable && !item.disabled,
     node: node,
@@ -20018,7 +20108,7 @@ function InserterListItem(_ref) {
       _onDragStart = _ref2.onDragStart,
       _onDragEnd = _ref2.onDragEnd;
     return /*#__PURE__*/React.createElement("div", {
-      className: "block-editor-block-types-list__list-item",
+      className: classes,
       draggable: draggable,
       onDragStart: function onDragStart(event) {
         isDragging.current = true;
@@ -20075,7 +20165,9 @@ function InserterListItem(_ref) {
     }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_3__["default"], {
       icon: item.icon,
       showColors: true
-    })), /*#__PURE__*/React.createElement("span", {
+    })), item.isProFeature && !isPro && /*#__PURE__*/React.createElement("span", {
+      className: "block-editor-block-types-list__item-pro-badge"
+    }, "Pro"), /*#__PURE__*/React.createElement("span", {
       className: "block-editor-block-types-list__item-title"
     }, item.label)));
   });
@@ -20821,9 +20913,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   NodeCard: () => (/* binding */ NodeCard)
 /* harmony export */ });
 /* harmony import */ var _node_icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../node-icon */ "./assets/jsx/workflow-editor/components/node-icon.jsx");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
+
+
+
 
 function NodeCard(_ref) {
   var node = _ref.node;
+  var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(function (select) {
+      return {
+        isPro: select(_editor_store__WEBPACK_IMPORTED_MODULE_3__.store).isPro()
+      };
+    }),
+    isPro = _useSelect.isPro;
   return /*#__PURE__*/React.createElement("div", {
     className: "block-editor-block-card"
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_0__["default"], {
@@ -20834,9 +20939,13 @@ function NodeCard(_ref) {
     className: "block-editor-block-card__content"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "block-editor-block-card__title"
-  }, node.label), node.description && /*#__PURE__*/React.createElement("span", {
+  }, node.label, node.isProFeature && !isPro && /*#__PURE__*/React.createElement("span", {
+    className: "block-editor-block-card__pro-badge"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Pro', 'post-expirator'))), node.description && /*#__PURE__*/React.createElement("span", {
     className: "block-editor-block-card__description"
-  }, node.description)));
+  }, node.description), node.isProFeature && !isPro && /*#__PURE__*/React.createElement("div", {
+    className: "block-editor-block-card__pro-instructions"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Upgrade to Pro to unlock this feature.', 'post-expirator'), "\xA0", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Drag this node to preview its options in your workflow.', 'post-expirator'))));
 }
 
 /***/ }),
@@ -25578,13 +25687,21 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     border-left: 0;
 }
 
-/* Error mark */
-
-.react-flow__node-error {
-    color: #d90f0f;
+/* Node Markers */
+.react-flow__node-marker-wrapper {
     position: absolute;
     top: -16px;
     right: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    justify-content: right;
+}
+
+/* Error mark */
+.react-flow__node-error {
+    color: #d90f0f;
+    display: inline-block;
 }
 
 /* Node Content */
@@ -25608,7 +25725,21 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.react-flow__node {
     font-size: 6px;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/node-types.css"],"names":[],"mappings":"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","sourcesContent":[".react-flow__node {\n    max-width: 170px;\n}\n\n.react-flow__node-body {\n    border-radius: 8px;\n    color: #171717;\n    font-size: 10px;\n    min-width: 140px;\n    box-sizing: border-box;\n    border: 1px solid transparent;\n    cursor: pointer;\n}\n\n.react-flow__node-inner-body {\n    padding: 6px;\n    box-sizing: border-box;\n}\n\n.react-flow__node-header {\n    text-align: center;\n    width: 100%;\n    position: relative;\n    text-align: left;\n}\n\n.react-flow__node-header .react-flow__node-label {\n    margin-left: 22px;\n}\n\n.react-flow__node-header .dashicon {\n    margin-right: 4px;\n    position: absolute;\n    left: 2px;\n    top: 2px;\n}\n\n.react-flow__node-header .node-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 2px;\n}\n\n.react-flow__node-slug {\n    font-size: 8px;\n    display: inline-block;\n    height: 6px;\n    line-height: 6px;\n    padding: 2px;\n    position: absolute;\n    top: 45px;\n    left: 27px;\n}\n\n.react-flow__handle {\n    width: 8px !important;\n    height: 8px !important;\n    box-sizing: border-box;\n}\n\n.react-flow__handle.react-flow__handle-bottom {\n    bottom: -4px !important;\n}\n\n.react-flow__handle.react-flow__handle-top {\n    top: -4px !important;\n}\n\n.react-flow__node-top {\n    font-size: 8px;\n    padding: 0 8px;\n    border-top-left-radius: 8px;\n    border-top-right-radius: 8px;\n    border-bottom: 1px solid silver;\n    position: relative;\n    padding-left: 18px;\n}\n\n.react-flow__node-top .publishpress-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 8px;\n}\n\n/* PLACEHOLDER FOR EMPTY FLOW */\n.react-flow__node-triggerPlaceholderNode {\n    background-color: #fff;\n    border: 1px dashed #d2d2d2;\n    cursor: pointer;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    display: flex;\n    align-items: center;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {\n    color: #fff;\n    background-color: #d2d2d2;\n    padding: 2px;\n    display: inline-block;\n    width: 12px;\n    height: 12px;\n    box-sizing: border-box;\n    position: relative;\n    border-radius: 1px;\n    margin-right: 6px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 12px;\n    height: 12px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {\n    color: #d2d2d2\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    padding-left: 0;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover {\n    border: 1px dashed #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {\n    background-color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {\n    color: #aeaeae;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    width: 350px;\n}\n\n.react-flow__node-inserter-popover {\n    display: flex;\n    flex-direction: column;\n    position: relative;\n}\n\n.react-flow__node-inserter-popover-content {\n    height: 100%;\n    overflow-y: auto;\n    height: 340px;\n}\n\n.react-flow__node-inserter-popover-close {\n    cursor: pointer;\n    background-color: #000;\n    color: #fff;\n    display: block;\n    width: 100%;\n    padding: 6px;\n    height: 44px;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    height: ;\n}\n\n/* GENERIC NODE */\n\n.react-flow__node-genericNode {\n    background-color: #b2b2c9;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-top {\n    border-bottom: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* TRIGGER */\n\n.react-flow__node-genericTrigger {\n    background-color: #dce5df;\n    border: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #B594B6;\n}\n\n.react-flow__node-genericTrigger  .react-flow__node-slug {\n    color: #939895;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-top {\n    border-bottom: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-slug {\n    color: #808882;\n}\n\n/* GENERIC ACTION */\n\n.react-flow__node-genericAction {\n    background-color: #89bae4;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #8a62be;\n}\n\n.react-flow__node-genericAction .react-flow__node-top {\n    border-bottom: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #526e87;\n}\n\n/* GENERIC ADVANCED */\n\n.react-flow__node-genericAdvanced {\n    background-color: #f8ddad;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #b19f80;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-top {\n    border-bottom: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #908065;\n}\n\n/* QUERY ACTION */\n\n.react-flow__node-queryAction {\n    background-color: #d8b6f2;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: #9079a1;\n}\n\n.react-flow__node-queryAction .react-flow__node-top {\n    border-bottom: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: rgb(110, 110, 125);\n}\n\n/* DEBUG ACTION */\n\n.react-flow__node-debugAction {\n    background-color: #f0aec6;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-slug {\n    color: #916877;\n}\n\n.react-flow__node-debugAction .react-flow__node-top {\n    border-bottom: 1px solid #cf96ab;\n}\n\n\n/* SELECTED NODES */\n\n.react-flow__node.selected .react-flow__node-body {\n    border: 1px solid #555;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* HANDLE AREA */\n\n.react-flow__node-handle-area {\n    font-size: 6px;\n    background-color: #fff;\n    border-bottom-left-radius: 8px;\n    border-bottom-right-radius: 8px;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-flow__node-handle-name {\n    padding: 2px;\n    padding-bottom: 6px;\n    text-align: center;\n    line-height: 100%;\n    flex: 1;\n    border-left: 1px solid silver;\n}\n\n.react-flow__node-handle-name:first-child {\n    border-left: 0;\n}\n\n/* Error mark */\n\n.react-flow__node-error {\n    color: #d90f0f;\n    position: absolute;\n    top: -16px;\n    right: 0;\n}\n\n/* Node Content */\n.react-flow__node-content {\n    font-size: 6px;\n    margin-top: 6px;\n}\n\n.react-flow__node-content table {\n    border-spacing: 0;\n    width: 100%;\n}\n\n.react-flow__node-content table th {\n    text-align: left;\n}\n\n.react-flow__node-content table th,\n.react-flow__node-content table td {\n    padding: 0 6px;\n    font-size: 6px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n}\n"],"sourceRoot":""}]);
+
+/* Pro Badge */
+.react-flow__node-pro-badge {
+    background-color: #ffb200;
+    color: #000;
+    display: inline-block;
+    border-radius: 100%;
+    width: 14px;
+    height: 14px;
+    padding-top: 1px;
+    padding-left: 1px;
+    margin-top: 1px;
+    box-sizing: border-box;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/node-types.css"],"names":[],"mappings":"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","sourcesContent":[".react-flow__node {\n    max-width: 170px;\n}\n\n.react-flow__node-body {\n    border-radius: 8px;\n    color: #171717;\n    font-size: 10px;\n    min-width: 140px;\n    box-sizing: border-box;\n    border: 1px solid transparent;\n    cursor: pointer;\n}\n\n.react-flow__node-inner-body {\n    padding: 6px;\n    box-sizing: border-box;\n}\n\n.react-flow__node-header {\n    text-align: center;\n    width: 100%;\n    position: relative;\n    text-align: left;\n}\n\n.react-flow__node-header .react-flow__node-label {\n    margin-left: 22px;\n}\n\n.react-flow__node-header .dashicon {\n    margin-right: 4px;\n    position: absolute;\n    left: 2px;\n    top: 2px;\n}\n\n.react-flow__node-header .node-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 2px;\n}\n\n.react-flow__node-slug {\n    font-size: 8px;\n    display: inline-block;\n    height: 6px;\n    line-height: 6px;\n    padding: 2px;\n    position: absolute;\n    top: 45px;\n    left: 27px;\n}\n\n.react-flow__handle {\n    width: 8px !important;\n    height: 8px !important;\n    box-sizing: border-box;\n}\n\n.react-flow__handle.react-flow__handle-bottom {\n    bottom: -4px !important;\n}\n\n.react-flow__handle.react-flow__handle-top {\n    top: -4px !important;\n}\n\n.react-flow__node-top {\n    font-size: 8px;\n    padding: 0 8px;\n    border-top-left-radius: 8px;\n    border-top-right-radius: 8px;\n    border-bottom: 1px solid silver;\n    position: relative;\n    padding-left: 18px;\n}\n\n.react-flow__node-top .publishpress-icon {\n    margin-right: 4px;\n    position: absolute;\n    top: 1px;\n    left: 8px;\n}\n\n/* PLACEHOLDER FOR EMPTY FLOW */\n.react-flow__node-triggerPlaceholderNode {\n    background-color: #fff;\n    border: 1px dashed #d2d2d2;\n    cursor: pointer;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    display: flex;\n    align-items: center;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon {\n    color: #fff;\n    background-color: #d2d2d2;\n    padding: 2px;\n    display: inline-block;\n    width: 12px;\n    height: 12px;\n    box-sizing: border-box;\n    position: relative;\n    border-radius: 1px;\n    margin-right: 6px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .icon svg {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    width: 12px;\n    height: 12px;\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header .react-flow__node-label {\n    color: #d2d2d2\n}\n\n.react-flow__node-triggerPlaceholderNode .react-flow__node-header {\n    padding-left: 0;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover {\n    border: 1px dashed #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .icon {\n    background-color: #aeaeae;\n}\n\n.react-flow__node-triggerPlaceholderNode:hover .react-flow__node-header .react-flow__node-label {\n    color: #aeaeae;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    width: 350px;\n}\n\n.react-flow__node-inserter-popover {\n    display: flex;\n    flex-direction: column;\n    position: relative;\n}\n\n.react-flow__node-inserter-popover-content {\n    height: 100%;\n    overflow-y: auto;\n    height: 340px;\n}\n\n.react-flow__node-inserter-popover-close {\n    cursor: pointer;\n    background-color: #000;\n    color: #fff;\n    display: block;\n    width: 100%;\n    padding: 6px;\n    height: 44px;\n}\n\n.react-flow__node-inserter-popover .components-popover__content {\n    height: ;\n}\n\n/* GENERIC NODE */\n\n.react-flow__node-genericNode {\n    background-color: #b2b2c9;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-top {\n    border-bottom: 1px solid #b2b2c9;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* TRIGGER */\n\n.react-flow__node-genericTrigger {\n    background-color: #dce5df;\n    border: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #B594B6;\n}\n\n.react-flow__node-genericTrigger  .react-flow__node-slug {\n    color: #939895;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-top {\n    border-bottom: 1px solid #b9c0bb;\n}\n\n.react-flow__node-genericTrigger .react-flow__node-slug {\n    color: #808882;\n}\n\n/* GENERIC ACTION */\n\n.react-flow__node-genericAction {\n    background-color: #89bae4;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #8a62be;\n}\n\n.react-flow__node-genericAction .react-flow__node-top {\n    border-bottom: 1px solid #7199bc;\n}\n\n.react-flow__node-genericAction .react-flow__node-slug {\n    color: #526e87;\n}\n\n/* GENERIC ADVANCED */\n\n.react-flow__node-genericAdvanced {\n    background-color: #f8ddad;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #b19f80;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-top {\n    border-bottom: 1px solid #d3bc94;\n}\n\n.react-flow__node-genericAdvanced .react-flow__node-slug {\n    color: #908065;\n}\n\n/* QUERY ACTION */\n\n.react-flow__node-queryAction {\n    background-color: #d8b6f2;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: #9079a1;\n}\n\n.react-flow__node-queryAction .react-flow__node-top {\n    border-bottom: 1px solid #b891c2;\n}\n\n.react-flow__node-queryAction .react-flow__node-slug {\n    color: rgb(110, 110, 125);\n}\n\n/* DEBUG ACTION */\n\n.react-flow__node-debugAction {\n    background-color: #f0aec6;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__handle {\n    background-color: #fff;\n    border: 1px solid #cf96ab;\n}\n\n.react-flow__node-debugAction .react-flow__node-slug {\n    color: #916877;\n}\n\n.react-flow__node-debugAction .react-flow__node-top {\n    border-bottom: 1px solid #cf96ab;\n}\n\n\n/* SELECTED NODES */\n\n.react-flow__node.selected .react-flow__node-body {\n    border: 1px solid #555;\n}\n\n.react-flow__node-genericNode .react-flow__node-slug {\n    color: #b2b2c9;\n}\n\n/* HANDLE AREA */\n\n.react-flow__node-handle-area {\n    font-size: 6px;\n    background-color: #fff;\n    border-bottom-left-radius: 8px;\n    border-bottom-right-radius: 8px;\n    display: flex;\n    flex-direction: row;\n}\n\n.react-flow__node-handle-name {\n    padding: 2px;\n    padding-bottom: 6px;\n    text-align: center;\n    line-height: 100%;\n    flex: 1;\n    border-left: 1px solid silver;\n}\n\n.react-flow__node-handle-name:first-child {\n    border-left: 0;\n}\n\n/* Node Markers */\n.react-flow__node-marker-wrapper {\n    position: absolute;\n    top: -16px;\n    right: 0;\n    display: flex;\n    flex-direction: row;\n    gap: 2px;\n    justify-content: right;\n}\n\n/* Error mark */\n.react-flow__node-error {\n    color: #d90f0f;\n    display: inline-block;\n}\n\n/* Node Content */\n.react-flow__node-content {\n    font-size: 6px;\n    margin-top: 6px;\n}\n\n.react-flow__node-content table {\n    border-spacing: 0;\n    width: 100%;\n}\n\n.react-flow__node-content table th {\n    text-align: left;\n}\n\n.react-flow__node-content table th,\n.react-flow__node-content table td {\n    padding: 0 6px;\n    font-size: 6px;\n    border: 1px solid rgba(0, 0, 0, 0.1);\n}\n\n/* Pro Badge */\n.react-flow__node-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    display: inline-block;\n    border-radius: 100%;\n    width: 14px;\n    height: 14px;\n    padding-top: 1px;\n    padding-left: 1px;\n    margin-top: 1px;\n    box-sizing: border-box;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25649,6 +25780,86 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.workflow-editor-notices__snackbar-lis
     left: 60px;
 }
 `, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/notices.css"],"names":[],"mappings":"AAAA;IACI,eAAe;IACf,YAAY;IACZ,WAAW;AACf;;AAEA;IACI,UAAU;AACd;;AAEA;IACI,UAAU;AACd","sourcesContent":[".workflow-editor-notices__snackbar-list {\n    position: fixed;\n    bottom: 35px;\n    left: 220px;\n}\n\n.folded .workflow-editor-notices__snackbar-list {\n    left: 92px;\n}\n\n.is-fullscreen-mode .workflow-editor-notices__snackbar-list {\n    left: 60px;\n}\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/pro-features.css":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/pro-features.css ***!
+  \***********************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.block-editor-block-types-list__item-pro-badge {
+    background-color: #ffb200;
+    color: #000;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    width: 81%;
+}
+
+.components-popover__content .block-editor-block-types-list__item-pro-badge {
+    width: 100%;
+}
+
+.workflow-editor-inspector-card__pro-badge,
+.block-editor-block-card__pro-badge {
+    background-color: #ffb200;
+    color: #000;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.workflow-editor-inspector-card__pro-badge,
+.components-popover__content .block-editor-block-card__pro-badge {
+    margin-left: 8px;
+}
+
+.workflow-editor-inspector-card__pro-instructions,
+.block-editor-block-card__pro-instructions {
+    font-size: 12px;
+    color: #757575;
+    margin-top: 8px;
+    line-height: 1.5;
+    font-style: italic;
+    font-weight: 400;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+}
+
+.edit-post-header-toolbar__buy-pro {
+    background-color: #ffb200;
+    color: #000;
+    padding: 4px 10px !important;
+    border-radius: 4px;
+}
+
+.edit-post-header-toolbar__buy-pro .publishpress-icon {
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 4px;
+}
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/pro-features.css"],"names":[],"mappings":"AAAA;IACI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;IAChB,UAAU;AACd;;AAEA;IACI,WAAW;AACf;;AAEA;;IAEI,yBAAyB;IACzB,WAAW;IACX,gBAAgB;IAChB,kBAAkB;IAClB,eAAe;IACf,gBAAgB;AACpB;;AAEA;;IAEI,gBAAgB;AACpB;;AAEA;;IAEI,eAAe;IACf,cAAc;IACd,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;IAC7B,gBAAgB;AACpB;;AAEA;IACI,yBAAyB;IACzB,WAAW;IACX,4BAA4B;IAC5B,kBAAkB;AACtB;;AAEA;IACI,sBAAsB;IACtB,uBAAuB;IACvB,iBAAiB;AACrB","sourcesContent":[".block-editor-block-types-list__item-pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n    width: 81%;\n}\n\n.components-popover__content .block-editor-block-types-list__item-pro-badge {\n    width: 100%;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.block-editor-block-card__pro-badge {\n    background-color: #ffb200;\n    color: #000;\n    padding: 3px 8px;\n    border-radius: 4px;\n    font-size: 10px;\n    font-weight: 600;\n}\n\n.workflow-editor-inspector-card__pro-badge,\n.components-popover__content .block-editor-block-card__pro-badge {\n    margin-left: 8px;\n}\n\n.workflow-editor-inspector-card__pro-instructions,\n.block-editor-block-card__pro-instructions {\n    font-size: 12px;\n    color: #757575;\n    margin-top: 8px;\n    line-height: 1.5;\n    font-style: italic;\n    font-weight: 400;\n    border-top: 1px solid #e0e0e0;\n    padding-top: 8px;\n}\n\n.edit-post-header-toolbar__buy-pro {\n    background-color: #ffb200;\n    color: #000;\n    padding: 4px 10px !important;\n    border-radius: 4px;\n}\n\n.edit-post-header-toolbar__buy-pro .publishpress-icon {\n    width: 18px !important;\n    height: 18px !important;\n    margin-right: 4px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25783,7 +25994,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_guide_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! -!../../../../node_modules/css-loader/dist/cjs.js!./guide.css */ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/guide.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_toolbar_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! -!../../../../node_modules/css-loader/dist/cjs.js!./toolbar.css */ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/toolbar.css");
 /* harmony import */ var _node_modules_css_loader_dist_cjs_js_notices_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! -!../../../../node_modules/css-loader/dist/cjs.js!./notices.css */ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/notices.css");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_pro_features_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! -!../../../../node_modules/css-loader/dist/cjs.js!./pro-features.css */ "./node_modules/css-loader/dist/cjs.js!./assets/jsx/workflow-editor/css/pro-features.css");
 // Imports
+
 
 
 
@@ -25805,6 +26018,7 @@ ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_dev_css__WEBPACK_
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_guide_css__WEBPACK_IMPORTED_MODULE_8__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_toolbar_css__WEBPACK_IMPORTED_MODULE_9__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_notices_css__WEBPACK_IMPORTED_MODULE_10__["default"]);
+___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_pro_features_css__WEBPACK_IMPORTED_MODULE_11__["default"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.reactflow-wrapper {
     height: 100%;
@@ -25817,7 +26031,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.reactflow-wrapper {
 .components-notice-list .components-notice__dismiss {
     margin-top: 12px;
 }
-`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/index.css"],"names":[],"mappings":"AAUA;IACI,YAAY;AAChB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":["@import url('custom.css');\n@import url('block-types-list.css');\n@import url('inserter.css');\n@import url('inspector.css');\n@import url('node-types.css');\n@import url('dev.css');\n@import url('guide.css');\n@import url('toolbar.css');\n@import url('notices.css');\n\n.reactflow-wrapper {\n    height: 100%;\n}\n\n.components-notice {\n    padding: 0 12px;\n}\n\n.components-notice-list .components-notice__dismiss {\n    margin-top: 12px;\n}\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./assets/jsx/workflow-editor/css/index.css"],"names":[],"mappings":"AAWA;IACI,YAAY;AAChB;;AAEA;IACI,eAAe;AACnB;;AAEA;IACI,gBAAgB;AACpB","sourcesContent":["@import url('custom.css');\n@import url('block-types-list.css');\n@import url('inserter.css');\n@import url('inspector.css');\n@import url('node-types.css');\n@import url('dev.css');\n@import url('guide.css');\n@import url('toolbar.css');\n@import url('notices.css');\n@import url('pro-features.css');\n\n.reactflow-wrapper {\n    height: 100%;\n}\n\n.components-notice {\n    padding: 0 12px;\n}\n\n.components-notice-list .components-notice__dismiss {\n    margin-top: 12px;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -50457,7 +50671,7 @@ var vanilla = (createState) => {
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
@@ -50479,6 +50693,36 @@ var vanilla = (createState) => {
 /******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/create fake namespace object */
+/******/ 	(() => {
+/******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
+/******/ 		var leafPrototypes;
+/******/ 		// create a fake namespace object
+/******/ 		// mode & 1: value is a module id, require it
+/******/ 		// mode & 2: merge all properties of value into the ns
+/******/ 		// mode & 4: return value when already ns object
+/******/ 		// mode & 16: return value when it's Promise-like
+/******/ 		// mode & 8|1: behave like require
+/******/ 		__webpack_require__.t = function(value, mode) {
+/******/ 			if(mode & 1) value = this(value);
+/******/ 			if(mode & 8) return value;
+/******/ 			if(typeof value === 'object' && value) {
+/******/ 				if((mode & 4) && value.__esModule) return value;
+/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
+/******/ 			}
+/******/ 			var ns = Object.create(null);
+/******/ 			__webpack_require__.r(ns);
+/******/ 			var def = {};
+/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
+/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
+/******/ 				Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
+/******/ 			}
+/******/ 			def['default'] = () => (value);
+/******/ 			__webpack_require__.d(ns, def);
+/******/ 			return ns;
 /******/ 		};
 /******/ 	})();
 /******/ 	

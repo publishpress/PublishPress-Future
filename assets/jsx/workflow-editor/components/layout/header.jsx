@@ -27,6 +27,7 @@ import { WorkflowSaveDraftButton } from '../workflow-save-draft-button';
 import { isWP65OrLater } from 'future-workflow-editor';
 import WorkflowPublishButton from '../workflow-publish-button';
 import { useAutoLayout } from '../flow-editor/auto-layout/hooks';
+import ShopIcon from '../icons/shop';
 
 const preventDefault = (event) => {
     event.preventDefault();
@@ -41,6 +42,7 @@ export const LayoutHeader = () => {
         isLoadingWorkflow,
         isEditedWorkflowDirty,
         takeScreenshot,
+        isPro
     } = useSelect((select) => {
         return {
             isFullscreenActive: select(editorStore).isFeatureActive(FEATURE_FULLSCREEN_MODE),
@@ -50,6 +52,7 @@ export const LayoutHeader = () => {
             isLoadingWorkflow: select(workflowStore).isLoadingWorkflow(),
             isEditedWorkflowDirty: select(workflowStore).isEditedWorkflowDirty(),
             takeScreenshot: select(workflowStore).takeScreenshot,
+            isPro: select(editorStore).isPro(),
         }
     });
 
@@ -86,6 +89,11 @@ export const LayoutHeader = () => {
         applyAutoLayout({
             direction: AUTO_LAYOUT_DIRECTION_DOWN,
         });
+    });
+
+    const onBuyProClick = useCallback((event) => {
+        event.preventDefault();
+        window.open('https://publishpress.com/links/future-workflow-toolbar', '_blank');
     });
 
     const toolbarLeftClassName = isWP65OrLater ? 'editor-document-tools__left' : 'edit-post-header-toolbar__left';
@@ -140,6 +148,21 @@ export const LayoutHeader = () => {
                                 __('Auto Layout', 'post-expirator')
                             }
                         </ToolbarItem>
+
+                        {!isPro && (
+                            <ToolbarItem
+                                as={Button}
+                                className="edit-post-header-toolbar__buy-pro"
+                            onMouseDown={preventDefault}
+                            onClick={onBuyProClick}
+                            icon={ShopIcon}
+                            /* translators: button label text should, if possible, be under 16 characters. */
+                            label={__('Upgrade to Pro and unlock more features', 'post-expirator')}
+                            showTooltip={!showIconLabels}
+                        >
+                                {__('Upgrade to Pro', 'post-expirator')}
+                            </ToolbarItem>
+                        )}
 
                         {/* {(isWideViewport || !showIconLabels) && (
                             <>
