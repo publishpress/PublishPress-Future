@@ -778,8 +778,7 @@ return [
                 case CoreOnInit::getNodeTypeName():
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $nodeRunner = new CoreOnInit(
-                            $container->get(ServicesAbstract::HOOKS),
-                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                            $container->get(ServicesAbstract::HOOKS)
                         );
                     }
                     break;
@@ -787,8 +786,7 @@ return [
                 case CoreOnAdminInit::getNodeTypeName():
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $nodeRunner = new CoreOnAdminInit(
-                            $container->get(ServicesAbstract::HOOKS),
-                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                            $container->get(ServicesAbstract::HOOKS)
                         );
                     }
                     break;
@@ -826,13 +824,7 @@ return [
 
                 case CoreOnCronSchedule::getNodeTypeName():
                     $nodeRunner = new CoreOnCronSchedule(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR),
-                        $container->get(ServicesAbstract::CRON),
-                        $container->get(ServicesAbstract::CRON_SCHEDULES_MODEL),
-                        $container->get(ServicesAbstract::NODE_TYPES_MODEL),
-                        $container->get(ServicesAbstract::WORKFLOW_VARIABLES_HANDLER),
-                        $container->get(ServicesAbstract::PLUGIN_VERSION)
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
@@ -898,10 +890,7 @@ return [
 
                 case CoreSendEmail::getNodeTypeName():
                     $nodeRunner = new CoreSendEmail(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
-                        $container->get(ServicesAbstract::EMAIL),
-                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
@@ -921,15 +910,13 @@ return [
 
                 case IfElse::getNodeTypeName():
                     $nodeRunner = new IfElse(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
                 case CorePostQuery::getNodeTypeName():
                     $nodeRunner = new CorePostQuery(
-                        $container->get(ServicesAbstract::HOOKS),
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
