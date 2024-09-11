@@ -29,14 +29,14 @@ class CoreSchedule implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Schedule", "publishpress-future-pro");
+        return __("Schedule", "post-expirator");
     }
 
     public function getDescription(): string
     {
         return __(
             "This step enables actions to be scheduled. You can choose when to run the next step.", // phpcs:ignore Generic.Files.LineLength.TooLong
-            "publishpress-future-pro"
+            "post-expirator"
         );
     }
 
@@ -64,13 +64,13 @@ class CoreSchedule implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Schedule", "publishpress-future-pro"),
-                "description" => __("A scheduled delay between steps.", "publishpress-future-pro"),
+                "label" => __("Schedule", "post-expirator"),
+                "description" => __("A scheduled delay between steps.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "schedule",
                         "type" => "dateOffset",
-                        "label" => __("Date offset", "publishpress-future-pro"),
+                        "label" => __("Date offset", "post-expirator"),
                     ],
                 ],
             ],
@@ -99,8 +99,8 @@ class CoreSchedule implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ],
         ];
     }
@@ -123,9 +123,14 @@ class CoreSchedule implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

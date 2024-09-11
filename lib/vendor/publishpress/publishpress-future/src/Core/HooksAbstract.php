@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2024 Ramble Ventures
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Core;
@@ -19,6 +19,8 @@ abstract class HooksAbstract
     public const ACTION_ADMIN_NOTICES = 'admin_notices';
 
     public const ACTION_INIT_PLUGIN = 'publishpressfuture_init_plugin';
+
+    public const ACTION_AFTER_INIT_PLUGIN = 'publishpressfuture_after_init_plugin';
 
     public const ACTION_ACTIVATE_PLUGIN = 'publishpressfuture_activate_plugin';
 

@@ -30,14 +30,14 @@ class CoreOnSavePost implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Post is saved", "publishpress-future-pro");
+        return __("Post is saved", "post-expirator");
     }
 
     public function getDescription(): string
     {
         return __(
             "This trigger activates whenever a post is saved, regardless of whether it's newly created, imported, or updated.", // phpcs:ignore Generic.Files.LineLength.TooLong
-            "publishpress-future-pro"
+            "post-expirator"
         );
     }
 
@@ -65,19 +65,19 @@ class CoreOnSavePost implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Post Query", "publishpress-future-pro"),
+                "label" => __("Post Query", "post-expirator"),
                 "description" => __(
                     "Specify the criteria for posts that will trigger this action. Leave blank to include all posts.",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "fields" => [
                     [
                         "name" => "postQuery",
                         "type" => "postQuery",
-                        "label" => __("Post query", "publishpress-future-pro"),
+                        "label" => __("Post query", "post-expirator"),
                         "description" => __(
                             "The query defines the posts that will trigger this action.",
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                         "settings" => [
                             "acceptsInput" => false,
@@ -102,13 +102,13 @@ class CoreOnSavePost implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "postQuery.postType",
-                        "label" => __("Post Type", "publishpress-future-pro"),
+                        "label" => __("Post Type", "post-expirator"),
                     ],
                     [
                         "rule" => "dataType",
                         "field" => "postQuery.postId",
                         "type" => "integerList",
-                        "label" => __("Post ID", "publishpress-future-pro"),
+                        "label" => __("Post ID", "post-expirator"),
                     ],
                 ],
             ],
@@ -128,8 +128,8 @@ class CoreOnSavePost implements NodeTypeInterface
             [
                 'name' => 'post',
                 'type' => 'post',
-                'label' => __("Saved post", "publishpress-future-pro"),
-                'description' => __("The post that was saved, with the new properties.", "publishpress-future-pro"),
+                'label' => __("Saved post", "post-expirator"),
+                'description' => __("The post that was saved, with the new properties.", "post-expirator"),
             ]
         ];
     }
@@ -147,9 +147,14 @@ class CoreOnSavePost implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

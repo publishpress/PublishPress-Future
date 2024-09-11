@@ -108,4 +108,11 @@ interface NodeTypeInterface
      * the nodes in the workflow editor.
      */
     public function getHandleSchema(): array;
+
+    /**
+     * Whether the node type is a pro feature.
+     *
+     * @return boolean
+     */
+    public function isProFeature(): bool;
 }

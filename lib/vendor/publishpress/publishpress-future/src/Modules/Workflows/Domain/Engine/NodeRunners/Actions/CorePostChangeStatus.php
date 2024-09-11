@@ -16,24 +16,10 @@ class CorePostChangeStatus implements NodeRunnerInterface
      */
     private $hooks;
 
-    /**
-     * @var NodeRunnerProcessorInterface
-     */
-    private $nodeRunnerProcessor;
-
-    /**
-     * @var \Closure
-     */
-    private $expirablePostModelFactory;
-
     public function __construct(
-        HookableInterface $hooks,
-        NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        \Closure $expirablePostModelFactory
+        HookableInterface $hooks
     ) {
         $this->hooks = $hooks;
-        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
-        $this->expirablePostModelFactory = $expirablePostModelFactory;
     }
 
     public static function getNodeTypeName(): string
@@ -43,23 +29,10 @@ class CorePostChangeStatus implements NodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback'], $contextVariables);
-    }
-
-    public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
-    {
-        $this->hooks->addFilter(HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT, '__return_true', 10);
-
-        $postModel = call_user_func($this->expirablePostModelFactory, $postId);
-
-        $newStatus = $nodeSettings['newStatus']['status'];
-
-        if ('publish' === $newStatus) {
-            $postModel->publish();
-        } else {
-            $postModel->setPostStatus($newStatus);
-        }
-
-        $this->hooks->removeFilter(HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT, '__return_true', 10);
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_ACTION_CORE_POST_CHANGE_STATUS_SETUP,
+            $step,
+            $contextVariables
+        );
     }
 }

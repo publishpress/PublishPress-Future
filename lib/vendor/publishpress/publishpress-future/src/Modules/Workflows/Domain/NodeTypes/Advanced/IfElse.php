@@ -29,12 +29,12 @@ class IfElse implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Simple condition", "publishpress-future-pro");
+        return __("Simple condition", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step allows you to create a conditional branch.", "publishpress-future-pro");
+        return __("This step allows you to create a conditional branch.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -61,17 +61,17 @@ class IfElse implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Conditions", "publishpress-future-pro"),
+                "label" => __("Conditions", "post-expirator"),
                 "description" => __(
                     "THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True handle is implemented. False will not run the next actions for now.", // phpcs:ignore Generic.Files.LineLength.TooLong
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "fields" => [
                     [
                         "name" => "test",
                         "type" => "text",
-                        "label" => __("NOT IMPLEMENTED YET!", "publishpress-future-pro"),
-                        "description" => __("Still not implemented", "publishpress-future-pro"),
+                        "label" => __("NOT IMPLEMENTED YET!", "post-expirator"),
+                        "description" => __("Still not implemented", "post-expirator"),
                     ],
                 ]
             ]
@@ -89,8 +89,8 @@ class IfElse implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ]
         ];
     }
@@ -113,14 +113,19 @@ class IfElse implements NodeTypeInterface
                 [
                     "id" => "true",
                     "left" => "25%",
-                    "label" => __("True", "publishpress-future-pro"),
+                    "label" => __("True", "post-expirator"),
                 ],
                 [
                     "id" => "false",
                     "left" => "75%",
-                    "label" => __("False", "publishpress-future-pro"),
+                    "label" => __("False", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

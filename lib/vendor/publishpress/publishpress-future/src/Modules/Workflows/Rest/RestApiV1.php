@@ -35,7 +35,7 @@ class RestApiV1 implements RestApiManagerInterface
                 'permission_callback' => [$this, 'getWorkflowPermissions'],
                 'args' => [
                     'id' => [
-                        'description' => __('The ID of the workflow', 'publishpress-future-pro'),
+                        'description' => __('The ID of the workflow', 'post-expirator'),
                         'type' => 'integer',
                         'required' => true
                     ]
@@ -68,7 +68,7 @@ class RestApiV1 implements RestApiManagerInterface
                 'permission_callback' => [$this, 'updateWorkflowPermissions'],
                 'args' => [
                     'id' => [
-                        'description' => __('The ID of the workflow', 'publishpress-future-pro'),
+                        'description' => __('The ID of the workflow', 'post-expirator'),
                         'type' => 'integer',
                         'required' => true
                     ]
@@ -88,7 +88,7 @@ class RestApiV1 implements RestApiManagerInterface
                 'permission_callback' => [$this, 'deleteWorkflowPermissions'],
                 'args' => [
                     'id' => [
-                        'description' => __('The ID of the workflow', 'publishpress-future-pro'),
+                        'description' => __('The ID of the workflow', 'post-expirator'),
                         'type' => 'integer',
                         'required' => true
                     ]
@@ -108,7 +108,7 @@ class RestApiV1 implements RestApiManagerInterface
                 'permission_callback' => [$this, 'getTaxonomyTermsPermissions'],
                 'args' => [
                     'taxonomy' => [
-                        'description' => __('The taxonomy name', 'publishpress-future-pro'),
+                        'description' => __('The taxonomy name', 'post-expirator'),
                         'type' => 'string',
                         'required' => true
                     ]
@@ -128,7 +128,7 @@ class RestApiV1 implements RestApiManagerInterface
                 'permission_callback' => [$this, 'getPostWorkflowSettingsPermissions'],
                 'args' => [
                     'post' => [
-                        'description' => __('The post ID', 'publishpress-future-pro'),
+                        'description' => __('The post ID', 'post-expirator'),
                         'type' => 'integer',
                         'required' => true
                     ]
@@ -163,7 +163,7 @@ class RestApiV1 implements RestApiManagerInterface
         if (! $workflowExists) {
             return new WP_Error(
                 self::ERROR_WORKFLOW_NOT_FOUND,
-                __('Workflow not found', 'publishpress-future-pro'),
+                __('Workflow not found', 'post-expirator'),
                 ['status' => 404]
             );
         }
@@ -189,7 +189,7 @@ class RestApiV1 implements RestApiManagerInterface
         if (! $workflowExists) {
             return new WP_Error(
                 self::ERROR_WORKFLOW_NOT_FOUND,
-                __('Workflow not found', 'publishpress-future-pro'),
+                __('Workflow not found', 'post-expirator'),
                 ['status' => 404]
             );
         }
@@ -250,7 +250,7 @@ class RestApiV1 implements RestApiManagerInterface
         if (! $workflowExists) {
             return new WP_Error(
                 self::ERROR_WORKFLOW_NOT_FOUND,
-                __('Workflow not found', 'publishpress-future-pro'),
+                __('Workflow not found', 'post-expirator'),
                 ['status' => 404]
             );
         }

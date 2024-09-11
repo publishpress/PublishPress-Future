@@ -2,7 +2,6 @@
 
 namespace PublishPress\Future\Modules\Workflows\Domain\Engine;
 
-use Druidfi\Mysqldump\Compress\CompressGzip;
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
@@ -133,7 +132,7 @@ class WorkflowEngine implements WorkflowEngineInterface
                         logError(
                             sprintf(
                                 // translators: %s is the trigger name
-                                __('Trigger not found: %s', 'publishpress-future-pro'),
+                                __('Trigger not found: %s', 'post-expirator'),
                                 $triggerName
                             )
                         );
@@ -200,8 +199,13 @@ class WorkflowEngine implements WorkflowEngineInterface
 
     public function executeAsyncNodeRoutine($args)
     {
+        if (is_null($args)) {
+            logError("Async node runner error", null, true);
+
+            return;
+        }
+
         $originalArgs = $args;
-        ray($args);
 
         try {
             if (ScheduledActionModel::argsAreOnNewFormat($args)) {
@@ -212,6 +216,13 @@ class WorkflowEngine implements WorkflowEngineInterface
                 $args = $scheduledStepModel->getArgs();
             } else {
                 // Old format, when the args were saved directly in the actionsscheduler_actions table.
+
+                if (! isset($args['step']['node']['data']['name'])) {
+                    logError("Async node runner error", null, true);
+
+                    return;
+                }
+
                 $nodeName = $args['step']['node']['data']['name'];
             }
             $args['actionId'] = $this->currentAsyncActionId;

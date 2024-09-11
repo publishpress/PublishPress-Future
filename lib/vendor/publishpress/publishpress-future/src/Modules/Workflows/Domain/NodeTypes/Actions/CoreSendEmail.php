@@ -14,14 +14,14 @@ class CoreSendEmail implements NodeTypeInterface
 
     public static function getDefaultSubject()
     {
-        return __('PublishPress Workflow: {{global.workflow.title}}', 'publishpress-future-pro');
+        return __('PublishPress Workflow: {{global.workflow.title}}', 'post-expirator');
     }
 
     public static function getDefaultMessage()
     {
         return __(
             'This is a message sent by PublishPress Workflow: {{global.workflow.title}}.',
-            'publishpress-future-pro'
+            'post-expirator'
         );
     }
 
@@ -42,12 +42,12 @@ class CoreSendEmail implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Send email", "publishpress-future-pro");
+        return __("Send email", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step dispatches a message via email.", "publishpress-future-pro");
+        return __("This step dispatches a message via email.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -74,18 +74,18 @@ class CoreSendEmail implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Message", "publishpress-future-pro"),
-                "description" => __("The email message", "publishpress-future-pro"),
+                "label" => __("Message", "post-expirator"),
+                "description" => __("The email message", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "recipient",
                         "type" => "emailRecipient",
-                        "label" => __("Recipient", "publishpress-future-pro"),
+                        "label" => __("Recipient", "post-expirator"),
                     ],
                     [
                         "name" => "subject",
                         "type" => "text",
-                        "label" => __("Subject", "publishpress-future-pro"),
+                        "label" => __("Subject", "post-expirator"),
                         "settings" => [
                             "placeholder" => self::getDefaultSubject(),
                         ],
@@ -93,7 +93,7 @@ class CoreSendEmail implements NodeTypeInterface
                     [
                         "name" => "message",
                         "type" => "textarea",
-                        "label" => __("Message", "publishpress-future-pro"),
+                        "label" => __("Message", "post-expirator"),
                         "settings" => [
                             "placeholder" => self::getDefaultMessage(),
                         ],
@@ -118,12 +118,12 @@ class CoreSendEmail implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "recipient.recipient",
-                        "label" => __("Email Recipient", "publishpress-future-pro"),
+                        "label" => __("Email Recipient", "post-expirator"),
                     ],
                     [
                         "rule" => "required",
                         "field" => "recipient.custom",
-                        "label" => __("Custom Email Address", "publishpress-future-pro"),
+                        "label" => __("Custom Email Address", "post-expirator"),
                         "condition" => [
                             "field" => "recipient.recipient",
                             "value" => "custom",
@@ -132,7 +132,7 @@ class CoreSendEmail implements NodeTypeInterface
                     [
                         "rule" => "dataType",
                         "field" => "recipient.custom",
-                        "label" => __("Custom Email Address", "publishpress-future-pro"),
+                        "label" => __("Custom Email Address", "post-expirator"),
                         "type" => "emailList",
                     ],
 
@@ -147,8 +147,8 @@ class CoreSendEmail implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ]
         ];
     }
@@ -171,9 +171,14 @@ class CoreSendEmail implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return true;
     }
 }

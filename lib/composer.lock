@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd294a605a677db5f5df0191cdc55546",
+    "content-hash": "51070f45ddf75f7d2770013d00ad6ed0",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-develop",
+            "version": "dev-andergmartins/issue893",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "d2116a8bb548c300301735f0b1afd71a264f4243"
+                "reference": "b3ef0c9858a9c84c1b748af6df20bca00988cabd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/d2116a8bb548c300301735f0b1afd71a264f4243",
-                "reference": "d2116a8bb548c300301735f0b1afd71a264f4243",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/b3ef0c9858a9c84c1b748af6df20bca00988cabd",
+                "reference": "b3ef0c9858a9c84c1b748af6df20bca00988cabd",
                 "shasum": ""
             },
             "require": {
@@ -398,11 +398,15 @@
                     "@gen:pot-php",
                     "@gen:pot-js"
                 ],
+                "gen:l10n-php": [
+                    "wp i18n make-php ./languages --allow-root"
+                ],
                 "gen:lang": [
                     "@gen:pot",
                     "@gen:mo",
                     "@gen:po-scripts",
                     "@gen:po-json",
+                    "@gen:l10n-php",
                     "@cleanup:js-mo"
                 ],
                 "cleanup:js-mo": [
@@ -584,10 +588,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/andergmartins/issue893",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-08-28T14:33:56+00:00"
+            "time": "2024-09-11T22:04:08+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",

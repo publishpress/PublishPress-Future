@@ -29,12 +29,12 @@ class RayDebug implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Ray - Debug", "publishpress-future-pro");
+        return __("Ray - Debug", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step transmits the flow's data to Ray Debug.", "publishpress-future-pro");
+        return __("This step transmits the flow's data to Ray Debug.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -61,23 +61,23 @@ class RayDebug implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Debug output", "publishpress-future-pro"),
-                "description" => __("The data to be sent to Ray.", "publishpress-future-pro"),
+                "label" => __("Debug output", "post-expirator"),
+                "description" => __("The data to be sent to Ray.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "data",
                         "type" => "debugData",
-                        "label" => __("Data", "publishpress-future-pro"),
+                        "label" => __("Data", "post-expirator"),
                     ],
                     [
                         "name" => "label",
                         "type" => "text",
-                        "label" => __("Label", "publishpress-future-pro"),
+                        "label" => __("Label", "post-expirator"),
                     ],
                     [
                         "name" => "color",
                         "type" => "rayColor",
-                        "label" => __("Color", "publishpress-future-pro"),
+                        "label" => __("Color", "post-expirator"),
                     ]
                 ],
             ]
@@ -103,8 +103,8 @@ class RayDebug implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ]
         ];
     }
@@ -127,9 +127,14 @@ class RayDebug implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

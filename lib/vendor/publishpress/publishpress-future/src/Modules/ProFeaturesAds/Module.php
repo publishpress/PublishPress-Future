@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Copyright (c) 2024 Ramble Ventures
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\ProFeaturesAds;
 
 use PublishPress\Future\Core\HookableInterface;
-use PublishPress\Future\Core\HooksAbstract;
 use PublishPress\Future\Framework\ModuleInterface;
 
 defined('ABSPATH') or die('Direct access not allowed.');

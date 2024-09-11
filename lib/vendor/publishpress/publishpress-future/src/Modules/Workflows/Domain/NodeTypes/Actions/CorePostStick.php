@@ -29,12 +29,12 @@ class CorePostStick implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Stick post", "publishpress-future-pro");
+        return __("Stick post", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step sticks a post.", "publishpress-future-pro");
+        return __("This step sticks a post.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -61,16 +61,16 @@ class CorePostStick implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Post", "publishpress-future-pro"),
-                "description" => __("The post to update.", "publishpress-future-pro"),
+                "label" => __("Post", "post-expirator"),
+                "description" => __("The post to update.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "post",
                         "type" => "postInput",
-                        "label" => __("Post", "publishpress-future-pro"),
+                        "label" => __("Post", "post-expirator"),
                         "description" => __(
                             "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                     ],
                 ],
@@ -91,7 +91,7 @@ class CorePostStick implements NodeTypeInterface
                         "name" => "advanced/core.schedule",
                         "message" => __(
                             "The Stick Post action must be part of a Schedule flow",
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                     ],
                 ],
@@ -113,8 +113,8 @@ class CorePostStick implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ],
         ];
     }
@@ -137,9 +137,14 @@ class CorePostStick implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

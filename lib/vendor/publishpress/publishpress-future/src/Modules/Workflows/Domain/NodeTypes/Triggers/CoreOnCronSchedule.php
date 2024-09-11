@@ -29,12 +29,12 @@ class CoreOnCronSchedule implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("On cron schedule", "publishpress-future-pro");
+        return __("On cron schedule", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This trigger activates upon a cron schedule, allowing recurrency.", "publishpress-future-pro");
+        return __("This trigger activates upon a cron schedule, allowing recurrency.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -61,13 +61,13 @@ class CoreOnCronSchedule implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Schedule", "publishpress-future-pro"),
-                "description" => __("A schedule to activate the workflow.", "publishpress-future-pro"),
+                "label" => __("Schedule", "post-expirator"),
+                "description" => __("A schedule to activate the workflow.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "schedule",
                         "type" => "dateOffset",
-                        "label" => __("Date offset", "publishpress-future-pro"),
+                        "label" => __("Date offset", "post-expirator"),
                         "settings" => [
                             "hideDateSources" => [
                                 "event",
@@ -113,9 +113,14 @@ class CoreOnCronSchedule implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return true;
     }
 }

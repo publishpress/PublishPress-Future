@@ -29,12 +29,12 @@ class CorePostTermsAdd implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Add extra terms to post", "publishpress-future-pro");
+        return __("Add extra terms to post", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step keeps the current taxonomy terms and adds additional terms.", "publishpress-future-pro");
+        return __("This step keeps the current taxonomy terms and adds additional terms.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -61,29 +61,29 @@ class CorePostTermsAdd implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Post", "publishpress-future-pro"),
-                "description" => __("The post to update.", "publishpress-future-pro"),
+                "label" => __("Post", "post-expirator"),
+                "description" => __("The post to update.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "post",
                         "type" => "postInput",
-                        "label" => __("Post", "publishpress-future-pro"),
+                        "label" => __("Post", "post-expirator"),
                         "description" => __(
                             "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                     ],
                 ],
             ],
             [
-                "label" => __("Extra terms", "publishpress-future-pro"),
-                "description" => __("The terms that will be added to the posts.", "publishpress-future-pro"),
+                "label" => __("Extra terms", "post-expirator"),
+                "description" => __("The terms that will be added to the posts.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "taxonomyTerms",
                         "type" => "taxonomyTerms",
-                        "label" => __("Terms", "publishpress-future-pro"),
-                        "description" => __("The terms that will be added to the posts.", "publishpress-future-pro"),
+                        "label" => __("Terms", "post-expirator"),
+                        "description" => __("The terms that will be added to the posts.", "post-expirator"),
                     ],
                 ]
             ],
@@ -109,7 +109,7 @@ class CorePostTermsAdd implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "taxonomyTerms.terms",
-                        "label" => __("Terms", "publishpress-future-pro"),
+                        "label" => __("Terms", "post-expirator"),
                     ]
                 ],
             ],
@@ -122,8 +122,8 @@ class CorePostTermsAdd implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ]
         ];
     }
@@ -146,9 +146,14 @@ class CorePostTermsAdd implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

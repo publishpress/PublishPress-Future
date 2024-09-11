@@ -30,12 +30,12 @@ class CoreOnInit implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("On site init", "publishpress-future-pro");
+        return __("On site init", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This trigger activates upon site initialization.", "publishpress-future-pro");
+        return __("This trigger activates upon site initialization.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -94,9 +94,14 @@ class CoreOnInit implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return true;
     }
 }

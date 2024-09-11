@@ -98,7 +98,7 @@ class WorkflowsList implements InitializableInterface
 
         $submenu["publishpress-future"][$indexAllWorkflows][0] = __(
             "Action Workflows",
-            "publishpress-future-pro"
+            "post-expirator"
         );
 
         add_submenu_page(
@@ -133,11 +133,11 @@ class WorkflowsList implements InitializableInterface
         wp_enqueue_script(
             "future_workflow_list_script",
             plugins_url(
-                "/src/assets/js/workflow-list.js",
-                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+                "/assets/js/workflow-list.js",
+                PUBLISHPRESS_FUTURE_PLUGIN_FILE
             ),
             ["jquery", "jquery-ui-dialog"],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            PUBLISHPRESS_FUTURE_VERSION,
             true
         );
     }
@@ -146,9 +146,9 @@ class WorkflowsList implements InitializableInterface
     {
         $columns["workflow_triggers"] = __(
             "Triggers",
-            "publishpress-future-pro"
+            "post-expirator"
         );
-        $columns["workflow_preview"] = __("Preview", "publishpress-future-pro");
+        $columns["workflow_preview"] = __("Preview", "post-expirator");
 
         // Move the date column to the end
         $date = $columns["date"];
@@ -172,7 +172,7 @@ class WorkflowsList implements InitializableInterface
         $triggers = [];
 
         if (empty($workflowFlow) || !isset($workflowFlow["nodes"])) {
-            esc_html_e("—", "publishpress-future-pro");
+            esc_html_e("—", "post-expirator");
             return;
         }
 
@@ -209,7 +209,7 @@ class WorkflowsList implements InitializableInterface
         $screenshotFull = $workflowModel->getScreenshotUrl();
 
         if (empty($screenshotFull)) {
-            esc_html_e("No screenshot", "publishpress-future-pro");
+            esc_html_e("No screenshot", "post-expirator");
             return;
         }
 
@@ -289,14 +289,14 @@ class WorkflowsList implements InitializableInterface
         $statuses = [
             'draft' => [
                 'action' => 'activate',
-                'text' => __('Activate', 'publishpress-future-pro'),
-                'title' => __('Activate', 'publishpress-future-pro'),
+                'text' => __('Activate', 'post-expirator'),
+                'title' => __('Activate', 'post-expirator'),
                 'status' => 'publish',
             ],
             'publish' => [
                 'action' => 'deactivate',
-                'text' => __('Deactivate', 'publishpress-future-pro'),
-                'title' => __('Deactivate', 'publishpress-future-pro'),
+                'text' => __('Deactivate', 'post-expirator'),
+                'title' => __('Deactivate', 'post-expirator'),
                 'status' => 'draft',
             ]
         ];

@@ -243,6 +243,10 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
 
         $row = $this->getRow();
 
+        if ($this->checkIfExists()) {
+            return false;
+        }
+
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $insertedCount = $wpdb->insert(
             $this->getTableSchema()->getTableName(),
@@ -254,6 +258,25 @@ class WorkflowScheduledStepModel implements WorkflowScheduledStepModelInterface
         }
 
         return true;
+    }
+
+    private function checkIfExists(): bool
+    {
+        global $wpdb;
+
+        $actionId = $this->getActionId();
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
+        $exists = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT * FROM %i WHERE action_id = %d",
+                $this->getTableSchema()->getTableName(),
+                $actionId
+            ),
+            ARRAY_A
+        );
+
+        return ! empty($exists);
     }
 
     public function update(): bool

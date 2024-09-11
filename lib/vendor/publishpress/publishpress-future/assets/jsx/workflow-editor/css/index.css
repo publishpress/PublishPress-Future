@@ -1,0 +1,22 @@
+@import url('custom.css');
+@import url('block-types-list.css');
+@import url('inserter.css');
+@import url('inspector.css');
+@import url('node-types.css');
+@import url('dev.css');
+@import url('guide.css');
+@import url('toolbar.css');
+@import url('notices.css');
+@import url('pro-features.css');
+
+.reactflow-wrapper {
+    height: 100%;
+}
+
+.components-notice {
+    padding: 0 12px;
+}
+
+.components-notice-list .components-notice__dismiss {
+    margin-top: 12px;
+}

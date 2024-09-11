@@ -119,20 +119,20 @@ class ScheduledActions implements InitializableInterface
 
         switch ($hook) {
             case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
-                $title = __('Workflow scheduled step', 'publishpress-future-pro');
+                $title = __('Workflow scheduled step', 'post-expirator');
                 break;
 
             case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
-                $title = __('Unschedule workflow recurring scheduled step', 'publishpress-future-pro');
+                $title = __('Unschedule workflow recurring scheduled step', 'post-expirator');
                 break;
 
             case WorkflowsHooksAbstract::ACTION_CLEANUP_ORPHAN_WORKFLOW_ARGS:
-                $title = __('Cleanup orphan workflow scheduled step arguments', 'publishpress-future-pro');
+                $title = __('Cleanup orphan workflow scheduled step arguments', 'post-expirator');
                 break;
 
             case WorkflowsHooksAbstract::ACTION_CLEANUP_FINISHED_SCHEDULED_STEPS:
                 $title = sprintf(
-                    __('Clean up completed scheduled steps older than %d days', 'publishpress-future-pro'),
+                    __('Clean up completed scheduled steps older than %d days', 'post-expirator'),
                     $this->settingsFacade->getScheduledWorkflowStepsCleanupRetention()
                 );
                 break;
@@ -236,11 +236,11 @@ class ScheduledActions implements InitializableInterface
                     }
                     $nextNodes .= '</ul>';
 
-                    $argsText = '<strong>' . __('Workflow:', 'publishpress-future-pro') . '</strong> '
+                    $argsText = '<strong>' . __('Workflow:', 'post-expirator') . '</strong> '
                         . $workflowTitle . '<br>';
 
                     if (isset($args['pluginVersion'])) {
-                        $argsText .= '<strong>' . __('Trigger: ', 'publishpress-future-pro') . '</strong>'
+                        $argsText .= '<strong>' . __('Trigger: ', 'post-expirator') . '</strong>'
                             . $args['contextVariables']['global']['trigger']['value']['label'] . '<br>';
 
                         // Check if the trigger is related to a post
@@ -253,24 +253,24 @@ class ScheduledActions implements InitializableInterface
 
                                 if ($post instanceof \WP_Post) {
                                     $postPermaling = get_permalink($post->ID);
-                                    $argsText .= '<strong>' . __('Post:', 'publishpress-future-pro')
+                                    $argsText .= '<strong>' . __('Post:', 'post-expirator')
                                         . '</strong> <a target="_blank" href="' . esc_url($postPermaling) . '">'
                                         . $post->post_title . '</a><br>';
                                 }
                             }
                         }
                     } else {
-                        $argsText .= '<strong>' . __('Trigger: ', 'publishpress-future-pro') . '</strong>'
+                        $argsText .= '<strong>' . __('Trigger: ', 'post-expirator') . '</strong>'
                             . $args['contextVariables']['global']['trigger']['label'] . '<br>';
                     }
 
-                    $argsText .= '<strong>' . __('Steps:', 'publishpress-future-pro') . '</strong><br>' . $nextNodes;
+                    $argsText .= '<strong>' . __('Steps:', 'post-expirator') . '</strong><br>' . $nextNodes;
 
                     $html = $argsText;
                     break;
 
                 case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
-                    $html = __('Workflow recurring scheduled action', 'publishpress-future-pro');
+                    $html = __('Workflow recurring scheduled action', 'post-expirator');
                     break;
             }
         } catch (\Exception $e) {
@@ -289,11 +289,11 @@ class ScheduledActions implements InitializableInterface
         wp_enqueue_style(
             "future_actions_admin_style",
             plugins_url(
-                "/src/assets/css/future-actions.css",
-                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+                "assets/css/future-actions.css",
+                PUBLISHPRESS_FUTURE_PLUGIN_FILE
             ),
             ["wp-components", "wp-edit-post", "wp-editor"],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
     }
 

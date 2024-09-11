@@ -30,12 +30,12 @@ class CoreOnAdminInit implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("On admin init", "publishpress-future-pro");
+        return __("On admin init", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This trigger activates upon the initialization of the admin site.", "publishpress-future-pro");
+        return __("This trigger activates upon the initialization of the admin site.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -94,9 +94,14 @@ class CoreOnAdminInit implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return true;
     }
 }

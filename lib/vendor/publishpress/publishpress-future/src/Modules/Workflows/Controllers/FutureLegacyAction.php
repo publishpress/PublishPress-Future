@@ -49,8 +49,8 @@ class FutureLegacyAction implements InitializableInterface
         wp_enqueue_script(
             "future_workflow_legacy_action_script",
             plugins_url(
-                "/src/assets/js/legacy-action.js",
-                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+                "/assets/js/legacy-action.js",
+                PUBLISHPRESS_FUTURE_PLUGIN_FILE
             ),
             [
                 "wp-plugins",
@@ -58,7 +58,7 @@ class FutureLegacyAction implements InitializableInterface
                 "wp-element",
                 "wp-data",
             ],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            PUBLISHPRESS_FUTURE_VERSION,
             true
         );
 

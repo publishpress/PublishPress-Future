@@ -51,14 +51,14 @@ class FutureLegacyAction implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Manually enabled via Future Actions box", "publishpress-future-pro");
+        return __("Manually enabled via Future Actions box", "post-expirator");
     }
 
     public function getDescription(): string
     {
         return __(
             "This trigger allows users to choose the workflow from the dropdown menu in the Future Actions options.",
-            "publishpress-future-pro"
+            "post-expirator"
         );
     }
 
@@ -106,8 +106,8 @@ class FutureLegacyAction implements NodeTypeInterface
             [
                 'name' => 'post',
                 'type' => 'post',
-                'label' => __("Action Post", "publishpress-future-pro"),
-                'description' => __("The post that was saved triggering the action.", "publishpress-future-pro"),
+                'label' => __("Action Post", "post-expirator"),
+                'description' => __("The post that was saved triggering the action.", "post-expirator"),
             ]
         ];
     }
@@ -125,7 +125,7 @@ class FutureLegacyAction implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
@@ -150,5 +150,10 @@ class FutureLegacyAction implements NodeTypeInterface
         }
 
         return $action;
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

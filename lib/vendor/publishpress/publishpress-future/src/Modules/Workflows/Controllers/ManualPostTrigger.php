@@ -155,8 +155,8 @@ class ManualPostTrigger implements InitializableInterface
         wp_enqueue_script(
             "future_workflow_manual_selection_script_quick_edit",
             plugins_url(
-                "/src/assets/js/workflow-manual-selection-quick-edit.js",
-                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+                "/assets/js/workflow-manual-selection-quick-edit.js",
+                PUBLISHPRESS_FUTURE_PLUGIN_FILE
             ),
             [
                 "wp-plugins",
@@ -164,7 +164,7 @@ class ManualPostTrigger implements InitializableInterface
                 "wp-element",
                 "wp-data",
             ],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            PUBLISHPRESS_FUTURE_VERSION,
             true
         );
 
@@ -207,8 +207,8 @@ class ManualPostTrigger implements InitializableInterface
         wp_enqueue_script(
             "future_workflow_manual_selection_script_block_editor",
             plugins_url(
-                "/src/assets/js/workflow-manual-selection-block-editor.js",
-                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+                "/assets/js/workflow-manual-selection-block-editor.js",
+                PUBLISHPRESS_FUTURE_PLUGIN_FILE
             ),
             [
                 "wp-plugins",
@@ -216,7 +216,7 @@ class ManualPostTrigger implements InitializableInterface
                 "wp-element",
                 "wp-data",
             ],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            PUBLISHPRESS_FUTURE_VERSION,
             true
         );
 
@@ -303,7 +303,7 @@ class ManualPostTrigger implements InitializableInterface
 
         add_meta_box(
             'future_workflow_manual_trigger',
-            __('Action Workflows', 'publishpress-future-pro'),
+            __('Action Workflows', 'post-expirator'),
             [$this, 'renderClassicEditorMetabox'],
             $postType,
             'side',
@@ -367,8 +367,8 @@ class ManualPostTrigger implements InitializableInterface
         wp_enqueue_script(
             "future_workflow_manual_selection_script",
             plugins_url(
-                "/src/assets/js/workflow-manual-selection-classic-editor.js",
-                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+                "/assets/js/workflow-manual-selection-classic-editor.js",
+                PUBLISHPRESS_FUTURE_PLUGIN_FILE
             ),
             [
                 "wp-plugins",
@@ -376,7 +376,7 @@ class ManualPostTrigger implements InitializableInterface
                 "wp-element",
                 "wp-data",
             ],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            PUBLISHPRESS_FUTURE_VERSION,
             true
         );
 

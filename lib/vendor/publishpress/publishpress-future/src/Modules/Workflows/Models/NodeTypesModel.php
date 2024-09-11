@@ -67,7 +67,7 @@ class NodeTypesModel implements NodeTypesModelInterface
         return [
             [
                 "name" => "post",
-                "label" => __("Post", "publishpress-future-pro"),
+                "label" => __("Post", "post-expirator"),
                 "icon" => [
                     "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -76,7 +76,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             ],
             [
                 "name" => "future",
-                "label" => __("PublishPress Future", "publishpress-future-pro"),
+                "label" => __("PublishPress Future", "post-expirator"),
                 "icon" => [
                     "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -85,7 +85,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             ],
             [
                 "name" => "site",
-                "label" => __("Site", "publishpress-future-pro"),
+                "label" => __("Site", "post-expirator"),
                 "icon" => [
                     "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -94,7 +94,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             ],
             [
                 "name" => "conditional",
-                "label" => __("Conditional", "publishpress-future-pro"),
+                "label" => __("Conditional", "post-expirator"),
                 "icon" => [
                     "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -103,7 +103,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             ],
             [
                 "name" => "async",
-                "label" => __("Asynchronous", "publishpress-future-pro"),
+                "label" => __("Asynchronous", "post-expirator"),
                 "icon" => [
                     "src" => "media-document",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -112,7 +112,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             ],
             [
                 "name" => "debug",
-                "label" => __("Debug", "publishpress-future-pro"),
+                "label" => __("Debug", "post-expirator"),
                 "icon" => [
                     "src" => "debug",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -121,7 +121,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             ],
             [
                 "name" => "db-query",
-                "label" => __("Data Query", "publishpress-future-pro"),
+                "label" => __("Data Query", "post-expirator"),
                 "icon" => [
                     "src" => "db-query",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -130,7 +130,7 @@ class NodeTypesModel implements NodeTypesModelInterface
             ],
             [
                 "name" => "messages",
-                "label" => __("Messages", "publishpress-future-pro"),
+                "label" => __("Messages", "post-expirator"),
                 "icon" => [
                     "src" => "messages",
                     "background" => self::DEFAULT_ICON_BACKGROUND,
@@ -145,6 +145,9 @@ class NodeTypesModel implements NodeTypesModelInterface
     {
         $instancesCopy = $instances;
 
+        /**
+         * @var NodeTypeInterface $instance
+         */
         foreach ($instancesCopy as &$instance) {
             $instanceClass = get_class($instance);
 
@@ -169,6 +172,7 @@ class NodeTypesModel implements NodeTypesModelInterface
                     "outputSchema" => $instance->getOutputSchema(),
                     "handleSchema" => $instance->getHandleSchema(),
                     "baseSlug" => $instance->getBaseSlug(),
+                    "isProFeature" => $instance->isProFeature(),
                 ],
                 $type
             );

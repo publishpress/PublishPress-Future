@@ -132,11 +132,11 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_style(
             "future_workflow_admin_style",
             plugins_url(
-                "/src/assets/css/workflow-editor.css",
-                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+                "/assets/css/workflow-editor.css",
+                PUBLISHPRESS_FUTURE_PLUGIN_FILE
             ),
             ["wp-components", "wp-edit-post", "wp-editor"],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION
+            PUBLISHPRESS_FUTURE_VERSION
         );
 
         wp_enqueue_script("wp-url");
@@ -149,8 +149,8 @@ class WorkflowEditor implements InitializableInterface
         wp_enqueue_script(
             "future_workflow_editor_script",
             plugins_url(
-                "/src/assets/js/workflow-editor.js",
-                PUBLISHPRESS_FUTURE_PRO_PLUGIN_FILE
+                "/assets/js/workflow-editor.js",
+                PUBLISHPRESS_FUTURE_PLUGIN_FILE
             ),
             [
                 "wp-element",
@@ -162,14 +162,14 @@ class WorkflowEditor implements InitializableInterface
                 "wp-i18n",
                 "wp-notices",
             ],
-            PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
+            PUBLISHPRESS_FUTURE_VERSION,
             true
         );
 
         wp_set_script_translations(
             'future_workflow_editor_script',
-            'publishpress-future-pro',
-            PUBLISHPRESS_FUTURE_PRO_BASE_PATH . '/languages'
+            'post-expirator',
+            PUBLISHPRESS_FUTURE_BASE_PATH . '/languages'
         );
 
         $postTypesModel = new PostTypesModel();
@@ -184,6 +184,8 @@ class WorkflowEditor implements InitializableInterface
         // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         $workflowId = (int)($_GET["workflow"] ?? 0);
 
+        $isPro = $this->hooks->applyFilters(HooksAbstract::FILTER_IS_PRO, false);
+
         wp_localize_script(
             "future_workflow_editor_script",
             "futureWorkflowEditor",
@@ -194,8 +196,8 @@ class WorkflowEditor implements InitializableInterface
                     ">="
                 ),
                 "apiUrl" => rest_url("publishpress-future/v1"),
-                "pluginVersion" => PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION,
-                "assetsUrl" => PUBLISHPRESS_FUTURE_PRO_ASSETS_URL,
+                "pluginVersion" => PUBLISHPRESS_FUTURE_VERSION,
+                "assetsUrl" => PUBLISHPRESS_FUTURE_ASSETS_URL,
                 "workflowId" => $workflowId,
                 "nonce" => wp_create_nonce("wp_rest"),
                 "nodeTypeCategories" => $this->nodeTypesModel->getCategories(),
@@ -226,6 +228,7 @@ class WorkflowEditor implements InitializableInterface
                 "taxonomies" => $taxonomies,
                 "welcomeGuidePages" => $this->getWelcomeGuidePages(),
                 "isExperimentalFeaturesEnabled" => $this->settingsFacade->getExperimentalFeaturesStatus(),
+                "isPro" => $isPro,
             ]
         );
     }
@@ -235,48 +238,48 @@ class WorkflowEditor implements InitializableInterface
     {
         return [
             [
-                "title" => __("Welcome to the workflow editor", 'publishpress-future-pro'),
-                "content" => __("In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow.", 'publishpress-future-pro'),
+                "title" => __("Welcome to the workflow editor", 'post-expirator'),
+                "content" => __("In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow.", 'post-expirator'),
                 "image" => '1-welcome-to-editor',
             ],
             [
-                "title" => __("Use your imagination", 'publishpress-future-pro'),
-                "content" => __("You're free to create very distinct workflows in your site, according to your needs.", 'publishpress-future-pro'),
+                "title" => __("Use your imagination", 'post-expirator'),
+                "content" => __("You're free to create very distinct workflows in your site, according to your needs.", 'post-expirator'),
                 "image" => '2-use-imagination',
             ],
             [
-                "title" => __("A basic workflow", 'publishpress-future-pro'),
-                "content" => __("Every workflow requires at least two steps connected to each other: one trigger and one action.", 'publishpress-future-pro'),
+                "title" => __("A basic workflow", 'post-expirator'),
+                "content" => __("Every workflow requires at least two steps connected to each other: one trigger and one action.", 'post-expirator'),
                 "image" => '3-basic-workflow',
             ],
             [
-                "title" => __("Add steps to your workflow", 'publishpress-future-pro'),
-                "content" => __("Drag and drop steps to add them to your workflow. Connect the steps to create a workflow.", 'publishpress-future-pro'),
+                "title" => __("Add steps to your workflow", 'post-expirator'),
+                "content" => __("Drag and drop steps to add them to your workflow. Connect the steps to create a workflow.", 'post-expirator'),
                 "image" => '4-add-steps',
             ],
             [
-                "title" => __("Output and input", 'publishpress-future-pro'),
-                "content" => __("Linked steps can pass data forward as input to the next step.", 'publishpress-future-pro'),
+                "title" => __("Output and input", 'post-expirator'),
+                "content" => __("Linked steps can pass data forward as input to the next step.", 'post-expirator'),
                 "image" => '5-output-input',
             ],
             [
-                "title" => __("Customize the workflow", 'publishpress-future-pro'),
-                "content" => __("Click on a step to customize it. You can change the step's settings in the right sidebar.", 'publishpress-future-pro'),
+                "title" => __("Customize the workflow", 'post-expirator'),
+                "content" => __("Click on a step to customize it. You can change the step's settings in the right sidebar.", 'post-expirator'),
                 "image" => '6-customize-workflow',
             ],
             [
-                "title" => __("Workflow validation", 'publishpress-future-pro'),
-                "content" => __("Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar.", 'publishpress-future-pro'),
+                "title" => __("Workflow validation", 'post-expirator'),
+                "content" => __("Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar.", 'post-expirator'),
                 "image" => '7-workflow-validation',
             ],
             [
-                "title" => __("Publish your workflow", 'publishpress-future-pro'),
-                "content" => __("When you're ready, click the publish button to make your workflow live.", 'publishpress-future-pro'),
+                "title" => __("Publish your workflow", 'post-expirator'),
+                "content" => __("When you're ready, click the publish button to make your workflow live.", 'post-expirator'),
                 "image" => '8-publish-workflow',
             ],
             [
-                "title" => __("Need help?", 'publishpress-future-pro'),
-                "content" => __("If you have any questions or need help, click the help button in the top right corner to access the support resources.", 'publishpress-future-pro'),
+                "title" => __("Need help?", 'post-expirator'),
+                "content" => __("If you have any questions or need help, click the help button in the top right corner to access the support resources.", 'post-expirator'),
                 "image" => '9-need-help',
             ],
         ];

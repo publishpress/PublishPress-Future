@@ -22,10 +22,10 @@ class PostType implements InitializableInterface
 
     public function initialize()
     {
-        $this->hooks->addAction(CoreHooksAbstract::ACTION_INIT_PLUGIN, [
-            $this,
-            "registerPostType",
-        ]);
+        $this->hooks->addAction(
+            CoreHooksAbstract::ACTION_AFTER_INIT_PLUGIN,
+            [$this, "registerPostType"]
+        );
 
         $this->hooks->addFilter(
             HooksAbstract::FILTER_SUPPORTED_POST_TYPES,
@@ -37,73 +37,73 @@ class PostType implements InitializableInterface
     {
         register_post_type(Module::POST_TYPE_WORKFLOW, [
             "labels" => [
-                "name" => __("Action Workflows", "publishpress-future-pro"),
-                "singular_name" => __("Future Workflow", "publishpress-future-pro"),
-                "add_new" => __("Add New", "publishpress-future-pro"),
+                "name" => __("Action Workflows", "post-expirator"),
+                "singular_name" => __("Future Workflow", "post-expirator"),
+                "add_new" => __("Add New", "post-expirator"),
                 "add_new_item" => __(
                     "Add New Workflow",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
-                "edit_item" => __("Edit Workflow", "publishpress-future-pro"),
-                "new_item" => __("New Workflow", "publishpress-future-pro"),
-                "view_item" => __("View Workflow", "publishpress-future-pro"),
+                "edit_item" => __("Edit Workflow", "post-expirator"),
+                "new_item" => __("New Workflow", "post-expirator"),
+                "view_item" => __("View Workflow", "post-expirator"),
                 "search_items" => __(
                     "Search Workflows",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "not_found" => __(
                     "No Workflows found",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "not_found_in_trash" => __(
                     "No Workflows found in Trash",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "parent_item_colon" => __(
                     "Parent Workflow:",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
-                "all_items" => __("All Workflows", "publishpress-future-pro"),
+                "all_items" => __("All Workflows", "post-expirator"),
                 "archives" => __(
                     "Workflow Archives",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "insert_into_item" => __(
                     "Insert into workflow",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "uploaded_to_this_item" => __(
                     "Uploaded to this workflow",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "filter_items_list" => __(
                     "Filter workflows list",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "items_list_navigation" => __(
                     "Workflows list navigation",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
-                "items_list" => __("Action Workflows list", "publishpress-future-pro"),
+                "items_list" => __("Action Workflows list", "post-expirator"),
                 "item_published" => __(
                     "Workflow published.",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "item_published_privately" => __(
                     "Workflow published privately.",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "item_reverted_to_draft" => __(
                     "Workflow reverted to draft.",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "item_scheduled" => __(
                     "Workflow scheduled.",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "item_updated" => __(
                     "Workflow updated.",
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
             ],
             "public" => false,

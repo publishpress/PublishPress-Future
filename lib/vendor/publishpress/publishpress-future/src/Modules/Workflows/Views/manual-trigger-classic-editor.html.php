@@ -3,4 +3,4 @@
 defined('ABSPATH') or die('Direct access not allowed.');
 ?>
 
-<div id="publishpress-future-pro-classic-editor"></div>
+<div id="post-expirator-classic-editor"></div>

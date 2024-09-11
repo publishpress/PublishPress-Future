@@ -29,14 +29,14 @@ class CorePostQuery implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Query posts", "publishpress-future-pro");
+        return __("Query posts", "post-expirator");
     }
 
     public function getDescription(): string
     {
         return __(
             "This step defines the posts that will be passed to the next step in the workflow.",
-            "publishpress-future-pro"
+            "post-expirator"
         );
     }
 
@@ -64,15 +64,15 @@ class CorePostQuery implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Post Query", "publishpress-future-pro"),
+                "label" => __("Post Query", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "postQuery",
                         "type" => "postQuery",
-                        "label" => __("Post query", "publishpress-future-pro"),
+                        "label" => __("Post query", "post-expirator"),
                         "description" => __(
                             "The query defines the posts that will be retrieved by this action.",
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                         "default" => [
                             "postSource" => "custom",
@@ -104,13 +104,13 @@ class CorePostQuery implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "postQuery.postType",
-                        "label" => __("Post Type", "publishpress-future-pro"),
+                        "label" => __("Post Type", "post-expirator"),
                     ],
                     [
                         "rule" => "dataType",
                         "field" => "postQuery.postId",
                         "type" => "integerList",
-                        "label" => __("Post ID", "publishpress-future-pro"),
+                        "label" => __("Post ID", "post-expirator"),
                     ],
                 ],
             ],
@@ -124,14 +124,14 @@ class CorePostQuery implements NodeTypeInterface
                 "name" => "posts",
                 "type" => "array",
                 "itemsType" => "integer",
-                "label" => __("Array of queried post IDs", "publishpress-future-pro"),
-                "description" => __("The posts found following the criteria of the query.", "publishpress-future-pro"),
+                "label" => __("Array of queried post IDs", "post-expirator"),
+                "description" => __("The posts found following the criteria of the query.", "post-expirator"),
             ],
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ],
         ];
     }
@@ -154,9 +154,14 @@ class CorePostQuery implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return true;
     }
 }

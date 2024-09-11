@@ -304,17 +304,17 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-develop",
-            "version_normalized": "dev-develop",
+            "version": "dev-andergmartins/issue893",
+            "version_normalized": "dev-andergmartins/issue893",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "d2116a8bb548c300301735f0b1afd71a264f4243"
+                "reference": "b3ef0c9858a9c84c1b748af6df20bca00988cabd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/d2116a8bb548c300301735f0b1afd71a264f4243",
-                "reference": "d2116a8bb548c300301735f0b1afd71a264f4243",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/b3ef0c9858a9c84c1b748af6df20bca00988cabd",
+                "reference": "b3ef0c9858a9c84c1b748af6df20bca00988cabd",
                 "shasum": ""
             },
             "require": {
@@ -350,7 +350,7 @@
                 "wp-cli/wp-cli-bundle": "^2.10",
                 "wp-coding-standards/wpcs": "^3"
             },
-            "time": "2024-08-28T14:33:56+00:00",
+            "time": "2024-09-11T22:04:08+00:00",
             "type": "wordpress-plugin",
             "extra": {
                 "plugin-slug": "post-expirator",
@@ -407,11 +407,15 @@
                     "@gen:pot-php",
                     "@gen:pot-js"
                 ],
+                "gen:l10n-php": [
+                    "wp i18n make-php ./languages --allow-root"
+                ],
                 "gen:lang": [
                     "@gen:pot",
                     "@gen:mo",
                     "@gen:po-scripts",
                     "@gen:po-json",
+                    "@gen:l10n-php",
                     "@cleanup:js-mo"
                 ],
                 "cleanup:js-mo": [
@@ -593,7 +597,7 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/andergmartins/issue893",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
             "install-path": "../publishpress/publishpress-future"

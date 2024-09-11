@@ -1,0 +1,53 @@
+.block-editor-block-types-list__item-pro-badge {
+    background-color: #ffb200;
+    color: #000;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    width: 81%;
+}
+
+.components-popover__content .block-editor-block-types-list__item-pro-badge {
+    width: 100%;
+}
+
+.workflow-editor-inspector-card__pro-badge,
+.block-editor-block-card__pro-badge {
+    background-color: #ffb200;
+    color: #000;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.workflow-editor-inspector-card__pro-badge,
+.components-popover__content .block-editor-block-card__pro-badge {
+    margin-left: 8px;
+}
+
+.workflow-editor-inspector-card__pro-instructions,
+.block-editor-block-card__pro-instructions {
+    font-size: 12px;
+    color: #757575;
+    margin-top: 8px;
+    line-height: 1.5;
+    font-style: italic;
+    font-weight: 400;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 8px;
+}
+
+.edit-post-header-toolbar__buy-pro {
+    background-color: #ffb200;
+    color: #000;
+    padding: 4px 10px !important;
+    border-radius: 4px;
+}
+
+.edit-post-header-toolbar__buy-pro .publishpress-icon {
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 4px;
+}

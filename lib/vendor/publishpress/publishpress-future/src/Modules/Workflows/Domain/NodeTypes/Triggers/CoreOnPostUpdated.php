@@ -30,12 +30,12 @@ class CoreOnPostUpdated implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Post is updated", "publishpress-future-pro");
+        return __("Post is updated", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This trigger activates when an existing post is updated.", "publishpress-future-pro");
+        return __("This trigger activates when an existing post is updated.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -62,19 +62,19 @@ class CoreOnPostUpdated implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Post Query", "publishpress-future-pro"),
+                "label" => __("Post Query", "post-expirator"),
                 "description" => __(
                     "Specify the criteria for posts that will trigger this action. Leave blank to include all posts.", // phpcs:ignore Generic.Files.LineLength.TooLong
-                    "publishpress-future-pro"
+                    "post-expirator"
                 ),
                 "fields" => [
                     [
                         "name" => "postQuery",
                         "type" => "postQuery",
-                        "label" => __("Post query", "publishpress-future-pro"),
+                        "label" => __("Post query", "post-expirator"),
                         "description" => __(
                             "The query defines the posts that will trigger this action.",
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                         "settings" => [
                             "acceptsInput" => false,
@@ -99,13 +99,13 @@ class CoreOnPostUpdated implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "postQuery.postType",
-                        "label" => __("Post Type", "publishpress-future-pro"),
+                        "label" => __("Post Type", "post-expirator"),
                     ],
                     [
                         "rule" => "dataType",
                         "field" => "postQuery.postId",
                         "type" => "integerList",
-                        "label" => __("Post ID", "publishpress-future-pro"),
+                        "label" => __("Post ID", "post-expirator"),
                     ],
                 ],
             ],
@@ -125,14 +125,14 @@ class CoreOnPostUpdated implements NodeTypeInterface
             [
                 'name' => 'postBefore',
                 'type' => 'post',
-                'label' => __("Post Before Update", "publishpress-future-pro"),
-                'description' => __("The post that was saved, with the old properties.", "publishpress-future-pro"),
+                'label' => __("Post Before Update", "post-expirator"),
+                'description' => __("The post that was saved, with the old properties.", "post-expirator"),
             ],
             [
                 'name' => 'postAfter',
                 'type' => 'post',
-                'label' => __("Post After Update", "publishpress-future-pro"),
-                'description' => __("The post that was saved, with the new properties.", "publishpress-future-pro"),
+                'label' => __("Post After Update", "post-expirator"),
+                'description' => __("The post that was saved, with the new properties.", "post-expirator"),
             ]
         ];
     }
@@ -150,9 +150,14 @@ class CoreOnPostUpdated implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

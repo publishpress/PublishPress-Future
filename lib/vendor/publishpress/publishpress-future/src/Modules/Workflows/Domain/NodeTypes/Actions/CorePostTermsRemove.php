@@ -29,12 +29,12 @@ class CorePostTermsRemove implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Remove terms from the post", "publishpress-future-pro");
+        return __("Remove terms from the post", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("This step removes current taxonomy terms.", "publishpress-future-pro");
+        return __("This step removes current taxonomy terms.", "post-expirator");
     }
 
     public function getIcon(): string
@@ -61,35 +61,35 @@ class CorePostTermsRemove implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Post", "publishpress-future-pro"),
-                "description" => __("The post to update.", "publishpress-future-pro"),
+                "label" => __("Post", "post-expirator"),
+                "description" => __("The post to update.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "post",
                         "type" => "postInput",
-                        "label" => __("Post", "publishpress-future-pro"),
+                        "label" => __("Post", "post-expirator"),
                         "description" => __(
                             "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                     ],
                 ],
             ],
             [
-                "label" => __("Terms to remove", "publishpress-future-pro"),
-                "description" => __("The terms that will be removed from the posts.", "publishpress-future-pro"),
+                "label" => __("Terms to remove", "post-expirator"),
+                "description" => __("The terms that will be removed from the posts.", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "taxonomyTerms",
                         "type" => "taxonomyTerms",
-                        "label" => __("Terms", "publishpress-future-pro"),
+                        "label" => __("Terms", "post-expirator"),
                         "description" => __(
                             "The terms that will be removed from the posts.",
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                         "settings" => [
                             "optionToSelectAll" => true,
-                            "labelOptionToSelectAll" => __("Remove all terms", "publishpress-future-pro"),
+                            "labelOptionToSelectAll" => __("Remove all terms", "post-expirator"),
                         ],
                     ],
                 ]
@@ -116,7 +116,7 @@ class CorePostTermsRemove implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "taxonomyTerms.terms",
-                        "label" => __("Terms", "publishpress-future-pro"),
+                        "label" => __("Terms", "post-expirator"),
                     ]
                 ],
             ],
@@ -129,8 +129,8 @@ class CorePostTermsRemove implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ]
         ];
     }
@@ -153,9 +153,14 @@ class CorePostTermsRemove implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

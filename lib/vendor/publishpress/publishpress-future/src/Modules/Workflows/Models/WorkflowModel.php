@@ -305,7 +305,7 @@ class WorkflowModel implements WorkflowModelInterface
         $currentLocale = get_locale();
         switch_to_locale('en_US');
 
-        $untranslatedString = __($string, 'publishpress-future-pro');
+        $untranslatedString = __($string, 'post-expirator');
 
         // Restore the original locale
         switch_to_locale($currentLocale);
@@ -334,7 +334,7 @@ class WorkflowModel implements WorkflowModelInterface
     public function setFlow(array $flow)
     {
         // Update the editor version in the flow
-        $flow['editorVersion'] = PUBLISHPRESS_FUTURE_PRO_PLUGIN_VERSION;
+        $flow['editorVersion'] = PUBLISHPRESS_FUTURE_VERSION;
 
         $this->flow = $flow;
         $this->post->post_content = wp_json_encode($this->flow);
@@ -364,7 +364,7 @@ class WorkflowModel implements WorkflowModelInterface
 
         if (empty($id)) {
             $this->post = [
-                'post_title' => __('New Workflow', 'publishpress-future-pro'),
+                'post_title' => __('New Workflow', 'post-expirator'),
                 'post_status' => 'auto-draft',
                 'post_type' => Module::POST_TYPE_WORKFLOW,
             ];

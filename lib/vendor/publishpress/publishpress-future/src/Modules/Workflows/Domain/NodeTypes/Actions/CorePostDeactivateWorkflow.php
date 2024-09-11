@@ -29,14 +29,14 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
 
     public function getLabel(): string
     {
-        return __("Deactivate Workflow for Post", "publishpress-future-pro");
+        return __("Deactivate Workflow for Post", "post-expirator");
     }
 
     public function getDescription(): string
     {
         return __(
             "This step enables you to deactivate the \"Manually enabled via checkbox\" workflow after use.",
-            "publishpress-future-pro"
+            "post-expirator"
         );
     }
 
@@ -64,15 +64,15 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
     {
         return [
             [
-                "label" => __("Settings", "publishpress-future-pro"),
+                "label" => __("Settings", "post-expirator"),
                 "fields" => [
                     [
                         "name" => "post",
                         "type" => "postInput",
-                        "label" => __("Post", "publishpress-future-pro"),
+                        "label" => __("Post", "post-expirator"),
                         "description" => __(
                             "Select the variable that contains the post to update. It can be a post instance or the post ID.", // phpcs:ignore Generic.Files.LineLength.TooLong
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                     ],
                     [
@@ -81,10 +81,10 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
                         "default" => [
                             "variable" => "global.workflow",
                         ],
-                        "label" => __("Workflow", "publishpress-future-pro"),
+                        "label" => __("Workflow", "post-expirator"),
                         "description" => __(
                             "Select the manually enabling workflow that will be deactivated for the selected post.", // phpcs:ignore Generic.Files.LineLength.TooLong
-                            "publishpress-future-pro"
+                            "post-expirator"
                         ),
                     ],
                 ],
@@ -107,12 +107,12 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
                     [
                         "rule" => "required",
                         "field" => "post.variable",
-                        "label" => __("Post", "publishpress-future-pro"),
+                        "label" => __("Post", "post-expirator"),
                     ],
                     [
                         "rule" => "required",
                         "field" => "workflow.variable",
-                        "label" => __("Workflow", "publishpress-future-pro"),
+                        "label" => __("Workflow", "post-expirator"),
                     ],
                 ],
             ],
@@ -125,8 +125,8 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
             [
                 "name" => "input",
                 "type" => "input",
-                "label" => __("Step input", "publishpress-future-pro"),
-                "description" => __("The input data for this step.", "publishpress-future-pro"),
+                "label" => __("Step input", "post-expirator"),
+                "description" => __("The input data for this step.", "post-expirator"),
             ]
         ];
     }
@@ -149,9 +149,14 @@ class CorePostDeactivateWorkflow implements NodeTypeInterface
                 [
                     "id" => "output",
                     "left" => "50%",
-                    "label" => __("Next", "publishpress-future-pro"),
+                    "label" => __("Next", "post-expirator"),
                 ]
             ]
         ];
+    }
+
+    public function isProFeature(): bool
+    {
+        return false;
     }
 }

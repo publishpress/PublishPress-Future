@@ -28,7 +28,7 @@ class BooleanResolver implements VariableResolverInterface
 
     public function getValueAsString(string $property = ''): string
     {
-        return $this->getValue($property) ? __('Yes', 'publishpress-future-pro') : __('No', 'publishpress-future-pro');
+        return $this->getValue($property) ? __('Yes', 'post-expirator') : __('No', 'post-expirator');
     }
 
     public function compact(): array
@@ -69,6 +69,6 @@ class BooleanResolver implements VariableResolverInterface
 
     public function __toString(): string
     {
-        return $this->variable ? __('Yes', 'publishpress-future-pro') : __('No', 'publishpress-future-pro');
+        return $this->variable ? __('Yes', 'post-expirator') : __('No', 'post-expirator');
     }
 }

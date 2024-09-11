@@ -1,0 +1,12 @@
+#publishpress-future-pro-quick-edit-wrapper {
+    max-width: 340px;
+    padding: 14px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+
+#publishpress-future-pro-quick-edit-wrapper label {
+    display: inline-block;
+    max-width: 100%;
+}

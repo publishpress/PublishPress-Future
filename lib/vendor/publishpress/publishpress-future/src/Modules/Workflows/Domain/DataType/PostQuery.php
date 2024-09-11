@@ -13,11 +13,11 @@ class PostQuery implements DataTypeInterface
 
     public function getLabel(): string
     {
-        return __("Post Query", "publishpress-future-pro");
+        return __("Post Query", "post-expirator");
     }
 
     public function getDescription(): string
     {
-        return __("A query to select posts", "publishpress-future-pro");
+        return __("A query to select posts", "post-expirator");
     }
 }

@@ -1,0 +1,11 @@
+.workflow-editor-dev-info-panel .components-panel__row {
+    overflow: scroll;
+}
+
+.workflow-editor-dev-info-wrapper {
+    min-width: 1000px;
+}
+
+.workflow-editor-dev-panel {
+    background-color: #fffaf1;
+}
