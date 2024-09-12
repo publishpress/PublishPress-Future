@@ -766,7 +766,17 @@ return [
 
     ServicesAbstract::NODE_RUNNER_FACTORY => static function (ContainerInterface $container) {
         return function ($nodeName) use ($container) {
-            $nodeRunner = null;
+            $hooks = $container->get(ServicesAbstract::HOOKS);
+
+            $nodeRunner = $hooks->applyFilters(
+                WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_BEFORE_MAP_TRIGGER,
+                null,
+                $nodeName
+            );
+
+            if (! is_null($nodeRunner)) {
+                return $nodeRunner;
+            }
 
             /**
              * @var SettingsFacade $settingsModel
