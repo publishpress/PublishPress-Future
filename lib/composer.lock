@@ -302,12 +302,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "b3ef0c9858a9c84c1b748af6df20bca00988cabd"
+                "reference": "2b890b9d4682f9c7ac53436adbcca3f5eda02391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/b3ef0c9858a9c84c1b748af6df20bca00988cabd",
-                "reference": "b3ef0c9858a9c84c1b748af6df20bca00988cabd",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/2b890b9d4682f9c7ac53436adbcca3f5eda02391",
+                "reference": "2b890b9d4682f9c7ac53436adbcca3f5eda02391",
                 "shasum": ""
             },
             "require": {
@@ -591,7 +591,7 @@
                 "source": "https://github.com/publishpress/PublishPress-Future/tree/andergmartins/issue893",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-09-11T22:04:08+00:00"
+            "time": "2024-09-12T13:30:05+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
