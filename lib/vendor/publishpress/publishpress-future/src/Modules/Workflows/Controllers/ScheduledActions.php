@@ -195,6 +195,15 @@ class ScheduledActions implements InitializableInterface
                         $step = $args['step'];
                     }
 
+                    if (
+                        empty($step)
+                        || ! isset($step['node'])
+                        || ! isset($step['node']['data'])
+                        || ! isset($step['node']['data']['name'])
+                    ) {
+                        return $html;
+                    }
+
                     $next = $step['next'] ?? [];
 
                     $nodeType = $this->nodeTypesModel->getNodeType($step['node']['data']['name']);
