@@ -787,6 +787,11 @@ class WorkflowModel implements WorkflowModelInterface
         $nodeTypes = $this->nodeTypesModel->getAllNodeTypesByType();
         $routineTree = $this->getRoutineTree($nodeTypes);
 
+        if (empty($routineTree)) {
+            // TODO: Log the error
+            return [];
+        }
+
         return $this->getStepFromRoutineTreeRecursively($routineTree, $nodeId);
     }
 
