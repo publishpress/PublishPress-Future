@@ -769,7 +769,7 @@ return [
             $hooks = $container->get(ServicesAbstract::HOOKS);
 
             $nodeRunner = $hooks->applyFilters(
-                WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_BEFORE_MAP_TRIGGER,
+                WorkflowsHooksAbstract::FILTER_WORKFLOW_ENGINE_MAP_NODE_RUNNER,
                 null,
                 $nodeName
             );
