@@ -63,8 +63,8 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
 
         if (! defined('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH')) {
             $vendorPath = __DIR__ . '/lib/vendor';
-            if (defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO') && PUBLISHPRESS_FUTURE_LOADED_BY_PRO) {
-                $vendorPath = \PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR;
+            if (defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO') && constant('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')) {
+                $vendorPath = constant('PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR');
             }
 
             define('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH', $vendorPath);

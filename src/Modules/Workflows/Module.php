@@ -88,8 +88,12 @@ class Module implements InitializableInterface
         /*
          * We initialize the engine in the constructor because it requires
          * the init hook has not been fired yet. The initialize method runs in the init hook.
+         * We don't initialize the engine if the module is loaded by the Pro version. The Pro version
+         * will initialize the engine in its own Module class.
          */
-        $this->initializeEngine();
+        if (! defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO') || ! constant('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')) {
+            $this->initializeEngine();
+        }
     }
 
     public function initialize()
