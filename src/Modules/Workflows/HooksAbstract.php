@@ -85,25 +85,4 @@ abstract class HooksAbstract
 
     public const FILTER_CLEANUP_SCHEDULED_TRANSIENT_TIMEOUT =
         'publishpressfuture_cleanup_scheduled_transient_timeout';
-
-    public const ACTION_WORKFLOW_TRIGGER_ON_ADMIN_INIT_SETUP =
-        'publishpressfuture_workflow_trigger_on_admin_init_setup';
-
-    public const ACTION_WORKFLOW_TRIGGER_ON_INIT_SETUP =
-        'publishpressfuture_workflow_trigger_on_init_setup';
-
-    public const ACTION_WORKFLOW_TRIGGER_ON_CRON_SCHEDULE_SETUP =
-        'publishpressfuture_workflow_trigger_on_cron_schedule_setup';
-
-    public const ACTION_WORKFLOW_ADVANCED_IF_ELSE_SETUP =
-        'publishpressfuture_workflow_advanced_if_else_setup';
-
-    public const ACTION_WORKFLOW_ADVANCED_CORE_POST_QUERY_SETUP =
-        'publishpressfuture_workflow_advanced_core_post_query_setup';
-
-    public const ACTION_WORKFLOW_ACTION_CORE_SEND_EMAIL_SETUP =
-        'publishpressfuture_workflow_action_core_send_email_setup';
-
-    public const ACTION_WORKFLOW_ACTION_CORE_POST_CHANGE_STATUS_SETUP =
-        'publishpressfuture_workflow_action_core_post_change_status_setup';
 }
