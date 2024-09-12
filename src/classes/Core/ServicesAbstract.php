@@ -68,7 +68,13 @@ abstract class ServicesAbstract
 
     public const MODULE_WPFORMS = 'future.pro/module-wpforms';
 
+    public const MODULE_WORKFLOWS = 'future.pro/module-workflows';
+
     public const MIGRATIONS_FACTORY = 'future.pro/migrations-factory';
+
+    public const WORKFLOW_ENGINE = 'future.pro/workflow-engine';
+
+    public const NODE_RUNNER_FACTORY = 'future.pro/node-runner-factory';
 
     /**
      * @deprecated 4.0.0
@@ -84,11 +90,6 @@ abstract class ServicesAbstract
      * @deprecated 4.0.0
      */
     public const CRON_SCHEDULES_MODEL = 'future.pro/cron-schedules-model';
-
-    /**
-     * @deprecated 4.0.0
-     */
-    public const WORKFLOW_ENGINE = 'future.pro/workflow-engine';
 
     /**
      * @deprecated 4.0.0
@@ -124,11 +125,6 @@ abstract class ServicesAbstract
      * @deprecated 4.0.0
      */
     public const CRON_STEP_NODE_RUNNER_PROCESSOR = 'future.pro/cron-step-node-runner-processor';
-
-    /**
-     * @deprecated 4.0.0
-     */
-    public const NODE_RUNNER_FACTORY = 'future.pro/node-runner-factory';
 
     /**
      * @deprecated 4.0.0

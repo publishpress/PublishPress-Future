@@ -18,6 +18,10 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnCronSchedule;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\WorkflowEngine;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
@@ -57,7 +61,7 @@ return [
 
     ServicesAbstract::MODULES => static function (ContainerInterface $container) {
         $modulesServicesList = [
-            FreeServicesAbstract::MODULE_WORKFLOWS,
+            ServicesAbstract::MODULE_WORKFLOWS,
             ServicesAbstract::MODULE_WPFORMS,
         ];
 
@@ -178,6 +182,13 @@ return [
         );
     },
 
+    ServicesAbstract::MODULE_WORKFLOWS => static function (ContainerInterface $container) {
+        return new \PublishPress\FuturePro\Modules\Workflows\Module(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+        );
+    },
+
     /**
      * @return \PublishPress\FuturePro\Models\CustomStatusesModel
      */
@@ -188,7 +199,8 @@ return [
     ServicesAbstract::MODEL_SETTINGS => static function (ContainerInterface $container) {
         return new SettingsModel(
             $container->get(ServicesAbstract::OPTIONS),
-            $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES)
+            $container->get(ServicesAbstract::MODEL_CUSTOM_STATUSES),
+            $container->get(FreeServicesAbstract::SETTINGS)
         );
     },
 
@@ -224,5 +236,37 @@ return [
         };
     },
 
+    ServicesAbstract::WORKFLOW_ENGINE => static function (ContainerInterface $container) {
+        return new WorkflowEngine(
+            $container->get(ServicesAbstract::HOOKS),
+            $container->get(FreeServicesAbstract::WORKFLOW_ENGINE),
+            $container->get(ServicesAbstract::NODE_RUNNER_FACTORY)
+         );
+    },
 
+    ServicesAbstract::NODE_RUNNER_FACTORY => static function (ContainerInterface $container) {
+        return function ($nodeName) use ($container) {
+            switch ($nodeName) {
+                case CoreOnInit::getNodeTypeName():
+                    return new CoreOnInit(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                    );
+
+                case CoreOnAdminInit::getNodeTypeName():
+                    return new CoreOnAdminInit(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                    );
+
+                case CoreOnCronSchedule::getNodeTypeName():
+                    return new CoreOnCronSchedule(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(FreeServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR)
+                    );
+            }
+
+            return null;
+        };
+    },
 ];
