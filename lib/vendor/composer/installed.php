@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
-        'reference' => '7bda840b7d37d3b3e741b70238fb1239036244fd',
+        'reference' => '1f696ba873e25f619e09a64809ce98d6d21da7a6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => '7bda840b7d37d3b3e741b70238fb1239036244fd',
+            'reference' => '1f696ba873e25f619e09a64809ce98d6d21da7a6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -58,7 +58,7 @@
         'publishpress/publishpress-future' => array(
             'pretty_version' => 'dev-andergmartins/issue893',
             'version' => 'dev-andergmartins/issue893',
-            'reference' => '2b890b9d4682f9c7ac53436adbcca3f5eda02391',
+            'reference' => '65e3c4b173eee0487fbd3a22207b98759fb8de89',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../publishpress/publishpress-future',
             'aliases' => array(),

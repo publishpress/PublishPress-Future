@@ -68,6 +68,8 @@ abstract class HooksAbstract
 
     public const FILTER_WORKFLOW_ENGINE_MAP_TRIGGER = 'publishpressfuture_workflow_engine_map_trigger';
 
+    public const FILTER_WORKFLOW_ENGINE_BEFORE_MAP_TRIGGER = 'publishpressfuture_workflow_engine_before_map_trigger';
+
     public const FILTER_ACTION_SCHEDULER_LIST_COLUMN_ARGS = 'action_scheduler_list_table_column_args';
 
     public const FILTER_IGNORE_SAVE_POST_EVENT = 'publishpressfuture_ignore_save_post_event';
