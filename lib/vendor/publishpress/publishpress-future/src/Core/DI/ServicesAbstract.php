@@ -150,10 +150,6 @@ abstract class ServicesAbstract
 
     public const NODE_RUNNER_MAPPER = 'future.free/workflows/node-runner-mapper';
 
-    public const GENERAL_ACTION_NODE_RUNNER_PROCESSOR = 'future.free/workflows/general-action-node-runner-processor';
-
-    public const POST_ACTION_NODE_RUNNER_PROCESSOR = 'future.free/workflows/post-action-node-runner-processor';
-
     public const GENERAL_STEP_NODE_RUNNER_PROCESSOR = 'future.free/workflows/general-step-node-runner-processor';
 
     public const POST_STEP_NODE_RUNNER_PROCESSOR = 'future.free/workflows/post-step-node-runner-processor';
