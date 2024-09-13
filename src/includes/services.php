@@ -18,6 +18,9 @@ use PublishPress\FuturePro\Core\PluginInitializator;
 use PublishPress\FuturePro\Core\ServicesAbstract;
 use PublishPress\FuturePro\Models\CustomStatusesModel;
 use PublishPress\FuturePro\Models\SettingsModel;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CorePostChangeStatus;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Actions\CoreSendEmail;
+use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Advanced\CorePostQuery;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnAdminInit;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnCronSchedule;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
@@ -247,6 +250,7 @@ return [
     ServicesAbstract::NODE_RUNNER_FACTORY => static function (ContainerInterface $container) {
         return function ($nodeName) use ($container) {
             switch ($nodeName) {
+                // Triggers
                 case CoreOnInit::getNodeTypeName():
                     return new CoreOnInit(
                         $container->get(ServicesAbstract::HOOKS),
@@ -263,6 +267,29 @@ return [
                     return new CoreOnCronSchedule(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(FreeServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR)
+                    );
+
+                // Actions
+                case CorePostChangeStatus::getNodeTypeName():
+                    return new CorePostChangeStatus(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(FreeServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                    );
+
+                case CoreSendEmail::getNodeTypeName():
+                    return new CoreSendEmail(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::EMAIL),
+                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+                    );
+
+                // Advanced
+                case CorePostQuery::getNodeTypeName():
+                    return new CorePostQuery(
+                        $container->get(ServicesAbstract::HOOKS),
+                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
                     );
             }
 
