@@ -63,4 +63,6 @@ interface WorkflowModelInterface
     public function getScreenshotUrl($size = 'full'): string;
 
     public function convertLegacyScreenshots(): void;
+
+    public function getNodeById(string $nodeId): array;
 }

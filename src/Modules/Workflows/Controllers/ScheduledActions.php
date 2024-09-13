@@ -9,6 +9,7 @@ use PublishPress\Future\Modules\Expirator\HooksAbstract;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule;
 use PublishPress\Future\Modules\Workflows\HooksAbstract as WorkflowsHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\ScheduledActionModel;
@@ -73,6 +74,13 @@ class ScheduledActions implements InitializableInterface
             2
         );
 
+        $this->hooks->addFilter(
+            WorkflowsHooksAbstract::FILTER_ACTION_SCHEDULER_LIST_COLUMN_RECURRENCE,
+            [$this, 'showRecurrenceInRecurrenceColumn'],
+            10,
+            2
+        );
+
         $this->hooks->addAction(
             CoreHooksAbstract::ACTION_ADMIN_ENQUEUE_SCRIPT,
             [$this, 'enqueueScripts'],
@@ -110,6 +118,46 @@ class ScheduledActions implements InitializableInterface
         );
     }
 
+    private function getStepFromActionId(string $actionId): array
+    {
+        $actionModel = new ScheduledActionModel();
+        $actionModel->loadByActionId((int) $actionId);
+
+        $args = $actionModel->getArgs();
+
+        if (empty($args)) {
+            return [];
+        }
+
+        if (isset($args[0])) {
+            $args = $args[0];
+        }
+
+        if (ScheduledActionModel::argsAreOnNewFormat((array) $args)) {
+            $scheduledStepModel = new WorkflowScheduledStepModel();
+            $scheduledStepModel->loadByActionId($actionModel->getActionId());
+
+            $args = $scheduledStepModel->getArgs();
+        }
+
+        if (! isset($args['contextVariables']['global']['workflow'])) {
+            return [];
+        }
+
+        $stepIsCompact = ! isset($args['step']['next']);
+
+        if ($stepIsCompact) {
+            $workflowModel = new WorkflowModel();
+            $workflowModel->load($args['contextVariables']['global']['workflow']['value'] ?? 0);
+
+            $step = $workflowModel->getNodeById($args['step']['nodeId']);
+        } else {
+            $step = isset($args['step']) ? $args['step'] : [];
+        }
+
+        return $step;
+    }
+
     public function showTitleInHookColumn($title, $row)
     {
         $actionModel = new ScheduledActionModel();
@@ -119,7 +167,19 @@ class ScheduledActions implements InitializableInterface
 
         switch ($hook) {
             case WorkflowsHooksAbstract::ACTION_ASYNC_EXECUTE_NODE:
-                $title = __('Workflow scheduled step', 'post-expirator');
+                $step = $this->getStepFromActionId($row['ID']);
+
+                if (empty($step)) {
+                    break;
+                }
+
+                $stepModel = new WorkflowScheduledStepModel();
+                $stepModel->loadByActionId($row['ID']);
+
+                $title = $stepModel->getIsRecurring() ?
+                    __('Workflow repeating scheduled step', 'post-expirator') :
+                    __('Workflow scheduled step', 'post-expirator');
+
                 break;
 
             case WorkflowsHooksAbstract::ACTION_UNSCHEDULE_RECURRING_NODE_ACTION:
@@ -195,12 +255,22 @@ class ScheduledActions implements InitializableInterface
                         $step = $args['step'];
                     }
 
+                    // The step is not found anymore in the workflow.
                     if (
                         empty($step)
                         || ! isset($step['node'])
                         || ! isset($step['node']['data'])
                         || ! isset($step['node']['data']['name'])
                     ) {
+                        $html = '<span style="color: red;">' . __('Step not found in workflow.', 'post-expirator') . '</span>';
+
+                        $html .= '<br>';
+                        $html .= '<strong>' . __('Workflow:', 'post-expirator') . '</strong> '
+                            . $workflowTitle . '<br>';
+
+                        $html .= '<strong>' . __('Step:', 'post-expirator') . '</strong> '
+                            . $args['step']['nodeId'];
+
                         return $html;
                     }
 
@@ -287,6 +357,77 @@ class ScheduledActions implements InitializableInterface
         }
 
         return $html;
+    }
+
+    public function showRecurrenceInRecurrenceColumn($recurrence, $row)
+    {
+        $step = $this->getStepFromActionId($row['ID']);
+
+        if (empty($step)) {
+            return $recurrence;
+        }
+
+        // Show the recurrence information
+        $stepModel = new WorkflowScheduledStepModel();
+        $stepModel->loadByActionId($row['ID']);
+
+        if (! $stepModel->getIsRecurring()) {
+            return $recurrence;
+        }
+
+        $repeatUntil = $stepModel->getRepeatUntil();
+
+        // Repeat until forever
+        if ($repeatUntil === 'forever') {
+            return $recurrence;
+        }
+
+        // Repeat until a specific date
+        if ($repeatUntil === 'date') {
+            $dateFormat = get_option('date_format');
+            $timeFormat = get_option('time_format');
+            $dateTimeFormat = $dateFormat . ' ' . $timeFormat;
+
+            $formattedDate = wp_date($dateTimeFormat, strtotime($stepModel->getRepeatUntilDate()));
+
+            return sprintf(
+                // translators: %1$s: recurrence, %2$s: date
+                __('%1$s until %2$s', 'post-expirator'),
+                $recurrence,
+                $formattedDate
+            );
+        }
+
+        // Repeat until a specific number of times
+        if ($repeatUntil === 'times') {
+            $recurrence = sprintf(
+                // translators: %1$s: recurrence, %2$d: repeat times
+                __('%1$s until %2$d times', 'post-expirator'),
+                $recurrence,
+                $stepModel->getRepeatTimes()
+            );
+
+            // Check how many times the step has been executed
+            $executedTimes = $stepModel->getRunCount();
+
+            $recurrence .= ' ' . sprintf(
+                // translators: %1$s: executed times, %2$d: total repeat times
+                __('[%1$s/%2$d]', 'post-expirator'),
+                $executedTimes,
+                $stepModel->getRepeatTimes()
+            );
+
+            return $recurrence;
+        }
+
+        return $recurrence;
+    }
+
+    private function getExecutedTimes(array $step): int
+    {
+        $executedTimes = 0;
+
+        return $executedTimes;
     }
 
     public function enqueueScripts($hook)
