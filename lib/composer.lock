@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51070f45ddf75f7d2770013d00ad6ed0",
+    "content-hash": "bd294a605a677db5f5df0191cdc55546",
     "packages": [
         {
             "name": "alledia/edd-sl-plugin-updater",
@@ -298,16 +298,16 @@
         },
         {
             "name": "publishpress/publishpress-future",
-            "version": "dev-andergmartins/issue893",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/publishpress/PublishPress-Future.git",
-                "reference": "25baeb504982cff250375b551a3959987eb5f68e"
+                "reference": "effa492db6299eed2f2a38d2533f769ce41254e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/25baeb504982cff250375b551a3959987eb5f68e",
-                "reference": "25baeb504982cff250375b551a3959987eb5f68e",
+                "url": "https://api.github.com/repos/publishpress/PublishPress-Future/zipball/effa492db6299eed2f2a38d2533f769ce41254e6",
+                "reference": "effa492db6299eed2f2a38d2533f769ce41254e6",
                 "shasum": ""
             },
             "require": {
@@ -588,10 +588,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/publishpress/PublishPress-Future/tree/andergmartins/issue893",
+                "source": "https://github.com/publishpress/PublishPress-Future/tree/develop",
                 "issues": "https://github.com/publishpress/PublishPress-Future/issues"
             },
-            "time": "2024-09-13T13:35:45+00:00"
+            "time": "2024-09-13T13:38:28+00:00"
         },
         {
             "name": "publishpress/wordpress-banners",
