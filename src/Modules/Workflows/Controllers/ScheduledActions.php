@@ -402,7 +402,7 @@ class ScheduledActions implements InitializableInterface
         if ($repeatUntil === 'times') {
             $recurrence = sprintf(
                 // translators: %1$s: recurrence, %2$d: repeat times
-                __('%1$s until %2$d times', 'post-expirator'),
+                __('%1$s for %2$d times', 'post-expirator'),
                 $recurrence,
                 $stepModel->getRepeatTimes()
             );
