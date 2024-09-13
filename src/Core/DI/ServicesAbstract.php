@@ -161,14 +161,4 @@ abstract class ServicesAbstract
     public const INPUT_VALIDATOR_POST_QUERY = 'future.free/workflows/input-validator-post-query';
 
     public const DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA = 'future.free/workflows/db-table-workflow-scheduled-steps-schema';
-
-    /**
-     * @deprecated 4.0.0 Use GENERAL_STEP_NODE_RUNNER_PROCESSOR instead
-     */
-    public const GENERAL_ACTION_NODE_RUNNER_PROCESSOR = 'future.free/workflows/general-action-node-runner-processor';
-
-    /**
-     * @deprecated 4.0.0 Use POST_STEP_NODE_RUNNER_PROCESSOR instead
-     */
-    public const POST_ACTION_NODE_RUNNER_PROCESSOR = 'future.free/workflows/post-action-node-runner-processor';
 }
