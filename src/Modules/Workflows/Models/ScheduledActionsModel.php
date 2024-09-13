@@ -22,6 +22,10 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
              */
             $tableSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
 
+            if (! $tableSchema->isTableExistent()) {
+                return;
+            }
+
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
             $wpdb->query(
                 $wpdb->prepare(
@@ -72,7 +76,15 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
 
         $container = Container::getInstance();
 
+        /**
+         * @var DBTableSchemaInterface $tableSchema
+         */
         $tableSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
+
+        if (! $tableSchema->isTableExistent()) {
+            return false;
+        }
+
         // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching
         $row = $wpdb->get_row(
             $wpdb->prepare(
@@ -98,7 +110,16 @@ class ScheduledActionsModel implements ScheduledActionsModelInterface
         global $wpdb;
 
         $container = Container::getInstance();
+
+        /**
+         * @var DBTableSchemaInterface $tableSchema
+         */
         $tableSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
+
+        if (! $tableSchema->isTableExistent()) {
+            return;
+        }
+
         // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         $wpdb->query(
             $wpdb->prepare(
