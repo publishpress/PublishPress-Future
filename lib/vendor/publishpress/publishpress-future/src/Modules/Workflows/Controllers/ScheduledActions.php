@@ -195,12 +195,22 @@ class ScheduledActions implements InitializableInterface
                         $step = $args['step'];
                     }
 
+                    // The step is not found anymore in the workflow.
                     if (
                         empty($step)
                         || ! isset($step['node'])
                         || ! isset($step['node']['data'])
                         || ! isset($step['node']['data']['name'])
                     ) {
+                        $html = '<span style="color: red;">' . __('Step not found in workflow.', 'post-expirator') . '</span>';
+
+                        $html .= '<br>';
+                        $html .= '<strong>' . __('Workflow:', 'post-expirator') . '</strong> '
+                            . $workflowTitle . '<br>';
+
+                        $html .= '<strong>' . __('Step:', 'post-expirator') . '</strong> '
+                            . $args['step']['nodeId'];
+
                         return $html;
                     }
 
