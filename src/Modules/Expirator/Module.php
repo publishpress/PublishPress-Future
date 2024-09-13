@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Modules\Expirator;
@@ -15,6 +15,7 @@ use PublishPress\Future\Modules\Expirator\Interfaces\SchedulerInterface;
 use PublishPress\Future\Modules\Expirator\Interfaces\CronInterface;
 use PublishPress\Future\Framework\WordPress\Facade\RequestFacade;
 use PublishPress\Future\Framework\Database\Interfaces\DBTableSchemaInterface;
+use PublishPress\Future\Modules\Settings\SettingsFacade;
 
 defined('ABSPATH') or die('Direct access not allowed.');
 
@@ -85,6 +86,11 @@ class Module implements ModuleInterface
      */
     private $actionArgsSchema;
 
+    /**
+     * @var SettingsFacade
+     */
+    private $settingsFacade;
+
 
     public function __construct(
         \PublishPress\Future\Core\HookableInterface $hooks,
@@ -98,7 +104,8 @@ class Module implements ModuleInterface
         \Closure $actionArgsModelFactory,
         \Closure $scheduledActionsTableFactory,
         NoticeFacade $noticesFacade,
-        DBTableSchemaInterface $actionArgsSchema
+        DBTableSchemaInterface $actionArgsSchema,
+        SettingsFacade $settingsFacade
     ) {
         $this->hooks = $hooks;
         $this->site = $site;
@@ -112,6 +119,7 @@ class Module implements ModuleInterface
         $this->scheduledActionsTableFactory = $scheduledActionsTableFactory;
         $this->noticesFacade = $noticesFacade;
         $this->actionArgsSchema = $actionArgsSchema;
+        $this->settingsFacade = $settingsFacade;
 
         $this->controllers['expiration'] = $this->factoryExpirationController();
         $this->controllers['quick_edit'] = $this->factoryQuickEditController();
@@ -171,7 +179,8 @@ class Module implements ModuleInterface
         return new Controllers\ScheduledActionsController(
             $this->hooks,
             $this->actionArgsModelFactory,
-            $this->scheduledActionsTableFactory
+            $this->scheduledActionsTableFactory,
+            $this->settingsFacade
         );
     }
 

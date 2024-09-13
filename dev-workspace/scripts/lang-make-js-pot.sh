@@ -14,7 +14,7 @@ do
 
         po_file="./$LANG_DIR/$PLUGIN_NAME-${locale}-$handler.po"
         if [ -f "$po_file" ]; then
-            wp i18n make-pot ./src/assets/jsx/$package ./$LANG_DIR/${PLUGIN_NAME}-$handler.pot --domain=$LANG_DOMAIN  --allow-root
+            wp i18n make-pot ./assets/jsx/$package ./$LANG_DIR/${PLUGIN_NAME}-$handler.pot --domain=$LANG_DOMAIN  --allow-root
             wp i18n update-po ./$LANG_DIR/$PLUGIN_NAME-$handler.pot $po_file --allow-root
         fi
     done

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2022. PublishPress, All rights reserved.
+ * Copyright (c) 2024, Ramble Ventures
  */
 
 namespace PublishPress\Future\Core;
@@ -21,6 +21,7 @@ use PublishPress\Future\Modules\Expirator\Migrations\V30001RestorePostMeta;
 use PublishPress\Future\Modules\Expirator\Migrations\V30104ArgsColumnLength;
 use PublishPress\Future\Modules\Expirator\PostMetaAbstract;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
+use PublishPress\Future\Modules\Workflows\Migrations\V40000WorkflowScheduledStepsSchema;
 use WpOrg\Requests\Hooks;
 
 defined('ABSPATH') or die('Direct access not allowed.');
@@ -111,6 +112,8 @@ class Plugin implements InitializableInterface
         $this->notices->init();
 
         $this->initializeModules();
+
+        $this->hooks->doAction(HooksAbstract::ACTION_AFTER_INIT_PLUGIN);
     }
 
     private function initializeModules()
@@ -240,7 +243,11 @@ class Plugin implements InitializableInterface
 
             if (version_compare($version, '3.0.1') === -1) {
                 if (! get_option('pp_future_V30001RestorePostMeta')) {
-                    $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30001RestorePostMeta::HOOK, [], true);
+                    $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(
+                        V30001RestorePostMeta::HOOK,
+                        [],
+                        true
+                    );
 
                     update_option('pp_future_V30001RestorePostMeta', true);
                 }
@@ -248,10 +255,20 @@ class Plugin implements InitializableInterface
 
             if (version_compare($version, '3.1.4') === -1) {
                 if (! get_option('pp_future_V30104ArgsColumnLength')) {
-                    $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(V30104ArgsColumnLength::HOOK, [], true);
+                    $container->get(ServicesAbstract::CRON)->enqueueAsyncAction(
+                        V30104ArgsColumnLength::HOOK,
+                        [],
+                        true
+                    );
 
                     update_option('pp_future_V30104ArgsColumnLength', true);
                 }
+            }
+
+            if (version_compare($version, '4.0.0', '<')) {
+                $container->get(ServicesAbstract::HOOKS)->doAction(
+                    V40000WorkflowScheduledStepsSchema::HOOK
+                );
             }
         }
 

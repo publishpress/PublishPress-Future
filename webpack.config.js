@@ -1,6 +1,8 @@
 const glob = require("glob");
 const path = require("path");
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 const defaultExternals = {
     "react": "React",
     "react-dom": "ReactDOM",
@@ -11,6 +13,7 @@ const defaultExternals = {
     "@wordpress/plugins": "wp.plugins",
     "@wordpress/hooks": "wp.hooks",
     "@wordpress/url": "wp.url",
+    'jquery': 'jQuery',
 };
 
 const defaultRules = [
@@ -126,6 +129,93 @@ module.exports = [
             ...defaultExternals,
             "&config.bulk-edit": "publishpressFutureBulkEditConfig",
             "&window": "window",
+        }
+    },
+    {
+        ...defaultExports,
+        entry: glob.sync(
+            "./assets/jsx/settings-advanced.jsx",
+        ),
+        output: {
+            ...defaultOutput,
+            filename: "settings-advanced.js"
+        },
+        externals: {
+            ...defaultExternals,
+        }
+    },
+    {
+        ...defaultExports,
+        entry: glob.sync(
+            "./assets/jsx/workflow-editor/index.jsx",
+        ),
+        output: {
+            ...defaultOutput,
+            filename: "workflow-editor.js"
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin(),
+        ],
+        externals: {
+            ...defaultExternals,
+            'future-workflow-editor': 'futureWorkflowEditor',
+        }
+    },
+    {
+        ...defaultExports,
+        entry: glob.sync(
+            "./assets/jsx/legacy-action/index.jsx",
+        ),
+        output: {
+            ...defaultOutput,
+            filename: "legacy-action.js"
+        },
+        externals: {
+            ...defaultExternals,
+            'future-workflow-editor': 'futureWorkflowEditor',
+        }
+    },
+    {
+        ...defaultExports,
+        entry: glob.sync(
+            "./assets/jsx/workflow-manual-selection/quick-edit/index.jsx",
+        ),
+        output: {
+            ...defaultOutput,
+            filename: "workflow-manual-selection-quick-edit.js"
+        },
+        externals: {
+            ...defaultExternals,
+            'future-workflow-editor': 'futureWorkflowEditor',
+        }
+    },
+    {
+        ...defaultExports,
+        entry: glob.sync(
+            "./assets/jsx/workflow-manual-selection/classic-editor/index.jsx",
+        ),
+        output: {
+            ...defaultOutput,
+            filename: "workflow-manual-selection-classic-editor.js"
+        },
+        externals: {
+            ...defaultExternals,
+            'future-workflow-editor': 'futureWorkflowEditor',
+        }
+    },
+    {
+        ...defaultExports,
+        entry: glob.sync(
+            "./assets/jsx/workflow-manual-selection/block-editor/index.jsx",
+        ),
+        output: {
+            ...defaultOutput,
+            filename: "workflow-manual-selection-block-editor.js"
+        },
+        externals: {
+            ...defaultExternals,
+            'future-workflow-editor': 'futureWorkflowEditor',
         }
     }
 ];

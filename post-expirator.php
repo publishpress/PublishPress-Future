@@ -5,7 +5,7 @@
  * Plugin URI: http://wordpress.org/extend/plugins/post-expirator/
  * Description: PublishPress Future allows you to schedule automatic changes to posts, pages and other content types.
  * Author: PublishPress
- * Version: 3.4.5-beta.1
+ * Version: 4.0.0-alpha.2
  * Author URI: http://publishpress.com
  * Text Domain: post-expirator
  * Domain Path: /languages
@@ -50,13 +50,21 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
         }
 
         if (! defined('PUBLISHPRESS_FUTURE_VERSION')) {
-            define('PUBLISHPRESS_FUTURE_VERSION', '3.4.5-beta.1');
+            define('PUBLISHPRESS_FUTURE_VERSION', '4.0.0-alpha.2');
+        }
+
+        if (! defined('PUBLISHPRESS_FUTURE_PLUGIN_FILE')) {
+            define('PUBLISHPRESS_FUTURE_PLUGIN_FILE', __FILE__);
+        }
+
+        if (! defined('PUBLISHPRESS_FUTURE_ASSETS_URL')) {
+            define('PUBLISHPRESS_FUTURE_ASSETS_URL', plugins_url('assets', __FILE__));
         }
 
         if (! defined('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH')) {
             $vendorPath = __DIR__ . '/lib/vendor';
-            if (defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO') && PUBLISHPRESS_FUTURE_LOADED_BY_PRO) {
-                $vendorPath = \PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR;
+            if (defined('PUBLISHPRESS_FUTURE_LOADED_BY_PRO') && constant('PUBLISHPRESS_FUTURE_LOADED_BY_PRO')) {
+                $vendorPath = constant('PUBLISHPRESS_FUTURE_PRO_VENDOR_DIR');
             }
 
             define('PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH', $vendorPath);
@@ -67,6 +75,10 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
              * @deprecated Since 3.1.0. Use PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH instead.
              */
             define('PUBLISHPRESS_FUTURE_VENDOR_PATH', PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH);
+        }
+
+        if (! defined('PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL')) {
+            define('PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL', false);
         }
 
         $autoloadFilePath = PUBLISHPRESS_FUTURE_LIB_VENDOR_PATH . '/autoload.php';

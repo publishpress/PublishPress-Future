@@ -1,4 +1,4 @@
-# Copyright (C) 2024 PublishPress
+# Copyright (c) 2024, Ramble Ventures
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
