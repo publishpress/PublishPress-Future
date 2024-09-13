@@ -814,4 +814,24 @@ class WorkflowModel implements WorkflowModelInterface
 
         return [];
     }
+
+    public function getNodeById(string $nodeId): array
+    {
+        $abstractFlow = $this->getFlow();
+
+        if (empty($abstractFlow)) {
+            return [];
+        }
+
+        $node = [];
+
+        foreach ($abstractFlow['nodes'] as $node) {
+            if ($node['id'] === $nodeId) {
+                $node = $node;
+                break;
+            }
+        }
+
+        return $node;
+    }
 }

@@ -72,6 +72,8 @@ abstract class HooksAbstract
 
     public const FILTER_ACTION_SCHEDULER_LIST_COLUMN_ARGS = 'action_scheduler_list_table_column_args';
 
+    public const FILTER_ACTION_SCHEDULER_LIST_COLUMN_RECURRENCE = 'action_scheduler_list_table_column_recurrence';
+
     public const FILTER_IGNORE_SAVE_POST_EVENT = 'publishpressfuture_ignore_save_post_event';
 
     public const FILTER_ORPHAN_WORKFLOW_ARGS_CLEANUP_INTERVAL =
