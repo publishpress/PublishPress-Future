@@ -811,5 +811,7 @@ class WorkflowModel implements WorkflowModelInterface
                 }
             }
         }
+
+        return [];
     }
 }
