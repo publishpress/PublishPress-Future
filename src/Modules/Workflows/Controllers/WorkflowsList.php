@@ -309,7 +309,7 @@ class WorkflowsList implements InitializableInterface
 
         $actions = [
             $statusData['action'] => sprintf(
-                '<a href="%s" class="pp-future-pro-workflow-%s-inline" title="%s">%s</a>',
+                '<a href="%s" class="pp-future-workflow-%s-inline" title="%s">%s</a>',
                 esc_url(
                     wp_nonce_url(
                         add_query_arg(
