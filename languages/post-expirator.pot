@@ -1,15 +1,15 @@
-# Copyright (c) 2024, Ramble Ventures
+# Copyright (C) 2024 PublishPress
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 3.4.4\n"
+"Project-Id-Version: PublishPress Future 4.0.0-alpha.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-21T02:08:19+00:00\n"
+"POT-Creation-Date: 2024-09-16T15:34:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: post-expirator\n"
@@ -21,7 +21,8 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:144
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:367
 #: src/Modules/Expirator/Controllers/QuickEditController.php:280
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:93
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:102
+#: src/Modules/Workflows/Models/NodeTypesModel.php:79
 msgid "PublishPress Future"
 msgstr ""
 
@@ -73,45 +74,45 @@ msgstr ""
 msgid "The legacy actions arguments restoration has been enqueued and will run asynchronously."
 msgstr ""
 
-#: legacy/classes/Display.class.php:243
+#: legacy/classes/Display.class.php:247
 msgid "The database schema was fixed."
 msgstr ""
 
-#: legacy/classes/Display.class.php:248
+#: legacy/classes/Display.class.php:252
 msgid "The database schema could not be fixed. Please, contact the support team."
 msgstr ""
 
-#: legacy/classes/Display.class.php:342
-#: legacy/classes/Display.class.php:400
+#: legacy/classes/Display.class.php:347
+#: legacy/classes/Display.class.php:405
 msgid "Saved Options!"
 msgstr ""
 
 #. translators: %1$s is the plugin name, %2$s is the star rating markup
-#: legacy/classes/Display.class.php:486
+#: legacy/classes/Display.class.php:491
 msgid "If you like %1$s, please leave us a %2$s rating. Thank you!"
 msgstr ""
 
-#: legacy/classes/Display.class.php:501
+#: legacy/classes/Display.class.php:506
 msgid "About PublishPress Future"
 msgstr ""
 
-#: legacy/classes/Display.class.php:503
+#: legacy/classes/Display.class.php:508
 msgid "About"
 msgstr ""
 
-#: legacy/classes/Display.class.php:509
+#: legacy/classes/Display.class.php:514
 msgid "Future Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:511
+#: legacy/classes/Display.class.php:516
 msgid "Documentation"
 msgstr ""
 
-#: legacy/classes/Display.class.php:517
+#: legacy/classes/Display.class.php:522
 msgid "Contact the PublishPress team"
 msgstr ""
 
-#: legacy/classes/Display.class.php:519
+#: legacy/classes/Display.class.php:524
 msgid "Contact"
 msgstr ""
 
@@ -119,28 +120,30 @@ msgstr ""
 msgid "No taxonomies found"
 msgstr ""
 
-#: services.php:74
-#: src/Modules/Settings/SettingsFacade.php:93
+#: services.php:109
+#: src/Modules/Settings/SettingsFacade.php:110
 msgid "l F jS, Y"
 msgstr ""
 
-#: services.php:78
-#: src/Modules/Settings/SettingsFacade.php:94
+#: services.php:113
+#: src/Modules/Settings/SettingsFacade.php:111
 msgid "g:ia"
 msgstr ""
 
-#: services.php:79
-#: src/Modules/Settings/SettingsFacade.php:95
+#: services.php:114
+#: src/Modules/Settings/SettingsFacade.php:112
 msgid "Post expires at EXPIRATIONTIME on ACTIONDATE"
 msgstr ""
 
 #: src/Framework/Logger/DBTableSchemas/DebugLogSchema.php:76
 #: src/Modules/Expirator/DBTableSchemas/ActionArgsSchema.php:84
+#: src/Modules/Workflows/DBTableSchemas/WorkflowScheduledStepsSchema.php:89
 msgid "The table %s does not exist."
 msgstr ""
 
 #: src/Framework/Logger/DBTableSchemas/DebugLogSchema.php:89
 #: src/Modules/Expirator/DBTableSchemas/ActionArgsSchema.php:107
+#: src/Modules/Workflows/DBTableSchemas/WorkflowScheduledStepsSchema.php:102
 msgid "The table indexes are invalid: "
 msgstr ""
 
@@ -268,7 +271,7 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:200
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:404
 #: src/Modules/Expirator/Controllers/QuickEditController.php:308
-#: src/Modules/Settings/Controllers/Controller.php:246
+#: src/Modules/Settings/Controllers/Controller.php:247
 msgid "Please select one or more %s"
 msgstr ""
 
@@ -276,6 +279,8 @@ msgstr ""
 #: src/Modules/Expirator/Controllers/BulkEditController.php:203
 #: src/Modules/Expirator/Controllers/ClassicEditorController.php:407
 #: src/Modules/Expirator/Controllers/QuickEditController.php:311
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:79
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:85
 msgid "New status"
 msgstr ""
 
@@ -320,10 +325,13 @@ msgid "Category"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/PluginsListController.php:46
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:67
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:67
 msgid "Settings"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/PostListController.php:75
+#: src/Modules/Workflows/Controllers/PostsList.php:76
 msgid "Future Action"
 msgstr ""
 
@@ -332,36 +340,48 @@ msgstr ""
 msgid "Invalid date time offset."
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:94
-msgid "Future"
-msgstr ""
-
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:103
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:104
-#: src/Views/tabs.php:59
-msgid "Action Settings"
+msgid "Future"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:112
 #: src/Modules/Expirator/Controllers/ScheduledActionsController.php:113
+#: src/Views/tabs.php:59
+msgid "Action Settings"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:121
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:122
 #: src/Modules/Expirator/Tables/ScheduledActionsTable.php:43
 msgid "Scheduled Actions"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:182
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:191
 msgid "Log format"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:189
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:198
 msgid "List"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:198
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:207
 msgid "Popup"
 msgstr ""
 
-#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:266
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:275
 msgid "Successfully executed action: %s"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:282
+msgid "Executed workflow scheduled step"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:289
+msgid "Cleaned up completed scheduled steps older than %d days"
+msgstr ""
+
+#: src/Modules/Expirator/Controllers/ScheduledActionsController.php:295
+msgid "Cleaned up orphan workflow scheduled step arguments"
 msgstr ""
 
 #: src/Modules/Expirator/Controllers/ShortcodeController.php:79
@@ -651,78 +671,80 @@ msgid "Completed"
 msgstr ""
 
 #. translators: %1$s: post type label, %2$d: post ID, %3$s: post link tag start, %4$s: post title, %5$s: post link tag end
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:449
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:456
 msgid "%1$s: [%2$d] %3$s%4$s%5$s"
 msgstr ""
 
 #. translators: %s is the new status
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:484
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:491
 msgid "New Status: %s"
 msgstr ""
 
 #. translators: %s is the list of terms
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:492
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:499
 msgid "Terms: %s"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:595
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:602
 msgid "View log"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:606
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:613
 msgid "Action: "
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:612
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:619
 msgid "Status: "
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:618
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:625
 msgid "Arguments: "
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:624
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:631
 msgid "Scheduled date: "
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:638
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:645
 #: src/Views/menu-diagnostics.php:192
 msgid "Date"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:639
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:646
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:77
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:96
 #: src/Views/menu-debug-log.php:37
 msgid "Message"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:673
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:680
 msgid "Async"
 msgstr ""
 
 #. translators: %s is the date interval in human readable format in the past
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:690
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:697
 msgid " (%s ago)"
 msgstr ""
 
 #. translators: %s is the date interval in human readable format in the present or future
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:696
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:703
 msgid " (%s)"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:720
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:727
 msgid "Now!"
 msgstr ""
 
 #. translators: %s: time interval
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:770
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:777
 msgid "Every %s"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:776
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:783
 msgid "Non-repeating"
 msgstr ""
 
-#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:786
+#: src/Modules/Expirator/Tables/ScheduledActionsTable.php:793
 msgid "No Scheduled Actions."
 msgstr ""
 
@@ -737,115 +759,1020 @@ msgid "Upgrade to Pro"
 msgstr ""
 
 #. translators: %1$s is the link to the PHP strtotime function documentation, %2$s and %3$s are the opening and closing code tags. Please, do not translate the date format text, since PHP will not be able to calculate using non-english terms.
-#: src/Modules/Settings/Controllers/Controller.php:199
+#: src/Modules/Settings/Controllers/Controller.php:200
 msgid ""
 "Set the offset to use for the default action date and time. For information on formatting, see %1$s\n"
 "                . For example, you could enter %2$s+1 month%3$s or %2$s+1 week 2 days 4 hours 2 seconds%3$s or %2$snext Thursday%3$s. Please, use only terms in English."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:210
+#: src/Modules/Settings/Controllers/Controller.php:211
 msgid "Default Values"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:211
+#: src/Modules/Settings/Controllers/Controller.php:212
 msgid "Use the values below to set the default actions/values to be used for each for the corresponding post types.  These values can all be overwritten when creating/editing the post/page."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:215
+#: src/Modules/Settings/Controllers/Controller.php:216
 msgid "Active"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:216
+#: src/Modules/Settings/Controllers/Controller.php:217
 msgid "Activate the PublishPress Future actions for this post type"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:217
+#: src/Modules/Settings/Controllers/Controller.php:218
 msgid "Default Action"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:218
+#: src/Modules/Settings/Controllers/Controller.php:219
 msgid "Select the default action for the post type."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:222
+#: src/Modules/Settings/Controllers/Controller.php:223
 #: src/Views/taxonomy-field.php:14
 msgid "Select the taxonomy to be used for actions."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:226
+#: src/Modules/Settings/Controllers/Controller.php:227
 msgid "Auto-enable"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:227
+#: src/Modules/Settings/Controllers/Controller.php:228
 msgid "Enabled for all new posts"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:228
+#: src/Modules/Settings/Controllers/Controller.php:229
 msgid "Taxonomy"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:229
+#: src/Modules/Settings/Controllers/Controller.php:230
 msgid "No taxonomies found for this post type. Taxonomy actions will not be available."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:230
+#: src/Modules/Settings/Controllers/Controller.php:231
 #: src/Views/menu-general.php:182
 msgid "Who to Notify"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:231
+#: src/Modules/Settings/Controllers/Controller.php:232
 msgid "Enter a comma separated list of emails that you would like to be notified when the action runs."
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:235
+#: src/Modules/Settings/Controllers/Controller.php:236
 #: src/Views/menu-general.php:68
 msgid "Default Date/Time Offset"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:238
+#: src/Modules/Settings/Controllers/Controller.php:239
 #: src/Views/menu-general.php:84
 msgid "PHP strtotime function"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:242
+#: src/Modules/Settings/Controllers/Controller.php:243
 msgid "Default terms:"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:243
+#: src/Modules/Settings/Controllers/Controller.php:244
 msgid "Save changes"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:244
+#: src/Modules/Settings/Controllers/Controller.php:245
 msgid "Wait for the validation..."
-msgstr ""
-
-#: src/Modules/Settings/Controllers/Controller.php:247
-#: src/Modules/Settings/Controllers/Controller.php:294
-msgid "Date Preview"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:248
 #: src/Modules/Settings/Controllers/Controller.php:295
-msgid "Current Date"
+msgid "Date Preview"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:249
 #: src/Modules/Settings/Controllers/Controller.php:296
-msgid "Computed Date"
+msgid "Current Date"
 msgstr ""
 
 #: src/Modules/Settings/Controllers/Controller.php:250
 #: src/Modules/Settings/Controllers/Controller.php:297
+msgid "Computed Date"
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:251
+#: src/Modules/Settings/Controllers/Controller.php:298
 msgid "Error"
 msgstr ""
 
-#: src/Modules/Settings/Controllers/Controller.php:391
+#: src/Modules/Settings/Controllers/Controller.php:323
+msgid "Scheduled Workflow Steps Cleanup"
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:324
+msgid "Automatically remove scheduled workflow steps"
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:328
+msgid "Automatically remove scheduled workflow steps that have been marked as failed, completed, or cancelled."
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:332
+msgid "Retain all scheduled workflow steps"
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:336
+msgid "Retain all scheduled workflow steps indefinitely, including those marked as failed, completed, or cancelled. This may impact database performance over time."
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:340
+msgid "Retention"
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:341
+msgid "The duration, in days, for which completed, failed, and canceled scheduled workflow steps will be preserved before automatic removal."
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:345
+msgid "days"
+msgstr ""
+
+#: src/Modules/Settings/Controllers/Controller.php:444
 msgid "Form Validation Failure: Sorry, your nonce did not verify."
 msgstr ""
 
 #. translators: %1$s and %2$s are placeholders for the link to by the Pro version
 #: src/Modules/VersionNotices/Module.php:95
 msgid "You're using PublishPress Future Free. The Pro version has more features and support. %1$sUpgrade to Pro%2$s"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ManualPostTrigger.php:306
+#: src/Modules/Workflows/Controllers/PostType.php:40
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:99
+#: src/Modules/Workflows/Views/manual-trigger-quick-edit.html.php:8
+msgid "Action Workflows"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:41
+msgid "Future Workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:42
+msgid "Add New"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:43
+msgid "Add New Workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:47
+msgid "Edit Workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:48
+#: src/Modules/Workflows/Models/WorkflowModel.php:367
+msgid "New Workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:49
+msgid "View Workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:50
+msgid "Search Workflows"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:54
+msgid "No Workflows found"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:58
+msgid "No Workflows found in Trash"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:62
+msgid "Parent Workflow:"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:66
+msgid "All Workflows"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:67
+msgid "Workflow Archives"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:71
+msgid "Insert into workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:75
+msgid "Uploaded to this workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:79
+msgid "Filter workflows list"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:83
+msgid "Workflows list navigation"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:87
+msgid "Action Workflows list"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:88
+msgid "Workflow published."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:92
+msgid "Workflow published privately."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:96
+msgid "Workflow reverted to draft."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:100
+msgid "Workflow scheduled."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/PostType.php:104
+msgid "Workflow updated."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:34
+msgid "Notify when a post is updated"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:35
+msgid "Notify the site admin when a post is updated."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:40
+msgid "Unpublish to Draft after a week"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:41
+msgid "Change the post status to Draft a week after it was published."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:46
+msgid "Unpublish and change category after one week"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:47
+msgid "Move the post to draft and add a category after 15 days."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:52
+msgid "Add extra categories one month after publishing"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/SampleWorkflows.php:53
+msgid "Sample workflow to add extra categories one month after publishing"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:180
+msgid "Workflow repeating scheduled step"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:181
+msgid "Workflow scheduled step"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:186
+msgid "Unschedule workflow recurring scheduled step"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:190
+msgid "Cleanup orphan workflow scheduled step arguments"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:195
+msgid "Clean up completed scheduled steps older than %d days"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:265
+msgid "Step not found in workflow."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:268
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:318
+msgid "Workflow:"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:271
+msgid "Step:"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:322
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:342
+msgid "Trigger: "
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:335
+msgid "Post:"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:346
+msgid "Steps:"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:352
+msgid "Workflow recurring scheduled action"
+msgstr ""
+
+#. translators: %1$s: recurrence, %2$s: date
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:395
+msgid "%1$s until %2$s"
+msgstr ""
+
+#. translators: %1$s: recurrence, %2$d: repeat times
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:405
+msgid "%1$s for %2$d times"
+msgstr ""
+
+#. translators: %1$s: executed times, %2$d: total repeat times
+#: src/Modules/Workflows/Controllers/ScheduledActions.php:415
+msgid "[%1$s/%2$d]"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:241
+msgid "Welcome to the workflow editor"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:242
+msgid "In the PublishPress Workflow Editor, each workflow step is presented as a distinct 'node' in the workflow."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:246
+msgid "Use your imagination"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:247
+msgid "You're free to create very distinct workflows in your site, according to your needs."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:251
+msgid "A basic workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:252
+msgid "Every workflow requires at least two steps connected to each other: one trigger and one action."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:256
+msgid "Add steps to your workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:257
+msgid "Drag and drop steps to add them to your workflow. Connect the steps to create a workflow."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:261
+msgid "Output and input"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:262
+msgid "Linked steps can pass data forward as input to the next step."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:266
+msgid "Customize the workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:267
+msgid "Click on a step to customize it. You can change the step's settings in the right sidebar."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:271
+msgid "Workflow validation"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:272
+msgid "Error messages will appear for any unfilled required settings, missed connections, or invalid values. Select the step to view the corresponding error in the sidebar."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:276
+msgid "Publish your workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:277
+msgid "When you're ready, click the publish button to make your workflow live."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:281
+msgid "Need help?"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowEditor.php:282
+msgid "If you have any questions or need help, click the help button in the top right corner to access the support resources."
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:147
+msgid "Triggers"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:151
+msgid "Preview"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:175
+msgid "—"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:212
+msgid "No screenshot"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:292
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:293
+msgid "Activate"
+msgstr ""
+
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:298
+#: src/Modules/Workflows/Controllers/WorkflowsList.php:299
+msgid "Deactivate"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/DataType/PostQuery.php:16
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:67
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:82
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:65
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:68
+msgid "Post Query"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/DataType/PostQuery.php:21
+msgid "A query to select posts"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:31
+#: src/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:72
+msgid "Yes"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:31
+#: src/Modules/Workflows/Domain/Engine/VariableResolvers/BooleanResolver.php:72
+msgid "No"
+msgstr ""
+
+#. translators: %s is the trigger name
+#: src/Modules/Workflows/Domain/Engine/WorkflowEngine.php:135
+msgid "Trigger not found: %s"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:58
+msgid "The workflow was not triggered."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:63
+msgid "The workflow was triggered by the legacy action"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/LegacyAction/TriggerWorkflow.php:76
+msgid "Trigger workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:32
+msgid "Move post to status"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:37
+msgid "This step transitions a post to a different status."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:64
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:70
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:72
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:110
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:64
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:70
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:64
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:70
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:64
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:70
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:64
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:70
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:64
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:70
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:64
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:70
+#: src/Modules/Workflows/Models/NodeTypesModel.php:70
+msgid "Post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:65
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:65
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:65
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:65
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:65
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:65
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:65
+msgid "The post to update."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:71
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:73
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:71
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:71
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:71
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:71
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:71
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:71
+msgid "Select the variable that contains the post to update. It can be a post instance or the post ID."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:80
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:86
+msgid "The new status that the post will be moved to."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:123
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:128
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:108
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:116
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:125
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:132
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:128
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:116
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:150
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:133
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:102
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:92
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:106
+msgid "Step input"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:124
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:129
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:109
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:117
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:126
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:133
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:129
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:117
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:151
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:134
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:103
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:93
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:107
+msgid "The input data for this step."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostChangeStatus.php:147
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:152
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:132
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:140
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:149
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:156
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:152
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:140
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:174
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:157
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:126
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:130
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:97
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:116
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:97
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:164
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:153
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:150
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:128
+msgid "Next"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:32
+msgid "Deactivate Workflow for Post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:37
+msgid "This step enables you to deactivate the \"Manually enabled via checkbox\" workflow after use."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:84
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:115
+msgid "Workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDeactivateWorkflow.php:85
+msgid "Select the manually enabling workflow that will be deactivated for the selected post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:32
+msgid "Delete post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostDelete.php:37
+msgid "This step deletes a post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:32
+msgid "Stick post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:37
+msgid "This step sticks a post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostStick.php:92
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:92
+msgid "The Stick Post action must be part of a Schedule flow"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:32
+msgid "Add extra terms to post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:37
+msgid "This step keeps the current taxonomy terms and adds additional terms."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:79
+msgid "Extra terms"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:80
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:86
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:89
+msgid "The terms that will be added to the posts."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:85
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsAdd.php:112
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:85
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:119
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:88
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:115
+msgid "Terms"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:32
+msgid "Remove terms from the post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:37
+msgid "This step removes current taxonomy terms."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:79
+msgid "Terms to remove"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:80
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:86
+msgid "The terms that will be removed from the posts."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsRemove.php:92
+msgid "Remove all terms"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:32
+msgid "Replace all terms on the post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:37
+msgid "This step removes the current taxonomy terms and adds new terms."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:79
+msgid "New terms"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostTermsSet.php:80
+msgid "The terms that will be added to the posts after removing all the others."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:32
+msgid "Unstick post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CorePostUnstick.php:37
+msgid "This step unsticks a post."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:17
+msgid "PublishPress Workflow: {{global.workflow.title}}"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:22
+msgid "This is a message sent by PublishPress Workflow: {{global.workflow.title}}."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:45
+msgid "Send email"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:50
+msgid "This step dispatches a message via email."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:78
+msgid "The email message"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:83
+msgid "Recipient"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:88
+msgid "Subject"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:121
+msgid "Email Recipient"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:126
+#: src/Modules/Workflows/Domain/NodeTypes/Actions/CoreSendEmail.php:135
+msgid "Custom Email Address"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:32
+msgid "Query posts"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:37
+msgid "This step defines the posts that will be passed to the next step in the workflow."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:72
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:91
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:74
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:77
+msgid "Post query"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:73
+msgid "The query defines the posts that will be retrieved by this action."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:107
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:119
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:102
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:105
+msgid "Post Type"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:113
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:125
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:108
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:111
+msgid "Post ID"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:127
+msgid "Array of queried post IDs"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CorePostQuery.php:128
+msgid "The posts found following the criteria of the query."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:32
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:67
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:64
+msgid "Schedule"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:37
+msgid "This step enables actions to be scheduled. You can choose when to run the next step."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:68
+msgid "A scheduled delay between steps."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/CoreSchedule.php:73
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:70
+msgid "Date offset"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:32
+msgid "Simple condition"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:37
+msgid "This step allows you to create a conditional branch."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:64
+msgid "Conditions"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:65
+msgid "THIS STEP IS JUST A PLACEHODLER FOR NOW. Not fully implemented yet. Only the True handle is implemented. False will not run the next actions for now."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:73
+msgid "NOT IMPLEMENTED YET!"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:74
+msgid "Still not implemented"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:116
+msgid "True"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/IfElse.php:121
+msgid "False"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:32
+msgid "Ray - Debug"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:37
+msgid "This step transmits the flow's data to Ray Debug."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:64
+msgid "Debug output"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:65
+msgid "The data to be sent to Ray."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:70
+msgid "Data"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:75
+msgid "Label"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Advanced/RayDebug.php:80
+msgid "Color"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:33
+msgid "On admin init"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnAdminInit.php:38
+msgid "This trigger activates upon the initialization of the admin site."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:32
+msgid "On cron schedule"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:37
+msgid "This trigger activates upon a cron schedule, allowing recurrency."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnCronSchedule.php:65
+msgid "A schedule to activate the workflow."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:33
+msgid "On site init"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnInit.php:38
+msgid "This trigger activates upon site initialization."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:32
+msgid "Manually enabled via checkbox"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:37
+msgid "This trigger activates when the option is manually enabled. It can be enabled via the post editing screen or the Quick Edit panel."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:68
+msgid "Settings for the trigger."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:73
+msgid "Checkbox label"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:74
+msgid "The label of the checkbox that enables the trigger."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:83
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:66
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:69
+msgid "Specify the criteria for posts that will trigger this action. Leave blank to include all posts."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:92
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:75
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:78
+msgid "The query defines the posts that will trigger this action."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:145
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:131
+msgid "Saved post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnManuallyEnabledForPost.php:146
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:135
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:132
+msgid "The post that was saved, with the new properties."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:33
+msgid "Post is updated"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:38
+msgid "This trigger activates when an existing post is updated."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:128
+msgid "Post Before Update"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:129
+msgid "The post that was saved, with the old properties."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnPostUpdated.php:134
+msgid "Post After Update"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:33
+msgid "Post is saved"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/CoreOnSavePost.php:38
+msgid "This trigger activates whenever a post is saved, regardless of whether it's newly created, imported, or updated."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:54
+msgid "Manually enabled via Future Actions box"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:59
+msgid "This trigger allows users to choose the workflow from the dropdown menu in the Future Actions options."
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:109
+msgid "Action Post"
+msgstr ""
+
+#: src/Modules/Workflows/Domain/NodeTypes/Triggers/FutureLegacyAction.php:110
+msgid "The post that was saved triggering the action."
+msgstr ""
+
+#: src/Modules/Workflows/Models/NodeTypesModel.php:88
+msgid "Site"
+msgstr ""
+
+#: src/Modules/Workflows/Models/NodeTypesModel.php:97
+msgid "Conditional"
+msgstr ""
+
+#: src/Modules/Workflows/Models/NodeTypesModel.php:106
+msgid "Asynchronous"
+msgstr ""
+
+#: src/Modules/Workflows/Models/NodeTypesModel.php:115
+#: src/Views/tabs.php:48
+msgid "Debug"
+msgstr ""
+
+#: src/Modules/Workflows/Models/NodeTypesModel.php:124
+msgid "Data Query"
+msgstr ""
+
+#: src/Modules/Workflows/Models/NodeTypesModel.php:133
+msgid "Messages"
+msgstr ""
+
+#: src/Modules/Workflows/Rest/RestApiV1.php:38
+#: src/Modules/Workflows/Rest/RestApiV1.php:71
+#: src/Modules/Workflows/Rest/RestApiV1.php:91
+msgid "The ID of the workflow"
+msgstr ""
+
+#: src/Modules/Workflows/Rest/RestApiV1.php:111
+msgid "The taxonomy name"
+msgstr ""
+
+#: src/Modules/Workflows/Rest/RestApiV1.php:131
+msgid "The post ID"
+msgstr ""
+
+#: src/Modules/Workflows/Rest/RestApiV1.php:166
+#: src/Modules/Workflows/Rest/RestApiV1.php:192
+#: src/Modules/Workflows/Rest/RestApiV1.php:253
+msgid "Workflow not found"
+msgstr ""
+
+#: src/Modules/Workflows/Views/editor.html.php:13
+msgid "Loading the workflow editor..."
+msgstr ""
+
+#: src/Modules/Workflows/Views/preview-column.html.php:9
+msgid "Screenshot"
 msgstr ""
 
 #: src/Views/ad-banner-right-sidebar.php:12
@@ -909,71 +1836,71 @@ msgstr ""
 msgid "No future action"
 msgstr ""
 
-#: src/Views/menu-advanced.php:27
+#: src/Views/menu-advanced.php:28
 msgid "Advanced Options"
 msgstr ""
 
-#: src/Views/menu-advanced.php:29
+#: src/Views/menu-advanced.php:30
 msgid "Please do not update anything here unless you know what it entails. For advanced users only."
 msgstr ""
 
-#: src/Views/menu-advanced.php:40
+#: src/Views/menu-advanced.php:107
 msgid "Future Action Column Style"
 msgstr ""
 
-#: src/Views/menu-advanced.php:51
+#: src/Views/menu-advanced.php:118
 msgid "Detailed"
 msgstr ""
 
-#: src/Views/menu-advanced.php:53
+#: src/Views/menu-advanced.php:120
 msgid "Displays all information in the Future Action column."
 msgstr ""
 
-#: src/Views/menu-advanced.php:65
+#: src/Views/menu-advanced.php:132
 msgid "Simplified"
 msgstr ""
 
-#: src/Views/menu-advanced.php:67
+#: src/Views/menu-advanced.php:134
 msgid "Displays only the icon and date/time."
 msgstr ""
 
-#: src/Views/menu-advanced.php:76
+#: src/Views/menu-advanced.php:143
 msgid "Time format in the date picker"
 msgstr ""
 
-#: src/Views/menu-advanced.php:87
+#: src/Views/menu-advanced.php:154
 msgid "Inherit from Site Settings"
 msgstr ""
 
-#: src/Views/menu-advanced.php:95
+#: src/Views/menu-advanced.php:162
 msgid "24 hours"
 msgstr ""
 
-#: src/Views/menu-advanced.php:103
+#: src/Views/menu-advanced.php:170
 msgid "AM/PM"
 msgstr ""
 
-#: src/Views/menu-advanced.php:110
+#: src/Views/menu-advanced.php:177
 msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr ""
 
-#: src/Views/menu-advanced.php:146
+#: src/Views/menu-advanced.php:213
 msgid "Preserve Data After Deactivating the Plugin"
 msgstr ""
 
-#: src/Views/menu-advanced.php:156
+#: src/Views/menu-advanced.php:223
 msgid "Preserve data"
 msgstr ""
 
-#: src/Views/menu-advanced.php:166
+#: src/Views/menu-advanced.php:233
 msgid "Delete data"
 msgstr ""
 
-#: src/Views/menu-advanced.php:171
+#: src/Views/menu-advanced.php:238
 msgid "Toggle between preserving or deleting data after the plugin is deactivated."
 msgstr ""
 
-#: src/Views/menu-advanced.php:182
+#: src/Views/menu-advanced.php:249
 #: src/Views/menu-display.php:185
 #: src/Views/menu-general.php:200
 msgid "Save Changes"
@@ -1261,8 +2188,4 @@ msgstr ""
 
 #: src/Views/tabs.php:40
 msgid "Diagnostics and Tools"
-msgstr ""
-
-#: src/Views/tabs.php:48
-msgid "Debug"
 msgstr ""
