@@ -8,55 +8,64 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - New workflow trigger "On Cron Schedule" for running workflows on a specific date and interval (Issue #914).
-- New inline workflow actions to activate and deactivate workflows (Issues #921, #920).
+- New inline workflow actions to activate and deactivate workflows, in the workflow list table (Issues #921, #920).
 - New setting field in the Schedule step to allow setting a custom Unique UID Expression (Issue #921).
 - New plugin's advanced setting to allow compressing the scheduled workflow data in the database (Commit f3ee2e6).
 - New automatically scheduled action to clean up the scheduled actions arguments table (Commit f3ee2e6).
 - New custom table `ppfuture_workflow_scheduled_steps` to store the arguments of the scheduled steps (Commit f3ee2e6).
-- CODE: New node runner processor for cron based steps runners, `CronStep` (Pro Commit 7ea77bd).
-- CODE: New interfaces:
-  - `...Modules\Workflows\Interfaces\AsyncNodeRunnerInterface` (Pro Commit 7ea77bd)
-  - `...Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface` (Pro Commit 7ea77bd)
-- CODE: Tests for the `CoreSchedule` action runner (Pro Commit 7ea77bd).
-- CODE: New filter: `publishpressfuturepro_ignore_save_post_event` (Pro Commit 50eacab).
-- CODE: New filter `publishpressfuture_migrations` (Pro Commit 210953a).
-- CODE: New action `publishpressfuture_fix_db_schema` (Pro Commit 210953a).
-- CODE: New filter `publishpressfuture_schema_is_healthy` (Pro Commit 210953a).
-- CODE: New action `publishpressfuture_upgrade_plugin` (Pro Commit 210953a).
-- CODE: New controller `PublishPress\FuturePro\Modules\Workflows\Controllers\Migrations` (Pro Commit f3ee2e6).
-- CODE: New action `publishpressfuturepro_migrate_steps_scheduler_args_schema` (Pro Commit f3ee2e6).
-- CODE: New action `publishpressfuturepro_cleanup_orphan_workflow_args` (Pro Commit f3ee2e6).
-- CODE: New filter `publishpressfuturepro_orphan_workflow_args_cleanup_interval` (Pro Commit f3ee2e6).
-- CODE: New interface `PublishPress\FuturePro\Modules\Workflows\Interfaces\ScheduledActionModelInterface` (Pro Commit f3ee2e6).
-- CODE: New class `PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionModel` (Pro Commit f3ee2e6).
-- CODE: Tests for the new db table schema `WorkflowScheduledStepsSchema` (Pro Commit f3ee2e6).
-- CODE: New filter `publishpressfuturepro_cron_schedule_runner_transient_timeout` to allow filtering the transient timeout for the cron schedule runner.
 
 ### Changed
 
 - Arguments of scheduled workflow steps are now stored in a custom table `ppfuture_workflow_scheduled_steps` (Pro Commit f3ee2e6).
 - The advanced settings to enable experimental features was changed from checkbox to radio buttons (Pro Commit f3ee2e6).
 - Changed the title of scheduled actions, replacing "action" with "step" (Pro Commit 40e2706).
-- CODE: React component data field DateOffset now receives field settings as a prop and supports `settings.hideDateSources` (Pro Commit 7ea77bd).
-- CODE: Renamed classes on namespace `PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors`:
-  - `GeneralAction` to `GeneralStep` (Pro Commit 7ea77bd)
-  - `PostAction` to `PostStep` (Pro Commit 7ea77bd)
-- CODE: Updated `PublishPress\Future\Core\HookableInterface` with new methods: `removeFilter` and `removeAction` (Pro Commit 50eacab).
-- CODE: Updated `PublishPress\Future\Framework\WordPress\Facade\HooksFacade` with new methods (Pro Commit 50eacab).
-- CODE: Updated `PublishPress\Future\Framework\WordPress\Models\PostModel` with new `publish` method (Pro Commit 50eacab).
-- CODE: The controller `PublishPress\FuturePro\Modules\Workflows\Controllers\ScheduledActions` now receives a cron interface in the constructor (Pro Commit f3ee2e6).
-- CODE: Fixed data type of return value for `scheduleRecurringAction` and `scheduleAsyncAction` methods in `CronInterface` (Pro Commit 53c5e17).
-- CODE: The variable resolver `PostResolver` now returns the post ID if no property is passed to `getValue` method (Pro Commit f3ee2e6).
-- CODE: The variable resolver `SiteResolver` now returns the site name if no property is passed to `getValue` method (Pro Commit f3ee2e6).
-- CODE: The variable resolver `UserResolver` now returns the user ID if no property is passed to `getValue` method (Pro Commit f3ee2e6).
-- CODE: The interface `PublishPress\FuturePro\Modules\Workflows\Interfaces\ScheduledActionsModelInterface` was refactored to handle multiple schedules. To handle one schedule, use new interface `PublishPress\FuturePro\Modules\Workflows\Interfaces\ScheduledActionModelInterface` (Pro Commit f3ee2e6).
-- CODE: The class `PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionsModel` was refactored to handle multiple schedules. To handle one schedule, use new class `PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionModel` (Pro Commit f3ee2e6).
+- New information added to the Recurrence column in the Scheduled Actions list table related to the limit of recurrences (Issue #928).
+- If a workflow is updated after tasks are scheduled, the changes in the routine tree are applied to the scheduled tasks (Issue #927).
+- When a workflow is published, there is a delay of a few seconds until cron actions are scheduled.
 
 ### Fixed
 
 - Fix an issue where the default schedule for "As soon as possible" was not set correctly (PRO PR #51).
 - Fix infinity loop in the workflow engine when using a post based trigger firing actions that update the post (Issue #922).
 - Fix an issue in the posts list detecting scheduled steps arguments when the length of the arguments is lower than 191 characters, for manually enabled workflow for posts (Pro Commit f3ee2e6).
+- When a workflow is unpublished, all the currently scheduled steps are canceled (Pro Commit f3ee2e6).
+- Fix issue related to not be able to schedule actions from different workflows (Issue #921).
+- Fix scheduled actions for exeecuting them when set to run "As soon as possible" (Issue #913).
+
+### Code changes
+
+- ADDED: New node runner processor for cron based steps runners, `CronStep` (Pro Commit 7ea77bd).
+- ADDED: New interfaces:
+  - `...Modules\Workflows\Interfaces\AsyncNodeRunnerInterface` (Pro Commit 7ea77bd)
+  - `...Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface` (Pro Commit 7ea77bd)
+- ADDED: Tests for the `CoreSchedule` action runner (Pro Commit 7ea77bd).
+- ADDED: New filter: `publishpressfuturepro_ignore_save_post_event` (Pro Commit 50eacab).
+- ADDED: New filter `publishpressfuture_migrations` (Pro Commit 210953a).
+- ADDED: New action `publishpressfuture_fix_db_schema` (Pro Commit 210953a).
+- ADDED: New filter `publishpressfuture_schema_is_healthy` (Pro Commit 210953a).
+- ADDED: New action `publishpressfuture_upgrade_plugin` (Pro Commit 210953a).
+- ADDED: New controller `PublishPress\FuturePro\Modules\Workflows\Controllers\Migrations` (Pro Commit f3ee2e6).
+- ADDED: New action `publishpressfuturepro_migrate_steps_scheduler_args_schema` (Pro Commit f3ee2e6).
+- ADDED: New action `publishpressfuturepro_cleanup_orphan_workflow_args` (Pro Commit f3ee2e6).
+- ADDED: New filter `publishpressfuturepro_orphan_workflow_args_cleanup_interval` (Pro Commit f3ee2e6).
+- ADDED: New interface `PublishPress\FuturePro\Modules\Workflows\Interfaces\ScheduledActionModelInterface` (Pro Commit f3ee2e6).
+- ADDED: New class `PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionModel` (Pro Commit f3ee2e6).
+- ADDED: Tests for the new db table schema `WorkflowScheduledStepsSchema` (Pro Commit f3ee2e6).
+- ADDED: New filter `publishpressfuturepro_cron_schedule_runner_transient_timeout` to allow filtering the transient timeout for the cron schedule runner.
+- CHANGED: React component data field DateOffset now receives field settings as a prop and supports `settings.hideDateSources` (Pro Commit 7ea77bd).
+- CHANGED: Renamed classes on namespace `PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunnerProcessors`:
+  - `GeneralAction` to `GeneralStep` (Pro Commit 7ea77bd)
+  - `PostAction` to `PostStep` (Pro Commit 7ea77bd)
+- CHANGED: Updated `PublishPress\Future\Core\HookableInterface` with new methods: `removeFilter` and `removeAction` (Pro Commit 50eacab).
+- CHANGED: Updated `PublishPress\Future\Framework\WordPress\Facade\HooksFacade` with new methods (Pro Commit 50eacab).
+- CHANGED: Updated `PublishPress\Future\Framework\WordPress\Models\PostModel` with new `publish` method (Pro Commit 50eacab).
+- CHANGED: The controller `PublishPress\FuturePro\Modules\Workflows\Controllers\ScheduledActions` now receives a cron interface in the constructor (Pro Commit f3ee2e6).
+- CHANGED: Fixed data type of return value for `scheduleRecurringAction` and `scheduleAsyncAction` methods in `CronInterface` (Pro Commit 53c5e17).
+- CHANGED: The variable resolver `PostResolver` now returns the post ID if no property is passed to `getValue` method (Pro Commit f3ee2e6).
+- CHANGED: The variable resolver `SiteResolver` now returns the site name if no property is passed to `getValue` method (Pro Commit f3ee2e6).
+- CHANGED: The variable resolver `UserResolver` now returns the user ID if no property is passed to `getValue` method (Pro Commit f3ee2e6).
+- CHANGED: The interface `PublishPress\FuturePro\Modules\Workflows\Interfaces\ScheduledActionsModelInterface` was refactored to handle multiple schedules. To handle one schedule, use new interface `PublishPress\FuturePro\Modules\Workflows\Interfaces\ScheduledActionModelInterface` (Pro Commit f3ee2e6).
+- CHANGED: The class `PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionsModel` was refactored to handle multiple schedules. To handle one schedule, use new class `PublishPress\FuturePro\Modules\Workflows\Models\ScheduledActionModel` (Pro Commit f3ee2e6).
 
 ## [3.4.4] - 22 Aug, 2024
 
