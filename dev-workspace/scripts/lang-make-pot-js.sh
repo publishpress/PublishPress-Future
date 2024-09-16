@@ -2,7 +2,8 @@
 
 source /project/dev-workspace/scripts/lang-constants.sh
 
-export JSX_SCRIPTS="workflow-editor/future_workflow_editor_script"
+# export JSX_SCRIPTS="workflow-editor/future_workflow_editor_script"
+export JSX_SCRIPTS=""
 
 for locale in $LANG_LOCALES
 do

@@ -8,4 +8,5 @@ export LANG_DIR="languages"
 export LANG_LOCALES="pt_BR it_IT es_ES fr_FR"
 
 # Space separated list of script handlers that the plugin provides
-export LANG_SCRIPT_HANDLERS="future_workflow_editor_script"
+# export LANG_SCRIPT_HANDLERS="future_workflow_editor_script"
+export LANG_SCRIPT_HANDLERS=""
