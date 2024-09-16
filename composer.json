@@ -75,7 +75,7 @@
         "watch:js": "wp-scripts build --mode development --watch",
         "get:version": "pbuild version",
         "gen:pot-php": "wp i18n make-pot . ./languages/post-expirator.pot --domain=post-expirator --exclude=dev-workspace,.wordpress-org,.github,dist,tests,lib,tmp,doc,*.js,*.js.map,*.jsx --allow-root",
-        "gen:pot-js": "bash ./dev-workspace/scripts/lang-make-js-pot.sh",
+        "gen:pot-js": "bash ./dev-workspace/scripts/lang-make-pot-js.sh",
         "gen:mo": "wp i18n make-mo ./languages ./languages --allow-root",
         "gen:po-scripts": "bash ./dev-workspace/scripts/lang-update-js-po.sh",
         "gen:po-json": "bash ./dev-workspace/scripts/lang-make-json.sh",

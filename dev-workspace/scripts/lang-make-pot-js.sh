@@ -11,11 +11,16 @@ do
         IFS='/' read -ra scriptHandlers <<< "$scriptHandler"
         package="${scriptHandlers[0]}"
         handler="${scriptHandlers[1]}"
-
+        source_path="./assets/jsx/${package}"
+        pot_file="./$LANG_DIR/${PLUGIN_NAME}-$handler.pot"
         po_file="./$LANG_DIR/$PLUGIN_NAME-${locale}-$handler.po"
-        if [ -f "$po_file" ]; then
-            wp i18n make-pot ./assets/jsx/$package ./$LANG_DIR/${PLUGIN_NAME}-$handler.pot --domain=$LANG_DOMAIN  --allow-root
-            wp i18n update-po ./$LANG_DIR/$PLUGIN_NAME-$handler.pot $po_file --allow-root
+
+        wp i18n make-pot $source_path $pot_file --domain=$LANG_DOMAIN  --allow-root
+
+        if [ ! -f "$po_file" ]; then
+            touch "$po_file"
         fi
+
+        wp i18n update-po $pot_file $po_file --allow-root
     done
 done
