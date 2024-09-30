@@ -35,7 +35,7 @@ module.exports = [
             ],
             extensions: [".js", ".jsx"],
             alias: {
-                "&publishpress-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
+                "@publishpress-future-free": path.join(__dirname, "lib", "vendor", "publishpress", "publishpress-future", "assets", "jsx")
             }
         },
         externals: {

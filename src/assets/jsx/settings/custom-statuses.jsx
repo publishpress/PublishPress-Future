@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2024 Ramble Ventures
  */
-import { SettingRow } from "&publishpress-free/components";
+import { SettingRow } from "@publishpress-future-free/components";
 import {
     settings,
     customPostStatuses,
