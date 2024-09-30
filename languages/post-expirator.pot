@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-09-16T16:26:40+00:00\n"
+"POT-Creation-Date: 2024-09-30T20:49:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: post-expirator\n"
@@ -1842,6 +1842,38 @@ msgstr ""
 
 #: src/Views/menu-advanced.php:30
 msgid "Please do not update anything here unless you know what it entails. For advanced users only."
+msgstr ""
+
+#: src/Views/menu-advanced.php:42
+msgid "Workfllow Step Schedule's Arguments Compression"
+msgstr ""
+
+#: src/Views/menu-advanced.php:51
+msgid "Compress the arguments"
+msgstr ""
+
+#: src/Views/menu-advanced.php:53
+msgid "Compress the arguments of the step schedule to save memory in the database, saving them as binary data."
+msgstr ""
+
+#: src/Views/menu-advanced.php:65
+msgid "Do not compress the arguments"
+msgstr ""
+
+#: src/Views/menu-advanced.php:67
+msgid "Do not compress the arguments of the step schedule, storing them as plain text."
+msgstr ""
+
+#: src/Views/menu-advanced.php:84
+msgid "Experimental Features"
+msgstr ""
+
+#: src/Views/menu-advanced.php:93
+msgid "Enable experimental features"
+msgstr ""
+
+#: src/Views/menu-advanced.php:95
+msgid "Enable experimental features that are still in development and may not be fully functional."
 msgstr ""
 
 #: src/Views/menu-advanced.php:107

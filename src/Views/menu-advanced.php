@@ -39,7 +39,7 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
                 <!-- Enable step schedule's compressed args -->
                 <tr valign="top">
                     <th scope="row">
-                        <?php esc_html_e('Workfllow Step Schedule\'s Arguments Compression', 'publishpress-future-pro'); ?>
+                        <?php esc_html_e('Workfllow Step Schedule\'s Arguments Compression', 'post-expirator'); ?>
                     </th>
                     <td>
                         <div class="pp-settings-field-row">
@@ -48,11 +48,11 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
                                 value="1"
                                 <?php echo $settingsFacade->getStepScheduleCompressedArgsStatus() ? 'checked' : ''; ?> />
                             <label for="future-step-schedule-compressed-args-enabled"><?php
-                                esc_html_e('Compress the arguments', 'publishpress-future-pro'); ?></label>
+                                esc_html_e('Compress the arguments', 'post-expirator'); ?></label>
                             <p class="description offset">
                                 <?php esc_html_e(
                                     'Compress the arguments of the step schedule to save memory in the database, saving them as binary data.', // phpcs:ignore Generic.Files.LineLength.TooLong
-                                    'publishpress-future-pro'
+                                    'post-expirator'
                                 ); ?>
                             </p>
                         </div>
@@ -62,11 +62,11 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
                                 value="0"
                                 <?php echo !$settingsFacade->getStepScheduleCompressedArgsStatus() ? 'checked' : ''; ?> />
                             <label for="future-step-schedule-compressed-args-disabled"><?php
-                                esc_html_e('Do not compress the arguments', 'publishpress-future-pro'); ?></label>
+                                esc_html_e('Do not compress the arguments', 'post-expirator'); ?></label>
                             <p class="description offset">
                                 <?php esc_html_e(
                                     'Do not compress the arguments of the step schedule, storing them as plain text.',
-                                    'publishpress-future-pro'
+                                    'post-expirator'
                                 ); ?>
                             </p>
                         </div>
@@ -81,7 +81,7 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
                 <?php if (PUBLISHPRESS_FUTURE_WORKFLOW_EXPERIMENTAL) : ?>
                     <tr valign="top">
                         <th scope="row">
-                            <?php esc_html_e('Experimental Features', 'publishpress-future-pro'); ?>
+                            <?php esc_html_e('Experimental Features', 'post-expirator'); ?>
                         </th>
                         <td>
                             <div class="pp-settings-field-row">
@@ -90,11 +90,11 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
                                         value="1"
                                         <?php echo $settingsFacade->getExperimentalFeaturesStatus() ? 'checked' : ''; ?> />
                                 <label for="future-experimental-features"><?php
-                                    esc_html_e('Enable experimental features', 'publishpress-future-pro'); ?></label>
+                                    esc_html_e('Enable experimental features', 'post-expirator'); ?></label>
                                 <p class="description offset">
                                     <?php esc_html_e(
                                         'Enable experimental features that are still in development and may not be fully functional.',
-                                        'publishpress-future-pro'
+                                        'post-expirator'
                                     ); ?>
                                 </p>
                             </div>
