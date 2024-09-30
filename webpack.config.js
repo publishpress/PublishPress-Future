@@ -1,3 +1,5 @@
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
 var glob = require("glob");
 var path = require("path");
 
@@ -8,6 +10,7 @@ module.exports = [
         entry: glob.sync(
             "./src/assets/jsx/settings/*.jsx",
         ),
+        mode: NODE_ENV,
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "js"),
@@ -57,6 +60,7 @@ module.exports = [
         entry: glob.sync(
             "./src/assets/jsx/block-editor.jsx",
         ),
+        mode: NODE_ENV,
         devtool: 'source-map',
         output: {
             path: path.join(__dirname, "src", "assets", "js"),
