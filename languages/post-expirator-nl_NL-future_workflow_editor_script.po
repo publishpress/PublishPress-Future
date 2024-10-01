@@ -229,11 +229,6 @@ msgstr ""
 msgid "Pro"
 msgstr ""
 
-#: components/inspector-card/index.jsx:59
-#: components/secondary-sidebar/node-card.jsx:35
-msgid "Upgrade to Pro to unlock this feature."
-msgstr ""
-
 #: components/layout/header.jsx:132
 msgid "Add"
 msgstr ""
@@ -470,10 +465,6 @@ msgstr ""
 
 #: components/node-inspector/node-inspector-card.jsx:19
 msgid "No description"
-msgstr ""
-
-#: components/node-types/generic.jsx:162
-msgid "Upgrade to Pro to unlock this feature"
 msgstr ""
 
 #: components/node-types/generic.jsx:170
@@ -793,4 +784,10 @@ msgstr ""
 
 #: components/workflow-switch-to-draft-button/index.jsx:56
 msgid "Switch to draft"
+msgstr ""
+
+#: components/inspector-card/index.jsx:59
+#: components/node-types/generic.jsx:162
+#: components/secondary-sidebar/node-card.jsx:35
+msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
 msgstr ""

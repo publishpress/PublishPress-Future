@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-09-30T20:49:30+00:00\n"
+"POT-Creation-Date: 2024-10-01T15:43:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: post-expirator\n"
@@ -231,8 +231,9 @@ msgid "Pro"
 msgstr ""
 
 #: components/inspector-card/index.jsx:59
+#: components/node-types/generic.jsx:162
 #: components/secondary-sidebar/node-card.jsx:35
-msgid "Upgrade to Pro to unlock this feature."
+msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
 msgstr ""
 
 #: components/layout/header.jsx:132
@@ -471,10 +472,6 @@ msgstr ""
 
 #: components/node-inspector/node-inspector-card.jsx:19
 msgid "No description"
-msgstr ""
-
-#: components/node-types/generic.jsx:162
-msgid "Upgrade to Pro to unlock this feature"
 msgstr ""
 
 #: components/node-types/generic.jsx:170

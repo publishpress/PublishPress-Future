@@ -772,11 +772,6 @@ msgstr ""
 msgid "Pro"
 msgstr ""
 
-#: components/inspector-card/index.jsx:59
-#: components/secondary-sidebar/node-card.jsx:35
-msgid "Upgrade to Pro to unlock this feature."
-msgstr ""
-
 #. translators: button label text should, if possible, be under 16 characters.
 #: components/layout/header.jsx:160
 msgid "Upgrade to Pro and unlock more features"
@@ -786,14 +781,16 @@ msgstr ""
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: components/node-types/generic.jsx:162
-msgid "Upgrade to Pro to unlock this feature"
-msgstr ""
-
 #: components/node-types/generic.jsx:170
 msgid "This node has errors"
 msgstr ""
 
 #: components/secondary-sidebar/node-card.jsx:37
 msgid "Drag this node to preview its options in your workflow."
+msgstr ""
+
+#: components/inspector-card/index.jsx:59
+#: components/node-types/generic.jsx:162
+#: components/secondary-sidebar/node-card.jsx:35
+msgid "Currently this step is being skipped. Upgrade to Pro to unlock this feature."
 msgstr ""

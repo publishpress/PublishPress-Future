@@ -159,7 +159,7 @@ export const GenericNode = memo(({ id, data, isConnectable, selected, nodeTypeIc
                         <div className='react-flow__node-marker-wrapper'>
                             {nodeType.isProFeature && !isPro && (
                                 <div className='react-flow__node-pro-badge'
-                                    title={__('Upgrade to Pro to unlock this feature', 'post-expirator')}
+                                    title={__('Currently this step is being skipped. Upgrade to Pro to unlock this feature.', 'post-expirator')}
                                 >
                                     <NodeIcon icon={'lock'} size={8} />
                                 </div>

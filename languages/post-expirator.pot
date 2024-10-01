@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PublishPress Future plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PublishPress Future 4.0.0-alpha.2\n"
+"Project-Id-Version: PublishPress Future 4.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/project\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-09-30T20:49:27+00:00\n"
+"POT-Creation-Date: 2024-10-01T15:43:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: post-expirator\n"
@@ -1916,23 +1916,23 @@ msgstr ""
 msgid "Choose Which User Roles Can Use PublishPress Future"
 msgstr ""
 
-#: src/Views/menu-advanced.php:213
+#: src/Views/menu-advanced.php:214
 msgid "Preserve Data After Deactivating the Plugin"
 msgstr ""
 
-#: src/Views/menu-advanced.php:223
+#: src/Views/menu-advanced.php:224
 msgid "Preserve data"
 msgstr ""
 
-#: src/Views/menu-advanced.php:233
+#: src/Views/menu-advanced.php:234
 msgid "Delete data"
 msgstr ""
 
-#: src/Views/menu-advanced.php:238
+#: src/Views/menu-advanced.php:239
 msgid "Toggle between preserving or deleting data after the plugin is deactivated."
 msgstr ""
 
-#: src/Views/menu-advanced.php:249
+#: src/Views/menu-advanced.php:250
 #: src/Views/menu-display.php:185
 #: src/Views/menu-general.php:200
 msgid "Save Changes"

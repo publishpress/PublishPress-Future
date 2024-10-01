@@ -56,7 +56,7 @@ export const InspectorCard = ({ title, description, icon, id, slug, isProFeature
                 {isProFeature && !isPro && (
                     <div className="workflow-editor-inspector-card__pro-instructions">
                         <a href="https://publishpress.com/links/future-workflow-inspector" target="_blank">
-                            {__("Upgrade to Pro to unlock this feature.", "post-expirator")}
+                        {__("Currently this step is being skipped. Upgrade to Pro to unlock this feature.", "post-expirator")}
                         </a>
                     </div>
                 )}
