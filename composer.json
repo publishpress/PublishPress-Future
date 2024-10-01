@@ -71,7 +71,7 @@
         "build:clean": "pbuild clean",
         "build:js": "wp-scripts build --mode production",
         "build:js-dev": "wp-scripts build --mode development",
-        "profile:js": "webpack --profile",
+        "profile:js": "npx webpack --mode production --profile",
         "watch:js-dev": "wp-scripts build --mode development --watch",
         "watch:js": "wp-scripts build --watch",
         "get:version": "pbuild version",
