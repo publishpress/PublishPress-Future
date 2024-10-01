@@ -61,7 +61,14 @@ module.exports = [
         externals: {
             ...defaultExternals,
             "&config.settings-post-types": "publishpressFutureSettingsConfig"
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-settings-post-types.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -73,7 +80,14 @@ module.exports = [
         externals: {
             ...defaultExternals,
             "&config.settings-general": "publishpressFutureSettingsGeneralConfig"
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-settings-general.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -88,7 +102,14 @@ module.exports = [
             ...defaultExternals,
             "&window": "window",
             "&config.block-editor": "publishpressFutureBlockEditorConfig"
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-block-editor.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -102,7 +123,14 @@ module.exports = [
         externals: {
             ...defaultExternals,
             "&config.classic-editor": "publishpressFutureClassicEditorConfig"
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-classic-editor.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -117,7 +145,14 @@ module.exports = [
             ...defaultExternals,
             "&config.quick-edit": "publishpressFutureQuickEditConfig",
             "&window": "window",
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-quick-edit.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -132,7 +167,14 @@ module.exports = [
             ...defaultExternals,
             "&config.bulk-edit": "publishpressFutureBulkEditConfig",
             "&window": "window",
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-bulk-edit.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -145,7 +187,14 @@ module.exports = [
         },
         externals: {
             ...defaultExternals,
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-settings-advanced.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -156,14 +205,17 @@ module.exports = [
             ...defaultOutput,
             filename: "workflow-editor.js"
         },
-        plugins: [
-            // other plugins
-            new BundleAnalyzerPlugin(),
-        ],
         externals: {
             ...defaultExternals,
             'future-workflow-editor': 'futureWorkflowEditor',
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-workflow-editor.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -177,7 +229,14 @@ module.exports = [
         externals: {
             ...defaultExternals,
             'future-workflow-editor': 'futureWorkflowEditor',
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-legacy-action.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -191,7 +250,14 @@ module.exports = [
         externals: {
             ...defaultExternals,
             'future-workflow-editor': 'futureWorkflowEditor',
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-workflow-manual-selection-quick-edit.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -205,7 +271,14 @@ module.exports = [
         externals: {
             ...defaultExternals,
             'future-workflow-editor': 'futureWorkflowEditor',
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-workflow-manual-selection-classic-editor.html',
+            }),
+        ],
     },
     {
         ...defaultExports,
@@ -219,6 +292,13 @@ module.exports = [
         externals: {
             ...defaultExternals,
             'future-workflow-editor': 'futureWorkflowEditor',
-        }
+        },
+        plugins: [
+            // other plugins
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static',
+                reportFilename: 'webpack-bundle-stats-workflow-manual-selection-block-editor.html',
+            }),
+        ],
     }
 ];
