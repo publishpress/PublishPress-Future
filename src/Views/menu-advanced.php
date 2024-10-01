@@ -203,8 +203,9 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
                                 <?php
                                 echo esc_html($role_label); ?>
                             </label>
-                        <?php
-                        endforeach; ?>
+                            <?php
+                        endforeach;
+                        ?>
                     </td>
                 </tr>
                 <tr valign="top">
