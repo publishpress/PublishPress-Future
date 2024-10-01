@@ -1,3 +1,5 @@
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
 const glob = require("glob");
 const path = require("path");
 
@@ -45,7 +47,8 @@ const defaultOutput = {
 }
 
 const defaultExports = {
-    devtool: 'source-map',
+    mode: NODE_ENV,
+    devtool: NODE_ENV === 'development' ? 'source-map' : false,
     resolve: {...defaultResolve},
     module: {...defaultModule},
 }

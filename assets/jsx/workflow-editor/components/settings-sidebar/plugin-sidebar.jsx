@@ -34,6 +34,7 @@ export function PluginSidebarEditPost({ className, ...props }) {
 	return (
 		<ComplementaryArea
 			panelClassName={className}
+
 			className="edit-post-sidebar"
 			smallScreenTitle={workflowTitle || __('(no name)', 'post-expirator')}
 			scope={SLOT_SCOPE_WORKFLOW_EDITOR}
