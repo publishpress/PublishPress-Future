@@ -105,7 +105,7 @@ class WorkflowsList implements InitializableInterface
             "edit.php?post_type=" . Module::POST_TYPE_WORKFLOW,
             "Action Workflows",
             "Action Workflows",
-            "edit_posts",
+            "manage_options",
             "future_workflow_editor",
             [$this, "renderEditorPage"]
         );
