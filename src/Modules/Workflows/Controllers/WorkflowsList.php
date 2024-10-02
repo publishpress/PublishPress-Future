@@ -127,19 +127,19 @@ class WorkflowsList implements InitializableInterface
             return;
         }
 
-        wp_enqueue_style("wp-jquery-ui-dialog");
-        wp_enqueue_script("jquery-ui-dialog");
+        // wp_enqueue_style("wp-jquery-ui-dialog");
+        // wp_enqueue_script("jquery-ui-dialog");
 
-        wp_enqueue_script(
-            "future_workflow_list_script",
-            plugins_url(
-                "/assets/js/workflow-list.js",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
-            ["jquery", "jquery-ui-dialog"],
-            PUBLISHPRESS_FUTURE_VERSION,
-            true
-        );
+        // wp_enqueue_script(
+        //     "future_workflow_list_script",
+        //     Plugin::getScriptUrl('workflowList'),
+        //     [
+        //         "jquery",
+        //         "jquery-ui-dialog",
+        //     ],
+        //     PUBLISHPRESS_FUTURE_VERSION,
+        //     true
+        // );
     }
 
     public function addCustomColumns($columns)
