@@ -23,10 +23,19 @@ $actionArgsSchema = $container->get(ServicesAbstract::DB_TABLE_ACTION_ARGS_SCHEM
  */
 $debugLogSchema = $container->get(ServicesAbstract::DB_TABLE_DEBUG_LOG_SCHEMA);
 
-$isSchemaHealthOk = $actionArgsSchema->isTableHealthy() && $debugLogSchema->isTableHealthy();
+/**
+ * @var DBTableSchemaInterface $workflowScheduledStepsSchema
+ */
+$workflowScheduledStepsSchema = $container->get(ServicesAbstract::DB_TABLE_WORKFLOW_SCHEDULED_STEPS_SCHEMA);
+
+$isSchemaHealthOk = $actionArgsSchema->isTableHealthy()
+    && $debugLogSchema->isTableHealthy()
+    && $workflowScheduledStepsSchema->isTableHealthy();
+
 $schemaHealthErrors = [
     $actionArgsSchema->getTableName() => $actionArgsSchema->getErrors(),
     $debugLogSchema->getTableName() => $debugLogSchema->getErrors(),
+    $workflowScheduledStepsSchema->getTableName() => $workflowScheduledStepsSchema->getErrors(),
 ];
 ?>
 
