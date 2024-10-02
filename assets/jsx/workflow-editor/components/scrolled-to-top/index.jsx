@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import $ from 'jquery';
+
+const $ = window.jQuery;
 
 const useScrollToTop = (ref, parentSelector) => {
     useEffect(() => {

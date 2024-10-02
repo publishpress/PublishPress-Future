@@ -2,8 +2,10 @@ import { FutureActionPanelBulkEdit } from './components';
 import { createStore } from './data';
 import { createRoot } from 'react-dom/client';
 import { select, dispatch } from '@wordpress/data';
-import { inlineEditPost } from "&window";
-import {
+
+const { inlineEditPost } = window;
+
+const {
     postTypeDefaultConfig,
     defaultDate,
     postType,
@@ -17,7 +19,7 @@ import {
     nonce,
     statusesSelectOptions,
     hideCalendarByDefault
-} from "&config.bulk-edit";
+} = window.publishpressFutureBulkEditConfig;
 
 const storeName = 'publishpress-future/future-action-bulk-edit';
 const delayToUnmountAfterSaving = 1000;

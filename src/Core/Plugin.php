@@ -360,4 +360,14 @@ class Plugin implements InitializableInterface
 
         $submenu['publishpress-future'] = $futureMenu;
     }
+
+    public static function getScriptUrl($script)
+    {
+        $extension = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '.js' : '.min.js';
+
+        $container = Container::getInstance();
+        $baseUrl = $container->get(ServicesAbstract::BASE_URL);
+
+        return $baseUrl . 'assets/js/' . $script . $extension;
+    }
 }

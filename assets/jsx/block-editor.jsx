@@ -2,7 +2,8 @@ import { createStore } from './data';
 import { FutureActionPanelBlockEditor } from './components';
 import { select } from '@wordpress/data';
 import { registerPlugin } from '@wordpress/plugins';
-import {
+
+const {
     actionsSelectOptions,
     is12Hour,
     timeFormat,
@@ -13,7 +14,7 @@ import {
     defaultDate,
     statusesSelectOptions,
     hideCalendarByDefault
-} from "&config.block-editor";
+} = window.publishpressFutureBlockEditorConfig;
 
 const storeName = 'publishpress-future/future-action';
 

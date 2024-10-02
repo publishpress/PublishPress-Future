@@ -6,6 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;

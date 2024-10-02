@@ -15,7 +15,9 @@ import { StrictMode, useState, useEffect } from "@wordpress/element";
 
 import { createRoot } from 'react-dom/client';
 
-import {
+import { render } from "react-dom";
+
+const {
     nonce,
     referrer,
     settings,
@@ -23,8 +25,7 @@ import {
     taxonomiesList,
     text,
     statusesList
-} from "&config.settings-post-types";
-import { render } from "react-dom";
+} = window.publishpressFutureSettingsConfig;
 
 const SettingsFormPanel = (props) => {
     const [formValidationStatusPerPostType, setFormValidationStatusPerPostType] = useState({});

@@ -7,6 +7,7 @@ use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Models\PostModel;
 use PublishPress\Future\Modules\Workflows\Models\PostTypesModel;
@@ -154,10 +155,7 @@ class ManualPostTrigger implements InitializableInterface
 
         wp_enqueue_script(
             "future_workflow_manual_selection_script_quick_edit",
-            plugins_url(
-                "/assets/js/workflow-manual-selection-quick-edit.js",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getScriptUrl('workflowManualSelectionQuickEdit'),
             [
                 "wp-plugins",
                 "wp-components",
@@ -206,10 +204,7 @@ class ManualPostTrigger implements InitializableInterface
 
         wp_enqueue_script(
             "future_workflow_manual_selection_script_block_editor",
-            plugins_url(
-                "/assets/js/workflow-manual-selection-block-editor.js",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getScriptUrl('workflowManualSelectionBlockEditor'),
             [
                 "wp-plugins",
                 "wp-components",
@@ -366,10 +361,7 @@ class ManualPostTrigger implements InitializableInterface
 
         wp_enqueue_script(
             "future_workflow_manual_selection_script",
-            plugins_url(
-                "/assets/js/workflow-manual-selection-classic-editor.js",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getScriptUrl('workflowManualSelectionClassicEditor'),
             [
                 "wp-plugins",
                 "wp-components",

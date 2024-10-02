@@ -12,6 +12,7 @@ use PublishPress\Future\Core\DI\Container;
 use PublishPress\Future\Core\DI\ServicesAbstract;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\ExpirationActionsAbstract;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorHooks;
@@ -301,7 +302,7 @@ class ClassicEditorController implements InitializableInterface
 
         wp_enqueue_script(
             'publishpress-future-classic-editor',
-            POSTEXPIRATOR_BASEURL . 'assets/js/classic-editor.js',
+            Plugin::getScriptUrl('classicEditor'),
             [
                 'wp-i18n',
                 'wp-components',

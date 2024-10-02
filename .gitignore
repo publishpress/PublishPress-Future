@@ -25,5 +25,6 @@ ray.php
 /tests/.env
 assets/js/*.map
 webpack-bundle-stats.json
+webpack-bundle-stats.html
 webpack-bundle-stats-*.json
 webpack-bundle-stats-*.html
