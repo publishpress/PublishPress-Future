@@ -146,6 +146,7 @@ class PostModel implements PostModelInterface
             $query = $wpdb->prepare(
                 $query, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 'trigger/core.manually-enabled-for-post',
+                'trigger/core.manually-enabled-for-post',
                 HooksAbstract::ACTION_ASYNC_EXECUTE_NODE
             );
 
