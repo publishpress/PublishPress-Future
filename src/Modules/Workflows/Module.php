@@ -127,6 +127,7 @@ class Module implements InitializableInterface
             ),
             new Controllers\SampleWorkflows(),
             new Controllers\PostsList($this->hooks),
+            new Controllers\Settings($this->hooks, $this->workflowScheduledStepsSchema),
         ];
 
         foreach ($controllers as $controller) {
