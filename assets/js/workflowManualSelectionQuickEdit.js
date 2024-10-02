@@ -2137,6 +2137,9 @@ window.inlineEditPost.edit = function (button, id) {
   wpInlineEditPro.apply(this, arguments);
   var postId = getPostIdFromButton(button);
   var container = document.getElementById("post-expirator-quick-edit");
+  if (!container) {
+    return;
+  }
   var root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot)(container);
   var saveButton = document.querySelector('.inline-edit-save .save');
   if (saveButton) {
