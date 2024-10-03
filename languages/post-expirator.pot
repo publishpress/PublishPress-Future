@@ -1845,7 +1845,7 @@ msgid "Please do not update anything here unless you know what it entails. For a
 msgstr ""
 
 #: src/Views/menu-advanced.php:42
-msgid "Workfllow Step Schedule's Arguments Compression"
+msgid "Workflow Step Schedule's Arguments Compression"
 msgstr ""
 
 #: src/Views/menu-advanced.php:51

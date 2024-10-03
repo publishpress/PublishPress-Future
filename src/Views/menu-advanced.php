@@ -39,7 +39,7 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
                 <!-- Enable step schedule's compressed args -->
                 <tr valign="top">
                     <th scope="row">
-                        <?php esc_html_e('Workfllow Step Schedule\'s Arguments Compression', 'post-expirator'); ?>
+                        <?php esc_html_e('Workflow Step Schedule\'s Arguments Compression', 'post-expirator'); ?>
                     </th>
                     <td>
                         <div class="pp-settings-field-row">
