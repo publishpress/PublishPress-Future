@@ -1840,10 +1840,6 @@ msgstr ""
 msgid "Advanced Options"
 msgstr ""
 
-#: src/Views/menu-advanced.php:30
-msgid "Please do not update anything here unless you know what it entails. For advanced users only."
-msgstr ""
-
 #: src/Views/menu-advanced.php:42
 msgid "Workflow Step Schedule's Arguments Compression"
 msgstr ""

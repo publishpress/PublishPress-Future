@@ -1008,14 +1008,6 @@ msgstr "Aucune action future"
 msgid "Advanced Options"
 msgstr "Options avancées"
 
-#: src/Views/menu-advanced.php:29
-msgid ""
-"Please do not update anything here unless you know what it entails. For "
-"advanced users only."
-msgstr ""
-"Veuillez ne rien mettre à jour ici si vous ne savez pas ce que cela "
-"implique. Pour les utilisateurs/utilisatrices avancés uniquement."
-
 #: src/Views/menu-advanced.php:40
 msgid "Future Action Column Style"
 msgstr "Style de colonne de l’action Future"

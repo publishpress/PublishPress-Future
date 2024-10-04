@@ -24,14 +24,7 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
             <?php
             wp_nonce_field('postexpirator_menu_advanced', '_postExpiratorMenuAdvanced_nonce'); ?>
 
-            <h3><?php
-                esc_html_e('Advanced Options', 'post-expirator'); ?></h3>
-            <p class="description"><?php
-                esc_html_e(
-                    'Please do not update anything here unless you know what it entails. For advanced users only.',
-                    'post-expirator'
-                ); ?>
-            </p>
+            <h3><?php esc_html_e('Advanced Options', 'post-expirator'); ?></h3>
             <table class="form-table">
 
                 <?php $hooks->doAction(HooksAbstract::ACTION_SETTINGS_TAB_ADVANCED_BEFORE); ?>
