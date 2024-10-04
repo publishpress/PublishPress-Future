@@ -11,7 +11,6 @@ defined('ABSPATH') or die('Direct access not allowed.');
 // Get Option
 $preserveData = (bool)get_option('expirationdatePreserveData', true);
 
-$user_roles = wp_roles()->get_names();
 $plugin_facade = PostExpirator_Facade::getInstance();
 $container = DIContainer::getInstance();
 $hooks = $container->get(ServicesAbstract::HOOKS);
@@ -94,113 +93,6 @@ $settingsFacade = $container->get(ServicesAbstract::SETTINGS);
                         </td>
                     </tr>
                 <?php endif; ?>
-
-                <tr valign="top">
-                    <th scope="row"><?php
-                        esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
-                    <td>
-                        <?php
-                        $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
-                        ?>
-                        <div class="pp-settings-field-row">
-                            <input type="radio" name="future-action-column-style"
-                                id="future-action-column-style-verbose"
-                                value="verbose" <?php
-                                echo $columnStyle === 'verbose' ? 'checked' : ''; ?>/>
-                            <label for="future-action-column-style-verbose"><?php
-                            esc_html_e('Detailed', 'post-expirator'); ?></label>
-                            <p class="description offset"><?php
-                            esc_html_e(
-                                'Displays all information in the Future Action column.',
-                                'post-expirator'
-                            ); ?></p>
-                        </div>
-
-                        <div class="pp-settings-field-row">
-                            <input type="radio" name="future-action-column-style"
-                                id="future-action-column-style-simple"
-                                value="simple" <?php
-                                echo $columnStyle === 'simple' ? 'checked' : ''; ?>/>
-                            <label for="future-action-column-style-simple"><?php
-                            esc_html_e('Simplified', 'post-expirator'); ?></label>
-                            <p class="description offset"><?php
-                            esc_html_e(
-                                'Displays only the icon and date/time.',
-                                'post-expirator'
-                            ); ?></p>
-                        </div>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><?php
-                        esc_html_e('Time format in the date picker', 'post-expirator'); ?></th>
-                    <td>
-                        <?php
-                        $timeFormat = $container->get(ServicesAbstract::SETTINGS)->getTimeFormatForDatePicker();
-                        ?>
-                        <div class="pp-settings-field-row">
-                            <input type="radio" name="future-action-time-format"
-                                id="future-action-time-format-inherited"
-                                value="inherited" <?php
-                                echo $timeFormat === 'inherited' ? 'checked' : ''; ?>/>
-                            <label for="future-action-time-format-inherited"><?php
-                            esc_html_e('Inherit from Site Settings', 'post-expirator'); ?></label>
-                        </div>
-                        <div class="pp-settings-field-row">
-                            <input type="radio" name="future-action-time-format"
-                                id="future-action-time-format-24h"
-                                value="24h" <?php
-                                echo $timeFormat === '24h' ? 'checked' : ''; ?>/>
-                            <label for="future-action-time-format-24h"><?php
-                            esc_html_e('24 hours', 'post-expirator'); ?></label>
-                        </div>
-                        <div class="pp-settings-field-row">
-                            <input type="radio" name="future-action-time-format"
-                                id="future-action-time-format-12h"
-                                value="12h" <?php
-                                echo $timeFormat === '12h' ? 'checked' : ''; ?>/>
-                            <label for="future-action-time-format-12h"><?php
-                            esc_html_e('AM/PM', 'post-expirator'); ?></label>
-                        </div>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row">
-                        <?php
-                        esc_html_e('Choose Which User Roles Can Use PublishPress Future', 'post-expirator'); ?>
-                    </th>
-                    <td class="pe-checklist">
-                        <?php
-                        foreach ($user_roles as $role_name => $role_label) : ?>
-                            <label for="allow-user-role-<?php
-                            echo esc_attr($role_name); ?>">
-                                <input type="checkbox"
-                                       id="allow-user-role-<?php
-                                        echo esc_attr($role_name); ?>"
-                                       name="allow-user-roles[]"
-                                                            <?php
-                                                            if ('administrator' === $role_name) :
-                                                                echo 'disabled="disabled"';
-                                                            endif; ?>
-                                       value="<?php
-                                        echo esc_attr($role_name); ?>"
-                                        <?php
-                                        if (
-                                            $plugin_facade->user_role_can_expire_posts(
-                                                $role_name
-                                            )
-                                        ) :
-                                            ?>checked="checked"<?php
-                                        endif; ?>
-                                />
-                                <?php
-                                echo esc_html($role_label); ?>
-                            </label>
-                            <?php
-                        endforeach;
-                        ?>
-                    </td>
-                </tr>
                 <tr valign="top">
                     <th scope="row">
                         <?php
