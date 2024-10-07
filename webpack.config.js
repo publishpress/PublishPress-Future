@@ -97,5 +97,42 @@ module.exports = [
             '@wordpress/blocks': 'wp.blocks',
             '&wp': 'wp',
         }
+    },
+    {
+        entry: glob.sync(
+            "./src/assets/jsx/workflow-editor-plugins/index.jsx",
+        ),
+        mode: NODE_ENV,
+        devtool: NODE_ENV === 'development' ? 'source-map' : false,
+        output: {
+            path: path.join(__dirname, "src", "assets", "js"),
+            filename: "workflow-editor-plugins.js"
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(jsx)$/, // Identifies which file or files should be transformed.
+                    use: {loader: "babel-loader"}, // Babel loader to transpile modern JavaScript.
+                    exclude: [
+                        /(node_modules|bower_components)/,
+                    ]// JavaScript files to be ignored.
+                },
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader", "css-loader", "postcss-loader"],
+                }
+            ]
+        },
+        externals: {
+            'react': 'React',
+            'react-dom': 'ReactDOM',
+            "@wordpress/components": "wp.components",
+            "@wordpress/data": "wp.data",
+            "@wordpress/plugins": "wp.plugins",
+            "@wordpress/url": "wp.url",
+            "@wordpress/hooks": "wp.hooks",
+            "@wordpress/element": "wp.element",
+            "@wordpress/i18n": "wp.i18n"
+        }
     }
 ];
