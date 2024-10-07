@@ -12072,18 +12072,14 @@ function DateOffset(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     isHelpVisible = _useState2[0],
     setIsHelpVisible = _useState2[1];
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(false),
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(true),
     _useState4 = _slicedToArray(_useState3, 2),
-    isPreviewVisible = _useState4[0],
-    setIsPreviewVisible = _useState4[1];
-  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(true),
+    isPreviewValid = _useState4[0],
+    setIsPreviewValid = _useState4[1];
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(''),
     _useState6 = _slicedToArray(_useState5, 2),
-    isPreviewValid = _useState6[0],
-    setIsPreviewValid = _useState6[1];
-  var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(''),
-    _useState8 = _slicedToArray(_useState7, 2),
-    previewMessage = _useState8[0],
-    setPreviewMessage = _useState8[1];
+    previewMessage = _useState6[0],
+    setPreviewMessage = _useState6[1];
   var toggleHelp = function toggleHelp() {
     return setIsHelpVisible(function (state) {
       return !state;
@@ -12169,53 +12165,13 @@ function DateOffset(_ref) {
     dangerouslySetInnerHTML: {
       __html: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "post-expirator"), "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>", "</a>", "<code>", "</code>", "<code>", "</code>", "<code>", "</code>")
     }
-  })))))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TreeSelect, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Repeating Action", "post-expirator"),
-    tree: recurrenceOptions,
-    selectedId: defaultValue.recurrence,
-    onChange: function onChange(value) {
-      return onChangeSetting({
-        settingName: "recurrence",
-        value: value
-      });
+  })))))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Slot, {
+    name: "DateOffsetAfterDateSourceField",
+    fillProps: {
+      onChangeSetting: onChangeSetting,
+      defaultValue: defaultValue
     }
-  }), defaultValue.recurrence === "custom" && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Interval in seconds", "post-expirator"),
-    value: defaultValue.repeatInterval,
-    onChange: function onChange(value) {
-      return onChangeSetting({
-        settingName: "repeatInterval",
-        value: value
-      });
-    }
-  }), defaultValue.recurrence !== "single" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TreeSelect, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Repeat until", "post-expirator"),
-    tree: repeatUntilOptions,
-    selectedId: defaultValue.repeatUntil,
-    onChange: function onChange(value) {
-      return onChangeSetting({
-        settingName: "repeatUntil",
-        value: value
-      });
-    }
-  }), defaultValue.repeatUntil === 'times' && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Times to repeat", "post-expirator"),
-    value: defaultValue.repeatTimes,
-    onChange: function onChange(value) {
-      return onChangeSetting({
-        settingName: "repeatTimes",
-        value: value
-      });
-    }
-  }), defaultValue.repeatUntil === 'date' && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.DatePicker, {
-    currentDate: defaultValue.repeatUntilDate,
-    onChange: function onChange(value) {
-      return onChangeSetting({
-        settingName: "repeatUntilDate",
-        value: value
-      });
-    }
-  })), isAdvancedSettingsEnabled && /*#__PURE__*/React.createElement(React.Fragment, null, !hidePreventDuplicateScheduling && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+  }), isAdvancedSettingsEnabled && /*#__PURE__*/React.createElement(React.Fragment, null, !hidePreventDuplicateScheduling && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Unique ID Expression", "post-expirator"),
     value: defaultValue.uniqueIdExpression,
     onChange: function onChange(value) {

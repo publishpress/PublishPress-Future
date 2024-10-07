@@ -6,7 +6,6 @@ import {
     PanelRow,
     Popover,
     Button,
-    ToggleControl,
     __experimentalVStack as VStack,
 } from "@wordpress/components";
 import { VariablesTreeSelect } from "../variables-tree-select";
@@ -16,7 +15,7 @@ import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
 import { filterVariableOptionsByDataType } from "../../utils";
 import { DateOffsetPreview } from "../../../components/DateOffsetPreview";
-import { Icon } from "@wordpress/components";
+import { Slot } from "@wordpress/components";
 
 /**
  *  When to execute:
@@ -119,7 +118,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     }
 
     const [isHelpVisible, setIsHelpVisible] = useState(false);
-    const [isPreviewVisible, setIsPreviewVisible] = useState(false);
     const [isPreviewValid, setIsPreviewValid] = useState(true);
     const [previewMessage, setPreviewMessage] = useState('');
     const toggleHelp = () => setIsHelpVisible((state) => !state);
@@ -228,46 +226,10 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
 
-                <TreeSelect
-                    label={__("Repeating Action", "post-expirator")}
-                    tree={recurrenceOptions}
-                    selectedId={defaultValue.recurrence}
-                    onChange={(value) => onChangeSetting({ settingName: "recurrence", value })}
-                />
-
-                {(defaultValue.recurrence === "custom") && (
-                    <TextControl
-                        label={__("Interval in seconds", "post-expirator")}
-                        value={defaultValue.repeatInterval}
-                        onChange={(value) => onChangeSetting({ settingName: "repeatInterval", value })}
-                    />
-                )}
-
-                {(defaultValue.recurrence !== "single") && (
-                    <>
-                        <TreeSelect
-                            label={__("Repeat until", "post-expirator")}
-                            tree={repeatUntilOptions}
-                            selectedId={defaultValue.repeatUntil}
-                            onChange={(value) => onChangeSetting({ settingName: "repeatUntil", value })}
-                        />
-
-                        {defaultValue.repeatUntil === 'times' && (
-                            <TextControl
-                                label={__("Times to repeat", "post-expirator")}
-                                value={defaultValue.repeatTimes}
-                                onChange={(value) => onChangeSetting({ settingName: "repeatTimes", value })}
-                            />
-                        )}
-
-                        {defaultValue.repeatUntil === 'date' && (
-                            <DatePicker
-                                currentDate={defaultValue.repeatUntilDate}
-                                onChange={(value) => onChangeSetting({ settingName: "repeatUntilDate", value })}
-                            />
-                        )}
-                    </>
-                )}
+                <Slot name="DateOffsetAfterDateSourceField" fillProps={{
+                    onChangeSetting,
+                    defaultValue,
+                }} />
 
                 {isAdvancedSettingsEnabled && (
                     <>
