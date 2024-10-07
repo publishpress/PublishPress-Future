@@ -12035,30 +12035,6 @@ function DateOffset(_ref) {
       return !settings.hideDateSources.includes(option.id);
     });
   }
-  var cronScheduleOptions = futureWorkflowEditor.cronSchedules;
-  cronScheduleOptions = cronScheduleOptions.map(function (schedule) {
-    return {
-      name: schedule.label,
-      id: "cron_".concat(schedule.value)
-    };
-  });
-  var recurrenceOptions = [{
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Non-repeating", "post-expirator"),
-    id: "single"
-  }, {
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom interval in seconds", "post-expirator"),
-    id: "custom"
-  }].concat(_toConsumableArray(cronScheduleOptions));
-  var repeatUntilOptions = [{
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Forever", "post-expirator"),
-    id: "forever"
-  }, {
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Specific date", "post-expirator"),
-    id: "date"
-  }, {
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("For a number of times", "post-expirator"),
-    id: "times"
-  }];
   var onChangeSetting = function onChangeSetting(_ref2) {
     var settingName = _ref2.settingName,
       value = _ref2.value;

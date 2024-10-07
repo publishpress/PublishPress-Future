@@ -87,27 +87,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         });
     }
 
-    let cronScheduleOptions = futureWorkflowEditor.cronSchedules;
-    cronScheduleOptions = cronScheduleOptions.map((schedule) => {
-        return {
-            name: schedule.label,
-            id: `cron_${schedule.value}`,
-        };
-    });
-
-    const recurrenceOptions = [
-        { name: __("Non-repeating", "post-expirator"), id: "single" },
-        { name: __("Custom interval in seconds", "post-expirator"), id: "custom" },
-        ...cronScheduleOptions
-    ];
-
-    const repeatUntilOptions = [
-        { name: __("Forever", "post-expirator"), id: "forever" },
-        { name: __("Specific date", "post-expirator"), id: "date" },
-        { name: __("For a number of times", "post-expirator"), id: "times" },
-    ];
-
-
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
         newValue[settingName] = value;
