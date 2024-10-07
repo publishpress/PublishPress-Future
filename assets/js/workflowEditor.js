@@ -11931,6 +11931,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils */ "./assets/jsx/workflow-editor/utils.jsx");
 /* harmony import */ var _components_DateOffsetPreview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../components/DateOffsetPreview */ "./assets/jsx/components/DateOffsetPreview.jsx");
+/* harmony import */ var _node_icon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../node-icon */ "./assets/jsx/workflow-editor/components/node-icon.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -11947,6 +11948,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -12081,6 +12083,21 @@ function DateOffset(_ref) {
     }
   };
   var hidePreventDuplicateScheduling = settings === null || settings === void 0 ? void 0 : settings.hidePreventDuplicateScheduling;
+  var isPro = futureWorkflowEditor.isPro || false;
+  var cronScheduleOptions = futureWorkflowEditor.cronSchedules;
+  cronScheduleOptions = cronScheduleOptions.map(function (schedule) {
+    return {
+      name: schedule.label,
+      id: "cron_".concat(schedule.value)
+    };
+  });
+  var recurrenceOptions = [{
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Non-repeating", "post-expirator"),
+    id: "single"
+  }, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom interval in seconds", "post-expirator"),
+    id: "custom"
+  }].concat(_toConsumableArray(cronScheduleOptions));
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TreeSelect, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("When to run", "post-expirator"),
     tree: whenToRunOptions,
@@ -12141,7 +12158,33 @@ function DateOffset(_ref) {
     dangerouslySetInnerHTML: {
       __html: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "post-expirator"), "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>", "</a>", "<code>", "</code>", "<code>", "</code>", "<code>", "</code>")
     }
-  })))))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Slot, {
+  })))))), !isPro && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TreeSelect, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Repeating Action", "post-expirator"),
+    tree: recurrenceOptions,
+    disabled: true
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginLeft: '8px',
+      color: '#000',
+      backgroundColor: '#ffb200',
+      borderRadius: '50%',
+      minWidth: '26px',
+      minHeight: '26px',
+      display: 'inline-block',
+      textAlign: 'center',
+      boxSizing: 'border-box',
+      paddingTop: '5px'
+    },
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Upgrade to Pro to unlock this feature.", "post-expirator")
+  }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    icon: 'lock',
+    size: 14
+  })))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Slot, {
     name: "DateOffsetAfterDateSourceField",
     fillProps: {
       onChangeSetting: onChangeSetting,
