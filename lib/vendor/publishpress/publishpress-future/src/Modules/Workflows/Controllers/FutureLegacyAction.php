@@ -6,6 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract as ExpiratorModuleHooksAbstract;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Workflows\Domain\LegacyAction\TriggerWorkflow;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
@@ -48,11 +49,9 @@ class FutureLegacyAction implements InitializableInterface
 
         wp_enqueue_script(
             "future_workflow_legacy_action_script",
-            plugins_url(
-                "/assets/js/legacy-action.js",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getScriptUrl('legacyAction'),
             [
+                "wp-plugins",
                 "wp-plugins",
                 "wp-components",
                 "wp-element",

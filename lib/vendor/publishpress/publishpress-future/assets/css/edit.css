@@ -58,12 +58,18 @@ div.pe-qe-fields > div {
     line-height: 20px;
 }
 
+.future-quick-edit-fieldset,
 #publishpress-future-bulk-edit,
 #publishpress-future-quick-edit {
     max-width: 340px;
     padding: 14px;
     border: 1px solid #ddd;
     margin-bottom: 20px;
+}
+
+.future-quick-edit-fieldset .title {
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 #publishpress-future-bulk-edit label,

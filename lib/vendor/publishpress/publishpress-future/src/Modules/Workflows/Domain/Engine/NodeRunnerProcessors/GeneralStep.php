@@ -8,7 +8,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 
-use function PublishPress\Future\logError;
+use function PublishPress\Future\logCatchException;
 
 class GeneralStep implements NodeRunnerProcessorInterface
 {
@@ -89,7 +89,11 @@ class GeneralStep implements NodeRunnerProcessorInterface
 
     public function logError(string $message, int $workflowId, array $step)
     {
-        logError(
+        if (! function_exists('error_log')) {
+            return;
+        }
+
+        error_log(
             sprintf(
                 '%1$s: workflowId: %2$d, step: %3$s',
                 $message,

@@ -243,14 +243,14 @@ class ScheduledActionsController implements InitializableInterface
                 'postexpirator-css',
                 POSTEXPIRATOR_BASEURL . 'assets/css/style.css',
                 false,
-                POSTEXPIRATOR_VERSION
+                PUBLISHPRESS_FUTURE_VERSION
             );
 
             wp_enqueue_style(
                 'pe-footer',
                 POSTEXPIRATOR_BASEURL . 'assets/css/footer.css',
                 false,
-                POSTEXPIRATOR_VERSION
+                PUBLISHPRESS_FUTURE_VERSION
             );
         }
     }

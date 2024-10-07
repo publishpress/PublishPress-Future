@@ -11,7 +11,7 @@ module.exports = [
             "./src/assets/jsx/settings/*.jsx",
         ),
         mode: NODE_ENV,
-        devtool: 'source-map',
+        devtool: NODE_ENV === 'development' ? 'source-map' : false,
         output: {
             path: path.join(__dirname, "src", "assets", "js"),
             filename: "settings.js"
@@ -61,7 +61,7 @@ module.exports = [
             "./src/assets/jsx/block-editor.jsx",
         ),
         mode: NODE_ENV,
-        devtool: 'source-map',
+        devtool: NODE_ENV === 'development' ? 'source-map' : false,
         output: {
             path: path.join(__dirname, "src", "assets", "js"),
             filename: "block-editor.js"

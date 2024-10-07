@@ -706,14 +706,6 @@ msgstr "Future documentatie"
 msgid "Advanced Options"
 msgstr "Geavanceerde opties"
 
-#: src/Views/menu-advanced.php:25
-msgid ""
-"Please do not update anything here unless you know what it entails. For "
-"advanced users only."
-msgstr ""
-"Update hier niets, tenzij je weet wat het inhoudt. Alleen voor gevorderde "
-"gebruikers."
-
 #: src/Views/menu-advanced.php:35
 msgid "Block Editor Support"
 msgstr "Ondersteuning voor blok-editor"

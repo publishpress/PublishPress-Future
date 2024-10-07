@@ -168,6 +168,8 @@ class PostExpirator_Display
                 update_option('expirationdateDisplayFooter', (int)$_POST['expired-display-footer']);
                 update_option('expirationdateFooterContents', wp_kses($_POST['expired-footer-contents'], []));
                 update_option('expirationdateFooterStyle', wp_kses($_POST['expired-footer-style'], []));
+                update_option('expirationdateColumnStyle', sanitize_key($_POST['future-action-column-style']));
+                update_option('expirationdateTimeFormatForDatePicker', sanitize_key($_POST['future-action-time-format']));
                 // phpcs:enable
             }
         }
@@ -376,30 +378,6 @@ class PostExpirator_Display
             } else {
                 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
                 update_option('expirationdatePreserveData', (int)$_POST['expired-preserve-data-deactivating']);
-                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateColumnStyle', sanitize_key($_POST['future-action-column-style']));
-                // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
-                update_option('expirationdateTimeFormatForDatePicker', sanitize_key($_POST['future-action-time-format']));
-
-                if (! isset($_POST['allow-user-roles']) || ! is_array($_POST['allow-user-roles'])) {
-                    $_POST['allow-user-roles'] = array();
-                }
-
-                $user_roles = wp_roles()->get_names();
-
-                foreach ($user_roles as $role_name => $role_label) {
-                    $role = get_role($role_name);
-
-                    if (! is_a($role, WP_Role::class)) {
-                        continue;
-                    }
-
-                    if ($role_name === 'administrator' || in_array($role_name, $_POST['allow-user-roles'], true)) {
-                        $role->add_cap(CapabilitiesAbstract::EXPIRE_POST);
-                    } else {
-                        $role->remove_cap(CapabilitiesAbstract::EXPIRE_POST);
-                    }
-                }
 
                 echo "<div id='message' class='updated fade'><p>";
                 esc_html_e('Saved Options!', 'post-expirator');

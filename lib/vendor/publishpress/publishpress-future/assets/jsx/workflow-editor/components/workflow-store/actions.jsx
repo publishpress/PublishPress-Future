@@ -1,8 +1,9 @@
 import { dispatch, select } from '@wordpress/data';
 import { apiFetch } from '@wordpress/data-controls';
 import { STORE_NAME } from './name';
-import { apiUrl, nonce } from 'future-workflow-editor';
 import { __ } from '@wordpress/i18n';
+
+const { apiUrl, nonce } = window.futureWorkflowEditor;
 
 const editableAttributes = ['title', 'description', 'flow', 'status', 'debugRayShowQueries', 'debugRayShowEmails', 'debugRayShowWordPressErrors'];
 

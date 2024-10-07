@@ -3,7 +3,8 @@ import { createStore } from './data';
 import { isGutenbergEnabled } from './utils';
 import { select } from '@wordpress/data';
 import { createRoot } from 'react-dom/client';
-import {
+
+const {
     postType,
     isNewPost,
     actionsSelectOptions,
@@ -16,7 +17,7 @@ import {
     defaultDate,
     statusesSelectOptions,
     hideCalendarByDefault
-} from "&config.classic-editor";
+} = window.publishpressFutureClassicEditorConfig;
 
 if (! isGutenbergEnabled()) {
     const storeName = 'publishpress-future/future-action';

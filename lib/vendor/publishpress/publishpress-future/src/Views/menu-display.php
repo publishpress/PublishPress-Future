@@ -77,6 +77,89 @@ $expirationdateDefaultTimeFormat = get_option('expirationdateDefaultTimeFormat',
             <hr/>
 
             <h3><?php
+                esc_html_e('Future actions column', 'post-expirator'); ?></h3>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php
+                        esc_html_e('Future Action Column Style', 'post-expirator'); ?></th>
+                    <td>
+                        <?php
+                        $columnStyle = $container->get(ServicesAbstract::SETTINGS)->getColumnStyle();
+                        ?>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-column-style"
+                                id="future-action-column-style-verbose"
+                                value="verbose" <?php
+                                echo $columnStyle === 'verbose' ? 'checked' : ''; ?>/>
+                            <label for="future-action-column-style-verbose"><?php
+                            esc_html_e('Detailed', 'post-expirator'); ?></label>
+                            <p class="description offset"><?php
+                            esc_html_e(
+                                'Displays all information in the Future Action column.',
+                                'post-expirator'
+                            ); ?></p>
+                        </div>
+
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-column-style"
+                                id="future-action-column-style-simple"
+                                value="simple" <?php
+                                echo $columnStyle === 'simple' ? 'checked' : ''; ?>/>
+                            <label for="future-action-column-style-simple"><?php
+                            esc_html_e('Simplified', 'post-expirator'); ?></label>
+                            <p class="description offset"><?php
+                            esc_html_e(
+                                'Displays only the icon and date/time.',
+                                'post-expirator'
+                            ); ?></p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <hr/>
+
+            <h3><?php
+                esc_html_e('Future actions editor', 'post-expirator'); ?></h3>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php
+                        esc_html_e('Time format in the date picker', 'post-expirator'); ?></th>
+                    <td>
+                        <?php
+                        $timeFormat = $container->get(ServicesAbstract::SETTINGS)->getTimeFormatForDatePicker();
+                        ?>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-time-format"
+                                id="future-action-time-format-inherited"
+                                value="inherited" <?php
+                                echo $timeFormat === 'inherited' ? 'checked' : ''; ?>/>
+                            <label for="future-action-time-format-inherited"><?php
+                            esc_html_e('Inherit from Site Settings', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-time-format"
+                                id="future-action-time-format-24h"
+                                value="24h" <?php
+                                echo $timeFormat === '24h' ? 'checked' : ''; ?>/>
+                            <label for="future-action-time-format-24h"><?php
+                            esc_html_e('24 hours', 'post-expirator'); ?></label>
+                        </div>
+                        <div class="pp-settings-field-row">
+                            <input type="radio" name="future-action-time-format"
+                                id="future-action-time-format-12h"
+                                value="12h" <?php
+                                echo $timeFormat === '12h' ? 'checked' : ''; ?>/>
+                            <label for="future-action-time-format-12h"><?php
+                            esc_html_e('AM/PM', 'post-expirator'); ?></label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <hr/>
+
+            <h3><?php
                 esc_html_e('Post Footer Display', 'post-expirator'); ?></h3>
             <p class="description"><?php
                 esc_html_e(

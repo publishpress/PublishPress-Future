@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Controllers;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Settings\SettingsFacade;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\CronSchedulesModelInterface;
@@ -148,10 +149,7 @@ class WorkflowEditor implements InitializableInterface
 
         wp_enqueue_script(
             "future_workflow_editor_script",
-            plugins_url(
-                "/assets/js/workflow-editor.js",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
+            Plugin::getScriptUrl('workflowEditor'),
             [
                 "wp-element",
                 "wp-components",

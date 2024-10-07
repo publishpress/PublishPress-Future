@@ -5,7 +5,8 @@ import {
     Fragment
 } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { apiFetch } from '&wp';
+
+const { apiFetch } = wp;
 
 require('./css/dateOffsetPreview.css');
 

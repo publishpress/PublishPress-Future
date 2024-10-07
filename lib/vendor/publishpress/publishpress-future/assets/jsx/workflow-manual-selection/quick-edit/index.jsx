@@ -33,6 +33,11 @@ window.inlineEditPost.edit = function (button, id) {
     const postId = getPostIdFromButton(button);
 
     const container = document.getElementById("post-expirator-quick-edit");
+
+    if (! container) {
+        return;
+    }
+
     const root = createRoot(container);
 
     const saveButton = document.querySelector('.inline-edit-save .save');

@@ -24,10 +24,11 @@ import { EditorHistoryUndo } from '../left-toolbar/undo';
 import { EditorHistoryRedo } from '../left-toolbar/redo';
 import { displayShortcut } from '@wordpress/keycodes';
 import { WorkflowSaveDraftButton } from '../workflow-save-draft-button';
-import { isWP65OrLater } from 'future-workflow-editor';
 import WorkflowPublishButton from '../workflow-publish-button';
 import { useAutoLayout } from '../flow-editor/auto-layout/hooks';
 import ShopIcon from '../icons/shop';
+
+const { isWP65OrLater } = window.futureWorkflowEditor;
 
 const preventDefault = (event) => {
     event.preventDefault();

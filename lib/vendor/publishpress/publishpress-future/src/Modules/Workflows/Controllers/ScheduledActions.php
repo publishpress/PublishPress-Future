@@ -3,6 +3,7 @@
 namespace PublishPress\Future\Modules\Workflows\Controllers;
 
 use Closure;
+use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Modules\Expirator\HooksAbstract;
@@ -134,10 +135,14 @@ class ScheduledActions implements InitializableInterface
         }
 
         if (ScheduledActionModel::argsAreOnNewFormat((array) $args)) {
-            $scheduledStepModel = new WorkflowScheduledStepModel();
-            $scheduledStepModel->loadByActionId($actionModel->getActionId());
+            try {
+                $scheduledStepModel = new WorkflowScheduledStepModel();
+                $scheduledStepModel->loadByActionId($actionModel->getActionId());
 
-            $args = $scheduledStepModel->getArgs();
+                $args = $scheduledStepModel->getArgs();
+            } catch (Exception $e) {
+                return [];
+            }
         }
 
         if (! isset($args['contextVariables']['global']['workflow'])) {

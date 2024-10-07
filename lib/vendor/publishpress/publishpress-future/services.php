@@ -787,13 +787,17 @@ return [
                 // Triggers
                 case CoreOnInit::getNodeTypeName():
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
-                        $nodeRunner = new CoreOnInit();
+                        $nodeRunner = new CoreOnInit(
+                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        );
                     }
                     break;
 
                 case CoreOnAdminInit::getNodeTypeName():
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
-                        $nodeRunner = new CoreOnAdminInit();
+                        $nodeRunner = new CoreOnAdminInit(
+                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        );
                     }
                     break;
 
@@ -829,7 +833,9 @@ return [
                     break;
 
                 case CoreOnCronSchedule::getNodeTypeName():
-                    $nodeRunner = new CoreOnCronSchedule();
+                    $nodeRunner = new CoreOnCronSchedule(
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                    );
                     break;
 
                     // Actions
@@ -885,11 +891,15 @@ return [
                     break;
 
                 case CorePostChangeStatus::getNodeTypeName():
-                    $nodeRunner = new CorePostChangeStatus();
+                    $nodeRunner = new CorePostChangeStatus(
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR)
+                    );
                     break;
 
                 case CoreSendEmail::getNodeTypeName():
-                    $nodeRunner = new CoreSendEmail();
+                    $nodeRunner = new CoreSendEmail(
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                    );
                     break;
 
                 case CorePostDeactivateWorkflow::getNodeTypeName():
@@ -911,7 +921,9 @@ return [
                     break;
 
                 case CorePostQuery::getNodeTypeName():
-                    $nodeRunner = new CorePostQuery();
+                    $nodeRunner = new CorePostQuery(
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                    );
                     break;
 
                 case RayDebug::getNodeTypeName():

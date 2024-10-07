@@ -12,9 +12,7 @@ import {
 
 import { createRoot } from 'react-dom/client';
 
-import {
-    text,
-} from "&config.settings-general";
+const { text } = window.publishpressFutureSettingsGeneralConfig;
 
 const SettingsFormPanel = (props) => {
     const [isValidForm, setIsValidForm] = useState(true);

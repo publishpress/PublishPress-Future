@@ -16,7 +16,7 @@ import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
 import { filterVariableOptionsByDataType } from "../../utils";
 import { DateOffsetPreview } from "../../../components/DateOffsetPreview";
-import { Icon } from "@wordpress/components";
+import { Slot, Fill } from "@wordpress/components";
 
 /**
  *  When to execute:
@@ -148,6 +148,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const hidePreventDuplicateScheduling = settings?.hidePreventDuplicateScheduling;
 
+
     return (
         <>
             <VStack>
@@ -228,6 +229,8 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
 
+                <Slot name="DateOffsetAfterDateSourceField" />
+
                 <TreeSelect
                     label={__("Repeating Action", "post-expirator")}
                     tree={recurrenceOptions}
@@ -291,6 +294,15 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
             </VStack>
+
+            <Fill name="DateOffsetAfterDateSourceField">
+                <TextControl
+                    label={__("TGest!", "post-expirator")}
+                    value={defaultValue.priority}
+                    onChange={(value) => onChangeSetting({ settingName: "priority", value })}
+                    help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
+                />
+            </Fill>
         </>
     );
 }

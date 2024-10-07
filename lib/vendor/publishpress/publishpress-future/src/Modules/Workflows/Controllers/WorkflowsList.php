@@ -6,6 +6,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Core\HooksAbstract as FutureCoreHooksAbstract;
 use PublishPress\Future\Framework\InitializableInterface;
 use PublishPress\Future\Core\HooksAbstract as CoreHooksAbstract;
+use PublishPress\Future\Core\Plugin;
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTypesModelInterface;
 use PublishPress\Future\Modules\Workflows\Models\NodeTypesModel;
@@ -105,7 +106,7 @@ class WorkflowsList implements InitializableInterface
             "edit.php?post_type=" . Module::POST_TYPE_WORKFLOW,
             "Action Workflows",
             "Action Workflows",
-            "edit_posts",
+            "manage_options",
             "future_workflow_editor",
             [$this, "renderEditorPage"]
         );
@@ -127,19 +128,19 @@ class WorkflowsList implements InitializableInterface
             return;
         }
 
-        wp_enqueue_style("wp-jquery-ui-dialog");
-        wp_enqueue_script("jquery-ui-dialog");
+        // wp_enqueue_style("wp-jquery-ui-dialog");
+        // wp_enqueue_script("jquery-ui-dialog");
 
-        wp_enqueue_script(
-            "future_workflow_list_script",
-            plugins_url(
-                "/assets/js/workflow-list.js",
-                PUBLISHPRESS_FUTURE_PLUGIN_FILE
-            ),
-            ["jquery", "jquery-ui-dialog"],
-            PUBLISHPRESS_FUTURE_VERSION,
-            true
-        );
+        // wp_enqueue_script(
+        //     "future_workflow_list_script",
+        //     Plugin::getScriptUrl('workflowList'),
+        //     [
+        //         "jquery",
+        //         "jquery-ui-dialog",
+        //     ],
+        //     PUBLISHPRESS_FUTURE_VERSION,
+        //     true
+        // );
     }
 
     public function addCustomColumns($columns)
@@ -309,7 +310,7 @@ class WorkflowsList implements InitializableInterface
 
         $actions = [
             $statusData['action'] => sprintf(
-                '<a href="%s" class="pp-future-pro-workflow-%s-inline" title="%s">%s</a>',
+                '<a href="%s" class="pp-future-workflow-%s-inline" title="%s">%s</a>',
                 esc_url(
                     wp_nonce_url(
                         add_query_arg(

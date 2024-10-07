@@ -3,8 +3,10 @@ import { createStore } from './data';
 import { getActionSettingsFromColumnData } from './utils';
 import { createRoot } from 'react-dom/client';
 import { select, dispatch } from '@wordpress/data';
-import { inlineEditPost } from "&window";
-import {
+
+const { inlineEditPost } = window;
+
+const {
     postType,
     isNewPost,
     actionsSelectOptions,
@@ -16,7 +18,7 @@ import {
     nonce,
     statusesSelectOptions,
     hideCalendarByDefault
-} from "&config.quick-edit";
+} = window.publishpressFutureQuickEditConfig;
 
 const storeName = 'publishpress-future/future-action-quick-edit';
 const delayToUnmountAfterSaving = 1000;

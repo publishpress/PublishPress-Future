@@ -4,9 +4,21 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Action
 
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail as NodeTypeCoreSendEmail;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
 class CoreSendEmail implements NodeRunnerInterface
 {
+    /**
+     * @var NodeRunnerProcessorInterface
+     */
+    private $nodeRunnerProcessor;
+
+    public function __construct(
+        NodeRunnerProcessorInterface $nodeRunnerProcessor
+    ) {
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+    }
+
     public static function getNodeTypeName(): string
     {
         return NodeTypeCoreSendEmail::getNodeTypeName();
@@ -14,7 +26,6 @@ class CoreSendEmail implements NodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        // This method is intentionally left empty.
-        // The functionality is implemented in the Pro version of the plugin.
+        $this->nodeRunnerProcessor->setup($step, '__return_true', $contextVariables);
     }
 }

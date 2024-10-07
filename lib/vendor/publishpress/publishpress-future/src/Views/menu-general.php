@@ -113,6 +113,48 @@ $plugin_facade = PostExpirator_Facade::getInstance();
             </table>
 
             <h3><?php
+                esc_html_e('Permissions', 'post-expirator'); ?></h3>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">
+                        <?php
+                        esc_html_e('Choose Which User Roles Can Use PublishPress Future', 'post-expirator'); ?>
+                    </th>
+                    <td class="pe-checklist">
+                        <?php
+                        foreach ($user_roles as $role_name => $role_label) : ?>
+                            <label for="allow-user-role-<?php
+                            echo esc_attr($role_name); ?>">
+                                <input type="checkbox"
+                                       id="allow-user-role-<?php
+                                        echo esc_attr($role_name); ?>"
+                                       name="allow-user-roles[]"
+                                                            <?php
+                                                            if ('administrator' === $role_name) :
+                                                                echo 'disabled="disabled"';
+                                                            endif; ?>
+                                       value="<?php
+                                        echo esc_attr($role_name); ?>"
+                                        <?php
+                                        if (
+                                            $plugin_facade->user_role_can_expire_posts(
+                                                $role_name
+                                            )
+                                        ) :
+                                            ?>checked="checked"<?php
+                                        endif; ?>
+                                />
+                                <?php
+                                echo esc_html($role_label); ?>
+                            </label>
+                            <?php
+                        endforeach;
+                        ?>
+                    </td>
+                </tr>
+            </table>
+
+            <h3><?php
                 esc_html_e('Email Notification', 'post-expirator'); ?></h3>
             <p class="description"><?php
                 esc_html_e(

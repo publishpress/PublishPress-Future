@@ -4,9 +4,21 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Trigge
 
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSchedule as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
 class CoreOnCronSchedule implements NodeTriggerRunnerInterface
 {
+    /**
+     * @var NodeRunnerProcessorInterface
+     */
+    private $nodeRunnerProcessor;
+
+    public function __construct(
+        NodeRunnerProcessorInterface $nodeRunnerProcessor
+    ) {
+        $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+    }
+
     /**
      * The default interval in seconds that the setup should be skipped.
      *
@@ -21,7 +33,6 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
 
     public function setup(int $workflowId, array $step, array $contextVariables = []): void
     {
-        // This method is intentionally left empty.
-        // The functionality is implemented in the Pro version of the plugin.
+        $this->nodeRunnerProcessor->setup($step, '__return_true', $contextVariables);
     }
 }
