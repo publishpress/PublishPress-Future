@@ -16164,18 +16164,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils */ "./assets/jsx/workflow-editor/utils.jsx");
-/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
-/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
-/* harmony import */ var _keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../keyboard-shortcuts */ "./assets/jsx/workflow-editor/components/keyboard-shortcuts/index.jsx");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
-/* harmony import */ var _secondary_sidebar_inserter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../secondary-sidebar/inserter */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter.jsx");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _settings_sidebar_settings_sidebar__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../settings-sidebar/settings-sidebar */ "./assets/jsx/workflow-editor/components/settings-sidebar/settings-sidebar.jsx");
-/* harmony import */ var _welcome_guide__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../welcome-guide */ "./assets/jsx/workflow-editor/components/welcome-guide/index.jsx");
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/plugins */ "@wordpress/plugins");
+/* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils */ "./assets/jsx/workflow-editor/utils.jsx");
+/* harmony import */ var _editor_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../editor-store */ "./assets/jsx/workflow-editor/components/editor-store/index.jsx");
+/* harmony import */ var reactflow__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! reactflow */ "./node_modules/@reactflow/core/dist/esm/index.mjs");
+/* harmony import */ var _keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../keyboard-shortcuts */ "./assets/jsx/workflow-editor/components/keyboard-shortcuts/index.jsx");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
+/* harmony import */ var _secondary_sidebar_inserter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../secondary-sidebar/inserter */ "./assets/jsx/workflow-editor/components/secondary-sidebar/inserter.jsx");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _settings_sidebar_settings_sidebar__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../settings-sidebar/settings-sidebar */ "./assets/jsx/workflow-editor/components/settings-sidebar/settings-sidebar.jsx");
+/* harmony import */ var _welcome_guide__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../welcome-guide */ "./assets/jsx/workflow-editor/components/welcome-guide/index.jsx");
+
 
 
 
@@ -16193,36 +16196,38 @@ __webpack_require__.r(__webpack_exports__);
 function WorkflowEditorLayout() {
   var _useSelect = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useSelect)(function (select) {
       return {
-        isFullscreenActive: select(_editor_store__WEBPACK_IMPORTED_MODULE_5__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_7__.FEATURE_FULLSCREEN_MODE),
-        isInserterOpened: select(_editor_store__WEBPACK_IMPORTED_MODULE_5__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_7__.FEATURE_INSERTER),
-        isWelcomeGuideActive: select(_editor_store__WEBPACK_IMPORTED_MODULE_5__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_7__.FEATURE_WELCOME_GUIDE)
+        isFullscreenActive: select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_8__.FEATURE_FULLSCREEN_MODE),
+        isInserterOpened: select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_8__.FEATURE_INSERTER),
+        isWelcomeGuideActive: select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_8__.FEATURE_WELCOME_GUIDE)
       };
     }),
     isFullscreenActive = _useSelect.isFullscreenActive,
     isInserterOpened = _useSelect.isInserterOpened,
     isWelcomeGuideActive = _useSelect.isWelcomeGuideActive;
-  var className = classnames__WEBPACK_IMPORTED_MODULE_9___default()('edit-post-layout editor-editor-interface', {
+  var className = classnames__WEBPACK_IMPORTED_MODULE_10___default()('edit-post-layout editor-editor-interface', {
     'is-inserter-opened': isInserterOpened
   });
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
     var bodyClasses = ['workflow-editor'];
-    (0,_utils__WEBPACK_IMPORTED_MODULE_4__.addBodyClasses)(bodyClasses);
+    (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addBodyClasses)(bodyClasses);
     return function () {
-      (0,_utils__WEBPACK_IMPORTED_MODULE_4__.removeBodyClasses)(bodyClasses);
+      (0,_utils__WEBPACK_IMPORTED_MODULE_5__.removeBodyClasses)(bodyClasses);
     };
   }, []);
   var secondarySidebar = function secondarySidebar() {
     if (isInserterOpened) {
-      return /*#__PURE__*/React.createElement(_secondary_sidebar_inserter__WEBPACK_IMPORTED_MODULE_8__.InserterSidebar, null);
+      return /*#__PURE__*/React.createElement(_secondary_sidebar_inserter__WEBPACK_IMPORTED_MODULE_9__.InserterSidebar, null);
     }
     return null;
   };
-  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_10__.SlotFillProvider, null, /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_13__.ReactFlowProvider, null, /*#__PURE__*/React.createElement(_wordpress_interface__WEBPACK_IMPORTED_MODULE_0__.FullscreenMode, {
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_11__.SlotFillProvider, null, /*#__PURE__*/React.createElement(reactflow__WEBPACK_IMPORTED_MODULE_14__.ReactFlowProvider, null, /*#__PURE__*/React.createElement(_wordpress_interface__WEBPACK_IMPORTED_MODULE_0__.FullscreenMode, {
     isActive: isFullscreenActive
-  }), /*#__PURE__*/React.createElement(_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_6__.KeyboardShortcuts, null), /*#__PURE__*/React.createElement(_settings_sidebar_settings_sidebar__WEBPACK_IMPORTED_MODULE_11__.SettingsSidebar, null), /*#__PURE__*/React.createElement(_interface__WEBPACK_IMPORTED_MODULE_1__.WorkflowEditorInterface, {
+  }), /*#__PURE__*/React.createElement(_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_7__.KeyboardShortcuts, null), /*#__PURE__*/React.createElement(_settings_sidebar_settings_sidebar__WEBPACK_IMPORTED_MODULE_12__.SettingsSidebar, null), /*#__PURE__*/React.createElement(_interface__WEBPACK_IMPORTED_MODULE_1__.WorkflowEditorInterface, {
     className: className,
     secondarySidebar: secondarySidebar
-  }), isWelcomeGuideActive && /*#__PURE__*/React.createElement(_welcome_guide__WEBPACK_IMPORTED_MODULE_12__["default"], null)));
+  }), isWelcomeGuideActive && /*#__PURE__*/React.createElement(_welcome_guide__WEBPACK_IMPORTED_MODULE_13__["default"], null)), /*#__PURE__*/React.createElement(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_4__.PluginArea, {
+    scope: "future-workflow-editor"
+  }));
 }
 
 /***/ }),
