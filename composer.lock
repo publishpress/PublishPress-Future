@@ -2168,12 +2168,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "2e9423c80f63045afa7c0b816f679ab212925f2f"
+                "reference": "daab03a5f48c04af1c2ba4df06ccc835072b3d06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/2e9423c80f63045afa7c0b816f679ab212925f2f",
-                "reference": "2e9423c80f63045afa7c0b816f679ab212925f2f",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/daab03a5f48c04af1c2ba4df06ccc835072b3d06",
+                "reference": "daab03a5f48c04af1c2ba4df06ccc835072b3d06",
                 "shasum": ""
             },
             "require": {
@@ -2264,7 +2264,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-06T17:01:34+00:00"
+            "time": "2024-10-07T16:42:15+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -5899,12 +5899,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "782255339ebd90cfe582880e9d8636596162e398"
+                "reference": "91ba9919c7677e587cb9a6b200a7d1993ed6ed5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/782255339ebd90cfe582880e9d8636596162e398",
-                "reference": "782255339ebd90cfe582880e9d8636596162e398",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/91ba9919c7677e587cb9a6b200a7d1993ed6ed5b",
+                "reference": "91ba9919c7677e587cb9a6b200a7d1993ed6ed5b",
                 "shasum": ""
             },
             "require": {
@@ -5951,7 +5951,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-06T12:27:29+00:00"
+            "time": "2024-10-07T19:57:11+00:00"
         },
         {
             "name": "sebastian/cli-parser",

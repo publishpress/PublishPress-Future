@@ -99,8 +99,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wp__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! &wp */ "&wp");
-/* harmony import */ var _wp__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wp__WEBPACK_IMPORTED_MODULE_2__);
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -109,7 +107,8 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
-
+var _wp = wp,
+  apiFetch = _wp.apiFetch;
 __webpack_require__(/*! ./css/dateOffsetPreview.css */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/css/dateOffsetPreview.css");
 var DateOffsetPreview = function DateOffsetPreview(_ref) {
   var offset = _ref.offset,
@@ -139,7 +138,7 @@ var DateOffsetPreview = function DateOffsetPreview(_ref) {
       apiRequestControllerRef.current = new AbortController();
       var signal = apiRequestControllerRef.current.signal;
       setHasPendingValidationCallback(true);
-      (0,_wp__WEBPACK_IMPORTED_MODULE_2__.apiFetch)({
+      apiFetch({
         path: (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_1__.addQueryArgs)("publishpress-future/v1/settings/validate-expire-offset"),
         method: 'POST',
         data: {
@@ -1236,9 +1235,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wp__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! &wp */ "&wp");
-/* harmony import */ var _wp__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wp__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _DateOffsetPreview__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DateOffsetPreview */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/DateOffsetPreview.jsx");
+/* harmony import */ var _DateOffsetPreview__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DateOffsetPreview */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/DateOffsetPreview.jsx");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1254,7 +1251,8 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-
+var _wp = wp,
+  apiFetch = _wp.apiFetch;
 var PanelRow = wp.components.PanelRow;
 var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
   var originalExpireTypeList = props.expireTypeList[props.postType];
@@ -1356,7 +1354,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
       return;
     }
     setTermsSelectIsLoading(true);
-    (0,_wp__WEBPACK_IMPORTED_MODULE_4__.apiFetch)({
+    apiFetch({
       path: (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_2__.addQueryArgs)("publishpress-future/v1/terms/".concat(postTypeTaxonomy))
     }).then(function (result) {
       var options = [];
@@ -1492,7 +1490,7 @@ var PostTypeSettingsPanel = function PostTypeSettingsPanel(props) {
       description: props.text.fieldDefaultDateTimeOffsetDescription,
       unescapedDescription: true,
       onChange: onChangeExpireOffset
-    }), /*#__PURE__*/React.createElement(_DateOffsetPreview__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), /*#__PURE__*/React.createElement(_DateOffsetPreview__WEBPACK_IMPORTED_MODULE_4__["default"], {
       offset: offset,
       label: props.text.datePreview,
       labelDatePreview: props.text.datePreviewCurrent,
@@ -2333,7 +2331,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addCustomStatusSettings: () => (/* binding */ addCustomStatusSettings)
 /* harmony export */ });
-/* harmony import */ var _publishpress_free_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! &publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+/* harmony import */ var _publishpress_future_free_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @publishpress-future-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
 /* harmony import */ var _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! &config.pro-settings */ "&config.pro-settings");
 /* harmony import */ var _config_pro_settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_config_pro_settings__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
@@ -2407,7 +2405,7 @@ var addCustomStatusSettings = function addCustomStatusSettings(settingsRows, pro
         title: postStatus.value
       });
     });
-    settingsRows.push( /*#__PURE__*/React.createElement(_publishpress_free_components__WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+    settingsRows.push( /*#__PURE__*/React.createElement(_publishpress_future_free_components__WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__.text.enableCustomStatuses,
       key: 'custom-statuses'
     }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", null, _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__.text.enableCustomStatusesDesc)), /*#__PURE__*/React.createElement("div", {
@@ -2435,7 +2433,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   addMetadataSettings: () => (/* binding */ addMetadataSettings)
 /* harmony export */ });
-/* harmony import */ var _publishpress_free_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! &publishpress-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
+/* harmony import */ var _publishpress_future_free_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @publishpress-future-free/components */ "./lib/vendor/publishpress/publishpress-future/assets/jsx/components/index.jsx");
 /* harmony import */ var _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! &config.pro-settings */ "&config.pro-settings");
 /* harmony import */ var _config_pro_settings__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_config_pro_settings__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
@@ -2549,7 +2547,7 @@ var addMetadataSettings = function addMetadataSettings(settingsRows, props, sett
     setHideMetabox(checked);
   };
   if (settingActive) {
-    settingsRows.push( /*#__PURE__*/React.createElement(_publishpress_free_components__WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
+    settingsRows.push( /*#__PURE__*/React.createElement(_publishpress_future_free_components__WEBPACK_IMPORTED_MODULE_0__.SettingRow, {
       label: _config_pro_settings__WEBPACK_IMPORTED_MODULE_1__.text.enableMetadataDrivenScheduling,
       key: 'metadata_mapping'
     }, /*#__PURE__*/React.createElement(FieldRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.CheckboxControl, {
@@ -2624,14 +2622,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../../node_modules/css-loader/dist/runtime/noSourceMaps.js */ "./node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
 // Imports
 
 
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.publishpress-future-date-preview .publishpress-future-date-preview-value {
     font-family: monospace;
@@ -2664,7 +2662,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.publishpress-future-date-preview .pub
 .publishpress-future-notice.publishpress-future-notice-error {
     color: #dc3232;
 }
-`, "",{"version":3,"sources":["webpack://./lib/vendor/publishpress/publishpress-future/assets/jsx/components/css/dateOffsetPreview.css"],"names":[],"mappings":"AAAA;IACI,sBAAsB;IACtB,yBAAyB;IACzB,gBAAgB;AACpB;;AAEA;IACI,cAAc;AAClB;;AAEA;IACI,kBAAkB;AACtB;;AAEA;IACI,eAAe;IACf,gBAAgB;IAChB,gBAAgB;IAChB,yBAAyB;IACzB,qBAAqB;IACrB,wBAAwB;IACxB,YAAY;IACZ,cAAc;IACd,kBAAkB;IAClB,cAAc;IACd,aAAa;AACjB;;AAEA;IACI,cAAc;AAClB","sourcesContent":[".publishpress-future-date-preview .publishpress-future-date-preview-value {\n    font-family: monospace;\n    background-color: #e7e7e7;\n    padding: 2px 4px;\n}\n\n.publishpress-future-date-preview.compact .publishpress-future-date-preview-label {\n    display: block;\n}\n\n.publishpress-future-date-preview.compact {\n    margin-bottom: 8px;\n}\n\n.publishpress-future-date-preview.compact h4 {\n    font-size: 11px;\n    font-weight: 500;\n    line-height: 1.4;\n    text-transform: uppercase;\n    display: inline-block;\n    margin-bottom: calc(8px);\n    padding: 0px;\n    flex-shrink: 0;\n    margin-right: 12px;\n    max-width: 75%;\n    margin-top: 0;\n}\n\n.publishpress-future-notice.publishpress-future-notice-error {\n    color: #dc3232;\n}\n"],"sourceRoot":""}]);
+`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2765,27 +2763,16 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/runtime/sourceMaps.js":
-/*!************************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/sourceMaps.js ***!
-  \************************************************************/
+/***/ "./node_modules/css-loader/dist/runtime/noSourceMaps.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/noSourceMaps.js ***!
+  \**************************************************************/
 /***/ ((module) => {
 
 
 
-module.exports = function (item) {
-  var content = item[1];
-  var cssMapping = item[3];
-  if (!cssMapping) {
-    return content;
-  }
-  if (typeof btoa === "function") {
-    var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(cssMapping))));
-    var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
-    var sourceMapping = "/*# ".concat(data, " */");
-    return [content].concat([sourceMapping]).join("\n");
-  }
-  return [content].join("\n");
+module.exports = function (i) {
+  return i[1];
 };
 
 /***/ }),
@@ -3121,16 +3108,6 @@ module.exports = publishpressFutureProSettings;
 
 /***/ }),
 
-/***/ "&wp":
-/*!*********************!*\
-  !*** external "wp" ***!
-  \*********************/
-/***/ ((module) => {
-
-module.exports = wp;
-
-/***/ }),
-
 /***/ "@wordpress/components":
 /*!********************************!*\
   !*** external "wp.components" ***!
@@ -3274,4 +3251,3 @@ module.exports = wp.url;
 /******/ 	
 /******/ })()
 ;
-//# sourceMappingURL=settings.js.map

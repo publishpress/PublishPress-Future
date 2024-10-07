@@ -229,6 +229,8 @@ class WorkflowEditor implements InitializableInterface
                 "isPro" => $isPro,
             ]
         );
+
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_EDITOR_SCRIPTS);
     }
 
     // phpcs:disable Generic.Files.LineLength.TooLong

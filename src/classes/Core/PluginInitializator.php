@@ -8,7 +8,6 @@ namespace PublishPress\FuturePro\Core;
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Framework\InitializableInterface;
-use PublishPress\Future\Framework\ModuleInterface as ModuleInterface;
 
 defined('ABSPATH') or die('No direct script access allowed.');
 

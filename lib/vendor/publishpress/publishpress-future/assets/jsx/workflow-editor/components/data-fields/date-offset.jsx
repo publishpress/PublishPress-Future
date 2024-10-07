@@ -6,7 +6,6 @@ import {
     PanelRow,
     Popover,
     Button,
-    ToggleControl,
     __experimentalVStack as VStack,
 } from "@wordpress/components";
 import { VariablesTreeSelect } from "../variables-tree-select";
@@ -16,7 +15,8 @@ import { store as editorStore } from "../editor-store";
 import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
 import { filterVariableOptionsByDataType } from "../../utils";
 import { DateOffsetPreview } from "../../../components/DateOffsetPreview";
-import { Slot, Fill } from "@wordpress/components";
+import { Slot } from "@wordpress/components";
+import NodeIcon from "../node-icon";
 
 /**
  *  When to execute:
@@ -88,27 +88,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         });
     }
 
-    let cronScheduleOptions = futureWorkflowEditor.cronSchedules;
-    cronScheduleOptions = cronScheduleOptions.map((schedule) => {
-        return {
-            name: schedule.label,
-            id: `cron_${schedule.value}`,
-        };
-    });
-
-    const recurrenceOptions = [
-        { name: __("Non-repeating", "post-expirator"), id: "single" },
-        { name: __("Custom interval in seconds", "post-expirator"), id: "custom" },
-        ...cronScheduleOptions
-    ];
-
-    const repeatUntilOptions = [
-        { name: __("Forever", "post-expirator"), id: "forever" },
-        { name: __("Specific date", "post-expirator"), id: "date" },
-        { name: __("For a number of times", "post-expirator"), id: "times" },
-    ];
-
-
     const onChangeSetting = ({ settingName, value }) => {
         const newValue = { ...defaultValue };
         newValue[settingName] = value;
@@ -119,7 +98,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
     }
 
     const [isHelpVisible, setIsHelpVisible] = useState(false);
-    const [isPreviewVisible, setIsPreviewVisible] = useState(false);
     const [isPreviewValid, setIsPreviewValid] = useState(true);
     const [previewMessage, setPreviewMessage] = useState('');
     const toggleHelp = () => setIsHelpVisible((state) => !state);
@@ -148,6 +126,22 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const hidePreventDuplicateScheduling = settings?.hidePreventDuplicateScheduling;
 
+    const isPro = futureWorkflowEditor.isPro || false;
+
+    let cronScheduleOptions = futureWorkflowEditor.cronSchedules;
+
+    cronScheduleOptions = cronScheduleOptions.map((schedule) => {
+        return {
+            name: schedule.label,
+            id: `cron_${schedule.value}`,
+        };
+    });
+
+    const recurrenceOptions = [
+        { name: __("Non-repeating", "post-expirator"), id: "single" },
+        { name: __("Custom interval in seconds", "post-expirator"), id: "custom" },
+        ...cronScheduleOptions
+    ];
 
     return (
         <>
@@ -229,48 +223,39 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
 
-                <Slot name="DateOffsetAfterDateSourceField" />
-
-                <TreeSelect
-                    label={__("Repeating Action", "post-expirator")}
-                    tree={recurrenceOptions}
-                    selectedId={defaultValue.recurrence}
-                    onChange={(value) => onChangeSetting({ settingName: "recurrence", value })}
-                />
-
-                {(defaultValue.recurrence === "custom") && (
-                    <TextControl
-                        label={__("Interval in seconds", "post-expirator")}
-                        value={defaultValue.repeatInterval}
-                        onChange={(value) => onChangeSetting({ settingName: "repeatInterval", value })}
-                    />
-                )}
-
-                {(defaultValue.recurrence !== "single") && (
+                {! isPro && (
                     <>
-                        <TreeSelect
-                            label={__("Repeat until", "post-expirator")}
-                            tree={repeatUntilOptions}
-                            selectedId={defaultValue.repeatUntil}
-                            onChange={(value) => onChangeSetting({ settingName: "repeatUntil", value })}
-                        />
-
-                        {defaultValue.repeatUntil === 'times' && (
-                            <TextControl
-                                label={__("Times to repeat", "post-expirator")}
-                                value={defaultValue.repeatTimes}
-                                onChange={(value) => onChangeSetting({ settingName: "repeatTimes", value })}
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <TreeSelect
+                                label={__("Repeating Action", "post-expirator")}
+                                tree={recurrenceOptions}
+                                disabled={true}
                             />
-                        )}
+                            <div style={{
+                                    marginLeft: '8px',
+                                    color: '#000',
+                                    backgroundColor: '#ffb200',
+                                    borderRadius: '50%',
+                                    minWidth: '26px',
+                                    minHeight: '26px',
+                                    display: 'inline-block',
+                                    textAlign: 'center',
+                                    boxSizing: 'border-box',
+                                    paddingTop: '5px'
+                                }}
+                                title={__("Upgrade to Pro to unlock this feature.", "post-expirator")}
+                            >
+                                <NodeIcon icon={'lock'} size={14} />
+                            </div>
+                        </div>
 
-                        {defaultValue.repeatUntil === 'date' && (
-                            <DatePicker
-                                currentDate={defaultValue.repeatUntilDate}
-                                onChange={(value) => onChangeSetting({ settingName: "repeatUntilDate", value })}
-                            />
-                        )}
                     </>
                 )}
+
+                <Slot name="DateOffsetAfterDateSourceField" fillProps={{
+                    onChangeSetting,
+                    defaultValue,
+                }} />
 
                 {isAdvancedSettingsEnabled && (
                     <>
@@ -294,15 +279,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                     </>
                 )}
             </VStack>
-
-            <Fill name="DateOffsetAfterDateSourceField">
-                <TextControl
-                    label={__("TGest!", "post-expirator")}
-                    value={defaultValue.priority}
-                    onChange={(value) => onChangeSetting({ settingName: "priority", value })}
-                    help={__("Sets the execution priority of the scheduled step. Lower numbers indicate higher priority and are executed first.", "post-expirator")} // phpcs:ignore Generic.Files.LineLength.TooLong
-                />
-            </Fill>
         </>
     );
 }
