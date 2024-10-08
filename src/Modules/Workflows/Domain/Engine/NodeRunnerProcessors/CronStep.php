@@ -207,6 +207,13 @@ class CronStep implements AsyncNodeRunnerProcessorInterface
             } else {
                 if (self::SCHEDULE_RECURRENCE_CUSTOM === $recurrence) {
                     $interval = (int)$nodeSettings['schedule']['repeatInterval'] ?? 0;
+
+                    $interval = $this->hooks->applyFilters(
+                        HooksAbstract::FILTER_INTERVAL_IN_SECONDS,
+                        $interval,
+                        $nodeSettings,
+                        $contextVariables
+                    );
                 } else {
                     $recurrence = preg_replace('/^cron_/', '', $recurrence);
 
