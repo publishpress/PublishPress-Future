@@ -16,7 +16,9 @@ import { FEATURE_ADVANCED_SETTINGS } from "../../constants";
 import { filterVariableOptionsByDataType } from "../../utils";
 import { DateOffsetPreview } from "../../../components/DateOffsetPreview";
 import { Slot } from "@wordpress/components";
-import NodeIcon from "../node-icon";
+import ProFeatureButton from "../pro-feature-button";
+import Recurrence from "./recurrence";
+import ProFeatureField from "../pro-feature-field";
 
 /**
  *  When to execute:
@@ -128,21 +130,6 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
 
     const isPro = futureWorkflowEditor.isPro || false;
 
-    let cronScheduleOptions = futureWorkflowEditor.cronSchedules;
-
-    cronScheduleOptions = cronScheduleOptions.map((schedule) => {
-        return {
-            name: schedule.label,
-            id: `cron_${schedule.value}`,
-        };
-    });
-
-    const recurrenceOptions = [
-        { name: __("Non-repeating", "post-expirator"), id: "single" },
-        { name: __("Custom interval in seconds", "post-expirator"), id: "custom" },
-        ...cronScheduleOptions
-    ];
-
     return (
         <>
             <VStack>
@@ -224,32 +211,9 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                 )}
 
                 {! isPro && (
-                    <>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <TreeSelect
-                                label={__("Repeating Action", "post-expirator")}
-                                tree={recurrenceOptions}
-                                disabled={true}
-                            />
-                            <div style={{
-                                    marginLeft: '8px',
-                                    color: '#000',
-                                    backgroundColor: '#ffb200',
-                                    borderRadius: '50%',
-                                    minWidth: '26px',
-                                    minHeight: '26px',
-                                    display: 'inline-block',
-                                    textAlign: 'center',
-                                    boxSizing: 'border-box',
-                                    paddingTop: '5px'
-                                }}
-                                title={__("Upgrade to Pro to unlock this feature.", "post-expirator")}
-                            >
-                                <NodeIcon icon={'lock'} size={14} />
-                            </div>
-                        </div>
-
-                    </>
+                    <ProFeatureField link="https://publishpress.com/links/future-workflow-inspector">
+                        <Recurrence label={__("Repeating Action", "post-expirator")} disabled={true} />
+                    </ProFeatureField>
                 )}
 
                 <Slot name="DateOffsetAfterDateSourceField" fillProps={{
