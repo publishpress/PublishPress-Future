@@ -17,6 +17,7 @@ import { filterVariableOptionsByDataType } from "../../utils";
 import { DateOffsetPreview } from "../../../components/DateOffsetPreview";
 import { Slot } from "@wordpress/components";
 import NodeIcon from "../node-icon";
+import ProFeatureButton from "../pro-feature-button";
 
 /**
  *  When to execute:
@@ -224,32 +225,14 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
                 )}
 
                 {! isPro && (
-                    <>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <TreeSelect
-                                label={__("Repeating Action", "post-expirator")}
-                                tree={recurrenceOptions}
-                                disabled={true}
-                            />
-                            <div style={{
-                                    marginLeft: '8px',
-                                    color: '#000',
-                                    backgroundColor: '#ffb200',
-                                    borderRadius: '50%',
-                                    minWidth: '26px',
-                                    minHeight: '26px',
-                                    display: 'inline-block',
-                                    textAlign: 'center',
-                                    boxSizing: 'border-box',
-                                    paddingTop: '5px'
-                                }}
-                                title={__("Upgrade to Pro to unlock this feature.", "post-expirator")}
-                            >
-                                <NodeIcon icon={'lock'} size={14} />
-                            </div>
-                        </div>
-
-                    </>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <TreeSelect
+                            label={__("Repeating Action", "post-expirator")}
+                            tree={recurrenceOptions}
+                            disabled={true}
+                        />
+                        <ProFeatureButton link="https://publishpress.com/links/future-workflow-inspector" />
+                    </div>
                 )}
 
                 <Slot name="DateOffsetAfterDateSourceField" fillProps={{
