@@ -2,7 +2,8 @@ import {
     Fill,
     TreeSelect,
     TextControl,
-    DatePicker
+    DatePicker,
+    __experimentalNumberControl as NumberControl
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -18,7 +19,7 @@ export default function RecurrentDateField() {
 
     const recurrenceOptions = [
         { name: __("Non-repeating", "post-expirator"), id: "single" },
-        { name: __("Custom interval in seconds", "post-expirator"), id: "custom" },
+        { name: __("Custom interval", "post-expirator"), id: "custom" },
         ...cronScheduleOptions
     ];
 
@@ -26,6 +27,16 @@ export default function RecurrentDateField() {
         { name: __("Forever", "post-expirator"), id: "forever" },
         { name: __("Specific date", "post-expirator"), id: "date" },
         { name: __("For a number of times", "post-expirator"), id: "times" },
+    ];
+
+    const recurrenceUnitOptions = [
+        { name: __("Seconds", "post-expirator"), id: "seconds" },
+        { name: __("Minutes", "post-expirator"), id: "minutes" },
+        { name: __("Hours", "post-expirator"), id: "hours" },
+        { name: __("Days", "post-expirator"), id: "days" },
+        { name: __("Weeks", "post-expirator"), id: "weeks" },
+        { name: __("Months", "post-expirator"), id: "months" },
+        { name: __("Years", "post-expirator"), id: "years" },
     ];
 
     return <Fill name="DateOffsetAfterDateSourceField">
@@ -40,11 +51,20 @@ export default function RecurrentDateField() {
                     />
 
                     {(defaultValue.recurrence === "custom") && (
-                        <TextControl
-                            label={__("Interval in seconds", "post-expirator")}
-                            value={defaultValue.repeatInterval}
-                            onChange={(value) => onChangeSetting({ settingName: "repeatInterval", value })}
-                        />
+                        <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                            <TreeSelect
+                                label={__("Unit of time", "post-expirator")}
+                                tree={recurrenceUnitOptions}
+                                value={defaultValue.repeatIntervalUnit || "seconds"}
+                                onChange={(value) => onChangeSetting({ settingName: "repeatIntervalUnit", value })}
+                                style={{ width: '130px' }}
+                            />
+                            <NumberControl
+                                label={__("Interval", "post-expirator")}
+                                value={defaultValue.repeatInterval}
+                                onChange={(value) => onChangeSetting({ settingName: "repeatInterval", value })}
+                            />
+                        </div>
                     )}
 
                     {(defaultValue.recurrence !== "single") && (

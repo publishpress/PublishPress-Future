@@ -36,7 +36,7 @@ function RecurrentDateField() {
     name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Non-repeating", "post-expirator"),
     id: "single"
   }, {
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Custom interval in seconds", "post-expirator"),
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Custom interval", "post-expirator"),
     id: "custom"
   }].concat(_toConsumableArray(cronScheduleOptions));
   var repeatUntilOptions = [{
@@ -48,6 +48,28 @@ function RecurrentDateField() {
   }, {
     name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("For a number of times", "post-expirator"),
     id: "times"
+  }];
+  var recurrenceUnitOptions = [{
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Seconds", "post-expirator"),
+    id: "seconds"
+  }, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Minutes", "post-expirator"),
+    id: "minutes"
+  }, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hours", "post-expirator"),
+    id: "hours"
+  }, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Days", "post-expirator"),
+    id: "days"
+  }, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Weeks", "post-expirator"),
+    id: "weeks"
+  }, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Months", "post-expirator"),
+    id: "months"
+  }, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Years", "post-expirator"),
+    id: "years"
   }];
   return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Fill, {
     name: "DateOffsetAfterDateSourceField"
@@ -64,8 +86,27 @@ function RecurrentDateField() {
           value: value
         });
       }
-    }), defaultValue.recurrence === "custom" && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Interval in seconds", "post-expirator"),
+    }), defaultValue.recurrence === "custom" && /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '10px'
+      }
+    }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TreeSelect, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Unit of time", "post-expirator"),
+      tree: recurrenceUnitOptions,
+      value: defaultValue.repeatIntervalUnit || "seconds",
+      onChange: function onChange(value) {
+        return onChangeSetting({
+          settingName: "repeatIntervalUnit",
+          value: value
+        });
+      },
+      style: {
+        width: '130px'
+      }
+    }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalNumberControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Interval", "post-expirator"),
       value: defaultValue.repeatInterval,
       onChange: function onChange(value) {
         return onChangeSetting({
@@ -73,7 +114,7 @@ function RecurrentDateField() {
           value: value
         });
       }
-    }), defaultValue.recurrence !== "single" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TreeSelect, {
+    })), defaultValue.recurrence !== "single" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TreeSelect, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Repeat until", "post-expirator"),
       tree: repeatUntilOptions,
       selectedId: defaultValue.repeatUntil,
