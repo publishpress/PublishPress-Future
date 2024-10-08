@@ -11931,8 +11931,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../constants */ "./assets/jsx/workflow-editor/constants.jsx");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils */ "./assets/jsx/workflow-editor/utils.jsx");
 /* harmony import */ var _components_DateOffsetPreview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../components/DateOffsetPreview */ "./assets/jsx/components/DateOffsetPreview.jsx");
-/* harmony import */ var _node_icon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../node-icon */ "./assets/jsx/workflow-editor/components/node-icon.jsx");
-/* harmony import */ var _pro_feature_button__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../pro-feature-button */ "./assets/jsx/workflow-editor/components/pro-feature-button/index.jsx");
+/* harmony import */ var _pro_feature_button__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pro-feature-button */ "./assets/jsx/workflow-editor/components/pro-feature-button/index.jsx");
+/* harmony import */ var _recurrence__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./recurrence */ "./assets/jsx/workflow-editor/components/data-fields/recurrence.jsx");
+/* harmony import */ var _pro_feature_field__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../pro-feature-field */ "./assets/jsx/workflow-editor/components/pro-feature-field/index.jsx");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -11949,6 +11950,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -12086,20 +12088,6 @@ function DateOffset(_ref) {
   };
   var hidePreventDuplicateScheduling = settings === null || settings === void 0 ? void 0 : settings.hidePreventDuplicateScheduling;
   var isPro = futureWorkflowEditor.isPro || false;
-  var cronScheduleOptions = futureWorkflowEditor.cronSchedules;
-  cronScheduleOptions = cronScheduleOptions.map(function (schedule) {
-    return {
-      name: schedule.label,
-      id: "cron_".concat(schedule.value)
-    };
-  });
-  var recurrenceOptions = [{
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Non-repeating", "post-expirator"),
-    id: "single"
-  }, {
-    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Custom interval in seconds", "post-expirator"),
-    id: "custom"
-  }].concat(_toConsumableArray(cronScheduleOptions));
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalVStack, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TreeSelect, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("When to run", "post-expirator"),
     tree: whenToRunOptions,
@@ -12160,17 +12148,11 @@ function DateOffset(_ref) {
     dangerouslySetInnerHTML: {
       __html: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("For more information on formatting, see the %sPHP strtotime function%s. For example, you could enter %s+1 month%s or %s+1 week 2 days 4 hours 2 seconds%s or %snext Thursday%s. Please use only phrases in English.", "post-expirator"), "<a href='https://www.php.net/manual/en/function.strtotime.php' target='_blank'>", "</a>", "<code>", "</code>", "<code>", "</code>", "<code>", "</code>")
     }
-  })))))), !isPro && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center'
-    }
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TreeSelect, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Repeating Action", "post-expirator"),
-    tree: recurrenceOptions,
-    disabled: true
-  }), /*#__PURE__*/React.createElement(_pro_feature_button__WEBPACK_IMPORTED_MODULE_10__["default"], {
+  })))))), !isPro && /*#__PURE__*/React.createElement(_pro_feature_field__WEBPACK_IMPORTED_MODULE_11__["default"], {
     link: "https://publishpress.com/links/future-workflow-inspector"
+  }, /*#__PURE__*/React.createElement(_recurrence__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)("Repeating Action", "post-expirator"),
+    disabled: true
   })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Slot, {
     name: "DateOffsetAfterDateSourceField",
     fillProps: {
@@ -12864,6 +12846,55 @@ function RayColor(_ref) {
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RayColor);
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/data-fields/recurrence.jsx":
+/*!**************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/data-fields/recurrence.jsx ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Recurrence)
+/* harmony export */ });
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+
+
+var settings = window.futureWorkflowEditor;
+function Recurrence(_ref) {
+  var label = _ref.label,
+    disabled = _ref.disabled;
+  var cronScheduleOptions = settings.cronSchedules.map(function (schedule) {
+    return {
+      name: schedule.label,
+      id: "cron_".concat(schedule.value)
+    };
+  });
+  var recurrenceOptions = [{
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Non-repeating", "post-expirator"),
+    id: "single"
+  }, {
+    name: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Custom interval in seconds", "post-expirator"),
+    id: "custom"
+  }].concat(_toConsumableArray(cronScheduleOptions));
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TreeSelect, {
+    label: label,
+    tree: recurrenceOptions,
+    disabled: disabled
+  });
+}
 
 /***/ }),
 
@@ -18376,6 +18407,34 @@ function ProFeatureButton(_ref) {
   }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_1__["default"], {
     icon: 'lock',
     size: 14
+  }));
+}
+
+/***/ }),
+
+/***/ "./assets/jsx/workflow-editor/components/pro-feature-field/index.jsx":
+/*!***************************************************************************!*\
+  !*** ./assets/jsx/workflow-editor/components/pro-feature-field/index.jsx ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ProFeatureField)
+/* harmony export */ });
+/* harmony import */ var _pro_feature_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pro-feature-button */ "./assets/jsx/workflow-editor/components/pro-feature-button/index.jsx");
+
+function ProFeatureField(_ref) {
+  var children = _ref.children,
+    link = _ref.link;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  }, children, /*#__PURE__*/React.createElement(_pro_feature_button__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    link: link
   }));
 }
 
