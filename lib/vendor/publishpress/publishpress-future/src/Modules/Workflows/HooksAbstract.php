@@ -89,4 +89,6 @@ abstract class HooksAbstract
 
     public const FILTER_CLEANUP_SCHEDULED_TRANSIENT_TIMEOUT =
         'publishpressfuture_cleanup_scheduled_transient_timeout';
+
+    public const FILTER_INTERVAL_IN_SECONDS = 'publishpressfuture_interval_in_seconds';
 }

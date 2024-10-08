@@ -53,6 +53,7 @@ export function DateOffset({ name, label, defaultValue, onChange, variables = []
         recurrence: "single",
         repeatUntil: "forever",
         repeatInterval: "3600",
+        repeatIntervalUnit: "seconds",
         repeatTimes: "5",
         repeatUntilDate: defaultRepeatDate,
         unique: true,
