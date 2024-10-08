@@ -8,8 +8,6 @@ use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterfac
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 
-use function PublishPress\Future\logCatchException;
-
 class GeneralStep implements NodeRunnerProcessorInterface
 {
     /**

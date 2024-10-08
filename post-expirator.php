@@ -129,10 +129,10 @@ if (! defined('PUBLISHPRESS_FUTURE_LOADED')) {
                 $container = Container::getInstance();
                 $container->get(ServicesAbstract::PLUGIN)->initialize();
             } catch (Exception $e) {
-                logCatchException($e);
+                logError('Error initializing the plugin', $e);
             }
         }, 10, 0);
     } catch (Exception $e) {
-        logCatchException($e);
+        logError('Error starting the plugin', $e, true);
     }
 }
