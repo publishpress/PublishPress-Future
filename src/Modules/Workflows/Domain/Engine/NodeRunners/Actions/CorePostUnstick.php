@@ -5,6 +5,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Action
 use Exception;
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostUnstick as NodeTypeCorePostUnstick;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
@@ -47,6 +48,8 @@ class CorePostUnstick implements NodeRunnerInterface
 
     public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
     {
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
+
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
         $postModel->unstick();
     }

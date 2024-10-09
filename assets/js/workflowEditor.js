@@ -20577,13 +20577,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _workflow_switch_to_draft_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../workflow-switch-to-draft-button */ "./assets/jsx/workflow-editor/components/workflow-switch-to-draft-button/index.jsx");
-/* harmony import */ var _workflow_delete_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../workflow-delete-button */ "./assets/jsx/workflow-editor/components/workflow-delete-button/index.jsx");
-/* harmony import */ var _persistent_panel_body__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../persistent-panel-body */ "./assets/jsx/workflow-editor/components/persistent-panel-body/index.jsx");
-/* harmony import */ var _scrolled_to_top__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../scrolled-to-top */ "./assets/jsx/workflow-editor/components/scrolled-to-top/index.jsx");
-
-
-
+/* harmony import */ var _persistent_panel_body__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../persistent-panel-body */ "./assets/jsx/workflow-editor/components/persistent-panel-body/index.jsx");
 
 
 
@@ -20597,12 +20591,14 @@ var WorkflowDebugRayPanel = function WorkflowDebugRayPanel() {
         showQueries: select(_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getEditedWorkflowAttribute('debugRayShowQueries'),
         showEmails: select(_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getEditedWorkflowAttribute('debugRayShowEmails'),
         showWordPressErrors: select(_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getEditedWorkflowAttribute('debugRayShowWordPressErrors'),
+        showCurrentRunningStep: select(_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).getEditedWorkflowAttribute('debugRayShowCurrentRunningStep'),
         isLoadingWorkflow: select(_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store).isLoadingWorkflow()
       };
     }),
     showQueries = _useSelect.showQueries,
     showEmails = _useSelect.showEmails,
     showWordPressErrors = _useSelect.showWordPressErrors,
+    showCurrentRunningStep = _useSelect.showCurrentRunningStep,
     isLoadingWorkflow = _useSelect.isLoadingWorkflow;
   var _useDispatch = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)(_workflow_store__WEBPACK_IMPORTED_MODULE_2__.store),
     setEditedWorkflowAttribute = _useDispatch.setEditedWorkflowAttribute;
@@ -20615,7 +20611,10 @@ var WorkflowDebugRayPanel = function WorkflowDebugRayPanel() {
   var onChangeShowWordPressErrors = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useCallback)(function (selected) {
     setEditedWorkflowAttribute('debugRayShowWordPressErrors', selected);
   });
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  var onChangeShowCurrentRunningStep = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useCallback)(function (selected) {
+    setEditedWorkflowAttribute('debugRayShowCurrentRunningStep', selected);
+  });
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_persistent_panel_body__WEBPACK_IMPORTED_MODULE_5__["default"], {
     className: "edit-post-post-status",
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Ray Debug', 'post-expirator'),
     initialOpen: true,
@@ -20632,6 +20631,10 @@ var WorkflowDebugRayPanel = function WorkflowDebugRayPanel() {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show WordPress Errors', 'post-expirator'),
     checked: showWordPressErrors,
     onChange: onChangeShowWordPressErrors
+  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.ToggleControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show current running step', 'post-expirator'),
+    checked: showCurrentRunningStep,
+    onChange: onChangeShowCurrentRunningStep
   }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (WorkflowDebugRayPanel);
@@ -21072,7 +21075,7 @@ var _marked = /*#__PURE__*/_regeneratorRuntime().mark(setupEditor),
 var _window$futureWorkflo = window.futureWorkflowEditor,
   apiUrl = _window$futureWorkflo.apiUrl,
   nonce = _window$futureWorkflo.nonce;
-var editableAttributes = ['title', 'description', 'flow', 'status', 'debugRayShowQueries', 'debugRayShowEmails', 'debugRayShowWordPressErrors'];
+var editableAttributes = ['title', 'description', 'flow', 'status', 'debugRayShowQueries', 'debugRayShowEmails', 'debugRayShowWordPressErrors', 'debugRayShowCurrentRunningStep'];
 function setupEditor(workflowId) {
   var workflow, _workflow;
   return _regeneratorRuntime().wrap(function setupEditor$(_context) {
@@ -21818,7 +21821,8 @@ var DEFAULT_STATE = {
     status: 'auto-draft',
     debugRayShowQueries: false,
     debugRayShowEmails: false,
-    debugRayShowWordPressErrors: false
+    debugRayShowWordPressErrors: false,
+    debugRayShowCurrentRunningStep: false
   },
   editedWorkflowAttributes: {},
   nodes: [],

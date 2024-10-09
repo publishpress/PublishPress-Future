@@ -98,6 +98,12 @@ class CoreOnSavePost implements NodeTriggerRunnerInterface
             return false;
         }
 
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP,
+            $this->step,
+            $this->contextVariables
+        );
+
         $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($this->step);
 
         $contextVariables = $this->contextVariables;

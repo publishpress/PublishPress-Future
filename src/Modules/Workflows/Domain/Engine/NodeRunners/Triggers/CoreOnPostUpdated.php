@@ -87,6 +87,12 @@ class CoreOnPostUpdated implements NodeTriggerRunnerInterface
             return;
         }
 
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP,
+            $this->step,
+            $this->contextVariables
+        );
+
         $postQueryArgs = [
             'post' => $postBefore,
             'node' => $this->step['node'],

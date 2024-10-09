@@ -4,6 +4,7 @@ namespace PublishPress\Future\Modules\Workflows\Domain\Engine\NodeRunners\Action
 
 use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostStick as NodeTypeCorePostStick;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 
@@ -46,6 +47,8 @@ class CorePostStick implements NodeRunnerInterface
 
     public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
     {
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
+
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
         $postModel->stick();
     }

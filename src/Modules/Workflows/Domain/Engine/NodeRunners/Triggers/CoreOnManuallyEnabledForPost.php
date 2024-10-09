@@ -82,6 +82,12 @@ class CoreOnManuallyEnabledForPost implements NodeTriggerRunnerInterface
             return;
         }
 
+        $this->hooks->doAction(
+            HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP,
+            $this->step,
+            $this->contextVariables
+        );
+
         $post = get_post($postId);
 
         $postQueryArgs = [

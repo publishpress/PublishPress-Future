@@ -42,6 +42,8 @@ class CorePostDeactivateWorkflow implements NodeRunnerInterface
 
     public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
     {
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
+
         $postModel = new PostModel();
         $postModel->load($postId);
 

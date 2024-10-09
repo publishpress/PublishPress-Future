@@ -8,6 +8,7 @@ use PublishPress\Future\Framework\WordPress\Facade\ErrorFacade;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostTermsSet as NodeTypeCorePostTermsSet;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\HooksAbstract;
 
 class CorePostTermsSet implements NodeRunnerInterface
 {
@@ -55,6 +56,8 @@ class CorePostTermsSet implements NodeRunnerInterface
 
     public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
     {
+        $this->hooks->doAction(HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP, $step, $contextVariables);
+
         $postModel = call_user_func($this->expirablePostModelFactory, $postId);
 
         $taxonomy = $nodeSettings['taxonomyTerms']['taxonomy'];

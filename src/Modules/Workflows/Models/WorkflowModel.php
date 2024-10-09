@@ -30,6 +30,8 @@ class WorkflowModel implements WorkflowModelInterface
 
     public const META_KEY_DEBUG_RAY_SHOW_WORDPRESS_ERRORS = '_pp_workflow_debug_ray_show_wordpress_errors';
 
+    public const META_KEY_DEBUG_RAY_SHOW_CURRENT_RUNNING_STEP = '_pp_workflow_debug_ray_show_current_running_step';
+
     public const STATUS_ENABLED = 'publish';
 
     public const STATUS_DISABLED = 'draft';
@@ -52,6 +54,8 @@ class WorkflowModel implements WorkflowModelInterface
     private $debugRayShowEmails = null;
 
     private $debugRayShowWordPressErrors = null;
+
+    private $debugRayShowCurrentRunningStep = null;
 
     /**
      * @var NodeTypesModelInterface
@@ -97,6 +101,7 @@ class WorkflowModel implements WorkflowModelInterface
         $this->debugRayShowEmails = null;
         $this->debugRayShowQueries = null;
         $this->debugRayShowWordPressErrors = null;
+        $this->debugRayShowCurrentRunningStep = null;
     }
 
     public function getId(): int
@@ -191,6 +196,11 @@ class WorkflowModel implements WorkflowModelInterface
             $this->post->ID,
             self::META_KEY_DEBUG_RAY_SHOW_WORDPRESS_ERRORS,
             $this->debugRayShowWordPressErrors ? '1' : '0'
+        );
+        update_post_meta(
+            $this->post->ID,
+            self::META_KEY_DEBUG_RAY_SHOW_CURRENT_RUNNING_STEP,
+            $this->debugRayShowCurrentRunningStep ? '1' : '0'
         );
     }
 
@@ -716,6 +726,11 @@ class WorkflowModel implements WorkflowModelInterface
         $this->debugRayShowWordPressErrors = $debugRayShowWordPressErrors;
     }
 
+    public function setDebugRayShowCurrentRunningStep(bool $debugRayShowCurrentRunningStep)
+    {
+        $this->debugRayShowCurrentRunningStep = $debugRayShowCurrentRunningStep;
+    }
+
     public function isDebugRayShowQueriesEnabled(): bool
     {
         if (null === $this->debugRayShowQueries) {
@@ -753,6 +768,19 @@ class WorkflowModel implements WorkflowModelInterface
         }
 
         return $this->debugRayShowWordPressErrors;
+    }
+
+    public function isDebugRayShowCurrentRunningStepEnabled(): bool
+    {
+        if (null === $this->debugRayShowCurrentRunningStep) {
+            $this->debugRayShowCurrentRunningStep = get_post_meta(
+                $this->post->ID,
+                self::META_KEY_DEBUG_RAY_SHOW_CURRENT_RUNNING_STEP,
+                true
+            ) === '1';
+        }
+
+        return $this->debugRayShowCurrentRunningStep;
     }
 
     private function getManualSelectionTrigger()

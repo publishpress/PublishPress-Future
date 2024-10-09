@@ -24,6 +24,7 @@ export const DEFAULT_STATE = {
         debugRayShowQueries: false,
         debugRayShowEmails: false,
         debugRayShowWordPressErrors: false,
+        debugRayShowCurrentRunningStep: false,
     },
     editedWorkflowAttributes: {},
     nodes: [],

@@ -46,11 +46,15 @@ interface WorkflowModelInterface
 
     public function setDebugRayShowWordPressErrors(bool $debugRayShowWordPressErrors);
 
+    public function setDebugRayShowCurrentRunningStep(bool $debugRayShowCurrentRunningStep);
+
     public function isDebugRayShowQueriesEnabled(): bool;
 
     public function isDebugRayShowEmailsEnabled(): bool;
 
     public function isDebugRayShowWordPressErrorsEnabled(): bool;
+
+    public function isDebugRayShowCurrentRunningStepEnabled(): bool;
 
     public function createNew($reuseAutoDraft = true): int;
 

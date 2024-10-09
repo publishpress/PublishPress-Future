@@ -17,6 +17,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\Module;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 
 use function PublishPress\Future\logError;
 
@@ -51,6 +52,11 @@ class WorkflowEngine implements WorkflowEngineInterface
      * @var int
      */
     private $currentAsyncActionId;
+
+    /**
+     * @var WorkflowModelInterface
+     */
+    private $currentRunningWorkflow;
 
     public function __construct(
         HookableInterface $hooks,
@@ -98,6 +104,13 @@ class WorkflowEngine implements WorkflowEngineInterface
             10,
             3
         );
+
+        $this->hooks->addAction(
+            HooksAbstract::ACTION_WORKFLOW_ENGINE_RUNNING_STEP,
+            [$this, "onRunningStep"],
+            10,
+            2
+        );
     }
 
     public function start()
@@ -112,8 +125,11 @@ class WorkflowEngine implements WorkflowEngineInterface
 
             // Setup the workflow triggers
             foreach ($workflows as $workflowId) {
+                /** @var WorkflowModelInterface $workflow */
                 $workflow = new WorkflowModel();
                 $workflow->load($workflowId);
+
+                $this->currentRunningWorkflow = $workflow;
 
                 $globalVariables = $this->variablesHandler->getGlobalVariables($workflow);
 
@@ -275,5 +291,24 @@ class WorkflowEngine implements WorkflowEngineInterface
     public function getVariablesHandler(): WorkflowVariablesHandlerInterface
     {
         return $this->variablesHandler;
+    }
+
+    public function onRunningStep(array $step, array $contextVariables)
+    {
+        if (empty($this->currentRunningWorkflow)) {
+            return;
+        }
+
+        if (! $this->currentRunningWorkflow->isDebugRayShowCurrentRunningStepEnabled()) {
+            return;
+        }
+
+        if (! function_exists('ray')) {
+            return;
+        }
+
+        // phpcs:ignore PublishPressStandards.Debug.DisallowDebugFunctions.FoundRayFunction
+        $stepSlug = $step['node']['data']['slug'];
+        ray($stepSlug)->label('Current running step');
     }
 }

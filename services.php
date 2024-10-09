@@ -788,7 +788,8 @@ return [
                 case CoreOnInit::getNodeTypeName():
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $nodeRunner = new CoreOnInit(
-                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                            $container->get(ServicesAbstract::HOOKS)
                         );
                     }
                     break;
@@ -796,7 +797,8 @@ return [
                 case CoreOnAdminInit::getNodeTypeName():
                     if ($settingsModel->getExperimentalFeaturesStatus()) {
                         $nodeRunner = new CoreOnAdminInit(
-                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                            $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                            $container->get(ServicesAbstract::HOOKS)
                         );
                     }
                     break;
@@ -834,7 +836,8 @@ return [
 
                 case CoreOnCronSchedule::getNodeTypeName():
                     $nodeRunner = new CoreOnCronSchedule(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
@@ -892,13 +895,15 @@ return [
 
                 case CorePostChangeStatus::getNodeTypeName():
                     $nodeRunner = new CorePostChangeStatus(
-                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
                 case CoreSendEmail::getNodeTypeName():
                     $nodeRunner = new CoreSendEmail(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
@@ -912,17 +917,22 @@ return [
                     // Advanced
                 case CoreSchedule::getNodeTypeName():
                     $nodeRunner = new CoreSchedule(
-                        $container->get(ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
-                case IfElse::getNodeTypeName():
-                    $nodeRunner = new IfElse();
+                case ConditionalSplit::getNodeTypeName():
+                    $nodeRunner = new ConditionalSplit(
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::HOOKS)
+                    );
                     break;
 
                 case CorePostQuery::getNodeTypeName():
                     $nodeRunner = new CorePostQuery(
-                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(ServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(ServicesAbstract::HOOKS)
                     );
                     break;
 
