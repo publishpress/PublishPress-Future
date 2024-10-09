@@ -834,4 +834,30 @@ class WorkflowModel implements WorkflowModelInterface
 
         return $node;
     }
+
+    public function getNodes(bool $fullNodes = false): array
+    {
+        $abstractFlow = $this->getFlow();
+
+        if (empty($abstractFlow)) {
+            return [];
+        }
+
+        $nodes = [];
+        foreach ($abstractFlow['nodes'] as $node) {
+            if ($fullNodes) {
+                $nodes[$node['data']['slug']] = $node;
+            } else {
+                $nodes[$node['data']['slug']] = [
+                    'id' => $node['id'],
+                    'type' => $node['type'],
+                    'name' => $node['data']['name'],
+                    'slug' => $node['data']['slug'],
+                    'settings' => $node['data']['settings'],
+                ];
+            }
+        }
+
+        return $nodes;
+    }
 }

@@ -65,4 +65,6 @@ interface WorkflowModelInterface
     public function convertLegacyScreenshots(): void;
 
     public function getNodeById(string $nodeId): array;
+
+    public function getNodes(): array;
 }

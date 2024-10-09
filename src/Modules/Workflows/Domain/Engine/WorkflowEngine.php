@@ -16,6 +16,7 @@ use PublishPress\Future\Modules\Workflows\Models\WorkflowModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowScheduledStepModel;
 use PublishPress\Future\Modules\Workflows\Models\WorkflowsModel;
 use PublishPress\Future\Modules\Workflows\Module;
+use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 
 use function PublishPress\Future\logError;
 

@@ -8,6 +8,7 @@ use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\SiteRe
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\UserResolver;
 use PublishPress\Future\Modules\Workflows\Domain\Engine\VariableResolvers\WorkflowResolver;
 use PublishPress\Future\Modules\Workflows\Interfaces\VariableResolverInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowModelInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 
 class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
@@ -70,7 +71,7 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
         return $text;
     }
 
-    public function getGlobalVariables($workflow)
+    public function getGlobalVariables(WorkflowModelInterface $workflow)
     {
         return [
             'workflow' => $this->getWorkflowGlobal($workflow),
@@ -80,7 +81,7 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
         ];
     }
 
-    protected function getWorkflowGlobal($workflow)
+    protected function getWorkflowGlobal(WorkflowModelInterface $workflow)
     {
         return new WorkflowResolver(
             [
@@ -88,6 +89,7 @@ class WorkflowVariablesHandler implements WorkflowVariablesHandlerInterface
                 'title' => $workflow->getTitle(),
                 'description' => $workflow->getDescription(),
                 'modified_at' => $workflow->getModifiedAt(),
+                'steps' => $workflow->getNodes(),
             ]
         );
     }

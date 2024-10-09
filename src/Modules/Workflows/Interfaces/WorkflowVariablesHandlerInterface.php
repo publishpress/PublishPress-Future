@@ -12,5 +12,5 @@ interface WorkflowVariablesHandlerInterface
 
     public function getVariablesValue($variableName, $variable);
 
-    public function getGlobalVariables($workflow);
+    public function getGlobalVariables(WorkflowModelInterface $workflow);
 }
