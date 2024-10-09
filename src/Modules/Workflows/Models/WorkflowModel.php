@@ -131,7 +131,13 @@ class WorkflowModel implements WorkflowModelInterface
 
     public function getStatus(): string
     {
-        return $this->post->post_status;
+        $status = $this->post->post_status;
+
+        if (empty($status)) {
+            return '';
+        }
+
+        return $status;
     }
 
     public function setStatus(string $status)
