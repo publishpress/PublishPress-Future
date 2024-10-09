@@ -350,6 +350,10 @@ class WorkflowsList implements InitializableInterface
         $workflowModel = new WorkflowModel();
         $workflowModel->load($id);
 
+        if (empty($workflowModel)) {
+            return $title;
+        }
+
         $workflowStatus = $workflowModel->getStatus();
 
         if ('publish' === $workflowStatus) {
