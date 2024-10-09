@@ -327,8 +327,7 @@
 }
 
 .react-flow__node-handle-name {
-    padding: 2px;
-    padding-bottom: 6px;
+    padding: 4px 2px 6px 2px;
     text-align: center;
     line-height: 100%;
     flex: 1;
@@ -405,4 +404,13 @@
 
 .react-flow__node-error .node-icon {
     margin-top: 2px;
+}
+
+body.workflow-editor.is-free .react-flow__node-handle-name {
+    color: #cacaca;
+}
+
+body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-output,
+body.workflow-editor.is-free .react-flow__node-handle-name.handle-area-source-true {
+    color: #000;
 }
