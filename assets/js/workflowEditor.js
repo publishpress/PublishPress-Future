@@ -16240,17 +16240,20 @@ function WorkflowEditorLayout() {
       return {
         isFullscreenActive: select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_8__.FEATURE_FULLSCREEN_MODE),
         isInserterOpened: select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_8__.FEATURE_INSERTER),
-        isWelcomeGuideActive: select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_8__.FEATURE_WELCOME_GUIDE)
+        isWelcomeGuideActive: select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store).isFeatureActive(_constants__WEBPACK_IMPORTED_MODULE_8__.FEATURE_WELCOME_GUIDE),
+        isPro: select(_editor_store__WEBPACK_IMPORTED_MODULE_6__.store).isPro()
       };
     }),
     isFullscreenActive = _useSelect.isFullscreenActive,
     isInserterOpened = _useSelect.isInserterOpened,
-    isWelcomeGuideActive = _useSelect.isWelcomeGuideActive;
+    isWelcomeGuideActive = _useSelect.isWelcomeGuideActive,
+    isPro = _useSelect.isPro;
   var className = classnames__WEBPACK_IMPORTED_MODULE_10___default()('edit-post-layout editor-editor-interface', {
     'is-inserter-opened': isInserterOpened
   });
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
     var bodyClasses = ['workflow-editor'];
+    bodyClasses.push(isPro ? 'is-pro' : 'is-free');
     (0,_utils__WEBPACK_IMPORTED_MODULE_5__.addBodyClasses)(bodyClasses);
     return function () {
       (0,_utils__WEBPACK_IMPORTED_MODULE_5__.removeBodyClasses)(bodyClasses);
@@ -17627,7 +17630,8 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
           style: {
             left: handle.left
           },
-          isConnectable: isConnectable
+          isConnectable: isConnectable,
+          className: 'handle-target-' + handle.id
         });
       });
     }
@@ -17645,13 +17649,14 @@ var GenericNode = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.memo)(funct
           style: {
             left: handle.left
           },
-          isConnectable: isConnectable
+          isConnectable: isConnectable,
+          className: 'handle-source-' + handle.id
         });
       });
       handleAreas = nodeType.handleSchema.source.map(function (handle) {
         return /*#__PURE__*/React.createElement("div", {
           key: handle.id + 'handleArea',
-          className: "react-flow__node-handle-name"
+          className: 'react-flow__node-handle-name handle-area-source-' + handle.id
         }, handle.label);
       });
     }
