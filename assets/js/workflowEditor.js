@@ -13589,6 +13589,10 @@ function WorkflowData() {
       name: "modified_at",
       type: "datetime",
       label: "Modification Date"
+    }, {
+      name: "steps",
+      type: "node",
+      label: "Steps"
     }]
   };
 }
@@ -16869,6 +16873,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icons_exclamation__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./icons/exclamation */ "./assets/jsx/workflow-editor/components/icons/exclamation.jsx");
 /* harmony import */ var _icons_lock__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./icons/lock */ "./assets/jsx/workflow-editor/components/icons/lock.jsx");
 /* harmony import */ var _icons_shop__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./icons/shop */ "./assets/jsx/workflow-editor/components/icons/shop.jsx");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /**
  * External dependencies
  */
@@ -16900,7 +16910,11 @@ function NodeIcon(_ref) {
     showColors = _ref$showColors === void 0 ? false : _ref$showColors,
     className = _ref.className,
     _ref$size = _ref.size,
-    size = _ref$size === void 0 ? 20 : _ref$size;
+    size = _ref$size === void 0 ? 20 : _ref$size,
+    _ref$onClick = _ref.onClick,
+    onClick = _ref$onClick === void 0 ? function () {} : _ref$onClick,
+    _ref$style = _ref.style,
+    style = _ref$style === void 0 ? {} : _ref$style;
   var iconSrc = ((_icon = icon) === null || _icon === void 0 ? void 0 : _icon.src) || icon;
   switch (iconSrc) {
     case 'block-default':
@@ -17002,13 +17016,14 @@ function NodeIcon(_ref) {
     icon: icon && icon.src ? icon.src : icon,
     size: size
   });
-  var style = showColors ? {
+  var spanStyle = showColors ? _objectSpread(_objectSpread({}, style), {}, {
     backgroundColor: icon && icon.background,
     color: icon && icon.foreground
-  } : {};
+  }) : style;
   return /*#__PURE__*/React.createElement("span", {
-    style: style,
-    className: mergedClassName
+    style: spanStyle,
+    className: mergedClassName,
+    onClick: onClick
   }, renderedIcon);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NodeIcon);
@@ -17304,7 +17319,7 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
   if (!inputSchema) {
     inputSchema = [];
   }
-  var Variable = function Variable(_ref2) {
+  var _Variable = function Variable(_ref2) {
     var schemaItem = _ref2.schemaItem,
       prefix = _ref2.prefix;
     var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)(false),
@@ -17316,18 +17331,29 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
     };
     var dataType = getDataTypeByName(schemaItem.type);
     var properties = null;
-    if (dataType.propertiesSchema) {
+    if (dataType && dataType.propertiesSchema) {
       properties = dataType.propertiesSchema.map(function (property) {
+        var propertyDataType = getDataTypeByName(property.type);
+        if (!propertyDataType || !propertyDataType.propertiesSchema) {
+          return /*#__PURE__*/React.createElement("li", {
+            key: "".concat(schemaItem.name).concat(property.name, "-li")
+          }, /*#__PURE__*/React.createElement("code", null, property.name));
+        }
         return /*#__PURE__*/React.createElement("li", {
-          key: "".concat(schemaItem.name).concat(property.name)
-        }, /*#__PURE__*/React.createElement("code", null, property.name));
+          key: "".concat(schemaItem.name).concat(property.name, "-li")
+        }, /*#__PURE__*/React.createElement(_Variable, {
+          schemaItem: property
+        }));
       });
     }
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-      onClick: togglePopover,
       className: "workflow-editor-data-flow-variable"
     }, /*#__PURE__*/React.createElement(_node_icon__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      icon: isOpen ? 'arrow-down' : 'arrow-right'
+      icon: isOpen ? 'arrow-down' : 'arrow-right',
+      onClick: togglePopover,
+      style: {
+        cursor: 'pointer'
+      }
     }), /*#__PURE__*/React.createElement("code", null, prefix, schemaItem.name), isOpen && properties && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Animate, {
       type: "slide-in",
       options: {
@@ -17345,7 +17371,7 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
   }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Inputs', 'post-expirator')), /*#__PURE__*/React.createElement("div", null, inputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step receives the following input from previous step:", "post-expirator")), /*#__PURE__*/React.createElement("ul", null, inputSchema.map(function (schemaItem, index) {
     return /*#__PURE__*/React.createElement("li", {
       key: "input-".concat(schemaItem.name, "-").concat(index)
-    }, /*#__PURE__*/React.createElement(Variable, {
+    }, /*#__PURE__*/React.createElement(_Variable, {
       schemaItem: schemaItem
     }));
   }))), inputSchema.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step does not receive any input from previous step.", "post-expirator"))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
@@ -17353,7 +17379,7 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
   }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Outputs', 'post-expirator')), /*#__PURE__*/React.createElement("div", null, outputSchema.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step outputs the following data:", "post-expirator")), /*#__PURE__*/React.createElement("ul", null, outputSchema.map(function (schemaItem, index) {
     return /*#__PURE__*/React.createElement("li", {
       key: "output-".concat(schemaItem.name, "-").concat(index)
-    }, /*#__PURE__*/React.createElement(Variable, {
+    }, /*#__PURE__*/React.createElement(_Variable, {
       schemaItem: schemaItem
     }));
   }))), outputSchema.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("This step does not output any data.", "post-expirator"))), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, {
@@ -17361,7 +17387,7 @@ var NodeDataFlowPanel = function NodeDataFlowPanel(_ref) {
   }, /*#__PURE__*/React.createElement("h3", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Global Variables', 'post-expirator')), /*#__PURE__*/React.createElement("div", null, !isLoadingWorkflow && globalVariableNames.length === 0 && /*#__PURE__*/React.createElement("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No global variables are declared', 'post-expirator')), !isLoadingWorkflow && globalVariableNames.length > 0 && /*#__PURE__*/React.createElement("ul", null, globalVariableNames.map(function (variableName) {
     return /*#__PURE__*/React.createElement("li", {
       key: "global-".concat(variableName)
-    }, /*#__PURE__*/React.createElement(Variable, {
+    }, /*#__PURE__*/React.createElement(_Variable, {
       schemaItem: globalVariables[variableName],
       prefix: "global."
     }));
