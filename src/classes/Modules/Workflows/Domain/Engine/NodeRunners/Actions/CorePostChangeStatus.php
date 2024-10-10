@@ -7,6 +7,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CorePostChang
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 
 class CorePostChangeStatus implements NodeRunnerInterface
 {
@@ -25,14 +26,21 @@ class CorePostChangeStatus implements NodeRunnerInterface
      */
     private $expirablePostModelFactory;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $runtimeVariablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
-        \Closure $expirablePostModelFactory
+        \Closure $expirablePostModelFactory,
+        RuntimeVariablesHandlerInterface $runtimeVariablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->expirablePostModelFactory = $expirablePostModelFactory;
+        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -40,12 +48,12 @@ class CorePostChangeStatus implements NodeRunnerInterface
         return NodeType::getNodeTypeName();
     }
 
-    public function setup(array $step, array $contextVariables = []): void
+    public function setup(array $step): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback'], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'actionCallback']);
     }
 
-    public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
+    public function actionCallback(int $postId, array $nodeSettings, array $step)
     {
         $this->hooks->addFilter(HooksAbstract::FILTER_IGNORE_SAVE_POST_EVENT, '__return_true', 10);
 

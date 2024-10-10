@@ -7,6 +7,7 @@ use PublishPress\Future\Core\HookableInterface;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Advanced\CorePostQuery as NodeType;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 
 class CorePostQuery implements NodeRunnerInterface
 {
@@ -20,12 +21,19 @@ class CorePostQuery implements NodeRunnerInterface
      */
     private $nodeRunnerProcessor;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $runtimeVariablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerProcessorInterface $nodeRunnerProcessor
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        RuntimeVariablesHandlerInterface $runtimeVariablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -33,12 +41,12 @@ class CorePostQuery implements NodeRunnerInterface
         return NodeType::getNodeTypeName();
     }
 
-    public function setup(array $step, array $contextVariables = []): void
+    public function setup(array $step): void
     {
         try {
             $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
             $nodeSettings = $this->nodeRunnerProcessor->getNodeSettings($node);
-            $workflowId = $this->nodeRunnerProcessor->getWorkflowIdFromContextVariables($contextVariables);
+            $workflowId = $this->runtimeVariablesHandler->getVariable('global.workflow.id');
             $nodeSlug = $this->nodeRunnerProcessor->getSlugFromStep($step);
 
             if (empty($nodeSettings)) {
@@ -52,22 +60,15 @@ class CorePostQuery implements NodeRunnerInterface
                 return;
             }
 
-            $contextVariables = array_merge(
-                $contextVariables,
-                [
-                    $nodeSlug => [
-                        'posts' => array_map('intval', $posts),
-                    ],
-                ]
-            );
+            $this->runtimeVariablesHandler->setVariable($nodeSlug . '.posts', array_map('intval', $posts));
 
-            $this->nodeRunnerProcessor->runNextSteps($step, $contextVariables);
+            $this->nodeRunnerProcessor->runNextSteps($step);
         } catch (\Exception $e) {
             $this->nodeRunnerProcessor->logError($e->getMessage(), $workflowId, $step);
         }
     }
 
-    public function actionCallback(int $postId, array $nodeSettings, array $step, array $contextVariables)
+    public function actionCallback(int $postId, array $nodeSettings, array $step)
     {
         // TODO: Do we need anything here? Maybe something for debugging or logging?
     }

@@ -7,6 +7,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnAdminI
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 
 class CoreOnAdminInit implements NodeTriggerRunnerInterface
 {
@@ -21,21 +22,23 @@ class CoreOnAdminInit implements NodeTriggerRunnerInterface
     private $step;
 
     /**
-     * @var array
-     */
-    private $contextVariables;
-
-    /**
      * @var NodeRunnerProcessorInterface
      */
     private $nodeRunnerProcessor;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $runtimeVariablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
-        NodeRunnerProcessorInterface $nodeRunnerProcessor
+        NodeRunnerProcessorInterface $nodeRunnerProcessor,
+        RuntimeVariablesHandlerInterface $runtimeVariablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -43,17 +46,16 @@ class CoreOnAdminInit implements NodeTriggerRunnerInterface
         return NodeTypeCoreOnAdminInit::getNodeTypeName();
     }
 
-    public function setup(int $workflowId, array $step, array $contextVariables = []): void
+    public function setup(int $workflowId, array $step): void
     {
         $this->step = $step;
-        $this->contextVariables = $contextVariables;
 
         $this->hooks->addAction(HooksAbstract::ACTION_ADMIN_INIT, [$this, 'triggerCallback'], 10);
     }
 
     public function triggerCallback()
     {
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
-        $this->nodeRunnerProcessor->runNextSteps($this->step, $this->contextVariables);
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
+        $this->nodeRunnerProcessor->runNextSteps($this->step);
     }
 }

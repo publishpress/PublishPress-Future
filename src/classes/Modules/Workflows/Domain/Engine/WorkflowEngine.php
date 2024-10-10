@@ -9,6 +9,7 @@ use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowVariablesHandlerInterface;
 use PublishPress\FuturePro\Modules\Workflows\Domain\Engine\NodeRunners\Triggers\CoreOnInit;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 
 class WorkflowEngine implements WorkflowEngineInterface
 {
@@ -49,7 +50,7 @@ class WorkflowEngine implements WorkflowEngineInterface
         $this->freeEngine->start();
     }
 
-    public function getVariablesHandler(): WorkflowVariablesHandlerInterface
+    public function getVariablesHandler(): RuntimeVariablesHandlerInterface
     {
         return $this->freeEngine->getVariablesHandler();
     }

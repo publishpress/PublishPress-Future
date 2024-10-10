@@ -8,6 +8,7 @@ use PublishPress\Future\Framework\WordPress\Facade\EmailFacade;
 use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Actions\CoreSendEmail as NodeTypeCoreSendEmail;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeRunnerProcessorInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\WorkflowEngineInterface;
 
 use function PublishPress\FuturePro\logError;
@@ -30,20 +31,20 @@ class CoreSendEmail implements NodeRunnerInterface
     private $emailFacade;
 
     /**
-     * @var WorkflowEngineInterface
+     * @var RuntimeVariablesHandlerInterface
      */
-    private $workflowEngine;
+    private $runtimeVariablesHandler;
 
     public function __construct(
         HookableInterface $hooks,
         NodeRunnerProcessorInterface $nodeRunnerProcessor,
         EmailFacade $emailFacade,
-        WorkflowEngineInterface $workflowEngine
+        RuntimeVariablesHandlerInterface $runtimeVariablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
         $this->emailFacade = $emailFacade;
-        $this->workflowEngine = $workflowEngine;
+        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -53,10 +54,10 @@ class CoreSendEmail implements NodeRunnerInterface
 
     public function setup(array $step, array $contextVariables = []): void
     {
-        $this->nodeRunnerProcessor->setup($step, [$this, 'processEmailSending'], $contextVariables);
+        $this->nodeRunnerProcessor->setup($step, [$this, 'processEmailSending']);
     }
 
-    public function processEmailSending(array $step, array $contextVariables)
+    public function processEmailSending(array $step)
     {
         try {
             $node = $this->nodeRunnerProcessor->getNodeFromStep($step);
@@ -64,20 +65,18 @@ class CoreSendEmail implements NodeRunnerInterface
 
             $recipient = $nodeSettings['recipient']['recipient'] ?? 'global.site.admin_email';
 
-            $variablesHandler = $this->workflowEngine->getVariablesHandler();
-
             $subject = $nodeSettings['subject'] ?? '';
             if (empty($subject)) {
                 $subject = NodeTypeCoreSendEmail::getDefaultSubject();
             }
-            $subject = $variablesHandler->replaceVariablesPlaceholdersInText($subject, $contextVariables);
+            $subject = $this->runtimeVariablesHandler->replacePlaceholdersInText($subject);
             $subject = sanitize_text_field($subject);
 
             $message = $nodeSettings['message'] ?? '';
             if (empty($message)) {
                 $message = NodeTypeCoreSendEmail::getDefaultMessage();
             }
-            $message = $variablesHandler->replaceVariablesPlaceholdersInText($message, $contextVariables);
+            $message = $this->runtimeVariablesHandler->replacePlaceholdersInText($message);
             // TODO: Add support for HTML emails. Block editor or separated email templates?
             $message = sanitize_textarea_field($message);
 
@@ -89,7 +88,7 @@ class CoreSendEmail implements NodeRunnerInterface
                     $recipient = explode(',', $customEmails);
                 }
             } else {
-                $recipient = $variablesHandler->parseNestedVariableValue($recipient, $contextVariables);
+                $recipient = $this->runtimeVariablesHandler->getVariable($recipient);
             }
 
             if (empty($recipient)) {

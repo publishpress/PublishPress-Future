@@ -254,19 +254,22 @@ return [
                 case CoreOnInit::getNodeTypeName():
                     return new CoreOnInit(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
                     );
 
                 case CoreOnAdminInit::getNodeTypeName():
                     return new CoreOnAdminInit(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
                     );
 
                 case CoreOnCronSchedule::getNodeTypeName():
                     return new CoreOnCronSchedule(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(FreeServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(FreeServicesAbstract::CRON_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
                     );
 
                 // Actions
@@ -274,7 +277,8 @@ return [
                     return new CorePostChangeStatus(
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(FreeServicesAbstract::POST_STEP_NODE_RUNNER_PROCESSOR),
-                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY)
+                        $container->get(FreeServicesAbstract::EXPIRABLE_POST_MODEL_FACTORY),
+                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
                     );
 
                 case CoreSendEmail::getNodeTypeName():
@@ -282,14 +286,15 @@ return [
                         $container->get(ServicesAbstract::HOOKS),
                         $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
                         $container->get(FreeServicesAbstract::EMAIL),
-                        $container->get(ServicesAbstract::WORKFLOW_ENGINE)
+                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
                     );
 
                 // Advanced
                 case CorePostQuery::getNodeTypeName():
                     return new CorePostQuery(
                         $container->get(ServicesAbstract::HOOKS),
-                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR)
+                        $container->get(FreeServicesAbstract::GENERAL_STEP_NODE_RUNNER_PROCESSOR),
+                        $container->get(FreeServicesAbstract::WORKFLOW_VARIABLES_HANDLER)
                     );
             }
 

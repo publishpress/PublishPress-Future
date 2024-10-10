@@ -7,6 +7,7 @@ use PublishPress\Future\Modules\Workflows\Domain\NodeTypes\Triggers\CoreOnCronSc
 use PublishPress\Future\Modules\Workflows\HooksAbstract;
 use PublishPress\Future\Modules\Workflows\Interfaces\AsyncNodeRunnerProcessorInterface;
 use PublishPress\Future\Modules\Workflows\Interfaces\NodeTriggerRunnerInterface;
+use PublishPress\Future\Modules\Workflows\Interfaces\RuntimeVariablesHandlerInterface;
 
 class CoreOnCronSchedule implements NodeTriggerRunnerInterface
 {
@@ -28,11 +29,6 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
     private $step;
 
     /**
-     * @var array
-     */
-    private $contextVariables;
-
-    /**
      * @var int
      */
     private $workflowId;
@@ -42,12 +38,19 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
      */
     private $nodeRunnerProcessor;
 
+    /**
+     * @var RuntimeVariablesHandlerInterface
+     */
+    private $runtimeVariablesHandler;
+
     public function __construct(
         HookableInterface $hooks,
-        AsyncNodeRunnerProcessorInterface $nodeRunnerProcessor
+        AsyncNodeRunnerProcessorInterface $nodeRunnerProcessor,
+        RuntimeVariablesHandlerInterface $runtimeVariablesHandler
     ) {
         $this->hooks = $hooks;
         $this->nodeRunnerProcessor = $nodeRunnerProcessor;
+        $this->runtimeVariablesHandler = $runtimeVariablesHandler;
     }
 
     public static function getNodeTypeName(): string
@@ -55,14 +58,13 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
         return NodeType::getNodeTypeName();
     }
 
-    public function setup(int $workflowId, array $step, array $contextVariables = []): void
+    public function setup(int $workflowId, array $step): void
     {
         $this->step = $step;
-        $this->contextVariables = $contextVariables;
         $this->workflowId = $workflowId;
 
         if ($this->shouldSetup()) {
-            $this->nodeRunnerProcessor->setup($this->step, '__return_true', $this->contextVariables);
+            $this->nodeRunnerProcessor->setup($this->step, '__return_true');
         }
     }
 
@@ -106,11 +108,10 @@ class CoreOnCronSchedule implements NodeTriggerRunnerInterface
         $expandedArgs = $this->nodeRunnerProcessor->expandArguments($compactedArgs);
 
         $this->step = $expandedArgs['step'];
-        $this->contextVariables = $expandedArgs['contextVariables'];
-        $this->workflowId = $this->nodeRunnerProcessor->getWorkflowIdFromContextVariables($this->contextVariables);
+        $this->workflowId = $this->runtimeVariablesHandler->getVariable('global.workflow.id');
 
 
-        $this->nodeRunnerProcessor->triggerCallbackIsRunning($this->contextVariables);
+        $this->nodeRunnerProcessor->triggerCallbackIsRunning();
         $this->nodeRunnerProcessor->actionCallback($compactedArgs, $originalArgs);
     }
 }
